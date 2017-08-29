@@ -89,7 +89,7 @@ func TestOpen(t *testing.T) {
 		t.Errorf("created an invalid spreadsheet: %s", err)
 	}
 	wb.Save(&got)
-	testhelper.CompareZip(t, "simple-1.xlsx", got.Bytes())
+	testhelper.CompareZip(t, "simple-1.xlsx", got.Bytes(), true)
 }
 
 func TestOpenExcel2016(t *testing.T) {

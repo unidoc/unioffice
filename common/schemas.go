@@ -27,10 +27,13 @@ const (
 	SharedStingsType         = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings"
 
 	// WML
-	HeaderType    = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header"
-	FooterType    = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer"
-	NumberingType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering"
-	FontTableType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable"
+	HeaderType      = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header"
+	FooterType      = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer"
+	NumberingType   = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering"
+	FontTableType   = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable"
+	WebSettingsType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings"
+	FootNotesType   = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes"
+	EndNotesType    = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes"
 
 	// PML
 	SlideType                   = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide"

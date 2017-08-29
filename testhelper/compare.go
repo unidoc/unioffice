@@ -36,7 +36,7 @@ func CompareGoldenXML(t *testing.T, expectedFn string, got []byte) {
 	dumpXmlDiff(t, exp, got)
 }
 
-func CompareZip(t *testing.T, expectedFn string, got []byte) {
+func CompareZip(t *testing.T, expectedFn string, got []byte, cmpFileContents bool) {
 	golden := filepath.Join("testdata", expectedFn)
 	zgot, err := zip.NewReader(bytes.NewReader(got), int64(len(got)))
 	if err != nil {
@@ -57,8 +57,19 @@ func CompareZip(t *testing.T, expectedFn string, got []byte) {
 	if err != nil {
 		t.Errorf("unable to read file: %s", err)
 	}
-	t.Run(expectedFn, compareZipContents(zexp, zgot))
+	t.Run(expectedFn, compareZipContents(zexp, zgot, cmpFileContents))
 }
+
+func CompareGoldenZipFilesOnly(t *testing.T, expectedFn string, got []byte) {
+	golden := filepath.Join("testdata", expectedFn)
+	if *update {
+		if err := ioutil.WriteFile(golden, got, 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	CompareZip(t, expectedFn, got, false)
+}
+
 func CompareGoldenZip(t *testing.T, expectedFn string, got []byte) {
 	golden := filepath.Join("testdata", expectedFn)
 	if *update {
@@ -66,10 +77,10 @@ func CompareGoldenZip(t *testing.T, expectedFn string, got []byte) {
 			t.Fatal(err)
 		}
 	}
-	CompareZip(t, expectedFn, got)
+	CompareZip(t, expectedFn, got, true)
 }
 
-func compareZipContents(exp, got *zip.Reader) func(t *testing.T) {
+func compareZipContents(exp, got *zip.Reader, cmpFileContents bool) func(t *testing.T) {
 	return func(t *testing.T) {
 		expFiles := make([]*zip.File, len(exp.File))
 		copy(expFiles, exp.File)
@@ -85,8 +96,10 @@ func compareZipContents(exp, got *zip.Reader) func(t *testing.T) {
 					continue
 				}
 				if f.Name == g.Name {
-					// comparing ones that have the same name
-					t.Run(f.Name, compareFiles(f, g))
+					if cmpFileContents {
+						// comparing contents that have the same name
+						t.Run(f.Name, compareFiles(f, g))
+					}
 					expFiles[i] = nil
 					gotFiles[j] = nil
 				}

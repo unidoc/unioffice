@@ -26,7 +26,10 @@ func TestRawEncode(t *testing.T) {
 	}
 	dec := xml.NewDecoder(f)
 	var got *bytes.Buffer
-	for i := 0; i < 2; i++ {
+
+	// should round trip multiple times with no changes after
+	// the first encoding
+	for i := 0; i < 5; i++ {
 		stng := wml.NewSettings()
 		if err := dec.Decode(stng); err != nil {
 			t.Errorf("error decoding settings: %s", err)
@@ -41,12 +44,14 @@ func TestRawEncode(t *testing.T) {
 		dec = xml.NewDecoder(bytes.NewReader(got.Bytes()))
 	}
 	xmlStr := got.String()
-	beg := strings.Index(xmlStr, "<w:hdrShapeDefaults>")
-	end := strings.Index(xmlStr, "</w:hdrShapeDefaults>")
+	beg := strings.LastIndex(xmlStr, "<w:hdrShapeDefaults>")
+	end := strings.LastIndex(xmlStr, "</w:hdrShapeDefaults>")
 
 	gotRaw := xmlStr[beg+20 : end]
-	exp := `<shapedefaults xmlns="urn:schemas-microsoft-com:office:office" spidmax="2049" xmlns:_="urn:schemas-microsoft-com:vml" _:ext="edit"/>`
+
+	exp := "<o:shapedefaults v:ext=\"edit\" spidmax=\"2049\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:v=\"urn:schemas-microsoft-com:vml\"><o:idmap v:ext=\"edit\" data=\"1\"/></o:shapedefaults>"
 	if gotRaw != exp {
 		t.Errorf("expected\n%q\ngot\n%q\n", exp, gotRaw)
 	}
+
 }

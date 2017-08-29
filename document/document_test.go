@@ -39,7 +39,7 @@ func TestOpen(t *testing.T) {
 		t.Errorf("created an invalid document: %s", err)
 	}
 	wb.Save(&got)
-	testhelper.CompareZip(t, "simple-1.docx", got.Bytes())
+	testhelper.CompareZip(t, "simple-1.docx", got.Bytes(), true)
 }
 
 func TestOpenHeaderFooter(t *testing.T) {
@@ -69,4 +69,17 @@ func TestAddParagraph(t *testing.T) {
 	if len(doc.Paragraphs()) != 2 {
 		t.Errorf("expected 2 paragraphs, got %d", len(doc.Paragraphs()))
 	}
+}
+
+func TestOpenWord2016(t *testing.T) {
+	doc, err := document.Open("../testdata/Office2016/Word-Windows.docx")
+	if err != nil {
+		t.Errorf("error opening Windows Word 2016 document: %s", err)
+	}
+	got := bytes.Buffer{}
+	if err := doc.Save(&got); err != nil {
+		t.Errorf("error saving W216 file: %s", err)
+	}
+	testhelper.CompareGoldenZipFilesOnly(t, "../../testdata/Office2016/Word-Windows.docx", got.Bytes())
+	doc.SaveToFile("/tmp/gen/rewrote.docx")
 }
