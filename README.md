@@ -6,7 +6,7 @@
 ## Status ##
 
 The current focus is on documents (.docx). Some other code exists for
-spreadsheets and presentations, but it is not as far as long.  The current plan
+spreadsheets and presentations, but it is even less complete.  The current plan
 is to get documents working well, then spreadsheets, and finally presentations.
 
 
@@ -56,6 +56,5 @@ before purchasing a commercial license.
 ### Consulting ###
 
 Baliance also offers consulting services related to enhancing the gooxml library
-on a case by case basis. All changes made to the library will be available for 
-all users under with the same terms as  Please contact sales@baliance.com for a
+on a case by case basis. Please contact sales@baliance.com for a
 quote if interested.
