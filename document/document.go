@@ -17,9 +17,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
-
 	"baliance.com/gooxml/common"
+	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
+	st "baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 
 	"baliance.com/gooxml/zippkg"
@@ -28,14 +28,19 @@ import (
 // Document is a text document that can be written out in the OOXML .docx format.
 type Document struct {
 	common.DocBase
-	x         *wml.Document
-	Settings  Settings
-	Numbering Numbering
-	Styles    Styles
-	headers   []*wml.Hdr
-	footers   []*wml.Ftr
-	docRels   common.Relationships
-	images    []*iref
+	x           *wml.Document
+	Settings    Settings
+	Numbering   Numbering
+	Styles      Styles
+	headers     []*wml.Hdr
+	footers     []*wml.Ftr
+	docRels     common.Relationships
+	images      []*iref
+	themes      []*dml.Theme
+	webSettings *wml.WebSettings
+	fontTable   *wml.Fonts
+	endNotes    *wml.Endnotes
+	footNotes   *wml.Footnotes
 }
 
 // New constructs an empty document that content can be added to.
@@ -43,7 +48,7 @@ func New() *Document {
 	d := &Document{x: wml.NewDocument()}
 	d.ContentTypes = common.NewContentTypes()
 	d.x.Body = wml.NewCT_Body()
-	d.x.ConformanceAttr = sharedTypes.ST_ConformanceClassTransitional
+	d.x.ConformanceAttr = st.ST_ConformanceClassTransitional
 	d.docRels = common.NewRelationships()
 
 	d.AppProperties = common.NewAppProperties()
@@ -138,14 +143,42 @@ func (d *Document) Save(w io.Writer) error {
 	if err := zippkg.MarshalXML(z, "word/document.xml", d.x); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, "word/numbering.xml", d.Numbering.X()); err != nil {
-		return err
+	if d.Numbering.X() != nil {
+		if err := zippkg.MarshalXML(z, "word/numbering.xml", d.Numbering.X()); err != nil {
+			return err
+		}
 	}
 	if err := zippkg.MarshalXML(z, "word/styles.xml", d.Styles.X()); err != nil {
 		return err
 	}
 	if err := zippkg.MarshalXML(z, "word/_rels/document.xml.rels", d.docRels.X()); err != nil {
 		return err
+	}
+	if d.webSettings != nil {
+		if err := zippkg.MarshalXML(z, "word/webSettings.xml", d.webSettings); err != nil {
+			return err
+		}
+	}
+	if d.fontTable != nil {
+		if err := zippkg.MarshalXML(z, "word/fontTable.xml", d.fontTable); err != nil {
+			return err
+		}
+	}
+	if d.endNotes != nil {
+		if err := zippkg.MarshalXML(z, "word/endnotes.xml", d.endNotes); err != nil {
+			return err
+		}
+	}
+	if d.footNotes != nil {
+		if err := zippkg.MarshalXML(z, "word/footnotes.xml", d.footNotes); err != nil {
+			return err
+		}
+	}
+	for i, thm := range d.themes {
+		if err := zippkg.MarshalXML(z, fmt.Sprintf("word/theme/theme%d.xml", i+1), thm); err != nil {
+			return err
+		}
+
 	}
 	for i, hdr := range d.headers {
 		fn := fmt.Sprintf("word/header%d.xml", i+1)
@@ -242,6 +275,9 @@ func Open(filename string) (*Document, error) {
 // Read reads a document from an io.Reader.
 func Read(r io.ReaderAt, size int64) (*Document, error) {
 	doc := New()
+	// numbering is not required
+	doc.Numbering.x = nil
+
 	td, err := ioutil.TempDir("", "gooxml-docx")
 	if err != nil {
 		return nil, err
@@ -301,7 +337,7 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 		case common.SettingsType:
 			decMap[basePaths[doc.docRels]+r.Target()] = doc.Settings.X()
 		case common.NumberingType:
-			doc.Numbering.Clear()
+			doc.Numbering = NewNumbering()
 			decMap[basePaths[doc.docRels]+r.Target()] = doc.Numbering.X()
 		case common.StylesType:
 			doc.Styles.Clear()
@@ -314,6 +350,22 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 			ftr := wml.NewFtr()
 			doc.footers = append(doc.footers, ftr)
 			decMap[basePaths[doc.docRels]+r.Target()] = ftr
+		case common.ThemeType:
+			thm := dml.NewTheme()
+			doc.themes = append(doc.themes, thm)
+			decMap[basePaths[doc.docRels]+r.Target()] = thm
+		case common.WebSettingsType:
+			doc.webSettings = wml.NewWebSettings()
+			decMap[basePaths[doc.docRels]+r.Target()] = doc.webSettings
+		case common.FontTableType:
+			doc.fontTable = wml.NewFonts()
+			decMap[basePaths[doc.docRels]+r.Target()] = doc.fontTable
+		case common.EndNotesType:
+			doc.endNotes = wml.NewEndnotes()
+			decMap[basePaths[doc.docRels]+r.Target()] = doc.endNotes
+		case common.FootNotesType:
+			doc.footNotes = wml.NewFootnotes()
+			decMap[basePaths[doc.docRels]+r.Target()] = doc.footNotes
 		case common.ImageType:
 			imgPath := basePaths[doc.docRels] + r.Target()
 			for i, f := range files {

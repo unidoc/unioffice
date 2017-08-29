@@ -43,11 +43,13 @@ var ST_PositiveFixedPercentagePatternRe = regexp.MustCompile(ST_PositiveFixedPer
 
 func ParseUnionST_OnOff(s string) (ST_OnOff, error) {
 	r := ST_OnOff{}
-	tru := true
 	switch s {
 	case "true", "1", "on":
+		tru := true
 		r.Bool = &tru
 	default:
+		fals := false
+		r.Bool = &fals
 	}
 	return r, nil
 }

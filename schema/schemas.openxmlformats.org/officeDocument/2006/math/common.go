@@ -17,7 +17,7 @@ import (
 )
 
 func ParseUnionST_OnOff(s string) (sharedTypes.ST_OnOff, error) {
-	return sharedTypes.ST_OnOff{}, nil
+	return sharedTypes.ParseUnionST_OnOff(s)
 }
 func ParseUnionST_TwipsMeasure(s string) (sharedTypes.ST_TwipsMeasure, error) {
 	ret := sharedTypes.ST_TwipsMeasure{}
