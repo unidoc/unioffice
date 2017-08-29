@@ -2,8 +2,6 @@
 package main
 
 import (
-	"fmt"
-
 	"baliance.com/gooxml/presentation"
 )
 
@@ -11,6 +9,5 @@ func main() {
 	ppt := presentation.New()
 	ppt.AddSlide()
 
-	fmt.Println(ppt.Validate())
 	ppt.SaveToFile("simple.pptx")
 }
