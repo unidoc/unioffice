@@ -30,7 +30,7 @@ func (s SelfClosingWriter) Write(b []byte) (int, error) {
 		if b[i] == '>' && b[i+1] == '<' && b[i+2] == '/' {
 			prevTag := []byte{}
 			et := i
-			for j := i; i >= 0; j-- {
+			for j := i; j >= 0; j-- {
 				if b[j] == ' ' {
 					et = j
 				} else if b[j] == '<' {
