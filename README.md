@@ -13,6 +13,7 @@ is to get documents working well, then spreadsheets, and finally presentations.
 ## Installation ##
     
     go get baliance.com/gooxml/
+    go build baliance.com/gooxml/...
 
 ## Raw Types ##
 
@@ -56,5 +57,4 @@ before purchasing a commercial license.
 ### Consulting ###
 
 Baliance also offers consulting services related to enhancing the gooxml library
-on a case by case basis. Please contact sales@baliance.com for a
-quote if interested.
+on a case by case basis. Please contact consulting@baliance.com if interested.
