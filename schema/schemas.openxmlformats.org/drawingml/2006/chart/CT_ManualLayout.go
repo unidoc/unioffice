@@ -1,0 +1,210 @@
+// Copyright 2017 Baliance. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
+package chart
+
+import (
+	"encoding/xml"
+	"log"
+)
+
+type CT_ManualLayout struct {
+	LayoutTarget *CT_LayoutTarget
+	XMode        *CT_LayoutMode
+	YMode        *CT_LayoutMode
+	WMode        *CT_LayoutMode
+	HMode        *CT_LayoutMode
+	X            *CT_Double
+	Y            *CT_Double
+	W            *CT_Double
+	H            *CT_Double
+	ExtLst       *CT_ExtensionList
+}
+
+func NewCT_ManualLayout() *CT_ManualLayout {
+	ret := &CT_ManualLayout{}
+	return ret
+}
+func (m *CT_ManualLayout) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	if m == nil {
+		return nil
+	}
+	e.EncodeToken(start)
+	start.Attr = nil
+	if m.LayoutTarget != nil {
+		selayoutTarget := xml.StartElement{Name: xml.Name{Local: "layoutTarget"}}
+		e.EncodeElement(m.LayoutTarget, selayoutTarget)
+	}
+	if m.XMode != nil {
+		sexMode := xml.StartElement{Name: xml.Name{Local: "xMode"}}
+		e.EncodeElement(m.XMode, sexMode)
+	}
+	if m.YMode != nil {
+		seyMode := xml.StartElement{Name: xml.Name{Local: "yMode"}}
+		e.EncodeElement(m.YMode, seyMode)
+	}
+	if m.WMode != nil {
+		sewMode := xml.StartElement{Name: xml.Name{Local: "wMode"}}
+		e.EncodeElement(m.WMode, sewMode)
+	}
+	if m.HMode != nil {
+		sehMode := xml.StartElement{Name: xml.Name{Local: "hMode"}}
+		e.EncodeElement(m.HMode, sehMode)
+	}
+	if m.X != nil {
+		sex := xml.StartElement{Name: xml.Name{Local: "x"}}
+		e.EncodeElement(m.X, sex)
+	}
+	if m.Y != nil {
+		sey := xml.StartElement{Name: xml.Name{Local: "y"}}
+		e.EncodeElement(m.Y, sey)
+	}
+	if m.W != nil {
+		sew := xml.StartElement{Name: xml.Name{Local: "w"}}
+		e.EncodeElement(m.W, sew)
+	}
+	if m.H != nil {
+		seh := xml.StartElement{Name: xml.Name{Local: "h"}}
+		e.EncodeElement(m.H, seh)
+	}
+	if m.ExtLst != nil {
+		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		e.EncodeElement(m.ExtLst, seextLst)
+	}
+	e.EncodeToken(xml.EndElement{Name: start.Name})
+	return nil
+}
+func (m *CT_ManualLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	// initialize to default
+lCT_ManualLayout:
+	for {
+		tok, err := d.Token()
+		if err != nil {
+			return err
+		}
+		switch el := tok.(type) {
+		case xml.StartElement:
+			switch el.Name.Local {
+			case "layoutTarget":
+				m.LayoutTarget = NewCT_LayoutTarget()
+				if err := d.DecodeElement(m.LayoutTarget, &el); err != nil {
+					return err
+				}
+			case "xMode":
+				m.XMode = NewCT_LayoutMode()
+				if err := d.DecodeElement(m.XMode, &el); err != nil {
+					return err
+				}
+			case "yMode":
+				m.YMode = NewCT_LayoutMode()
+				if err := d.DecodeElement(m.YMode, &el); err != nil {
+					return err
+				}
+			case "wMode":
+				m.WMode = NewCT_LayoutMode()
+				if err := d.DecodeElement(m.WMode, &el); err != nil {
+					return err
+				}
+			case "hMode":
+				m.HMode = NewCT_LayoutMode()
+				if err := d.DecodeElement(m.HMode, &el); err != nil {
+					return err
+				}
+			case "x":
+				m.X = NewCT_Double()
+				if err := d.DecodeElement(m.X, &el); err != nil {
+					return err
+				}
+			case "y":
+				m.Y = NewCT_Double()
+				if err := d.DecodeElement(m.Y, &el); err != nil {
+					return err
+				}
+			case "w":
+				m.W = NewCT_Double()
+				if err := d.DecodeElement(m.W, &el); err != nil {
+					return err
+				}
+			case "h":
+				m.H = NewCT_Double()
+				if err := d.DecodeElement(m.H, &el); err != nil {
+					return err
+				}
+			case "extLst":
+				m.ExtLst = NewCT_ExtensionList()
+				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
+					return err
+				}
+			default:
+				log.Printf("skipping unsupported element %v", el.Name)
+				if err := d.Skip(); err != nil {
+					return err
+				}
+			}
+		case xml.EndElement:
+			break lCT_ManualLayout
+		case xml.CharData:
+		}
+	}
+	return nil
+}
+func (m *CT_ManualLayout) Validate() error {
+	return m.ValidateWithPath("CT_ManualLayout")
+}
+func (m *CT_ManualLayout) ValidateWithPath(path string) error {
+	if m.LayoutTarget != nil {
+		if err := m.LayoutTarget.ValidateWithPath(path + "/LayoutTarget"); err != nil {
+			return err
+		}
+	}
+	if m.XMode != nil {
+		if err := m.XMode.ValidateWithPath(path + "/XMode"); err != nil {
+			return err
+		}
+	}
+	if m.YMode != nil {
+		if err := m.YMode.ValidateWithPath(path + "/YMode"); err != nil {
+			return err
+		}
+	}
+	if m.WMode != nil {
+		if err := m.WMode.ValidateWithPath(path + "/WMode"); err != nil {
+			return err
+		}
+	}
+	if m.HMode != nil {
+		if err := m.HMode.ValidateWithPath(path + "/HMode"); err != nil {
+			return err
+		}
+	}
+	if m.X != nil {
+		if err := m.X.ValidateWithPath(path + "/X"); err != nil {
+			return err
+		}
+	}
+	if m.Y != nil {
+		if err := m.Y.ValidateWithPath(path + "/Y"); err != nil {
+			return err
+		}
+	}
+	if m.W != nil {
+		if err := m.W.ValidateWithPath(path + "/W"); err != nil {
+			return err
+		}
+	}
+	if m.H != nil {
+		if err := m.H.ValidateWithPath(path + "/H"); err != nil {
+			return err
+		}
+	}
+	if m.ExtLst != nil {
+		if err := m.ExtLst.ValidateWithPath(path + "/ExtLst"); err != nil {
+			return err
+		}
+	}
+	return nil
+}

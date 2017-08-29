@@ -1,0 +1,94 @@
+// Copyright 2017 Baliance. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
+package spreadsheetml
+
+import (
+	"encoding/xml"
+	"fmt"
+	"log"
+	"strconv"
+)
+
+type CT_PivotFields struct {
+	// Field Count
+	CountAttr *uint32
+	// PivotTable Field
+	PivotField []*CT_PivotField
+}
+
+func NewCT_PivotFields() *CT_PivotFields {
+	ret := &CT_PivotFields{}
+	return ret
+}
+func (m *CT_PivotFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	if m == nil {
+		return nil
+	}
+	if m.CountAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "count"},
+			Value: fmt.Sprintf("%v", *m.CountAttr)})
+	}
+	e.EncodeToken(start)
+	start.Attr = nil
+	sepivotField := xml.StartElement{Name: xml.Name{Local: "x:pivotField"}}
+	e.EncodeElement(m.PivotField, sepivotField)
+	e.EncodeToken(xml.EndElement{Name: start.Name})
+	return nil
+}
+func (m *CT_PivotFields) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	// initialize to default
+	for _, attr := range start.Attr {
+		if attr.Name.Local == "count" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			// SPECIAL
+			pt := uint32(parsed)
+			m.CountAttr = &pt
+		}
+	}
+lCT_PivotFields:
+	for {
+		tok, err := d.Token()
+		if err != nil {
+			return err
+		}
+		switch el := tok.(type) {
+		case xml.StartElement:
+			switch el.Name.Local {
+			case "pivotField":
+				tmp := NewCT_PivotField()
+				if err := d.DecodeElement(tmp, &el); err != nil {
+					return err
+				}
+				m.PivotField = append(m.PivotField, tmp)
+			default:
+				log.Printf("skipping unsupported element %v", el.Name)
+				if err := d.Skip(); err != nil {
+					return err
+				}
+			}
+		case xml.EndElement:
+			break lCT_PivotFields
+		case xml.CharData:
+		}
+	}
+	return nil
+}
+func (m *CT_PivotFields) Validate() error {
+	return m.ValidateWithPath("CT_PivotFields")
+}
+func (m *CT_PivotFields) ValidateWithPath(path string) error {
+	for i, v := range m.PivotField {
+		if err := v.ValidateWithPath(fmt.Sprintf("%s/PivotField[%d]", path, i)); err != nil {
+			return err
+		}
+	}
+	return nil
+}

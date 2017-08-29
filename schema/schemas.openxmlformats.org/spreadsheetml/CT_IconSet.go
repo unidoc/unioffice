@@ -1,0 +1,133 @@
+// Copyright 2017 Baliance. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
+package spreadsheetml
+
+import (
+	"encoding/xml"
+	"fmt"
+	"log"
+	"strconv"
+)
+
+type CT_IconSet struct {
+	// Icon Set
+	IconSetAttr ST_IconSetType
+	// Show Value
+	ShowValueAttr *bool
+	// Percent
+	PercentAttr *bool
+	// Reverse Icons
+	ReverseAttr *bool
+	// Conditional Formatting Object
+	Cfvo []*CT_Cfvo
+}
+
+func NewCT_IconSet() *CT_IconSet {
+	ret := &CT_IconSet{}
+	return ret
+}
+func (m *CT_IconSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	if m == nil {
+		return nil
+	}
+	if m.IconSetAttr != ST_IconSetTypeUnset {
+		attr, err := m.IconSetAttr.MarshalXMLAttr(xml.Name{Local: "iconSet"})
+		if err != nil {
+			return err
+		}
+		start.Attr = append(start.Attr, attr)
+	}
+	if m.ShowValueAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showValue"},
+			Value: fmt.Sprintf("%v", *m.ShowValueAttr)})
+	}
+	if m.PercentAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "percent"},
+			Value: fmt.Sprintf("%v", *m.PercentAttr)})
+	}
+	if m.ReverseAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "reverse"},
+			Value: fmt.Sprintf("%v", *m.ReverseAttr)})
+	}
+	e.EncodeToken(start)
+	start.Attr = nil
+	secfvo := xml.StartElement{Name: xml.Name{Local: "x:cfvo"}}
+	e.EncodeElement(m.Cfvo, secfvo)
+	e.EncodeToken(xml.EndElement{Name: start.Name})
+	return nil
+}
+func (m *CT_IconSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	// initialize to default
+	for _, attr := range start.Attr {
+		if attr.Name.Local == "iconSet" {
+			m.IconSetAttr.UnmarshalXMLAttr(attr)
+		}
+		if attr.Name.Local == "showValue" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowValueAttr = &parsed
+		}
+		if attr.Name.Local == "percent" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PercentAttr = &parsed
+		}
+		if attr.Name.Local == "reverse" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ReverseAttr = &parsed
+		}
+	}
+lCT_IconSet:
+	for {
+		tok, err := d.Token()
+		if err != nil {
+			return err
+		}
+		switch el := tok.(type) {
+		case xml.StartElement:
+			switch el.Name.Local {
+			case "cfvo":
+				tmp := NewCT_Cfvo()
+				if err := d.DecodeElement(tmp, &el); err != nil {
+					return err
+				}
+				m.Cfvo = append(m.Cfvo, tmp)
+			default:
+				log.Printf("skipping unsupported element %v", el.Name)
+				if err := d.Skip(); err != nil {
+					return err
+				}
+			}
+		case xml.EndElement:
+			break lCT_IconSet
+		case xml.CharData:
+		}
+	}
+	return nil
+}
+func (m *CT_IconSet) Validate() error {
+	return m.ValidateWithPath("CT_IconSet")
+}
+func (m *CT_IconSet) ValidateWithPath(path string) error {
+	if err := m.IconSetAttr.ValidateWithPath(path + "/IconSetAttr"); err != nil {
+		return err
+	}
+	for i, v := range m.Cfvo {
+		if err := v.ValidateWithPath(fmt.Sprintf("%s/Cfvo[%d]", path, i)); err != nil {
+			return err
+		}
+	}
+	return nil
+}

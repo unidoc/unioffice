@@ -1,0 +1,132 @@
+// Copyright 2017 Baliance. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
+package chart
+
+import (
+	"encoding/xml"
+	"log"
+)
+
+type CT_AxDataSourceChoice struct {
+	MultiLvlStrRef *CT_MultiLvlStrRef
+	NumRef         *CT_NumRef
+	NumLit         *CT_NumData
+	StrRef         *CT_StrRef
+	StrLit         *CT_StrData
+}
+
+func NewCT_AxDataSourceChoice() *CT_AxDataSourceChoice {
+	ret := &CT_AxDataSourceChoice{}
+	return ret
+}
+func (m *CT_AxDataSourceChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	if m == nil {
+		return nil
+	}
+	if m.MultiLvlStrRef != nil {
+		semultiLvlStrRef := xml.StartElement{Name: xml.Name{Local: "multiLvlStrRef"}}
+		e.EncodeElement(m.MultiLvlStrRef, semultiLvlStrRef)
+	}
+	if m.NumRef != nil {
+		senumRef := xml.StartElement{Name: xml.Name{Local: "numRef"}}
+		e.EncodeElement(m.NumRef, senumRef)
+	}
+	if m.NumLit != nil {
+		senumLit := xml.StartElement{Name: xml.Name{Local: "numLit"}}
+		e.EncodeElement(m.NumLit, senumLit)
+	}
+	if m.StrRef != nil {
+		sestrRef := xml.StartElement{Name: xml.Name{Local: "strRef"}}
+		e.EncodeElement(m.StrRef, sestrRef)
+	}
+	if m.StrLit != nil {
+		sestrLit := xml.StartElement{Name: xml.Name{Local: "strLit"}}
+		e.EncodeElement(m.StrLit, sestrLit)
+	}
+	return nil
+}
+func (m *CT_AxDataSourceChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	// initialize to default
+lCT_AxDataSourceChoice:
+	for {
+		tok, err := d.Token()
+		if err != nil {
+			return err
+		}
+		switch el := tok.(type) {
+		case xml.StartElement:
+			switch el.Name.Local {
+			case "multiLvlStrRef":
+				m.MultiLvlStrRef = NewCT_MultiLvlStrRef()
+				if err := d.DecodeElement(m.MultiLvlStrRef, &el); err != nil {
+					return err
+				}
+			case "numRef":
+				m.NumRef = NewCT_NumRef()
+				if err := d.DecodeElement(m.NumRef, &el); err != nil {
+					return err
+				}
+			case "numLit":
+				m.NumLit = NewCT_NumData()
+				if err := d.DecodeElement(m.NumLit, &el); err != nil {
+					return err
+				}
+			case "strRef":
+				m.StrRef = NewCT_StrRef()
+				if err := d.DecodeElement(m.StrRef, &el); err != nil {
+					return err
+				}
+			case "strLit":
+				m.StrLit = NewCT_StrData()
+				if err := d.DecodeElement(m.StrLit, &el); err != nil {
+					return err
+				}
+			default:
+				log.Printf("skipping unsupported element %v", el.Name)
+				if err := d.Skip(); err != nil {
+					return err
+				}
+			}
+		case xml.EndElement:
+			break lCT_AxDataSourceChoice
+		case xml.CharData:
+		}
+	}
+	return nil
+}
+func (m *CT_AxDataSourceChoice) Validate() error {
+	return m.ValidateWithPath("CT_AxDataSourceChoice")
+}
+func (m *CT_AxDataSourceChoice) ValidateWithPath(path string) error {
+	if m.MultiLvlStrRef != nil {
+		if err := m.MultiLvlStrRef.ValidateWithPath(path + "/MultiLvlStrRef"); err != nil {
+			return err
+		}
+	}
+	if m.NumRef != nil {
+		if err := m.NumRef.ValidateWithPath(path + "/NumRef"); err != nil {
+			return err
+		}
+	}
+	if m.NumLit != nil {
+		if err := m.NumLit.ValidateWithPath(path + "/NumLit"); err != nil {
+			return err
+		}
+	}
+	if m.StrRef != nil {
+		if err := m.StrRef.ValidateWithPath(path + "/StrRef"); err != nil {
+			return err
+		}
+	}
+	if m.StrLit != nil {
+		if err := m.StrLit.ValidateWithPath(path + "/StrLit"); err != nil {
+			return err
+		}
+	}
+	return nil
+}

@@ -1,0 +1,87 @@
+// Copyright 2017 Baliance. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
+package chart
+
+import (
+	"encoding/xml"
+	"log"
+)
+
+type CT_DispUnitsChoice struct {
+	CustUnit    *CT_Double
+	BuiltInUnit *CT_BuiltInUnit
+}
+
+func NewCT_DispUnitsChoice() *CT_DispUnitsChoice {
+	ret := &CT_DispUnitsChoice{}
+	return ret
+}
+func (m *CT_DispUnitsChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	if m == nil {
+		return nil
+	}
+	if m.CustUnit != nil {
+		secustUnit := xml.StartElement{Name: xml.Name{Local: "custUnit"}}
+		e.EncodeElement(m.CustUnit, secustUnit)
+	}
+	if m.BuiltInUnit != nil {
+		sebuiltInUnit := xml.StartElement{Name: xml.Name{Local: "builtInUnit"}}
+		e.EncodeElement(m.BuiltInUnit, sebuiltInUnit)
+	}
+	return nil
+}
+func (m *CT_DispUnitsChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	// initialize to default
+lCT_DispUnitsChoice:
+	for {
+		tok, err := d.Token()
+		if err != nil {
+			return err
+		}
+		switch el := tok.(type) {
+		case xml.StartElement:
+			switch el.Name.Local {
+			case "custUnit":
+				m.CustUnit = NewCT_Double()
+				if err := d.DecodeElement(m.CustUnit, &el); err != nil {
+					return err
+				}
+			case "builtInUnit":
+				m.BuiltInUnit = NewCT_BuiltInUnit()
+				if err := d.DecodeElement(m.BuiltInUnit, &el); err != nil {
+					return err
+				}
+			default:
+				log.Printf("skipping unsupported element %v", el.Name)
+				if err := d.Skip(); err != nil {
+					return err
+				}
+			}
+		case xml.EndElement:
+			break lCT_DispUnitsChoice
+		case xml.CharData:
+		}
+	}
+	return nil
+}
+func (m *CT_DispUnitsChoice) Validate() error {
+	return m.ValidateWithPath("CT_DispUnitsChoice")
+}
+func (m *CT_DispUnitsChoice) ValidateWithPath(path string) error {
+	if m.CustUnit != nil {
+		if err := m.CustUnit.ValidateWithPath(path + "/CustUnit"); err != nil {
+			return err
+		}
+	}
+	if m.BuiltInUnit != nil {
+		if err := m.BuiltInUnit.ValidateWithPath(path + "/BuiltInUnit"); err != nil {
+			return err
+		}
+	}
+	return nil
+}

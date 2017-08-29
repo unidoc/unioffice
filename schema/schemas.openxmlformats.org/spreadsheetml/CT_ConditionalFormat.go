@@ -1,0 +1,133 @@
+// Copyright 2017 Baliance. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
+package spreadsheetml
+
+import (
+	"encoding/xml"
+	"fmt"
+	"log"
+	"strconv"
+)
+
+type CT_ConditionalFormat struct {
+	// Conditional Formatting Scope
+	ScopeAttr ST_Scope
+	// Conditional Formatting Rule Type
+	TypeAttr ST_Type
+	// Priority
+	PriorityAttr uint32
+	// Pivot Areas
+	PivotAreas *CT_PivotAreas
+	ExtLst     *CT_ExtensionList
+}
+
+func NewCT_ConditionalFormat() *CT_ConditionalFormat {
+	ret := &CT_ConditionalFormat{}
+	ret.PivotAreas = NewCT_PivotAreas()
+	return ret
+}
+func (m *CT_ConditionalFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	if m == nil {
+		return nil
+	}
+	if m.ScopeAttr != ST_ScopeUnset {
+		attr, err := m.ScopeAttr.MarshalXMLAttr(xml.Name{Local: "scope"})
+		if err != nil {
+			return err
+		}
+		start.Attr = append(start.Attr, attr)
+	}
+	if m.TypeAttr != ST_TypeUnset {
+		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
+		if err != nil {
+			return err
+		}
+		start.Attr = append(start.Attr, attr)
+	}
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "priority"},
+		Value: fmt.Sprintf("%v", m.PriorityAttr)})
+	e.EncodeToken(start)
+	start.Attr = nil
+	sepivotAreas := xml.StartElement{Name: xml.Name{Local: "x:pivotAreas"}}
+	e.EncodeElement(m.PivotAreas, sepivotAreas)
+	if m.ExtLst != nil {
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		e.EncodeElement(m.ExtLst, seextLst)
+	}
+	e.EncodeToken(xml.EndElement{Name: start.Name})
+	return nil
+}
+func (m *CT_ConditionalFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	// initialize to default
+	m.PivotAreas = NewCT_PivotAreas()
+	for _, attr := range start.Attr {
+		if attr.Name.Local == "scope" {
+			m.ScopeAttr.UnmarshalXMLAttr(attr)
+		}
+		if attr.Name.Local == "type" {
+			m.TypeAttr.UnmarshalXMLAttr(attr)
+		}
+		if attr.Name.Local == "priority" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			m.PriorityAttr = uint32(parsed)
+		}
+	}
+lCT_ConditionalFormat:
+	for {
+		tok, err := d.Token()
+		if err != nil {
+			return err
+		}
+		switch el := tok.(type) {
+		case xml.StartElement:
+			switch el.Name.Local {
+			case "pivotAreas":
+				if err := d.DecodeElement(m.PivotAreas, &el); err != nil {
+					return err
+				}
+			case "extLst":
+				m.ExtLst = NewCT_ExtensionList()
+				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
+					return err
+				}
+			default:
+				log.Printf("skipping unsupported element %v", el.Name)
+				if err := d.Skip(); err != nil {
+					return err
+				}
+			}
+		case xml.EndElement:
+			break lCT_ConditionalFormat
+		case xml.CharData:
+		}
+	}
+	return nil
+}
+func (m *CT_ConditionalFormat) Validate() error {
+	return m.ValidateWithPath("CT_ConditionalFormat")
+}
+func (m *CT_ConditionalFormat) ValidateWithPath(path string) error {
+	if err := m.ScopeAttr.ValidateWithPath(path + "/ScopeAttr"); err != nil {
+		return err
+	}
+	if err := m.TypeAttr.ValidateWithPath(path + "/TypeAttr"); err != nil {
+		return err
+	}
+	if err := m.PivotAreas.ValidateWithPath(path + "/PivotAreas"); err != nil {
+		return err
+	}
+	if m.ExtLst != nil {
+		if err := m.ExtLst.ValidateWithPath(path + "/ExtLst"); err != nil {
+			return err
+		}
+	}
+	return nil
+}

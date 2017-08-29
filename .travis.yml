@@ -1,0 +1,11 @@
+language: go
+go:
+        - 1.8.x
+        - 1.9.x
+        - tip
+script:
+        - mkdir -p /home/travis/gopath/src/baliance.com/
+        - ln -s /home/travis/gopath/src/github.com/baliance/gooxml /home/travis/gopath/src/baliance.com/gooxml
+        - go vet ./...
+        - go test -v ./...
+        - GOFMT=$(gofmt -d -s .) && echo $GOFMT && test -z "$GOFMT"

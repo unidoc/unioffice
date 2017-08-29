@@ -1,0 +1,76 @@
+// Copyright 2017 Baliance. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
+package wordprocessingml
+
+import (
+	"encoding/xml"
+	"log"
+)
+
+type CT_PPrDefault struct {
+	// Paragraph Properties
+	PPr *CT_PPrGeneral
+}
+
+func NewCT_PPrDefault() *CT_PPrDefault {
+	ret := &CT_PPrDefault{}
+	return ret
+}
+func (m *CT_PPrDefault) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	if m == nil {
+		return nil
+	}
+	e.EncodeToken(start)
+	start.Attr = nil
+	if m.PPr != nil {
+		sepPr := xml.StartElement{Name: xml.Name{Local: "w:pPr"}}
+		e.EncodeElement(m.PPr, sepPr)
+	}
+	e.EncodeToken(xml.EndElement{Name: start.Name})
+	return nil
+}
+func (m *CT_PPrDefault) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	// initialize to default
+lCT_PPrDefault:
+	for {
+		tok, err := d.Token()
+		if err != nil {
+			return err
+		}
+		switch el := tok.(type) {
+		case xml.StartElement:
+			switch el.Name.Local {
+			case "pPr":
+				m.PPr = NewCT_PPrGeneral()
+				if err := d.DecodeElement(m.PPr, &el); err != nil {
+					return err
+				}
+			default:
+				log.Printf("skipping unsupported element %v", el.Name)
+				if err := d.Skip(); err != nil {
+					return err
+				}
+			}
+		case xml.EndElement:
+			break lCT_PPrDefault
+		case xml.CharData:
+		}
+	}
+	return nil
+}
+func (m *CT_PPrDefault) Validate() error {
+	return m.ValidateWithPath("CT_PPrDefault")
+}
+func (m *CT_PPrDefault) ValidateWithPath(path string) error {
+	if m.PPr != nil {
+		if err := m.PPr.ValidateWithPath(path + "/PPr"); err != nil {
+			return err
+		}
+	}
+	return nil
+}

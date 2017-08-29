@@ -1,0 +1,90 @@
+// Copyright 2017 Baliance. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
+package chart
+
+import (
+	"encoding/xml"
+	"log"
+)
+
+type CT_Layout struct {
+	ManualLayout *CT_ManualLayout
+	ExtLst       *CT_ExtensionList
+}
+
+func NewCT_Layout() *CT_Layout {
+	ret := &CT_Layout{}
+	return ret
+}
+func (m *CT_Layout) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	if m == nil {
+		return nil
+	}
+	e.EncodeToken(start)
+	start.Attr = nil
+	if m.ManualLayout != nil {
+		semanualLayout := xml.StartElement{Name: xml.Name{Local: "manualLayout"}}
+		e.EncodeElement(m.ManualLayout, semanualLayout)
+	}
+	if m.ExtLst != nil {
+		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		e.EncodeElement(m.ExtLst, seextLst)
+	}
+	e.EncodeToken(xml.EndElement{Name: start.Name})
+	return nil
+}
+func (m *CT_Layout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	// initialize to default
+lCT_Layout:
+	for {
+		tok, err := d.Token()
+		if err != nil {
+			return err
+		}
+		switch el := tok.(type) {
+		case xml.StartElement:
+			switch el.Name.Local {
+			case "manualLayout":
+				m.ManualLayout = NewCT_ManualLayout()
+				if err := d.DecodeElement(m.ManualLayout, &el); err != nil {
+					return err
+				}
+			case "extLst":
+				m.ExtLst = NewCT_ExtensionList()
+				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
+					return err
+				}
+			default:
+				log.Printf("skipping unsupported element %v", el.Name)
+				if err := d.Skip(); err != nil {
+					return err
+				}
+			}
+		case xml.EndElement:
+			break lCT_Layout
+		case xml.CharData:
+		}
+	}
+	return nil
+}
+func (m *CT_Layout) Validate() error {
+	return m.ValidateWithPath("CT_Layout")
+}
+func (m *CT_Layout) ValidateWithPath(path string) error {
+	if m.ManualLayout != nil {
+		if err := m.ManualLayout.ValidateWithPath(path + "/ManualLayout"); err != nil {
+			return err
+		}
+	}
+	if m.ExtLst != nil {
+		if err := m.ExtLst.ValidateWithPath(path + "/ExtLst"); err != nil {
+			return err
+		}
+	}
+	return nil
+}

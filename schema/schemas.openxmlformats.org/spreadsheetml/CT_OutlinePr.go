@@ -1,0 +1,105 @@
+// Copyright 2017 Baliance. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
+package spreadsheetml
+
+import (
+	"encoding/xml"
+	"fmt"
+	"strconv"
+)
+
+type CT_OutlinePr struct {
+	// Apply Styles in Outline
+	ApplyStylesAttr *bool
+	// Summary Below
+	SummaryBelowAttr *bool
+	// Summary Right
+	SummaryRightAttr *bool
+	// Show Outline Symbols
+	ShowOutlineSymbolsAttr *bool
+}
+
+func NewCT_OutlinePr() *CT_OutlinePr {
+	ret := &CT_OutlinePr{}
+	return ret
+}
+func (m *CT_OutlinePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	if m == nil {
+		return nil
+	}
+	if m.ApplyStylesAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyStyles"},
+			Value: fmt.Sprintf("%v", *m.ApplyStylesAttr)})
+	}
+	if m.SummaryBelowAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "summaryBelow"},
+			Value: fmt.Sprintf("%v", *m.SummaryBelowAttr)})
+	}
+	if m.SummaryRightAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "summaryRight"},
+			Value: fmt.Sprintf("%v", *m.SummaryRightAttr)})
+	}
+	if m.ShowOutlineSymbolsAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showOutlineSymbols"},
+			Value: fmt.Sprintf("%v", *m.ShowOutlineSymbolsAttr)})
+	}
+	e.EncodeToken(start)
+	start.Attr = nil
+	e.EncodeToken(xml.EndElement{Name: start.Name})
+	return nil
+}
+func (m *CT_OutlinePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	// initialize to default
+	for _, attr := range start.Attr {
+		if attr.Name.Local == "applyStyles" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ApplyStylesAttr = &parsed
+		}
+		if attr.Name.Local == "summaryBelow" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SummaryBelowAttr = &parsed
+		}
+		if attr.Name.Local == "summaryRight" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SummaryRightAttr = &parsed
+		}
+		if attr.Name.Local == "showOutlineSymbols" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowOutlineSymbolsAttr = &parsed
+		}
+	}
+	// skip any extensions we may find, but don't support
+	for {
+		tok, err := d.Token()
+		if err != nil {
+			return fmt.Errorf("parsing CT_OutlinePr: %s", err)
+		}
+		if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+			break
+		}
+	}
+	return nil
+}
+func (m *CT_OutlinePr) Validate() error {
+	return m.ValidateWithPath("CT_OutlinePr")
+}
+func (m *CT_OutlinePr) ValidateWithPath(path string) error {
+	return nil
+}

@@ -1,0 +1,118 @@
+// Copyright 2017 Baliance. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
+package wordprocessingml
+
+import (
+	"encoding/xml"
+	"fmt"
+	"strconv"
+
+	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
+)
+
+type CT_LineNumber struct {
+	// Line Number Increments to Display
+	CountByAttr *int32
+	// Line Numbering Starting Value
+	StartAttr *int32
+	// Distance Between Text and Line Numbering
+	DistanceAttr *sharedTypes.ST_TwipsMeasure
+	// Line Numbering Restart Setting
+	RestartAttr ST_LineNumberRestart
+}
+
+func NewCT_LineNumber() *CT_LineNumber {
+	ret := &CT_LineNumber{}
+	return ret
+}
+func (m *CT_LineNumber) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	if m == nil {
+		return nil
+	}
+	if m.CountByAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:countBy"},
+			Value: fmt.Sprintf("%v", *m.CountByAttr)})
+	}
+	if m.StartAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:start"},
+			Value: fmt.Sprintf("%v", *m.StartAttr)})
+	}
+	if m.DistanceAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:distance"},
+			Value: fmt.Sprintf("%v", *m.DistanceAttr)})
+	}
+	if m.RestartAttr != ST_LineNumberRestartUnset {
+		attr, err := m.RestartAttr.MarshalXMLAttr(xml.Name{Local: "w:restart"})
+		if err != nil {
+			return err
+		}
+		start.Attr = append(start.Attr, attr)
+	}
+	e.EncodeToken(start)
+	start.Attr = nil
+	e.EncodeToken(xml.EndElement{Name: start.Name})
+	return nil
+}
+func (m *CT_LineNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	// initialize to default
+	for _, attr := range start.Attr {
+		if attr.Name.Local == "countBy" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			// SPECIAL
+			pt := int32(parsed)
+			m.CountByAttr = &pt
+		}
+		if attr.Name.Local == "start" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			// SPECIAL
+			pt := int32(parsed)
+			m.StartAttr = &pt
+		}
+		if attr.Name.Local == "distance" {
+			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DistanceAttr = &parsed
+		}
+		if attr.Name.Local == "restart" {
+			m.RestartAttr.UnmarshalXMLAttr(attr)
+		}
+	}
+	// skip any extensions we may find, but don't support
+	for {
+		tok, err := d.Token()
+		if err != nil {
+			return fmt.Errorf("parsing CT_LineNumber: %s", err)
+		}
+		if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+			break
+		}
+	}
+	return nil
+}
+func (m *CT_LineNumber) Validate() error {
+	return m.ValidateWithPath("CT_LineNumber")
+}
+func (m *CT_LineNumber) ValidateWithPath(path string) error {
+	if m.DistanceAttr != nil {
+		if err := m.DistanceAttr.ValidateWithPath(path + "/DistanceAttr"); err != nil {
+			return err
+		}
+	}
+	if err := m.RestartAttr.ValidateWithPath(path + "/RestartAttr"); err != nil {
+		return err
+	}
+	return nil
+}
