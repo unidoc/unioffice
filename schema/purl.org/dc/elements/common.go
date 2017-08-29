@@ -12,6 +12,6 @@ import "baliance.com/gooxml"
 func init() {
 	gooxml.RegisterConstructor("http://purl.org/dc/elements/1.1/", "SimpleLiteral", NewSimpleLiteral)
 	gooxml.RegisterConstructor("http://purl.org/dc/elements/1.1/", "elementContainer", NewElementContainer)
-	gooxml.RegisterConstructor("http://purl.org/dc/elements/1.1/", "any", NewAnyEl)
+	gooxml.RegisterConstructor("http://purl.org/dc/elements/1.1/", "any", NewAny)
 	gooxml.RegisterConstructor("http://purl.org/dc/elements/1.1/", "elementsGroup", NewElementsGroup)
 }

@@ -16,7 +16,7 @@ import (
 
 type CT_GraphicalObjectData struct {
 	UriAttr string
-	Any     []Any
+	Any     []gooxml.Any
 }
 
 func NewCT_GraphicalObjectData() *CT_GraphicalObjectData {

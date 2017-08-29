@@ -53,7 +53,7 @@ func TestOpenHeaderFooter(t *testing.T) {
 		t.Errorf("created an invalid document: %s", err)
 	}
 	wb.Save(&got)
-	testhelper.CompareZip(t, "header-footer-multiple.docx", got.Bytes())
+	testhelper.CompareGoldenZip(t, "header-footer-multiple.docx", got.Bytes())
 }
 
 func TestAddParagraph(t *testing.T) {

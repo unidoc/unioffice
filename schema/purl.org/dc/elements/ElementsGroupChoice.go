@@ -14,7 +14,7 @@ import (
 )
 
 type ElementsGroupChoice struct {
-	AnyEl []*AnyEl
+	Any []*Any
 }
 
 func NewElementsGroupChoice() *ElementsGroupChoice {
@@ -25,9 +25,9 @@ func (m *ElementsGroupChoice) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	if m == nil {
 		return nil
 	}
-	if m.AnyEl != nil {
+	if m.Any != nil {
 		seany := xml.StartElement{Name: xml.Name{Local: "dc:any"}}
-		e.EncodeElement(m.AnyEl, seany)
+		e.EncodeElement(m.Any, seany)
 	}
 	return nil
 }
@@ -43,11 +43,11 @@ lElementsGroupChoice:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "any":
-				tmp := NewAnyEl()
+				tmp := NewAny()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
-				m.AnyEl = append(m.AnyEl, tmp)
+				m.Any = append(m.Any, tmp)
 			default:
 				log.Printf("skipping unsupported element %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -65,8 +65,8 @@ func (m *ElementsGroupChoice) Validate() error {
 	return m.ValidateWithPath("ElementsGroupChoice")
 }
 func (m *ElementsGroupChoice) ValidateWithPath(path string) error {
-	for i, v := range m.AnyEl {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/AnyEl[%d]", path, i)); err != nil {
+	for i, v := range m.Any {
+		if err := v.ValidateWithPath(fmt.Sprintf("%s/Any[%d]", path, i)); err != nil {
 			return err
 		}
 	}

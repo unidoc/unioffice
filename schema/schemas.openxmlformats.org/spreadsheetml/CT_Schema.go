@@ -23,7 +23,7 @@ type CT_Schema struct {
 	NamespaceAttr *string
 	// Schema Language
 	SchemaLanguageAttr *string
-	Any                Any
+	Any                gooxml.Any
 }
 
 func NewCT_Schema() *CT_Schema {

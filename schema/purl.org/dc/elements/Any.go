@@ -12,29 +12,29 @@ import (
 	"fmt"
 )
 
-type AnyEl struct {
+type Any struct {
 	SimpleLiteral
 }
 
-func NewAnyEl() *AnyEl {
-	ret := &AnyEl{}
+func NewAny() *Any {
+	ret := &Any{}
 	ret.SimpleLiteral = *NewSimpleLiteral()
 	return ret
 }
-func (m *AnyEl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+func (m *Any) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
 	}
 	return m.SimpleLiteral.MarshalXML(e, start)
 }
-func (m *AnyEl) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+func (m *Any) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.SimpleLiteral = *NewSimpleLiteral()
 	// skip any extensions we may find, but don't support
 	for {
 		tok, err := d.Token()
 		if err != nil {
-			return fmt.Errorf("parsing AnyEl: %s", err)
+			return fmt.Errorf("parsing Any: %s", err)
 		}
 		if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
 			break
@@ -42,10 +42,10 @@ func (m *AnyEl) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
-func (m *AnyEl) Validate() error {
-	return m.ValidateWithPath("AnyEl")
+func (m *Any) Validate() error {
+	return m.ValidateWithPath("Any")
 }
-func (m *AnyEl) ValidateWithPath(path string) error {
+func (m *Any) ValidateWithPath(path string) error {
 	if err := m.SimpleLiteral.ValidateWithPath(path); err != nil {
 		return err
 	}

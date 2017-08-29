@@ -18,7 +18,7 @@ type SelfClosingWriter struct {
 	W io.Writer
 }
 
-var closeTag = []byte{' ', '/', '>'}
+var closeTag = []byte{'/', '>'}
 
 func (s SelfClosingWriter) Write(b []byte) (int, error) {
 	writeStart := 0

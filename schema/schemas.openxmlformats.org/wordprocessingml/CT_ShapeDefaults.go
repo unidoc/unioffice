@@ -9,10 +9,12 @@ package wordprocessingml
 
 import (
 	"encoding/xml"
-	"fmt"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ShapeDefaults struct {
+	Any []gooxml.Any
 }
 
 func NewCT_ShapeDefaults() *CT_ShapeDefaults {
@@ -25,19 +27,38 @@ func (m *CT_ShapeDefaults) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	}
 	e.EncodeToken(start)
 	start.Attr = nil
+	if m.Any != nil {
+		for _, c := range m.Any {
+			c.MarshalXML(e, start)
+		}
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
 func (m *CT_ShapeDefaults) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	// skip any extensions we may find, but don't support
+lCT_ShapeDefaults:
 	for {
 		tok, err := d.Token()
 		if err != nil {
-			return fmt.Errorf("parsing CT_ShapeDefaults: %s", err)
+			return err
 		}
-		if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
-			break
+		switch el := tok.(type) {
+		case xml.StartElement:
+			switch el.Name.Local {
+			default:
+				if anyEl, err := gooxml.CreateElement(el); err != nil {
+					return err
+				} else {
+					if err := d.DecodeElement(anyEl, &el); err != nil {
+						return err
+					}
+					m.Any = append(m.Any, anyEl)
+				}
+			}
+		case xml.EndElement:
+			break lCT_ShapeDefaults
+		case xml.CharData:
 		}
 	}
 	return nil

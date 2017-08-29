@@ -42,7 +42,7 @@ func (r *Raw) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	copy(tmpAttrs, r.Attrs)
 
 	// fix namespaces in the element we're about to write
-	for i := 0; i < len(tmpAttrs); {
+	for i := 0; i < len(tmpAttrs); i++ {
 		attr := tmpAttrs[i]
 		// we unmarshaled an xmlns:foo="http:/foo.com" attribute for a <foo:bar/> element
 		if attr.Name.Space == "xmlns" && attr.Value == r.XMLName.Space {
@@ -52,11 +52,9 @@ func (r *Raw) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			// rewrite <bar xmlns:foo="http://foo.com"/> to <foo:bar xmlns:foo="http://foo.com"/>
 			// nuke our namespace which would have been put as xmlns="http://foo.com"
 			s.Name.Space = ""
-			tmpAttrs[i] = tmpAttrs[len(tmpAttrs)-1]
-			tmpAttrs = tmpAttrs[0 : len(tmpAttrs)-1]
+		} else if attr.Name.Space == "xmlns" || attr.Name.Local == "xmlns" {
 		} else {
 			s.Attr = append(s.Attr, attr)
-			i++
 		}
 	}
 

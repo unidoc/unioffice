@@ -16,7 +16,7 @@ import (
 
 type CT_OfficeArtExtension struct {
 	UriAttr string
-	Any     []Any
+	Any     []gooxml.Any
 }
 
 func NewCT_OfficeArtExtension() *CT_OfficeArtExtension {

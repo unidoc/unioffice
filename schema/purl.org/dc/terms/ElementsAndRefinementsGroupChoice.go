@@ -16,7 +16,7 @@ import (
 )
 
 type ElementsAndRefinementsGroupChoice struct {
-	AnyEl []*elements.AnyEl
+	Any []*elements.Any
 }
 
 func NewElementsAndRefinementsGroupChoice() *ElementsAndRefinementsGroupChoice {
@@ -27,9 +27,9 @@ func (m *ElementsAndRefinementsGroupChoice) MarshalXML(e *xml.Encoder, start xml
 	if m == nil {
 		return nil
 	}
-	if m.AnyEl != nil {
+	if m.Any != nil {
 		seany := xml.StartElement{Name: xml.Name{Local: "dc:any"}}
-		e.EncodeElement(m.AnyEl, seany)
+		e.EncodeElement(m.Any, seany)
 	}
 	return nil
 }
@@ -45,11 +45,11 @@ lElementsAndRefinementsGroupChoice:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "any":
-				tmp := elements.NewAnyEl()
+				tmp := elements.NewAny()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
-				m.AnyEl = append(m.AnyEl, tmp)
+				m.Any = append(m.Any, tmp)
 			default:
 				log.Printf("skipping unsupported element %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -67,8 +67,8 @@ func (m *ElementsAndRefinementsGroupChoice) Validate() error {
 	return m.ValidateWithPath("ElementsAndRefinementsGroupChoice")
 }
 func (m *ElementsAndRefinementsGroupChoice) ValidateWithPath(path string) error {
-	for i, v := range m.AnyEl {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/AnyEl[%d]", path, i)); err != nil {
+	for i, v := range m.Any {
+		if err := v.ValidateWithPath(fmt.Sprintf("%s/Any[%d]", path, i)); err != nil {
 			return err
 		}
 	}

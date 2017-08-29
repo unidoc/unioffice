@@ -17,7 +17,7 @@ import (
 type CT_Extension struct {
 	// URI
 	UriAttr *string
-	Any     Any
+	Any     gooxml.Any
 }
 
 func NewCT_Extension() *CT_Extension {

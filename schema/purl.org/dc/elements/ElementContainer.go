@@ -49,7 +49,7 @@ lElementContainer:
 			switch el.Name.Local {
 			case "any":
 				tmp := NewElementsGroupChoice()
-				if err := d.DecodeElement(&tmp.AnyEl, &el); err != nil {
+				if err := d.DecodeElement(&tmp.Any, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)

@@ -45,11 +45,6 @@ func ParseUnionST_TransitionEightDirectionType(s string) (ST_TransitionEightDire
 	return ST_TransitionEightDirectionType{}, nil
 }
 
-type Any interface {
-	MarshalXML(e *xml.Encoder, start xml.StartElement) error
-	UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
-}
-
 type ST_TransitionSideDirectionType byte
 
 const (

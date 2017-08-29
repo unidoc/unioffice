@@ -26,7 +26,7 @@ type CT_DataBinding struct {
 	FileBindingNameAttr *string
 	// XML Data Loading Behavior
 	DataBindingLoadModeAttr uint32
-	Any                     Any
+	Any                     gooxml.Any
 }
 
 func NewCT_DataBinding() *CT_DataBinding {

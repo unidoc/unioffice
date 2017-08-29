@@ -32,11 +32,6 @@ func (s ST_CellSpans) String() string {
 	return strings.Join(s, " ")
 }
 
-type Any interface {
-	MarshalXML(e *xml.Encoder, start xml.StartElement) error
-	UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
-}
-
 type ST_FilterOperator byte
 
 const (
