@@ -44,12 +44,12 @@ func (m *CT_CoreProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(start)
 	start.Attr = nil
 	if m.Category != nil {
-		secategory := xml.StartElement{Name: xml.Name{Local: "category"}}
+		secategory := xml.StartElement{Name: xml.Name{Local: "cp:category"}}
 		gooxml.AddPreserveSpaceAttr(&secategory, *m.Category)
 		e.EncodeElement(m.Category, secategory)
 	}
 	if m.ContentStatus != nil {
-		secontentStatus := xml.StartElement{Name: xml.Name{Local: "contentStatus"}}
+		secontentStatus := xml.StartElement{Name: xml.Name{Local: "cp:contentStatus"}}
 		gooxml.AddPreserveSpaceAttr(&secontentStatus, *m.ContentStatus)
 		e.EncodeElement(m.ContentStatus, secontentStatus)
 	}
@@ -74,7 +74,7 @@ func (m *CT_CoreProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		e.EncodeElement(m.Identifier, seidentifier)
 	}
 	if m.Keywords != nil {
-		sekeywords := xml.StartElement{Name: xml.Name{Local: "keywords"}}
+		sekeywords := xml.StartElement{Name: xml.Name{Local: "cp:keywords"}}
 		e.EncodeElement(m.Keywords, sekeywords)
 	}
 	if m.Language != nil {
@@ -83,12 +83,12 @@ func (m *CT_CoreProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		e.EncodeElement(m.Language, selanguage)
 	}
 	if m.LastModifiedBy != nil {
-		selastModifiedBy := xml.StartElement{Name: xml.Name{Local: "lastModifiedBy"}}
+		selastModifiedBy := xml.StartElement{Name: xml.Name{Local: "cp:lastModifiedBy"}}
 		gooxml.AddPreserveSpaceAttr(&selastModifiedBy, *m.LastModifiedBy)
 		e.EncodeElement(m.LastModifiedBy, selastModifiedBy)
 	}
 	if m.LastPrinted != nil {
-		selastPrinted := xml.StartElement{Name: xml.Name{Local: "lastPrinted"}}
+		selastPrinted := xml.StartElement{Name: xml.Name{Local: "cp:lastPrinted"}}
 		e.EncodeElement(m.LastPrinted, selastPrinted)
 	}
 	if m.Modified != nil {
@@ -97,7 +97,7 @@ func (m *CT_CoreProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		e.EncodeElement(m.Modified, semodified)
 	}
 	if m.Revision != nil {
-		serevision := xml.StartElement{Name: xml.Name{Local: "revision"}}
+		serevision := xml.StartElement{Name: xml.Name{Local: "cp:revision"}}
 		gooxml.AddPreserveSpaceAttr(&serevision, *m.Revision)
 		e.EncodeElement(m.Revision, serevision)
 	}
@@ -112,7 +112,7 @@ func (m *CT_CoreProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		e.EncodeElement(m.Title, setitle)
 	}
 	if m.Version != nil {
-		seversion := xml.StartElement{Name: xml.Name{Local: "version"}}
+		seversion := xml.StartElement{Name: xml.Name{Local: "cp:version"}}
 		gooxml.AddPreserveSpaceAttr(&seversion, *m.Version)
 		e.EncodeElement(m.Version, seversion)
 	}
