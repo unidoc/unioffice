@@ -272,6 +272,20 @@ func Open(filename string) (*Document, error) {
 	return Read(f, fi.Size())
 }
 
+// OpenTemplate opens a document, removing all content so it can be used as a
+// template.  Since Word removes unused styles from a document upon save, to
+// create a template in Word add a paragraph with every style of interest.  When
+// opened with OpenTemplate the documents styles will be available but the
+// content will be gone.
+func OpenTemplate(filename string) (*Document, error) {
+	d, err := Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	d.x.Body = wml.NewCT_Body()
+	return d, nil
+}
+
 // Read reads a document from an io.Reader.
 func Read(r io.ReaderAt, size int64) (*Document, error) {
 	doc := New()

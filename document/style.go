@@ -21,6 +21,11 @@ func (s Style) X() *wml.CT_Style {
 	return s.x
 }
 
+// Type returns the type of the style.
+func (s Style) Type() wml.ST_StyleType {
+	return s.x.TypeAttr
+}
+
 // StyleID returns the style ID.
 func (s Style) StyleID() string {
 	if s.x.StyleIdAttr == nil {

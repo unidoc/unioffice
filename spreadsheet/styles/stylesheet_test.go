@@ -19,7 +19,7 @@ import (
 	"baliance.com/gooxml/zippkg"
 )
 
-func TestWtyleSheetUnmarshal(t *testing.T) {
+func TestStyleSheetUnmarshal(t *testing.T) {
 	f, err := os.Open("testdata/styles.xml")
 	if err != nil {
 		t.Fatalf("error reading content types file")
