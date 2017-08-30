@@ -81,5 +81,4 @@ func TestOpenWord2016(t *testing.T) {
 		t.Errorf("error saving W216 file: %s", err)
 	}
 	testhelper.CompareGoldenZipFilesOnly(t, "../../testdata/Office2016/Word-Windows.docx", got.Bytes())
-	doc.SaveToFile("/tmp/gen/rewrote.docx")
 }
