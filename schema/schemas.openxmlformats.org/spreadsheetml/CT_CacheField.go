@@ -173,7 +173,6 @@ func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.NumFmtIdAttr = &pt
 		}
@@ -189,7 +188,6 @@ func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.SqlTypeAttr = &pt
 		}
@@ -198,7 +196,6 @@ func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.HierarchyAttr = &pt
 		}
@@ -207,7 +204,6 @@ func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LevelAttr = &pt
 		}
@@ -223,7 +219,6 @@ func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.MappingCountAttr = &pt
 		}

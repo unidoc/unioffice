@@ -19,6 +19,7 @@ type CT_DocPartBehavior struct {
 
 func NewCT_DocPartBehavior() *CT_DocPartBehavior {
 	ret := &CT_DocPartBehavior{}
+	ret.ValAttr = ST_DocPartBehavior(1)
 	return ret
 }
 func (m *CT_DocPartBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_DocPartBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 }
 func (m *CT_DocPartBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_DocPartBehavior(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

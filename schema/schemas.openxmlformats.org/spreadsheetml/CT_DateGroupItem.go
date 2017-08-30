@@ -32,6 +32,7 @@ type CT_DateGroupItem struct {
 
 func NewCT_DateGroupItem() *CT_DateGroupItem {
 	ret := &CT_DateGroupItem{}
+	ret.DateTimeGroupingAttr = ST_DateTimeGrouping(1)
 	return ret
 }
 func (m *CT_DateGroupItem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -72,6 +73,7 @@ func (m *CT_DateGroupItem) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 }
 func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.DateTimeGroupingAttr = ST_DateTimeGrouping(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "year" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 16)
@@ -85,7 +87,6 @@ func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint16(parsed)
 			m.MonthAttr = &pt
 		}
@@ -94,7 +95,6 @@ func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint16(parsed)
 			m.DayAttr = &pt
 		}
@@ -103,7 +103,6 @@ func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint16(parsed)
 			m.HourAttr = &pt
 		}
@@ -112,7 +111,6 @@ func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint16(parsed)
 			m.MinuteAttr = &pt
 		}
@@ -121,7 +119,6 @@ func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint16(parsed)
 			m.SecondAttr = &pt
 		}

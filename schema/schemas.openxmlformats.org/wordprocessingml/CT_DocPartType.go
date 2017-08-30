@@ -19,6 +19,7 @@ type CT_DocPartType struct {
 
 func NewCT_DocPartType() *CT_DocPartType {
 	ret := &CT_DocPartType{}
+	ret.ValAttr = ST_DocPartType(1)
 	return ret
 }
 func (m *CT_DocPartType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_DocPartType) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 }
 func (m *CT_DocPartType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_DocPartType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

@@ -53,7 +53,6 @@ func (m *CT_WrapTopBottom) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DistTAttr = &pt
 		}
@@ -62,7 +61,6 @@ func (m *CT_WrapTopBottom) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DistBAttr = &pt
 		}

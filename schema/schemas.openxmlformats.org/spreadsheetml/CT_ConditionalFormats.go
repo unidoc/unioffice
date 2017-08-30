@@ -48,7 +48,6 @@ func (m *CT_ConditionalFormats) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CountAttr = &pt
 		}

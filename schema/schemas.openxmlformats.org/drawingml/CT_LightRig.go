@@ -21,6 +21,8 @@ type CT_LightRig struct {
 
 func NewCT_LightRig() *CT_LightRig {
 	ret := &CT_LightRig{}
+	ret.RigAttr = ST_LightRigType(1)
+	ret.DirAttr = ST_LightRigDirection(1)
 	return ret
 }
 func (m *CT_LightRig) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -48,6 +50,8 @@ func (m *CT_LightRig) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_LightRig) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.RigAttr = ST_LightRigType(1)
+	m.DirAttr = ST_LightRigDirection(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "rig" {
 			m.RigAttr.UnmarshalXMLAttr(attr)

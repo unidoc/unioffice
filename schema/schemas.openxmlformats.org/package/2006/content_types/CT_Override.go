@@ -19,6 +19,7 @@ type CT_Override struct {
 
 func NewCT_Override() *CT_Override {
 	ret := &CT_Override{}
+	ret.ContentTypeAttr = "application/xml"
 	return ret
 }
 func (m *CT_Override) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +37,7 @@ func (m *CT_Override) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Override) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ContentTypeAttr = "application/xml"
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "ContentType" {
 			parsed, err := attr.Value, error(nil)

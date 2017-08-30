@@ -21,6 +21,7 @@ type CT_SystemColor struct {
 
 func NewCT_SystemColor() *CT_SystemColor {
 	ret := &CT_SystemColor{}
+	ret.ValAttr = ST_SystemColorVal(1)
 	return ret
 }
 func (m *CT_SystemColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -48,6 +49,7 @@ func (m *CT_SystemColor) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 }
 func (m *CT_SystemColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_SystemColorVal(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

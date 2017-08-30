@@ -25,6 +25,7 @@ type CT_FontReference struct {
 
 func NewCT_FontReference() *CT_FontReference {
 	ret := &CT_FontReference{}
+	ret.IdxAttr = ST_FontCollectionIndex(1)
 	return ret
 }
 func (m *CT_FontReference) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -67,6 +68,7 @@ func (m *CT_FontReference) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 }
 func (m *CT_FontReference) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.IdxAttr = ST_FontCollectionIndex(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "idx" {
 			m.IdxAttr.UnmarshalXMLAttr(attr)

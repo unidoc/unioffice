@@ -54,7 +54,6 @@ func (m *CT_Members) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CountAttr = &pt
 		}
@@ -63,7 +62,6 @@ func (m *CT_Members) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LevelAttr = &pt
 		}

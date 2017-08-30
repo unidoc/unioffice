@@ -78,7 +78,6 @@ func (m *CT_TableCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.RowSpanAttr = &pt
 		}
@@ -87,7 +86,6 @@ func (m *CT_TableCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.GridSpanAttr = &pt
 		}

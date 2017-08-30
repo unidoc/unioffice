@@ -30,6 +30,7 @@ type CT_TblStylePr struct {
 
 func NewCT_TblStylePr() *CT_TblStylePr {
 	ret := &CT_TblStylePr{}
+	ret.TypeAttr = ST_TblStyleOverrideType(1)
 	return ret
 }
 func (m *CT_TblStylePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -68,6 +69,7 @@ func (m *CT_TblStylePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 }
 func (m *CT_TblStylePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_TblStyleOverrideType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

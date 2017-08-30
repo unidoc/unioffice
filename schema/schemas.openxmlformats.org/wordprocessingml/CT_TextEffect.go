@@ -19,6 +19,7 @@ type CT_TextEffect struct {
 
 func NewCT_TextEffect() *CT_TextEffect {
 	ret := &CT_TextEffect{}
+	ret.ValAttr = ST_TextEffect(1)
 	return ret
 }
 func (m *CT_TextEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_TextEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 }
 func (m *CT_TextEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_TextEffect(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

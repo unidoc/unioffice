@@ -21,6 +21,7 @@ type CT_Vstream struct {
 
 func NewCT_Vstream() *CT_Vstream {
 	ret := &CT_Vstream{}
+	ret.VersionAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
 func (m *CT_Vstream) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -35,6 +36,7 @@ func (m *CT_Vstream) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Vstream) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.VersionAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "version" {
 			parsed, err := attr.Value, error(nil)

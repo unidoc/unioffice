@@ -114,7 +114,6 @@ func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.CryptAlgorithmSidAttr = &pt
 		}
@@ -123,7 +122,6 @@ func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.CryptSpinCountAttr = &pt
 		}

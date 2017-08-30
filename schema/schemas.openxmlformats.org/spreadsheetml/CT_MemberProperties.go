@@ -48,7 +48,6 @@ func (m *CT_MemberProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CountAttr = &pt
 		}

@@ -41,6 +41,7 @@ type CT_TopPageBorder struct {
 
 func NewCT_TopPageBorder() *CT_TopPageBorder {
 	ret := &CT_TopPageBorder{}
+	ret.ValAttr = ST_Border(1)
 	return ret
 }
 func (m *CT_TopPageBorder) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -106,6 +107,7 @@ func (m *CT_TopPageBorder) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 }
 func (m *CT_TopPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_Border(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "topLeft" {
 			parsed, err := attr.Value, error(nil)
@@ -160,7 +162,6 @@ func (m *CT_TopPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint64(parsed)
 			m.SzAttr = &pt
 		}
@@ -169,7 +170,6 @@ func (m *CT_TopPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint64(parsed)
 			m.SpaceAttr = &pt
 		}

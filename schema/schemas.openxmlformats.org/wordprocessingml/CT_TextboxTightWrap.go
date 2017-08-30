@@ -19,6 +19,7 @@ type CT_TextboxTightWrap struct {
 
 func NewCT_TextboxTightWrap() *CT_TextboxTightWrap {
 	ret := &CT_TextboxTightWrap{}
+	ret.ValAttr = ST_TextboxTightWrap(1)
 	return ret
 }
 func (m *CT_TextboxTightWrap) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_TextboxTightWrap) MarshalXML(e *xml.Encoder, start xml.StartElement)
 }
 func (m *CT_TextboxTightWrap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_TextboxTightWrap(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

@@ -25,6 +25,7 @@ type CT_WrapSquare struct {
 
 func NewCT_WrapSquare() *CT_WrapSquare {
 	ret := &CT_WrapSquare{}
+	ret.WrapTextAttr = ST_WrapText(1)
 	return ret
 }
 func (m *CT_WrapSquare) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -63,6 +64,7 @@ func (m *CT_WrapSquare) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 }
 func (m *CT_WrapSquare) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.WrapTextAttr = ST_WrapText(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "wrapText" {
 			m.WrapTextAttr.UnmarshalXMLAttr(attr)
@@ -72,7 +74,6 @@ func (m *CT_WrapSquare) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DistTAttr = &pt
 		}
@@ -81,7 +82,6 @@ func (m *CT_WrapSquare) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DistBAttr = &pt
 		}
@@ -90,7 +90,6 @@ func (m *CT_WrapSquare) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DistLAttr = &pt
 		}
@@ -99,7 +98,6 @@ func (m *CT_WrapSquare) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DistRAttr = &pt
 		}

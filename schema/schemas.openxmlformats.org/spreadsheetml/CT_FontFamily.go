@@ -19,6 +19,7 @@ type CT_FontFamily struct {
 
 func NewCT_FontFamily() *CT_FontFamily {
 	ret := &CT_FontFamily{}
+	ret.ValAttr = 0
 	return ret
 }
 func (m *CT_FontFamily) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -34,6 +35,7 @@ func (m *CT_FontFamily) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 }
 func (m *CT_FontFamily) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = 0
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

@@ -22,6 +22,7 @@ type CT_VolType struct {
 
 func NewCT_VolType() *CT_VolType {
 	ret := &CT_VolType{}
+	ret.TypeAttr = ST_VolDepType(1)
 	return ret
 }
 func (m *CT_VolType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -42,6 +43,7 @@ func (m *CT_VolType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_VolType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_VolDepType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

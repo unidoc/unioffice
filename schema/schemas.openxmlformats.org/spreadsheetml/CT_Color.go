@@ -74,7 +74,6 @@ func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.IndexedAttr = &pt
 		}
@@ -90,7 +89,6 @@ func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ThemeAttr = &pt
 		}

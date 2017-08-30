@@ -52,7 +52,6 @@ func (m *CT_SlideMasterIdListEntry) UnmarshalXML(d *xml.Decoder, start xml.Start
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.IdAttr = &pt
 		}

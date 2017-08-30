@@ -22,6 +22,7 @@ type CT_IconFilter struct {
 
 func NewCT_IconFilter() *CT_IconFilter {
 	ret := &CT_IconFilter{}
+	ret.IconSetAttr = ST_IconSetType(1)
 	return ret
 }
 func (m *CT_IconFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -44,6 +45,7 @@ func (m *CT_IconFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 }
 func (m *CT_IconFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.IconSetAttr = ST_IconSetType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "iconSet" {
 			m.IconSetAttr.UnmarshalXMLAttr(attr)
@@ -53,7 +55,6 @@ func (m *CT_IconFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.IconIdAttr = &pt
 		}

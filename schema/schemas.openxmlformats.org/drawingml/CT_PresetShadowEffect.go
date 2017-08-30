@@ -28,6 +28,7 @@ type CT_PresetShadowEffect struct {
 
 func NewCT_PresetShadowEffect() *CT_PresetShadowEffect {
 	ret := &CT_PresetShadowEffect{}
+	ret.PrstAttr = ST_PresetShadowVal(1)
 	return ret
 }
 func (m *CT_PresetShadowEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -78,6 +79,7 @@ func (m *CT_PresetShadowEffect) MarshalXML(e *xml.Encoder, start xml.StartElemen
 }
 func (m *CT_PresetShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PrstAttr = ST_PresetShadowVal(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prst" {
 			m.PrstAttr.UnmarshalXMLAttr(attr)
@@ -94,7 +96,6 @@ func (m *CT_PresetShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.DirAttr = &pt
 		}

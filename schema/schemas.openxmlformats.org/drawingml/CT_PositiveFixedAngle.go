@@ -19,6 +19,7 @@ type CT_PositiveFixedAngle struct {
 
 func NewCT_PositiveFixedAngle() *CT_PositiveFixedAngle {
 	ret := &CT_PositiveFixedAngle{}
+	ret.ValAttr = 0
 	return ret
 }
 func (m *CT_PositiveFixedAngle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -34,6 +35,7 @@ func (m *CT_PositiveFixedAngle) MarshalXML(e *xml.Encoder, start xml.StartElemen
 }
 func (m *CT_PositiveFixedAngle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = 0
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

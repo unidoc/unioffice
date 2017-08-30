@@ -42,7 +42,6 @@ func (m *CT_ChildPref) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.ValAttr = &pt
 		}

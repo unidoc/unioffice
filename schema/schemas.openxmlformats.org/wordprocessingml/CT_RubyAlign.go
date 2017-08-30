@@ -19,6 +19,7 @@ type CT_RubyAlign struct {
 
 func NewCT_RubyAlign() *CT_RubyAlign {
 	ret := &CT_RubyAlign{}
+	ret.ValAttr = ST_RubyAlign(1)
 	return ret
 }
 func (m *CT_RubyAlign) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_RubyAlign) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 }
 func (m *CT_RubyAlign) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_RubyAlign(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

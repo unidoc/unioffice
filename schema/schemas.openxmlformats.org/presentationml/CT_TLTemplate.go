@@ -50,7 +50,6 @@ func (m *CT_TLTemplate) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LvlAttr = &pt
 		}

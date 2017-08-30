@@ -18,6 +18,7 @@ type CT_PictureFormat struct {
 
 func NewCT_PictureFormat() *CT_PictureFormat {
 	ret := &CT_PictureFormat{}
+	ret.ValAttr = ST_PictureFormat(1)
 	return ret
 }
 func (m *CT_PictureFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +37,7 @@ func (m *CT_PictureFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 }
 func (m *CT_PictureFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_PictureFormat(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

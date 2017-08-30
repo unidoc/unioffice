@@ -134,7 +134,6 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.NumFmtIdAttr = &pt
 		}
@@ -143,7 +142,6 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.FontIdAttr = &pt
 		}
@@ -152,7 +150,6 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.FillIdAttr = &pt
 		}
@@ -161,7 +158,6 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.BorderIdAttr = &pt
 		}
@@ -170,7 +166,6 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.XfIdAttr = &pt
 		}

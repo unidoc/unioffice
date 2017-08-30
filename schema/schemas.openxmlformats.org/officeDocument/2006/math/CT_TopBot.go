@@ -18,6 +18,7 @@ type CT_TopBot struct {
 
 func NewCT_TopBot() *CT_TopBot {
 	ret := &CT_TopBot{}
+	ret.ValAttr = ST_TopBot(1)
 	return ret
 }
 func (m *CT_TopBot) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +37,7 @@ func (m *CT_TopBot) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_TopBot) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_TopBot(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

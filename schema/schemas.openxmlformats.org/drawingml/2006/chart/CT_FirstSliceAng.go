@@ -42,7 +42,6 @@ func (m *CT_FirstSliceAng) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint16(parsed)
 			m.ValAttr = &pt
 		}

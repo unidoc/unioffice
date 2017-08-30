@@ -35,6 +35,7 @@ type CT_Shd struct {
 
 func NewCT_Shd() *CT_Shd {
 	ret := &CT_Shd{}
+	ret.ValAttr = ST_Shd(1)
 	return ret
 }
 func (m *CT_Shd) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -91,6 +92,7 @@ func (m *CT_Shd) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Shd) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_Shd(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

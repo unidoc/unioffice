@@ -24,6 +24,7 @@ type CT_MdxKPI struct {
 
 func NewCT_MdxKPI() *CT_MdxKPI {
 	ret := &CT_MdxKPI{}
+	ret.PAttr = ST_MdxKPIProperty(1)
 	return ret
 }
 func (m *CT_MdxKPI) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -46,6 +47,7 @@ func (m *CT_MdxKPI) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_MdxKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PAttr = ST_MdxKPIProperty(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "n" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

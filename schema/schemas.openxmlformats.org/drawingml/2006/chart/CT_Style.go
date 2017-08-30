@@ -19,6 +19,7 @@ type CT_Style struct {
 
 func NewCT_Style() *CT_Style {
 	ret := &CT_Style{}
+	ret.ValAttr = 1
 	return ret
 }
 func (m *CT_Style) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -34,6 +35,7 @@ func (m *CT_Style) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Style) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = 1
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)

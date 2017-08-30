@@ -42,7 +42,6 @@ func (m *CT_RotY) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint16(parsed)
 			m.ValAttr = &pt
 		}

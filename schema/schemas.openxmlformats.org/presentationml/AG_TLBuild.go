@@ -49,7 +49,6 @@ func (m *AG_TLBuild) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SpidAttr = &pt
 		}
@@ -58,7 +57,6 @@ func (m *AG_TLBuild) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.GrpIdAttr = &pt
 		}

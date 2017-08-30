@@ -155,7 +155,6 @@ func (m *CT_CfRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DxfIdAttr = &pt
 		}
@@ -212,7 +211,6 @@ func (m *CT_CfRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RankAttr = &pt
 		}
@@ -221,7 +219,6 @@ func (m *CT_CfRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.StdDevAttr = &pt
 		}

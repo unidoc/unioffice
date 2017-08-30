@@ -20,6 +20,8 @@ type CT_Marker struct {
 
 func NewCT_Marker() *CT_Marker {
 	ret := &CT_Marker{}
+	ret.X = 0.0
+	ret.Y = 0.0
 	return ret
 }
 func (m *CT_Marker) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +39,8 @@ func (m *CT_Marker) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Marker) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.X = 0.0
+	m.Y = 0.0
 lCT_Marker:
 	for {
 		tok, err := d.Token()

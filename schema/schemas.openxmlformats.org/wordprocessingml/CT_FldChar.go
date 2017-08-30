@@ -32,6 +32,7 @@ type CT_FldChar struct {
 
 func NewCT_FldChar() *CT_FldChar {
 	ret := &CT_FldChar{}
+	ret.FldCharTypeAttr = ST_FldCharType(1)
 	return ret
 }
 func (m *CT_FldChar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -70,6 +71,7 @@ func (m *CT_FldChar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_FldChar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.FldCharTypeAttr = ST_FldCharType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "fldCharType" {
 			m.FldCharTypeAttr.UnmarshalXMLAttr(attr)

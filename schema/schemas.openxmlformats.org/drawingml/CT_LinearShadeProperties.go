@@ -47,7 +47,6 @@ func (m *CT_LinearShadeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartE
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.AngAttr = &pt
 		}

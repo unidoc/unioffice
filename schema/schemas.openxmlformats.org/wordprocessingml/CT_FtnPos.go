@@ -19,6 +19,7 @@ type CT_FtnPos struct {
 
 func NewCT_FtnPos() *CT_FtnPos {
 	ret := &CT_FtnPos{}
+	ret.ValAttr = ST_FtnPos(1)
 	return ret
 }
 func (m *CT_FtnPos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_FtnPos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_FtnPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_FtnPos(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

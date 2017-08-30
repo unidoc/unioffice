@@ -93,7 +93,6 @@ func (m *Headers) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RevisionIdAttr = &pt
 		}
@@ -102,7 +101,6 @@ func (m *Headers) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.VersionAttr = &pt
 		}
@@ -125,7 +123,6 @@ func (m *Headers) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.PreserveHistoryAttr = &pt
 		}

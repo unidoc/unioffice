@@ -19,6 +19,7 @@ type CT_NumRestart struct {
 
 func NewCT_NumRestart() *CT_NumRestart {
 	ret := &CT_NumRestart{}
+	ret.ValAttr = ST_RestartNumber(1)
 	return ret
 }
 func (m *CT_NumRestart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_NumRestart) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 }
 func (m *CT_NumRestart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_RestartNumber(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

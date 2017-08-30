@@ -221,7 +221,6 @@ func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.IntervalAttr = &pt
 		}
@@ -244,7 +243,6 @@ func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.TypeAttr = &pt
 		}
@@ -253,7 +251,6 @@ func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ReconnectionMethodAttr = &pt
 		}
@@ -269,7 +266,6 @@ func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.MinRefreshableVersionAttr = &pt
 		}

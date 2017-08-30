@@ -18,6 +18,7 @@ type CT_LblAlgn struct {
 
 func NewCT_LblAlgn() *CT_LblAlgn {
 	ret := &CT_LblAlgn{}
+	ret.ValAttr = ST_LblAlgn(1)
 	return ret
 }
 func (m *CT_LblAlgn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +37,7 @@ func (m *CT_LblAlgn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_LblAlgn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_LblAlgn(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

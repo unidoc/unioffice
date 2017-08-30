@@ -184,7 +184,6 @@ func (m *CT_TextParagraphProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.MarLAttr = &pt
 		}
@@ -193,7 +192,6 @@ func (m *CT_TextParagraphProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.MarRAttr = &pt
 		}
@@ -202,7 +200,6 @@ func (m *CT_TextParagraphProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.LvlAttr = &pt
 		}
@@ -211,7 +208,6 @@ func (m *CT_TextParagraphProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.IndentAttr = &pt
 		}

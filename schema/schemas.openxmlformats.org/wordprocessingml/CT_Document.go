@@ -24,6 +24,7 @@ type CT_Document struct {
 
 func NewCT_Document() *CT_Document {
 	ret := &CT_Document{}
+	ret.ConformanceAttr = sharedTypes.ST_ConformanceClass(1)
 	return ret
 }
 func (m *CT_Document) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -50,6 +51,7 @@ func (m *CT_Document) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Document) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ConformanceAttr = sharedTypes.ST_ConformanceClass(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "conformance" {
 			m.ConformanceAttr.UnmarshalXMLAttr(attr)

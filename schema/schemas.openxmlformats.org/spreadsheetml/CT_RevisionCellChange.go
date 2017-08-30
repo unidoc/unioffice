@@ -181,7 +181,6 @@ func (m *CT_RevisionCellChange) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.NumFmtIdAttr = &pt
 		}
@@ -225,7 +224,6 @@ func (m *CT_RevisionCellChange) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RIdAttr = &pt
 		}

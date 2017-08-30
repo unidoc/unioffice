@@ -110,7 +110,6 @@ func (m *CT_RevisionMove) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SourceSheetIdAttr = &pt
 		}
@@ -119,7 +118,6 @@ func (m *CT_RevisionMove) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RIdAttr = &pt
 		}

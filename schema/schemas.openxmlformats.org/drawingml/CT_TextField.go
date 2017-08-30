@@ -26,6 +26,7 @@ type CT_TextField struct {
 
 func NewCT_TextField() *CT_TextField {
 	ret := &CT_TextField{}
+	ret.IdAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
 func (m *CT_TextField) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -58,6 +59,7 @@ func (m *CT_TextField) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 }
 func (m *CT_TextField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.IdAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)

@@ -38,6 +38,7 @@ type CT_Border struct {
 
 func NewCT_Border() *CT_Border {
 	ret := &CT_Border{}
+	ret.ValAttr = ST_Border(1)
 	return ret
 }
 func (m *CT_Border) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -91,6 +92,7 @@ func (m *CT_Border) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Border) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_Border(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)
@@ -124,7 +126,6 @@ func (m *CT_Border) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint64(parsed)
 			m.SzAttr = &pt
 		}
@@ -133,7 +134,6 @@ func (m *CT_Border) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint64(parsed)
 			m.SpaceAttr = &pt
 		}

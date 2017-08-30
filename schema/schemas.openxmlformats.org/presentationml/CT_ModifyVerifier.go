@@ -165,7 +165,6 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SpinValueAttr = &pt
 		}
@@ -183,7 +182,6 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CryptAlgorithmSidAttr = &pt
 		}
@@ -192,7 +190,6 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SpinCountAttr = &pt
 		}
@@ -222,7 +219,6 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.AlgIdExtAttr = &pt
 		}
@@ -238,7 +234,6 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CryptProviderTypeExtAttr = &pt
 		}

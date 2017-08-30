@@ -19,6 +19,7 @@ type CT_TargetScreenSz struct {
 
 func NewCT_TargetScreenSz() *CT_TargetScreenSz {
 	ret := &CT_TargetScreenSz{}
+	ret.ValAttr = ST_TargetScreenSz(1)
 	return ret
 }
 func (m *CT_TargetScreenSz) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_TargetScreenSz) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 }
 func (m *CT_TargetScreenSz) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_TargetScreenSz(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

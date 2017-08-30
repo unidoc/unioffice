@@ -18,6 +18,7 @@ type CT_LimLoc struct {
 
 func NewCT_LimLoc() *CT_LimLoc {
 	ret := &CT_LimLoc{}
+	ret.ValAttr = ST_LimLoc(1)
 	return ret
 }
 func (m *CT_LimLoc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +37,7 @@ func (m *CT_LimLoc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_LimLoc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_LimLoc(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

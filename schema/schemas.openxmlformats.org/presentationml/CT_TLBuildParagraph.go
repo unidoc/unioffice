@@ -101,7 +101,6 @@ func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.BldLvlAttr = &pt
 		}
@@ -138,7 +137,6 @@ func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SpidAttr = &pt
 		}
@@ -147,7 +145,6 @@ func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.GrpIdAttr = &pt
 		}

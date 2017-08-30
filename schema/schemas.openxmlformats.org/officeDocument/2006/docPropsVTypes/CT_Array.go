@@ -40,6 +40,7 @@ type CT_Array struct {
 
 func NewCT_Array() *CT_Array {
 	ret := &CT_Array{}
+	ret.BaseTypeAttr = ST_ArrayBaseType(1)
 	return ret
 }
 func (m *CT_Array) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -130,6 +131,7 @@ func (m *CT_Array) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Array) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.BaseTypeAttr = ST_ArrayBaseType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "lBounds" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

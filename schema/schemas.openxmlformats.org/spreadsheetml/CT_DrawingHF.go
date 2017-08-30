@@ -155,7 +155,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LhoAttr = &pt
 		}
@@ -164,7 +163,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LheAttr = &pt
 		}
@@ -173,7 +171,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LhfAttr = &pt
 		}
@@ -182,7 +179,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ChoAttr = &pt
 		}
@@ -191,7 +187,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CheAttr = &pt
 		}
@@ -200,7 +195,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ChfAttr = &pt
 		}
@@ -209,7 +203,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RhoAttr = &pt
 		}
@@ -218,7 +211,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RheAttr = &pt
 		}
@@ -227,7 +219,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RhfAttr = &pt
 		}
@@ -236,7 +227,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LfoAttr = &pt
 		}
@@ -245,7 +235,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LfeAttr = &pt
 		}
@@ -254,7 +243,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LffAttr = &pt
 		}
@@ -263,7 +251,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CfoAttr = &pt
 		}
@@ -272,7 +259,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CfeAttr = &pt
 		}
@@ -281,7 +267,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CffAttr = &pt
 		}
@@ -290,7 +275,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RfoAttr = &pt
 		}
@@ -299,7 +283,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RfeAttr = &pt
 		}
@@ -308,7 +291,6 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RffAttr = &pt
 		}

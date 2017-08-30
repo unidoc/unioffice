@@ -73,7 +73,6 @@ func (m *CT_GroupTransform2D) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.RotAttr = &pt
 		}

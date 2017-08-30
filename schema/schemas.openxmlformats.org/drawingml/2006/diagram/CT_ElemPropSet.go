@@ -211,7 +211,6 @@ func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.PresStyleIdxAttr = &pt
 		}
@@ -220,7 +219,6 @@ func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.PresStyleCntAttr = &pt
 		}
@@ -292,7 +290,6 @@ func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.CustAngAttr = &pt
 		}
@@ -315,7 +312,6 @@ func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.CustSzXAttr = &pt
 		}
@@ -324,7 +320,6 @@ func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.CustSzYAttr = &pt
 		}

@@ -29,6 +29,7 @@ type CT_CacheSource struct {
 
 func NewCT_CacheSource() *CT_CacheSource {
 	ret := &CT_CacheSource{}
+	ret.TypeAttr = ST_SourceType(1)
 	return ret
 }
 func (m *CT_CacheSource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -63,6 +64,7 @@ func (m *CT_CacheSource) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 }
 func (m *CT_CacheSource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_SourceType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
@@ -72,7 +74,6 @@ func (m *CT_CacheSource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ConnectionIdAttr = &pt
 		}

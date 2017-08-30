@@ -83,7 +83,6 @@ func (m *CT_StyleDefinitionHeader) UnmarshalXML(d *xml.Decoder, start xml.StartE
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.ResIdAttr = &pt
 		}

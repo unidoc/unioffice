@@ -82,7 +82,6 @@ func (m *CT_Columns) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.NumAttr = &pt
 		}

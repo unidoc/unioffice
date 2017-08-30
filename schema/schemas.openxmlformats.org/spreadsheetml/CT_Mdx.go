@@ -31,6 +31,7 @@ type CT_Mdx struct {
 
 func NewCT_Mdx() *CT_Mdx {
 	ret := &CT_Mdx{}
+	ret.FAttr = ST_MdxFunctionType(1)
 	return ret
 }
 func (m *CT_Mdx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -67,6 +68,7 @@ func (m *CT_Mdx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Mdx) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.FAttr = ST_MdxFunctionType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "n" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -152,7 +152,6 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.DirAttr = &pt
 		}
@@ -161,7 +160,6 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.FadeDirAttr = &pt
 		}
@@ -184,7 +182,6 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.KxAttr = &pt
 		}
@@ -193,7 +190,6 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.KyAttr = &pt
 		}

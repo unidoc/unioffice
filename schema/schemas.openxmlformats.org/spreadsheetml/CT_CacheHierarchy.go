@@ -212,7 +212,6 @@ func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ParentSetAttr = &pt
 		}
@@ -221,7 +220,6 @@ func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.IconSetAttr = &pt
 		}
@@ -314,7 +312,6 @@ func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint16(parsed)
 			m.MemberValueDatatypeAttr = &pt
 		}

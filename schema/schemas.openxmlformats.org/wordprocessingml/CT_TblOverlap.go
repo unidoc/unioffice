@@ -19,6 +19,7 @@ type CT_TblOverlap struct {
 
 func NewCT_TblOverlap() *CT_TblOverlap {
 	ret := &CT_TblOverlap{}
+	ret.ValAttr = ST_TblOverlap(1)
 	return ret
 }
 func (m *CT_TblOverlap) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_TblOverlap) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 }
 func (m *CT_TblOverlap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_TblOverlap(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

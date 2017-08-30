@@ -273,7 +273,6 @@ func (m *CT_TextCharacterProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.SzAttr = &pt
 		}
@@ -302,7 +301,6 @@ func (m *CT_TextCharacterProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.KernAttr = &pt
 		}
@@ -363,7 +361,6 @@ func (m *CT_TextCharacterProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SmtIdAttr = &pt
 		}

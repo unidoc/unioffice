@@ -19,6 +19,7 @@ type CT_PictureStackUnit struct {
 
 func NewCT_PictureStackUnit() *CT_PictureStackUnit {
 	ret := &CT_PictureStackUnit{}
+	ret.ValAttr = 0 + 1
 	return ret
 }
 func (m *CT_PictureStackUnit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -34,6 +35,7 @@ func (m *CT_PictureStackUnit) MarshalXML(e *xml.Encoder, start xml.StartElement)
 }
 func (m *CT_PictureStackUnit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = 0 + 1
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)

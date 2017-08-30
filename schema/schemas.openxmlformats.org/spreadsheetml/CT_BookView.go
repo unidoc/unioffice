@@ -155,7 +155,6 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.XWindowAttr = &pt
 		}
@@ -164,7 +163,6 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.YWindowAttr = &pt
 		}
@@ -173,7 +171,6 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.WindowWidthAttr = &pt
 		}
@@ -182,7 +179,6 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.WindowHeightAttr = &pt
 		}
@@ -191,7 +187,6 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.TabRatioAttr = &pt
 		}
@@ -200,7 +195,6 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.FirstSheetAttr = &pt
 		}
@@ -209,7 +203,6 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ActiveTabAttr = &pt
 		}

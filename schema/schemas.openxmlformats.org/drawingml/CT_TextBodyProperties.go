@@ -188,7 +188,6 @@ func (m *CT_TextBodyProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.RotAttr = &pt
 		}
@@ -244,7 +243,6 @@ func (m *CT_TextBodyProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.NumColAttr = &pt
 		}
@@ -253,7 +251,6 @@ func (m *CT_TextBodyProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.SpcColAttr = &pt
 		}

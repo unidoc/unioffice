@@ -48,7 +48,6 @@ func (m *CT_WebPublishObjects) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CountAttr = &pt
 		}

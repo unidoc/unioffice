@@ -81,7 +81,6 @@ func (m *CT_TransformEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.KxAttr = &pt
 		}
@@ -90,7 +89,6 @@ func (m *CT_TransformEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.KyAttr = &pt
 		}

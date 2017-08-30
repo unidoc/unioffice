@@ -152,7 +152,6 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LocalSheetIdAttr = &pt
 		}
@@ -189,7 +188,6 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.FunctionGroupIdAttr = &pt
 		}

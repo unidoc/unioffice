@@ -97,7 +97,6 @@ func (m *CT_InnerShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.DirAttr = &pt
 		}

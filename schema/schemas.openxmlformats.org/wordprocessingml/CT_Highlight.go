@@ -19,6 +19,7 @@ type CT_Highlight struct {
 
 func NewCT_Highlight() *CT_Highlight {
 	ret := &CT_Highlight{}
+	ret.ValAttr = ST_HighlightColor(1)
 	return ret
 }
 func (m *CT_Highlight) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_Highlight) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 }
 func (m *CT_Highlight) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_HighlightColor(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

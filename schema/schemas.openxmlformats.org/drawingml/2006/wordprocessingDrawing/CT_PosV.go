@@ -20,6 +20,7 @@ type CT_PosV struct {
 
 func NewCT_PosV() *CT_PosV {
 	ret := &CT_PosV{}
+	ret.RelativeFromAttr = ST_RelFromV(1)
 	ret.Choice = NewCT_PosVChoice()
 	return ret
 }
@@ -40,6 +41,7 @@ func (m *CT_PosV) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_PosV) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.RelativeFromAttr = ST_RelFromV(1)
 	m.Choice = NewCT_PosVChoice()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "relativeFrom" {

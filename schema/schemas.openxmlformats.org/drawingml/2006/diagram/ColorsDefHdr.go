@@ -59,7 +59,6 @@ func (m *ColorsDefHdr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.ResIdAttr = &pt
 		}

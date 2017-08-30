@@ -68,7 +68,6 @@ func (m *CT_BlipFillProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DpiAttr = &pt
 		}

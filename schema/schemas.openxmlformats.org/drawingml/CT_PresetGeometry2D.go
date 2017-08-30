@@ -20,6 +20,7 @@ type CT_PresetGeometry2D struct {
 
 func NewCT_PresetGeometry2D() *CT_PresetGeometry2D {
 	ret := &CT_PresetGeometry2D{}
+	ret.PrstAttr = ST_ShapeType(1)
 	return ret
 }
 func (m *CT_PresetGeometry2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -42,6 +43,7 @@ func (m *CT_PresetGeometry2D) MarshalXML(e *xml.Encoder, start xml.StartElement)
 }
 func (m *CT_PresetGeometry2D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PrstAttr = ST_ShapeType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prst" {
 			m.PrstAttr.UnmarshalXMLAttr(attr)

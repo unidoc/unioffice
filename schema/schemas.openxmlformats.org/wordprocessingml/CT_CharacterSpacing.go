@@ -19,6 +19,7 @@ type CT_CharacterSpacing struct {
 
 func NewCT_CharacterSpacing() *CT_CharacterSpacing {
 	ret := &CT_CharacterSpacing{}
+	ret.ValAttr = ST_CharacterSpacing(1)
 	return ret
 }
 func (m *CT_CharacterSpacing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_CharacterSpacing) MarshalXML(e *xml.Encoder, start xml.StartElement)
 }
 func (m *CT_CharacterSpacing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_CharacterSpacing(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

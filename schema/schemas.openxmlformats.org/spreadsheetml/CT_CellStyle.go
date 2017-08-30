@@ -92,7 +92,6 @@ func (m *CT_CellStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.BuiltinIdAttr = &pt
 		}
@@ -101,7 +100,6 @@ func (m *CT_CellStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ILevelAttr = &pt
 		}

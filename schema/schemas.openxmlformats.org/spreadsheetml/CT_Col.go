@@ -114,7 +114,6 @@ func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.StyleAttr = &pt
 		}
@@ -151,7 +150,6 @@ func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.OutlineLevelAttr = &pt
 		}

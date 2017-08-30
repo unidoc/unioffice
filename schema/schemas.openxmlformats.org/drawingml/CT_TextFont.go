@@ -75,7 +75,6 @@ func (m *CT_TextFont) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int8(parsed)
 			m.CharsetAttr = &pt
 		}

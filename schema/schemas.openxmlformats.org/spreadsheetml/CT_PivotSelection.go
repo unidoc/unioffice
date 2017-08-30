@@ -182,7 +182,6 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CountAttr = &pt
 		}
@@ -194,7 +193,6 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DimensionAttr = &pt
 		}
@@ -203,7 +201,6 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.StartAttr = &pt
 		}
@@ -212,7 +209,6 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.MinAttr = &pt
 		}
@@ -221,7 +217,6 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.MaxAttr = &pt
 		}
@@ -230,7 +225,6 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ActiveRowAttr = &pt
 		}
@@ -239,7 +233,6 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ActiveColAttr = &pt
 		}
@@ -248,7 +241,6 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.PreviousRowAttr = &pt
 		}
@@ -257,7 +249,6 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.PreviousColAttr = &pt
 		}
@@ -266,7 +257,6 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ClickAttr = &pt
 		}

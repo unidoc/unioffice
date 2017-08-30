@@ -40,6 +40,7 @@ type CT_UndoInfo struct {
 
 func NewCT_UndoInfo() *CT_UndoInfo {
 	ret := &CT_UndoInfo{}
+	ret.ExpAttr = ST_FormulaExpression(1)
 	return ret
 }
 func (m *CT_UndoInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -94,6 +95,7 @@ func (m *CT_UndoInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ExpAttr = ST_FormulaExpression(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "index" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -166,7 +168,6 @@ func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SIdAttr = &pt
 		}

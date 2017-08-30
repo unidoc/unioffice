@@ -33,6 +33,7 @@ type CT_CustomChartsheetView struct {
 
 func NewCT_CustomChartsheetView() *CT_CustomChartsheetView {
 	ret := &CT_CustomChartsheetView{}
+	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
 func (m *CT_CustomChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -75,6 +76,7 @@ func (m *CT_CustomChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElem
 }
 func (m *CT_CustomChartsheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "guid" {
 			parsed, err := attr.Value, error(nil)
@@ -88,7 +90,6 @@ func (m *CT_CustomChartsheetView) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ScaleAttr = &pt
 		}

@@ -128,7 +128,6 @@ func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.FieldAttr = &pt
 		}
@@ -199,7 +198,6 @@ func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.FieldPositionAttr = &pt
 		}

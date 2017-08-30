@@ -94,7 +94,6 @@ func (m *CT_RevisionAutoFormatting) UnmarshalXML(d *xml.Decoder, start xml.Start
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.AutoFormatIdAttr = &pt
 		}

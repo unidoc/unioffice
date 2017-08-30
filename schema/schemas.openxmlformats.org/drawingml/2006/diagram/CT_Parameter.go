@@ -19,6 +19,7 @@ type CT_Parameter struct {
 
 func NewCT_Parameter() *CT_Parameter {
 	ret := &CT_Parameter{}
+	ret.TypeAttr = ST_ParameterId(1)
 	return ret
 }
 func (m *CT_Parameter) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -39,6 +40,7 @@ func (m *CT_Parameter) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 }
 func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_ParameterId(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

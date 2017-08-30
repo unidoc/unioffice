@@ -23,6 +23,7 @@ type CT_TabStop struct {
 
 func NewCT_TabStop() *CT_TabStop {
 	ret := &CT_TabStop{}
+	ret.ValAttr = ST_TabJc(1)
 	return ret
 }
 func (m *CT_TabStop) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -50,6 +51,7 @@ func (m *CT_TabStop) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_TabStop) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_TabJc(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

@@ -21,6 +21,9 @@ type CT_SphereCoords struct {
 
 func NewCT_SphereCoords() *CT_SphereCoords {
 	ret := &CT_SphereCoords{}
+	ret.LatAttr = 0
+	ret.LonAttr = 0
+	ret.RevAttr = 0
 	return ret
 }
 func (m *CT_SphereCoords) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -40,6 +43,9 @@ func (m *CT_SphereCoords) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 }
 func (m *CT_SphereCoords) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.LatAttr = 0
+	m.LonAttr = 0
+	m.RevAttr = 0
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "lat" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

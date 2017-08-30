@@ -13,7 +13,7 @@ import (
 	"baliance.com/gooxml"
 )
 
-const ST_ContentTypePattern = `(((([[[:ascii:]]-[\p{Cc}\(\)<>@,;:\\"/\[\]\?=\{\}\s\t]])+))/((([[[:ascii:]]-[\p{Cc}\(\)<>@,;:\\"/\[\]\?=\{\}\s\t]])+))((\s+)*;(\s+)*(((([[[:ascii:]]-[\p{Cc}\(\)<>@,;:\\"/\[\]\?=\{\}\s\t]])+))=((([[[:ascii:]]-[\p{Cc}\(\)<>@,;:\\"/\[\]\?=\{\}\s\t]])+)|("(([[^[:ascii:]][[:ascii:]]-[\p{Cc}"\n\r]]|(\s+))|(\\[[[:ascii:]]]))*"))))*)`
+const ST_ContentTypePattern = `^\p{Latin}+/.*$`
 
 var ST_ContentTypePatternRe = regexp.MustCompile(ST_ContentTypePattern)
 

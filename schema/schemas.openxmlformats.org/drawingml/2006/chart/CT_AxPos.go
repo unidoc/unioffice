@@ -18,6 +18,7 @@ type CT_AxPos struct {
 
 func NewCT_AxPos() *CT_AxPos {
 	ret := &CT_AxPos{}
+	ret.ValAttr = ST_AxPos(1)
 	return ret
 }
 func (m *CT_AxPos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +37,7 @@ func (m *CT_AxPos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_AxPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_AxPos(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

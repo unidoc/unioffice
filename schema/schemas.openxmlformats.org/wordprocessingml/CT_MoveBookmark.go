@@ -90,7 +90,6 @@ func (m *CT_MoveBookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.ColFirstAttr = &pt
 		}
@@ -99,7 +98,6 @@ func (m *CT_MoveBookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.ColLastAttr = &pt
 		}

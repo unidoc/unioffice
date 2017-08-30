@@ -20,6 +20,7 @@ type CT_TextAutonumberBullet struct {
 
 func NewCT_TextAutonumberBullet() *CT_TextAutonumberBullet {
 	ret := &CT_TextAutonumberBullet{}
+	ret.TypeAttr = ST_TextAutonumberScheme(1)
 	return ret
 }
 func (m *CT_TextAutonumberBullet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -42,6 +43,7 @@ func (m *CT_TextAutonumberBullet) MarshalXML(e *xml.Encoder, start xml.StartElem
 }
 func (m *CT_TextAutonumberBullet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_TextAutonumberScheme(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
@@ -51,7 +53,6 @@ func (m *CT_TextAutonumberBullet) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.StartAtAttr = &pt
 		}

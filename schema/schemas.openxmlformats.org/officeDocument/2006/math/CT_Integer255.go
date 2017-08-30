@@ -19,6 +19,7 @@ type CT_Integer255 struct {
 
 func NewCT_Integer255() *CT_Integer255 {
 	ret := &CT_Integer255{}
+	ret.ValAttr = 1
 	return ret
 }
 func (m *CT_Integer255) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -34,6 +35,7 @@ func (m *CT_Integer255) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 }
 func (m *CT_Integer255) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = 1
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

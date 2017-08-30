@@ -70,6 +70,7 @@ type CT_CustomWorkbookView struct {
 
 func NewCT_CustomWorkbookView() *CT_CustomWorkbookView {
 	ret := &CT_CustomWorkbookView{}
+	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
 func (m *CT_CustomWorkbookView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -179,6 +180,7 @@ func (m *CT_CustomWorkbookView) MarshalXML(e *xml.Encoder, start xml.StartElemen
 }
 func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -206,7 +208,6 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.MergeIntervalAttr = &pt
 		}
@@ -285,7 +286,6 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.XWindowAttr = &pt
 		}
@@ -294,7 +294,6 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.YWindowAttr = &pt
 		}
@@ -317,7 +316,6 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.TabRatioAttr = &pt
 		}

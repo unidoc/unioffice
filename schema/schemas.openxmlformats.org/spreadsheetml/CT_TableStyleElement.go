@@ -24,6 +24,7 @@ type CT_TableStyleElement struct {
 
 func NewCT_TableStyleElement() *CT_TableStyleElement {
 	ret := &CT_TableStyleElement{}
+	ret.TypeAttr = ST_TableStyleType(1)
 	return ret
 }
 func (m *CT_TableStyleElement) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -50,6 +51,7 @@ func (m *CT_TableStyleElement) MarshalXML(e *xml.Encoder, start xml.StartElement
 }
 func (m *CT_TableStyleElement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_TableStyleType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
@@ -59,7 +61,6 @@ func (m *CT_TableStyleElement) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SizeAttr = &pt
 		}
@@ -68,7 +69,6 @@ func (m *CT_TableStyleElement) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DxfIdAttr = &pt
 		}

@@ -145,7 +145,6 @@ func (m *QueryTable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.AutoFormatIdAttr = &pt
 		}

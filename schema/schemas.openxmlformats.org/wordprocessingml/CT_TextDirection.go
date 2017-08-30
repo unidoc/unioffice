@@ -19,6 +19,7 @@ type CT_TextDirection struct {
 
 func NewCT_TextDirection() *CT_TextDirection {
 	ret := &CT_TextDirection{}
+	ret.ValAttr = ST_TextDirection(1)
 	return ret
 }
 func (m *CT_TextDirection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_TextDirection) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 }
 func (m *CT_TextDirection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_TextDirection(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

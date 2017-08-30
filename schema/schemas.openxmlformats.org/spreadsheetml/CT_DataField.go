@@ -110,7 +110,6 @@ func (m *CT_DataField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.BaseFieldAttr = &pt
 		}
@@ -119,7 +118,6 @@ func (m *CT_DataField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.BaseItemAttr = &pt
 		}
@@ -128,7 +126,6 @@ func (m *CT_DataField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.NumFmtIdAttr = &pt
 		}

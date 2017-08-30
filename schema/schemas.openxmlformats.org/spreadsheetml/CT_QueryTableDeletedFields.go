@@ -48,7 +48,6 @@ func (m *CT_QueryTableDeletedFields) UnmarshalXML(d *xml.Decoder, start xml.Star
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CountAttr = &pt
 		}

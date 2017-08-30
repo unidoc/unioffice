@@ -87,7 +87,6 @@ func (m *CT_LsdException) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.UiPriorityAttr = &pt
 		}

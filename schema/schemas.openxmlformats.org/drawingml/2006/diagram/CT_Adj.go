@@ -20,6 +20,7 @@ type CT_Adj struct {
 
 func NewCT_Adj() *CT_Adj {
 	ret := &CT_Adj{}
+	ret.IdxAttr = 1
 	return ret
 }
 func (m *CT_Adj) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_Adj) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Adj) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.IdxAttr = 1
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "idx" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

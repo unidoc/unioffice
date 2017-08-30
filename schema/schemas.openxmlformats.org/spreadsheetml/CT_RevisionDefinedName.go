@@ -198,7 +198,6 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LocalSheetIdAttr = &pt
 		}
@@ -235,7 +234,6 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.FunctionGroupIdAttr = &pt
 		}
@@ -244,7 +242,6 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.OldFunctionGroupIdAttr = &pt
 		}
@@ -253,7 +250,6 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.ShortcutKeyAttr = &pt
 		}
@@ -262,7 +258,6 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.OldShortcutKeyAttr = &pt
 		}
@@ -355,7 +350,6 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RIdAttr = &pt
 		}

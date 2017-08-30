@@ -19,6 +19,7 @@ type CT_MultiLevelType struct {
 
 func NewCT_MultiLevelType() *CT_MultiLevelType {
 	ret := &CT_MultiLevelType{}
+	ret.ValAttr = ST_MultiLevelType(1)
 	return ret
 }
 func (m *CT_MultiLevelType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_MultiLevelType) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 }
 func (m *CT_MultiLevelType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_MultiLevelType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

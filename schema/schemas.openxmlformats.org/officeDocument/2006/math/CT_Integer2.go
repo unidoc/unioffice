@@ -19,6 +19,7 @@ type CT_Integer2 struct {
 
 func NewCT_Integer2() *CT_Integer2 {
 	ret := &CT_Integer2{}
+	ret.ValAttr = -2
 	return ret
 }
 func (m *CT_Integer2) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -34,6 +35,7 @@ func (m *CT_Integer2) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Integer2) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = -2
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

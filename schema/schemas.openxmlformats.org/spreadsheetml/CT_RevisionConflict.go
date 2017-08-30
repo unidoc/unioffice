@@ -58,7 +58,6 @@ func (m *CT_RevisionConflict) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SheetIdAttr = &pt
 		}
@@ -67,7 +66,6 @@ func (m *CT_RevisionConflict) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RIdAttr = &pt
 		}

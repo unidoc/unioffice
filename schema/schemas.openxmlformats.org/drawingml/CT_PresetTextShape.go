@@ -20,6 +20,7 @@ type CT_PresetTextShape struct {
 
 func NewCT_PresetTextShape() *CT_PresetTextShape {
 	ret := &CT_PresetTextShape{}
+	ret.PrstAttr = ST_TextShapeType(1)
 	return ret
 }
 func (m *CT_PresetTextShape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -42,6 +43,7 @@ func (m *CT_PresetTextShape) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 }
 func (m *CT_PresetTextShape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PrstAttr = ST_TextShapeType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prst" {
 			m.PrstAttr.UnmarshalXMLAttr(attr)

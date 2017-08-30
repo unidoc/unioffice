@@ -275,7 +275,6 @@ func (m *CT_QueryTable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.AutoFormatIdAttr = &pt
 		}
