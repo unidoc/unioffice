@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"log"
 	"time"
+
+	"baliance.com/gooxml"
 )
 
 type CoreProperties struct {
@@ -57,22 +59,22 @@ lCoreProperties:
 					return err
 				}
 			case "created":
-				m.Created = new(string)
+				m.Created = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Created, &el); err != nil {
 					return err
 				}
 			case "creator":
-				m.Creator = new(string)
+				m.Creator = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Creator, &el); err != nil {
 					return err
 				}
 			case "description":
-				m.Description = new(string)
+				m.Description = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Description, &el); err != nil {
 					return err
 				}
 			case "identifier":
-				m.Identifier = new(string)
+				m.Identifier = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Identifier, &el); err != nil {
 					return err
 				}
@@ -82,7 +84,7 @@ lCoreProperties:
 					return err
 				}
 			case "language":
-				m.Language = new(string)
+				m.Language = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Language, &el); err != nil {
 					return err
 				}
@@ -97,7 +99,7 @@ lCoreProperties:
 					return err
 				}
 			case "modified":
-				m.Modified = new(string)
+				m.Modified = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Modified, &el); err != nil {
 					return err
 				}
@@ -107,12 +109,12 @@ lCoreProperties:
 					return err
 				}
 			case "subject":
-				m.Subject = new(string)
+				m.Subject = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Subject, &el); err != nil {
 					return err
 				}
 			case "title":
-				m.Title = new(string)
+				m.Title = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Title, &el); err != nil {
 					return err
 				}

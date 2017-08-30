@@ -18,18 +18,18 @@ import (
 type CT_CoreProperties struct {
 	Category       *string
 	ContentStatus  *string
-	Created        *string
-	Creator        *string
-	Description    *string
-	Identifier     *string
+	Created        *gooxml.XSDAny
+	Creator        *gooxml.XSDAny
+	Description    *gooxml.XSDAny
+	Identifier     *gooxml.XSDAny
 	Keywords       *CT_Keywords
-	Language       *string
+	Language       *gooxml.XSDAny
 	LastModifiedBy *string
 	LastPrinted    *time.Time
-	Modified       *string
+	Modified       *gooxml.XSDAny
 	Revision       *string
-	Subject        *string
-	Title          *string
+	Subject        *gooxml.XSDAny
+	Title          *gooxml.XSDAny
 	Version        *string
 }
 
@@ -55,22 +55,18 @@ func (m *CT_CoreProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.Created != nil {
 		secreated := xml.StartElement{Name: xml.Name{Local: "dcterms:created"}}
-		gooxml.AddPreserveSpaceAttr(&secreated, *m.Created)
 		e.EncodeElement(m.Created, secreated)
 	}
 	if m.Creator != nil {
 		secreator := xml.StartElement{Name: xml.Name{Local: "dc:creator"}}
-		gooxml.AddPreserveSpaceAttr(&secreator, *m.Creator)
 		e.EncodeElement(m.Creator, secreator)
 	}
 	if m.Description != nil {
 		sedescription := xml.StartElement{Name: xml.Name{Local: "dc:description"}}
-		gooxml.AddPreserveSpaceAttr(&sedescription, *m.Description)
 		e.EncodeElement(m.Description, sedescription)
 	}
 	if m.Identifier != nil {
 		seidentifier := xml.StartElement{Name: xml.Name{Local: "dc:identifier"}}
-		gooxml.AddPreserveSpaceAttr(&seidentifier, *m.Identifier)
 		e.EncodeElement(m.Identifier, seidentifier)
 	}
 	if m.Keywords != nil {
@@ -79,7 +75,6 @@ func (m *CT_CoreProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.Language != nil {
 		selanguage := xml.StartElement{Name: xml.Name{Local: "dc:language"}}
-		gooxml.AddPreserveSpaceAttr(&selanguage, *m.Language)
 		e.EncodeElement(m.Language, selanguage)
 	}
 	if m.LastModifiedBy != nil {
@@ -93,7 +88,6 @@ func (m *CT_CoreProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.Modified != nil {
 		semodified := xml.StartElement{Name: xml.Name{Local: "dcterms:modified"}}
-		gooxml.AddPreserveSpaceAttr(&semodified, *m.Modified)
 		e.EncodeElement(m.Modified, semodified)
 	}
 	if m.Revision != nil {
@@ -103,12 +97,10 @@ func (m *CT_CoreProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.Subject != nil {
 		sesubject := xml.StartElement{Name: xml.Name{Local: "dc:subject"}}
-		gooxml.AddPreserveSpaceAttr(&sesubject, *m.Subject)
 		e.EncodeElement(m.Subject, sesubject)
 	}
 	if m.Title != nil {
 		setitle := xml.StartElement{Name: xml.Name{Local: "dc:title"}}
-		gooxml.AddPreserveSpaceAttr(&setitle, *m.Title)
 		e.EncodeElement(m.Title, setitle)
 	}
 	if m.Version != nil {
@@ -141,22 +133,22 @@ lCT_CoreProperties:
 					return err
 				}
 			case "created":
-				m.Created = new(string)
+				m.Created = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Created, &el); err != nil {
 					return err
 				}
 			case "creator":
-				m.Creator = new(string)
+				m.Creator = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Creator, &el); err != nil {
 					return err
 				}
 			case "description":
-				m.Description = new(string)
+				m.Description = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Description, &el); err != nil {
 					return err
 				}
 			case "identifier":
-				m.Identifier = new(string)
+				m.Identifier = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Identifier, &el); err != nil {
 					return err
 				}
@@ -166,7 +158,7 @@ lCT_CoreProperties:
 					return err
 				}
 			case "language":
-				m.Language = new(string)
+				m.Language = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Language, &el); err != nil {
 					return err
 				}
@@ -181,7 +173,7 @@ lCT_CoreProperties:
 					return err
 				}
 			case "modified":
-				m.Modified = new(string)
+				m.Modified = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Modified, &el); err != nil {
 					return err
 				}
@@ -191,12 +183,12 @@ lCT_CoreProperties:
 					return err
 				}
 			case "subject":
-				m.Subject = new(string)
+				m.Subject = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Subject, &el); err != nil {
 					return err
 				}
 			case "title":
-				m.Title = new(string)
+				m.Title = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Title, &el); err != nil {
 					return err
 				}

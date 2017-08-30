@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"log"
 	"strings"
+	"unicode"
 )
 
 // XSDAny  is used to marshal/unmarshal xsd:any types in the OOXML schema.
@@ -12,16 +13,36 @@ type XSDAny struct {
 	Tokens []xml.Token
 }
 
+var wellKnownSchemas = map[string]string{
+	"xsi":     "http://www.w3.org/2001/XMLSchema-instance",
+	"dcterms": "http://purl.org/dc/terms/",
+	"dc":      "http://purl.org/dc/elements/1.1/",
+}
+var wellKnownSchemasInv = func() map[string]string {
+	r := map[string]string{}
+	for pfx, ns := range wellKnownSchemas {
+		r[ns] = pfx
+	}
+	return r
+}()
+
 func cloneToken(tok xml.Token) xml.Token {
 	switch el := tok.(type) {
 	case xml.CharData:
 		cd := xml.CharData{}
 		cd = append(cd, el...)
 		return cd
-	case xml.StartElement, xml.EndElement:
+	case xml.StartElement:
+		for i, attr := range el.Attr {
+			if ns, ok := wellKnownSchemas[attr.Name.Space]; ok {
+				el.Attr[i].Name.Space = ns
+			}
+		}
+		return tok
+	case xml.EndElement:
 		return tok
 	default:
-		log.Fatalf("need to suppot %T", el)
+		log.Fatalf("need to support %T", el)
 	}
 	return nil
 }
@@ -55,6 +76,23 @@ type nsSet struct {
 }
 
 func (n *nsSet) getPrefix(ns string) string {
+	// Common namespaces are used in these 'any' elements and some versions
+	// of Word really want to the prefix to match what they write out.  This
+	// occurred primarily with docProps/core.xml
+	if pfx, ok := wellKnownSchemasInv[ns]; ok {
+		if _, ok := n.prefixToURL[pfx]; !ok {
+			n.prefixToURL[pfx] = ns
+			n.urlToPrefix[ns] = pfx
+			n.prefixes = append(n.prefixes, pfx)
+		}
+		return pfx
+	}
+
+	// trying to construct a decent looking valid prefix
+	ns = strings.TrimFunc(ns, func(r rune) bool {
+		return !unicode.IsLetter(r)
+	})
+
 	// do we have a prefix for this ns?
 	if sc, ok := n.urlToPrefix[ns]; ok {
 		return sc
