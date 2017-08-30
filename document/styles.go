@@ -206,3 +206,24 @@ func (s Styles) initializeDocDefaults() {
 	s.x.DocDefaults.PPrDefault.PPr.Spacing.LineAttr.Int32 = gooxml.Int32(259)
 	s.x.DocDefaults.PPrDefault.PPr.Spacing.LineRuleAttr = wml.ST_LineSpacingRuleAuto
 }
+
+// Styles returns all styles.
+func (s Styles) Styles() []Style {
+	ret := []Style{}
+	for _, s := range s.x.Style {
+		ret = append(ret, Style{s})
+	}
+	return ret
+}
+
+// Styles returns only paragraph styles.
+func (s Styles) ParagraphStyles() []Style {
+	ret := []Style{}
+	for _, s := range s.x.Style {
+		if s.TypeAttr != wml.ST_StyleTypeParagraph {
+			continue
+		}
+		ret = append(ret, Style{s})
+	}
+	return ret
+}
