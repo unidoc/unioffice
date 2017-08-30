@@ -9,12 +9,13 @@ package wordprocessingml
 
 import (
 	"encoding/xml"
+	"fmt"
 	"log"
 )
 
 type CT_Endnotes struct {
 	// Endnote Content
-	Endnote *CT_FtnEdn
+	Endnote []*CT_FtnEdn
 }
 
 func NewCT_Endnotes() *CT_Endnotes {
@@ -46,10 +47,11 @@ lCT_Endnotes:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "endnote":
-				m.Endnote = NewCT_FtnEdn()
-				if err := d.DecodeElement(m.Endnote, &el); err != nil {
+				tmp := NewCT_FtnEdn()
+				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
+				m.Endnote = append(m.Endnote, tmp)
 			default:
 				log.Printf("skipping unsupported element %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -67,8 +69,8 @@ func (m *CT_Endnotes) Validate() error {
 	return m.ValidateWithPath("CT_Endnotes")
 }
 func (m *CT_Endnotes) ValidateWithPath(path string) error {
-	if m.Endnote != nil {
-		if err := m.Endnote.ValidateWithPath(path + "/Endnote"); err != nil {
+	for i, v := range m.Endnote {
+		if err := v.ValidateWithPath(fmt.Sprintf("%s/Endnote[%d]", path, i)); err != nil {
 			return err
 		}
 	}

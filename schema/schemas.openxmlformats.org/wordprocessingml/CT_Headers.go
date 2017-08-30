@@ -9,17 +9,17 @@ package wordprocessingml
 
 import (
 	"encoding/xml"
+	"fmt"
 	"log"
 )
 
 type CT_Headers struct {
 	// Header Cell Reference
-	Header *CT_String
+	Header []*CT_String
 }
 
 func NewCT_Headers() *CT_Headers {
 	ret := &CT_Headers{}
-	ret.Header = NewCT_String()
 	return ret
 }
 func (m *CT_Headers) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -35,7 +35,6 @@ func (m *CT_Headers) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Headers) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.Header = NewCT_String()
 lCT_Headers:
 	for {
 		tok, err := d.Token()
@@ -46,9 +45,11 @@ lCT_Headers:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "header":
-				if err := d.DecodeElement(m.Header, &el); err != nil {
+				tmp := NewCT_String()
+				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
+				m.Header = append(m.Header, tmp)
 			default:
 				log.Printf("skipping unsupported element %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -66,8 +67,10 @@ func (m *CT_Headers) Validate() error {
 	return m.ValidateWithPath("CT_Headers")
 }
 func (m *CT_Headers) ValidateWithPath(path string) error {
-	if err := m.Header.ValidateWithPath(path + "/Header"); err != nil {
-		return err
+	for i, v := range m.Header {
+		if err := v.ValidateWithPath(fmt.Sprintf("%s/Header[%d]", path, i)); err != nil {
+			return err
+		}
 	}
 	return nil
 }

@@ -51,10 +51,11 @@ lEndnotes:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "endnote":
-				m.Endnote = NewCT_FtnEdn()
-				if err := d.DecodeElement(m.Endnote, &el); err != nil {
+				tmp := NewCT_FtnEdn()
+				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
+				m.Endnote = append(m.Endnote, tmp)
 			default:
 				log.Printf("skipping unsupported element %v", el.Name)
 				if err := d.Skip(); err != nil {

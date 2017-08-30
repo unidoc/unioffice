@@ -51,10 +51,11 @@ lFootnotes:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "footnote":
-				m.Footnote = NewCT_FtnEdn()
-				if err := d.DecodeElement(m.Footnote, &el); err != nil {
+				tmp := NewCT_FtnEdn()
+				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
+				m.Footnote = append(m.Footnote, tmp)
 			default:
 				log.Printf("skipping unsupported element %v", el.Name)
 				if err := d.Skip(); err != nil {
