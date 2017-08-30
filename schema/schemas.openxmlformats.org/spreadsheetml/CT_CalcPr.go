@@ -121,7 +121,6 @@ func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CalcIdAttr = &pt
 		}
@@ -150,7 +149,6 @@ func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.IterateCountAttr = &pt
 		}
@@ -194,7 +192,6 @@ func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ConcurrentManualCountAttr = &pt
 		}

@@ -22,6 +22,7 @@ type CT_TableStyleList struct {
 
 func NewCT_TableStyleList() *CT_TableStyleList {
 	ret := &CT_TableStyleList{}
+	ret.DefAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
 func (m *CT_TableStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -41,6 +42,7 @@ func (m *CT_TableStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 }
 func (m *CT_TableStyleList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.DefAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "def" {
 			parsed, err := attr.Value, error(nil)

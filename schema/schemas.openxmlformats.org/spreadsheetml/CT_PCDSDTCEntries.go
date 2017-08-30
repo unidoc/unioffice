@@ -68,7 +68,6 @@ func (m *CT_PCDSDTCEntries) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CountAttr = &pt
 		}

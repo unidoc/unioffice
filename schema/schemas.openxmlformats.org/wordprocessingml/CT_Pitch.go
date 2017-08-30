@@ -19,6 +19,7 @@ type CT_Pitch struct {
 
 func NewCT_Pitch() *CT_Pitch {
 	ret := &CT_Pitch{}
+	ret.ValAttr = ST_Pitch(1)
 	return ret
 }
 func (m *CT_Pitch) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_Pitch) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Pitch) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_Pitch(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

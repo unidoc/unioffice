@@ -44,6 +44,7 @@ type CT_PivotFilter struct {
 
 func NewCT_PivotFilter() *CT_PivotFilter {
 	ret := &CT_PivotFilter{}
+	ret.TypeAttr = ST_PivotFilterType(1)
 	ret.AutoFilter = NewCT_AutoFilter()
 	return ret
 }
@@ -105,6 +106,7 @@ func (m *CT_PivotFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 }
 func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_PivotFilterType(1)
 	m.AutoFilter = NewCT_AutoFilter()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "fld" {
@@ -119,7 +121,6 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.MpFldAttr = &pt
 		}
@@ -131,7 +132,6 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.EvalOrderAttr = &pt
 		}
@@ -147,7 +147,6 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.IMeasureHierAttr = &pt
 		}
@@ -156,7 +155,6 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.IMeasureFldAttr = &pt
 		}

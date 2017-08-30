@@ -21,6 +21,7 @@ type CT_NumFmt struct {
 
 func NewCT_NumFmt() *CT_NumFmt {
 	ret := &CT_NumFmt{}
+	ret.ValAttr = ST_NumberFormat(1)
 	return ret
 }
 func (m *CT_NumFmt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -43,6 +44,7 @@ func (m *CT_NumFmt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_NumFmt) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_NumberFormat(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

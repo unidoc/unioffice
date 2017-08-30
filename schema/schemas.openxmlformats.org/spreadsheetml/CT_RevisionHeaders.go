@@ -47,6 +47,7 @@ type CT_RevisionHeaders struct {
 
 func NewCT_RevisionHeaders() *CT_RevisionHeaders {
 	ret := &CT_RevisionHeaders{}
+	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
 func (m *CT_RevisionHeaders) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -108,6 +109,7 @@ func (m *CT_RevisionHeaders) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 }
 func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "guid" {
 			parsed, err := attr.Value, error(nil)
@@ -163,7 +165,6 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RevisionIdAttr = &pt
 		}
@@ -172,7 +173,6 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.VersionAttr = &pt
 		}
@@ -195,7 +195,6 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.PreserveHistoryAttr = &pt
 		}

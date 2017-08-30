@@ -30,6 +30,7 @@ type CT_ObjectLink struct {
 
 func NewCT_ObjectLink() *CT_ObjectLink {
 	ret := &CT_ObjectLink{}
+	ret.UpdateModeAttr = ST_ObjectUpdateMode(1)
 	return ret
 }
 func (m *CT_ObjectLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -73,6 +74,7 @@ func (m *CT_ObjectLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 }
 func (m *CT_ObjectLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.UpdateModeAttr = ST_ObjectUpdateMode(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "updateMode" {
 			m.UpdateModeAttr.UnmarshalXMLAttr(attr)

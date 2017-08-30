@@ -89,7 +89,6 @@ func (m *CT_TLCommonMediaNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartE
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.NumSldAttr = &pt
 		}

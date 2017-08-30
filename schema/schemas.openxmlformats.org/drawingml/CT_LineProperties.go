@@ -127,7 +127,6 @@ func (m *CT_LineProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.WAttr = &pt
 		}

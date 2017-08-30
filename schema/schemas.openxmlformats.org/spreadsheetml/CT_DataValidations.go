@@ -73,7 +73,6 @@ func (m *CT_DataValidations) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.XWindowAttr = &pt
 		}
@@ -82,7 +81,6 @@ func (m *CT_DataValidations) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.YWindowAttr = &pt
 		}
@@ -91,7 +89,6 @@ func (m *CT_DataValidations) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CountAttr = &pt
 		}

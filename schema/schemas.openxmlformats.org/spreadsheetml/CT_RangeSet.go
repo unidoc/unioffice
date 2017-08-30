@@ -84,7 +84,6 @@ func (m *CT_RangeSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.I1Attr = &pt
 		}
@@ -93,7 +92,6 @@ func (m *CT_RangeSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.I2Attr = &pt
 		}
@@ -102,7 +100,6 @@ func (m *CT_RangeSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.I3Attr = &pt
 		}
@@ -111,7 +108,6 @@ func (m *CT_RangeSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.I4Attr = &pt
 		}

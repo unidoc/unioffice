@@ -70,7 +70,6 @@ func (m *CT_PageNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.StartAttr = &pt
 		}
@@ -79,7 +78,6 @@ func (m *CT_PageNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.ChapStyleAttr = &pt
 		}

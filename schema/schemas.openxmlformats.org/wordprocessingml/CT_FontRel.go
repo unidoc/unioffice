@@ -22,6 +22,7 @@ type CT_FontRel struct {
 
 func NewCT_FontRel() *CT_FontRel {
 	ret := &CT_FontRel{}
+	ret.FontKeyAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
 func (m *CT_FontRel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -41,6 +42,7 @@ func (m *CT_FontRel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_FontRel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.FontKeyAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "fontKey" {
 			parsed, err := attr.Value, error(nil)

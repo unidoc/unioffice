@@ -19,6 +19,7 @@ type CT_ProofErr struct {
 
 func NewCT_ProofErr() *CT_ProofErr {
 	ret := &CT_ProofErr{}
+	ret.TypeAttr = ST_ProofErr(1)
 	return ret
 }
 func (m *CT_ProofErr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_ProofErr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_ProofErr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_ProofErr(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

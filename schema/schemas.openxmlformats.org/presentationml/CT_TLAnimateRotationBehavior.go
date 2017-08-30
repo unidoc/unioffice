@@ -61,7 +61,6 @@ func (m *CT_TLAnimateRotationBehavior) UnmarshalXML(d *xml.Decoder, start xml.St
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.ByAttr = &pt
 		}
@@ -70,7 +69,6 @@ func (m *CT_TLAnimateRotationBehavior) UnmarshalXML(d *xml.Decoder, start xml.St
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.FromAttr = &pt
 		}
@@ -79,7 +77,6 @@ func (m *CT_TLAnimateRotationBehavior) UnmarshalXML(d *xml.Decoder, start xml.St
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.ToAttr = &pt
 		}

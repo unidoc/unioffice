@@ -19,6 +19,7 @@ type CT_MailMergeDocType struct {
 
 func NewCT_MailMergeDocType() *CT_MailMergeDocType {
 	ret := &CT_MailMergeDocType{}
+	ret.ValAttr = ST_MailMergeDocType(1)
 	return ret
 }
 func (m *CT_MailMergeDocType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_MailMergeDocType) MarshalXML(e *xml.Encoder, start xml.StartElement)
 }
 func (m *CT_MailMergeDocType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_MailMergeDocType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

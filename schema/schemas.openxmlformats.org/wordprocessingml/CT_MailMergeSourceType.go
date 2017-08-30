@@ -19,6 +19,7 @@ type CT_MailMergeSourceType struct {
 
 func NewCT_MailMergeSourceType() *CT_MailMergeSourceType {
 	ret := &CT_MailMergeSourceType{}
+	ret.ValAttr = ST_MailMergeSourceType(1)
 	return ret
 }
 func (m *CT_MailMergeSourceType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_MailMergeSourceType) MarshalXML(e *xml.Encoder, start xml.StartEleme
 }
 func (m *CT_MailMergeSourceType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_MailMergeSourceType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

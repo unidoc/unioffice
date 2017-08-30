@@ -20,6 +20,7 @@ type CT_PresetColor struct {
 
 func NewCT_PresetColor() *CT_PresetColor {
 	ret := &CT_PresetColor{}
+	ret.ValAttr = ST_PresetColorVal(1)
 	return ret
 }
 func (m *CT_PresetColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -43,6 +44,7 @@ func (m *CT_PresetColor) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 }
 func (m *CT_PresetColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_PresetColorVal(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

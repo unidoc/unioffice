@@ -232,7 +232,6 @@ func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.IdAttr = &pt
 		}
@@ -241,7 +240,6 @@ func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.PresetIDAttr = &pt
 		}
@@ -253,7 +251,6 @@ func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.PresetSubtypeAttr = &pt
 		}
@@ -344,7 +341,6 @@ func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.BldLvlAttr = &pt
 		}
@@ -353,7 +349,6 @@ func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.GrpIdAttr = &pt
 		}

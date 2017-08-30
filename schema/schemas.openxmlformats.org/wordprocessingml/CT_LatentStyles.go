@@ -89,7 +89,6 @@ func (m *CT_LatentStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.DefUIPriorityAttr = &pt
 		}
@@ -119,7 +118,6 @@ func (m *CT_LatentStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.CountAttr = &pt
 		}

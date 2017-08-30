@@ -132,7 +132,6 @@ func (m *CT_WebPublishing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DpiAttr = &pt
 		}
@@ -141,7 +140,6 @@ func (m *CT_WebPublishing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CodePageAttr = &pt
 		}

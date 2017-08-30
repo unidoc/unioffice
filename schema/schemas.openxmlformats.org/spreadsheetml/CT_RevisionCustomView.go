@@ -23,6 +23,8 @@ type CT_RevisionCustomView struct {
 
 func NewCT_RevisionCustomView() *CT_RevisionCustomView {
 	ret := &CT_RevisionCustomView{}
+	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
+	ret.ActionAttr = ST_RevisionAction(1)
 	return ret
 }
 func (m *CT_RevisionCustomView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -43,6 +45,8 @@ func (m *CT_RevisionCustomView) MarshalXML(e *xml.Encoder, start xml.StartElemen
 }
 func (m *CT_RevisionCustomView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
+	m.ActionAttr = ST_RevisionAction(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "guid" {
 			parsed, err := attr.Value, error(nil)

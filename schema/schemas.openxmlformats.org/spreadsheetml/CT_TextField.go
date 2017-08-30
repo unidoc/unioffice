@@ -55,7 +55,6 @@ func (m *CT_TextField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.PositionAttr = &pt
 		}

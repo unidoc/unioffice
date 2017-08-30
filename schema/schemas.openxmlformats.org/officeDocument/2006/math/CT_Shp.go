@@ -18,6 +18,7 @@ type CT_Shp struct {
 
 func NewCT_Shp() *CT_Shp {
 	ret := &CT_Shp{}
+	ret.ValAttr = ST_Shp(1)
 	return ret
 }
 func (m *CT_Shp) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +37,7 @@ func (m *CT_Shp) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Shp) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_Shp(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

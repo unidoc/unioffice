@@ -19,6 +19,7 @@ type CT_HdrFtrRef struct {
 
 func NewCT_HdrFtrRef() *CT_HdrFtrRef {
 	ret := &CT_HdrFtrRef{}
+	ret.TypeAttr = ST_HdrFtr(1)
 	return ret
 }
 func (m *CT_HdrFtrRef) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -39,6 +40,7 @@ func (m *CT_HdrFtrRef) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 }
 func (m *CT_HdrFtrRef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_HdrFtr(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

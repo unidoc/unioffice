@@ -83,7 +83,6 @@ func (m *CT_ColorTransformHeader) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.ResIdAttr = &pt
 		}

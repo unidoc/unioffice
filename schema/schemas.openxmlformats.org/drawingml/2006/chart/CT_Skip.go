@@ -19,6 +19,7 @@ type CT_Skip struct {
 
 func NewCT_Skip() *CT_Skip {
 	ret := &CT_Skip{}
+	ret.ValAttr = 1
 	return ret
 }
 func (m *CT_Skip) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -34,6 +35,7 @@ func (m *CT_Skip) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Skip) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = 1
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

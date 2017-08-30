@@ -19,6 +19,7 @@ type CT_TextAlignment struct {
 
 func NewCT_TextAlignment() *CT_TextAlignment {
 	ret := &CT_TextAlignment{}
+	ret.ValAttr = ST_TextAlignment(1)
 	return ret
 }
 func (m *CT_TextAlignment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_TextAlignment) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 }
 func (m *CT_TextAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_TextAlignment(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

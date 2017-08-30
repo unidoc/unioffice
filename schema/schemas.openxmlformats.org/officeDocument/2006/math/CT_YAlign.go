@@ -20,6 +20,7 @@ type CT_YAlign struct {
 
 func NewCT_YAlign() *CT_YAlign {
 	ret := &CT_YAlign{}
+	ret.ValAttr = sharedTypes.ST_YAlign(1)
 	return ret
 }
 func (m *CT_YAlign) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -38,6 +39,7 @@ func (m *CT_YAlign) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_YAlign) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = sharedTypes.ST_YAlign(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

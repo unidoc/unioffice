@@ -31,6 +31,18 @@ type CT_ColorMapping struct {
 
 func NewCT_ColorMapping() *CT_ColorMapping {
 	ret := &CT_ColorMapping{}
+	ret.Bg1Attr = ST_ColorSchemeIndex(1)
+	ret.Tx1Attr = ST_ColorSchemeIndex(1)
+	ret.Bg2Attr = ST_ColorSchemeIndex(1)
+	ret.Tx2Attr = ST_ColorSchemeIndex(1)
+	ret.Accent1Attr = ST_ColorSchemeIndex(1)
+	ret.Accent2Attr = ST_ColorSchemeIndex(1)
+	ret.Accent3Attr = ST_ColorSchemeIndex(1)
+	ret.Accent4Attr = ST_ColorSchemeIndex(1)
+	ret.Accent5Attr = ST_ColorSchemeIndex(1)
+	ret.Accent6Attr = ST_ColorSchemeIndex(1)
+	ret.HlinkAttr = ST_ColorSchemeIndex(1)
+	ret.FolHlinkAttr = ST_ColorSchemeIndex(1)
 	return ret
 }
 func (m *CT_ColorMapping) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -108,6 +120,18 @@ func (m *CT_ColorMapping) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 }
 func (m *CT_ColorMapping) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.Bg1Attr = ST_ColorSchemeIndex(1)
+	m.Tx1Attr = ST_ColorSchemeIndex(1)
+	m.Bg2Attr = ST_ColorSchemeIndex(1)
+	m.Tx2Attr = ST_ColorSchemeIndex(1)
+	m.Accent1Attr = ST_ColorSchemeIndex(1)
+	m.Accent2Attr = ST_ColorSchemeIndex(1)
+	m.Accent3Attr = ST_ColorSchemeIndex(1)
+	m.Accent4Attr = ST_ColorSchemeIndex(1)
+	m.Accent5Attr = ST_ColorSchemeIndex(1)
+	m.Accent6Attr = ST_ColorSchemeIndex(1)
+	m.HlinkAttr = ST_ColorSchemeIndex(1)
+	m.FolHlinkAttr = ST_ColorSchemeIndex(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bg1" {
 			m.Bg1Attr.UnmarshalXMLAttr(attr)

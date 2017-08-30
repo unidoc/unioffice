@@ -117,7 +117,6 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.NameLenAttr = &pt
 		}
@@ -126,7 +125,6 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.PPosAttr = &pt
 		}
@@ -135,7 +133,6 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.PLenAttr = &pt
 		}
@@ -144,7 +141,6 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LevelAttr = &pt
 		}

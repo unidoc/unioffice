@@ -114,7 +114,6 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.MissingItemsLimitAttr = &pt
 		}
@@ -123,7 +122,6 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.CreatedVersionAttr = &pt
 		}
@@ -132,7 +130,6 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.RefreshedVersionAttr = &pt
 		}
@@ -141,7 +138,6 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.MinRefreshableVersionAttr = &pt
 		}
@@ -150,7 +146,6 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RecordCountAttr = &pt
 		}

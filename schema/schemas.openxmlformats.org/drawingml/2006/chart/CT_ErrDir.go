@@ -18,6 +18,7 @@ type CT_ErrDir struct {
 
 func NewCT_ErrDir() *CT_ErrDir {
 	ret := &CT_ErrDir{}
+	ret.ValAttr = ST_ErrDir(1)
 	return ret
 }
 func (m *CT_ErrDir) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +37,7 @@ func (m *CT_ErrDir) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_ErrDir) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_ErrDir(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

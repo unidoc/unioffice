@@ -23,6 +23,7 @@ type CT_Camera struct {
 
 func NewCT_Camera() *CT_Camera {
 	ret := &CT_Camera{}
+	ret.PrstAttr = ST_PresetCameraType(1)
 	return ret
 }
 func (m *CT_Camera) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -53,6 +54,7 @@ func (m *CT_Camera) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Camera) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PrstAttr = ST_PresetCameraType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prst" {
 			m.PrstAttr.UnmarshalXMLAttr(attr)
@@ -62,7 +64,6 @@ func (m *CT_Camera) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.FovAttr = &pt
 		}

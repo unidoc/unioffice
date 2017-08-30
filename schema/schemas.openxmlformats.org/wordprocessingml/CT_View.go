@@ -19,6 +19,7 @@ type CT_View struct {
 
 func NewCT_View() *CT_View {
 	ret := &CT_View{}
+	ret.ValAttr = ST_View(1)
 	return ret
 }
 func (m *CT_View) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_View) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_View) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_View(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

@@ -23,6 +23,7 @@ type CT_SlideIdListEntry struct {
 
 func NewCT_SlideIdListEntry() *CT_SlideIdListEntry {
 	ret := &CT_SlideIdListEntry{}
+	ret.IdAttr = 256
 	return ret
 }
 func (m *CT_SlideIdListEntry) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -44,6 +45,7 @@ func (m *CT_SlideIdListEntry) MarshalXML(e *xml.Encoder, start xml.StartElement)
 }
 func (m *CT_SlideIdListEntry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.IdAttr = 256
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

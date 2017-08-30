@@ -19,6 +19,8 @@ type CT_Default struct {
 
 func NewCT_Default() *CT_Default {
 	ret := &CT_Default{}
+	ret.ExtensionAttr = "xml"
+	ret.ContentTypeAttr = "application/xml"
 	return ret
 }
 func (m *CT_Default) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +38,8 @@ func (m *CT_Default) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Default) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ExtensionAttr = "xml"
+	m.ContentTypeAttr = "application/xml"
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "Extension" {
 			parsed, err := attr.Value, error(nil)

@@ -26,6 +26,7 @@ type CT_Cfvo struct {
 
 func NewCT_Cfvo() *CT_Cfvo {
 	ret := &CT_Cfvo{}
+	ret.TypeAttr = ST_CfvoType(1)
 	return ret
 }
 func (m *CT_Cfvo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -56,6 +57,7 @@ func (m *CT_Cfvo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Cfvo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_CfvoType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

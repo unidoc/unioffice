@@ -89,7 +89,6 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.BaseColWidthAttr = &pt
 		}
@@ -140,7 +139,6 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.OutlineLevelRowAttr = &pt
 		}
@@ -149,7 +147,6 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.OutlineLevelColAttr = &pt
 		}

@@ -409,7 +409,6 @@ func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.NumFmtIdAttr = &pt
 		}
@@ -537,7 +536,6 @@ func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ItemPageCountAttr = &pt
 		}
@@ -563,7 +561,6 @@ func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RankByAttr = &pt
 		}

@@ -125,7 +125,6 @@ func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.MinimumVersionAttr = &pt
 		}
@@ -134,7 +133,6 @@ func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.NextIdAttr = &pt
 		}
@@ -143,7 +141,6 @@ func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.UnboundColumnsLeftAttr = &pt
 		}
@@ -152,7 +149,6 @@ func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.UnboundColumnsRightAttr = &pt
 		}

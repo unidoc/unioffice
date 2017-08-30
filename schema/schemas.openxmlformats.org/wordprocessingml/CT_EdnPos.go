@@ -19,6 +19,7 @@ type CT_EdnPos struct {
 
 func NewCT_EdnPos() *CT_EdnPos {
 	ret := &CT_EdnPos{}
+	ret.ValAttr = ST_EdnPos(1)
 	return ret
 }
 func (m *CT_EdnPos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_EdnPos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_EdnPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_EdnPos(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

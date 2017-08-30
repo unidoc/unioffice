@@ -38,6 +38,7 @@ type CT_RevisionRowColumn struct {
 
 func NewCT_RevisionRowColumn() *CT_RevisionRowColumn {
 	ret := &CT_RevisionRowColumn{}
+	ret.ActionAttr = ST_rwColActionType(1)
 	return ret
 }
 func (m *CT_RevisionRowColumn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -92,6 +93,7 @@ func (m *CT_RevisionRowColumn) MarshalXML(e *xml.Encoder, start xml.StartElement
 }
 func (m *CT_RevisionRowColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ActionAttr = ST_rwColActionType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "sId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -129,7 +131,6 @@ func (m *CT_RevisionRowColumn) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RIdAttr = &pt
 		}

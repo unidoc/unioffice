@@ -111,7 +111,6 @@ func (m *CT_Cell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SAttr = &pt
 		}
@@ -123,7 +122,6 @@ func (m *CT_Cell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CmAttr = &pt
 		}
@@ -132,7 +130,6 @@ func (m *CT_Cell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.VmAttr = &pt
 		}

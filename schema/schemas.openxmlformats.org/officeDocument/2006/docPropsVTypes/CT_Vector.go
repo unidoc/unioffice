@@ -44,6 +44,7 @@ type CT_Vector struct {
 
 func NewCT_Vector() *CT_Vector {
 	ret := &CT_Vector{}
+	ret.BaseTypeAttr = ST_VectorBaseType(1)
 	return ret
 }
 func (m *CT_Vector) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -144,6 +145,7 @@ func (m *CT_Vector) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Vector) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.BaseTypeAttr = ST_VectorBaseType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "baseType" {
 			m.BaseTypeAttr.UnmarshalXMLAttr(attr)

@@ -19,6 +19,7 @@ type CT_StyleSort struct {
 
 func NewCT_StyleSort() *CT_StyleSort {
 	ret := &CT_StyleSort{}
+	ret.ValAttr = ST_StyleSort(1)
 	return ret
 }
 func (m *CT_StyleSort) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_StyleSort) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 }
 func (m *CT_StyleSort) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_StyleSort(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

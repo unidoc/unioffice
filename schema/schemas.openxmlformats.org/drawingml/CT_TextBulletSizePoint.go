@@ -19,6 +19,7 @@ type CT_TextBulletSizePoint struct {
 
 func NewCT_TextBulletSizePoint() *CT_TextBulletSizePoint {
 	ret := &CT_TextBulletSizePoint{}
+	ret.ValAttr = 100
 	return ret
 }
 func (m *CT_TextBulletSizePoint) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -34,6 +35,7 @@ func (m *CT_TextBulletSizePoint) MarshalXML(e *xml.Encoder, start xml.StartEleme
 }
 func (m *CT_TextBulletSizePoint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = 100
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

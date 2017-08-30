@@ -67,7 +67,6 @@ func (m *CT_Break) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.IdAttr = &pt
 		}
@@ -76,7 +75,6 @@ func (m *CT_Break) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.MinAttr = &pt
 		}
@@ -85,7 +83,6 @@ func (m *CT_Break) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.MaxAttr = &pt
 		}

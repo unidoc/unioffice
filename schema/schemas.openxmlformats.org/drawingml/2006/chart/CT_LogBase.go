@@ -19,6 +19,7 @@ type CT_LogBase struct {
 
 func NewCT_LogBase() *CT_LogBase {
 	ret := &CT_LogBase{}
+	ret.ValAttr = 2
 	return ret
 }
 func (m *CT_LogBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -34,6 +35,7 @@ func (m *CT_LogBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_LogBase) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = 2
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)

@@ -19,6 +19,7 @@ type CT_DocPartGallery struct {
 
 func NewCT_DocPartGallery() *CT_DocPartGallery {
 	ret := &CT_DocPartGallery{}
+	ret.ValAttr = ST_DocPartGallery(1)
 	return ret
 }
 func (m *CT_DocPartGallery) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_DocPartGallery) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 }
 func (m *CT_DocPartGallery) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_DocPartGallery(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

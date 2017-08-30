@@ -20,6 +20,7 @@ type CT_SchemeColor struct {
 
 func NewCT_SchemeColor() *CT_SchemeColor {
 	ret := &CT_SchemeColor{}
+	ret.ValAttr = ST_SchemeColorVal(1)
 	return ret
 }
 func (m *CT_SchemeColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -43,6 +44,7 @@ func (m *CT_SchemeColor) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 }
 func (m *CT_SchemeColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_SchemeColorVal(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

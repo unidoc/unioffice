@@ -42,7 +42,6 @@ func (m *CT_MarkerSize) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.ValAttr = &pt
 		}

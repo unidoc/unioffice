@@ -18,6 +18,7 @@ type CT_CrossBetween struct {
 
 func NewCT_CrossBetween() *CT_CrossBetween {
 	ret := &CT_CrossBetween{}
+	ret.ValAttr = ST_CrossBetween(1)
 	return ret
 }
 func (m *CT_CrossBetween) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +37,7 @@ func (m *CT_CrossBetween) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 }
 func (m *CT_CrossBetween) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_CrossBetween(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

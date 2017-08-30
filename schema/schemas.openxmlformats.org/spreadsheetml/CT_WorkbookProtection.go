@@ -197,7 +197,6 @@ func (m *CT_WorkbookProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RevisionsSpinCountAttr = &pt
 		}
@@ -227,7 +226,6 @@ func (m *CT_WorkbookProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.WorkbookSpinCountAttr = &pt
 		}

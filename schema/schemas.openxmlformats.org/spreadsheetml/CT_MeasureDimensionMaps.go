@@ -50,7 +50,6 @@ func (m *CT_MeasureDimensionMaps) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CountAttr = &pt
 		}

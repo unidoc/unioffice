@@ -54,7 +54,6 @@ func (m *CT_DdeValues) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.RowsAttr = &pt
 		}
@@ -63,7 +62,6 @@ func (m *CT_DdeValues) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ColsAttr = &pt
 		}

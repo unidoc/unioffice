@@ -37,6 +37,7 @@ type CT_TableStyle struct {
 
 func NewCT_TableStyle() *CT_TableStyle {
 	ret := &CT_TableStyle{}
+	ret.StyleIdAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
 func (m *CT_TableStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -114,6 +115,7 @@ func (m *CT_TableStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 }
 func (m *CT_TableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.StyleIdAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "styleId" {
 			parsed, err := attr.Value, error(nil)

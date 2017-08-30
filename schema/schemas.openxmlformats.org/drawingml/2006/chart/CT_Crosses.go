@@ -18,6 +18,7 @@ type CT_Crosses struct {
 
 func NewCT_Crosses() *CT_Crosses {
 	ret := &CT_Crosses{}
+	ret.ValAttr = ST_Crosses(1)
 	return ret
 }
 func (m *CT_Crosses) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +37,7 @@ func (m *CT_Crosses) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Crosses) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_Crosses(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

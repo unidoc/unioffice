@@ -67,7 +67,6 @@ func (m *CT_ExternalDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SheetIdAttr = &pt
 		}

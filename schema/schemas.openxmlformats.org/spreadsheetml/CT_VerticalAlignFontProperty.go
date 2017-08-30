@@ -21,6 +21,7 @@ type CT_VerticalAlignFontProperty struct {
 
 func NewCT_VerticalAlignFontProperty() *CT_VerticalAlignFontProperty {
 	ret := &CT_VerticalAlignFontProperty{}
+	ret.ValAttr = sharedTypes.ST_VerticalAlignRun(1)
 	return ret
 }
 func (m *CT_VerticalAlignFontProperty) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -39,6 +40,7 @@ func (m *CT_VerticalAlignFontProperty) MarshalXML(e *xml.Encoder, start xml.Star
 }
 func (m *CT_VerticalAlignFontProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = sharedTypes.ST_VerticalAlignRun(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

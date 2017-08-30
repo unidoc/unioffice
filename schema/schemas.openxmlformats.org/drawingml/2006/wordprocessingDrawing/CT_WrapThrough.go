@@ -23,6 +23,7 @@ type CT_WrapThrough struct {
 
 func NewCT_WrapThrough() *CT_WrapThrough {
 	ret := &CT_WrapThrough{}
+	ret.WrapTextAttr = ST_WrapText(1)
 	ret.WrapPolygon = NewCT_WrapPath()
 	return ret
 }
@@ -52,6 +53,7 @@ func (m *CT_WrapThrough) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 }
 func (m *CT_WrapThrough) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.WrapTextAttr = ST_WrapText(1)
 	m.WrapPolygon = NewCT_WrapPath()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "wrapText" {
@@ -62,7 +64,6 @@ func (m *CT_WrapThrough) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DistLAttr = &pt
 		}
@@ -71,7 +72,6 @@ func (m *CT_WrapThrough) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DistRAttr = &pt
 		}

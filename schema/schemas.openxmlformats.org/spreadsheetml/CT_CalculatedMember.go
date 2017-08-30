@@ -117,7 +117,6 @@ func (m *CT_CalculatedMember) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.SolveOrderAttr = &pt
 		}

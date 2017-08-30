@@ -20,6 +20,7 @@ type CT_BlendEffect struct {
 
 func NewCT_BlendEffect() *CT_BlendEffect {
 	ret := &CT_BlendEffect{}
+	ret.BlendAttr = ST_BlendMode(1)
 	ret.Cont = NewCT_EffectContainer()
 	return ret
 }
@@ -41,6 +42,7 @@ func (m *CT_BlendEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 }
 func (m *CT_BlendEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.BlendAttr = ST_BlendMode(1)
 	m.Cont = NewCT_EffectContainer()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "blend" {

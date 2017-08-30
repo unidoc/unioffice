@@ -72,7 +72,6 @@ func (m *CT_EastAsianLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.IdAttr = &pt
 		}

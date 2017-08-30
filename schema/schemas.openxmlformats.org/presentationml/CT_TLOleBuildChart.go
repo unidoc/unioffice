@@ -77,7 +77,6 @@ func (m *CT_TLOleBuildChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SpidAttr = &pt
 		}
@@ -86,7 +85,6 @@ func (m *CT_TLOleBuildChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.GrpIdAttr = &pt
 		}

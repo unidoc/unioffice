@@ -18,6 +18,7 @@ type CT_MarkerStyle struct {
 
 func NewCT_MarkerStyle() *CT_MarkerStyle {
 	ret := &CT_MarkerStyle{}
+	ret.ValAttr = ST_MarkerStyle(1)
 	return ret
 }
 func (m *CT_MarkerStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +37,7 @@ func (m *CT_MarkerStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 }
 func (m *CT_MarkerStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_MarkerStyle(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

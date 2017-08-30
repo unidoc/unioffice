@@ -18,6 +18,7 @@ type CT_FType struct {
 
 func NewCT_FType() *CT_FType {
 	ret := &CT_FType{}
+	ret.ValAttr = ST_FType(1)
 	return ret
 }
 func (m *CT_FType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -36,6 +37,7 @@ func (m *CT_FType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_FType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_FType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

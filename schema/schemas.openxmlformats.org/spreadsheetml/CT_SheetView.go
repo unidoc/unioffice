@@ -264,7 +264,6 @@ func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ColorIdAttr = &pt
 		}
@@ -273,7 +272,6 @@ func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ZoomScaleAttr = &pt
 		}
@@ -282,7 +280,6 @@ func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ZoomScaleNormalAttr = &pt
 		}
@@ -291,7 +288,6 @@ func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ZoomScaleSheetLayoutViewAttr = &pt
 		}
@@ -300,7 +296,6 @@ func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ZoomScalePageLayoutViewAttr = &pt
 		}

@@ -19,6 +19,7 @@ type CT_LevelSuffix struct {
 
 func NewCT_LevelSuffix() *CT_LevelSuffix {
 	ret := &CT_LevelSuffix{}
+	ret.ValAttr = ST_LevelSuffix(1)
 	return ret
 }
 func (m *CT_LevelSuffix) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_LevelSuffix) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 }
 func (m *CT_LevelSuffix) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_LevelSuffix(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

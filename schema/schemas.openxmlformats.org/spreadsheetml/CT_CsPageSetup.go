@@ -119,7 +119,6 @@ func (m *CT_CsPageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.PaperSizeAttr = &pt
 		}
@@ -142,7 +141,6 @@ func (m *CT_CsPageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.FirstPageNumberAttr = &pt
 		}
@@ -182,7 +180,6 @@ func (m *CT_CsPageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.HorizontalDpiAttr = &pt
 		}
@@ -191,7 +188,6 @@ func (m *CT_CsPageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.VerticalDpiAttr = &pt
 		}
@@ -200,7 +196,6 @@ func (m *CT_CsPageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.CopiesAttr = &pt
 		}

@@ -19,6 +19,7 @@ type CT_Em struct {
 
 func NewCT_Em() *CT_Em {
 	ret := &CT_Em{}
+	ret.ValAttr = ST_Em(1)
 	return ret
 }
 func (m *CT_Em) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_Em) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Em) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_Em(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

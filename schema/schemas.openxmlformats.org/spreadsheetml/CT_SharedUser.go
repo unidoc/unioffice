@@ -31,6 +31,7 @@ type CT_SharedUser struct {
 
 func NewCT_SharedUser() *CT_SharedUser {
 	ret := &CT_SharedUser{}
+	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
 func (m *CT_SharedUser) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -56,6 +57,7 @@ func (m *CT_SharedUser) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 }
 func (m *CT_SharedUser) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "guid" {
 			parsed, err := attr.Value, error(nil)

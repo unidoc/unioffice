@@ -49,7 +49,6 @@ func (m *CT_MeasureDimensionMap) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.MeasureGroupAttr = &pt
 		}
@@ -58,7 +57,6 @@ func (m *CT_MeasureDimensionMap) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DimensionAttr = &pt
 		}

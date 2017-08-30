@@ -19,6 +19,7 @@ type CT_TLTriggerRuntimeNode struct {
 
 func NewCT_TLTriggerRuntimeNode() *CT_TLTriggerRuntimeNode {
 	ret := &CT_TLTriggerRuntimeNode{}
+	ret.ValAttr = ST_TLTriggerRuntimeNode(1)
 	return ret
 }
 func (m *CT_TLTriggerRuntimeNode) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_TLTriggerRuntimeNode) MarshalXML(e *xml.Encoder, start xml.StartElem
 }
 func (m *CT_TLTriggerRuntimeNode) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_TLTriggerRuntimeNode(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

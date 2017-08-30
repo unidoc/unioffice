@@ -25,6 +25,7 @@ type CT_FillOverlayEffect struct {
 
 func NewCT_FillOverlayEffect() *CT_FillOverlayEffect {
 	ret := &CT_FillOverlayEffect{}
+	ret.BlendAttr = ST_BlendMode(1)
 	return ret
 }
 func (m *CT_FillOverlayEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -67,6 +68,7 @@ func (m *CT_FillOverlayEffect) MarshalXML(e *xml.Encoder, start xml.StartElement
 }
 func (m *CT_FillOverlayEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.BlendAttr = ST_BlendMode(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "blend" {
 			m.BlendAttr.UnmarshalXMLAttr(attr)

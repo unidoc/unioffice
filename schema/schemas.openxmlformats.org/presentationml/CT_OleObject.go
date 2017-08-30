@@ -118,7 +118,6 @@ func (m *CT_OleObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.ImgWAttr = &pt
 		}
@@ -127,7 +126,6 @@ func (m *CT_OleObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.ImgHAttr = &pt
 		}

@@ -29,6 +29,7 @@ type CT_DynamicFilter struct {
 
 func NewCT_DynamicFilter() *CT_DynamicFilter {
 	ret := &CT_DynamicFilter{}
+	ret.TypeAttr = ST_DynamicFilterType(1)
 	return ret
 }
 func (m *CT_DynamicFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -63,6 +64,7 @@ func (m *CT_DynamicFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 }
 func (m *CT_DynamicFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_DynamicFilterType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

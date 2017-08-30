@@ -19,6 +19,7 @@ type CT_SoftEdgesEffect struct {
 
 func NewCT_SoftEdgesEffect() *CT_SoftEdgesEffect {
 	ret := &CT_SoftEdgesEffect{}
+	ret.RadAttr = 0
 	return ret
 }
 func (m *CT_SoftEdgesEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -34,6 +35,7 @@ func (m *CT_SoftEdgesEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 }
 func (m *CT_SoftEdgesEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.RadAttr = 0
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "rad" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)

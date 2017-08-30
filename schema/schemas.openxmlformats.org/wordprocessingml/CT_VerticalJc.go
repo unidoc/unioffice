@@ -19,6 +19,7 @@ type CT_VerticalJc struct {
 
 func NewCT_VerticalJc() *CT_VerticalJc {
 	ret := &CT_VerticalJc{}
+	ret.ValAttr = ST_VerticalJc(1)
 	return ret
 }
 func (m *CT_VerticalJc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_VerticalJc) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 }
 func (m *CT_VerticalJc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_VerticalJc(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

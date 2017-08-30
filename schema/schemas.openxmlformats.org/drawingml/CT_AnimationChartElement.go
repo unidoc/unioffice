@@ -21,6 +21,7 @@ type CT_AnimationChartElement struct {
 
 func NewCT_AnimationChartElement() *CT_AnimationChartElement {
 	ret := &CT_AnimationChartElement{}
+	ret.BldStepAttr = ST_ChartBuildStep(1)
 	return ret
 }
 func (m *CT_AnimationChartElement) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -47,13 +48,13 @@ func (m *CT_AnimationChartElement) MarshalXML(e *xml.Encoder, start xml.StartEle
 }
 func (m *CT_AnimationChartElement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.BldStepAttr = ST_ChartBuildStep(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "seriesIdx" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.SeriesIdxAttr = &pt
 		}
@@ -62,7 +63,6 @@ func (m *CT_AnimationChartElement) UnmarshalXML(d *xml.Decoder, start xml.StartE
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.CategoryIdxAttr = &pt
 		}

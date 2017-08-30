@@ -18,6 +18,7 @@ type CT_TextBulletSizePercent struct {
 
 func NewCT_TextBulletSizePercent() *CT_TextBulletSizePercent {
 	ret := &CT_TextBulletSizePercent{}
+	ret.ValAttr = "100%"
 	return ret
 }
 func (m *CT_TextBulletSizePercent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -33,6 +34,7 @@ func (m *CT_TextBulletSizePercent) MarshalXML(e *xml.Encoder, start xml.StartEle
 }
 func (m *CT_TextBulletSizePercent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = "100%"
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := attr.Value, error(nil)

@@ -130,7 +130,6 @@ func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.CryptAlgorithmSidAttr = &pt
 		}
@@ -139,7 +138,6 @@ func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.CryptSpinCountAttr = &pt
 		}

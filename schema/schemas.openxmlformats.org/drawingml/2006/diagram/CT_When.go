@@ -40,6 +40,8 @@ type CT_When struct {
 
 func NewCT_When() *CT_When {
 	ret := &CT_When{}
+	ret.FuncAttr = ST_FunctionType(1)
+	ret.OpAttr = ST_FunctionOperator(1)
 	return ret
 }
 func (m *CT_When) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -133,6 +135,8 @@ func (m *CT_When) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_When) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.FuncAttr = ST_FunctionType(1)
+	m.OpAttr = ST_FunctionOperator(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

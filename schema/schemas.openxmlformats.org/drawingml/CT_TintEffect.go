@@ -47,7 +47,6 @@ func (m *CT_TintEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.HueAttr = &pt
 		}

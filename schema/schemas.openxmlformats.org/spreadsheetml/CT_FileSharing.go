@@ -121,7 +121,6 @@ func (m *CT_FileSharing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SpinCountAttr = &pt
 		}

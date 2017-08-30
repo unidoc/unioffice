@@ -19,6 +19,7 @@ type CT_FrameLayout struct {
 
 func NewCT_FrameLayout() *CT_FrameLayout {
 	ret := &CT_FrameLayout{}
+	ret.ValAttr = ST_FrameLayout(1)
 	return ret
 }
 func (m *CT_FrameLayout) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +38,7 @@ func (m *CT_FrameLayout) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 }
 func (m *CT_FrameLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_FrameLayout(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

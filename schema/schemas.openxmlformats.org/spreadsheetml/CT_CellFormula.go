@@ -166,7 +166,6 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.SiAttr = &pt
 		}

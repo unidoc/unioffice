@@ -23,6 +23,9 @@ type CT_PTab struct {
 
 func NewCT_PTab() *CT_PTab {
 	ret := &CT_PTab{}
+	ret.AlignmentAttr = ST_PTabAlignment(1)
+	ret.RelativeToAttr = ST_PTabRelativeTo(1)
+	ret.LeaderAttr = ST_PTabLeader(1)
 	return ret
 }
 func (m *CT_PTab) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -51,6 +54,9 @@ func (m *CT_PTab) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_PTab) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.AlignmentAttr = ST_PTabAlignment(1)
+	m.RelativeToAttr = ST_PTabRelativeTo(1)
+	m.LeaderAttr = ST_PTabLeader(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "alignment" {
 			m.AlignmentAttr.UnmarshalXMLAttr(attr)

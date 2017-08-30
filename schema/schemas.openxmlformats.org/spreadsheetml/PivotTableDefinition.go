@@ -65,7 +65,6 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DataPositionAttr = &pt
 		}
@@ -144,7 +143,6 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.UpdatedVersionAttr = &pt
 		}
@@ -153,7 +151,6 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.MinRefreshableVersionAttr = &pt
 		}
@@ -281,7 +278,6 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.PageWrapAttr = &pt
 		}
@@ -346,7 +342,6 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint8(parsed)
 			m.CreatedVersionAttr = &pt
 		}
@@ -355,7 +350,6 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.IndentAttr = &pt
 		}
@@ -441,7 +435,6 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.ChartFormatAttr = &pt
 		}
@@ -485,7 +478,6 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.AutoFormatIdAttr = &pt
 		}

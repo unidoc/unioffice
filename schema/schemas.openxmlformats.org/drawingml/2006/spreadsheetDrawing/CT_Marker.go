@@ -24,6 +24,8 @@ type CT_Marker struct {
 
 func NewCT_Marker() *CT_Marker {
 	ret := &CT_Marker{}
+	ret.Col = 0
+	ret.Row = 0
 	return ret
 }
 func (m *CT_Marker) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -45,6 +47,8 @@ func (m *CT_Marker) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Marker) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.Col = 0
+	m.Row = 0
 lCT_Marker:
 	for {
 		tok, err := d.Token()

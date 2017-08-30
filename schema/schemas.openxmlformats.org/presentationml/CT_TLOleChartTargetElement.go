@@ -22,6 +22,7 @@ type CT_TLOleChartTargetElement struct {
 
 func NewCT_TLOleChartTargetElement() *CT_TLOleChartTargetElement {
 	ret := &CT_TLOleChartTargetElement{}
+	ret.TypeAttr = ST_TLChartSubelementType(1)
 	return ret
 }
 func (m *CT_TLOleChartTargetElement) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -44,6 +45,7 @@ func (m *CT_TLOleChartTargetElement) MarshalXML(e *xml.Encoder, start xml.StartE
 }
 func (m *CT_TLOleChartTargetElement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_TLChartSubelementType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
@@ -53,7 +55,6 @@ func (m *CT_TLOleChartTargetElement) UnmarshalXML(d *xml.Decoder, start xml.Star
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.LvlAttr = &pt
 		}

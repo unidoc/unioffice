@@ -20,6 +20,8 @@ type CT_PositiveSize2D struct {
 
 func NewCT_PositiveSize2D() *CT_PositiveSize2D {
 	ret := &CT_PositiveSize2D{}
+	ret.CxAttr = 0
+	ret.CyAttr = 0
 	return ret
 }
 func (m *CT_PositiveSize2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -37,6 +39,8 @@ func (m *CT_PositiveSize2D) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 }
 func (m *CT_PositiveSize2D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CxAttr = 0
+	m.CyAttr = 0
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "cx" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)

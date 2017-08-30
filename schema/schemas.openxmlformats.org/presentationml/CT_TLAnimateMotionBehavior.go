@@ -114,7 +114,6 @@ func (m *CT_TLAnimateMotionBehavior) UnmarshalXML(d *xml.Decoder, start xml.Star
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := int32(parsed)
 			m.RAngAttr = &pt
 		}

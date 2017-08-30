@@ -164,7 +164,6 @@ func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.QueryTableFieldIdAttr = &pt
 		}
@@ -173,7 +172,6 @@ func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.HeaderRowDxfIdAttr = &pt
 		}
@@ -182,7 +180,6 @@ func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.DataDxfIdAttr = &pt
 		}
@@ -191,7 +188,6 @@ func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			if err != nil {
 				return err
 			}
-			// SPECIAL
 			pt := uint32(parsed)
 			m.TotalsRowDxfIdAttr = &pt
 		}
