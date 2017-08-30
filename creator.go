@@ -28,7 +28,8 @@ func RegisterConstructor(ns, name string, fn interface{}) {
 	creatorFns[ns+"/"+name] = fn
 }
 
-// CreateElement creates an element with the given namespace and name.
+// CreateElement creates an element with the given namespace and name. It is
+// used to unmarshal some xsd:any elements to the appropriate concrete type.
 func CreateElement(start xml.StartElement) (Any, error) {
 	fn, ok := creatorFns[start.Name.Space+"/"+start.Name.Local]
 	if !ok {
