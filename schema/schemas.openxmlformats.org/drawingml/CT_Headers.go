@@ -10,12 +10,10 @@ package drawingml
 import (
 	"encoding/xml"
 	"log"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Headers struct {
-	Header string
+	Header []string
 }
 
 func NewCT_Headers() *CT_Headers {
@@ -29,7 +27,6 @@ func (m *CT_Headers) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	start.Attr = nil
 	seheader := xml.StartElement{Name: xml.Name{Local: "a:header"}}
-	gooxml.AddPreserveSpaceAttr(&seheader, m.Header)
 	e.EncodeElement(m.Header, seheader)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -46,9 +43,11 @@ lCT_Headers:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "header":
-				if err := d.DecodeElement(m.Header, &el); err != nil {
+				var tmp string
+				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
+				m.Header = append(m.Header, tmp)
 			default:
 				log.Printf("skipping unsupported element %v", el.Name)
 				if err := d.Skip(); err != nil {

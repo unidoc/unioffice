@@ -9,17 +9,17 @@ package wordprocessingml
 
 import (
 	"encoding/xml"
+	"fmt"
 	"log"
 )
 
 type CT_Divs struct {
 	// Information About Single HTML div Element
-	Div *CT_Div
+	Div []*CT_Div
 }
 
 func NewCT_Divs() *CT_Divs {
 	ret := &CT_Divs{}
-	ret.Div = NewCT_Div()
 	return ret
 }
 func (m *CT_Divs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
@@ -35,7 +35,6 @@ func (m *CT_Divs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 func (m *CT_Divs) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.Div = NewCT_Div()
 lCT_Divs:
 	for {
 		tok, err := d.Token()
@@ -46,9 +45,11 @@ lCT_Divs:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "div":
-				if err := d.DecodeElement(m.Div, &el); err != nil {
+				tmp := NewCT_Div()
+				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
+				m.Div = append(m.Div, tmp)
 			default:
 				log.Printf("skipping unsupported element %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -66,8 +67,10 @@ func (m *CT_Divs) Validate() error {
 	return m.ValidateWithPath("CT_Divs")
 }
 func (m *CT_Divs) ValidateWithPath(path string) error {
-	if err := m.Div.ValidateWithPath(path + "/Div"); err != nil {
-		return err
+	for i, v := range m.Div {
+		if err := v.ValidateWithPath(fmt.Sprintf("%s/Div[%d]", path, i)); err != nil {
+			return err
+		}
 	}
 	return nil
 }

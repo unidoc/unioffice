@@ -18,7 +18,7 @@ type CT_FunctionGroups struct {
 	// Built-in Function Group Count
 	BuiltInGroupCountAttr *uint32
 	// Function Group
-	FunctionGroup *CT_FunctionGroup
+	FunctionGroup []*CT_FunctionGroup
 }
 
 func NewCT_FunctionGroups() *CT_FunctionGroups {
@@ -65,10 +65,11 @@ lCT_FunctionGroups:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "functionGroup":
-				m.FunctionGroup = NewCT_FunctionGroup()
-				if err := d.DecodeElement(m.FunctionGroup, &el); err != nil {
+				tmp := NewCT_FunctionGroup()
+				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
+				m.FunctionGroup = append(m.FunctionGroup, tmp)
 			default:
 				log.Printf("skipping unsupported element %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -86,8 +87,8 @@ func (m *CT_FunctionGroups) Validate() error {
 	return m.ValidateWithPath("CT_FunctionGroups")
 }
 func (m *CT_FunctionGroups) ValidateWithPath(path string) error {
-	if m.FunctionGroup != nil {
-		if err := m.FunctionGroup.ValidateWithPath(path + "/FunctionGroup"); err != nil {
+	for i, v := range m.FunctionGroup {
+		if err := v.ValidateWithPath(fmt.Sprintf("%s/FunctionGroup[%d]", path, i)); err != nil {
 			return err
 		}
 	}

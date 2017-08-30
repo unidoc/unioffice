@@ -9,12 +9,13 @@ package wordprocessingml
 
 import (
 	"encoding/xml"
+	"fmt"
 	"log"
 )
 
 type CT_Footnotes struct {
 	// Footnote Content
-	Footnote *CT_FtnEdn
+	Footnote []*CT_FtnEdn
 }
 
 func NewCT_Footnotes() *CT_Footnotes {
@@ -46,10 +47,11 @@ lCT_Footnotes:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "footnote":
-				m.Footnote = NewCT_FtnEdn()
-				if err := d.DecodeElement(m.Footnote, &el); err != nil {
+				tmp := NewCT_FtnEdn()
+				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
+				m.Footnote = append(m.Footnote, tmp)
 			default:
 				log.Printf("skipping unsupported element %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -67,8 +69,8 @@ func (m *CT_Footnotes) Validate() error {
 	return m.ValidateWithPath("CT_Footnotes")
 }
 func (m *CT_Footnotes) ValidateWithPath(path string) error {
-	if m.Footnote != nil {
-		if err := m.Footnote.ValidateWithPath(path + "/Footnote"); err != nil {
+	for i, v := range m.Footnote {
+		if err := v.ValidateWithPath(fmt.Sprintf("%s/Footnote[%d]", path, i)); err != nil {
 			return err
 		}
 	}
