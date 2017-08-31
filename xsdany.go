@@ -9,8 +9,10 @@ import (
 
 // XSDAny  is used to marshal/unmarshal xsd:any types in the OOXML schema.
 type XSDAny struct {
-	Attrs  []xml.Attr
-	Tokens []xml.Token
+	XMLName xml.Name
+	Attrs   []xml.Attr
+	Data    []byte
+	Nodes   []*XSDAny
 }
 
 var wellKnownSchemas = map[string]string{
@@ -47,25 +49,23 @@ func cloneToken(tok xml.Token) xml.Token {
 	return nil
 }
 
+type any struct {
+	XMLName xml.Name
+	Attrs   []xml.Attr `xml:",any,attr"`
+	Data    []byte     `xml:",chardata"`
+	Nodes   []*any     `xml:",any"`
+}
+
 // UnmarshalXML implements the xml.Unmarshaler interface.
 func (x *XSDAny) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	x.Tokens = append(x.Tokens, cloneToken(start))
-lfor:
-	for {
-		tok, err := d.Token()
-		if err != nil {
-			return err
-		}
-		switch el := tok.(type) {
-		default:
-			x.Tokens = append(x.Tokens, cloneToken(tok))
-		case xml.EndElement:
-			x.Tokens = append(x.Tokens, cloneToken(tok))
-			if el.Name == start.Name {
-				break lfor
-			}
-		}
+	a := any{}
+	if err := d.DecodeElement(&a, &start); err != nil {
+		return err
 	}
+	x.XMLName = a.XMLName
+	x.Attrs = a.Attrs
+	x.Data = a.Data
+	x.Nodes = convertToXNodes(a.Nodes)
 	return nil
 }
 
@@ -124,18 +124,17 @@ func (n *nsSet) getPrefix(ns string) string {
 	}
 }
 
-func (n nsSet) applyToSE(se *xml.StartElement) {
-	if se.Name.Space == "" {
+func (n nsSet) applyToNode(a *any) {
+	if a.XMLName.Space == "" {
 		return
 	}
-
-	pfx := n.getPrefix(se.Name.Space)
-	se.Name.Space = ""
-	se.Name.Local = pfx + ":" + se.Name.Local
-	tmpAttr := se.Attr
-	se.Attr = nil
+	pfx := n.getPrefix(a.XMLName.Space)
+	a.XMLName.Space = ""
+	a.XMLName.Local = pfx + ":" + a.XMLName.Local
+	tmpAttr := a.Attrs
+	a.Attrs = nil
 	for _, attr := range tmpAttr {
-		// skip these as we create them later
+		// skip namespace prefix declaration atributes as we create them later
 		if attr.Name.Space == "xmlns" {
 			continue
 		}
@@ -144,63 +143,84 @@ func (n nsSet) applyToSE(se *xml.StartElement) {
 			attr.Name.Space = ""
 			attr.Name.Local = pfx + ":" + attr.Name.Local
 		}
-		se.Attr = append(se.Attr, attr)
+		a.Attrs = append(a.Attrs, attr)
+	}
+	for _, cn := range a.Nodes {
+		n.applyToNode(cn)
 	}
 }
 
-func (n nsSet) applyToEE(ee *xml.EndElement) {
-	if ee.Name.Space == "" {
-		return
+// collectNS walks a tree of nodes finding any non-default namespace being used
+func (x *XSDAny) collectNS(ns *nsSet) {
+	if x.XMLName.Space != "" {
+		ns.getPrefix(x.XMLName.Space)
 	}
-	pfx := n.getPrefix(ee.Name.Space)
-	ee.Name.Space = ""
-	ee.Name.Local = pfx + ":" + ee.Name.Local
+	for _, attr := range x.Attrs {
+		if attr.Name.Space != "" && attr.Name.Space != "xmlns" {
+			ns.getPrefix(attr.Name.Space)
+		}
+	}
+	for _, n := range x.Nodes {
+		n.collectNS(ns)
+	}
+}
+
+func convertToXNodes(an []*any) []*XSDAny {
+	ret := []*XSDAny{}
+	for _, a := range an {
+		x := &XSDAny{}
+		x.XMLName = a.XMLName
+		x.Attrs = a.Attrs
+		x.Nodes = convertToXNodes(a.Nodes)
+		ret = append(ret, x)
+	}
+	return ret
+}
+func convertToNodes(xn []*XSDAny) []*any {
+	ret := []*any{}
+	for _, x := range xn {
+		a := &any{}
+		a.XMLName = x.XMLName
+		a.Attrs = x.Attrs
+		a.Nodes = convertToNodes(x.Nodes)
+		ret = append(ret, a)
+	}
+	return ret
 }
 
 // MarshalXML implements the xml.Marshaler interface.
 func (x *XSDAny) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if len(x.Tokens) == 0 {
-		return nil
-	}
-	ns := nsSet{urlToPrefix: make(map[string]string),
-		prefixToURL: make(map[string]string)}
+	start.Name = x.XMLName
+	start.Attr = x.Attrs
+	a := any{}
+	a.XMLName = x.XMLName
+	a.Attrs = x.Attrs
+	a.Data = x.Data
+	a.Nodes = convertToNodes(x.Nodes)
 
-	// collect the namespaces
-	for _, tok := range x.Tokens {
-		if se, ok := tok.(xml.StartElement); ok {
-			if se.Name.Space != "" {
-				ns.getPrefix(se.Name.Space)
-			}
-			for _, attr := range se.Attr {
-				if attr.Name.Space != "" && attr.Name.Space != "xmlns" {
-					ns.getPrefix(attr.Name.Space)
-				}
-			}
-		}
+	ns := nsSet{
+		urlToPrefix: map[string]string{},
+		prefixToURL: map[string]string{},
 	}
-	// iniital element must be a StartElement
-	se := x.Tokens[0].(xml.StartElement)
-	ns.applyToSE(&se)
-	// add namespaces to first element
+
+	// collect any namespaces in use in the node tree
+	x.collectNS(&ns)
+
+	// apply our new namespaces to the node and its children
+	ns.applyToNode(&a)
+
+	// add our prefixes and namespaces to root element
 	for _, pfx := range ns.prefixes {
 		ns := ns.prefixToURL[pfx]
-		se.Attr = append(se.Attr, xml.Attr{
+		a.Attrs = append(a.Attrs, xml.Attr{
 			Name:  xml.Name{Local: "xmlns:" + pfx},
 			Value: ns,
 		})
 	}
-	e.EncodeToken(se)
 
-	for _, tok := range x.Tokens[1:] {
-		if se, ok := tok.(xml.StartElement); ok {
-			ns.applyToSE(&se)
-			e.EncodeToken(se)
-		} else if ee, ok := tok.(xml.EndElement); ok {
-			ns.applyToEE(&ee)
-			e.EncodeToken(ee)
-		} else if err := e.EncodeToken(tok); err != nil {
-			return err
-		}
+	// finally write out our new element
+	if err := e.Encode(&a); err != nil {
+		return err
 	}
 	return nil
 }
