@@ -35,8 +35,7 @@ func ParseUnionST_SignedTwipsMeasure(s string) (ST_SignedTwipsMeasure, error) {
 		if err != nil {
 			return r, fmt.Errorf("parsing %s as int: %s", s, err)
 		}
-		v32 := int32(v)
-		r.Int32 = &v32
+		r.Int64 = &v
 	}
 	return r, nil
 }
@@ -82,8 +81,7 @@ func ParseUnionST_DecimalNumberOrPercent(s string) (ST_DecimalNumberOrPercent, e
 		if err != nil {
 			return ret, fmt.Errorf("parsing %s as int: %s", s, err)
 		}
-		v32 := int32(v)
-		ret.ST_UnqualifiedPercentage = &v32
+		ret.ST_UnqualifiedPercentage = &v
 	}
 	return ret, nil
 }
@@ -101,8 +99,7 @@ func ParseUnionST_MeasurementOrPercent(s string) (ST_MeasurementOrPercent, error
 			if err != nil {
 				return r, fmt.Errorf("parsing %s as int: %s", s, err)
 			}
-			v32 := int32(v)
-			r.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = &v32
+			r.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = &v
 		}
 	}
 	return r, nil
@@ -132,8 +129,7 @@ func ParseUnionST_SignedHpsMeasure(s string) (ST_SignedHpsMeasure, error) {
 		if err != nil {
 			return r, fmt.Errorf("parsing %s as int: %s", s, err)
 		}
-		v32 := int32(v)
-		r.Int32 = &v32
+		r.Int64 = &v
 	}
 	return r, nil
 }
@@ -147,8 +143,7 @@ func ParseUnionST_TextScale(s string) (ST_TextScale, error) {
 		if err != nil {
 			return r, fmt.Errorf("parsing %s as int: %s", s, err)
 		}
-		v32 := int32(v)
-		r.ST_TextScaleDecimal = &v32
+		r.ST_TextScaleDecimal = &v
 	}
 	return r, nil
 }

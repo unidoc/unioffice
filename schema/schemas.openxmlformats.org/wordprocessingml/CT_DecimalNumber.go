@@ -15,7 +15,7 @@ import (
 
 type CT_DecimalNumber struct {
 	// Decimal Number Value
-	ValAttr int32
+	ValAttr int64
 }
 
 func NewCT_DecimalNumber() *CT_DecimalNumber {
@@ -37,11 +37,11 @@ func (m *CT_DecimalNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	// initialize to default
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.ValAttr = int32(parsed)
+			m.ValAttr = parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

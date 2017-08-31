@@ -20,7 +20,7 @@ type CT_LatentStyles struct {
 	// Default Style Locking Setting
 	DefLockedStateAttr *sharedTypes.ST_OnOff
 	// Default User Interface Priority Setting
-	DefUIPriorityAttr *int32
+	DefUIPriorityAttr *int64
 	// Default Semi-Hidden Setting
 	DefSemiHiddenAttr *sharedTypes.ST_OnOff
 	// Default Hidden Until Used Setting
@@ -28,7 +28,7 @@ type CT_LatentStyles struct {
 	// Default Primary Style Setting
 	DefQFormatAttr *sharedTypes.ST_OnOff
 	// Latent Style Count
-	CountAttr *int32
+	CountAttr *int64
 	// Latent Style Exception
 	LsdException []*CT_LsdException
 }
@@ -85,12 +85,11 @@ func (m *CT_LatentStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			m.DefLockedStateAttr = &parsed
 		}
 		if attr.Name.Local == "defUIPriority" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.DefUIPriorityAttr = &pt
+			m.DefUIPriorityAttr = &parsed
 		}
 		if attr.Name.Local == "defSemiHidden" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -114,12 +113,11 @@ func (m *CT_LatentStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			m.DefQFormatAttr = &parsed
 		}
 		if attr.Name.Local == "count" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.CountAttr = &pt
+			m.CountAttr = &parsed
 		}
 	}
 lCT_LatentStyles:

@@ -53,7 +53,7 @@ func (t Table) SetWidthPercent(v float64) {
 	t.x.TblPr.TblW.WAttr = &wml.ST_MeasurementOrPercent{}
 	t.x.TblPr.TblW.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
 	// percent value is measured in 1/50'th of a percent
-	t.x.TblPr.TblW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int32(int32(v * 50))
+	t.x.TblPr.TblW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(v * 50))
 }
 
 func (t Table) SetWidth(d measurement.Distance) {
@@ -62,7 +62,7 @@ func (t Table) SetWidth(d measurement.Distance) {
 	t.x.TblPr.TblW.TypeAttr = wml.ST_TblWidthDxa
 	t.x.TblPr.TblW.WAttr = &wml.ST_MeasurementOrPercent{}
 	t.x.TblPr.TblW.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
-	t.x.TblPr.TblW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int32(int32(d / measurement.Twips))
+	t.x.TblPr.TblW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(d / measurement.Twips))
 }
 
 func (t Table) Borders() Borders {

@@ -17,9 +17,9 @@ type CT_DocGrid struct {
 	// Document Grid Type
 	TypeAttr ST_DocGrid
 	// Document Grid Line Pitch
-	LinePitchAttr *int32
+	LinePitchAttr *int64
 	// Document Grid Character Pitch
-	CharSpaceAttr *int32
+	CharSpaceAttr *int64
 }
 
 func NewCT_DocGrid() *CT_DocGrid {
@@ -57,20 +57,18 @@ func (m *CT_DocGrid) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			m.TypeAttr.UnmarshalXMLAttr(attr)
 		}
 		if attr.Name.Local == "linePitch" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.LinePitchAttr = &pt
+			m.LinePitchAttr = &parsed
 		}
 		if attr.Name.Local == "charSpace" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.CharSpaceAttr = &pt
+			m.CharSpaceAttr = &parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

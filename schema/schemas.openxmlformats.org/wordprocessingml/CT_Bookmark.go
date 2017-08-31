@@ -15,11 +15,11 @@ import (
 
 type CT_Bookmark struct {
 	NameAttr                 string
-	ColFirstAttr             *int32
-	ColLastAttr              *int32
+	ColFirstAttr             *int64
+	ColLastAttr              *int64
 	DisplacedByCustomXmlAttr ST_DisplacedByCustomXml
 	// Annotation Identifier
-	IdAttr int32
+	IdAttr int64
 }
 
 func NewCT_Bookmark() *CT_Bookmark {
@@ -65,30 +65,28 @@ func (m *CT_Bookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			m.NameAttr = parsed
 		}
 		if attr.Name.Local == "colFirst" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.ColFirstAttr = &pt
+			m.ColFirstAttr = &parsed
 		}
 		if attr.Name.Local == "colLast" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.ColLastAttr = &pt
+			m.ColLastAttr = &parsed
 		}
 		if attr.Name.Local == "displacedByCustomXml" {
 			m.DisplacedByCustomXmlAttr.UnmarshalXMLAttr(attr)
 		}
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = int32(parsed)
+			m.IdAttr = parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

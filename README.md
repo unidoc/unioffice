@@ -14,7 +14,7 @@ is to get documents working well, then spreadsheets, and finally presentations.
 ## Installation ##
     
     go get baliance.com/gooxml/
-    go build baliance.com/gooxml/...
+    go build -i baliance.com/gooxml/...
 
 ## Raw Types ##
 

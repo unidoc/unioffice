@@ -19,7 +19,7 @@ type CT_FtnEdnRef struct {
 	// Suppress Footnote/Endnote Reference Mark
 	CustomMarkFollowsAttr *sharedTypes.ST_OnOff
 	// Footnote/Endnote ID Reference
-	IdAttr int32
+	IdAttr int64
 }
 
 func NewCT_FtnEdnRef() *CT_FtnEdnRef {
@@ -52,11 +52,11 @@ func (m *CT_FtnEdnRef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			m.CustomMarkFollowsAttr = &parsed
 		}
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = int32(parsed)
+			m.IdAttr = parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

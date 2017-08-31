@@ -19,27 +19,27 @@ type CT_Ind struct {
 	// Start Indentation
 	StartAttr *ST_SignedTwipsMeasure
 	// Start Indentation in Character Units
-	StartCharsAttr *int32
+	StartCharsAttr *int64
 	// End Indentation
 	EndAttr *ST_SignedTwipsMeasure
 	// End Indentation in Character Units
-	EndCharsAttr *int32
+	EndCharsAttr *int64
 	// Start Indentation
 	LeftAttr *ST_SignedTwipsMeasure
 	// Start Indentation in Character Units
-	LeftCharsAttr *int32
+	LeftCharsAttr *int64
 	// End Indentation
 	RightAttr *ST_SignedTwipsMeasure
 	// End Indentation in Character Units
-	RightCharsAttr *int32
+	RightCharsAttr *int64
 	// Indentation Removed from First Line
 	HangingAttr *sharedTypes.ST_TwipsMeasure
 	// Indentation Removed From First Line in Character Units
-	HangingCharsAttr *int32
+	HangingCharsAttr *int64
 	// Additional First Line Indentation
 	FirstLineAttr *sharedTypes.ST_TwipsMeasure
 	// Additional First Line Indentation in Character Units
-	FirstLineCharsAttr *int32
+	FirstLineCharsAttr *int64
 }
 
 func NewCT_Ind() *CT_Ind {
@@ -114,12 +114,11 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.StartAttr = &parsed
 		}
 		if attr.Name.Local == "startChars" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.StartCharsAttr = &pt
+			m.StartCharsAttr = &parsed
 		}
 		if attr.Name.Local == "end" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -129,12 +128,11 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.EndAttr = &parsed
 		}
 		if attr.Name.Local == "endChars" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.EndCharsAttr = &pt
+			m.EndCharsAttr = &parsed
 		}
 		if attr.Name.Local == "left" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -144,12 +142,11 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.LeftAttr = &parsed
 		}
 		if attr.Name.Local == "leftChars" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.LeftCharsAttr = &pt
+			m.LeftCharsAttr = &parsed
 		}
 		if attr.Name.Local == "right" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -159,12 +156,11 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.RightAttr = &parsed
 		}
 		if attr.Name.Local == "rightChars" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.RightCharsAttr = &pt
+			m.RightCharsAttr = &parsed
 		}
 		if attr.Name.Local == "hanging" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -174,12 +170,11 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.HangingAttr = &parsed
 		}
 		if attr.Name.Local == "hangingChars" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.HangingCharsAttr = &pt
+			m.HangingCharsAttr = &parsed
 		}
 		if attr.Name.Local == "firstLine" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -189,12 +184,11 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.FirstLineAttr = &parsed
 		}
 		if attr.Name.Local == "firstLineChars" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.FirstLineCharsAttr = &pt
+			m.FirstLineCharsAttr = &parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

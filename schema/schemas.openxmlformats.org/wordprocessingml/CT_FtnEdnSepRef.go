@@ -15,7 +15,7 @@ import (
 
 type CT_FtnEdnSepRef struct {
 	// Footnote/Endnote ID
-	IdAttr int32
+	IdAttr int64
 }
 
 func NewCT_FtnEdnSepRef() *CT_FtnEdnSepRef {
@@ -37,11 +37,11 @@ func (m *CT_FtnEdnSepRef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	// initialize to default
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = int32(parsed)
+			m.IdAttr = parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

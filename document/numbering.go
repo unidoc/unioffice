@@ -48,7 +48,7 @@ func (n Numbering) InitializeDefault() {
 	const indentDelta = 144
 	for i := 0; i < 9; i++ {
 		lvl := wml.NewCT_Lvl()
-		lvl.IlvlAttr = int32(i)
+		lvl.IlvlAttr = int64(i)
 		lvl.Start = wml.NewCT_DecimalNumber()
 		lvl.Start.ValAttr = 1
 
@@ -72,12 +72,12 @@ func (n Numbering) InitializeDefault() {
 		tab := wml.NewCT_TabStop()
 		tab.ValAttr = wml.ST_TabJcNum
 
-		indent := int32(i*indentDelta + indentStart)
-		tab.PosAttr.Int32 = gooxml.Int32(indent)
+		indent := int64(i*indentDelta + indentStart)
+		tab.PosAttr.Int64 = gooxml.Int64(indent)
 		lvl.PPr.Tabs.Tab = append(lvl.PPr.Tabs.Tab, tab)
 		lvl.PPr.Ind = wml.NewCT_Ind()
 		lvl.PPr.Ind.LeftAttr = &wml.ST_SignedTwipsMeasure{}
-		lvl.PPr.Ind.LeftAttr.Int32 = gooxml.Int32(indent)
+		lvl.PPr.Ind.LeftAttr.Int64 = gooxml.Int64(indent)
 		lvl.PPr.Ind.HangingAttr = &sharedTypes.ST_TwipsMeasure{}
 		lvl.PPr.Ind.HangingAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(indent))
 

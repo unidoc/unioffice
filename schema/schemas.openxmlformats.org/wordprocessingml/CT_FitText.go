@@ -19,7 +19,7 @@ type CT_FitText struct {
 	// Value
 	ValAttr sharedTypes.ST_TwipsMeasure
 	// Fit Text Run ID
-	IdAttr *int32
+	IdAttr *int64
 }
 
 func NewCT_FitText() *CT_FitText {
@@ -52,12 +52,11 @@ func (m *CT_FitText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			m.ValAttr = parsed
 		}
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.IdAttr = &pt
+			m.IdAttr = &parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

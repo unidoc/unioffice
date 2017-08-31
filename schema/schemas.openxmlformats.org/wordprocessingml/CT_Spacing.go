@@ -19,13 +19,13 @@ type CT_Spacing struct {
 	// Spacing Above Paragraph
 	BeforeAttr *sharedTypes.ST_TwipsMeasure
 	// Spacing Above Paragraph IN Line Units
-	BeforeLinesAttr *int32
+	BeforeLinesAttr *int64
 	// Automatically Determine Spacing Above Paragraph
 	BeforeAutospacingAttr *sharedTypes.ST_OnOff
 	// Spacing Below Paragraph
 	AfterAttr *sharedTypes.ST_TwipsMeasure
 	// Spacing Below Paragraph in Line Units
-	AfterLinesAttr *int32
+	AfterLinesAttr *int64
 	// Automatically Determine Spacing Below Paragraph
 	AfterAutospacingAttr *sharedTypes.ST_OnOff
 	// Spacing Between Lines in Paragraph
@@ -93,12 +93,11 @@ func (m *CT_Spacing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			m.BeforeAttr = &parsed
 		}
 		if attr.Name.Local == "beforeLines" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.BeforeLinesAttr = &pt
+			m.BeforeLinesAttr = &parsed
 		}
 		if attr.Name.Local == "beforeAutospacing" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -115,12 +114,11 @@ func (m *CT_Spacing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			m.AfterAttr = &parsed
 		}
 		if attr.Name.Local == "afterLines" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.AfterLinesAttr = &pt
+			m.AfterLinesAttr = &parsed
 		}
 		if attr.Name.Local == "afterAutospacing" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)

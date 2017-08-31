@@ -14,7 +14,7 @@ import (
 // ST_TextScale is a union type
 type ST_TextScale struct {
 	ST_TextScalePercent *string
-	ST_TextScaleDecimal *int32
+	ST_TextScaleDecimal *int64
 }
 
 func (m *ST_TextScale) Validate() error {

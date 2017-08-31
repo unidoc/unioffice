@@ -17,7 +17,7 @@ import (
 
 type CT_EastAsianLayout struct {
 	// East Asian Typography Run ID
-	IdAttr *int32
+	IdAttr *int64
 	// Two Lines in One
 	CombineAttr *sharedTypes.ST_OnOff
 	// Display Brackets Around Two Lines in One
@@ -68,12 +68,11 @@ func (m *CT_EastAsianLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	// initialize to default
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.IdAttr = &pt
+			m.IdAttr = &parsed
 		}
 		if attr.Name.Local == "combine" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)

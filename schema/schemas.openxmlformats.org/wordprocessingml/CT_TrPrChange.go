@@ -19,7 +19,7 @@ type CT_TrPrChange struct {
 	AuthorAttr string
 	DateAttr   *time.Time
 	// Annotation Identifier
-	IdAttr int32
+	IdAttr int64
 	TrPr   *CT_TrPrBase
 }
 
@@ -66,11 +66,11 @@ func (m *CT_TrPrChange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			m.DateAttr = &parsed
 		}
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = int32(parsed)
+			m.IdAttr = parsed
 		}
 	}
 lCT_TrPrChange:

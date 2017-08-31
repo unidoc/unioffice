@@ -23,7 +23,7 @@ type CT_PageSz struct {
 	// Page Orientation
 	OrientAttr ST_PageOrientation
 	// Printer Paper Code
-	CodeAttr *int32
+	CodeAttr *int64
 }
 
 func NewCT_PageSz() *CT_PageSz {
@@ -79,12 +79,11 @@ func (m *CT_PageSz) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.OrientAttr.UnmarshalXMLAttr(attr)
 		}
 		if attr.Name.Local == "code" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.CodeAttr = &pt
+			m.CodeAttr = &parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

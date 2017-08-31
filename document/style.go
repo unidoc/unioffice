@@ -60,7 +60,7 @@ func (s Style) SetPrimaryStyle(b bool) {
 // SetUISortOrder controls the order the style is displayed in the UI.
 func (s Style) SetUISortOrder(order int) {
 	s.x.UiPriority = wml.NewCT_DecimalNumber()
-	s.x.UiPriority.ValAttr = int32(order)
+	s.x.UiPriority.ValAttr = int64(order)
 }
 
 // SetSemiHidden controls if the style is hidden in the UI.

@@ -15,7 +15,7 @@ import (
 
 type CT_Markup struct {
 	// Annotation Identifier
-	IdAttr int32
+	IdAttr int64
 }
 
 func NewCT_Markup() *CT_Markup {
@@ -37,11 +37,11 @@ func (m *CT_Markup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = int32(parsed)
+			m.IdAttr = parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

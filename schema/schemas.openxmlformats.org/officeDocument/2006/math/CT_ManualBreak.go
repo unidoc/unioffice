@@ -14,7 +14,7 @@ import (
 )
 
 type CT_ManualBreak struct {
-	AlnAtAttr *int32
+	AlnAtAttr *int64
 }
 
 func NewCT_ManualBreak() *CT_ManualBreak {
@@ -38,12 +38,11 @@ func (m *CT_ManualBreak) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	// initialize to default
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "alnAt" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.AlnAtAttr = &pt
+			m.AlnAtAttr = &parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

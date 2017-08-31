@@ -19,7 +19,7 @@ type CT_SectPrChange struct {
 	AuthorAttr string
 	DateAttr   *time.Time
 	// Annotation Identifier
-	IdAttr int32
+	IdAttr int64
 	SectPr *CT_SectPrBase
 }
 
@@ -66,11 +66,11 @@ func (m *CT_SectPrChange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			m.DateAttr = &parsed
 		}
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = int32(parsed)
+			m.IdAttr = parsed
 		}
 	}
 lCT_SectPrChange:

@@ -16,7 +16,7 @@ import (
 
 type CT_NumLvl struct {
 	// Numbering Level ID
-	IlvlAttr int32
+	IlvlAttr int64
 	// Numbering Level Starting Value Override
 	StartOverride *CT_DecimalNumber
 	// Numbering Level Override Definition
@@ -50,11 +50,11 @@ func (m *CT_NumLvl) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "ilvl" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IlvlAttr = int32(parsed)
+			m.IlvlAttr = parsed
 		}
 	}
 lCT_NumLvl:

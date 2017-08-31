@@ -13,7 +13,7 @@ import (
 
 // ST_SignedHpsMeasure is a union type
 type ST_SignedHpsMeasure struct {
-	Int32               *int32
+	Int64               *int64
 	ST_UniversalMeasure *string
 }
 
@@ -22,8 +22,8 @@ func (m *ST_SignedHpsMeasure) Validate() error {
 }
 func (m *ST_SignedHpsMeasure) ValidateWithPath(path string) error {
 	mems := []string{}
-	if m.Int32 != nil {
-		mems = append(mems, "Int32")
+	if m.Int64 != nil {
+		mems = append(mems, "Int64")
 	}
 	if m.ST_UniversalMeasure != nil {
 		mems = append(mems, "ST_UniversalMeasure")
@@ -34,8 +34,8 @@ func (m *ST_SignedHpsMeasure) ValidateWithPath(path string) error {
 	return nil
 }
 func (m ST_SignedHpsMeasure) String() string {
-	if m.Int32 != nil {
-		return fmt.Sprintf("%v", *m.Int32)
+	if m.Int64 != nil {
+		return fmt.Sprintf("%v", *m.Int64)
 	}
 	if m.ST_UniversalMeasure != nil {
 		return fmt.Sprintf("%v", *m.ST_UniversalMeasure)

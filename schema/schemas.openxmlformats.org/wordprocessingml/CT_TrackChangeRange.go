@@ -19,7 +19,7 @@ type CT_TrackChangeRange struct {
 	AuthorAttr               string
 	DateAttr                 *time.Time
 	// Annotation Identifier
-	IdAttr int32
+	IdAttr int64
 }
 
 func NewCT_TrackChangeRange() *CT_TrackChangeRange {
@@ -72,11 +72,11 @@ func (m *CT_TrackChangeRange) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			m.DateAttr = &parsed
 		}
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = int32(parsed)
+			m.IdAttr = parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

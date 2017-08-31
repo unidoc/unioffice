@@ -16,8 +16,8 @@ import (
 type CT_PermStart struct {
 	EdGrpAttr    ST_EdGrp
 	EdAttr       *string
-	ColFirstAttr *int32
-	ColLastAttr  *int32
+	ColFirstAttr *int64
+	ColLastAttr  *int64
 	// Annotation ID
 	IdAttr string
 	// Annotation Displaced By Custom XML Markup
@@ -79,20 +79,18 @@ func (m *CT_PermStart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			m.EdAttr = &parsed
 		}
 		if attr.Name.Local == "colFirst" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.ColFirstAttr = &pt
+			m.ColFirstAttr = &parsed
 		}
 		if attr.Name.Local == "colLast" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.ColLastAttr = &pt
+			m.ColLastAttr = &parsed
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
