@@ -435,7 +435,7 @@ func (d *Document) Validate() error {
 // AddImage adds an image to the document package, returning a reference that
 // can be used to add the image to a run and place it in the document contents.
 func (d *Document) AddImage(i Image) (ImageRef, error) {
-	r := ImageRef{img: i}
+	r := ImageRef{img: i, d: d}
 	if i.Path != "" {
 		r.ref = &iref{path: i.Path}
 		d.images = append(d.images, r.ref)
@@ -452,4 +452,40 @@ func (d *Document) AddImage(i Image) (ImageRef, error) {
 	fn := fmt.Sprintf("media/image%d.%s", len(d.images), i.Format)
 	d.docRels.AddRelationship(fn, common.ImageType)
 	return r, nil
+}
+
+// GetImageByRelID returns an ImageRef with the associated relation ID in the
+// document.
+func (d *Document) GetImageByRelID(relID string) (ImageRef, bool) {
+	for _, img := range d.Images() {
+		if img.RelID() == relID {
+			return img, true
+		}
+	}
+	return ImageRef{}, false
+}
+
+// Images returns all images mentioned in the document relationships.
+func (d *Document) Images() []ImageRef {
+	ret := []ImageRef{}
+	t := Image{}
+	_ = t
+	imgIdx := 0
+	for _, rel := range d.docRels.Relationships() {
+		if rel.Type() != common.ImageType {
+			continue
+		}
+		if imgIdx < len(d.images) {
+			iref := d.images[imgIdx]
+			img, err := ImageFromFile(iref.path)
+			if err != nil {
+				// TODO: report this error?
+			} else {
+				rimg := ImageRef{ref: iref, img: img, d: d}
+				ret = append(ret, rimg)
+			}
+		}
+		imgIdx++
+	}
+	return ret
 }

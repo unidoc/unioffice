@@ -43,6 +43,14 @@ func (p Paragraph) SetSpacing(before, after measurement.Distance) {
 	p.x.PPr.Spacing.AfterAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(after / measurement.Twips))
 }
 
+// Style returns the style for a paragraph, or an empty string if it is unset.
+func (p Paragraph) Style() string {
+	if p.x.PPr != nil && p.x.PPr.PStyle != nil {
+		return p.x.PPr.PStyle.ValAttr
+	}
+	return ""
+}
+
 // SetStyle sets the style of a paragraph.
 func (p Paragraph) SetStyle(s string) {
 	p.ensurePPr()

@@ -15,6 +15,8 @@ import (
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
+
+	"baliance.com/gooxml/common"
 )
 
 // Image is a container for image information.
@@ -30,8 +32,30 @@ type iref struct {
 
 // ImageRef is a reference to an image in a document.
 type ImageRef struct {
+	d   *Document
 	ref *iref
 	img Image
+}
+
+// RelID returns the relationship ID.
+func (i ImageRef) RelID() string {
+	for imgIdx, ir := range i.d.images {
+		if ir == i.ref {
+			imgID := i.d.docRels.FindRIDForN(imgIdx, common.ImageType)
+			return imgID
+		}
+	}
+	return ""
+}
+
+// Format returns the format of the underlying image
+func (i ImageRef) Format() string {
+	return i.img.Format
+}
+
+// Path returns the path to an image file
+func (i ImageRef) Path() string {
+	return i.img.Path
 }
 
 // ImageFromFile reads an image from a file on disk. It doesn't keep the image

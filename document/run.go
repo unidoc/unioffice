@@ -23,6 +23,7 @@ import (
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 )
 
+// Run is a run of text within a paragraph that shares the same formatting.
 type Run struct {
 	d *Document
 	x *wml.CT_R
@@ -33,6 +34,7 @@ func (r Run) X() *wml.CT_R {
 	return r.x
 }
 
+// Text returns the underlying tet in the run.
 func (r Run) Text() string {
 	if len(r.x.EG_RunInnerContent) == 0 {
 		return ""
@@ -49,6 +51,7 @@ func (r Run) Text() string {
 	return buf.String()
 }
 
+// AddText adds tet to a run.
 func (r Run) AddText(s string) {
 	ic := wml.NewEG_RunInnerContent()
 	r.x.EG_RunInnerContent = append(r.x.EG_RunInnerContent, ic)
@@ -61,6 +64,8 @@ func (r Run) newIC() *wml.EG_RunInnerContent {
 	r.x.EG_RunInnerContent = append(r.x.EG_RunInnerContent, ic)
 	return ic
 }
+
+// AddTab adds tab to a run and can be used with the the Paragraph's tab stops.
 func (r Run) AddTab() {
 	ic := r.newIC()
 	ic.Tab = wml.NewCT_Empty()
@@ -100,6 +105,8 @@ func (r Run) ensureRPR() {
 		r.x.RPr.EG_RPrBase = append(r.x.RPr.EG_RPrBase, b)
 	}
 }
+
+// SetFontFamily sets the Ascii & HAnsi fonly family for a run.
 func (r Run) SetFontFamily(family string) {
 	r.ensureRPR()
 	b := r.x.RPr.EG_RPrBase[0]
@@ -110,14 +117,30 @@ func (r Run) SetFontFamily(family string) {
 	b.RFonts.HAnsiAttr = gooxml.String(family)
 }
 
-func (r Run) SetFontSize(points uint64) {
+// SetFontSize sets the font size.
+func (r Run) SetFontSize(sz measurement.Distance) {
 	b := r.x.RPr.EG_RPrBase[0]
 	b.Sz = wml.NewCT_HpsMeasure()
-	b.Sz.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(2 * points)
+	// size is measured in half points
+	b.Sz.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(sz / measurement.HalfPoint))
 	b.SzCs = wml.NewCT_HpsMeasure()
-	b.SzCs.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(2 * points)
+	b.SzCs.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(sz / measurement.HalfPoint))
 }
 
+// IsBold returns true if the run has been set to bold.
+func (r Run) IsBold() bool {
+	if r.x.RPr == nil {
+		return false
+	}
+	for _, b := range r.x.RPr.EG_RPrBase {
+		if b.B != nil {
+			return true
+		}
+	}
+	return false
+}
+
+// SetBold sets the run to bold.
 func (r Run) SetBold(b bool) {
 	r.ensureRPR()
 	if !b {
@@ -129,6 +152,20 @@ func (r Run) SetBold(b bool) {
 	}
 }
 
+// IsItalic returns true if the run was set to bold.
+func (r Run) IsItalic() bool {
+	if r.x.RPr == nil {
+		return false
+	}
+	for _, b := range r.x.RPr.EG_RPrBase {
+		if b.I != nil {
+			return true
+		}
+	}
+	return false
+}
+
+// SetItalic sets the run to italic.
 func (r Run) SetItalic(b bool) {
 	r.ensureRPR()
 	if !b {
@@ -140,6 +177,7 @@ func (r Run) SetItalic(b bool) {
 	}
 }
 
+// SetAllCaps sets the run to all caps.
 func (r Run) SetAllCaps(b bool) {
 	r.ensureRPR()
 	if !b {
@@ -149,6 +187,7 @@ func (r Run) SetAllCaps(b bool) {
 	}
 }
 
+// SetSmallCaps sets the run to small caps.
 func (r Run) SetSmallCaps(b bool) {
 	r.ensureRPR()
 	if !b {
@@ -158,6 +197,7 @@ func (r Run) SetSmallCaps(b bool) {
 	}
 }
 
+// SetUnderline sets the run to underline with a particular style and color.
 func (r Run) SetUnderline(style wml.ST_Underline, c color.Color) {
 	r.ensureRPR()
 	if style == wml.ST_UnderlineUnset {
@@ -170,6 +210,7 @@ func (r Run) SetUnderline(style wml.ST_Underline, c color.Color) {
 	}
 }
 
+// SetStrikeThrough sets the run to strike-through.
 func (r Run) SetStrikeThrough(b bool) {
 	r.ensureRPR()
 	if !b {
@@ -179,6 +220,7 @@ func (r Run) SetStrikeThrough(b bool) {
 	}
 }
 
+// SetDoubleStrikeThrough sets the run to double strike-through.
 func (r Run) SetDoubleStrikeThrough(b bool) {
 	r.ensureRPR()
 	if !b {
@@ -188,6 +230,7 @@ func (r Run) SetDoubleStrikeThrough(b bool) {
 	}
 }
 
+// SetOutline sets the run to outlined text.
 func (r Run) SetOutline(b bool) {
 	r.ensureRPR()
 	if !b {
@@ -197,6 +240,7 @@ func (r Run) SetOutline(b bool) {
 	}
 }
 
+// SetShadow sets the run to shadowed text.
 func (r Run) SetShadow(b bool) {
 	r.ensureRPR()
 	if !b {
@@ -206,6 +250,7 @@ func (r Run) SetShadow(b bool) {
 	}
 }
 
+// SetEmboss sets the run to embossed text.
 func (r Run) SetEmboss(b bool) {
 	r.ensureRPR()
 	if !b {
@@ -215,6 +260,7 @@ func (r Run) SetEmboss(b bool) {
 	}
 }
 
+// SetImprint sets the run to imprinted text.
 func (r Run) SetImprint(b bool) {
 	r.ensureRPR()
 	if !b {
@@ -224,17 +270,20 @@ func (r Run) SetImprint(b bool) {
 	}
 }
 
+// ClearColor clears the text color.
 func (r Run) ClearColor() {
 	r.ensureRPR()
 	r.x.RPr.EG_RPrBase[0].Color = nil
 }
 
+// SetColor sets the text color.
 func (r Run) SetColor(c color.Color) {
 	r.ensureRPR()
 	r.x.RPr.EG_RPrBase[0].Color = wml.NewCT_Color()
 	r.x.RPr.EG_RPrBase[0].Color.ValAttr.ST_HexColorRGB = c.AsRGBString()
 }
 
+// SetHighlight highlights text in a specified color.
 func (r Run) SetHighlight(c wml.ST_HighlightColor) {
 	r.ensureRPR()
 	r.x.RPr.EG_RPrBase[0].Highlight = wml.NewCT_Highlight()
@@ -258,7 +307,21 @@ func (r Run) AddBreak() {
 	ic.Br = wml.NewCT_Br()
 }
 
-// AddDrawingAnchored adds an anchored drawing that
+// DrawingAnchored returns a slice of AnchoredDrawings.
+func (r Run) DrawingAnchored() []AnchoredDrawing {
+	ret := []AnchoredDrawing{}
+	for _, ic := range r.x.EG_RunInnerContent {
+		if ic.Drawing == nil {
+			continue
+		}
+		for _, anc := range ic.Drawing.Anchor {
+			ret = append(ret, AnchoredDrawing{r.d, anc})
+		}
+	}
+	return ret
+}
+
+// AddDrawingAnchored adds an anchored (floating) drawing from an ImageRef.
 func (r Run) AddDrawingAnchored(img ImageRef) (AnchoredDrawing, error) {
 	ic := r.newIC()
 	ic.Drawing = wml.NewCT_Drawing()
