@@ -11,6 +11,7 @@ import (
 	"archive/zip"
 	"bufio"
 	"bytes"
+	"encoding/xml"
 	"flag"
 	"io/ioutil"
 	"log"
@@ -18,6 +19,8 @@ import (
 	"os/exec"
 	"path/filepath"
 	"testing"
+
+	"baliance.com/gooxml"
 )
 
 var update = flag.Bool("test.update", false, "update golden file")
@@ -149,8 +152,24 @@ func tempFilePath(prefix string) string {
 }
 
 func xmlIndentFile(fn string) error {
-	cmd := exec.Command("xmlindent", "-w", "-f", fn)
-	return cmd.Run()
+	any := gooxml.XSDAny{}
+	f, err := os.Open(fn)
+	if err != nil {
+		return err
+	}
+	dec := xml.NewDecoder(f)
+	if err := dec.Decode(&any); err != nil {
+		return err
+	}
+	f.Close()
+	f, err = os.Create(fn)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	enc := xml.NewEncoder(f)
+	enc.Indent("", "  ")
+	return enc.Encode(&any)
 }
 
 func dumpXmlDiff(t *testing.T, exp, got []byte) {
