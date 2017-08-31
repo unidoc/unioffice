@@ -17,7 +17,7 @@ type AG_Password struct {
 	AlgorithmNameAttr *string
 	HashValueAttr     *string
 	SaltValueAttr     *string
-	SpinCountAttr     *int32
+	SpinCountAttr     *int64
 }
 
 func NewAG_Password() *AG_Password {
@@ -72,12 +72,11 @@ func (m *AG_Password) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			m.SaltValueAttr = &parsed
 		}
 		if attr.Name.Local == "spinCount" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.SpinCountAttr = &pt
+			m.SpinCountAttr = &parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

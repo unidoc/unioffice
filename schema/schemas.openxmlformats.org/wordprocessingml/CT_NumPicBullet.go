@@ -16,7 +16,7 @@ import (
 
 type CT_NumPicBullet struct {
 	// Picture Numbering Symbol ID
-	NumPicBulletIdAttr int32
+	NumPicBulletIdAttr int64
 	// Picture Numbering Symbol Properties
 	Pict    *CT_Picture
 	Drawing *CT_Drawing
@@ -49,11 +49,11 @@ func (m *CT_NumPicBullet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	// initialize to default
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "numPicBulletId" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.NumPicBulletIdAttr = int32(parsed)
+			m.NumPicBulletIdAttr = parsed
 		}
 	}
 lCT_NumPicBullet:

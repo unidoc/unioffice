@@ -15,9 +15,9 @@ import (
 
 type CT_PaperSource struct {
 	// First Page Printer Tray Code
-	FirstAttr *int32
+	FirstAttr *int64
 	// Non-First Page Printer Tray Code
-	OtherAttr *int32
+	OtherAttr *int64
 }
 
 func NewCT_PaperSource() *CT_PaperSource {
@@ -45,20 +45,18 @@ func (m *CT_PaperSource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	// initialize to default
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "first" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.FirstAttr = &pt
+			m.FirstAttr = &parsed
 		}
 		if attr.Name.Local == "other" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.OtherAttr = &pt
+			m.OtherAttr = &parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

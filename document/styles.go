@@ -203,7 +203,7 @@ func (s Styles) initializeDocDefaults() {
 	s.x.DocDefaults.PPrDefault.PPr.Spacing.AfterAttr = &sharedTypes.ST_TwipsMeasure{}
 	s.x.DocDefaults.PPrDefault.PPr.Spacing.AfterAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(160)
 	s.x.DocDefaults.PPrDefault.PPr.Spacing.LineAttr = &wml.ST_SignedTwipsMeasure{}
-	s.x.DocDefaults.PPrDefault.PPr.Spacing.LineAttr.Int32 = gooxml.Int32(259)
+	s.x.DocDefaults.PPrDefault.PPr.Spacing.LineAttr.Int64 = gooxml.Int64(259)
 	s.x.DocDefaults.PPrDefault.PPr.Spacing.LineRuleAttr = wml.ST_LineSpacingRuleAuto
 }
 

@@ -16,7 +16,7 @@ import (
 
 type CT_AbstractNum struct {
 	// Abstract Numbering Definition ID
-	AbstractNumIdAttr int32
+	AbstractNumIdAttr int64
 	// Abstract Numbering Definition Identifier
 	Nsid *CT_LongHexNumber
 	// Abstract Numbering Definition Type
@@ -80,11 +80,11 @@ func (m *CT_AbstractNum) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	// initialize to default
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "abstractNumId" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.AbstractNumIdAttr = int32(parsed)
+			m.AbstractNumIdAttr = parsed
 		}
 	}
 lCT_AbstractNum:

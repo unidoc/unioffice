@@ -63,7 +63,7 @@ func (p Paragraph) AddTabStop(position measurement.Distance, justificaton wml.ST
 	tab := wml.NewCT_TabStop()
 	tab.LeaderAttr = leader
 	tab.ValAttr = justificaton
-	tab.PosAttr.Int32 = gooxml.Int32(int32(position / measurement.Twips))
+	tab.PosAttr.Int64 = gooxml.Int64(int64(position / measurement.Twips))
 	p.x.PPr.Tabs.Tab = append(p.x.PPr.Tabs.Tab, tab)
 }
 
@@ -120,7 +120,7 @@ func (p Paragraph) SetHeadingLevel(idx int) {
 		p.x.PPr.NumPr = wml.NewCT_NumPr()
 	}
 	p.x.PPr.NumPr.Ilvl = wml.NewCT_DecimalNumber()
-	p.x.PPr.NumPr.Ilvl.ValAttr = int32(idx)
+	p.x.PPr.NumPr.Ilvl.ValAttr = int64(idx)
 	p.x.PPr.NumPr.NumId = wml.NewCT_DecimalNumber()
-	p.x.PPr.NumPr.NumId.ValAttr = int32(1)
+	p.x.PPr.NumPr.NumId.ValAttr = int64(1)
 }

@@ -18,7 +18,7 @@ import (
 
 type CT_Lvl struct {
 	// Numbering Level
-	IlvlAttr int32
+	IlvlAttr int64
 	// Template Code
 	TplcAttr *string
 	// Tentative Numbering
@@ -124,11 +124,11 @@ func (m *CT_Lvl) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "ilvl" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IlvlAttr = int32(parsed)
+			m.IlvlAttr = parsed
 		}
 		if attr.Name.Local == "tplc" {
 			parsed, err := attr.Value, error(nil)

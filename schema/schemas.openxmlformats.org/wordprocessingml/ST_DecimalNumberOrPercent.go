@@ -13,7 +13,7 @@ import (
 
 // ST_DecimalNumberOrPercent is a union type
 type ST_DecimalNumberOrPercent struct {
-	ST_UnqualifiedPercentage *int32
+	ST_UnqualifiedPercentage *int64
 	ST_Percentage            *string
 }
 

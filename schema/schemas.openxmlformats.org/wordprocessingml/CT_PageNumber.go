@@ -17,9 +17,9 @@ type CT_PageNumber struct {
 	// Page Number Format
 	FmtAttr ST_NumberFormat
 	// Starting Page Number
-	StartAttr *int32
+	StartAttr *int64
 	// Chapter Heading Style
-	ChapStyleAttr *int32
+	ChapStyleAttr *int64
 	// Chapter Separator Character
 	ChapSepAttr ST_ChapterSep
 }
@@ -66,20 +66,18 @@ func (m *CT_PageNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			m.FmtAttr.UnmarshalXMLAttr(attr)
 		}
 		if attr.Name.Local == "start" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.StartAttr = &pt
+			m.StartAttr = &parsed
 		}
 		if attr.Name.Local == "chapStyle" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.ChapStyleAttr = &pt
+			m.ChapStyleAttr = &parsed
 		}
 		if attr.Name.Local == "chapSep" {
 			m.ChapSepAttr.UnmarshalXMLAttr(attr)

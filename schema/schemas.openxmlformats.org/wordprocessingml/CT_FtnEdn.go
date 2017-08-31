@@ -20,7 +20,7 @@ type CT_FtnEdn struct {
 	// Footnote/Endnote Type
 	TypeAttr ST_FtnEdn
 	// Footnote/Endnote ID
-	IdAttr            int32
+	IdAttr            int64
 	EG_BlockLevelElts []*EG_BlockLevelElts
 }
 
@@ -56,11 +56,11 @@ func (m *CT_FtnEdn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
 		}
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = int32(parsed)
+			m.IdAttr = parsed
 		}
 	}
 lCT_FtnEdn:

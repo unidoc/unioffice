@@ -16,7 +16,7 @@ import (
 
 type CT_TblGridChange struct {
 	// Annotation Identifier
-	IdAttr  int32
+	IdAttr  int64
 	TblGrid *CT_TblGridBase
 }
 
@@ -43,11 +43,11 @@ func (m *CT_TblGridChange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	m.TblGrid = NewCT_TblGridBase()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = int32(parsed)
+			m.IdAttr = parsed
 		}
 	}
 lCT_TblGridChange:

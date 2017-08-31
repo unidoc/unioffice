@@ -21,7 +21,7 @@ type CT_LsdException struct {
 	// Latent Style Locking Setting
 	LockedAttr *sharedTypes.ST_OnOff
 	// Override default sorting order
-	UiPriorityAttr *int32
+	UiPriorityAttr *int64
 	// Semi hidden text override
 	SemiHiddenAttr *sharedTypes.ST_OnOff
 	// Unhide when used
@@ -83,12 +83,11 @@ func (m *CT_LsdException) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			m.LockedAttr = &parsed
 		}
 		if attr.Name.Local == "uiPriority" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.UiPriorityAttr = &pt
+			m.UiPriorityAttr = &parsed
 		}
 		if attr.Name.Local == "semiHidden" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)

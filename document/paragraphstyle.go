@@ -31,7 +31,7 @@ func (p ParagraphStyle) AddTabStop(position measurement.Distance, justificaton w
 	tab := wml.NewCT_TabStop()
 	tab.LeaderAttr = leader
 	tab.ValAttr = justificaton
-	tab.PosAttr.Int32 = gooxml.Int32(int32(position / measurement.Twips))
+	tab.PosAttr.Int64 = gooxml.Int64(int64(position / measurement.Twips))
 	p.x.Tabs.Tab = append(p.x.Tabs.Tab, tab)
 }
 
@@ -68,5 +68,5 @@ func (p ParagraphStyle) SetKeepNext(b bool) {
 // SetOutlineLevel sets the outline level of this style.
 func (p ParagraphStyle) SetOutlineLevel(lvl int) {
 	p.x.OutlineLvl = wml.NewCT_DecimalNumber()
-	p.x.OutlineLvl.ValAttr = int32(lvl)
+	p.x.OutlineLvl.ValAttr = int64(lvl)
 }

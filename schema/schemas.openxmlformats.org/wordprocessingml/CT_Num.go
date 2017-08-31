@@ -16,7 +16,7 @@ import (
 
 type CT_Num struct {
 	// Numbering Definition Instance ID
-	NumIdAttr int32
+	NumIdAttr int64
 	// Abstract Numbering Definition Reference
 	AbstractNumId *CT_DecimalNumber
 	// Numbering Level Definition Override
@@ -50,11 +50,11 @@ func (m *CT_Num) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	m.AbstractNumId = NewCT_DecimalNumber()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "numId" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.NumIdAttr = int32(parsed)
+			m.NumIdAttr = parsed
 		}
 	}
 lCT_Num:

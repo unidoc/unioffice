@@ -16,7 +16,7 @@ import (
 
 type CT_Div struct {
 	// div Data ID
-	IdAttr int32
+	IdAttr int64
 	// Data for HTML blockquote Element
 	BlockQuote *CT_OnOff
 	// Data for HTML body Element
@@ -86,11 +86,11 @@ func (m *CT_Div) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	m.MarBottom = NewCT_SignedTwipsMeasure()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = int32(parsed)
+			m.IdAttr = parsed
 		}
 	}
 lCT_Div:

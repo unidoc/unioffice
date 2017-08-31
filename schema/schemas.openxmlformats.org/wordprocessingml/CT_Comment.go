@@ -22,7 +22,7 @@ type CT_Comment struct {
 	AuthorAttr   string
 	DateAttr     *time.Time
 	// Annotation Identifier
-	IdAttr            int32
+	IdAttr            int64
 	EG_BlockLevelElts []*EG_BlockLevelElts
 }
 
@@ -81,11 +81,11 @@ func (m *CT_Comment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			m.DateAttr = &parsed
 		}
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = int32(parsed)
+			m.IdAttr = parsed
 		}
 	}
 lCT_Comment:

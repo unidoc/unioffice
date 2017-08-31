@@ -19,7 +19,7 @@ type CT_FramePr struct {
 	// Drop Cap Frame
 	DropCapAttr ST_DropCap
 	// Drop Cap Vertical Height in Lines
-	LinesAttr *int32
+	LinesAttr *int64
 	// Frame Width
 	WAttr *sharedTypes.ST_TwipsMeasure
 	// Frame Height
@@ -149,12 +149,11 @@ func (m *CT_FramePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			m.DropCapAttr.UnmarshalXMLAttr(attr)
 		}
 		if attr.Name.Local == "lines" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.LinesAttr = &pt
+			m.LinesAttr = &parsed
 		}
 		if attr.Name.Local == "w" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)

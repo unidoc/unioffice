@@ -14,7 +14,7 @@ import (
 )
 
 type CT_FontFamily struct {
-	ValAttr int32
+	ValAttr int64
 }
 
 func NewCT_FontFamily() *CT_FontFamily {
@@ -38,11 +38,11 @@ func (m *CT_FontFamily) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	m.ValAttr = 0
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.ValAttr = int32(parsed)
+			m.ValAttr = parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -22,7 +22,7 @@ type CT_Columns struct {
 	// Spacing Between Equal Width Columns
 	SpaceAttr *sharedTypes.ST_TwipsMeasure
 	// Number of Equal Width Columns
-	NumAttr *int32
+	NumAttr *int64
 	// Draw Line Between Columns
 	SepAttr *sharedTypes.ST_OnOff
 	// Single Column Definition
@@ -78,12 +78,11 @@ func (m *CT_Columns) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			m.SpaceAttr = &parsed
 		}
 		if attr.Name.Local == "num" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.NumAttr = &pt
+			m.NumAttr = &parsed
 		}
 		if attr.Name.Local == "sep" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)

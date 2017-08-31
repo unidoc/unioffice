@@ -16,7 +16,7 @@ import (
 type CT_MarkupRange struct {
 	DisplacedByCustomXmlAttr ST_DisplacedByCustomXml
 	// Annotation Identifier
-	IdAttr int32
+	IdAttr int64
 }
 
 func NewCT_MarkupRange() *CT_MarkupRange {
@@ -48,11 +48,11 @@ func (m *CT_MarkupRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			m.DisplacedByCustomXmlAttr.UnmarshalXMLAttr(attr)
 		}
 		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = int32(parsed)
+			m.IdAttr = parsed
 		}
 	}
 	// skip any extensions we may find, but don't support

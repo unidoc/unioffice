@@ -23,7 +23,7 @@ type CT_Caption struct {
 	// Include Chapter Number in Field for Caption
 	ChapNumAttr *sharedTypes.ST_OnOff
 	// Style for Chapter Headings
-	HeadingAttr *int32
+	HeadingAttr *int64
 	// Do Not Include Name In Caption
 	NoLabelAttr *sharedTypes.ST_OnOff
 	// Caption Numbering Format
@@ -101,12 +101,11 @@ func (m *CT_Caption) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			m.ChapNumAttr = &parsed
 		}
 		if attr.Name.Local == "heading" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.HeadingAttr = &pt
+			m.HeadingAttr = &parsed
 		}
 		if attr.Name.Local == "noLabel" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)

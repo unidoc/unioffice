@@ -17,9 +17,9 @@ import (
 
 type CT_LineNumber struct {
 	// Line Number Increments to Display
-	CountByAttr *int32
+	CountByAttr *int64
 	// Line Numbering Starting Value
-	StartAttr *int32
+	StartAttr *int64
 	// Distance Between Text and Line Numbering
 	DistanceAttr *sharedTypes.ST_TwipsMeasure
 	// Line Numbering Restart Setting
@@ -62,20 +62,18 @@ func (m *CT_LineNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	// initialize to default
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "countBy" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.CountByAttr = &pt
+			m.CountByAttr = &parsed
 		}
 		if attr.Name.Local == "start" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.StartAttr = &pt
+			m.StartAttr = &parsed
 		}
 		if attr.Name.Local == "distance" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)

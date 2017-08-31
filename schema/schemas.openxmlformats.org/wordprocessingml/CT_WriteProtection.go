@@ -21,8 +21,8 @@ type CT_WriteProtection struct {
 	CryptProviderTypeAttr          sharedTypes.ST_CryptProv
 	CryptAlgorithmClassAttr        sharedTypes.ST_AlgClass
 	CryptAlgorithmTypeAttr         sharedTypes.ST_AlgType
-	CryptAlgorithmSidAttr          *int32
-	CryptSpinCountAttr             *int32
+	CryptAlgorithmSidAttr          *int64
+	CryptSpinCountAttr             *int64
 	CryptProviderAttr              *string
 	AlgIdExtAttr                   *string
 	AlgIdExtSourceAttr             *string
@@ -126,20 +126,18 @@ func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			m.CryptAlgorithmTypeAttr.UnmarshalXMLAttr(attr)
 		}
 		if attr.Name.Local == "cryptAlgorithmSid" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.CryptAlgorithmSidAttr = &pt
+			m.CryptAlgorithmSidAttr = &parsed
 		}
 		if attr.Name.Local == "cryptSpinCount" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.CryptSpinCountAttr = &pt
+			m.CryptSpinCountAttr = &parsed
 		}
 		if attr.Name.Local == "cryptProvider" {
 			parsed, err := attr.Value, error(nil)
