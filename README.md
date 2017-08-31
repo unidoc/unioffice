@@ -2,6 +2,8 @@
 .pptx).  
 
 [![Build Status](https://travis-ci.org/baliance/gooxml.svg?branch=master)](https://travis-ci.org/baliance/gooxml)
+[![Coverage Status](https://coveralls.io/repos/github/baliance/gooxml/badge.svg?branch=master)](https://coveralls.io/github/baliance/gooxml?branch=master)
+[![GoDoc](https://godoc.org/baliance.com/gooxml?status.svg)](https://godoc.org/baliance.com/gooxml)
 
 ## Status ##
 
