@@ -7,12 +7,8 @@ go:
 install:
         - mkdir -p $HOME/gopath/src/baliance.com/
         - ln -s $HOME/gopath/src/github.com/baliance/gooxml $HOME/gopath/src/baliance.com/gooxml
-        - go get github.com/mattn/goveralls
-        - go get github.com/modocache/gover
 
 script:
-        - go list -f '{{if len .TestGoFiles}}"go test -coverprofile={{.Dir}}/.coverprofile {{.ImportPath}}"{{end}}' ./... | xargs -L 1 sh -c
-        - go list -f '{{if len .XTestGoFiles}}"go test -coverprofile={{.Dir}}/.coverprofile {{.ImportPath}}"{{end}}' ./... | xargs -L 1 sh -c
-        - gover
-        - goveralls -coverprofile=gover.coverprofile -v -service=travis-ci
-        
+        - go vet ./...
+        - go test -v ./...
+        - GOFMT=$(gofmt -d -s .) && echo $GOFMT && test -z "$GOFMT"
