@@ -25,6 +25,20 @@ func (a AnchoredDrawing) X() *wd.Anchor {
 	return a.x
 }
 
+// GetImage returns the ImageRef associated with an AnchoredDrawing.
+func (a AnchoredDrawing) GetImage() (ImageRef, bool) {
+	any := a.x.Graphic.GraphicData.Any
+	if len(any) > 0 {
+		p, ok := any[0].(*pic.Pic)
+		if ok {
+			if p.BlipFill != nil && p.BlipFill.Blip != nil && p.BlipFill.Blip.EmbedAttr != nil {
+				return a.d.GetImageByRelID(*p.BlipFill.Blip.EmbedAttr)
+			}
+		}
+	}
+	return ImageRef{}, false
+}
+
 // SetName sets the name of the image, visible in the properties of the image
 // within Word.
 func (a AnchoredDrawing) SetName(name string) {
