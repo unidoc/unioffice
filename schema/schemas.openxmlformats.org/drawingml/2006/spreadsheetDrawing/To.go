@@ -21,6 +21,7 @@ func NewTo() *To {
 	ret.CT_Marker = *NewCT_Marker()
 	return ret
 }
+
 func (m *To) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *To) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "to"
 	return m.CT_Marker.MarshalXML(e, start)
 }
+
 func (m *To) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Marker = *NewCT_Marker()
@@ -74,9 +76,13 @@ lTo:
 	}
 	return nil
 }
+
+// Validate validates the To and its children
 func (m *To) Validate() error {
 	return m.ValidateWithPath("To")
 }
+
+// ValidateWithPath validates the To and its children, prefixing error messages with path
 func (m *To) ValidateWithPath(path string) error {
 	if err := m.CT_Marker.ValidateWithPath(path); err != nil {
 		return err

@@ -44,6 +44,7 @@ func NewCT_TableCellProperties() *CT_TableCellProperties {
 	ret := &CT_TableCellProperties{}
 	return ret
 }
+
 func (m *CT_TableCellProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -153,6 +154,7 @@ func (m *CT_TableCellProperties) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TableCellProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -298,9 +300,13 @@ lCT_TableCellProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_TableCellProperties and its children
 func (m *CT_TableCellProperties) Validate() error {
 	return m.ValidateWithPath("CT_TableCellProperties")
 }
+
+// ValidateWithPath validates the CT_TableCellProperties and its children, prefixing error messages with path
 func (m *CT_TableCellProperties) ValidateWithPath(path string) error {
 	if m.MarLAttr != nil {
 		if err := m.MarLAttr.ValidateWithPath(path + "/MarLAttr"); err != nil {

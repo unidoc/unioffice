@@ -21,6 +21,7 @@ func NewElementsAndRefinementsGroup() *ElementsAndRefinementsGroup {
 	ret := &ElementsAndRefinementsGroup{}
 	return ret
 }
+
 func (m *ElementsAndRefinementsGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *ElementsAndRefinementsGroup) MarshalXML(e *xml.Encoder, start xml.Start
 	}
 	return nil
 }
+
 func (m *ElementsAndRefinementsGroup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lElementsAndRefinementsGroup:
@@ -62,9 +64,13 @@ lElementsAndRefinementsGroup:
 	}
 	return nil
 }
+
+// Validate validates the ElementsAndRefinementsGroup and its children
 func (m *ElementsAndRefinementsGroup) Validate() error {
 	return m.ValidateWithPath("ElementsAndRefinementsGroup")
 }
+
+// ValidateWithPath validates the ElementsAndRefinementsGroup and its children, prefixing error messages with path
 func (m *ElementsAndRefinementsGroup) ValidateWithPath(path string) error {
 	for i, v := range m.Choice {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Choice[%d]", path, i)); err != nil {

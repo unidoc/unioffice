@@ -21,6 +21,7 @@ func NewEG_ShadeProperties() *EG_ShadeProperties {
 	ret := &EG_ShadeProperties{}
 	return ret
 }
+
 func (m *EG_ShadeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_ShadeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	return nil
 }
+
 func (m *EG_ShadeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ShadeProperties:
@@ -69,9 +71,13 @@ lEG_ShadeProperties:
 	}
 	return nil
 }
+
+// Validate validates the EG_ShadeProperties and its children
 func (m *EG_ShadeProperties) Validate() error {
 	return m.ValidateWithPath("EG_ShadeProperties")
 }
+
+// ValidateWithPath validates the EG_ShadeProperties and its children, prefixing error messages with path
 func (m *EG_ShadeProperties) ValidateWithPath(path string) error {
 	if m.Lin != nil {
 		if err := m.Lin.ValidateWithPath(path + "/Lin"); err != nil {

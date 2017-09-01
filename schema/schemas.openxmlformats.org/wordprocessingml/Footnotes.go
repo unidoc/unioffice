@@ -21,6 +21,7 @@ func NewFootnotes() *Footnotes {
 	ret.CT_Footnotes = *NewCT_Footnotes()
 	return ret
 }
+
 func (m *Footnotes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *Footnotes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "w:footnotes"
 	return m.CT_Footnotes.MarshalXML(e, start)
 }
+
 func (m *Footnotes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Footnotes = *NewCT_Footnotes()
@@ -69,9 +71,13 @@ lFootnotes:
 	}
 	return nil
 }
+
+// Validate validates the Footnotes and its children
 func (m *Footnotes) Validate() error {
 	return m.ValidateWithPath("Footnotes")
 }
+
+// ValidateWithPath validates the Footnotes and its children, prefixing error messages with path
 func (m *Footnotes) ValidateWithPath(path string) error {
 	if err := m.CT_Footnotes.ValidateWithPath(path); err != nil {
 		return err

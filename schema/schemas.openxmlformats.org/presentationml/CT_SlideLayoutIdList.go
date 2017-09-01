@@ -22,6 +22,7 @@ func NewCT_SlideLayoutIdList() *CT_SlideLayoutIdList {
 	ret := &CT_SlideLayoutIdList{}
 	return ret
 }
+
 func (m *CT_SlideLayoutIdList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_SlideLayoutIdList) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SlideLayoutIdList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_SlideLayoutIdList:
@@ -64,9 +66,13 @@ lCT_SlideLayoutIdList:
 	}
 	return nil
 }
+
+// Validate validates the CT_SlideLayoutIdList and its children
 func (m *CT_SlideLayoutIdList) Validate() error {
 	return m.ValidateWithPath("CT_SlideLayoutIdList")
 }
+
+// ValidateWithPath validates the CT_SlideLayoutIdList and its children, prefixing error messages with path
 func (m *CT_SlideLayoutIdList) ValidateWithPath(path string) error {
 	for i, v := range m.SldLayoutId {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/SldLayoutId[%d]", path, i)); err != nil {

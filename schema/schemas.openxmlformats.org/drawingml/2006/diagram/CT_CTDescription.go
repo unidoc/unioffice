@@ -21,6 +21,7 @@ func NewCT_CTDescription() *CT_CTDescription {
 	ret := &CT_CTDescription{}
 	return ret
 }
+
 func (m *CT_CTDescription) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_CTDescription) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CTDescription) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -65,9 +67,13 @@ func (m *CT_CTDescription) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	}
 	return nil
 }
+
+// Validate validates the CT_CTDescription and its children
 func (m *CT_CTDescription) Validate() error {
 	return m.ValidateWithPath("CT_CTDescription")
 }
+
+// ValidateWithPath validates the CT_CTDescription and its children, prefixing error messages with path
 func (m *CT_CTDescription) ValidateWithPath(path string) error {
 	return nil
 }

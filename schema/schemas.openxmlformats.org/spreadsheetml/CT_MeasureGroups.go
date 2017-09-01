@@ -25,6 +25,7 @@ func NewCT_MeasureGroups() *CT_MeasureGroups {
 	ret := &CT_MeasureGroups{}
 	return ret
 }
+
 func (m *CT_MeasureGroups) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_MeasureGroups) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MeasureGroups) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -81,9 +83,13 @@ lCT_MeasureGroups:
 	}
 	return nil
 }
+
+// Validate validates the CT_MeasureGroups and its children
 func (m *CT_MeasureGroups) Validate() error {
 	return m.ValidateWithPath("CT_MeasureGroups")
 }
+
+// ValidateWithPath validates the CT_MeasureGroups and its children, prefixing error messages with path
 func (m *CT_MeasureGroups) ValidateWithPath(path string) error {
 	for i, v := range m.MeasureGroup {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/MeasureGroup[%d]", path, i)); err != nil {

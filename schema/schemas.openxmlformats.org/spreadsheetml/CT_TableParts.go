@@ -25,6 +25,7 @@ func NewCT_TableParts() *CT_TableParts {
 	ret := &CT_TableParts{}
 	return ret
 }
+
 func (m *CT_TableParts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_TableParts) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TableParts) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -81,9 +83,13 @@ lCT_TableParts:
 	}
 	return nil
 }
+
+// Validate validates the CT_TableParts and its children
 func (m *CT_TableParts) Validate() error {
 	return m.ValidateWithPath("CT_TableParts")
 }
+
+// ValidateWithPath validates the CT_TableParts and its children, prefixing error messages with path
 func (m *CT_TableParts) ValidateWithPath(path string) error {
 	for i, v := range m.TablePart {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/TablePart[%d]", path, i)); err != nil {

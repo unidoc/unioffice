@@ -46,6 +46,7 @@ func NewCT_ColorScheme() *CT_ColorScheme {
 	ret.FolHlink = NewCT_Color()
 	return ret
 }
+
 func (m *CT_ColorScheme) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -84,6 +85,7 @@ func (m *CT_ColorScheme) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ColorScheme) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Dk1 = NewCT_Color()
@@ -182,9 +184,13 @@ lCT_ColorScheme:
 	}
 	return nil
 }
+
+// Validate validates the CT_ColorScheme and its children
 func (m *CT_ColorScheme) Validate() error {
 	return m.ValidateWithPath("CT_ColorScheme")
 }
+
+// ValidateWithPath validates the CT_ColorScheme and its children, prefixing error messages with path
 func (m *CT_ColorScheme) ValidateWithPath(path string) error {
 	if err := m.Dk1.ValidateWithPath(path + "/Dk1"); err != nil {
 		return err

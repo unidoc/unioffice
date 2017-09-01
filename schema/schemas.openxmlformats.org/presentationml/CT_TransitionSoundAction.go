@@ -23,6 +23,7 @@ func NewCT_TransitionSoundAction() *CT_TransitionSoundAction {
 	ret := &CT_TransitionSoundAction{}
 	return ret
 }
+
 func (m *CT_TransitionSoundAction) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_TransitionSoundAction) MarshalXML(e *xml.Encoder, start xml.StartEle
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TransitionSoundAction) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TransitionSoundAction:
@@ -73,9 +75,13 @@ lCT_TransitionSoundAction:
 	}
 	return nil
 }
+
+// Validate validates the CT_TransitionSoundAction and its children
 func (m *CT_TransitionSoundAction) Validate() error {
 	return m.ValidateWithPath("CT_TransitionSoundAction")
 }
+
+// ValidateWithPath validates the CT_TransitionSoundAction and its children, prefixing error messages with path
 func (m *CT_TransitionSoundAction) ValidateWithPath(path string) error {
 	if m.StSnd != nil {
 		if err := m.StSnd.ValidateWithPath(path + "/StSnd"); err != nil {

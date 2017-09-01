@@ -21,6 +21,7 @@ func NewRecipients() *Recipients {
 	ret.CT_Recipients = *NewCT_Recipients()
 	return ret
 }
+
 func (m *Recipients) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *Recipients) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "w:recipients"
 	return m.CT_Recipients.MarshalXML(e, start)
 }
+
 func (m *Recipients) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Recipients = *NewCT_Recipients()
@@ -69,9 +71,13 @@ lRecipients:
 	}
 	return nil
 }
+
+// Validate validates the Recipients and its children
 func (m *Recipients) Validate() error {
 	return m.ValidateWithPath("Recipients")
 }
+
+// ValidateWithPath validates the Recipients and its children, prefixing error messages with path
 func (m *Recipients) ValidateWithPath(path string) error {
 	if err := m.CT_Recipients.ValidateWithPath(path); err != nil {
 		return err

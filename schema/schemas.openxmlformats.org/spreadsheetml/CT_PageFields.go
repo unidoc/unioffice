@@ -25,6 +25,7 @@ func NewCT_PageFields() *CT_PageFields {
 	ret := &CT_PageFields{}
 	return ret
 }
+
 func (m *CT_PageFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_PageFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PageFields) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_PageFields:
 	}
 	return nil
 }
+
+// Validate validates the CT_PageFields and its children
 func (m *CT_PageFields) Validate() error {
 	return m.ValidateWithPath("CT_PageFields")
 }
+
+// ValidateWithPath validates the CT_PageFields and its children, prefixing error messages with path
 func (m *CT_PageFields) ValidateWithPath(path string) error {
 	for i, v := range m.PageField {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/PageField[%d]", path, i)); err != nil {

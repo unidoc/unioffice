@@ -35,6 +35,7 @@ func (e ST_TargetMode) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}
 	return attr, nil
 }
+
 func (e *ST_TargetMode) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "":
@@ -46,9 +47,11 @@ func (e *ST_TargetMode) UnmarshalXMLAttr(attr xml.Attr) error {
 	}
 	return nil
 }
+
 func (m ST_TargetMode) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(m.String(), start)
 }
+
 func (m *ST_TargetMode) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
@@ -75,6 +78,7 @@ func (m *ST_TargetMode) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	}
 	return fmt.Errorf("expected end element, got %v", tok)
 }
+
 func (m ST_TargetMode) String() string {
 	switch m {
 	case 0:
@@ -86,9 +90,11 @@ func (m ST_TargetMode) String() string {
 	}
 	return ""
 }
+
 func (m ST_TargetMode) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m ST_TargetMode) ValidateWithPath(path string) error {
 	switch m {
 	case 0, 1, 2:
@@ -97,6 +103,8 @@ func (m ST_TargetMode) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
+// init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/relationships", "CT_Relationships", NewCT_Relationships)
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/relationships", "CT_Relationship", NewCT_Relationship)

@@ -23,6 +23,7 @@ func NewCT_GraphicalObjectData() *CT_GraphicalObjectData {
 	ret := &CT_GraphicalObjectData{}
 	return ret
 }
+
 func (m *CT_GraphicalObjectData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *CT_GraphicalObjectData) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GraphicalObjectData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -75,9 +77,13 @@ lCT_GraphicalObjectData:
 	}
 	return nil
 }
+
+// Validate validates the CT_GraphicalObjectData and its children
 func (m *CT_GraphicalObjectData) Validate() error {
 	return m.ValidateWithPath("CT_GraphicalObjectData")
 }
+
+// ValidateWithPath validates the CT_GraphicalObjectData and its children, prefixing error messages with path
 func (m *CT_GraphicalObjectData) ValidateWithPath(path string) error {
 	return nil
 }

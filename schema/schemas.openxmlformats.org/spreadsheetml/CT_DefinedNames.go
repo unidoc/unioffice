@@ -22,6 +22,7 @@ func NewCT_DefinedNames() *CT_DefinedNames {
 	ret := &CT_DefinedNames{}
 	return ret
 }
+
 func (m *CT_DefinedNames) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_DefinedNames) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DefinedNames) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_DefinedNames:
@@ -64,9 +66,13 @@ lCT_DefinedNames:
 	}
 	return nil
 }
+
+// Validate validates the CT_DefinedNames and its children
 func (m *CT_DefinedNames) Validate() error {
 	return m.ValidateWithPath("CT_DefinedNames")
 }
+
+// ValidateWithPath validates the CT_DefinedNames and its children, prefixing error messages with path
 func (m *CT_DefinedNames) ValidateWithPath(path string) error {
 	for i, v := range m.DefinedName {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/DefinedName[%d]", path, i)); err != nil {

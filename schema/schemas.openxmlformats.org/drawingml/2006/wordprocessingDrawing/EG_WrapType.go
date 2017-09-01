@@ -20,6 +20,7 @@ func NewEG_WrapType() *EG_WrapType {
 	ret := &EG_WrapType{}
 	return ret
 }
+
 func (m *EG_WrapType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -29,6 +30,7 @@ func (m *EG_WrapType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *EG_WrapType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_WrapType:
@@ -83,9 +85,13 @@ lEG_WrapType:
 	}
 	return nil
 }
+
+// Validate validates the EG_WrapType and its children
 func (m *EG_WrapType) Validate() error {
 	return m.ValidateWithPath("EG_WrapType")
 }
+
+// ValidateWithPath validates the EG_WrapType and its children, prefixing error messages with path
 func (m *EG_WrapType) ValidateWithPath(path string) error {
 	if m.Choice != nil {
 		if err := m.Choice.ValidateWithPath(path + "/Choice"); err != nil {

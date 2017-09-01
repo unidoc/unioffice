@@ -21,6 +21,7 @@ func NewCT_Authors() *CT_Authors {
 	ret := &CT_Authors{}
 	return ret
 }
+
 func (m *CT_Authors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_Authors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Authors) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Authors:
@@ -63,9 +65,13 @@ lCT_Authors:
 	}
 	return nil
 }
+
+// Validate validates the CT_Authors and its children
 func (m *CT_Authors) Validate() error {
 	return m.ValidateWithPath("CT_Authors")
 }
+
+// ValidateWithPath validates the CT_Authors and its children, prefixing error messages with path
 func (m *CT_Authors) ValidateWithPath(path string) error {
 	return nil
 }

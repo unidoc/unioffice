@@ -20,6 +20,7 @@ func NewCT_LineJoinMiterProperties() *CT_LineJoinMiterProperties {
 	ret := &CT_LineJoinMiterProperties{}
 	return ret
 }
+
 func (m *CT_LineJoinMiterProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_LineJoinMiterProperties) MarshalXML(e *xml.Encoder, start xml.StartE
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LineJoinMiterProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -55,9 +57,13 @@ func (m *CT_LineJoinMiterProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 	}
 	return nil
 }
+
+// Validate validates the CT_LineJoinMiterProperties and its children
 func (m *CT_LineJoinMiterProperties) Validate() error {
 	return m.ValidateWithPath("CT_LineJoinMiterProperties")
 }
+
+// ValidateWithPath validates the CT_LineJoinMiterProperties and its children, prefixing error messages with path
 func (m *CT_LineJoinMiterProperties) ValidateWithPath(path string) error {
 	if m.LimAttr != nil {
 		if err := m.LimAttr.ValidateWithPath(path + "/LimAttr"); err != nil {

@@ -6,6 +6,3 @@
 // commercial license can be purchased by contacting sales@baliance.com.
 
 package relationships
-
-func init() {
-}

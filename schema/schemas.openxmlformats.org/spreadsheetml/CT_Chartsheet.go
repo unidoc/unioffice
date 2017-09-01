@@ -42,6 +42,7 @@ func NewCT_Chartsheet() *CT_Chartsheet {
 	ret.Drawing = NewCT_Drawing()
 	return ret
 }
+
 func (m *CT_Chartsheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -102,6 +103,7 @@ func (m *CT_Chartsheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Chartsheet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.SheetViews = NewCT_ChartsheetViews()
@@ -196,9 +198,13 @@ lCT_Chartsheet:
 	}
 	return nil
 }
+
+// Validate validates the CT_Chartsheet and its children
 func (m *CT_Chartsheet) Validate() error {
 	return m.ValidateWithPath("CT_Chartsheet")
 }
+
+// ValidateWithPath validates the CT_Chartsheet and its children, prefixing error messages with path
 func (m *CT_Chartsheet) ValidateWithPath(path string) error {
 	if m.SheetPr != nil {
 		if err := m.SheetPr.ValidateWithPath(path + "/SheetPr"); err != nil {

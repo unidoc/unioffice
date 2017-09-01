@@ -30,6 +30,7 @@ func NewCT_VolTopic() *CT_VolTopic {
 	ret := &CT_VolTopic{}
 	return ret
 }
+
 func (m *CT_VolTopic) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -54,6 +55,7 @@ func (m *CT_VolTopic) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_VolTopic) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -99,9 +101,13 @@ lCT_VolTopic:
 	}
 	return nil
 }
+
+// Validate validates the CT_VolTopic and its children
 func (m *CT_VolTopic) Validate() error {
 	return m.ValidateWithPath("CT_VolTopic")
 }
+
+// ValidateWithPath validates the CT_VolTopic and its children, prefixing error messages with path
 func (m *CT_VolTopic) ValidateWithPath(path string) error {
 	if err := m.TAttr.ValidateWithPath(path + "/TAttr"); err != nil {
 		return err

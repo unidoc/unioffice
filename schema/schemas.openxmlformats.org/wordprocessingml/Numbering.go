@@ -21,6 +21,7 @@ func NewNumbering() *Numbering {
 	ret.CT_Numbering = *NewCT_Numbering()
 	return ret
 }
+
 func (m *Numbering) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *Numbering) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "w:numbering"
 	return m.CT_Numbering.MarshalXML(e, start)
 }
+
 func (m *Numbering) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Numbering = *NewCT_Numbering()
@@ -86,9 +88,13 @@ lNumbering:
 	}
 	return nil
 }
+
+// Validate validates the Numbering and its children
 func (m *Numbering) Validate() error {
 	return m.ValidateWithPath("Numbering")
 }
+
+// ValidateWithPath validates the Numbering and its children, prefixing error messages with path
 func (m *Numbering) ValidateWithPath(path string) error {
 	if err := m.CT_Numbering.ValidateWithPath(path); err != nil {
 		return err

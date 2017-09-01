@@ -22,6 +22,7 @@ func NewCT_SlideViewProperties() *CT_SlideViewProperties {
 	ret.CSldViewPr = NewCT_CommonSlideViewProperties()
 	return ret
 }
+
 func (m *CT_SlideViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *CT_SlideViewProperties) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SlideViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CSldViewPr = NewCT_CommonSlideViewProperties()
@@ -70,9 +72,13 @@ lCT_SlideViewProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_SlideViewProperties and its children
 func (m *CT_SlideViewProperties) Validate() error {
 	return m.ValidateWithPath("CT_SlideViewProperties")
 }
+
+// ValidateWithPath validates the CT_SlideViewProperties and its children, prefixing error messages with path
 func (m *CT_SlideViewProperties) ValidateWithPath(path string) error {
 	if err := m.CSldViewPr.ValidateWithPath(path + "/CSldViewPr"); err != nil {
 		return err

@@ -74,6 +74,7 @@ func NewCT_Macrosheet() *CT_Macrosheet {
 	ret.SheetData = NewCT_SheetData()
 	return ret
 }
+
 func (m *CT_Macrosheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -189,6 +190,7 @@ func (m *CT_Macrosheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Macrosheet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.SheetData = NewCT_SheetData()
@@ -350,9 +352,13 @@ lCT_Macrosheet:
 	}
 	return nil
 }
+
+// Validate validates the CT_Macrosheet and its children
 func (m *CT_Macrosheet) Validate() error {
 	return m.ValidateWithPath("CT_Macrosheet")
 }
+
+// ValidateWithPath validates the CT_Macrosheet and its children, prefixing error messages with path
 func (m *CT_Macrosheet) ValidateWithPath(path string) error {
 	if m.SheetPr != nil {
 		if err := m.SheetPr.ValidateWithPath(path + "/SheetPr"); err != nil {

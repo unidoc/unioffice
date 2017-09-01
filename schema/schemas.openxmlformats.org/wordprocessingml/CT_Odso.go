@@ -36,6 +36,7 @@ func NewCT_Odso() *CT_Odso {
 	ret := &CT_Odso{}
 	return ret
 }
+
 func (m *CT_Odso) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -76,6 +77,7 @@ func (m *CT_Odso) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Odso) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Odso:
@@ -142,9 +144,13 @@ lCT_Odso:
 	}
 	return nil
 }
+
+// Validate validates the CT_Odso and its children
 func (m *CT_Odso) Validate() error {
 	return m.ValidateWithPath("CT_Odso")
 }
+
+// ValidateWithPath validates the CT_Odso and its children, prefixing error messages with path
 func (m *CT_Odso) ValidateWithPath(path string) error {
 	if m.Udl != nil {
 		if err := m.Udl.ValidateWithPath(path + "/Udl"); err != nil {

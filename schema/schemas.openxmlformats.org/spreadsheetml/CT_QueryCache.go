@@ -25,6 +25,7 @@ func NewCT_QueryCache() *CT_QueryCache {
 	ret := &CT_QueryCache{}
 	return ret
 }
+
 func (m *CT_QueryCache) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_QueryCache) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_QueryCache) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_QueryCache:
 	}
 	return nil
 }
+
+// Validate validates the CT_QueryCache and its children
 func (m *CT_QueryCache) Validate() error {
 	return m.ValidateWithPath("CT_QueryCache")
 }
+
+// ValidateWithPath validates the CT_QueryCache and its children, prefixing error messages with path
 func (m *CT_QueryCache) ValidateWithPath(path string) error {
 	for i, v := range m.Query {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Query[%d]", path, i)); err != nil {

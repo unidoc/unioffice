@@ -23,6 +23,7 @@ func NewCT_Default() *CT_Default {
 	ret.ContentTypeAttr = "application/xml"
 	return ret
 }
+
 func (m *CT_Default) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_Default) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Default) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ExtensionAttr = "xml"
@@ -67,9 +69,13 @@ func (m *CT_Default) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	}
 	return nil
 }
+
+// Validate validates the CT_Default and its children
 func (m *CT_Default) Validate() error {
 	return m.ValidateWithPath("CT_Default")
 }
+
+// ValidateWithPath validates the CT_Default and its children, prefixing error messages with path
 func (m *CT_Default) ValidateWithPath(path string) error {
 	if !ST_ExtensionPatternRe.MatchString(m.ExtensionAttr) {
 		return fmt.Errorf(`%s/m.ExtensionAttr must match '%s' (have %v)`, path, ST_ExtensionPatternRe, m.ExtensionAttr)

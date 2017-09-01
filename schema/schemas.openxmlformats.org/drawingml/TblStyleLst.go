@@ -21,6 +21,7 @@ func NewTblStyleLst() *TblStyleLst {
 	ret.CT_TableStyleList = *NewCT_TableStyleList()
 	return ret
 }
+
 func (m *TblStyleLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *TblStyleLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "a:tblStyleLst"
 	return m.CT_TableStyleList.MarshalXML(e, start)
 }
+
 func (m *TblStyleLst) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_TableStyleList = *NewCT_TableStyleList()
@@ -73,9 +75,13 @@ lTblStyleLst:
 	}
 	return nil
 }
+
+// Validate validates the TblStyleLst and its children
 func (m *TblStyleLst) Validate() error {
 	return m.ValidateWithPath("TblStyleLst")
 }
+
+// ValidateWithPath validates the TblStyleLst and its children, prefixing error messages with path
 func (m *TblStyleLst) ValidateWithPath(path string) error {
 	if err := m.CT_TableStyleList.ValidateWithPath(path); err != nil {
 		return err

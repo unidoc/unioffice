@@ -25,6 +25,7 @@ func NewCT_AlphaInverseEffect() *CT_AlphaInverseEffect {
 	ret := &CT_AlphaInverseEffect{}
 	return ret
 }
+
 func (m *CT_AlphaInverseEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -57,6 +58,7 @@ func (m *CT_AlphaInverseEffect) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_AlphaInverseEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_AlphaInverseEffect:
@@ -111,9 +113,13 @@ lCT_AlphaInverseEffect:
 	}
 	return nil
 }
+
+// Validate validates the CT_AlphaInverseEffect and its children
 func (m *CT_AlphaInverseEffect) Validate() error {
 	return m.ValidateWithPath("CT_AlphaInverseEffect")
 }
+
+// ValidateWithPath validates the CT_AlphaInverseEffect and its children, prefixing error messages with path
 func (m *CT_AlphaInverseEffect) ValidateWithPath(path string) error {
 	if m.ScrgbClr != nil {
 		if err := m.ScrgbClr.ValidateWithPath(path + "/ScrgbClr"); err != nil {

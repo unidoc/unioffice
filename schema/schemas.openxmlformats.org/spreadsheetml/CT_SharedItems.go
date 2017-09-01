@@ -62,6 +62,7 @@ func NewCT_SharedItems() *CT_SharedItems {
 	ret := &CT_SharedItems{}
 	return ret
 }
+
 func (m *CT_SharedItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -150,6 +151,7 @@ func (m *CT_SharedItems) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SharedItems) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -311,9 +313,13 @@ lCT_SharedItems:
 	}
 	return nil
 }
+
+// Validate validates the CT_SharedItems and its children
 func (m *CT_SharedItems) Validate() error {
 	return m.ValidateWithPath("CT_SharedItems")
 }
+
+// ValidateWithPath validates the CT_SharedItems and its children, prefixing error messages with path
 func (m *CT_SharedItems) ValidateWithPath(path string) error {
 	for i, v := range m.M {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/M[%d]", path, i)); err != nil {

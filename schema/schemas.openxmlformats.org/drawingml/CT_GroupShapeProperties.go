@@ -31,6 +31,7 @@ func NewCT_GroupShapeProperties() *CT_GroupShapeProperties {
 	ret := &CT_GroupShapeProperties{}
 	return ret
 }
+
 func (m *CT_GroupShapeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -90,6 +91,7 @@ func (m *CT_GroupShapeProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GroupShapeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -174,9 +176,13 @@ lCT_GroupShapeProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_GroupShapeProperties and its children
 func (m *CT_GroupShapeProperties) Validate() error {
 	return m.ValidateWithPath("CT_GroupShapeProperties")
 }
+
+// ValidateWithPath validates the CT_GroupShapeProperties and its children, prefixing error messages with path
 func (m *CT_GroupShapeProperties) ValidateWithPath(path string) error {
 	if err := m.BwModeAttr.ValidateWithPath(path + "/BwModeAttr"); err != nil {
 		return err

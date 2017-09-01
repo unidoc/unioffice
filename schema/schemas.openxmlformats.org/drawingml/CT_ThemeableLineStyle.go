@@ -21,6 +21,7 @@ func NewCT_ThemeableLineStyle() *CT_ThemeableLineStyle {
 	ret := &CT_ThemeableLineStyle{}
 	return ret
 }
+
 func (m *CT_ThemeableLineStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_ThemeableLineStyle) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ThemeableLineStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_ThemeableLineStyle:
@@ -71,9 +73,13 @@ lCT_ThemeableLineStyle:
 	}
 	return nil
 }
+
+// Validate validates the CT_ThemeableLineStyle and its children
 func (m *CT_ThemeableLineStyle) Validate() error {
 	return m.ValidateWithPath("CT_ThemeableLineStyle")
 }
+
+// ValidateWithPath validates the CT_ThemeableLineStyle and its children, prefixing error messages with path
 func (m *CT_ThemeableLineStyle) ValidateWithPath(path string) error {
 	if m.Ln != nil {
 		if err := m.Ln.ValidateWithPath(path + "/Ln"); err != nil {

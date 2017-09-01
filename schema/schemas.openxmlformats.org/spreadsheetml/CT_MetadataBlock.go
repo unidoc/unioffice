@@ -22,6 +22,7 @@ func NewCT_MetadataBlock() *CT_MetadataBlock {
 	ret := &CT_MetadataBlock{}
 	return ret
 }
+
 func (m *CT_MetadataBlock) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_MetadataBlock) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MetadataBlock) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_MetadataBlock:
@@ -62,9 +64,13 @@ lCT_MetadataBlock:
 	}
 	return nil
 }
+
+// Validate validates the CT_MetadataBlock and its children
 func (m *CT_MetadataBlock) Validate() error {
 	return m.ValidateWithPath("CT_MetadataBlock")
 }
+
+// ValidateWithPath validates the CT_MetadataBlock and its children, prefixing error messages with path
 func (m *CT_MetadataBlock) ValidateWithPath(path string) error {
 	for i, v := range m.Rc {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Rc[%d]", path, i)); err != nil {

@@ -24,6 +24,7 @@ func NewViewPr() *ViewPr {
 	ret.CT_ViewProperties = *NewCT_ViewProperties()
 	return ret
 }
+
 func (m *ViewPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *ViewPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "p:viewPr"
 	return m.CT_ViewProperties.MarshalXML(e, start)
 }
+
 func (m *ViewPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_ViewProperties = *NewCT_ViewProperties()
@@ -114,9 +116,13 @@ lViewPr:
 	}
 	return nil
 }
+
+// Validate validates the ViewPr and its children
 func (m *ViewPr) Validate() error {
 	return m.ValidateWithPath("ViewPr")
 }
+
+// ValidateWithPath validates the ViewPr and its children, prefixing error messages with path
 func (m *ViewPr) ValidateWithPath(path string) error {
 	if err := m.CT_ViewProperties.ValidateWithPath(path); err != nil {
 		return err

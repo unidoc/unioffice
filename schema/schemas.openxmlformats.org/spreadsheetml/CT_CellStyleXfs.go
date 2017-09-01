@@ -25,6 +25,7 @@ func NewCT_CellStyleXfs() *CT_CellStyleXfs {
 	ret := &CT_CellStyleXfs{}
 	return ret
 }
+
 func (m *CT_CellStyleXfs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_CellStyleXfs) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CellStyleXfs) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_CellStyleXfs:
 	}
 	return nil
 }
+
+// Validate validates the CT_CellStyleXfs and its children
 func (m *CT_CellStyleXfs) Validate() error {
 	return m.ValidateWithPath("CT_CellStyleXfs")
 }
+
+// ValidateWithPath validates the CT_CellStyleXfs and its children, prefixing error messages with path
 func (m *CT_CellStyleXfs) ValidateWithPath(path string) error {
 	for i, v := range m.Xf {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Xf[%d]", path, i)); err != nil {

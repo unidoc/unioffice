@@ -21,6 +21,7 @@ func NewEG_OfficeArtExtensionList() *EG_OfficeArtExtensionList {
 	ret := &EG_OfficeArtExtensionList{}
 	return ret
 }
+
 func (m *EG_OfficeArtExtensionList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *EG_OfficeArtExtensionList) MarshalXML(e *xml.Encoder, start xml.StartEl
 	}
 	return nil
 }
+
 func (m *EG_OfficeArtExtensionList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_OfficeArtExtensionList:
@@ -61,9 +63,13 @@ lEG_OfficeArtExtensionList:
 	}
 	return nil
 }
+
+// Validate validates the EG_OfficeArtExtensionList and its children
 func (m *EG_OfficeArtExtensionList) Validate() error {
 	return m.ValidateWithPath("EG_OfficeArtExtensionList")
 }
+
+// ValidateWithPath validates the EG_OfficeArtExtensionList and its children, prefixing error messages with path
 func (m *EG_OfficeArtExtensionList) ValidateWithPath(path string) error {
 	for i, v := range m.Ext {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Ext[%d]", path, i)); err != nil {

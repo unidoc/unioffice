@@ -30,6 +30,7 @@ func NewCT_Connector() *CT_Connector {
 	ret.SpPr = drawingml.NewCT_ShapeProperties()
 	return ret
 }
+
 func (m *CT_Connector) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -50,6 +51,7 @@ func (m *CT_Connector) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Connector) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.NvCxnSpPr = NewCT_ConnectorNonVisual()
@@ -94,9 +96,13 @@ lCT_Connector:
 	}
 	return nil
 }
+
+// Validate validates the CT_Connector and its children
 func (m *CT_Connector) Validate() error {
 	return m.ValidateWithPath("CT_Connector")
 }
+
+// ValidateWithPath validates the CT_Connector and its children, prefixing error messages with path
 func (m *CT_Connector) ValidateWithPath(path string) error {
 	if err := m.NvCxnSpPr.ValidateWithPath(path + "/NvCxnSpPr"); err != nil {
 		return err

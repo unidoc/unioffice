@@ -23,6 +23,7 @@ func NewCT_Guid() *CT_Guid {
 	ret := &CT_Guid{}
 	return ret
 }
+
 func (m *CT_Guid) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_Guid) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Guid) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -58,9 +60,13 @@ func (m *CT_Guid) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_Guid and its children
 func (m *CT_Guid) Validate() error {
 	return m.ValidateWithPath("CT_Guid")
 }
+
+// ValidateWithPath validates the CT_Guid and its children, prefixing error messages with path
 func (m *CT_Guid) ValidateWithPath(path string) error {
 	if m.ValAttr != nil {
 		if !sharedTypes.ST_GuidPatternRe.MatchString(*m.ValAttr) {

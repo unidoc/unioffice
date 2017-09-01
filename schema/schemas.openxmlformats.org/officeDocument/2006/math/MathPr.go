@@ -21,6 +21,7 @@ func NewMathPr() *MathPr {
 	ret.CT_MathPr = *NewCT_MathPr()
 	return ret
 }
+
 func (m *MathPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *MathPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "m:mathPr"
 	return m.CT_MathPr.MarshalXML(e, start)
 }
+
 func (m *MathPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_MathPr = *NewCT_MathPr()
@@ -140,9 +142,13 @@ lMathPr:
 	}
 	return nil
 }
+
+// Validate validates the MathPr and its children
 func (m *MathPr) Validate() error {
 	return m.ValidateWithPath("MathPr")
 }
+
+// ValidateWithPath validates the MathPr and its children, prefixing error messages with path
 func (m *MathPr) ValidateWithPath(path string) error {
 	if err := m.CT_MathPr.ValidateWithPath(path); err != nil {
 		return err

@@ -21,6 +21,7 @@ func NewCT_MathPrChoice() *CT_MathPrChoice {
 	ret := &CT_MathPrChoice{}
 	return ret
 }
+
 func (m *CT_MathPrChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_MathPrChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	return nil
 }
+
 func (m *CT_MathPrChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_MathPrChoice:
@@ -69,9 +71,13 @@ lCT_MathPrChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_MathPrChoice and its children
 func (m *CT_MathPrChoice) Validate() error {
 	return m.ValidateWithPath("CT_MathPrChoice")
 }
+
+// ValidateWithPath validates the CT_MathPrChoice and its children, prefixing error messages with path
 func (m *CT_MathPrChoice) ValidateWithPath(path string) error {
 	if m.WrapIndent != nil {
 		if err := m.WrapIndent.ValidateWithPath(path + "/WrapIndent"); err != nil {

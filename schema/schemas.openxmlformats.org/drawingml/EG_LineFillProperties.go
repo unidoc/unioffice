@@ -23,6 +23,7 @@ func NewEG_LineFillProperties() *EG_LineFillProperties {
 	ret := &EG_LineFillProperties{}
 	return ret
 }
+
 func (m *EG_LineFillProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *EG_LineFillProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	return nil
 }
+
 func (m *EG_LineFillProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_LineFillProperties:
@@ -89,9 +91,13 @@ lEG_LineFillProperties:
 	}
 	return nil
 }
+
+// Validate validates the EG_LineFillProperties and its children
 func (m *EG_LineFillProperties) Validate() error {
 	return m.ValidateWithPath("EG_LineFillProperties")
 }
+
+// ValidateWithPath validates the EG_LineFillProperties and its children, prefixing error messages with path
 func (m *EG_LineFillProperties) ValidateWithPath(path string) error {
 	if m.NoFill != nil {
 		if err := m.NoFill.ValidateWithPath(path + "/NoFill"); err != nil {

@@ -19,6 +19,7 @@ func NewPoint() *Point {
 	ret := &Point{}
 	return ret
 }
+
 func (m *Point) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *Point) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *Point) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *Point) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the Point and its children
 func (m *Point) Validate() error {
 	return m.ValidateWithPath("Point")
 }
+
+// ValidateWithPath validates the Point and its children, prefixing error messages with path
 func (m *Point) ValidateWithPath(path string) error {
 	return nil
 }

@@ -22,6 +22,7 @@ func NewCT_TLAnimVariantFloatVal() *CT_TLAnimVariantFloatVal {
 	ret := &CT_TLAnimVariantFloatVal{}
 	return ret
 }
+
 func (m *CT_TLAnimVariantFloatVal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_TLAnimVariantFloatVal) MarshalXML(e *xml.Encoder, start xml.StartEle
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLAnimVariantFloatVal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -55,9 +57,13 @@ func (m *CT_TLAnimVariantFloatVal) UnmarshalXML(d *xml.Decoder, start xml.StartE
 	}
 	return nil
 }
+
+// Validate validates the CT_TLAnimVariantFloatVal and its children
 func (m *CT_TLAnimVariantFloatVal) Validate() error {
 	return m.ValidateWithPath("CT_TLAnimVariantFloatVal")
 }
+
+// ValidateWithPath validates the CT_TLAnimVariantFloatVal and its children, prefixing error messages with path
 func (m *CT_TLAnimVariantFloatVal) ValidateWithPath(path string) error {
 	return nil
 }

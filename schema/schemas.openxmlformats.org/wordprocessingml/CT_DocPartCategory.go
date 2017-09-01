@@ -25,6 +25,7 @@ func NewCT_DocPartCategory() *CT_DocPartCategory {
 	ret.Gallery = NewCT_DocPartGallery()
 	return ret
 }
+
 func (m *CT_DocPartCategory) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_DocPartCategory) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DocPartCategory) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Name = NewCT_String()
@@ -71,9 +73,13 @@ lCT_DocPartCategory:
 	}
 	return nil
 }
+
+// Validate validates the CT_DocPartCategory and its children
 func (m *CT_DocPartCategory) Validate() error {
 	return m.ValidateWithPath("CT_DocPartCategory")
 }
+
+// ValidateWithPath validates the CT_DocPartCategory and its children, prefixing error messages with path
 func (m *CT_DocPartCategory) ValidateWithPath(path string) error {
 	if err := m.Name.ValidateWithPath(path + "/Name"); err != nil {
 		return err

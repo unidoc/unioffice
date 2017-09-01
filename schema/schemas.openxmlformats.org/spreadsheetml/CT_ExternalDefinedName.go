@@ -26,6 +26,7 @@ func NewCT_ExternalDefinedName() *CT_ExternalDefinedName {
 	ret := &CT_ExternalDefinedName{}
 	return ret
 }
+
 func (m *CT_ExternalDefinedName) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -44,6 +45,7 @@ func (m *CT_ExternalDefinedName) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ExternalDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -82,9 +84,13 @@ func (m *CT_ExternalDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 	}
 	return nil
 }
+
+// Validate validates the CT_ExternalDefinedName and its children
 func (m *CT_ExternalDefinedName) Validate() error {
 	return m.ValidateWithPath("CT_ExternalDefinedName")
 }
+
+// ValidateWithPath validates the CT_ExternalDefinedName and its children, prefixing error messages with path
 func (m *CT_ExternalDefinedName) ValidateWithPath(path string) error {
 	return nil
 }

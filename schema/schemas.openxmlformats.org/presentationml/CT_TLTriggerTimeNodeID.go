@@ -22,6 +22,7 @@ func NewCT_TLTriggerTimeNodeID() *CT_TLTriggerTimeNodeID {
 	ret := &CT_TLTriggerTimeNodeID{}
 	return ret
 }
+
 func (m *CT_TLTriggerTimeNodeID) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_TLTriggerTimeNodeID) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLTriggerTimeNodeID) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -55,9 +57,13 @@ func (m *CT_TLTriggerTimeNodeID) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 	}
 	return nil
 }
+
+// Validate validates the CT_TLTriggerTimeNodeID and its children
 func (m *CT_TLTriggerTimeNodeID) Validate() error {
 	return m.ValidateWithPath("CT_TLTriggerTimeNodeID")
 }
+
+// ValidateWithPath validates the CT_TLTriggerTimeNodeID and its children, prefixing error messages with path
 func (m *CT_TLTriggerTimeNodeID) ValidateWithPath(path string) error {
 	return nil
 }

@@ -35,6 +35,7 @@ func NewCT_ShapeProperties() *CT_ShapeProperties {
 	ret := &CT_ShapeProperties{}
 	return ret
 }
+
 func (m *CT_ShapeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -110,6 +111,7 @@ func (m *CT_ShapeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ShapeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -214,9 +216,13 @@ lCT_ShapeProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_ShapeProperties and its children
 func (m *CT_ShapeProperties) Validate() error {
 	return m.ValidateWithPath("CT_ShapeProperties")
 }
+
+// ValidateWithPath validates the CT_ShapeProperties and its children, prefixing error messages with path
 func (m *CT_ShapeProperties) ValidateWithPath(path string) error {
 	if err := m.BwModeAttr.ValidateWithPath(path + "/BwModeAttr"); err != nil {
 		return err

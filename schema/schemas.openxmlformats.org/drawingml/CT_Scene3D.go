@@ -25,6 +25,7 @@ func NewCT_Scene3D() *CT_Scene3D {
 	ret.LightRig = NewCT_LightRig()
 	return ret
 }
+
 func (m *CT_Scene3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *CT_Scene3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Scene3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Camera = NewCT_Camera()
@@ -89,9 +91,13 @@ lCT_Scene3D:
 	}
 	return nil
 }
+
+// Validate validates the CT_Scene3D and its children
 func (m *CT_Scene3D) Validate() error {
 	return m.ValidateWithPath("CT_Scene3D")
 }
+
+// ValidateWithPath validates the CT_Scene3D and its children, prefixing error messages with path
 func (m *CT_Scene3D) ValidateWithPath(path string) error {
 	if err := m.Camera.ValidateWithPath(path + "/Camera"); err != nil {
 		return err

@@ -43,6 +43,7 @@ func NewCT_Array() *CT_Array {
 	ret.BaseTypeAttr = ST_ArrayBaseType(1)
 	return ret
 }
+
 func (m *CT_Array) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -128,6 +129,7 @@ func (m *CT_Array) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Array) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.BaseTypeAttr = ST_ArrayBaseType(1)
@@ -274,9 +276,13 @@ lCT_Array:
 	}
 	return nil
 }
+
+// Validate validates the CT_Array and its children
 func (m *CT_Array) Validate() error {
 	return m.ValidateWithPath("CT_Array")
 }
+
+// ValidateWithPath validates the CT_Array and its children, prefixing error messages with path
 func (m *CT_Array) ValidateWithPath(path string) error {
 	if m.BaseTypeAttr == ST_ArrayBaseTypeUnset {
 		return fmt.Errorf("%s/BaseTypeAttr is a mandatory field", path)

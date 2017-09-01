@@ -21,6 +21,7 @@ func NewCT_TextTabStop() *CT_TextTabStop {
 	ret := &CT_TextTabStop{}
 	return ret
 }
+
 func (m *CT_TextTabStop) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_TextTabStop) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextTabStop) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -66,9 +68,13 @@ func (m *CT_TextTabStop) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}
 	return nil
 }
+
+// Validate validates the CT_TextTabStop and its children
 func (m *CT_TextTabStop) Validate() error {
 	return m.ValidateWithPath("CT_TextTabStop")
 }
+
+// ValidateWithPath validates the CT_TextTabStop and its children, prefixing error messages with path
 func (m *CT_TextTabStop) ValidateWithPath(path string) error {
 	if m.PosAttr != nil {
 		if err := m.PosAttr.ValidateWithPath(path + "/PosAttr"); err != nil {

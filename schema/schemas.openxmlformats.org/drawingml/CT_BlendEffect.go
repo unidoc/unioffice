@@ -24,6 +24,7 @@ func NewCT_BlendEffect() *CT_BlendEffect {
 	ret.Cont = NewCT_EffectContainer()
 	return ret
 }
+
 func (m *CT_BlendEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_BlendEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_BlendEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.BlendAttr = ST_BlendMode(1)
@@ -74,9 +76,13 @@ lCT_BlendEffect:
 	}
 	return nil
 }
+
+// Validate validates the CT_BlendEffect and its children
 func (m *CT_BlendEffect) Validate() error {
 	return m.ValidateWithPath("CT_BlendEffect")
 }
+
+// ValidateWithPath validates the CT_BlendEffect and its children, prefixing error messages with path
 func (m *CT_BlendEffect) ValidateWithPath(path string) error {
 	if m.BlendAttr == ST_BlendModeUnset {
 		return fmt.Errorf("%s/BlendAttr is a mandatory field", path)

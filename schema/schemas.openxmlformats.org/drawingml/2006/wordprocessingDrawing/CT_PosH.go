@@ -24,6 +24,7 @@ func NewCT_PosH() *CT_PosH {
 	ret.Choice = NewCT_PosHChoice()
 	return ret
 }
+
 func (m *CT_PosH) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *CT_PosH) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PosH) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.RelativeFromAttr = ST_RelFromH(1)
@@ -81,9 +83,13 @@ lCT_PosH:
 	}
 	return nil
 }
+
+// Validate validates the CT_PosH and its children
 func (m *CT_PosH) Validate() error {
 	return m.ValidateWithPath("CT_PosH")
 }
+
+// ValidateWithPath validates the CT_PosH and its children, prefixing error messages with path
 func (m *CT_PosH) ValidateWithPath(path string) error {
 	if m.RelativeFromAttr == ST_RelFromHUnset {
 		return fmt.Errorf("%s/RelativeFromAttr is a mandatory field", path)

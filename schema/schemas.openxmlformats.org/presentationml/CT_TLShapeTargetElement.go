@@ -35,6 +35,7 @@ func NewCT_TLShapeTargetElement() *CT_TLShapeTargetElement {
 	ret := &CT_TLShapeTargetElement{}
 	return ret
 }
+
 func (m *CT_TLShapeTargetElement) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -65,6 +66,7 @@ func (m *CT_TLShapeTargetElement) MarshalXML(e *xml.Encoder, start xml.StartElem
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLShapeTargetElement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -123,9 +125,13 @@ lCT_TLShapeTargetElement:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLShapeTargetElement and its children
 func (m *CT_TLShapeTargetElement) Validate() error {
 	return m.ValidateWithPath("CT_TLShapeTargetElement")
 }
+
+// ValidateWithPath validates the CT_TLShapeTargetElement and its children, prefixing error messages with path
 func (m *CT_TLShapeTargetElement) ValidateWithPath(path string) error {
 	if m.Bg != nil {
 		if err := m.Bg.ValidateWithPath(path + "/Bg"); err != nil {

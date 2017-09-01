@@ -49,6 +49,7 @@ func NewCT_PivotArea() *CT_PivotArea {
 	ret := &CT_PivotArea{}
 	return ret
 }
+
 func (m *CT_PivotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -119,6 +120,7 @@ func (m *CT_PivotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -233,9 +235,13 @@ lCT_PivotArea:
 	}
 	return nil
 }
+
+// Validate validates the CT_PivotArea and its children
 func (m *CT_PivotArea) Validate() error {
 	return m.ValidateWithPath("CT_PivotArea")
 }
+
+// ValidateWithPath validates the CT_PivotArea and its children, prefixing error messages with path
 func (m *CT_PivotArea) ValidateWithPath(path string) error {
 	if err := m.TypeAttr.ValidateWithPath(path + "/TypeAttr"); err != nil {
 		return err

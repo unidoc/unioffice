@@ -21,6 +21,7 @@ func NewCT_InOutTransition() *CT_InOutTransition {
 	ret := &CT_InOutTransition{}
 	return ret
 }
+
 func (m *CT_InOutTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *CT_InOutTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_InOutTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -55,9 +57,13 @@ func (m *CT_InOutTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	}
 	return nil
 }
+
+// Validate validates the CT_InOutTransition and its children
 func (m *CT_InOutTransition) Validate() error {
 	return m.ValidateWithPath("CT_InOutTransition")
 }
+
+// ValidateWithPath validates the CT_InOutTransition and its children, prefixing error messages with path
 func (m *CT_InOutTransition) ValidateWithPath(path string) error {
 	if err := m.DirAttr.ValidateWithPath(path + "/DirAttr"); err != nil {
 		return err

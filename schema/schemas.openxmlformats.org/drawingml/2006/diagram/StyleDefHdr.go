@@ -24,6 +24,7 @@ func NewStyleDefHdr() *StyleDefHdr {
 	ret.CT_StyleDefinitionHeader = *NewCT_StyleDefinitionHeader()
 	return ret
 }
+
 func (m *StyleDefHdr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *StyleDefHdr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "styleDefHdr"
 	return m.CT_StyleDefinitionHeader.MarshalXML(e, start)
 }
+
 func (m *StyleDefHdr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_StyleDefinitionHeader = *NewCT_StyleDefinitionHeader()
@@ -107,9 +109,13 @@ lStyleDefHdr:
 	}
 	return nil
 }
+
+// Validate validates the StyleDefHdr and its children
 func (m *StyleDefHdr) Validate() error {
 	return m.ValidateWithPath("StyleDefHdr")
 }
+
+// ValidateWithPath validates the StyleDefHdr and its children, prefixing error messages with path
 func (m *StyleDefHdr) ValidateWithPath(path string) error {
 	if err := m.CT_StyleDefinitionHeader.ValidateWithPath(path); err != nil {
 		return err

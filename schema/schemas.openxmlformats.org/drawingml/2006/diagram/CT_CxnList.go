@@ -21,6 +21,7 @@ func NewCT_CxnList() *CT_CxnList {
 	ret := &CT_CxnList{}
 	return ret
 }
+
 func (m *CT_CxnList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_CxnList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CxnList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_CxnList:
@@ -63,9 +65,13 @@ lCT_CxnList:
 	}
 	return nil
 }
+
+// Validate validates the CT_CxnList and its children
 func (m *CT_CxnList) Validate() error {
 	return m.ValidateWithPath("CT_CxnList")
 }
+
+// ValidateWithPath validates the CT_CxnList and its children, prefixing error messages with path
 func (m *CT_CxnList) ValidateWithPath(path string) error {
 	for i, v := range m.Cxn {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Cxn[%d]", path, i)); err != nil {

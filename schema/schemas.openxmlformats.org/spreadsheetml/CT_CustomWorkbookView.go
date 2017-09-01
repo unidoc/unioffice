@@ -73,6 +73,7 @@ func NewCT_CustomWorkbookView() *CT_CustomWorkbookView {
 	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
+
 func (m *CT_CustomWorkbookView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -177,6 +178,7 @@ func (m *CT_CustomWorkbookView) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
@@ -373,9 +375,13 @@ lCT_CustomWorkbookView:
 	}
 	return nil
 }
+
+// Validate validates the CT_CustomWorkbookView and its children
 func (m *CT_CustomWorkbookView) Validate() error {
 	return m.ValidateWithPath("CT_CustomWorkbookView")
 }
+
+// ValidateWithPath validates the CT_CustomWorkbookView and its children, prefixing error messages with path
 func (m *CT_CustomWorkbookView) ValidateWithPath(path string) error {
 	if !sharedTypes.ST_GuidPatternRe.MatchString(m.GuidAttr) {
 		return fmt.Errorf(`%s/m.GuidAttr must match '%s' (have %v)`, path, sharedTypes.ST_GuidPatternRe, m.GuidAttr)

@@ -25,6 +25,7 @@ func NewCT_RowHierarchiesUsage() *CT_RowHierarchiesUsage {
 	ret := &CT_RowHierarchiesUsage{}
 	return ret
 }
+
 func (m *CT_RowHierarchiesUsage) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_RowHierarchiesUsage) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RowHierarchiesUsage) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_RowHierarchiesUsage:
 	}
 	return nil
 }
+
+// Validate validates the CT_RowHierarchiesUsage and its children
 func (m *CT_RowHierarchiesUsage) Validate() error {
 	return m.ValidateWithPath("CT_RowHierarchiesUsage")
 }
+
+// ValidateWithPath validates the CT_RowHierarchiesUsage and its children, prefixing error messages with path
 func (m *CT_RowHierarchiesUsage) ValidateWithPath(path string) error {
 	for i, v := range m.RowHierarchyUsage {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/RowHierarchyUsage[%d]", path, i)); err != nil {

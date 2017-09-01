@@ -27,6 +27,7 @@ func NewCT_NumLvl() *CT_NumLvl {
 	ret := &CT_NumLvl{}
 	return ret
 }
+
 func (m *CT_NumLvl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *CT_NumLvl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_NumLvl) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -88,9 +90,13 @@ lCT_NumLvl:
 	}
 	return nil
 }
+
+// Validate validates the CT_NumLvl and its children
 func (m *CT_NumLvl) Validate() error {
 	return m.ValidateWithPath("CT_NumLvl")
 }
+
+// ValidateWithPath validates the CT_NumLvl and its children, prefixing error messages with path
 func (m *CT_NumLvl) ValidateWithPath(path string) error {
 	if m.StartOverride != nil {
 		if err := m.StartOverride.ValidateWithPath(path + "/StartOverride"); err != nil {

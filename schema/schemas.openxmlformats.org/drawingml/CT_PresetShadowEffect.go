@@ -31,6 +31,7 @@ func NewCT_PresetShadowEffect() *CT_PresetShadowEffect {
 	ret.PrstAttr = ST_PresetShadowVal(1)
 	return ret
 }
+
 func (m *CT_PresetShadowEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -76,6 +77,7 @@ func (m *CT_PresetShadowEffect) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PresetShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.PrstAttr = ST_PresetShadowVal(1)
@@ -151,9 +153,13 @@ lCT_PresetShadowEffect:
 	}
 	return nil
 }
+
+// Validate validates the CT_PresetShadowEffect and its children
 func (m *CT_PresetShadowEffect) Validate() error {
 	return m.ValidateWithPath("CT_PresetShadowEffect")
 }
+
+// ValidateWithPath validates the CT_PresetShadowEffect and its children, prefixing error messages with path
 func (m *CT_PresetShadowEffect) ValidateWithPath(path string) error {
 	if m.PrstAttr == ST_PresetShadowValUnset {
 		return fmt.Errorf("%s/PrstAttr is a mandatory field", path)

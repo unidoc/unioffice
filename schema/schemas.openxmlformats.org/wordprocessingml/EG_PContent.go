@@ -29,6 +29,7 @@ func NewEG_PContent() *EG_PContent {
 	ret := &EG_PContent{}
 	return ret
 }
+
 func (m *EG_PContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -52,6 +53,7 @@ func (m *EG_PContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *EG_PContent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_PContent:
@@ -395,9 +397,13 @@ lEG_PContent:
 	}
 	return nil
 }
+
+// Validate validates the EG_PContent and its children
 func (m *EG_PContent) Validate() error {
 	return m.ValidateWithPath("EG_PContent")
 }
+
+// ValidateWithPath validates the EG_PContent and its children, prefixing error messages with path
 func (m *EG_PContent) ValidateWithPath(path string) error {
 	for i, v := range m.FldSimple {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/FldSimple[%d]", path, i)); err != nil {

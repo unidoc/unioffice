@@ -24,6 +24,7 @@ func NewAnchor() *Anchor {
 	ret.CT_Anchor = *NewCT_Anchor()
 	return ret
 }
+
 func (m *Anchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *Anchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "wp:anchor"
 	return m.CT_Anchor.MarshalXML(e, start)
 }
+
 func (m *Anchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Anchor = *NewCT_Anchor()
@@ -210,9 +212,13 @@ lAnchor:
 	}
 	return nil
 }
+
+// Validate validates the Anchor and its children
 func (m *Anchor) Validate() error {
 	return m.ValidateWithPath("Anchor")
 }
+
+// ValidateWithPath validates the Anchor and its children, prefixing error messages with path
 func (m *Anchor) ValidateWithPath(path string) error {
 	if err := m.CT_Anchor.ValidateWithPath(path); err != nil {
 		return err

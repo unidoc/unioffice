@@ -25,6 +25,7 @@ func NewCT_ExtensionListModify() *CT_ExtensionListModify {
 	ret := &CT_ExtensionListModify{}
 	return ret
 }
+
 func (m *CT_ExtensionListModify) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_ExtensionListModify) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ExtensionListModify) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -80,9 +82,13 @@ lCT_ExtensionListModify:
 	}
 	return nil
 }
+
+// Validate validates the CT_ExtensionListModify and its children
 func (m *CT_ExtensionListModify) Validate() error {
 	return m.ValidateWithPath("CT_ExtensionListModify")
 }
+
+// ValidateWithPath validates the CT_ExtensionListModify and its children, prefixing error messages with path
 func (m *CT_ExtensionListModify) ValidateWithPath(path string) error {
 	for i, v := range m.Ext {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Ext[%d]", path, i)); err != nil {

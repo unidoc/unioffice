@@ -24,6 +24,7 @@ func NewCT_VerticalAlignRun() *CT_VerticalAlignRun {
 	ret.ValAttr = sharedTypes.ST_VerticalAlignRun(1)
 	return ret
 }
+
 func (m *CT_VerticalAlignRun) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_VerticalAlignRun) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_VerticalAlignRun) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = sharedTypes.ST_VerticalAlignRun(1)
@@ -57,9 +59,13 @@ func (m *CT_VerticalAlignRun) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	}
 	return nil
 }
+
+// Validate validates the CT_VerticalAlignRun and its children
 func (m *CT_VerticalAlignRun) Validate() error {
 	return m.ValidateWithPath("CT_VerticalAlignRun")
 }
+
+// ValidateWithPath validates the CT_VerticalAlignRun and its children, prefixing error messages with path
 func (m *CT_VerticalAlignRun) ValidateWithPath(path string) error {
 	if m.ValAttr == sharedTypes.ST_VerticalAlignRunUnset {
 		return fmt.Errorf("%s/ValAttr is a mandatory field", path)

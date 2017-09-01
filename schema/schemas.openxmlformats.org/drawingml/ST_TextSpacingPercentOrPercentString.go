@@ -20,6 +20,7 @@ type ST_TextSpacingPercentOrPercentString struct {
 func (m *ST_TextSpacingPercentOrPercentString) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_TextSpacingPercentOrPercentString) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_TextSpacingPercent != nil {
@@ -33,6 +34,7 @@ func (m *ST_TextSpacingPercentOrPercentString) ValidateWithPath(path string) err
 	}
 	return nil
 }
+
 func (m ST_TextSpacingPercentOrPercentString) String() string {
 	if m.ST_TextSpacingPercent != nil {
 		return fmt.Sprintf("%v", *m.ST_TextSpacingPercent)

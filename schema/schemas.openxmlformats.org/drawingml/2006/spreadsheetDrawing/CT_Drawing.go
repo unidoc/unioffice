@@ -21,6 +21,7 @@ func NewCT_Drawing() *CT_Drawing {
 	ret := &CT_Drawing{}
 	return ret
 }
+
 func (m *CT_Drawing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_Drawing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Drawing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Drawing:
@@ -79,9 +81,13 @@ lCT_Drawing:
 	}
 	return nil
 }
+
+// Validate validates the CT_Drawing and its children
 func (m *CT_Drawing) Validate() error {
 	return m.ValidateWithPath("CT_Drawing")
 }
+
+// ValidateWithPath validates the CT_Drawing and its children, prefixing error messages with path
 func (m *CT_Drawing) ValidateWithPath(path string) error {
 	for i, v := range m.EG_Anchor {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/EG_Anchor[%d]", path, i)); err != nil {

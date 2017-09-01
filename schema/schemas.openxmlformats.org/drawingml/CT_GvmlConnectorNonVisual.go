@@ -23,6 +23,7 @@ func NewCT_GvmlConnectorNonVisual() *CT_GvmlConnectorNonVisual {
 	ret.CNvCxnSpPr = NewCT_NonVisualConnectorProperties()
 	return ret
 }
+
 func (m *CT_GvmlConnectorNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_GvmlConnectorNonVisual) MarshalXML(e *xml.Encoder, start xml.StartEl
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GvmlConnectorNonVisual) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CNvPr = NewCT_NonVisualDrawingProps()
@@ -69,9 +71,13 @@ lCT_GvmlConnectorNonVisual:
 	}
 	return nil
 }
+
+// Validate validates the CT_GvmlConnectorNonVisual and its children
 func (m *CT_GvmlConnectorNonVisual) Validate() error {
 	return m.ValidateWithPath("CT_GvmlConnectorNonVisual")
 }
+
+// ValidateWithPath validates the CT_GvmlConnectorNonVisual and its children, prefixing error messages with path
 func (m *CT_GvmlConnectorNonVisual) ValidateWithPath(path string) error {
 	if err := m.CNvPr.ValidateWithPath(path + "/CNvPr"); err != nil {
 		return err

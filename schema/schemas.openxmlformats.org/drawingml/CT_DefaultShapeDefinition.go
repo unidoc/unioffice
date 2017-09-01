@@ -27,6 +27,7 @@ func NewCT_DefaultShapeDefinition() *CT_DefaultShapeDefinition {
 	ret.LstStyle = NewCT_TextListStyle()
 	return ret
 }
+
 func (m *CT_DefaultShapeDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -49,6 +50,7 @@ func (m *CT_DefaultShapeDefinition) MarshalXML(e *xml.Encoder, start xml.StartEl
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DefaultShapeDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.SpPr = NewCT_ShapeProperties()
@@ -98,9 +100,13 @@ lCT_DefaultShapeDefinition:
 	}
 	return nil
 }
+
+// Validate validates the CT_DefaultShapeDefinition and its children
 func (m *CT_DefaultShapeDefinition) Validate() error {
 	return m.ValidateWithPath("CT_DefaultShapeDefinition")
 }
+
+// ValidateWithPath validates the CT_DefaultShapeDefinition and its children, prefixing error messages with path
 func (m *CT_DefaultShapeDefinition) ValidateWithPath(path string) error {
 	if err := m.SpPr.ValidateWithPath(path + "/SpPr"); err != nil {
 		return err

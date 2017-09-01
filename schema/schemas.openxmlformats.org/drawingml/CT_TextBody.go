@@ -24,6 +24,7 @@ func NewCT_TextBody() *CT_TextBody {
 	ret.BodyPr = NewCT_TextBodyProperties()
 	return ret
 }
+
 func (m *CT_TextBody) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_TextBody) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextBody) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.BodyPr = NewCT_TextBodyProperties()
@@ -80,9 +82,13 @@ lCT_TextBody:
 	}
 	return nil
 }
+
+// Validate validates the CT_TextBody and its children
 func (m *CT_TextBody) Validate() error {
 	return m.ValidateWithPath("CT_TextBody")
 }
+
+// ValidateWithPath validates the CT_TextBody and its children, prefixing error messages with path
 func (m *CT_TextBody) ValidateWithPath(path string) error {
 	if err := m.BodyPr.ValidateWithPath(path + "/BodyPr"); err != nil {
 		return err

@@ -25,6 +25,7 @@ func NewCT_FillEffect() *CT_FillEffect {
 	ret := &CT_FillEffect{}
 	return ret
 }
+
 func (m *CT_FillEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -57,6 +58,7 @@ func (m *CT_FillEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_FillEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_FillEffect:
@@ -111,9 +113,13 @@ lCT_FillEffect:
 	}
 	return nil
 }
+
+// Validate validates the CT_FillEffect and its children
 func (m *CT_FillEffect) Validate() error {
 	return m.ValidateWithPath("CT_FillEffect")
 }
+
+// ValidateWithPath validates the CT_FillEffect and its children, prefixing error messages with path
 func (m *CT_FillEffect) ValidateWithPath(path string) error {
 	if m.NoFill != nil {
 		if err := m.NoFill.ValidateWithPath(path + "/NoFill"); err != nil {

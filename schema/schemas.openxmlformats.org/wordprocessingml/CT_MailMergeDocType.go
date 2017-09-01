@@ -22,6 +22,7 @@ func NewCT_MailMergeDocType() *CT_MailMergeDocType {
 	ret.ValAttr = ST_MailMergeDocType(1)
 	return ret
 }
+
 func (m *CT_MailMergeDocType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_MailMergeDocType) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MailMergeDocType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = ST_MailMergeDocType(1)
@@ -55,9 +57,13 @@ func (m *CT_MailMergeDocType) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	}
 	return nil
 }
+
+// Validate validates the CT_MailMergeDocType and its children
 func (m *CT_MailMergeDocType) Validate() error {
 	return m.ValidateWithPath("CT_MailMergeDocType")
 }
+
+// ValidateWithPath validates the CT_MailMergeDocType and its children, prefixing error messages with path
 func (m *CT_MailMergeDocType) ValidateWithPath(path string) error {
 	if m.ValAttr == ST_MailMergeDocTypeUnset {
 		return fmt.Errorf("%s/ValAttr is a mandatory field", path)

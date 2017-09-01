@@ -23,6 +23,7 @@ func NewEG_PieChartShared() *EG_PieChartShared {
 	ret := &EG_PieChartShared{}
 	return ret
 }
+
 func (m *EG_PieChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *EG_PieChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	return nil
 }
+
 func (m *EG_PieChartShared) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_PieChartShared:
@@ -81,9 +83,13 @@ lEG_PieChartShared:
 	}
 	return nil
 }
+
+// Validate validates the EG_PieChartShared and its children
 func (m *EG_PieChartShared) Validate() error {
 	return m.ValidateWithPath("EG_PieChartShared")
 }
+
+// ValidateWithPath validates the EG_PieChartShared and its children, prefixing error messages with path
 func (m *EG_PieChartShared) ValidateWithPath(path string) error {
 	if m.VaryColors != nil {
 		if err := m.VaryColors.ValidateWithPath(path + "/VaryColors"); err != nil {

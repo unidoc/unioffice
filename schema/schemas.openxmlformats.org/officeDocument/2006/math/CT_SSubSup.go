@@ -26,6 +26,7 @@ func NewCT_SSubSup() *CT_SSubSup {
 	ret.Sup = NewCT_OMathArg()
 	return ret
 }
+
 func (m *CT_SSubSup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -44,6 +45,7 @@ func (m *CT_SSubSup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SSubSup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.E = NewCT_OMathArg()
@@ -88,9 +90,13 @@ lCT_SSubSup:
 	}
 	return nil
 }
+
+// Validate validates the CT_SSubSup and its children
 func (m *CT_SSubSup) Validate() error {
 	return m.ValidateWithPath("CT_SSubSup")
 }
+
+// ValidateWithPath validates the CT_SSubSup and its children, prefixing error messages with path
 func (m *CT_SSubSup) ValidateWithPath(path string) error {
 	if m.SSubSupPr != nil {
 		if err := m.SSubSupPr.ValidateWithPath(path + "/SSubSupPr"); err != nil {

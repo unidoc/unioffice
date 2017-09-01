@@ -23,6 +23,7 @@ func NewEG_BlockLevelChunkElts() *EG_BlockLevelChunkElts {
 	ret := &EG_BlockLevelChunkElts{}
 	return ret
 }
+
 func (m *EG_BlockLevelChunkElts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *EG_BlockLevelChunkElts) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	return nil
 }
+
 func (m *EG_BlockLevelChunkElts) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_BlockLevelChunkElts:
@@ -349,9 +351,13 @@ lEG_BlockLevelChunkElts:
 	}
 	return nil
 }
+
+// Validate validates the EG_BlockLevelChunkElts and its children
 func (m *EG_BlockLevelChunkElts) Validate() error {
 	return m.ValidateWithPath("EG_BlockLevelChunkElts")
 }
+
+// ValidateWithPath validates the EG_BlockLevelChunkElts and its children, prefixing error messages with path
 func (m *EG_BlockLevelChunkElts) ValidateWithPath(path string) error {
 	for i, v := range m.EG_ContentBlockContent {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/EG_ContentBlockContent[%d]", path, i)); err != nil {

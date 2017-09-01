@@ -30,6 +30,7 @@ func NewCT_TLGraphicalObjectBuild() *CT_TLGraphicalObjectBuild {
 	ret := &CT_TLGraphicalObjectBuild{}
 	return ret
 }
+
 func (m *CT_TLGraphicalObjectBuild) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -58,6 +59,7 @@ func (m *CT_TLGraphicalObjectBuild) MarshalXML(e *xml.Encoder, start xml.StartEl
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLGraphicalObjectBuild) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -117,9 +119,13 @@ lCT_TLGraphicalObjectBuild:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLGraphicalObjectBuild and its children
 func (m *CT_TLGraphicalObjectBuild) Validate() error {
 	return m.ValidateWithPath("CT_TLGraphicalObjectBuild")
 }
+
+// ValidateWithPath validates the CT_TLGraphicalObjectBuild and its children, prefixing error messages with path
 func (m *CT_TLGraphicalObjectBuild) ValidateWithPath(path string) error {
 	if m.BldAsOne != nil {
 		if err := m.BldAsOne.ValidateWithPath(path + "/BldAsOne"); err != nil {

@@ -25,6 +25,7 @@ func NewCT_TableStyleList() *CT_TableStyleList {
 	ret.DefAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
+
 func (m *CT_TableStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_TableStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TableStyleList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.DefAttr = "{00000000-0000-0000-0000-000000000000}"
@@ -79,9 +81,13 @@ lCT_TableStyleList:
 	}
 	return nil
 }
+
+// Validate validates the CT_TableStyleList and its children
 func (m *CT_TableStyleList) Validate() error {
 	return m.ValidateWithPath("CT_TableStyleList")
 }
+
+// ValidateWithPath validates the CT_TableStyleList and its children, prefixing error messages with path
 func (m *CT_TableStyleList) ValidateWithPath(path string) error {
 	if !sharedTypes.ST_GuidPatternRe.MatchString(m.DefAttr) {
 		return fmt.Errorf(`%s/m.DefAttr must match '%s' (have %v)`, path, sharedTypes.ST_GuidPatternRe, m.DefAttr)

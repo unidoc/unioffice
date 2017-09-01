@@ -27,6 +27,7 @@ func NewCT_Members() *CT_Members {
 	ret := &CT_Members{}
 	return ret
 }
+
 func (m *CT_Members) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *CT_Members) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Members) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -93,9 +95,13 @@ lCT_Members:
 	}
 	return nil
 }
+
+// Validate validates the CT_Members and its children
 func (m *CT_Members) Validate() error {
 	return m.ValidateWithPath("CT_Members")
 }
+
+// ValidateWithPath validates the CT_Members and its children, prefixing error messages with path
 func (m *CT_Members) ValidateWithPath(path string) error {
 	for i, v := range m.Member {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Member[%d]", path, i)); err != nil {

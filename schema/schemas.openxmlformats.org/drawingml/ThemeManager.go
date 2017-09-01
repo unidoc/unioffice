@@ -21,6 +21,7 @@ func NewThemeManager() *ThemeManager {
 	ret.CT_EmptyElement = *NewCT_EmptyElement()
 	return ret
 }
+
 func (m *ThemeManager) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *ThemeManager) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	start.Name.Local = "a:themeManager"
 	return m.CT_EmptyElement.MarshalXML(e, start)
 }
+
 func (m *ThemeManager) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_EmptyElement = *NewCT_EmptyElement()
@@ -48,9 +50,13 @@ func (m *ThemeManager) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
+// Validate validates the ThemeManager and its children
 func (m *ThemeManager) Validate() error {
 	return m.ValidateWithPath("ThemeManager")
 }
+
+// ValidateWithPath validates the ThemeManager and its children, prefixing error messages with path
 func (m *ThemeManager) ValidateWithPath(path string) error {
 	if err := m.CT_EmptyElement.ValidateWithPath(path); err != nil {
 		return err

@@ -31,6 +31,7 @@ func NewCT_TableStyle() *CT_TableStyle {
 	ret := &CT_TableStyle{}
 	return ret
 }
+
 func (m *CT_TableStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -57,6 +58,7 @@ func (m *CT_TableStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -118,9 +120,13 @@ lCT_TableStyle:
 	}
 	return nil
 }
+
+// Validate validates the CT_TableStyle and its children
 func (m *CT_TableStyle) Validate() error {
 	return m.ValidateWithPath("CT_TableStyle")
 }
+
+// ValidateWithPath validates the CT_TableStyle and its children, prefixing error messages with path
 func (m *CT_TableStyle) ValidateWithPath(path string) error {
 	for i, v := range m.TableStyleElement {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/TableStyleElement[%d]", path, i)); err != nil {

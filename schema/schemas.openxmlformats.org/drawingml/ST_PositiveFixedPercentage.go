@@ -20,6 +20,7 @@ type ST_PositiveFixedPercentage struct {
 func (m *ST_PositiveFixedPercentage) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_PositiveFixedPercentage) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_PositiveFixedPercentageDecimal != nil {
@@ -36,6 +37,7 @@ func (m *ST_PositiveFixedPercentage) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_PositiveFixedPercentage) String() string {
 	if m.ST_PositiveFixedPercentageDecimal != nil {
 		return fmt.Sprintf("%v", *m.ST_PositiveFixedPercentageDecimal)

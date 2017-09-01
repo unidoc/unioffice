@@ -21,6 +21,7 @@ func NewCT_Layout() *CT_Layout {
 	ret := &CT_Layout{}
 	return ret
 }
+
 func (m *CT_Layout) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_Layout) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Layout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Layout:
@@ -71,9 +73,13 @@ lCT_Layout:
 	}
 	return nil
 }
+
+// Validate validates the CT_Layout and its children
 func (m *CT_Layout) Validate() error {
 	return m.ValidateWithPath("CT_Layout")
 }
+
+// ValidateWithPath validates the CT_Layout and its children, prefixing error messages with path
 func (m *CT_Layout) ValidateWithPath(path string) error {
 	if m.ManualLayout != nil {
 		if err := m.ManualLayout.ValidateWithPath(path + "/ManualLayout"); err != nil {

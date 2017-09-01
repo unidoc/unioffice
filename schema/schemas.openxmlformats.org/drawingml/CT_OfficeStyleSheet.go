@@ -27,6 +27,7 @@ func NewCT_OfficeStyleSheet() *CT_OfficeStyleSheet {
 	ret.ThemeElements = NewCT_BaseStyles()
 	return ret
 }
+
 func (m *CT_OfficeStyleSheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -57,6 +58,7 @@ func (m *CT_OfficeStyleSheet) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_OfficeStyleSheet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ThemeElements = NewCT_BaseStyles()
@@ -115,9 +117,13 @@ lCT_OfficeStyleSheet:
 	}
 	return nil
 }
+
+// Validate validates the CT_OfficeStyleSheet and its children
 func (m *CT_OfficeStyleSheet) Validate() error {
 	return m.ValidateWithPath("CT_OfficeStyleSheet")
 }
+
+// ValidateWithPath validates the CT_OfficeStyleSheet and its children, prefixing error messages with path
 func (m *CT_OfficeStyleSheet) ValidateWithPath(path string) error {
 	if err := m.ThemeElements.ValidateWithPath(path + "/ThemeElements"); err != nil {
 		return err

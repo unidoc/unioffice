@@ -21,12 +21,14 @@ func NewGraphic() *Graphic {
 	ret.CT_GraphicalObject = *NewCT_GraphicalObject()
 	return ret
 }
+
 func (m *Graphic) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
 	}
 	return m.CT_GraphicalObject.MarshalXML(e, start)
 }
+
 func (m *Graphic) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_GraphicalObject = *NewCT_GraphicalObject()
@@ -56,9 +58,13 @@ lGraphic:
 	}
 	return nil
 }
+
+// Validate validates the Graphic and its children
 func (m *Graphic) Validate() error {
 	return m.ValidateWithPath("Graphic")
 }
+
+// ValidateWithPath validates the Graphic and its children, prefixing error messages with path
 func (m *Graphic) ValidateWithPath(path string) error {
 	if err := m.CT_GraphicalObject.ValidateWithPath(path); err != nil {
 		return err

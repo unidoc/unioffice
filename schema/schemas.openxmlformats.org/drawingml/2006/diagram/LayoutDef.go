@@ -23,6 +23,7 @@ func NewLayoutDef() *LayoutDef {
 	ret.CT_DiagramDefinition = *NewCT_DiagramDefinition()
 	return ret
 }
+
 func (m *LayoutDef) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *LayoutDef) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "layoutDef"
 	return m.CT_DiagramDefinition.MarshalXML(e, start)
 }
+
 func (m *LayoutDef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_DiagramDefinition = *NewCT_DiagramDefinition()
@@ -124,9 +126,13 @@ lLayoutDef:
 	}
 	return nil
 }
+
+// Validate validates the LayoutDef and its children
 func (m *LayoutDef) Validate() error {
 	return m.ValidateWithPath("LayoutDef")
 }
+
+// ValidateWithPath validates the LayoutDef and its children, prefixing error messages with path
 func (m *LayoutDef) ValidateWithPath(path string) error {
 	if err := m.CT_DiagramDefinition.ValidateWithPath(path); err != nil {
 		return err

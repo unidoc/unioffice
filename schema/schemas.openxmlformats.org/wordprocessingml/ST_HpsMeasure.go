@@ -20,6 +20,7 @@ type ST_HpsMeasure struct {
 func (m *ST_HpsMeasure) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_HpsMeasure) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_UnsignedDecimalNumber != nil {
@@ -33,6 +34,7 @@ func (m *ST_HpsMeasure) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_HpsMeasure) String() string {
 	if m.ST_UnsignedDecimalNumber != nil {
 		return fmt.Sprintf("%v", *m.ST_UnsignedDecimalNumber)

@@ -22,6 +22,7 @@ func NewEG_LineJoinProperties() *EG_LineJoinProperties {
 	ret := &EG_LineJoinProperties{}
 	return ret
 }
+
 func (m *EG_LineJoinProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *EG_LineJoinProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	return nil
 }
+
 func (m *EG_LineJoinProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_LineJoinProperties:
@@ -79,9 +81,13 @@ lEG_LineJoinProperties:
 	}
 	return nil
 }
+
+// Validate validates the EG_LineJoinProperties and its children
 func (m *EG_LineJoinProperties) Validate() error {
 	return m.ValidateWithPath("EG_LineJoinProperties")
 }
+
+// ValidateWithPath validates the EG_LineJoinProperties and its children, prefixing error messages with path
 func (m *EG_LineJoinProperties) ValidateWithPath(path string) error {
 	if m.Round != nil {
 		if err := m.Round.ValidateWithPath(path + "/Round"); err != nil {

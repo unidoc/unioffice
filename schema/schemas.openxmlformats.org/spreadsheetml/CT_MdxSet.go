@@ -29,6 +29,7 @@ func NewCT_MdxSet() *CT_MdxSet {
 	ret := &CT_MdxSet{}
 	return ret
 }
+
 func (m *CT_MdxSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -54,6 +55,7 @@ func (m *CT_MdxSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MdxSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -104,9 +106,13 @@ lCT_MdxSet:
 	}
 	return nil
 }
+
+// Validate validates the CT_MdxSet and its children
 func (m *CT_MdxSet) Validate() error {
 	return m.ValidateWithPath("CT_MdxSet")
 }
+
+// ValidateWithPath validates the CT_MdxSet and its children, prefixing error messages with path
 func (m *CT_MdxSet) ValidateWithPath(path string) error {
 	if err := m.OAttr.ValidateWithPath(path + "/OAttr"); err != nil {
 		return err

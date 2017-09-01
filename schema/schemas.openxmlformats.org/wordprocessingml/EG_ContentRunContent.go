@@ -35,6 +35,7 @@ func NewEG_ContentRunContent() *EG_ContentRunContent {
 	ret := &EG_ContentRunContent{}
 	return ret
 }
+
 func (m *EG_ContentRunContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -70,6 +71,7 @@ func (m *EG_ContentRunContent) MarshalXML(e *xml.Encoder, start xml.StartElement
 	}
 	return nil
 }
+
 func (m *EG_ContentRunContent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ContentRunContent:
@@ -335,9 +337,13 @@ lEG_ContentRunContent:
 	}
 	return nil
 }
+
+// Validate validates the EG_ContentRunContent and its children
 func (m *EG_ContentRunContent) Validate() error {
 	return m.ValidateWithPath("EG_ContentRunContent")
 }
+
+// ValidateWithPath validates the EG_ContentRunContent and its children, prefixing error messages with path
 func (m *EG_ContentRunContent) ValidateWithPath(path string) error {
 	if m.CustomXml != nil {
 		if err := m.CustomXml.ValidateWithPath(path + "/CustomXml"); err != nil {

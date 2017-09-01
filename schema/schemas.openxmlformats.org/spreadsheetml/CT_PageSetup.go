@@ -59,6 +59,7 @@ func NewCT_PageSetup() *CT_PageSetup {
 	ret := &CT_PageSetup{}
 	return ret
 }
+
 func (m *CT_PageSetup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -155,6 +156,7 @@ func (m *CT_PageSetup) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -296,9 +298,13 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
+// Validate validates the CT_PageSetup and its children
 func (m *CT_PageSetup) Validate() error {
 	return m.ValidateWithPath("CT_PageSetup")
 }
+
+// ValidateWithPath validates the CT_PageSetup and its children, prefixing error messages with path
 func (m *CT_PageSetup) ValidateWithPath(path string) error {
 	if m.PaperHeightAttr != nil {
 		if !sharedTypes.ST_PositiveUniversalMeasurePatternRe.MatchString(*m.PaperHeightAttr) {

@@ -20,6 +20,7 @@ type ST_HexColor struct {
 func (m *ST_HexColor) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_HexColor) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_HexColorAuto != ST_HexColorAutoUnset {
@@ -33,6 +34,7 @@ func (m *ST_HexColor) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_HexColor) String() string {
 	if m.ST_HexColorAuto != ST_HexColorAutoUnset {
 		return m.ST_HexColorAuto.String()

@@ -21,6 +21,7 @@ func NewWorksheet() *Worksheet {
 	ret.CT_Worksheet = *NewCT_Worksheet()
 	return ret
 }
+
 func (m *Worksheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *Worksheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "x:worksheet"
 	return m.CT_Worksheet.MarshalXML(e, start)
 }
+
 func (m *Worksheet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Worksheet = *NewCT_Worksheet()
@@ -255,9 +257,13 @@ lWorksheet:
 	}
 	return nil
 }
+
+// Validate validates the Worksheet and its children
 func (m *Worksheet) Validate() error {
 	return m.ValidateWithPath("Worksheet")
 }
+
+// ValidateWithPath validates the Worksheet and its children, prefixing error messages with path
 func (m *Worksheet) ValidateWithPath(path string) error {
 	if err := m.CT_Worksheet.ValidateWithPath(path); err != nil {
 		return err

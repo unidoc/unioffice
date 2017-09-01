@@ -23,6 +23,7 @@ func NewCT_GroupChrPr() *CT_GroupChrPr {
 	ret := &CT_GroupChrPr{}
 	return ret
 }
+
 func (m *CT_GroupChrPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *CT_GroupChrPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GroupChrPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_GroupChrPr:
@@ -91,9 +93,13 @@ lCT_GroupChrPr:
 	}
 	return nil
 }
+
+// Validate validates the CT_GroupChrPr and its children
 func (m *CT_GroupChrPr) Validate() error {
 	return m.ValidateWithPath("CT_GroupChrPr")
 }
+
+// ValidateWithPath validates the CT_GroupChrPr and its children, prefixing error messages with path
 func (m *CT_GroupChrPr) ValidateWithPath(path string) error {
 	if m.Chr != nil {
 		if err := m.Chr.ValidateWithPath(path + "/Chr"); err != nil {

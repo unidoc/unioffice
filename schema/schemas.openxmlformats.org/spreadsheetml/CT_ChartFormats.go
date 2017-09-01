@@ -25,6 +25,7 @@ func NewCT_ChartFormats() *CT_ChartFormats {
 	ret := &CT_ChartFormats{}
 	return ret
 }
+
 func (m *CT_ChartFormats) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_ChartFormats) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ChartFormats) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_ChartFormats:
 	}
 	return nil
 }
+
+// Validate validates the CT_ChartFormats and its children
 func (m *CT_ChartFormats) Validate() error {
 	return m.ValidateWithPath("CT_ChartFormats")
 }
+
+// ValidateWithPath validates the CT_ChartFormats and its children, prefixing error messages with path
 func (m *CT_ChartFormats) ValidateWithPath(path string) error {
 	for i, v := range m.ChartFormat {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/ChartFormat[%d]", path, i)); err != nil {

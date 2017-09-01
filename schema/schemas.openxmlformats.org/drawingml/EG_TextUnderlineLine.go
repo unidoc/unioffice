@@ -21,6 +21,7 @@ func NewEG_TextUnderlineLine() *EG_TextUnderlineLine {
 	ret := &EG_TextUnderlineLine{}
 	return ret
 }
+
 func (m *EG_TextUnderlineLine) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_TextUnderlineLine) MarshalXML(e *xml.Encoder, start xml.StartElement
 	}
 	return nil
 }
+
 func (m *EG_TextUnderlineLine) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_TextUnderlineLine:
@@ -69,9 +71,13 @@ lEG_TextUnderlineLine:
 	}
 	return nil
 }
+
+// Validate validates the EG_TextUnderlineLine and its children
 func (m *EG_TextUnderlineLine) Validate() error {
 	return m.ValidateWithPath("EG_TextUnderlineLine")
 }
+
+// ValidateWithPath validates the EG_TextUnderlineLine and its children, prefixing error messages with path
 func (m *EG_TextUnderlineLine) ValidateWithPath(path string) error {
 	if m.ULnTx != nil {
 		if err := m.ULnTx.ValidateWithPath(path + "/ULnTx"); err != nil {

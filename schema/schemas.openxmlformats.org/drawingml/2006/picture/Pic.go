@@ -21,6 +21,7 @@ func NewPic() *Pic {
 	ret.CT_Picture = *NewCT_Picture()
 	return ret
 }
+
 func (m *Pic) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *Pic) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "pic:pic"
 	return m.CT_Picture.MarshalXML(e, start)
 }
+
 func (m *Pic) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Picture = *NewCT_Picture()
@@ -69,9 +71,13 @@ lPic:
 	}
 	return nil
 }
+
+// Validate validates the Pic and its children
 func (m *Pic) Validate() error {
 	return m.ValidateWithPath("Pic")
 }
+
+// ValidateWithPath validates the Pic and its children, prefixing error messages with path
 func (m *Pic) ValidateWithPath(path string) error {
 	if err := m.CT_Picture.ValidateWithPath(path); err != nil {
 		return err

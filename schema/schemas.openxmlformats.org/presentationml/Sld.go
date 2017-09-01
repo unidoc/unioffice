@@ -24,6 +24,7 @@ func NewSld() *Sld {
 	ret.CT_Slide = *NewCT_Slide()
 	return ret
 }
+
 func (m *Sld) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *Sld) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "p:sld"
 	return m.CT_Slide.MarshalXML(e, start)
 }
+
 func (m *Sld) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Slide = *NewCT_Slide()
@@ -109,9 +111,13 @@ lSld:
 	}
 	return nil
 }
+
+// Validate validates the Sld and its children
 func (m *Sld) Validate() error {
 	return m.ValidateWithPath("Sld")
 }
+
+// ValidateWithPath validates the Sld and its children, prefixing error messages with path
 func (m *Sld) ValidateWithPath(path string) error {
 	if err := m.CT_Slide.ValidateWithPath(path); err != nil {
 		return err

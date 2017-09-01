@@ -21,6 +21,7 @@ func NewCT_ColorMRU() *CT_ColorMRU {
 	ret := &CT_ColorMRU{}
 	return ret
 }
+
 func (m *CT_ColorMRU) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_ColorMRU) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ColorMRU) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_ColorMRU:
@@ -101,9 +103,13 @@ lCT_ColorMRU:
 	}
 	return nil
 }
+
+// Validate validates the CT_ColorMRU and its children
 func (m *CT_ColorMRU) Validate() error {
 	return m.ValidateWithPath("CT_ColorMRU")
 }
+
+// ValidateWithPath validates the CT_ColorMRU and its children, prefixing error messages with path
 func (m *CT_ColorMRU) ValidateWithPath(path string) error {
 	for i, v := range m.EG_ColorChoice {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/EG_ColorChoice[%d]", path, i)); err != nil {

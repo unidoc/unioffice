@@ -19,6 +19,7 @@ func NewPeriod() *Period {
 	ret := &Period{}
 	return ret
 }
+
 func (m *Period) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *Period) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *Period) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *Period) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the Period and its children
 func (m *Period) Validate() error {
 	return m.ValidateWithPath("Period")
 }
+
+// ValidateWithPath validates the Period and its children, prefixing error messages with path
 func (m *Period) ValidateWithPath(path string) error {
 	return nil
 }

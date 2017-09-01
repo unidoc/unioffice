@@ -22,6 +22,7 @@ func NewCT_FramesetChoice() *CT_FramesetChoice {
 	ret := &CT_FramesetChoice{}
 	return ret
 }
+
 func (m *CT_FramesetChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *CT_FramesetChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	return nil
 }
+
 func (m *CT_FramesetChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_FramesetChoice:
@@ -72,9 +74,13 @@ lCT_FramesetChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_FramesetChoice and its children
 func (m *CT_FramesetChoice) Validate() error {
 	return m.ValidateWithPath("CT_FramesetChoice")
 }
+
+// ValidateWithPath validates the CT_FramesetChoice and its children, prefixing error messages with path
 func (m *CT_FramesetChoice) ValidateWithPath(path string) error {
 	for i, v := range m.Frameset {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Frameset[%d]", path, i)); err != nil {

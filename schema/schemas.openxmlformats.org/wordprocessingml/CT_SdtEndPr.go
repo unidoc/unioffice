@@ -22,6 +22,7 @@ func NewCT_SdtEndPr() *CT_SdtEndPr {
 	ret := &CT_SdtEndPr{}
 	return ret
 }
+
 func (m *CT_SdtEndPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_SdtEndPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SdtEndPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_SdtEndPr:
@@ -64,9 +66,13 @@ lCT_SdtEndPr:
 	}
 	return nil
 }
+
+// Validate validates the CT_SdtEndPr and its children
 func (m *CT_SdtEndPr) Validate() error {
 	return m.ValidateWithPath("CT_SdtEndPr")
 }
+
+// ValidateWithPath validates the CT_SdtEndPr and its children, prefixing error messages with path
 func (m *CT_SdtEndPr) ValidateWithPath(path string) error {
 	for i, v := range m.RPr {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/RPr[%d]", path, i)); err != nil {

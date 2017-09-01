@@ -21,6 +21,7 @@ func NewCT_SupplementalFont() *CT_SupplementalFont {
 	ret := &CT_SupplementalFont{}
 	return ret
 }
+
 func (m *CT_SupplementalFont) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_SupplementalFont) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SupplementalFont) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -63,9 +65,13 @@ func (m *CT_SupplementalFont) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	}
 	return nil
 }
+
+// Validate validates the CT_SupplementalFont and its children
 func (m *CT_SupplementalFont) Validate() error {
 	return m.ValidateWithPath("CT_SupplementalFont")
 }
+
+// ValidateWithPath validates the CT_SupplementalFont and its children, prefixing error messages with path
 func (m *CT_SupplementalFont) ValidateWithPath(path string) error {
 	return nil
 }

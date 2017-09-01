@@ -43,6 +43,7 @@ func NewCT_TLCommonBehaviorData() *CT_TLCommonBehaviorData {
 	ret.TgtEl = NewCT_TLTimeTargetElement()
 	return ret
 }
+
 func (m *CT_TLCommonBehaviorData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -103,6 +104,7 @@ func (m *CT_TLCommonBehaviorData) MarshalXML(e *xml.Encoder, start xml.StartElem
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLCommonBehaviorData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CTn = NewCT_TLCommonTimeNodeData()
@@ -184,9 +186,13 @@ lCT_TLCommonBehaviorData:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLCommonBehaviorData and its children
 func (m *CT_TLCommonBehaviorData) Validate() error {
 	return m.ValidateWithPath("CT_TLCommonBehaviorData")
 }
+
+// ValidateWithPath validates the CT_TLCommonBehaviorData and its children, prefixing error messages with path
 func (m *CT_TLCommonBehaviorData) ValidateWithPath(path string) error {
 	if err := m.AdditiveAttr.ValidateWithPath(path + "/AdditiveAttr"); err != nil {
 		return err

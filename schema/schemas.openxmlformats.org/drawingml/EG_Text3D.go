@@ -21,6 +21,7 @@ func NewEG_Text3D() *EG_Text3D {
 	ret := &EG_Text3D{}
 	return ret
 }
+
 func (m *EG_Text3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_Text3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *EG_Text3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_Text3D:
@@ -69,9 +71,13 @@ lEG_Text3D:
 	}
 	return nil
 }
+
+// Validate validates the EG_Text3D and its children
 func (m *EG_Text3D) Validate() error {
 	return m.ValidateWithPath("EG_Text3D")
 }
+
+// ValidateWithPath validates the EG_Text3D and its children, prefixing error messages with path
 func (m *EG_Text3D) ValidateWithPath(path string) error {
 	if m.Sp3d != nil {
 		if err := m.Sp3d.ValidateWithPath(path + "/Sp3d"); err != nil {

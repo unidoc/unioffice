@@ -24,6 +24,7 @@ func NewLayoutDefHdr() *LayoutDefHdr {
 	ret.CT_DiagramDefinitionHeader = *NewCT_DiagramDefinitionHeader()
 	return ret
 }
+
 func (m *LayoutDefHdr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *LayoutDefHdr) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	start.Name.Local = "layoutDefHdr"
 	return m.CT_DiagramDefinitionHeader.MarshalXML(e, start)
 }
+
 func (m *LayoutDefHdr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_DiagramDefinitionHeader = *NewCT_DiagramDefinitionHeader()
@@ -114,9 +116,13 @@ lLayoutDefHdr:
 	}
 	return nil
 }
+
+// Validate validates the LayoutDefHdr and its children
 func (m *LayoutDefHdr) Validate() error {
 	return m.ValidateWithPath("LayoutDefHdr")
 }
+
+// ValidateWithPath validates the LayoutDefHdr and its children, prefixing error messages with path
 func (m *LayoutDefHdr) ValidateWithPath(path string) error {
 	if err := m.CT_DiagramDefinitionHeader.ValidateWithPath(path); err != nil {
 		return err

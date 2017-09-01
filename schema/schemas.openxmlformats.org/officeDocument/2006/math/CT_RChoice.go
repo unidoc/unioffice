@@ -21,6 +21,7 @@ func NewCT_RChoice() *CT_RChoice {
 	ret := &CT_RChoice{}
 	return ret
 }
+
 func (m *CT_RChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *CT_RChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *CT_RChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_RChoice:
@@ -61,9 +63,13 @@ lCT_RChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_RChoice and its children
 func (m *CT_RChoice) Validate() error {
 	return m.ValidateWithPath("CT_RChoice")
 }
+
+// ValidateWithPath validates the CT_RChoice and its children, prefixing error messages with path
 func (m *CT_RChoice) ValidateWithPath(path string) error {
 	for i, v := range m.T {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/T[%d]", path, i)); err != nil {

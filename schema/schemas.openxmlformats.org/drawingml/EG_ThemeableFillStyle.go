@@ -21,6 +21,7 @@ func NewEG_ThemeableFillStyle() *EG_ThemeableFillStyle {
 	ret := &EG_ThemeableFillStyle{}
 	return ret
 }
+
 func (m *EG_ThemeableFillStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_ThemeableFillStyle) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	return nil
 }
+
 func (m *EG_ThemeableFillStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ThemeableFillStyle:
@@ -69,9 +71,13 @@ lEG_ThemeableFillStyle:
 	}
 	return nil
 }
+
+// Validate validates the EG_ThemeableFillStyle and its children
 func (m *EG_ThemeableFillStyle) Validate() error {
 	return m.ValidateWithPath("EG_ThemeableFillStyle")
 }
+
+// ValidateWithPath validates the EG_ThemeableFillStyle and its children, prefixing error messages with path
 func (m *EG_ThemeableFillStyle) ValidateWithPath(path string) error {
 	if m.Fill != nil {
 		if err := m.Fill.ValidateWithPath(path + "/Fill"); err != nil {

@@ -28,6 +28,7 @@ func NewCT_PolarAdjustHandle() *CT_PolarAdjustHandle {
 	ret.Pos = NewCT_AdjPoint2D()
 	return ret
 }
+
 func (m *CT_PolarAdjustHandle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -62,6 +63,7 @@ func (m *CT_PolarAdjustHandle) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PolarAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Pos = NewCT_AdjPoint2D()
@@ -135,9 +137,13 @@ lCT_PolarAdjustHandle:
 	}
 	return nil
 }
+
+// Validate validates the CT_PolarAdjustHandle and its children
 func (m *CT_PolarAdjustHandle) Validate() error {
 	return m.ValidateWithPath("CT_PolarAdjustHandle")
 }
+
+// ValidateWithPath validates the CT_PolarAdjustHandle and its children, prefixing error messages with path
 func (m *CT_PolarAdjustHandle) ValidateWithPath(path string) error {
 	if m.MinRAttr != nil {
 		if err := m.MinRAttr.ValidateWithPath(path + "/MinRAttr"); err != nil {

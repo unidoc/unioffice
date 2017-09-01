@@ -21,6 +21,7 @@ func NewCT_FFCheckBoxChoice() *CT_FFCheckBoxChoice {
 	ret := &CT_FFCheckBoxChoice{}
 	return ret
 }
+
 func (m *CT_FFCheckBoxChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_FFCheckBoxChoice) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	}
 	return nil
 }
+
 func (m *CT_FFCheckBoxChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_FFCheckBoxChoice:
@@ -69,9 +71,13 @@ lCT_FFCheckBoxChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_FFCheckBoxChoice and its children
 func (m *CT_FFCheckBoxChoice) Validate() error {
 	return m.ValidateWithPath("CT_FFCheckBoxChoice")
 }
+
+// ValidateWithPath validates the CT_FFCheckBoxChoice and its children, prefixing error messages with path
 func (m *CT_FFCheckBoxChoice) ValidateWithPath(path string) error {
 	if m.Size != nil {
 		if err := m.Size.ValidateWithPath(path + "/Size"); err != nil {

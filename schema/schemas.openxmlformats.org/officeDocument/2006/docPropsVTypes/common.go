@@ -98,6 +98,7 @@ func (e ST_VectorBaseType) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}
 	return attr, nil
 }
+
 func (e *ST_VectorBaseType) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "":
@@ -145,9 +146,11 @@ func (e *ST_VectorBaseType) UnmarshalXMLAttr(attr xml.Attr) error {
 	}
 	return nil
 }
+
 func (m ST_VectorBaseType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(m.String(), start)
 }
+
 func (m *ST_VectorBaseType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
@@ -210,6 +213,7 @@ func (m *ST_VectorBaseType) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	}
 	return fmt.Errorf("expected end element, got %v", tok)
 }
+
 func (m ST_VectorBaseType) String() string {
 	switch m {
 	case 0:
@@ -257,9 +261,11 @@ func (m ST_VectorBaseType) String() string {
 	}
 	return ""
 }
+
 func (m ST_VectorBaseType) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m ST_VectorBaseType) ValidateWithPath(path string) error {
 	switch m {
 	case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20:
@@ -335,6 +341,7 @@ func (e ST_ArrayBaseType) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}
 	return attr, nil
 }
+
 func (e *ST_ArrayBaseType) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "":
@@ -376,9 +383,11 @@ func (e *ST_ArrayBaseType) UnmarshalXMLAttr(attr xml.Attr) error {
 	}
 	return nil
 }
+
 func (m ST_ArrayBaseType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(m.String(), start)
 }
+
 func (m *ST_ArrayBaseType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
@@ -435,6 +444,7 @@ func (m *ST_ArrayBaseType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	}
 	return fmt.Errorf("expected end element, got %v", tok)
 }
+
 func (m ST_ArrayBaseType) String() string {
 	switch m {
 	case 0:
@@ -476,9 +486,11 @@ func (m ST_ArrayBaseType) String() string {
 	}
 	return ""
 }
+
 func (m ST_ArrayBaseType) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m ST_ArrayBaseType) ValidateWithPath(path string) error {
 	switch m {
 	case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17:
@@ -487,6 +499,8 @@ func (m ST_ArrayBaseType) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
+// init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Empty", NewCT_Empty)
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Null", NewCT_Null)

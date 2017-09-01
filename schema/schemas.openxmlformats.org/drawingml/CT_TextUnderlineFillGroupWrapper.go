@@ -25,6 +25,7 @@ func NewCT_TextUnderlineFillGroupWrapper() *CT_TextUnderlineFillGroupWrapper {
 	ret := &CT_TextUnderlineFillGroupWrapper{}
 	return ret
 }
+
 func (m *CT_TextUnderlineFillGroupWrapper) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -57,6 +58,7 @@ func (m *CT_TextUnderlineFillGroupWrapper) MarshalXML(e *xml.Encoder, start xml.
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextUnderlineFillGroupWrapper) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TextUnderlineFillGroupWrapper:
@@ -111,9 +113,13 @@ lCT_TextUnderlineFillGroupWrapper:
 	}
 	return nil
 }
+
+// Validate validates the CT_TextUnderlineFillGroupWrapper and its children
 func (m *CT_TextUnderlineFillGroupWrapper) Validate() error {
 	return m.ValidateWithPath("CT_TextUnderlineFillGroupWrapper")
 }
+
+// ValidateWithPath validates the CT_TextUnderlineFillGroupWrapper and its children, prefixing error messages with path
 func (m *CT_TextUnderlineFillGroupWrapper) ValidateWithPath(path string) error {
 	if m.NoFill != nil {
 		if err := m.NoFill.ValidateWithPath(path + "/NoFill"); err != nil {

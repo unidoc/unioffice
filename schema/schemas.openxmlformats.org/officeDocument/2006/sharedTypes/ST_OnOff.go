@@ -18,6 +18,7 @@ type ST_OnOff struct {
 func (m *ST_OnOff) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_OnOff) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.Bool != nil {
@@ -31,6 +32,7 @@ func (m *ST_OnOff) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_OnOff) String() string {
 	if m.Bool != nil {
 		return fmt.Sprintf("%v", *m.Bool)

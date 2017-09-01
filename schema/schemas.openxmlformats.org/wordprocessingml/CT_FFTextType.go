@@ -22,6 +22,7 @@ func NewCT_FFTextType() *CT_FFTextType {
 	ret.ValAttr = ST_FFTextType(1)
 	return ret
 }
+
 func (m *CT_FFTextType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_FFTextType) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_FFTextType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = ST_FFTextType(1)
@@ -55,9 +57,13 @@ func (m *CT_FFTextType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	}
 	return nil
 }
+
+// Validate validates the CT_FFTextType and its children
 func (m *CT_FFTextType) Validate() error {
 	return m.ValidateWithPath("CT_FFTextType")
 }
+
+// ValidateWithPath validates the CT_FFTextType and its children, prefixing error messages with path
 func (m *CT_FFTextType) ValidateWithPath(path string) error {
 	if m.ValAttr == ST_FFTextTypeUnset {
 		return fmt.Errorf("%s/ValAttr is a mandatory field", path)

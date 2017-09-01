@@ -31,6 +31,7 @@ func NewCT_TblCellMar() *CT_TblCellMar {
 	ret := &CT_TblCellMar{}
 	return ret
 }
+
 func (m *CT_TblCellMar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -63,6 +64,7 @@ func (m *CT_TblCellMar) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TblCellMar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TblCellMar:
@@ -117,9 +119,13 @@ lCT_TblCellMar:
 	}
 	return nil
 }
+
+// Validate validates the CT_TblCellMar and its children
 func (m *CT_TblCellMar) Validate() error {
 	return m.ValidateWithPath("CT_TblCellMar")
 }
+
+// ValidateWithPath validates the CT_TblCellMar and its children, prefixing error messages with path
 func (m *CT_TblCellMar) ValidateWithPath(path string) error {
 	if m.Top != nil {
 		if err := m.Top.ValidateWithPath(path + "/Top"); err != nil {

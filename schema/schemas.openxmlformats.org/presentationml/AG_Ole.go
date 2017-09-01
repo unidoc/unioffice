@@ -26,6 +26,7 @@ func NewAG_Ole() *AG_Ole {
 	ret := &AG_Ole{}
 	return ret
 }
+
 func (m *AG_Ole) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -56,6 +57,7 @@ func (m *AG_Ole) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *AG_Ole) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -116,9 +118,13 @@ func (m *AG_Ole) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the AG_Ole and its children
 func (m *AG_Ole) Validate() error {
 	return m.ValidateWithPath("AG_Ole")
 }
+
+// ValidateWithPath validates the AG_Ole and its children, prefixing error messages with path
 func (m *AG_Ole) ValidateWithPath(path string) error {
 	if m.ImgWAttr != nil {
 		if *m.ImgWAttr < 0 {

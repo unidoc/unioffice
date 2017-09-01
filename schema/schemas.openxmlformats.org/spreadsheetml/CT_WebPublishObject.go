@@ -32,6 +32,7 @@ func NewCT_WebPublishObject() *CT_WebPublishObject {
 	ret := &CT_WebPublishObject{}
 	return ret
 }
+
 func (m *CT_WebPublishObject) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -58,6 +59,7 @@ func (m *CT_WebPublishObject) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_WebPublishObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -116,9 +118,13 @@ func (m *CT_WebPublishObject) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	}
 	return nil
 }
+
+// Validate validates the CT_WebPublishObject and its children
 func (m *CT_WebPublishObject) Validate() error {
 	return m.ValidateWithPath("CT_WebPublishObject")
 }
+
+// ValidateWithPath validates the CT_WebPublishObject and its children, prefixing error messages with path
 func (m *CT_WebPublishObject) ValidateWithPath(path string) error {
 	return nil
 }

@@ -26,6 +26,7 @@ func NewEG_LineChartShared() *EG_LineChartShared {
 	ret.Grouping = NewCT_Grouping()
 	return ret
 }
+
 func (m *EG_LineChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -50,6 +51,7 @@ func (m *EG_LineChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	return nil
 }
+
 func (m *EG_LineChartShared) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Grouping = NewCT_Grouping()
@@ -100,9 +102,13 @@ lEG_LineChartShared:
 	}
 	return nil
 }
+
+// Validate validates the EG_LineChartShared and its children
 func (m *EG_LineChartShared) Validate() error {
 	return m.ValidateWithPath("EG_LineChartShared")
 }
+
+// ValidateWithPath validates the EG_LineChartShared and its children, prefixing error messages with path
 func (m *EG_LineChartShared) ValidateWithPath(path string) error {
 	if err := m.Grouping.ValidateWithPath(path + "/Grouping"); err != nil {
 		return err

@@ -21,6 +21,7 @@ func NewCT_MCS() *CT_MCS {
 	ret := &CT_MCS{}
 	return ret
 }
+
 func (m *CT_MCS) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *CT_MCS) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MCS) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_MCS:
@@ -61,9 +63,13 @@ lCT_MCS:
 	}
 	return nil
 }
+
+// Validate validates the CT_MCS and its children
 func (m *CT_MCS) Validate() error {
 	return m.ValidateWithPath("CT_MCS")
 }
+
+// ValidateWithPath validates the CT_MCS and its children, prefixing error messages with path
 func (m *CT_MCS) ValidateWithPath(path string) error {
 	for i, v := range m.Mc {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Mc[%d]", path, i)); err != nil {

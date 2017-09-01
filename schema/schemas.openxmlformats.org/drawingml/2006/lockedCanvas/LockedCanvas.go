@@ -23,6 +23,7 @@ func NewLockedCanvas() *LockedCanvas {
 	ret.CT_GvmlGroupShape = *drawingml.NewCT_GvmlGroupShape()
 	return ret
 }
+
 func (m *LockedCanvas) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *LockedCanvas) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	start.Name.Local = "lockedCanvas"
 	return m.CT_GvmlGroupShape.MarshalXML(e, start)
 }
+
 func (m *LockedCanvas) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_GvmlGroupShape = *drawingml.NewCT_GvmlGroupShape()
@@ -47,9 +49,13 @@ func (m *LockedCanvas) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
+// Validate validates the LockedCanvas and its children
 func (m *LockedCanvas) Validate() error {
 	return m.ValidateWithPath("LockedCanvas")
 }
+
+// ValidateWithPath validates the LockedCanvas and its children, prefixing error messages with path
 func (m *LockedCanvas) ValidateWithPath(path string) error {
 	if err := m.CT_GvmlGroupShape.ValidateWithPath(path); err != nil {
 		return err

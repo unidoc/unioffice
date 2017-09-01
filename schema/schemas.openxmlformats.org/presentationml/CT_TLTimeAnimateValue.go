@@ -26,6 +26,7 @@ func NewCT_TLTimeAnimateValue() *CT_TLTimeAnimateValue {
 	ret := &CT_TLTimeAnimateValue{}
 	return ret
 }
+
 func (m *CT_TLTimeAnimateValue) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -46,6 +47,7 @@ func (m *CT_TLTimeAnimateValue) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLTimeAnimateValue) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -91,9 +93,13 @@ lCT_TLTimeAnimateValue:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLTimeAnimateValue and its children
 func (m *CT_TLTimeAnimateValue) Validate() error {
 	return m.ValidateWithPath("CT_TLTimeAnimateValue")
 }
+
+// ValidateWithPath validates the CT_TLTimeAnimateValue and its children, prefixing error messages with path
 func (m *CT_TLTimeAnimateValue) ValidateWithPath(path string) error {
 	if m.TmAttr != nil {
 		if err := m.TmAttr.ValidateWithPath(path + "/TmAttr"); err != nil {

@@ -21,6 +21,7 @@ func NewEG_EffectProperties() *EG_EffectProperties {
 	ret := &EG_EffectProperties{}
 	return ret
 }
+
 func (m *EG_EffectProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_EffectProperties) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	}
 	return nil
 }
+
 func (m *EG_EffectProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_EffectProperties:
@@ -69,9 +71,13 @@ lEG_EffectProperties:
 	}
 	return nil
 }
+
+// Validate validates the EG_EffectProperties and its children
 func (m *EG_EffectProperties) Validate() error {
 	return m.ValidateWithPath("EG_EffectProperties")
 }
+
+// ValidateWithPath validates the EG_EffectProperties and its children, prefixing error messages with path
 func (m *EG_EffectProperties) ValidateWithPath(path string) error {
 	if m.EffectLst != nil {
 		if err := m.EffectLst.ValidateWithPath(path + "/EffectLst"); err != nil {

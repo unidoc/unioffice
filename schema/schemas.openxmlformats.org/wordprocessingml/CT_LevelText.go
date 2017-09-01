@@ -25,6 +25,7 @@ func NewCT_LevelText() *CT_LevelText {
 	ret := &CT_LevelText{}
 	return ret
 }
+
 func (m *CT_LevelText) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_LevelText) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LevelText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -71,9 +73,13 @@ func (m *CT_LevelText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
+// Validate validates the CT_LevelText and its children
 func (m *CT_LevelText) Validate() error {
 	return m.ValidateWithPath("CT_LevelText")
 }
+
+// ValidateWithPath validates the CT_LevelText and its children, prefixing error messages with path
 func (m *CT_LevelText) ValidateWithPath(path string) error {
 	if m.NullAttr != nil {
 		if err := m.NullAttr.ValidateWithPath(path + "/NullAttr"); err != nil {

@@ -38,6 +38,7 @@ func NewCT_RevisionMove() *CT_RevisionMove {
 	ret := &CT_RevisionMove{}
 	return ret
 }
+
 func (m *CT_RevisionMove) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -80,6 +81,7 @@ func (m *CT_RevisionMove) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RevisionMove) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -175,9 +177,13 @@ lCT_RevisionMove:
 	}
 	return nil
 }
+
+// Validate validates the CT_RevisionMove and its children
 func (m *CT_RevisionMove) Validate() error {
 	return m.ValidateWithPath("CT_RevisionMove")
 }
+
+// ValidateWithPath validates the CT_RevisionMove and its children, prefixing error messages with path
 func (m *CT_RevisionMove) ValidateWithPath(path string) error {
 	for i, v := range m.Undo {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Undo[%d]", path, i)); err != nil {

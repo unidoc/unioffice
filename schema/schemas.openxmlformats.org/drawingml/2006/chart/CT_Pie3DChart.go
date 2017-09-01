@@ -24,6 +24,7 @@ func NewCT_Pie3DChart() *CT_Pie3DChart {
 	ret := &CT_Pie3DChart{}
 	return ret
 }
+
 func (m *CT_Pie3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -48,6 +49,7 @@ func (m *CT_Pie3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Pie3DChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Pie3DChart:
@@ -93,9 +95,13 @@ lCT_Pie3DChart:
 	}
 	return nil
 }
+
+// Validate validates the CT_Pie3DChart and its children
 func (m *CT_Pie3DChart) Validate() error {
 	return m.ValidateWithPath("CT_Pie3DChart")
 }
+
+// ValidateWithPath validates the CT_Pie3DChart and its children, prefixing error messages with path
 func (m *CT_Pie3DChart) ValidateWithPath(path string) error {
 	if m.VaryColors != nil {
 		if err := m.VaryColors.ValidateWithPath(path + "/VaryColors"); err != nil {

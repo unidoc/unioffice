@@ -19,6 +19,7 @@ func NewDDC() *DDC {
 	ret := &DDC{}
 	return ret
 }
+
 func (m *DDC) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *DDC) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *DDC) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *DDC) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the DDC and its children
 func (m *DDC) Validate() error {
 	return m.ValidateWithPath("DDC")
 }
+
+// ValidateWithPath validates the DDC and its children, prefixing error messages with path
 func (m *DDC) ValidateWithPath(path string) error {
 	return nil
 }

@@ -21,6 +21,7 @@ func NewDocument() *Document {
 	ret.CT_Document = *NewCT_Document()
 	return ret
 }
+
 func (m *Document) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *Document) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "w:document"
 	return m.CT_Document.MarshalXML(e, start)
 }
+
 func (m *Document) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Document = *NewCT_Document()
@@ -78,9 +80,13 @@ lDocument:
 	}
 	return nil
 }
+
+// Validate validates the Document and its children
 func (m *Document) Validate() error {
 	return m.ValidateWithPath("Document")
 }
+
+// ValidateWithPath validates the Document and its children, prefixing error messages with path
 func (m *Document) ValidateWithPath(path string) error {
 	if err := m.CT_Document.ValidateWithPath(path); err != nil {
 		return err

@@ -21,6 +21,7 @@ func NewStyles() *Styles {
 	ret.CT_Styles = *NewCT_Styles()
 	return ret
 }
+
 func (m *Styles) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *Styles) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "w:styles"
 	return m.CT_Styles.MarshalXML(e, start)
 }
+
 func (m *Styles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Styles = *NewCT_Styles()
@@ -79,9 +81,13 @@ lStyles:
 	}
 	return nil
 }
+
+// Validate validates the Styles and its children
 func (m *Styles) Validate() error {
 	return m.ValidateWithPath("Styles")
 }
+
+// ValidateWithPath validates the Styles and its children, prefixing error messages with path
 func (m *Styles) ValidateWithPath(path string) error {
 	if err := m.CT_Styles.ValidateWithPath(path); err != nil {
 		return err

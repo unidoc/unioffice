@@ -21,6 +21,7 @@ func NewCT_DashStopList() *CT_DashStopList {
 	ret := &CT_DashStopList{}
 	return ret
 }
+
 func (m *CT_DashStopList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_DashStopList) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DashStopList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_DashStopList:
@@ -63,9 +65,13 @@ lCT_DashStopList:
 	}
 	return nil
 }
+
+// Validate validates the CT_DashStopList and its children
 func (m *CT_DashStopList) Validate() error {
 	return m.ValidateWithPath("CT_DashStopList")
 }
+
+// ValidateWithPath validates the CT_DashStopList and its children, prefixing error messages with path
 func (m *CT_DashStopList) ValidateWithPath(path string) error {
 	for i, v := range m.Ds {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Ds[%d]", path, i)); err != nil {

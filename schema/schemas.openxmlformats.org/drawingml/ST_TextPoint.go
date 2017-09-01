@@ -20,6 +20,7 @@ type ST_TextPoint struct {
 func (m *ST_TextPoint) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_TextPoint) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_TextPointUnqualified != nil {
@@ -33,6 +34,7 @@ func (m *ST_TextPoint) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_TextPoint) String() string {
 	if m.ST_TextPointUnqualified != nil {
 		return fmt.Sprintf("%v", *m.ST_TextPointUnqualified)

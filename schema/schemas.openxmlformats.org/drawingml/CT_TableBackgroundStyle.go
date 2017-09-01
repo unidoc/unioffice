@@ -23,6 +23,7 @@ func NewCT_TableBackgroundStyle() *CT_TableBackgroundStyle {
 	ret := &CT_TableBackgroundStyle{}
 	return ret
 }
+
 func (m *CT_TableBackgroundStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *CT_TableBackgroundStyle) MarshalXML(e *xml.Encoder, start xml.StartElem
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TableBackgroundStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TableBackgroundStyle:
@@ -91,9 +93,13 @@ lCT_TableBackgroundStyle:
 	}
 	return nil
 }
+
+// Validate validates the CT_TableBackgroundStyle and its children
 func (m *CT_TableBackgroundStyle) Validate() error {
 	return m.ValidateWithPath("CT_TableBackgroundStyle")
 }
+
+// ValidateWithPath validates the CT_TableBackgroundStyle and its children, prefixing error messages with path
 func (m *CT_TableBackgroundStyle) ValidateWithPath(path string) error {
 	if m.Fill != nil {
 		if err := m.Fill.ValidateWithPath(path + "/Fill"); err != nil {

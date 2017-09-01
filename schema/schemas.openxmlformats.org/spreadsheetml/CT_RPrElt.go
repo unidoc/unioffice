@@ -50,6 +50,7 @@ func NewCT_RPrElt() *CT_RPrElt {
 	ret := &CT_RPrElt{}
 	return ret
 }
+
 func (m *CT_RPrElt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -118,6 +119,7 @@ func (m *CT_RPrElt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RPrElt) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_RPrElt:
@@ -232,9 +234,13 @@ lCT_RPrElt:
 	}
 	return nil
 }
+
+// Validate validates the CT_RPrElt and its children
 func (m *CT_RPrElt) Validate() error {
 	return m.ValidateWithPath("CT_RPrElt")
 }
+
+// ValidateWithPath validates the CT_RPrElt and its children, prefixing error messages with path
 func (m *CT_RPrElt) ValidateWithPath(path string) error {
 	for i, v := range m.RFont {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/RFont[%d]", path, i)); err != nil {

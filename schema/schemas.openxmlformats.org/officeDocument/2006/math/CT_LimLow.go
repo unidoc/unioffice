@@ -24,6 +24,7 @@ func NewCT_LimLow() *CT_LimLow {
 	ret.Lim = NewCT_OMathArg()
 	return ret
 }
+
 func (m *CT_LimLow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_LimLow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LimLow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.E = NewCT_OMathArg()
@@ -79,9 +81,13 @@ lCT_LimLow:
 	}
 	return nil
 }
+
+// Validate validates the CT_LimLow and its children
 func (m *CT_LimLow) Validate() error {
 	return m.ValidateWithPath("CT_LimLow")
 }
+
+// ValidateWithPath validates the CT_LimLow and its children, prefixing error messages with path
 func (m *CT_LimLow) ValidateWithPath(path string) error {
 	if m.LimLowPr != nil {
 		if err := m.LimLowPr.ValidateWithPath(path + "/LimLowPr"); err != nil {

@@ -28,6 +28,7 @@ func NewCT_Ruby() *CT_Ruby {
 	ret.RubyBase = NewCT_RubyContent()
 	return ret
 }
+
 func (m *CT_Ruby) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -42,6 +43,7 @@ func (m *CT_Ruby) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Ruby) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.RubyPr = NewCT_RubyPr()
@@ -81,9 +83,13 @@ lCT_Ruby:
 	}
 	return nil
 }
+
+// Validate validates the CT_Ruby and its children
 func (m *CT_Ruby) Validate() error {
 	return m.ValidateWithPath("CT_Ruby")
 }
+
+// ValidateWithPath validates the CT_Ruby and its children, prefixing error messages with path
 func (m *CT_Ruby) ValidateWithPath(path string) error {
 	if err := m.RubyPr.ValidateWithPath(path + "/RubyPr"); err != nil {
 		return err

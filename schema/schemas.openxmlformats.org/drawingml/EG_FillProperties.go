@@ -25,6 +25,7 @@ func NewEG_FillProperties() *EG_FillProperties {
 	ret := &EG_FillProperties{}
 	return ret
 }
+
 func (m *EG_FillProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -55,6 +56,7 @@ func (m *EG_FillProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	return nil
 }
+
 func (m *EG_FillProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_FillProperties:
@@ -109,9 +111,13 @@ lEG_FillProperties:
 	}
 	return nil
 }
+
+// Validate validates the EG_FillProperties and its children
 func (m *EG_FillProperties) Validate() error {
 	return m.ValidateWithPath("EG_FillProperties")
 }
+
+// ValidateWithPath validates the EG_FillProperties and its children, prefixing error messages with path
 func (m *EG_FillProperties) ValidateWithPath(path string) error {
 	if m.NoFill != nil {
 		if err := m.NoFill.ValidateWithPath(path + "/NoFill"); err != nil {

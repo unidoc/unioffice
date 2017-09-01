@@ -21,6 +21,7 @@ func NewCT_NonVisualGraphicFrameProperties() *CT_NonVisualGraphicFrameProperties
 	ret := &CT_NonVisualGraphicFrameProperties{}
 	return ret
 }
+
 func (m *CT_NonVisualGraphicFrameProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_NonVisualGraphicFrameProperties) MarshalXML(e *xml.Encoder, start xm
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_NonVisualGraphicFrameProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_NonVisualGraphicFrameProperties:
@@ -71,9 +73,13 @@ lCT_NonVisualGraphicFrameProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_NonVisualGraphicFrameProperties and its children
 func (m *CT_NonVisualGraphicFrameProperties) Validate() error {
 	return m.ValidateWithPath("CT_NonVisualGraphicFrameProperties")
 }
+
+// ValidateWithPath validates the CT_NonVisualGraphicFrameProperties and its children, prefixing error messages with path
 func (m *CT_NonVisualGraphicFrameProperties) ValidateWithPath(path string) error {
 	if m.GraphicFrameLocks != nil {
 		if err := m.GraphicFrameLocks.ValidateWithPath(path + "/GraphicFrameLocks"); err != nil {

@@ -26,6 +26,7 @@ func NewCT_Tuple() *CT_Tuple {
 	ret := &CT_Tuple{}
 	return ret
 }
+
 func (m *CT_Tuple) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -44,6 +45,7 @@ func (m *CT_Tuple) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Tuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -83,9 +85,13 @@ func (m *CT_Tuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_Tuple and its children
 func (m *CT_Tuple) Validate() error {
 	return m.ValidateWithPath("CT_Tuple")
 }
+
+// ValidateWithPath validates the CT_Tuple and its children, prefixing error messages with path
 func (m *CT_Tuple) ValidateWithPath(path string) error {
 	return nil
 }

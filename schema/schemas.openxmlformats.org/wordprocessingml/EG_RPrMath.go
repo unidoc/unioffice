@@ -25,6 +25,7 @@ func NewEG_RPrMath() *EG_RPrMath {
 	ret := &EG_RPrMath{}
 	return ret
 }
+
 func (m *EG_RPrMath) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -44,6 +45,7 @@ func (m *EG_RPrMath) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *EG_RPrMath) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_RPrMath:
@@ -83,9 +85,13 @@ lEG_RPrMath:
 	}
 	return nil
 }
+
+// Validate validates the EG_RPrMath and its children
 func (m *EG_RPrMath) Validate() error {
 	return m.ValidateWithPath("EG_RPrMath")
 }
+
+// ValidateWithPath validates the EG_RPrMath and its children, prefixing error messages with path
 func (m *EG_RPrMath) ValidateWithPath(path string) error {
 	if m.Ins != nil {
 		if err := m.Ins.ValidateWithPath(path + "/Ins"); err != nil {

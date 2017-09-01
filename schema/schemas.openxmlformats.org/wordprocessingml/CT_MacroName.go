@@ -21,6 +21,7 @@ func NewCT_MacroName() *CT_MacroName {
 	ret := &CT_MacroName{}
 	return ret
 }
+
 func (m *CT_MacroName) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *CT_MacroName) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MacroName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -54,9 +56,13 @@ func (m *CT_MacroName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
+// Validate validates the CT_MacroName and its children
 func (m *CT_MacroName) Validate() error {
 	return m.ValidateWithPath("CT_MacroName")
 }
+
+// ValidateWithPath validates the CT_MacroName and its children, prefixing error messages with path
 func (m *CT_MacroName) ValidateWithPath(path string) error {
 	return nil
 }

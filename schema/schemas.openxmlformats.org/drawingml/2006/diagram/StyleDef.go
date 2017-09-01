@@ -23,6 +23,7 @@ func NewStyleDef() *StyleDef {
 	ret.CT_StyleDefinition = *NewCT_StyleDefinition()
 	return ret
 }
+
 func (m *StyleDef) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *StyleDef) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "styleDef"
 	return m.CT_StyleDefinition.MarshalXML(e, start)
 }
+
 func (m *StyleDef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_StyleDefinition = *NewCT_StyleDefinition()
@@ -109,9 +111,13 @@ lStyleDef:
 	}
 	return nil
 }
+
+// Validate validates the StyleDef and its children
 func (m *StyleDef) Validate() error {
 	return m.ValidateWithPath("StyleDef")
 }
+
+// ValidateWithPath validates the StyleDef and its children, prefixing error messages with path
 func (m *StyleDef) ValidateWithPath(path string) error {
 	if err := m.CT_StyleDefinition.ValidateWithPath(path); err != nil {
 		return err

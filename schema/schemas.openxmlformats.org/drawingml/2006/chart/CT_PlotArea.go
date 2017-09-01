@@ -28,6 +28,7 @@ func NewCT_PlotArea() *CT_PlotArea {
 	ret := &CT_PlotArea{}
 	return ret
 }
+
 func (m *CT_PlotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -60,6 +61,7 @@ func (m *CT_PlotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PlotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_PlotArea:
@@ -224,9 +226,13 @@ lCT_PlotArea:
 	}
 	return nil
 }
+
+// Validate validates the CT_PlotArea and its children
 func (m *CT_PlotArea) Validate() error {
 	return m.ValidateWithPath("CT_PlotArea")
 }
+
+// ValidateWithPath validates the CT_PlotArea and its children, prefixing error messages with path
 func (m *CT_PlotArea) ValidateWithPath(path string) error {
 	if m.Layout != nil {
 		if err := m.Layout.ValidateWithPath(path + "/Layout"); err != nil {

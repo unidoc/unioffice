@@ -20,6 +20,7 @@ func NewCT_TickLblPos() *CT_TickLblPos {
 	ret := &CT_TickLblPos{}
 	return ret
 }
+
 func (m *CT_TickLblPos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_TickLblPos) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TickLblPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -54,9 +56,13 @@ func (m *CT_TickLblPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	}
 	return nil
 }
+
+// Validate validates the CT_TickLblPos and its children
 func (m *CT_TickLblPos) Validate() error {
 	return m.ValidateWithPath("CT_TickLblPos")
 }
+
+// ValidateWithPath validates the CT_TickLblPos and its children, prefixing error messages with path
 func (m *CT_TickLblPos) ValidateWithPath(path string) error {
 	if err := m.ValAttr.ValidateWithPath(path + "/ValAttr"); err != nil {
 		return err

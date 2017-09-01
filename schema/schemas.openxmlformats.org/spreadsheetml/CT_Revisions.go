@@ -44,6 +44,7 @@ func NewCT_Revisions() *CT_Revisions {
 	ret := &CT_Revisions{}
 	return ret
 }
+
 func (m *CT_Revisions) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -100,6 +101,7 @@ func (m *CT_Revisions) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Revisions) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Revisions:
@@ -196,9 +198,13 @@ lCT_Revisions:
 	}
 	return nil
 }
+
+// Validate validates the CT_Revisions and its children
 func (m *CT_Revisions) Validate() error {
 	return m.ValidateWithPath("CT_Revisions")
 }
+
+// ValidateWithPath validates the CT_Revisions and its children, prefixing error messages with path
 func (m *CT_Revisions) ValidateWithPath(path string) error {
 	for i, v := range m.Rrc {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Rrc[%d]", path, i)); err != nil {

@@ -20,6 +20,7 @@ type ST_Coordinate struct {
 func (m *ST_Coordinate) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_Coordinate) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_CoordinateUnqualified != nil {
@@ -33,6 +34,7 @@ func (m *ST_Coordinate) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_Coordinate) String() string {
 	if m.ST_CoordinateUnqualified != nil {
 		return fmt.Sprintf("%v", *m.ST_CoordinateUnqualified)

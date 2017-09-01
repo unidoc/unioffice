@@ -26,6 +26,7 @@ func NewCT_ChartsheetPr() *CT_ChartsheetPr {
 	ret := &CT_ChartsheetPr{}
 	return ret
 }
+
 func (m *CT_ChartsheetPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -46,6 +47,7 @@ func (m *CT_ChartsheetPr) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ChartsheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -91,9 +93,13 @@ lCT_ChartsheetPr:
 	}
 	return nil
 }
+
+// Validate validates the CT_ChartsheetPr and its children
 func (m *CT_ChartsheetPr) Validate() error {
 	return m.ValidateWithPath("CT_ChartsheetPr")
 }
+
+// ValidateWithPath validates the CT_ChartsheetPr and its children, prefixing error messages with path
 func (m *CT_ChartsheetPr) ValidateWithPath(path string) error {
 	if m.TabColor != nil {
 		if err := m.TabColor.ValidateWithPath(path + "/TabColor"); err != nil {

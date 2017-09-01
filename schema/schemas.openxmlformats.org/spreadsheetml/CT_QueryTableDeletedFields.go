@@ -25,6 +25,7 @@ func NewCT_QueryTableDeletedFields() *CT_QueryTableDeletedFields {
 	ret := &CT_QueryTableDeletedFields{}
 	return ret
 }
+
 func (m *CT_QueryTableDeletedFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_QueryTableDeletedFields) MarshalXML(e *xml.Encoder, start xml.StartE
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_QueryTableDeletedFields) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_QueryTableDeletedFields:
 	}
 	return nil
 }
+
+// Validate validates the CT_QueryTableDeletedFields and its children
 func (m *CT_QueryTableDeletedFields) Validate() error {
 	return m.ValidateWithPath("CT_QueryTableDeletedFields")
 }
+
+// ValidateWithPath validates the CT_QueryTableDeletedFields and its children, prefixing error messages with path
 func (m *CT_QueryTableDeletedFields) ValidateWithPath(path string) error {
 	for i, v := range m.DeletedField {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/DeletedField[%d]", path, i)); err != nil {

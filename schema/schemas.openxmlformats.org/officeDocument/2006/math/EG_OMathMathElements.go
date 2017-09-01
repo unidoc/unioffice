@@ -39,6 +39,7 @@ func NewEG_OMathMathElements() *EG_OMathMathElements {
 	ret := &EG_OMathMathElements{}
 	return ret
 }
+
 func (m *EG_OMathMathElements) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -125,6 +126,7 @@ func (m *EG_OMathMathElements) MarshalXML(e *xml.Encoder, start xml.StartElement
 	}
 	return nil
 }
+
 func (m *EG_OMathMathElements) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_OMathMathElements:
@@ -249,9 +251,13 @@ lEG_OMathMathElements:
 	}
 	return nil
 }
+
+// Validate validates the EG_OMathMathElements and its children
 func (m *EG_OMathMathElements) Validate() error {
 	return m.ValidateWithPath("EG_OMathMathElements")
 }
+
+// ValidateWithPath validates the EG_OMathMathElements and its children, prefixing error messages with path
 func (m *EG_OMathMathElements) ValidateWithPath(path string) error {
 	if m.Acc != nil {
 		if err := m.Acc.ValidateWithPath(path + "/Acc"); err != nil {

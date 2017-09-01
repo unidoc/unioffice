@@ -56,6 +56,7 @@ func NewCT_WorkbookPr() *CT_WorkbookPr {
 	ret := &CT_WorkbookPr{}
 	return ret
 }
+
 func (m *CT_WorkbookPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -142,6 +143,7 @@ func (m *CT_WorkbookPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_WorkbookPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -277,9 +279,13 @@ func (m *CT_WorkbookPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	}
 	return nil
 }
+
+// Validate validates the CT_WorkbookPr and its children
 func (m *CT_WorkbookPr) Validate() error {
 	return m.ValidateWithPath("CT_WorkbookPr")
 }
+
+// ValidateWithPath validates the CT_WorkbookPr and its children, prefixing error messages with path
 func (m *CT_WorkbookPr) ValidateWithPath(path string) error {
 	if err := m.ShowObjectsAttr.ValidateWithPath(path + "/ShowObjectsAttr"); err != nil {
 		return err

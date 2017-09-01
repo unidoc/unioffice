@@ -22,6 +22,7 @@ func NewEG_LegendEntryData() *EG_LegendEntryData {
 	ret := &EG_LegendEntryData{}
 	return ret
 }
+
 func (m *EG_LegendEntryData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *EG_LegendEntryData) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	return nil
 }
+
 func (m *EG_LegendEntryData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_LegendEntryData:
@@ -61,9 +63,13 @@ lEG_LegendEntryData:
 	}
 	return nil
 }
+
+// Validate validates the EG_LegendEntryData and its children
 func (m *EG_LegendEntryData) Validate() error {
 	return m.ValidateWithPath("EG_LegendEntryData")
 }
+
+// ValidateWithPath validates the EG_LegendEntryData and its children, prefixing error messages with path
 func (m *EG_LegendEntryData) ValidateWithPath(path string) error {
 	if m.TxPr != nil {
 		if err := m.TxPr.ValidateWithPath(path + "/TxPr"); err != nil {

@@ -23,6 +23,7 @@ func NewCT_AltChunk() *CT_AltChunk {
 	ret := &CT_AltChunk{}
 	return ret
 }
+
 func (m *CT_AltChunk) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_AltChunk) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_AltChunk) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -77,9 +79,13 @@ lCT_AltChunk:
 	}
 	return nil
 }
+
+// Validate validates the CT_AltChunk and its children
 func (m *CT_AltChunk) Validate() error {
 	return m.ValidateWithPath("CT_AltChunk")
 }
+
+// ValidateWithPath validates the CT_AltChunk and its children, prefixing error messages with path
 func (m *CT_AltChunk) ValidateWithPath(path string) error {
 	if m.AltChunkPr != nil {
 		if err := m.AltChunkPr.ValidateWithPath(path + "/AltChunkPr"); err != nil {

@@ -23,6 +23,7 @@ func NewCT_TLByAnimateColorTransform() *CT_TLByAnimateColorTransform {
 	ret := &CT_TLByAnimateColorTransform{}
 	return ret
 }
+
 func (m *CT_TLByAnimateColorTransform) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_TLByAnimateColorTransform) MarshalXML(e *xml.Encoder, start xml.Star
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLByAnimateColorTransform) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TLByAnimateColorTransform:
@@ -73,9 +75,13 @@ lCT_TLByAnimateColorTransform:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLByAnimateColorTransform and its children
 func (m *CT_TLByAnimateColorTransform) Validate() error {
 	return m.ValidateWithPath("CT_TLByAnimateColorTransform")
 }
+
+// ValidateWithPath validates the CT_TLByAnimateColorTransform and its children, prefixing error messages with path
 func (m *CT_TLByAnimateColorTransform) ValidateWithPath(path string) error {
 	if m.Rgb != nil {
 		if err := m.Rgb.ValidateWithPath(path + "/Rgb"); err != nil {

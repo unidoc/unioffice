@@ -97,6 +97,7 @@ func NewEG_RPrBase() *EG_RPrBase {
 	ret := &EG_RPrBase{}
 	return ret
 }
+
 func (m *EG_RPrBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -259,6 +260,7 @@ func (m *EG_RPrBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *EG_RPrBase) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_RPrBase:
@@ -478,9 +480,13 @@ lEG_RPrBase:
 	}
 	return nil
 }
+
+// Validate validates the EG_RPrBase and its children
 func (m *EG_RPrBase) Validate() error {
 	return m.ValidateWithPath("EG_RPrBase")
 }
+
+// ValidateWithPath validates the EG_RPrBase and its children, prefixing error messages with path
 func (m *EG_RPrBase) ValidateWithPath(path string) error {
 	if m.RStyle != nil {
 		if err := m.RStyle.ValidateWithPath(path + "/RStyle"); err != nil {

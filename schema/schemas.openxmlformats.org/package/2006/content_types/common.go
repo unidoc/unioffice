@@ -21,6 +21,7 @@ const ST_ExtensionPattern = `([!$&'\(\)\*\+,:=]|(%[0-9a-fA-F][0-9a-fA-F])|[:@]|[
 
 var ST_ExtensionPatternRe = regexp.MustCompile(ST_ExtensionPattern)
 
+// init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "CT_Types", NewCT_Types)
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "CT_Default", NewCT_Default)

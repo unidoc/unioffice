@@ -25,6 +25,7 @@ func NewCT_Color() *CT_Color {
 	ret := &CT_Color{}
 	return ret
 }
+
 func (m *CT_Color) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -57,6 +58,7 @@ func (m *CT_Color) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Color:
@@ -111,9 +113,13 @@ lCT_Color:
 	}
 	return nil
 }
+
+// Validate validates the CT_Color and its children
 func (m *CT_Color) Validate() error {
 	return m.ValidateWithPath("CT_Color")
 }
+
+// ValidateWithPath validates the CT_Color and its children, prefixing error messages with path
 func (m *CT_Color) ValidateWithPath(path string) error {
 	if m.ScrgbClr != nil {
 		if err := m.ScrgbClr.ValidateWithPath(path + "/ScrgbClr"); err != nil {

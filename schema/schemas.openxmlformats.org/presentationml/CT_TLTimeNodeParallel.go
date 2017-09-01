@@ -22,6 +22,7 @@ func NewCT_TLTimeNodeParallel() *CT_TLTimeNodeParallel {
 	ret.CTn = NewCT_TLCommonTimeNodeData()
 	return ret
 }
+
 func (m *CT_TLTimeNodeParallel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_TLTimeNodeParallel) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLTimeNodeParallel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CTn = NewCT_TLCommonTimeNodeData()
@@ -61,9 +63,13 @@ lCT_TLTimeNodeParallel:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLTimeNodeParallel and its children
 func (m *CT_TLTimeNodeParallel) Validate() error {
 	return m.ValidateWithPath("CT_TLTimeNodeParallel")
 }
+
+// ValidateWithPath validates the CT_TLTimeNodeParallel and its children, prefixing error messages with path
 func (m *CT_TLTimeNodeParallel) ValidateWithPath(path string) error {
 	if err := m.CTn.ValidateWithPath(path + "/CTn"); err != nil {
 		return err

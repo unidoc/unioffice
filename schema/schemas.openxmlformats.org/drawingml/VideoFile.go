@@ -21,6 +21,7 @@ func NewVideoFile() *VideoFile {
 	ret.CT_VideoFile = *NewCT_VideoFile()
 	return ret
 }
+
 func (m *VideoFile) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *VideoFile) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "a:videoFile"
 	return m.CT_VideoFile.MarshalXML(e, start)
 }
+
 func (m *VideoFile) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_VideoFile = *NewCT_VideoFile()
@@ -79,9 +81,13 @@ lVideoFile:
 	}
 	return nil
 }
+
+// Validate validates the VideoFile and its children
 func (m *VideoFile) Validate() error {
 	return m.ValidateWithPath("VideoFile")
 }
+
+// ValidateWithPath validates the VideoFile and its children, prefixing error messages with path
 func (m *VideoFile) ValidateWithPath(path string) error {
 	if err := m.CT_VideoFile.ValidateWithPath(path); err != nil {
 		return err

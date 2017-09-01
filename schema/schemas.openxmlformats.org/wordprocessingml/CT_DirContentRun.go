@@ -31,6 +31,7 @@ func NewCT_DirContentRun() *CT_DirContentRun {
 	ret := &CT_DirContentRun{}
 	return ret
 }
+
 func (m *CT_DirContentRun) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -63,6 +64,7 @@ func (m *CT_DirContentRun) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DirContentRun) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -411,9 +413,13 @@ lCT_DirContentRun:
 	}
 	return nil
 }
+
+// Validate validates the CT_DirContentRun and its children
 func (m *CT_DirContentRun) Validate() error {
 	return m.ValidateWithPath("CT_DirContentRun")
 }
+
+// ValidateWithPath validates the CT_DirContentRun and its children, prefixing error messages with path
 func (m *CT_DirContentRun) ValidateWithPath(path string) error {
 	if err := m.ValAttr.ValidateWithPath(path + "/ValAttr"); err != nil {
 		return err

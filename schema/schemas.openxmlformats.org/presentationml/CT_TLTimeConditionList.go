@@ -22,6 +22,7 @@ func NewCT_TLTimeConditionList() *CT_TLTimeConditionList {
 	ret := &CT_TLTimeConditionList{}
 	return ret
 }
+
 func (m *CT_TLTimeConditionList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_TLTimeConditionList) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLTimeConditionList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TLTimeConditionList:
@@ -62,9 +64,13 @@ lCT_TLTimeConditionList:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLTimeConditionList and its children
 func (m *CT_TLTimeConditionList) Validate() error {
 	return m.ValidateWithPath("CT_TLTimeConditionList")
 }
+
+// ValidateWithPath validates the CT_TLTimeConditionList and its children, prefixing error messages with path
 func (m *CT_TLTimeConditionList) ValidateWithPath(path string) error {
 	for i, v := range m.Cond {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Cond[%d]", path, i)); err != nil {

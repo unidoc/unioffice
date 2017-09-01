@@ -22,6 +22,7 @@ func NewCT_AutoSortScope() *CT_AutoSortScope {
 	ret.PivotArea = NewCT_PivotArea()
 	return ret
 }
+
 func (m *CT_AutoSortScope) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_AutoSortScope) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_AutoSortScope) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.PivotArea = NewCT_PivotArea()
@@ -61,9 +63,13 @@ lCT_AutoSortScope:
 	}
 	return nil
 }
+
+// Validate validates the CT_AutoSortScope and its children
 func (m *CT_AutoSortScope) Validate() error {
 	return m.ValidateWithPath("CT_AutoSortScope")
 }
+
+// ValidateWithPath validates the CT_AutoSortScope and its children, prefixing error messages with path
 func (m *CT_AutoSortScope) ValidateWithPath(path string) error {
 	if err := m.PivotArea.ValidateWithPath(path + "/PivotArea"); err != nil {
 		return err

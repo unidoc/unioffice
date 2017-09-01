@@ -21,6 +21,7 @@ func NewCT_LblAlgn() *CT_LblAlgn {
 	ret.ValAttr = ST_LblAlgn(1)
 	return ret
 }
+
 func (m *CT_LblAlgn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_LblAlgn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LblAlgn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = ST_LblAlgn(1)
@@ -54,9 +56,13 @@ func (m *CT_LblAlgn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	}
 	return nil
 }
+
+// Validate validates the CT_LblAlgn and its children
 func (m *CT_LblAlgn) Validate() error {
 	return m.ValidateWithPath("CT_LblAlgn")
 }
+
+// ValidateWithPath validates the CT_LblAlgn and its children, prefixing error messages with path
 func (m *CT_LblAlgn) ValidateWithPath(path string) error {
 	if m.ValAttr == ST_LblAlgnUnset {
 		return fmt.Errorf("%s/ValAttr is a mandatory field", path)

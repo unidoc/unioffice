@@ -21,6 +21,7 @@ func NewRelIds() *RelIds {
 	ret.CT_RelIds = *NewCT_RelIds()
 	return ret
 }
+
 func (m *RelIds) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *RelIds) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "relIds"
 	return m.CT_RelIds.MarshalXML(e, start)
 }
+
 func (m *RelIds) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_RelIds = *NewCT_RelIds()
@@ -78,9 +80,13 @@ func (m *RelIds) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the RelIds and its children
 func (m *RelIds) Validate() error {
 	return m.ValidateWithPath("RelIds")
 }
+
+// ValidateWithPath validates the RelIds and its children, prefixing error messages with path
 func (m *RelIds) ValidateWithPath(path string) error {
 	if err := m.CT_RelIds.ValidateWithPath(path); err != nil {
 		return err

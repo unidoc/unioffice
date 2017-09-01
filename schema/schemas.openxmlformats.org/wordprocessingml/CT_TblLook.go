@@ -35,6 +35,7 @@ func NewCT_TblLook() *CT_TblLook {
 	ret := &CT_TblLook{}
 	return ret
 }
+
 func (m *CT_TblLook) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -71,6 +72,7 @@ func (m *CT_TblLook) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TblLook) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -136,9 +138,13 @@ func (m *CT_TblLook) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	}
 	return nil
 }
+
+// Validate validates the CT_TblLook and its children
 func (m *CT_TblLook) Validate() error {
 	return m.ValidateWithPath("CT_TblLook")
 }
+
+// ValidateWithPath validates the CT_TblLook and its children, prefixing error messages with path
 func (m *CT_TblLook) ValidateWithPath(path string) error {
 	if m.FirstRowAttr != nil {
 		if err := m.FirstRowAttr.ValidateWithPath(path + "/FirstRowAttr"); err != nil {

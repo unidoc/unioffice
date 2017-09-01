@@ -25,6 +25,7 @@ func NewCT_CellStyles() *CT_CellStyles {
 	ret := &CT_CellStyles{}
 	return ret
 }
+
 func (m *CT_CellStyles) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_CellStyles) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CellStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_CellStyles:
 	}
 	return nil
 }
+
+// Validate validates the CT_CellStyles and its children
 func (m *CT_CellStyles) Validate() error {
 	return m.ValidateWithPath("CT_CellStyles")
 }
+
+// ValidateWithPath validates the CT_CellStyles and its children, prefixing error messages with path
 func (m *CT_CellStyles) ValidateWithPath(path string) error {
 	for i, v := range m.CellStyle {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/CellStyle[%d]", path, i)); err != nil {

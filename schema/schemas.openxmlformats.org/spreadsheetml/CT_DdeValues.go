@@ -27,6 +27,7 @@ func NewCT_DdeValues() *CT_DdeValues {
 	ret := &CT_DdeValues{}
 	return ret
 }
+
 func (m *CT_DdeValues) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *CT_DdeValues) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DdeValues) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -93,9 +95,13 @@ lCT_DdeValues:
 	}
 	return nil
 }
+
+// Validate validates the CT_DdeValues and its children
 func (m *CT_DdeValues) Validate() error {
 	return m.ValidateWithPath("CT_DdeValues")
 }
+
+// ValidateWithPath validates the CT_DdeValues and its children, prefixing error messages with path
 func (m *CT_DdeValues) ValidateWithPath(path string) error {
 	for i, v := range m.Value {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Value[%d]", path, i)); err != nil {

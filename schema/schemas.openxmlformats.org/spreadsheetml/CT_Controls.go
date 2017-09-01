@@ -22,6 +22,7 @@ func NewCT_Controls() *CT_Controls {
 	ret := &CT_Controls{}
 	return ret
 }
+
 func (m *CT_Controls) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_Controls) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Controls) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Controls:
@@ -62,9 +64,13 @@ lCT_Controls:
 	}
 	return nil
 }
+
+// Validate validates the CT_Controls and its children
 func (m *CT_Controls) Validate() error {
 	return m.ValidateWithPath("CT_Controls")
 }
+
+// ValidateWithPath validates the CT_Controls and its children, prefixing error messages with path
 func (m *CT_Controls) ValidateWithPath(path string) error {
 	for i, v := range m.Control {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Control[%d]", path, i)); err != nil {

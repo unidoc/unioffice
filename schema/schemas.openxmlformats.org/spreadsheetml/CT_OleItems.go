@@ -22,6 +22,7 @@ func NewCT_OleItems() *CT_OleItems {
 	ret := &CT_OleItems{}
 	return ret
 }
+
 func (m *CT_OleItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_OleItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_OleItems) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_OleItems:
@@ -64,9 +66,13 @@ lCT_OleItems:
 	}
 	return nil
 }
+
+// Validate validates the CT_OleItems and its children
 func (m *CT_OleItems) Validate() error {
 	return m.ValidateWithPath("CT_OleItems")
 }
+
+// ValidateWithPath validates the CT_OleItems and its children, prefixing error messages with path
 func (m *CT_OleItems) ValidateWithPath(path string) error {
 	for i, v := range m.OleItem {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/OleItem[%d]", path, i)); err != nil {

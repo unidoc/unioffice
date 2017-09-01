@@ -26,6 +26,7 @@ func NewCT_CustomGeometry2D() *CT_CustomGeometry2D {
 	ret.PathLst = NewCT_Path2DList()
 	return ret
 }
+
 func (m *CT_CustomGeometry2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -56,6 +57,7 @@ func (m *CT_CustomGeometry2D) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CustomGeometry2D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.PathLst = NewCT_Path2DList()
@@ -110,9 +112,13 @@ lCT_CustomGeometry2D:
 	}
 	return nil
 }
+
+// Validate validates the CT_CustomGeometry2D and its children
 func (m *CT_CustomGeometry2D) Validate() error {
 	return m.ValidateWithPath("CT_CustomGeometry2D")
 }
+
+// ValidateWithPath validates the CT_CustomGeometry2D and its children, prefixing error messages with path
 func (m *CT_CustomGeometry2D) ValidateWithPath(path string) error {
 	if m.AvLst != nil {
 		if err := m.AvLst.ValidateWithPath(path + "/AvLst"); err != nil {

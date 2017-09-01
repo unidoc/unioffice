@@ -30,6 +30,7 @@ func NewCT_LineNumber() *CT_LineNumber {
 	ret := &CT_LineNumber{}
 	return ret
 }
+
 func (m *CT_LineNumber) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -57,6 +58,7 @@ func (m *CT_LineNumber) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LineNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -97,9 +99,13 @@ func (m *CT_LineNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	}
 	return nil
 }
+
+// Validate validates the CT_LineNumber and its children
 func (m *CT_LineNumber) Validate() error {
 	return m.ValidateWithPath("CT_LineNumber")
 }
+
+// ValidateWithPath validates the CT_LineNumber and its children, prefixing error messages with path
 func (m *CT_LineNumber) ValidateWithPath(path string) error {
 	if m.DistanceAttr != nil {
 		if err := m.DistanceAttr.ValidateWithPath(path + "/DistanceAttr"); err != nil {

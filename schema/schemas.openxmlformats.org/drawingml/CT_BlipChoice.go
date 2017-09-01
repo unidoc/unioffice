@@ -37,6 +37,7 @@ func NewCT_BlipChoice() *CT_BlipChoice {
 	ret := &CT_BlipChoice{}
 	return ret
 }
+
 func (m *CT_BlipChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -111,6 +112,7 @@ func (m *CT_BlipChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	return nil
 }
+
 func (m *CT_BlipChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_BlipChoice:
@@ -237,9 +239,13 @@ lCT_BlipChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_BlipChoice and its children
 func (m *CT_BlipChoice) Validate() error {
 	return m.ValidateWithPath("CT_BlipChoice")
 }
+
+// ValidateWithPath validates the CT_BlipChoice and its children, prefixing error messages with path
 func (m *CT_BlipChoice) ValidateWithPath(path string) error {
 	for i, v := range m.AlphaBiLevel {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/AlphaBiLevel[%d]", path, i)); err != nil {

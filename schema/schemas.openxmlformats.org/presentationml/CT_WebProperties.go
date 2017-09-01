@@ -40,6 +40,7 @@ func NewCT_WebProperties() *CT_WebProperties {
 	ret := &CT_WebProperties{}
 	return ret
 }
+
 func (m *CT_WebProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -94,6 +95,7 @@ func (m *CT_WebProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_WebProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -180,9 +182,13 @@ lCT_WebProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_WebProperties and its children
 func (m *CT_WebProperties) Validate() error {
 	return m.ValidateWithPath("CT_WebProperties")
 }
+
+// ValidateWithPath validates the CT_WebProperties and its children, prefixing error messages with path
 func (m *CT_WebProperties) ValidateWithPath(path string) error {
 	if err := m.ImgSzAttr.ValidateWithPath(path + "/ImgSzAttr"); err != nil {
 		return err

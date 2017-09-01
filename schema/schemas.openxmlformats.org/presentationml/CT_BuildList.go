@@ -28,6 +28,7 @@ func NewCT_BuildList() *CT_BuildList {
 	ret := &CT_BuildList{}
 	return ret
 }
+
 func (m *CT_BuildList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -52,6 +53,7 @@ func (m *CT_BuildList) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_BuildList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_BuildList:
@@ -100,9 +102,13 @@ lCT_BuildList:
 	}
 	return nil
 }
+
+// Validate validates the CT_BuildList and its children
 func (m *CT_BuildList) Validate() error {
 	return m.ValidateWithPath("CT_BuildList")
 }
+
+// ValidateWithPath validates the CT_BuildList and its children, prefixing error messages with path
 func (m *CT_BuildList) ValidateWithPath(path string) error {
 	for i, v := range m.BldP {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/BldP[%d]", path, i)); err != nil {

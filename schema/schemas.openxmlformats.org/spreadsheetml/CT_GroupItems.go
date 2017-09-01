@@ -35,6 +35,7 @@ func NewCT_GroupItems() *CT_GroupItems {
 	ret := &CT_GroupItems{}
 	return ret
 }
+
 func (m *CT_GroupItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -71,6 +72,7 @@ func (m *CT_GroupItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GroupItems) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -141,9 +143,13 @@ lCT_GroupItems:
 	}
 	return nil
 }
+
+// Validate validates the CT_GroupItems and its children
 func (m *CT_GroupItems) Validate() error {
 	return m.ValidateWithPath("CT_GroupItems")
 }
+
+// ValidateWithPath validates the CT_GroupItems and its children, prefixing error messages with path
 func (m *CT_GroupItems) ValidateWithPath(path string) error {
 	for i, v := range m.M {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/M[%d]", path, i)); err != nil {

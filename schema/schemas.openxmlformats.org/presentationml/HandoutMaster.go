@@ -21,6 +21,7 @@ func NewHandoutMaster() *HandoutMaster {
 	ret.CT_HandoutMaster = *NewCT_HandoutMaster()
 	return ret
 }
+
 func (m *HandoutMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *HandoutMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	start.Name.Local = "p:handoutMaster"
 	return m.CT_HandoutMaster.MarshalXML(e, start)
 }
+
 func (m *HandoutMaster) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_HandoutMaster = *NewCT_HandoutMaster()
@@ -77,9 +79,13 @@ lHandoutMaster:
 	}
 	return nil
 }
+
+// Validate validates the HandoutMaster and its children
 func (m *HandoutMaster) Validate() error {
 	return m.ValidateWithPath("HandoutMaster")
 }
+
+// ValidateWithPath validates the HandoutMaster and its children, prefixing error messages with path
 func (m *HandoutMaster) ValidateWithPath(path string) error {
 	if err := m.CT_HandoutMaster.ValidateWithPath(path); err != nil {
 		return err

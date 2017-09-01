@@ -25,6 +25,7 @@ func NewCT_ServerFormats() *CT_ServerFormats {
 	ret := &CT_ServerFormats{}
 	return ret
 }
+
 func (m *CT_ServerFormats) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_ServerFormats) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ServerFormats) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -81,9 +83,13 @@ lCT_ServerFormats:
 	}
 	return nil
 }
+
+// Validate validates the CT_ServerFormats and its children
 func (m *CT_ServerFormats) Validate() error {
 	return m.ValidateWithPath("CT_ServerFormats")
 }
+
+// ValidateWithPath validates the CT_ServerFormats and its children, prefixing error messages with path
 func (m *CT_ServerFormats) ValidateWithPath(path string) error {
 	for i, v := range m.ServerFormat {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/ServerFormat[%d]", path, i)); err != nil {

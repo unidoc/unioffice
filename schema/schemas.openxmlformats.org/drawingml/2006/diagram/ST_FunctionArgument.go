@@ -19,6 +19,7 @@ type ST_FunctionArgument struct {
 func (m *ST_FunctionArgument) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_FunctionArgument) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_VariableType != ST_VariableTypeUnset {
@@ -29,6 +30,7 @@ func (m *ST_FunctionArgument) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_FunctionArgument) String() string {
 	if m.ST_VariableType != ST_VariableTypeUnset {
 		return m.ST_VariableType.String()

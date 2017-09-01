@@ -22,6 +22,7 @@ func NewCT_TLAnimVariantBooleanVal() *CT_TLAnimVariantBooleanVal {
 	ret := &CT_TLAnimVariantBooleanVal{}
 	return ret
 }
+
 func (m *CT_TLAnimVariantBooleanVal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_TLAnimVariantBooleanVal) MarshalXML(e *xml.Encoder, start xml.StartE
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLAnimVariantBooleanVal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -55,9 +57,13 @@ func (m *CT_TLAnimVariantBooleanVal) UnmarshalXML(d *xml.Decoder, start xml.Star
 	}
 	return nil
 }
+
+// Validate validates the CT_TLAnimVariantBooleanVal and its children
 func (m *CT_TLAnimVariantBooleanVal) Validate() error {
 	return m.ValidateWithPath("CT_TLAnimVariantBooleanVal")
 }
+
+// ValidateWithPath validates the CT_TLAnimVariantBooleanVal and its children, prefixing error messages with path
 func (m *CT_TLAnimVariantBooleanVal) ValidateWithPath(path string) error {
 	return nil
 }

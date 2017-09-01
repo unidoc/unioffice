@@ -31,6 +31,7 @@ func NewCT_CommonViewProperties() *CT_CommonViewProperties {
 	ret.Origin = drawingml.NewCT_Point2D()
 	return ret
 }
+
 func (m *CT_CommonViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *CT_CommonViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CommonViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Scale = drawingml.NewCT_Scale2D()
@@ -90,9 +92,13 @@ lCT_CommonViewProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_CommonViewProperties and its children
 func (m *CT_CommonViewProperties) Validate() error {
 	return m.ValidateWithPath("CT_CommonViewProperties")
 }
+
+// ValidateWithPath validates the CT_CommonViewProperties and its children, prefixing error messages with path
 func (m *CT_CommonViewProperties) ValidateWithPath(path string) error {
 	if err := m.Scale.ValidateWithPath(path + "/Scale"); err != nil {
 		return err

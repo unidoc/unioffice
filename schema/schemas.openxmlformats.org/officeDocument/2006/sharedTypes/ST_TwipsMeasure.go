@@ -18,6 +18,7 @@ type ST_TwipsMeasure struct {
 func (m *ST_TwipsMeasure) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_TwipsMeasure) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_UnsignedDecimalNumber != nil {
@@ -31,6 +32,7 @@ func (m *ST_TwipsMeasure) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_TwipsMeasure) String() string {
 	if m.ST_UnsignedDecimalNumber != nil {
 		return fmt.Sprintf("%v", *m.ST_UnsignedDecimalNumber)

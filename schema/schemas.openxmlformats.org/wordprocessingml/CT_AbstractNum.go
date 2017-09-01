@@ -37,6 +37,7 @@ func NewCT_AbstractNum() *CT_AbstractNum {
 	ret := &CT_AbstractNum{}
 	return ret
 }
+
 func (m *CT_AbstractNum) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -75,6 +76,7 @@ func (m *CT_AbstractNum) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_AbstractNum) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -144,9 +146,13 @@ lCT_AbstractNum:
 	}
 	return nil
 }
+
+// Validate validates the CT_AbstractNum and its children
 func (m *CT_AbstractNum) Validate() error {
 	return m.ValidateWithPath("CT_AbstractNum")
 }
+
+// ValidateWithPath validates the CT_AbstractNum and its children, prefixing error messages with path
 func (m *CT_AbstractNum) ValidateWithPath(path string) error {
 	if m.Nsid != nil {
 		if err := m.Nsid.ValidateWithPath(path + "/Nsid"); err != nil {

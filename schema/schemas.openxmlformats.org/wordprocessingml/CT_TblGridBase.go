@@ -22,6 +22,7 @@ func NewCT_TblGridBase() *CT_TblGridBase {
 	ret := &CT_TblGridBase{}
 	return ret
 }
+
 func (m *CT_TblGridBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_TblGridBase) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TblGridBase) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TblGridBase:
@@ -64,9 +66,13 @@ lCT_TblGridBase:
 	}
 	return nil
 }
+
+// Validate validates the CT_TblGridBase and its children
 func (m *CT_TblGridBase) Validate() error {
 	return m.ValidateWithPath("CT_TblGridBase")
 }
+
+// ValidateWithPath validates the CT_TblGridBase and its children, prefixing error messages with path
 func (m *CT_TblGridBase) ValidateWithPath(path string) error {
 	for i, v := range m.GridCol {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/GridCol[%d]", path, i)); err != nil {

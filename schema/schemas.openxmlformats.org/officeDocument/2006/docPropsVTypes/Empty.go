@@ -21,12 +21,14 @@ func NewEmpty() *Empty {
 	ret.CT_Empty = *NewCT_Empty()
 	return ret
 }
+
 func (m *Empty) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
 	}
 	return m.CT_Empty.MarshalXML(e, start)
 }
+
 func (m *Empty) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Empty = *NewCT_Empty()
@@ -42,9 +44,13 @@ func (m *Empty) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the Empty and its children
 func (m *Empty) Validate() error {
 	return m.ValidateWithPath("Empty")
 }
+
+// ValidateWithPath validates the Empty and its children, prefixing error messages with path
 func (m *Empty) ValidateWithPath(path string) error {
 	if err := m.CT_Empty.ValidateWithPath(path); err != nil {
 		return err

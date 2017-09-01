@@ -31,6 +31,7 @@ func NewCT_PBdr() *CT_PBdr {
 	ret := &CT_PBdr{}
 	return ret
 }
+
 func (m *CT_PBdr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -63,6 +64,7 @@ func (m *CT_PBdr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PBdr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_PBdr:
@@ -117,9 +119,13 @@ lCT_PBdr:
 	}
 	return nil
 }
+
+// Validate validates the CT_PBdr and its children
 func (m *CT_PBdr) Validate() error {
 	return m.ValidateWithPath("CT_PBdr")
 }
+
+// ValidateWithPath validates the CT_PBdr and its children, prefixing error messages with path
 func (m *CT_PBdr) ValidateWithPath(path string) error {
 	if m.Top != nil {
 		if err := m.Top.ValidateWithPath(path + "/Top"); err != nil {

@@ -23,6 +23,7 @@ func NewAG_TLBuild() *AG_TLBuild {
 	ret := &AG_TLBuild{}
 	return ret
 }
+
 func (m *AG_TLBuild) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *AG_TLBuild) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *AG_TLBuild) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -80,9 +82,13 @@ func (m *AG_TLBuild) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	}
 	return nil
 }
+
+// Validate validates the AG_TLBuild and its children
 func (m *AG_TLBuild) Validate() error {
 	return m.ValidateWithPath("AG_TLBuild")
 }
+
+// ValidateWithPath validates the AG_TLBuild and its children, prefixing error messages with path
 func (m *AG_TLBuild) ValidateWithPath(path string) error {
 	return nil
 }

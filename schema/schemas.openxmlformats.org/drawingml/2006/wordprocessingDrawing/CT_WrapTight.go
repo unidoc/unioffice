@@ -27,6 +27,7 @@ func NewCT_WrapTight() *CT_WrapTight {
 	ret.WrapPolygon = NewCT_WrapPath()
 	return ret
 }
+
 func (m *CT_WrapTight) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -50,6 +51,7 @@ func (m *CT_WrapTight) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_WrapTight) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.WrapTextAttr = ST_WrapText(1)
@@ -101,9 +103,13 @@ lCT_WrapTight:
 	}
 	return nil
 }
+
+// Validate validates the CT_WrapTight and its children
 func (m *CT_WrapTight) Validate() error {
 	return m.ValidateWithPath("CT_WrapTight")
 }
+
+// ValidateWithPath validates the CT_WrapTight and its children, prefixing error messages with path
 func (m *CT_WrapTight) ValidateWithPath(path string) error {
 	if m.WrapTextAttr == ST_WrapTextUnset {
 		return fmt.Errorf("%s/WrapTextAttr is a mandatory field", path)

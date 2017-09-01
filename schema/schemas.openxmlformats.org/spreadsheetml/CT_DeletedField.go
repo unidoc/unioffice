@@ -21,6 +21,7 @@ func NewCT_DeletedField() *CT_DeletedField {
 	ret := &CT_DeletedField{}
 	return ret
 }
+
 func (m *CT_DeletedField) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *CT_DeletedField) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DeletedField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -54,9 +56,13 @@ func (m *CT_DeletedField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	}
 	return nil
 }
+
+// Validate validates the CT_DeletedField and its children
 func (m *CT_DeletedField) Validate() error {
 	return m.ValidateWithPath("CT_DeletedField")
 }
+
+// ValidateWithPath validates the CT_DeletedField and its children, prefixing error messages with path
 func (m *CT_DeletedField) ValidateWithPath(path string) error {
 	return nil
 }

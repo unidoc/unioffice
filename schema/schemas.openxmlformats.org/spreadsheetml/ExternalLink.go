@@ -21,6 +21,7 @@ func NewExternalLink() *ExternalLink {
 	ret.CT_ExternalLink = *NewCT_ExternalLink()
 	return ret
 }
+
 func (m *ExternalLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *ExternalLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	start.Name.Local = "x:externalLink"
 	return m.CT_ExternalLink.MarshalXML(e, start)
 }
+
 func (m *ExternalLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_ExternalLink = *NewCT_ExternalLink()
@@ -82,9 +84,13 @@ lExternalLink:
 	}
 	return nil
 }
+
+// Validate validates the ExternalLink and its children
 func (m *ExternalLink) Validate() error {
 	return m.ValidateWithPath("ExternalLink")
 }
+
+// ValidateWithPath validates the ExternalLink and its children, prefixing error messages with path
 func (m *ExternalLink) ValidateWithPath(path string) error {
 	if err := m.CT_ExternalLink.ValidateWithPath(path); err != nil {
 		return err

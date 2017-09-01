@@ -22,6 +22,7 @@ func NewCT_CommentList() *CT_CommentList {
 	ret := &CT_CommentList{}
 	return ret
 }
+
 func (m *CT_CommentList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_CommentList) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CommentList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_CommentList:
@@ -64,9 +66,13 @@ lCT_CommentList:
 	}
 	return nil
 }
+
+// Validate validates the CT_CommentList and its children
 func (m *CT_CommentList) Validate() error {
 	return m.ValidateWithPath("CT_CommentList")
 }
+
+// ValidateWithPath validates the CT_CommentList and its children, prefixing error messages with path
 func (m *CT_CommentList) ValidateWithPath(path string) error {
 	for i, v := range m.Comment {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Comment[%d]", path, i)); err != nil {

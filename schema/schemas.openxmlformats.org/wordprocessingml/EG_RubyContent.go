@@ -25,6 +25,7 @@ func NewEG_RubyContent() *EG_RubyContent {
 	ret := &EG_RubyContent{}
 	return ret
 }
+
 func (m *EG_RubyContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *EG_RubyContent) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
 func (m *EG_RubyContent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_RubyContent:
@@ -280,9 +282,13 @@ lEG_RubyContent:
 	}
 	return nil
 }
+
+// Validate validates the EG_RubyContent and its children
 func (m *EG_RubyContent) Validate() error {
 	return m.ValidateWithPath("EG_RubyContent")
 }
+
+// ValidateWithPath validates the EG_RubyContent and its children, prefixing error messages with path
 func (m *EG_RubyContent) ValidateWithPath(path string) error {
 	if m.R != nil {
 		if err := m.R.ValidateWithPath(path + "/R"); err != nil {

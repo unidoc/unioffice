@@ -21,6 +21,7 @@ func NewCT_PathShadeProperties() *CT_PathShadeProperties {
 	ret := &CT_PathShadeProperties{}
 	return ret
 }
+
 func (m *CT_PathShadeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_PathShadeProperties) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PathShadeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -74,9 +76,13 @@ lCT_PathShadeProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_PathShadeProperties and its children
 func (m *CT_PathShadeProperties) Validate() error {
 	return m.ValidateWithPath("CT_PathShadeProperties")
 }
+
+// ValidateWithPath validates the CT_PathShadeProperties and its children, prefixing error messages with path
 func (m *CT_PathShadeProperties) ValidateWithPath(path string) error {
 	if err := m.PathAttr.ValidateWithPath(path + "/PathAttr"); err != nil {
 		return err

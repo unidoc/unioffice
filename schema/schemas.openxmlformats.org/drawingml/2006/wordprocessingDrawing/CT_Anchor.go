@@ -49,6 +49,7 @@ func NewCT_Anchor() *CT_Anchor {
 	ret.Graphic = drawingml.NewGraphic()
 	return ret
 }
+
 func (m *CT_Anchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -114,6 +115,7 @@ func (m *CT_Anchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Anchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.SimplePos = drawingml.NewCT_Point2D()
@@ -291,9 +293,13 @@ lCT_Anchor:
 	}
 	return nil
 }
+
+// Validate validates the CT_Anchor and its children
 func (m *CT_Anchor) Validate() error {
 	return m.ValidateWithPath("CT_Anchor")
 }
+
+// ValidateWithPath validates the CT_Anchor and its children, prefixing error messages with path
 func (m *CT_Anchor) ValidateWithPath(path string) error {
 	if err := m.SimplePos.ValidateWithPath(path + "/SimplePos"); err != nil {
 		return err

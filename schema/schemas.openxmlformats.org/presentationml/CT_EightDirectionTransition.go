@@ -21,6 +21,7 @@ func NewCT_EightDirectionTransition() *CT_EightDirectionTransition {
 	ret := &CT_EightDirectionTransition{}
 	return ret
 }
+
 func (m *CT_EightDirectionTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_EightDirectionTransition) MarshalXML(e *xml.Encoder, start xml.Start
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_EightDirectionTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -56,9 +58,13 @@ func (m *CT_EightDirectionTransition) UnmarshalXML(d *xml.Decoder, start xml.Sta
 	}
 	return nil
 }
+
+// Validate validates the CT_EightDirectionTransition and its children
 func (m *CT_EightDirectionTransition) Validate() error {
 	return m.ValidateWithPath("CT_EightDirectionTransition")
 }
+
+// ValidateWithPath validates the CT_EightDirectionTransition and its children, prefixing error messages with path
 func (m *CT_EightDirectionTransition) ValidateWithPath(path string) error {
 	if m.DirAttr != nil {
 		if err := m.DirAttr.ValidateWithPath(path + "/DirAttr"); err != nil {

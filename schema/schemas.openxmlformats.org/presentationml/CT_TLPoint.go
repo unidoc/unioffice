@@ -25,6 +25,7 @@ func NewCT_TLPoint() *CT_TLPoint {
 	ret := &CT_TLPoint{}
 	return ret
 }
+
 func (m *CT_TLPoint) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_TLPoint) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLPoint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -67,9 +69,13 @@ func (m *CT_TLPoint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	}
 	return nil
 }
+
+// Validate validates the CT_TLPoint and its children
 func (m *CT_TLPoint) Validate() error {
 	return m.ValidateWithPath("CT_TLPoint")
 }
+
+// ValidateWithPath validates the CT_TLPoint and its children, prefixing error messages with path
 func (m *CT_TLPoint) ValidateWithPath(path string) error {
 	if err := m.XAttr.ValidateWithPath(path + "/XAttr"); err != nil {
 		return err

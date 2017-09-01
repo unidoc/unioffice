@@ -22,6 +22,7 @@ func NewCT_Tabs() *CT_Tabs {
 	ret := &CT_Tabs{}
 	return ret
 }
+
 func (m *CT_Tabs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_Tabs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Tabs) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Tabs:
@@ -62,9 +64,13 @@ lCT_Tabs:
 	}
 	return nil
 }
+
+// Validate validates the CT_Tabs and its children
 func (m *CT_Tabs) Validate() error {
 	return m.ValidateWithPath("CT_Tabs")
 }
+
+// ValidateWithPath validates the CT_Tabs and its children, prefixing error messages with path
 func (m *CT_Tabs) ValidateWithPath(path string) error {
 	for i, v := range m.Tab {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Tab[%d]", path, i)); err != nil {

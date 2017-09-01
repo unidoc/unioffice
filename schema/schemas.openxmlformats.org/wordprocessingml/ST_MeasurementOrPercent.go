@@ -20,6 +20,7 @@ type ST_MeasurementOrPercent struct {
 func (m *ST_MeasurementOrPercent) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_MeasurementOrPercent) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_DecimalNumberOrPercent != nil {
@@ -36,6 +37,7 @@ func (m *ST_MeasurementOrPercent) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_MeasurementOrPercent) String() string {
 	if m.ST_DecimalNumberOrPercent != nil {
 		return m.ST_DecimalNumberOrPercent.String()

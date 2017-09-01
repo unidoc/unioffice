@@ -22,6 +22,7 @@ func NewCT_Skip() *CT_Skip {
 	ret.ValAttr = 1
 	return ret
 }
+
 func (m *CT_Skip) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_Skip) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Skip) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = 1
@@ -56,9 +58,13 @@ func (m *CT_Skip) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_Skip and its children
 func (m *CT_Skip) Validate() error {
 	return m.ValidateWithPath("CT_Skip")
 }
+
+// ValidateWithPath validates the CT_Skip and its children, prefixing error messages with path
 func (m *CT_Skip) ValidateWithPath(path string) error {
 	if m.ValAttr < 1 {
 		return fmt.Errorf("%s/m.ValAttr must be >= 1 (have %v)", path, m.ValAttr)

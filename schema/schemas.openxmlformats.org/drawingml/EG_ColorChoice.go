@@ -25,6 +25,7 @@ func NewEG_ColorChoice() *EG_ColorChoice {
 	ret := &EG_ColorChoice{}
 	return ret
 }
+
 func (m *EG_ColorChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -55,6 +56,7 @@ func (m *EG_ColorChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
 func (m *EG_ColorChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ColorChoice:
@@ -109,9 +111,13 @@ lEG_ColorChoice:
 	}
 	return nil
 }
+
+// Validate validates the EG_ColorChoice and its children
 func (m *EG_ColorChoice) Validate() error {
 	return m.ValidateWithPath("EG_ColorChoice")
 }
+
+// ValidateWithPath validates the EG_ColorChoice and its children, prefixing error messages with path
 func (m *EG_ColorChoice) ValidateWithPath(path string) error {
 	if m.ScrgbClr != nil {
 		if err := m.ScrgbClr.ValidateWithPath(path + "/ScrgbClr"); err != nil {

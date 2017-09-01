@@ -22,6 +22,7 @@ func NewQueryTable() *QueryTable {
 	ret.CT_QueryTable = *NewCT_QueryTable()
 	return ret
 }
+
 func (m *QueryTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *QueryTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "x:queryTable"
 	return m.CT_QueryTable.MarshalXML(e, start)
 }
+
 func (m *QueryTable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_QueryTable = *NewCT_QueryTable()
@@ -223,9 +225,13 @@ lQueryTable:
 	}
 	return nil
 }
+
+// Validate validates the QueryTable and its children
 func (m *QueryTable) Validate() error {
 	return m.ValidateWithPath("QueryTable")
 }
+
+// ValidateWithPath validates the QueryTable and its children, prefixing error messages with path
 func (m *QueryTable) ValidateWithPath(path string) error {
 	if err := m.CT_QueryTable.ValidateWithPath(path); err != nil {
 		return err

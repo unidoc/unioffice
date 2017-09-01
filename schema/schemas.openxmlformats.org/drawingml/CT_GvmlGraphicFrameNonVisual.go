@@ -23,6 +23,7 @@ func NewCT_GvmlGraphicFrameNonVisual() *CT_GvmlGraphicFrameNonVisual {
 	ret.CNvGraphicFramePr = NewCT_NonVisualGraphicFrameProperties()
 	return ret
 }
+
 func (m *CT_GvmlGraphicFrameNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_GvmlGraphicFrameNonVisual) MarshalXML(e *xml.Encoder, start xml.Star
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GvmlGraphicFrameNonVisual) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CNvPr = NewCT_NonVisualDrawingProps()
@@ -69,9 +71,13 @@ lCT_GvmlGraphicFrameNonVisual:
 	}
 	return nil
 }
+
+// Validate validates the CT_GvmlGraphicFrameNonVisual and its children
 func (m *CT_GvmlGraphicFrameNonVisual) Validate() error {
 	return m.ValidateWithPath("CT_GvmlGraphicFrameNonVisual")
 }
+
+// ValidateWithPath validates the CT_GvmlGraphicFrameNonVisual and its children, prefixing error messages with path
 func (m *CT_GvmlGraphicFrameNonVisual) ValidateWithPath(path string) error {
 	if err := m.CNvPr.ValidateWithPath(path + "/CNvPr"); err != nil {
 		return err

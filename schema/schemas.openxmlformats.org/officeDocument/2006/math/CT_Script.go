@@ -20,6 +20,7 @@ func NewCT_Script() *CT_Script {
 	ret := &CT_Script{}
 	return ret
 }
+
 func (m *CT_Script) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_Script) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Script) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -54,9 +56,13 @@ func (m *CT_Script) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_Script and its children
 func (m *CT_Script) Validate() error {
 	return m.ValidateWithPath("CT_Script")
 }
+
+// ValidateWithPath validates the CT_Script and its children, prefixing error messages with path
 func (m *CT_Script) ValidateWithPath(path string) error {
 	if err := m.ValAttr.ValidateWithPath(path + "/ValAttr"); err != nil {
 		return err

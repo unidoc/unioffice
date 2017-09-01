@@ -21,6 +21,7 @@ func NewCT_GradientStopList() *CT_GradientStopList {
 	ret := &CT_GradientStopList{}
 	return ret
 }
+
 func (m *CT_GradientStopList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *CT_GradientStopList) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GradientStopList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_GradientStopList:
@@ -61,9 +63,13 @@ lCT_GradientStopList:
 	}
 	return nil
 }
+
+// Validate validates the CT_GradientStopList and its children
 func (m *CT_GradientStopList) Validate() error {
 	return m.ValidateWithPath("CT_GradientStopList")
 }
+
+// ValidateWithPath validates the CT_GradientStopList and its children, prefixing error messages with path
 func (m *CT_GradientStopList) ValidateWithPath(path string) error {
 	for i, v := range m.Gs {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Gs[%d]", path, i)); err != nil {

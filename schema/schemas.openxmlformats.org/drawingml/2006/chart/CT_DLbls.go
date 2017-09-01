@@ -23,6 +23,7 @@ func NewCT_DLbls() *CT_DLbls {
 	ret := &CT_DLbls{}
 	return ret
 }
+
 func (m *CT_DLbls) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -42,6 +43,7 @@ func (m *CT_DLbls) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DLbls) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_DLbls:
@@ -161,9 +163,13 @@ lCT_DLbls:
 	}
 	return nil
 }
+
+// Validate validates the CT_DLbls and its children
 func (m *CT_DLbls) Validate() error {
 	return m.ValidateWithPath("CT_DLbls")
 }
+
+// ValidateWithPath validates the CT_DLbls and its children, prefixing error messages with path
 func (m *CT_DLbls) ValidateWithPath(path string) error {
 	for i, v := range m.DLbl {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/DLbl[%d]", path, i)); err != nil {

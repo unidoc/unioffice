@@ -20,6 +20,7 @@ func NewCT_StretchInfoProperties() *CT_StretchInfoProperties {
 	ret := &CT_StretchInfoProperties{}
 	return ret
 }
+
 func (m *CT_StretchInfoProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_StretchInfoProperties) MarshalXML(e *xml.Encoder, start xml.StartEle
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_StretchInfoProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_StretchInfoProperties:
@@ -61,9 +63,13 @@ lCT_StretchInfoProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_StretchInfoProperties and its children
 func (m *CT_StretchInfoProperties) Validate() error {
 	return m.ValidateWithPath("CT_StretchInfoProperties")
 }
+
+// ValidateWithPath validates the CT_StretchInfoProperties and its children, prefixing error messages with path
 func (m *CT_StretchInfoProperties) ValidateWithPath(path string) error {
 	if m.FillRect != nil {
 		if err := m.FillRect.ValidateWithPath(path + "/FillRect"); err != nil {

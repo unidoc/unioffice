@@ -33,6 +33,7 @@ func NewCT_ObjectLink() *CT_ObjectLink {
 	ret.UpdateModeAttr = ST_ObjectUpdateMode(1)
 	return ret
 }
+
 func (m *CT_ObjectLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -71,6 +72,7 @@ func (m *CT_ObjectLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ObjectLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.UpdateModeAttr = ST_ObjectUpdateMode(1)
@@ -129,9 +131,13 @@ func (m *CT_ObjectLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	}
 	return nil
 }
+
+// Validate validates the CT_ObjectLink and its children
 func (m *CT_ObjectLink) Validate() error {
 	return m.ValidateWithPath("CT_ObjectLink")
 }
+
+// ValidateWithPath validates the CT_ObjectLink and its children, prefixing error messages with path
 func (m *CT_ObjectLink) ValidateWithPath(path string) error {
 	if m.UpdateModeAttr == ST_ObjectUpdateModeUnset {
 		return fmt.Errorf("%s/UpdateModeAttr is a mandatory field", path)

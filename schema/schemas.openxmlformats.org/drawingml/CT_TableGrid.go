@@ -21,6 +21,7 @@ func NewCT_TableGrid() *CT_TableGrid {
 	ret := &CT_TableGrid{}
 	return ret
 }
+
 func (m *CT_TableGrid) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_TableGrid) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TableGrid) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TableGrid:
@@ -63,9 +65,13 @@ lCT_TableGrid:
 	}
 	return nil
 }
+
+// Validate validates the CT_TableGrid and its children
 func (m *CT_TableGrid) Validate() error {
 	return m.ValidateWithPath("CT_TableGrid")
 }
+
+// ValidateWithPath validates the CT_TableGrid and its children, prefixing error messages with path
 func (m *CT_TableGrid) ValidateWithPath(path string) error {
 	for i, v := range m.GridCol {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/GridCol[%d]", path, i)); err != nil {

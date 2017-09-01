@@ -21,6 +21,7 @@ func NewGlossaryDocument() *GlossaryDocument {
 	ret.CT_GlossaryDocument = *NewCT_GlossaryDocument()
 	return ret
 }
+
 func (m *GlossaryDocument) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *GlossaryDocument) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	start.Name.Local = "w:glossaryDocument"
 	return m.CT_GlossaryDocument.MarshalXML(e, start)
 }
+
 func (m *GlossaryDocument) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_GlossaryDocument = *NewCT_GlossaryDocument()
@@ -73,9 +75,13 @@ lGlossaryDocument:
 	}
 	return nil
 }
+
+// Validate validates the GlossaryDocument and its children
 func (m *GlossaryDocument) Validate() error {
 	return m.ValidateWithPath("GlossaryDocument")
 }
+
+// ValidateWithPath validates the GlossaryDocument and its children, prefixing error messages with path
 func (m *GlossaryDocument) ValidateWithPath(path string) error {
 	if err := m.CT_GlossaryDocument.ValidateWithPath(path); err != nil {
 		return err

@@ -25,6 +25,7 @@ func NewCT_MemberProperties() *CT_MemberProperties {
 	ret := &CT_MemberProperties{}
 	return ret
 }
+
 func (m *CT_MemberProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_MemberProperties) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MemberProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_MemberProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_MemberProperties and its children
 func (m *CT_MemberProperties) Validate() error {
 	return m.ValidateWithPath("CT_MemberProperties")
 }
+
+// ValidateWithPath validates the CT_MemberProperties and its children, prefixing error messages with path
 func (m *CT_MemberProperties) ValidateWithPath(path string) error {
 	for i, v := range m.Mp {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Mp[%d]", path, i)); err != nil {

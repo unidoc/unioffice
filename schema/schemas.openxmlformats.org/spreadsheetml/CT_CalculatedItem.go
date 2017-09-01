@@ -30,6 +30,7 @@ func NewCT_CalculatedItem() *CT_CalculatedItem {
 	ret.PivotArea = NewCT_PivotArea()
 	return ret
 }
+
 func (m *CT_CalculatedItem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -52,6 +53,7 @@ func (m *CT_CalculatedItem) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CalculatedItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.PivotArea = NewCT_PivotArea()
@@ -103,9 +105,13 @@ lCT_CalculatedItem:
 	}
 	return nil
 }
+
+// Validate validates the CT_CalculatedItem and its children
 func (m *CT_CalculatedItem) Validate() error {
 	return m.ValidateWithPath("CT_CalculatedItem")
 }
+
+// ValidateWithPath validates the CT_CalculatedItem and its children, prefixing error messages with path
 func (m *CT_CalculatedItem) ValidateWithPath(path string) error {
 	if err := m.PivotArea.ValidateWithPath(path + "/PivotArea"); err != nil {
 		return err

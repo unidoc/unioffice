@@ -21,6 +21,7 @@ func NewChart() *Chart {
 	ret.CT_RelId = *NewCT_RelId()
 	return ret
 }
+
 func (m *Chart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *Chart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "chart"
 	return m.CT_RelId.MarshalXML(e, start)
 }
+
 func (m *Chart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_RelId = *NewCT_RelId()
@@ -58,9 +60,13 @@ func (m *Chart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the Chart and its children
 func (m *Chart) Validate() error {
 	return m.ValidateWithPath("Chart")
 }
+
+// ValidateWithPath validates the Chart and its children, prefixing error messages with path
 func (m *Chart) ValidateWithPath(path string) error {
 	if err := m.CT_RelId.ValidateWithPath(path); err != nil {
 		return err

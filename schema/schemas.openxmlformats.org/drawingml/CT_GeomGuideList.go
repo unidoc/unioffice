@@ -21,6 +21,7 @@ func NewCT_GeomGuideList() *CT_GeomGuideList {
 	ret := &CT_GeomGuideList{}
 	return ret
 }
+
 func (m *CT_GeomGuideList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_GeomGuideList) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GeomGuideList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_GeomGuideList:
@@ -63,9 +65,13 @@ lCT_GeomGuideList:
 	}
 	return nil
 }
+
+// Validate validates the CT_GeomGuideList and its children
 func (m *CT_GeomGuideList) Validate() error {
 	return m.ValidateWithPath("CT_GeomGuideList")
 }
+
+// ValidateWithPath validates the CT_GeomGuideList and its children, prefixing error messages with path
 func (m *CT_GeomGuideList) ValidateWithPath(path string) error {
 	for i, v := range m.Gd {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Gd[%d]", path, i)); err != nil {

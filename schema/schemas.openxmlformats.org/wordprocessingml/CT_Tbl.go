@@ -30,6 +30,7 @@ func NewCT_Tbl() *CT_Tbl {
 	ret.TblGrid = NewCT_TblGrid()
 	return ret
 }
+
 func (m *CT_Tbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -52,6 +53,7 @@ func (m *CT_Tbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Tbl) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.TblPr = NewCT_TblPr()
@@ -305,9 +307,13 @@ lCT_Tbl:
 	}
 	return nil
 }
+
+// Validate validates the CT_Tbl and its children
 func (m *CT_Tbl) Validate() error {
 	return m.ValidateWithPath("CT_Tbl")
 }
+
+// ValidateWithPath validates the CT_Tbl and its children, prefixing error messages with path
 func (m *CT_Tbl) ValidateWithPath(path string) error {
 	for i, v := range m.EG_RangeMarkupElements {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/EG_RangeMarkupElements[%d]", path, i)); err != nil {

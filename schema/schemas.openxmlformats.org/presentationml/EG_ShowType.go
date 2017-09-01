@@ -25,6 +25,7 @@ func NewEG_ShowType() *EG_ShowType {
 	ret := &EG_ShowType{}
 	return ret
 }
+
 func (m *EG_ShowType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -43,6 +44,7 @@ func (m *EG_ShowType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *EG_ShowType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ShowType:
@@ -82,9 +84,13 @@ lEG_ShowType:
 	}
 	return nil
 }
+
+// Validate validates the EG_ShowType and its children
 func (m *EG_ShowType) Validate() error {
 	return m.ValidateWithPath("EG_ShowType")
 }
+
+// ValidateWithPath validates the EG_ShowType and its children, prefixing error messages with path
 func (m *EG_ShowType) ValidateWithPath(path string) error {
 	if m.Present != nil {
 		if err := m.Present.ValidateWithPath(path + "/Present"); err != nil {

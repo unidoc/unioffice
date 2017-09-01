@@ -26,6 +26,7 @@ func NewCT_Styles() *CT_Styles {
 	ret := &CT_Styles{}
 	return ret
 }
+
 func (m *CT_Styles) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -46,6 +47,7 @@ func (m *CT_Styles) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Styles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Styles:
@@ -86,9 +88,13 @@ lCT_Styles:
 	}
 	return nil
 }
+
+// Validate validates the CT_Styles and its children
 func (m *CT_Styles) Validate() error {
 	return m.ValidateWithPath("CT_Styles")
 }
+
+// ValidateWithPath validates the CT_Styles and its children, prefixing error messages with path
 func (m *CT_Styles) ValidateWithPath(path string) error {
 	if m.DocDefaults != nil {
 		if err := m.DocDefaults.ValidateWithPath(path + "/DocDefaults"); err != nil {

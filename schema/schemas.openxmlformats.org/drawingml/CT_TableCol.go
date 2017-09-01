@@ -22,6 +22,7 @@ func NewCT_TableCol() *CT_TableCol {
 	ret := &CT_TableCol{}
 	return ret
 }
+
 func (m *CT_TableCol) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *CT_TableCol) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TableCol) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -74,9 +76,13 @@ lCT_TableCol:
 	}
 	return nil
 }
+
+// Validate validates the CT_TableCol and its children
 func (m *CT_TableCol) Validate() error {
 	return m.ValidateWithPath("CT_TableCol")
 }
+
+// ValidateWithPath validates the CT_TableCol and its children, prefixing error messages with path
 func (m *CT_TableCol) ValidateWithPath(path string) error {
 	if err := m.WAttr.ValidateWithPath(path + "/WAttr"); err != nil {
 		return err

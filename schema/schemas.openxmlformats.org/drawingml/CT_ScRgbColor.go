@@ -24,6 +24,7 @@ func NewCT_ScRgbColor() *CT_ScRgbColor {
 	ret := &CT_ScRgbColor{}
 	return ret
 }
+
 func (m *CT_ScRgbColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -43,6 +44,7 @@ func (m *CT_ScRgbColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ScRgbColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -286,9 +288,13 @@ lCT_ScRgbColor:
 	}
 	return nil
 }
+
+// Validate validates the CT_ScRgbColor and its children
 func (m *CT_ScRgbColor) Validate() error {
 	return m.ValidateWithPath("CT_ScRgbColor")
 }
+
+// ValidateWithPath validates the CT_ScRgbColor and its children, prefixing error messages with path
 func (m *CT_ScRgbColor) ValidateWithPath(path string) error {
 	if err := m.RAttr.ValidateWithPath(path + "/RAttr"); err != nil {
 		return err

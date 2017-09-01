@@ -31,6 +31,7 @@ func NewCT_BarChart() *CT_BarChart {
 	ret.BarDir = NewCT_BarDir()
 	return ret
 }
+
 func (m *CT_BarChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -75,6 +76,7 @@ func (m *CT_BarChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_BarChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.BarDir = NewCT_BarDir()
@@ -152,9 +154,13 @@ lCT_BarChart:
 	}
 	return nil
 }
+
+// Validate validates the CT_BarChart and its children
 func (m *CT_BarChart) Validate() error {
 	return m.ValidateWithPath("CT_BarChart")
 }
+
+// ValidateWithPath validates the CT_BarChart and its children, prefixing error messages with path
 func (m *CT_BarChart) ValidateWithPath(path string) error {
 	if err := m.BarDir.ValidateWithPath(path + "/BarDir"); err != nil {
 		return err

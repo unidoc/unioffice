@@ -21,6 +21,7 @@ func NewCT_PosVChoice() *CT_PosVChoice {
 	ret := &CT_PosVChoice{}
 	return ret
 }
+
 func (m *CT_PosVChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_PosVChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	return nil
 }
+
 func (m *CT_PosVChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_PosVChoice:
@@ -69,9 +71,13 @@ lCT_PosVChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_PosVChoice and its children
 func (m *CT_PosVChoice) Validate() error {
 	return m.ValidateWithPath("CT_PosVChoice")
 }
+
+// ValidateWithPath validates the CT_PosVChoice and its children, prefixing error messages with path
 func (m *CT_PosVChoice) ValidateWithPath(path string) error {
 	if err := m.Align.ValidateWithPath(path + "/Align"); err != nil {
 		return err

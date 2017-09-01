@@ -26,6 +26,7 @@ func NewCT_DoughnutChart() *CT_DoughnutChart {
 	ret := &CT_DoughnutChart{}
 	return ret
 }
+
 func (m *CT_DoughnutChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -58,6 +59,7 @@ func (m *CT_DoughnutChart) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DoughnutChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_DoughnutChart:
@@ -113,9 +115,13 @@ lCT_DoughnutChart:
 	}
 	return nil
 }
+
+// Validate validates the CT_DoughnutChart and its children
 func (m *CT_DoughnutChart) Validate() error {
 	return m.ValidateWithPath("CT_DoughnutChart")
 }
+
+// ValidateWithPath validates the CT_DoughnutChart and its children, prefixing error messages with path
 func (m *CT_DoughnutChart) ValidateWithPath(path string) error {
 	if m.VaryColors != nil {
 		if err := m.VaryColors.ValidateWithPath(path + "/VaryColors"); err != nil {

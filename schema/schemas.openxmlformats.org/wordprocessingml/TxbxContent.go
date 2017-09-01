@@ -23,6 +23,7 @@ func NewTxbxContent() *TxbxContent {
 	ret.CT_TxbxContent = *NewCT_TxbxContent()
 	return ret
 }
+
 func (m *TxbxContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *TxbxContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "w:txbxContent"
 	return m.CT_TxbxContent.MarshalXML(e, start)
 }
+
 func (m *TxbxContent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_TxbxContent = *NewCT_TxbxContent()
@@ -362,9 +364,13 @@ lTxbxContent:
 	}
 	return nil
 }
+
+// Validate validates the TxbxContent and its children
 func (m *TxbxContent) Validate() error {
 	return m.ValidateWithPath("TxbxContent")
 }
+
+// ValidateWithPath validates the TxbxContent and its children, prefixing error messages with path
 func (m *TxbxContent) ValidateWithPath(path string) error {
 	if err := m.CT_TxbxContent.ValidateWithPath(path); err != nil {
 		return err

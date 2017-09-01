@@ -25,6 +25,7 @@ func NewCT_TextFields() *CT_TextFields {
 	ret := &CT_TextFields{}
 	return ret
 }
+
 func (m *CT_TextFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_TextFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextFields) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_TextFields:
 	}
 	return nil
 }
+
+// Validate validates the CT_TextFields and its children
 func (m *CT_TextFields) Validate() error {
 	return m.ValidateWithPath("CT_TextFields")
 }
+
+// ValidateWithPath validates the CT_TextFields and its children, prefixing error messages with path
 func (m *CT_TextFields) ValidateWithPath(path string) error {
 	for i, v := range m.TextField {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/TextField[%d]", path, i)); err != nil {

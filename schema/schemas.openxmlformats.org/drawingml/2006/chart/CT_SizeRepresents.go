@@ -20,6 +20,7 @@ func NewCT_SizeRepresents() *CT_SizeRepresents {
 	ret := &CT_SizeRepresents{}
 	return ret
 }
+
 func (m *CT_SizeRepresents) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_SizeRepresents) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SizeRepresents) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -54,9 +56,13 @@ func (m *CT_SizeRepresents) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	}
 	return nil
 }
+
+// Validate validates the CT_SizeRepresents and its children
 func (m *CT_SizeRepresents) Validate() error {
 	return m.ValidateWithPath("CT_SizeRepresents")
 }
+
+// ValidateWithPath validates the CT_SizeRepresents and its children, prefixing error messages with path
 func (m *CT_SizeRepresents) ValidateWithPath(path string) error {
 	if err := m.ValAttr.ValidateWithPath(path + "/ValAttr"); err != nil {
 		return err

@@ -30,6 +30,7 @@ func NewAG_Locking() *AG_Locking {
 	ret := &AG_Locking{}
 	return ret
 }
+
 func (m *AG_Locking) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -76,6 +77,7 @@ func (m *AG_Locking) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *AG_Locking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -162,9 +164,13 @@ func (m *AG_Locking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	}
 	return nil
 }
+
+// Validate validates the AG_Locking and its children
 func (m *AG_Locking) Validate() error {
 	return m.ValidateWithPath("AG_Locking")
 }
+
+// ValidateWithPath validates the AG_Locking and its children, prefixing error messages with path
 func (m *AG_Locking) ValidateWithPath(path string) error {
 	return nil
 }

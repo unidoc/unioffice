@@ -21,6 +21,7 @@ func NewEG_FillModeProperties() *EG_FillModeProperties {
 	ret := &EG_FillModeProperties{}
 	return ret
 }
+
 func (m *EG_FillModeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_FillModeProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	return nil
 }
+
 func (m *EG_FillModeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_FillModeProperties:
@@ -69,9 +71,13 @@ lEG_FillModeProperties:
 	}
 	return nil
 }
+
+// Validate validates the EG_FillModeProperties and its children
 func (m *EG_FillModeProperties) Validate() error {
 	return m.ValidateWithPath("EG_FillModeProperties")
 }
+
+// ValidateWithPath validates the EG_FillModeProperties and its children, prefixing error messages with path
 func (m *EG_FillModeProperties) ValidateWithPath(path string) error {
 	if m.Tile != nil {
 		if err := m.Tile.ValidateWithPath(path + "/Tile"); err != nil {

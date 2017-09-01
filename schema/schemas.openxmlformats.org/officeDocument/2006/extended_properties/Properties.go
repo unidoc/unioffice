@@ -21,6 +21,7 @@ func NewProperties() *Properties {
 	ret.CT_Properties = *NewCT_Properties()
 	return ret
 }
+
 func (m *Properties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *Properties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "Properties"
 	return m.CT_Properties.MarshalXML(e, start)
 }
+
 func (m *Properties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Properties = *NewCT_Properties()
@@ -191,9 +193,13 @@ lProperties:
 	}
 	return nil
 }
+
+// Validate validates the Properties and its children
 func (m *Properties) Validate() error {
 	return m.ValidateWithPath("Properties")
 }
+
+// ValidateWithPath validates the Properties and its children, prefixing error messages with path
 func (m *Properties) ValidateWithPath(path string) error {
 	if err := m.CT_Properties.ValidateWithPath(path); err != nil {
 		return err

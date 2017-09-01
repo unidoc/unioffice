@@ -23,6 +23,7 @@ func NewCT_VideoFile() *CT_VideoFile {
 	ret := &CT_VideoFile{}
 	return ret
 }
+
 func (m *CT_VideoFile) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_VideoFile) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_VideoFile) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -86,9 +88,13 @@ lCT_VideoFile:
 	}
 	return nil
 }
+
+// Validate validates the CT_VideoFile and its children
 func (m *CT_VideoFile) Validate() error {
 	return m.ValidateWithPath("CT_VideoFile")
 }
+
+// ValidateWithPath validates the CT_VideoFile and its children, prefixing error messages with path
 func (m *CT_VideoFile) ValidateWithPath(path string) error {
 	if m.ExtLst != nil {
 		if err := m.ExtLst.ValidateWithPath(path + "/ExtLst"); err != nil {

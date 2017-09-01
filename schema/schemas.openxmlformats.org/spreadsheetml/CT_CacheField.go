@@ -55,6 +55,7 @@ func NewCT_CacheField() *CT_CacheField {
 	ret := &CT_CacheField{}
 	return ret
 }
+
 func (m *CT_CacheField) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -129,6 +130,7 @@ func (m *CT_CacheField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -272,9 +274,13 @@ lCT_CacheField:
 	}
 	return nil
 }
+
+// Validate validates the CT_CacheField and its children
 func (m *CT_CacheField) Validate() error {
 	return m.ValidateWithPath("CT_CacheField")
 }
+
+// ValidateWithPath validates the CT_CacheField and its children, prefixing error messages with path
 func (m *CT_CacheField) ValidateWithPath(path string) error {
 	if m.SharedItems != nil {
 		if err := m.SharedItems.ValidateWithPath(path + "/SharedItems"); err != nil {

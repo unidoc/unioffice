@@ -29,6 +29,7 @@ func NewCT_TLTimeTargetElement() *CT_TLTimeTargetElement {
 	ret := &CT_TLTimeTargetElement{}
 	return ret
 }
+
 func (m *CT_TLTimeTargetElement) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -53,6 +54,7 @@ func (m *CT_TLTimeTargetElement) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLTimeTargetElement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TLTimeTargetElement:
@@ -97,9 +99,13 @@ lCT_TLTimeTargetElement:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLTimeTargetElement and its children
 func (m *CT_TLTimeTargetElement) Validate() error {
 	return m.ValidateWithPath("CT_TLTimeTargetElement")
 }
+
+// ValidateWithPath validates the CT_TLTimeTargetElement and its children, prefixing error messages with path
 func (m *CT_TLTimeTargetElement) ValidateWithPath(path string) error {
 	if m.SldTgt != nil {
 		if err := m.SldTgt.ValidateWithPath(path + "/SldTgt"); err != nil {

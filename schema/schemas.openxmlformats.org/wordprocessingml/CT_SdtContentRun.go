@@ -29,6 +29,7 @@ func NewCT_SdtContentRun() *CT_SdtContentRun {
 	ret := &CT_SdtContentRun{}
 	return ret
 }
+
 func (m *CT_SdtContentRun) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -54,6 +55,7 @@ func (m *CT_SdtContentRun) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SdtContentRun) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_SdtContentRun:
@@ -397,9 +399,13 @@ lCT_SdtContentRun:
 	}
 	return nil
 }
+
+// Validate validates the CT_SdtContentRun and its children
 func (m *CT_SdtContentRun) Validate() error {
 	return m.ValidateWithPath("CT_SdtContentRun")
 }
+
+// ValidateWithPath validates the CT_SdtContentRun and its children, prefixing error messages with path
 func (m *CT_SdtContentRun) ValidateWithPath(path string) error {
 	for i, v := range m.FldSimple {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/FldSimple[%d]", path, i)); err != nil {

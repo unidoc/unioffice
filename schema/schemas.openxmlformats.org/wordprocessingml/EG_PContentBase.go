@@ -23,6 +23,7 @@ func NewEG_PContentBase() *EG_PContentBase {
 	ret := &EG_PContentBase{}
 	return ret
 }
+
 func (m *EG_PContentBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *EG_PContentBase) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	return nil
 }
+
 func (m *EG_PContentBase) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_PContentBase:
@@ -81,9 +83,13 @@ lEG_PContentBase:
 	}
 	return nil
 }
+
+// Validate validates the EG_PContentBase and its children
 func (m *EG_PContentBase) Validate() error {
 	return m.ValidateWithPath("EG_PContentBase")
 }
+
+// ValidateWithPath validates the EG_PContentBase and its children, prefixing error messages with path
 func (m *EG_PContentBase) ValidateWithPath(path string) error {
 	if m.CustomXml != nil {
 		if err := m.CustomXml.ValidateWithPath(path + "/CustomXml"); err != nil {

@@ -21,6 +21,7 @@ func NewCT_Order() *CT_Order {
 	ret := &CT_Order{}
 	return ret
 }
+
 func (m *CT_Order) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_Order) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Order) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -57,9 +59,13 @@ func (m *CT_Order) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_Order and its children
 func (m *CT_Order) Validate() error {
 	return m.ValidateWithPath("CT_Order")
 }
+
+// ValidateWithPath validates the CT_Order and its children, prefixing error messages with path
 func (m *CT_Order) ValidateWithPath(path string) error {
 	if m.ValAttr != nil {
 		if *m.ValAttr < 2 {

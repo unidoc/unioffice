@@ -43,6 +43,7 @@ func NewCT_Div() *CT_Div {
 	ret.MarBottom = NewCT_SignedTwipsMeasure()
 	return ret
 }
+
 func (m *CT_Div) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -77,6 +78,7 @@ func (m *CT_Div) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Div) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.MarLeft = NewCT_SignedTwipsMeasure()
@@ -151,9 +153,13 @@ lCT_Div:
 	}
 	return nil
 }
+
+// Validate validates the CT_Div and its children
 func (m *CT_Div) Validate() error {
 	return m.ValidateWithPath("CT_Div")
 }
+
+// ValidateWithPath validates the CT_Div and its children, prefixing error messages with path
 func (m *CT_Div) ValidateWithPath(path string) error {
 	if m.BlockQuote != nil {
 		if err := m.BlockQuote.ValidateWithPath(path + "/BlockQuote"); err != nil {

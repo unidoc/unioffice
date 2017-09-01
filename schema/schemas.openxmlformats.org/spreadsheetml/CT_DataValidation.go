@@ -53,6 +53,7 @@ func NewCT_DataValidation() *CT_DataValidation {
 	ret := &CT_DataValidation{}
 	return ret
 }
+
 func (m *CT_DataValidation) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -133,6 +134,7 @@ func (m *CT_DataValidation) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DataValidation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -244,9 +246,13 @@ lCT_DataValidation:
 	}
 	return nil
 }
+
+// Validate validates the CT_DataValidation and its children
 func (m *CT_DataValidation) Validate() error {
 	return m.ValidateWithPath("CT_DataValidation")
 }
+
+// ValidateWithPath validates the CT_DataValidation and its children, prefixing error messages with path
 func (m *CT_DataValidation) ValidateWithPath(path string) error {
 	if err := m.TypeAttr.ValidateWithPath(path + "/TypeAttr"); err != nil {
 		return err

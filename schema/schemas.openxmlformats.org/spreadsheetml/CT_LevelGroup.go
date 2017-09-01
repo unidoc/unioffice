@@ -34,6 +34,7 @@ func NewCT_LevelGroup() *CT_LevelGroup {
 	ret.GroupMembers = NewCT_GroupMembers()
 	return ret
 }
+
 func (m *CT_LevelGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -58,6 +59,7 @@ func (m *CT_LevelGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LevelGroup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.GroupMembers = NewCT_GroupMembers()
@@ -125,9 +127,13 @@ lCT_LevelGroup:
 	}
 	return nil
 }
+
+// Validate validates the CT_LevelGroup and its children
 func (m *CT_LevelGroup) Validate() error {
 	return m.ValidateWithPath("CT_LevelGroup")
 }
+
+// ValidateWithPath validates the CT_LevelGroup and its children, prefixing error messages with path
 func (m *CT_LevelGroup) ValidateWithPath(path string) error {
 	if err := m.GroupMembers.ValidateWithPath(path + "/GroupMembers"); err != nil {
 		return err

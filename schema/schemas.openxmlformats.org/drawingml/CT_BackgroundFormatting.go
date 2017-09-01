@@ -27,6 +27,7 @@ func NewCT_BackgroundFormatting() *CT_BackgroundFormatting {
 	ret := &CT_BackgroundFormatting{}
 	return ret
 }
+
 func (m *CT_BackgroundFormatting) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -68,6 +69,7 @@ func (m *CT_BackgroundFormatting) MarshalXML(e *xml.Encoder, start xml.StartElem
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_BackgroundFormatting) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_BackgroundFormatting:
@@ -132,9 +134,13 @@ lCT_BackgroundFormatting:
 	}
 	return nil
 }
+
+// Validate validates the CT_BackgroundFormatting and its children
 func (m *CT_BackgroundFormatting) Validate() error {
 	return m.ValidateWithPath("CT_BackgroundFormatting")
 }
+
+// ValidateWithPath validates the CT_BackgroundFormatting and its children, prefixing error messages with path
 func (m *CT_BackgroundFormatting) ValidateWithPath(path string) error {
 	if m.NoFill != nil {
 		if err := m.NoFill.ValidateWithPath(path + "/NoFill"); err != nil {

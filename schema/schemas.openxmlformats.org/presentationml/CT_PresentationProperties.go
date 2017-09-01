@@ -32,6 +32,7 @@ func NewCT_PresentationProperties() *CT_PresentationProperties {
 	ret := &CT_PresentationProperties{}
 	return ret
 }
+
 func (m *CT_PresentationProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -64,6 +65,7 @@ func (m *CT_PresentationProperties) MarshalXML(e *xml.Encoder, start xml.StartEl
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PresentationProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_PresentationProperties:
@@ -118,9 +120,13 @@ lCT_PresentationProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_PresentationProperties and its children
 func (m *CT_PresentationProperties) Validate() error {
 	return m.ValidateWithPath("CT_PresentationProperties")
 }
+
+// ValidateWithPath validates the CT_PresentationProperties and its children, prefixing error messages with path
 func (m *CT_PresentationProperties) ValidateWithPath(path string) error {
 	if m.HtmlPubPr != nil {
 		if err := m.HtmlPubPr.ValidateWithPath(path + "/HtmlPubPr"); err != nil {

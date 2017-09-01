@@ -20,6 +20,7 @@ type ST_HPercent struct {
 func (m *ST_HPercent) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_HPercent) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_HPercentWithSymbol != nil {
@@ -33,6 +34,7 @@ func (m *ST_HPercent) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_HPercent) String() string {
 	if m.ST_HPercentWithSymbol != nil {
 		return fmt.Sprintf("%v", *m.ST_HPercentWithSymbol)

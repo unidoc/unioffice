@@ -21,6 +21,7 @@ func NewAG_Blob() *AG_Blob {
 	ret := &AG_Blob{}
 	return ret
 }
+
 func (m *AG_Blob) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *AG_Blob) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *AG_Blob) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -65,9 +67,13 @@ func (m *AG_Blob) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the AG_Blob and its children
 func (m *AG_Blob) Validate() error {
 	return m.ValidateWithPath("AG_Blob")
 }
+
+// ValidateWithPath validates the AG_Blob and its children, prefixing error messages with path
 func (m *AG_Blob) ValidateWithPath(path string) error {
 	return nil
 }

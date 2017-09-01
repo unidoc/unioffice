@@ -217,6 +217,7 @@ func NewCT_Settings() *CT_Settings {
 	ret := &CT_Settings{}
 	return ret
 }
+
 func (m *CT_Settings) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -617,6 +618,7 @@ func (m *CT_Settings) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Settings) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Settings:
@@ -1134,9 +1136,13 @@ lCT_Settings:
 	}
 	return nil
 }
+
+// Validate validates the CT_Settings and its children
 func (m *CT_Settings) Validate() error {
 	return m.ValidateWithPath("CT_Settings")
 }
+
+// ValidateWithPath validates the CT_Settings and its children, prefixing error messages with path
 func (m *CT_Settings) ValidateWithPath(path string) error {
 	if m.WriteProtection != nil {
 		if err := m.WriteProtection.ValidateWithPath(path + "/WriteProtection"); err != nil {

@@ -9,6 +9,7 @@ package chartDrawing
 
 import "baliance.com/gooxml"
 
+// init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", "CT_ShapeNonVisual", NewCT_ShapeNonVisual)
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", "CT_Shape", NewCT_Shape)

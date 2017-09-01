@@ -35,6 +35,7 @@ func NewCT_Inline() *CT_Inline {
 	ret.Graphic = drawingml.NewGraphic()
 	return ret
 }
+
 func (m *CT_Inline) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -73,6 +74,7 @@ func (m *CT_Inline) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Inline) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Extent = drawingml.NewCT_PositiveSize2D()
@@ -156,9 +158,13 @@ lCT_Inline:
 	}
 	return nil
 }
+
+// Validate validates the CT_Inline and its children
 func (m *CT_Inline) Validate() error {
 	return m.ValidateWithPath("CT_Inline")
 }
+
+// ValidateWithPath validates the CT_Inline and its children, prefixing error messages with path
 func (m *CT_Inline) ValidateWithPath(path string) error {
 	if err := m.Extent.ValidateWithPath(path + "/Extent"); err != nil {
 		return err

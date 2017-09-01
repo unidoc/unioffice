@@ -41,6 +41,7 @@ func NewCT_RevisionRowColumn() *CT_RevisionRowColumn {
 	ret.ActionAttr = ST_rwColActionType(1)
 	return ret
 }
+
 func (m *CT_RevisionRowColumn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -90,6 +91,7 @@ func (m *CT_RevisionRowColumn) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RevisionRowColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ActionAttr = ST_rwColActionType(1)
@@ -188,9 +190,13 @@ lCT_RevisionRowColumn:
 	}
 	return nil
 }
+
+// Validate validates the CT_RevisionRowColumn and its children
 func (m *CT_RevisionRowColumn) Validate() error {
 	return m.ValidateWithPath("CT_RevisionRowColumn")
 }
+
+// ValidateWithPath validates the CT_RevisionRowColumn and its children, prefixing error messages with path
 func (m *CT_RevisionRowColumn) ValidateWithPath(path string) error {
 	if m.ActionAttr == ST_rwColActionTypeUnset {
 		return fmt.Errorf("%s/ActionAttr is a mandatory field", path)

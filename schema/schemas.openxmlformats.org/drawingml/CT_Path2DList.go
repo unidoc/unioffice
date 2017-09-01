@@ -21,6 +21,7 @@ func NewCT_Path2DList() *CT_Path2DList {
 	ret := &CT_Path2DList{}
 	return ret
 }
+
 func (m *CT_Path2DList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_Path2DList) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Path2DList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Path2DList:
@@ -63,9 +65,13 @@ lCT_Path2DList:
 	}
 	return nil
 }
+
+// Validate validates the CT_Path2DList and its children
 func (m *CT_Path2DList) Validate() error {
 	return m.ValidateWithPath("CT_Path2DList")
 }
+
+// ValidateWithPath validates the CT_Path2DList and its children, prefixing error messages with path
 func (m *CT_Path2DList) ValidateWithPath(path string) error {
 	for i, v := range m.Path {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Path[%d]", path, i)); err != nil {

@@ -23,6 +23,7 @@ func NewCT_IgnoredErrors() *CT_IgnoredErrors {
 	ret := &CT_IgnoredErrors{}
 	return ret
 }
+
 func (m *CT_IgnoredErrors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_IgnoredErrors) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_IgnoredErrors) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_IgnoredErrors:
@@ -72,9 +74,13 @@ lCT_IgnoredErrors:
 	}
 	return nil
 }
+
+// Validate validates the CT_IgnoredErrors and its children
 func (m *CT_IgnoredErrors) Validate() error {
 	return m.ValidateWithPath("CT_IgnoredErrors")
 }
+
+// ValidateWithPath validates the CT_IgnoredErrors and its children, prefixing error messages with path
 func (m *CT_IgnoredErrors) ValidateWithPath(path string) error {
 	for i, v := range m.IgnoredError {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/IgnoredError[%d]", path, i)); err != nil {

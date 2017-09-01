@@ -23,6 +23,7 @@ func NewWpc() *Wpc {
 	ret.CT_WordprocessingCanvas = *NewCT_WordprocessingCanvas()
 	return ret
 }
+
 func (m *Wpc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *Wpc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "wp:wpc"
 	return m.CT_WordprocessingCanvas.MarshalXML(e, start)
 }
+
 func (m *Wpc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_WordprocessingCanvas = *NewCT_WordprocessingCanvas()
@@ -107,9 +109,13 @@ lWpc:
 	}
 	return nil
 }
+
+// Validate validates the Wpc and its children
 func (m *Wpc) Validate() error {
 	return m.ValidateWithPath("Wpc")
 }
+
+// ValidateWithPath validates the Wpc and its children, prefixing error messages with path
 func (m *Wpc) ValidateWithPath(path string) error {
 	if err := m.CT_WordprocessingCanvas.ValidateWithPath(path); err != nil {
 		return err

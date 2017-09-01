@@ -25,6 +25,7 @@ func NewCT_Column() *CT_Column {
 	ret := &CT_Column{}
 	return ret
 }
+
 func (m *CT_Column) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_Column) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Column) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -71,9 +73,13 @@ func (m *CT_Column) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_Column and its children
 func (m *CT_Column) Validate() error {
 	return m.ValidateWithPath("CT_Column")
 }
+
+// ValidateWithPath validates the CT_Column and its children, prefixing error messages with path
 func (m *CT_Column) ValidateWithPath(path string) error {
 	if m.WAttr != nil {
 		if err := m.WAttr.ValidateWithPath(path + "/WAttr"); err != nil {

@@ -22,6 +22,7 @@ func NewCT_ColorSchemeAndMapping() *CT_ColorSchemeAndMapping {
 	ret.ClrScheme = NewCT_ColorScheme()
 	return ret
 }
+
 func (m *CT_ColorSchemeAndMapping) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *CT_ColorSchemeAndMapping) MarshalXML(e *xml.Encoder, start xml.StartEle
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ColorSchemeAndMapping) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ClrScheme = NewCT_ColorScheme()
@@ -70,9 +72,13 @@ lCT_ColorSchemeAndMapping:
 	}
 	return nil
 }
+
+// Validate validates the CT_ColorSchemeAndMapping and its children
 func (m *CT_ColorSchemeAndMapping) Validate() error {
 	return m.ValidateWithPath("CT_ColorSchemeAndMapping")
 }
+
+// ValidateWithPath validates the CT_ColorSchemeAndMapping and its children, prefixing error messages with path
 func (m *CT_ColorSchemeAndMapping) ValidateWithPath(path string) error {
 	if err := m.ClrScheme.ValidateWithPath(path + "/ClrScheme"); err != nil {
 		return err

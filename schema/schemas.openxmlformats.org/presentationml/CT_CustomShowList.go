@@ -22,6 +22,7 @@ func NewCT_CustomShowList() *CT_CustomShowList {
 	ret := &CT_CustomShowList{}
 	return ret
 }
+
 func (m *CT_CustomShowList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_CustomShowList) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CustomShowList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_CustomShowList:
@@ -64,9 +66,13 @@ lCT_CustomShowList:
 	}
 	return nil
 }
+
+// Validate validates the CT_CustomShowList and its children
 func (m *CT_CustomShowList) Validate() error {
 	return m.ValidateWithPath("CT_CustomShowList")
 }
+
+// ValidateWithPath validates the CT_CustomShowList and its children, prefixing error messages with path
 func (m *CT_CustomShowList) ValidateWithPath(path string) error {
 	for i, v := range m.CustShow {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/CustShow[%d]", path, i)); err != nil {

@@ -26,6 +26,7 @@ func NewCT_RevisionQueryTableField() *CT_RevisionQueryTableField {
 	ret := &CT_RevisionQueryTableField{}
 	return ret
 }
+
 func (m *CT_RevisionQueryTableField) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_RevisionQueryTableField) MarshalXML(e *xml.Encoder, start xml.StartE
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RevisionQueryTableField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -77,9 +79,13 @@ func (m *CT_RevisionQueryTableField) UnmarshalXML(d *xml.Decoder, start xml.Star
 	}
 	return nil
 }
+
+// Validate validates the CT_RevisionQueryTableField and its children
 func (m *CT_RevisionQueryTableField) Validate() error {
 	return m.ValidateWithPath("CT_RevisionQueryTableField")
 }
+
+// ValidateWithPath validates the CT_RevisionQueryTableField and its children, prefixing error messages with path
 func (m *CT_RevisionQueryTableField) ValidateWithPath(path string) error {
 	return nil
 }

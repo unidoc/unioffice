@@ -21,6 +21,7 @@ func NewTagLst() *TagLst {
 	ret.CT_TagList = *NewCT_TagList()
 	return ret
 }
+
 func (m *TagLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *TagLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "p:tagLst"
 	return m.CT_TagList.MarshalXML(e, start)
 }
+
 func (m *TagLst) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_TagList = *NewCT_TagList()
@@ -65,9 +67,13 @@ lTagLst:
 	}
 	return nil
 }
+
+// Validate validates the TagLst and its children
 func (m *TagLst) Validate() error {
 	return m.ValidateWithPath("TagLst")
 }
+
+// ValidateWithPath validates the TagLst and its children, prefixing error messages with path
 func (m *TagLst) ValidateWithPath(path string) error {
 	if err := m.CT_TagList.ValidateWithPath(path); err != nil {
 		return err

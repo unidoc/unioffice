@@ -57,6 +57,7 @@ func NewEG_SectPrContents() *EG_SectPrContents {
 	ret := &EG_SectPrContents{}
 	return ret
 }
+
 func (m *EG_SectPrContents) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -139,6 +140,7 @@ func (m *EG_SectPrContents) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	return nil
 }
+
 func (m *EG_SectPrContents) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_SectPrContents:
@@ -258,9 +260,13 @@ lEG_SectPrContents:
 	}
 	return nil
 }
+
+// Validate validates the EG_SectPrContents and its children
 func (m *EG_SectPrContents) Validate() error {
 	return m.ValidateWithPath("EG_SectPrContents")
 }
+
+// ValidateWithPath validates the EG_SectPrContents and its children, prefixing error messages with path
 func (m *EG_SectPrContents) ValidateWithPath(path string) error {
 	if m.FootnotePr != nil {
 		if err := m.FootnotePr.ValidateWithPath(path + "/FootnotePr"); err != nil {

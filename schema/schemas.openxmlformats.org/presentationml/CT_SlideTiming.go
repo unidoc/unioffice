@@ -23,6 +23,7 @@ func NewCT_SlideTiming() *CT_SlideTiming {
 	ret := &CT_SlideTiming{}
 	return ret
 }
+
 func (m *CT_SlideTiming) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -43,6 +44,7 @@ func (m *CT_SlideTiming) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SlideTiming) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_SlideTiming:
@@ -82,9 +84,13 @@ lCT_SlideTiming:
 	}
 	return nil
 }
+
+// Validate validates the CT_SlideTiming and its children
 func (m *CT_SlideTiming) Validate() error {
 	return m.ValidateWithPath("CT_SlideTiming")
 }
+
+// ValidateWithPath validates the CT_SlideTiming and its children, prefixing error messages with path
 func (m *CT_SlideTiming) ValidateWithPath(path string) error {
 	if m.TnLst != nil {
 		if err := m.TnLst.ValidateWithPath(path + "/TnLst"); err != nil {

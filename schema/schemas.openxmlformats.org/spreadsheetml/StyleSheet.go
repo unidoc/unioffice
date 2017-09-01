@@ -21,6 +21,7 @@ func NewStyleSheet() *StyleSheet {
 	ret.CT_Stylesheet = *NewCT_Stylesheet()
 	return ret
 }
+
 func (m *StyleSheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *StyleSheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "x:styleSheet"
 	return m.CT_Stylesheet.MarshalXML(e, start)
 }
+
 func (m *StyleSheet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Stylesheet = *NewCT_Stylesheet()
@@ -114,9 +116,13 @@ lStyleSheet:
 	}
 	return nil
 }
+
+// Validate validates the StyleSheet and its children
 func (m *StyleSheet) Validate() error {
 	return m.ValidateWithPath("StyleSheet")
 }
+
+// ValidateWithPath validates the StyleSheet and its children, prefixing error messages with path
 func (m *StyleSheet) ValidateWithPath(path string) error {
 	if err := m.CT_Stylesheet.ValidateWithPath(path); err != nil {
 		return err

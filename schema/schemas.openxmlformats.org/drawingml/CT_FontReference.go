@@ -28,6 +28,7 @@ func NewCT_FontReference() *CT_FontReference {
 	ret.IdxAttr = ST_FontCollectionIndex(1)
 	return ret
 }
+
 func (m *CT_FontReference) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -65,6 +66,7 @@ func (m *CT_FontReference) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_FontReference) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.IdxAttr = ST_FontCollectionIndex(1)
@@ -125,9 +127,13 @@ lCT_FontReference:
 	}
 	return nil
 }
+
+// Validate validates the CT_FontReference and its children
 func (m *CT_FontReference) Validate() error {
 	return m.ValidateWithPath("CT_FontReference")
 }
+
+// ValidateWithPath validates the CT_FontReference and its children, prefixing error messages with path
 func (m *CT_FontReference) ValidateWithPath(path string) error {
 	if m.IdxAttr == ST_FontCollectionIndexUnset {
 		return fmt.Errorf("%s/IdxAttr is a mandatory field", path)

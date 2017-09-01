@@ -21,6 +21,7 @@ func NewMapInfo() *MapInfo {
 	ret.CT_MapInfo = *NewCT_MapInfo()
 	return ret
 }
+
 func (m *MapInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *MapInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "x:MapInfo"
 	return m.CT_MapInfo.MarshalXML(e, start)
 }
+
 func (m *MapInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_MapInfo = *NewCT_MapInfo()
@@ -80,9 +82,13 @@ lMapInfo:
 	}
 	return nil
 }
+
+// Validate validates the MapInfo and its children
 func (m *MapInfo) Validate() error {
 	return m.ValidateWithPath("MapInfo")
 }
+
+// ValidateWithPath validates the MapInfo and its children, prefixing error messages with path
 func (m *MapInfo) ValidateWithPath(path string) error {
 	if err := m.CT_MapInfo.ValidateWithPath(path); err != nil {
 		return err

@@ -22,6 +22,7 @@ func NewCT_LinearShadeProperties() *CT_LinearShadeProperties {
 	ret := &CT_LinearShadeProperties{}
 	return ret
 }
+
 func (m *CT_LinearShadeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *CT_LinearShadeProperties) MarshalXML(e *xml.Encoder, start xml.StartEle
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LinearShadeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -69,9 +71,13 @@ func (m *CT_LinearShadeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartE
 	}
 	return nil
 }
+
+// Validate validates the CT_LinearShadeProperties and its children
 func (m *CT_LinearShadeProperties) Validate() error {
 	return m.ValidateWithPath("CT_LinearShadeProperties")
 }
+
+// ValidateWithPath validates the CT_LinearShadeProperties and its children, prefixing error messages with path
 func (m *CT_LinearShadeProperties) ValidateWithPath(path string) error {
 	if m.AngAttr != nil {
 		if *m.AngAttr < 0 {

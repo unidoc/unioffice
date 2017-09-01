@@ -34,6 +34,7 @@ func NewCT_DocPartPr() *CT_DocPartPr {
 	ret.Name = NewCT_DocPartName()
 	return ret
 }
+
 func (m *CT_DocPartPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -68,6 +69,7 @@ func (m *CT_DocPartPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DocPartPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Name = NewCT_DocPartName()
@@ -127,9 +129,13 @@ lCT_DocPartPr:
 	}
 	return nil
 }
+
+// Validate validates the CT_DocPartPr and its children
 func (m *CT_DocPartPr) Validate() error {
 	return m.ValidateWithPath("CT_DocPartPr")
 }
+
+// ValidateWithPath validates the CT_DocPartPr and its children, prefixing error messages with path
 func (m *CT_DocPartPr) ValidateWithPath(path string) error {
 	if err := m.Name.ValidateWithPath(path + "/Name"); err != nil {
 		return err

@@ -27,6 +27,7 @@ func NewCT_LvlLegacy() *CT_LvlLegacy {
 	ret := &CT_LvlLegacy{}
 	return ret
 }
+
 func (m *CT_LvlLegacy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *CT_LvlLegacy) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LvlLegacy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -84,9 +86,13 @@ func (m *CT_LvlLegacy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
+// Validate validates the CT_LvlLegacy and its children
 func (m *CT_LvlLegacy) Validate() error {
 	return m.ValidateWithPath("CT_LvlLegacy")
 }
+
+// ValidateWithPath validates the CT_LvlLegacy and its children, prefixing error messages with path
 func (m *CT_LvlLegacy) ValidateWithPath(path string) error {
 	if m.LegacyAttr != nil {
 		if err := m.LegacyAttr.ValidateWithPath(path + "/LegacyAttr"); err != nil {

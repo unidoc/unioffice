@@ -21,6 +21,7 @@ func NewCT_LuminanceEffect() *CT_LuminanceEffect {
 	ret := &CT_LuminanceEffect{}
 	return ret
 }
+
 func (m *CT_LuminanceEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_LuminanceEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LuminanceEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -67,9 +69,13 @@ func (m *CT_LuminanceEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	}
 	return nil
 }
+
+// Validate validates the CT_LuminanceEffect and its children
 func (m *CT_LuminanceEffect) Validate() error {
 	return m.ValidateWithPath("CT_LuminanceEffect")
 }
+
+// ValidateWithPath validates the CT_LuminanceEffect and its children, prefixing error messages with path
 func (m *CT_LuminanceEffect) ValidateWithPath(path string) error {
 	if m.BrightAttr != nil {
 		if err := m.BrightAttr.ValidateWithPath(path + "/BrightAttr"); err != nil {

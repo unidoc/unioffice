@@ -21,6 +21,7 @@ func NewCT_ErrDir() *CT_ErrDir {
 	ret.ValAttr = ST_ErrDir(1)
 	return ret
 }
+
 func (m *CT_ErrDir) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_ErrDir) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ErrDir) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = ST_ErrDir(1)
@@ -54,9 +56,13 @@ func (m *CT_ErrDir) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_ErrDir and its children
 func (m *CT_ErrDir) Validate() error {
 	return m.ValidateWithPath("CT_ErrDir")
 }
+
+// ValidateWithPath validates the CT_ErrDir and its children, prefixing error messages with path
 func (m *CT_ErrDir) ValidateWithPath(path string) error {
 	if m.ValAttr == ST_ErrDirUnset {
 		return fmt.Errorf("%s/ValAttr is a mandatory field", path)

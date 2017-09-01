@@ -25,6 +25,7 @@ func NewCT_Formats() *CT_Formats {
 	ret := &CT_Formats{}
 	return ret
 }
+
 func (m *CT_Formats) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_Formats) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Formats) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_Formats:
 	}
 	return nil
 }
+
+// Validate validates the CT_Formats and its children
 func (m *CT_Formats) Validate() error {
 	return m.ValidateWithPath("CT_Formats")
 }
+
+// ValidateWithPath validates the CT_Formats and its children, prefixing error messages with path
 func (m *CT_Formats) ValidateWithPath(path string) error {
 	for i, v := range m.Format {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Format[%d]", path, i)); err != nil {

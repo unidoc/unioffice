@@ -23,6 +23,7 @@ func NewCT_EffectStyleItem() *CT_EffectStyleItem {
 	ret := &CT_EffectStyleItem{}
 	return ret
 }
+
 func (m *CT_EffectStyleItem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *CT_EffectStyleItem) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_EffectStyleItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_EffectStyleItem:
@@ -91,9 +93,13 @@ lCT_EffectStyleItem:
 	}
 	return nil
 }
+
+// Validate validates the CT_EffectStyleItem and its children
 func (m *CT_EffectStyleItem) Validate() error {
 	return m.ValidateWithPath("CT_EffectStyleItem")
 }
+
+// ValidateWithPath validates the CT_EffectStyleItem and its children, prefixing error messages with path
 func (m *CT_EffectStyleItem) ValidateWithPath(path string) error {
 	if m.EffectLst != nil {
 		if err := m.EffectLst.ValidateWithPath(path + "/EffectLst"); err != nil {

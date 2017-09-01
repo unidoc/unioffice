@@ -27,6 +27,7 @@ func NewCT_Document() *CT_Document {
 	ret.ConformanceAttr = sharedTypes.ST_ConformanceClass(1)
 	return ret
 }
+
 func (m *CT_Document) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -48,6 +49,7 @@ func (m *CT_Document) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Document) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ConformanceAttr = sharedTypes.ST_ConformanceClass(1)
@@ -88,9 +90,13 @@ lCT_Document:
 	}
 	return nil
 }
+
+// Validate validates the CT_Document and its children
 func (m *CT_Document) Validate() error {
 	return m.ValidateWithPath("CT_Document")
 }
+
+// ValidateWithPath validates the CT_Document and its children, prefixing error messages with path
 func (m *CT_Document) ValidateWithPath(path string) error {
 	if m.ConformanceAttr == sharedTypes.ST_ConformanceClassUnset {
 		return fmt.Errorf("%s/ConformanceAttr is a mandatory field", path)

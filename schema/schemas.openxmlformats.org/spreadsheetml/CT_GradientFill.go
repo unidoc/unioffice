@@ -35,6 +35,7 @@ func NewCT_GradientFill() *CT_GradientFill {
 	ret := &CT_GradientFill{}
 	return ret
 }
+
 func (m *CT_GradientFill) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -74,6 +75,7 @@ func (m *CT_GradientFill) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GradientFill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -144,9 +146,13 @@ lCT_GradientFill:
 	}
 	return nil
 }
+
+// Validate validates the CT_GradientFill and its children
 func (m *CT_GradientFill) Validate() error {
 	return m.ValidateWithPath("CT_GradientFill")
 }
+
+// ValidateWithPath validates the CT_GradientFill and its children, prefixing error messages with path
 func (m *CT_GradientFill) ValidateWithPath(path string) error {
 	if err := m.TypeAttr.ValidateWithPath(path + "/TypeAttr"); err != nil {
 		return err

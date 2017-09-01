@@ -49,6 +49,7 @@ func NewCT_TextParagraphProperties() *CT_TextParagraphProperties {
 	ret := &CT_TextParagraphProperties{}
 	return ret
 }
+
 func (m *CT_TextParagraphProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -175,6 +176,7 @@ func (m *CT_TextParagraphProperties) MarshalXML(e *xml.Encoder, start xml.StartE
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextParagraphProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -359,9 +361,13 @@ lCT_TextParagraphProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_TextParagraphProperties and its children
 func (m *CT_TextParagraphProperties) Validate() error {
 	return m.ValidateWithPath("CT_TextParagraphProperties")
 }
+
+// ValidateWithPath validates the CT_TextParagraphProperties and its children, prefixing error messages with path
 func (m *CT_TextParagraphProperties) ValidateWithPath(path string) error {
 	if m.MarLAttr != nil {
 		if *m.MarLAttr < 0 {

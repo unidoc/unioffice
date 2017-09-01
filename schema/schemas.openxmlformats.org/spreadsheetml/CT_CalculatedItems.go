@@ -25,6 +25,7 @@ func NewCT_CalculatedItems() *CT_CalculatedItems {
 	ret := &CT_CalculatedItems{}
 	return ret
 }
+
 func (m *CT_CalculatedItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_CalculatedItems) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CalculatedItems) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_CalculatedItems:
 	}
 	return nil
 }
+
+// Validate validates the CT_CalculatedItems and its children
 func (m *CT_CalculatedItems) Validate() error {
 	return m.ValidateWithPath("CT_CalculatedItems")
 }
+
+// ValidateWithPath validates the CT_CalculatedItems and its children, prefixing error messages with path
 func (m *CT_CalculatedItems) ValidateWithPath(path string) error {
 	for i, v := range m.CalculatedItem {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/CalculatedItem[%d]", path, i)); err != nil {

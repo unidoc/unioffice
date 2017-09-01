@@ -24,6 +24,7 @@ func NewCT_Captions() *CT_Captions {
 	ret := &CT_Captions{}
 	return ret
 }
+
 func (m *CT_Captions) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *CT_Captions) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Captions) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Captions:
@@ -73,9 +75,13 @@ lCT_Captions:
 	}
 	return nil
 }
+
+// Validate validates the CT_Captions and its children
 func (m *CT_Captions) Validate() error {
 	return m.ValidateWithPath("CT_Captions")
 }
+
+// ValidateWithPath validates the CT_Captions and its children, prefixing error messages with path
 func (m *CT_Captions) ValidateWithPath(path string) error {
 	for i, v := range m.Caption {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Caption[%d]", path, i)); err != nil {

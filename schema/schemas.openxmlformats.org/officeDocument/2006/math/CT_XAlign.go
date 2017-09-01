@@ -23,6 +23,7 @@ func NewCT_XAlign() *CT_XAlign {
 	ret.ValAttr = sharedTypes.ST_XAlign(1)
 	return ret
 }
+
 func (m *CT_XAlign) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *CT_XAlign) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_XAlign) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = sharedTypes.ST_XAlign(1)
@@ -56,9 +58,13 @@ func (m *CT_XAlign) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_XAlign and its children
 func (m *CT_XAlign) Validate() error {
 	return m.ValidateWithPath("CT_XAlign")
 }
+
+// ValidateWithPath validates the CT_XAlign and its children, prefixing error messages with path
 func (m *CT_XAlign) ValidateWithPath(path string) error {
 	if m.ValAttr == sharedTypes.ST_XAlignUnset {
 		return fmt.Errorf("%s/ValAttr is a mandatory field", path)

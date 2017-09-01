@@ -22,6 +22,7 @@ func NewOleObj() *OleObj {
 	ret.CT_OleObject = *NewCT_OleObject()
 	return ret
 }
+
 func (m *OleObj) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *OleObj) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "p:oleObj"
 	return m.CT_OleObject.MarshalXML(e, start)
 }
+
 func (m *OleObj) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_OleObject = *NewCT_OleObject()
@@ -130,9 +132,13 @@ lOleObj:
 	}
 	return nil
 }
+
+// Validate validates the OleObj and its children
 func (m *OleObj) Validate() error {
 	return m.ValidateWithPath("OleObj")
 }
+
+// ValidateWithPath validates the OleObj and its children, prefixing error messages with path
 func (m *OleObj) ValidateWithPath(path string) error {
 	if err := m.CT_OleObject.ValidateWithPath(path); err != nil {
 		return err

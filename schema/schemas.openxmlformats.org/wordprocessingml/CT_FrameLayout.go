@@ -22,6 +22,7 @@ func NewCT_FrameLayout() *CT_FrameLayout {
 	ret.ValAttr = ST_FrameLayout(1)
 	return ret
 }
+
 func (m *CT_FrameLayout) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_FrameLayout) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_FrameLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = ST_FrameLayout(1)
@@ -55,9 +57,13 @@ func (m *CT_FrameLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}
 	return nil
 }
+
+// Validate validates the CT_FrameLayout and its children
 func (m *CT_FrameLayout) Validate() error {
 	return m.ValidateWithPath("CT_FrameLayout")
 }
+
+// ValidateWithPath validates the CT_FrameLayout and its children, prefixing error messages with path
 func (m *CT_FrameLayout) ValidateWithPath(path string) error {
 	if m.ValAttr == ST_FrameLayoutUnset {
 		return fmt.Errorf("%s/ValAttr is a mandatory field", path)

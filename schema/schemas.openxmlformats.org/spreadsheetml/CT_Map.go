@@ -41,6 +41,7 @@ func NewCT_Map() *CT_Map {
 	ret := &CT_Map{}
 	return ret
 }
+
 func (m *CT_Map) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -71,6 +72,7 @@ func (m *CT_Map) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Map) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -165,9 +167,13 @@ lCT_Map:
 	}
 	return nil
 }
+
+// Validate validates the CT_Map and its children
 func (m *CT_Map) Validate() error {
 	return m.ValidateWithPath("CT_Map")
 }
+
+// ValidateWithPath validates the CT_Map and its children, prefixing error messages with path
 func (m *CT_Map) ValidateWithPath(path string) error {
 	if m.DataBinding != nil {
 		if err := m.DataBinding.ValidateWithPath(path + "/DataBinding"); err != nil {

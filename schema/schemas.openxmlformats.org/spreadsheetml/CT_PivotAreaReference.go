@@ -58,6 +58,7 @@ func NewCT_PivotAreaReference() *CT_PivotAreaReference {
 	ret := &CT_PivotAreaReference{}
 	return ret
 }
+
 func (m *CT_PivotAreaReference) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -142,6 +143,7 @@ func (m *CT_PivotAreaReference) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PivotAreaReference) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -300,9 +302,13 @@ lCT_PivotAreaReference:
 	}
 	return nil
 }
+
+// Validate validates the CT_PivotAreaReference and its children
 func (m *CT_PivotAreaReference) Validate() error {
 	return m.ValidateWithPath("CT_PivotAreaReference")
 }
+
+// ValidateWithPath validates the CT_PivotAreaReference and its children, prefixing error messages with path
 func (m *CT_PivotAreaReference) ValidateWithPath(path string) error {
 	for i, v := range m.X {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/X[%d]", path, i)); err != nil {

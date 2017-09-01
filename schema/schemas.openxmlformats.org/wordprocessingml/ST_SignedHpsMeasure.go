@@ -20,6 +20,7 @@ type ST_SignedHpsMeasure struct {
 func (m *ST_SignedHpsMeasure) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_SignedHpsMeasure) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.Int64 != nil {
@@ -33,6 +34,7 @@ func (m *ST_SignedHpsMeasure) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_SignedHpsMeasure) String() string {
 	if m.Int64 != nil {
 		return fmt.Sprintf("%v", *m.Int64)

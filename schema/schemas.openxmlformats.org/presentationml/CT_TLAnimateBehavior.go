@@ -34,6 +34,7 @@ func NewCT_TLAnimateBehavior() *CT_TLAnimateBehavior {
 	ret.CBhvr = NewCT_TLCommonBehaviorData()
 	return ret
 }
+
 func (m *CT_TLAnimateBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -74,6 +75,7 @@ func (m *CT_TLAnimateBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLAnimateBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CBhvr = NewCT_TLCommonBehaviorData()
@@ -137,9 +139,13 @@ lCT_TLAnimateBehavior:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLAnimateBehavior and its children
 func (m *CT_TLAnimateBehavior) Validate() error {
 	return m.ValidateWithPath("CT_TLAnimateBehavior")
 }
+
+// ValidateWithPath validates the CT_TLAnimateBehavior and its children, prefixing error messages with path
 func (m *CT_TLAnimateBehavior) ValidateWithPath(path string) error {
 	if err := m.CalcmodeAttr.ValidateWithPath(path + "/CalcmodeAttr"); err != nil {
 		return err

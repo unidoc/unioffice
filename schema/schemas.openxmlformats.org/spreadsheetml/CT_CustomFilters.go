@@ -25,6 +25,7 @@ func NewCT_CustomFilters() *CT_CustomFilters {
 	ret := &CT_CustomFilters{}
 	return ret
 }
+
 func (m *CT_CustomFilters) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_CustomFilters) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CustomFilters) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -78,9 +80,13 @@ lCT_CustomFilters:
 	}
 	return nil
 }
+
+// Validate validates the CT_CustomFilters and its children
 func (m *CT_CustomFilters) Validate() error {
 	return m.ValidateWithPath("CT_CustomFilters")
 }
+
+// ValidateWithPath validates the CT_CustomFilters and its children, prefixing error messages with path
 func (m *CT_CustomFilters) ValidateWithPath(path string) error {
 	for i, v := range m.CustomFilter {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/CustomFilter[%d]", path, i)); err != nil {

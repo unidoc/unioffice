@@ -21,6 +21,7 @@ func NewElementContainer() *ElementContainer {
 	ret := &ElementContainer{}
 	return ret
 }
+
 func (m *ElementContainer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *ElementContainer) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *ElementContainer) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lElementContainer:
@@ -65,9 +67,13 @@ lElementContainer:
 	}
 	return nil
 }
+
+// Validate validates the ElementContainer and its children
 func (m *ElementContainer) Validate() error {
 	return m.ValidateWithPath("ElementContainer")
 }
+
+// ValidateWithPath validates the ElementContainer and its children, prefixing error messages with path
 func (m *ElementContainer) ValidateWithPath(path string) error {
 	for i, v := range m.Choice {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Choice[%d]", path, i)); err != nil {

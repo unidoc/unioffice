@@ -26,6 +26,7 @@ func NewCT_Camera() *CT_Camera {
 	ret.PrstAttr = ST_PresetCameraType(1)
 	return ret
 }
+
 func (m *CT_Camera) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -51,6 +52,7 @@ func (m *CT_Camera) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Camera) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.PrstAttr = ST_PresetCameraType(1)
@@ -101,9 +103,13 @@ lCT_Camera:
 	}
 	return nil
 }
+
+// Validate validates the CT_Camera and its children
 func (m *CT_Camera) Validate() error {
 	return m.ValidateWithPath("CT_Camera")
 }
+
+// ValidateWithPath validates the CT_Camera and its children, prefixing error messages with path
 func (m *CT_Camera) ValidateWithPath(path string) error {
 	if m.PrstAttr == ST_PresetCameraTypeUnset {
 		return fmt.Errorf("%s/PrstAttr is a mandatory field", path)

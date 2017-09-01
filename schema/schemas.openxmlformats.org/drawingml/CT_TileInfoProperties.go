@@ -25,6 +25,7 @@ func NewCT_TileInfoProperties() *CT_TileInfoProperties {
 	ret := &CT_TileInfoProperties{}
 	return ret
 }
+
 func (m *CT_TileInfoProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -63,6 +64,7 @@ func (m *CT_TileInfoProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TileInfoProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -113,9 +115,13 @@ func (m *CT_TileInfoProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 	}
 	return nil
 }
+
+// Validate validates the CT_TileInfoProperties and its children
 func (m *CT_TileInfoProperties) Validate() error {
 	return m.ValidateWithPath("CT_TileInfoProperties")
 }
+
+// ValidateWithPath validates the CT_TileInfoProperties and its children, prefixing error messages with path
 func (m *CT_TileInfoProperties) ValidateWithPath(path string) error {
 	if m.TxAttr != nil {
 		if err := m.TxAttr.ValidateWithPath(path + "/TxAttr"); err != nil {

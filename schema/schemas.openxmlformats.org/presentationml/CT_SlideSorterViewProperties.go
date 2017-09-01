@@ -27,6 +27,7 @@ func NewCT_SlideSorterViewProperties() *CT_SlideSorterViewProperties {
 	ret.CViewPr = NewCT_CommonViewProperties()
 	return ret
 }
+
 func (m *CT_SlideSorterViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *CT_SlideSorterViewProperties) MarshalXML(e *xml.Encoder, start xml.Star
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SlideSorterViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CViewPr = NewCT_CommonViewProperties()
@@ -88,9 +90,13 @@ lCT_SlideSorterViewProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_SlideSorterViewProperties and its children
 func (m *CT_SlideSorterViewProperties) Validate() error {
 	return m.ValidateWithPath("CT_SlideSorterViewProperties")
 }
+
+// ValidateWithPath validates the CT_SlideSorterViewProperties and its children, prefixing error messages with path
 func (m *CT_SlideSorterViewProperties) ValidateWithPath(path string) error {
 	if err := m.CViewPr.ValidateWithPath(path + "/CViewPr"); err != nil {
 		return err

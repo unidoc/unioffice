@@ -23,6 +23,7 @@ func NewEG_MathContent() *EG_MathContent {
 	ret := &EG_MathContent{}
 	return ret
 }
+
 func (m *EG_MathContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *EG_MathContent) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
 func (m *EG_MathContent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_MathContent:
@@ -71,9 +73,13 @@ lEG_MathContent:
 	}
 	return nil
 }
+
+// Validate validates the EG_MathContent and its children
 func (m *EG_MathContent) Validate() error {
 	return m.ValidateWithPath("EG_MathContent")
 }
+
+// ValidateWithPath validates the EG_MathContent and its children, prefixing error messages with path
 func (m *EG_MathContent) ValidateWithPath(path string) error {
 	if m.OMathPara != nil {
 		if err := m.OMathPara.ValidateWithPath(path + "/OMathPara"); err != nil {

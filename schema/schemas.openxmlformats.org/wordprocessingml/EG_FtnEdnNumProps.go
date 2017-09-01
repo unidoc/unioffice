@@ -23,6 +23,7 @@ func NewEG_FtnEdnNumProps() *EG_FtnEdnNumProps {
 	ret := &EG_FtnEdnNumProps{}
 	return ret
 }
+
 func (m *EG_FtnEdnNumProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *EG_FtnEdnNumProps) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	return nil
 }
+
 func (m *EG_FtnEdnNumProps) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_FtnEdnNumProps:
@@ -71,9 +73,13 @@ lEG_FtnEdnNumProps:
 	}
 	return nil
 }
+
+// Validate validates the EG_FtnEdnNumProps and its children
 func (m *EG_FtnEdnNumProps) Validate() error {
 	return m.ValidateWithPath("EG_FtnEdnNumProps")
 }
+
+// ValidateWithPath validates the EG_FtnEdnNumProps and its children, prefixing error messages with path
 func (m *EG_FtnEdnNumProps) ValidateWithPath(path string) error {
 	if m.NumStart != nil {
 		if err := m.NumStart.ValidateWithPath(path + "/NumStart"); err != nil {

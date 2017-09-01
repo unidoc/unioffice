@@ -21,6 +21,7 @@ func NewElementsGroupChoice() *ElementsGroupChoice {
 	ret := &ElementsGroupChoice{}
 	return ret
 }
+
 func (m *ElementsGroupChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *ElementsGroupChoice) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	}
 	return nil
 }
+
 func (m *ElementsGroupChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lElementsGroupChoice:
@@ -61,9 +63,13 @@ lElementsGroupChoice:
 	}
 	return nil
 }
+
+// Validate validates the ElementsGroupChoice and its children
 func (m *ElementsGroupChoice) Validate() error {
 	return m.ValidateWithPath("ElementsGroupChoice")
 }
+
+// ValidateWithPath validates the ElementsGroupChoice and its children, prefixing error messages with path
 func (m *ElementsGroupChoice) ValidateWithPath(path string) error {
 	for i, v := range m.Any {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Any[%d]", path, i)); err != nil {

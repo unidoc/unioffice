@@ -21,6 +21,7 @@ func NewTypes() *Types {
 	ret.CT_Types = *NewCT_Types()
 	return ret
 }
+
 func (m *Types) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -30,6 +31,7 @@ func (m *Types) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "Types"
 	return m.CT_Types.MarshalXML(e, start)
 }
+
 func (m *Types) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Types = *NewCT_Types()
@@ -67,9 +69,13 @@ lTypes:
 	}
 	return nil
 }
+
+// Validate validates the Types and its children
 func (m *Types) Validate() error {
 	return m.ValidateWithPath("Types")
 }
+
+// ValidateWithPath validates the Types and its children, prefixing error messages with path
 func (m *Types) ValidateWithPath(path string) error {
 	if err := m.CT_Types.ValidateWithPath(path); err != nil {
 		return err

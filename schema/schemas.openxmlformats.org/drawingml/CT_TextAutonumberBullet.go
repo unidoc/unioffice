@@ -23,6 +23,7 @@ func NewCT_TextAutonumberBullet() *CT_TextAutonumberBullet {
 	ret.TypeAttr = ST_TextAutonumberScheme(1)
 	return ret
 }
+
 func (m *CT_TextAutonumberBullet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_TextAutonumberBullet) MarshalXML(e *xml.Encoder, start xml.StartElem
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextAutonumberBullet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.TypeAttr = ST_TextAutonumberScheme(1)
@@ -68,9 +70,13 @@ func (m *CT_TextAutonumberBullet) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 	}
 	return nil
 }
+
+// Validate validates the CT_TextAutonumberBullet and its children
 func (m *CT_TextAutonumberBullet) Validate() error {
 	return m.ValidateWithPath("CT_TextAutonumberBullet")
 }
+
+// ValidateWithPath validates the CT_TextAutonumberBullet and its children, prefixing error messages with path
 func (m *CT_TextAutonumberBullet) ValidateWithPath(path string) error {
 	if m.TypeAttr == ST_TextAutonumberSchemeUnset {
 		return fmt.Errorf("%s/TypeAttr is a mandatory field", path)

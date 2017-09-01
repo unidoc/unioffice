@@ -21,6 +21,7 @@ func NewBlip() *Blip {
 	ret.CT_Blip = *NewCT_Blip()
 	return ret
 }
+
 func (m *Blip) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *Blip) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "a:blip"
 	return m.CT_Blip.MarshalXML(e, start)
 }
+
 func (m *Blip) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Blip = *NewCT_Blip()
@@ -184,9 +186,13 @@ lBlip:
 	}
 	return nil
 }
+
+// Validate validates the Blip and its children
 func (m *Blip) Validate() error {
 	return m.ValidateWithPath("Blip")
 }
+
+// ValidateWithPath validates the Blip and its children, prefixing error messages with path
 func (m *Blip) ValidateWithPath(path string) error {
 	if err := m.CT_Blip.ValidateWithPath(path); err != nil {
 		return err

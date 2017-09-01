@@ -23,6 +23,7 @@ func NewCT_Fill() *CT_Fill {
 	ret := &CT_Fill{}
 	return ret
 }
+
 func (m *CT_Fill) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_Fill) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Fill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Fill:
@@ -73,9 +75,13 @@ lCT_Fill:
 	}
 	return nil
 }
+
+// Validate validates the CT_Fill and its children
 func (m *CT_Fill) Validate() error {
 	return m.ValidateWithPath("CT_Fill")
 }
+
+// ValidateWithPath validates the CT_Fill and its children, prefixing error messages with path
 func (m *CT_Fill) ValidateWithPath(path string) error {
 	if m.PatternFill != nil {
 		if err := m.PatternFill.ValidateWithPath(path + "/PatternFill"); err != nil {

@@ -28,6 +28,7 @@ func NewCT_PictureNonVisual() *CT_PictureNonVisual {
 	ret.NvPr = NewCT_ApplicationNonVisualDrawingProps()
 	return ret
 }
+
 func (m *CT_PictureNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -42,6 +43,7 @@ func (m *CT_PictureNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PictureNonVisual) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
@@ -81,9 +83,13 @@ lCT_PictureNonVisual:
 	}
 	return nil
 }
+
+// Validate validates the CT_PictureNonVisual and its children
 func (m *CT_PictureNonVisual) Validate() error {
 	return m.ValidateWithPath("CT_PictureNonVisual")
 }
+
+// ValidateWithPath validates the CT_PictureNonVisual and its children, prefixing error messages with path
 func (m *CT_PictureNonVisual) ValidateWithPath(path string) error {
 	if err := m.CNvPr.ValidateWithPath(path + "/CNvPr"); err != nil {
 		return err

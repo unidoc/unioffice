@@ -42,6 +42,7 @@ func NewCT_ViewProperties() *CT_ViewProperties {
 	ret := &CT_ViewProperties{}
 	return ret
 }
+
 func (m *CT_ViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -93,6 +94,7 @@ func (m *CT_ViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -169,9 +171,13 @@ lCT_ViewProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_ViewProperties and its children
 func (m *CT_ViewProperties) Validate() error {
 	return m.ValidateWithPath("CT_ViewProperties")
 }
+
+// ValidateWithPath validates the CT_ViewProperties and its children, prefixing error messages with path
 func (m *CT_ViewProperties) ValidateWithPath(path string) error {
 	if err := m.LastViewAttr.ValidateWithPath(path + "/LastViewAttr"); err != nil {
 		return err

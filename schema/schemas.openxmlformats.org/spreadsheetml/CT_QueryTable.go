@@ -62,6 +62,7 @@ func NewCT_QueryTable() *CT_QueryTable {
 	ret := &CT_QueryTable{}
 	return ret
 }
+
 func (m *CT_QueryTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -165,6 +166,7 @@ func (m *CT_QueryTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_QueryTable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -352,9 +354,13 @@ lCT_QueryTable:
 	}
 	return nil
 }
+
+// Validate validates the CT_QueryTable and its children
 func (m *CT_QueryTable) Validate() error {
 	return m.ValidateWithPath("CT_QueryTable")
 }
+
+// ValidateWithPath validates the CT_QueryTable and its children, prefixing error messages with path
 func (m *CT_QueryTable) ValidateWithPath(path string) error {
 	if err := m.GrowShrinkTypeAttr.ValidateWithPath(path + "/GrowShrinkTypeAttr"); err != nil {
 		return err

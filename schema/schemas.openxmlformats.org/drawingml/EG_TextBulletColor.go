@@ -21,6 +21,7 @@ func NewEG_TextBulletColor() *EG_TextBulletColor {
 	ret := &EG_TextBulletColor{}
 	return ret
 }
+
 func (m *EG_TextBulletColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_TextBulletColor) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	return nil
 }
+
 func (m *EG_TextBulletColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_TextBulletColor:
@@ -69,9 +71,13 @@ lEG_TextBulletColor:
 	}
 	return nil
 }
+
+// Validate validates the EG_TextBulletColor and its children
 func (m *EG_TextBulletColor) Validate() error {
 	return m.ValidateWithPath("EG_TextBulletColor")
 }
+
+// ValidateWithPath validates the EG_TextBulletColor and its children, prefixing error messages with path
 func (m *EG_TextBulletColor) ValidateWithPath(path string) error {
 	if m.BuClrTx != nil {
 		if err := m.BuClrTx.ValidateWithPath(path + "/BuClrTx"); err != nil {

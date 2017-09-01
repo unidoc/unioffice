@@ -32,6 +32,7 @@ func NewCT_LineChart() *CT_LineChart {
 	ret.Grouping = NewCT_Grouping()
 	return ret
 }
+
 func (m *CT_LineChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -80,6 +81,7 @@ func (m *CT_LineChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LineChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Grouping = NewCT_Grouping()
@@ -161,9 +163,13 @@ lCT_LineChart:
 	}
 	return nil
 }
+
+// Validate validates the CT_LineChart and its children
 func (m *CT_LineChart) Validate() error {
 	return m.ValidateWithPath("CT_LineChart")
 }
+
+// ValidateWithPath validates the CT_LineChart and its children, prefixing error messages with path
 func (m *CT_LineChart) ValidateWithPath(path string) error {
 	if err := m.Grouping.ValidateWithPath(path + "/Grouping"); err != nil {
 		return err

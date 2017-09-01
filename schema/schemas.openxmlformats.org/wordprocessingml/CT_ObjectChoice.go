@@ -23,6 +23,7 @@ func NewCT_ObjectChoice() *CT_ObjectChoice {
 	ret := &CT_ObjectChoice{}
 	return ret
 }
+
 func (m *CT_ObjectChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *CT_ObjectChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	return nil
 }
+
 func (m *CT_ObjectChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_ObjectChoice:
@@ -89,9 +91,13 @@ lCT_ObjectChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_ObjectChoice and its children
 func (m *CT_ObjectChoice) Validate() error {
 	return m.ValidateWithPath("CT_ObjectChoice")
 }
+
+// ValidateWithPath validates the CT_ObjectChoice and its children, prefixing error messages with path
 func (m *CT_ObjectChoice) ValidateWithPath(path string) error {
 	if m.Control != nil {
 		if err := m.Control.ValidateWithPath(path + "/Control"); err != nil {

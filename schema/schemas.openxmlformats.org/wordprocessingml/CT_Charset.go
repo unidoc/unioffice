@@ -23,6 +23,7 @@ func NewCT_Charset() *CT_Charset {
 	ret := &CT_Charset{}
 	return ret
 }
+
 func (m *CT_Charset) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_Charset) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Charset) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -69,9 +71,13 @@ func (m *CT_Charset) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	}
 	return nil
 }
+
+// Validate validates the CT_Charset and its children
 func (m *CT_Charset) Validate() error {
 	return m.ValidateWithPath("CT_Charset")
 }
+
+// ValidateWithPath validates the CT_Charset and its children, prefixing error messages with path
 func (m *CT_Charset) ValidateWithPath(path string) error {
 	return nil
 }

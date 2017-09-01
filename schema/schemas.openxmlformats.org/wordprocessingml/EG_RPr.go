@@ -21,6 +21,7 @@ func NewEG_RPr() *EG_RPr {
 	ret := &EG_RPr{}
 	return ret
 }
+
 func (m *EG_RPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *EG_RPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *EG_RPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_RPr:
@@ -60,9 +62,13 @@ lEG_RPr:
 	}
 	return nil
 }
+
+// Validate validates the EG_RPr and its children
 func (m *EG_RPr) Validate() error {
 	return m.ValidateWithPath("EG_RPr")
 }
+
+// ValidateWithPath validates the EG_RPr and its children, prefixing error messages with path
 func (m *EG_RPr) ValidateWithPath(path string) error {
 	if m.RPr != nil {
 		if err := m.RPr.ValidateWithPath(path + "/RPr"); err != nil {

@@ -25,6 +25,7 @@ func NewEG_AreaChartShared() *EG_AreaChartShared {
 	ret := &EG_AreaChartShared{}
 	return ret
 }
+
 func (m *EG_AreaChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -51,6 +52,7 @@ func (m *EG_AreaChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	return nil
 }
+
 func (m *EG_AreaChartShared) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_AreaChartShared:
@@ -101,9 +103,13 @@ lEG_AreaChartShared:
 	}
 	return nil
 }
+
+// Validate validates the EG_AreaChartShared and its children
 func (m *EG_AreaChartShared) Validate() error {
 	return m.ValidateWithPath("EG_AreaChartShared")
 }
+
+// ValidateWithPath validates the EG_AreaChartShared and its children, prefixing error messages with path
 func (m *EG_AreaChartShared) ValidateWithPath(path string) error {
 	if m.Grouping != nil {
 		if err := m.Grouping.ValidateWithPath(path + "/Grouping"); err != nil {

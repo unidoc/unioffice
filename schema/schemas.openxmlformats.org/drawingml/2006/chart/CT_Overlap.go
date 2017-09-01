@@ -20,6 +20,7 @@ func NewCT_Overlap() *CT_Overlap {
 	ret := &CT_Overlap{}
 	return ret
 }
+
 func (m *CT_Overlap) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_Overlap) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Overlap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -55,9 +57,13 @@ func (m *CT_Overlap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	}
 	return nil
 }
+
+// Validate validates the CT_Overlap and its children
 func (m *CT_Overlap) Validate() error {
 	return m.ValidateWithPath("CT_Overlap")
 }
+
+// ValidateWithPath validates the CT_Overlap and its children, prefixing error messages with path
 func (m *CT_Overlap) ValidateWithPath(path string) error {
 	if m.ValAttr != nil {
 		if err := m.ValAttr.ValidateWithPath(path + "/ValAttr"); err != nil {

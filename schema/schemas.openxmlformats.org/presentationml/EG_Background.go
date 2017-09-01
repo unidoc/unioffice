@@ -25,6 +25,7 @@ func NewEG_Background() *EG_Background {
 	ret := &EG_Background{}
 	return ret
 }
+
 func (m *EG_Background) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *EG_Background) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	return nil
 }
+
 func (m *EG_Background) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_Background:
@@ -73,9 +75,13 @@ lEG_Background:
 	}
 	return nil
 }
+
+// Validate validates the EG_Background and its children
 func (m *EG_Background) Validate() error {
 	return m.ValidateWithPath("EG_Background")
 }
+
+// ValidateWithPath validates the EG_Background and its children, prefixing error messages with path
 func (m *EG_Background) ValidateWithPath(path string) error {
 	if m.BgPr != nil {
 		if err := m.BgPr.ValidateWithPath(path + "/BgPr"); err != nil {

@@ -20,6 +20,7 @@ type ST_PrSetCustVal struct {
 func (m *ST_PrSetCustVal) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_PrSetCustVal) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_Percentage != nil {
@@ -33,6 +34,7 @@ func (m *ST_PrSetCustVal) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_PrSetCustVal) String() string {
 	if m.ST_Percentage != nil {
 		return fmt.Sprintf("%v", *m.ST_Percentage)

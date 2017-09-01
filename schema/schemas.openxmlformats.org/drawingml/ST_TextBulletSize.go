@@ -20,6 +20,7 @@ type ST_TextBulletSize struct {
 func (m *ST_TextBulletSize) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_TextBulletSize) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_TextBulletSizePercent != nil {
@@ -33,6 +34,7 @@ func (m *ST_TextBulletSize) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_TextBulletSize) String() string {
 	if m.ST_TextBulletSizePercent != nil {
 		return fmt.Sprintf("%v", *m.ST_TextBulletSizePercent)

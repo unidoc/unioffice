@@ -29,6 +29,7 @@ func NewEG_ContentCellContent() *EG_ContentCellContent {
 	ret := &EG_ContentCellContent{}
 	return ret
 }
+
 func (m *EG_ContentCellContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -52,6 +53,7 @@ func (m *EG_ContentCellContent) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	return nil
 }
+
 func (m *EG_ContentCellContent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ContentCellContent:
@@ -303,9 +305,13 @@ lEG_ContentCellContent:
 	}
 	return nil
 }
+
+// Validate validates the EG_ContentCellContent and its children
 func (m *EG_ContentCellContent) Validate() error {
 	return m.ValidateWithPath("EG_ContentCellContent")
 }
+
+// ValidateWithPath validates the EG_ContentCellContent and its children, prefixing error messages with path
 func (m *EG_ContentCellContent) ValidateWithPath(path string) error {
 	for i, v := range m.Tc {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Tc[%d]", path, i)); err != nil {

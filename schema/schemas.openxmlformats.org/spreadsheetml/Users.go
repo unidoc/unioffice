@@ -22,6 +22,7 @@ func NewUsers() *Users {
 	ret.CT_Users = *NewCT_Users()
 	return ret
 }
+
 func (m *Users) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *Users) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "x:users"
 	return m.CT_Users.MarshalXML(e, start)
 }
+
 func (m *Users) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Users = *NewCT_Users()
@@ -76,9 +78,13 @@ lUsers:
 	}
 	return nil
 }
+
+// Validate validates the Users and its children
 func (m *Users) Validate() error {
 	return m.ValidateWithPath("Users")
 }
+
+// ValidateWithPath validates the Users and its children, prefixing error messages with path
 func (m *Users) ValidateWithPath(path string) error {
 	if err := m.CT_Users.ValidateWithPath(path); err != nil {
 		return err

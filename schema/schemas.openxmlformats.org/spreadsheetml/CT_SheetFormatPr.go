@@ -38,6 +38,7 @@ func NewCT_SheetFormatPr() *CT_SheetFormatPr {
 	ret := &CT_SheetFormatPr{}
 	return ret
 }
+
 func (m *CT_SheetFormatPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -80,6 +81,7 @@ func (m *CT_SheetFormatPr) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -162,9 +164,13 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	}
 	return nil
 }
+
+// Validate validates the CT_SheetFormatPr and its children
 func (m *CT_SheetFormatPr) Validate() error {
 	return m.ValidateWithPath("CT_SheetFormatPr")
 }
+
+// ValidateWithPath validates the CT_SheetFormatPr and its children, prefixing error messages with path
 func (m *CT_SheetFormatPr) ValidateWithPath(path string) error {
 	return nil
 }

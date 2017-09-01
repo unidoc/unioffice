@@ -25,6 +25,7 @@ func NewCT_TblGridChange() *CT_TblGridChange {
 	ret.TblGrid = NewCT_TblGridBase()
 	return ret
 }
+
 func (m *CT_TblGridChange) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_TblGridChange) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TblGridChange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.TblGrid = NewCT_TblGridBase()
@@ -75,9 +77,13 @@ lCT_TblGridChange:
 	}
 	return nil
 }
+
+// Validate validates the CT_TblGridChange and its children
 func (m *CT_TblGridChange) Validate() error {
 	return m.ValidateWithPath("CT_TblGridChange")
 }
+
+// ValidateWithPath validates the CT_TblGridChange and its children, prefixing error messages with path
 func (m *CT_TblGridChange) ValidateWithPath(path string) error {
 	if err := m.TblGrid.ValidateWithPath(path + "/TblGrid"); err != nil {
 		return err
