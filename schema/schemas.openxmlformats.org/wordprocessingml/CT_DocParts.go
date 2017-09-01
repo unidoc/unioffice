@@ -54,7 +54,7 @@ lCT_DocParts:
 				}
 				m.DocPart = append(m.DocPart, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_DocParts %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

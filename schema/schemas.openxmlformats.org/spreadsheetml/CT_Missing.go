@@ -214,7 +214,7 @@ lCT_Missing:
 				}
 				m.X = append(m.X, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Missing %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -165,7 +165,7 @@ lArray:
 				}
 				m.Cy = append(m.Cy, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on Array %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

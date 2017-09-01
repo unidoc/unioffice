@@ -62,7 +62,7 @@ lCT_FramesetChoice:
 				}
 				m.Frame = append(m.Frame, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_FramesetChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

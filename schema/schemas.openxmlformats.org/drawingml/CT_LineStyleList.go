@@ -51,7 +51,7 @@ lCT_LineStyleList:
 				}
 				m.Ln = append(m.Ln, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_LineStyleList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

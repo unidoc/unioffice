@@ -90,7 +90,7 @@ lEG_BarChartShared:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on EG_BarChartShared %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -71,7 +71,7 @@ lCT_PCDKPIs:
 				}
 				m.Kpi = append(m.Kpi, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_PCDKPIs %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

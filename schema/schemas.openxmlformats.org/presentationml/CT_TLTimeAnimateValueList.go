@@ -54,7 +54,7 @@ lCT_TLTimeAnimateValueList:
 				}
 				m.Tav = append(m.Tav, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_TLTimeAnimateValueList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -52,7 +52,7 @@ lCT_OleObjects:
 				}
 				m.OleObject = append(m.OleObject, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_OleObjects %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

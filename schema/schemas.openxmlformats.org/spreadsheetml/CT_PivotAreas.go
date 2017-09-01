@@ -71,7 +71,7 @@ lCT_PivotAreas:
 				}
 				m.PivotArea = append(m.PivotArea, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_PivotAreas %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

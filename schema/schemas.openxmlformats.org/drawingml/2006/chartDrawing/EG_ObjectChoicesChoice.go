@@ -89,7 +89,7 @@ lEG_ObjectChoicesChoice:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on EG_ObjectChoicesChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

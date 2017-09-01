@@ -71,7 +71,7 @@ lCT_QueryTableFields:
 				}
 				m.QueryTableField = append(m.QueryTableField, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_QueryTableFields %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

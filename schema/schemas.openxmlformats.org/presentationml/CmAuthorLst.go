@@ -55,7 +55,7 @@ lCmAuthorLst:
 				}
 				m.CmAuthor = append(m.CmAuthor, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CmAuthorLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

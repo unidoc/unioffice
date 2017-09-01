@@ -71,7 +71,7 @@ lCT_DataRefs:
 				}
 				m.DataRef = append(m.DataRef, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_DataRefs %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

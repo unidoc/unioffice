@@ -69,7 +69,7 @@ lCT_PivotFields:
 				}
 				m.PivotField = append(m.PivotField, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_PivotFields %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

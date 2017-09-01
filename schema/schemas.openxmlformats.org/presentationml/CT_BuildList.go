@@ -90,7 +90,7 @@ lCT_BuildList:
 				}
 				m.BldGraphic = append(m.BldGraphic, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_BuildList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -114,7 +114,7 @@ lCT_GradientStop:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_GradientStop %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -69,7 +69,7 @@ lCT_TextFields:
 				}
 				m.TextField = append(m.TextField, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_TextFields %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -110,7 +110,7 @@ lCT_DataValidations:
 				}
 				m.DataValidation = append(m.DataValidation, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_DataValidations %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

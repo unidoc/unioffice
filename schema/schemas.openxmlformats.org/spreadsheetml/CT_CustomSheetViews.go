@@ -52,7 +52,7 @@ lCT_CustomSheetViews:
 				}
 				m.CustomSheetView = append(m.CustomSheetView, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_CustomSheetViews %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

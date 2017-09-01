@@ -69,7 +69,7 @@ lWsDr:
 				}
 				m.EG_Anchor = append(m.EG_Anchor, tmpanchor)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on WsDr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

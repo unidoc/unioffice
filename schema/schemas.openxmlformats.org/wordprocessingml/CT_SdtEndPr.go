@@ -54,7 +54,7 @@ lCT_SdtEndPr:
 				}
 				m.RPr = append(m.RPr, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_SdtEndPr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

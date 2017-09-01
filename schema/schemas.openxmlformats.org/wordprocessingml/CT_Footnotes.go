@@ -54,7 +54,7 @@ lCT_Footnotes:
 				}
 				m.Footnote = append(m.Footnote, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Footnotes %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

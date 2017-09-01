@@ -88,7 +88,7 @@ lCT_BackgroundFillStyleList:
 				}
 				m.EG_FillProperties = append(m.EG_FillProperties, tmpfillproperties)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_BackgroundFillStyleList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

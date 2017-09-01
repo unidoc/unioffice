@@ -78,7 +78,7 @@ lCT_Num:
 				}
 				m.LvlOverride = append(m.LvlOverride, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Num %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

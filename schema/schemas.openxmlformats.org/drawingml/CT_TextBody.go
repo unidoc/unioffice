@@ -70,7 +70,7 @@ lCT_TextBody:
 				}
 				m.P = append(m.P, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_TextBody %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

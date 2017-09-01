@@ -69,7 +69,7 @@ lCT_TableStyleList:
 				}
 				m.TblStyle = append(m.TblStyle, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_TableStyleList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

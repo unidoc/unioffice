@@ -53,7 +53,7 @@ lCT_Relationships:
 				}
 				m.Relationship = append(m.Relationship, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Relationships %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

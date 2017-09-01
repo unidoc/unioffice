@@ -69,7 +69,7 @@ lCT_Items:
 				}
 				m.Item = append(m.Item, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Items %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

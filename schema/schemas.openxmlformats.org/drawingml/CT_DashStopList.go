@@ -53,7 +53,7 @@ lCT_DashStopList:
 				}
 				m.Ds = append(m.Ds, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_DashStopList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

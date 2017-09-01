@@ -53,7 +53,7 @@ lCT_TextTabStopList:
 				}
 				m.Tab = append(m.Tab, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_TextTabStopList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

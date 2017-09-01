@@ -51,7 +51,7 @@ lCT_TLBehaviorAttributeNameList:
 				}
 				m.AttrName = append(m.AttrName, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_TLBehaviorAttributeNameList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

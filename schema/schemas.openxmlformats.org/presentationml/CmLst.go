@@ -55,7 +55,7 @@ lCmLst:
 				}
 				m.Cm = append(m.Cm, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CmLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

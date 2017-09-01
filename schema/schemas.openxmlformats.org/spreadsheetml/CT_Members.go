@@ -83,7 +83,7 @@ lCT_Members:
 				}
 				m.Member = append(m.Member, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Members %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

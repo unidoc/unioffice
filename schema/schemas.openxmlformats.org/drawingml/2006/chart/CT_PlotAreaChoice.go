@@ -216,7 +216,7 @@ lCT_PlotAreaChoice:
 				}
 				m.BubbleChart = append(m.BubbleChart, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_PlotAreaChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

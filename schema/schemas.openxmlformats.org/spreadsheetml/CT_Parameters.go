@@ -69,7 +69,7 @@ lCT_Parameters:
 				}
 				m.Parameter = append(m.Parameter, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Parameters %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -267,7 +267,7 @@ lCT_CfRule:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_CfRule %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

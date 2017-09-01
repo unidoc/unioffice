@@ -60,7 +60,7 @@ lEG_TextGeometry:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on EG_TextGeometry %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

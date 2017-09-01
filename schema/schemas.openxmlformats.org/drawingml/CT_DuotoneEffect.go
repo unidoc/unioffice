@@ -88,7 +88,7 @@ lCT_DuotoneEffect:
 				}
 				m.EG_ColorChoice = append(m.EG_ColorChoice, tmpcolorchoice)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_DuotoneEffect %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

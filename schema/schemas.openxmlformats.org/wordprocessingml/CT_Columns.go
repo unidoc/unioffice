@@ -109,7 +109,7 @@ lCT_Columns:
 				}
 				m.Col = append(m.Col, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Columns %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

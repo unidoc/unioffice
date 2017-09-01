@@ -53,7 +53,7 @@ lCT_ColorSchemeList:
 				}
 				m.ExtraClrScheme = append(m.ExtraClrScheme, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_ColorSchemeList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

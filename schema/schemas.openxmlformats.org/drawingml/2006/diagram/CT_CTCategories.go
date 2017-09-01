@@ -53,7 +53,7 @@ lCT_CTCategories:
 				}
 				m.Cat = append(m.Cat, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_CTCategories %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

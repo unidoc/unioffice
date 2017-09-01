@@ -69,7 +69,7 @@ lCT_ReviewedRevisions:
 				}
 				m.Reviewed = append(m.Reviewed, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_ReviewedRevisions %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

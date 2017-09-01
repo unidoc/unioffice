@@ -331,7 +331,7 @@ lCT_R:
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_R %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

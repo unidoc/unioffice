@@ -54,7 +54,7 @@ lCT_Endnotes:
 				}
 				m.Endnote = append(m.Endnote, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Endnotes %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

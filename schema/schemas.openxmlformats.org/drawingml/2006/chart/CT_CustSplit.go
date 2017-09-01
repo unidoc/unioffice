@@ -53,7 +53,7 @@ lCT_CustSplit:
 				}
 				m.SecondPiePt = append(m.SecondPiePt, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_CustSplit %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

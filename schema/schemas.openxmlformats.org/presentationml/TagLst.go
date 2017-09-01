@@ -55,7 +55,7 @@ lTagLst:
 				}
 				m.Tag = append(m.Tag, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on TagLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

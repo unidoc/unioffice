@@ -106,7 +106,7 @@ lCT_IconSet:
 				}
 				m.Cfvo = append(m.Cfvo, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_IconSet %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

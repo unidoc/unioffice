@@ -59,7 +59,7 @@ lFonts:
 				}
 				m.Font = append(m.Font, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on Fonts %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

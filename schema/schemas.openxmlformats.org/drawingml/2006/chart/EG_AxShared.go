@@ -193,7 +193,7 @@ lEG_AxShared:
 				}
 				_ = m.Choice
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on EG_AxShared %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

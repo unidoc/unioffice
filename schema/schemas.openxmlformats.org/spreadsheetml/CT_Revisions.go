@@ -186,7 +186,7 @@ lCT_Revisions:
 				}
 				m.Rcft = append(m.Rcft, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Revisions %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}
