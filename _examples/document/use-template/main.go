@@ -1,3 +1,5 @@
+// Copyright 2017 Baliance. All rights reserved.
+
 package main
 
 import (
