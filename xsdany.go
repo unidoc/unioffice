@@ -19,7 +19,10 @@ var wellKnownSchemas = map[string]string{
 	"xsi":     "http://www.w3.org/2001/XMLSchema-instance",
 	"dcterms": "http://purl.org/dc/terms/",
 	"dc":      "http://purl.org/dc/elements/1.1/",
+	"w14":     "http://schemas.microsoft.com/office/word/2010/wordml",
+	"w15":     "http://schemas.microsoft.com/office/word/2012/wordml",
 }
+
 var wellKnownSchemasInv = func() map[string]string {
 	r := map[string]string{}
 	for pfx, ns := range wellKnownSchemas {
