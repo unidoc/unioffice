@@ -13,23 +13,37 @@ func main() {
 	doc := document.New()
 
 	table := doc.AddTable()
+	// width of the page
 	table.SetWidthPercent(100)
+	// with thick borers
+	borders := table.Borders()
+	borders.SetAll(wml.ST_BorderSingle, color.Auto, 2*measurement.Point)
+
 	row := table.AddRow()
-	row.AddCell().AddParagraph().AddRun().AddText("Name")
+	run := row.AddCell().AddParagraph().AddRun()
+	run.AddText("Name")
+	run.SetHighlight(wml.ST_HighlightColorYellow)
 	row.AddCell().AddParagraph().AddRun().AddText("John Smith")
 	row = table.AddRow()
 	row.AddCell().AddParagraph().AddRun().AddText("Street Address")
 	row.AddCell().AddParagraph().AddRun().AddText("111 Country Road")
 
-	table = doc.AddTable()
-	table.SetWidth(4 * measurement.Inch)
+	doc.AddParagraph()
 
-	borders := table.Borders()
+	table = doc.AddTable()
+	// 4 inches wide
+	table.SetWidth(4 * measurement.Inch)
+	borders = table.Borders()
+	// thin borders
 	borders.SetAll(wml.ST_BorderSingle, color.Auto, measurement.Zero)
 
 	row = table.AddRow()
-	row.AddCell().AddParagraph().AddRun().AddText("Name")
-	row.AddCell().AddParagraph().AddRun().AddText("John Smith")
+	cell := row.AddCell()
+	// column span
+	//cell.Properties().SetColumnSpan(2)
+	run = cell.AddParagraph().AddRun()
+	run.AddText("Cells can span multiple columns")
+
 	row = table.AddRow()
 	row.AddCell().AddParagraph().AddRun().AddText("Street Address")
 	row.AddCell().AddParagraph().AddRun().AddText("111 Country Road")
