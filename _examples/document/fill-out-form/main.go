@@ -16,7 +16,7 @@ func main() {
 
 	// FindAllFields is a helper function that traverses the document
 	// identifying fields
-	fields := document.FindAllFields(doc)
+	fields := doc.FormFields()
 	fmt.Println("found", len(fields), "fields")
 
 	for _, fld := range fields {
