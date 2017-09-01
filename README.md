@@ -2,6 +2,7 @@
 .pptx).  
 
 [![Build Status](https://travis-ci.org/baliance/gooxml.svg?branch=master)](https://travis-ci.org/baliance/gooxml)
+[![Go Report Card](https://goreportcard.com/badge/baliance.com/gooxml)](https://goreportcard.com/report/baliance.com/gooxml)
 [![GoDoc](https://godoc.org/baliance.com/gooxml?status.svg)](https://godoc.org/baliance.com/gooxml)
 
 ## Status ##
@@ -15,6 +16,18 @@ is to get documents working well, then spreadsheets, and finally presentations.
     
     go get baliance.com/gooxml/
     go build -i baliance.com/gooxml/...
+
+## Document Examples ##
+
+- [Simple Text Formatting](https://github.com/baliance/gooxml/tree/master/_examples/document/simple) Text font colors, sizes, highlighting, etc.
+- [Auto Generated Table of Contents](https://github.com/baliance/gooxml/tree/master/_examples/document/toc) Creating document headings with an auto generated TOC based off of the headingds
+- [Floating Image](https://github.com/baliance/gooxml/tree/master/_examples/document/image) Placing an image somewhere on a page, absolutely positioned with different text wrapping.
+- [Header & Footer](https://github.com/baliance/gooxml/tree/master/_examples/document/header-footer) Creating headers and footers including page numbering.
+- [Multiple Headers & Footers](https://github.com/baliance/gooxml/tree/master/_examples/document/header-footer-multiple) Using different headers and footers depending on document section.
+- [Inline Tables](https://github.com/baliance/gooxml/tree/master/_examples/document/tables) Adding an table with and without borders.
+- [Using Existing Word Document as a Template](https://github.com/baliance/gooxml/tree/master/_examples/document/use-template) Opening a document as a template to re-use the styles created in the document.
+- [Filling out Form Fields](https://github.com/baliance/gooxml/tree/master/_examples/document/fill-out-form) Opening a document with embedded form fields, filling out the fields and saving the result as  a new filled form.
+
 
 ## Raw Types ##
 
