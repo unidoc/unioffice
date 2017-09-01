@@ -27,7 +27,6 @@ func (m *CT_SmartTagTypes) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SmartTagType != nil {
 		sesmartTagType := xml.StartElement{Name: xml.Name{Local: "x:smartTagType"}}
 		e.EncodeElement(m.SmartTagType, sesmartTagType)

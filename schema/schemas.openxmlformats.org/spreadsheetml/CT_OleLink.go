@@ -34,7 +34,6 @@ func (m *CT_OleLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "progId"},
 		Value: fmt.Sprintf("%v", m.ProgIdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.OleItems != nil {
 		seoleItems := xml.StartElement{Name: xml.Name{Local: "x:oleItems"}}
 		e.EncodeElement(m.OleItems, seoleItems)

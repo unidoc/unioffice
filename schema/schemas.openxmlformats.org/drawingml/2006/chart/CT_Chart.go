@@ -38,7 +38,6 @@ func (m *CT_Chart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Title != nil {
 		setitle := xml.StartElement{Name: xml.Name{Local: "title"}}
 		e.EncodeElement(m.Title, setitle)

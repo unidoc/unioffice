@@ -50,7 +50,6 @@ func (m *CT_TableStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TableStyleElement != nil {
 		setableStyleElement := xml.StartElement{Name: xml.Name{Local: "x:tableStyleElement"}}
 		e.EncodeElement(m.TableStyleElement, setableStyleElement)

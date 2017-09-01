@@ -160,7 +160,6 @@ func (m *CT_CacheHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.HiddenAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FieldsUsage != nil {
 		sefieldsUsage := xml.StartElement{Name: xml.Name{Local: "x:fieldsUsage"}}
 		e.EncodeElement(m.FieldsUsage, sefieldsUsage)

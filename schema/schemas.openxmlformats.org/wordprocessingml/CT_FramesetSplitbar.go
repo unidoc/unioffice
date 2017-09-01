@@ -32,7 +32,6 @@ func (m *CT_FramesetSplitbar) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.W != nil {
 		sew := xml.StartElement{Name: xml.Name{Local: "w:w"}}
 		e.EncodeElement(m.W, sew)

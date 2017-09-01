@@ -104,7 +104,6 @@ func (m *CT_TextParagraphProperties) MarshalXML(e *xml.Encoder, start xml.StartE
 			Value: fmt.Sprintf("%v", *m.HangingPunctAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.LnSpc != nil {
 		selnSpc := xml.StartElement{Name: xml.Name{Local: "a:lnSpc"}}
 		e.EncodeElement(m.LnSpc, selnSpc)

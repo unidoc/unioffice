@@ -35,7 +35,6 @@ func (m *CT_TLMediaNodeAudio) MarshalXML(e *xml.Encoder, start xml.StartElement)
 			Value: fmt.Sprintf("%v", *m.IsNarrationAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secMediaNode := xml.StartElement{Name: xml.Name{Local: "p:cMediaNode"}}
 	e.EncodeElement(m.CMediaNode, secMediaNode)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

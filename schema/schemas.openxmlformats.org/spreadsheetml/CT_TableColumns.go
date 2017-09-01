@@ -34,7 +34,6 @@ func (m *CT_TableColumns) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	setableColumn := xml.StartElement{Name: xml.Name{Local: "x:tableColumn"}}
 	e.EncodeElement(m.TableColumn, setableColumn)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

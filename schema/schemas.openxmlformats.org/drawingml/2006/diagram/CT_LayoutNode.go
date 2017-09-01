@@ -60,7 +60,6 @@ func (m *CT_LayoutNode) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.MoveWithAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Alg != nil {
 		sealg := xml.StartElement{Name: xml.Name{Local: "alg"}}
 		e.EncodeElement(m.Alg, sealg)

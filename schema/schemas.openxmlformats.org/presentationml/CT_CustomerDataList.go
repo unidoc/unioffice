@@ -29,7 +29,6 @@ func (m *CT_CustomerDataList) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CustData != nil {
 		secustData := xml.StartElement{Name: xml.Name{Local: "p:custData"}}
 		e.EncodeElement(m.CustData, secustData)

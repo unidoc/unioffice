@@ -26,7 +26,6 @@ func (m *CT_AltChunkPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.MatchSrc != nil {
 		sematchSrc := xml.StartElement{Name: xml.Name{Local: "w:matchSrc"}}
 		e.EncodeElement(m.MatchSrc, sematchSrc)

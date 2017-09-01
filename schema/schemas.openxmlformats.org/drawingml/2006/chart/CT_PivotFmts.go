@@ -26,7 +26,6 @@ func (m *CT_PivotFmts) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PivotFmt != nil {
 		sepivotFmt := xml.StartElement{Name: xml.Name{Local: "pivotFmt"}}
 		e.EncodeElement(m.PivotFmt, sepivotFmt)

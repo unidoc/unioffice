@@ -30,7 +30,6 @@ func (m *CT_Marker) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Symbol != nil {
 		sesymbol := xml.StartElement{Name: xml.Name{Local: "symbol"}}
 		e.EncodeElement(m.Symbol, sesymbol)

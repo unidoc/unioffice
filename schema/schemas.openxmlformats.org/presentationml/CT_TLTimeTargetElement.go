@@ -34,7 +34,6 @@ func (m *CT_TLTimeTargetElement) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SldTgt != nil {
 		sesldTgt := xml.StartElement{Name: xml.Name{Local: "p:sldTgt"}}
 		e.EncodeElement(m.SldTgt, sesldTgt)

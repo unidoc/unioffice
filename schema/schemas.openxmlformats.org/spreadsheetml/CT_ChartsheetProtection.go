@@ -67,7 +67,6 @@ func (m *CT_ChartsheetProtection) MarshalXML(e *xml.Encoder, start xml.StartElem
 			Value: fmt.Sprintf("%v", *m.ObjectsAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

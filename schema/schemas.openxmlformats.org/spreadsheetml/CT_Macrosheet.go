@@ -80,7 +80,6 @@ func (m *CT_Macrosheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	start.Name.Local = "x:CT_Macrosheet"
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SheetPr != nil {
 		sesheetPr := xml.StartElement{Name: xml.Name{Local: "x:sheetPr"}}
 		e.EncodeElement(m.SheetPr, sesheetPr)

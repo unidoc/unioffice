@@ -37,7 +37,6 @@ func (m *CT_HslColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "lum"},
 		Value: fmt.Sprintf("%v", m.LumAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EG_ColorTransform != nil {
 		for _, c := range m.EG_ColorTransform {
 			c.MarshalXML(e, start)

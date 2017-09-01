@@ -37,7 +37,6 @@ func (m *CT_OfPieChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seofPieType := xml.StartElement{Name: xml.Name{Local: "ofPieType"}}
 	e.EncodeElement(m.OfPieType, seofPieType)
 	if m.VaryColors != nil {

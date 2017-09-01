@@ -27,7 +27,6 @@ func (m *CT_Tabs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	setab := xml.StartElement{Name: xml.Name{Local: "w:tab"}}
 	e.EncodeElement(m.Tab, setab)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

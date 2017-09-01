@@ -34,7 +34,6 @@ func (m *CT_TableParts) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TablePart != nil {
 		setablePart := xml.StartElement{Name: xml.Name{Local: "x:tablePart"}}
 		e.EncodeElement(m.TablePart, setablePart)

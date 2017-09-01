@@ -34,7 +34,6 @@ func (m *CT_ChartFormats) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sechartFormat := xml.StartElement{Name: xml.Name{Local: "x:chartFormat"}}
 	e.EncodeElement(m.ChartFormat, sechartFormat)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

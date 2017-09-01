@@ -26,7 +26,6 @@ func (m *CT_CustomColorList) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CustClr != nil {
 		secustClr := xml.StartElement{Name: xml.Name{Local: "a:custClr"}}
 		e.EncodeElement(m.CustClr, secustClr)

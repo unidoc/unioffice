@@ -30,7 +30,6 @@ func (m *CT_OfficeArtExtension) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "uri"},
 		Value: fmt.Sprintf("%v", m.UriAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Any != nil {
 		for _, c := range m.Any {
 			c.MarshalXML(e, start)

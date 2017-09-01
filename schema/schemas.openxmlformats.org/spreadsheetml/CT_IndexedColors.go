@@ -27,7 +27,6 @@ func (m *CT_IndexedColors) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sergbColor := xml.StartElement{Name: xml.Name{Local: "x:rgbColor"}}
 	e.EncodeElement(m.RgbColor, sergbColor)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

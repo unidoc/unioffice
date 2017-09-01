@@ -49,7 +49,6 @@ func (m *CT_CommonSlideViewProperties) MarshalXML(e *xml.Encoder, start xml.Star
 			Value: fmt.Sprintf("%v", *m.ShowGuidesAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secViewPr := xml.StartElement{Name: xml.Name{Local: "p:cViewPr"}}
 	e.EncodeElement(m.CViewPr, secViewPr)
 	if m.GuideLst != nil {

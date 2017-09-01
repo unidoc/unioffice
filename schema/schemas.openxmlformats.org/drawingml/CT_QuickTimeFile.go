@@ -29,7 +29,6 @@ func (m *CT_QuickTimeFile) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:link"},
 		Value: fmt.Sprintf("%v", m.LinkAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "a:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

@@ -25,7 +25,6 @@ func (m *CT_StretchInfoProperties) MarshalXML(e *xml.Encoder, start xml.StartEle
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FillRect != nil {
 		sefillRect := xml.StartElement{Name: xml.Name{Local: "a:fillRect"}}
 		e.EncodeElement(m.FillRect, sefillRect)

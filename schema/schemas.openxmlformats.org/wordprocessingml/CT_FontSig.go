@@ -48,7 +48,6 @@ func (m *CT_FontSig) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:csb1"},
 		Value: fmt.Sprintf("%v", m.Csb1Attr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

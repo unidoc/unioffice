@@ -27,7 +27,6 @@ func (m *CT_ColorMappingOverride) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	start.Name.Local = "a:CT_ColorMappingOverride"
 	e.EncodeToken(start)
-	start.Attr = nil
 	m.Choice.MarshalXML(e, start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

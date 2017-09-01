@@ -62,7 +62,6 @@ func (m *CT_Border) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.OutlineAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Start != nil {
 		sestart := xml.StartElement{Name: xml.Name{Local: "x:start"}}
 		e.EncodeElement(m.Start, sestart)

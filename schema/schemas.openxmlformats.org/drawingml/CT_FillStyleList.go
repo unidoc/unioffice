@@ -26,7 +26,6 @@ func (m *CT_FillStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	for _, c := range m.EG_FillProperties {
 		c.MarshalXML(e, start)
 	}

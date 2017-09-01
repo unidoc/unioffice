@@ -41,7 +41,6 @@ func (m *CT_Object) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.DyaOrigAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Drawing != nil {
 		sedrawing := xml.StartElement{Name: xml.Name{Local: "w:drawing"}}
 		e.EncodeElement(m.Drawing, sedrawing)

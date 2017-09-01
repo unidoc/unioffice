@@ -154,7 +154,6 @@ func (m *CT_QueryTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.ApplyWidthHeightFormatsAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.QueryTableRefresh != nil {
 		sequeryTableRefresh := xml.StartElement{Name: xml.Name{Local: "x:queryTableRefresh"}}
 		e.EncodeElement(m.QueryTableRefresh, sequeryTableRefresh)

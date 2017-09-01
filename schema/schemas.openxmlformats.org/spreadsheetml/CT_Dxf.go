@@ -38,7 +38,6 @@ func (m *CT_Dxf) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Font != nil {
 		sefont := xml.StartElement{Name: xml.Name{Local: "x:font"}}
 		e.EncodeElement(m.Font, sefont)

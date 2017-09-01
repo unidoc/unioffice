@@ -41,7 +41,6 @@ func (m *CT_Sst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.UniqueCountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Si != nil {
 		sesi := xml.StartElement{Name: xml.Name{Local: "x:si"}}
 		e.EncodeElement(m.Si, sesi)

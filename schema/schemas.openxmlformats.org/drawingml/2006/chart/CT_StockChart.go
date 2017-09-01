@@ -32,7 +32,6 @@ func (m *CT_StockChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seser := xml.StartElement{Name: xml.Name{Local: "ser"}}
 	e.EncodeElement(m.Ser, seser)
 	if m.DLbls != nil {

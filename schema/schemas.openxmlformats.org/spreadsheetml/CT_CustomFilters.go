@@ -34,7 +34,6 @@ func (m *CT_CustomFilters) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 			Value: fmt.Sprintf("%v", *m.AndAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secustomFilter := xml.StartElement{Name: xml.Name{Local: "x:customFilter"}}
 	e.EncodeElement(m.CustomFilter, secustomFilter)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

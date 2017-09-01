@@ -58,7 +58,6 @@ func (m *CT_ViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.ShowCommentsAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.NormalViewPr != nil {
 		senormalViewPr := xml.StartElement{Name: xml.Name{Local: "p:normalViewPr"}}
 		e.EncodeElement(m.NormalViewPr, senormalViewPr)

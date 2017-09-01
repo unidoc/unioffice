@@ -33,7 +33,6 @@ func (m *CT_LayoutVariablePropertySet) MarshalXML(e *xml.Encoder, start xml.Star
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.OrgChart != nil {
 		seorgChart := xml.StartElement{Name: xml.Name{Local: "orgChart"}}
 		e.EncodeElement(m.OrgChart, seorgChart)

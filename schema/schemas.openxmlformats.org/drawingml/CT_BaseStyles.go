@@ -31,7 +31,6 @@ func (m *CT_BaseStyles) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seclrScheme := xml.StartElement{Name: xml.Name{Local: "a:clrScheme"}}
 	e.EncodeElement(m.ClrScheme, seclrScheme)
 	sefontScheme := xml.StartElement{Name: xml.Name{Local: "a:fontScheme"}}

@@ -34,7 +34,6 @@ func (m *CT_WebPublishObjects) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sewebPublishObject := xml.StartElement{Name: xml.Name{Local: "x:webPublishObject"}}
 	e.EncodeElement(m.WebPublishObject, sewebPublishObject)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

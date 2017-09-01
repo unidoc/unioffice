@@ -136,7 +136,6 @@ func (m *CT_PivotSelection) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.IdAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sepivotArea := xml.StartElement{Name: xml.Name{Local: "x:pivotArea"}}
 	e.EncodeElement(m.PivotArea, sepivotArea)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

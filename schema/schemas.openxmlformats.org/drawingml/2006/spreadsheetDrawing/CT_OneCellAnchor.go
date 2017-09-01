@@ -33,7 +33,6 @@ func (m *CT_OneCellAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sefrom := xml.StartElement{Name: xml.Name{Local: "from"}}
 	e.EncodeElement(m.From, sefrom)
 	seext := xml.StartElement{Name: xml.Name{Local: "ext"}}

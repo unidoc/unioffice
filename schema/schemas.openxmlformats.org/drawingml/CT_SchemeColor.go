@@ -33,7 +33,6 @@ func (m *CT_SchemeColor) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	start.Attr = append(start.Attr, attr)
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EG_ColorTransform != nil {
 		for _, c := range m.EG_ColorTransform {
 			c.MarshalXML(e, start)

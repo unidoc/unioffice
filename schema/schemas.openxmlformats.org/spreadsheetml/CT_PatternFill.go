@@ -37,7 +37,6 @@ func (m *CT_PatternFill) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FgColor != nil {
 		sefgColor := xml.StartElement{Name: xml.Name{Local: "x:fgColor"}}
 		e.EncodeElement(m.FgColor, sefgColor)

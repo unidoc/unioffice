@@ -34,7 +34,6 @@ func (m *CT_BlendEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	start.Attr = append(start.Attr, attr)
 	e.EncodeToken(start)
-	start.Attr = nil
 	secont := xml.StartElement{Name: xml.Name{Local: "a:cont"}}
 	e.EncodeElement(m.Cont, secont)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

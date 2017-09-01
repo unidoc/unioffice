@@ -47,7 +47,6 @@ func (m *CT_InnerShadowEffect) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.DirAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ScrgbClr != nil {
 		sescrgbClr := xml.StartElement{Name: xml.Name{Local: "a:scrgbClr"}}
 		e.EncodeElement(m.ScrgbClr, sescrgbClr)

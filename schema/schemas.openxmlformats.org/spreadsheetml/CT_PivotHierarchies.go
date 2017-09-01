@@ -34,7 +34,6 @@ func (m *CT_PivotHierarchies) MarshalXML(e *xml.Encoder, start xml.StartElement)
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sepivotHierarchy := xml.StartElement{Name: xml.Name{Local: "x:pivotHierarchy"}}
 	e.EncodeElement(m.PivotHierarchy, sepivotHierarchy)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

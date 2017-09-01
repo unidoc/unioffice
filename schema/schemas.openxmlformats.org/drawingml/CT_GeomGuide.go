@@ -30,7 +30,6 @@ func (m *CT_GeomGuide) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fmla"},
 		Value: fmt.Sprintf("%v", m.FmlaAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

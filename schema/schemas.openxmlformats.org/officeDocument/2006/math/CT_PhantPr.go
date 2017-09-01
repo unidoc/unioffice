@@ -30,7 +30,6 @@ func (m *CT_PhantPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Show != nil {
 		seshow := xml.StartElement{Name: xml.Name{Local: "m:show"}}
 		e.EncodeElement(m.Show, seshow)

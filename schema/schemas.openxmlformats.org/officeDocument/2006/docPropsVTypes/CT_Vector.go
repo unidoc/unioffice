@@ -59,7 +59,6 @@ func (m *CT_Vector) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "size"},
 		Value: fmt.Sprintf("%v", m.SizeAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Variant != nil {
 		sevariant := xml.StartElement{Name: xml.Name{Local: "vt:variant"}}
 		e.EncodeElement(m.Variant, sevariant)

@@ -29,7 +29,6 @@ func (m *CT_AlphaModulateFixedEffect) MarshalXML(e *xml.Encoder, start xml.Start
 			Value: fmt.Sprintf("%v", *m.AmtAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

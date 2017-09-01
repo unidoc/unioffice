@@ -35,7 +35,6 @@ func (m *CT_DdeLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ddeTopic"},
 		Value: fmt.Sprintf("%v", m.DdeTopicAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DdeItems != nil {
 		seddeItems := xml.StartElement{Name: xml.Name{Local: "x:ddeItems"}}
 		e.EncodeElement(m.DdeItems, seddeItems)

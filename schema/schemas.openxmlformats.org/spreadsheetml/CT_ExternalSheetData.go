@@ -38,7 +38,6 @@ func (m *CT_ExternalSheetData) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.RefreshErrorAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Row != nil {
 		serow := xml.StartElement{Name: xml.Name{Local: "x:row"}}
 		e.EncodeElement(m.Row, serow)

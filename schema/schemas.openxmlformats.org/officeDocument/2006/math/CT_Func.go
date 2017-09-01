@@ -29,7 +29,6 @@ func (m *CT_Func) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FuncPr != nil {
 		sefuncPr := xml.StartElement{Name: xml.Name{Local: "m:funcPr"}}
 		e.EncodeElement(m.FuncPr, sefuncPr)

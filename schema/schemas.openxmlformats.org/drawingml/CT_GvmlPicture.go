@@ -32,7 +32,6 @@ func (m *CT_GvmlPicture) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	senvPicPr := xml.StartElement{Name: xml.Name{Local: "a:nvPicPr"}}
 	e.EncodeElement(m.NvPicPr, senvPicPr)
 	seblipFill := xml.StartElement{Name: xml.Name{Local: "a:blipFill"}}

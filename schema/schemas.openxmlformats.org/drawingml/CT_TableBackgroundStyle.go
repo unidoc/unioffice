@@ -28,7 +28,6 @@ func (m *CT_TableBackgroundStyle) MarshalXML(e *xml.Encoder, start xml.StartElem
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Fill != nil {
 		sefill := xml.StartElement{Name: xml.Name{Local: "a:fill"}}
 		e.EncodeElement(m.Fill, sefill)

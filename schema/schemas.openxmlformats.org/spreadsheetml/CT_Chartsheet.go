@@ -47,7 +47,6 @@ func (m *CT_Chartsheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SheetPr != nil {
 		sesheetPr := xml.StartElement{Name: xml.Name{Local: "x:sheetPr"}}
 		e.EncodeElement(m.SheetPr, sesheetPr)

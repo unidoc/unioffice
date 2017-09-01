@@ -28,7 +28,6 @@ func (m *CT_GvmlPictureNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElem
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secNvPr := xml.StartElement{Name: xml.Name{Local: "a:cNvPr"}}
 	e.EncodeElement(m.CNvPr, secNvPr)
 	secNvPicPr := xml.StartElement{Name: xml.Name{Local: "a:cNvPicPr"}}

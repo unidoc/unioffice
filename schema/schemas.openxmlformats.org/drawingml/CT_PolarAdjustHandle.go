@@ -57,7 +57,6 @@ func (m *CT_PolarAdjustHandle) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.MaxAngAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sepos := xml.StartElement{Name: xml.Name{Local: "a:pos"}}
 	e.EncodeElement(m.Pos, sepos)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

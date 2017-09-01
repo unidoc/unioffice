@@ -34,7 +34,6 @@ func (m *CT_Borders) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Border != nil {
 		seborder := xml.StartElement{Name: xml.Name{Local: "x:border"}}
 		e.EncodeElement(m.Border, seborder)

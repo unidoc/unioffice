@@ -34,7 +34,6 @@ func (m *CT_GroupLevels) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	segroupLevel := xml.StartElement{Name: xml.Name{Local: "x:groupLevel"}}
 	e.EncodeElement(m.GroupLevel, segroupLevel)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

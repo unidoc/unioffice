@@ -49,7 +49,6 @@ func (m *CT_Revisions) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Rrc != nil {
 		serrc := xml.StartElement{Name: xml.Name{Local: "x:rrc"}}
 		e.EncodeElement(m.Rrc, serrc)

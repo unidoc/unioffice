@@ -39,7 +39,6 @@ func (m *CT_AnimationDgmElement) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

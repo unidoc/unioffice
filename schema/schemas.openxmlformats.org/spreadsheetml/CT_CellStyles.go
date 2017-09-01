@@ -34,7 +34,6 @@ func (m *CT_CellStyles) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secellStyle := xml.StartElement{Name: xml.Name{Local: "x:cellStyle"}}
 	e.EncodeElement(m.CellStyle, secellStyle)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

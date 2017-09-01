@@ -26,7 +26,6 @@ func (m *CT_BarPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Pos != nil {
 		sepos := xml.StartElement{Name: xml.Name{Local: "m:pos"}}
 		e.EncodeElement(m.Pos, sepos)

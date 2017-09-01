@@ -44,7 +44,6 @@ func (m *CT_TcBorders) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Top != nil {
 		setop := xml.StartElement{Name: xml.Name{Local: "w:top"}}
 		e.EncodeElement(m.Top, setop)

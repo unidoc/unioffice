@@ -46,7 +46,6 @@ func (m *CT_TableStyles) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.DefaultPivotStyleAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TableStyle != nil {
 		setableStyle := xml.StartElement{Name: xml.Name{Local: "x:tableStyle"}}
 		e.EncodeElement(m.TableStyle, setableStyle)

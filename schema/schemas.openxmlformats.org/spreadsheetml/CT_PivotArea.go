@@ -108,7 +108,6 @@ func (m *CT_PivotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.FieldPositionAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.References != nil {
 		sereferences := xml.StartElement{Name: xml.Name{Local: "x:references"}}
 		e.EncodeElement(m.References, sereferences)

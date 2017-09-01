@@ -47,7 +47,6 @@ func (m *CT_Filters) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Filter != nil {
 		sefilter := xml.StartElement{Name: xml.Name{Local: "x:filter"}}
 		e.EncodeElement(m.Filter, sefilter)

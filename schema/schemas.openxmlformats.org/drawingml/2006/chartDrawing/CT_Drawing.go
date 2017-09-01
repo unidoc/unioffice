@@ -27,7 +27,6 @@ func (m *CT_Drawing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	start.Name.Local = "CT_Drawing"
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EG_Anchor != nil {
 		for _, c := range m.EG_Anchor {
 			c.MarshalXML(e, start)

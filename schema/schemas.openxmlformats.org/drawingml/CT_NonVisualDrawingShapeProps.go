@@ -33,7 +33,6 @@ func (m *CT_NonVisualDrawingShapeProps) MarshalXML(e *xml.Encoder, start xml.Sta
 			Value: fmt.Sprintf("%v", *m.TxBoxAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SpLocks != nil {
 		sespLocks := xml.StartElement{Name: xml.Name{Local: "a:spLocks"}}
 		e.EncodeElement(m.SpLocks, sespLocks)

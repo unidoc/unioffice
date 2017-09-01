@@ -49,7 +49,6 @@ func (m *CT_Schema) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.SchemaLanguageAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Any != nil {
 		m.Any.MarshalXML(e, start)
 	}

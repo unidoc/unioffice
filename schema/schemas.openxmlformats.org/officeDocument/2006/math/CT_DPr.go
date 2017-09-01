@@ -30,7 +30,6 @@ func (m *CT_DPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.BegChr != nil {
 		sebegChr := xml.StartElement{Name: xml.Name{Local: "m:begChr"}}
 		e.EncodeElement(m.BegChr, sebegChr)

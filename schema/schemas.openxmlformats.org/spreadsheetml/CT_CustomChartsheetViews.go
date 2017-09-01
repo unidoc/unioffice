@@ -27,7 +27,6 @@ func (m *CT_CustomChartsheetViews) MarshalXML(e *xml.Encoder, start xml.StartEle
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CustomSheetView != nil {
 		secustomSheetView := xml.StartElement{Name: xml.Name{Local: "x:customSheetView"}}
 		e.EncodeElement(m.CustomSheetView, secustomSheetView)

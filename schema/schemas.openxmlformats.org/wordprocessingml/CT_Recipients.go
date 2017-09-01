@@ -27,7 +27,6 @@ func (m *CT_Recipients) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	serecipientData := xml.StartElement{Name: xml.Name{Local: "w:recipientData"}}
 	e.EncodeElement(m.RecipientData, serecipientData)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

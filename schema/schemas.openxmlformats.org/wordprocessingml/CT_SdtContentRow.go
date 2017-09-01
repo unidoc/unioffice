@@ -34,7 +34,6 @@ func (m *CT_SdtContentRow) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Tr != nil {
 		setr := xml.StartElement{Name: xml.Name{Local: "w:tr"}}
 		e.EncodeElement(m.Tr, setr)

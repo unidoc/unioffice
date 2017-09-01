@@ -27,7 +27,6 @@ func (m *CT_AlphaBiLevelEffect) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "thresh"},
 		Value: fmt.Sprintf("%v", m.ThreshAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

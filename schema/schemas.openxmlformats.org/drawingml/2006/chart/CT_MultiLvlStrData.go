@@ -28,7 +28,6 @@ func (m *CT_MultiLvlStrData) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PtCount != nil {
 		septCount := xml.StartElement{Name: xml.Name{Local: "ptCount"}}
 		e.EncodeElement(m.PtCount, septCount)

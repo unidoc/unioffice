@@ -27,7 +27,6 @@ func (m *CT_Sheets) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sesheet := xml.StartElement{Name: xml.Name{Local: "x:sheet"}}
 	e.EncodeElement(m.Sheet, sesheet)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -149,7 +149,6 @@ func (m *CT_SheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "workbookViewId"},
 		Value: fmt.Sprintf("%v", m.WorkbookViewIdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Pane != nil {
 		sepane := xml.StartElement{Name: xml.Name{Local: "x:pane"}}
 		e.EncodeElement(m.Pane, sepane)

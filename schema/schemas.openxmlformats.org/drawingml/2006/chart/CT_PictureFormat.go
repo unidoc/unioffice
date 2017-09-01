@@ -31,7 +31,6 @@ func (m *CT_PictureFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	}
 	start.Attr = append(start.Attr, attr)
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

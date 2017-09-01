@@ -29,7 +29,6 @@ func (m *CT_FFCheckBox) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Choice != nil {
 		m.Choice.MarshalXML(e, start)
 	}

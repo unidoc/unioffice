@@ -34,7 +34,6 @@ func (m *CT_MetadataBlocks) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sebk := xml.StartElement{Name: xml.Name{Local: "x:bk"}}
 	e.EncodeElement(m.Bk, sebk)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

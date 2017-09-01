@@ -34,7 +34,6 @@ func (m *CT_NumFmts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.NumFmt != nil {
 		senumFmt := xml.StartElement{Name: xml.Name{Local: "x:numFmt"}}
 		e.EncodeElement(m.NumFmt, senumFmt)

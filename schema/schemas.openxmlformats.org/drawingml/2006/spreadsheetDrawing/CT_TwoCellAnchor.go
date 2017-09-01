@@ -39,7 +39,6 @@ func (m *CT_TwoCellAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sefrom := xml.StartElement{Name: xml.Name{Local: "from"}}
 	e.EncodeElement(m.From, sefrom)
 	seto := xml.StartElement{Name: xml.Name{Local: "to"}}

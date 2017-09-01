@@ -28,7 +28,6 @@ func (m *CT_TLTextTargetElement) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CharRg != nil {
 		secharRg := xml.StartElement{Name: xml.Name{Local: "p:charRg"}}
 		e.EncodeElement(m.CharRg, secharRg)

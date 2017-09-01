@@ -35,7 +35,6 @@ func (m *CT_AnimationChartBuildProperties) MarshalXML(e *xml.Encoder, start xml.
 			Value: fmt.Sprintf("%v", *m.AnimBgAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

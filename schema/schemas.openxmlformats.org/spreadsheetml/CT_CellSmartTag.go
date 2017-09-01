@@ -44,7 +44,6 @@ func (m *CT_CellSmartTag) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.XmlBasedAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CellSmartTagPr != nil {
 		secellSmartTagPr := xml.StartElement{Name: xml.Name{Local: "x:cellSmartTagPr"}}
 		e.EncodeElement(m.CellSmartTagPr, secellSmartTagPr)

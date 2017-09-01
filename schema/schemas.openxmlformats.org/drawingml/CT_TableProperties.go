@@ -71,7 +71,6 @@ func (m *CT_TableProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.BandColAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.NoFill != nil {
 		senoFill := xml.StartElement{Name: xml.Name{Local: "a:noFill"}}
 		e.EncodeElement(m.NoFill, senoFill)

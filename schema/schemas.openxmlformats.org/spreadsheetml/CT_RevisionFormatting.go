@@ -61,7 +61,6 @@ func (m *CT_RevisionFormatting) MarshalXML(e *xml.Encoder, start xml.StartElemen
 			Value: fmt.Sprintf("%v", *m.LengthAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Dxf != nil {
 		sedxf := xml.StartElement{Name: xml.Name{Local: "x:dxf"}}
 		e.EncodeElement(m.Dxf, sedxf)

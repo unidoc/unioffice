@@ -91,7 +91,6 @@ func (m *CT_PPrGeneral) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PStyle != nil {
 		sepStyle := xml.StartElement{Name: xml.Name{Local: "w:pStyle"}}
 		e.EncodeElement(m.PStyle, sepStyle)

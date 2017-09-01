@@ -27,7 +27,6 @@ func (m *CT_Controls) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secontrol := xml.StartElement{Name: xml.Name{Local: "x:control"}}
 	e.EncodeElement(m.Control, secontrol)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

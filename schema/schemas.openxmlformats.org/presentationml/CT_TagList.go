@@ -27,7 +27,6 @@ func (m *CT_TagList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Tag != nil {
 		setag := xml.StartElement{Name: xml.Name{Local: "p:tag"}}
 		e.EncodeElement(m.Tag, setag)

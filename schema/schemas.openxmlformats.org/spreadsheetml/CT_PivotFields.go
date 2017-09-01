@@ -34,7 +34,6 @@ func (m *CT_PivotFields) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sepivotField := xml.StartElement{Name: xml.Name{Local: "x:pivotField"}}
 	e.EncodeElement(m.PivotField, sepivotField)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -34,7 +34,6 @@ func (m *CT_Tuples) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	setpl := xml.StartElement{Name: xml.Name{Local: "x:tpl"}}
 	e.EncodeElement(m.Tpl, setpl)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

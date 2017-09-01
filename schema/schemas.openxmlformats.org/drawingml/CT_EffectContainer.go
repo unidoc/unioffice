@@ -68,7 +68,6 @@ func (m *CT_EffectContainer) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.NameAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Cont != nil {
 		secont := xml.StartElement{Name: xml.Name{Local: "a:cont"}}
 		e.EncodeElement(m.Cont, secont)

@@ -58,7 +58,6 @@ func (m *CT_TblPrBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TblStyle != nil {
 		setblStyle := xml.StartElement{Name: xml.Name{Local: "w:tblStyle"}}
 		e.EncodeElement(m.TblStyle, setblStyle)

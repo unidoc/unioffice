@@ -29,7 +29,6 @@ func (m *CT_Marker) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sex := xml.StartElement{Name: xml.Name{Local: "x"}}
 	e.EncodeElement(m.X, sex)
 	sey := xml.StartElement{Name: xml.Name{Local: "y"}}

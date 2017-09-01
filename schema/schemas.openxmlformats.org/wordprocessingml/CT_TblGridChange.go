@@ -32,7 +32,6 @@ func (m *CT_TblGridChange) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:id"},
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	setblGrid := xml.StartElement{Name: xml.Name{Local: "w:tblGrid"}}
 	e.EncodeElement(m.TblGrid, setblGrid)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

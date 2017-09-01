@@ -38,7 +38,6 @@ func (m *CT_TLByRgbColorTransform) MarshalXML(e *xml.Encoder, start xml.StartEle
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "b"},
 		Value: fmt.Sprintf("%v", m.BAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

@@ -42,7 +42,6 @@ func (m *CT_CoreProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Category != nil {
 		secategory := xml.StartElement{Name: xml.Name{Local: "cp:category"}}
 		gooxml.AddPreserveSpaceAttr(&secategory, *m.Category)

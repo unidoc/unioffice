@@ -27,7 +27,6 @@ func (m *CT_OleItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.OleItem != nil {
 		seoleItem := xml.StartElement{Name: xml.Name{Local: "x:oleItem"}}
 		e.EncodeElement(m.OleItem, seoleItem)

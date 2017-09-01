@@ -27,7 +27,6 @@ func (m *CT_BaseStylesOverride) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ClrScheme != nil {
 		seclrScheme := xml.StartElement{Name: xml.Name{Local: "a:clrScheme"}}
 		e.EncodeElement(m.ClrScheme, seclrScheme)

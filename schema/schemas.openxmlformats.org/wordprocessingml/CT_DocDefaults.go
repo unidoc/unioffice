@@ -28,7 +28,6 @@ func (m *CT_DocDefaults) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.RPrDefault != nil {
 		serPrDefault := xml.StartElement{Name: xml.Name{Local: "w:rPrDefault"}}
 		e.EncodeElement(m.RPrDefault, serPrDefault)

@@ -36,7 +36,6 @@ func (m *CT_SlideSorterViewProperties) MarshalXML(e *xml.Encoder, start xml.Star
 			Value: fmt.Sprintf("%v", *m.ShowFormattingAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secViewPr := xml.StartElement{Name: xml.Name{Local: "p:cViewPr"}}
 	e.EncodeElement(m.CViewPr, secViewPr)
 	if m.ExtLst != nil {

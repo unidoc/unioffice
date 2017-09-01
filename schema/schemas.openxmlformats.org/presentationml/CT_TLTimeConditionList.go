@@ -27,7 +27,6 @@ func (m *CT_TLTimeConditionList) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	second := xml.StartElement{Name: xml.Name{Local: "p:cond"}}
 	e.EncodeElement(m.Cond, second)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

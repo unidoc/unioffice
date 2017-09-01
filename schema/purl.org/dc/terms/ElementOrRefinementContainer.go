@@ -27,7 +27,6 @@ func (m *ElementOrRefinementContainer) MarshalXML(e *xml.Encoder, start xml.Star
 	}
 	start.Name.Local = "elementOrRefinementContainer"
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Choice != nil {
 		for _, c := range m.Choice {
 			c.MarshalXML(e, start)

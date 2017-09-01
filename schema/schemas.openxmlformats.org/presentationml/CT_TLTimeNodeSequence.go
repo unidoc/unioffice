@@ -57,7 +57,6 @@ func (m *CT_TLTimeNodeSequence) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secTn := xml.StartElement{Name: xml.Name{Local: "p:cTn"}}
 	e.EncodeElement(m.CTn, secTn)
 	if m.PrevCondLst != nil {

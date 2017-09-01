@@ -26,7 +26,6 @@ func (m *CT_AlphaModulateEffect) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secont := xml.StartElement{Name: xml.Name{Local: "a:cont"}}
 	e.EncodeElement(m.Cont, secont)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -28,7 +28,6 @@ func (m *CT_TransitionSoundAction) MarshalXML(e *xml.Encoder, start xml.StartEle
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.StSnd != nil {
 		sestSnd := xml.StartElement{Name: xml.Name{Local: "p:stSnd"}}
 		e.EncodeElement(m.StSnd, sestSnd)

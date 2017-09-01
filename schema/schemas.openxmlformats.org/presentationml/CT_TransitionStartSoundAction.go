@@ -37,7 +37,6 @@ func (m *CT_TransitionStartSoundAction) MarshalXML(e *xml.Encoder, start xml.Sta
 			Value: fmt.Sprintf("%v", *m.LoopAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sesnd := xml.StartElement{Name: xml.Name{Local: "p:snd"}}
 	e.EncodeElement(m.Snd, sesnd)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -32,7 +32,6 @@ func (m *CT_Extension) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.UriAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Any != nil {
 		m.Any.MarshalXML(e, start)
 	}

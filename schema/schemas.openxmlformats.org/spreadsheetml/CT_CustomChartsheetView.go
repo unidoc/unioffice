@@ -58,7 +58,6 @@ func (m *CT_CustomChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElem
 			Value: fmt.Sprintf("%v", *m.ZoomToFitAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PageMargins != nil {
 		sepageMargins := xml.StartElement{Name: xml.Name{Local: "x:pageMargins"}}
 		e.EncodeElement(m.PageMargins, sepageMargins)

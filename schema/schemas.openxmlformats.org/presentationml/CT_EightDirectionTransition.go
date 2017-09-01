@@ -30,7 +30,6 @@ func (m *CT_EightDirectionTransition) MarshalXML(e *xml.Encoder, start xml.Start
 			Value: fmt.Sprintf("%v", *m.DirAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

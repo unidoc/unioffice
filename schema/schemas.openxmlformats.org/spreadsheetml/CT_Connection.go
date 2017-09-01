@@ -157,7 +157,6 @@ func (m *CT_Connection) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.SingleSignOnIdAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DbPr != nil {
 		sedbPr := xml.StartElement{Name: xml.Name{Local: "x:dbPr"}}
 		e.EncodeElement(m.DbPr, sedbPr)

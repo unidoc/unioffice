@@ -32,7 +32,6 @@ func (m *CT_TableStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "def"},
 		Value: fmt.Sprintf("%v", m.DefAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TblStyle != nil {
 		setblStyle := xml.StartElement{Name: xml.Name{Local: "a:tblStyle"}}
 		e.EncodeElement(m.TblStyle, setblStyle)

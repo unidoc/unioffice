@@ -27,7 +27,6 @@ func (m *CT_MRUColors) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secolor := xml.StartElement{Name: xml.Name{Local: "x:color"}}
 	e.EncodeElement(m.Color, secolor)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

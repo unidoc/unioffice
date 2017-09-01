@@ -40,7 +40,6 @@ func (m *CT_CommonViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 			Value: fmt.Sprintf("%v", *m.VarScaleAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sescale := xml.StartElement{Name: xml.Name{Local: "p:scale"}}
 	e.EncodeElement(m.Scale, sescale)
 	seorigin := xml.StartElement{Name: xml.Name{Local: "p:origin"}}

@@ -68,7 +68,6 @@ func (m *CT_Hyperlink) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.EndSndAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Snd != nil {
 		sesnd := xml.StartElement{Name: xml.Name{Local: "a:snd"}}
 		e.EncodeElement(m.Snd, sesnd)

@@ -34,7 +34,6 @@ func (m *CT_ColHierarchiesUsage) MarshalXML(e *xml.Encoder, start xml.StartEleme
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secolHierarchyUsage := xml.StartElement{Name: xml.Name{Local: "x:colHierarchyUsage"}}
 	e.EncodeElement(m.ColHierarchyUsage, secolHierarchyUsage)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -27,7 +27,6 @@ func (m *CT_ExtensionList) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Ext != nil {
 		seext := xml.StartElement{Name: xml.Name{Local: "p:ext"}}
 		e.EncodeElement(m.Ext, seext)

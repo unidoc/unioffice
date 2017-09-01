@@ -72,7 +72,6 @@ func (m *CT_ProtectedRange) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.SpinCountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SecurityDescriptor != nil {
 		sesecurityDescriptor := xml.StartElement{Name: xml.Name{Local: "x:securityDescriptor"}}
 		e.EncodeElement(m.SecurityDescriptor, sesecurityDescriptor)

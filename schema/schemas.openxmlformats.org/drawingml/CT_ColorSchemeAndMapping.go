@@ -27,7 +27,6 @@ func (m *CT_ColorSchemeAndMapping) MarshalXML(e *xml.Encoder, start xml.StartEle
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seclrScheme := xml.StartElement{Name: xml.Name{Local: "a:clrScheme"}}
 	e.EncodeElement(m.ClrScheme, seclrScheme)
 	if m.ClrMap != nil {

@@ -26,7 +26,6 @@ func (m *CT_LineStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seln := xml.StartElement{Name: xml.Name{Local: "a:ln"}}
 	e.EncodeElement(m.Ln, seln)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

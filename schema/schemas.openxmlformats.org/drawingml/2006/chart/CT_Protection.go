@@ -29,7 +29,6 @@ func (m *CT_Protection) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ChartObject != nil {
 		sechartObject := xml.StartElement{Name: xml.Name{Local: "chartObject"}}
 		e.EncodeElement(m.ChartObject, sechartObject)

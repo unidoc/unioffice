@@ -56,7 +56,6 @@ func (m *CT_DataBinding) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "DataBindingLoadMode"},
 		Value: fmt.Sprintf("%v", m.DataBindingLoadModeAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Any != nil {
 		m.Any.MarshalXML(e, start)
 	}

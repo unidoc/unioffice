@@ -28,7 +28,6 @@ func (m *CT_Colors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.IndexedColors != nil {
 		seindexedColors := xml.StartElement{Name: xml.Name{Local: "x:indexedColors"}}
 		e.EncodeElement(m.IndexedColors, seindexedColors)

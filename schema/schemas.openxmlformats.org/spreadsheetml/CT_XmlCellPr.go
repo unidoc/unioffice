@@ -41,7 +41,6 @@ func (m *CT_XmlCellPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.UniqueNameAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sexmlPr := xml.StartElement{Name: xml.Name{Local: "x:xmlPr"}}
 	e.EncodeElement(m.XmlPr, sexmlPr)
 	if m.ExtLst != nil {

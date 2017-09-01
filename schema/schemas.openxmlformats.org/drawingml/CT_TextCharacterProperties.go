@@ -152,7 +152,6 @@ func (m *CT_TextCharacterProperties) MarshalXML(e *xml.Encoder, start xml.StartE
 			Value: fmt.Sprintf("%v", *m.BmkAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Ln != nil {
 		seln := xml.StartElement{Name: xml.Name{Local: "a:ln"}}
 		e.EncodeElement(m.Ln, seln)

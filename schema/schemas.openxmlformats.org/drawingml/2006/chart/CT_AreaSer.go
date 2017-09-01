@@ -41,7 +41,6 @@ func (m *CT_AreaSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
 	e.EncodeElement(m.Idx, seidx)
 	seorder := xml.StartElement{Name: xml.Name{Local: "order"}}

@@ -39,7 +39,6 @@ func (m *CT_TLAnimateScaleBehavior) MarshalXML(e *xml.Encoder, start xml.StartEl
 			Value: fmt.Sprintf("%v", *m.ZoomContentsAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secBhvr := xml.StartElement{Name: xml.Name{Local: "p:cBhvr"}}
 	e.EncodeElement(m.CBhvr, secBhvr)
 	if m.By != nil {

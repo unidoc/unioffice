@@ -41,7 +41,6 @@ func (m *CT_ConditionalFormatting) MarshalXML(e *xml.Encoder, start xml.StartEle
 			Value: fmt.Sprintf("%v", *m.SqrefAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secfRule := xml.StartElement{Name: xml.Name{Local: "x:cfRule"}}
 	e.EncodeElement(m.CfRule, secfRule)
 	if m.ExtLst != nil {

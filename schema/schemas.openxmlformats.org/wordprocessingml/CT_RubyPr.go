@@ -41,7 +41,6 @@ func (m *CT_RubyPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	serubyAlign := xml.StartElement{Name: xml.Name{Local: "w:rubyAlign"}}
 	e.EncodeElement(m.RubyAlign, serubyAlign)
 	sehps := xml.StartElement{Name: xml.Name{Local: "w:hps"}}

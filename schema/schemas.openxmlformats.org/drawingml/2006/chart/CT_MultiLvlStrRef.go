@@ -29,7 +29,6 @@ func (m *CT_MultiLvlStrRef) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sef := xml.StartElement{Name: xml.Name{Local: "f"}}
 	gooxml.AddPreserveSpaceAttr(&sef, m.F)
 	e.EncodeElement(m.F, sef)

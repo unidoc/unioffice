@@ -34,7 +34,6 @@ func (m *CT_PivotAreas) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PivotArea != nil {
 		sepivotArea := xml.StartElement{Name: xml.Name{Local: "x:pivotArea"}}
 		e.EncodeElement(m.PivotArea, sepivotArea)

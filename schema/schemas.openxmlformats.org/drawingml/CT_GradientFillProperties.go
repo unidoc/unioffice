@@ -43,7 +43,6 @@ func (m *CT_GradientFillProperties) MarshalXML(e *xml.Encoder, start xml.StartEl
 			Value: fmt.Sprintf("%v", *m.RotWithShapeAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.GsLst != nil {
 		segsLst := xml.StartElement{Name: xml.Name{Local: "a:gsLst"}}
 		e.EncodeElement(m.GsLst, segsLst)

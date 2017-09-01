@@ -34,7 +34,6 @@ func (m *CT_MeasureDimensionMaps) MarshalXML(e *xml.Encoder, start xml.StartElem
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Map != nil {
 		semap := xml.StartElement{Name: xml.Name{Local: "x:map"}}
 		e.EncodeElement(m.Map, semap)

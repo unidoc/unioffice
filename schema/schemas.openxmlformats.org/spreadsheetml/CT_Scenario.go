@@ -62,7 +62,6 @@ func (m *CT_Scenario) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CommentAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seinputCells := xml.StartElement{Name: xml.Name{Local: "x:inputCells"}}
 	e.EncodeElement(m.InputCells, seinputCells)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

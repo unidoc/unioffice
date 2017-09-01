@@ -36,7 +36,6 @@ func (m *CT_Bar3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sebarDir := xml.StartElement{Name: xml.Name{Local: "barDir"}}
 	e.EncodeElement(m.BarDir, sebarDir)
 	if m.Grouping != nil {

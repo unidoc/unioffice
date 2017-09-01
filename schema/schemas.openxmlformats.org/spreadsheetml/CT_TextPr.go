@@ -130,7 +130,6 @@ func (m *CT_TextPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.DelimiterAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TextFields != nil {
 		setextFields := xml.StartElement{Name: xml.Name{Local: "x:textFields"}}
 		e.EncodeElement(m.TextFields, setextFields)

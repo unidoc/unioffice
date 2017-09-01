@@ -36,7 +36,6 @@ func (m *CT_OfficeStyleSheet) MarshalXML(e *xml.Encoder, start xml.StartElement)
 			Value: fmt.Sprintf("%v", *m.NameAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sethemeElements := xml.StartElement{Name: xml.Name{Local: "a:themeElements"}}
 	e.EncodeElement(m.ThemeElements, sethemeElements)
 	if m.ObjectDefaults != nil {

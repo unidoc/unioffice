@@ -54,7 +54,6 @@ func (m *CT_SortState) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ref"},
 		Value: fmt.Sprintf("%v", m.RefAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SortCondition != nil {
 		sesortCondition := xml.StartElement{Name: xml.Name{Local: "x:sortCondition"}}
 		e.EncodeElement(m.SortCondition, sesortCondition)

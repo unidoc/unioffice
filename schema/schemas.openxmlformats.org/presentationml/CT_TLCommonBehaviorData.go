@@ -92,7 +92,6 @@ func (m *CT_TLCommonBehaviorData) MarshalXML(e *xml.Encoder, start xml.StartElem
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secTn := xml.StartElement{Name: xml.Name{Local: "p:cTn"}}
 	e.EncodeElement(m.CTn, secTn)
 	setgtEl := xml.StartElement{Name: xml.Name{Local: "p:tgtEl"}}

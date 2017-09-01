@@ -54,7 +54,6 @@ func (m *CT_HtmlPublishProperties) MarshalXML(e *xml.Encoder, start xml.StartEle
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:id"},
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SldAll != nil {
 		sesldAll := xml.StartElement{Name: xml.Name{Local: "p:sldAll"}}
 		e.EncodeElement(m.SldAll, sesldAll)

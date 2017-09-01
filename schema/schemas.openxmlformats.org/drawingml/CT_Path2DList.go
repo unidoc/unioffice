@@ -26,7 +26,6 @@ func (m *CT_Path2DList) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Path != nil {
 		sepath := xml.StartElement{Name: xml.Name{Local: "a:path"}}
 		e.EncodeElement(m.Path, sepath)

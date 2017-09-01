@@ -26,7 +26,6 @@ func (m *CT_EffectStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seeffectStyle := xml.StartElement{Name: xml.Name{Local: "a:effectStyle"}}
 	e.EncodeElement(m.EffectStyle, seeffectStyle)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

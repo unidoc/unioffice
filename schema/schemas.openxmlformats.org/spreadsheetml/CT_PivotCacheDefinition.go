@@ -164,7 +164,6 @@ func (m *CT_PivotCacheDefinition) MarshalXML(e *xml.Encoder, start xml.StartElem
 			Value: fmt.Sprintf("%v", *m.SupportAdvancedDrillAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secacheSource := xml.StartElement{Name: xml.Name{Local: "x:cacheSource"}}
 	e.EncodeElement(m.CacheSource, secacheSource)
 	secacheFields := xml.StartElement{Name: xml.Name{Local: "x:cacheFields"}}

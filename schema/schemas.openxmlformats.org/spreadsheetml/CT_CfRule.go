@@ -120,7 +120,6 @@ func (m *CT_CfRule) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.EqualAverageAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Formula != nil {
 		seformula := xml.StartElement{Name: xml.Name{Local: "x:formula"}}
 		e.EncodeElement(m.Formula, seformula)

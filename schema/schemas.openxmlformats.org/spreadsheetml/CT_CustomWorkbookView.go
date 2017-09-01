@@ -170,7 +170,6 @@ func (m *CT_CustomWorkbookView) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

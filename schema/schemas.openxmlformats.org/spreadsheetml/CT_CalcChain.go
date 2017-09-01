@@ -28,7 +28,6 @@ func (m *CT_CalcChain) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sec := xml.StartElement{Name: xml.Name{Local: "x:c"}}
 	e.EncodeElement(m.C, sec)
 	if m.ExtLst != nil {

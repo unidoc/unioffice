@@ -31,7 +31,6 @@ func (m *CT_CustomGeometry2D) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.AvLst != nil {
 		seavLst := xml.StartElement{Name: xml.Name{Local: "a:avLst"}}
 		e.EncodeElement(m.AvLst, seavLst)

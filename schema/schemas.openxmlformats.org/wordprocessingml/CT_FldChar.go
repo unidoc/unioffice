@@ -53,7 +53,6 @@ func (m *CT_FldChar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.DirtyAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FldData != nil {
 		sefldData := xml.StartElement{Name: xml.Name{Local: "w:fldData"}}
 		e.EncodeElement(m.FldData, sefldData)

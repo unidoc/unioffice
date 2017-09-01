@@ -105,7 +105,6 @@ func (m *CT_TableColumn) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.TotalsRowCellStyleAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CalculatedColumnFormula != nil {
 		secalculatedColumnFormula := xml.StartElement{Name: xml.Name{Local: "x:calculatedColumnFormula"}}
 		e.EncodeElement(m.CalculatedColumnFormula, secalculatedColumnFormula)

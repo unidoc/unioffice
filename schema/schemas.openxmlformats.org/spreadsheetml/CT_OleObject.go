@@ -73,7 +73,6 @@ func (m *CT_OleObject) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.IdAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ObjectPr != nil {
 		seobjectPr := xml.StartElement{Name: xml.Name{Local: "x:objectPr"}}
 		e.EncodeElement(m.ObjectPr, seobjectPr)

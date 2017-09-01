@@ -55,7 +55,6 @@ func (m *CT_FilterColumn) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.ShowButtonAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Filters != nil {
 		sefilters := xml.StartElement{Name: xml.Name{Local: "x:filters"}}
 		e.EncodeElement(m.Filters, sefilters)

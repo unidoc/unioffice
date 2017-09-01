@@ -80,7 +80,6 @@ func (m *CT_OuterShadowEffect) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.RotWithShapeAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ScrgbClr != nil {
 		sescrgbClr := xml.StartElement{Name: xml.Name{Local: "a:scrgbClr"}}
 		e.EncodeElement(m.ScrgbClr, sescrgbClr)

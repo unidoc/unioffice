@@ -27,7 +27,6 @@ func (m *CT_TLTimeNodeExclusive) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secTn := xml.StartElement{Name: xml.Name{Local: "p:cTn"}}
 	e.EncodeElement(m.CTn, secTn)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

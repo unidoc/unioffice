@@ -34,7 +34,6 @@ func (m *CT_ParaRPrOriginal) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Ins != nil {
 		seins := xml.StartElement{Name: xml.Name{Local: "w:ins"}}
 		e.EncodeElement(m.Ins, seins)

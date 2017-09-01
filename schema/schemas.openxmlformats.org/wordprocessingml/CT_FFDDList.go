@@ -31,7 +31,6 @@ func (m *CT_FFDDList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Result != nil {
 		seresult := xml.StartElement{Name: xml.Name{Local: "w:result"}}
 		e.EncodeElement(m.Result, seresult)

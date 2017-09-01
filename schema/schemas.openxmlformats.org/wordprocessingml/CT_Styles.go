@@ -31,7 +31,6 @@ func (m *CT_Styles) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DocDefaults != nil {
 		sedocDefaults := xml.StartElement{Name: xml.Name{Local: "w:docDefaults"}}
 		e.EncodeElement(m.DocDefaults, sedocDefaults)

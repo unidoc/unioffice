@@ -40,7 +40,6 @@ func (m *CT_CustomXmlRow) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:element"},
 		Value: fmt.Sprintf("%v", m.ElementAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CustomXmlPr != nil {
 		secustomXmlPr := xml.StartElement{Name: xml.Name{Local: "w:customXmlPr"}}
 		e.EncodeElement(m.CustomXmlPr, secustomXmlPr)

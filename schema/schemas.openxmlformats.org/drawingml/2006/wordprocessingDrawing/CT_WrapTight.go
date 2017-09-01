@@ -45,7 +45,6 @@ func (m *CT_WrapTight) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.DistRAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sewrapPolygon := xml.StartElement{Name: xml.Name{Local: "wp:wrapPolygon"}}
 	e.EncodeElement(m.WrapPolygon, sewrapPolygon)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

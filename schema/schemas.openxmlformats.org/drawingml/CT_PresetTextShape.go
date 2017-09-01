@@ -33,7 +33,6 @@ func (m *CT_PresetTextShape) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	start.Attr = append(start.Attr, attr)
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.AvLst != nil {
 		seavLst := xml.StartElement{Name: xml.Name{Local: "a:avLst"}}
 		e.EncodeElement(m.AvLst, seavLst)

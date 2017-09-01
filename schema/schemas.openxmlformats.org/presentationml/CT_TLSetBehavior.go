@@ -29,7 +29,6 @@ func (m *CT_TLSetBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secBhvr := xml.StartElement{Name: xml.Name{Local: "p:cBhvr"}}
 	e.EncodeElement(m.CBhvr, secBhvr)
 	if m.To != nil {

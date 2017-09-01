@@ -36,7 +36,6 @@ func (m *CT_AutoFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.RefAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FilterColumn != nil {
 		sefilterColumn := xml.StartElement{Name: xml.Name{Local: "x:filterColumn"}}
 		e.EncodeElement(m.FilterColumn, sefilterColumn)

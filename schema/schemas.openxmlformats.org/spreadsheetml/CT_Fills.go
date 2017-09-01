@@ -34,7 +34,6 @@ func (m *CT_Fills) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Fill != nil {
 		sefill := xml.StartElement{Name: xml.Name{Local: "x:fill"}}
 		e.EncodeElement(m.Fill, sefill)

@@ -27,7 +27,6 @@ func (m *CT_Hyperlinks) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sehyperlink := xml.StartElement{Name: xml.Name{Local: "x:hyperlink"}}
 	e.EncodeElement(m.Hyperlink, sehyperlink)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

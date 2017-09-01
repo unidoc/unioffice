@@ -36,7 +36,6 @@ func (m *CT_PivotCacheRecords) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.R != nil {
 		ser := xml.StartElement{Name: xml.Name{Local: "x:r"}}
 		e.EncodeElement(m.R, ser)

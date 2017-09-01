@@ -26,7 +26,6 @@ func (m *CT_SDCategories) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Cat != nil {
 		secat := xml.StartElement{Name: xml.Name{Local: "cat"}}
 		e.EncodeElement(m.Cat, secat)

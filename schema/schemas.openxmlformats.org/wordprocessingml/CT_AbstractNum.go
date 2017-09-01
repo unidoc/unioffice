@@ -44,7 +44,6 @@ func (m *CT_AbstractNum) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:abstractNumId"},
 		Value: fmt.Sprintf("%v", m.AbstractNumIdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Nsid != nil {
 		sensid := xml.StartElement{Name: xml.Name{Local: "w:nsid"}}
 		e.EncodeElement(m.Nsid, sensid)

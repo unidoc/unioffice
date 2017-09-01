@@ -33,7 +33,6 @@ func (m *CT_BackgroundProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 			Value: fmt.Sprintf("%v", *m.ShadeToTitleAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "p:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

@@ -27,7 +27,6 @@ func (m *CT_DdeItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DdeItem != nil {
 		seddeItem := xml.StartElement{Name: xml.Name{Local: "x:ddeItem"}}
 		e.EncodeElement(m.DdeItem, seddeItem)

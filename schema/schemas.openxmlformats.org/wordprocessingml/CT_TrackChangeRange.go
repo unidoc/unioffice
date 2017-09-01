@@ -47,7 +47,6 @@ func (m *CT_TrackChangeRange) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	start.Name.Local = "w:CT_TrackChangeRange"
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

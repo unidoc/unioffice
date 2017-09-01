@@ -166,7 +166,6 @@ func (m *CT_Table) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.ConnectionIdAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.AutoFilter != nil {
 		seautoFilter := xml.StartElement{Name: xml.Name{Local: "x:autoFilter"}}
 		e.EncodeElement(m.AutoFilter, seautoFilter)

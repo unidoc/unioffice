@@ -30,7 +30,6 @@ func (m *CT_SdtDocPart) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DocPartGallery != nil {
 		sedocPartGallery := xml.StartElement{Name: xml.Name{Local: "w:docPartGallery"}}
 		e.EncodeElement(m.DocPartGallery, sedocPartGallery)

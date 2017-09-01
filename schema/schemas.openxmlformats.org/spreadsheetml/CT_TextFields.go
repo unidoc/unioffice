@@ -34,7 +34,6 @@ func (m *CT_TextFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	setextField := xml.StartElement{Name: xml.Name{Local: "x:textField"}}
 	e.EncodeElement(m.TextField, setextField)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

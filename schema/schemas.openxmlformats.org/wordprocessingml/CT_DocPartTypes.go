@@ -35,7 +35,6 @@ func (m *CT_DocPartTypes) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.AllAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Type != nil {
 		setype := xml.StartElement{Name: xml.Name{Local: "w:type"}}
 		e.EncodeElement(m.Type, setype)

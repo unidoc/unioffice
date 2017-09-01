@@ -26,7 +26,6 @@ func (m *CT_TableGrid) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.GridCol != nil {
 		segridCol := xml.StartElement{Name: xml.Name{Local: "a:gridCol"}}
 		e.EncodeElement(m.GridCol, segridCol)

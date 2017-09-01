@@ -35,7 +35,6 @@ func (m *CT_StyleMatrixReference) MarshalXML(e *xml.Encoder, start xml.StartElem
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "idx"},
 		Value: fmt.Sprintf("%v", m.IdxAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ScrgbClr != nil {
 		sescrgbClr := xml.StartElement{Name: xml.Name{Local: "a:scrgbClr"}}
 		e.EncodeElement(m.ScrgbClr, sescrgbClr)

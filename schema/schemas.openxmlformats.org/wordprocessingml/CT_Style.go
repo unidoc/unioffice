@@ -98,7 +98,6 @@ func (m *CT_Style) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CustomStyleAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Name != nil {
 		sename := xml.StartElement{Name: xml.Name{Local: "w:name"}}
 		e.EncodeElement(m.Name, sename)

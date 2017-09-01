@@ -24,7 +24,6 @@ func (m *CT_TextUnderlineFillFollowText) MarshalXML(e *xml.Encoder, start xml.St
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

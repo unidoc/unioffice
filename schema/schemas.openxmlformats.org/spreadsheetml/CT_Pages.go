@@ -34,7 +34,6 @@ func (m *CT_Pages) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sepage := xml.StartElement{Name: xml.Name{Local: "x:page"}}
 	e.EncodeElement(m.Page, sepage)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

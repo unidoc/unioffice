@@ -40,7 +40,6 @@ func (m *CT_SdtDate) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.FullDateAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DateFormat != nil {
 		sedateFormat := xml.StartElement{Name: xml.Name{Local: "w:dateFormat"}}
 		e.EncodeElement(m.DateFormat, sedateFormat)

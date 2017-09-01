@@ -67,7 +67,6 @@ func (m *CT_RevisionHeader) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.MaxRIdAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sesheetIdMap := xml.StartElement{Name: xml.Name{Local: "x:sheetIdMap"}}
 	e.EncodeElement(m.SheetIdMap, sesheetIdMap)
 	if m.ReviewedList != nil {

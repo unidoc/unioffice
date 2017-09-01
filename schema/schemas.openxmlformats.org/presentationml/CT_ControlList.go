@@ -27,7 +27,6 @@ func (m *CT_ControlList) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Control != nil {
 		secontrol := xml.StartElement{Name: xml.Name{Local: "p:control"}}
 		e.EncodeElement(m.Control, secontrol)

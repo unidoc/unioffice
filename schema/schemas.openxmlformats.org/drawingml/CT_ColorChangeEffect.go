@@ -35,7 +35,6 @@ func (m *CT_ColorChangeEffect) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.UseAAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seclrFrom := xml.StartElement{Name: xml.Name{Local: "a:clrFrom"}}
 	e.EncodeElement(m.ClrFrom, seclrFrom)
 	seclrTo := xml.StartElement{Name: xml.Name{Local: "a:clrTo"}}

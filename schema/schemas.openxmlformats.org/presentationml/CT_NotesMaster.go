@@ -37,7 +37,6 @@ func (m *CT_NotesMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secSld := xml.StartElement{Name: xml.Name{Local: "p:cSld"}}
 	e.EncodeElement(m.CSld, secSld)
 	seclrMap := xml.StartElement{Name: xml.Name{Local: "p:clrMap"}}

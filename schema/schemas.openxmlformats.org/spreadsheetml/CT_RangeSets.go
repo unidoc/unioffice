@@ -34,7 +34,6 @@ func (m *CT_RangeSets) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	serangeSet := xml.StartElement{Name: xml.Name{Local: "x:rangeSet"}}
 	e.EncodeElement(m.RangeSet, serangeSet)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

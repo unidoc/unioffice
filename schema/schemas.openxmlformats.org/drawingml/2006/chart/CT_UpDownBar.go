@@ -27,7 +27,6 @@ func (m *CT_UpDownBar) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SpPr != nil {
 		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)

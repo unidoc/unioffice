@@ -44,7 +44,6 @@ func (m *CT_Colors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EG_ColorChoice != nil {
 		for _, c := range m.EG_ColorChoice {
 			c.MarshalXML(e, start)

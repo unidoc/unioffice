@@ -29,7 +29,6 @@ func (m *CT_SRgbColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "val"},
 		Value: fmt.Sprintf("%v", m.ValAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EG_ColorTransform != nil {
 		for _, c := range m.EG_ColorTransform {
 			c.MarshalXML(e, start)

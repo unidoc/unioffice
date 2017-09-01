@@ -26,7 +26,6 @@ func (m *CT_Authors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Author != nil {
 		seauthor := xml.StartElement{Name: xml.Name{Local: "x:author"}}
 		e.EncodeElement(m.Author, seauthor)

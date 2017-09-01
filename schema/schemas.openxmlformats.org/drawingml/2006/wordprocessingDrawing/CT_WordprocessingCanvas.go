@@ -31,7 +31,6 @@ func (m *CT_WordprocessingCanvas) MarshalXML(e *xml.Encoder, start xml.StartElem
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Bg != nil {
 		sebg := xml.StartElement{Name: xml.Name{Local: "wp:bg"}}
 		e.EncodeElement(m.Bg, sebg)

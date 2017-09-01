@@ -51,7 +51,6 @@ func (m *CT_TimeNodeList) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Par != nil {
 		separ := xml.StartElement{Name: xml.Name{Local: "p:par"}}
 		e.EncodeElement(m.Par, separ)

@@ -31,7 +31,6 @@ func (m *CT_Keywords) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.LangAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Value != nil {
 		sevalue := xml.StartElement{Name: xml.Name{Local: "cp:value"}}
 		e.EncodeElement(m.Value, sevalue)

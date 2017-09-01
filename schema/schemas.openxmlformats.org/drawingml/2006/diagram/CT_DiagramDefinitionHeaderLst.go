@@ -26,7 +26,6 @@ func (m *CT_DiagramDefinitionHeaderLst) MarshalXML(e *xml.Encoder, start xml.Sta
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.LayoutDefHdr != nil {
 		selayoutDefHdr := xml.StartElement{Name: xml.Name{Local: "layoutDefHdr"}}
 		e.EncodeElement(m.LayoutDefHdr, selayoutDefHdr)

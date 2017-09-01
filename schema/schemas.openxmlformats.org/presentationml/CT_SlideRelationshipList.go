@@ -27,7 +27,6 @@ func (m *CT_SlideRelationshipList) MarshalXML(e *xml.Encoder, start xml.StartEle
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Sld != nil {
 		sesld := xml.StartElement{Name: xml.Name{Local: "p:sld"}}
 		e.EncodeElement(m.Sld, sesld)

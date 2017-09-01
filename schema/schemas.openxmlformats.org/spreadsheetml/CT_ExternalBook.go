@@ -34,7 +34,6 @@ func (m *CT_ExternalBook) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:id"},
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SheetNames != nil {
 		sesheetNames := xml.StartElement{Name: xml.Name{Local: "x:sheetNames"}}
 		e.EncodeElement(m.SheetNames, sesheetNames)

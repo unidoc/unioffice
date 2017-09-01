@@ -26,7 +26,6 @@ func (m *CT_ThemeableLineStyle) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Ln != nil {
 		seln := xml.StartElement{Name: xml.Name{Local: "a:ln"}}
 		e.EncodeElement(m.Ln, seln)

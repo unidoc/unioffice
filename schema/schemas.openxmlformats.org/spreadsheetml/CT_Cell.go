@@ -75,7 +75,6 @@ func (m *CT_Cell) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.PhAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.F != nil {
 		sef := xml.StartElement{Name: xml.Name{Local: "x:f"}}
 		e.EncodeElement(m.F, sef)

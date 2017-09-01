@@ -29,7 +29,6 @@ func (m *CT_LimLow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.LimLowPr != nil {
 		selimLowPr := xml.StartElement{Name: xml.Name{Local: "m:limLowPr"}}
 		e.EncodeElement(m.LimLowPr, selimLowPr)

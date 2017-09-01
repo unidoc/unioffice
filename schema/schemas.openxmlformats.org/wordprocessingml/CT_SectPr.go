@@ -86,7 +86,6 @@ func (m *CT_SectPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.RsidSectAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EG_HdrFtrReferences != nil {
 		for _, c := range m.EG_HdrFtrReferences {
 			c.MarshalXML(e, start)

@@ -26,7 +26,6 @@ func (m *CT_NonVisualGroupDrawingShapeProps) MarshalXML(e *xml.Encoder, start xm
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.GrpSpLocks != nil {
 		segrpSpLocks := xml.StartElement{Name: xml.Name{Local: "a:grpSpLocks"}}
 		e.EncodeElement(m.GrpSpLocks, segrpSpLocks)

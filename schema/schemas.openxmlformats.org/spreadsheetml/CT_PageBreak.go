@@ -40,7 +40,6 @@ func (m *CT_PageBreak) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.ManualBreakCountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Brk != nil {
 		sebrk := xml.StartElement{Name: xml.Name{Local: "x:brk"}}
 		e.EncodeElement(m.Brk, sebrk)

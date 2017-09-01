@@ -43,7 +43,6 @@ func (m *CT_Transform2D) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.FlipVAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Off != nil {
 		seoff := xml.StartElement{Name: xml.Name{Local: "a:off"}}
 		e.EncodeElement(m.Off, seoff)

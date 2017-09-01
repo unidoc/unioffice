@@ -27,7 +27,6 @@ func (m *CT_CustomWorkbookViews) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secustomWorkbookView := xml.StartElement{Name: xml.Name{Local: "x:customWorkbookView"}}
 	e.EncodeElement(m.CustomWorkbookView, secustomWorkbookView)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

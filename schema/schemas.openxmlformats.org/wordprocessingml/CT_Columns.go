@@ -54,7 +54,6 @@ func (m *CT_Columns) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.SepAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secol := xml.StartElement{Name: xml.Name{Local: "w:col"}}
 	e.EncodeElement(m.Col, secol)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

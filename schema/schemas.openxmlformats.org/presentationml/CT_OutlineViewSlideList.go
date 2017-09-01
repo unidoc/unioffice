@@ -27,7 +27,6 @@ func (m *CT_OutlineViewSlideList) MarshalXML(e *xml.Encoder, start xml.StartElem
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Sld != nil {
 		sesld := xml.StartElement{Name: xml.Name{Local: "p:sld"}}
 		e.EncodeElement(m.Sld, sesld)

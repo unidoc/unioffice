@@ -38,7 +38,6 @@ func (m *CT_PhoneticRun) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "eb"},
 		Value: fmt.Sprintf("%v", m.EbAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	set := xml.StartElement{Name: xml.Name{Local: "x:t"}}
 	gooxml.AddPreserveSpaceAttr(&set, m.T)
 	e.EncodeElement(m.T, set)

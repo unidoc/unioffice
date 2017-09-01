@@ -32,7 +32,6 @@ func (m *CT_MeasureGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "caption"},
 		Value: fmt.Sprintf("%v", m.CaptionAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

@@ -30,7 +30,6 @@ func (m *CT_Scene3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secamera := xml.StartElement{Name: xml.Name{Local: "a:camera"}}
 	e.EncodeElement(m.Camera, secamera)
 	selightRig := xml.StartElement{Name: xml.Name{Local: "a:lightRig"}}

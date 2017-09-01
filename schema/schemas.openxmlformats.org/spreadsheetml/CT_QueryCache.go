@@ -34,7 +34,6 @@ func (m *CT_QueryCache) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sequery := xml.StartElement{Name: xml.Name{Local: "x:query"}}
 	e.EncodeElement(m.Query, sequery)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

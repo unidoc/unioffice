@@ -33,7 +33,6 @@ func (m *CT_SlideMasterTextStyles) MarshalXML(e *xml.Encoder, start xml.StartEle
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TitleStyle != nil {
 		setitleStyle := xml.StartElement{Name: xml.Name{Local: "p:titleStyle"}}
 		e.EncodeElement(m.TitleStyle, setitleStyle)

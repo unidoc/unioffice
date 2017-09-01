@@ -56,7 +56,6 @@ func (m *CT_Boolean) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CpAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.X != nil {
 		sex := xml.StartElement{Name: xml.Name{Local: "x:x"}}
 		e.EncodeElement(m.X, sex)

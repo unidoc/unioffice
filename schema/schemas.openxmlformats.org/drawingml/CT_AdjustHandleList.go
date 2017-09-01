@@ -27,7 +27,6 @@ func (m *CT_AdjustHandleList) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.AhXY != nil {
 		seahXY := xml.StartElement{Name: xml.Name{Local: "a:ahXY"}}
 		e.EncodeElement(m.AhXY, seahXY)

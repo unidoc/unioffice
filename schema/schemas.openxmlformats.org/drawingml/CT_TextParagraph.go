@@ -28,7 +28,6 @@ func (m *CT_TextParagraph) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PPr != nil {
 		sepPr := xml.StartElement{Name: xml.Name{Local: "a:pPr"}}
 		e.EncodeElement(m.PPr, sepPr)

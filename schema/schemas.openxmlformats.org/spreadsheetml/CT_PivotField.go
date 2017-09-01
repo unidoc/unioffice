@@ -326,7 +326,6 @@ func (m *CT_PivotField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.DefaultAttributeDrillStateAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Items != nil {
 		seitems := xml.StartElement{Name: xml.Name{Local: "x:items"}}
 		e.EncodeElement(m.Items, seitems)

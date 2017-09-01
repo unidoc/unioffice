@@ -82,7 +82,6 @@ func (m *CT_PictureLocking) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.NoChangeShapeTypeAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "a:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

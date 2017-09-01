@@ -29,7 +29,6 @@ func (m *CT_TextBody) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sebodyPr := xml.StartElement{Name: xml.Name{Local: "a:bodyPr"}}
 	e.EncodeElement(m.BodyPr, sebodyPr)
 	if m.LstStyle != nil {

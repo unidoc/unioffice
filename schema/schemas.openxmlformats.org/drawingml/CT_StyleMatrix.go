@@ -38,7 +38,6 @@ func (m *CT_StyleMatrix) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.NameAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sefillStyleLst := xml.StartElement{Name: xml.Name{Local: "a:fillStyleLst"}}
 	e.EncodeElement(m.FillStyleLst, sefillStyleLst)
 	selnStyleLst := xml.StartElement{Name: xml.Name{Local: "a:lnStyleLst"}}

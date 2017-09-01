@@ -40,7 +40,6 @@ func (m *CT_SmartTagRun) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:element"},
 		Value: fmt.Sprintf("%v", m.ElementAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SmartTagPr != nil {
 		sesmartTagPr := xml.StartElement{Name: xml.Name{Local: "w:smartTagPr"}}
 		e.EncodeElement(m.SmartTagPr, sesmartTagPr)

@@ -46,7 +46,6 @@ func (m *CT_TLAnimateRotationBehavior) MarshalXML(e *xml.Encoder, start xml.Star
 			Value: fmt.Sprintf("%v", *m.ToAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secBhvr := xml.StartElement{Name: xml.Name{Local: "p:cBhvr"}}
 	e.EncodeElement(m.CBhvr, secBhvr)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

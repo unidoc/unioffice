@@ -26,7 +26,6 @@ func (m *CT_TextBlipBullet) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seblip := xml.StartElement{Name: xml.Name{Local: "a:blip"}}
 	e.EncodeElement(m.Blip, seblip)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

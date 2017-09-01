@@ -26,7 +26,6 @@ func (m *CT_StyleDefinitionHeaderLst) MarshalXML(e *xml.Encoder, start xml.Start
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.StyleDefHdr != nil {
 		sestyleDefHdr := xml.StartElement{Name: xml.Name{Local: "styleDefHdr"}}
 		e.EncodeElement(m.StyleDefHdr, sestyleDefHdr)

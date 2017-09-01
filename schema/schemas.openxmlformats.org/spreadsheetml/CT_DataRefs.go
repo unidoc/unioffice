@@ -34,7 +34,6 @@ func (m *CT_DataRefs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DataRef != nil {
 		sedataRef := xml.StartElement{Name: xml.Name{Local: "x:dataRef"}}
 		e.EncodeElement(m.DataRef, sedataRef)

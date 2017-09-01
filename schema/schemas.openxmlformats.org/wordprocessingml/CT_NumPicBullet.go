@@ -33,7 +33,6 @@ func (m *CT_NumPicBullet) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:numPicBulletId"},
 		Value: fmt.Sprintf("%v", m.NumPicBulletIdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Pict != nil {
 		sepict := xml.StartElement{Name: xml.Name{Local: "w:pict"}}
 		e.EncodeElement(m.Pict, sepict)

@@ -29,7 +29,6 @@ func (m *CT_Scale2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	start.Name.Local = "a:CT_Scale2D"
 	e.EncodeToken(start)
-	start.Attr = nil
 	sesx := xml.StartElement{Name: xml.Name{Local: "a:sx"}}
 	e.EncodeElement(m.Sx, sesx)
 	sesy := xml.StartElement{Name: xml.Name{Local: "a:sy"}}

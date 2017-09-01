@@ -26,7 +26,6 @@ func (m *CT_ExternalLink) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Choice != nil {
 		m.Choice.MarshalXML(e, start)
 	}

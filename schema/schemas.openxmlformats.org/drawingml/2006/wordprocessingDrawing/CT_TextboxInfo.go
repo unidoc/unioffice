@@ -36,7 +36,6 @@ func (m *CT_TextboxInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.IdAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	setxbxContent := xml.StartElement{Name: xml.Name{Local: "wp:txbxContent"}}
 	e.EncodeElement(m.TxbxContent, setxbxContent)
 	if m.ExtLst != nil {

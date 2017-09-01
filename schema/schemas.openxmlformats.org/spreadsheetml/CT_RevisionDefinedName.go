@@ -172,7 +172,6 @@ func (m *CT_RevisionDefinedName) MarshalXML(e *xml.Encoder, start xml.StartEleme
 			Value: fmt.Sprintf("%v", *m.RaAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Formula != nil {
 		seformula := xml.StartElement{Name: xml.Name{Local: "x:formula"}}
 		gooxml.AddPreserveSpaceAttr(&seformula, *m.Formula)

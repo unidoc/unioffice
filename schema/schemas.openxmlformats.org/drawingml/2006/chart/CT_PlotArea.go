@@ -33,7 +33,6 @@ func (m *CT_PlotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Layout != nil {
 		selayout := xml.StartElement{Name: xml.Name{Local: "layout"}}
 		e.EncodeElement(m.Layout, selayout)

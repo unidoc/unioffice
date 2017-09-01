@@ -101,7 +101,6 @@ func (m *CT_RevisionHeaders) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.PreserveHistoryAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seheader := xml.StartElement{Name: xml.Name{Local: "x:header"}}
 	e.EncodeElement(m.Header, seheader)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

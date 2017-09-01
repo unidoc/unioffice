@@ -44,7 +44,6 @@ func (m *CT_FieldGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.BaseAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.RangePr != nil {
 		serangePr := xml.StartElement{Name: xml.Name{Local: "x:rangePr"}}
 		e.EncodeElement(m.RangePr, serangePr)

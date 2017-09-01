@@ -31,7 +31,6 @@ func (m *CT_CellSmartTags) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r"},
 		Value: fmt.Sprintf("%v", m.RAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	secellSmartTag := xml.StartElement{Name: xml.Name{Local: "x:cellSmartTag"}}
 	e.EncodeElement(m.CellSmartTag, secellSmartTag)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

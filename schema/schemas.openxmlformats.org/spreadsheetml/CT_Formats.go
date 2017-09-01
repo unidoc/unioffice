@@ -34,7 +34,6 @@ func (m *CT_Formats) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seformat := xml.StartElement{Name: xml.Name{Local: "x:format"}}
 	e.EncodeElement(m.Format, seformat)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

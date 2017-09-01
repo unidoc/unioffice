@@ -27,7 +27,6 @@ func (m *CT_Connections) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seconnection := xml.StartElement{Name: xml.Name{Local: "x:connection"}}
 	e.EncodeElement(m.Connection, seconnection)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -45,7 +45,6 @@ func (m *CT_TLIterateData) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 			Value: fmt.Sprintf("%v", *m.BackwardsAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TmAbs != nil {
 		setmAbs := xml.StartElement{Name: xml.Name{Local: "p:tmAbs"}}
 		e.EncodeElement(m.TmAbs, setmAbs)

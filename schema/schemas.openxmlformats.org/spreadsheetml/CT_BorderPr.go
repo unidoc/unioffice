@@ -35,7 +35,6 @@ func (m *CT_BorderPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Color != nil {
 		secolor := xml.StartElement{Name: xml.Name{Local: "x:color"}}
 		e.EncodeElement(m.Color, secolor)

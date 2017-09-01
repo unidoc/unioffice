@@ -65,7 +65,6 @@ func (m *CT_TLAnimateBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secBhvr := xml.StartElement{Name: xml.Name{Local: "p:cBhvr"}}
 	e.EncodeElement(m.CBhvr, secBhvr)
 	if m.TavLst != nil {

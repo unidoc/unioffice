@@ -46,7 +46,6 @@ func (m *CT_Format) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.DxfIdAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sepivotArea := xml.StartElement{Name: xml.Name{Local: "x:pivotArea"}}
 	e.EncodeElement(m.PivotArea, sepivotArea)
 	if m.ExtLst != nil {

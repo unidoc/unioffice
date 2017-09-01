@@ -25,7 +25,6 @@ func (m *CT_OMathParaPr) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Jc != nil {
 		sejc := xml.StartElement{Name: xml.Name{Local: "m:jc"}}
 		e.EncodeElement(m.Jc, sejc)

@@ -53,7 +53,6 @@ func (m *CT_Comment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.ShapeIdAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	setext := xml.StartElement{Name: xml.Name{Local: "x:text"}}
 	e.EncodeElement(m.Text, setext)
 	if m.CommentPr != nil {

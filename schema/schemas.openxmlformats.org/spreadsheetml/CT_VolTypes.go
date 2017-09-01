@@ -28,7 +28,6 @@ func (m *CT_VolTypes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sevolType := xml.StartElement{Name: xml.Name{Local: "x:volType"}}
 	e.EncodeElement(m.VolType, sevolType)
 	if m.ExtLst != nil {

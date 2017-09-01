@@ -69,7 +69,6 @@ func (m *CT_NormalViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 			Value: fmt.Sprintf("%v", *m.PreferSingleViewAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	serestoredLeft := xml.StartElement{Name: xml.Name{Local: "p:restoredLeft"}}
 	e.EncodeElement(m.RestoredLeft, serestoredLeft)
 	serestoredTop := xml.StartElement{Name: xml.Name{Local: "p:restoredTop"}}

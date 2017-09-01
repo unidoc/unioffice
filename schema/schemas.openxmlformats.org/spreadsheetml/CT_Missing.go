@@ -96,7 +96,6 @@ func (m *CT_Missing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.BAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Tpls != nil {
 		setpls := xml.StartElement{Name: xml.Name{Local: "x:tpls"}}
 		e.EncodeElement(m.Tpls, setpls)

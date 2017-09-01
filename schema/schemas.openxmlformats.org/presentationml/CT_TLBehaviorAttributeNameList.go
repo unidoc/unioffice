@@ -26,7 +26,6 @@ func (m *CT_TLBehaviorAttributeNameList) MarshalXML(e *xml.Encoder, start xml.St
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seattrName := xml.StartElement{Name: xml.Name{Local: "p:attrName"}}
 	e.EncodeElement(m.AttrName, seattrName)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

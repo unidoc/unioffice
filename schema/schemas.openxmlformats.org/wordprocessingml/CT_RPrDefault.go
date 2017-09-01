@@ -26,7 +26,6 @@ func (m *CT_RPrDefault) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.RPr != nil {
 		serPr := xml.StartElement{Name: xml.Name{Local: "w:rPr"}}
 		e.EncodeElement(m.RPr, serPr)

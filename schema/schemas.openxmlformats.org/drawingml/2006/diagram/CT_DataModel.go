@@ -32,7 +32,6 @@ func (m *CT_DataModel) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	septLst := xml.StartElement{Name: xml.Name{Local: "ptLst"}}
 	e.EncodeElement(m.PtLst, septLst)
 	if m.CxnLst != nil {

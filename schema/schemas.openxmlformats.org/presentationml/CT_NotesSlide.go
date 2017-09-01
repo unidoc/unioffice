@@ -44,7 +44,6 @@ func (m *CT_NotesSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.ShowMasterPhAnimAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secSld := xml.StartElement{Name: xml.Name{Local: "p:cSld"}}
 	e.EncodeElement(m.CSld, secSld)
 	if m.ClrMapOvr != nil {

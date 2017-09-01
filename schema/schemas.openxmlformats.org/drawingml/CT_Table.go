@@ -29,7 +29,6 @@ func (m *CT_Table) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TblPr != nil {
 		setblPr := xml.StartElement{Name: xml.Name{Local: "a:tblPr"}}
 		e.EncodeElement(m.TblPr, setblPr)

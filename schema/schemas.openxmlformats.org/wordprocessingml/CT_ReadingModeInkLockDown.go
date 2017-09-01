@@ -43,7 +43,6 @@ func (m *CT_ReadingModeInkLockDown) MarshalXML(e *xml.Encoder, start xml.StartEl
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:fontSz"},
 		Value: fmt.Sprintf("%v", m.FontSzAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

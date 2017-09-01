@@ -33,7 +33,6 @@ func (m *CT_BorderBoxPr) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.HideTop != nil {
 		sehideTop := xml.StartElement{Name: xml.Name{Local: "m:hideTop"}}
 		e.EncodeElement(m.HideTop, sehideTop)
