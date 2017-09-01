@@ -90,3 +90,41 @@ func (p ParagraphProperties) SetHeadingLevel(idx int) {
 	p.x.NumPr.NumId = wml.NewCT_DecimalNumber()
 	p.x.NumPr.NumId.ValAttr = int64(1)
 }
+
+// SetKeepWithNext controls if this paragraph should be kept with the next.
+func (p ParagraphProperties) SetKeepWithNext(b bool) {
+	if !b {
+		p.x.KeepNext = nil
+	} else {
+		p.x.KeepNext = wml.NewCT_OnOff()
+	}
+}
+
+// SetKeepOnOnePage controls if all lines in a paragraph are kept on the same
+// page.
+func (p ParagraphProperties) SetKeepOnOnePage(b bool) {
+	if !b {
+		p.x.KeepLines = nil
+	} else {
+		p.x.KeepLines = wml.NewCT_OnOff()
+	}
+}
+
+// SetPageBreakBefore controls if there is a page break before this paragraph.
+func (p ParagraphProperties) SetPageBreakBefore(b bool) {
+	if !b {
+		p.x.PageBreakBefore = nil
+	} else {
+		p.x.PageBreakBefore = wml.NewCT_OnOff()
+	}
+}
+
+// SetWindowControl controls if the first or last line of the paragraph is
+// allowed to dispay on a separate page.
+func (p ParagraphProperties) SetWindowControl(b bool) {
+	if !b {
+		p.x.WidowControl = nil
+	} else {
+		p.x.WidowControl = wml.NewCT_OnOff()
+	}
+}
