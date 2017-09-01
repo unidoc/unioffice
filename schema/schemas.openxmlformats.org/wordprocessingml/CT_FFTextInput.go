@@ -31,7 +31,6 @@ func (m *CT_FFTextInput) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	if m == nil {
 		return nil
 	}
-	start.Name.Local = "w:CT_FFTextInput"
 	e.EncodeToken(start)
 	start.Attr = nil
 	if m.Type != nil {

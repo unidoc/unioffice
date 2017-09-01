@@ -30,7 +30,6 @@ func (m *CT_FFDDList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
 	}
-	start.Name.Local = "w:CT_FFDDList"
 	e.EncodeToken(start)
 	start.Attr = nil
 	if m.Result != nil {
