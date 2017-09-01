@@ -9,8 +9,8 @@ package wordprocessingml
 
 import (
 	"encoding/xml"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/math"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/schemaLibrary"
 )
@@ -549,10 +549,11 @@ lSettings:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
-				if err := d.Skip(); err != nil {
+				any := &gooxml.XSDAny{}
+				if err := d.DecodeElement(any, &el); err != nil {
 					return err
 				}
+				m.Extra = append(m.Extra, any)
 			}
 		case xml.EndElement:
 			break lSettings

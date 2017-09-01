@@ -10,8 +10,8 @@ package wordprocessingml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/math"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/schemaLibrary"
 )
@@ -211,6 +211,7 @@ type CT_Settings struct {
 	DecimalSymbol *CT_String
 	// List Separator for Field Code Evaluation
 	ListSeparator *CT_String
+	Extra         []gooxml.Any
 }
 
 func NewCT_Settings() *CT_Settings {
@@ -614,6 +615,11 @@ func (m *CT_Settings) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ListSeparator != nil {
 		selistSeparator := xml.StartElement{Name: xml.Name{Local: "w:listSeparator"}}
 		e.EncodeElement(m.ListSeparator, selistSeparator)
+	}
+	for _, any := range m.Extra {
+		if err := any.MarshalXML(e, start); err != nil {
+			return err
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -1124,10 +1130,11 @@ lCT_Settings:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
-				if err := d.Skip(); err != nil {
+				any := &gooxml.XSDAny{}
+				if err := d.DecodeElement(any, &el); err != nil {
 					return err
 				}
+				m.Extra = append(m.Extra, any)
 			}
 		case xml.EndElement:
 			break lCT_Settings
