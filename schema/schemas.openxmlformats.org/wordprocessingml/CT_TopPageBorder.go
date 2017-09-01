@@ -163,16 +163,14 @@ func (m *CT_TopPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			pt := uint64(parsed)
-			m.SzAttr = &pt
+			m.SzAttr = &parsed
 		}
 		if attr.Name.Local == "space" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			pt := uint64(parsed)
-			m.SpaceAttr = &pt
+			m.SpaceAttr = &parsed
 		}
 		if attr.Name.Local == "shadow" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)

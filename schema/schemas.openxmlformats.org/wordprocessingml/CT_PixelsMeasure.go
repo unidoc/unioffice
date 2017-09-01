@@ -42,7 +42,7 @@ func (m *CT_PixelsMeasure) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			if err != nil {
 				return err
 			}
-			m.ValAttr = uint64(parsed)
+			m.ValAttr = parsed
 		}
 	}
 	// skip any extensions we may find, but don't support
