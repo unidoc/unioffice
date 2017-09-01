@@ -33,6 +33,7 @@ func NewCT_DataConsolidate() *CT_DataConsolidate {
 	ret := &CT_DataConsolidate{}
 	return ret
 }
+
 func (m *CT_DataConsolidate) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -68,6 +69,7 @@ func (m *CT_DataConsolidate) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DataConsolidate) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -130,9 +132,13 @@ lCT_DataConsolidate:
 	}
 	return nil
 }
+
+// Validate validates the CT_DataConsolidate and its children
 func (m *CT_DataConsolidate) Validate() error {
 	return m.ValidateWithPath("CT_DataConsolidate")
 }
+
+// ValidateWithPath validates the CT_DataConsolidate and its children, prefixing error messages with path
 func (m *CT_DataConsolidate) ValidateWithPath(path string) error {
 	if err := m.FunctionAttr.ValidateWithPath(path + "/FunctionAttr"); err != nil {
 		return err

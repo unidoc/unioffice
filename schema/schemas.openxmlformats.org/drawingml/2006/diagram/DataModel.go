@@ -23,6 +23,7 @@ func NewDataModel() *DataModel {
 	ret.CT_DataModel = *NewCT_DataModel()
 	return ret
 }
+
 func (m *DataModel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *DataModel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "dataModel"
 	return m.CT_DataModel.MarshalXML(e, start)
 }
+
 func (m *DataModel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_DataModel = *NewCT_DataModel()
@@ -84,9 +86,13 @@ lDataModel:
 	}
 	return nil
 }
+
+// Validate validates the DataModel and its children
 func (m *DataModel) Validate() error {
 	return m.ValidateWithPath("DataModel")
 }
+
+// ValidateWithPath validates the DataModel and its children, prefixing error messages with path
 func (m *DataModel) ValidateWithPath(path string) error {
 	if err := m.CT_DataModel.ValidateWithPath(path); err != nil {
 		return err

@@ -30,6 +30,7 @@ func NewCT_SurfaceSer() *CT_SurfaceSer {
 	ret.Order = NewCT_UnsignedInt()
 	return ret
 }
+
 func (m *CT_SurfaceSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -62,6 +63,7 @@ func (m *CT_SurfaceSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SurfaceSer) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Idx = NewCT_UnsignedInt()
@@ -121,9 +123,13 @@ lCT_SurfaceSer:
 	}
 	return nil
 }
+
+// Validate validates the CT_SurfaceSer and its children
 func (m *CT_SurfaceSer) Validate() error {
 	return m.ValidateWithPath("CT_SurfaceSer")
 }
+
+// ValidateWithPath validates the CT_SurfaceSer and its children, prefixing error messages with path
 func (m *CT_SurfaceSer) ValidateWithPath(path string) error {
 	if err := m.Idx.ValidateWithPath(path + "/Idx"); err != nil {
 		return err

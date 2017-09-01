@@ -22,6 +22,7 @@ func NewCT_CellWatches() *CT_CellWatches {
 	ret := &CT_CellWatches{}
 	return ret
 }
+
 func (m *CT_CellWatches) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_CellWatches) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CellWatches) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_CellWatches:
@@ -62,9 +64,13 @@ lCT_CellWatches:
 	}
 	return nil
 }
+
+// Validate validates the CT_CellWatches and its children
 func (m *CT_CellWatches) Validate() error {
 	return m.ValidateWithPath("CT_CellWatches")
 }
+
+// ValidateWithPath validates the CT_CellWatches and its children, prefixing error messages with path
 func (m *CT_CellWatches) ValidateWithPath(path string) error {
 	for i, v := range m.CellWatch {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/CellWatch[%d]", path, i)); err != nil {

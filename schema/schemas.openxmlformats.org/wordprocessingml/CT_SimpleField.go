@@ -32,6 +32,7 @@ func NewCT_SimpleField() *CT_SimpleField {
 	ret := &CT_SimpleField{}
 	return ret
 }
+
 func (m *CT_SimpleField) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -59,6 +60,7 @@ func (m *CT_SimpleField) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SimpleField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -498,9 +500,13 @@ lCT_SimpleField:
 	}
 	return nil
 }
+
+// Validate validates the CT_SimpleField and its children
 func (m *CT_SimpleField) Validate() error {
 	return m.ValidateWithPath("CT_SimpleField")
 }
+
+// ValidateWithPath validates the CT_SimpleField and its children, prefixing error messages with path
 func (m *CT_SimpleField) ValidateWithPath(path string) error {
 	if m.FldLockAttr != nil {
 		if err := m.FldLockAttr.ValidateWithPath(path + "/FldLockAttr"); err != nil {

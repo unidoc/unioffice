@@ -38,6 +38,7 @@ func NewCT_Shd() *CT_Shd {
 	ret.ValAttr = ST_Shd(1)
 	return ret
 }
+
 func (m *CT_Shd) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -89,6 +90,7 @@ func (m *CT_Shd) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Shd) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = ST_Shd(1)
@@ -157,9 +159,13 @@ func (m *CT_Shd) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_Shd and its children
 func (m *CT_Shd) Validate() error {
 	return m.ValidateWithPath("CT_Shd")
 }
+
+// ValidateWithPath validates the CT_Shd and its children, prefixing error messages with path
 func (m *CT_Shd) ValidateWithPath(path string) error {
 	if m.ValAttr == ST_ShdUnset {
 		return fmt.Errorf("%s/ValAttr is a mandatory field", path)

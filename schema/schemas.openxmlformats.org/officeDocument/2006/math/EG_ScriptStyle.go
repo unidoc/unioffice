@@ -21,6 +21,7 @@ func NewEG_ScriptStyle() *EG_ScriptStyle {
 	ret := &EG_ScriptStyle{}
 	return ret
 }
+
 func (m *EG_ScriptStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *EG_ScriptStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
 func (m *EG_ScriptStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ScriptStyle:
@@ -70,9 +72,13 @@ lEG_ScriptStyle:
 	}
 	return nil
 }
+
+// Validate validates the EG_ScriptStyle and its children
 func (m *EG_ScriptStyle) Validate() error {
 	return m.ValidateWithPath("EG_ScriptStyle")
 }
+
+// ValidateWithPath validates the EG_ScriptStyle and its children, prefixing error messages with path
 func (m *EG_ScriptStyle) ValidateWithPath(path string) error {
 	if m.Scr != nil {
 		if err := m.Scr.ValidateWithPath(path + "/Scr"); err != nil {

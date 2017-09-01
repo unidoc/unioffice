@@ -25,6 +25,7 @@ func NewCT_LightRig() *CT_LightRig {
 	ret.DirAttr = ST_LightRigDirection(1)
 	return ret
 }
+
 func (m *CT_LightRig) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *CT_LightRig) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LightRig) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.RigAttr = ST_LightRigType(1)
@@ -86,9 +88,13 @@ lCT_LightRig:
 	}
 	return nil
 }
+
+// Validate validates the CT_LightRig and its children
 func (m *CT_LightRig) Validate() error {
 	return m.ValidateWithPath("CT_LightRig")
 }
+
+// ValidateWithPath validates the CT_LightRig and its children, prefixing error messages with path
 func (m *CT_LightRig) ValidateWithPath(path string) error {
 	if m.RigAttr == ST_LightRigTypeUnset {
 		return fmt.Errorf("%s/RigAttr is a mandatory field", path)

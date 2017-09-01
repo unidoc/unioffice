@@ -21,6 +21,7 @@ func NewEG_TextBulletTypeface() *EG_TextBulletTypeface {
 	ret := &EG_TextBulletTypeface{}
 	return ret
 }
+
 func (m *EG_TextBulletTypeface) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_TextBulletTypeface) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	return nil
 }
+
 func (m *EG_TextBulletTypeface) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_TextBulletTypeface:
@@ -69,9 +71,13 @@ lEG_TextBulletTypeface:
 	}
 	return nil
 }
+
+// Validate validates the EG_TextBulletTypeface and its children
 func (m *EG_TextBulletTypeface) Validate() error {
 	return m.ValidateWithPath("EG_TextBulletTypeface")
 }
+
+// ValidateWithPath validates the EG_TextBulletTypeface and its children, prefixing error messages with path
 func (m *EG_TextBulletTypeface) ValidateWithPath(path string) error {
 	if m.BuFontTx != nil {
 		if err := m.BuFontTx.ValidateWithPath(path + "/BuFontTx"); err != nil {

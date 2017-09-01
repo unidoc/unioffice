@@ -27,6 +27,7 @@ func NewCT_TrendlineLbl() *CT_TrendlineLbl {
 	ret := &CT_TrendlineLbl{}
 	return ret
 }
+
 func (m *CT_TrendlineLbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -59,6 +60,7 @@ func (m *CT_TrendlineLbl) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TrendlineLbl) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TrendlineLbl:
@@ -113,9 +115,13 @@ lCT_TrendlineLbl:
 	}
 	return nil
 }
+
+// Validate validates the CT_TrendlineLbl and its children
 func (m *CT_TrendlineLbl) Validate() error {
 	return m.ValidateWithPath("CT_TrendlineLbl")
 }
+
+// ValidateWithPath validates the CT_TrendlineLbl and its children, prefixing error messages with path
 func (m *CT_TrendlineLbl) ValidateWithPath(path string) error {
 	if m.Layout != nil {
 		if err := m.Layout.ValidateWithPath(path + "/Layout"); err != nil {

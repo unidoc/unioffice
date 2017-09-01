@@ -20,6 +20,7 @@ func NewCT_SSubPr() *CT_SSubPr {
 	ret := &CT_SSubPr{}
 	return ret
 }
+
 func (m *CT_SSubPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_SSubPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SSubPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_SSubPr:
@@ -61,9 +63,13 @@ lCT_SSubPr:
 	}
 	return nil
 }
+
+// Validate validates the CT_SSubPr and its children
 func (m *CT_SSubPr) Validate() error {
 	return m.ValidateWithPath("CT_SSubPr")
 }
+
+// ValidateWithPath validates the CT_SSubPr and its children, prefixing error messages with path
 func (m *CT_SSubPr) ValidateWithPath(path string) error {
 	if m.CtrlPr != nil {
 		if err := m.CtrlPr.ValidateWithPath(path + "/CtrlPr"); err != nil {

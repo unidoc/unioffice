@@ -24,6 +24,7 @@ func NewCT_MeasureDimensionMap() *CT_MeasureDimensionMap {
 	ret := &CT_MeasureDimensionMap{}
 	return ret
 }
+
 func (m *CT_MeasureDimensionMap) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_MeasureDimensionMap) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MeasureDimensionMap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -72,9 +74,13 @@ func (m *CT_MeasureDimensionMap) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 	}
 	return nil
 }
+
+// Validate validates the CT_MeasureDimensionMap and its children
 func (m *CT_MeasureDimensionMap) Validate() error {
 	return m.ValidateWithPath("CT_MeasureDimensionMap")
 }
+
+// ValidateWithPath validates the CT_MeasureDimensionMap and its children, prefixing error messages with path
 func (m *CT_MeasureDimensionMap) ValidateWithPath(path string) error {
 	return nil
 }

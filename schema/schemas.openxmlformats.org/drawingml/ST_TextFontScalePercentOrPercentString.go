@@ -20,6 +20,7 @@ type ST_TextFontScalePercentOrPercentString struct {
 func (m *ST_TextFontScalePercentOrPercentString) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_TextFontScalePercentOrPercentString) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_TextFontScalePercent != nil {
@@ -33,6 +34,7 @@ func (m *ST_TextFontScalePercentOrPercentString) ValidateWithPath(path string) e
 	}
 	return nil
 }
+
 func (m ST_TextFontScalePercentOrPercentString) String() string {
 	if m.ST_TextFontScalePercent != nil {
 		return fmt.Sprintf("%v", *m.ST_TextFontScalePercent)

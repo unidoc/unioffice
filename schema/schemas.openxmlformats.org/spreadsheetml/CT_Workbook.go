@@ -63,6 +63,7 @@ func NewCT_Workbook() *CT_Workbook {
 	ret.Sheets = NewCT_Sheets()
 	return ret
 }
+
 func (m *CT_Workbook) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -152,6 +153,7 @@ func (m *CT_Workbook) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Workbook) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Sheets = NewCT_Sheets()
@@ -277,9 +279,13 @@ lCT_Workbook:
 	}
 	return nil
 }
+
+// Validate validates the CT_Workbook and its children
 func (m *CT_Workbook) Validate() error {
 	return m.ValidateWithPath("CT_Workbook")
 }
+
+// ValidateWithPath validates the CT_Workbook and its children, prefixing error messages with path
 func (m *CT_Workbook) ValidateWithPath(path string) error {
 	if err := m.ConformanceAttr.ValidateWithPath(path + "/ConformanceAttr"); err != nil {
 		return err

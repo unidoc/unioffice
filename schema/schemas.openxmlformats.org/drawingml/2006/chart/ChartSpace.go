@@ -23,6 +23,7 @@ func NewChartSpace() *ChartSpace {
 	ret.CT_ChartSpace = *NewCT_ChartSpace()
 	return ret
 }
+
 func (m *ChartSpace) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *ChartSpace) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "chartSpace"
 	return m.CT_ChartSpace.MarshalXML(e, start)
 }
+
 func (m *ChartSpace) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_ChartSpace = *NewCT_ChartSpace()
@@ -130,9 +132,13 @@ lChartSpace:
 	}
 	return nil
 }
+
+// Validate validates the ChartSpace and its children
 func (m *ChartSpace) Validate() error {
 	return m.ValidateWithPath("ChartSpace")
 }
+
+// ValidateWithPath validates the ChartSpace and its children, prefixing error messages with path
 func (m *ChartSpace) ValidateWithPath(path string) error {
 	if err := m.CT_ChartSpace.ValidateWithPath(path); err != nil {
 		return err

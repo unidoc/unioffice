@@ -24,6 +24,7 @@ func NewEG_Media() *EG_Media {
 	ret := &EG_Media{}
 	return ret
 }
+
 func (m *EG_Media) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -51,6 +52,7 @@ func (m *EG_Media) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *EG_Media) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_Media:
@@ -100,9 +102,13 @@ lEG_Media:
 	}
 	return nil
 }
+
+// Validate validates the EG_Media and its children
 func (m *EG_Media) Validate() error {
 	return m.ValidateWithPath("EG_Media")
 }
+
+// ValidateWithPath validates the EG_Media and its children, prefixing error messages with path
 func (m *EG_Media) ValidateWithPath(path string) error {
 	if m.AudioCd != nil {
 		if err := m.AudioCd.ValidateWithPath(path + "/AudioCd"); err != nil {

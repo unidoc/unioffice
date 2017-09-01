@@ -23,6 +23,7 @@ func NewCT_RegularTextRun() *CT_RegularTextRun {
 	ret := &CT_RegularTextRun{}
 	return ret
 }
+
 func (m *CT_RegularTextRun) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *CT_RegularTextRun) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RegularTextRun) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_RegularTextRun:
@@ -71,9 +73,13 @@ lCT_RegularTextRun:
 	}
 	return nil
 }
+
+// Validate validates the CT_RegularTextRun and its children
 func (m *CT_RegularTextRun) Validate() error {
 	return m.ValidateWithPath("CT_RegularTextRun")
 }
+
+// ValidateWithPath validates the CT_RegularTextRun and its children, prefixing error messages with path
 func (m *CT_RegularTextRun) ValidateWithPath(path string) error {
 	if m.RPr != nil {
 		if err := m.RPr.ValidateWithPath(path + "/RPr"); err != nil {

@@ -25,6 +25,7 @@ type ST_FunctionValue struct {
 func (m *ST_FunctionValue) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_FunctionValue) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.Int32 != nil {
@@ -53,6 +54,7 @@ func (m *ST_FunctionValue) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_FunctionValue) String() string {
 	if m.Int32 != nil {
 		return fmt.Sprintf("%v", *m.Int32)

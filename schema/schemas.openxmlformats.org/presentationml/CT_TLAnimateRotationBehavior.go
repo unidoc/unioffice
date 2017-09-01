@@ -29,6 +29,7 @@ func NewCT_TLAnimateRotationBehavior() *CT_TLAnimateRotationBehavior {
 	ret.CBhvr = NewCT_TLCommonBehaviorData()
 	return ret
 }
+
 func (m *CT_TLAnimateRotationBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -51,6 +52,7 @@ func (m *CT_TLAnimateRotationBehavior) MarshalXML(e *xml.Encoder, start xml.Star
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLAnimateRotationBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CBhvr = NewCT_TLCommonBehaviorData()
@@ -106,9 +108,13 @@ lCT_TLAnimateRotationBehavior:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLAnimateRotationBehavior and its children
 func (m *CT_TLAnimateRotationBehavior) Validate() error {
 	return m.ValidateWithPath("CT_TLAnimateRotationBehavior")
 }
+
+// ValidateWithPath validates the CT_TLAnimateRotationBehavior and its children, prefixing error messages with path
 func (m *CT_TLAnimateRotationBehavior) ValidateWithPath(path string) error {
 	if err := m.CBhvr.ValidateWithPath(path + "/CBhvr"); err != nil {
 		return err

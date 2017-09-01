@@ -23,6 +23,7 @@ func NewCT_TblGridCol() *CT_TblGridCol {
 	ret := &CT_TblGridCol{}
 	return ret
 }
+
 func (m *CT_TblGridCol) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_TblGridCol) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TblGridCol) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -58,9 +60,13 @@ func (m *CT_TblGridCol) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	}
 	return nil
 }
+
+// Validate validates the CT_TblGridCol and its children
 func (m *CT_TblGridCol) Validate() error {
 	return m.ValidateWithPath("CT_TblGridCol")
 }
+
+// ValidateWithPath validates the CT_TblGridCol and its children, prefixing error messages with path
 func (m *CT_TblGridCol) ValidateWithPath(path string) error {
 	if m.WAttr != nil {
 		if err := m.WAttr.ValidateWithPath(path + "/WAttr"); err != nil {

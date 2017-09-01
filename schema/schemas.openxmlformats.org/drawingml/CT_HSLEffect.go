@@ -23,6 +23,7 @@ func NewCT_HSLEffect() *CT_HSLEffect {
 	ret := &CT_HSLEffect{}
 	return ret
 }
+
 func (m *CT_HSLEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -43,6 +44,7 @@ func (m *CT_HSLEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_HSLEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -81,9 +83,13 @@ func (m *CT_HSLEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
+// Validate validates the CT_HSLEffect and its children
 func (m *CT_HSLEffect) Validate() error {
 	return m.ValidateWithPath("CT_HSLEffect")
 }
+
+// ValidateWithPath validates the CT_HSLEffect and its children, prefixing error messages with path
 func (m *CT_HSLEffect) ValidateWithPath(path string) error {
 	if m.HueAttr != nil {
 		if *m.HueAttr < 0 {

@@ -31,6 +31,7 @@ func NewCT_IconSet() *CT_IconSet {
 	ret := &CT_IconSet{}
 	return ret
 }
+
 func (m *CT_IconSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -60,6 +61,7 @@ func (m *CT_IconSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_IconSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -116,9 +118,13 @@ lCT_IconSet:
 	}
 	return nil
 }
+
+// Validate validates the CT_IconSet and its children
 func (m *CT_IconSet) Validate() error {
 	return m.ValidateWithPath("CT_IconSet")
 }
+
+// ValidateWithPath validates the CT_IconSet and its children, prefixing error messages with path
 func (m *CT_IconSet) ValidateWithPath(path string) error {
 	if err := m.IconSetAttr.ValidateWithPath(path + "/IconSetAttr"); err != nil {
 		return err

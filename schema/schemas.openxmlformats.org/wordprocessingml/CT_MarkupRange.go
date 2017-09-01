@@ -23,6 +23,7 @@ func NewCT_MarkupRange() *CT_MarkupRange {
 	ret := &CT_MarkupRange{}
 	return ret
 }
+
 func (m *CT_MarkupRange) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_MarkupRange) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MarkupRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -66,9 +68,13 @@ func (m *CT_MarkupRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}
 	return nil
 }
+
+// Validate validates the CT_MarkupRange and its children
 func (m *CT_MarkupRange) Validate() error {
 	return m.ValidateWithPath("CT_MarkupRange")
 }
+
+// ValidateWithPath validates the CT_MarkupRange and its children, prefixing error messages with path
 func (m *CT_MarkupRange) ValidateWithPath(path string) error {
 	if err := m.DisplacedByCustomXmlAttr.ValidateWithPath(path + "/DisplacedByCustomXmlAttr"); err != nil {
 		return err

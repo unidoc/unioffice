@@ -24,6 +24,7 @@ func NewNotes() *Notes {
 	ret.CT_NotesSlide = *NewCT_NotesSlide()
 	return ret
 }
+
 func (m *Notes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *Notes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "p:notes"
 	return m.CT_NotesSlide.MarshalXML(e, start)
 }
+
 func (m *Notes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_NotesSlide = *NewCT_NotesSlide()
@@ -92,9 +94,13 @@ lNotes:
 	}
 	return nil
 }
+
+// Validate validates the Notes and its children
 func (m *Notes) Validate() error {
 	return m.ValidateWithPath("Notes")
 }
+
+// ValidateWithPath validates the Notes and its children, prefixing error messages with path
 func (m *Notes) ValidateWithPath(path string) error {
 	if err := m.CT_NotesSlide.ValidateWithPath(path); err != nil {
 		return err

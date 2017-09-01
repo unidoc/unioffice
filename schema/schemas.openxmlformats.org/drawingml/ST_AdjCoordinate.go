@@ -20,6 +20,7 @@ type ST_AdjCoordinate struct {
 func (m *ST_AdjCoordinate) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_AdjCoordinate) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_Coordinate != nil {
@@ -36,6 +37,7 @@ func (m *ST_AdjCoordinate) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_AdjCoordinate) String() string {
 	if m.ST_Coordinate != nil {
 		return m.ST_Coordinate.String()

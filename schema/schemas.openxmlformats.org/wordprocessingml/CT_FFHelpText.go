@@ -23,6 +23,7 @@ func NewCT_FFHelpText() *CT_FFHelpText {
 	ret := &CT_FFHelpText{}
 	return ret
 }
+
 func (m *CT_FFHelpText) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -42,6 +43,7 @@ func (m *CT_FFHelpText) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_FFHelpText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -68,9 +70,13 @@ func (m *CT_FFHelpText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	}
 	return nil
 }
+
+// Validate validates the CT_FFHelpText and its children
 func (m *CT_FFHelpText) Validate() error {
 	return m.ValidateWithPath("CT_FFHelpText")
 }
+
+// ValidateWithPath validates the CT_FFHelpText and its children, prefixing error messages with path
 func (m *CT_FFHelpText) ValidateWithPath(path string) error {
 	if err := m.TypeAttr.ValidateWithPath(path + "/TypeAttr"); err != nil {
 		return err

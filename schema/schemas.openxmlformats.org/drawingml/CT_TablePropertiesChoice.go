@@ -25,6 +25,7 @@ func NewCT_TablePropertiesChoice() *CT_TablePropertiesChoice {
 	ret := &CT_TablePropertiesChoice{}
 	return ret
 }
+
 func (m *CT_TablePropertiesChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_TablePropertiesChoice) MarshalXML(e *xml.Encoder, start xml.StartEle
 	}
 	return nil
 }
+
 func (m *CT_TablePropertiesChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TablePropertiesChoice:
@@ -74,9 +76,13 @@ lCT_TablePropertiesChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_TablePropertiesChoice and its children
 func (m *CT_TablePropertiesChoice) Validate() error {
 	return m.ValidateWithPath("CT_TablePropertiesChoice")
 }
+
+// ValidateWithPath validates the CT_TablePropertiesChoice and its children, prefixing error messages with path
 func (m *CT_TablePropertiesChoice) ValidateWithPath(path string) error {
 	if m.TableStyle != nil {
 		if err := m.TableStyle.ValidateWithPath(path + "/TableStyle"); err != nil {

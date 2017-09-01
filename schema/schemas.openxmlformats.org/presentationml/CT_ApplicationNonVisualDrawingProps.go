@@ -30,6 +30,7 @@ func NewCT_ApplicationNonVisualDrawingProps() *CT_ApplicationNonVisualDrawingPro
 	ret := &CT_ApplicationNonVisualDrawingProps{}
 	return ret
 }
+
 func (m *CT_ApplicationNonVisualDrawingProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -58,6 +59,7 @@ func (m *CT_ApplicationNonVisualDrawingProps) MarshalXML(e *xml.Encoder, start x
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ApplicationNonVisualDrawingProps) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -113,9 +115,13 @@ lCT_ApplicationNonVisualDrawingProps:
 	}
 	return nil
 }
+
+// Validate validates the CT_ApplicationNonVisualDrawingProps and its children
 func (m *CT_ApplicationNonVisualDrawingProps) Validate() error {
 	return m.ValidateWithPath("CT_ApplicationNonVisualDrawingProps")
 }
+
+// ValidateWithPath validates the CT_ApplicationNonVisualDrawingProps and its children, prefixing error messages with path
 func (m *CT_ApplicationNonVisualDrawingProps) ValidateWithPath(path string) error {
 	if m.Ph != nil {
 		if err := m.Ph.ValidateWithPath(path + "/Ph"); err != nil {

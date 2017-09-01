@@ -25,6 +25,7 @@ func NewCT_SdtRow() *CT_SdtRow {
 	ret := &CT_SdtRow{}
 	return ret
 }
+
 func (m *CT_SdtRow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *CT_SdtRow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SdtRow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_SdtRow:
@@ -84,9 +86,13 @@ lCT_SdtRow:
 	}
 	return nil
 }
+
+// Validate validates the CT_SdtRow and its children
 func (m *CT_SdtRow) Validate() error {
 	return m.ValidateWithPath("CT_SdtRow")
 }
+
+// ValidateWithPath validates the CT_SdtRow and its children, prefixing error messages with path
 func (m *CT_SdtRow) ValidateWithPath(path string) error {
 	if m.SdtPr != nil {
 		if err := m.SdtPr.ValidateWithPath(path + "/SdtPr"); err != nil {

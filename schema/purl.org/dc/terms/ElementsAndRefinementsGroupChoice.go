@@ -23,6 +23,7 @@ func NewElementsAndRefinementsGroupChoice() *ElementsAndRefinementsGroupChoice {
 	ret := &ElementsAndRefinementsGroupChoice{}
 	return ret
 }
+
 func (m *ElementsAndRefinementsGroupChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *ElementsAndRefinementsGroupChoice) MarshalXML(e *xml.Encoder, start xml
 	}
 	return nil
 }
+
 func (m *ElementsAndRefinementsGroupChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lElementsAndRefinementsGroupChoice:
@@ -63,9 +65,13 @@ lElementsAndRefinementsGroupChoice:
 	}
 	return nil
 }
+
+// Validate validates the ElementsAndRefinementsGroupChoice and its children
 func (m *ElementsAndRefinementsGroupChoice) Validate() error {
 	return m.ValidateWithPath("ElementsAndRefinementsGroupChoice")
 }
+
+// ValidateWithPath validates the ElementsAndRefinementsGroupChoice and its children, prefixing error messages with path
 func (m *ElementsAndRefinementsGroupChoice) ValidateWithPath(path string) error {
 	for i, v := range m.Any {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Any[%d]", path, i)); err != nil {

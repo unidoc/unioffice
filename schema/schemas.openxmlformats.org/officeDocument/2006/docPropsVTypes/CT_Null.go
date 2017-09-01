@@ -19,6 +19,7 @@ func NewCT_Null() *CT_Null {
 	ret := &CT_Null{}
 	return ret
 }
+
 func (m *CT_Null) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -27,6 +28,7 @@ func (m *CT_Null) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Null) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -41,9 +43,13 @@ func (m *CT_Null) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_Null and its children
 func (m *CT_Null) Validate() error {
 	return m.ValidateWithPath("CT_Null")
 }
+
+// ValidateWithPath validates the CT_Null and its children, prefixing error messages with path
 func (m *CT_Null) ValidateWithPath(path string) error {
 	return nil
 }

@@ -22,6 +22,7 @@ func NewCT_MailMergeSourceType() *CT_MailMergeSourceType {
 	ret.ValAttr = ST_MailMergeSourceType(1)
 	return ret
 }
+
 func (m *CT_MailMergeSourceType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_MailMergeSourceType) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MailMergeSourceType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = ST_MailMergeSourceType(1)
@@ -55,9 +57,13 @@ func (m *CT_MailMergeSourceType) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 	}
 	return nil
 }
+
+// Validate validates the CT_MailMergeSourceType and its children
 func (m *CT_MailMergeSourceType) Validate() error {
 	return m.ValidateWithPath("CT_MailMergeSourceType")
 }
+
+// ValidateWithPath validates the CT_MailMergeSourceType and its children, prefixing error messages with path
 func (m *CT_MailMergeSourceType) ValidateWithPath(path string) error {
 	if m.ValAttr == ST_MailMergeSourceTypeUnset {
 		return fmt.Errorf("%s/ValAttr is a mandatory field", path)

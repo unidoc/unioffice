@@ -27,6 +27,7 @@ func NewCT_MdxKPI() *CT_MdxKPI {
 	ret.PAttr = ST_MdxKPIProperty(1)
 	return ret
 }
+
 func (m *CT_MdxKPI) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -44,6 +45,7 @@ func (m *CT_MdxKPI) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MdxKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.PAttr = ST_MdxKPIProperty(1)
@@ -78,9 +80,13 @@ func (m *CT_MdxKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_MdxKPI and its children
 func (m *CT_MdxKPI) Validate() error {
 	return m.ValidateWithPath("CT_MdxKPI")
 }
+
+// ValidateWithPath validates the CT_MdxKPI and its children, prefixing error messages with path
 func (m *CT_MdxKPI) ValidateWithPath(path string) error {
 	if m.PAttr == ST_MdxKPIPropertyUnset {
 		return fmt.Errorf("%s/PAttr is a mandatory field", path)

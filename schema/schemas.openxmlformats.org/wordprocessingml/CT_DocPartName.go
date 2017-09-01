@@ -25,6 +25,7 @@ func NewCT_DocPartName() *CT_DocPartName {
 	ret := &CT_DocPartName{}
 	return ret
 }
+
 func (m *CT_DocPartName) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_DocPartName) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DocPartName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -69,9 +71,13 @@ func (m *CT_DocPartName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}
 	return nil
 }
+
+// Validate validates the CT_DocPartName and its children
 func (m *CT_DocPartName) Validate() error {
 	return m.ValidateWithPath("CT_DocPartName")
 }
+
+// ValidateWithPath validates the CT_DocPartName and its children, prefixing error messages with path
 func (m *CT_DocPartName) ValidateWithPath(path string) error {
 	if m.DecoratedAttr != nil {
 		if err := m.DecoratedAttr.ValidateWithPath(path + "/DecoratedAttr"); err != nil {

@@ -27,6 +27,7 @@ func NewCT_WordprocessingGroupChoice() *CT_WordprocessingGroupChoice {
 	ret := &CT_WordprocessingGroupChoice{}
 	return ret
 }
+
 func (m *CT_WordprocessingGroupChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -53,6 +54,7 @@ func (m *CT_WordprocessingGroupChoice) MarshalXML(e *xml.Encoder, start xml.Star
 	}
 	return nil
 }
+
 func (m *CT_WordprocessingGroupChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_WordprocessingGroupChoice:
@@ -107,9 +109,13 @@ lCT_WordprocessingGroupChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_WordprocessingGroupChoice and its children
 func (m *CT_WordprocessingGroupChoice) Validate() error {
 	return m.ValidateWithPath("CT_WordprocessingGroupChoice")
 }
+
+// ValidateWithPath validates the CT_WordprocessingGroupChoice and its children, prefixing error messages with path
 func (m *CT_WordprocessingGroupChoice) ValidateWithPath(path string) error {
 	for i, v := range m.Wsp {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Wsp[%d]", path, i)); err != nil {

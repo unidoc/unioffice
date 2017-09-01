@@ -37,6 +37,7 @@ func NewCT_WebPublishItem() *CT_WebPublishItem {
 	ret.SourceTypeAttr = ST_WebSourceType(1)
 	return ret
 }
+
 func (m *CT_WebPublishItem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -72,6 +73,7 @@ func (m *CT_WebPublishItem) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_WebPublishItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.SourceTypeAttr = ST_WebSourceType(1)
@@ -141,9 +143,13 @@ func (m *CT_WebPublishItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	}
 	return nil
 }
+
+// Validate validates the CT_WebPublishItem and its children
 func (m *CT_WebPublishItem) Validate() error {
 	return m.ValidateWithPath("CT_WebPublishItem")
 }
+
+// ValidateWithPath validates the CT_WebPublishItem and its children, prefixing error messages with path
 func (m *CT_WebPublishItem) ValidateWithPath(path string) error {
 	if m.SourceTypeAttr == ST_WebSourceTypeUnset {
 		return fmt.Errorf("%s/SourceTypeAttr is a mandatory field", path)

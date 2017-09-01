@@ -21,6 +21,7 @@ func NewCT_ExternalSheetName() *CT_ExternalSheetName {
 	ret := &CT_ExternalSheetName{}
 	return ret
 }
+
 func (m *CT_ExternalSheetName) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_ExternalSheetName) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ExternalSheetName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -56,9 +58,13 @@ func (m *CT_ExternalSheetName) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	}
 	return nil
 }
+
+// Validate validates the CT_ExternalSheetName and its children
 func (m *CT_ExternalSheetName) Validate() error {
 	return m.ValidateWithPath("CT_ExternalSheetName")
 }
+
+// ValidateWithPath validates the CT_ExternalSheetName and its children, prefixing error messages with path
 func (m *CT_ExternalSheetName) ValidateWithPath(path string) error {
 	return nil
 }

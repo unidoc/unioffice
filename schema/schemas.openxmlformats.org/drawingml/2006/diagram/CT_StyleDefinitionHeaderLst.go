@@ -21,6 +21,7 @@ func NewCT_StyleDefinitionHeaderLst() *CT_StyleDefinitionHeaderLst {
 	ret := &CT_StyleDefinitionHeaderLst{}
 	return ret
 }
+
 func (m *CT_StyleDefinitionHeaderLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_StyleDefinitionHeaderLst) MarshalXML(e *xml.Encoder, start xml.Start
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_StyleDefinitionHeaderLst) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_StyleDefinitionHeaderLst:
@@ -63,9 +65,13 @@ lCT_StyleDefinitionHeaderLst:
 	}
 	return nil
 }
+
+// Validate validates the CT_StyleDefinitionHeaderLst and its children
 func (m *CT_StyleDefinitionHeaderLst) Validate() error {
 	return m.ValidateWithPath("CT_StyleDefinitionHeaderLst")
 }
+
+// ValidateWithPath validates the CT_StyleDefinitionHeaderLst and its children, prefixing error messages with path
 func (m *CT_StyleDefinitionHeaderLst) ValidateWithPath(path string) error {
 	for i, v := range m.StyleDefHdr {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/StyleDefHdr[%d]", path, i)); err != nil {

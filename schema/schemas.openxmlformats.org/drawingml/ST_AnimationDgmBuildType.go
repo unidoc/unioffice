@@ -20,6 +20,7 @@ type ST_AnimationDgmBuildType struct {
 func (m *ST_AnimationDgmBuildType) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_AnimationDgmBuildType) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_AnimationBuildType != ST_AnimationBuildTypeUnset {
@@ -33,6 +34,7 @@ func (m *ST_AnimationDgmBuildType) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_AnimationDgmBuildType) String() string {
 	if m.ST_AnimationBuildType != ST_AnimationBuildTypeUnset {
 		return m.ST_AnimationBuildType.String()

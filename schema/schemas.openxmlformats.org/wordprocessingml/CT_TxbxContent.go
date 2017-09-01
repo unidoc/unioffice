@@ -25,6 +25,7 @@ func NewCT_TxbxContent() *CT_TxbxContent {
 	ret := &CT_TxbxContent{}
 	return ret
 }
+
 func (m *CT_TxbxContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -42,6 +43,7 @@ func (m *CT_TxbxContent) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TxbxContent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TxbxContent:
@@ -363,9 +365,13 @@ lCT_TxbxContent:
 	}
 	return nil
 }
+
+// Validate validates the CT_TxbxContent and its children
 func (m *CT_TxbxContent) Validate() error {
 	return m.ValidateWithPath("CT_TxbxContent")
 }
+
+// ValidateWithPath validates the CT_TxbxContent and its children, prefixing error messages with path
 func (m *CT_TxbxContent) ValidateWithPath(path string) error {
 	for i, v := range m.AltChunk {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/AltChunk[%d]", path, i)); err != nil {

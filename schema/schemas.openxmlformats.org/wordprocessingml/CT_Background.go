@@ -29,6 +29,7 @@ func NewCT_Background() *CT_Background {
 	ret := &CT_Background{}
 	return ret
 }
+
 func (m *CT_Background) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -60,6 +61,7 @@ func (m *CT_Background) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Background) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -115,9 +117,13 @@ lCT_Background:
 	}
 	return nil
 }
+
+// Validate validates the CT_Background and its children
 func (m *CT_Background) Validate() error {
 	return m.ValidateWithPath("CT_Background")
 }
+
+// ValidateWithPath validates the CT_Background and its children, prefixing error messages with path
 func (m *CT_Background) ValidateWithPath(path string) error {
 	if m.ColorAttr != nil {
 		if err := m.ColorAttr.ValidateWithPath(path + "/ColorAttr"); err != nil {

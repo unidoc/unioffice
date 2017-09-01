@@ -25,6 +25,7 @@ func NewCT_GroupShapeNonVisual() *CT_GroupShapeNonVisual {
 	ret.CNvGrpSpPr = drawingml.NewCT_NonVisualGroupDrawingShapeProps()
 	return ret
 }
+
 func (m *CT_GroupShapeNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_GroupShapeNonVisual) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GroupShapeNonVisual) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
@@ -71,9 +73,13 @@ lCT_GroupShapeNonVisual:
 	}
 	return nil
 }
+
+// Validate validates the CT_GroupShapeNonVisual and its children
 func (m *CT_GroupShapeNonVisual) Validate() error {
 	return m.ValidateWithPath("CT_GroupShapeNonVisual")
 }
+
+// ValidateWithPath validates the CT_GroupShapeNonVisual and its children, prefixing error messages with path
 func (m *CT_GroupShapeNonVisual) ValidateWithPath(path string) error {
 	if err := m.CNvPr.ValidateWithPath(path + "/CNvPr"); err != nil {
 		return err

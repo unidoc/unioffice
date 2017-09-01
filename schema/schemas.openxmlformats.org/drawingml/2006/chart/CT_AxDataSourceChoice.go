@@ -24,6 +24,7 @@ func NewCT_AxDataSourceChoice() *CT_AxDataSourceChoice {
 	ret := &CT_AxDataSourceChoice{}
 	return ret
 }
+
 func (m *CT_AxDataSourceChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -50,6 +51,7 @@ func (m *CT_AxDataSourceChoice) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	return nil
 }
+
 func (m *CT_AxDataSourceChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_AxDataSourceChoice:
@@ -99,9 +101,13 @@ lCT_AxDataSourceChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_AxDataSourceChoice and its children
 func (m *CT_AxDataSourceChoice) Validate() error {
 	return m.ValidateWithPath("CT_AxDataSourceChoice")
 }
+
+// ValidateWithPath validates the CT_AxDataSourceChoice and its children, prefixing error messages with path
 func (m *CT_AxDataSourceChoice) ValidateWithPath(path string) error {
 	if m.MultiLvlStrRef != nil {
 		if err := m.MultiLvlStrRef.ValidateWithPath(path + "/MultiLvlStrRef"); err != nil {

@@ -23,6 +23,7 @@ func NewHdr() *Hdr {
 	ret.CT_HdrFtr = *NewCT_HdrFtr()
 	return ret
 }
+
 func (m *Hdr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *Hdr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "w:hdr"
 	return m.CT_HdrFtr.MarshalXML(e, start)
 }
+
 func (m *Hdr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_HdrFtr = *NewCT_HdrFtr()
@@ -362,9 +364,13 @@ lHdr:
 	}
 	return nil
 }
+
+// Validate validates the Hdr and its children
 func (m *Hdr) Validate() error {
 	return m.ValidateWithPath("Hdr")
 }
+
+// ValidateWithPath validates the Hdr and its children, prefixing error messages with path
 func (m *Hdr) ValidateWithPath(path string) error {
 	if err := m.CT_HdrFtr.ValidateWithPath(path); err != nil {
 		return err

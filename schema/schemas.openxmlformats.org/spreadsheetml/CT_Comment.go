@@ -36,6 +36,7 @@ func NewCT_Comment() *CT_Comment {
 	ret.Text = NewCT_Rst()
 	return ret
 }
+
 func (m *CT_Comment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -62,6 +63,7 @@ func (m *CT_Comment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Comment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Text = NewCT_Rst()
@@ -127,9 +129,13 @@ lCT_Comment:
 	}
 	return nil
 }
+
+// Validate validates the CT_Comment and its children
 func (m *CT_Comment) Validate() error {
 	return m.ValidateWithPath("CT_Comment")
 }
+
+// ValidateWithPath validates the CT_Comment and its children, prefixing error messages with path
 func (m *CT_Comment) ValidateWithPath(path string) error {
 	if m.GuidAttr != nil {
 		if !sharedTypes.ST_GuidPatternRe.MatchString(*m.GuidAttr) {

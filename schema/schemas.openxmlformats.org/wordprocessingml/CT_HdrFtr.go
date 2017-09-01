@@ -25,6 +25,7 @@ func NewCT_HdrFtr() *CT_HdrFtr {
 	ret := &CT_HdrFtr{}
 	return ret
 }
+
 func (m *CT_HdrFtr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -42,6 +43,7 @@ func (m *CT_HdrFtr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_HdrFtr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_HdrFtr:
@@ -363,9 +365,13 @@ lCT_HdrFtr:
 	}
 	return nil
 }
+
+// Validate validates the CT_HdrFtr and its children
 func (m *CT_HdrFtr) Validate() error {
 	return m.ValidateWithPath("CT_HdrFtr")
 }
+
+// ValidateWithPath validates the CT_HdrFtr and its children, prefixing error messages with path
 func (m *CT_HdrFtr) ValidateWithPath(path string) error {
 	for i, v := range m.AltChunk {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/AltChunk[%d]", path, i)); err != nil {

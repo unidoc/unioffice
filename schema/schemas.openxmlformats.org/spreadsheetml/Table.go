@@ -22,6 +22,7 @@ func NewTable() *Table {
 	ret.CT_Table = *NewCT_Table()
 	return ret
 }
+
 func (m *Table) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *Table) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "x:table"
 	return m.CT_Table.MarshalXML(e, start)
 }
+
 func (m *Table) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Table = *NewCT_Table()
@@ -245,9 +247,13 @@ lTable:
 	}
 	return nil
 }
+
+// Validate validates the Table and its children
 func (m *Table) Validate() error {
 	return m.ValidateWithPath("Table")
 }
+
+// ValidateWithPath validates the Table and its children, prefixing error messages with path
 func (m *Table) ValidateWithPath(path string) error {
 	if err := m.CT_Table.ValidateWithPath(path); err != nil {
 		return err

@@ -30,6 +30,7 @@ func NewCT_ReadingModeInkLockDown() *CT_ReadingModeInkLockDown {
 	ret := &CT_ReadingModeInkLockDown{}
 	return ret
 }
+
 func (m *CT_ReadingModeInkLockDown) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -46,6 +47,7 @@ func (m *CT_ReadingModeInkLockDown) MarshalXML(e *xml.Encoder, start xml.StartEl
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ReadingModeInkLockDown) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -90,9 +92,13 @@ func (m *CT_ReadingModeInkLockDown) UnmarshalXML(d *xml.Decoder, start xml.Start
 	}
 	return nil
 }
+
+// Validate validates the CT_ReadingModeInkLockDown and its children
 func (m *CT_ReadingModeInkLockDown) Validate() error {
 	return m.ValidateWithPath("CT_ReadingModeInkLockDown")
 }
+
+// ValidateWithPath validates the CT_ReadingModeInkLockDown and its children, prefixing error messages with path
 func (m *CT_ReadingModeInkLockDown) ValidateWithPath(path string) error {
 	if err := m.ActualPgAttr.ValidateWithPath(path + "/ActualPgAttr"); err != nil {
 		return err

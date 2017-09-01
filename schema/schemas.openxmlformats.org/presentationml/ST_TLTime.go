@@ -20,6 +20,7 @@ type ST_TLTime struct {
 func (m *ST_TLTime) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_TLTime) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.Uint32 != nil {
@@ -33,6 +34,7 @@ func (m *ST_TLTime) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_TLTime) String() string {
 	if m.Uint32 != nil {
 		return fmt.Sprintf("%v", *m.Uint32)

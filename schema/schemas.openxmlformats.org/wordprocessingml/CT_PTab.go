@@ -28,6 +28,7 @@ func NewCT_PTab() *CT_PTab {
 	ret.LeaderAttr = ST_PTabLeader(1)
 	return ret
 }
+
 func (m *CT_PTab) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -51,6 +52,7 @@ func (m *CT_PTab) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PTab) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.AlignmentAttr = ST_PTabAlignment(1)
@@ -79,9 +81,13 @@ func (m *CT_PTab) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_PTab and its children
 func (m *CT_PTab) Validate() error {
 	return m.ValidateWithPath("CT_PTab")
 }
+
+// ValidateWithPath validates the CT_PTab and its children, prefixing error messages with path
 func (m *CT_PTab) ValidateWithPath(path string) error {
 	if m.AlignmentAttr == ST_PTabAlignmentUnset {
 		return fmt.Errorf("%s/AlignmentAttr is a mandatory field", path)

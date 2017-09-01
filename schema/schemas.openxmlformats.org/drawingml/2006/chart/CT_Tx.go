@@ -21,6 +21,7 @@ func NewCT_Tx() *CT_Tx {
 	ret.Choice = NewCT_TxChoice()
 	return ret
 }
+
 func (m *CT_Tx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -30,6 +31,7 @@ func (m *CT_Tx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Tx) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Choice = NewCT_TxChoice()
@@ -67,9 +69,13 @@ lCT_Tx:
 	}
 	return nil
 }
+
+// Validate validates the CT_Tx and its children
 func (m *CT_Tx) Validate() error {
 	return m.ValidateWithPath("CT_Tx")
 }
+
+// ValidateWithPath validates the CT_Tx and its children, prefixing error messages with path
 func (m *CT_Tx) ValidateWithPath(path string) error {
 	if err := m.Choice.ValidateWithPath(path + "/Choice"); err != nil {
 		return err

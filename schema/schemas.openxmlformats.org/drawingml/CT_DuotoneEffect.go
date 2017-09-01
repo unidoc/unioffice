@@ -21,6 +21,7 @@ func NewCT_DuotoneEffect() *CT_DuotoneEffect {
 	ret := &CT_DuotoneEffect{}
 	return ret
 }
+
 func (m *CT_DuotoneEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_DuotoneEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DuotoneEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_DuotoneEffect:
@@ -98,9 +100,13 @@ lCT_DuotoneEffect:
 	}
 	return nil
 }
+
+// Validate validates the CT_DuotoneEffect and its children
 func (m *CT_DuotoneEffect) Validate() error {
 	return m.ValidateWithPath("CT_DuotoneEffect")
 }
+
+// ValidateWithPath validates the CT_DuotoneEffect and its children, prefixing error messages with path
 func (m *CT_DuotoneEffect) ValidateWithPath(path string) error {
 	for i, v := range m.EG_ColorChoice {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/EG_ColorChoice[%d]", path, i)); err != nil {

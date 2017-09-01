@@ -22,6 +22,7 @@ func NewCT_PivotCaches() *CT_PivotCaches {
 	ret := &CT_PivotCaches{}
 	return ret
 }
+
 func (m *CT_PivotCaches) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_PivotCaches) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PivotCaches) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_PivotCaches:
@@ -62,9 +64,13 @@ lCT_PivotCaches:
 	}
 	return nil
 }
+
+// Validate validates the CT_PivotCaches and its children
 func (m *CT_PivotCaches) Validate() error {
 	return m.ValidateWithPath("CT_PivotCaches")
 }
+
+// ValidateWithPath validates the CT_PivotCaches and its children, prefixing error messages with path
 func (m *CT_PivotCaches) ValidateWithPath(path string) error {
 	for i, v := range m.PivotCache {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/PivotCache[%d]", path, i)); err != nil {

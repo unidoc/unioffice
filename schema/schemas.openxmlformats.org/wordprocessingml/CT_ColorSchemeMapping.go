@@ -43,6 +43,7 @@ func NewCT_ColorSchemeMapping() *CT_ColorSchemeMapping {
 	ret := &CT_ColorSchemeMapping{}
 	return ret
 }
+
 func (m *CT_ColorSchemeMapping) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -135,6 +136,7 @@ func (m *CT_ColorSchemeMapping) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ColorSchemeMapping) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -187,9 +189,13 @@ func (m *CT_ColorSchemeMapping) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 	}
 	return nil
 }
+
+// Validate validates the CT_ColorSchemeMapping and its children
 func (m *CT_ColorSchemeMapping) Validate() error {
 	return m.ValidateWithPath("CT_ColorSchemeMapping")
 }
+
+// ValidateWithPath validates the CT_ColorSchemeMapping and its children, prefixing error messages with path
 func (m *CT_ColorSchemeMapping) ValidateWithPath(path string) error {
 	if err := m.Bg1Attr.ValidateWithPath(path + "/Bg1Attr"); err != nil {
 		return err

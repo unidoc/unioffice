@@ -21,6 +21,7 @@ func NewEG_Geometry() *EG_Geometry {
 	ret := &EG_Geometry{}
 	return ret
 }
+
 func (m *EG_Geometry) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_Geometry) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *EG_Geometry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_Geometry:
@@ -69,9 +71,13 @@ lEG_Geometry:
 	}
 	return nil
 }
+
+// Validate validates the EG_Geometry and its children
 func (m *EG_Geometry) Validate() error {
 	return m.ValidateWithPath("EG_Geometry")
 }
+
+// ValidateWithPath validates the EG_Geometry and its children, prefixing error messages with path
 func (m *EG_Geometry) ValidateWithPath(path string) error {
 	if m.CustGeom != nil {
 		if err := m.CustGeom.ValidateWithPath(path + "/CustGeom"); err != nil {

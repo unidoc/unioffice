@@ -20,6 +20,7 @@ type ST_DepthPercent struct {
 func (m *ST_DepthPercent) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_DepthPercent) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_DepthPercentWithSymbol != nil {
@@ -33,6 +34,7 @@ func (m *ST_DepthPercent) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_DepthPercent) String() string {
 	if m.ST_DepthPercentWithSymbol != nil {
 		return fmt.Sprintf("%v", *m.ST_DepthPercentWithSymbol)

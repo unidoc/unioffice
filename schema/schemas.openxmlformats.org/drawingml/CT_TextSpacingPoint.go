@@ -22,6 +22,7 @@ func NewCT_TextSpacingPoint() *CT_TextSpacingPoint {
 	ret.ValAttr = 0
 	return ret
 }
+
 func (m *CT_TextSpacingPoint) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_TextSpacingPoint) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextSpacingPoint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = 0
@@ -56,9 +58,13 @@ func (m *CT_TextSpacingPoint) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	}
 	return nil
 }
+
+// Validate validates the CT_TextSpacingPoint and its children
 func (m *CT_TextSpacingPoint) Validate() error {
 	return m.ValidateWithPath("CT_TextSpacingPoint")
 }
+
+// ValidateWithPath validates the CT_TextSpacingPoint and its children, prefixing error messages with path
 func (m *CT_TextSpacingPoint) ValidateWithPath(path string) error {
 	if m.ValAttr < 0 {
 		return fmt.Errorf("%s/m.ValAttr must be >= 0 (have %v)", path, m.ValAttr)

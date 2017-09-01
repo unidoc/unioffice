@@ -23,6 +23,7 @@ func NewCT_PrintSettings() *CT_PrintSettings {
 	ret := &CT_PrintSettings{}
 	return ret
 }
+
 func (m *CT_PrintSettings) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *CT_PrintSettings) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PrintSettings) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_PrintSettings:
@@ -91,9 +93,13 @@ lCT_PrintSettings:
 	}
 	return nil
 }
+
+// Validate validates the CT_PrintSettings and its children
 func (m *CT_PrintSettings) Validate() error {
 	return m.ValidateWithPath("CT_PrintSettings")
 }
+
+// ValidateWithPath validates the CT_PrintSettings and its children, prefixing error messages with path
 func (m *CT_PrintSettings) ValidateWithPath(path string) error {
 	if m.HeaderFooter != nil {
 		if err := m.HeaderFooter.ValidateWithPath(path + "/HeaderFooter"); err != nil {

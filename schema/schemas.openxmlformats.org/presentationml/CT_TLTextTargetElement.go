@@ -23,6 +23,7 @@ func NewCT_TLTextTargetElement() *CT_TLTextTargetElement {
 	ret := &CT_TLTextTargetElement{}
 	return ret
 }
+
 func (m *CT_TLTextTargetElement) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_TLTextTargetElement) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLTextTargetElement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TLTextTargetElement:
@@ -73,9 +75,13 @@ lCT_TLTextTargetElement:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLTextTargetElement and its children
 func (m *CT_TLTextTargetElement) Validate() error {
 	return m.ValidateWithPath("CT_TLTextTargetElement")
 }
+
+// ValidateWithPath validates the CT_TLTextTargetElement and its children, prefixing error messages with path
 func (m *CT_TLTextTargetElement) ValidateWithPath(path string) error {
 	if m.CharRg != nil {
 		if err := m.CharRg.ValidateWithPath(path + "/CharRg"); err != nil {

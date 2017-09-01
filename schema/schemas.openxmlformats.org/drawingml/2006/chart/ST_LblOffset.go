@@ -20,6 +20,7 @@ type ST_LblOffset struct {
 func (m *ST_LblOffset) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_LblOffset) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_LblOffsetPercent != nil {
@@ -33,6 +34,7 @@ func (m *ST_LblOffset) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_LblOffset) String() string {
 	if m.ST_LblOffsetPercent != nil {
 		return fmt.Sprintf("%v", *m.ST_LblOffsetPercent)

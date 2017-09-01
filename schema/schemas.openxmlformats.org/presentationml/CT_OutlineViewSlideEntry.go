@@ -23,6 +23,7 @@ func NewCT_OutlineViewSlideEntry() *CT_OutlineViewSlideEntry {
 	ret := &CT_OutlineViewSlideEntry{}
 	return ret
 }
+
 func (m *CT_OutlineViewSlideEntry) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_OutlineViewSlideEntry) MarshalXML(e *xml.Encoder, start xml.StartEle
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_OutlineViewSlideEntry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -67,9 +69,13 @@ func (m *CT_OutlineViewSlideEntry) UnmarshalXML(d *xml.Decoder, start xml.StartE
 	}
 	return nil
 }
+
+// Validate validates the CT_OutlineViewSlideEntry and its children
 func (m *CT_OutlineViewSlideEntry) Validate() error {
 	return m.ValidateWithPath("CT_OutlineViewSlideEntry")
 }
+
+// ValidateWithPath validates the CT_OutlineViewSlideEntry and its children, prefixing error messages with path
 func (m *CT_OutlineViewSlideEntry) ValidateWithPath(path string) error {
 	return nil
 }

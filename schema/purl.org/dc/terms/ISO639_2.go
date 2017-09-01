@@ -19,6 +19,7 @@ func NewISO639_2() *ISO639_2 {
 	ret := &ISO639_2{}
 	return ret
 }
+
 func (m *ISO639_2) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *ISO639_2) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *ISO639_2) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *ISO639_2) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the ISO639_2 and its children
 func (m *ISO639_2) Validate() error {
 	return m.ValidateWithPath("ISO639_2")
 }
+
+// ValidateWithPath validates the ISO639_2 and its children, prefixing error messages with path
 func (m *ISO639_2) ValidateWithPath(path string) error {
 	return nil
 }

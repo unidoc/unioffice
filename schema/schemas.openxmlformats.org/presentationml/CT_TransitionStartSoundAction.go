@@ -28,6 +28,7 @@ func NewCT_TransitionStartSoundAction() *CT_TransitionStartSoundAction {
 	ret.Snd = drawingml.NewCT_EmbeddedWAVAudioFile()
 	return ret
 }
+
 func (m *CT_TransitionStartSoundAction) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -42,6 +43,7 @@ func (m *CT_TransitionStartSoundAction) MarshalXML(e *xml.Encoder, start xml.Sta
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TransitionStartSoundAction) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Snd = drawingml.NewCT_EmbeddedWAVAudioFile()
@@ -80,9 +82,13 @@ lCT_TransitionStartSoundAction:
 	}
 	return nil
 }
+
+// Validate validates the CT_TransitionStartSoundAction and its children
 func (m *CT_TransitionStartSoundAction) Validate() error {
 	return m.ValidateWithPath("CT_TransitionStartSoundAction")
 }
+
+// ValidateWithPath validates the CT_TransitionStartSoundAction and its children, prefixing error messages with path
 func (m *CT_TransitionStartSoundAction) ValidateWithPath(path string) error {
 	if err := m.Snd.ValidateWithPath(path + "/Snd"); err != nil {
 		return err

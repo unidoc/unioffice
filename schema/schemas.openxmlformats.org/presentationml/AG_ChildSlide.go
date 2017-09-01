@@ -22,6 +22,7 @@ func NewAG_ChildSlide() *AG_ChildSlide {
 	ret := &AG_ChildSlide{}
 	return ret
 }
+
 func (m *AG_ChildSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *AG_ChildSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	return nil
 }
+
 func (m *AG_ChildSlide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -66,9 +68,13 @@ func (m *AG_ChildSlide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	}
 	return nil
 }
+
+// Validate validates the AG_ChildSlide and its children
 func (m *AG_ChildSlide) Validate() error {
 	return m.ValidateWithPath("AG_ChildSlide")
 }
+
+// ValidateWithPath validates the AG_ChildSlide and its children, prefixing error messages with path
 func (m *AG_ChildSlide) ValidateWithPath(path string) error {
 	return nil
 }

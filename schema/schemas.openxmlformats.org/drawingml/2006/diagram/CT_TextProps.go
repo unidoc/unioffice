@@ -19,6 +19,7 @@ func NewCT_TextProps() *CT_TextProps {
 	ret := &CT_TextProps{}
 	return ret
 }
+
 func (m *CT_TextProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -27,6 +28,7 @@ func (m *CT_TextProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextProps) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -41,9 +43,13 @@ func (m *CT_TextProps) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
+// Validate validates the CT_TextProps and its children
 func (m *CT_TextProps) Validate() error {
 	return m.ValidateWithPath("CT_TextProps")
 }
+
+// ValidateWithPath validates the CT_TextProps and its children, prefixing error messages with path
 func (m *CT_TextProps) ValidateWithPath(path string) error {
 	return nil
 }

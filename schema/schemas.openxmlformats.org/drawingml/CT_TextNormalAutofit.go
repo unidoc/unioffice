@@ -21,6 +21,7 @@ func NewCT_TextNormalAutofit() *CT_TextNormalAutofit {
 	ret := &CT_TextNormalAutofit{}
 	return ret
 }
+
 func (m *CT_TextNormalAutofit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_TextNormalAutofit) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextNormalAutofit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -67,9 +69,13 @@ func (m *CT_TextNormalAutofit) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	}
 	return nil
 }
+
+// Validate validates the CT_TextNormalAutofit and its children
 func (m *CT_TextNormalAutofit) Validate() error {
 	return m.ValidateWithPath("CT_TextNormalAutofit")
 }
+
+// ValidateWithPath validates the CT_TextNormalAutofit and its children, prefixing error messages with path
 func (m *CT_TextNormalAutofit) ValidateWithPath(path string) error {
 	if m.FontScaleAttr != nil {
 		if err := m.FontScaleAttr.ValidateWithPath(path + "/FontScaleAttr"); err != nil {

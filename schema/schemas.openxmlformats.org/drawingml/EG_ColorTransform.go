@@ -47,6 +47,7 @@ func NewEG_ColorTransform() *EG_ColorTransform {
 	ret := &EG_ColorTransform{}
 	return ret
 }
+
 func (m *EG_ColorTransform) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -165,6 +166,7 @@ func (m *EG_ColorTransform) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	return nil
 }
+
 func (m *EG_ColorTransform) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ColorTransform:
@@ -329,9 +331,13 @@ lEG_ColorTransform:
 	}
 	return nil
 }
+
+// Validate validates the EG_ColorTransform and its children
 func (m *EG_ColorTransform) Validate() error {
 	return m.ValidateWithPath("EG_ColorTransform")
 }
+
+// ValidateWithPath validates the EG_ColorTransform and its children, prefixing error messages with path
 func (m *EG_ColorTransform) ValidateWithPath(path string) error {
 	if m.Tint != nil {
 		if err := m.Tint.ValidateWithPath(path + "/Tint"); err != nil {

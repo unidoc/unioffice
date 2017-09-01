@@ -30,6 +30,7 @@ func NewCT_Schema() *CT_Schema {
 	ret := &CT_Schema{}
 	return ret
 }
+
 func (m *CT_Schema) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -55,6 +56,7 @@ func (m *CT_Schema) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Schema) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -113,9 +115,13 @@ lCT_Schema:
 	}
 	return nil
 }
+
+// Validate validates the CT_Schema and its children
 func (m *CT_Schema) Validate() error {
 	return m.ValidateWithPath("CT_Schema")
 }
+
+// ValidateWithPath validates the CT_Schema and its children, prefixing error messages with path
 func (m *CT_Schema) ValidateWithPath(path string) error {
 	return nil
 }

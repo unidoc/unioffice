@@ -28,6 +28,7 @@ func NewCT_ConditionalFormatting() *CT_ConditionalFormatting {
 	ret := &CT_ConditionalFormatting{}
 	return ret
 }
+
 func (m *CT_ConditionalFormatting) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -50,6 +51,7 @@ func (m *CT_ConditionalFormatting) MarshalXML(e *xml.Encoder, start xml.StartEle
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ConditionalFormatting) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -101,9 +103,13 @@ lCT_ConditionalFormatting:
 	}
 	return nil
 }
+
+// Validate validates the CT_ConditionalFormatting and its children
 func (m *CT_ConditionalFormatting) Validate() error {
 	return m.ValidateWithPath("CT_ConditionalFormatting")
 }
+
+// ValidateWithPath validates the CT_ConditionalFormatting and its children, prefixing error messages with path
 func (m *CT_ConditionalFormatting) ValidateWithPath(path string) error {
 	for i, v := range m.CfRule {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/CfRule[%d]", path, i)); err != nil {

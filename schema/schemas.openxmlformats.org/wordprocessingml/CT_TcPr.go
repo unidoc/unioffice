@@ -54,6 +54,7 @@ func NewCT_TcPr() *CT_TcPr {
 	ret := &CT_TcPr{}
 	return ret
 }
+
 func (m *CT_TcPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -134,6 +135,7 @@ func (m *CT_TcPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TcPr:
@@ -248,9 +250,13 @@ lCT_TcPr:
 	}
 	return nil
 }
+
+// Validate validates the CT_TcPr and its children
 func (m *CT_TcPr) Validate() error {
 	return m.ValidateWithPath("CT_TcPr")
 }
+
+// ValidateWithPath validates the CT_TcPr and its children, prefixing error messages with path
 func (m *CT_TcPr) ValidateWithPath(path string) error {
 	if m.CnfStyle != nil {
 		if err := m.CnfStyle.ValidateWithPath(path + "/CnfStyle"); err != nil {

@@ -22,6 +22,7 @@ func NewCT_TagList() *CT_TagList {
 	ret := &CT_TagList{}
 	return ret
 }
+
 func (m *CT_TagList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_TagList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TagList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TagList:
@@ -64,9 +66,13 @@ lCT_TagList:
 	}
 	return nil
 }
+
+// Validate validates the CT_TagList and its children
 func (m *CT_TagList) Validate() error {
 	return m.ValidateWithPath("CT_TagList")
 }
+
+// ValidateWithPath validates the CT_TagList and its children, prefixing error messages with path
 func (m *CT_TagList) ValidateWithPath(path string) error {
 	for i, v := range m.Tag {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Tag[%d]", path, i)); err != nil {

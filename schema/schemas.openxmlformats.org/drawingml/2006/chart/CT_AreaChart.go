@@ -27,6 +27,7 @@ func NewCT_AreaChart() *CT_AreaChart {
 	ret := &CT_AreaChart{}
 	return ret
 }
+
 func (m *CT_AreaChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -61,6 +62,7 @@ func (m *CT_AreaChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_AreaChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_AreaChart:
@@ -122,9 +124,13 @@ lCT_AreaChart:
 	}
 	return nil
 }
+
+// Validate validates the CT_AreaChart and its children
 func (m *CT_AreaChart) Validate() error {
 	return m.ValidateWithPath("CT_AreaChart")
 }
+
+// ValidateWithPath validates the CT_AreaChart and its children, prefixing error messages with path
 func (m *CT_AreaChart) ValidateWithPath(path string) error {
 	if m.Grouping != nil {
 		if err := m.Grouping.ValidateWithPath(path + "/Grouping"); err != nil {

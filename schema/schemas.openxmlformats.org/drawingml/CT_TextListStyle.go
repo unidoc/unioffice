@@ -30,6 +30,7 @@ func NewCT_TextListStyle() *CT_TextListStyle {
 	ret := &CT_TextListStyle{}
 	return ret
 }
+
 func (m *CT_TextListStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -82,6 +83,7 @@ func (m *CT_TextListStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextListStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TextListStyle:
@@ -161,9 +163,13 @@ lCT_TextListStyle:
 	}
 	return nil
 }
+
+// Validate validates the CT_TextListStyle and its children
 func (m *CT_TextListStyle) Validate() error {
 	return m.ValidateWithPath("CT_TextListStyle")
 }
+
+// ValidateWithPath validates the CT_TextListStyle and its children, prefixing error messages with path
 func (m *CT_TextListStyle) ValidateWithPath(path string) error {
 	if m.DefPPr != nil {
 		if err := m.DefPPr.ValidateWithPath(path + "/DefPPr"); err != nil {

@@ -22,6 +22,7 @@ func NewCT_Parameter() *CT_Parameter {
 	ret.TypeAttr = ST_ParameterId(1)
 	return ret
 }
+
 func (m *CT_Parameter) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_Parameter) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.TypeAttr = ST_ParameterId(1)
@@ -64,9 +66,13 @@ func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
+// Validate validates the CT_Parameter and its children
 func (m *CT_Parameter) Validate() error {
 	return m.ValidateWithPath("CT_Parameter")
 }
+
+// ValidateWithPath validates the CT_Parameter and its children, prefixing error messages with path
 func (m *CT_Parameter) ValidateWithPath(path string) error {
 	if m.TypeAttr == ST_ParameterIdUnset {
 		return fmt.Errorf("%s/TypeAttr is a mandatory field", path)

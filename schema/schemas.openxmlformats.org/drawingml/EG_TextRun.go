@@ -22,6 +22,7 @@ func NewEG_TextRun() *EG_TextRun {
 	ret := &EG_TextRun{}
 	return ret
 }
+
 func (m *EG_TextRun) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *EG_TextRun) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *EG_TextRun) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_TextRun:
@@ -79,9 +81,13 @@ lEG_TextRun:
 	}
 	return nil
 }
+
+// Validate validates the EG_TextRun and its children
 func (m *EG_TextRun) Validate() error {
 	return m.ValidateWithPath("EG_TextRun")
 }
+
+// ValidateWithPath validates the EG_TextRun and its children, prefixing error messages with path
 func (m *EG_TextRun) ValidateWithPath(path string) error {
 	if m.R != nil {
 		if err := m.R.ValidateWithPath(path + "/R"); err != nil {

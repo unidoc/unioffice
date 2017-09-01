@@ -24,6 +24,7 @@ func NewEG_WrapTypeChoice() *EG_WrapTypeChoice {
 	ret := &EG_WrapTypeChoice{}
 	return ret
 }
+
 func (m *EG_WrapTypeChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -50,6 +51,7 @@ func (m *EG_WrapTypeChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	return nil
 }
+
 func (m *EG_WrapTypeChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_WrapTypeChoice:
@@ -99,9 +101,13 @@ lEG_WrapTypeChoice:
 	}
 	return nil
 }
+
+// Validate validates the EG_WrapTypeChoice and its children
 func (m *EG_WrapTypeChoice) Validate() error {
 	return m.ValidateWithPath("EG_WrapTypeChoice")
 }
+
+// ValidateWithPath validates the EG_WrapTypeChoice and its children, prefixing error messages with path
 func (m *EG_WrapTypeChoice) ValidateWithPath(path string) error {
 	if m.WrapNone != nil {
 		if err := m.WrapNone.ValidateWithPath(path + "/WrapNone"); err != nil {

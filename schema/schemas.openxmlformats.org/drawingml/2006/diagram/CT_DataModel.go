@@ -27,6 +27,7 @@ func NewCT_DataModel() *CT_DataModel {
 	ret.PtLst = NewCT_PtList()
 	return ret
 }
+
 func (m *CT_DataModel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -53,6 +54,7 @@ func (m *CT_DataModel) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DataModel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.PtLst = NewCT_PtList()
@@ -102,9 +104,13 @@ lCT_DataModel:
 	}
 	return nil
 }
+
+// Validate validates the CT_DataModel and its children
 func (m *CT_DataModel) Validate() error {
 	return m.ValidateWithPath("CT_DataModel")
 }
+
+// ValidateWithPath validates the CT_DataModel and its children, prefixing error messages with path
 func (m *CT_DataModel) ValidateWithPath(path string) error {
 	if err := m.PtLst.ValidateWithPath(path + "/PtLst"); err != nil {
 		return err

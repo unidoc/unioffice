@@ -20,6 +20,7 @@ type ST_BubbleScale struct {
 func (m *ST_BubbleScale) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_BubbleScale) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_BubbleScalePercent != nil {
@@ -33,6 +34,7 @@ func (m *ST_BubbleScale) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_BubbleScale) String() string {
 	if m.ST_BubbleScalePercent != nil {
 		return fmt.Sprintf("%v", *m.ST_BubbleScalePercent)

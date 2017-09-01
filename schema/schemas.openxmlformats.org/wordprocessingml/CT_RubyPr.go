@@ -36,6 +36,7 @@ func NewCT_RubyPr() *CT_RubyPr {
 	ret.Lid = NewCT_Lang()
 	return ret
 }
+
 func (m *CT_RubyPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -58,6 +59,7 @@ func (m *CT_RubyPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RubyPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.RubyAlign = NewCT_RubyAlign()
@@ -112,9 +114,13 @@ lCT_RubyPr:
 	}
 	return nil
 }
+
+// Validate validates the CT_RubyPr and its children
 func (m *CT_RubyPr) Validate() error {
 	return m.ValidateWithPath("CT_RubyPr")
 }
+
+// ValidateWithPath validates the CT_RubyPr and its children, prefixing error messages with path
 func (m *CT_RubyPr) ValidateWithPath(path string) error {
 	if err := m.RubyAlign.ValidateWithPath(path + "/RubyAlign"); err != nil {
 		return err

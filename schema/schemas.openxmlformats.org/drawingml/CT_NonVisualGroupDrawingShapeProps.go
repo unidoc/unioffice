@@ -21,6 +21,7 @@ func NewCT_NonVisualGroupDrawingShapeProps() *CT_NonVisualGroupDrawingShapeProps
 	ret := &CT_NonVisualGroupDrawingShapeProps{}
 	return ret
 }
+
 func (m *CT_NonVisualGroupDrawingShapeProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_NonVisualGroupDrawingShapeProps) MarshalXML(e *xml.Encoder, start xm
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_NonVisualGroupDrawingShapeProps) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_NonVisualGroupDrawingShapeProps:
@@ -71,9 +73,13 @@ lCT_NonVisualGroupDrawingShapeProps:
 	}
 	return nil
 }
+
+// Validate validates the CT_NonVisualGroupDrawingShapeProps and its children
 func (m *CT_NonVisualGroupDrawingShapeProps) Validate() error {
 	return m.ValidateWithPath("CT_NonVisualGroupDrawingShapeProps")
 }
+
+// ValidateWithPath validates the CT_NonVisualGroupDrawingShapeProps and its children, prefixing error messages with path
 func (m *CT_NonVisualGroupDrawingShapeProps) ValidateWithPath(path string) error {
 	if m.GrpSpLocks != nil {
 		if err := m.GrpSpLocks.ValidateWithPath(path + "/GrpSpLocks"); err != nil {

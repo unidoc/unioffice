@@ -25,6 +25,7 @@ func NewCT_PCDKPIs() *CT_PCDKPIs {
 	ret := &CT_PCDKPIs{}
 	return ret
 }
+
 func (m *CT_PCDKPIs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_PCDKPIs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PCDKPIs) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -81,9 +83,13 @@ lCT_PCDKPIs:
 	}
 	return nil
 }
+
+// Validate validates the CT_PCDKPIs and its children
 func (m *CT_PCDKPIs) Validate() error {
 	return m.ValidateWithPath("CT_PCDKPIs")
 }
+
+// ValidateWithPath validates the CT_PCDKPIs and its children, prefixing error messages with path
 func (m *CT_PCDKPIs) ValidateWithPath(path string) error {
 	for i, v := range m.Kpi {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Kpi[%d]", path, i)); err != nil {

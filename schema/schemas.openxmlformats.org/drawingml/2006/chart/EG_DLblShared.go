@@ -33,6 +33,7 @@ func NewEG_DLblShared() *EG_DLblShared {
 	ret := &EG_DLblShared{}
 	return ret
 }
+
 func (m *EG_DLblShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -84,6 +85,7 @@ func (m *EG_DLblShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	return nil
 }
+
 func (m *EG_DLblShared) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_DLblShared:
@@ -163,9 +165,13 @@ lEG_DLblShared:
 	}
 	return nil
 }
+
+// Validate validates the EG_DLblShared and its children
 func (m *EG_DLblShared) Validate() error {
 	return m.ValidateWithPath("EG_DLblShared")
 }
+
+// ValidateWithPath validates the EG_DLblShared and its children, prefixing error messages with path
 func (m *EG_DLblShared) ValidateWithPath(path string) error {
 	if m.NumFmt != nil {
 		if err := m.NumFmt.ValidateWithPath(path + "/NumFmt"); err != nil {

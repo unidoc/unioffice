@@ -23,6 +23,7 @@ func NewCT_UpDownBars() *CT_UpDownBars {
 	ret := &CT_UpDownBars{}
 	return ret
 }
+
 func (m *CT_UpDownBars) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *CT_UpDownBars) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_UpDownBars) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_UpDownBars:
@@ -91,9 +93,13 @@ lCT_UpDownBars:
 	}
 	return nil
 }
+
+// Validate validates the CT_UpDownBars and its children
 func (m *CT_UpDownBars) Validate() error {
 	return m.ValidateWithPath("CT_UpDownBars")
 }
+
+// ValidateWithPath validates the CT_UpDownBars and its children, prefixing error messages with path
 func (m *CT_UpDownBars) ValidateWithPath(path string) error {
 	if m.GapWidth != nil {
 		if err := m.GapWidth.ValidateWithPath(path + "/GapWidth"); err != nil {

@@ -35,6 +35,7 @@ func NewGroup_DLbl() *Group_DLbl {
 	ret := &Group_DLbl{}
 	return ret
 }
+
 func (m *Group_DLbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -94,6 +95,7 @@ func (m *Group_DLbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *Group_DLbl) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lGroup_DLbl:
@@ -183,9 +185,13 @@ lGroup_DLbl:
 	}
 	return nil
 }
+
+// Validate validates the Group_DLbl and its children
 func (m *Group_DLbl) Validate() error {
 	return m.ValidateWithPath("Group_DLbl")
 }
+
+// ValidateWithPath validates the Group_DLbl and its children, prefixing error messages with path
 func (m *Group_DLbl) ValidateWithPath(path string) error {
 	if m.Layout != nil {
 		if err := m.Layout.ValidateWithPath(path + "/Layout"); err != nil {

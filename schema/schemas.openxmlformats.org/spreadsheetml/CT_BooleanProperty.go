@@ -22,6 +22,7 @@ func NewCT_BooleanProperty() *CT_BooleanProperty {
 	ret := &CT_BooleanProperty{}
 	return ret
 }
+
 func (m *CT_BooleanProperty) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_BooleanProperty) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_BooleanProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -57,9 +59,13 @@ func (m *CT_BooleanProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	}
 	return nil
 }
+
+// Validate validates the CT_BooleanProperty and its children
 func (m *CT_BooleanProperty) Validate() error {
 	return m.ValidateWithPath("CT_BooleanProperty")
 }
+
+// ValidateWithPath validates the CT_BooleanProperty and its children, prefixing error messages with path
 func (m *CT_BooleanProperty) ValidateWithPath(path string) error {
 	return nil
 }

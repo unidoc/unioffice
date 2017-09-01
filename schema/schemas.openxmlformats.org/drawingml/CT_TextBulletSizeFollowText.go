@@ -19,6 +19,7 @@ func NewCT_TextBulletSizeFollowText() *CT_TextBulletSizeFollowText {
 	ret := &CT_TextBulletSizeFollowText{}
 	return ret
 }
+
 func (m *CT_TextBulletSizeFollowText) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -27,6 +28,7 @@ func (m *CT_TextBulletSizeFollowText) MarshalXML(e *xml.Encoder, start xml.Start
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextBulletSizeFollowText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -41,9 +43,13 @@ func (m *CT_TextBulletSizeFollowText) UnmarshalXML(d *xml.Decoder, start xml.Sta
 	}
 	return nil
 }
+
+// Validate validates the CT_TextBulletSizeFollowText and its children
 func (m *CT_TextBulletSizeFollowText) Validate() error {
 	return m.ValidateWithPath("CT_TextBulletSizeFollowText")
 }
+
+// ValidateWithPath validates the CT_TextBulletSizeFollowText and its children, prefixing error messages with path
 func (m *CT_TextBulletSizeFollowText) ValidateWithPath(path string) error {
 	return nil
 }

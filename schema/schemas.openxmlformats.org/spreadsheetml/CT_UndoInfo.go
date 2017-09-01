@@ -43,6 +43,7 @@ func NewCT_UndoInfo() *CT_UndoInfo {
 	ret.ExpAttr = ST_FormulaExpression(1)
 	return ret
 }
+
 func (m *CT_UndoInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -92,6 +93,7 @@ func (m *CT_UndoInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ExpAttr = ST_FormulaExpression(1)
@@ -183,9 +185,13 @@ func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	}
 	return nil
 }
+
+// Validate validates the CT_UndoInfo and its children
 func (m *CT_UndoInfo) Validate() error {
 	return m.ValidateWithPath("CT_UndoInfo")
 }
+
+// ValidateWithPath validates the CT_UndoInfo and its children, prefixing error messages with path
 func (m *CT_UndoInfo) ValidateWithPath(path string) error {
 	if m.ExpAttr == ST_FormulaExpressionUnset {
 		return fmt.Errorf("%s/ExpAttr is a mandatory field", path)

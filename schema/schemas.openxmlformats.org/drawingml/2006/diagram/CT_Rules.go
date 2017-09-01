@@ -21,6 +21,7 @@ func NewCT_Rules() *CT_Rules {
 	ret := &CT_Rules{}
 	return ret
 }
+
 func (m *CT_Rules) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_Rules) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Rules) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Rules:
@@ -63,9 +65,13 @@ lCT_Rules:
 	}
 	return nil
 }
+
+// Validate validates the CT_Rules and its children
 func (m *CT_Rules) Validate() error {
 	return m.ValidateWithPath("CT_Rules")
 }
+
+// ValidateWithPath validates the CT_Rules and its children, prefixing error messages with path
 func (m *CT_Rules) ValidateWithPath(path string) error {
 	for i, v := range m.Rule {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Rule[%d]", path, i)); err != nil {

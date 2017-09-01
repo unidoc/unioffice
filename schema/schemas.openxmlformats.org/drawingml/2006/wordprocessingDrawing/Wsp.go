@@ -24,12 +24,14 @@ func NewWsp() *Wsp {
 	ret.CT_WordprocessingShape = *NewCT_WordprocessingShape()
 	return ret
 }
+
 func (m *Wsp) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
 	}
 	return m.CT_WordprocessingShape.MarshalXML(e, start)
 }
+
 func (m *Wsp) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_WordprocessingShape = *NewCT_WordprocessingShape()
@@ -111,9 +113,13 @@ lWsp:
 	}
 	return nil
 }
+
+// Validate validates the Wsp and its children
 func (m *Wsp) Validate() error {
 	return m.ValidateWithPath("Wsp")
 }
+
+// ValidateWithPath validates the Wsp and its children, prefixing error messages with path
 func (m *Wsp) ValidateWithPath(path string) error {
 	if err := m.CT_WordprocessingShape.ValidateWithPath(path); err != nil {
 		return err

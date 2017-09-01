@@ -24,6 +24,7 @@ func NewEG_PContentMath() *EG_PContentMath {
 	ret := &EG_PContentMath{}
 	return ret
 }
+
 func (m *EG_PContentMath) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *EG_PContentMath) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	return nil
 }
+
 func (m *EG_PContentMath) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_PContentMath:
@@ -362,9 +364,13 @@ lEG_PContentMath:
 	}
 	return nil
 }
+
+// Validate validates the EG_PContentMath and its children
 func (m *EG_PContentMath) Validate() error {
 	return m.ValidateWithPath("EG_PContentMath")
 }
+
+// ValidateWithPath validates the EG_PContentMath and its children, prefixing error messages with path
 func (m *EG_PContentMath) ValidateWithPath(path string) error {
 	for i, v := range m.EG_PContentBase {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/EG_PContentBase[%d]", path, i)); err != nil {

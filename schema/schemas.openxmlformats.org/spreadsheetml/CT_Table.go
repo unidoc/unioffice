@@ -76,6 +76,7 @@ func NewCT_Table() *CT_Table {
 	ret.TableColumns = NewCT_TableColumns()
 	return ret
 }
+
 func (m *CT_Table) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -187,6 +188,7 @@ func (m *CT_Table) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Table) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.TableColumns = NewCT_TableColumns()
@@ -397,9 +399,13 @@ lCT_Table:
 	}
 	return nil
 }
+
+// Validate validates the CT_Table and its children
 func (m *CT_Table) Validate() error {
 	return m.ValidateWithPath("CT_Table")
 }
+
+// ValidateWithPath validates the CT_Table and its children, prefixing error messages with path
 func (m *CT_Table) ValidateWithPath(path string) error {
 	if err := m.TableTypeAttr.ValidateWithPath(path + "/TableTypeAttr"); err != nil {
 		return err

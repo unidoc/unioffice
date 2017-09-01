@@ -27,6 +27,7 @@ func NewEG_SerShared() *EG_SerShared {
 	ret.Order = NewCT_UnsignedInt()
 	return ret
 }
+
 func (m *EG_SerShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *EG_SerShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	return nil
 }
+
 func (m *EG_SerShared) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Idx = NewCT_UnsignedInt()
@@ -89,9 +91,13 @@ lEG_SerShared:
 	}
 	return nil
 }
+
+// Validate validates the EG_SerShared and its children
 func (m *EG_SerShared) Validate() error {
 	return m.ValidateWithPath("EG_SerShared")
 }
+
+// ValidateWithPath validates the EG_SerShared and its children, prefixing error messages with path
 func (m *EG_SerShared) ValidateWithPath(path string) error {
 	if err := m.Idx.ValidateWithPath(path + "/Idx"); err != nil {
 		return err

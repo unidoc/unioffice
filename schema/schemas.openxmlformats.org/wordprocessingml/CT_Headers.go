@@ -22,6 +22,7 @@ func NewCT_Headers() *CT_Headers {
 	ret := &CT_Headers{}
 	return ret
 }
+
 func (m *CT_Headers) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_Headers) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Headers) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Headers:
@@ -62,9 +64,13 @@ lCT_Headers:
 	}
 	return nil
 }
+
+// Validate validates the CT_Headers and its children
 func (m *CT_Headers) Validate() error {
 	return m.ValidateWithPath("CT_Headers")
 }
+
+// ValidateWithPath validates the CT_Headers and its children, prefixing error messages with path
 func (m *CT_Headers) ValidateWithPath(path string) error {
 	for i, v := range m.Header {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Header[%d]", path, i)); err != nil {

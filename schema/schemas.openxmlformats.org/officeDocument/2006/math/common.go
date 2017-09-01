@@ -54,6 +54,7 @@ func (e ST_Shp) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}
 	return attr, nil
 }
+
 func (e *ST_Shp) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "":
@@ -65,9 +66,11 @@ func (e *ST_Shp) UnmarshalXMLAttr(attr xml.Attr) error {
 	}
 	return nil
 }
+
 func (m ST_Shp) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(m.String(), start)
 }
+
 func (m *ST_Shp) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
@@ -94,6 +97,7 @@ func (m *ST_Shp) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return fmt.Errorf("expected end element, got %v", tok)
 }
+
 func (m ST_Shp) String() string {
 	switch m {
 	case 0:
@@ -105,9 +109,11 @@ func (m ST_Shp) String() string {
 	}
 	return ""
 }
+
 func (m ST_Shp) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m ST_Shp) ValidateWithPath(path string) error {
 	switch m {
 	case 0, 1, 2:
@@ -144,6 +150,7 @@ func (e ST_FType) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}
 	return attr, nil
 }
+
 func (e *ST_FType) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "":
@@ -159,9 +166,11 @@ func (e *ST_FType) UnmarshalXMLAttr(attr xml.Attr) error {
 	}
 	return nil
 }
+
 func (m ST_FType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(m.String(), start)
 }
+
 func (m *ST_FType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
@@ -192,6 +201,7 @@ func (m *ST_FType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return fmt.Errorf("expected end element, got %v", tok)
 }
+
 func (m ST_FType) String() string {
 	switch m {
 	case 0:
@@ -207,9 +217,11 @@ func (m ST_FType) String() string {
 	}
 	return ""
 }
+
 func (m ST_FType) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m ST_FType) ValidateWithPath(path string) error {
 	switch m {
 	case 0, 1, 2, 3, 4:
@@ -240,6 +252,7 @@ func (e ST_LimLoc) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}
 	return attr, nil
 }
+
 func (e *ST_LimLoc) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "":
@@ -251,9 +264,11 @@ func (e *ST_LimLoc) UnmarshalXMLAttr(attr xml.Attr) error {
 	}
 	return nil
 }
+
 func (m ST_LimLoc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(m.String(), start)
 }
+
 func (m *ST_LimLoc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
@@ -280,6 +295,7 @@ func (m *ST_LimLoc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return fmt.Errorf("expected end element, got %v", tok)
 }
+
 func (m ST_LimLoc) String() string {
 	switch m {
 	case 0:
@@ -291,9 +307,11 @@ func (m ST_LimLoc) String() string {
 	}
 	return ""
 }
+
 func (m ST_LimLoc) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m ST_LimLoc) ValidateWithPath(path string) error {
 	switch m {
 	case 0, 1, 2:
@@ -324,6 +342,7 @@ func (e ST_TopBot) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}
 	return attr, nil
 }
+
 func (e *ST_TopBot) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "":
@@ -335,9 +354,11 @@ func (e *ST_TopBot) UnmarshalXMLAttr(attr xml.Attr) error {
 	}
 	return nil
 }
+
 func (m ST_TopBot) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(m.String(), start)
 }
+
 func (m *ST_TopBot) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
@@ -364,6 +385,7 @@ func (m *ST_TopBot) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return fmt.Errorf("expected end element, got %v", tok)
 }
+
 func (m ST_TopBot) String() string {
 	switch m {
 	case 0:
@@ -375,9 +397,11 @@ func (m ST_TopBot) String() string {
 	}
 	return ""
 }
+
 func (m ST_TopBot) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m ST_TopBot) ValidateWithPath(path string) error {
 	switch m {
 	case 0, 1, 2:
@@ -420,6 +444,7 @@ func (e ST_Script) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}
 	return attr, nil
 }
+
 func (e *ST_Script) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "":
@@ -439,9 +464,11 @@ func (e *ST_Script) UnmarshalXMLAttr(attr xml.Attr) error {
 	}
 	return nil
 }
+
 func (m ST_Script) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(m.String(), start)
 }
+
 func (m *ST_Script) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
@@ -476,6 +503,7 @@ func (m *ST_Script) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return fmt.Errorf("expected end element, got %v", tok)
 }
+
 func (m ST_Script) String() string {
 	switch m {
 	case 0:
@@ -495,9 +523,11 @@ func (m ST_Script) String() string {
 	}
 	return ""
 }
+
 func (m ST_Script) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m ST_Script) ValidateWithPath(path string) error {
 	switch m {
 	case 0, 1, 2, 3, 4, 5, 6:
@@ -534,6 +564,7 @@ func (e ST_Style) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}
 	return attr, nil
 }
+
 func (e *ST_Style) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "":
@@ -549,9 +580,11 @@ func (e *ST_Style) UnmarshalXMLAttr(attr xml.Attr) error {
 	}
 	return nil
 }
+
 func (m ST_Style) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(m.String(), start)
 }
+
 func (m *ST_Style) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
@@ -582,6 +615,7 @@ func (m *ST_Style) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return fmt.Errorf("expected end element, got %v", tok)
 }
+
 func (m ST_Style) String() string {
 	switch m {
 	case 0:
@@ -597,9 +631,11 @@ func (m ST_Style) String() string {
 	}
 	return ""
 }
+
 func (m ST_Style) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m ST_Style) ValidateWithPath(path string) error {
 	switch m {
 	case 0, 1, 2, 3, 4:
@@ -636,6 +672,7 @@ func (e ST_Jc) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}
 	return attr, nil
 }
+
 func (e *ST_Jc) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "":
@@ -651,9 +688,11 @@ func (e *ST_Jc) UnmarshalXMLAttr(attr xml.Attr) error {
 	}
 	return nil
 }
+
 func (m ST_Jc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(m.String(), start)
 }
+
 func (m *ST_Jc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
@@ -684,6 +723,7 @@ func (m *ST_Jc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return fmt.Errorf("expected end element, got %v", tok)
 }
+
 func (m ST_Jc) String() string {
 	switch m {
 	case 0:
@@ -699,9 +739,11 @@ func (m ST_Jc) String() string {
 	}
 	return ""
 }
+
 func (m ST_Jc) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m ST_Jc) ValidateWithPath(path string) error {
 	switch m {
 	case 0, 1, 2, 3, 4:
@@ -735,6 +777,7 @@ func (e ST_BreakBin) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}
 	return attr, nil
 }
+
 func (e *ST_BreakBin) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "":
@@ -748,9 +791,11 @@ func (e *ST_BreakBin) UnmarshalXMLAttr(attr xml.Attr) error {
 	}
 	return nil
 }
+
 func (m ST_BreakBin) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(m.String(), start)
 }
+
 func (m *ST_BreakBin) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
@@ -779,6 +824,7 @@ func (m *ST_BreakBin) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	}
 	return fmt.Errorf("expected end element, got %v", tok)
 }
+
 func (m ST_BreakBin) String() string {
 	switch m {
 	case 0:
@@ -792,9 +838,11 @@ func (m ST_BreakBin) String() string {
 	}
 	return ""
 }
+
 func (m ST_BreakBin) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m ST_BreakBin) ValidateWithPath(path string) error {
 	switch m {
 	case 0, 1, 2, 3:
@@ -828,6 +876,7 @@ func (e ST_BreakBinSub) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	}
 	return attr, nil
 }
+
 func (e *ST_BreakBinSub) UnmarshalXMLAttr(attr xml.Attr) error {
 	switch attr.Value {
 	case "":
@@ -841,9 +890,11 @@ func (e *ST_BreakBinSub) UnmarshalXMLAttr(attr xml.Attr) error {
 	}
 	return nil
 }
+
 func (m ST_BreakBinSub) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(m.String(), start)
 }
+
 func (m *ST_BreakBinSub) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
@@ -872,6 +923,7 @@ func (m *ST_BreakBinSub) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}
 	return fmt.Errorf("expected end element, got %v", tok)
 }
+
 func (m ST_BreakBinSub) String() string {
 	switch m {
 	case 0:
@@ -885,9 +937,11 @@ func (m ST_BreakBinSub) String() string {
 	}
 	return ""
 }
+
 func (m ST_BreakBinSub) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m ST_BreakBinSub) ValidateWithPath(path string) error {
 	switch m {
 	case 0, 1, 2, 3:
@@ -896,6 +950,8 @@ func (m ST_BreakBinSub) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
+// init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/math", "CT_Integer255", NewCT_Integer255)
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/math", "CT_Integer2", NewCT_Integer2)

@@ -25,6 +25,7 @@ func NewCT_Dxfs() *CT_Dxfs {
 	ret := &CT_Dxfs{}
 	return ret
 }
+
 func (m *CT_Dxfs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_Dxfs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Dxfs) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -81,9 +83,13 @@ lCT_Dxfs:
 	}
 	return nil
 }
+
+// Validate validates the CT_Dxfs and its children
 func (m *CT_Dxfs) Validate() error {
 	return m.ValidateWithPath("CT_Dxfs")
 }
+
+// ValidateWithPath validates the CT_Dxfs and its children, prefixing error messages with path
 func (m *CT_Dxfs) ValidateWithPath(path string) error {
 	for i, v := range m.Dxf {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Dxf[%d]", path, i)); err != nil {

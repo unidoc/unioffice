@@ -32,6 +32,7 @@ func NewCT_OfPieChart() *CT_OfPieChart {
 	ret.OfPieType = NewCT_OfPieType()
 	return ret
 }
+
 func (m *CT_OfPieChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -82,6 +83,7 @@ func (m *CT_OfPieChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_OfPieChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.OfPieType = NewCT_OfPieType()
@@ -163,9 +165,13 @@ lCT_OfPieChart:
 	}
 	return nil
 }
+
+// Validate validates the CT_OfPieChart and its children
 func (m *CT_OfPieChart) Validate() error {
 	return m.ValidateWithPath("CT_OfPieChart")
 }
+
+// ValidateWithPath validates the CT_OfPieChart and its children, prefixing error messages with path
 func (m *CT_OfPieChart) ValidateWithPath(path string) error {
 	if err := m.OfPieType.ValidateWithPath(path + "/OfPieType"); err != nil {
 		return err

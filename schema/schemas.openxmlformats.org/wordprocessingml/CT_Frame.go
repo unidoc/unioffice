@@ -39,6 +39,7 @@ func NewCT_Frame() *CT_Frame {
 	ret := &CT_Frame{}
 	return ret
 }
+
 func (m *CT_Frame) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -87,6 +88,7 @@ func (m *CT_Frame) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Frame) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Frame:
@@ -161,9 +163,13 @@ lCT_Frame:
 	}
 	return nil
 }
+
+// Validate validates the CT_Frame and its children
 func (m *CT_Frame) Validate() error {
 	return m.ValidateWithPath("CT_Frame")
 }
+
+// ValidateWithPath validates the CT_Frame and its children, prefixing error messages with path
 func (m *CT_Frame) ValidateWithPath(path string) error {
 	if m.Sz != nil {
 		if err := m.Sz.ValidateWithPath(path + "/Sz"); err != nil {

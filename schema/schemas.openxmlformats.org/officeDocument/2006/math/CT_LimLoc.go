@@ -21,6 +21,7 @@ func NewCT_LimLoc() *CT_LimLoc {
 	ret.ValAttr = ST_LimLoc(1)
 	return ret
 }
+
 func (m *CT_LimLoc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_LimLoc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LimLoc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = ST_LimLoc(1)
@@ -54,9 +56,13 @@ func (m *CT_LimLoc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_LimLoc and its children
 func (m *CT_LimLoc) Validate() error {
 	return m.ValidateWithPath("CT_LimLoc")
 }
+
+// ValidateWithPath validates the CT_LimLoc and its children, prefixing error messages with path
 func (m *CT_LimLoc) ValidateWithPath(path string) error {
 	if m.ValAttr == ST_LimLocUnset {
 		return fmt.Errorf("%s/ValAttr is a mandatory field", path)

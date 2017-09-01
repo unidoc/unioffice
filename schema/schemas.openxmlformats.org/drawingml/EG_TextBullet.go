@@ -23,6 +23,7 @@ func NewEG_TextBullet() *EG_TextBullet {
 	ret := &EG_TextBullet{}
 	return ret
 }
+
 func (m *EG_TextBullet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *EG_TextBullet) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	return nil
 }
+
 func (m *EG_TextBullet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_TextBullet:
@@ -89,9 +91,13 @@ lEG_TextBullet:
 	}
 	return nil
 }
+
+// Validate validates the EG_TextBullet and its children
 func (m *EG_TextBullet) Validate() error {
 	return m.ValidateWithPath("EG_TextBullet")
 }
+
+// ValidateWithPath validates the EG_TextBullet and its children, prefixing error messages with path
 func (m *EG_TextBullet) ValidateWithPath(path string) error {
 	if m.BuNone != nil {
 		if err := m.BuNone.ValidateWithPath(path + "/BuNone"); err != nil {

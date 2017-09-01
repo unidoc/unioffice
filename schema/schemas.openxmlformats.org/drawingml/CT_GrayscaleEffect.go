@@ -19,6 +19,7 @@ func NewCT_GrayscaleEffect() *CT_GrayscaleEffect {
 	ret := &CT_GrayscaleEffect{}
 	return ret
 }
+
 func (m *CT_GrayscaleEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -27,6 +28,7 @@ func (m *CT_GrayscaleEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GrayscaleEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -41,9 +43,13 @@ func (m *CT_GrayscaleEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	}
 	return nil
 }
+
+// Validate validates the CT_GrayscaleEffect and its children
 func (m *CT_GrayscaleEffect) Validate() error {
 	return m.ValidateWithPath("CT_GrayscaleEffect")
 }
+
+// ValidateWithPath validates the CT_GrayscaleEffect and its children, prefixing error messages with path
 func (m *CT_GrayscaleEffect) ValidateWithPath(path string) error {
 	return nil
 }

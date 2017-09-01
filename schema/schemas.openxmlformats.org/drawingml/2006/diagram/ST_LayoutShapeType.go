@@ -22,6 +22,7 @@ type ST_LayoutShapeType struct {
 func (m *ST_LayoutShapeType) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_LayoutShapeType) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_ShapeType != drawingml.ST_ShapeTypeUnset {
@@ -35,6 +36,7 @@ func (m *ST_LayoutShapeType) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_LayoutShapeType) String() string {
 	if m.ST_ShapeType != drawingml.ST_ShapeTypeUnset {
 		return m.ST_ShapeType.String()

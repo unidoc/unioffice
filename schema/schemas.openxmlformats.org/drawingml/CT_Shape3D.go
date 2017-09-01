@@ -30,6 +30,7 @@ func NewCT_Shape3D() *CT_Shape3D {
 	ret := &CT_Shape3D{}
 	return ret
 }
+
 func (m *CT_Shape3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -77,6 +78,7 @@ func (m *CT_Shape3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Shape3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -152,9 +154,13 @@ lCT_Shape3D:
 	}
 	return nil
 }
+
+// Validate validates the CT_Shape3D and its children
 func (m *CT_Shape3D) Validate() error {
 	return m.ValidateWithPath("CT_Shape3D")
 }
+
+// ValidateWithPath validates the CT_Shape3D and its children, prefixing error messages with path
 func (m *CT_Shape3D) ValidateWithPath(path string) error {
 	if m.ZAttr != nil {
 		if err := m.ZAttr.ValidateWithPath(path + "/ZAttr"); err != nil {

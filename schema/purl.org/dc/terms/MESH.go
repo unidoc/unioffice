@@ -19,6 +19,7 @@ func NewMESH() *MESH {
 	ret := &MESH{}
 	return ret
 }
+
 func (m *MESH) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *MESH) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *MESH) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *MESH) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the MESH and its children
 func (m *MESH) Validate() error {
 	return m.ValidateWithPath("MESH")
 }
+
+// ValidateWithPath validates the MESH and its children, prefixing error messages with path
 func (m *MESH) ValidateWithPath(path string) error {
 	return nil
 }

@@ -37,6 +37,7 @@ func NewCT_TblPrExBase() *CT_TblPrExBase {
 	ret := &CT_TblPrExBase{}
 	return ret
 }
+
 func (m *CT_TblPrExBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -81,6 +82,7 @@ func (m *CT_TblPrExBase) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TblPrExBase) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TblPrExBase:
@@ -150,9 +152,13 @@ lCT_TblPrExBase:
 	}
 	return nil
 }
+
+// Validate validates the CT_TblPrExBase and its children
 func (m *CT_TblPrExBase) Validate() error {
 	return m.ValidateWithPath("CT_TblPrExBase")
 }
+
+// ValidateWithPath validates the CT_TblPrExBase and its children, prefixing error messages with path
 func (m *CT_TblPrExBase) ValidateWithPath(path string) error {
 	if m.TblW != nil {
 		if err := m.TblW.ValidateWithPath(path + "/TblW"); err != nil {

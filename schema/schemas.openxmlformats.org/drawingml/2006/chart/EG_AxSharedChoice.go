@@ -21,6 +21,7 @@ func NewEG_AxSharedChoice() *EG_AxSharedChoice {
 	ret := &EG_AxSharedChoice{}
 	return ret
 }
+
 func (m *EG_AxSharedChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_AxSharedChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	return nil
 }
+
 func (m *EG_AxSharedChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_AxSharedChoice:
@@ -69,9 +71,13 @@ lEG_AxSharedChoice:
 	}
 	return nil
 }
+
+// Validate validates the EG_AxSharedChoice and its children
 func (m *EG_AxSharedChoice) Validate() error {
 	return m.ValidateWithPath("EG_AxSharedChoice")
 }
+
+// ValidateWithPath validates the EG_AxSharedChoice and its children, prefixing error messages with path
 func (m *EG_AxSharedChoice) ValidateWithPath(path string) error {
 	if m.Crosses != nil {
 		if err := m.Crosses.ValidateWithPath(path + "/Crosses"); err != nil {

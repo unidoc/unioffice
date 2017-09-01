@@ -32,6 +32,7 @@ func NewCT_OleObject() *CT_OleObject {
 	ret.Choice = NewCT_OleObjectChoice()
 	return ret
 }
+
 func (m *CT_OleObject) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -73,6 +74,7 @@ func (m *CT_OleObject) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_OleObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Choice = NewCT_OleObjectChoice()
@@ -168,9 +170,13 @@ lCT_OleObject:
 	}
 	return nil
 }
+
+// Validate validates the CT_OleObject and its children
 func (m *CT_OleObject) Validate() error {
 	return m.ValidateWithPath("CT_OleObject")
 }
+
+// ValidateWithPath validates the CT_OleObject and its children, prefixing error messages with path
 func (m *CT_OleObject) ValidateWithPath(path string) error {
 	if err := m.Choice.ValidateWithPath(path + "/Choice"); err != nil {
 		return err

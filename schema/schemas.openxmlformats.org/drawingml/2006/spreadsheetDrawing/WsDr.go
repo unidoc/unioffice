@@ -21,6 +21,7 @@ func NewWsDr() *WsDr {
 	ret.CT_Drawing = *NewCT_Drawing()
 	return ret
 }
+
 func (m *WsDr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *WsDr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "wsDr"
 	return m.CT_Drawing.MarshalXML(e, start)
 }
+
 func (m *WsDr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Drawing = *NewCT_Drawing()
@@ -79,9 +81,13 @@ lWsDr:
 	}
 	return nil
 }
+
+// Validate validates the WsDr and its children
 func (m *WsDr) Validate() error {
 	return m.ValidateWithPath("WsDr")
 }
+
+// ValidateWithPath validates the WsDr and its children, prefixing error messages with path
 func (m *WsDr) ValidateWithPath(path string) error {
 	if err := m.CT_Drawing.ValidateWithPath(path); err != nil {
 		return err

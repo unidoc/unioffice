@@ -31,6 +31,7 @@ func NewCT_NotesSlide() *CT_NotesSlide {
 	ret.CSld = NewCT_CommonSlideData()
 	return ret
 }
+
 func (m *CT_NotesSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -57,6 +58,7 @@ func (m *CT_NotesSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_NotesSlide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CSld = NewCT_CommonSlideData()
@@ -112,9 +114,13 @@ lCT_NotesSlide:
 	}
 	return nil
 }
+
+// Validate validates the CT_NotesSlide and its children
 func (m *CT_NotesSlide) Validate() error {
 	return m.ValidateWithPath("CT_NotesSlide")
 }
+
+// ValidateWithPath validates the CT_NotesSlide and its children, prefixing error messages with path
 func (m *CT_NotesSlide) ValidateWithPath(path string) error {
 	if err := m.CSld.ValidateWithPath(path + "/CSld"); err != nil {
 		return err

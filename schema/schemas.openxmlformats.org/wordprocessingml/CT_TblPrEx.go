@@ -38,6 +38,7 @@ func NewCT_TblPrEx() *CT_TblPrEx {
 	ret := &CT_TblPrEx{}
 	return ret
 }
+
 func (m *CT_TblPrEx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -86,6 +87,7 @@ func (m *CT_TblPrEx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TblPrEx) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TblPrEx:
@@ -160,9 +162,13 @@ lCT_TblPrEx:
 	}
 	return nil
 }
+
+// Validate validates the CT_TblPrEx and its children
 func (m *CT_TblPrEx) Validate() error {
 	return m.ValidateWithPath("CT_TblPrEx")
 }
+
+// ValidateWithPath validates the CT_TblPrEx and its children, prefixing error messages with path
 func (m *CT_TblPrEx) ValidateWithPath(path string) error {
 	if m.TblW != nil {
 		if err := m.TblW.ValidateWithPath(path + "/TblW"); err != nil {

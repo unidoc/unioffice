@@ -32,6 +32,7 @@ func NewCT_ContentPartLocking() *CT_ContentPartLocking {
 	ret := &CT_ContentPartLocking{}
 	return ret
 }
+
 func (m *CT_ContentPartLocking) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -84,6 +85,7 @@ func (m *CT_ContentPartLocking) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ContentPartLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -185,9 +187,13 @@ lCT_ContentPartLocking:
 	}
 	return nil
 }
+
+// Validate validates the CT_ContentPartLocking and its children
 func (m *CT_ContentPartLocking) Validate() error {
 	return m.ValidateWithPath("CT_ContentPartLocking")
 }
+
+// ValidateWithPath validates the CT_ContentPartLocking and its children, prefixing error messages with path
 func (m *CT_ContentPartLocking) ValidateWithPath(path string) error {
 	if m.ExtLst != nil {
 		if err := m.ExtLst.ValidateWithPath(path + "/ExtLst"); err != nil {

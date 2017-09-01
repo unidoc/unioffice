@@ -22,6 +22,7 @@ func NewPivotCacheDefinition() *PivotCacheDefinition {
 	ret.CT_PivotCacheDefinition = *NewCT_PivotCacheDefinition()
 	return ret
 }
+
 func (m *PivotCacheDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *PivotCacheDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement
 	start.Name.Local = "x:pivotCacheDefinition"
 	return m.CT_PivotCacheDefinition.MarshalXML(e, start)
 }
+
 func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_PivotCacheDefinition = *NewCT_PivotCacheDefinition()
@@ -253,9 +255,13 @@ lPivotCacheDefinition:
 	}
 	return nil
 }
+
+// Validate validates the PivotCacheDefinition and its children
 func (m *PivotCacheDefinition) Validate() error {
 	return m.ValidateWithPath("PivotCacheDefinition")
 }
+
+// ValidateWithPath validates the PivotCacheDefinition and its children, prefixing error messages with path
 func (m *PivotCacheDefinition) ValidateWithPath(path string) error {
 	if err := m.CT_PivotCacheDefinition.ValidateWithPath(path); err != nil {
 		return err

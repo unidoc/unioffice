@@ -20,6 +20,7 @@ type ST_Thickness struct {
 func (m *ST_Thickness) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_Thickness) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_ThicknessPercent != nil {
@@ -33,6 +34,7 @@ func (m *ST_Thickness) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_Thickness) String() string {
 	if m.ST_ThicknessPercent != nil {
 		return fmt.Sprintf("%v", *m.ST_ThicknessPercent)

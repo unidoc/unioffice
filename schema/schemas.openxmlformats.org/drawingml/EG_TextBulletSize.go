@@ -22,6 +22,7 @@ func NewEG_TextBulletSize() *EG_TextBulletSize {
 	ret := &EG_TextBulletSize{}
 	return ret
 }
+
 func (m *EG_TextBulletSize) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *EG_TextBulletSize) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	return nil
 }
+
 func (m *EG_TextBulletSize) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_TextBulletSize:
@@ -79,9 +81,13 @@ lEG_TextBulletSize:
 	}
 	return nil
 }
+
+// Validate validates the EG_TextBulletSize and its children
 func (m *EG_TextBulletSize) Validate() error {
 	return m.ValidateWithPath("EG_TextBulletSize")
 }
+
+// ValidateWithPath validates the EG_TextBulletSize and its children, prefixing error messages with path
 func (m *EG_TextBulletSize) ValidateWithPath(path string) error {
 	if m.BuSzTx != nil {
 		if err := m.BuSzTx.ValidateWithPath(path + "/BuSzTx"); err != nil {

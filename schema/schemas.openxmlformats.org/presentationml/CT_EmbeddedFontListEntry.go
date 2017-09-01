@@ -32,6 +32,7 @@ func NewCT_EmbeddedFontListEntry() *CT_EmbeddedFontListEntry {
 	ret.Font = drawingml.NewCT_TextFont()
 	return ret
 }
+
 func (m *CT_EmbeddedFontListEntry) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -58,6 +59,7 @@ func (m *CT_EmbeddedFontListEntry) MarshalXML(e *xml.Encoder, start xml.StartEle
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_EmbeddedFontListEntry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Font = drawingml.NewCT_TextFont()
@@ -107,9 +109,13 @@ lCT_EmbeddedFontListEntry:
 	}
 	return nil
 }
+
+// Validate validates the CT_EmbeddedFontListEntry and its children
 func (m *CT_EmbeddedFontListEntry) Validate() error {
 	return m.ValidateWithPath("CT_EmbeddedFontListEntry")
 }
+
+// ValidateWithPath validates the CT_EmbeddedFontListEntry and its children, prefixing error messages with path
 func (m *CT_EmbeddedFontListEntry) ValidateWithPath(path string) error {
 	if err := m.Font.ValidateWithPath(path + "/Font"); err != nil {
 		return err

@@ -21,6 +21,7 @@ func NewElementsGroup() *ElementsGroup {
 	ret := &ElementsGroup{}
 	return ret
 }
+
 func (m *ElementsGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *ElementsGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	return nil
 }
+
 func (m *ElementsGroup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lElementsGroup:
@@ -62,9 +64,13 @@ lElementsGroup:
 	}
 	return nil
 }
+
+// Validate validates the ElementsGroup and its children
 func (m *ElementsGroup) Validate() error {
 	return m.ValidateWithPath("ElementsGroup")
 }
+
+// ValidateWithPath validates the ElementsGroup and its children, prefixing error messages with path
 func (m *ElementsGroup) ValidateWithPath(path string) error {
 	for i, v := range m.Choice {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Choice[%d]", path, i)); err != nil {

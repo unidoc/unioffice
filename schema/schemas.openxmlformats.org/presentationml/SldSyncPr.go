@@ -21,6 +21,7 @@ func NewSldSyncPr() *SldSyncPr {
 	ret.CT_SlideSyncProperties = *NewCT_SlideSyncProperties()
 	return ret
 }
+
 func (m *SldSyncPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *SldSyncPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "p:sldSyncPr"
 	return m.CT_SlideSyncProperties.MarshalXML(e, start)
 }
+
 func (m *SldSyncPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_SlideSyncProperties = *NewCT_SlideSyncProperties()
@@ -87,9 +89,13 @@ lSldSyncPr:
 	}
 	return nil
 }
+
+// Validate validates the SldSyncPr and its children
 func (m *SldSyncPr) Validate() error {
 	return m.ValidateWithPath("SldSyncPr")
 }
+
+// ValidateWithPath validates the SldSyncPr and its children, prefixing error messages with path
 func (m *SldSyncPr) ValidateWithPath(path string) error {
 	if err := m.CT_SlideSyncProperties.ValidateWithPath(path); err != nil {
 		return err

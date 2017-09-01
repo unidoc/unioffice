@@ -32,6 +32,7 @@ func NewCT_HeaderFooter() *CT_HeaderFooter {
 	ret := &CT_HeaderFooter{}
 	return ret
 }
+
 func (m *CT_HeaderFooter) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -82,6 +83,7 @@ func (m *CT_HeaderFooter) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_HeaderFooter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -159,9 +161,13 @@ lCT_HeaderFooter:
 	}
 	return nil
 }
+
+// Validate validates the CT_HeaderFooter and its children
 func (m *CT_HeaderFooter) Validate() error {
 	return m.ValidateWithPath("CT_HeaderFooter")
 }
+
+// ValidateWithPath validates the CT_HeaderFooter and its children, prefixing error messages with path
 func (m *CT_HeaderFooter) ValidateWithPath(path string) error {
 	return nil
 }

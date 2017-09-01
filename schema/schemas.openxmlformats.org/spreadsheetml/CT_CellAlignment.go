@@ -38,6 +38,7 @@ func NewCT_CellAlignment() *CT_CellAlignment {
 	ret := &CT_CellAlignment{}
 	return ret
 }
+
 func (m *CT_CellAlignment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -88,6 +89,7 @@ func (m *CT_CellAlignment) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CellAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -163,9 +165,13 @@ func (m *CT_CellAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	}
 	return nil
 }
+
+// Validate validates the CT_CellAlignment and its children
 func (m *CT_CellAlignment) Validate() error {
 	return m.ValidateWithPath("CT_CellAlignment")
 }
+
+// ValidateWithPath validates the CT_CellAlignment and its children, prefixing error messages with path
 func (m *CT_CellAlignment) ValidateWithPath(path string) error {
 	if err := m.HorizontalAttr.ValidateWithPath(path + "/HorizontalAttr"); err != nil {
 		return err

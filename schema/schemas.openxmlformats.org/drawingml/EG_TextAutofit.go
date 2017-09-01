@@ -22,6 +22,7 @@ func NewEG_TextAutofit() *EG_TextAutofit {
 	ret := &EG_TextAutofit{}
 	return ret
 }
+
 func (m *EG_TextAutofit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *EG_TextAutofit) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
 func (m *EG_TextAutofit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_TextAutofit:
@@ -79,9 +81,13 @@ lEG_TextAutofit:
 	}
 	return nil
 }
+
+// Validate validates the EG_TextAutofit and its children
 func (m *EG_TextAutofit) Validate() error {
 	return m.ValidateWithPath("EG_TextAutofit")
 }
+
+// ValidateWithPath validates the EG_TextAutofit and its children, prefixing error messages with path
 func (m *EG_TextAutofit) ValidateWithPath(path string) error {
 	if m.NoAutofit != nil {
 		if err := m.NoAutofit.ValidateWithPath(path + "/NoAutofit"); err != nil {

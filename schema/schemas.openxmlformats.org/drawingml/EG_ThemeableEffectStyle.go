@@ -21,6 +21,7 @@ func NewEG_ThemeableEffectStyle() *EG_ThemeableEffectStyle {
 	ret := &EG_ThemeableEffectStyle{}
 	return ret
 }
+
 func (m *EG_ThemeableEffectStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_ThemeableEffectStyle) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	return nil
 }
+
 func (m *EG_ThemeableEffectStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ThemeableEffectStyle:
@@ -69,9 +71,13 @@ lEG_ThemeableEffectStyle:
 	}
 	return nil
 }
+
+// Validate validates the EG_ThemeableEffectStyle and its children
 func (m *EG_ThemeableEffectStyle) Validate() error {
 	return m.ValidateWithPath("EG_ThemeableEffectStyle")
 }
+
+// ValidateWithPath validates the EG_ThemeableEffectStyle and its children, prefixing error messages with path
 func (m *EG_ThemeableEffectStyle) ValidateWithPath(path string) error {
 	if m.Effect != nil {
 		if err := m.Effect.ValidateWithPath(path + "/Effect"); err != nil {

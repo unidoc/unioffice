@@ -62,6 +62,7 @@ func NewCT_SheetProtection() *CT_SheetProtection {
 	ret := &CT_SheetProtection{}
 	return ret
 }
+
 func (m *CT_SheetProtection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -154,6 +155,7 @@ func (m *CT_SheetProtection) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -318,9 +320,13 @@ func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	}
 	return nil
 }
+
+// Validate validates the CT_SheetProtection and its children
 func (m *CT_SheetProtection) Validate() error {
 	return m.ValidateWithPath("CT_SheetProtection")
 }
+
+// ValidateWithPath validates the CT_SheetProtection and its children, prefixing error messages with path
 func (m *CT_SheetProtection) ValidateWithPath(path string) error {
 	return nil
 }

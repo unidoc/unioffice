@@ -24,6 +24,7 @@ func NewCT_Scaling() *CT_Scaling {
 	ret := &CT_Scaling{}
 	return ret
 }
+
 func (m *CT_Scaling) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -52,6 +53,7 @@ func (m *CT_Scaling) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Scaling) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Scaling:
@@ -101,9 +103,13 @@ lCT_Scaling:
 	}
 	return nil
 }
+
+// Validate validates the CT_Scaling and its children
 func (m *CT_Scaling) Validate() error {
 	return m.ValidateWithPath("CT_Scaling")
 }
+
+// ValidateWithPath validates the CT_Scaling and its children, prefixing error messages with path
 func (m *CT_Scaling) ValidateWithPath(path string) error {
 	if m.LogBase != nil {
 		if err := m.LogBase.ValidateWithPath(path + "/LogBase"); err != nil {

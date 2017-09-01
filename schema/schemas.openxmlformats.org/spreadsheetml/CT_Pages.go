@@ -25,6 +25,7 @@ func NewCT_Pages() *CT_Pages {
 	ret := &CT_Pages{}
 	return ret
 }
+
 func (m *CT_Pages) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_Pages) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Pages) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_Pages:
 	}
 	return nil
 }
+
+// Validate validates the CT_Pages and its children
 func (m *CT_Pages) Validate() error {
 	return m.ValidateWithPath("CT_Pages")
 }
+
+// ValidateWithPath validates the CT_Pages and its children, prefixing error messages with path
 func (m *CT_Pages) ValidateWithPath(path string) error {
 	for i, v := range m.Page {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Page[%d]", path, i)); err != nil {

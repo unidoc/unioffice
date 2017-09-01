@@ -21,6 +21,7 @@ func NewCT_NumDataSourceChoice() *CT_NumDataSourceChoice {
 	ret := &CT_NumDataSourceChoice{}
 	return ret
 }
+
 func (m *CT_NumDataSourceChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_NumDataSourceChoice) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	return nil
 }
+
 func (m *CT_NumDataSourceChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_NumDataSourceChoice:
@@ -69,9 +71,13 @@ lCT_NumDataSourceChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_NumDataSourceChoice and its children
 func (m *CT_NumDataSourceChoice) Validate() error {
 	return m.ValidateWithPath("CT_NumDataSourceChoice")
 }
+
+// ValidateWithPath validates the CT_NumDataSourceChoice and its children, prefixing error messages with path
 func (m *CT_NumDataSourceChoice) ValidateWithPath(path string) error {
 	if m.NumRef != nil {
 		if err := m.NumRef.ValidateWithPath(path + "/NumRef"); err != nil {

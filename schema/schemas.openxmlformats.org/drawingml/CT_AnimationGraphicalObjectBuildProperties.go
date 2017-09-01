@@ -21,6 +21,7 @@ func NewCT_AnimationGraphicalObjectBuildProperties() *CT_AnimationGraphicalObjec
 	ret := &CT_AnimationGraphicalObjectBuildProperties{}
 	return ret
 }
+
 func (m *CT_AnimationGraphicalObjectBuildProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *CT_AnimationGraphicalObjectBuildProperties) MarshalXML(e *xml.Encoder, 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_AnimationGraphicalObjectBuildProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_AnimationGraphicalObjectBuildProperties:
@@ -72,9 +74,13 @@ lCT_AnimationGraphicalObjectBuildProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_AnimationGraphicalObjectBuildProperties and its children
 func (m *CT_AnimationGraphicalObjectBuildProperties) Validate() error {
 	return m.ValidateWithPath("CT_AnimationGraphicalObjectBuildProperties")
 }
+
+// ValidateWithPath validates the CT_AnimationGraphicalObjectBuildProperties and its children, prefixing error messages with path
 func (m *CT_AnimationGraphicalObjectBuildProperties) ValidateWithPath(path string) error {
 	if m.BldDgm != nil {
 		if err := m.BldDgm.ValidateWithPath(path + "/BldDgm"); err != nil {

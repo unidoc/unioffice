@@ -21,6 +21,7 @@ func NewCT_VMerge() *CT_VMerge {
 	ret := &CT_VMerge{}
 	return ret
 }
+
 func (m *CT_VMerge) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *CT_VMerge) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_VMerge) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -55,9 +57,13 @@ func (m *CT_VMerge) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_VMerge and its children
 func (m *CT_VMerge) Validate() error {
 	return m.ValidateWithPath("CT_VMerge")
 }
+
+// ValidateWithPath validates the CT_VMerge and its children, prefixing error messages with path
 func (m *CT_VMerge) ValidateWithPath(path string) error {
 	if err := m.ValAttr.ValidateWithPath(path + "/ValAttr"); err != nil {
 		return err

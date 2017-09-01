@@ -123,6 +123,7 @@ func NewCT_PivotField() *CT_PivotField {
 	ret := &CT_PivotField{}
 	return ret
 }
+
 func (m *CT_PivotField) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -341,6 +342,7 @@ func (m *CT_PivotField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -713,9 +715,13 @@ lCT_PivotField:
 	}
 	return nil
 }
+
+// Validate validates the CT_PivotField and its children
 func (m *CT_PivotField) Validate() error {
 	return m.ValidateWithPath("CT_PivotField")
 }
+
+// ValidateWithPath validates the CT_PivotField and its children, prefixing error messages with path
 func (m *CT_PivotField) ValidateWithPath(path string) error {
 	if err := m.AxisAttr.ValidateWithPath(path + "/AxisAttr"); err != nil {
 		return err

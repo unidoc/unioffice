@@ -21,6 +21,7 @@ func NewConnections() *Connections {
 	ret.CT_Connections = *NewCT_Connections()
 	return ret
 }
+
 func (m *Connections) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *Connections) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "x:connections"
 	return m.CT_Connections.MarshalXML(e, start)
 }
+
 func (m *Connections) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Connections = *NewCT_Connections()
@@ -65,9 +67,13 @@ lConnections:
 	}
 	return nil
 }
+
+// Validate validates the Connections and its children
 func (m *Connections) Validate() error {
 	return m.ValidateWithPath("Connections")
 }
+
+// ValidateWithPath validates the Connections and its children, prefixing error messages with path
 func (m *Connections) ValidateWithPath(path string) error {
 	if err := m.CT_Connections.ValidateWithPath(path); err != nil {
 		return err

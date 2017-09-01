@@ -23,6 +23,7 @@ func NewNotesMaster() *NotesMaster {
 	ret.CT_NotesMaster = *NewCT_NotesMaster()
 	return ret
 }
+
 func (m *NotesMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *NotesMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "p:notesMaster"
 	return m.CT_NotesMaster.MarshalXML(e, start)
 }
+
 func (m *NotesMaster) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_NotesMaster = *NewCT_NotesMaster()
@@ -84,9 +86,13 @@ lNotesMaster:
 	}
 	return nil
 }
+
+// Validate validates the NotesMaster and its children
 func (m *NotesMaster) Validate() error {
 	return m.ValidateWithPath("NotesMaster")
 }
+
+// ValidateWithPath validates the NotesMaster and its children, prefixing error messages with path
 func (m *NotesMaster) ValidateWithPath(path string) error {
 	if err := m.CT_NotesMaster.ValidateWithPath(path); err != nil {
 		return err

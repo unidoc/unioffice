@@ -21,6 +21,7 @@ func NewEG_TextGeometry() *EG_TextGeometry {
 	ret := &EG_TextGeometry{}
 	return ret
 }
+
 func (m *EG_TextGeometry) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *EG_TextGeometry) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	return nil
 }
+
 func (m *EG_TextGeometry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_TextGeometry:
@@ -70,9 +72,13 @@ lEG_TextGeometry:
 	}
 	return nil
 }
+
+// Validate validates the EG_TextGeometry and its children
 func (m *EG_TextGeometry) Validate() error {
 	return m.ValidateWithPath("EG_TextGeometry")
 }
+
+// ValidateWithPath validates the EG_TextGeometry and its children, prefixing error messages with path
 func (m *EG_TextGeometry) ValidateWithPath(path string) error {
 	if m.CustGeom != nil {
 		if err := m.CustGeom.ValidateWithPath(path + "/CustGeom"); err != nil {

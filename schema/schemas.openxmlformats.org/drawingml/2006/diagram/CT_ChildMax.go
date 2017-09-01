@@ -21,6 +21,7 @@ func NewCT_ChildMax() *CT_ChildMax {
 	ret := &CT_ChildMax{}
 	return ret
 }
+
 func (m *CT_ChildMax) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_ChildMax) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ChildMax) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -57,9 +59,13 @@ func (m *CT_ChildMax) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	}
 	return nil
 }
+
+// Validate validates the CT_ChildMax and its children
 func (m *CT_ChildMax) Validate() error {
 	return m.ValidateWithPath("CT_ChildMax")
 }
+
+// ValidateWithPath validates the CT_ChildMax and its children, prefixing error messages with path
 func (m *CT_ChildMax) ValidateWithPath(path string) error {
 	if m.ValAttr != nil {
 		if *m.ValAttr < -1 {

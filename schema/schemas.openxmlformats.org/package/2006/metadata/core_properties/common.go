@@ -9,6 +9,7 @@ package core_properties
 
 import "baliance.com/gooxml"
 
+// init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/metadata/core-properties", "CT_CoreProperties", NewCT_CoreProperties)
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/metadata/core-properties", "CT_Keywords", NewCT_Keywords)

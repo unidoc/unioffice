@@ -24,6 +24,7 @@ func NewAG_Password() *AG_Password {
 	ret := &AG_Password{}
 	return ret
 }
+
 func (m *AG_Password) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *AG_Password) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "w:AG_Password"
 	return nil
 }
+
 func (m *AG_Password) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -91,9 +93,13 @@ func (m *AG_Password) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	}
 	return nil
 }
+
+// Validate validates the AG_Password and its children
 func (m *AG_Password) Validate() error {
 	return m.ValidateWithPath("AG_Password")
 }
+
+// ValidateWithPath validates the AG_Password and its children, prefixing error messages with path
 func (m *AG_Password) ValidateWithPath(path string) error {
 	return nil
 }

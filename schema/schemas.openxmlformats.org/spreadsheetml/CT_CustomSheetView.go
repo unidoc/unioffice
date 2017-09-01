@@ -83,6 +83,7 @@ func NewCT_CustomSheetView() *CT_CustomSheetView {
 	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
+
 func (m *CT_CustomSheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -215,6 +216,7 @@ func (m *CT_CustomSheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CustomSheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
@@ -426,9 +428,13 @@ lCT_CustomSheetView:
 	}
 	return nil
 }
+
+// Validate validates the CT_CustomSheetView and its children
 func (m *CT_CustomSheetView) Validate() error {
 	return m.ValidateWithPath("CT_CustomSheetView")
 }
+
+// ValidateWithPath validates the CT_CustomSheetView and its children, prefixing error messages with path
 func (m *CT_CustomSheetView) ValidateWithPath(path string) error {
 	if !sharedTypes.ST_GuidPatternRe.MatchString(m.GuidAttr) {
 		return fmt.Errorf(`%s/m.GuidAttr must match '%s' (have %v)`, path, sharedTypes.ST_GuidPatternRe, m.GuidAttr)

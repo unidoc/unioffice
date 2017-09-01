@@ -27,6 +27,7 @@ func NewCT_SectPrChange() *CT_SectPrChange {
 	ret := &CT_SectPrChange{}
 	return ret
 }
+
 func (m *CT_SectPrChange) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *CT_SectPrChange) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SectPrChange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -99,9 +101,13 @@ lCT_SectPrChange:
 	}
 	return nil
 }
+
+// Validate validates the CT_SectPrChange and its children
 func (m *CT_SectPrChange) Validate() error {
 	return m.ValidateWithPath("CT_SectPrChange")
 }
+
+// ValidateWithPath validates the CT_SectPrChange and its children, prefixing error messages with path
 func (m *CT_SectPrChange) ValidateWithPath(path string) error {
 	if m.SectPr != nil {
 		if err := m.SectPr.ValidateWithPath(path + "/SectPr"); err != nil {

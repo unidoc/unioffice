@@ -40,6 +40,7 @@ func NewEG_AxShared() *EG_AxShared {
 	ret.CrossAx = NewCT_UnsignedInt()
 	return ret
 }
+
 func (m *EG_AxShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -97,6 +98,7 @@ func (m *EG_AxShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *EG_AxShared) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.AxId = NewCT_UnsignedInt()
@@ -203,9 +205,13 @@ lEG_AxShared:
 	}
 	return nil
 }
+
+// Validate validates the EG_AxShared and its children
 func (m *EG_AxShared) Validate() error {
 	return m.ValidateWithPath("EG_AxShared")
 }
+
+// ValidateWithPath validates the EG_AxShared and its children, prefixing error messages with path
 func (m *EG_AxShared) ValidateWithPath(path string) error {
 	if err := m.AxId.ValidateWithPath(path + "/AxId"); err != nil {
 		return err

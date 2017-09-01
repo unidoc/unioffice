@@ -44,6 +44,7 @@ func NewCT_QueryTableRefresh() *CT_QueryTableRefresh {
 	ret.QueryTableFields = NewCT_QueryTableFields()
 	return ret
 }
+
 func (m *CT_QueryTableRefresh) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -94,6 +95,7 @@ func (m *CT_QueryTableRefresh) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.QueryTableFields = NewCT_QueryTableFields()
@@ -193,9 +195,13 @@ lCT_QueryTableRefresh:
 	}
 	return nil
 }
+
+// Validate validates the CT_QueryTableRefresh and its children
 func (m *CT_QueryTableRefresh) Validate() error {
 	return m.ValidateWithPath("CT_QueryTableRefresh")
 }
+
+// ValidateWithPath validates the CT_QueryTableRefresh and its children, prefixing error messages with path
 func (m *CT_QueryTableRefresh) ValidateWithPath(path string) error {
 	if err := m.QueryTableFields.ValidateWithPath(path + "/QueryTableFields"); err != nil {
 		return err

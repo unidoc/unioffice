@@ -24,6 +24,7 @@ func NewCT_Rad() *CT_Rad {
 	ret.E = NewCT_OMathArg()
 	return ret
 }
+
 func (m *CT_Rad) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_Rad) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Rad) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Deg = NewCT_OMathArg()
@@ -79,9 +81,13 @@ lCT_Rad:
 	}
 	return nil
 }
+
+// Validate validates the CT_Rad and its children
 func (m *CT_Rad) Validate() error {
 	return m.ValidateWithPath("CT_Rad")
 }
+
+// ValidateWithPath validates the CT_Rad and its children, prefixing error messages with path
 func (m *CT_Rad) ValidateWithPath(path string) error {
 	if m.RadPr != nil {
 		if err := m.RadPr.ValidateWithPath(path + "/RadPr"); err != nil {

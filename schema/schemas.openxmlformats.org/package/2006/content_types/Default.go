@@ -21,12 +21,14 @@ func NewDefault() *Default {
 	ret.CT_Default = *NewCT_Default()
 	return ret
 }
+
 func (m *Default) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
 	}
 	return m.CT_Default.MarshalXML(e, start)
 }
+
 func (m *Default) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Default = *NewCT_Default()
@@ -58,9 +60,13 @@ func (m *Default) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the Default and its children
 func (m *Default) Validate() error {
 	return m.ValidateWithPath("Default")
 }
+
+// ValidateWithPath validates the Default and its children, prefixing error messages with path
 func (m *Default) ValidateWithPath(path string) error {
 	if err := m.CT_Default.ValidateWithPath(path); err != nil {
 		return err

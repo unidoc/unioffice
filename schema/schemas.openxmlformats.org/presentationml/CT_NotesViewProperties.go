@@ -23,6 +23,7 @@ func NewCT_NotesViewProperties() *CT_NotesViewProperties {
 	ret.CSldViewPr = NewCT_CommonSlideViewProperties()
 	return ret
 }
+
 func (m *CT_NotesViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_NotesViewProperties) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_NotesViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CSldViewPr = NewCT_CommonSlideViewProperties()
@@ -71,9 +73,13 @@ lCT_NotesViewProperties:
 	}
 	return nil
 }
+
+// Validate validates the CT_NotesViewProperties and its children
 func (m *CT_NotesViewProperties) Validate() error {
 	return m.ValidateWithPath("CT_NotesViewProperties")
 }
+
+// ValidateWithPath validates the CT_NotesViewProperties and its children, prefixing error messages with path
 func (m *CT_NotesViewProperties) ValidateWithPath(path string) error {
 	if err := m.CSldViewPr.ValidateWithPath(path + "/CSldViewPr"); err != nil {
 		return err

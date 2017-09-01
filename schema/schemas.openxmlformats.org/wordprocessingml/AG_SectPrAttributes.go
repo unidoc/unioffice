@@ -23,6 +23,7 @@ func NewAG_SectPrAttributes() *AG_SectPrAttributes {
 	ret := &AG_SectPrAttributes{}
 	return ret
 }
+
 func (m *AG_SectPrAttributes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *AG_SectPrAttributes) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	}
 	return nil
 }
+
 func (m *AG_SectPrAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -89,9 +91,13 @@ func (m *AG_SectPrAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	}
 	return nil
 }
+
+// Validate validates the AG_SectPrAttributes and its children
 func (m *AG_SectPrAttributes) Validate() error {
 	return m.ValidateWithPath("AG_SectPrAttributes")
 }
+
+// ValidateWithPath validates the AG_SectPrAttributes and its children, prefixing error messages with path
 func (m *AG_SectPrAttributes) ValidateWithPath(path string) error {
 	return nil
 }

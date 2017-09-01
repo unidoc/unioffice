@@ -29,6 +29,7 @@ func NewCT_EdnDocProps() *CT_EdnDocProps {
 	ret := &CT_EdnDocProps{}
 	return ret
 }
+
 func (m *CT_EdnDocProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -57,6 +58,7 @@ func (m *CT_EdnDocProps) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_EdnDocProps) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_EdnDocProps:
@@ -107,9 +109,13 @@ lCT_EdnDocProps:
 	}
 	return nil
 }
+
+// Validate validates the CT_EdnDocProps and its children
 func (m *CT_EdnDocProps) Validate() error {
 	return m.ValidateWithPath("CT_EdnDocProps")
 }
+
+// ValidateWithPath validates the CT_EdnDocProps and its children, prefixing error messages with path
 func (m *CT_EdnDocProps) ValidateWithPath(path string) error {
 	if m.Pos != nil {
 		if err := m.Pos.ValidateWithPath(path + "/Pos"); err != nil {

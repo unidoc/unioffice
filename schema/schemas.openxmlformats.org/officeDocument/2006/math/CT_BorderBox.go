@@ -22,6 +22,7 @@ func NewCT_BorderBox() *CT_BorderBox {
 	ret.E = NewCT_OMathArg()
 	return ret
 }
+
 func (m *CT_BorderBox) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *CT_BorderBox) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_BorderBox) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.E = NewCT_OMathArg()
@@ -70,9 +72,13 @@ lCT_BorderBox:
 	}
 	return nil
 }
+
+// Validate validates the CT_BorderBox and its children
 func (m *CT_BorderBox) Validate() error {
 	return m.ValidateWithPath("CT_BorderBox")
 }
+
+// ValidateWithPath validates the CT_BorderBox and its children, prefixing error messages with path
 func (m *CT_BorderBox) ValidateWithPath(path string) error {
 	if m.BorderBoxPr != nil {
 		if err := m.BorderBoxPr.ValidateWithPath(path + "/BorderBoxPr"); err != nil {

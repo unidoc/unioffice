@@ -28,6 +28,7 @@ func NewCT_ObjectEmbed() *CT_ObjectEmbed {
 	ret := &CT_ObjectEmbed{}
 	return ret
 }
+
 func (m *CT_ObjectEmbed) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -57,6 +58,7 @@ func (m *CT_ObjectEmbed) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ObjectEmbed) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -104,9 +106,13 @@ func (m *CT_ObjectEmbed) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}
 	return nil
 }
+
+// Validate validates the CT_ObjectEmbed and its children
 func (m *CT_ObjectEmbed) Validate() error {
 	return m.ValidateWithPath("CT_ObjectEmbed")
 }
+
+// ValidateWithPath validates the CT_ObjectEmbed and its children, prefixing error messages with path
 func (m *CT_ObjectEmbed) ValidateWithPath(path string) error {
 	if err := m.DrawAspectAttr.ValidateWithPath(path + "/DrawAspectAttr"); err != nil {
 		return err

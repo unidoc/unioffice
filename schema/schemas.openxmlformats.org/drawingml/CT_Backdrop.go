@@ -26,6 +26,7 @@ func NewCT_Backdrop() *CT_Backdrop {
 	ret.Up = NewCT_Vector3D()
 	return ret
 }
+
 func (m *CT_Backdrop) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -44,6 +45,7 @@ func (m *CT_Backdrop) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Backdrop) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Anchor = NewCT_Point3D()
@@ -88,9 +90,13 @@ lCT_Backdrop:
 	}
 	return nil
 }
+
+// Validate validates the CT_Backdrop and its children
 func (m *CT_Backdrop) Validate() error {
 	return m.ValidateWithPath("CT_Backdrop")
 }
+
+// ValidateWithPath validates the CT_Backdrop and its children, prefixing error messages with path
 func (m *CT_Backdrop) ValidateWithPath(path string) error {
 	if err := m.Anchor.ValidateWithPath(path + "/Anchor"); err != nil {
 		return err

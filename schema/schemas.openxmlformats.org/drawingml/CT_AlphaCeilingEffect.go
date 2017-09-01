@@ -19,6 +19,7 @@ func NewCT_AlphaCeilingEffect() *CT_AlphaCeilingEffect {
 	ret := &CT_AlphaCeilingEffect{}
 	return ret
 }
+
 func (m *CT_AlphaCeilingEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -27,6 +28,7 @@ func (m *CT_AlphaCeilingEffect) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_AlphaCeilingEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -41,9 +43,13 @@ func (m *CT_AlphaCeilingEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 	}
 	return nil
 }
+
+// Validate validates the CT_AlphaCeilingEffect and its children
 func (m *CT_AlphaCeilingEffect) Validate() error {
 	return m.ValidateWithPath("CT_AlphaCeilingEffect")
 }
+
+// ValidateWithPath validates the CT_AlphaCeilingEffect and its children, prefixing error messages with path
 func (m *CT_AlphaCeilingEffect) ValidateWithPath(path string) error {
 	return nil
 }

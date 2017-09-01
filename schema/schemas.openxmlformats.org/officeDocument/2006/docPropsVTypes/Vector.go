@@ -23,12 +23,14 @@ func NewVector() *Vector {
 	ret.CT_Vector = *NewCT_Vector()
 	return ret
 }
+
 func (m *Vector) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
 	}
 	return m.CT_Vector.MarshalXML(e, start)
 }
+
 func (m *Vector) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Vector = *NewCT_Vector()
@@ -186,9 +188,13 @@ lVector:
 	}
 	return nil
 }
+
+// Validate validates the Vector and its children
 func (m *Vector) Validate() error {
 	return m.ValidateWithPath("Vector")
 }
+
+// ValidateWithPath validates the Vector and its children, prefixing error messages with path
 func (m *Vector) ValidateWithPath(path string) error {
 	if err := m.CT_Vector.ValidateWithPath(path); err != nil {
 		return err

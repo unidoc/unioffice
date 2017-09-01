@@ -21,6 +21,7 @@ func NewMetadata() *Metadata {
 	ret.CT_Metadata = *NewCT_Metadata()
 	return ret
 }
+
 func (m *Metadata) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *Metadata) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "x:metadata"
 	return m.CT_Metadata.MarshalXML(e, start)
 }
+
 func (m *Metadata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Metadata = *NewCT_Metadata()
@@ -95,9 +97,13 @@ lMetadata:
 	}
 	return nil
 }
+
+// Validate validates the Metadata and its children
 func (m *Metadata) Validate() error {
 	return m.ValidateWithPath("Metadata")
 }
+
+// ValidateWithPath validates the Metadata and its children, prefixing error messages with path
 func (m *Metadata) ValidateWithPath(path string) error {
 	if err := m.CT_Metadata.ValidateWithPath(path); err != nil {
 		return err

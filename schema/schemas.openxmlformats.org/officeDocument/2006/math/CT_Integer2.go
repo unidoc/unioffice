@@ -22,6 +22,7 @@ func NewCT_Integer2() *CT_Integer2 {
 	ret.ValAttr = -2
 	return ret
 }
+
 func (m *CT_Integer2) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_Integer2) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Integer2) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = -2
@@ -56,9 +58,13 @@ func (m *CT_Integer2) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	}
 	return nil
 }
+
+// Validate validates the CT_Integer2 and its children
 func (m *CT_Integer2) Validate() error {
 	return m.ValidateWithPath("CT_Integer2")
 }
+
+// ValidateWithPath validates the CT_Integer2 and its children, prefixing error messages with path
 func (m *CT_Integer2) ValidateWithPath(path string) error {
 	if m.ValAttr < -2 {
 		return fmt.Errorf("%s/m.ValAttr must be >= -2 (have %v)", path, m.ValAttr)

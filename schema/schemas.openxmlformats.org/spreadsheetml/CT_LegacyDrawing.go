@@ -20,6 +20,7 @@ func NewCT_LegacyDrawing() *CT_LegacyDrawing {
 	ret := &CT_LegacyDrawing{}
 	return ret
 }
+
 func (m *CT_LegacyDrawing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -30,6 +31,7 @@ func (m *CT_LegacyDrawing) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LegacyDrawing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -53,9 +55,13 @@ func (m *CT_LegacyDrawing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	}
 	return nil
 }
+
+// Validate validates the CT_LegacyDrawing and its children
 func (m *CT_LegacyDrawing) Validate() error {
 	return m.ValidateWithPath("CT_LegacyDrawing")
 }
+
+// ValidateWithPath validates the CT_LegacyDrawing and its children, prefixing error messages with path
 func (m *CT_LegacyDrawing) ValidateWithPath(path string) error {
 	return nil
 }

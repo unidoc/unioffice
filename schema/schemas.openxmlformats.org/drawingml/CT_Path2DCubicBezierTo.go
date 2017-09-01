@@ -21,6 +21,7 @@ func NewCT_Path2DCubicBezierTo() *CT_Path2DCubicBezierTo {
 	ret := &CT_Path2DCubicBezierTo{}
 	return ret
 }
+
 func (m *CT_Path2DCubicBezierTo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *CT_Path2DCubicBezierTo) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Path2DCubicBezierTo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Path2DCubicBezierTo:
@@ -61,9 +63,13 @@ lCT_Path2DCubicBezierTo:
 	}
 	return nil
 }
+
+// Validate validates the CT_Path2DCubicBezierTo and its children
 func (m *CT_Path2DCubicBezierTo) Validate() error {
 	return m.ValidateWithPath("CT_Path2DCubicBezierTo")
 }
+
+// ValidateWithPath validates the CT_Path2DCubicBezierTo and its children, prefixing error messages with path
 func (m *CT_Path2DCubicBezierTo) ValidateWithPath(path string) error {
 	for i, v := range m.Pt {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Pt[%d]", path, i)); err != nil {

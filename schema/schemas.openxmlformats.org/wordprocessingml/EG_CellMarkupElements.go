@@ -25,6 +25,7 @@ func NewEG_CellMarkupElements() *EG_CellMarkupElements {
 	ret := &EG_CellMarkupElements{}
 	return ret
 }
+
 func (m *EG_CellMarkupElements) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -43,6 +44,7 @@ func (m *EG_CellMarkupElements) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	return nil
 }
+
 func (m *EG_CellMarkupElements) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_CellMarkupElements:
@@ -82,9 +84,13 @@ lEG_CellMarkupElements:
 	}
 	return nil
 }
+
+// Validate validates the EG_CellMarkupElements and its children
 func (m *EG_CellMarkupElements) Validate() error {
 	return m.ValidateWithPath("EG_CellMarkupElements")
 }
+
+// ValidateWithPath validates the EG_CellMarkupElements and its children, prefixing error messages with path
 func (m *EG_CellMarkupElements) ValidateWithPath(path string) error {
 	if m.CellIns != nil {
 		if err := m.CellIns.ValidateWithPath(path + "/CellIns"); err != nil {

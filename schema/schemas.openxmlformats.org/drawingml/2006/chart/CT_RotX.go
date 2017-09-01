@@ -21,6 +21,7 @@ func NewCT_RotX() *CT_RotX {
 	ret := &CT_RotX{}
 	return ret
 }
+
 func (m *CT_RotX) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_RotX) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RotX) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -57,9 +59,13 @@ func (m *CT_RotX) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_RotX and its children
 func (m *CT_RotX) Validate() error {
 	return m.ValidateWithPath("CT_RotX")
 }
+
+// ValidateWithPath validates the CT_RotX and its children, prefixing error messages with path
 func (m *CT_RotX) ValidateWithPath(path string) error {
 	if m.ValAttr != nil {
 		if *m.ValAttr < -90 {

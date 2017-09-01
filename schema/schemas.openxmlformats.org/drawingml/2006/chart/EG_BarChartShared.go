@@ -26,6 +26,7 @@ func NewEG_BarChartShared() *EG_BarChartShared {
 	ret.BarDir = NewCT_BarDir()
 	return ret
 }
+
 func (m *EG_BarChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -50,6 +51,7 @@ func (m *EG_BarChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	return nil
 }
+
 func (m *EG_BarChartShared) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.BarDir = NewCT_BarDir()
@@ -100,9 +102,13 @@ lEG_BarChartShared:
 	}
 	return nil
 }
+
+// Validate validates the EG_BarChartShared and its children
 func (m *EG_BarChartShared) Validate() error {
 	return m.ValidateWithPath("EG_BarChartShared")
 }
+
+// ValidateWithPath validates the EG_BarChartShared and its children, prefixing error messages with path
 func (m *EG_BarChartShared) ValidateWithPath(path string) error {
 	if err := m.BarDir.ValidateWithPath(path + "/BarDir"); err != nil {
 		return err

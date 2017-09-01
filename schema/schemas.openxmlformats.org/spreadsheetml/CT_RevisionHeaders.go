@@ -50,6 +50,7 @@ func NewCT_RevisionHeaders() *CT_RevisionHeaders {
 	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
+
 func (m *CT_RevisionHeaders) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -106,6 +107,7 @@ func (m *CT_RevisionHeaders) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
@@ -226,9 +228,13 @@ lCT_RevisionHeaders:
 	}
 	return nil
 }
+
+// Validate validates the CT_RevisionHeaders and its children
 func (m *CT_RevisionHeaders) Validate() error {
 	return m.ValidateWithPath("CT_RevisionHeaders")
 }
+
+// ValidateWithPath validates the CT_RevisionHeaders and its children, prefixing error messages with path
 func (m *CT_RevisionHeaders) ValidateWithPath(path string) error {
 	if !sharedTypes.ST_GuidPatternRe.MatchString(m.GuidAttr) {
 		return fmt.Errorf(`%s/m.GuidAttr must match '%s' (have %v)`, path, sharedTypes.ST_GuidPatternRe, m.GuidAttr)

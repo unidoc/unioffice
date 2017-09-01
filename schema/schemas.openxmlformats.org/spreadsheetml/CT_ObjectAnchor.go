@@ -31,6 +31,7 @@ func NewCT_ObjectAnchor() *CT_ObjectAnchor {
 	ret.To = spreadsheetDrawing.NewTo()
 	return ret
 }
+
 func (m *CT_ObjectAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -51,6 +52,7 @@ func (m *CT_ObjectAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ObjectAnchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.From = spreadsheetDrawing.NewFrom()
@@ -101,9 +103,13 @@ lCT_ObjectAnchor:
 	}
 	return nil
 }
+
+// Validate validates the CT_ObjectAnchor and its children
 func (m *CT_ObjectAnchor) Validate() error {
 	return m.ValidateWithPath("CT_ObjectAnchor")
 }
+
+// ValidateWithPath validates the CT_ObjectAnchor and its children, prefixing error messages with path
 func (m *CT_ObjectAnchor) ValidateWithPath(path string) error {
 	if err := m.From.ValidateWithPath(path + "/From"); err != nil {
 		return err

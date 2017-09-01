@@ -22,6 +22,7 @@ func NewHeaders() *Headers {
 	ret.CT_RevisionHeaders = *NewCT_RevisionHeaders()
 	return ret
 }
+
 func (m *Headers) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *Headers) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "x:headers"
 	return m.CT_RevisionHeaders.MarshalXML(e, start)
 }
+
 func (m *Headers) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_RevisionHeaders = *NewCT_RevisionHeaders()
@@ -155,9 +157,13 @@ lHeaders:
 	}
 	return nil
 }
+
+// Validate validates the Headers and its children
 func (m *Headers) Validate() error {
 	return m.ValidateWithPath("Headers")
 }
+
+// ValidateWithPath validates the Headers and its children, prefixing error messages with path
 func (m *Headers) ValidateWithPath(path string) error {
 	if err := m.CT_RevisionHeaders.ValidateWithPath(path); err != nil {
 		return err

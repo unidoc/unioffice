@@ -22,6 +22,7 @@ func NewCT_Keywords() *CT_Keywords {
 	ret := &CT_Keywords{}
 	return ret
 }
+
 func (m *CT_Keywords) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *CT_Keywords) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Keywords) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -77,9 +79,13 @@ lCT_Keywords:
 	}
 	return nil
 }
+
+// Validate validates the CT_Keywords and its children
 func (m *CT_Keywords) Validate() error {
 	return m.ValidateWithPath("CT_Keywords")
 }
+
+// ValidateWithPath validates the CT_Keywords and its children, prefixing error messages with path
 func (m *CT_Keywords) ValidateWithPath(path string) error {
 	for i, v := range m.Value {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Value[%d]", path, i)); err != nil {

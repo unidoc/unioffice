@@ -25,6 +25,7 @@ func NewCT_MathCtrlDel() *CT_MathCtrlDel {
 	ret := &CT_MathCtrlDel{}
 	return ret
 }
+
 func (m *CT_MathCtrlDel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_MathCtrlDel) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MathCtrlDel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -78,9 +80,13 @@ func (m *CT_MathCtrlDel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}
 	return nil
 }
+
+// Validate validates the CT_MathCtrlDel and its children
 func (m *CT_MathCtrlDel) Validate() error {
 	return m.ValidateWithPath("CT_MathCtrlDel")
 }
+
+// ValidateWithPath validates the CT_MathCtrlDel and its children, prefixing error messages with path
 func (m *CT_MathCtrlDel) ValidateWithPath(path string) error {
 	return nil
 }

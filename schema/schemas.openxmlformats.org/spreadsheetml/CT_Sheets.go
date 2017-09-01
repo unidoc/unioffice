@@ -22,6 +22,7 @@ func NewCT_Sheets() *CT_Sheets {
 	ret := &CT_Sheets{}
 	return ret
 }
+
 func (m *CT_Sheets) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_Sheets) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Sheets) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Sheets:
@@ -62,9 +64,13 @@ lCT_Sheets:
 	}
 	return nil
 }
+
+// Validate validates the CT_Sheets and its children
 func (m *CT_Sheets) Validate() error {
 	return m.ValidateWithPath("CT_Sheets")
 }
+
+// ValidateWithPath validates the CT_Sheets and its children, prefixing error messages with path
 func (m *CT_Sheets) ValidateWithPath(path string) error {
 	for i, v := range m.Sheet {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Sheet[%d]", path, i)); err != nil {

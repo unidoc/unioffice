@@ -21,6 +21,7 @@ func NewCT_PPrDefault() *CT_PPrDefault {
 	ret := &CT_PPrDefault{}
 	return ret
 }
+
 func (m *CT_PPrDefault) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_PPrDefault) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PPrDefault) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_PPrDefault:
@@ -62,9 +64,13 @@ lCT_PPrDefault:
 	}
 	return nil
 }
+
+// Validate validates the CT_PPrDefault and its children
 func (m *CT_PPrDefault) Validate() error {
 	return m.ValidateWithPath("CT_PPrDefault")
 }
+
+// ValidateWithPath validates the CT_PPrDefault and its children, prefixing error messages with path
 func (m *CT_PPrDefault) ValidateWithPath(path string) error {
 	if m.PPr != nil {
 		if err := m.PPr.ValidateWithPath(path + "/PPr"); err != nil {

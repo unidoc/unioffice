@@ -19,6 +19,7 @@ func NewCT_TextNoAutofit() *CT_TextNoAutofit {
 	ret := &CT_TextNoAutofit{}
 	return ret
 }
+
 func (m *CT_TextNoAutofit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -27,6 +28,7 @@ func (m *CT_TextNoAutofit) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextNoAutofit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -41,9 +43,13 @@ func (m *CT_TextNoAutofit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	}
 	return nil
 }
+
+// Validate validates the CT_TextNoAutofit and its children
 func (m *CT_TextNoAutofit) Validate() error {
 	return m.ValidateWithPath("CT_TextNoAutofit")
 }
+
+// ValidateWithPath validates the CT_TextNoAutofit and its children, prefixing error messages with path
 func (m *CT_TextNoAutofit) ValidateWithPath(path string) error {
 	return nil
 }

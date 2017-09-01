@@ -47,6 +47,7 @@ func NewCT_Missing() *CT_Missing {
 	ret := &CT_Missing{}
 	return ret
 }
+
 func (m *CT_Missing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -107,6 +108,7 @@ func (m *CT_Missing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Missing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -224,9 +226,13 @@ lCT_Missing:
 	}
 	return nil
 }
+
+// Validate validates the CT_Missing and its children
 func (m *CT_Missing) Validate() error {
 	return m.ValidateWithPath("CT_Missing")
 }
+
+// ValidateWithPath validates the CT_Missing and its children, prefixing error messages with path
 func (m *CT_Missing) ValidateWithPath(path string) error {
 	for i, v := range m.Tpls {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Tpls[%d]", path, i)); err != nil {

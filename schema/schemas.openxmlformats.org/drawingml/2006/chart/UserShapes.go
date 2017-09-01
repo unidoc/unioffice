@@ -23,6 +23,7 @@ func NewUserShapes() *UserShapes {
 	ret.CT_Drawing = *chartDrawing.NewCT_Drawing()
 	return ret
 }
+
 func (m *UserShapes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *UserShapes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "userShapes"
 	return m.CT_Drawing.MarshalXML(e, start)
 }
+
 func (m *UserShapes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Drawing = *chartDrawing.NewCT_Drawing()
@@ -51,9 +53,13 @@ func (m *UserShapes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	}
 	return nil
 }
+
+// Validate validates the UserShapes and its children
 func (m *UserShapes) Validate() error {
 	return m.ValidateWithPath("UserShapes")
 }
+
+// ValidateWithPath validates the UserShapes and its children, prefixing error messages with path
 func (m *UserShapes) ValidateWithPath(path string) error {
 	if err := m.CT_Drawing.ValidateWithPath(path); err != nil {
 		return err

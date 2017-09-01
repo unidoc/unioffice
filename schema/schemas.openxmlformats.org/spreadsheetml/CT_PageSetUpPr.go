@@ -24,6 +24,7 @@ func NewCT_PageSetUpPr() *CT_PageSetUpPr {
 	ret := &CT_PageSetUpPr{}
 	return ret
 }
+
 func (m *CT_PageSetUpPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_PageSetUpPr) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PageSetUpPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -70,9 +72,13 @@ func (m *CT_PageSetUpPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}
 	return nil
 }
+
+// Validate validates the CT_PageSetUpPr and its children
 func (m *CT_PageSetUpPr) Validate() error {
 	return m.ValidateWithPath("CT_PageSetUpPr")
 }
+
+// ValidateWithPath validates the CT_PageSetUpPr and its children, prefixing error messages with path
 func (m *CT_PageSetUpPr) ValidateWithPath(path string) error {
 	return nil
 }

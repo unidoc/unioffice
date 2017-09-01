@@ -27,6 +27,7 @@ func NewAG_AutoFormat() *AG_AutoFormat {
 	ret := &AG_AutoFormat{}
 	return ret
 }
+
 func (m *AG_AutoFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -61,6 +62,7 @@ func (m *AG_AutoFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	return nil
 }
+
 func (m *AG_AutoFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -127,9 +129,13 @@ func (m *AG_AutoFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	}
 	return nil
 }
+
+// Validate validates the AG_AutoFormat and its children
 func (m *AG_AutoFormat) Validate() error {
 	return m.ValidateWithPath("AG_AutoFormat")
 }
+
+// ValidateWithPath validates the AG_AutoFormat and its children, prefixing error messages with path
 func (m *AG_AutoFormat) ValidateWithPath(path string) error {
 	return nil
 }

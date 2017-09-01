@@ -28,6 +28,7 @@ func NewCT_AbsoluteAnchor() *CT_AbsoluteAnchor {
 	ret.ClientData = NewCT_AnchorClientData()
 	return ret
 }
+
 func (m *CT_AbsoluteAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *CT_AbsoluteAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_AbsoluteAnchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Pos = drawingml.NewCT_Point2D()
@@ -120,9 +122,13 @@ lCT_AbsoluteAnchor:
 	}
 	return nil
 }
+
+// Validate validates the CT_AbsoluteAnchor and its children
 func (m *CT_AbsoluteAnchor) Validate() error {
 	return m.ValidateWithPath("CT_AbsoluteAnchor")
 }
+
+// ValidateWithPath validates the CT_AbsoluteAnchor and its children, prefixing error messages with path
 func (m *CT_AbsoluteAnchor) ValidateWithPath(path string) error {
 	if err := m.Pos.ValidateWithPath(path + "/Pos"); err != nil {
 		return err

@@ -23,6 +23,7 @@ func NewEG_SurfaceChartShared() *EG_SurfaceChartShared {
 	ret := &EG_SurfaceChartShared{}
 	return ret
 }
+
 func (m *EG_SurfaceChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *EG_SurfaceChartShared) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	return nil
 }
+
 func (m *EG_SurfaceChartShared) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_SurfaceChartShared:
@@ -81,9 +83,13 @@ lEG_SurfaceChartShared:
 	}
 	return nil
 }
+
+// Validate validates the EG_SurfaceChartShared and its children
 func (m *EG_SurfaceChartShared) Validate() error {
 	return m.ValidateWithPath("EG_SurfaceChartShared")
 }
+
+// ValidateWithPath validates the EG_SurfaceChartShared and its children, prefixing error messages with path
 func (m *EG_SurfaceChartShared) ValidateWithPath(path string) error {
 	if m.Wireframe != nil {
 		if err := m.Wireframe.ValidateWithPath(path + "/Wireframe"); err != nil {

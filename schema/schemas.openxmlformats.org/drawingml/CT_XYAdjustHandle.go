@@ -28,6 +28,7 @@ func NewCT_XYAdjustHandle() *CT_XYAdjustHandle {
 	ret.Pos = NewCT_AdjPoint2D()
 	return ret
 }
+
 func (m *CT_XYAdjustHandle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -62,6 +63,7 @@ func (m *CT_XYAdjustHandle) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_XYAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Pos = NewCT_AdjPoint2D()
@@ -135,9 +137,13 @@ lCT_XYAdjustHandle:
 	}
 	return nil
 }
+
+// Validate validates the CT_XYAdjustHandle and its children
 func (m *CT_XYAdjustHandle) Validate() error {
 	return m.ValidateWithPath("CT_XYAdjustHandle")
 }
+
+// ValidateWithPath validates the CT_XYAdjustHandle and its children, prefixing error messages with path
 func (m *CT_XYAdjustHandle) ValidateWithPath(path string) error {
 	if m.MinXAttr != nil {
 		if err := m.MinXAttr.ValidateWithPath(path + "/MinXAttr"); err != nil {

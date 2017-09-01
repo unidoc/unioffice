@@ -28,6 +28,7 @@ func NewCT_StyleLabel() *CT_StyleLabel {
 	ret := &CT_StyleLabel{}
 	return ret
 }
+
 func (m *CT_StyleLabel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -58,6 +59,7 @@ func (m *CT_StyleLabel) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_StyleLabel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -116,9 +118,13 @@ lCT_StyleLabel:
 	}
 	return nil
 }
+
+// Validate validates the CT_StyleLabel and its children
 func (m *CT_StyleLabel) Validate() error {
 	return m.ValidateWithPath("CT_StyleLabel")
 }
+
+// ValidateWithPath validates the CT_StyleLabel and its children, prefixing error messages with path
 func (m *CT_StyleLabel) ValidateWithPath(path string) error {
 	if m.Scene3d != nil {
 		if err := m.Scene3d.ValidateWithPath(path + "/Scene3d"); err != nil {

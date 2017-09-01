@@ -24,6 +24,7 @@ func NewCT_PictureOptions() *CT_PictureOptions {
 	ret := &CT_PictureOptions{}
 	return ret
 }
+
 func (m *CT_PictureOptions) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -52,6 +53,7 @@ func (m *CT_PictureOptions) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PictureOptions) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_PictureOptions:
@@ -101,9 +103,13 @@ lCT_PictureOptions:
 	}
 	return nil
 }
+
+// Validate validates the CT_PictureOptions and its children
 func (m *CT_PictureOptions) Validate() error {
 	return m.ValidateWithPath("CT_PictureOptions")
 }
+
+// ValidateWithPath validates the CT_PictureOptions and its children, prefixing error messages with path
 func (m *CT_PictureOptions) ValidateWithPath(path string) error {
 	if m.ApplyToFront != nil {
 		if err := m.ApplyToFront.ValidateWithPath(path + "/ApplyToFront"); err != nil {

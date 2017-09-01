@@ -28,6 +28,7 @@ func NewCT_SlideSize() *CT_SlideSize {
 	ret.CyAttr = 914400
 	return ret
 }
+
 func (m *CT_SlideSize) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *CT_SlideSize) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SlideSize) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CxAttr = 914400
@@ -82,9 +84,13 @@ func (m *CT_SlideSize) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
+// Validate validates the CT_SlideSize and its children
 func (m *CT_SlideSize) Validate() error {
 	return m.ValidateWithPath("CT_SlideSize")
 }
+
+// ValidateWithPath validates the CT_SlideSize and its children, prefixing error messages with path
 func (m *CT_SlideSize) ValidateWithPath(path string) error {
 	if m.CxAttr < 914400 {
 		return fmt.Errorf("%s/m.CxAttr must be >= 914400 (have %v)", path, m.CxAttr)

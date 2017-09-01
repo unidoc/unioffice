@@ -26,6 +26,7 @@ func NewCT_View3D() *CT_View3D {
 	ret := &CT_View3D{}
 	return ret
 }
+
 func (m *CT_View3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -62,6 +63,7 @@ func (m *CT_View3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_View3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_View3D:
@@ -121,9 +123,13 @@ lCT_View3D:
 	}
 	return nil
 }
+
+// Validate validates the CT_View3D and its children
 func (m *CT_View3D) Validate() error {
 	return m.ValidateWithPath("CT_View3D")
 }
+
+// ValidateWithPath validates the CT_View3D and its children, prefixing error messages with path
 func (m *CT_View3D) ValidateWithPath(path string) error {
 	if m.RotX != nil {
 		if err := m.RotX.ValidateWithPath(path + "/RotX"); err != nil {

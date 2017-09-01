@@ -53,6 +53,7 @@ func NewCT_ElemPropSet() *CT_ElemPropSet {
 	ret := &CT_ElemPropSet{}
 	return ret
 }
+
 func (m *CT_ElemPropSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -181,6 +182,7 @@ func (m *CT_ElemPropSet) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -418,9 +420,13 @@ lCT_ElemPropSet:
 	}
 	return nil
 }
+
+// Validate validates the CT_ElemPropSet and its children
 func (m *CT_ElemPropSet) Validate() error {
 	return m.ValidateWithPath("CT_ElemPropSet")
 }
+
+// ValidateWithPath validates the CT_ElemPropSet and its children, prefixing error messages with path
 func (m *CT_ElemPropSet) ValidateWithPath(path string) error {
 	if m.PresAssocIDAttr != nil {
 		if err := m.PresAssocIDAttr.ValidateWithPath(path + "/PresAssocIDAttr"); err != nil {

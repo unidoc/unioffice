@@ -20,6 +20,7 @@ type ST_ModelId struct {
 func (m *ST_ModelId) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_ModelId) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.Int32 != nil {
@@ -33,6 +34,7 @@ func (m *ST_ModelId) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_ModelId) String() string {
 	if m.Int32 != nil {
 		return fmt.Sprintf("%v", *m.Int32)

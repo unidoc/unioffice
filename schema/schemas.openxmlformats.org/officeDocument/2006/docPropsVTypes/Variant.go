@@ -22,12 +22,14 @@ func NewVariant() *Variant {
 	ret.CT_Variant = *NewCT_Variant()
 	return ret
 }
+
 func (m *Variant) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
 	}
 	return m.CT_Variant.MarshalXML(e, start)
 }
+
 func (m *Variant) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Variant = *NewCT_Variant()
@@ -223,9 +225,13 @@ lVariant:
 	}
 	return nil
 }
+
+// Validate validates the Variant and its children
 func (m *Variant) Validate() error {
 	return m.ValidateWithPath("Variant")
 }
+
+// ValidateWithPath validates the Variant and its children, prefixing error messages with path
 func (m *Variant) ValidateWithPath(path string) error {
 	if err := m.CT_Variant.ValidateWithPath(path); err != nil {
 		return err

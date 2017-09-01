@@ -36,6 +36,7 @@ func NewCT_OuterShadowEffect() *CT_OuterShadowEffect {
 	ret := &CT_OuterShadowEffect{}
 	return ret
 }
+
 func (m *CT_OuterShadowEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -107,6 +108,7 @@ func (m *CT_OuterShadowEffect) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_OuterShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -225,9 +227,13 @@ lCT_OuterShadowEffect:
 	}
 	return nil
 }
+
+// Validate validates the CT_OuterShadowEffect and its children
 func (m *CT_OuterShadowEffect) Validate() error {
 	return m.ValidateWithPath("CT_OuterShadowEffect")
 }
+
+// ValidateWithPath validates the CT_OuterShadowEffect and its children, prefixing error messages with path
 func (m *CT_OuterShadowEffect) ValidateWithPath(path string) error {
 	if m.BlurRadAttr != nil {
 		if *m.BlurRadAttr < 0 {

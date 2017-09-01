@@ -23,6 +23,7 @@ func NewCT_LegendEntryChoice() *CT_LegendEntryChoice {
 	ret := &CT_LegendEntryChoice{}
 	return ret
 }
+
 func (m *CT_LegendEntryChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_LegendEntryChoice) MarshalXML(e *xml.Encoder, start xml.StartElement
 	}
 	return nil
 }
+
 func (m *CT_LegendEntryChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_LegendEntryChoice:
@@ -71,9 +73,13 @@ lCT_LegendEntryChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_LegendEntryChoice and its children
 func (m *CT_LegendEntryChoice) Validate() error {
 	return m.ValidateWithPath("CT_LegendEntryChoice")
 }
+
+// ValidateWithPath validates the CT_LegendEntryChoice and its children, prefixing error messages with path
 func (m *CT_LegendEntryChoice) ValidateWithPath(path string) error {
 	if m.Delete != nil {
 		if err := m.Delete.ValidateWithPath(path + "/Delete"); err != nil {

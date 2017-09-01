@@ -25,6 +25,7 @@ func NewCT_ExternalRow() *CT_ExternalRow {
 	ret := &CT_ExternalRow{}
 	return ret
 }
+
 func (m *CT_ExternalRow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_ExternalRow) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ExternalRow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -78,9 +80,13 @@ lCT_ExternalRow:
 	}
 	return nil
 }
+
+// Validate validates the CT_ExternalRow and its children
 func (m *CT_ExternalRow) Validate() error {
 	return m.ValidateWithPath("CT_ExternalRow")
 }
+
+// ValidateWithPath validates the CT_ExternalRow and its children, prefixing error messages with path
 func (m *CT_ExternalRow) ValidateWithPath(path string) error {
 	for i, v := range m.Cell {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Cell[%d]", path, i)); err != nil {

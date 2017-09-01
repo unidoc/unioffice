@@ -21,6 +21,7 @@ func NewCT_ColorSchemeList() *CT_ColorSchemeList {
 	ret := &CT_ColorSchemeList{}
 	return ret
 }
+
 func (m *CT_ColorSchemeList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_ColorSchemeList) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ColorSchemeList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_ColorSchemeList:
@@ -63,9 +65,13 @@ lCT_ColorSchemeList:
 	}
 	return nil
 }
+
+// Validate validates the CT_ColorSchemeList and its children
 func (m *CT_ColorSchemeList) Validate() error {
 	return m.ValidateWithPath("CT_ColorSchemeList")
 }
+
+// ValidateWithPath validates the CT_ColorSchemeList and its children, prefixing error messages with path
 func (m *CT_ColorSchemeList) ValidateWithPath(path string) error {
 	for i, v := range m.ExtraClrScheme {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/ExtraClrScheme[%d]", path, i)); err != nil {

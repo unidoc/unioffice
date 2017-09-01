@@ -44,6 +44,7 @@ func NewCT_When() *CT_When {
 	ret.OpAttr = ST_FunctionOperator(1)
 	return ret
 }
+
 func (m *CT_When) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -132,6 +133,7 @@ func (m *CT_When) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_When) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.FuncAttr = ST_FunctionType(1)
@@ -283,9 +285,13 @@ lCT_When:
 	}
 	return nil
 }
+
+// Validate validates the CT_When and its children
 func (m *CT_When) Validate() error {
 	return m.ValidateWithPath("CT_When")
 }
+
+// ValidateWithPath validates the CT_When and its children, prefixing error messages with path
 func (m *CT_When) ValidateWithPath(path string) error {
 	if m.FuncAttr == ST_FunctionTypeUnset {
 		return fmt.Errorf("%s/FuncAttr is a mandatory field", path)

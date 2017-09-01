@@ -24,6 +24,7 @@ func NewCT_RelSizeAnchor() *CT_RelSizeAnchor {
 	ret.To = NewCT_Marker()
 	return ret
 }
+
 func (m *CT_RelSizeAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_RelSizeAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RelSizeAnchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.From = NewCT_Marker()
@@ -103,9 +105,13 @@ lCT_RelSizeAnchor:
 	}
 	return nil
 }
+
+// Validate validates the CT_RelSizeAnchor and its children
 func (m *CT_RelSizeAnchor) Validate() error {
 	return m.ValidateWithPath("CT_RelSizeAnchor")
 }
+
+// ValidateWithPath validates the CT_RelSizeAnchor and its children, prefixing error messages with path
 func (m *CT_RelSizeAnchor) ValidateWithPath(path string) error {
 	if err := m.From.ValidateWithPath(path + "/From"); err != nil {
 		return err

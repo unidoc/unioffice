@@ -22,6 +22,7 @@ func NewCT_R() *CT_R {
 	ret := &CT_R{}
 	return ret
 }
+
 func (m *CT_R) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_R) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_R) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_R:
@@ -74,9 +76,13 @@ lCT_R:
 	}
 	return nil
 }
+
+// Validate validates the CT_R and its children
 func (m *CT_R) Validate() error {
 	return m.ValidateWithPath("CT_R")
 }
+
+// ValidateWithPath validates the CT_R and its children, prefixing error messages with path
 func (m *CT_R) ValidateWithPath(path string) error {
 	if m.RPr != nil {
 		if err := m.RPr.ValidateWithPath(path + "/RPr"); err != nil {

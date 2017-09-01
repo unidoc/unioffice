@@ -32,6 +32,7 @@ func NewCT_CommentAuthor() *CT_CommentAuthor {
 	ret := &CT_CommentAuthor{}
 	return ret
 }
+
 func (m *CT_CommentAuthor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -54,6 +55,7 @@ func (m *CT_CommentAuthor) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CommentAuthor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -120,9 +122,13 @@ lCT_CommentAuthor:
 	}
 	return nil
 }
+
+// Validate validates the CT_CommentAuthor and its children
 func (m *CT_CommentAuthor) Validate() error {
 	return m.ValidateWithPath("CT_CommentAuthor")
 }
+
+// ValidateWithPath validates the CT_CommentAuthor and its children, prefixing error messages with path
 func (m *CT_CommentAuthor) ValidateWithPath(path string) error {
 	if m.ExtLst != nil {
 		if err := m.ExtLst.ValidateWithPath(path + "/ExtLst"); err != nil {

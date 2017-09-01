@@ -24,6 +24,7 @@ func NewCT_Func() *CT_Func {
 	ret.E = NewCT_OMathArg()
 	return ret
 }
+
 func (m *CT_Func) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_Func) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Func) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.FName = NewCT_OMathArg()
@@ -79,9 +81,13 @@ lCT_Func:
 	}
 	return nil
 }
+
+// Validate validates the CT_Func and its children
 func (m *CT_Func) Validate() error {
 	return m.ValidateWithPath("CT_Func")
 }
+
+// ValidateWithPath validates the CT_Func and its children, prefixing error messages with path
 func (m *CT_Func) ValidateWithPath(path string) error {
 	if m.FuncPr != nil {
 		if err := m.FuncPr.ValidateWithPath(path + "/FuncPr"); err != nil {

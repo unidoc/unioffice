@@ -21,6 +21,7 @@ func NewVolTypes() *VolTypes {
 	ret.CT_VolTypes = *NewCT_VolTypes()
 	return ret
 }
+
 func (m *VolTypes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *VolTypes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "x:volTypes"
 	return m.CT_VolTypes.MarshalXML(e, start)
 }
+
 func (m *VolTypes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_VolTypes = *NewCT_VolTypes()
@@ -70,9 +72,13 @@ lVolTypes:
 	}
 	return nil
 }
+
+// Validate validates the VolTypes and its children
 func (m *VolTypes) Validate() error {
 	return m.ValidateWithPath("VolTypes")
 }
+
+// ValidateWithPath validates the VolTypes and its children, prefixing error messages with path
 func (m *VolTypes) ValidateWithPath(path string) error {
 	if err := m.CT_VolTypes.ValidateWithPath(path); err != nil {
 		return err

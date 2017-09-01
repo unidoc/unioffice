@@ -26,6 +26,7 @@ func NewCT_NormalViewPortion() *CT_NormalViewPortion {
 	ret := &CT_NormalViewPortion{}
 	return ret
 }
+
 func (m *CT_NormalViewPortion) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_NormalViewPortion) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_NormalViewPortion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -70,9 +72,13 @@ func (m *CT_NormalViewPortion) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	}
 	return nil
 }
+
+// Validate validates the CT_NormalViewPortion and its children
 func (m *CT_NormalViewPortion) Validate() error {
 	return m.ValidateWithPath("CT_NormalViewPortion")
 }
+
+// ValidateWithPath validates the CT_NormalViewPortion and its children, prefixing error messages with path
 func (m *CT_NormalViewPortion) ValidateWithPath(path string) error {
 	if err := m.SzAttr.ValidateWithPath(path + "/SzAttr"); err != nil {
 		return err

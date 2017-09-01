@@ -75,6 +75,7 @@ func NewCT_Properties() *CT_Properties {
 	ret := &CT_Properties{}
 	return ret
 }
+
 func (m *CT_Properties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -198,6 +199,7 @@ func (m *CT_Properties) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Properties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Properties:
@@ -357,9 +359,13 @@ lCT_Properties:
 	}
 	return nil
 }
+
+// Validate validates the CT_Properties and its children
 func (m *CT_Properties) Validate() error {
 	return m.ValidateWithPath("CT_Properties")
 }
+
+// ValidateWithPath validates the CT_Properties and its children, prefixing error messages with path
 func (m *CT_Properties) ValidateWithPath(path string) error {
 	if m.HeadingPairs != nil {
 		if err := m.HeadingPairs.ValidateWithPath(path + "/HeadingPairs"); err != nil {

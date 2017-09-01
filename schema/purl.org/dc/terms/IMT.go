@@ -19,6 +19,7 @@ func NewIMT() *IMT {
 	ret := &IMT{}
 	return ret
 }
+
 func (m *IMT) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *IMT) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *IMT) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *IMT) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the IMT and its children
 func (m *IMT) Validate() error {
 	return m.ValidateWithPath("IMT")
 }
+
+// ValidateWithPath validates the IMT and its children, prefixing error messages with path
 func (m *IMT) ValidateWithPath(path string) error {
 	return nil
 }

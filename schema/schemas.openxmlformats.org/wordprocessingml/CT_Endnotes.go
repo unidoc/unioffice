@@ -22,6 +22,7 @@ func NewCT_Endnotes() *CT_Endnotes {
 	ret := &CT_Endnotes{}
 	return ret
 }
+
 func (m *CT_Endnotes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_Endnotes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Endnotes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Endnotes:
@@ -64,9 +66,13 @@ lCT_Endnotes:
 	}
 	return nil
 }
+
+// Validate validates the CT_Endnotes and its children
 func (m *CT_Endnotes) Validate() error {
 	return m.ValidateWithPath("CT_Endnotes")
 }
+
+// ValidateWithPath validates the CT_Endnotes and its children, prefixing error messages with path
 func (m *CT_Endnotes) ValidateWithPath(path string) error {
 	for i, v := range m.Endnote {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Endnote[%d]", path, i)); err != nil {

@@ -25,6 +25,7 @@ func NewCT_ColFields() *CT_ColFields {
 	ret := &CT_ColFields{}
 	return ret
 }
+
 func (m *CT_ColFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_ColFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ColFields) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_ColFields:
 	}
 	return nil
 }
+
+// Validate validates the CT_ColFields and its children
 func (m *CT_ColFields) Validate() error {
 	return m.ValidateWithPath("CT_ColFields")
 }
+
+// ValidateWithPath validates the CT_ColFields and its children, prefixing error messages with path
 func (m *CT_ColFields) ValidateWithPath(path string) error {
 	for i, v := range m.Field {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Field[%d]", path, i)); err != nil {

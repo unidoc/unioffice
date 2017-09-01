@@ -21,6 +21,7 @@ func NewFonts() *Fonts {
 	ret.CT_FontsList = *NewCT_FontsList()
 	return ret
 }
+
 func (m *Fonts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *Fonts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "w:fonts"
 	return m.CT_FontsList.MarshalXML(e, start)
 }
+
 func (m *Fonts) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_FontsList = *NewCT_FontsList()
@@ -69,9 +71,13 @@ lFonts:
 	}
 	return nil
 }
+
+// Validate validates the Fonts and its children
 func (m *Fonts) Validate() error {
 	return m.ValidateWithPath("Fonts")
 }
+
+// ValidateWithPath validates the Fonts and its children, prefixing error messages with path
 func (m *Fonts) ValidateWithPath(path string) error {
 	if err := m.CT_FontsList.ValidateWithPath(path); err != nil {
 		return err

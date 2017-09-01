@@ -23,6 +23,7 @@ func NewCT_OMathArg() *CT_OMathArg {
 	ret := &CT_OMathArg{}
 	return ret
 }
+
 func (m *CT_OMathArg) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -44,6 +45,7 @@ func (m *CT_OMathArg) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_OMathArg) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_OMathArg:
@@ -218,9 +220,13 @@ lCT_OMathArg:
 	}
 	return nil
 }
+
+// Validate validates the CT_OMathArg and its children
 func (m *CT_OMathArg) Validate() error {
 	return m.ValidateWithPath("CT_OMathArg")
 }
+
+// ValidateWithPath validates the CT_OMathArg and its children, prefixing error messages with path
 func (m *CT_OMathArg) ValidateWithPath(path string) error {
 	if m.ArgPr != nil {
 		if err := m.ArgPr.ValidateWithPath(path + "/ArgPr"); err != nil {

@@ -31,6 +31,7 @@ func NewCT_NumericRule() *CT_NumericRule {
 	ret := &CT_NumericRule{}
 	return ret
 }
+
 func (m *CT_NumericRule) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -80,6 +81,7 @@ func (m *CT_NumericRule) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_NumericRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -148,9 +150,13 @@ lCT_NumericRule:
 	}
 	return nil
 }
+
+// Validate validates the CT_NumericRule and its children
 func (m *CT_NumericRule) Validate() error {
 	return m.ValidateWithPath("CT_NumericRule")
 }
+
+// ValidateWithPath validates the CT_NumericRule and its children, prefixing error messages with path
 func (m *CT_NumericRule) ValidateWithPath(path string) error {
 	if m.ExtLst != nil {
 		if err := m.ExtLst.ValidateWithPath(path + "/ExtLst"); err != nil {

@@ -21,6 +21,7 @@ func NewCT_OfficeArtExtensionList() *CT_OfficeArtExtensionList {
 	ret := &CT_OfficeArtExtensionList{}
 	return ret
 }
+
 func (m *CT_OfficeArtExtensionList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_OfficeArtExtensionList) MarshalXML(e *xml.Encoder, start xml.StartEl
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_OfficeArtExtensionList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_OfficeArtExtensionList:
@@ -63,9 +65,13 @@ lCT_OfficeArtExtensionList:
 	}
 	return nil
 }
+
+// Validate validates the CT_OfficeArtExtensionList and its children
 func (m *CT_OfficeArtExtensionList) Validate() error {
 	return m.ValidateWithPath("CT_OfficeArtExtensionList")
 }
+
+// ValidateWithPath validates the CT_OfficeArtExtensionList and its children, prefixing error messages with path
 func (m *CT_OfficeArtExtensionList) ValidateWithPath(path string) error {
 	for i, v := range m.Ext {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Ext[%d]", path, i)); err != nil {

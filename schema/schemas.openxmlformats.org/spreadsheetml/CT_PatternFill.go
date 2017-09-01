@@ -25,6 +25,7 @@ func NewCT_PatternFill() *CT_PatternFill {
 	ret := &CT_PatternFill{}
 	return ret
 }
+
 func (m *CT_PatternFill) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -48,6 +49,7 @@ func (m *CT_PatternFill) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PatternFill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -87,9 +89,13 @@ lCT_PatternFill:
 	}
 	return nil
 }
+
+// Validate validates the CT_PatternFill and its children
 func (m *CT_PatternFill) Validate() error {
 	return m.ValidateWithPath("CT_PatternFill")
 }
+
+// ValidateWithPath validates the CT_PatternFill and its children, prefixing error messages with path
 func (m *CT_PatternFill) ValidateWithPath(path string) error {
 	if err := m.PatternTypeAttr.ValidateWithPath(path + "/PatternTypeAttr"); err != nil {
 		return err

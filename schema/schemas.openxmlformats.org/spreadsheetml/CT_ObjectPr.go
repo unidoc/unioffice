@@ -46,6 +46,7 @@ func NewCT_ObjectPr() *CT_ObjectPr {
 	ret.Anchor = NewCT_ObjectAnchor()
 	return ret
 }
+
 func (m *CT_ObjectPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -104,6 +105,7 @@ func (m *CT_ObjectPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ObjectPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Anchor = NewCT_ObjectAnchor()
@@ -219,9 +221,13 @@ lCT_ObjectPr:
 	}
 	return nil
 }
+
+// Validate validates the CT_ObjectPr and its children
 func (m *CT_ObjectPr) Validate() error {
 	return m.ValidateWithPath("CT_ObjectPr")
 }
+
+// ValidateWithPath validates the CT_ObjectPr and its children, prefixing error messages with path
 func (m *CT_ObjectPr) ValidateWithPath(path string) error {
 	if err := m.Anchor.ValidateWithPath(path + "/Anchor"); err != nil {
 		return err

@@ -21,6 +21,7 @@ func NewEG_LineDashProperties() *EG_LineDashProperties {
 	ret := &EG_LineDashProperties{}
 	return ret
 }
+
 func (m *EG_LineDashProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_LineDashProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	return nil
 }
+
 func (m *EG_LineDashProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_LineDashProperties:
@@ -69,9 +71,13 @@ lEG_LineDashProperties:
 	}
 	return nil
 }
+
+// Validate validates the EG_LineDashProperties and its children
 func (m *EG_LineDashProperties) Validate() error {
 	return m.ValidateWithPath("EG_LineDashProperties")
 }
+
+// ValidateWithPath validates the EG_LineDashProperties and its children, prefixing error messages with path
 func (m *EG_LineDashProperties) ValidateWithPath(path string) error {
 	if m.PrstDash != nil {
 		if err := m.PrstDash.ValidateWithPath(path + "/PrstDash"); err != nil {

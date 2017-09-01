@@ -23,6 +23,7 @@ func NewCT_LegendEntry() *CT_LegendEntry {
 	ret.Idx = NewCT_UnsignedInt()
 	return ret
 }
+
 func (m *CT_LegendEntry) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_LegendEntry) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_LegendEntry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Idx = NewCT_UnsignedInt()
@@ -86,9 +88,13 @@ lCT_LegendEntry:
 	}
 	return nil
 }
+
+// Validate validates the CT_LegendEntry and its children
 func (m *CT_LegendEntry) Validate() error {
 	return m.ValidateWithPath("CT_LegendEntry")
 }
+
+// ValidateWithPath validates the CT_LegendEntry and its children, prefixing error messages with path
 func (m *CT_LegendEntry) ValidateWithPath(path string) error {
 	if err := m.Idx.ValidateWithPath(path + "/Idx"); err != nil {
 		return err

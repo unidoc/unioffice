@@ -19,6 +19,7 @@ func NewLCC() *LCC {
 	ret := &LCC{}
 	return ret
 }
+
 func (m *LCC) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *LCC) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *LCC) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *LCC) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the LCC and its children
 func (m *LCC) Validate() error {
 	return m.ValidateWithPath("LCC")
 }
+
+// ValidateWithPath validates the LCC and its children, prefixing error messages with path
 func (m *LCC) ValidateWithPath(path string) error {
 	return nil
 }

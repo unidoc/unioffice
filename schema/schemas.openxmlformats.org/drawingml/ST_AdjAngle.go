@@ -20,6 +20,7 @@ type ST_AdjAngle struct {
 func (m *ST_AdjAngle) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_AdjAngle) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_Angle != nil {
@@ -33,6 +34,7 @@ func (m *ST_AdjAngle) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_AdjAngle) String() string {
 	if m.ST_Angle != nil {
 		return fmt.Sprintf("%v", *m.ST_Angle)

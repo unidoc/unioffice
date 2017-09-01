@@ -49,6 +49,7 @@ func NewCT_Error() *CT_Error {
 	ret := &CT_Error{}
 	return ret
 }
+
 func (m *CT_Error) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -111,6 +112,7 @@ func (m *CT_Error) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Error) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -234,9 +236,13 @@ lCT_Error:
 	}
 	return nil
 }
+
+// Validate validates the CT_Error and its children
 func (m *CT_Error) Validate() error {
 	return m.ValidateWithPath("CT_Error")
 }
+
+// ValidateWithPath validates the CT_Error and its children, prefixing error messages with path
 func (m *CT_Error) ValidateWithPath(path string) error {
 	if m.Tpls != nil {
 		if err := m.Tpls.ValidateWithPath(path + "/Tpls"); err != nil {

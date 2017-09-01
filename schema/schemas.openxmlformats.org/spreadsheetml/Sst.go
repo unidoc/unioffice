@@ -22,6 +22,7 @@ func NewSst() *Sst {
 	ret.CT_Sst = *NewCT_Sst()
 	return ret
 }
+
 func (m *Sst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *Sst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "x:sst"
 	return m.CT_Sst.MarshalXML(e, start)
 }
+
 func (m *Sst) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Sst = *NewCT_Sst()
@@ -89,9 +91,13 @@ lSst:
 	}
 	return nil
 }
+
+// Validate validates the Sst and its children
 func (m *Sst) Validate() error {
 	return m.ValidateWithPath("Sst")
 }
+
+// ValidateWithPath validates the Sst and its children, prefixing error messages with path
 func (m *Sst) ValidateWithPath(path string) error {
 	if err := m.CT_Sst.ValidateWithPath(path); err != nil {
 		return err

@@ -29,6 +29,7 @@ func NewCT_Line3DChart() *CT_Line3DChart {
 	ret.Grouping = NewCT_Grouping()
 	return ret
 }
+
 func (m *CT_Line3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -65,6 +66,7 @@ func (m *CT_Line3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Line3DChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Grouping = NewCT_Grouping()
@@ -131,9 +133,13 @@ lCT_Line3DChart:
 	}
 	return nil
 }
+
+// Validate validates the CT_Line3DChart and its children
 func (m *CT_Line3DChart) Validate() error {
 	return m.ValidateWithPath("CT_Line3DChart")
 }
+
+// ValidateWithPath validates the CT_Line3DChart and its children, prefixing error messages with path
 func (m *CT_Line3DChart) ValidateWithPath(path string) error {
 	if err := m.Grouping.ValidateWithPath(path + "/Grouping"); err != nil {
 		return err

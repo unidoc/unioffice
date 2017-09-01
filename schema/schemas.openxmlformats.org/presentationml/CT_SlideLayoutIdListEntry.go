@@ -25,6 +25,7 @@ func NewCT_SlideLayoutIdListEntry() *CT_SlideLayoutIdListEntry {
 	ret := &CT_SlideLayoutIdListEntry{}
 	return ret
 }
+
 func (m *CT_SlideLayoutIdListEntry) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -43,6 +44,7 @@ func (m *CT_SlideLayoutIdListEntry) MarshalXML(e *xml.Encoder, start xml.StartEl
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SlideLayoutIdListEntry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -89,9 +91,13 @@ lCT_SlideLayoutIdListEntry:
 	}
 	return nil
 }
+
+// Validate validates the CT_SlideLayoutIdListEntry and its children
 func (m *CT_SlideLayoutIdListEntry) Validate() error {
 	return m.ValidateWithPath("CT_SlideLayoutIdListEntry")
 }
+
+// ValidateWithPath validates the CT_SlideLayoutIdListEntry and its children, prefixing error messages with path
 func (m *CT_SlideLayoutIdListEntry) ValidateWithPath(path string) error {
 	if m.IdAttr != nil {
 		if *m.IdAttr < 2147483648 {

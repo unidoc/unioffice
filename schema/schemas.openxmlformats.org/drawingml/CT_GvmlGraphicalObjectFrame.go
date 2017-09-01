@@ -26,6 +26,7 @@ func NewCT_GvmlGraphicalObjectFrame() *CT_GvmlGraphicalObjectFrame {
 	ret.Xfrm = NewCT_Transform2D()
 	return ret
 }
+
 func (m *CT_GvmlGraphicalObjectFrame) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -44,6 +45,7 @@ func (m *CT_GvmlGraphicalObjectFrame) MarshalXML(e *xml.Encoder, start xml.Start
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GvmlGraphicalObjectFrame) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.NvGraphicFramePr = NewCT_GvmlGraphicFrameNonVisual()
@@ -88,9 +90,13 @@ lCT_GvmlGraphicalObjectFrame:
 	}
 	return nil
 }
+
+// Validate validates the CT_GvmlGraphicalObjectFrame and its children
 func (m *CT_GvmlGraphicalObjectFrame) Validate() error {
 	return m.ValidateWithPath("CT_GvmlGraphicalObjectFrame")
 }
+
+// ValidateWithPath validates the CT_GvmlGraphicalObjectFrame and its children, prefixing error messages with path
 func (m *CT_GvmlGraphicalObjectFrame) ValidateWithPath(path string) error {
 	if err := m.NvGraphicFramePr.ValidateWithPath(path + "/NvGraphicFramePr"); err != nil {
 		return err

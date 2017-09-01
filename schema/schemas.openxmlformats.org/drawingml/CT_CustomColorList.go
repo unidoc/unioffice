@@ -21,6 +21,7 @@ func NewCT_CustomColorList() *CT_CustomColorList {
 	ret := &CT_CustomColorList{}
 	return ret
 }
+
 func (m *CT_CustomColorList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_CustomColorList) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CustomColorList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_CustomColorList:
@@ -63,9 +65,13 @@ lCT_CustomColorList:
 	}
 	return nil
 }
+
+// Validate validates the CT_CustomColorList and its children
 func (m *CT_CustomColorList) Validate() error {
 	return m.ValidateWithPath("CT_CustomColorList")
 }
+
+// ValidateWithPath validates the CT_CustomColorList and its children, prefixing error messages with path
 func (m *CT_CustomColorList) ValidateWithPath(path string) error {
 	for i, v := range m.CustClr {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/CustClr[%d]", path, i)); err != nil {

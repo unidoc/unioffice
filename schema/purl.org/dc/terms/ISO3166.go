@@ -19,6 +19,7 @@ func NewISO3166() *ISO3166 {
 	ret := &ISO3166{}
 	return ret
 }
+
 func (m *ISO3166) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *ISO3166) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *ISO3166) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *ISO3166) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the ISO3166 and its children
 func (m *ISO3166) Validate() error {
 	return m.ValidateWithPath("ISO3166")
 }
+
+// ValidateWithPath validates the ISO3166 and its children, prefixing error messages with path
 func (m *ISO3166) ValidateWithPath(path string) error {
 	return nil
 }

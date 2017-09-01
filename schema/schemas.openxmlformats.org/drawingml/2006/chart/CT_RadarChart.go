@@ -27,6 +27,7 @@ func NewCT_RadarChart() *CT_RadarChart {
 	ret.RadarStyle = NewCT_RadarStyle()
 	return ret
 }
+
 func (m *CT_RadarChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -55,6 +56,7 @@ func (m *CT_RadarChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RadarChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.RadarStyle = NewCT_RadarStyle()
@@ -111,9 +113,13 @@ lCT_RadarChart:
 	}
 	return nil
 }
+
+// Validate validates the CT_RadarChart and its children
 func (m *CT_RadarChart) Validate() error {
 	return m.ValidateWithPath("CT_RadarChart")
 }
+
+// ValidateWithPath validates the CT_RadarChart and its children, prefixing error messages with path
 func (m *CT_RadarChart) ValidateWithPath(path string) error {
 	if err := m.RadarStyle.ValidateWithPath(path + "/RadarStyle"); err != nil {
 		return err

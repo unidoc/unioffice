@@ -31,6 +31,7 @@ func NewCT_SlideTransition() *CT_SlideTransition {
 	ret := &CT_SlideTransition{}
 	return ret
 }
+
 func (m *CT_SlideTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -65,6 +66,7 @@ func (m *CT_SlideTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SlideTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -245,9 +247,13 @@ lCT_SlideTransition:
 	}
 	return nil
 }
+
+// Validate validates the CT_SlideTransition and its children
 func (m *CT_SlideTransition) Validate() error {
 	return m.ValidateWithPath("CT_SlideTransition")
 }
+
+// ValidateWithPath validates the CT_SlideTransition and its children, prefixing error messages with path
 func (m *CT_SlideTransition) ValidateWithPath(path string) error {
 	if err := m.SpdAttr.ValidateWithPath(path + "/SpdAttr"); err != nil {
 		return err

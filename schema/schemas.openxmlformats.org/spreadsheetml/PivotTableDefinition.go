@@ -22,6 +22,7 @@ func NewPivotTableDefinition() *PivotTableDefinition {
 	ret.CT_pivotTableDefinition = *NewCT_pivotTableDefinition()
 	return ret
 }
+
 func (m *PivotTableDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *PivotTableDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement
 	start.Name.Local = "x:pivotTableDefinition"
 	return m.CT_pivotTableDefinition.MarshalXML(e, start)
 }
+
 func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_pivotTableDefinition = *NewCT_pivotTableDefinition()
@@ -630,9 +632,13 @@ lPivotTableDefinition:
 	}
 	return nil
 }
+
+// Validate validates the PivotTableDefinition and its children
 func (m *PivotTableDefinition) Validate() error {
 	return m.ValidateWithPath("PivotTableDefinition")
 }
+
+// ValidateWithPath validates the PivotTableDefinition and its children, prefixing error messages with path
 func (m *PivotTableDefinition) ValidateWithPath(path string) error {
 	if err := m.CT_pivotTableDefinition.ValidateWithPath(path); err != nil {
 		return err

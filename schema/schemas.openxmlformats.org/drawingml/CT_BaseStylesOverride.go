@@ -22,6 +22,7 @@ func NewCT_BaseStylesOverride() *CT_BaseStylesOverride {
 	ret := &CT_BaseStylesOverride{}
 	return ret
 }
+
 func (m *CT_BaseStylesOverride) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -42,6 +43,7 @@ func (m *CT_BaseStylesOverride) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_BaseStylesOverride) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_BaseStylesOverride:
@@ -81,9 +83,13 @@ lCT_BaseStylesOverride:
 	}
 	return nil
 }
+
+// Validate validates the CT_BaseStylesOverride and its children
 func (m *CT_BaseStylesOverride) Validate() error {
 	return m.ValidateWithPath("CT_BaseStylesOverride")
 }
+
+// ValidateWithPath validates the CT_BaseStylesOverride and its children, prefixing error messages with path
 func (m *CT_BaseStylesOverride) ValidateWithPath(path string) error {
 	if m.ClrScheme != nil {
 		if err := m.ClrScheme.ValidateWithPath(path + "/ClrScheme"); err != nil {

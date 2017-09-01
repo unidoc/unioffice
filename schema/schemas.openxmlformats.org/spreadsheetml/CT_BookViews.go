@@ -22,6 +22,7 @@ func NewCT_BookViews() *CT_BookViews {
 	ret := &CT_BookViews{}
 	return ret
 }
+
 func (m *CT_BookViews) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_BookViews) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_BookViews) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_BookViews:
@@ -62,9 +64,13 @@ lCT_BookViews:
 	}
 	return nil
 }
+
+// Validate validates the CT_BookViews and its children
 func (m *CT_BookViews) Validate() error {
 	return m.ValidateWithPath("CT_BookViews")
 }
+
+// ValidateWithPath validates the CT_BookViews and its children, prefixing error messages with path
 func (m *CT_BookViews) ValidateWithPath(path string) error {
 	for i, v := range m.WorkbookView {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/WorkbookView[%d]", path, i)); err != nil {

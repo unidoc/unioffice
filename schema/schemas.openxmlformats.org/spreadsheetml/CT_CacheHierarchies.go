@@ -25,6 +25,7 @@ func NewCT_CacheHierarchies() *CT_CacheHierarchies {
 	ret := &CT_CacheHierarchies{}
 	return ret
 }
+
 func (m *CT_CacheHierarchies) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_CacheHierarchies) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CacheHierarchies) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -81,9 +83,13 @@ lCT_CacheHierarchies:
 	}
 	return nil
 }
+
+// Validate validates the CT_CacheHierarchies and its children
 func (m *CT_CacheHierarchies) Validate() error {
 	return m.ValidateWithPath("CT_CacheHierarchies")
 }
+
+// ValidateWithPath validates the CT_CacheHierarchies and its children, prefixing error messages with path
 func (m *CT_CacheHierarchies) ValidateWithPath(path string) error {
 	for i, v := range m.CacheHierarchy {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/CacheHierarchy[%d]", path, i)); err != nil {

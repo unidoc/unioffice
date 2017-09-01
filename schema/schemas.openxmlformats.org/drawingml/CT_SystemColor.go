@@ -24,6 +24,7 @@ func NewCT_SystemColor() *CT_SystemColor {
 	ret.ValAttr = ST_SystemColorVal(1)
 	return ret
 }
+
 func (m *CT_SystemColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -46,6 +47,7 @@ func (m *CT_SystemColor) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SystemColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = ST_SystemColorVal(1)
@@ -279,9 +281,13 @@ lCT_SystemColor:
 	}
 	return nil
 }
+
+// Validate validates the CT_SystemColor and its children
 func (m *CT_SystemColor) Validate() error {
 	return m.ValidateWithPath("CT_SystemColor")
 }
+
+// ValidateWithPath validates the CT_SystemColor and its children, prefixing error messages with path
 func (m *CT_SystemColor) ValidateWithPath(path string) error {
 	if m.ValAttr == ST_SystemColorValUnset {
 		return fmt.Errorf("%s/ValAttr is a mandatory field", path)

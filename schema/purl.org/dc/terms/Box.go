@@ -19,6 +19,7 @@ func NewBox() *Box {
 	ret := &Box{}
 	return ret
 }
+
 func (m *Box) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *Box) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *Box) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *Box) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the Box and its children
 func (m *Box) Validate() error {
 	return m.ValidateWithPath("Box")
 }
+
+// ValidateWithPath validates the Box and its children, prefixing error messages with path
 func (m *Box) ValidateWithPath(path string) error {
 	return nil
 }

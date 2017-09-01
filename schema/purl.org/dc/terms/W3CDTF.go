@@ -19,6 +19,7 @@ func NewW3CDTF() *W3CDTF {
 	ret := &W3CDTF{}
 	return ret
 }
+
 func (m *W3CDTF) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *W3CDTF) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *W3CDTF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *W3CDTF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the W3CDTF and its children
 func (m *W3CDTF) Validate() error {
 	return m.ValidateWithPath("W3CDTF")
 }
+
+// ValidateWithPath validates the W3CDTF and its children, prefixing error messages with path
 func (m *W3CDTF) ValidateWithPath(path string) error {
 	return nil
 }

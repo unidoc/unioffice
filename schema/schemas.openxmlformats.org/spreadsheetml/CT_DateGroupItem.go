@@ -35,6 +35,7 @@ func NewCT_DateGroupItem() *CT_DateGroupItem {
 	ret.DateTimeGroupingAttr = ST_DateTimeGrouping(1)
 	return ret
 }
+
 func (m *CT_DateGroupItem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -70,6 +71,7 @@ func (m *CT_DateGroupItem) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.DateTimeGroupingAttr = ST_DateTimeGrouping(1)
@@ -137,9 +139,13 @@ func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	}
 	return nil
 }
+
+// Validate validates the CT_DateGroupItem and its children
 func (m *CT_DateGroupItem) Validate() error {
 	return m.ValidateWithPath("CT_DateGroupItem")
 }
+
+// ValidateWithPath validates the CT_DateGroupItem and its children, prefixing error messages with path
 func (m *CT_DateGroupItem) ValidateWithPath(path string) error {
 	if m.DateTimeGroupingAttr == ST_DateTimeGroupingUnset {
 		return fmt.Errorf("%s/DateTimeGroupingAttr is a mandatory field", path)

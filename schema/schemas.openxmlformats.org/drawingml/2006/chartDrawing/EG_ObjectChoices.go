@@ -20,6 +20,7 @@ func NewEG_ObjectChoices() *EG_ObjectChoices {
 	ret := &EG_ObjectChoices{}
 	return ret
 }
+
 func (m *EG_ObjectChoices) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -29,6 +30,7 @@ func (m *EG_ObjectChoices) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	}
 	return nil
 }
+
 func (m *EG_ObjectChoices) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ObjectChoices:
@@ -83,9 +85,13 @@ lEG_ObjectChoices:
 	}
 	return nil
 }
+
+// Validate validates the EG_ObjectChoices and its children
 func (m *EG_ObjectChoices) Validate() error {
 	return m.ValidateWithPath("EG_ObjectChoices")
 }
+
+// ValidateWithPath validates the EG_ObjectChoices and its children, prefixing error messages with path
 func (m *EG_ObjectChoices) ValidateWithPath(path string) error {
 	if m.Choice != nil {
 		if err := m.Choice.ValidateWithPath(path + "/Choice"); err != nil {

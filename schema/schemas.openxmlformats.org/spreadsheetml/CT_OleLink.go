@@ -25,6 +25,7 @@ func NewCT_OleLink() *CT_OleLink {
 	ret := &CT_OleLink{}
 	return ret
 }
+
 func (m *CT_OleLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_OleLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_OleLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -86,9 +88,13 @@ lCT_OleLink:
 	}
 	return nil
 }
+
+// Validate validates the CT_OleLink and its children
 func (m *CT_OleLink) Validate() error {
 	return m.ValidateWithPath("CT_OleLink")
 }
+
+// ValidateWithPath validates the CT_OleLink and its children, prefixing error messages with path
 func (m *CT_OleLink) ValidateWithPath(path string) error {
 	if m.OleItems != nil {
 		if err := m.OleItems.ValidateWithPath(path + "/OleItems"); err != nil {

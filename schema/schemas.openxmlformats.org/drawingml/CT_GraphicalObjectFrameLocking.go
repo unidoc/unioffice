@@ -28,6 +28,7 @@ func NewCT_GraphicalObjectFrameLocking() *CT_GraphicalObjectFrameLocking {
 	ret := &CT_GraphicalObjectFrameLocking{}
 	return ret
 }
+
 func (m *CT_GraphicalObjectFrameLocking) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -64,6 +65,7 @@ func (m *CT_GraphicalObjectFrameLocking) MarshalXML(e *xml.Encoder, start xml.St
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GraphicalObjectFrameLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -137,9 +139,13 @@ lCT_GraphicalObjectFrameLocking:
 	}
 	return nil
 }
+
+// Validate validates the CT_GraphicalObjectFrameLocking and its children
 func (m *CT_GraphicalObjectFrameLocking) Validate() error {
 	return m.ValidateWithPath("CT_GraphicalObjectFrameLocking")
 }
+
+// ValidateWithPath validates the CT_GraphicalObjectFrameLocking and its children, prefixing error messages with path
 func (m *CT_GraphicalObjectFrameLocking) ValidateWithPath(path string) error {
 	if m.ExtLst != nil {
 		if err := m.ExtLst.ValidateWithPath(path + "/ExtLst"); err != nil {

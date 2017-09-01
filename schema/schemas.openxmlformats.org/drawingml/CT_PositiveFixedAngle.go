@@ -22,6 +22,7 @@ func NewCT_PositiveFixedAngle() *CT_PositiveFixedAngle {
 	ret.ValAttr = 0
 	return ret
 }
+
 func (m *CT_PositiveFixedAngle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_PositiveFixedAngle) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PositiveFixedAngle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = 0
@@ -56,9 +58,13 @@ func (m *CT_PositiveFixedAngle) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 	}
 	return nil
 }
+
+// Validate validates the CT_PositiveFixedAngle and its children
 func (m *CT_PositiveFixedAngle) Validate() error {
 	return m.ValidateWithPath("CT_PositiveFixedAngle")
 }
+
+// ValidateWithPath validates the CT_PositiveFixedAngle and its children, prefixing error messages with path
 func (m *CT_PositiveFixedAngle) ValidateWithPath(path string) error {
 	if m.ValAttr < 0 {
 		return fmt.Errorf("%s/m.ValAttr must be >= 0 (have %v)", path, m.ValAttr)

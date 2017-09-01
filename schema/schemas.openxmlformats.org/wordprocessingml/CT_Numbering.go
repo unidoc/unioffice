@@ -28,6 +28,7 @@ func NewCT_Numbering() *CT_Numbering {
 	ret := &CT_Numbering{}
 	return ret
 }
+
 func (m *CT_Numbering) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -52,6 +53,7 @@ func (m *CT_Numbering) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Numbering) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Numbering:
@@ -99,9 +101,13 @@ lCT_Numbering:
 	}
 	return nil
 }
+
+// Validate validates the CT_Numbering and its children
 func (m *CT_Numbering) Validate() error {
 	return m.ValidateWithPath("CT_Numbering")
 }
+
+// ValidateWithPath validates the CT_Numbering and its children, prefixing error messages with path
 func (m *CT_Numbering) ValidateWithPath(path string) error {
 	for i, v := range m.NumPicBullet {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/NumPicBullet[%d]", path, i)); err != nil {

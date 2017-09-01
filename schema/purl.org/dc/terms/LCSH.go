@@ -19,6 +19,7 @@ func NewLCSH() *LCSH {
 	ret := &LCSH{}
 	return ret
 }
+
 func (m *LCSH) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *LCSH) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *LCSH) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *LCSH) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the LCSH and its children
 func (m *LCSH) Validate() error {
 	return m.ValidateWithPath("LCSH")
 }
+
+// ValidateWithPath validates the LCSH and its children, prefixing error messages with path
 func (m *LCSH) ValidateWithPath(path string) error {
 	return nil
 }

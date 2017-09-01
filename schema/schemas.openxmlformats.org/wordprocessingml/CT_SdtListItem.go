@@ -23,6 +23,7 @@ func NewCT_SdtListItem() *CT_SdtListItem {
 	ret := &CT_SdtListItem{}
 	return ret
 }
+
 func (m *CT_SdtListItem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_SdtListItem) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SdtListItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -69,9 +71,13 @@ func (m *CT_SdtListItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	}
 	return nil
 }
+
+// Validate validates the CT_SdtListItem and its children
 func (m *CT_SdtListItem) Validate() error {
 	return m.ValidateWithPath("CT_SdtListItem")
 }
+
+// ValidateWithPath validates the CT_SdtListItem and its children, prefixing error messages with path
 func (m *CT_SdtListItem) ValidateWithPath(path string) error {
 	return nil
 }

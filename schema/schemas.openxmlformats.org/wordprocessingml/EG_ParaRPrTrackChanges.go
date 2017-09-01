@@ -27,6 +27,7 @@ func NewEG_ParaRPrTrackChanges() *EG_ParaRPrTrackChanges {
 	ret := &EG_ParaRPrTrackChanges{}
 	return ret
 }
+
 func (m *EG_ParaRPrTrackChanges) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -49,6 +50,7 @@ func (m *EG_ParaRPrTrackChanges) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	return nil
 }
+
 func (m *EG_ParaRPrTrackChanges) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ParaRPrTrackChanges:
@@ -93,9 +95,13 @@ lEG_ParaRPrTrackChanges:
 	}
 	return nil
 }
+
+// Validate validates the EG_ParaRPrTrackChanges and its children
 func (m *EG_ParaRPrTrackChanges) Validate() error {
 	return m.ValidateWithPath("EG_ParaRPrTrackChanges")
 }
+
+// ValidateWithPath validates the EG_ParaRPrTrackChanges and its children, prefixing error messages with path
 func (m *EG_ParaRPrTrackChanges) ValidateWithPath(path string) error {
 	if m.Ins != nil {
 		if err := m.Ins.ValidateWithPath(path + "/Ins"); err != nil {

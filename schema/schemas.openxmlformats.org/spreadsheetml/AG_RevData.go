@@ -23,6 +23,7 @@ func NewAG_RevData() *AG_RevData {
 	ret := &AG_RevData{}
 	return ret
 }
+
 func (m *AG_RevData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *AG_RevData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *AG_RevData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ func (m *AG_RevData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	}
 	return nil
 }
+
+// Validate validates the AG_RevData and its children
 func (m *AG_RevData) Validate() error {
 	return m.ValidateWithPath("AG_RevData")
 }
+
+// ValidateWithPath validates the AG_RevData and its children, prefixing error messages with path
 func (m *AG_RevData) ValidateWithPath(path string) error {
 	return nil
 }

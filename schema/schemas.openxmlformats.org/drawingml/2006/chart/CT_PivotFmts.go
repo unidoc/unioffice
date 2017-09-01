@@ -21,6 +21,7 @@ func NewCT_PivotFmts() *CT_PivotFmts {
 	ret := &CT_PivotFmts{}
 	return ret
 }
+
 func (m *CT_PivotFmts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_PivotFmts) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PivotFmts) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_PivotFmts:
@@ -63,9 +65,13 @@ lCT_PivotFmts:
 	}
 	return nil
 }
+
+// Validate validates the CT_PivotFmts and its children
 func (m *CT_PivotFmts) Validate() error {
 	return m.ValidateWithPath("CT_PivotFmts")
 }
+
+// ValidateWithPath validates the CT_PivotFmts and its children, prefixing error messages with path
 func (m *CT_PivotFmts) ValidateWithPath(path string) error {
 	for i, v := range m.PivotFmt {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/PivotFmt[%d]", path, i)); err != nil {

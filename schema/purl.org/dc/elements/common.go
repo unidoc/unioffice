@@ -9,6 +9,7 @@ package elements
 
 import "baliance.com/gooxml"
 
+// init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
 	gooxml.RegisterConstructor("http://purl.org/dc/elements/1.1/", "SimpleLiteral", NewSimpleLiteral)
 	gooxml.RegisterConstructor("http://purl.org/dc/elements/1.1/", "elementContainer", NewElementContainer)

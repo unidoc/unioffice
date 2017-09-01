@@ -28,6 +28,7 @@ func NewCT_Consolidation() *CT_Consolidation {
 	ret.RangeSets = NewCT_RangeSets()
 	return ret
 }
+
 func (m *CT_Consolidation) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -46,6 +47,7 @@ func (m *CT_Consolidation) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Consolidation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.RangeSets = NewCT_RangeSets()
@@ -89,9 +91,13 @@ lCT_Consolidation:
 	}
 	return nil
 }
+
+// Validate validates the CT_Consolidation and its children
 func (m *CT_Consolidation) Validate() error {
 	return m.ValidateWithPath("CT_Consolidation")
 }
+
+// ValidateWithPath validates the CT_Consolidation and its children, prefixing error messages with path
 func (m *CT_Consolidation) ValidateWithPath(path string) error {
 	if m.Pages != nil {
 		if err := m.Pages.ValidateWithPath(path + "/Pages"); err != nil {

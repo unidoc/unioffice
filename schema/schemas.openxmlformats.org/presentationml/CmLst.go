@@ -21,6 +21,7 @@ func NewCmLst() *CmLst {
 	ret.CT_CommentList = *NewCT_CommentList()
 	return ret
 }
+
 func (m *CmLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CmLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "p:cmLst"
 	return m.CT_CommentList.MarshalXML(e, start)
 }
+
 func (m *CmLst) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_CommentList = *NewCT_CommentList()
@@ -65,9 +67,13 @@ lCmLst:
 	}
 	return nil
 }
+
+// Validate validates the CmLst and its children
 func (m *CmLst) Validate() error {
 	return m.ValidateWithPath("CmLst")
 }
+
+// ValidateWithPath validates the CmLst and its children, prefixing error messages with path
 func (m *CmLst) ValidateWithPath(path string) error {
 	if err := m.CT_CommentList.ValidateWithPath(path); err != nil {
 		return err

@@ -23,12 +23,14 @@ func NewWgp() *Wgp {
 	ret.CT_WordprocessingGroup = *NewCT_WordprocessingGroup()
 	return ret
 }
+
 func (m *Wgp) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
 	}
 	return m.CT_WordprocessingGroup.MarshalXML(e, start)
 }
+
 func (m *Wgp) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_WordprocessingGroup = *NewCT_WordprocessingGroup()
@@ -102,9 +104,13 @@ lWgp:
 	}
 	return nil
 }
+
+// Validate validates the Wgp and its children
 func (m *Wgp) Validate() error {
 	return m.ValidateWithPath("Wgp")
 }
+
+// ValidateWithPath validates the Wgp and its children, prefixing error messages with path
 func (m *Wgp) ValidateWithPath(path string) error {
 	if err := m.CT_WordprocessingGroup.ValidateWithPath(path); err != nil {
 		return err

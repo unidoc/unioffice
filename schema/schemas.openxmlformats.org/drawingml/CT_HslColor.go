@@ -26,6 +26,7 @@ func NewCT_HslColor() *CT_HslColor {
 	ret.HueAttr = 0
 	return ret
 }
+
 func (m *CT_HslColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *CT_HslColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_HslColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.HueAttr = 0
@@ -289,9 +291,13 @@ lCT_HslColor:
 	}
 	return nil
 }
+
+// Validate validates the CT_HslColor and its children
 func (m *CT_HslColor) Validate() error {
 	return m.ValidateWithPath("CT_HslColor")
 }
+
+// ValidateWithPath validates the CT_HslColor and its children, prefixing error messages with path
 func (m *CT_HslColor) ValidateWithPath(path string) error {
 	if m.HueAttr < 0 {
 		return fmt.Errorf("%s/m.HueAttr must be >= 0 (have %v)", path, m.HueAttr)

@@ -21,6 +21,7 @@ func NewCT_AnimationElementChoice() *CT_AnimationElementChoice {
 	ret := &CT_AnimationElementChoice{}
 	return ret
 }
+
 func (m *CT_AnimationElementChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *CT_AnimationElementChoice) MarshalXML(e *xml.Encoder, start xml.StartEl
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_AnimationElementChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_AnimationElementChoice:
@@ -72,9 +74,13 @@ lCT_AnimationElementChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_AnimationElementChoice and its children
 func (m *CT_AnimationElementChoice) Validate() error {
 	return m.ValidateWithPath("CT_AnimationElementChoice")
 }
+
+// ValidateWithPath validates the CT_AnimationElementChoice and its children, prefixing error messages with path
 func (m *CT_AnimationElementChoice) ValidateWithPath(path string) error {
 	if m.Dgm != nil {
 		if err := m.Dgm.ValidateWithPath(path + "/Dgm"); err != nil {

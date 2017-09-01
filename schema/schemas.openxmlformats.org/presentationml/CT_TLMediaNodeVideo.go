@@ -26,6 +26,7 @@ func NewCT_TLMediaNodeVideo() *CT_TLMediaNodeVideo {
 	ret.CMediaNode = NewCT_TLCommonMediaNodeData()
 	return ret
 }
+
 func (m *CT_TLMediaNodeVideo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_TLMediaNodeVideo) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLMediaNodeVideo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CMediaNode = NewCT_TLCommonMediaNodeData()
@@ -78,9 +80,13 @@ lCT_TLMediaNodeVideo:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLMediaNodeVideo and its children
 func (m *CT_TLMediaNodeVideo) Validate() error {
 	return m.ValidateWithPath("CT_TLMediaNodeVideo")
 }
+
+// ValidateWithPath validates the CT_TLMediaNodeVideo and its children, prefixing error messages with path
 func (m *CT_TLMediaNodeVideo) ValidateWithPath(path string) error {
 	if err := m.CMediaNode.ValidateWithPath(path + "/CMediaNode"); err != nil {
 		return err

@@ -27,6 +27,7 @@ func NewCT_TableStyleElement() *CT_TableStyleElement {
 	ret.TypeAttr = ST_TableStyleType(1)
 	return ret
 }
+
 func (m *CT_TableStyleElement) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -48,6 +49,7 @@ func (m *CT_TableStyleElement) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TableStyleElement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.TypeAttr = ST_TableStyleType(1)
@@ -84,9 +86,13 @@ func (m *CT_TableStyleElement) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	}
 	return nil
 }
+
+// Validate validates the CT_TableStyleElement and its children
 func (m *CT_TableStyleElement) Validate() error {
 	return m.ValidateWithPath("CT_TableStyleElement")
 }
+
+// ValidateWithPath validates the CT_TableStyleElement and its children, prefixing error messages with path
 func (m *CT_TableStyleElement) ValidateWithPath(path string) error {
 	if m.TypeAttr == ST_TableStyleTypeUnset {
 		return fmt.Errorf("%s/TypeAttr is a mandatory field", path)

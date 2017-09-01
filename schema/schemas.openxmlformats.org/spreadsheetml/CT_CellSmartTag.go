@@ -29,6 +29,7 @@ func NewCT_CellSmartTag() *CT_CellSmartTag {
 	ret := &CT_CellSmartTag{}
 	return ret
 }
+
 func (m *CT_CellSmartTag) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -51,6 +52,7 @@ func (m *CT_CellSmartTag) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CellSmartTag) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -104,9 +106,13 @@ lCT_CellSmartTag:
 	}
 	return nil
 }
+
+// Validate validates the CT_CellSmartTag and its children
 func (m *CT_CellSmartTag) Validate() error {
 	return m.ValidateWithPath("CT_CellSmartTag")
 }
+
+// ValidateWithPath validates the CT_CellSmartTag and its children, prefixing error messages with path
 func (m *CT_CellSmartTag) ValidateWithPath(path string) error {
 	for i, v := range m.CellSmartTagPr {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/CellSmartTagPr[%d]", path, i)); err != nil {

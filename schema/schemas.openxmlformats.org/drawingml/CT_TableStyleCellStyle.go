@@ -23,6 +23,7 @@ func NewCT_TableStyleCellStyle() *CT_TableStyleCellStyle {
 	ret := &CT_TableStyleCellStyle{}
 	return ret
 }
+
 func (m *CT_TableStyleCellStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *CT_TableStyleCellStyle) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TableStyleCellStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TableStyleCellStyle:
@@ -91,9 +93,13 @@ lCT_TableStyleCellStyle:
 	}
 	return nil
 }
+
+// Validate validates the CT_TableStyleCellStyle and its children
 func (m *CT_TableStyleCellStyle) Validate() error {
 	return m.ValidateWithPath("CT_TableStyleCellStyle")
 }
+
+// ValidateWithPath validates the CT_TableStyleCellStyle and its children, prefixing error messages with path
 func (m *CT_TableStyleCellStyle) ValidateWithPath(path string) error {
 	if m.TcBdr != nil {
 		if err := m.TcBdr.ValidateWithPath(path + "/TcBdr"); err != nil {

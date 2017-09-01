@@ -20,6 +20,7 @@ type ST_DecimalNumberOrPercent struct {
 func (m *ST_DecimalNumberOrPercent) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_DecimalNumberOrPercent) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_UnqualifiedPercentage != nil {
@@ -33,6 +34,7 @@ func (m *ST_DecimalNumberOrPercent) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_DecimalNumberOrPercent) String() string {
 	if m.ST_UnqualifiedPercentage != nil {
 		return fmt.Sprintf("%v", *m.ST_UnqualifiedPercentage)

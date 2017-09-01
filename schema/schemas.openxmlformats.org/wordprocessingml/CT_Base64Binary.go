@@ -20,6 +20,7 @@ func NewCT_Base64Binary() *CT_Base64Binary {
 	ret := &CT_Base64Binary{}
 	return ret
 }
+
 func (m *CT_Base64Binary) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -30,6 +31,7 @@ func (m *CT_Base64Binary) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Base64Binary) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -53,9 +55,13 @@ func (m *CT_Base64Binary) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	}
 	return nil
 }
+
+// Validate validates the CT_Base64Binary and its children
 func (m *CT_Base64Binary) Validate() error {
 	return m.ValidateWithPath("CT_Base64Binary")
 }
+
+// ValidateWithPath validates the CT_Base64Binary and its children, prefixing error messages with path
 func (m *CT_Base64Binary) ValidateWithPath(path string) error {
 	return nil
 }

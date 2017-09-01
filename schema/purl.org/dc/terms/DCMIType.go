@@ -19,6 +19,7 @@ func NewDCMIType() *DCMIType {
 	ret := &DCMIType{}
 	return ret
 }
+
 func (m *DCMIType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *DCMIType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *DCMIType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *DCMIType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the DCMIType and its children
 func (m *DCMIType) Validate() error {
 	return m.ValidateWithPath("DCMIType")
 }
+
+// ValidateWithPath validates the DCMIType and its children, prefixing error messages with path
 func (m *DCMIType) ValidateWithPath(path string) error {
 	return nil
 }

@@ -28,6 +28,7 @@ func NewCT_RPrChange() *CT_RPrChange {
 	ret.RPr = NewCT_RPrOriginal()
 	return ret
 }
+
 func (m *CT_RPrChange) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -46,6 +47,7 @@ func (m *CT_RPrChange) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RPrChange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.RPr = NewCT_RPrOriginal()
@@ -98,9 +100,13 @@ lCT_RPrChange:
 	}
 	return nil
 }
+
+// Validate validates the CT_RPrChange and its children
 func (m *CT_RPrChange) Validate() error {
 	return m.ValidateWithPath("CT_RPrChange")
 }
+
+// ValidateWithPath validates the CT_RPrChange and its children, prefixing error messages with path
 func (m *CT_RPrChange) ValidateWithPath(path string) error {
 	if err := m.RPr.ValidateWithPath(path + "/RPr"); err != nil {
 		return err

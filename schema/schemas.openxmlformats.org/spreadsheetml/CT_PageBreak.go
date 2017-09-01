@@ -27,6 +27,7 @@ func NewCT_PageBreak() *CT_PageBreak {
 	ret := &CT_PageBreak{}
 	return ret
 }
+
 func (m *CT_PageBreak) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -47,6 +48,7 @@ func (m *CT_PageBreak) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PageBreak) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -95,9 +97,13 @@ lCT_PageBreak:
 	}
 	return nil
 }
+
+// Validate validates the CT_PageBreak and its children
 func (m *CT_PageBreak) Validate() error {
 	return m.ValidateWithPath("CT_PageBreak")
 }
+
+// ValidateWithPath validates the CT_PageBreak and its children, prefixing error messages with path
 func (m *CT_PageBreak) ValidateWithPath(path string) error {
 	for i, v := range m.Brk {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Brk[%d]", path, i)); err != nil {

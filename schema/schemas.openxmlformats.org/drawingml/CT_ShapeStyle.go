@@ -27,6 +27,7 @@ func NewCT_ShapeStyle() *CT_ShapeStyle {
 	ret.FontRef = NewCT_FontReference()
 	return ret
 }
+
 func (m *CT_ShapeStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -43,6 +44,7 @@ func (m *CT_ShapeStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ShapeStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.LnRef = NewCT_StyleMatrixReference()
@@ -87,9 +89,13 @@ lCT_ShapeStyle:
 	}
 	return nil
 }
+
+// Validate validates the CT_ShapeStyle and its children
 func (m *CT_ShapeStyle) Validate() error {
 	return m.ValidateWithPath("CT_ShapeStyle")
 }
+
+// ValidateWithPath validates the CT_ShapeStyle and its children, prefixing error messages with path
 func (m *CT_ShapeStyle) ValidateWithPath(path string) error {
 	if err := m.LnRef.ValidateWithPath(path + "/LnRef"); err != nil {
 		return err

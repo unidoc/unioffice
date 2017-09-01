@@ -20,6 +20,7 @@ type ST_TransitionEightDirectionType struct {
 func (m *ST_TransitionEightDirectionType) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_TransitionEightDirectionType) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_TransitionSideDirectionType != ST_TransitionSideDirectionTypeUnset {
@@ -33,6 +34,7 @@ func (m *ST_TransitionEightDirectionType) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_TransitionEightDirectionType) String() string {
 	if m.ST_TransitionSideDirectionType != ST_TransitionSideDirectionTypeUnset {
 		return m.ST_TransitionSideDirectionType.String()

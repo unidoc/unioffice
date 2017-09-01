@@ -21,6 +21,7 @@ func NewElementOrRefinementContainer() *ElementOrRefinementContainer {
 	ret := &ElementOrRefinementContainer{}
 	return ret
 }
+
 func (m *ElementOrRefinementContainer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *ElementOrRefinementContainer) MarshalXML(e *xml.Encoder, start xml.Star
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *ElementOrRefinementContainer) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lElementOrRefinementContainer:
@@ -65,9 +67,13 @@ lElementOrRefinementContainer:
 	}
 	return nil
 }
+
+// Validate validates the ElementOrRefinementContainer and its children
 func (m *ElementOrRefinementContainer) Validate() error {
 	return m.ValidateWithPath("ElementOrRefinementContainer")
 }
+
+// ValidateWithPath validates the ElementOrRefinementContainer and its children, prefixing error messages with path
 func (m *ElementOrRefinementContainer) ValidateWithPath(path string) error {
 	for i, v := range m.Choice {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Choice[%d]", path, i)); err != nil {

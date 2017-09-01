@@ -85,6 +85,7 @@ func NewEG_RunInnerContent() *EG_RunInnerContent {
 	ret := &EG_RunInnerContent{}
 	return ret
 }
+
 func (m *EG_RunInnerContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -223,6 +224,7 @@ func (m *EG_RunInnerContent) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	return nil
 }
+
 func (m *EG_RunInnerContent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_RunInnerContent:
@@ -412,9 +414,13 @@ lEG_RunInnerContent:
 	}
 	return nil
 }
+
+// Validate validates the EG_RunInnerContent and its children
 func (m *EG_RunInnerContent) Validate() error {
 	return m.ValidateWithPath("EG_RunInnerContent")
 }
+
+// ValidateWithPath validates the EG_RunInnerContent and its children, prefixing error messages with path
 func (m *EG_RunInnerContent) ValidateWithPath(path string) error {
 	if m.Br != nil {
 		if err := m.Br.ValidateWithPath(path + "/Br"); err != nil {

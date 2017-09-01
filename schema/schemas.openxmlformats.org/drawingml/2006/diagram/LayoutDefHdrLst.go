@@ -21,6 +21,7 @@ func NewLayoutDefHdrLst() *LayoutDefHdrLst {
 	ret.CT_DiagramDefinitionHeaderLst = *NewCT_DiagramDefinitionHeaderLst()
 	return ret
 }
+
 func (m *LayoutDefHdrLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *LayoutDefHdrLst) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	start.Name.Local = "layoutDefHdrLst"
 	return m.CT_DiagramDefinitionHeaderLst.MarshalXML(e, start)
 }
+
 func (m *LayoutDefHdrLst) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_DiagramDefinitionHeaderLst = *NewCT_DiagramDefinitionHeaderLst()
@@ -64,9 +66,13 @@ lLayoutDefHdrLst:
 	}
 	return nil
 }
+
+// Validate validates the LayoutDefHdrLst and its children
 func (m *LayoutDefHdrLst) Validate() error {
 	return m.ValidateWithPath("LayoutDefHdrLst")
 }
+
+// ValidateWithPath validates the LayoutDefHdrLst and its children, prefixing error messages with path
 func (m *LayoutDefHdrLst) ValidateWithPath(path string) error {
 	if err := m.CT_DiagramDefinitionHeaderLst.ValidateWithPath(path); err != nil {
 		return err

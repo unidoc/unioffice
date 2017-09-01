@@ -79,6 +79,7 @@ func NewCT_Presentation() *CT_Presentation {
 	ret.NotesSz = drawingml.NewCT_PositiveSize2D()
 	return ret
 }
+
 func (m *CT_Presentation) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -196,6 +197,7 @@ func (m *CT_Presentation) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Presentation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.NotesSz = drawingml.NewCT_PositiveSize2D()
@@ -379,9 +381,13 @@ lCT_Presentation:
 	}
 	return nil
 }
+
+// Validate validates the CT_Presentation and its children
 func (m *CT_Presentation) Validate() error {
 	return m.ValidateWithPath("CT_Presentation")
 }
+
+// ValidateWithPath validates the CT_Presentation and its children, prefixing error messages with path
 func (m *CT_Presentation) ValidateWithPath(path string) error {
 	if m.ServerZoomAttr != nil {
 		if err := m.ServerZoomAttr.ValidateWithPath(path + "/ServerZoomAttr"); err != nil {

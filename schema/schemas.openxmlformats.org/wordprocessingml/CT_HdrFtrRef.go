@@ -22,6 +22,7 @@ func NewCT_HdrFtrRef() *CT_HdrFtrRef {
 	ret.TypeAttr = ST_HdrFtr(1)
 	return ret
 }
+
 func (m *CT_HdrFtrRef) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_HdrFtrRef) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_HdrFtrRef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.TypeAttr = ST_HdrFtr(1)
@@ -64,9 +66,13 @@ func (m *CT_HdrFtrRef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	}
 	return nil
 }
+
+// Validate validates the CT_HdrFtrRef and its children
 func (m *CT_HdrFtrRef) Validate() error {
 	return m.ValidateWithPath("CT_HdrFtrRef")
 }
+
+// ValidateWithPath validates the CT_HdrFtrRef and its children, prefixing error messages with path
 func (m *CT_HdrFtrRef) ValidateWithPath(path string) error {
 	if m.TypeAttr == ST_HdrFtrUnset {
 		return fmt.Errorf("%s/TypeAttr is a mandatory field", path)

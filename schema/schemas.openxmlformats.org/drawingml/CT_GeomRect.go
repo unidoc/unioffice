@@ -23,6 +23,7 @@ func NewCT_GeomRect() *CT_GeomRect {
 	ret := &CT_GeomRect{}
 	return ret
 }
+
 func (m *CT_GeomRect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_GeomRect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GeomRect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -83,9 +85,13 @@ func (m *CT_GeomRect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	}
 	return nil
 }
+
+// Validate validates the CT_GeomRect and its children
 func (m *CT_GeomRect) Validate() error {
 	return m.ValidateWithPath("CT_GeomRect")
 }
+
+// ValidateWithPath validates the CT_GeomRect and its children, prefixing error messages with path
 func (m *CT_GeomRect) ValidateWithPath(path string) error {
 	if err := m.LAttr.ValidateWithPath(path + "/LAttr"); err != nil {
 		return err

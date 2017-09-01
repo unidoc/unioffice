@@ -21,6 +21,7 @@ func NewCT_WordprocessingShapeChoice1() *CT_WordprocessingShapeChoice1 {
 	ret := &CT_WordprocessingShapeChoice1{}
 	return ret
 }
+
 func (m *CT_WordprocessingShapeChoice1) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_WordprocessingShapeChoice1) MarshalXML(e *xml.Encoder, start xml.Sta
 	}
 	return nil
 }
+
 func (m *CT_WordprocessingShapeChoice1) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_WordprocessingShapeChoice1:
@@ -69,9 +71,13 @@ lCT_WordprocessingShapeChoice1:
 	}
 	return nil
 }
+
+// Validate validates the CT_WordprocessingShapeChoice1 and its children
 func (m *CT_WordprocessingShapeChoice1) Validate() error {
 	return m.ValidateWithPath("CT_WordprocessingShapeChoice1")
 }
+
+// ValidateWithPath validates the CT_WordprocessingShapeChoice1 and its children, prefixing error messages with path
 func (m *CT_WordprocessingShapeChoice1) ValidateWithPath(path string) error {
 	if m.Txbx != nil {
 		if err := m.Txbx.ValidateWithPath(path + "/Txbx"); err != nil {

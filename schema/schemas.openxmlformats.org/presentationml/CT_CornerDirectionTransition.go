@@ -21,6 +21,7 @@ func NewCT_CornerDirectionTransition() *CT_CornerDirectionTransition {
 	ret := &CT_CornerDirectionTransition{}
 	return ret
 }
+
 func (m *CT_CornerDirectionTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *CT_CornerDirectionTransition) MarshalXML(e *xml.Encoder, start xml.Star
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CornerDirectionTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -55,9 +57,13 @@ func (m *CT_CornerDirectionTransition) UnmarshalXML(d *xml.Decoder, start xml.St
 	}
 	return nil
 }
+
+// Validate validates the CT_CornerDirectionTransition and its children
 func (m *CT_CornerDirectionTransition) Validate() error {
 	return m.ValidateWithPath("CT_CornerDirectionTransition")
 }
+
+// ValidateWithPath validates the CT_CornerDirectionTransition and its children, prefixing error messages with path
 func (m *CT_CornerDirectionTransition) ValidateWithPath(path string) error {
 	if err := m.DirAttr.ValidateWithPath(path + "/DirAttr"); err != nil {
 		return err

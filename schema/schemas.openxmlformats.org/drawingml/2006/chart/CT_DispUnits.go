@@ -22,6 +22,7 @@ func NewCT_DispUnits() *CT_DispUnits {
 	ret := &CT_DispUnits{}
 	return ret
 }
+
 func (m *CT_DispUnits) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_DispUnits) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DispUnits) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_DispUnits:
@@ -87,9 +89,13 @@ lCT_DispUnits:
 	}
 	return nil
 }
+
+// Validate validates the CT_DispUnits and its children
 func (m *CT_DispUnits) Validate() error {
 	return m.ValidateWithPath("CT_DispUnits")
 }
+
+// ValidateWithPath validates the CT_DispUnits and its children, prefixing error messages with path
 func (m *CT_DispUnits) ValidateWithPath(path string) error {
 	if m.Choice != nil {
 		if err := m.Choice.ValidateWithPath(path + "/Choice"); err != nil {

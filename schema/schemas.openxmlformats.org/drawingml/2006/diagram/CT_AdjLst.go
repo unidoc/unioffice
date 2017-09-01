@@ -21,6 +21,7 @@ func NewCT_AdjLst() *CT_AdjLst {
 	ret := &CT_AdjLst{}
 	return ret
 }
+
 func (m *CT_AdjLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_AdjLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_AdjLst) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_AdjLst:
@@ -63,9 +65,13 @@ lCT_AdjLst:
 	}
 	return nil
 }
+
+// Validate validates the CT_AdjLst and its children
 func (m *CT_AdjLst) Validate() error {
 	return m.ValidateWithPath("CT_AdjLst")
 }
+
+// ValidateWithPath validates the CT_AdjLst and its children, prefixing error messages with path
 func (m *CT_AdjLst) ValidateWithPath(path string) error {
 	for i, v := range m.Adj {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Adj[%d]", path, i)); err != nil {

@@ -23,6 +23,7 @@ func NewEG_HdrFtrReferences() *EG_HdrFtrReferences {
 	ret := &EG_HdrFtrReferences{}
 	return ret
 }
+
 func (m *EG_HdrFtrReferences) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *EG_HdrFtrReferences) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	}
 	return nil
 }
+
 func (m *EG_HdrFtrReferences) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_HdrFtrReferences:
@@ -71,9 +73,13 @@ lEG_HdrFtrReferences:
 	}
 	return nil
 }
+
+// Validate validates the EG_HdrFtrReferences and its children
 func (m *EG_HdrFtrReferences) Validate() error {
 	return m.ValidateWithPath("EG_HdrFtrReferences")
 }
+
+// ValidateWithPath validates the EG_HdrFtrReferences and its children, prefixing error messages with path
 func (m *EG_HdrFtrReferences) ValidateWithPath(path string) error {
 	if m.HeaderReference != nil {
 		if err := m.HeaderReference.ValidateWithPath(path + "/HeaderReference"); err != nil {

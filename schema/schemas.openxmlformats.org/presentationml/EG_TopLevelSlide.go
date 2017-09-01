@@ -24,6 +24,7 @@ func NewEG_TopLevelSlide() *EG_TopLevelSlide {
 	ret.ClrMap = drawingml.NewCT_ColorMapping()
 	return ret
 }
+
 func (m *EG_TopLevelSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *EG_TopLevelSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeElement(m.ClrMap, seclrMap)
 	return nil
 }
+
 func (m *EG_TopLevelSlide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ClrMap = drawingml.NewCT_ColorMapping()
@@ -61,9 +63,13 @@ lEG_TopLevelSlide:
 	}
 	return nil
 }
+
+// Validate validates the EG_TopLevelSlide and its children
 func (m *EG_TopLevelSlide) Validate() error {
 	return m.ValidateWithPath("EG_TopLevelSlide")
 }
+
+// ValidateWithPath validates the EG_TopLevelSlide and its children, prefixing error messages with path
 func (m *EG_TopLevelSlide) ValidateWithPath(path string) error {
 	if err := m.ClrMap.ValidateWithPath(path + "/ClrMap"); err != nil {
 		return err

@@ -24,6 +24,7 @@ func NewCT_SdtComboBox() *CT_SdtComboBox {
 	ret := &CT_SdtComboBox{}
 	return ret
 }
+
 func (m *CT_SdtComboBox) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_SdtComboBox) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SdtComboBox) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -79,9 +81,13 @@ lCT_SdtComboBox:
 	}
 	return nil
 }
+
+// Validate validates the CT_SdtComboBox and its children
 func (m *CT_SdtComboBox) Validate() error {
 	return m.ValidateWithPath("CT_SdtComboBox")
 }
+
+// ValidateWithPath validates the CT_SdtComboBox and its children, prefixing error messages with path
 func (m *CT_SdtComboBox) ValidateWithPath(path string) error {
 	for i, v := range m.ListItem {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/ListItem[%d]", path, i)); err != nil {

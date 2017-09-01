@@ -25,6 +25,7 @@ func NewCT_SdtCell() *CT_SdtCell {
 	ret := &CT_SdtCell{}
 	return ret
 }
+
 func (m *CT_SdtCell) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *CT_SdtCell) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SdtCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_SdtCell:
@@ -84,9 +86,13 @@ lCT_SdtCell:
 	}
 	return nil
 }
+
+// Validate validates the CT_SdtCell and its children
 func (m *CT_SdtCell) Validate() error {
 	return m.ValidateWithPath("CT_SdtCell")
 }
+
+// ValidateWithPath validates the CT_SdtCell and its children, prefixing error messages with path
 func (m *CT_SdtCell) ValidateWithPath(path string) error {
 	if m.SdtPr != nil {
 		if err := m.SdtPr.ValidateWithPath(path + "/SdtPr"); err != nil {

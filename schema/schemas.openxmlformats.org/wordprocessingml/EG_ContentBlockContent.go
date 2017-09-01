@@ -31,6 +31,7 @@ func NewEG_ContentBlockContent() *EG_ContentBlockContent {
 	ret := &EG_ContentBlockContent{}
 	return ret
 }
+
 func (m *EG_ContentBlockContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -58,6 +59,7 @@ func (m *EG_ContentBlockContent) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	return nil
 }
+
 func (m *EG_ContentBlockContent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ContentBlockContent:
@@ -315,9 +317,13 @@ lEG_ContentBlockContent:
 	}
 	return nil
 }
+
+// Validate validates the EG_ContentBlockContent and its children
 func (m *EG_ContentBlockContent) Validate() error {
 	return m.ValidateWithPath("EG_ContentBlockContent")
 }
+
+// ValidateWithPath validates the EG_ContentBlockContent and its children, prefixing error messages with path
 func (m *EG_ContentBlockContent) ValidateWithPath(path string) error {
 	if m.CustomXml != nil {
 		if err := m.CustomXml.ValidateWithPath(path + "/CustomXml"); err != nil {

@@ -20,6 +20,7 @@ type ST_SecondPieSize struct {
 func (m *ST_SecondPieSize) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_SecondPieSize) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_SecondPieSizePercent != nil {
@@ -33,6 +34,7 @@ func (m *ST_SecondPieSize) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_SecondPieSize) String() string {
 	if m.ST_SecondPieSizePercent != nil {
 		return fmt.Sprintf("%v", *m.ST_SecondPieSizePercent)

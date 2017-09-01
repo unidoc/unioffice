@@ -25,6 +25,7 @@ func NewEG_ContentRunContentBase() *EG_ContentRunContentBase {
 	ret := &EG_ContentRunContentBase{}
 	return ret
 }
+
 func (m *EG_ContentRunContentBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -44,6 +45,7 @@ func (m *EG_ContentRunContentBase) MarshalXML(e *xml.Encoder, start xml.StartEle
 	}
 	return nil
 }
+
 func (m *EG_ContentRunContentBase) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ContentRunContentBase:
@@ -289,9 +291,13 @@ lEG_ContentRunContentBase:
 	}
 	return nil
 }
+
+// Validate validates the EG_ContentRunContentBase and its children
 func (m *EG_ContentRunContentBase) Validate() error {
 	return m.ValidateWithPath("EG_ContentRunContentBase")
 }
+
+// ValidateWithPath validates the EG_ContentRunContentBase and its children, prefixing error messages with path
 func (m *EG_ContentRunContentBase) ValidateWithPath(path string) error {
 	if m.SmartTag != nil {
 		if err := m.SmartTag.ValidateWithPath(path + "/SmartTag"); err != nil {

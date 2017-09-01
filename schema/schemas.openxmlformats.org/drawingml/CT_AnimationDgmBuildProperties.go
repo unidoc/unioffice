@@ -22,6 +22,7 @@ func NewCT_AnimationDgmBuildProperties() *CT_AnimationDgmBuildProperties {
 	ret := &CT_AnimationDgmBuildProperties{}
 	return ret
 }
+
 func (m *CT_AnimationDgmBuildProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *CT_AnimationDgmBuildProperties) MarshalXML(e *xml.Encoder, start xml.St
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_AnimationDgmBuildProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -68,9 +70,13 @@ func (m *CT_AnimationDgmBuildProperties) UnmarshalXML(d *xml.Decoder, start xml.
 	}
 	return nil
 }
+
+// Validate validates the CT_AnimationDgmBuildProperties and its children
 func (m *CT_AnimationDgmBuildProperties) Validate() error {
 	return m.ValidateWithPath("CT_AnimationDgmBuildProperties")
 }
+
+// ValidateWithPath validates the CT_AnimationDgmBuildProperties and its children, prefixing error messages with path
 func (m *CT_AnimationDgmBuildProperties) ValidateWithPath(path string) error {
 	if m.BldAttr != nil {
 		if err := m.BldAttr.ValidateWithPath(path + "/BldAttr"); err != nil {

@@ -36,6 +36,7 @@ func NewCT_CustomChartsheetView() *CT_CustomChartsheetView {
 	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
+
 func (m *CT_CustomChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -73,6 +74,7 @@ func (m *CT_CustomChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElem
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CustomChartsheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
@@ -140,9 +142,13 @@ lCT_CustomChartsheetView:
 	}
 	return nil
 }
+
+// Validate validates the CT_CustomChartsheetView and its children
 func (m *CT_CustomChartsheetView) Validate() error {
 	return m.ValidateWithPath("CT_CustomChartsheetView")
 }
+
+// ValidateWithPath validates the CT_CustomChartsheetView and its children, prefixing error messages with path
 func (m *CT_CustomChartsheetView) ValidateWithPath(path string) error {
 	if !sharedTypes.ST_GuidPatternRe.MatchString(m.GuidAttr) {
 		return fmt.Errorf(`%s/m.GuidAttr must match '%s' (have %v)`, path, sharedTypes.ST_GuidPatternRe, m.GuidAttr)

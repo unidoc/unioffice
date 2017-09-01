@@ -19,6 +19,7 @@ func NewURI() *URI {
 	ret := &URI{}
 	return ret
 }
+
 func (m *URI) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -28,6 +29,7 @@ func (m *URI) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *URI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -42,9 +44,13 @@ func (m *URI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the URI and its children
 func (m *URI) Validate() error {
 	return m.ValidateWithPath("URI")
 }
+
+// ValidateWithPath validates the URI and its children, prefixing error messages with path
 func (m *URI) ValidateWithPath(path string) error {
 	return nil
 }

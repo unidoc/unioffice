@@ -24,6 +24,7 @@ func NewColorsDefHdr() *ColorsDefHdr {
 	ret.CT_ColorTransformHeader = *NewCT_ColorTransformHeader()
 	return ret
 }
+
 func (m *ColorsDefHdr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *ColorsDefHdr) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	start.Name.Local = "colorsDefHdr"
 	return m.CT_ColorTransformHeader.MarshalXML(e, start)
 }
+
 func (m *ColorsDefHdr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_ColorTransformHeader = *NewCT_ColorTransformHeader()
@@ -107,9 +109,13 @@ lColorsDefHdr:
 	}
 	return nil
 }
+
+// Validate validates the ColorsDefHdr and its children
 func (m *ColorsDefHdr) Validate() error {
 	return m.ValidateWithPath("ColorsDefHdr")
 }
+
+// ValidateWithPath validates the ColorsDefHdr and its children, prefixing error messages with path
 func (m *ColorsDefHdr) ValidateWithPath(path string) error {
 	if err := m.CT_ColorTransformHeader.ValidateWithPath(path); err != nil {
 		return err

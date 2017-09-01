@@ -27,6 +27,7 @@ func NewCT_ExternalSheetData() *CT_ExternalSheetData {
 	ret := &CT_ExternalSheetData{}
 	return ret
 }
+
 func (m *CT_ExternalSheetData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -45,6 +46,7 @@ func (m *CT_ExternalSheetData) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ExternalSheetData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -91,9 +93,13 @@ lCT_ExternalSheetData:
 	}
 	return nil
 }
+
+// Validate validates the CT_ExternalSheetData and its children
 func (m *CT_ExternalSheetData) Validate() error {
 	return m.ValidateWithPath("CT_ExternalSheetData")
 }
+
+// ValidateWithPath validates the CT_ExternalSheetData and its children, prefixing error messages with path
 func (m *CT_ExternalSheetData) ValidateWithPath(path string) error {
 	for i, v := range m.Row {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Row[%d]", path, i)); err != nil {

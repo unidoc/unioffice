@@ -21,6 +21,7 @@ func NewWebSettings() *WebSettings {
 	ret.CT_WebSettings = *NewCT_WebSettings()
 	return ret
 }
+
 func (m *WebSettings) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -38,6 +39,7 @@ func (m *WebSettings) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "w:webSettings"
 	return m.CT_WebSettings.MarshalXML(e, start)
 }
+
 func (m *WebSettings) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_WebSettings = *NewCT_WebSettings()
@@ -128,9 +130,13 @@ lWebSettings:
 	}
 	return nil
 }
+
+// Validate validates the WebSettings and its children
 func (m *WebSettings) Validate() error {
 	return m.ValidateWithPath("WebSettings")
 }
+
+// ValidateWithPath validates the WebSettings and its children, prefixing error messages with path
 func (m *WebSettings) ValidateWithPath(path string) error {
 	if err := m.CT_WebSettings.ValidateWithPath(path); err != nil {
 		return err

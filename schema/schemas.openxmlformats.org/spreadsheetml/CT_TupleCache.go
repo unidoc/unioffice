@@ -29,6 +29,7 @@ func NewCT_TupleCache() *CT_TupleCache {
 	ret := &CT_TupleCache{}
 	return ret
 }
+
 func (m *CT_TupleCache) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -57,6 +58,7 @@ func (m *CT_TupleCache) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TupleCache) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TupleCache:
@@ -106,9 +108,13 @@ lCT_TupleCache:
 	}
 	return nil
 }
+
+// Validate validates the CT_TupleCache and its children
 func (m *CT_TupleCache) Validate() error {
 	return m.ValidateWithPath("CT_TupleCache")
 }
+
+// ValidateWithPath validates the CT_TupleCache and its children, prefixing error messages with path
 func (m *CT_TupleCache) ValidateWithPath(path string) error {
 	if m.Entries != nil {
 		if err := m.Entries.ValidateWithPath(path + "/Entries"); err != nil {

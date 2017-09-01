@@ -29,6 +29,7 @@ func NewCT_TextField() *CT_TextField {
 	ret.IdAttr = "{00000000-0000-0000-0000-000000000000}"
 	return ret
 }
+
 func (m *CT_TextField) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -56,6 +57,7 @@ func (m *CT_TextField) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TextField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.IdAttr = "{00000000-0000-0000-0000-000000000000}"
@@ -112,9 +114,13 @@ lCT_TextField:
 	}
 	return nil
 }
+
+// Validate validates the CT_TextField and its children
 func (m *CT_TextField) Validate() error {
 	return m.ValidateWithPath("CT_TextField")
 }
+
+// ValidateWithPath validates the CT_TextField and its children, prefixing error messages with path
 func (m *CT_TextField) ValidateWithPath(path string) error {
 	if !sharedTypes.ST_GuidPatternRe.MatchString(m.IdAttr) {
 		return fmt.Errorf(`%s/m.IdAttr must match '%s' (have %v)`, path, sharedTypes.ST_GuidPatternRe, m.IdAttr)

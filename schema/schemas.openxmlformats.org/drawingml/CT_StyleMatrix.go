@@ -29,6 +29,7 @@ func NewCT_StyleMatrix() *CT_StyleMatrix {
 	ret.BgFillStyleLst = NewCT_BackgroundFillStyleList()
 	return ret
 }
+
 func (m *CT_StyleMatrix) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -49,6 +50,7 @@ func (m *CT_StyleMatrix) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_StyleMatrix) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.FillStyleLst = NewCT_FillStyleList()
@@ -102,9 +104,13 @@ lCT_StyleMatrix:
 	}
 	return nil
 }
+
+// Validate validates the CT_StyleMatrix and its children
 func (m *CT_StyleMatrix) Validate() error {
 	return m.ValidateWithPath("CT_StyleMatrix")
 }
+
+// ValidateWithPath validates the CT_StyleMatrix and its children, prefixing error messages with path
 func (m *CT_StyleMatrix) ValidateWithPath(path string) error {
 	if err := m.FillStyleLst.ValidateWithPath(path + "/FillStyleLst"); err != nil {
 		return err

@@ -49,6 +49,7 @@ func NewEG_Effect() *EG_Effect {
 	ret := &EG_Effect{}
 	return ret
 }
+
 func (m *EG_Effect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -175,6 +176,7 @@ func (m *EG_Effect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
 func (m *EG_Effect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_Effect:
@@ -349,9 +351,13 @@ lEG_Effect:
 	}
 	return nil
 }
+
+// Validate validates the EG_Effect and its children
 func (m *EG_Effect) Validate() error {
 	return m.ValidateWithPath("EG_Effect")
 }
+
+// ValidateWithPath validates the EG_Effect and its children, prefixing error messages with path
 func (m *EG_Effect) ValidateWithPath(path string) error {
 	if m.Cont != nil {
 		if err := m.Cont.ValidateWithPath(path + "/Cont"); err != nil {

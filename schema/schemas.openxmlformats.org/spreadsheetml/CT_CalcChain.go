@@ -23,6 +23,7 @@ func NewCT_CalcChain() *CT_CalcChain {
 	ret := &CT_CalcChain{}
 	return ret
 }
+
 func (m *CT_CalcChain) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_CalcChain) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CalcChain) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_CalcChain:
@@ -72,9 +74,13 @@ lCT_CalcChain:
 	}
 	return nil
 }
+
+// Validate validates the CT_CalcChain and its children
 func (m *CT_CalcChain) Validate() error {
 	return m.ValidateWithPath("CT_CalcChain")
 }
+
+// ValidateWithPath validates the CT_CalcChain and its children, prefixing error messages with path
 func (m *CT_CalcChain) ValidateWithPath(path string) error {
 	for i, v := range m.C {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/C[%d]", path, i)); err != nil {

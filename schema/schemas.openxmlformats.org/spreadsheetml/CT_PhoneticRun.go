@@ -29,6 +29,7 @@ func NewCT_PhoneticRun() *CT_PhoneticRun {
 	ret := &CT_PhoneticRun{}
 	return ret
 }
+
 func (m *CT_PhoneticRun) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -44,6 +45,7 @@ func (m *CT_PhoneticRun) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PhoneticRun) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -88,9 +90,13 @@ lCT_PhoneticRun:
 	}
 	return nil
 }
+
+// Validate validates the CT_PhoneticRun and its children
 func (m *CT_PhoneticRun) Validate() error {
 	return m.ValidateWithPath("CT_PhoneticRun")
 }
+
+// ValidateWithPath validates the CT_PhoneticRun and its children, prefixing error messages with path
 func (m *CT_PhoneticRun) ValidateWithPath(path string) error {
 	return nil
 }

@@ -29,6 +29,7 @@ func NewCT_CustomXmlCell() *CT_CustomXmlCell {
 	ret := &CT_CustomXmlCell{}
 	return ret
 }
+
 func (m *CT_CustomXmlCell) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -52,6 +53,7 @@ func (m *CT_CustomXmlCell) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CustomXmlCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -380,9 +382,13 @@ lCT_CustomXmlCell:
 	}
 	return nil
 }
+
+// Validate validates the CT_CustomXmlCell and its children
 func (m *CT_CustomXmlCell) Validate() error {
 	return m.ValidateWithPath("CT_CustomXmlCell")
 }
+
+// ValidateWithPath validates the CT_CustomXmlCell and its children, prefixing error messages with path
 func (m *CT_CustomXmlCell) ValidateWithPath(path string) error {
 	if m.CustomXmlPr != nil {
 		if err := m.CustomXmlPr.ValidateWithPath(path + "/CustomXmlPr"); err != nil {

@@ -22,6 +22,7 @@ func NewCT_ExternalReferences() *CT_ExternalReferences {
 	ret := &CT_ExternalReferences{}
 	return ret
 }
+
 func (m *CT_ExternalReferences) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_ExternalReferences) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ExternalReferences) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_ExternalReferences:
@@ -62,9 +64,13 @@ lCT_ExternalReferences:
 	}
 	return nil
 }
+
+// Validate validates the CT_ExternalReferences and its children
 func (m *CT_ExternalReferences) Validate() error {
 	return m.ValidateWithPath("CT_ExternalReferences")
 }
+
+// ValidateWithPath validates the CT_ExternalReferences and its children, prefixing error messages with path
 func (m *CT_ExternalReferences) ValidateWithPath(path string) error {
 	for i, v := range m.ExternalReference {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/ExternalReference[%d]", path, i)); err != nil {

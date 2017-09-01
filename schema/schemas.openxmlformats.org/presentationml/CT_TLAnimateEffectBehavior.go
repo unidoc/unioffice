@@ -30,6 +30,7 @@ func NewCT_TLAnimateEffectBehavior() *CT_TLAnimateEffectBehavior {
 	ret.CBhvr = NewCT_TLCommonBehaviorData()
 	return ret
 }
+
 func (m *CT_TLAnimateEffectBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -59,6 +60,7 @@ func (m *CT_TLAnimateEffectBehavior) MarshalXML(e *xml.Encoder, start xml.StartE
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLAnimateEffectBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CBhvr = NewCT_TLCommonBehaviorData()
@@ -112,9 +114,13 @@ lCT_TLAnimateEffectBehavior:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLAnimateEffectBehavior and its children
 func (m *CT_TLAnimateEffectBehavior) Validate() error {
 	return m.ValidateWithPath("CT_TLAnimateEffectBehavior")
 }
+
+// ValidateWithPath validates the CT_TLAnimateEffectBehavior and its children, prefixing error messages with path
 func (m *CT_TLAnimateEffectBehavior) ValidateWithPath(path string) error {
 	if err := m.TransitionAttr.ValidateWithPath(path + "/TransitionAttr"); err != nil {
 		return err

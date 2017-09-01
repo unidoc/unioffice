@@ -26,6 +26,7 @@ func NewCT_TrackChangeNumbering() *CT_TrackChangeNumbering {
 	ret := &CT_TrackChangeNumbering{}
 	return ret
 }
+
 func (m *CT_TrackChangeNumbering) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -46,6 +47,7 @@ func (m *CT_TrackChangeNumbering) MarshalXML(e *xml.Encoder, start xml.StartElem
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TrackChangeNumbering) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -90,9 +92,13 @@ func (m *CT_TrackChangeNumbering) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 	}
 	return nil
 }
+
+// Validate validates the CT_TrackChangeNumbering and its children
 func (m *CT_TrackChangeNumbering) Validate() error {
 	return m.ValidateWithPath("CT_TrackChangeNumbering")
 }
+
+// ValidateWithPath validates the CT_TrackChangeNumbering and its children, prefixing error messages with path
 func (m *CT_TrackChangeNumbering) ValidateWithPath(path string) error {
 	return nil
 }

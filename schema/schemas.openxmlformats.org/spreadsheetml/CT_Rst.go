@@ -30,6 +30,7 @@ func NewCT_Rst() *CT_Rst {
 	ret := &CT_Rst{}
 	return ret
 }
+
 func (m *CT_Rst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -55,6 +56,7 @@ func (m *CT_Rst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Rst) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_Rst:
@@ -101,9 +103,13 @@ lCT_Rst:
 	}
 	return nil
 }
+
+// Validate validates the CT_Rst and its children
 func (m *CT_Rst) Validate() error {
 	return m.ValidateWithPath("CT_Rst")
 }
+
+// ValidateWithPath validates the CT_Rst and its children, prefixing error messages with path
 func (m *CT_Rst) ValidateWithPath(path string) error {
 	for i, v := range m.R {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/R[%d]", path, i)); err != nil {

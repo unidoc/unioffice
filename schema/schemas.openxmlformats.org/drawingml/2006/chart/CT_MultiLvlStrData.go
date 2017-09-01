@@ -23,6 +23,7 @@ func NewCT_MultiLvlStrData() *CT_MultiLvlStrData {
 	ret := &CT_MultiLvlStrData{}
 	return ret
 }
+
 func (m *CT_MultiLvlStrData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -43,6 +44,7 @@ func (m *CT_MultiLvlStrData) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MultiLvlStrData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_MultiLvlStrData:
@@ -83,9 +85,13 @@ lCT_MultiLvlStrData:
 	}
 	return nil
 }
+
+// Validate validates the CT_MultiLvlStrData and its children
 func (m *CT_MultiLvlStrData) Validate() error {
 	return m.ValidateWithPath("CT_MultiLvlStrData")
 }
+
+// ValidateWithPath validates the CT_MultiLvlStrData and its children, prefixing error messages with path
 func (m *CT_MultiLvlStrData) ValidateWithPath(path string) error {
 	if m.PtCount != nil {
 		if err := m.PtCount.ValidateWithPath(path + "/PtCount"); err != nil {

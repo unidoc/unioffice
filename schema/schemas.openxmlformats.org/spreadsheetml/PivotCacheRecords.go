@@ -22,6 +22,7 @@ func NewPivotCacheRecords() *PivotCacheRecords {
 	ret.CT_PivotCacheRecords = *NewCT_PivotCacheRecords()
 	return ret
 }
+
 func (m *PivotCacheRecords) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *PivotCacheRecords) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	start.Name.Local = "x:pivotCacheRecords"
 	return m.CT_PivotCacheRecords.MarshalXML(e, start)
 }
+
 func (m *PivotCacheRecords) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_PivotCacheRecords = *NewCT_PivotCacheRecords()
@@ -81,9 +83,13 @@ lPivotCacheRecords:
 	}
 	return nil
 }
+
+// Validate validates the PivotCacheRecords and its children
 func (m *PivotCacheRecords) Validate() error {
 	return m.ValidateWithPath("PivotCacheRecords")
 }
+
+// ValidateWithPath validates the PivotCacheRecords and its children, prefixing error messages with path
 func (m *PivotCacheRecords) ValidateWithPath(path string) error {
 	if err := m.CT_PivotCacheRecords.ValidateWithPath(path); err != nil {
 		return err

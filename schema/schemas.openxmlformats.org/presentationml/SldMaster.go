@@ -22,6 +22,7 @@ func NewSldMaster() *SldMaster {
 	ret.CT_SlideMaster = *NewCT_SlideMaster()
 	return ret
 }
+
 func (m *SldMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *SldMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "p:sldMaster"
 	return m.CT_SlideMaster.MarshalXML(e, start)
 }
+
 func (m *SldMaster) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_SlideMaster = *NewCT_SlideMaster()
@@ -107,9 +109,13 @@ lSldMaster:
 	}
 	return nil
 }
+
+// Validate validates the SldMaster and its children
 func (m *SldMaster) Validate() error {
 	return m.ValidateWithPath("SldMaster")
 }
+
+// ValidateWithPath validates the SldMaster and its children, prefixing error messages with path
 func (m *SldMaster) ValidateWithPath(path string) error {
 	if err := m.CT_SlideMaster.ValidateWithPath(path); err != nil {
 		return err

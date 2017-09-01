@@ -27,6 +27,7 @@ func NewCT_Sheet() *CT_Sheet {
 	ret := &CT_Sheet{}
 	return ret
 }
+
 func (m *CT_Sheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -48,6 +49,7 @@ func (m *CT_Sheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Sheet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -88,9 +90,13 @@ func (m *CT_Sheet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_Sheet and its children
 func (m *CT_Sheet) Validate() error {
 	return m.ValidateWithPath("CT_Sheet")
 }
+
+// ValidateWithPath validates the CT_Sheet and its children, prefixing error messages with path
 func (m *CT_Sheet) ValidateWithPath(path string) error {
 	if err := m.StateAttr.ValidateWithPath(path + "/StateAttr"); err != nil {
 		return err

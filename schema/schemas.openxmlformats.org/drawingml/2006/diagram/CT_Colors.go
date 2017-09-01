@@ -25,6 +25,7 @@ func NewCT_Colors() *CT_Colors {
 	ret := &CT_Colors{}
 	return ret
 }
+
 func (m *CT_Colors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -52,6 +53,7 @@ func (m *CT_Colors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Colors) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -84,9 +86,13 @@ lCT_Colors:
 	}
 	return nil
 }
+
+// Validate validates the CT_Colors and its children
 func (m *CT_Colors) Validate() error {
 	return m.ValidateWithPath("CT_Colors")
 }
+
+// ValidateWithPath validates the CT_Colors and its children, prefixing error messages with path
 func (m *CT_Colors) ValidateWithPath(path string) error {
 	if err := m.MethAttr.ValidateWithPath(path + "/MethAttr"); err != nil {
 		return err

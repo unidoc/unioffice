@@ -26,6 +26,7 @@ func NewCT_GvmlShape() *CT_GvmlShape {
 	ret.SpPr = NewCT_ShapeProperties()
 	return ret
 }
+
 func (m *CT_GvmlShape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -50,6 +51,7 @@ func (m *CT_GvmlShape) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GvmlShape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.NvSpPr = NewCT_GvmlShapeNonVisual()
@@ -99,9 +101,13 @@ lCT_GvmlShape:
 	}
 	return nil
 }
+
+// Validate validates the CT_GvmlShape and its children
 func (m *CT_GvmlShape) Validate() error {
 	return m.ValidateWithPath("CT_GvmlShape")
 }
+
+// ValidateWithPath validates the CT_GvmlShape and its children, prefixing error messages with path
 func (m *CT_GvmlShape) ValidateWithPath(path string) error {
 	if err := m.NvSpPr.ValidateWithPath(path + "/NvSpPr"); err != nil {
 		return err

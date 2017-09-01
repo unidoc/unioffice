@@ -21,6 +21,7 @@ func NewCT_ShapeDefaults() *CT_ShapeDefaults {
 	ret := &CT_ShapeDefaults{}
 	return ret
 }
+
 func (m *CT_ShapeDefaults) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_ShapeDefaults) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ShapeDefaults) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_ShapeDefaults:
@@ -62,9 +64,13 @@ lCT_ShapeDefaults:
 	}
 	return nil
 }
+
+// Validate validates the CT_ShapeDefaults and its children
 func (m *CT_ShapeDefaults) Validate() error {
 	return m.ValidateWithPath("CT_ShapeDefaults")
 }
+
+// ValidateWithPath validates the CT_ShapeDefaults and its children, prefixing error messages with path
 func (m *CT_ShapeDefaults) ValidateWithPath(path string) error {
 	return nil
 }

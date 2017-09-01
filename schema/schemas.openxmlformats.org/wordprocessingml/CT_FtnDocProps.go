@@ -29,6 +29,7 @@ func NewCT_FtnDocProps() *CT_FtnDocProps {
 	ret := &CT_FtnDocProps{}
 	return ret
 }
+
 func (m *CT_FtnDocProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -57,6 +58,7 @@ func (m *CT_FtnDocProps) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_FtnDocProps) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_FtnDocProps:
@@ -107,9 +109,13 @@ lCT_FtnDocProps:
 	}
 	return nil
 }
+
+// Validate validates the CT_FtnDocProps and its children
 func (m *CT_FtnDocProps) Validate() error {
 	return m.ValidateWithPath("CT_FtnDocProps")
 }
+
+// ValidateWithPath validates the CT_FtnDocProps and its children, prefixing error messages with path
 func (m *CT_FtnDocProps) ValidateWithPath(path string) error {
 	if m.Pos != nil {
 		if err := m.Pos.ValidateWithPath(path + "/Pos"); err != nil {

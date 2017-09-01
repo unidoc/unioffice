@@ -22,6 +22,7 @@ func NewCT_DocVars() *CT_DocVars {
 	ret := &CT_DocVars{}
 	return ret
 }
+
 func (m *CT_DocVars) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -34,6 +35,7 @@ func (m *CT_DocVars) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DocVars) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_DocVars:
@@ -64,9 +66,13 @@ lCT_DocVars:
 	}
 	return nil
 }
+
+// Validate validates the CT_DocVars and its children
 func (m *CT_DocVars) Validate() error {
 	return m.ValidateWithPath("CT_DocVars")
 }
+
+// ValidateWithPath validates the CT_DocVars and its children, prefixing error messages with path
 func (m *CT_DocVars) ValidateWithPath(path string) error {
 	for i, v := range m.DocVar {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/DocVar[%d]", path, i)); err != nil {

@@ -23,6 +23,7 @@ func NewCT_ConnectionSite() *CT_ConnectionSite {
 	ret.Pos = NewCT_AdjPoint2D()
 	return ret
 }
+
 func (m *CT_ConnectionSite) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_ConnectionSite) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ConnectionSite) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Pos = NewCT_AdjPoint2D()
@@ -73,9 +75,13 @@ lCT_ConnectionSite:
 	}
 	return nil
 }
+
+// Validate validates the CT_ConnectionSite and its children
 func (m *CT_ConnectionSite) Validate() error {
 	return m.ValidateWithPath("CT_ConnectionSite")
 }
+
+// ValidateWithPath validates the CT_ConnectionSite and its children, prefixing error messages with path
 func (m *CT_ConnectionSite) ValidateWithPath(path string) error {
 	if err := m.AngAttr.ValidateWithPath(path + "/AngAttr"); err != nil {
 		return err

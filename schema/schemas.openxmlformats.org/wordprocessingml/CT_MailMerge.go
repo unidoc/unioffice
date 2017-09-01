@@ -53,6 +53,7 @@ func NewCT_MailMerge() *CT_MailMerge {
 	ret.DataType = NewCT_MailMergeDataType()
 	return ret
 }
+
 func (m *CT_MailMerge) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -121,6 +122,7 @@ func (m *CT_MailMerge) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_MailMerge) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.MainDocumentType = NewCT_MailMergeDocType()
@@ -225,9 +227,13 @@ lCT_MailMerge:
 	}
 	return nil
 }
+
+// Validate validates the CT_MailMerge and its children
 func (m *CT_MailMerge) Validate() error {
 	return m.ValidateWithPath("CT_MailMerge")
 }
+
+// ValidateWithPath validates the CT_MailMerge and its children, prefixing error messages with path
 func (m *CT_MailMerge) ValidateWithPath(path string) error {
 	if err := m.MainDocumentType.ValidateWithPath(path + "/MainDocumentType"); err != nil {
 		return err

@@ -22,6 +22,7 @@ func NewCT_AxisUnit() *CT_AxisUnit {
 	ret.ValAttr = 0 + 1
 	return ret
 }
+
 func (m *CT_AxisUnit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_AxisUnit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_AxisUnit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = 0 + 1
@@ -56,9 +58,13 @@ func (m *CT_AxisUnit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	}
 	return nil
 }
+
+// Validate validates the CT_AxisUnit and its children
 func (m *CT_AxisUnit) Validate() error {
 	return m.ValidateWithPath("CT_AxisUnit")
 }
+
+// ValidateWithPath validates the CT_AxisUnit and its children, prefixing error messages with path
 func (m *CT_AxisUnit) ValidateWithPath(path string) error {
 	if m.ValAttr <= 0 {
 		return fmt.Errorf("%s/m.ValAttr must be > 0 (have %v)", path, m.ValAttr)

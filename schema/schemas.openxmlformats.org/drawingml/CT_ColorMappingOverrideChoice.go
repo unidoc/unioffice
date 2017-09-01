@@ -21,6 +21,7 @@ func NewCT_ColorMappingOverrideChoice() *CT_ColorMappingOverrideChoice {
 	ret := &CT_ColorMappingOverrideChoice{}
 	return ret
 }
+
 func (m *CT_ColorMappingOverrideChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_ColorMappingOverrideChoice) MarshalXML(e *xml.Encoder, start xml.Sta
 	}
 	return nil
 }
+
 func (m *CT_ColorMappingOverrideChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_ColorMappingOverrideChoice:
@@ -69,9 +71,13 @@ lCT_ColorMappingOverrideChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_ColorMappingOverrideChoice and its children
 func (m *CT_ColorMappingOverrideChoice) Validate() error {
 	return m.ValidateWithPath("CT_ColorMappingOverrideChoice")
 }
+
+// ValidateWithPath validates the CT_ColorMappingOverrideChoice and its children, prefixing error messages with path
 func (m *CT_ColorMappingOverrideChoice) ValidateWithPath(path string) error {
 	if m.MasterClrMapping != nil {
 		if err := m.MasterClrMapping.ValidateWithPath(path + "/MasterClrMapping"); err != nil {

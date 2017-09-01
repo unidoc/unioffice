@@ -21,6 +21,7 @@ func NewCT_TLBehaviorAttributeNameList() *CT_TLBehaviorAttributeNameList {
 	ret := &CT_TLBehaviorAttributeNameList{}
 	return ret
 }
+
 func (m *CT_TLBehaviorAttributeNameList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *CT_TLBehaviorAttributeNameList) MarshalXML(e *xml.Encoder, start xml.St
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLBehaviorAttributeNameList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TLBehaviorAttributeNameList:
@@ -61,9 +63,13 @@ lCT_TLBehaviorAttributeNameList:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLBehaviorAttributeNameList and its children
 func (m *CT_TLBehaviorAttributeNameList) Validate() error {
 	return m.ValidateWithPath("CT_TLBehaviorAttributeNameList")
 }
+
+// ValidateWithPath validates the CT_TLBehaviorAttributeNameList and its children, prefixing error messages with path
 func (m *CT_TLBehaviorAttributeNameList) ValidateWithPath(path string) error {
 	return nil
 }

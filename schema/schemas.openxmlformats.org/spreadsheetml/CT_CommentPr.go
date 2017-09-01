@@ -47,6 +47,7 @@ func NewCT_CommentPr() *CT_CommentPr {
 	ret.Anchor = NewCT_ObjectAnchor()
 	return ret
 }
+
 func (m *CT_CommentPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -111,6 +112,7 @@ func (m *CT_CommentPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CommentPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Anchor = NewCT_ObjectAnchor()
@@ -218,9 +220,13 @@ lCT_CommentPr:
 	}
 	return nil
 }
+
+// Validate validates the CT_CommentPr and its children
 func (m *CT_CommentPr) Validate() error {
 	return m.ValidateWithPath("CT_CommentPr")
 }
+
+// ValidateWithPath validates the CT_CommentPr and its children, prefixing error messages with path
 func (m *CT_CommentPr) ValidateWithPath(path string) error {
 	if err := m.TextHAlignAttr.ValidateWithPath(path + "/TextHAlignAttr"); err != nil {
 		return err

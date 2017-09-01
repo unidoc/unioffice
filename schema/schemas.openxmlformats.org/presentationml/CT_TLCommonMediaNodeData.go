@@ -36,6 +36,7 @@ func NewCT_TLCommonMediaNodeData() *CT_TLCommonMediaNodeData {
 	ret.TgtEl = NewCT_TLTimeTargetElement()
 	return ret
 }
+
 func (m *CT_TLCommonMediaNodeData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -64,6 +65,7 @@ func (m *CT_TLCommonMediaNodeData) MarshalXML(e *xml.Encoder, start xml.StartEle
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLCommonMediaNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CTn = NewCT_TLCommonTimeNodeData()
@@ -129,9 +131,13 @@ lCT_TLCommonMediaNodeData:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLCommonMediaNodeData and its children
 func (m *CT_TLCommonMediaNodeData) Validate() error {
 	return m.ValidateWithPath("CT_TLCommonMediaNodeData")
 }
+
+// ValidateWithPath validates the CT_TLCommonMediaNodeData and its children, prefixing error messages with path
 func (m *CT_TLCommonMediaNodeData) ValidateWithPath(path string) error {
 	if m.VolAttr != nil {
 		if err := m.VolAttr.ValidateWithPath(path + "/VolAttr"); err != nil {

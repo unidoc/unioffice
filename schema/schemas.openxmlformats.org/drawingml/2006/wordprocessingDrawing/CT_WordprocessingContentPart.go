@@ -27,6 +27,7 @@ func NewCT_WordprocessingContentPart() *CT_WordprocessingContentPart {
 	ret := &CT_WordprocessingContentPart{}
 	return ret
 }
+
 func (m *CT_WordprocessingContentPart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -56,6 +57,7 @@ func (m *CT_WordprocessingContentPart) MarshalXML(e *xml.Encoder, start xml.Star
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_WordprocessingContentPart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -107,9 +109,13 @@ lCT_WordprocessingContentPart:
 	}
 	return nil
 }
+
+// Validate validates the CT_WordprocessingContentPart and its children
 func (m *CT_WordprocessingContentPart) Validate() error {
 	return m.ValidateWithPath("CT_WordprocessingContentPart")
 }
+
+// ValidateWithPath validates the CT_WordprocessingContentPart and its children, prefixing error messages with path
 func (m *CT_WordprocessingContentPart) ValidateWithPath(path string) error {
 	if err := m.BwModeAttr.ValidateWithPath(path + "/BwModeAttr"); err != nil {
 		return err

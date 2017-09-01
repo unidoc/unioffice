@@ -24,6 +24,7 @@ func NewCT_CustomXmlPr() *CT_CustomXmlPr {
 	ret := &CT_CustomXmlPr{}
 	return ret
 }
+
 func (m *CT_CustomXmlPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_CustomXmlPr) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_CustomXmlPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_CustomXmlPr:
@@ -75,9 +77,13 @@ lCT_CustomXmlPr:
 	}
 	return nil
 }
+
+// Validate validates the CT_CustomXmlPr and its children
 func (m *CT_CustomXmlPr) Validate() error {
 	return m.ValidateWithPath("CT_CustomXmlPr")
 }
+
+// ValidateWithPath validates the CT_CustomXmlPr and its children, prefixing error messages with path
 func (m *CT_CustomXmlPr) ValidateWithPath(path string) error {
 	if m.Placeholder != nil {
 		if err := m.Placeholder.ValidateWithPath(path + "/Placeholder"); err != nil {

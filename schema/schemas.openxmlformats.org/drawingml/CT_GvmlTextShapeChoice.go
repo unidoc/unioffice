@@ -21,6 +21,7 @@ func NewCT_GvmlTextShapeChoice() *CT_GvmlTextShapeChoice {
 	ret := &CT_GvmlTextShapeChoice{}
 	return ret
 }
+
 func (m *CT_GvmlTextShapeChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *CT_GvmlTextShapeChoice) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	return nil
 }
+
 func (m *CT_GvmlTextShapeChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_GvmlTextShapeChoice:
@@ -69,9 +71,13 @@ lCT_GvmlTextShapeChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_GvmlTextShapeChoice and its children
 func (m *CT_GvmlTextShapeChoice) Validate() error {
 	return m.ValidateWithPath("CT_GvmlTextShapeChoice")
 }
+
+// ValidateWithPath validates the CT_GvmlTextShapeChoice and its children, prefixing error messages with path
 func (m *CT_GvmlTextShapeChoice) ValidateWithPath(path string) error {
 	if m.UseSpRect != nil {
 		if err := m.UseSpRect.ValidateWithPath(path + "/UseSpRect"); err != nil {

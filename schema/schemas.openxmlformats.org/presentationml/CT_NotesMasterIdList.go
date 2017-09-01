@@ -21,6 +21,7 @@ func NewCT_NotesMasterIdList() *CT_NotesMasterIdList {
 	ret := &CT_NotesMasterIdList{}
 	return ret
 }
+
 func (m *CT_NotesMasterIdList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -33,6 +34,7 @@ func (m *CT_NotesMasterIdList) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_NotesMasterIdList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_NotesMasterIdList:
@@ -62,9 +64,13 @@ lCT_NotesMasterIdList:
 	}
 	return nil
 }
+
+// Validate validates the CT_NotesMasterIdList and its children
 func (m *CT_NotesMasterIdList) Validate() error {
 	return m.ValidateWithPath("CT_NotesMasterIdList")
 }
+
+// ValidateWithPath validates the CT_NotesMasterIdList and its children, prefixing error messages with path
 func (m *CT_NotesMasterIdList) ValidateWithPath(path string) error {
 	if m.NotesMasterId != nil {
 		if err := m.NotesMasterId.ValidateWithPath(path + "/NotesMasterId"); err != nil {

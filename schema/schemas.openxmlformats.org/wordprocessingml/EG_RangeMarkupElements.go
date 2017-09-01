@@ -51,6 +51,7 @@ func NewEG_RangeMarkupElements() *EG_RangeMarkupElements {
 	ret := &EG_RangeMarkupElements{}
 	return ret
 }
+
 func (m *EG_RangeMarkupElements) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -121,6 +122,7 @@ func (m *EG_RangeMarkupElements) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	return nil
 }
+
 func (m *EG_RangeMarkupElements) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_RangeMarkupElements:
@@ -225,9 +227,13 @@ lEG_RangeMarkupElements:
 	}
 	return nil
 }
+
+// Validate validates the EG_RangeMarkupElements and its children
 func (m *EG_RangeMarkupElements) Validate() error {
 	return m.ValidateWithPath("EG_RangeMarkupElements")
 }
+
+// ValidateWithPath validates the EG_RangeMarkupElements and its children, prefixing error messages with path
 func (m *EG_RangeMarkupElements) ValidateWithPath(path string) error {
 	if m.BookmarkStart != nil {
 		if err := m.BookmarkStart.ValidateWithPath(path + "/BookmarkStart"); err != nil {

@@ -25,6 +25,7 @@ func NewCT_PCDSCPage() *CT_PCDSCPage {
 	ret := &CT_PCDSCPage{}
 	return ret
 }
+
 func (m *CT_PCDSCPage) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -41,6 +42,7 @@ func (m *CT_PCDSCPage) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_PCDSCPage) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -81,9 +83,13 @@ lCT_PCDSCPage:
 	}
 	return nil
 }
+
+// Validate validates the CT_PCDSCPage and its children
 func (m *CT_PCDSCPage) Validate() error {
 	return m.ValidateWithPath("CT_PCDSCPage")
 }
+
+// ValidateWithPath validates the CT_PCDSCPage and its children, prefixing error messages with path
 func (m *CT_PCDSCPage) ValidateWithPath(path string) error {
 	for i, v := range m.PageItem {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/PageItem[%d]", path, i)); err != nil {

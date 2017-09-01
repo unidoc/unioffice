@@ -38,6 +38,7 @@ func NewEG_RunLevelElts() *EG_RunLevelElts {
 	ret := &EG_RunLevelElts{}
 	return ret
 }
+
 func (m *EG_RunLevelElts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -82,6 +83,7 @@ func (m *EG_RunLevelElts) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	return nil
 }
+
 func (m *EG_RunLevelElts) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_RunLevelElts:
@@ -267,9 +269,13 @@ lEG_RunLevelElts:
 	}
 	return nil
 }
+
+// Validate validates the EG_RunLevelElts and its children
 func (m *EG_RunLevelElts) Validate() error {
 	return m.ValidateWithPath("EG_RunLevelElts")
 }
+
+// ValidateWithPath validates the EG_RunLevelElts and its children, prefixing error messages with path
 func (m *EG_RunLevelElts) ValidateWithPath(path string) error {
 	if m.ProofErr != nil {
 		if err := m.ProofErr.ValidateWithPath(path + "/ProofErr"); err != nil {

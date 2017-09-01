@@ -21,6 +21,7 @@ func NewCT_Path2DMoveTo() *CT_Path2DMoveTo {
 	ret.Pt = NewCT_AdjPoint2D()
 	return ret
 }
+
 func (m *CT_Path2DMoveTo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -31,6 +32,7 @@ func (m *CT_Path2DMoveTo) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Path2DMoveTo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Pt = NewCT_AdjPoint2D()
@@ -60,9 +62,13 @@ lCT_Path2DMoveTo:
 	}
 	return nil
 }
+
+// Validate validates the CT_Path2DMoveTo and its children
 func (m *CT_Path2DMoveTo) Validate() error {
 	return m.ValidateWithPath("CT_Path2DMoveTo")
 }
+
+// ValidateWithPath validates the CT_Path2DMoveTo and its children, prefixing error messages with path
 func (m *CT_Path2DMoveTo) ValidateWithPath(path string) error {
 	if err := m.Pt.ValidateWithPath(path + "/Pt"); err != nil {
 		return err

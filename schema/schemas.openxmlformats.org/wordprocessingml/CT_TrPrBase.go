@@ -44,6 +44,7 @@ func NewCT_TrPrBase() *CT_TrPrBase {
 	ret := &CT_TrPrBase{}
 	return ret
 }
+
 func (m *CT_TrPrBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -100,6 +101,7 @@ func (m *CT_TrPrBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TrPrBase) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TrPrBase:
@@ -196,9 +198,13 @@ lCT_TrPrBase:
 	}
 	return nil
 }
+
+// Validate validates the CT_TrPrBase and its children
 func (m *CT_TrPrBase) Validate() error {
 	return m.ValidateWithPath("CT_TrPrBase")
 }
+
+// ValidateWithPath validates the CT_TrPrBase and its children, prefixing error messages with path
 func (m *CT_TrPrBase) ValidateWithPath(path string) error {
 	for i, v := range m.CnfStyle {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/CnfStyle[%d]", path, i)); err != nil {

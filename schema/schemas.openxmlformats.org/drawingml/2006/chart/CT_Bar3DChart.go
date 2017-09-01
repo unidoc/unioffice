@@ -31,6 +31,7 @@ func NewCT_Bar3DChart() *CT_Bar3DChart {
 	ret.BarDir = NewCT_BarDir()
 	return ret
 }
+
 func (m *CT_Bar3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -75,6 +76,7 @@ func (m *CT_Bar3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Bar3DChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.BarDir = NewCT_BarDir()
@@ -151,9 +153,13 @@ lCT_Bar3DChart:
 	}
 	return nil
 }
+
+// Validate validates the CT_Bar3DChart and its children
 func (m *CT_Bar3DChart) Validate() error {
 	return m.ValidateWithPath("CT_Bar3DChart")
 }
+
+// ValidateWithPath validates the CT_Bar3DChart and its children, prefixing error messages with path
 func (m *CT_Bar3DChart) ValidateWithPath(path string) error {
 	if err := m.BarDir.ValidateWithPath(path + "/BarDir"); err != nil {
 		return err

@@ -20,6 +20,7 @@ type ST_GapAmount struct {
 func (m *ST_GapAmount) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_GapAmount) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_GapAmountPercent != nil {
@@ -33,6 +34,7 @@ func (m *ST_GapAmount) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_GapAmount) String() string {
 	if m.ST_GapAmountPercent != nil {
 		return fmt.Sprintf("%v", *m.ST_GapAmountPercent)

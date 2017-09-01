@@ -22,6 +22,7 @@ type ST_TLTimeAnimateValueTime struct {
 func (m *ST_TLTimeAnimateValueTime) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_TLTimeAnimateValueTime) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_PositiveFixedPercentage != nil {
@@ -38,6 +39,7 @@ func (m *ST_TLTimeAnimateValueTime) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_TLTimeAnimateValueTime) String() string {
 	if m.ST_PositiveFixedPercentage != nil {
 		return m.ST_PositiveFixedPercentage.String()

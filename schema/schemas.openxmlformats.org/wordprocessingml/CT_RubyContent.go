@@ -25,6 +25,7 @@ func NewCT_RubyContent() *CT_RubyContent {
 	ret := &CT_RubyContent{}
 	return ret
 }
+
 func (m *CT_RubyContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -42,6 +43,7 @@ func (m *CT_RubyContent) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_RubyContent) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_RubyContent:
@@ -282,9 +284,13 @@ lCT_RubyContent:
 	}
 	return nil
 }
+
+// Validate validates the CT_RubyContent and its children
 func (m *CT_RubyContent) Validate() error {
 	return m.ValidateWithPath("CT_RubyContent")
 }
+
+// ValidateWithPath validates the CT_RubyContent and its children, prefixing error messages with path
 func (m *CT_RubyContent) ValidateWithPath(path string) error {
 	if m.R != nil {
 		if err := m.R.ValidateWithPath(path + "/R"); err != nil {

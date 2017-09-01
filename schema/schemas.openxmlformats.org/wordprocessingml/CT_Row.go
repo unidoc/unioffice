@@ -35,6 +35,7 @@ func NewCT_Row() *CT_Row {
 	ret := &CT_Row{}
 	return ret
 }
+
 func (m *CT_Row) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -72,6 +73,7 @@ func (m *CT_Row) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -419,9 +421,13 @@ lCT_Row:
 	}
 	return nil
 }
+
+// Validate validates the CT_Row and its children
 func (m *CT_Row) Validate() error {
 	return m.ValidateWithPath("CT_Row")
 }
+
+// ValidateWithPath validates the CT_Row and its children, prefixing error messages with path
 func (m *CT_Row) ValidateWithPath(path string) error {
 	if m.TblPrEx != nil {
 		if err := m.TblPrEx.ValidateWithPath(path + "/TblPrEx"); err != nil {

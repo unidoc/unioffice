@@ -54,6 +54,7 @@ type ST_ParameterVal struct {
 func (m *ST_ParameterVal) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_ParameterVal) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_DiagramHorizontalAlignment != ST_DiagramHorizontalAlignmentUnset {
@@ -169,6 +170,7 @@ func (m *ST_ParameterVal) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_ParameterVal) String() string {
 	if m.ST_DiagramHorizontalAlignment != ST_DiagramHorizontalAlignmentUnset {
 		return m.ST_DiagramHorizontalAlignment.String()

@@ -31,6 +31,7 @@ func NewCT_DiagramDefinitionHeader() *CT_DiagramDefinitionHeader {
 	ret := &CT_DiagramDefinitionHeader{}
 	return ret
 }
+
 func (m *CT_DiagramDefinitionHeader) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -65,6 +66,7 @@ func (m *CT_DiagramDefinitionHeader) MarshalXML(e *xml.Encoder, start xml.StartE
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_DiagramDefinitionHeader) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -142,9 +144,13 @@ lCT_DiagramDefinitionHeader:
 	}
 	return nil
 }
+
+// Validate validates the CT_DiagramDefinitionHeader and its children
 func (m *CT_DiagramDefinitionHeader) Validate() error {
 	return m.ValidateWithPath("CT_DiagramDefinitionHeader")
 }
+
+// ValidateWithPath validates the CT_DiagramDefinitionHeader and its children, prefixing error messages with path
 func (m *CT_DiagramDefinitionHeader) ValidateWithPath(path string) error {
 	for i, v := range m.Title {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/Title[%d]", path, i)); err != nil {

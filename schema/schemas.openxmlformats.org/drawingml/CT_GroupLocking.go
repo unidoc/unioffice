@@ -29,6 +29,7 @@ func NewCT_GroupLocking() *CT_GroupLocking {
 	ret := &CT_GroupLocking{}
 	return ret
 }
+
 func (m *CT_GroupLocking) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -69,6 +70,7 @@ func (m *CT_GroupLocking) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GroupLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -149,9 +151,13 @@ lCT_GroupLocking:
 	}
 	return nil
 }
+
+// Validate validates the CT_GroupLocking and its children
 func (m *CT_GroupLocking) Validate() error {
 	return m.ValidateWithPath("CT_GroupLocking")
 }
+
+// ValidateWithPath validates the CT_GroupLocking and its children, prefixing error messages with path
 func (m *CT_GroupLocking) ValidateWithPath(path string) error {
 	if m.ExtLst != nil {
 		if err := m.ExtLst.ValidateWithPath(path + "/ExtLst"); err != nil {

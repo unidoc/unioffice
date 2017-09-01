@@ -26,6 +26,7 @@ func NewCT_ColorChangeEffect() *CT_ColorChangeEffect {
 	ret.ClrTo = NewCT_Color()
 	return ret
 }
+
 func (m *CT_ColorChangeEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -42,6 +43,7 @@ func (m *CT_ColorChangeEffect) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ColorChangeEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ClrFrom = NewCT_Color()
@@ -85,9 +87,13 @@ lCT_ColorChangeEffect:
 	}
 	return nil
 }
+
+// Validate validates the CT_ColorChangeEffect and its children
 func (m *CT_ColorChangeEffect) Validate() error {
 	return m.ValidateWithPath("CT_ColorChangeEffect")
 }
+
+// ValidateWithPath validates the CT_ColorChangeEffect and its children, prefixing error messages with path
 func (m *CT_ColorChangeEffect) ValidateWithPath(path string) error {
 	if err := m.ClrFrom.ValidateWithPath(path + "/ClrFrom"); err != nil {
 		return err

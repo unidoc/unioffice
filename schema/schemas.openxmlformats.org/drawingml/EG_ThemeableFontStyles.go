@@ -21,6 +21,7 @@ func NewEG_ThemeableFontStyles() *EG_ThemeableFontStyles {
 	ret := &EG_ThemeableFontStyles{}
 	return ret
 }
+
 func (m *EG_ThemeableFontStyles) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -35,6 +36,7 @@ func (m *EG_ThemeableFontStyles) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	return nil
 }
+
 func (m *EG_ThemeableFontStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_ThemeableFontStyles:
@@ -69,9 +71,13 @@ lEG_ThemeableFontStyles:
 	}
 	return nil
 }
+
+// Validate validates the EG_ThemeableFontStyles and its children
 func (m *EG_ThemeableFontStyles) Validate() error {
 	return m.ValidateWithPath("EG_ThemeableFontStyles")
 }
+
+// ValidateWithPath validates the EG_ThemeableFontStyles and its children, prefixing error messages with path
 func (m *EG_ThemeableFontStyles) ValidateWithPath(path string) error {
 	if m.Font != nil {
 		if err := m.Font.ValidateWithPath(path + "/Font"); err != nil {

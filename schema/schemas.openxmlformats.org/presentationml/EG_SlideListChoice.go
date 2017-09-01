@@ -25,6 +25,7 @@ func NewEG_SlideListChoice() *EG_SlideListChoice {
 	ret := &EG_SlideListChoice{}
 	return ret
 }
+
 func (m *EG_SlideListChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -43,6 +44,7 @@ func (m *EG_SlideListChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	return nil
 }
+
 func (m *EG_SlideListChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lEG_SlideListChoice:
@@ -82,9 +84,13 @@ lEG_SlideListChoice:
 	}
 	return nil
 }
+
+// Validate validates the EG_SlideListChoice and its children
 func (m *EG_SlideListChoice) Validate() error {
 	return m.ValidateWithPath("EG_SlideListChoice")
 }
+
+// ValidateWithPath validates the EG_SlideListChoice and its children, prefixing error messages with path
 func (m *EG_SlideListChoice) ValidateWithPath(path string) error {
 	if m.SldAll != nil {
 		if err := m.SldAll.ValidateWithPath(path + "/SldAll"); err != nil {

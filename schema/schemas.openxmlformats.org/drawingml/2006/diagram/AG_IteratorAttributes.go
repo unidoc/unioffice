@@ -25,6 +25,7 @@ func NewAG_IteratorAttributes() *AG_IteratorAttributes {
 	ret := &AG_IteratorAttributes{}
 	return ret
 }
+
 func (m *AG_IteratorAttributes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -55,6 +56,7 @@ func (m *AG_IteratorAttributes) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	return nil
 }
+
 func (m *AG_IteratorAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -113,9 +115,13 @@ func (m *AG_IteratorAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 	}
 	return nil
 }
+
+// Validate validates the AG_IteratorAttributes and its children
 func (m *AG_IteratorAttributes) Validate() error {
 	return m.ValidateWithPath("AG_IteratorAttributes")
 }
+
+// ValidateWithPath validates the AG_IteratorAttributes and its children, prefixing error messages with path
 func (m *AG_IteratorAttributes) ValidateWithPath(path string) error {
 	return nil
 }

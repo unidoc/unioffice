@@ -22,6 +22,7 @@ func NewCT_Bar() *CT_Bar {
 	ret.E = NewCT_OMathArg()
 	return ret
 }
+
 func (m *CT_Bar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -36,6 +37,7 @@ func (m *CT_Bar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Bar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.E = NewCT_OMathArg()
@@ -70,9 +72,13 @@ lCT_Bar:
 	}
 	return nil
 }
+
+// Validate validates the CT_Bar and its children
 func (m *CT_Bar) Validate() error {
 	return m.ValidateWithPath("CT_Bar")
 }
+
+// ValidateWithPath validates the CT_Bar and its children, prefixing error messages with path
 func (m *CT_Bar) ValidateWithPath(path string) error {
 	if m.BarPr != nil {
 		if err := m.BarPr.ValidateWithPath(path + "/BarPr"); err != nil {

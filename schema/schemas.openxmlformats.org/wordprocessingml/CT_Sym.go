@@ -23,6 +23,7 @@ func NewCT_Sym() *CT_Sym {
 	ret := &CT_Sym{}
 	return ret
 }
+
 func (m *CT_Sym) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -39,6 +40,7 @@ func (m *CT_Sym) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_Sym) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -69,9 +71,13 @@ func (m *CT_Sym) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the CT_Sym and its children
 func (m *CT_Sym) Validate() error {
 	return m.ValidateWithPath("CT_Sym")
 }
+
+// ValidateWithPath validates the CT_Sym and its children, prefixing error messages with path
 func (m *CT_Sym) ValidateWithPath(path string) error {
 	return nil
 }

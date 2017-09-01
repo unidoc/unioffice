@@ -21,12 +21,14 @@ func NewVstream() *Vstream {
 	ret.CT_Vstream = *NewCT_Vstream()
 	return ret
 }
+
 func (m *Vstream) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
 	}
 	return m.CT_Vstream.MarshalXML(e, start)
 }
+
 func (m *Vstream) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Vstream = *NewCT_Vstream()
@@ -51,9 +53,13 @@ func (m *Vstream) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	}
 	return nil
 }
+
+// Validate validates the Vstream and its children
 func (m *Vstream) Validate() error {
 	return m.ValidateWithPath("Vstream")
 }
+
+// ValidateWithPath validates the Vstream and its children, prefixing error messages with path
 func (m *Vstream) ValidateWithPath(path string) error {
 	if err := m.CT_Vstream.ValidateWithPath(path); err != nil {
 		return err

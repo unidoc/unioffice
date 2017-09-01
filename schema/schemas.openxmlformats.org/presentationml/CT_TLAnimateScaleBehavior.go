@@ -30,6 +30,7 @@ func NewCT_TLAnimateScaleBehavior() *CT_TLAnimateScaleBehavior {
 	ret.CBhvr = NewCT_TLCommonBehaviorData()
 	return ret
 }
+
 func (m *CT_TLAnimateScaleBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -56,6 +57,7 @@ func (m *CT_TLAnimateScaleBehavior) MarshalXML(e *xml.Encoder, start xml.StartEl
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLAnimateScaleBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CBhvr = NewCT_TLCommonBehaviorData()
@@ -109,9 +111,13 @@ lCT_TLAnimateScaleBehavior:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLAnimateScaleBehavior and its children
 func (m *CT_TLAnimateScaleBehavior) Validate() error {
 	return m.ValidateWithPath("CT_TLAnimateScaleBehavior")
 }
+
+// ValidateWithPath validates the CT_TLAnimateScaleBehavior and its children, prefixing error messages with path
 func (m *CT_TLAnimateScaleBehavior) ValidateWithPath(path string) error {
 	if err := m.CBhvr.ValidateWithPath(path + "/CBhvr"); err != nil {
 		return err

@@ -26,6 +26,7 @@ func NewCT_WordprocessingCanvas() *CT_WordprocessingCanvas {
 	ret := &CT_WordprocessingCanvas{}
 	return ret
 }
+
 func (m *CT_WordprocessingCanvas) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -51,6 +52,7 @@ func (m *CT_WordprocessingCanvas) MarshalXML(e *xml.Encoder, start xml.StartElem
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_WordprocessingCanvas) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_WordprocessingCanvas:
@@ -120,9 +122,13 @@ lCT_WordprocessingCanvas:
 	}
 	return nil
 }
+
+// Validate validates the CT_WordprocessingCanvas and its children
 func (m *CT_WordprocessingCanvas) Validate() error {
 	return m.ValidateWithPath("CT_WordprocessingCanvas")
 }
+
+// ValidateWithPath validates the CT_WordprocessingCanvas and its children, prefixing error messages with path
 func (m *CT_WordprocessingCanvas) ValidateWithPath(path string) error {
 	if m.Bg != nil {
 		if err := m.Bg.ValidateWithPath(path + "/Bg"); err != nil {

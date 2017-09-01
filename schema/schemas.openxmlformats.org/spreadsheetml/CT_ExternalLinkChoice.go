@@ -22,6 +22,7 @@ func NewCT_ExternalLinkChoice() *CT_ExternalLinkChoice {
 	ret := &CT_ExternalLinkChoice{}
 	return ret
 }
+
 func (m *CT_ExternalLinkChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -40,6 +41,7 @@ func (m *CT_ExternalLinkChoice) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	return nil
 }
+
 func (m *CT_ExternalLinkChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_ExternalLinkChoice:
@@ -79,9 +81,13 @@ lCT_ExternalLinkChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_ExternalLinkChoice and its children
 func (m *CT_ExternalLinkChoice) Validate() error {
 	return m.ValidateWithPath("CT_ExternalLinkChoice")
 }
+
+// ValidateWithPath validates the CT_ExternalLinkChoice and its children, prefixing error messages with path
 func (m *CT_ExternalLinkChoice) ValidateWithPath(path string) error {
 	if m.ExternalBook != nil {
 		if err := m.ExternalBook.ValidateWithPath(path + "/ExternalBook"); err != nil {

@@ -20,6 +20,7 @@ type ST_Overlap struct {
 func (m *ST_Overlap) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_Overlap) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_OverlapPercent != nil {
@@ -33,6 +34,7 @@ func (m *ST_Overlap) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_Overlap) String() string {
 	if m.ST_OverlapPercent != nil {
 		return fmt.Sprintf("%v", *m.ST_OverlapPercent)

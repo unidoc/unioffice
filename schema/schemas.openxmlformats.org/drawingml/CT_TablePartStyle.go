@@ -21,6 +21,7 @@ func NewCT_TablePartStyle() *CT_TablePartStyle {
 	ret := &CT_TablePartStyle{}
 	return ret
 }
+
 func (m *CT_TablePartStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -37,6 +38,7 @@ func (m *CT_TablePartStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TablePartStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_TablePartStyle:
@@ -71,9 +73,13 @@ lCT_TablePartStyle:
 	}
 	return nil
 }
+
+// Validate validates the CT_TablePartStyle and its children
 func (m *CT_TablePartStyle) Validate() error {
 	return m.ValidateWithPath("CT_TablePartStyle")
 }
+
+// ValidateWithPath validates the CT_TablePartStyle and its children, prefixing error messages with path
 func (m *CT_TablePartStyle) ValidateWithPath(path string) error {
 	if m.TcTxStyle != nil {
 		if err := m.TcTxStyle.ValidateWithPath(path + "/TcTxStyle"); err != nil {

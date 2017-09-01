@@ -32,6 +32,7 @@ func NewCT_ErrBars() *CT_ErrBars {
 	ret.ErrValType = NewCT_ErrValType()
 	return ret
 }
+
 func (m *CT_ErrBars) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -72,6 +73,7 @@ func (m *CT_ErrBars) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_ErrBars) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ErrBarType = NewCT_ErrBarType()
@@ -141,9 +143,13 @@ lCT_ErrBars:
 	}
 	return nil
 }
+
+// Validate validates the CT_ErrBars and its children
 func (m *CT_ErrBars) Validate() error {
 	return m.ValidateWithPath("CT_ErrBars")
 }
+
+// ValidateWithPath validates the CT_ErrBars and its children, prefixing error messages with path
 func (m *CT_ErrBars) ValidateWithPath(path string) error {
 	if m.ErrDir != nil {
 		if err := m.ErrDir.ValidateWithPath(path + "/ErrDir"); err != nil {

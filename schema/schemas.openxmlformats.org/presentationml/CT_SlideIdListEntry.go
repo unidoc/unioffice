@@ -26,6 +26,7 @@ func NewCT_SlideIdListEntry() *CT_SlideIdListEntry {
 	ret.IdAttr = 256
 	return ret
 }
+
 func (m *CT_SlideIdListEntry) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -42,6 +43,7 @@ func (m *CT_SlideIdListEntry) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_SlideIdListEntry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.IdAttr = 256
@@ -88,9 +90,13 @@ lCT_SlideIdListEntry:
 	}
 	return nil
 }
+
+// Validate validates the CT_SlideIdListEntry and its children
 func (m *CT_SlideIdListEntry) Validate() error {
 	return m.ValidateWithPath("CT_SlideIdListEntry")
 }
+
+// ValidateWithPath validates the CT_SlideIdListEntry and its children, prefixing error messages with path
 func (m *CT_SlideIdListEntry) ValidateWithPath(path string) error {
 	if m.IdAttr < 256 {
 		return fmt.Errorf("%s/m.IdAttr must be >= 256 (have %v)", path, m.IdAttr)

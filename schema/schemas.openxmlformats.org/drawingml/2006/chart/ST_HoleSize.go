@@ -20,6 +20,7 @@ type ST_HoleSize struct {
 func (m *ST_HoleSize) Validate() error {
 	return m.ValidateWithPath("")
 }
+
 func (m *ST_HoleSize) ValidateWithPath(path string) error {
 	mems := []string{}
 	if m.ST_HoleSizePercent != nil {
@@ -33,6 +34,7 @@ func (m *ST_HoleSize) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
 func (m ST_HoleSize) String() string {
 	if m.ST_HoleSizePercent != nil {
 		return fmt.Sprintf("%v", *m.ST_HoleSizePercent)

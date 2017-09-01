@@ -19,6 +19,7 @@ func NewCT_GroupFillProperties() *CT_GroupFillProperties {
 	ret := &CT_GroupFillProperties{}
 	return ret
 }
+
 func (m *CT_GroupFillProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -27,6 +28,7 @@ func (m *CT_GroupFillProperties) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_GroupFillProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	// skip any extensions we may find, but don't support
@@ -41,9 +43,13 @@ func (m *CT_GroupFillProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 	}
 	return nil
 }
+
+// Validate validates the CT_GroupFillProperties and its children
 func (m *CT_GroupFillProperties) Validate() error {
 	return m.ValidateWithPath("CT_GroupFillProperties")
 }
+
+// ValidateWithPath validates the CT_GroupFillProperties and its children, prefixing error messages with path
 func (m *CT_GroupFillProperties) ValidateWithPath(path string) error {
 	return nil
 }

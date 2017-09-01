@@ -36,6 +36,7 @@ func NewCT_PlotAreaChoice() *CT_PlotAreaChoice {
 	ret := &CT_PlotAreaChoice{}
 	return ret
 }
+
 func (m *CT_PlotAreaChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -106,6 +107,7 @@ func (m *CT_PlotAreaChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	return nil
 }
+
 func (m *CT_PlotAreaChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_PlotAreaChoice:
@@ -226,9 +228,13 @@ lCT_PlotAreaChoice:
 	}
 	return nil
 }
+
+// Validate validates the CT_PlotAreaChoice and its children
 func (m *CT_PlotAreaChoice) Validate() error {
 	return m.ValidateWithPath("CT_PlotAreaChoice")
 }
+
+// ValidateWithPath validates the CT_PlotAreaChoice and its children, prefixing error messages with path
 func (m *CT_PlotAreaChoice) ValidateWithPath(path string) error {
 	for i, v := range m.AreaChart {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/AreaChart[%d]", path, i)); err != nil {

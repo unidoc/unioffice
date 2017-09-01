@@ -30,6 +30,7 @@ func NewCT_TLTimeCondition() *CT_TLTimeCondition {
 	ret := &CT_TLTimeCondition{}
 	return ret
 }
+
 func (m *CT_TLTimeCondition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -61,6 +62,7 @@ func (m *CT_TLTimeCondition) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_TLTimeCondition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -112,9 +114,13 @@ lCT_TLTimeCondition:
 	}
 	return nil
 }
+
+// Validate validates the CT_TLTimeCondition and its children
 func (m *CT_TLTimeCondition) Validate() error {
 	return m.ValidateWithPath("CT_TLTimeCondition")
 }
+
+// ValidateWithPath validates the CT_TLTimeCondition and its children, prefixing error messages with path
 func (m *CT_TLTimeCondition) ValidateWithPath(path string) error {
 	if err := m.EvtAttr.ValidateWithPath(path + "/EvtAttr"); err != nil {
 		return err

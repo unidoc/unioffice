@@ -22,6 +22,7 @@ func NewCT_FieldUsage() *CT_FieldUsage {
 	ret := &CT_FieldUsage{}
 	return ret
 }
+
 func (m *CT_FieldUsage) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -32,6 +33,7 @@ func (m *CT_FieldUsage) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_FieldUsage) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
@@ -55,9 +57,13 @@ func (m *CT_FieldUsage) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	}
 	return nil
 }
+
+// Validate validates the CT_FieldUsage and its children
 func (m *CT_FieldUsage) Validate() error {
 	return m.ValidateWithPath("CT_FieldUsage")
 }
+
+// ValidateWithPath validates the CT_FieldUsage and its children, prefixing error messages with path
 func (m *CT_FieldUsage) ValidateWithPath(path string) error {
 	return nil
 }

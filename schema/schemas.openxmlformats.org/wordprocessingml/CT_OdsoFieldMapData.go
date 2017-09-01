@@ -31,6 +31,7 @@ func NewCT_OdsoFieldMapData() *CT_OdsoFieldMapData {
 	ret := &CT_OdsoFieldMapData{}
 	return ret
 }
+
 func (m *CT_OdsoFieldMapData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m == nil {
 		return nil
@@ -63,6 +64,7 @@ func (m *CT_OdsoFieldMapData) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
+
 func (m *CT_OdsoFieldMapData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 lCT_OdsoFieldMapData:
@@ -117,9 +119,13 @@ lCT_OdsoFieldMapData:
 	}
 	return nil
 }
+
+// Validate validates the CT_OdsoFieldMapData and its children
 func (m *CT_OdsoFieldMapData) Validate() error {
 	return m.ValidateWithPath("CT_OdsoFieldMapData")
 }
+
+// ValidateWithPath validates the CT_OdsoFieldMapData and its children, prefixing error messages with path
 func (m *CT_OdsoFieldMapData) ValidateWithPath(path string) error {
 	if m.Type != nil {
 		if err := m.Type.ValidateWithPath(path + "/Type"); err != nil {
