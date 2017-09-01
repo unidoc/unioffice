@@ -14,17 +14,17 @@ import (
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 )
 
-// Borders allows manipulation of borders on a table.
-type Borders struct {
+// TableBorders allows manipulation of borders on a table.
+type TableBorders struct {
 	x *wml.CT_TblBorders
 }
 
 // X returns the inner wml.CT_TblBorders
-func (b Borders) X() *wml.CT_TblBorders {
+func (b TableBorders) X() *wml.CT_TblBorders {
 	return b.x
 }
 
-func (b Borders) setBorder(brd *wml.CT_Border, t wml.ST_Border, c color.Color, thickness measurement.Distance) {
+func (b TableBorders) setBorder(brd *wml.CT_Border, t wml.ST_Border, c color.Color, thickness measurement.Distance) {
 	brd.ValAttr = t
 	brd.ColorAttr = &wml.ST_HexColor{}
 	if c.IsAuto() {
@@ -39,7 +39,7 @@ func (b Borders) setBorder(brd *wml.CT_Border, t wml.ST_Border, c color.Color, t
 }
 
 // SetAll sets all of the borders to a given value.
-func (b Borders) SetAll(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
+func (b TableBorders) SetAll(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
 	b.SetBottom(t, c, thickness)
 	b.SetLeft(t, c, thickness)
 	b.SetRight(t, c, thickness)
@@ -49,37 +49,37 @@ func (b Borders) SetAll(t wml.ST_Border, c color.Color, thickness measurement.Di
 }
 
 // SetBottom sets the bottom border to a specified type, color and thickness.
-func (b Borders) SetBottom(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
+func (b TableBorders) SetBottom(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
 	b.x.Bottom = wml.NewCT_Border()
 	b.setBorder(b.x.Bottom, t, c, thickness)
 }
 
 // SetTop sets the top border to a specified type, color and thickness.
-func (b Borders) SetTop(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
+func (b TableBorders) SetTop(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
 	b.x.Top = wml.NewCT_Border()
 	b.setBorder(b.x.Top, t, c, thickness)
 }
 
 // SetLeft sets the left border to a specified type, color and thickness.
-func (b Borders) SetLeft(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
+func (b TableBorders) SetLeft(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
 	b.x.Left = wml.NewCT_Border()
 	b.setBorder(b.x.Left, t, c, thickness)
 }
 
 // SetRight sets the right border to a specified type, color and thickness.
-func (b Borders) SetRight(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
+func (b TableBorders) SetRight(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
 	b.x.Right = wml.NewCT_Border()
 	b.setBorder(b.x.Right, t, c, thickness)
 }
 
 // SetInsideHorizontal sets the interior horizontal borders to a specified type, color and thickness.
-func (b Borders) SetInsideHorizontal(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
+func (b TableBorders) SetInsideHorizontal(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
 	b.x.InsideH = wml.NewCT_Border()
 	b.setBorder(b.x.InsideH, t, c, thickness)
 }
 
 // SetInsideVertical sets the interior vertical borders to a specified type, color and thickness.
-func (b Borders) SetInsideVertical(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
+func (b TableBorders) SetInsideVertical(t wml.ST_Border, c color.Color, thickness measurement.Distance) {
 	b.x.InsideV = wml.NewCT_Border()
 	b.setBorder(b.x.InsideV, t, c, thickness)
 }

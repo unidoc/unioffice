@@ -34,7 +34,7 @@ func MarshalXML(z *zip.Writer, filename string, v interface{}) error {
 	if err != nil {
 		return fmt.Errorf("creating xml header to %s: %s", filename, err)
 	}
-	if err := xml.NewEncoder(SelfClosingWriter{w}).Encode(v); err != nil {
+	if err = xml.NewEncoder(SelfClosingWriter{w}).Encode(v); err != nil {
 		return fmt.Errorf("marshaling %s: %s", filename, err)
 	}
 	_, err = w.Write(nl)

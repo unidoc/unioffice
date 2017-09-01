@@ -14,17 +14,18 @@ import (
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 )
 
-type ParagraphStyle struct {
+// ParagraphStyleProperties is the styling information for a paragraph.
+type ParagraphStyleProperties struct {
 	x *wml.CT_PPrGeneral
 }
 
 // X returns the inner wrapped XML type.
-func (p ParagraphStyle) X() *wml.CT_PPrGeneral {
+func (p ParagraphStyleProperties) X() *wml.CT_PPrGeneral {
 	return p.x
 }
 
 // AddTabStop adds a tab stop to the paragraph.
-func (p ParagraphStyle) AddTabStop(position measurement.Distance, justificaton wml.ST_TabJc, leader wml.ST_TabTlc) {
+func (p ParagraphStyleProperties) AddTabStop(position measurement.Distance, justificaton wml.ST_TabJc, leader wml.ST_TabTlc) {
 	if p.x.Tabs == nil {
 		p.x.Tabs = wml.NewCT_Tabs()
 	}
@@ -36,7 +37,7 @@ func (p ParagraphStyle) AddTabStop(position measurement.Distance, justificaton w
 }
 
 // SetSpacing sets the spacing that comes before and after the paragraph.
-func (p ParagraphStyle) SetSpacing(before, after measurement.Distance) {
+func (p ParagraphStyleProperties) SetSpacing(before, after measurement.Distance) {
 	if p.x.Spacing == nil {
 		p.x.Spacing = wml.NewCT_Spacing()
 	}
@@ -57,7 +58,7 @@ func (p ParagraphStyle) SetSpacing(before, after measurement.Distance) {
 }
 
 // SetKeepNext controls if the paragraph is kept with the next paragraph.
-func (p ParagraphStyle) SetKeepNext(b bool) {
+func (p ParagraphStyleProperties) SetKeepNext(b bool) {
 	if !b {
 		p.x.KeepNext = nil
 	} else {
@@ -66,7 +67,7 @@ func (p ParagraphStyle) SetKeepNext(b bool) {
 }
 
 // SetOutlineLevel sets the outline level of this style.
-func (p ParagraphStyle) SetOutlineLevel(lvl int) {
+func (p ParagraphStyleProperties) SetOutlineLevel(lvl int) {
 	p.x.OutlineLvl = wml.NewCT_DecimalNumber()
 	p.x.OutlineLvl.ValAttr = int64(lvl)
 }

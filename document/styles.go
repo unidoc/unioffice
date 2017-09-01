@@ -118,9 +118,9 @@ func (s Styles) InitializeDefault() {
 	hdr.SetSemiHidden(true)
 	hdr.SetUnhideWhenUsed(true)
 	hdr.SetLinkedStyle(hc.StyleID())
-	hdr.ParagraphStyle().AddTabStop(4680*measurement.Twips, wml.ST_TabJcCenter, wml.ST_TabTlcUnset)
-	hdr.ParagraphStyle().AddTabStop(9360*measurement.Twips, wml.ST_TabJcRight, wml.ST_TabTlcUnset)
-	hdr.ParagraphStyle().SetSpacing(0, 240*measurement.Twips)
+	hdr.ParagraphStyleProperties().AddTabStop(4680*measurement.Twips, wml.ST_TabJcCenter, wml.ST_TabTlcUnset)
+	hdr.ParagraphStyleProperties().AddTabStop(9360*measurement.Twips, wml.ST_TabJcRight, wml.ST_TabTlcUnset)
+	hdr.ParagraphStyleProperties().SetSpacing(0, 240*measurement.Twips)
 
 	// FooterChar
 	fc := s.AddStyle("FooterChar", wml.ST_StyleTypeCharacter, true)
@@ -137,9 +137,9 @@ func (s Styles) InitializeDefault() {
 	ftr.SetSemiHidden(true)
 	ftr.SetUnhideWhenUsed(true)
 	ftr.SetLinkedStyle(fc.StyleID())
-	ftr.ParagraphStyle().AddTabStop(4680*measurement.Twips, wml.ST_TabJcCenter, wml.ST_TabTlcUnset)
-	ftr.ParagraphStyle().AddTabStop(9360*measurement.Twips, wml.ST_TabJcRight, wml.ST_TabTlcUnset)
-	ftr.ParagraphStyle().SetSpacing(0, 240*measurement.Twips)
+	ftr.ParagraphStyleProperties().AddTabStop(4680*measurement.Twips, wml.ST_TabJcCenter, wml.ST_TabTlcUnset)
+	ftr.ParagraphStyleProperties().AddTabStop(9360*measurement.Twips, wml.ST_TabJcRight, wml.ST_TabTlcUnset)
+	ftr.ParagraphStyleProperties().SetSpacing(0, 240*measurement.Twips)
 
 	fontSizes := []measurement.Distance{16, 13, 12, 11, 11, 11, 11, 11, 11}
 	spacing := []measurement.Distance{240, 40, 40, 40, 40, 40, 40, 40, 40}
@@ -159,9 +159,9 @@ func (s Styles) InitializeDefault() {
 		hdng.SetLinkedStyle(hdng.StyleID())
 		hdng.SetUISortOrder(9 + i)
 		hdng.SetPrimaryStyle(true)
-		hdng.ParagraphStyle().SetKeepNext(true)
-		hdng.ParagraphStyle().SetSpacing(spacing[i]*measurement.Twips, 0)
-		hdng.ParagraphStyle().SetOutlineLevel(i)
+		hdng.ParagraphStyleProperties().SetKeepNext(true)
+		hdng.ParagraphStyleProperties().SetSpacing(spacing[i]*measurement.Twips, 0)
+		hdng.ParagraphStyleProperties().SetOutlineLevel(i)
 		hdng.RunStyle().SetSize(fontSizes[i] * measurement.Point)
 	}
 
@@ -216,7 +216,7 @@ func (s Styles) Styles() []Style {
 	return ret
 }
 
-// Styles returns only paragraph styles.
+// ParagraphStyles returns only the paragraph styles.
 func (s Styles) ParagraphStyles() []Style {
 	ret := []Style{}
 	for _, s := range s.x.Style {

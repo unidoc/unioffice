@@ -158,7 +158,7 @@ func xmlIndentFile(fn string) error {
 		return err
 	}
 	dec := xml.NewDecoder(f)
-	if err := dec.Decode(&any); err != nil {
+	if err = dec.Decode(&any); err != nil {
 		return err
 	}
 	f.Close()

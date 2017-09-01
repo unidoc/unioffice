@@ -31,6 +31,8 @@ func (c Cell) AddParagraph() Paragraph {
 
 	return Paragraph{c.d, p}
 }
+
+// Properties returns the cell properties.
 func (c Cell) Properties() CellProperties {
 	if c.x.TcPr == nil {
 		c.x.TcPr = wml.NewCT_TcPr()

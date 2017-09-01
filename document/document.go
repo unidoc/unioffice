@@ -89,12 +89,6 @@ func (d *Document) X() *wml.Document {
 	return d.x
 }
 
-func (d *Document) ensureSectPr() {
-	if d.x.Body.SectPr == nil {
-		d.x.Body.SectPr = wml.NewCT_SectPr()
-	}
-}
-
 // AddHeader creates a header, but doesn't add it to the document for display.
 func (d *Document) AddHeader() Header {
 	hdr := wml.NewHdr()
@@ -219,7 +213,9 @@ func (d *Document) Save(w io.Writer) error {
 	if err := zippkg.MarshalXML(z, "[Content_Types].xml", d.ContentTypes.X()); err != nil {
 		return err
 	}
-	d.WriteExtraFiles(z)
+	if err := d.WriteExtraFiles(z); err != nil {
+		return err
+	}
 	return z.Close()
 }
 

@@ -14,9 +14,9 @@ func main() {
 
 	table := doc.AddTable()
 	// width of the page
-	table.SetWidthPercent(100)
+	table.Properties().SetWidthPercent(100)
 	// with thick borers
-	borders := table.Borders()
+	borders := table.Properties().Borders()
 	borders.SetAll(wml.ST_BorderSingle, color.Auto, 2*measurement.Point)
 
 	row := table.AddRow()
@@ -32,8 +32,8 @@ func main() {
 
 	table = doc.AddTable()
 	// 4 inches wide
-	table.SetWidth(4 * measurement.Inch)
-	borders = table.Borders()
+	table.Properties().SetWidth(4 * measurement.Inch)
+	borders = table.Properties().Borders()
 	// thin borders
 	borders.SetAll(wml.ST_BorderSingle, color.Auto, measurement.Zero)
 
