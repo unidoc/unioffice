@@ -111,12 +111,12 @@ func (s Style) SetNextStyle(name string) {
 	}
 }
 
-// ParagraphStyle returns the paragraph style.
-func (s Style) ParagraphStyle() ParagraphStyle {
+// ParagraphStyleProperties returns the paragraph style properties.
+func (s Style) ParagraphStyleProperties() ParagraphStyleProperties {
 	if s.x.PPr == nil {
 		s.x.PPr = wml.NewCT_PPrGeneral()
 	}
-	return ParagraphStyle{s.x.PPr}
+	return ParagraphStyleProperties{s.x.PPr}
 }
 
 // RunStyle returns the run style.

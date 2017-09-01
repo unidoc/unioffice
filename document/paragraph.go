@@ -28,7 +28,7 @@ func (p Paragraph) ensurePPr() {
 	}
 }
 
-// ParagraphProperties returnst the paragraph properties.
+// Properties returns the paragraph properties.
 func (p Paragraph) Properties() ParagraphProperties {
 	p.ensurePPr()
 	return ParagraphProperties{p.d, p.x.PPr}
@@ -42,7 +42,8 @@ func (p Paragraph) Style() string {
 	return ""
 }
 
-// SetStyle sets the style of a paragraph.
+// SetStyle sets the style of a paragraph and is identical to setting it on the
+// paragraph's Properties()
 func (p Paragraph) SetStyle(s string) {
 	p.ensurePPr()
 	if s == "" {

@@ -9,15 +9,18 @@ package document
 
 import wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 
+// Row is a row within a table within a document.
 type Row struct {
 	d *Document
 	x *wml.CT_Row
 }
 
+// X returns the inner wrapped XML type.
 func (r Row) X() *wml.CT_Row {
 	return r.x
 }
 
+// AddCell adds a cell to a row and returns it
 func (r Row) AddCell() Cell {
 	cc := wml.NewEG_ContentCellContent()
 	r.x.EG_ContentCellContent = append(r.x.EG_ContentCellContent, cc)

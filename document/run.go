@@ -290,7 +290,7 @@ func (r Run) SetHighlight(c wml.ST_HighlightColor) {
 	r.x.RPr.EG_RPrBase[0].Highlight.ValAttr = c
 }
 
-// TODO: test this on Windows
+// SetEffect sets a text effect on the run.
 func (r Run) SetEffect(e wml.ST_TextEffect) {
 	r.ensureRPR()
 	if e == wml.ST_TextEffectUnset {
@@ -357,7 +357,7 @@ func (r Run) AddDrawingAnchored(img ImageRef) (AnchoredDrawing, error) {
 
 	// Mac Word chokes if the ID is greater than an int32, even though the field is a
 	// uint32 in the XSD
-	randID := uint32(0x7FFFFFFF & rand.Uint32())
+	randID := 0x7FFFFFFF & rand.Uint32()
 	anchor.DocPr.IdAttr = randID
 	p := pic.NewPic()
 	p.NvPicPr.CNvPr.IdAttr = randID

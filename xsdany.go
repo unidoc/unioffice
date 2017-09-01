@@ -2,7 +2,6 @@ package gooxml
 
 import (
 	"encoding/xml"
-	"log"
 	"strings"
 	"unicode"
 )
@@ -30,27 +29,6 @@ var wellKnownSchemasInv = func() map[string]string {
 	}
 	return r
 }()
-
-func cloneToken(tok xml.Token) xml.Token {
-	switch el := tok.(type) {
-	case xml.CharData:
-		cd := xml.CharData{}
-		cd = append(cd, el...)
-		return cd
-	case xml.StartElement:
-		for i, attr := range el.Attr {
-			if ns, ok := wellKnownSchemas[attr.Name.Space]; ok {
-				el.Attr[i].Name.Space = ns
-			}
-		}
-		return tok
-	case xml.EndElement:
-		return tok
-	default:
-		log.Fatalf("need to support %T", el)
-	}
-	return nil
-}
 
 type any struct {
 	XMLName xml.Name
@@ -222,8 +200,5 @@ func (x *XSDAny) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 
 	// finally write out our new element
-	if err := e.Encode(&a); err != nil {
-		return err
-	}
-	return nil
+	return e.Encode(&a)
 }

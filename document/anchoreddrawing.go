@@ -84,11 +84,13 @@ func (a AnchoredDrawing) SetAlignment(h wd.ST_AlignH, v wd.ST_AlignV) {
 	a.SetVAlignment(v)
 }
 
+// SetHAlignment sets the horizontal alignment for an anchored image.
 func (a AnchoredDrawing) SetHAlignment(h wd.ST_AlignH) {
 	a.x.PositionH.Choice = &wd.CT_PosHChoice{}
 	a.x.PositionH.Choice.Align = h
 }
 
+// SetVAlignment sets the vertical alignment for an anchored image.
 func (a AnchoredDrawing) SetVAlignment(v wd.ST_AlignV) {
 	a.x.PositionV.Choice = &wd.CT_PosVChoice{}
 	a.x.PositionV.Choice.Align = v
