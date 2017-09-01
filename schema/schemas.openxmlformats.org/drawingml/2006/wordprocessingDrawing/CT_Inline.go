@@ -56,7 +56,6 @@ func (m *CT_Inline) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.DistRAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seextent := xml.StartElement{Name: xml.Name{Local: "wp:extent"}}
 	e.EncodeElement(m.Extent, seextent)
 	if m.EffectExtent != nil {

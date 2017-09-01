@@ -49,7 +49,6 @@ func (m *CT_TableStyleTextStyle) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Font != nil {
 		sefont := xml.StartElement{Name: xml.Name{Local: "a:font"}}
 		e.EncodeElement(m.Font, sefont)

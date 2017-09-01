@@ -35,7 +35,6 @@ func (m *CT_TLTemplate) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.LvlAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	setnLst := xml.StartElement{Name: xml.Name{Local: "p:tnLst"}}
 	e.EncodeElement(m.TnLst, setnLst)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

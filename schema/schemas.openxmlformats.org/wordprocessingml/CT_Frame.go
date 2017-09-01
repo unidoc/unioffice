@@ -44,7 +44,6 @@ func (m *CT_Frame) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Sz != nil {
 		sesz := xml.StartElement{Name: xml.Name{Local: "w:sz"}}
 		e.EncodeElement(m.Sz, sesz)

@@ -56,7 +56,6 @@ func (m *CT_TrackChangesView) MarshalXML(e *xml.Encoder, start xml.StartElement)
 			Value: fmt.Sprintf("%v", *m.InkAnnotationsAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

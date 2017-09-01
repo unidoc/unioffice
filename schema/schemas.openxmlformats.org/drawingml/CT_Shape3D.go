@@ -54,7 +54,6 @@ func (m *CT_Shape3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.BevelT != nil {
 		sebevelT := xml.StartElement{Name: xml.Name{Local: "a:bevelT"}}
 		e.EncodeElement(m.BevelT, sebevelT)

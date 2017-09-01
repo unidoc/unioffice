@@ -108,7 +108,6 @@ func (m *CT_BookView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.AutoFilterDateGroupingAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

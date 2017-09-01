@@ -26,7 +26,6 @@ func (m *CT_ConnectionSiteList) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Cxn != nil {
 		secxn := xml.StartElement{Name: xml.Name{Local: "a:cxn"}}
 		e.EncodeElement(m.Cxn, secxn)

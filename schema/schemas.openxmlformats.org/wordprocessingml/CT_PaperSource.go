@@ -37,7 +37,6 @@ func (m *CT_PaperSource) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.OtherAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

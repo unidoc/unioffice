@@ -49,7 +49,6 @@ func (m *CT_I) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.IAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.X != nil {
 		sex := xml.StartElement{Name: xml.Name{Local: "x:x"}}
 		e.EncodeElement(m.X, sex)

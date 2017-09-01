@@ -35,7 +35,6 @@ func (m *CT_GraphicFrame) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secNvPr := xml.StartElement{Name: xml.Name{Local: "wp:cNvPr"}}
 	e.EncodeElement(m.CNvPr, secNvPr)
 	secNvFrPr := xml.StartElement{Name: xml.Name{Local: "wp:cNvFrPr"}}

@@ -27,7 +27,6 @@ func (m *CT_ExternalSheetNames) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sesheetName := xml.StartElement{Name: xml.Name{Local: "x:sheetName"}}
 	e.EncodeElement(m.SheetName, sesheetName)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -34,7 +34,6 @@ func (m *CT_MetadataTypes) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	semetadataType := xml.StartElement{Name: xml.Name{Local: "x:metadataType"}}
 	e.EncodeElement(m.MetadataType, semetadataType)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

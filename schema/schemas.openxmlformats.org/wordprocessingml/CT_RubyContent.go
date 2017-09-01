@@ -30,7 +30,6 @@ func (m *CT_RubyContent) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.R != nil {
 		ser := xml.StartElement{Name: xml.Name{Local: "w:r"}}
 		e.EncodeElement(m.R, ser)

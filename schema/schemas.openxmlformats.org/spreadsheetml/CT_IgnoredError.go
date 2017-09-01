@@ -83,7 +83,6 @@ func (m *CT_IgnoredError) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.CalculatedColumnAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

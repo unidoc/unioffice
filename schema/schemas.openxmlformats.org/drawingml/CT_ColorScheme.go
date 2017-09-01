@@ -53,7 +53,6 @@ func (m *CT_ColorScheme) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "name"},
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	sedk1 := xml.StartElement{Name: xml.Name{Local: "a:dk1"}}
 	e.EncodeElement(m.Dk1, sedk1)
 	selt1 := xml.StartElement{Name: xml.Name{Local: "a:lt1"}}

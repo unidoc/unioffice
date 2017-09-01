@@ -91,7 +91,6 @@ func (m *CT_PageBorder) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.FrameAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

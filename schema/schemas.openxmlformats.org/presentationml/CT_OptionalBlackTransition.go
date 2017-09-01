@@ -31,7 +31,6 @@ func (m *CT_OptionalBlackTransition) MarshalXML(e *xml.Encoder, start xml.StartE
 			Value: fmt.Sprintf("%v", *m.ThruBlkAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

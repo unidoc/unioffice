@@ -26,7 +26,6 @@ func (m *CT_OMath) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EG_OMathMathElements != nil {
 		for _, c := range m.EG_OMathMathElements {
 			c.MarshalXML(e, start)

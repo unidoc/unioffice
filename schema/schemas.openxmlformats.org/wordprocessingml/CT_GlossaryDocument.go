@@ -27,7 +27,6 @@ func (m *CT_GlossaryDocument) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Background != nil {
 		sebackground := xml.StartElement{Name: xml.Name{Local: "w:background"}}
 		e.EncodeElement(m.Background, sebackground)

@@ -54,7 +54,6 @@ func (m *CT_WrapSquare) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.DistRAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EffectExtent != nil {
 		seeffectExtent := xml.StartElement{Name: xml.Name{Local: "wp:effectExtent"}}
 		e.EncodeElement(m.EffectExtent, seeffectExtent)

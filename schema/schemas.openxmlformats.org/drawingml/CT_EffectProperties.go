@@ -26,7 +26,6 @@ func (m *CT_EffectProperties) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EffectLst != nil {
 		seeffectLst := xml.StartElement{Name: xml.Name{Local: "a:effectLst"}}
 		e.EncodeElement(m.EffectLst, seeffectLst)

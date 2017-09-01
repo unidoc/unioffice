@@ -33,7 +33,6 @@ func (m *CT_FontCollection) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	selatin := xml.StartElement{Name: xml.Name{Local: "a:latin"}}
 	e.EncodeElement(m.Latin, selatin)
 	seea := xml.StartElement{Name: xml.Name{Local: "a:ea"}}

@@ -28,7 +28,6 @@ func (m *CT_GroupChrPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Chr != nil {
 		sechr := xml.StartElement{Name: xml.Name{Local: "m:chr"}}
 		e.EncodeElement(m.Chr, sechr)

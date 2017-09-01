@@ -26,7 +26,6 @@ func (m *CT_AxDataSource) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	m.Choice.MarshalXML(e, start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

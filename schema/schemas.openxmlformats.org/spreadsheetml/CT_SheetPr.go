@@ -86,7 +86,6 @@ func (m *CT_SheetPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.EnableFormatConditionsCalculationAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TabColor != nil {
 		setabColor := xml.StartElement{Name: xml.Name{Local: "x:tabColor"}}
 		e.EncodeElement(m.TabColor, setabColor)

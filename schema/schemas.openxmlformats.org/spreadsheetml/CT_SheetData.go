@@ -27,7 +27,6 @@ func (m *CT_SheetData) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Row != nil {
 		serow := xml.StartElement{Name: xml.Name{Local: "x:row"}}
 		e.EncodeElement(m.Row, serow)

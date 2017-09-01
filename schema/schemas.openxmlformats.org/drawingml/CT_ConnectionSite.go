@@ -30,7 +30,6 @@ func (m *CT_ConnectionSite) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ang"},
 		Value: fmt.Sprintf("%v", m.AngAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	sepos := xml.StartElement{Name: xml.Name{Local: "a:pos"}}
 	e.EncodeElement(m.Pos, sepos)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

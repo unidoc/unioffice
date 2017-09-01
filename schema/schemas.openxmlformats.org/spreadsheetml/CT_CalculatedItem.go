@@ -43,7 +43,6 @@ func (m *CT_CalculatedItem) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.FormulaAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sepivotArea := xml.StartElement{Name: xml.Name{Local: "x:pivotArea"}}
 	e.EncodeElement(m.PivotArea, sepivotArea)
 	if m.ExtLst != nil {

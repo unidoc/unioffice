@@ -36,7 +36,6 @@ func (m *CT_Tc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.IdAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TcPr != nil {
 		setcPr := xml.StartElement{Name: xml.Name{Local: "w:tcPr"}}
 		e.EncodeElement(m.TcPr, setcPr)

@@ -34,7 +34,6 @@ func (m *CT_PosH) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	start.Attr = append(start.Attr, attr)
 	e.EncodeToken(start)
-	start.Attr = nil
 	m.Choice.MarshalXML(e, start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

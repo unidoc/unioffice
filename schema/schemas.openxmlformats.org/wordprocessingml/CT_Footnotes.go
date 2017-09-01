@@ -27,7 +27,6 @@ func (m *CT_Footnotes) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Footnote != nil {
 		sefootnote := xml.StartElement{Name: xml.Name{Local: "w:footnote"}}
 		e.EncodeElement(m.Footnote, sefootnote)

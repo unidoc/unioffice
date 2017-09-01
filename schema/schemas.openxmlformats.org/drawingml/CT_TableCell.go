@@ -54,7 +54,6 @@ func (m *CT_TableCell) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.IdAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TxBody != nil {
 		setxBody := xml.StartElement{Name: xml.Name{Local: "a:txBody"}}
 		e.EncodeElement(m.TxBody, setxBody)

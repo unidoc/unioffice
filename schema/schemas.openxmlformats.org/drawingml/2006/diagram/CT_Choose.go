@@ -32,7 +32,6 @@ func (m *CT_Choose) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.NameAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seif := xml.StartElement{Name: xml.Name{Local: "if"}}
 	e.EncodeElement(m.If, seif)
 	if m.Else != nil {

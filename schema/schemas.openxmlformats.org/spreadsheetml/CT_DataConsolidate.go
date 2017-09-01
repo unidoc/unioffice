@@ -61,7 +61,6 @@ func (m *CT_DataConsolidate) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.LinkAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DataRefs != nil {
 		sedataRefs := xml.StartElement{Name: xml.Name{Local: "x:dataRefs"}}
 		e.EncodeElement(m.DataRefs, sedataRefs)

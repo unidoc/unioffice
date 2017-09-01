@@ -110,7 +110,6 @@ func (m *CT_CacheField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.MemberPropertyFieldAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SharedItems != nil {
 		sesharedItems := xml.StartElement{Name: xml.Name{Local: "x:sharedItems"}}
 		e.EncodeElement(m.SharedItems, sesharedItems)

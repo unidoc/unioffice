@@ -26,7 +26,6 @@ func (m *CT_TextSpacing) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SpcPct != nil {
 		sespcPct := xml.StartElement{Name: xml.Name{Local: "a:spcPct"}}
 		e.EncodeElement(m.SpcPct, sespcPct)

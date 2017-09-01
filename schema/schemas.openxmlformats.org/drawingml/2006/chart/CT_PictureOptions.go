@@ -29,7 +29,6 @@ func (m *CT_PictureOptions) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ApplyToFront != nil {
 		seapplyToFront := xml.StartElement{Name: xml.Name{Local: "applyToFront"}}
 		e.EncodeElement(m.ApplyToFront, seapplyToFront)

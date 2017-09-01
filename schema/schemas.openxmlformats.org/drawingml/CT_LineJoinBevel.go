@@ -24,7 +24,6 @@ func (m *CT_LineJoinBevel) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

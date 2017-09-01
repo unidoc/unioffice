@@ -94,7 +94,6 @@ func (m *CT_PivotFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.StringValue2Attr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seautoFilter := xml.StartElement{Name: xml.Name{Local: "x:autoFilter"}}
 	e.EncodeElement(m.AutoFilter, seautoFilter)
 	if m.ExtLst != nil {

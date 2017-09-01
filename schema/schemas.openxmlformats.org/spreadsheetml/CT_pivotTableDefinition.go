@@ -456,7 +456,6 @@ func (m *CT_pivotTableDefinition) MarshalXML(e *xml.Encoder, start xml.StartElem
 			Value: fmt.Sprintf("%v", *m.ApplyWidthHeightFormatsAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	selocation := xml.StartElement{Name: xml.Name{Local: "x:location"}}
 	e.EncodeElement(m.Location, selocation)
 	if m.PivotFields != nil {

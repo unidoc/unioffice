@@ -43,7 +43,6 @@ func (m *CT_ChartFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.SeriesAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sepivotArea := xml.StartElement{Name: xml.Name{Local: "x:pivotArea"}}
 	e.EncodeElement(m.PivotArea, sepivotArea)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

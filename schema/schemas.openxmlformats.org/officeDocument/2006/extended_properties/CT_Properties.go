@@ -80,7 +80,6 @@ func (m *CT_Properties) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Template != nil {
 		seTemplate := xml.StartElement{Name: xml.Name{Local: "Template"}}
 		gooxml.AddPreserveSpaceAttr(&seTemplate, *m.Template)

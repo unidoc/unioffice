@@ -35,7 +35,6 @@ func (m *CT_TLMediaNodeVideo) MarshalXML(e *xml.Encoder, start xml.StartElement)
 			Value: fmt.Sprintf("%v", *m.FullScrnAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secMediaNode := xml.StartElement{Name: xml.Name{Local: "p:cMediaNode"}}
 	e.EncodeElement(m.CMediaNode, secMediaNode)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

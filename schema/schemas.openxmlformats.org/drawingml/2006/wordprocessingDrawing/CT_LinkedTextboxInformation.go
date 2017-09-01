@@ -35,7 +35,6 @@ func (m *CT_LinkedTextboxInformation) MarshalXML(e *xml.Encoder, start xml.Start
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "seq"},
 		Value: fmt.Sprintf("%v", m.SeqAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "wp:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

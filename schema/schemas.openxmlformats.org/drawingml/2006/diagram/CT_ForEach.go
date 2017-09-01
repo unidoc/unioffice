@@ -76,7 +76,6 @@ func (m *CT_ForEach) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.StepAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Alg != nil {
 		sealg := xml.StartElement{Name: xml.Name{Local: "alg"}}
 		e.EncodeElement(m.Alg, sealg)

@@ -25,7 +25,6 @@ func (m *CT_SPrePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CtrlPr != nil {
 		sectrlPr := xml.StartElement{Name: xml.Name{Local: "m:ctrlPr"}}
 		e.EncodeElement(m.CtrlPr, sectrlPr)

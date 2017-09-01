@@ -39,7 +39,6 @@ func (m *CT_Background) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.BgPr != nil {
 		sebgPr := xml.StartElement{Name: xml.Name{Local: "p:bgPr"}}
 		e.EncodeElement(m.BgPr, sebgPr)

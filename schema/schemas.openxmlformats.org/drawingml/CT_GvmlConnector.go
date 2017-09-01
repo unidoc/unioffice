@@ -30,7 +30,6 @@ func (m *CT_GvmlConnector) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	senvCxnSpPr := xml.StartElement{Name: xml.Name{Local: "a:nvCxnSpPr"}}
 	e.EncodeElement(m.NvCxnSpPr, senvCxnSpPr)
 	sespPr := xml.StartElement{Name: xml.Name{Local: "a:spPr"}}

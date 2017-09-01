@@ -43,7 +43,6 @@ func (m *CT_BdoContentRun) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FldSimple != nil {
 		sefldSimple := xml.StartElement{Name: xml.Name{Local: "w:fldSimple"}}
 		e.EncodeElement(m.FldSimple, sefldSimple)

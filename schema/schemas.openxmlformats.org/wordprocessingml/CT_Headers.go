@@ -27,7 +27,6 @@ func (m *CT_Headers) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seheader := xml.StartElement{Name: xml.Name{Local: "w:header"}}
 	e.EncodeElement(m.Header, seheader)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -33,7 +33,6 @@ func (m *CT_Marker) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secol := xml.StartElement{Name: xml.Name{Local: "col"}}
 	e.EncodeElement(m.Col, secol)
 	secolOff := xml.StartElement{Name: xml.Name{Local: "colOff"}}

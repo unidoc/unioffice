@@ -34,7 +34,6 @@ func (m *CT_CacheFields) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CacheField != nil {
 		secacheField := xml.StartElement{Name: xml.Name{Local: "x:cacheField"}}
 		e.EncodeElement(m.CacheField, secacheField)

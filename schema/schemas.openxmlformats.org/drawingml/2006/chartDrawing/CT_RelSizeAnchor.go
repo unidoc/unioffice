@@ -29,7 +29,6 @@ func (m *CT_RelSizeAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sefrom := xml.StartElement{Name: xml.Name{Local: "from"}}
 	e.EncodeElement(m.From, sefrom)
 	seto := xml.StartElement{Name: xml.Name{Local: "to"}}

@@ -37,7 +37,6 @@ func (m *CT_ErrBars) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ErrDir != nil {
 		seerrDir := xml.StartElement{Name: xml.Name{Local: "errDir"}}
 		e.EncodeElement(m.ErrDir, seerrDir)

@@ -77,7 +77,6 @@ func (m *CT_QueryTableRefresh) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.UnboundColumnsRightAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sequeryTableFields := xml.StartElement{Name: xml.Name{Local: "x:queryTableFields"}}
 	e.EncodeElement(m.QueryTableFields, sequeryTableFields)
 	if m.QueryTableDeletedFields != nil {

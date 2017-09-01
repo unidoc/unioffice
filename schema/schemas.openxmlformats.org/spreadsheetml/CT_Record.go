@@ -39,7 +39,6 @@ func (m *CT_Record) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.M != nil {
 		sem := xml.StartElement{Name: xml.Name{Local: "x:m"}}
 		e.EncodeElement(m.M, sem)

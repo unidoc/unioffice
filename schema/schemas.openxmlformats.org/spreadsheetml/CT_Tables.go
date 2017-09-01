@@ -38,7 +38,6 @@ func (m *CT_Tables) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.M != nil {
 		sem := xml.StartElement{Name: xml.Name{Local: "x:m"}}
 		e.EncodeElement(m.M, sem)

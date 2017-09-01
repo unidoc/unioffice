@@ -33,7 +33,6 @@ func (m *CT_FontScheme) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "name"},
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	semajorFont := xml.StartElement{Name: xml.Name{Local: "a:majorFont"}}
 	e.EncodeElement(m.MajorFont, semajorFont)
 	seminorFont := xml.StartElement{Name: xml.Name{Local: "a:minorFont"}}

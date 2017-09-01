@@ -34,7 +34,6 @@ func (m *CT_ServerFormats) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ServerFormat != nil {
 		seserverFormat := xml.StartElement{Name: xml.Name{Local: "x:serverFormat"}}
 		e.EncodeElement(m.ServerFormat, seserverFormat)

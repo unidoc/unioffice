@@ -44,7 +44,6 @@ func (m *CT_ObjectAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.SizeWithCellsAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sefrom := xml.StartElement{Name: xml.Name{Local: "xdr:from"}}
 	e.EncodeElement(m.From, sefrom)
 	seto := xml.StartElement{Name: xml.Name{Local: "xdr:to"}}

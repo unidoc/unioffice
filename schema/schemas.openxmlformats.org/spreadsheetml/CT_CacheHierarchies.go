@@ -34,7 +34,6 @@ func (m *CT_CacheHierarchies) MarshalXML(e *xml.Encoder, start xml.StartElement)
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CacheHierarchy != nil {
 		secacheHierarchy := xml.StartElement{Name: xml.Name{Local: "x:cacheHierarchy"}}
 		e.EncodeElement(m.CacheHierarchy, secacheHierarchy)

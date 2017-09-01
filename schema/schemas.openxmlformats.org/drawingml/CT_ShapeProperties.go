@@ -47,7 +47,6 @@ func (m *CT_ShapeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Xfrm != nil {
 		sexfrm := xml.StartElement{Name: xml.Name{Local: "a:xfrm"}}
 		e.EncodeElement(m.Xfrm, sexfrm)

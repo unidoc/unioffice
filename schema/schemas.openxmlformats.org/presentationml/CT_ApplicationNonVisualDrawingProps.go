@@ -43,7 +43,6 @@ func (m *CT_ApplicationNonVisualDrawingProps) MarshalXML(e *xml.Encoder, start x
 			Value: fmt.Sprintf("%v", *m.UserDrawnAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Ph != nil {
 		seph := xml.StartElement{Name: xml.Name{Local: "p:ph"}}
 		e.EncodeElement(m.Ph, seph)

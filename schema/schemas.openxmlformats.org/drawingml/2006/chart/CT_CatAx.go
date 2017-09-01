@@ -52,7 +52,6 @@ func (m *CT_CatAx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seaxId := xml.StartElement{Name: xml.Name{Local: "axId"}}
 	e.EncodeElement(m.AxId, seaxId)
 	sescaling := xml.StartElement{Name: xml.Name{Local: "scaling"}}

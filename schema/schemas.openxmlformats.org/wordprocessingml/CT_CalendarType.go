@@ -35,7 +35,6 @@ func (m *CT_CalendarType) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

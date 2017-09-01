@@ -32,7 +32,6 @@ func (m *CT_AreaChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Grouping != nil {
 		segrouping := xml.StartElement{Name: xml.Name{Local: "grouping"}}
 		e.EncodeElement(m.Grouping, segrouping)

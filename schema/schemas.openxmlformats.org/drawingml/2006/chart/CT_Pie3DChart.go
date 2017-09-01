@@ -29,7 +29,6 @@ func (m *CT_Pie3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.VaryColors != nil {
 		sevaryColors := xml.StartElement{Name: xml.Name{Local: "varyColors"}}
 		e.EncodeElement(m.VaryColors, sevaryColors)

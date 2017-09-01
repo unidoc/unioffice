@@ -35,7 +35,6 @@ func (m *CT_TextListStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DefPPr != nil {
 		sedefPPr := xml.StartElement{Name: xml.Name{Local: "a:defPPr"}}
 		e.EncodeElement(m.DefPPr, sedefPPr)

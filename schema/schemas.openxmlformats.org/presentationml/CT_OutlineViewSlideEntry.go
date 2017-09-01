@@ -34,7 +34,6 @@ func (m *CT_OutlineViewSlideEntry) MarshalXML(e *xml.Encoder, start xml.StartEle
 			Value: fmt.Sprintf("%v", *m.CollapseAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

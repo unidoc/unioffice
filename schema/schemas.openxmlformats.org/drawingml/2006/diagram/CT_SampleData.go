@@ -32,7 +32,6 @@ func (m *CT_SampleData) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.UseDefAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DataModel != nil {
 		sedataModel := xml.StartElement{Name: xml.Name{Local: "dataModel"}}
 		e.EncodeElement(m.DataModel, sedataModel)

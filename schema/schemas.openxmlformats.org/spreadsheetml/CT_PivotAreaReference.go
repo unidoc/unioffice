@@ -131,7 +131,6 @@ func (m *CT_PivotAreaReference) MarshalXML(e *xml.Encoder, start xml.StartElemen
 			Value: fmt.Sprintf("%v", *m.VarPSubtotalAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.X != nil {
 		sex := xml.StartElement{Name: xml.Name{Local: "x:x"}}
 		e.EncodeElement(m.X, sex)

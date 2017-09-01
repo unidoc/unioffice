@@ -222,7 +222,6 @@ func (m *CT_Settings) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.WriteProtection != nil {
 		sewriteProtection := xml.StartElement{Name: xml.Name{Local: "w:writeProtection"}}
 		e.EncodeElement(m.WriteProtection, sewriteProtection)

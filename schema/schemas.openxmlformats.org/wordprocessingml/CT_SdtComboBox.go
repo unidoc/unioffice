@@ -33,7 +33,6 @@ func (m *CT_SdtComboBox) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.LastValueAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ListItem != nil {
 		selistItem := xml.StartElement{Name: xml.Name{Local: "w:listItem"}}
 		e.EncodeElement(m.ListItem, selistItem)

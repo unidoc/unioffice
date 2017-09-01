@@ -35,7 +35,6 @@ func (m *CT_StyleLabel) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "name"},
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Scene3d != nil {
 		sescene3d := xml.StartElement{Name: xml.Name{Local: "scene3d"}}
 		e.EncodeElement(m.Scene3d, sescene3d)

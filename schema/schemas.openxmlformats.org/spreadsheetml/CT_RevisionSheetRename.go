@@ -54,7 +54,6 @@ func (m *CT_RevisionSheetRename) MarshalXML(e *xml.Encoder, start xml.StartEleme
 			Value: fmt.Sprintf("%v", *m.RaAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

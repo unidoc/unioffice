@@ -30,7 +30,6 @@ func (m *CT_DocPartCategory) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sename := xml.StartElement{Name: xml.Name{Local: "w:name"}}
 	e.EncodeElement(m.Name, sename)
 	segallery := xml.StartElement{Name: xml.Name{Local: "w:gallery"}}

@@ -27,7 +27,6 @@ func (m *CT_SingleXmlCells) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sesingleXmlCell := xml.StartElement{Name: xml.Name{Local: "x:singleXmlCell"}}
 	e.EncodeElement(m.SingleXmlCell, sesingleXmlCell)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

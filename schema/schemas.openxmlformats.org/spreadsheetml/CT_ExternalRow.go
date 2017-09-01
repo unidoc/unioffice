@@ -32,7 +32,6 @@ func (m *CT_ExternalRow) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r"},
 		Value: fmt.Sprintf("%v", m.RAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Cell != nil {
 		secell := xml.StartElement{Name: xml.Name{Local: "x:cell"}}
 		e.EncodeElement(m.Cell, secell)

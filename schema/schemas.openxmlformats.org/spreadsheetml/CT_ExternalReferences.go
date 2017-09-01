@@ -27,7 +27,6 @@ func (m *CT_ExternalReferences) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seexternalReference := xml.StartElement{Name: xml.Name{Local: "x:externalReference"}}
 	e.EncodeElement(m.ExternalReference, seexternalReference)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

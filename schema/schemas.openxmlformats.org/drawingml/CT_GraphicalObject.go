@@ -26,7 +26,6 @@ func (m *CT_GraphicalObject) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	segraphicData := xml.StartElement{Name: xml.Name{Local: "a:graphicData"}}
 	e.EncodeElement(m.GraphicData, segraphicData)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

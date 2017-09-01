@@ -50,7 +50,6 @@ func (m *CT_NonVisualDrawingProps) MarshalXML(e *xml.Encoder, start xml.StartEle
 			Value: fmt.Sprintf("%v", *m.TitleAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.HlinkClick != nil {
 		sehlinkClick := xml.StartElement{Name: xml.Name{Local: "a:hlinkClick"}}
 		e.EncodeElement(m.HlinkClick, sehlinkClick)

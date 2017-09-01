@@ -47,7 +47,6 @@ func (m *CT_Cfvo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.GteAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

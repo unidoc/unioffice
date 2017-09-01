@@ -75,7 +75,6 @@ func (m *CT_RevisionRowColumn) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.RaAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Undo != nil {
 		seundo := xml.StartElement{Name: xml.Name{Local: "x:undo"}}
 		e.EncodeElement(m.Undo, seundo)

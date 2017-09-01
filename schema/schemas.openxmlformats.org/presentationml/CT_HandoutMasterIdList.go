@@ -26,7 +26,6 @@ func (m *CT_HandoutMasterIdList) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.HandoutMasterId != nil {
 		sehandoutMasterId := xml.StartElement{Name: xml.Name{Local: "p:handoutMasterId"}}
 		e.EncodeElement(m.HandoutMasterId, sehandoutMasterId)

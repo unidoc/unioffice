@@ -34,7 +34,6 @@ func (m *CT_ManualLayout) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.LayoutTarget != nil {
 		selayoutTarget := xml.StartElement{Name: xml.Name{Local: "layoutTarget"}}
 		e.EncodeElement(m.LayoutTarget, selayoutTarget)

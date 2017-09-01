@@ -51,7 +51,6 @@ func (m *CT_Font) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:name"},
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.AltName != nil {
 		sealtName := xml.StartElement{Name: xml.Name{Local: "w:altName"}}
 		e.EncodeElement(m.AltName, sealtName)

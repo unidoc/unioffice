@@ -109,7 +109,6 @@ func (m *CT_WebPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.EditPageAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Tables != nil {
 		setables := xml.StartElement{Name: xml.Name{Local: "x:tables"}}
 		e.EncodeElement(m.Tables, setables)

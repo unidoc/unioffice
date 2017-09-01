@@ -37,7 +37,6 @@ func (m *CT_LineChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	segrouping := xml.StartElement{Name: xml.Name{Local: "grouping"}}
 	e.EncodeElement(m.Grouping, segrouping)
 	if m.VaryColors != nil {

@@ -42,7 +42,6 @@ func (m *CT_Algorithm) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.RevAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Param != nil {
 		separam := xml.StartElement{Name: xml.Name{Local: "param"}}
 		e.EncodeElement(m.Param, separam)

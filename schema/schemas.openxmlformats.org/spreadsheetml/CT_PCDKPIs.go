@@ -34,7 +34,6 @@ func (m *CT_PCDKPIs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Kpi != nil {
 		sekpi := xml.StartElement{Name: xml.Name{Local: "x:kpi"}}
 		e.EncodeElement(m.Kpi, sekpi)

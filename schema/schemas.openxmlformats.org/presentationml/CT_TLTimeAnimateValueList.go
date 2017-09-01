@@ -27,7 +27,6 @@ func (m *CT_TLTimeAnimateValueList) MarshalXML(e *xml.Encoder, start xml.StartEl
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Tav != nil {
 		setav := xml.StartElement{Name: xml.Name{Local: "p:tav"}}
 		e.EncodeElement(m.Tav, setav)

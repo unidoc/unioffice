@@ -31,7 +31,6 @@ func (m *CT_Comments) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seauthors := xml.StartElement{Name: xml.Name{Local: "x:authors"}}
 	e.EncodeElement(m.Authors, seauthors)
 	secommentList := xml.StartElement{Name: xml.Name{Local: "x:commentList"}}

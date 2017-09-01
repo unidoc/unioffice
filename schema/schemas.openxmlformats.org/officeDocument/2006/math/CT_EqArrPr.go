@@ -30,7 +30,6 @@ func (m *CT_EqArrPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.BaseJc != nil {
 		sebaseJc := xml.StartElement{Name: xml.Name{Local: "m:baseJc"}}
 		e.EncodeElement(m.BaseJc, sebaseJc)

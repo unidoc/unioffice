@@ -27,7 +27,6 @@ func (m *CT_Cols) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secol := xml.StartElement{Name: xml.Name{Local: "x:col"}}
 	e.EncodeElement(m.Col, secol)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

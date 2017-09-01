@@ -43,7 +43,6 @@ func (m *CT_StyleDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.MinVerAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Title != nil {
 		setitle := xml.StartElement{Name: xml.Name{Local: "title"}}
 		e.EncodeElement(m.Title, setitle)

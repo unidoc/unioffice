@@ -27,7 +27,6 @@ func (m *CT_DefinedNames) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DefinedName != nil {
 		sedefinedName := xml.StartElement{Name: xml.Name{Local: "x:definedName"}}
 		e.EncodeElement(m.DefinedName, sedefinedName)

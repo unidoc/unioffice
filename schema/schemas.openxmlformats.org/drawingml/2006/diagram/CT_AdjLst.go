@@ -26,7 +26,6 @@ func (m *CT_AdjLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Adj != nil {
 		seadj := xml.StartElement{Name: xml.Name{Local: "adj"}}
 		e.EncodeElement(m.Adj, seadj)

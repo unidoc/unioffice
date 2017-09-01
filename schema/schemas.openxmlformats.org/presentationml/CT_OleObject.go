@@ -65,7 +65,6 @@ func (m *CT_OleObject) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.ImgHAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	m.Choice.MarshalXML(e, start)
 	if m.Pic != nil {
 		sepic := xml.StartElement{Name: xml.Name{Local: "p:pic"}}

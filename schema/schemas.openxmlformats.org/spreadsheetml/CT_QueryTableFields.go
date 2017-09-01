@@ -34,7 +34,6 @@ func (m *CT_QueryTableFields) MarshalXML(e *xml.Encoder, start xml.StartElement)
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.QueryTableField != nil {
 		sequeryTableField := xml.StartElement{Name: xml.Name{Local: "x:queryTableField"}}
 		e.EncodeElement(m.QueryTableField, sequeryTableField)

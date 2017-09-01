@@ -45,7 +45,6 @@ func (m *CT_StyleDefinitionHeader) MarshalXML(e *xml.Encoder, start xml.StartEle
 			Value: fmt.Sprintf("%v", *m.ResIdAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	setitle := xml.StartElement{Name: xml.Name{Local: "title"}}
 	e.EncodeElement(m.Title, setitle)
 	sedesc := xml.StartElement{Name: xml.Name{Local: "desc"}}

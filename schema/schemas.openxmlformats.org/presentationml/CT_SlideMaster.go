@@ -51,7 +51,6 @@ func (m *CT_SlideMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.PreserveAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secSld := xml.StartElement{Name: xml.Name{Local: "p:cSld"}}
 	e.EncodeElement(m.CSld, secSld)
 	seclrMap := xml.StartElement{Name: xml.Name{Local: "p:clrMap"}}

@@ -34,7 +34,6 @@ func (m *CT_PivotAreaReferences) MarshalXML(e *xml.Encoder, start xml.StartEleme
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sereference := xml.StartElement{Name: xml.Name{Local: "x:reference"}}
 	e.EncodeElement(m.Reference, sereference)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -41,7 +41,6 @@ func (m *CT_Odso) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Udl != nil {
 		seudl := xml.StartElement{Name: xml.Name{Local: "w:udl"}}
 		e.EncodeElement(m.Udl, seudl)

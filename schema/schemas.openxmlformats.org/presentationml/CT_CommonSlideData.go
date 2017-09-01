@@ -41,7 +41,6 @@ func (m *CT_CommonSlideData) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.NameAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Bg != nil {
 		sebg := xml.StartElement{Name: xml.Name{Local: "p:bg"}}
 		e.EncodeElement(m.Bg, sebg)

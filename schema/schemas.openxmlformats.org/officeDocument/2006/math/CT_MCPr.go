@@ -26,7 +26,6 @@ func (m *CT_MCPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Count != nil {
 		secount := xml.StartElement{Name: xml.Name{Local: "m:count"}}
 		e.EncodeElement(m.Count, secount)

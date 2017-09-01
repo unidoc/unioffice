@@ -24,7 +24,6 @@ func (m *CT_TextBulletSizeFollowText) MarshalXML(e *xml.Encoder, start xml.Start
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

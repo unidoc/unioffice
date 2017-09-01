@@ -67,7 +67,6 @@ func (m *CT_ShowProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.UseTimingsAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Present != nil {
 		sepresent := xml.StartElement{Name: xml.Name{Local: "p:present"}}
 		e.EncodeElement(m.Present, sepresent)

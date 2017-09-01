@@ -27,7 +27,6 @@ func (m *CT_AnimationElementChoice) MarshalXML(e *xml.Encoder, start xml.StartEl
 	}
 	start.Name.Local = "a:CT_AnimationElementChoice"
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Dgm != nil {
 		sedgm := xml.StartElement{Name: xml.Name{Local: "a:dgm"}}
 		e.EncodeElement(m.Dgm, sedgm)

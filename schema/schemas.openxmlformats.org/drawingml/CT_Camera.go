@@ -44,7 +44,6 @@ func (m *CT_Camera) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.ZoomAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Rot != nil {
 		serot := xml.StartElement{Name: xml.Name{Local: "a:rot"}}
 		e.EncodeElement(m.Rot, serot)

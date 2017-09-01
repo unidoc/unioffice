@@ -27,7 +27,6 @@ func (m *CT_EqArr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EqArrPr != nil {
 		seeqArrPr := xml.StartElement{Name: xml.Name{Local: "m:eqArrPr"}}
 		e.EncodeElement(m.EqArrPr, seeqArrPr)

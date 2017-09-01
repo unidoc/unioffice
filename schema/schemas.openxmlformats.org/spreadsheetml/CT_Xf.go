@@ -110,7 +110,6 @@ func (m *CT_Xf) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.ApplyProtectionAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Alignment != nil {
 		sealignment := xml.StartElement{Name: xml.Name{Local: "x:alignment"}}
 		e.EncodeElement(m.Alignment, sealignment)

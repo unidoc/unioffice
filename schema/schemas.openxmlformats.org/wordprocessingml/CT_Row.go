@@ -56,7 +56,6 @@ func (m *CT_Row) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.RsidTrAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TblPrEx != nil {
 		setblPrEx := xml.StartElement{Name: xml.Name{Local: "w:tblPrEx"}}
 		e.EncodeElement(m.TblPrEx, setblPrEx)

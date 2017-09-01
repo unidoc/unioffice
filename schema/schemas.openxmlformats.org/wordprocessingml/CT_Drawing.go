@@ -29,7 +29,6 @@ func (m *CT_Drawing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Anchor != nil {
 		seanchor := xml.StartElement{Name: xml.Name{Local: "wp:anchor"}}
 		e.EncodeElement(m.Anchor, seanchor)

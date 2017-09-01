@@ -27,7 +27,6 @@ func (m *CT_SlideViewProperties) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secSldViewPr := xml.StartElement{Name: xml.Name{Local: "p:cSldViewPr"}}
 	e.EncodeElement(m.CSldViewPr, secSldViewPr)
 	if m.ExtLst != nil {

@@ -52,7 +52,6 @@ func (m *CT_DdeItem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.PreferPicAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Values != nil {
 		sevalues := xml.StartElement{Name: xml.Name{Local: "x:values"}}
 		e.EncodeElement(m.Values, sevalues)

@@ -36,7 +36,6 @@ func (m *CT_TLAnimVariant) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.BoolVal != nil {
 		seboolVal := xml.StartElement{Name: xml.Name{Local: "p:boolVal"}}
 		e.EncodeElement(m.BoolVal, seboolVal)

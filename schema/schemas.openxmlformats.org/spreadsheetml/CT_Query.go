@@ -31,7 +31,6 @@ func (m *CT_Query) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "mdx"},
 		Value: fmt.Sprintf("%v", m.MdxAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Tpls != nil {
 		setpls := xml.StartElement{Name: xml.Name{Local: "x:tpls"}}
 		e.EncodeElement(m.Tpls, setpls)

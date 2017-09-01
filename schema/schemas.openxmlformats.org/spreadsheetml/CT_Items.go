@@ -34,7 +34,6 @@ func (m *CT_Items) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seitem := xml.StartElement{Name: xml.Name{Local: "x:item"}}
 	e.EncodeElement(m.Item, seitem)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -38,7 +38,6 @@ func (m *CT_FillOverlayEffect) MarshalXML(e *xml.Encoder, start xml.StartElement
 	}
 	start.Attr = append(start.Attr, attr)
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.NoFill != nil {
 		senoFill := xml.StartElement{Name: xml.Name{Local: "a:noFill"}}
 		e.EncodeElement(m.NoFill, senoFill)

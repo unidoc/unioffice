@@ -27,7 +27,6 @@ func (m *CT_DocParts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DocPart != nil {
 		sedocPart := xml.StartElement{Name: xml.Name{Local: "w:docPart"}}
 		e.EncodeElement(m.DocPart, sedocPart)

@@ -34,7 +34,6 @@ func (m *CT_RowHierarchiesUsage) MarshalXML(e *xml.Encoder, start xml.StartEleme
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	serowHierarchyUsage := xml.StartElement{Name: xml.Name{Local: "x:rowHierarchyUsage"}}
 	e.EncodeElement(m.RowHierarchyUsage, serowHierarchyUsage)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

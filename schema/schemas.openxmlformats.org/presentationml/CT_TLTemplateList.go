@@ -27,7 +27,6 @@ func (m *CT_TLTemplateList) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Tmpl != nil {
 		setmpl := xml.StartElement{Name: xml.Name{Local: "p:tmpl"}}
 		e.EncodeElement(m.Tmpl, setmpl)

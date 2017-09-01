@@ -35,7 +35,6 @@ func (m *CT_Rst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.T != nil {
 		set := xml.StartElement{Name: xml.Name{Local: "x:t"}}
 		gooxml.AddPreserveSpaceAttr(&set, *m.T)

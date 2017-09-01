@@ -26,7 +26,6 @@ func (m *CT_GradientStopList) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	segs := xml.StartElement{Name: xml.Name{Local: "a:gs"}}
 	e.EncodeElement(m.Gs, segs)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

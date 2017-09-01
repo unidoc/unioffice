@@ -40,7 +40,6 @@ func (m *CT_LightRig) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	start.Attr = append(start.Attr, attr)
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Rot != nil {
 		serot := xml.StartElement{Name: xml.Name{Local: "a:rot"}}
 		e.EncodeElement(m.Rot, serot)

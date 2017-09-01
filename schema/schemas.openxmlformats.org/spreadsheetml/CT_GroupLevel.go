@@ -50,7 +50,6 @@ func (m *CT_GroupLevel) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CustomRollUpAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Groups != nil {
 		segroups := xml.StartElement{Name: xml.Name{Local: "x:groups"}}
 		e.EncodeElement(m.Groups, segroups)

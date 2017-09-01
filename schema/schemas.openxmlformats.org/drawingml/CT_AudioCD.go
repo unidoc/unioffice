@@ -29,7 +29,6 @@ func (m *CT_AudioCD) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sest := xml.StartElement{Name: xml.Name{Local: "a:st"}}
 	e.EncodeElement(m.St, sest)
 	seend := xml.StartElement{Name: xml.Name{Local: "a:end"}}

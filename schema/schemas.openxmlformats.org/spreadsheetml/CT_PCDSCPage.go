@@ -34,7 +34,6 @@ func (m *CT_PCDSCPage) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PageItem != nil {
 		sepageItem := xml.StartElement{Name: xml.Name{Local: "x:pageItem"}}
 		e.EncodeElement(m.PageItem, sepageItem)

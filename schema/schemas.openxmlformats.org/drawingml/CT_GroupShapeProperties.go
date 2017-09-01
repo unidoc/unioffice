@@ -43,7 +43,6 @@ func (m *CT_GroupShapeProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Xfrm != nil {
 		sexfrm := xml.StartElement{Name: xml.Name{Local: "a:xfrm"}}
 		e.EncodeElement(m.Xfrm, sexfrm)

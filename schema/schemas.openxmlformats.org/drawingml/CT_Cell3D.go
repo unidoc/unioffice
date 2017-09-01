@@ -36,7 +36,6 @@ func (m *CT_Cell3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sebevel := xml.StartElement{Name: xml.Name{Local: "a:bevel"}}
 	e.EncodeElement(m.Bevel, sebevel)
 	if m.LightRig != nil {

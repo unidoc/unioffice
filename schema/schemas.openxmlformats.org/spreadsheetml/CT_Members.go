@@ -40,7 +40,6 @@ func (m *CT_Members) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.LevelAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	semember := xml.StartElement{Name: xml.Name{Local: "x:member"}}
 	e.EncodeElement(m.Member, semember)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

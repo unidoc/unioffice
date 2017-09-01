@@ -68,7 +68,6 @@ func (m *CT_RevisionAutoFormatting) MarshalXML(e *xml.Encoder, start xml.StartEl
 			Value: fmt.Sprintf("%v", *m.ApplyWidthHeightFormatsAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

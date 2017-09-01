@@ -29,7 +29,6 @@ func (m *CT_BandFmt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
 	e.EncodeElement(m.Idx, seidx)
 	if m.SpPr != nil {

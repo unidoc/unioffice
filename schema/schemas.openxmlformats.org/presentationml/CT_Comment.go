@@ -50,7 +50,6 @@ func (m *CT_Comment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "idx"},
 		Value: fmt.Sprintf("%v", m.IdxAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	sepos := xml.StartElement{Name: xml.Name{Local: "p:pos"}}
 	e.EncodeElement(m.Pos, sepos)
 	setext := xml.StartElement{Name: xml.Name{Local: "p:text"}}

@@ -115,7 +115,6 @@ func (m *CT_RevisionCellChange) MarshalXML(e *xml.Encoder, start xml.StartElemen
 			Value: fmt.Sprintf("%v", *m.RaAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Oc != nil {
 		seoc := xml.StartElement{Name: xml.Name{Local: "x:oc"}}
 		e.EncodeElement(m.Oc, seoc)

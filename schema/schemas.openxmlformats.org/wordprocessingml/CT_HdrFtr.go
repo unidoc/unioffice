@@ -30,7 +30,6 @@ func (m *CT_HdrFtr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.AltChunk != nil {
 		sealtChunk := xml.StartElement{Name: xml.Name{Local: "w:altChunk"}}
 		e.EncodeElement(m.AltChunk, sealtChunk)

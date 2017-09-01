@@ -47,7 +47,6 @@ func (m *CT_SharedUser) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dateTime"},
 		Value: fmt.Sprintf("%v", m.DateTimeAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

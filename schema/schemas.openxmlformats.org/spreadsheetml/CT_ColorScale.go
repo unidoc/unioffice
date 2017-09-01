@@ -29,7 +29,6 @@ func (m *CT_ColorScale) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secfvo := xml.StartElement{Name: xml.Name{Local: "x:cfvo"}}
 	e.EncodeElement(m.Cfvo, secfvo)
 	secolor := xml.StartElement{Name: xml.Name{Local: "x:color"}}

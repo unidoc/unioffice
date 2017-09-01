@@ -123,7 +123,6 @@ func (m *CT_SharedItems) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.LongTextAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.M != nil {
 		sem := xml.StartElement{Name: xml.Name{Local: "x:m"}}
 		e.EncodeElement(m.M, sem)

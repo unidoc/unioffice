@@ -27,7 +27,6 @@ func (m *CT_PivotCaches) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sepivotCache := xml.StartElement{Name: xml.Name{Local: "x:pivotCache"}}
 	e.EncodeElement(m.PivotCache, sepivotCache)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

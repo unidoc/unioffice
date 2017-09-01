@@ -32,7 +32,6 @@ func (m *CT_PresetLineDashProperties) MarshalXML(e *xml.Encoder, start xml.Start
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

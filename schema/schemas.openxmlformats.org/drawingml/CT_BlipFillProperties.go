@@ -40,7 +40,6 @@ func (m *CT_BlipFillProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 			Value: fmt.Sprintf("%v", *m.RotWithShapeAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Blip != nil {
 		seblip := xml.StartElement{Name: xml.Name{Local: "a:blip"}}
 		e.EncodeElement(m.Blip, seblip)

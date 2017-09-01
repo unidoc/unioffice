@@ -29,7 +29,6 @@ func (m *CT_ClipboardStyleSheet) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	start.Name.Local = "a:CT_ClipboardStyleSheet"
 	e.EncodeToken(start)
-	start.Attr = nil
 	sethemeElements := xml.StartElement{Name: xml.Name{Local: "a:themeElements"}}
 	e.EncodeElement(m.ThemeElements, sethemeElements)
 	seclrMap := xml.StartElement{Name: xml.Name{Local: "a:clrMap"}}

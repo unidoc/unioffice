@@ -26,7 +26,6 @@ func (m *CT_SchemaLibrary) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Schema != nil {
 		seschema := xml.StartElement{Name: xml.Name{Local: "ma:schema"}}
 		e.EncodeElement(m.Schema, seschema)

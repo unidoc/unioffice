@@ -40,7 +40,6 @@ func (m *CT_FutureMetadata) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Bk != nil {
 		sebk := xml.StartElement{Name: xml.Name{Local: "x:bk"}}
 		e.EncodeElement(m.Bk, sebk)

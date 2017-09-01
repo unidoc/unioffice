@@ -34,7 +34,6 @@ func (m *CT_FunctionGroups) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.BuiltInGroupCountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FunctionGroup != nil {
 		sefunctionGroup := xml.StartElement{Name: xml.Name{Local: "x:functionGroup"}}
 		e.EncodeElement(m.FunctionGroup, sefunctionGroup)

@@ -33,7 +33,6 @@ func (m *CT_NonVisualPictureProperties) MarshalXML(e *xml.Encoder, start xml.Sta
 			Value: fmt.Sprintf("%v", *m.PreferRelativeResizeAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PicLocks != nil {
 		sepicLocks := xml.StartElement{Name: xml.Name{Local: "a:picLocks"}}
 		e.EncodeElement(m.PicLocks, sepicLocks)

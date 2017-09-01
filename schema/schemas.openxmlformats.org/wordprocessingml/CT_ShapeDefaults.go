@@ -26,7 +26,6 @@ func (m *CT_ShapeDefaults) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Any != nil {
 		for _, c := range m.Any {
 			c.MarshalXML(e, start)

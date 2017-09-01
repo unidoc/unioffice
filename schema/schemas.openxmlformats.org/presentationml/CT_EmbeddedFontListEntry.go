@@ -37,7 +37,6 @@ func (m *CT_EmbeddedFontListEntry) MarshalXML(e *xml.Encoder, start xml.StartEle
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sefont := xml.StartElement{Name: xml.Name{Local: "p:font"}}
 	e.EncodeElement(m.Font, sefont)
 	if m.Regular != nil {

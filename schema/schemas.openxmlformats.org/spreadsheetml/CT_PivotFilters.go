@@ -34,7 +34,6 @@ func (m *CT_PivotFilters) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Filter != nil {
 		sefilter := xml.StartElement{Name: xml.Name{Local: "x:filter"}}
 		e.EncodeElement(m.Filter, sefilter)

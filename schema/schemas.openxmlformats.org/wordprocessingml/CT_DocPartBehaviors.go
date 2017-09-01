@@ -27,7 +27,6 @@ func (m *CT_DocPartBehaviors) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Behavior != nil {
 		sebehavior := xml.StartElement{Name: xml.Name{Local: "w:behavior"}}
 		e.EncodeElement(m.Behavior, sebehavior)

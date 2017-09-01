@@ -67,7 +67,6 @@ func (m *CT_GradientFill) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.BottomAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Stop != nil {
 		sestop := xml.StartElement{Name: xml.Name{Local: "x:stop"}}
 		e.EncodeElement(m.Stop, sestop)

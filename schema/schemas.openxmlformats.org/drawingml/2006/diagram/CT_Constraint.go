@@ -76,7 +76,6 @@ func (m *CT_Constraint) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

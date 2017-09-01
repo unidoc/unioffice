@@ -47,7 +47,6 @@ func (m *CT_TLGraphicalObjectBuild) MarshalXML(e *xml.Encoder, start xml.StartEl
 			Value: fmt.Sprintf("%v", *m.UiExpandAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.BldAsOne != nil {
 		sebldAsOne := xml.StartElement{Name: xml.Name{Local: "p:bldAsOne"}}
 		e.EncodeElement(m.BldAsOne, sebldAsOne)

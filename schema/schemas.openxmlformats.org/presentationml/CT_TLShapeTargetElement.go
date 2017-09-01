@@ -42,7 +42,6 @@ func (m *CT_TLShapeTargetElement) MarshalXML(e *xml.Encoder, start xml.StartElem
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "spid"},
 		Value: fmt.Sprintf("%v", m.SpidAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Bg != nil {
 		sebg := xml.StartElement{Name: xml.Name{Local: "p:bg"}}
 		e.EncodeElement(m.Bg, sebg)

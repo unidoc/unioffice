@@ -27,7 +27,6 @@ func (m *CT_Box) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.BoxPr != nil {
 		seboxPr := xml.StartElement{Name: xml.Name{Local: "m:boxPr"}}
 		e.EncodeElement(m.BoxPr, seboxPr)

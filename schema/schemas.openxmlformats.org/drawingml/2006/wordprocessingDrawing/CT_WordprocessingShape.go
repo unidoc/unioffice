@@ -43,7 +43,6 @@ func (m *CT_WordprocessingShape) MarshalXML(e *xml.Encoder, start xml.StartEleme
 			Value: fmt.Sprintf("%v", *m.NormalEastAsianFlowAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CNvPr != nil {
 		secNvPr := xml.StartElement{Name: xml.Name{Local: "wp:cNvPr"}}
 		e.EncodeElement(m.CNvPr, secNvPr)

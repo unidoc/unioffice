@@ -34,7 +34,6 @@ func (m *CT_Dimensions) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Dimension != nil {
 		sedimension := xml.StartElement{Name: xml.Name{Local: "x:dimension"}}
 		e.EncodeElement(m.Dimension, sedimension)

@@ -34,7 +34,6 @@ func (m *CT_Groups) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	segroup := xml.StartElement{Name: xml.Name{Local: "x:group"}}
 	e.EncodeElement(m.Group, segroup)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -42,7 +42,6 @@ func (m *CT_VolTopic) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sev := xml.StartElement{Name: xml.Name{Local: "x:v"}}
 	gooxml.AddPreserveSpaceAttr(&sev, m.V)
 	e.EncodeElement(m.V, sev)

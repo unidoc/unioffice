@@ -33,7 +33,6 @@ func (m *CT_BuildList) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.BldP != nil {
 		sebldP := xml.StartElement{Name: xml.Name{Local: "p:bldP"}}
 		e.EncodeElement(m.BldP, sebldP)

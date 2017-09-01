@@ -47,7 +47,6 @@ func (m *CT_SimpleField) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.DirtyAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FldData != nil {
 		sefldData := xml.StartElement{Name: xml.Name{Local: "w:fldData"}}
 		e.EncodeElement(m.FldData, sefldData)

@@ -172,7 +172,6 @@ func (m *CT_CustomSheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.TopLeftCellAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Pane != nil {
 		sepane := xml.StartElement{Name: xml.Name{Local: "x:pane"}}
 		e.EncodeElement(m.Pane, sepane)

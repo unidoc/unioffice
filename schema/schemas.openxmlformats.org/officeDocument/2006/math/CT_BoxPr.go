@@ -30,7 +30,6 @@ func (m *CT_BoxPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.OpEmu != nil {
 		seopEmu := xml.StartElement{Name: xml.Name{Local: "m:opEmu"}}
 		e.EncodeElement(m.OpEmu, seopEmu)

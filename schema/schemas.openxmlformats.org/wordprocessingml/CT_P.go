@@ -60,7 +60,6 @@ func (m *CT_P) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.RsidRDefaultAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PPr != nil {
 		sepPr := xml.StartElement{Name: xml.Name{Local: "w:pPr"}}
 		e.EncodeElement(m.PPr, sepPr)

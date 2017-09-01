@@ -135,7 +135,6 @@ func (m *CT_Presentation) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SldMasterIdLst != nil {
 		sesldMasterIdLst := xml.StartElement{Name: xml.Name{Local: "p:sldMasterIdLst"}}
 		e.EncodeElement(m.SldMasterIdLst, sesldMasterIdLst)

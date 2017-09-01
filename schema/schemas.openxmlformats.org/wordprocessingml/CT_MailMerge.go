@@ -58,7 +58,6 @@ func (m *CT_MailMerge) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	semainDocumentType := xml.StartElement{Name: xml.Name{Local: "w:mainDocumentType"}}
 	e.EncodeElement(m.MainDocumentType, semainDocumentType)
 	if m.LinkToQuery != nil {

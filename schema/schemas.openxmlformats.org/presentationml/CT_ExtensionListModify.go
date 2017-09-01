@@ -34,7 +34,6 @@ func (m *CT_ExtensionListModify) MarshalXML(e *xml.Encoder, start xml.StartEleme
 			Value: fmt.Sprintf("%v", *m.ModAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Ext != nil {
 		seext := xml.StartElement{Name: xml.Name{Local: "p:ext"}}
 		e.EncodeElement(m.Ext, seext)

@@ -28,7 +28,6 @@ func (m *CT_TLByAnimateColorTransform) MarshalXML(e *xml.Encoder, start xml.Star
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Rgb != nil {
 		sergb := xml.StartElement{Name: xml.Name{Local: "p:rgb"}}
 		e.EncodeElement(m.Rgb, sergb)

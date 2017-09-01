@@ -39,7 +39,6 @@ func (m *CT_MathPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.MathFont != nil {
 		semathFont := xml.StartElement{Name: xml.Name{Local: "m:mathFont"}}
 		e.EncodeElement(m.MathFont, semathFont)

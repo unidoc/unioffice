@@ -34,7 +34,6 @@ func (m *CT_CellXfs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sexf := xml.StartElement{Name: xml.Name{Local: "x:xf"}}
 	e.EncodeElement(m.Xf, sexf)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

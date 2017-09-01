@@ -27,7 +27,6 @@ func (m *CT_SlideLayoutIdList) MarshalXML(e *xml.Encoder, start xml.StartElement
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.SldLayoutId != nil {
 		sesldLayoutId := xml.StartElement{Name: xml.Name{Local: "p:sldLayoutId"}}
 		e.EncodeElement(m.SldLayoutId, sesldLayoutId)

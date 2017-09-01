@@ -33,7 +33,6 @@ func (m *CT_PathShadeProperties) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FillToRect != nil {
 		sefillToRect := xml.StartElement{Name: xml.Name{Local: "a:fillToRect"}}
 		e.EncodeElement(m.FillToRect, sefillToRect)

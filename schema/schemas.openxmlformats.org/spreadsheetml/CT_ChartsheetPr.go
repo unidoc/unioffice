@@ -39,7 +39,6 @@ func (m *CT_ChartsheetPr) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.CodeNameAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TabColor != nil {
 		setabColor := xml.StartElement{Name: xml.Name{Local: "x:tabColor"}}
 		e.EncodeElement(m.TabColor, setabColor)

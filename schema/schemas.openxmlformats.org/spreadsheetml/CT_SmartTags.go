@@ -27,7 +27,6 @@ func (m *CT_SmartTags) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secellSmartTags := xml.StartElement{Name: xml.Name{Local: "x:cellSmartTags"}}
 	e.EncodeElement(m.CellSmartTags, secellSmartTags)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

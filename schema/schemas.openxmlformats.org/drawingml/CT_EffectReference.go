@@ -27,7 +27,6 @@ func (m *CT_EffectReference) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ref"},
 		Value: fmt.Sprintf("%v", m.RefAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

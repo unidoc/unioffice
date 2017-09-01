@@ -60,7 +60,6 @@ func (m *CT_Path2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.ExtrusionOkAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Close != nil {
 		seclose := xml.StartElement{Name: xml.Name{Local: "a:close"}}
 		e.EncodeElement(m.Close, seclose)

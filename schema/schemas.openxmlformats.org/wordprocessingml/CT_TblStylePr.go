@@ -43,7 +43,6 @@ func (m *CT_TblStylePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	start.Attr = append(start.Attr, attr)
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PPr != nil {
 		sepPr := xml.StartElement{Name: xml.Name{Local: "w:pPr"}}
 		e.EncodeElement(m.PPr, sepPr)

@@ -35,7 +35,6 @@ func (m *CT_Tbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EG_RangeMarkupElements != nil {
 		for _, c := range m.EG_RangeMarkupElements {
 			c.MarshalXML(e, start)

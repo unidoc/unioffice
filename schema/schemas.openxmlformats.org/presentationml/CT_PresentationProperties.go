@@ -37,7 +37,6 @@ func (m *CT_PresentationProperties) MarshalXML(e *xml.Encoder, start xml.StartEl
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.HtmlPubPr != nil {
 		sehtmlPubPr := xml.StartElement{Name: xml.Name{Local: "p:htmlPubPr"}}
 		e.EncodeElement(m.HtmlPubPr, sehtmlPubPr)

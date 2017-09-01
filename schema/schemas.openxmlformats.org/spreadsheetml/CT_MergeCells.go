@@ -34,7 +34,6 @@ func (m *CT_MergeCells) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	semergeCell := xml.StartElement{Name: xml.Name{Local: "x:mergeCell"}}
 	e.EncodeElement(m.MergeCell, semergeCell)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

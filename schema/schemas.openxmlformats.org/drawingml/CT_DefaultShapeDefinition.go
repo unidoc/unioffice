@@ -32,7 +32,6 @@ func (m *CT_DefaultShapeDefinition) MarshalXML(e *xml.Encoder, start xml.StartEl
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sespPr := xml.StartElement{Name: xml.Name{Local: "a:spPr"}}
 	e.EncodeElement(m.SpPr, sespPr)
 	sebodyPr := xml.StartElement{Name: xml.Name{Local: "a:bodyPr"}}

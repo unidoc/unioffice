@@ -98,7 +98,6 @@ func (m *CT_PivotHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.CaptionAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Mps != nil {
 		semps := xml.StartElement{Name: xml.Name{Local: "x:mps"}}
 		e.EncodeElement(m.Mps, semps)

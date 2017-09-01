@@ -34,7 +34,6 @@ func (m *CT_TupleCache) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Entries != nil {
 		seentries := xml.StartElement{Name: xml.Name{Local: "x:entries"}}
 		e.EncodeElement(m.Entries, seentries)

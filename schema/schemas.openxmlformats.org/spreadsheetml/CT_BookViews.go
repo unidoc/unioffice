@@ -27,7 +27,6 @@ func (m *CT_BookViews) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seworkbookView := xml.StartElement{Name: xml.Name{Local: "x:workbookView"}}
 	e.EncodeElement(m.WorkbookView, seworkbookView)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

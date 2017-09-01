@@ -38,7 +38,6 @@ func (m *CT_SystemColor) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.LastClrAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EG_ColorTransform != nil {
 		for _, c := range m.EG_ColorTransform {
 			c.MarshalXML(e, start)

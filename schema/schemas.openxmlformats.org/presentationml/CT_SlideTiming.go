@@ -28,7 +28,6 @@ func (m *CT_SlideTiming) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TnLst != nil {
 		setnLst := xml.StartElement{Name: xml.Name{Local: "p:tnLst"}}
 		e.EncodeElement(m.TnLst, setnLst)

@@ -51,7 +51,6 @@ func (m *CT_ExternalCell) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.VmAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.V != nil {
 		sev := xml.StartElement{Name: xml.Name{Local: "x:v"}}
 		gooxml.AddPreserveSpaceAttr(&sev, *m.V)

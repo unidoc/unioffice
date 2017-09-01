@@ -40,7 +40,6 @@ func (m *CT_Trendline) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Name != nil {
 		sename := xml.StartElement{Name: xml.Name{Local: "name"}}
 		gooxml.AddPreserveSpaceAttr(&sename, *m.Name)

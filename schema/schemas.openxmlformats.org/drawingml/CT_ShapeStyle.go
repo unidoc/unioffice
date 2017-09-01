@@ -32,7 +32,6 @@ func (m *CT_ShapeStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	selnRef := xml.StartElement{Name: xml.Name{Local: "a:lnRef"}}
 	e.EncodeElement(m.LnRef, selnRef)
 	sefillRef := xml.StartElement{Name: xml.Name{Local: "a:fillRef"}}

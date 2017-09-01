@@ -44,7 +44,6 @@ func (m *CT_Shape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.UseBgFillAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	senvSpPr := xml.StartElement{Name: xml.Name{Local: "p:nvSpPr"}}
 	e.EncodeElement(m.NvSpPr, senvSpPr)
 	sespPr := xml.StartElement{Name: xml.Name{Local: "p:spPr"}}

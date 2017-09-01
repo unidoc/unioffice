@@ -27,7 +27,6 @@ func (m *CT_Phant) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PhantPr != nil {
 		sephantPr := xml.StartElement{Name: xml.Name{Local: "m:phantPr"}}
 		e.EncodeElement(m.PhantPr, sephantPr)

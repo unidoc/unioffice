@@ -66,7 +66,6 @@ func (m *CT_LatentStyles) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.LsdException != nil {
 		selsdException := xml.StartElement{Name: xml.Name{Local: "w:lsdException"}}
 		e.EncodeElement(m.LsdException, selsdException)

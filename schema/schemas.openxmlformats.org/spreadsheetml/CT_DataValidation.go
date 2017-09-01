@@ -120,7 +120,6 @@ func (m *CT_DataValidation) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "sqref"},
 		Value: fmt.Sprintf("%v", m.SqrefAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Formula1 != nil {
 		seformula1 := xml.StartElement{Name: xml.Name{Local: "x:formula1"}}
 		gooxml.AddPreserveSpaceAttr(&seformula1, *m.Formula1)

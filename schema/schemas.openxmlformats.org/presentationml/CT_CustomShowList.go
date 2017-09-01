@@ -27,7 +27,6 @@ func (m *CT_CustomShowList) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CustShow != nil {
 		secustShow := xml.StartElement{Name: xml.Name{Local: "p:custShow"}}
 		e.EncodeElement(m.CustShow, secustShow)

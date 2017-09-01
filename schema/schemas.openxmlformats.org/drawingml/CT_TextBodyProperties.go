@@ -144,7 +144,6 @@ func (m *CT_TextBodyProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 			Value: fmt.Sprintf("%v", *m.CompatLnSpcAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PrstTxWarp != nil {
 		seprstTxWarp := xml.StartElement{Name: xml.Name{Local: "a:prstTxWarp"}}
 		e.EncodeElement(m.PrstTxWarp, seprstTxWarp)

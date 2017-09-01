@@ -33,7 +33,6 @@ func (m *CT_DTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ShowHorzBorder != nil {
 		seshowHorzBorder := xml.StartElement{Name: xml.Name{Local: "showHorzBorder"}}
 		e.EncodeElement(m.ShowHorzBorder, seshowHorzBorder)

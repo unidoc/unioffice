@@ -34,7 +34,6 @@ func (m *CT_QueryTableDeletedFields) MarshalXML(e *xml.Encoder, start xml.StartE
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sedeletedField := xml.StartElement{Name: xml.Name{Local: "x:deletedField"}}
 	e.EncodeElement(m.DeletedField, sedeletedField)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -34,7 +34,6 @@ func (m *CT_Fonts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Font != nil {
 		sefont := xml.StartElement{Name: xml.Name{Local: "x:font"}}
 		e.EncodeElement(m.Font, sefont)

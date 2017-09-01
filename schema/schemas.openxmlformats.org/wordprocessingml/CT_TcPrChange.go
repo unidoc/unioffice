@@ -41,7 +41,6 @@ func (m *CT_TcPrChange) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:id"},
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	setcPr := xml.StartElement{Name: xml.Name{Local: "w:tcPr"}}
 	e.EncodeElement(m.TcPr, setcPr)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

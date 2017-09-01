@@ -28,7 +28,6 @@ func (m *CT_RPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EG_RPrBase != nil {
 		for _, c := range m.EG_RPrBase {
 			c.MarshalXML(e, start)

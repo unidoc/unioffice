@@ -43,7 +43,6 @@ func (m *CT_SingleXmlCell) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "connectionId"},
 		Value: fmt.Sprintf("%v", m.ConnectionIdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	sexmlCellPr := xml.StartElement{Name: xml.Name{Local: "x:xmlCellPr"}}
 	e.EncodeElement(m.XmlCellPr, sexmlCellPr)
 	if m.ExtLst != nil {

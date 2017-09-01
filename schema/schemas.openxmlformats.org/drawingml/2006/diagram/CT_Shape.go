@@ -65,7 +65,6 @@ func (m *CT_Shape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.BlipPhldrAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.AdjLst != nil {
 		seadjLst := xml.StartElement{Name: xml.Name{Local: "adjLst"}}
 		e.EncodeElement(m.AdjLst, seadjLst)

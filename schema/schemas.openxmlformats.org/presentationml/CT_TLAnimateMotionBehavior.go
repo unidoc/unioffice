@@ -70,7 +70,6 @@ func (m *CT_TLAnimateMotionBehavior) MarshalXML(e *xml.Encoder, start xml.StartE
 			Value: fmt.Sprintf("%v", *m.PtsTypesAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secBhvr := xml.StartElement{Name: xml.Name{Local: "p:cBhvr"}}
 	e.EncodeElement(m.CBhvr, secBhvr)
 	if m.By != nil {

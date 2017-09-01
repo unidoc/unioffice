@@ -170,7 +170,6 @@ func (m *CT_ElemPropSet) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.CustRadScaleIncAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.PresLayoutVars != nil {
 		sepresLayoutVars := xml.StartElement{Name: xml.Name{Local: "presLayoutVars"}}
 		e.EncodeElement(m.PresLayoutVars, sepresLayoutVars)

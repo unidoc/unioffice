@@ -38,7 +38,6 @@ func (m *CT_EffectExtent) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "b"},
 		Value: fmt.Sprintf("%v", m.BAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

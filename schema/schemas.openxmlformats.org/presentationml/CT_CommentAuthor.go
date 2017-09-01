@@ -47,7 +47,6 @@ func (m *CT_CommentAuthor) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "clrIdx"},
 		Value: fmt.Sprintf("%v", m.ClrIdxAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "p:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

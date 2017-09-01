@@ -196,7 +196,6 @@ func (m *CT_TLCommonTimeNodeData) MarshalXML(e *xml.Encoder, start xml.StartElem
 			Value: fmt.Sprintf("%v", *m.NodePhAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.StCondLst != nil {
 		sestCondLst := xml.StartElement{Name: xml.Name{Local: "p:stCondLst"}}
 		e.EncodeElement(m.StCondLst, sestCondLst)

@@ -39,7 +39,6 @@ func (m *CT_TLOleChartTargetElement) MarshalXML(e *xml.Encoder, start xml.StartE
 			Value: fmt.Sprintf("%v", *m.LvlAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

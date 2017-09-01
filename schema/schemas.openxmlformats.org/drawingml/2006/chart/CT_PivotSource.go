@@ -31,7 +31,6 @@ func (m *CT_PivotSource) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sename := xml.StartElement{Name: xml.Name{Local: "name"}}
 	gooxml.AddPreserveSpaceAttr(&sename, m.Name)
 	e.EncodeElement(m.Name, sename)

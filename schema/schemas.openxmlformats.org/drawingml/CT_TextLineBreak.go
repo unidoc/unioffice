@@ -25,7 +25,6 @@ func (m *CT_TextLineBreak) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.RPr != nil {
 		serPr := xml.StartElement{Name: xml.Name{Local: "a:rPr"}}
 		e.EncodeElement(m.RPr, serPr)

@@ -25,7 +25,6 @@ func (m *RFC3066) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	start.Name.Local = "RFC3066"
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

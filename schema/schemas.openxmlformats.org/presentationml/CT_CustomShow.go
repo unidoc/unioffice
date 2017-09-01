@@ -38,7 +38,6 @@ func (m *CT_CustomShow) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "id"},
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	sesldLst := xml.StartElement{Name: xml.Name{Local: "p:sldLst"}}
 	e.EncodeElement(m.SldLst, sesldLst)
 	if m.ExtLst != nil {

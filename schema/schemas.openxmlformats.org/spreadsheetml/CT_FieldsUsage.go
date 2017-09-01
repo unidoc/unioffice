@@ -34,7 +34,6 @@ func (m *CT_FieldsUsage) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FieldUsage != nil {
 		sefieldUsage := xml.StartElement{Name: xml.Name{Local: "x:fieldUsage"}}
 		e.EncodeElement(m.FieldUsage, sefieldUsage)

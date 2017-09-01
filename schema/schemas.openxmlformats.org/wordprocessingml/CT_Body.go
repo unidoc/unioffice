@@ -30,7 +30,6 @@ func (m *CT_Body) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EG_BlockLevelElts != nil {
 		for _, c := range m.EG_BlockLevelElts {
 			c.MarshalXML(e, start)

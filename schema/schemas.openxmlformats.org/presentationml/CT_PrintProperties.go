@@ -63,7 +63,6 @@ func (m *CT_PrintProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.FrameSlidesAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "p:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

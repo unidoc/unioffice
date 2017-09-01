@@ -32,7 +32,6 @@ func (m *CT_EffectList) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Blur != nil {
 		seblur := xml.StartElement{Name: xml.Name{Local: "a:blur"}}
 		e.EncodeElement(m.Blur, seblur)

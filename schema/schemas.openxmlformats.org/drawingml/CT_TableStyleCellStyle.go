@@ -28,7 +28,6 @@ func (m *CT_TableStyleCellStyle) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TcBdr != nil {
 		setcBdr := xml.StartElement{Name: xml.Name{Local: "a:tcBdr"}}
 		e.EncodeElement(m.TcBdr, setcBdr)

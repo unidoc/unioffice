@@ -27,7 +27,6 @@ func (m *CT_TextCharBullet) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "char"},
 		Value: fmt.Sprintf("%v", m.CharAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

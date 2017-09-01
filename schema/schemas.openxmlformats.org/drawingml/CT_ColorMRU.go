@@ -27,7 +27,6 @@ func (m *CT_ColorMRU) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	start.Name.Local = "a:CT_ColorMRU"
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EG_ColorChoice != nil {
 		for _, c := range m.EG_ColorChoice {
 			c.MarshalXML(e, start)

@@ -37,7 +37,6 @@ func (m *CT_RevisionQueryTableField) MarshalXML(e *xml.Encoder, start xml.StartE
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fieldId"},
 		Value: fmt.Sprintf("%v", m.FieldIdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

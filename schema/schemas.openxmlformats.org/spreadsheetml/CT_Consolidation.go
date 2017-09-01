@@ -37,7 +37,6 @@ func (m *CT_Consolidation) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 			Value: fmt.Sprintf("%v", *m.AutoPageAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Pages != nil {
 		sepages := xml.StartElement{Name: xml.Name{Local: "x:pages"}}
 		e.EncodeElement(m.Pages, sepages)

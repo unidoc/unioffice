@@ -35,7 +35,6 @@ func (m *CT_Connector) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	senvCxnSpPr := xml.StartElement{Name: xml.Name{Local: "p:nvCxnSpPr"}}
 	e.EncodeElement(m.NvCxnSpPr, senvCxnSpPr)
 	sespPr := xml.StartElement{Name: xml.Name{Local: "p:spPr"}}

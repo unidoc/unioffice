@@ -45,7 +45,6 @@ func (m *CT_Picture) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.FPublishedAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	senvPicPr := xml.StartElement{Name: xml.Name{Local: "nvPicPr"}}
 	e.EncodeElement(m.NvPicPr, senvPicPr)
 	seblipFill := xml.StartElement{Name: xml.Name{Local: "blipFill"}}

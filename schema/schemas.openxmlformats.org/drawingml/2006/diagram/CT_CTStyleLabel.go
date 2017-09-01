@@ -37,7 +37,6 @@ func (m *CT_CTStyleLabel) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "name"},
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FillClrLst != nil {
 		sefillClrLst := xml.StartElement{Name: xml.Name{Local: "fillClrLst"}}
 		e.EncodeElement(m.FillClrLst, sefillClrLst)

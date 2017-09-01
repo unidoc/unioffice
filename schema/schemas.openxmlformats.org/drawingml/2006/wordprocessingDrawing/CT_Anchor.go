@@ -88,7 +88,6 @@ func (m *CT_Anchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "allowOverlap"},
 		Value: fmt.Sprintf("%v", m.AllowOverlapAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	sesimplePos := xml.StartElement{Name: xml.Name{Local: "wp:simplePos"}}
 	e.EncodeElement(m.SimplePos, sesimplePos)
 	sepositionH := xml.StartElement{Name: xml.Name{Local: "wp:positionH"}}

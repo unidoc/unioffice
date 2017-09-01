@@ -34,7 +34,6 @@ func (m *CT_NonVisualContentPartProperties) MarshalXML(e *xml.Encoder, start xml
 	}
 	start.Name.Local = "a:CT_NonVisualContentPartProperties"
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.CpLocks != nil {
 		secpLocks := xml.StartElement{Name: xml.Name{Local: "a:cpLocks"}}
 		e.EncodeElement(m.CpLocks, secpLocks)

@@ -88,7 +88,6 @@ func (m *CT_MdxTuple) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.BAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.N != nil {
 		sen := xml.StartElement{Name: xml.Name{Local: "x:n"}}
 		e.EncodeElement(m.N, sen)

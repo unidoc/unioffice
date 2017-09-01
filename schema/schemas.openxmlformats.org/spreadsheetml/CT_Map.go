@@ -64,7 +64,6 @@ func (m *CT_Map) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "PreserveFormat"},
 		Value: fmt.Sprintf("%v", m.PreserveFormatAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.DataBinding != nil {
 		seDataBinding := xml.StartElement{Name: xml.Name{Local: "x:DataBinding"}}
 		e.EncodeElement(m.DataBinding, seDataBinding)

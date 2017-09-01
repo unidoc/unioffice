@@ -29,7 +29,6 @@ func (m *CT_NotesMasterIdListEntry) MarshalXML(e *xml.Encoder, start xml.StartEl
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:id"},
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "p:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

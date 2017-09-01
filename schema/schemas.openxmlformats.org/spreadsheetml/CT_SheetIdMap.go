@@ -34,7 +34,6 @@ func (m *CT_SheetIdMap) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sesheetId := xml.StartElement{Name: xml.Name{Local: "x:sheetId"}}
 	e.EncodeElement(m.SheetId, sesheetId)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

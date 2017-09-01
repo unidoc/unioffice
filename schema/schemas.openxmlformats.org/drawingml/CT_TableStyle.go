@@ -49,7 +49,6 @@ func (m *CT_TableStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "styleName"},
 		Value: fmt.Sprintf("%v", m.StyleNameAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.TblBg != nil {
 		setblBg := xml.StartElement{Name: xml.Name{Local: "a:tblBg"}}
 		e.EncodeElement(m.TblBg, setblBg)

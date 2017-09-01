@@ -30,7 +30,6 @@ func (m *CT_Color) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ScrgbClr != nil {
 		sescrgbClr := xml.StartElement{Name: xml.Name{Local: "a:scrgbClr"}}
 		e.EncodeElement(m.ScrgbClr, sescrgbClr)

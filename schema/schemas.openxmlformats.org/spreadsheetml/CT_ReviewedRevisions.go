@@ -34,7 +34,6 @@ func (m *CT_ReviewedRevisions) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sereviewed := xml.StartElement{Name: xml.Name{Local: "x:reviewed"}}
 	e.EncodeElement(m.Reviewed, sereviewed)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

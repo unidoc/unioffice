@@ -30,7 +30,6 @@ func (m *CT_SupplementalFont) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "typeface"},
 		Value: fmt.Sprintf("%v", m.TypefaceAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

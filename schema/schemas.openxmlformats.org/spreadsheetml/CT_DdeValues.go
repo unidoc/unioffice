@@ -40,7 +40,6 @@ func (m *CT_DdeValues) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.ColsAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sevalue := xml.StartElement{Name: xml.Name{Local: "x:value"}}
 	e.EncodeElement(m.Value, sevalue)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

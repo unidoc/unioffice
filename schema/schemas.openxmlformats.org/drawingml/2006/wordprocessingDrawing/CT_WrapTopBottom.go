@@ -37,7 +37,6 @@ func (m *CT_WrapTopBottom) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 			Value: fmt.Sprintf("%v", *m.DistBAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.EffectExtent != nil {
 		seeffectExtent := xml.StartElement{Name: xml.Name{Local: "wp:effectExtent"}}
 		e.EncodeElement(m.EffectExtent, seeffectExtent)

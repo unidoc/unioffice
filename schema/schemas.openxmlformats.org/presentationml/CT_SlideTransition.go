@@ -51,7 +51,6 @@ func (m *CT_SlideTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.AdvTmAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Choice != nil {
 		m.Choice.MarshalXML(e, start)
 	}

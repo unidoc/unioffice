@@ -25,7 +25,6 @@ func (m *LCC) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	start.Name.Local = "LCC"
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

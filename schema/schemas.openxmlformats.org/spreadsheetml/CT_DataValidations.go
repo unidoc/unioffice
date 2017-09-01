@@ -52,7 +52,6 @@ func (m *CT_DataValidations) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sedataValidation := xml.StartElement{Name: xml.Name{Local: "x:dataValidation"}}
 	e.EncodeElement(m.DataValidation, sedataValidation)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

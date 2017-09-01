@@ -35,7 +35,6 @@ func (m *CT_Num) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:numId"},
 		Value: fmt.Sprintf("%v", m.NumIdAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	seabstractNumId := xml.StartElement{Name: xml.Name{Local: "w:abstractNumId"}}
 	e.EncodeElement(m.AbstractNumId, seabstractNumId)
 	if m.LvlOverride != nil {

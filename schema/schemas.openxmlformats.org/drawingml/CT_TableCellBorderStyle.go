@@ -33,7 +33,6 @@ func (m *CT_TableCellBorderStyle) MarshalXML(e *xml.Encoder, start xml.StartElem
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Left != nil {
 		seleft := xml.StartElement{Name: xml.Name{Local: "a:left"}}
 		e.EncodeElement(m.Left, seleft)

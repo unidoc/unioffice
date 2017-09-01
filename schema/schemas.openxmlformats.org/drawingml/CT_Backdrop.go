@@ -31,7 +31,6 @@ func (m *CT_Backdrop) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seanchor := xml.StartElement{Name: xml.Name{Local: "a:anchor"}}
 	e.EncodeElement(m.Anchor, seanchor)
 	senorm := xml.StartElement{Name: xml.Name{Local: "a:norm"}}

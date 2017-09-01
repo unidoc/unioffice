@@ -57,7 +57,6 @@ func (m *CT_TLCommonMediaNodeData) MarshalXML(e *xml.Encoder, start xml.StartEle
 			Value: fmt.Sprintf("%v", *m.ShowWhenStoppedAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secTn := xml.StartElement{Name: xml.Name{Local: "p:cTn"}}
 	e.EncodeElement(m.CTn, secTn)
 	setgtEl := xml.StartElement{Name: xml.Name{Local: "p:tgtEl"}}

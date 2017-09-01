@@ -33,7 +33,6 @@ func (m *CT_BackgroundFormatting) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	start.Name.Local = "a:CT_BackgroundFormatting"
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.NoFill != nil {
 		senoFill := xml.StartElement{Name: xml.Name{Local: "a:noFill"}}
 		e.EncodeElement(m.NoFill, senoFill)

@@ -28,7 +28,6 @@ func (m *CT_IgnoredErrors) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seignoredError := xml.StartElement{Name: xml.Name{Local: "x:ignoredError"}}
 	e.EncodeElement(m.IgnoredError, seignoredError)
 	if m.ExtLst != nil {

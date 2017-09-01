@@ -66,7 +66,6 @@ func (m *CT_Placeholder) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.HasCustomPromptAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "p:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

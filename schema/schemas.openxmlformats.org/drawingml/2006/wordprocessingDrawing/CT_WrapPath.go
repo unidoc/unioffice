@@ -36,7 +36,6 @@ func (m *CT_WrapPath) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.EditedAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sestart := xml.StartElement{Name: xml.Name{Local: "wp:start"}}
 	e.EncodeElement(m.Start, sestart)
 	selineTo := xml.StartElement{Name: xml.Name{Local: "wp:lineTo"}}

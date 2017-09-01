@@ -27,7 +27,6 @@ func (m *CT_MetadataBlock) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	serc := xml.StartElement{Name: xml.Name{Local: "x:rc"}}
 	e.EncodeElement(m.Rc, serc)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

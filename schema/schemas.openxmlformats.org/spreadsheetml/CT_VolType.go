@@ -35,7 +35,6 @@ func (m *CT_VolType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	start.Attr = append(start.Attr, attr)
 	e.EncodeToken(start)
-	start.Attr = nil
 	semain := xml.StartElement{Name: xml.Name{Local: "x:main"}}
 	e.EncodeElement(m.Main, semain)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

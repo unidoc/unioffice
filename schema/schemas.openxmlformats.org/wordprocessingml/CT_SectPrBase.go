@@ -83,7 +83,6 @@ func (m *CT_SectPrBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.RsidSectAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.FootnotePr != nil {
 		sefootnotePr := xml.StartElement{Name: xml.Name{Local: "w:footnotePr"}}
 		e.EncodeElement(m.FootnotePr, sefootnotePr)

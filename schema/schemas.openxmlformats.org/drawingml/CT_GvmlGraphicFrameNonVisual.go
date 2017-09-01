@@ -28,7 +28,6 @@ func (m *CT_GvmlGraphicFrameNonVisual) MarshalXML(e *xml.Encoder, start xml.Star
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secNvPr := xml.StartElement{Name: xml.Name{Local: "a:cNvPr"}}
 	e.EncodeElement(m.CNvPr, secNvPr)
 	secNvGraphicFramePr := xml.StartElement{Name: xml.Name{Local: "a:cNvGraphicFramePr"}}

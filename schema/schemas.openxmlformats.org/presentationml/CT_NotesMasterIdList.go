@@ -26,7 +26,6 @@ func (m *CT_NotesMasterIdList) MarshalXML(e *xml.Encoder, start xml.StartElement
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.NotesMasterId != nil {
 		senotesMasterId := xml.StartElement{Name: xml.Name{Local: "p:notesMasterId"}}
 		e.EncodeElement(m.NotesMasterId, senotesMasterId)

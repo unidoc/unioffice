@@ -49,7 +49,6 @@ func (m *CT_PageMargins) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "footer"},
 		Value: fmt.Sprintf("%v", m.FooterAttr)})
 	e.EncodeToken(start)
-	start.Attr = nil
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

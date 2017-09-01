@@ -106,7 +106,6 @@ func (m *CT_CommentPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.AutoScaleAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	seanchor := xml.StartElement{Name: xml.Name{Local: "x:anchor"}}
 	e.EncodeElement(m.Anchor, seanchor)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

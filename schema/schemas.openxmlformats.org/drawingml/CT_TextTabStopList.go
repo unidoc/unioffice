@@ -26,7 +26,6 @@ func (m *CT_TextTabStopList) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Tab != nil {
 		setab := xml.StartElement{Name: xml.Name{Local: "a:tab"}}
 		e.EncodeElement(m.Tab, setab)

@@ -26,7 +26,6 @@ func (m *CT_PtList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Pt != nil {
 		sept := xml.StartElement{Name: xml.Name{Local: "pt"}}
 		e.EncodeElement(m.Pt, sept)

@@ -46,7 +46,6 @@ func (m *CT_Scenarios) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.SqrefAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	sescenario := xml.StartElement{Name: xml.Name{Local: "x:scenario"}}
 	e.EncodeElement(m.Scenario, sescenario)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

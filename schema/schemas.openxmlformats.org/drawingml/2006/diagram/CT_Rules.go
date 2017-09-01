@@ -26,7 +26,6 @@ func (m *CT_Rules) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Rule != nil {
 		serule := xml.StartElement{Name: xml.Name{Local: "rule"}}
 		e.EncodeElement(m.Rule, serule)

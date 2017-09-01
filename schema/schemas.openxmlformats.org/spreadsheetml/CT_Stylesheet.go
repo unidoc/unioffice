@@ -46,7 +46,6 @@ func (m *CT_Stylesheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.NumFmts != nil {
 		senumFmts := xml.StartElement{Name: xml.Name{Local: "x:numFmts"}}
 		e.EncodeElement(m.NumFmts, senumFmts)

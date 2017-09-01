@@ -46,7 +46,6 @@ func (m *CT_CacheSource) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.ConnectionIdAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.WorksheetSource != nil {
 		seworksheetSource := xml.StartElement{Name: xml.Name{Local: "x:worksheetSource"}}
 		e.EncodeElement(m.WorksheetSource, seworksheetSource)

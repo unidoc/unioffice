@@ -27,7 +27,6 @@ func (m *CT_GuideList) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Guide != nil {
 		seguide := xml.StartElement{Name: xml.Name{Local: "p:guide"}}
 		e.EncodeElement(m.Guide, seguide)

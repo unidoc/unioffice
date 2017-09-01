@@ -55,7 +55,6 @@ func (m *CT_IconSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.ReverseAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	secfvo := xml.StartElement{Name: xml.Name{Local: "x:cfvo"}}
 	e.EncodeElement(m.Cfvo, secfvo)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

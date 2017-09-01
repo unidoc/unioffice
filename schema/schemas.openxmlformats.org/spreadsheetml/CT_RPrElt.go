@@ -55,7 +55,6 @@ func (m *CT_RPrElt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.RFont != nil {
 		serFont := xml.StartElement{Name: xml.Name{Local: "x:rFont"}}
 		e.EncodeElement(m.RFont, serFont)

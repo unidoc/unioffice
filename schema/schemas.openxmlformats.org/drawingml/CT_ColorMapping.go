@@ -110,7 +110,6 @@ func (m *CT_ColorMapping) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	start.Attr = append(start.Attr, attr)
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "a:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)

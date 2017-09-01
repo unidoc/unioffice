@@ -59,7 +59,6 @@ func (m *CT_PageBorders) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.Top != nil {
 		setop := xml.StartElement{Name: xml.Name{Local: "w:top"}}
 		e.EncodeElement(m.Top, setop)

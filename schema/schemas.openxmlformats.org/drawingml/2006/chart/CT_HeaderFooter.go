@@ -49,7 +49,6 @@ func (m *CT_HeaderFooter) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.DifferentFirstAttr)})
 	}
 	e.EncodeToken(start)
-	start.Attr = nil
 	if m.OddHeader != nil {
 		seoddHeader := xml.StartElement{Name: xml.Name{Local: "oddHeader"}}
 		gooxml.AddPreserveSpaceAttr(&seoddHeader, *m.OddHeader)
