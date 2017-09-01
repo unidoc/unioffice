@@ -63,14 +63,14 @@ func (m *CT_ReadingModeInkLockDown) UnmarshalXML(d *xml.Decoder, start xml.Start
 			if err != nil {
 				return err
 			}
-			m.WAttr = uint64(parsed)
+			m.WAttr = parsed
 		}
 		if attr.Name.Local == "h" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.HAttr = uint64(parsed)
+			m.HAttr = parsed
 		}
 		if attr.Name.Local == "fontSz" {
 			parsed, err := ParseUnionST_DecimalNumberOrPercent(attr.Value)

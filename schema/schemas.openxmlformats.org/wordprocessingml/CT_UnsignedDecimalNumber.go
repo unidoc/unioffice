@@ -42,7 +42,7 @@ func (m *CT_UnsignedDecimalNumber) UnmarshalXML(d *xml.Decoder, start xml.StartE
 			if err != nil {
 				return err
 			}
-			m.ValAttr = uint64(parsed)
+			m.ValAttr = parsed
 		}
 	}
 	// skip any extensions we may find, but don't support
