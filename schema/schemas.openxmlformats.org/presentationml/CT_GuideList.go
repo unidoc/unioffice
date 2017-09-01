@@ -54,7 +54,7 @@ lCT_GuideList:
 				}
 				m.Guide = append(m.Guide, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_GuideList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

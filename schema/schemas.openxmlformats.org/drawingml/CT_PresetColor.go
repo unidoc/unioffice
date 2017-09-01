@@ -257,7 +257,7 @@ lCT_PresetColor:
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_PresetColor %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

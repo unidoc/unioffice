@@ -66,7 +66,7 @@ lCT_VolType:
 				}
 				m.Main = append(m.Main, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_VolType %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

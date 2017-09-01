@@ -493,7 +493,7 @@ lCT_TextCharacterProperties:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_TextCharacterProperties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

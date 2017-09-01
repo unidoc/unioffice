@@ -99,7 +99,7 @@ lCT_SingleXmlCell:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_SingleXmlCell %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

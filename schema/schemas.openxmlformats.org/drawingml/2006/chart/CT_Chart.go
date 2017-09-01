@@ -170,7 +170,7 @@ lCT_Chart:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Chart %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

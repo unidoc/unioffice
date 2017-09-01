@@ -94,7 +94,7 @@ lCT_MdxSet:
 				}
 				m.N = append(m.N, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_MdxSet %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

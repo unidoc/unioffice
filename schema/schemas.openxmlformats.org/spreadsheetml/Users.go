@@ -66,7 +66,7 @@ lUsers:
 				}
 				m.UserInfo = append(m.UserInfo, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on Users %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

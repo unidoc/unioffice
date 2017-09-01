@@ -62,7 +62,7 @@ lCT_GlossaryDocument:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_GlossaryDocument %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -69,7 +69,7 @@ lCT_SdtComboBox:
 				}
 				m.ListItem = append(m.ListItem, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_SdtComboBox %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

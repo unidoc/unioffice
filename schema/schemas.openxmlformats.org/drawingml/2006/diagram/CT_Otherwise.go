@@ -157,7 +157,7 @@ lCT_Otherwise:
 				}
 				m.ExtLst = append(m.ExtLst, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Otherwise %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

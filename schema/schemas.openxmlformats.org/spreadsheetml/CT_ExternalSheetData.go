@@ -81,7 +81,7 @@ lCT_ExternalSheetData:
 				}
 				m.Row = append(m.Row, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_ExternalSheetData %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -73,7 +73,7 @@ lEG_WrapType:
 				}
 				_ = m.Choice
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on EG_WrapType %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

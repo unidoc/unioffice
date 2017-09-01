@@ -53,7 +53,7 @@ lCT_BandFmts:
 				}
 				m.BandFmt = append(m.BandFmt, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_BandFmts %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -132,7 +132,7 @@ lCT_Scenario:
 				}
 				m.InputCells = append(m.InputCells, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Scenario %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

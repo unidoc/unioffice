@@ -134,7 +134,7 @@ lCT_AbstractNum:
 				}
 				m.Lvl = append(m.Lvl, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_AbstractNum %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

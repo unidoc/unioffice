@@ -70,7 +70,7 @@ lMapInfo:
 				}
 				m.Map = append(m.Map, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on MapInfo %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

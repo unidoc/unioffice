@@ -53,7 +53,7 @@ lCT_Constraints:
 				}
 				m.Constr = append(m.Constr, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Constraints %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

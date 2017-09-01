@@ -69,7 +69,7 @@ lCT_CellStyleXfs:
 				}
 				m.Xf = append(m.Xf, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_CellStyleXfs %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

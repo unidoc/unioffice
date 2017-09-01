@@ -137,7 +137,7 @@ lCT_LatentStyles:
 				}
 				m.LsdException = append(m.LsdException, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_LatentStyles %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

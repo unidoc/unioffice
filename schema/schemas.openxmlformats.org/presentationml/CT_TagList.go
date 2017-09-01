@@ -54,7 +54,7 @@ lCT_TagList:
 				}
 				m.Tag = append(m.Tag, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_TagList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

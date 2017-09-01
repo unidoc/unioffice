@@ -53,7 +53,7 @@ lCT_TableGrid:
 				}
 				m.GridCol = append(m.GridCol, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_TableGrid %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

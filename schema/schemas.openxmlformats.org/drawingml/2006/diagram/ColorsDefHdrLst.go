@@ -54,7 +54,7 @@ lColorsDefHdrLst:
 				}
 				m.ColorsDefHdr = append(m.ColorsDefHdr, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on ColorsDefHdrLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

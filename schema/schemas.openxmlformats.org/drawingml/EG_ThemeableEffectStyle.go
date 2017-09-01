@@ -59,7 +59,7 @@ lEG_ThemeableEffectStyle:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on EG_ThemeableEffectStyle %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

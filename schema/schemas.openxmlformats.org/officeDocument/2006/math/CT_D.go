@@ -61,7 +61,7 @@ lCT_D:
 				}
 				m.E = append(m.E, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_D %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

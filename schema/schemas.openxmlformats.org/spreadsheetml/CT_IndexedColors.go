@@ -52,7 +52,7 @@ lCT_IndexedColors:
 				}
 				m.RgbColor = append(m.RgbColor, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_IndexedColors %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

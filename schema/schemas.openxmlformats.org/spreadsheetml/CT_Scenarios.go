@@ -96,7 +96,7 @@ lCT_Scenarios:
 				}
 				m.Scenario = append(m.Scenario, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Scenarios %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

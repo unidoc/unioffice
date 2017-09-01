@@ -69,7 +69,7 @@ lCT_WebPublishObjects:
 				}
 				m.WebPublishObject = append(m.WebPublishObject, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_WebPublishObjects %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

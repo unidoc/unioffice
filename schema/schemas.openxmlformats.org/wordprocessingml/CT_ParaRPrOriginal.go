@@ -365,7 +365,7 @@ lCT_ParaRPrOriginal:
 				}
 				m.EG_RPrBase = append(m.EG_RPrBase, tmprprbase)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_ParaRPrOriginal %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

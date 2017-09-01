@@ -51,7 +51,7 @@ lCT_Path2DQuadBezierTo:
 				}
 				m.Pt = append(m.Pt, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Path2DQuadBezierTo %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -77,7 +77,7 @@ lCT_WrapPath:
 				}
 				m.LineTo = append(m.LineTo, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_WrapPath %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

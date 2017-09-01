@@ -170,7 +170,7 @@ lCT_Path2D:
 				}
 				m.CubicBezTo = append(m.CubicBezTo, tmp)
 			default:
-				log.Printf("skipping unsupported element %v", el.Name)
+				log.Printf("skipping unsupported element on CT_Path2D %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}
