@@ -29,7 +29,7 @@ func (m *CT_VectorLpstr) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	e.EncodeToken(start)
 	start.Attr = nil
-	sevector := xml.StartElement{Name: xml.Name{Local: "d:vector"}}
+	sevector := xml.StartElement{Name: xml.Name{Local: "vt:vector"}}
 	e.EncodeElement(m.Vector, sevector)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
