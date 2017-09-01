@@ -27,14 +27,14 @@ func main() {
 	// Construct our header
 	hdr := doc.AddHeader()
 	para := hdr.AddParagraph()
-	para.AddTabStop(2.5*measurement.Inch, wml.ST_TabJcCenter, wml.ST_TabTlcNone)
+	para.Properties().AddTabStop(2.5*measurement.Inch, wml.ST_TabJcCenter, wml.ST_TabTlcNone)
 	run := para.AddRun()
 	run.AddTab()
 	run.AddText("My Document Title")
 
 	// Create a new section and apply the header
 	para = doc.AddParagraph()
-	section := para.AddSection(wml.ST_SectionMarkNextPage)
+	section := para.Properties().AddSection(wml.ST_SectionMarkNextPage)
 	section.SetHeader(hdr, wml.ST_HdrFtrDefault)
 
 	// Add some more content
@@ -46,7 +46,7 @@ func main() {
 
 	hdr = doc.AddHeader()
 	para = hdr.AddParagraph()
-	para.AddTabStop(2.5*measurement.Inch, wml.ST_TabJcCenter, wml.ST_TabTlcNone)
+	para.Properties().AddTabStop(2.5*measurement.Inch, wml.ST_TabJcCenter, wml.ST_TabTlcNone)
 	run = para.AddRun()
 	run.AddTab()
 	run.AddText("Different Title")

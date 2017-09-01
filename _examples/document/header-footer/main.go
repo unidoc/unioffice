@@ -13,7 +13,7 @@ func main() {
 
 	hdr := doc.AddHeader()
 	para := hdr.AddParagraph()
-	para.AddTabStop(2.5*measurement.Inch, wml.ST_TabJcCenter, wml.ST_TabTlcNone)
+	para.Properties().AddTabStop(2.5*measurement.Inch, wml.ST_TabJcCenter, wml.ST_TabTlcNone)
 	run := para.AddRun()
 	run.AddTab()
 	run.AddText("My Document Title")
@@ -24,7 +24,7 @@ func main() {
 
 	ftr := doc.AddFooter()
 	para = ftr.AddParagraph()
-	para.AddTabStop(6*measurement.Inch, wml.ST_TabJcRight, wml.ST_TabTlcNone)
+	para.Properties().AddTabStop(6*measurement.Inch, wml.ST_TabJcRight, wml.ST_TabTlcNone)
 	run = para.AddRun()
 	run.AddText("Some subtitle goes here")
 	run.AddTab()

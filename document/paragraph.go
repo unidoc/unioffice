@@ -8,11 +8,6 @@
 package document
 
 import (
-	"fmt"
-
-	"baliance.com/gooxml"
-	"baliance.com/gooxml/measurement"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 )
 
@@ -33,14 +28,10 @@ func (p Paragraph) ensurePPr() {
 	}
 }
 
-// SetSpacing sets the spacing that comes before and after the paragraph.
-func (p Paragraph) SetSpacing(before, after measurement.Distance) {
+// ParagraphProperties returnst the paragraph properties.
+func (p Paragraph) Properties() ParagraphProperties {
 	p.ensurePPr()
-	p.x.PPr.Spacing = wml.NewCT_Spacing()
-	p.x.PPr.Spacing.BeforeAttr = &sharedTypes.ST_TwipsMeasure{}
-	p.x.PPr.Spacing.BeforeAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(before / measurement.Twips))
-	p.x.PPr.Spacing.AfterAttr = &sharedTypes.ST_TwipsMeasure{}
-	p.x.PPr.Spacing.AfterAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(after / measurement.Twips))
+	return ParagraphProperties{p.d, p.x.PPr}
 }
 
 // Style returns the style for a paragraph, or an empty string if it is unset.
@@ -60,19 +51,6 @@ func (p Paragraph) SetStyle(s string) {
 		p.x.PPr.PStyle = wml.NewCT_String()
 		p.x.PPr.PStyle.ValAttr = s
 	}
-}
-
-// AddTabStop adds a tab stop to the paragraph.  It controls the position of text when using Run.AddTab()
-func (p Paragraph) AddTabStop(position measurement.Distance, justificaton wml.ST_TabJc, leader wml.ST_TabTlc) {
-	p.ensurePPr()
-	if p.x.PPr.Tabs == nil {
-		p.x.PPr.Tabs = wml.NewCT_Tabs()
-	}
-	tab := wml.NewCT_TabStop()
-	tab.LeaderAttr = leader
-	tab.ValAttr = justificaton
-	tab.PosAttr.Int64 = gooxml.Int64(int64(position / measurement.Twips))
-	p.x.PPr.Tabs.Tab = append(p.x.PPr.Tabs.Tab, tab)
 }
 
 // AddRun adds a run to a paragraph.
@@ -104,31 +82,4 @@ func (p Paragraph) Runs() []Run {
 		}
 	}
 	return ret
-}
-
-// AddSection adds a new document section with an optional section break.  If t
-// is ST_SectionMarkUnset, then no break will be inserted.
-func (p Paragraph) AddSection(t wml.ST_SectionMark) Section {
-	p.ensurePPr()
-	p.x.PPr.SectPr = wml.NewCT_SectPr()
-	if t != wml.ST_SectionMarkUnset {
-		p.x.PPr.SectPr.Type = wml.NewCT_SectType()
-		p.x.PPr.SectPr.Type.ValAttr = t
-	}
-	return Section{p.d, p.x.PPr.SectPr}
-}
-
-// SetHeadingLevel sets a heading level and style based on the level to a
-// paragraph.  The default styles for a new gooxml document support headings
-// from level 1 to 8.
-func (p Paragraph) SetHeadingLevel(idx int) {
-	p.ensurePPr()
-	p.SetStyle(fmt.Sprintf("Heading%d", idx))
-	if p.x.PPr.NumPr == nil {
-		p.x.PPr.NumPr = wml.NewCT_NumPr()
-	}
-	p.x.PPr.NumPr.Ilvl = wml.NewCT_DecimalNumber()
-	p.x.PPr.NumPr.Ilvl.ValAttr = int64(idx)
-	p.x.PPr.NumPr.NumId = wml.NewCT_DecimalNumber()
-	p.x.PPr.NumPr.NumId.ValAttr = int64(1)
 }

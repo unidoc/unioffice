@@ -15,23 +15,23 @@ func main() {
 	// Add a TOC
 	doc.AddParagraph().AddRun().AddField(document.FieldTOC)
 	// followed by a page break
-	doc.AddParagraph().AddSection(wml.ST_SectionMarkNextPage)
+	doc.AddParagraph().Properties().AddSection(wml.ST_SectionMarkNextPage)
 
 	// and finally paragraphs at different heading levels
 	for i := 0; i < 4; i++ {
 		para := doc.AddParagraph()
-		para.SetHeadingLevel(1)
+		para.Properties().SetHeadingLevel(1)
 		para.AddRun().AddText("First Level")
 
 		doc.AddParagraph().AddRun().AddText(lorem)
 		for i := 0; i < 3; i++ {
 			para := doc.AddParagraph()
-			para.SetHeadingLevel(2)
+			para.Properties().SetHeadingLevel(2)
 			para.AddRun().AddText("Second Level")
 			doc.AddParagraph().AddRun().AddText(lorem)
 
 			para = doc.AddParagraph()
-			para.SetHeadingLevel(3)
+			para.Properties().SetHeadingLevel(3)
 			para.AddRun().AddText("Third Level")
 			doc.AddParagraph().AddRun().AddText(lorem)
 		}
