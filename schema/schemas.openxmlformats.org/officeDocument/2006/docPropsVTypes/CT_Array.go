@@ -59,71 +59,71 @@ func (m *CT_Array) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	start.Attr = nil
 	if m.Variant != nil {
-		sevariant := xml.StartElement{Name: xml.Name{Local: "variant"}}
+		sevariant := xml.StartElement{Name: xml.Name{Local: "vt:variant"}}
 		e.EncodeElement(m.Variant, sevariant)
 	}
 	if m.I1 != nil {
-		sei1 := xml.StartElement{Name: xml.Name{Local: "i1"}}
+		sei1 := xml.StartElement{Name: xml.Name{Local: "vt:i1"}}
 		e.EncodeElement(m.I1, sei1)
 	}
 	if m.I2 != nil {
-		sei2 := xml.StartElement{Name: xml.Name{Local: "i2"}}
+		sei2 := xml.StartElement{Name: xml.Name{Local: "vt:i2"}}
 		e.EncodeElement(m.I2, sei2)
 	}
 	if m.I4 != nil {
-		sei4 := xml.StartElement{Name: xml.Name{Local: "i4"}}
+		sei4 := xml.StartElement{Name: xml.Name{Local: "vt:i4"}}
 		e.EncodeElement(m.I4, sei4)
 	}
 	if m.Int != nil {
-		seint := xml.StartElement{Name: xml.Name{Local: "int"}}
+		seint := xml.StartElement{Name: xml.Name{Local: "vt:int"}}
 		e.EncodeElement(m.Int, seint)
 	}
 	if m.Ui1 != nil {
-		seui1 := xml.StartElement{Name: xml.Name{Local: "ui1"}}
+		seui1 := xml.StartElement{Name: xml.Name{Local: "vt:ui1"}}
 		e.EncodeElement(m.Ui1, seui1)
 	}
 	if m.Ui2 != nil {
-		seui2 := xml.StartElement{Name: xml.Name{Local: "ui2"}}
+		seui2 := xml.StartElement{Name: xml.Name{Local: "vt:ui2"}}
 		e.EncodeElement(m.Ui2, seui2)
 	}
 	if m.Ui4 != nil {
-		seui4 := xml.StartElement{Name: xml.Name{Local: "ui4"}}
+		seui4 := xml.StartElement{Name: xml.Name{Local: "vt:ui4"}}
 		e.EncodeElement(m.Ui4, seui4)
 	}
 	if m.Uint != nil {
-		seuint := xml.StartElement{Name: xml.Name{Local: "uint"}}
+		seuint := xml.StartElement{Name: xml.Name{Local: "vt:uint"}}
 		e.EncodeElement(m.Uint, seuint)
 	}
 	if m.R4 != nil {
-		ser4 := xml.StartElement{Name: xml.Name{Local: "r4"}}
+		ser4 := xml.StartElement{Name: xml.Name{Local: "vt:r4"}}
 		e.EncodeElement(m.R4, ser4)
 	}
 	if m.R8 != nil {
-		ser8 := xml.StartElement{Name: xml.Name{Local: "r8"}}
+		ser8 := xml.StartElement{Name: xml.Name{Local: "vt:r8"}}
 		e.EncodeElement(m.R8, ser8)
 	}
 	if m.Decimal != nil {
-		sedecimal := xml.StartElement{Name: xml.Name{Local: "decimal"}}
+		sedecimal := xml.StartElement{Name: xml.Name{Local: "vt:decimal"}}
 		e.EncodeElement(m.Decimal, sedecimal)
 	}
 	if m.Bstr != nil {
-		sebstr := xml.StartElement{Name: xml.Name{Local: "bstr"}}
+		sebstr := xml.StartElement{Name: xml.Name{Local: "vt:bstr"}}
 		e.EncodeElement(m.Bstr, sebstr)
 	}
 	if m.Date != nil {
-		sedate := xml.StartElement{Name: xml.Name{Local: "date"}}
+		sedate := xml.StartElement{Name: xml.Name{Local: "vt:date"}}
 		e.EncodeElement(m.Date, sedate)
 	}
 	if m.Bool != nil {
-		sebool := xml.StartElement{Name: xml.Name{Local: "bool"}}
+		sebool := xml.StartElement{Name: xml.Name{Local: "vt:bool"}}
 		e.EncodeElement(m.Bool, sebool)
 	}
 	if m.Error != nil {
-		seerror := xml.StartElement{Name: xml.Name{Local: "error"}}
+		seerror := xml.StartElement{Name: xml.Name{Local: "vt:error"}}
 		e.EncodeElement(m.Error, seerror)
 	}
 	if m.Cy != nil {
-		secy := xml.StartElement{Name: xml.Name{Local: "cy"}}
+		secy := xml.StartElement{Name: xml.Name{Local: "vt:cy"}}
 		e.EncodeElement(m.Cy, secy)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

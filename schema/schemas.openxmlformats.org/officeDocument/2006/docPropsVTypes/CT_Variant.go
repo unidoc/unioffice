@@ -65,150 +65,150 @@ func (m *CT_Variant) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	start.Attr = nil
 	if m.Variant != nil {
-		sevariant := xml.StartElement{Name: xml.Name{Local: "variant"}}
+		sevariant := xml.StartElement{Name: xml.Name{Local: "vt:variant"}}
 		e.EncodeElement(m.Variant, sevariant)
 	}
 	if m.Vector != nil {
-		sevector := xml.StartElement{Name: xml.Name{Local: "vector"}}
+		sevector := xml.StartElement{Name: xml.Name{Local: "vt:vector"}}
 		e.EncodeElement(m.Vector, sevector)
 	}
 	if m.Array != nil {
-		searray := xml.StartElement{Name: xml.Name{Local: "array"}}
+		searray := xml.StartElement{Name: xml.Name{Local: "vt:array"}}
 		e.EncodeElement(m.Array, searray)
 	}
 	if m.Blob != nil {
-		seblob := xml.StartElement{Name: xml.Name{Local: "blob"}}
+		seblob := xml.StartElement{Name: xml.Name{Local: "vt:blob"}}
 		gooxml.AddPreserveSpaceAttr(&seblob, *m.Blob)
 		e.EncodeElement(m.Blob, seblob)
 	}
 	if m.Oblob != nil {
-		seoblob := xml.StartElement{Name: xml.Name{Local: "oblob"}}
+		seoblob := xml.StartElement{Name: xml.Name{Local: "vt:oblob"}}
 		gooxml.AddPreserveSpaceAttr(&seoblob, *m.Oblob)
 		e.EncodeElement(m.Oblob, seoblob)
 	}
 	if m.Empty != nil {
-		seempty := xml.StartElement{Name: xml.Name{Local: "empty"}}
+		seempty := xml.StartElement{Name: xml.Name{Local: "vt:empty"}}
 		e.EncodeElement(m.Empty, seempty)
 	}
 	if m.Null != nil {
-		senull := xml.StartElement{Name: xml.Name{Local: "null"}}
+		senull := xml.StartElement{Name: xml.Name{Local: "vt:null"}}
 		e.EncodeElement(m.Null, senull)
 	}
 	if m.I1 != nil {
-		sei1 := xml.StartElement{Name: xml.Name{Local: "i1"}}
+		sei1 := xml.StartElement{Name: xml.Name{Local: "vt:i1"}}
 		e.EncodeElement(m.I1, sei1)
 	}
 	if m.I2 != nil {
-		sei2 := xml.StartElement{Name: xml.Name{Local: "i2"}}
+		sei2 := xml.StartElement{Name: xml.Name{Local: "vt:i2"}}
 		e.EncodeElement(m.I2, sei2)
 	}
 	if m.I4 != nil {
-		sei4 := xml.StartElement{Name: xml.Name{Local: "i4"}}
+		sei4 := xml.StartElement{Name: xml.Name{Local: "vt:i4"}}
 		e.EncodeElement(m.I4, sei4)
 	}
 	if m.I8 != nil {
-		sei8 := xml.StartElement{Name: xml.Name{Local: "i8"}}
+		sei8 := xml.StartElement{Name: xml.Name{Local: "vt:i8"}}
 		e.EncodeElement(m.I8, sei8)
 	}
 	if m.Int != nil {
-		seint := xml.StartElement{Name: xml.Name{Local: "int"}}
+		seint := xml.StartElement{Name: xml.Name{Local: "vt:int"}}
 		e.EncodeElement(m.Int, seint)
 	}
 	if m.Ui1 != nil {
-		seui1 := xml.StartElement{Name: xml.Name{Local: "ui1"}}
+		seui1 := xml.StartElement{Name: xml.Name{Local: "vt:ui1"}}
 		e.EncodeElement(m.Ui1, seui1)
 	}
 	if m.Ui2 != nil {
-		seui2 := xml.StartElement{Name: xml.Name{Local: "ui2"}}
+		seui2 := xml.StartElement{Name: xml.Name{Local: "vt:ui2"}}
 		e.EncodeElement(m.Ui2, seui2)
 	}
 	if m.Ui4 != nil {
-		seui4 := xml.StartElement{Name: xml.Name{Local: "ui4"}}
+		seui4 := xml.StartElement{Name: xml.Name{Local: "vt:ui4"}}
 		e.EncodeElement(m.Ui4, seui4)
 	}
 	if m.Ui8 != nil {
-		seui8 := xml.StartElement{Name: xml.Name{Local: "ui8"}}
+		seui8 := xml.StartElement{Name: xml.Name{Local: "vt:ui8"}}
 		e.EncodeElement(m.Ui8, seui8)
 	}
 	if m.Uint != nil {
-		seuint := xml.StartElement{Name: xml.Name{Local: "uint"}}
+		seuint := xml.StartElement{Name: xml.Name{Local: "vt:uint"}}
 		e.EncodeElement(m.Uint, seuint)
 	}
 	if m.R4 != nil {
-		ser4 := xml.StartElement{Name: xml.Name{Local: "r4"}}
+		ser4 := xml.StartElement{Name: xml.Name{Local: "vt:r4"}}
 		e.EncodeElement(m.R4, ser4)
 	}
 	if m.R8 != nil {
-		ser8 := xml.StartElement{Name: xml.Name{Local: "r8"}}
+		ser8 := xml.StartElement{Name: xml.Name{Local: "vt:r8"}}
 		e.EncodeElement(m.R8, ser8)
 	}
 	if m.Decimal != nil {
-		sedecimal := xml.StartElement{Name: xml.Name{Local: "decimal"}}
+		sedecimal := xml.StartElement{Name: xml.Name{Local: "vt:decimal"}}
 		e.EncodeElement(m.Decimal, sedecimal)
 	}
 	if m.Lpstr != nil {
-		selpstr := xml.StartElement{Name: xml.Name{Local: "lpstr"}}
+		selpstr := xml.StartElement{Name: xml.Name{Local: "vt:lpstr"}}
 		gooxml.AddPreserveSpaceAttr(&selpstr, *m.Lpstr)
 		e.EncodeElement(m.Lpstr, selpstr)
 	}
 	if m.Lpwstr != nil {
-		selpwstr := xml.StartElement{Name: xml.Name{Local: "lpwstr"}}
+		selpwstr := xml.StartElement{Name: xml.Name{Local: "vt:lpwstr"}}
 		gooxml.AddPreserveSpaceAttr(&selpwstr, *m.Lpwstr)
 		e.EncodeElement(m.Lpwstr, selpwstr)
 	}
 	if m.Bstr != nil {
-		sebstr := xml.StartElement{Name: xml.Name{Local: "bstr"}}
+		sebstr := xml.StartElement{Name: xml.Name{Local: "vt:bstr"}}
 		gooxml.AddPreserveSpaceAttr(&sebstr, *m.Bstr)
 		e.EncodeElement(m.Bstr, sebstr)
 	}
 	if m.Date != nil {
-		sedate := xml.StartElement{Name: xml.Name{Local: "date"}}
+		sedate := xml.StartElement{Name: xml.Name{Local: "vt:date"}}
 		e.EncodeElement(m.Date, sedate)
 	}
 	if m.Filetime != nil {
-		sefiletime := xml.StartElement{Name: xml.Name{Local: "filetime"}}
+		sefiletime := xml.StartElement{Name: xml.Name{Local: "vt:filetime"}}
 		e.EncodeElement(m.Filetime, sefiletime)
 	}
 	if m.Bool != nil {
-		sebool := xml.StartElement{Name: xml.Name{Local: "bool"}}
+		sebool := xml.StartElement{Name: xml.Name{Local: "vt:bool"}}
 		e.EncodeElement(m.Bool, sebool)
 	}
 	if m.Cy != nil {
-		secy := xml.StartElement{Name: xml.Name{Local: "cy"}}
+		secy := xml.StartElement{Name: xml.Name{Local: "vt:cy"}}
 		gooxml.AddPreserveSpaceAttr(&secy, *m.Cy)
 		e.EncodeElement(m.Cy, secy)
 	}
 	if m.Error != nil {
-		seerror := xml.StartElement{Name: xml.Name{Local: "error"}}
+		seerror := xml.StartElement{Name: xml.Name{Local: "vt:error"}}
 		gooxml.AddPreserveSpaceAttr(&seerror, *m.Error)
 		e.EncodeElement(m.Error, seerror)
 	}
 	if m.Stream != nil {
-		sestream := xml.StartElement{Name: xml.Name{Local: "stream"}}
+		sestream := xml.StartElement{Name: xml.Name{Local: "vt:stream"}}
 		gooxml.AddPreserveSpaceAttr(&sestream, *m.Stream)
 		e.EncodeElement(m.Stream, sestream)
 	}
 	if m.Ostream != nil {
-		seostream := xml.StartElement{Name: xml.Name{Local: "ostream"}}
+		seostream := xml.StartElement{Name: xml.Name{Local: "vt:ostream"}}
 		gooxml.AddPreserveSpaceAttr(&seostream, *m.Ostream)
 		e.EncodeElement(m.Ostream, seostream)
 	}
 	if m.Storage != nil {
-		sestorage := xml.StartElement{Name: xml.Name{Local: "storage"}}
+		sestorage := xml.StartElement{Name: xml.Name{Local: "vt:storage"}}
 		gooxml.AddPreserveSpaceAttr(&sestorage, *m.Storage)
 		e.EncodeElement(m.Storage, sestorage)
 	}
 	if m.Ostorage != nil {
-		seostorage := xml.StartElement{Name: xml.Name{Local: "ostorage"}}
+		seostorage := xml.StartElement{Name: xml.Name{Local: "vt:ostorage"}}
 		gooxml.AddPreserveSpaceAttr(&seostorage, *m.Ostorage)
 		e.EncodeElement(m.Ostorage, seostorage)
 	}
 	if m.Vstream != nil {
-		sevstream := xml.StartElement{Name: xml.Name{Local: "vstream"}}
+		sevstream := xml.StartElement{Name: xml.Name{Local: "vt:vstream"}}
 		e.EncodeElement(m.Vstream, sevstream)
 	}
 	if m.Clsid != nil {
-		seclsid := xml.StartElement{Name: xml.Name{Local: "clsid"}}
+		seclsid := xml.StartElement{Name: xml.Name{Local: "vt:clsid"}}
 		gooxml.AddPreserveSpaceAttr(&seclsid, *m.Clsid)
 		e.EncodeElement(m.Clsid, seclsid)
 	}

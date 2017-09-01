@@ -28,7 +28,7 @@ func (m *CT_DigSigBlob) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	e.EncodeToken(start)
 	start.Attr = nil
-	seblob := xml.StartElement{Name: xml.Name{Local: "d:blob"}}
+	seblob := xml.StartElement{Name: xml.Name{Local: "vt:blob"}}
 	gooxml.AddPreserveSpaceAttr(&seblob, m.Blob)
 	e.EncodeElement(m.Blob, seblob)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
