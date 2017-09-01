@@ -32,6 +32,9 @@ type CT_FFData struct {
 	HelpText []*CT_FFHelpText
 	// Associated Status Text
 	StatusText []*CT_FFStatusText
+	CheckBox   *CT_FFCheckBox
+	DdList     *CT_FFDDList
+	TextInput  *CT_FFTextInput
 }
 
 func NewCT_FFData() *CT_FFData {
@@ -79,6 +82,18 @@ func (m *CT_FFData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.StatusText != nil {
 		sestatusText := xml.StartElement{Name: xml.Name{Local: "w:statusText"}}
 		e.EncodeElement(m.StatusText, sestatusText)
+	}
+	if m.CheckBox != nil {
+		secheckBox := xml.StartElement{Name: xml.Name{Local: "w:checkBox"}}
+		e.EncodeElement(m.CheckBox, secheckBox)
+	}
+	if m.DdList != nil {
+		seddList := xml.StartElement{Name: xml.Name{Local: "w:ddList"}}
+		e.EncodeElement(m.DdList, seddList)
+	}
+	if m.TextInput != nil {
+		setextInput := xml.StartElement{Name: xml.Name{Local: "w:textInput"}}
+		e.EncodeElement(m.TextInput, setextInput)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -148,6 +163,21 @@ lCT_FFData:
 					return err
 				}
 				m.StatusText = append(m.StatusText, tmp)
+			case "checkBox":
+				m.CheckBox = NewCT_FFCheckBox()
+				if err := d.DecodeElement(m.CheckBox, &el); err != nil {
+					return err
+				}
+			case "ddList":
+				m.DdList = NewCT_FFDDList()
+				if err := d.DecodeElement(m.DdList, &el); err != nil {
+					return err
+				}
+			case "textInput":
+				m.TextInput = NewCT_FFTextInput()
+				if err := d.DecodeElement(m.TextInput, &el); err != nil {
+					return err
+				}
 			default:
 				log.Printf("skipping unsupported element %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -207,6 +237,21 @@ func (m *CT_FFData) ValidateWithPath(path string) error {
 	}
 	for i, v := range m.StatusText {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/StatusText[%d]", path, i)); err != nil {
+			return err
+		}
+	}
+	if m.CheckBox != nil {
+		if err := m.CheckBox.ValidateWithPath(path + "/CheckBox"); err != nil {
+			return err
+		}
+	}
+	if m.DdList != nil {
+		if err := m.DdList.ValidateWithPath(path + "/DdList"); err != nil {
+			return err
+		}
+	}
+	if m.TextInput != nil {
+		if err := m.TextInput.ValidateWithPath(path + "/TextInput"); err != nil {
 			return err
 		}
 	}
