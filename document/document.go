@@ -11,6 +11,8 @@ import (
 	"archive/zip"
 	"errors"
 	"fmt"
+	"image"
+	"image/jpeg"
 	"io"
 	"io/ioutil"
 	"log"
@@ -28,10 +30,13 @@ import (
 // Document is a text document that can be written out in the OOXML .docx format.
 type Document struct {
 	common.DocBase
-	x           *wml.Document
-	Settings    Settings
-	Numbering   Numbering
-	Styles      Styles
+	x *wml.Document
+
+	Settings  Settings    // document settings
+	Numbering Numbering   // numbering styles within the doucment
+	Styles    Styles      // styles that are use and can be used within the document
+	Thumbnail image.Image // thumbnail preview of the document
+
 	headers     []*wml.Hdr
 	footers     []*wml.Ftr
 	docRels     common.Relationships
@@ -136,6 +141,15 @@ func (d *Document) Save(w io.Writer) error {
 	}
 	if err := zippkg.MarshalXML(z, "docProps/core.xml", d.CoreProperties.X()); err != nil {
 		return err
+	}
+	if d.Thumbnail != nil {
+		tn, err := z.Create("docProps/thumbnail.jpeg")
+		if err != nil {
+			return err
+		}
+		if err := jpeg.Encode(tn, d.Thumbnail, nil); err != nil {
+			return err
+		}
 	}
 	if err := zippkg.MarshalXML(z, "word/settings.xml", d.Settings.X()); err != nil {
 		return err
@@ -337,6 +351,25 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 			decMap[r.Target()] = doc.CoreProperties.X()
 		case common.ExtendedPropertiesType:
 			decMap[r.Target()] = doc.AppProperties.X()
+		case common.ThumbnailType:
+			// read our thumbnail
+			for i, f := range files {
+				if f == nil {
+					continue
+				}
+				if f.Name == r.Target() {
+					rc, err := f.Open()
+					if err != nil {
+						return nil, fmt.Errorf("error reading thumbnail: %s", err)
+					}
+					doc.Thumbnail, _, err = image.Decode(rc)
+					rc.Close()
+					if err != nil {
+						return nil, fmt.Errorf("error decoding thumbnail: %s", err)
+					}
+					files[i] = nil
+				}
+			}
 		default:
 			log.Printf("unsupported type: %s", r.Type())
 		}
