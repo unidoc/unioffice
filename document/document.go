@@ -27,7 +27,9 @@ import (
 	"baliance.com/gooxml/zippkg"
 )
 
-// Document is a text document that can be written out in the OOXML .docx format.
+// Document is a text document that can be written out in the OOXML .docx
+// format. It can be opened from a file on disk and modified, or created from
+// scratch.
 type Document struct {
 	common.DocBase
 	x *wml.Document
@@ -89,7 +91,8 @@ func (d *Document) X() *wml.Document {
 	return d.x
 }
 
-// AddHeader creates a header, but doesn't add it to the document for display.
+// AddHeader creates a header associated with the document, but doesn't add it
+// to the document for display.
 func (d *Document) AddHeader() Header {
 	hdr := wml.NewHdr()
 	d.headers = append(d.headers, hdr)
@@ -100,7 +103,8 @@ func (d *Document) AddHeader() Header {
 	return Header{d, hdr}
 }
 
-// AddFooter creates a Footer, but doesn't add it to the document for display.
+// AddFooter creates a Footer associated with the document, but doesn't add it
+// to the document for display.
 func (d *Document) AddFooter() Footer {
 	ftr := wml.NewFtr()
 	d.footers = append(d.footers, ftr)
@@ -111,8 +115,8 @@ func (d *Document) AddFooter() Footer {
 }
 
 // BodySection returns the default body section used for all preceeding
-// paragraphs until the previous Section. If there is no previous section, it
-// applies to the entire document.
+// paragraphs until the previous Section. If there is no previous sections, the
+// body section applies to the entire document.
 func (d *Document) BodySection() Section {
 	if d.x.Body.SectPr == nil {
 		d.x.Body.SectPr = wml.NewCT_SectPr()
@@ -285,7 +289,7 @@ func Open(filename string) (*Document, error) {
 // OpenTemplate opens a document, removing all content so it can be used as a
 // template.  Since Word removes unused styles from a document upon save, to
 // create a template in Word add a paragraph with every style of interest.  When
-// opened with OpenTemplate the documents styles will be available but the
+// opened with OpenTemplate the document's styles will be available but the
 // content will be gone.
 func OpenTemplate(filename string) (*Document, error) {
 	d, err := Open(filename)
@@ -449,7 +453,9 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	return doc, nil
 }
 
-// Validate attempts to validate the structure of a document.
+// Validate validates the structure and in cases where it't possible, the ranges
+// of elements within a document. A validation error dones't mean that the
+// document won't work in MS Word or LibreOffice, but it's worth checking into.
 func (d *Document) Validate() error {
 	if d == nil || d.x == nil {
 		return errors.New("document not initialized correctly, nil base")
@@ -515,6 +521,57 @@ func (d *Document) Images() []ImageRef {
 			}
 		}
 		imgIdx++
+	}
+	return ret
+}
+
+// FormFields extracts all of the fields from a document.  They can then be
+// manipulated via the methods on the field and the document saved.
+func (d *Document) FormFields() []FormField {
+	ret := []FormField{}
+	for _, p := range d.Paragraphs() {
+		runs := p.Runs()
+		for i, r := range runs {
+			for _, ic := range r.x.EG_RunInnerContent {
+				// skip non form fields
+				if ic.FldChar == nil || ic.FldChar.FfData == nil {
+					continue
+				}
+
+				// found a begin form field
+				if ic.FldChar.FldCharTypeAttr == wml.ST_FldCharTypeBegin {
+					// ensure it has a name
+					if len(ic.FldChar.FfData.Name) == 0 || ic.FldChar.FfData.Name[0].ValAttr == nil {
+						continue
+					}
+
+					field := FormField{x: ic.FldChar.FfData}
+					// for text input boxes, we need a pointer to where to set
+					// the text as well
+					if ic.FldChar.FfData.TextInput != nil {
+
+						// ensure we always have at lest two IC's
+						for j := i + 1; j < len(runs)-1; j++ {
+							if len(runs[j].x.EG_RunInnerContent) == 0 {
+								continue
+							}
+							ic := runs[j].x.EG_RunInnerContent[0]
+							// look for the 'separate' field
+							if ic.FldChar != nil && ic.FldChar.FldCharTypeAttr == wml.ST_FldCharTypeSeparate {
+								if len(runs[j+1].x.EG_RunInnerContent) == 0 {
+									continue
+								}
+								// the value should be the text in the next inner content that is not a field char
+								if runs[j+1].x.EG_RunInnerContent[0].FldChar == nil {
+									field.textIC = runs[j+1].x.EG_RunInnerContent[0]
+								}
+							}
+						}
+					}
+					ret = append(ret, field)
+				}
+			}
+		}
 	}
 	return ret
 }

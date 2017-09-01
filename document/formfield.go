@@ -23,8 +23,8 @@ const (
 	FormFieldTypeDropDown
 )
 
-// FormField is a form within a document.  It references the document, so
-// changes to the form field wil be reflected in the document if it is saved.
+// FormField is a form within a document. It references the document, so changes
+// to the form field wil be reflected in the document if it is saved.
 type FormField struct {
 	x      *wml.CT_FFData
 	textIC *wml.EG_RunInnerContent
@@ -120,55 +120,4 @@ func (f FormField) SetChecked(b bool) {
 		f.x.CheckBox.Checked = wml.NewCT_OnOff()
 	}
 
-}
-
-// FindAllFields extracts all of the fields from a document.  They can then be
-// manipulated via the methods on the field and the document can be saved.
-func FindAllFields(d *Document) []FormField {
-	ret := []FormField{}
-	for _, p := range d.Paragraphs() {
-		runs := p.Runs()
-		for i, r := range runs {
-			for _, ic := range r.x.EG_RunInnerContent {
-				// skip non form fields
-				if ic.FldChar == nil || ic.FldChar.FfData == nil {
-					continue
-				}
-
-				// found a begin form field
-				if ic.FldChar.FldCharTypeAttr == wml.ST_FldCharTypeBegin {
-					// ensure it has a name
-					if len(ic.FldChar.FfData.Name) == 0 || ic.FldChar.FfData.Name[0].ValAttr == nil {
-						continue
-					}
-
-					field := FormField{x: ic.FldChar.FfData}
-					// for text input boxes, we need a pointer to where to set
-					// the text as well
-					if ic.FldChar.FfData.TextInput != nil {
-
-						// ensure we always have at lest two IC's
-						for j := i + 1; j < len(runs)-1; j++ {
-							if len(runs[j].x.EG_RunInnerContent) == 0 {
-								continue
-							}
-							ic := runs[j].x.EG_RunInnerContent[0]
-							// look for the 'separate' field
-							if ic.FldChar != nil && ic.FldChar.FldCharTypeAttr == wml.ST_FldCharTypeSeparate {
-								if len(runs[j+1].x.EG_RunInnerContent) == 0 {
-									continue
-								}
-								// the value should be the text in the next inner content that is not a field char
-								if runs[j+1].x.EG_RunInnerContent[0].FldChar == nil {
-									field.textIC = runs[j+1].x.EG_RunInnerContent[0]
-								}
-							}
-						}
-					}
-					ret = append(ret, field)
-				}
-			}
-		}
-	}
-	return ret
 }
