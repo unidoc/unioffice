@@ -28,5 +28,12 @@ func (c Cell) AddParagraph() Paragraph {
 	ble.EG_ContentBlockContent = append(ble.EG_ContentBlockContent, bc)
 	p := wml.NewCT_P()
 	bc.P = append(bc.P, p)
+
 	return Paragraph{c.d, p}
+}
+func (c Cell) Properties() CellProperties {
+	if c.x.TcPr == nil {
+		c.x.TcPr = wml.NewCT_TcPr()
+	}
+	return CellProperties{c.x.TcPr}
 }
