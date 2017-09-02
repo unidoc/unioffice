@@ -11,6 +11,8 @@ import (
 	"archive/zip"
 	"errors"
 	"fmt"
+	"image"
+	"image/jpeg"
 	"io"
 	"io/ioutil"
 	"log"
@@ -124,6 +126,25 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 			decMap[r.Target()] = wb.CoreProperties.X()
 		case common.ExtendedPropertiesType:
 			decMap[r.Target()] = wb.AppProperties.X()
+		case common.ThumbnailType:
+			// read our thumbnail
+			for i, f := range files {
+				if f == nil {
+					continue
+				}
+				if f.Name == r.Target() {
+					rc, err := f.Open()
+					if err != nil {
+						return nil, fmt.Errorf("error reading thumbnail: %s", err)
+					}
+					wb.Thumbnail, _, err = image.Decode(rc)
+					rc.Close()
+					if err != nil {
+						return nil, fmt.Errorf("error decoding thumbnail: %s", err)
+					}
+					files[i] = nil
+				}
+			}
 		default:
 			log.Printf("unsupported type: %s", r.Type())
 		}
@@ -256,6 +277,15 @@ func (wb *Workbook) Save(w io.Writer) error {
 	for i, sheet := range wb.xws {
 		wbs := wb.x.Sheets.Sheet[i]
 		zippkg.MarshalXML(z, fmt.Sprintf("xl/worksheets/sheet%d.xml", wbs.SheetIdAttr), sheet)
+	}
+	if wb.Thumbnail != nil {
+		tn, err := z.Create("docProps/thumbnail.jpeg")
+		if err != nil {
+			return err
+		}
+		if err := jpeg.Encode(tn, wb.Thumbnail, nil); err != nil {
+			return err
+		}
 	}
 	wb.WriteExtraFiles(z)
 	return z.Close()

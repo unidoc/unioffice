@@ -34,10 +34,9 @@ type Document struct {
 	common.DocBase
 	x *wml.Document
 
-	Settings  Settings    // document settings
-	Numbering Numbering   // numbering styles within the doucment
-	Styles    Styles      // styles that are use and can be used within the document
-	Thumbnail image.Image // thumbnail preview of the document
+	Settings  Settings  // document settings
+	Numbering Numbering // numbering styles within the doucment
+	Styles    Styles    // styles that are use and can be used within the document
 
 	headers     []*wml.Hdr
 	footers     []*wml.Ftr

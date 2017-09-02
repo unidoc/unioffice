@@ -10,6 +10,7 @@ package common
 import (
 	"archive/zip"
 	"fmt"
+	"image"
 
 	"baliance.com/gooxml/zippkg"
 )
@@ -21,8 +22,10 @@ type DocBase struct {
 	AppProperties  AppProperties
 	Rels           Relationships
 	CoreProperties CoreProperties
-	ExtraFiles     []ExtraFile
-	TmpPath        string // path where temporary files are stored when opening documents
+	Thumbnail      image.Image // thumbnail preview of the document
+
+	ExtraFiles []ExtraFile
+	TmpPath    string // path where temporary files are stored when opening documents
 }
 
 // AddExtraFileFromZip is used when reading an unsupported file from an OOXML
