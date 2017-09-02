@@ -18,4 +18,5 @@ for pkg in $ALLPKGS; do
     fi
 done
 rm coverage.out
+sed -ie "s#$PKG#github.com/baliance/gooxml#" coverage.txt
 bash <(curl -s https://codecov.io/bash)
