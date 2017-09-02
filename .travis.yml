@@ -14,3 +14,6 @@ script:
         - go vet ./...
         - go test -v ./...
         - GOFMT=$(gofmt -d -s .) && echo $GOFMT && test -z "$GOFMT"
+
+after_success:
+        - ./test-coverage.sh
