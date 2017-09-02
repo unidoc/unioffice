@@ -12,7 +12,7 @@ import (
 
 func main() {
 	ss := spreadsheet.New()
-	sheet := ss.AddSheet("Sheet 1")
+	sheet := ss.AddSheet()
 
 	hdrStyle := ss.StyleSheet.AddCellStyle()
 	hdrStyle.SetHorizontalAlignment(sml.ST_HorizontalAlignmentCenter)
