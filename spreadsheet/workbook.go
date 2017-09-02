@@ -19,7 +19,6 @@ import (
 
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
-	"baliance.com/gooxml/spreadsheet/styles"
 	"baliance.com/gooxml/zippkg"
 )
 
@@ -28,7 +27,7 @@ type Workbook struct {
 	common.DocBase
 	x *spreadsheetml.Workbook
 
-	StyleSheet    styles.StyleSheet
+	StyleSheet    StyleSheet
 	Theme         common.Theme
 	SharedStrings SharedStrings
 	xws           []*spreadsheetml.Worksheet
@@ -43,7 +42,7 @@ func New() *Workbook {
 
 	wb.AppProperties = common.NewAppProperties()
 	wb.CoreProperties = common.NewCoreProperties()
-	wb.StyleSheet = styles.NewStyleSheet()
+	wb.StyleSheet = NewStyleSheet()
 
 	wb.Rels = common.NewRelationships()
 	wb.wbRels = common.NewRelationships()
@@ -148,7 +147,7 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 			basePaths[wksRel] = basePath
 			wb.xwsRels = append(wb.xwsRels, wksRel)
 		case common.StylesType:
-			wb.StyleSheet = styles.NewStyleSheet()
+			wb.StyleSheet = NewStyleSheet()
 			decMap[basePaths[wb.wbRels]+r.Target()] = wb.StyleSheet.X()
 		case common.ThemeType:
 			wb.Theme = common.NewTheme()

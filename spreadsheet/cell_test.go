@@ -13,7 +13,7 @@ import sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
 
 func TestCell(t *testing.T) {
 	wb := spreadsheet.New()
-	sheet := wb.AddSheet("test")
+	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()
 

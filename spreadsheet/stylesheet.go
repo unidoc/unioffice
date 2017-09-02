@@ -5,7 +5,7 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package styles
+package spreadsheet
 
 import (
 	"errors"
@@ -76,7 +76,7 @@ func (s StyleSheet) AddFont() Font {
 	font := sml.NewCT_Font()
 	s.x.Fonts.Font = append(s.x.Fonts.Font, font)
 	s.x.Fonts.CountAttr = gooxml.Uint32(uint32(len(s.x.Fonts.Font)))
-	return NewFont(font, s.x)
+	return Font{font, s.x}
 }
 
 // RemoveFont removes a font from the style sheet.  It *does not* update styles that refer
@@ -96,7 +96,7 @@ func (s StyleSheet) RemoveFont(f Font) error {
 func (s StyleSheet) Fonts() []Font {
 	ret := []Font{}
 	for _, f := range s.x.Fonts.Font {
-		ret = append(ret, NewFont(f, s.x))
+		ret = append(ret, Font{f, s.x})
 	}
 	return ret
 }
@@ -106,7 +106,7 @@ func (s StyleSheet) AddCellStyle() CellStyle {
 	xf := sml.NewCT_Xf()
 	s.x.CellXfs.Xf = append(s.x.CellXfs.Xf, xf)
 	s.x.CellXfs.CountAttr = gooxml.Uint32(uint32(len(s.x.CellXfs.Xf)))
-	return NewCellStyle(xf, s.x.CellXfs)
+	return CellStyle{xf, s.x.CellXfs}
 }
 
 // Fills returns a Fills object that can be used to add/create/edit fills.

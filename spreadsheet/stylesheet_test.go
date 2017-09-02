@@ -5,7 +5,7 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package styles_test
+package spreadsheet_test
 
 import (
 	"bytes"
@@ -14,7 +14,7 @@ import (
 	"os"
 	"testing"
 
-	"baliance.com/gooxml/spreadsheet/styles"
+	"baliance.com/gooxml/spreadsheet"
 	"baliance.com/gooxml/testhelper"
 	"baliance.com/gooxml/zippkg"
 )
@@ -22,25 +22,25 @@ import (
 func TestStyleSheetUnmarshal(t *testing.T) {
 	f, err := os.Open("testdata/styles.xml")
 	if err != nil {
-		t.Fatalf("error reading content types file")
+		t.Fatalf("error reading styles.xml")
 	}
 	dec := xml.NewDecoder(f)
-	r := styles.NewStyleSheet()
+	r := spreadsheet.NewStyleSheet()
 	if err := dec.Decode(r.X()); err != nil {
-		t.Errorf("error decoding content types: %s", err)
+		t.Errorf("error decoding styles.xml: %s", err)
 	}
 	got := &bytes.Buffer{}
 	fmt.Fprintf(got, zippkg.XMLHeader)
 	enc := xml.NewEncoder(zippkg.SelfClosingWriter{W: got})
 	if err := enc.Encode(r.X()); err != nil {
-		t.Errorf("error encoding content types: %s", err)
+		t.Errorf("error encoding styles.xml: %s", err)
 	}
 
 	testhelper.CompareGoldenXML(t, "styles.xml", got.Bytes())
 }
 
 func TestStyleSheetFonts(t *testing.T) {
-	ss := styles.NewStyleSheet()
+	ss := spreadsheet.NewStyleSheet()
 	fc := len(ss.Fonts())
 	ft := ss.AddFont()
 
