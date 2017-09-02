@@ -26,4 +26,4 @@ The packages of interest are baliance.com/gooxml/document,
 baliance/gooxml/spreadsheet and baliance.com/gooxml/presentation.
 
 */
-package gooxml
+package gooxml // import "baliance.com/gooxml"

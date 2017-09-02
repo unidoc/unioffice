@@ -9,6 +9,7 @@ install:
         - ln -s $HOME/gopath/src/github.com/baliance/gooxml $HOME/gopath/src/baliance.com/gooxml
 
 script:
+        - cd $HOME/gopath/src/baliance.com/gooxml
         - ./build-examples.sh
         - go vet ./...
         - go test -v ./...
