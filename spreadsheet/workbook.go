@@ -182,9 +182,9 @@ func (wb *Workbook) X() *spreadsheetml.Workbook {
 }
 
 // AddSheet adds a new sheet with a given name to a workbook.
-func (wb *Workbook) AddSheet(name string) Sheet {
+func (wb *Workbook) AddSheet() Sheet {
 	rs := spreadsheetml.NewCT_Sheet()
-	rs.NameAttr = name
+
 	// Assign a unique sheet ID
 	rs.SheetIdAttr = 1
 	for _, s := range wb.x.Sheets.Sheet {
@@ -279,8 +279,14 @@ func (wb *Workbook) Validate() error {
 		return fmt.Errorf("found %d worksheet descriptions and %d worksheets", maxID, len(wb.xws))
 	}
 
+	// Excel doesn't like reused sheet names
+	usedNames := map[string]struct{}{}
 	for i, s := range wb.x.Sheets.Sheet {
 		sw := Sheet{wb, s, wb.xws[i]}
+		if _, ok := usedNames[sw.Name()]; ok {
+			return errors.New(fmt.Sprintf("workbook/Sheet[%d] has duplicate name '%s'", i, sw.Name()))
+		}
+		usedNames[sw.Name()] = struct{}{}
 		if err := sw.ValidateWithPath(fmt.Sprintf("workbook/Sheet[%d]", i)); err != nil {
 			return err
 		}
