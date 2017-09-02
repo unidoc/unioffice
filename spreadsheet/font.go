@@ -5,25 +5,24 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package styles
+package spreadsheet
 
 import (
 	"baliance.com/gooxml/color"
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
 )
 
+// Font allows editing fonts within a spreadsheet stylesheet.
 type Font struct {
 	font   *sml.CT_Font
 	styles *sml.StyleSheet
 }
 
-func NewFont(font *sml.CT_Font, styles *sml.StyleSheet) Font {
-	return Font{font, styles}
-}
-
+// X returns the inner wrapped XML type.
 func (f Font) X() *sml.CT_Font {
 	return f.font
 }
+
 func (f Font) Index() uint32 {
 	for i, sf := range f.styles.Fonts.Font {
 		if f.font == sf {

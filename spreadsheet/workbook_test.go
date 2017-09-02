@@ -67,7 +67,7 @@ func TestWorkbookUnmarshal(t *testing.T) {
 
 func TestSimpleSheet(t *testing.T) {
 	wb := spreadsheet.New()
-	sheet := wb.AddSheet("foo")
+	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()
 	cell.SetString("testing 123")
@@ -114,14 +114,14 @@ func TestSheetCount(t *testing.T) {
 	if wb.SheetCount() != 0 {
 		t.Errorf("expected 0 sheets, got %d", wb.SheetCount())
 	}
-	wb.AddSheet("Sheet 1")
+	wb.AddSheet()
 	if err := wb.Validate(); err != nil {
 		t.Errorf("created an invalid spreadsheet: %s", err)
 	}
 	if wb.SheetCount() != 1 {
 		t.Errorf("expected 1 sheets, got %d", wb.SheetCount())
 	}
-	wb.AddSheet("Sheet 2")
+	wb.AddSheet()
 	if err := wb.Validate(); err != nil {
 		t.Errorf("created an invalid spreadsheet: %s", err)
 	}
@@ -132,7 +132,7 @@ func TestSheetCount(t *testing.T) {
 
 func TestPreserveSpace(t *testing.T) {
 	ss := spreadsheet.New()
-	sheet := ss.AddSheet("Sheet 1")
+	sheet := ss.AddSheet()
 	row := sheet.AddRow()
 	values := []string{"  foo  ", " bar \t", "foo\r\nbar", "\t\r\nfoo\t123\r\n"}
 	for i, s := range values {

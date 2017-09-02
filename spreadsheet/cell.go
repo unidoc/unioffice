@@ -12,7 +12,6 @@ import (
 
 	"baliance.com/gooxml"
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
-	"baliance.com/gooxml/spreadsheet/styles"
 )
 
 // Cell is a single cell within a sheet.
@@ -73,7 +72,7 @@ func (c Cell) SetBool(v bool) {
 
 // SetStyle applies a style to the cell.  This style is referenced in the generated XML
 // via CellStyle.Index().
-func (c Cell) SetStyle(cs styles.CellStyle) {
+func (c Cell) SetStyle(cs CellStyle) {
 	c.x.SAttr = gooxml.Uint32(cs.Index())
 }
 
