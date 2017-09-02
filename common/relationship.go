@@ -33,6 +33,11 @@ func (r Relationship) ID() string {
 	return r.x.IdAttr
 }
 
+// SetTarget set the target (path) of a relationship.
+func (r Relationship) SetTarget(s string) {
+	r.x.TargetAttr = s
+}
+
 // Target returns the target (path) of a relationship.
 func (r Relationship) Target() string {
 	return r.x.TargetAttr
