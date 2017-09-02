@@ -15,10 +15,31 @@ import (
 	"strings"
 	"testing"
 
+	"baliance.com/gooxml"
+
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 	"baliance.com/gooxml/zippkg"
 )
 
+func TestCreatorUnknownType(t *testing.T) {
+	el, err := gooxml.CreateElement(xml.StartElement{Name: xml.Name{Local: "foo", Space: "bar"}})
+	if el == nil || err != nil {
+		t.Errorf("CreateElement should never return nil: %s", err)
+	}
+	if _, ok := el.(*gooxml.XSDAny); !ok {
+		t.Errorf("CreateElement should return XSDAny for unknown types")
+	}
+}
+
+func TestCreatorKnownType(t *testing.T) {
+	el, err := gooxml.CreateElement(xml.StartElement{Name: xml.Name{Local: "CT_Settings", Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}})
+	if el == nil || err != nil {
+		t.Errorf("CreateElement should never return nil: %s", err)
+	}
+	if _, ok := el.(*wml.CT_Settings); !ok {
+		t.Errorf("CreateElement should return the element requested, got %T", el)
+	}
+}
 func TestRawEncode(t *testing.T) {
 	f, err := os.Open("testdata/settings.xml")
 	if err != nil {
