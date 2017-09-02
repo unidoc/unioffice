@@ -11,6 +11,7 @@ import (
 	"fmt"
 
 	"baliance.com/gooxml"
+	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -54,6 +55,10 @@ func (s Styles) AddStyle(styleID string, t wml.ST_StyleType, isDefault bool) Sty
 // InitializeDefault constructs the default styles.
 func (s Styles) InitializeDefault() {
 	s.initializeDocDefaults()
+	s.initializeStyleDefaults()
+}
+
+func (s Styles) initializeStyleDefaults() {
 	// Normal
 	normal := s.AddStyle("Normal", wml.ST_StyleTypeParagraph, true)
 	normal.SetName("Normal")
@@ -65,6 +70,30 @@ func (s Styles) InitializeDefault() {
 	dpf.SetUISortOrder(1)
 	dpf.SetSemiHidden(true)
 	dpf.SetUnhideWhenUsed(true)
+
+	// Heading1
+	heading1Char := s.AddStyle("Heading1Char", wml.ST_StyleTypeCharacter, true)
+	heading1Char.SetName("Heading 1 Char")
+	heading1Char.SetLinkedStyle("Heading1")
+	heading1Char.SetBasedOn(dpf.StyleID())
+	heading1Char.RunProperties().SetSize(32 / measurement.HalfPoint)
+	heading1Char.RunProperties().Fonts().SetASCIITheme(wml.ST_ThemeMajorAscii)
+	heading1Char.RunProperties().Fonts().SetEastAsiaTheme(wml.ST_ThemeMajorEastAsia)
+	heading1Char.RunProperties().Fonts().SetHANSITheme(wml.ST_ThemeMajorHAnsi)
+	heading1Char.RunProperties().Fonts().SetCSTheme(wml.ST_ThemeMajorBidi)
+	heading1Char.RunProperties().Color().SetColor(color.FromHex("2F5496"))
+	heading1Char.RunProperties().Color().SetThemeColor(wml.ST_ThemeColorAccent1)
+	heading1Char.RunProperties().Color().SetThemeShade(0xbf)
+
+	heading1 := s.AddStyle("Heading1", wml.ST_StyleTypeParagraph, true)
+	heading1.SetName("heading 1")
+	heading1.SetBasedOn(normal.StyleID())
+	heading1.SetNextStyle(normal.StyleID())
+	heading1.SetPrimaryStyle(true)
+	heading1.ParagraphProperties().SetKeepNext(true)
+	heading1.ParagraphProperties().SetKeepOnOnePage(true)
+	heading1.ParagraphProperties().SetSpacing(240*measurement.Twips, measurement.Zero)
+	heading1.ParagraphProperties().SetOutlineLevel(0)
 
 	// TableNormal
 	tbl := s.AddStyle("TableNormal", wml.ST_StyleTypeTable, true)
@@ -118,9 +147,9 @@ func (s Styles) InitializeDefault() {
 	hdr.SetSemiHidden(true)
 	hdr.SetUnhideWhenUsed(true)
 	hdr.SetLinkedStyle(hc.StyleID())
-	hdr.ParagraphStyleProperties().AddTabStop(4680*measurement.Twips, wml.ST_TabJcCenter, wml.ST_TabTlcUnset)
-	hdr.ParagraphStyleProperties().AddTabStop(9360*measurement.Twips, wml.ST_TabJcRight, wml.ST_TabTlcUnset)
-	hdr.ParagraphStyleProperties().SetSpacing(0, 240*measurement.Twips)
+	hdr.ParagraphProperties().AddTabStop(4680*measurement.Twips, wml.ST_TabJcCenter, wml.ST_TabTlcUnset)
+	hdr.ParagraphProperties().AddTabStop(9360*measurement.Twips, wml.ST_TabJcRight, wml.ST_TabTlcUnset)
+	hdr.ParagraphProperties().SetSpacing(0, 240*measurement.Twips)
 
 	// FooterChar
 	fc := s.AddStyle("FooterChar", wml.ST_StyleTypeCharacter, true)
@@ -137,9 +166,9 @@ func (s Styles) InitializeDefault() {
 	ftr.SetSemiHidden(true)
 	ftr.SetUnhideWhenUsed(true)
 	ftr.SetLinkedStyle(fc.StyleID())
-	ftr.ParagraphStyleProperties().AddTabStop(4680*measurement.Twips, wml.ST_TabJcCenter, wml.ST_TabTlcUnset)
-	ftr.ParagraphStyleProperties().AddTabStop(9360*measurement.Twips, wml.ST_TabJcRight, wml.ST_TabTlcUnset)
-	ftr.ParagraphStyleProperties().SetSpacing(0, 240*measurement.Twips)
+	ftr.ParagraphProperties().AddTabStop(4680*measurement.Twips, wml.ST_TabJcCenter, wml.ST_TabTlcUnset)
+	ftr.ParagraphProperties().AddTabStop(9360*measurement.Twips, wml.ST_TabJcRight, wml.ST_TabTlcUnset)
+	ftr.ParagraphProperties().SetSpacing(0, 240*measurement.Twips)
 
 	fontSizes := []measurement.Distance{16, 13, 12, 11, 11, 11, 11, 11, 11}
 	spacing := []measurement.Distance{240, 40, 40, 40, 40, 40, 40, 40, 40}
@@ -159,9 +188,9 @@ func (s Styles) InitializeDefault() {
 		hdng.SetLinkedStyle(hdng.StyleID())
 		hdng.SetUISortOrder(9 + i)
 		hdng.SetPrimaryStyle(true)
-		hdng.ParagraphStyleProperties().SetKeepNext(true)
-		hdng.ParagraphStyleProperties().SetSpacing(spacing[i]*measurement.Twips, 0)
-		hdng.ParagraphStyleProperties().SetOutlineLevel(i)
+		hdng.ParagraphProperties().SetKeepNext(true)
+		hdng.ParagraphProperties().SetSpacing(spacing[i]*measurement.Twips, 0)
+		hdng.ParagraphProperties().SetOutlineLevel(i)
 		hdng.RunProperties().SetSize(fontSizes[i] * measurement.Point)
 	}
 }
@@ -182,12 +211,12 @@ func (s Styles) initializeDocDefaults() {
 	base = wml.NewEG_RPrBase()
 	s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase = append(s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase, base)
 	base.Sz = wml.NewCT_HpsMeasure()
-	base.Sz.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(22)
+	base.Sz.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(12 / measurement.HalfPoint)
 
 	base = wml.NewEG_RPrBase()
 	s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase = append(s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase, base)
 	base.SzCs = wml.NewCT_HpsMeasure()
-	base.SzCs.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(22)
+	base.SzCs.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(12 / measurement.HalfPoint)
 
 	base = wml.NewEG_RPrBase()
 	s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase = append(s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase, base)
@@ -195,15 +224,6 @@ func (s Styles) initializeDocDefaults() {
 	base.Lang.ValAttr = gooxml.String("en-us")
 	base.Lang.EastAsiaAttr = gooxml.String("en-us")
 	base.Lang.BidiAttr = gooxml.String("ar-SA")
-
-	s.x.DocDefaults.PPrDefault = wml.NewCT_PPrDefault()
-	s.x.DocDefaults.PPrDefault.PPr = wml.NewCT_PPrGeneral()
-	s.x.DocDefaults.PPrDefault.PPr.Spacing = wml.NewCT_Spacing()
-	s.x.DocDefaults.PPrDefault.PPr.Spacing.AfterAttr = &sharedTypes.ST_TwipsMeasure{}
-	s.x.DocDefaults.PPrDefault.PPr.Spacing.AfterAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(160)
-	s.x.DocDefaults.PPrDefault.PPr.Spacing.LineAttr = &wml.ST_SignedTwipsMeasure{}
-	s.x.DocDefaults.PPrDefault.PPr.Spacing.LineAttr.Int64 = gooxml.Int64(259)
-	s.x.DocDefaults.PPrDefault.PPr.Spacing.LineRuleAttr = wml.ST_LineSpacingRuleAuto
 }
 
 // Styles returns all styles.

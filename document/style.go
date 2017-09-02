@@ -111,8 +111,8 @@ func (s Style) SetNextStyle(name string) {
 	}
 }
 
-// ParagraphStyleProperties returns the paragraph style properties.
-func (s Style) ParagraphStyleProperties() ParagraphStyleProperties {
+// ParagraphProperties returns the paragraph style properties.
+func (s Style) ParagraphProperties() ParagraphStyleProperties {
 	if s.x.PPr == nil {
 		s.x.PPr = wml.NewCT_PPrGeneral()
 	}

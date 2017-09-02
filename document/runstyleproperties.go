@@ -56,3 +56,41 @@ func (r RunStyleProperties) SetSize(size measurement.Distance) {
 	sz.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(size / measurement.HalfPoint))
 	szCs.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(size / measurement.HalfPoint))
 }
+
+// Fonts returns the style's Fonts.
+func (r RunStyleProperties) Fonts() Fonts {
+	var ctf *wml.CT_Fonts
+	for _, b := range r.x.EG_RPrBase {
+		if b.RFonts != nil {
+			ctf = b.RFonts
+			break
+		}
+	}
+	if ctf == nil {
+		ctf = wml.NewCT_Fonts()
+
+		b := wml.NewEG_RPrBase()
+		b.RFonts = ctf
+		r.x.EG_RPrBase = append(r.x.EG_RPrBase, b)
+	}
+	return Fonts{ctf}
+}
+
+// Color returns the style's Color.
+func (r RunStyleProperties) Color() Color {
+	var ctc *wml.CT_Color
+	for _, b := range r.x.EG_RPrBase {
+		if b.Color != nil {
+			ctc = b.Color
+			break
+		}
+	}
+	if ctc == nil {
+		ctc = wml.NewCT_Color()
+
+		b := wml.NewEG_RPrBase()
+		b.Color = ctc
+		r.x.EG_RPrBase = append(r.x.EG_RPrBase, b)
+	}
+	return Color{ctc}
+}
