@@ -23,9 +23,6 @@ func NewCT_TopBot() *CT_TopBot {
 }
 
 func (m *CT_TopBot) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "m:val"})
 	if err != nil {
 		return err

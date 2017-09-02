@@ -25,9 +25,6 @@ func NewEG_FtnEdnNumProps() *EG_FtnEdnNumProps {
 }
 
 func (m *EG_FtnEdnNumProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.NumStart != nil {
 		senumStart := xml.StartElement{Name: xml.Name{Local: "w:numStart"}}
 		e.EncodeElement(m.NumStart, senumStart)

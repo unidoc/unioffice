@@ -30,9 +30,6 @@ func NewCT_XYAdjustHandle() *CT_XYAdjustHandle {
 }
 
 func (m *CT_XYAdjustHandle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.GdRefXAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "gdRefX"},
 			Value: fmt.Sprintf("%v", *m.GdRefXAttr)})

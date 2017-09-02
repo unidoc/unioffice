@@ -26,9 +26,6 @@ func NewCT_PictureOptions() *CT_PictureOptions {
 }
 
 func (m *CT_PictureOptions) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.ApplyToFront != nil {
 		seapplyToFront := xml.StartElement{Name: xml.Name{Local: "applyToFront"}}

@@ -8,6 +8,7 @@
 package terms_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/purl.org/dc/terms"
@@ -21,4 +22,11 @@ func TestElementsAndRefinementsGroupChoiceConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed terms.ElementsAndRefinementsGroupChoice should validate: %s", err)
 	}
+}
+
+func TestElementsAndRefinementsGroupChoiceMarshalUnmarshal(t *testing.T) {
+	v := terms.NewElementsAndRefinementsGroupChoice()
+	buf, _ := xml.Marshal(v)
+	v2 := terms.NewElementsAndRefinementsGroupChoice()
+	xml.Unmarshal(buf, v2)
 }

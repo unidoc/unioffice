@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestCommentsConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.Comments should validate: %s", err)
 	}
+}
+
+func TestCommentsMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewComments()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewComments()
+	xml.Unmarshal(buf, v2)
 }

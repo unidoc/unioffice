@@ -23,9 +23,6 @@ func NewEG_Anchor() *EG_Anchor {
 }
 
 func (m *EG_Anchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.RelSizeAnchor != nil {
 		serelSizeAnchor := xml.StartElement{Name: xml.Name{Local: "relSizeAnchor"}}
 		e.EncodeElement(m.RelSizeAnchor, serelSizeAnchor)

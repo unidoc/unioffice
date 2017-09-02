@@ -23,9 +23,6 @@ func NewCT_PosVChoice() *CT_PosVChoice {
 }
 
 func (m *CT_PosVChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Align != ST_AlignVUnset {
 		sealign := xml.StartElement{Name: xml.Name{Local: "wp:align"}}
 		e.EncodeElement(m.Align, sealign)

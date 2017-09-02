@@ -26,9 +26,6 @@ func NewEG_TopLevelSlide() *EG_TopLevelSlide {
 }
 
 func (m *EG_TopLevelSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	seclrMap := xml.StartElement{Name: xml.Name{Local: "p:clrMap"}}
 	e.EncodeElement(m.ClrMap, seclrMap)
 	return nil

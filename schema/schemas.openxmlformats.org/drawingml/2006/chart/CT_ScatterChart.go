@@ -29,9 +29,6 @@ func NewCT_ScatterChart() *CT_ScatterChart {
 }
 
 func (m *CT_ScatterChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sescatterStyle := xml.StartElement{Name: xml.Name{Local: "scatterStyle"}}
 	e.EncodeElement(m.ScatterStyle, sescatterStyle)

@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestPivotTableDefinitionConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.PivotTableDefinition should validate: %s", err)
 	}
+}
+
+func TestPivotTableDefinitionMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewPivotTableDefinition()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewPivotTableDefinition()
+	xml.Unmarshal(buf, v2)
 }

@@ -26,9 +26,6 @@ func NewCT_LimUpp() *CT_LimUpp {
 }
 
 func (m *CT_LimUpp) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.LimUppPr != nil {
 		selimUppPr := xml.StartElement{Name: xml.Name{Local: "m:limUppPr"}}

@@ -26,9 +26,6 @@ func NewEG_PContentMath() *EG_PContentMath {
 }
 
 func (m *EG_PContentMath) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "w:EG_PContentMath"
 	if m.EG_PContentBase != nil {
 		for _, c := range m.EG_PContentBase {

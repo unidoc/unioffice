@@ -34,9 +34,6 @@ func NewCT_ErrBars() *CT_ErrBars {
 }
 
 func (m *CT_ErrBars) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.ErrDir != nil {
 		seerrDir := xml.StartElement{Name: xml.Name{Local: "errDir"}}

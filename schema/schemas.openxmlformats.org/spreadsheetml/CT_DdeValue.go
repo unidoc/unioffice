@@ -27,9 +27,6 @@ func NewCT_DdeValue() *CT_DdeValue {
 }
 
 func (m *CT_DdeValue) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TAttr != ST_DdeValueTypeUnset {
 		attr, err := m.TAttr.MarshalXMLAttr(xml.Name{Local: "t"})
 		if err != nil {

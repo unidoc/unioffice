@@ -28,9 +28,6 @@ func NewCT_AbsSizeAnchor() *CT_AbsSizeAnchor {
 }
 
 func (m *CT_AbsSizeAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sefrom := xml.StartElement{Name: xml.Name{Local: "from"}}
 	e.EncodeElement(m.From, sefrom)

@@ -23,9 +23,6 @@ func NewCT_CxnList() *CT_CxnList {
 }
 
 func (m *CT_CxnList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Cxn != nil {
 		secxn := xml.StartElement{Name: xml.Name{Local: "cxn"}}

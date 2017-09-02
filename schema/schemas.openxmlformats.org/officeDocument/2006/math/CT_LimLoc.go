@@ -23,9 +23,6 @@ func NewCT_LimLoc() *CT_LimLoc {
 }
 
 func (m *CT_LimLoc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "m:val"})
 	if err != nil {
 		return err

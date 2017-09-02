@@ -27,9 +27,6 @@ func NewCT_Surface3DChart() *CT_Surface3DChart {
 }
 
 func (m *CT_Surface3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Wireframe != nil {
 		sewireframe := xml.StartElement{Name: xml.Name{Local: "wireframe"}}

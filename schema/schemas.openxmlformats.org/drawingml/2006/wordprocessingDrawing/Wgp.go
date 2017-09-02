@@ -25,9 +25,6 @@ func NewWgp() *Wgp {
 }
 
 func (m *Wgp) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	return m.CT_WordprocessingGroup.MarshalXML(e, start)
 }
 

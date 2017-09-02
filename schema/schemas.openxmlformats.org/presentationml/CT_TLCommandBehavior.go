@@ -28,9 +28,6 @@ func NewCT_TLCommandBehavior() *CT_TLCommandBehavior {
 }
 
 func (m *CT_TLCommandBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TypeAttr != ST_TLCommandTypeUnset {
 		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 		if err != nil {

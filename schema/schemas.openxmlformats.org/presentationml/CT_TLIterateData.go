@@ -31,9 +31,6 @@ func NewCT_TLIterateData() *CT_TLIterateData {
 }
 
 func (m *CT_TLIterateData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TypeAttr != ST_IterateTypeUnset {
 		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 		if err != nil {

@@ -35,9 +35,6 @@ func NewCT_PageBorders() *CT_PageBorders {
 }
 
 func (m *CT_PageBorders) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ZOrderAttr != ST_PageBorderZOrderUnset {
 		attr, err := m.ZOrderAttr.MarshalXMLAttr(xml.Name{Local: "w:zOrder"})
 		if err != nil {

@@ -27,9 +27,6 @@ func NewCT_Colors() *CT_Colors {
 }
 
 func (m *CT_Colors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.MethAttr != ST_ClrAppMethodUnset {
 		attr, err := m.MethAttr.MarshalXMLAttr(xml.Name{Local: "meth"})
 		if err != nil {

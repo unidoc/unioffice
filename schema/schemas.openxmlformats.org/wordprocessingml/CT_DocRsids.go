@@ -26,9 +26,6 @@ func NewCT_DocRsids() *CT_DocRsids {
 }
 
 func (m *CT_DocRsids) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.RsidRoot != nil {
 		sersidRoot := xml.StartElement{Name: xml.Name{Local: "w:rsidRoot"}}

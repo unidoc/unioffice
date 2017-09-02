@@ -25,9 +25,6 @@ func NewCT_GeomRect() *CT_GeomRect {
 }
 
 func (m *CT_GeomRect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "l"},
 		Value: fmt.Sprintf("%v", m.LAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "t"},

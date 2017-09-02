@@ -28,9 +28,6 @@ func NewCT_GvmlGroupShapeChoice() *CT_GvmlGroupShapeChoice {
 }
 
 func (m *CT_GvmlGroupShapeChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TxSp != nil {
 		setxSp := xml.StartElement{Name: xml.Name{Local: "a:txSp"}}
 		e.EncodeElement(m.TxSp, setxSp)

@@ -8,6 +8,7 @@
 package spreadsheetDrawing_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"
@@ -21,4 +22,11 @@ func TestEG_ObjectChoicesChoiceConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetDrawing.EG_ObjectChoicesChoice should validate: %s", err)
 	}
+}
+
+func TestEG_ObjectChoicesChoiceMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetDrawing.NewEG_ObjectChoicesChoice()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetDrawing.NewEG_ObjectChoicesChoice()
+	xml.Unmarshal(buf, v2)
 }

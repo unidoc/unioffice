@@ -21,9 +21,6 @@ func NewDCMIType() *DCMIType {
 }
 
 func (m *DCMIType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "DCMIType"
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

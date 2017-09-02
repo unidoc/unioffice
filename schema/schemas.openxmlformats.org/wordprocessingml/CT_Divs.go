@@ -24,9 +24,6 @@ func NewCT_Divs() *CT_Divs {
 }
 
 func (m *CT_Divs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sediv := xml.StartElement{Name: xml.Name{Local: "w:div"}}
 	e.EncodeElement(m.Div, sediv)

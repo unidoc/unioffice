@@ -26,9 +26,6 @@ func NewCT_Cell3D() *CT_Cell3D {
 }
 
 func (m *CT_Cell3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PrstMaterialAttr != ST_PresetMaterialTypeUnset {
 		attr, err := m.PrstMaterialAttr.MarshalXMLAttr(xml.Name{Local: "prstMaterial"})
 		if err != nil {

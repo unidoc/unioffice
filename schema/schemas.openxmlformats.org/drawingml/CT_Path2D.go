@@ -34,9 +34,6 @@ func NewCT_Path2D() *CT_Path2D {
 }
 
 func (m *CT_Path2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.WAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w"},
 			Value: fmt.Sprintf("%v", *m.WAttr)})

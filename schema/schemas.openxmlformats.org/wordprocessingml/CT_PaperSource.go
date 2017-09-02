@@ -26,9 +26,6 @@ func NewCT_PaperSource() *CT_PaperSource {
 }
 
 func (m *CT_PaperSource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.FirstAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:first"},
 			Value: fmt.Sprintf("%v", *m.FirstAttr)})

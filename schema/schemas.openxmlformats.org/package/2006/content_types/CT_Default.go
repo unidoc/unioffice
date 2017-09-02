@@ -25,9 +25,6 @@ func NewCT_Default() *CT_Default {
 }
 
 func (m *CT_Default) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "Extension"},
 		Value: fmt.Sprintf("%v", m.ExtensionAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ContentType"},

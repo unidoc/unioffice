@@ -39,9 +39,6 @@ func NewCT_Fonts() *CT_Fonts {
 }
 
 func (m *CT_Fonts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.HintAttr != ST_HintUnset {
 		attr, err := m.HintAttr.MarshalXMLAttr(xml.Name{Local: "w:hint"})
 		if err != nil {

@@ -25,9 +25,6 @@ func NewCT_SchemeColor() *CT_SchemeColor {
 }
 
 func (m *CT_SchemeColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 	if err != nil {
 		return err

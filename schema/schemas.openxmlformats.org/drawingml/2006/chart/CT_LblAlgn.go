@@ -23,9 +23,6 @@ func NewCT_LblAlgn() *CT_LblAlgn {
 }
 
 func (m *CT_LblAlgn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 	if err != nil {
 		return err

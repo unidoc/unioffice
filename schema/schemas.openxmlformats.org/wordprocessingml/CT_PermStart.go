@@ -30,9 +30,6 @@ func NewCT_PermStart() *CT_PermStart {
 }
 
 func (m *CT_PermStart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.EdGrpAttr != ST_EdGrpUnset {
 		attr, err := m.EdGrpAttr.MarshalXMLAttr(xml.Name{Local: "w:edGrp"})
 		if err != nil {

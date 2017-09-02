@@ -8,6 +8,7 @@
 package presentationml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/presentationml"
@@ -21,4 +22,11 @@ func TestAG_ChildSlideConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed presentationml.AG_ChildSlide should validate: %s", err)
 	}
+}
+
+func TestAG_ChildSlideMarshalUnmarshal(t *testing.T) {
+	v := presentationml.NewAG_ChildSlide()
+	buf, _ := xml.Marshal(v)
+	v2 := presentationml.NewAG_ChildSlide()
+	xml.Unmarshal(buf, v2)
 }

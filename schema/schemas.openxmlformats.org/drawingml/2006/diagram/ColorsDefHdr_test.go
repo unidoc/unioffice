@@ -8,6 +8,7 @@
 package diagram_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/diagram"
@@ -21,4 +22,11 @@ func TestColorsDefHdrConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed diagram.ColorsDefHdr should validate: %s", err)
 	}
+}
+
+func TestColorsDefHdrMarshalUnmarshal(t *testing.T) {
+	v := diagram.NewColorsDefHdr()
+	buf, _ := xml.Marshal(v)
+	v2 := diagram.NewColorsDefHdr()
+	xml.Unmarshal(buf, v2)
 }

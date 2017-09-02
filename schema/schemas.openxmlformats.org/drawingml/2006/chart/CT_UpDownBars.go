@@ -25,9 +25,6 @@ func NewCT_UpDownBars() *CT_UpDownBars {
 }
 
 func (m *CT_UpDownBars) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.GapWidth != nil {
 		segapWidth := xml.StartElement{Name: xml.Name{Local: "gapWidth"}}

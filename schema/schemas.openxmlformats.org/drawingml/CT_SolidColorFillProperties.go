@@ -27,9 +27,6 @@ func NewCT_SolidColorFillProperties() *CT_SolidColorFillProperties {
 }
 
 func (m *CT_SolidColorFillProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.ScrgbClr != nil {
 		sescrgbClr := xml.StartElement{Name: xml.Name{Local: "a:scrgbClr"}}

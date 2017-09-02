@@ -38,9 +38,6 @@ func NewCT_DLblChoice() *CT_DLblChoice {
 }
 
 func (m *CT_DLblChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Delete != nil {
 		sedelete := xml.StartElement{Name: xml.Name{Local: "delete"}}
 		e.EncodeElement(m.Delete, sedelete)

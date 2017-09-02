@@ -27,9 +27,6 @@ func NewCT_TLOleChartTargetElement() *CT_TLOleChartTargetElement {
 }
 
 func (m *CT_TLOleChartTargetElement) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 	if err != nil {
 		return err

@@ -25,9 +25,6 @@ func NewCT_FFStatusText() *CT_FFStatusText {
 }
 
 func (m *CT_FFStatusText) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TypeAttr != ST_InfoTextTypeUnset {
 		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "w:type"})
 		if err != nil {

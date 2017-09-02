@@ -22,9 +22,6 @@ func NewCT_BuiltInUnit() *CT_BuiltInUnit {
 }
 
 func (m *CT_BuiltInUnit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_BuiltInUnitUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

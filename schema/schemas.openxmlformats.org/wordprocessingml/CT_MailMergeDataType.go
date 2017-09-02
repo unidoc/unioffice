@@ -23,9 +23,6 @@ func NewCT_MailMergeDataType() *CT_MailMergeDataType {
 }
 
 func (m *CT_MailMergeDataType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:val"},
 		Value: fmt.Sprintf("%v", m.ValAttr)})
 	e.EncodeToken(start)

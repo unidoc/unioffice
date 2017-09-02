@@ -8,6 +8,7 @@
 package presentationml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/presentationml"
@@ -21,4 +22,11 @@ func TestEG_TopLevelSlideConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed presentationml.EG_TopLevelSlide should validate: %s", err)
 	}
+}
+
+func TestEG_TopLevelSlideMarshalUnmarshal(t *testing.T) {
+	v := presentationml.NewEG_TopLevelSlide()
+	buf, _ := xml.Marshal(v)
+	v2 := presentationml.NewEG_TopLevelSlide()
+	xml.Unmarshal(buf, v2)
 }

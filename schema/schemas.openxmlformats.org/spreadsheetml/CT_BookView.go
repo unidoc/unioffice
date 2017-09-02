@@ -50,9 +50,6 @@ func NewCT_BookView() *CT_BookView {
 }
 
 func (m *CT_BookView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.VisibilityAttr != ST_VisibilityUnset {
 		attr, err := m.VisibilityAttr.MarshalXMLAttr(xml.Name{Local: "visibility"})
 		if err != nil {

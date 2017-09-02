@@ -25,9 +25,6 @@ func NewCT_CalendarType() *CT_CalendarType {
 }
 
 func (m *CT_CalendarType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != sharedTypes.ST_CalendarTypeUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 		if err != nil {

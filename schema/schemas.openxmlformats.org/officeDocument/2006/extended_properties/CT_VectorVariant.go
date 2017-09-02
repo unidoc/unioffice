@@ -25,9 +25,6 @@ func NewCT_VectorVariant() *CT_VectorVariant {
 }
 
 func (m *CT_VectorVariant) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sevector := xml.StartElement{Name: xml.Name{Local: "vt:vector"}}
 	e.EncodeElement(m.Vector, sevector)

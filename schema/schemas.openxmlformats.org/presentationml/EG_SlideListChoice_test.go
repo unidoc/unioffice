@@ -8,6 +8,7 @@
 package presentationml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/presentationml"
@@ -21,4 +22,11 @@ func TestEG_SlideListChoiceConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed presentationml.EG_SlideListChoice should validate: %s", err)
 	}
+}
+
+func TestEG_SlideListChoiceMarshalUnmarshal(t *testing.T) {
+	v := presentationml.NewEG_SlideListChoice()
+	buf, _ := xml.Marshal(v)
+	v2 := presentationml.NewEG_SlideListChoice()
+	xml.Unmarshal(buf, v2)
 }

@@ -23,9 +23,6 @@ func NewGraphic() *Graphic {
 }
 
 func (m *Graphic) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	return m.CT_GraphicalObject.MarshalXML(e, start)
 }
 

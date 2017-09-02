@@ -53,9 +53,6 @@ func NewEG_RangeMarkupElements() *EG_RangeMarkupElements {
 }
 
 func (m *EG_RangeMarkupElements) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BookmarkStart != nil {
 		sebookmarkStart := xml.StartElement{Name: xml.Name{Local: "w:bookmarkStart"}}
 		e.EncodeElement(m.BookmarkStart, sebookmarkStart)

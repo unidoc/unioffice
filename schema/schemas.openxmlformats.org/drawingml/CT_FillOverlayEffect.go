@@ -30,9 +30,6 @@ func NewCT_FillOverlayEffect() *CT_FillOverlayEffect {
 }
 
 func (m *CT_FillOverlayEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.BlendAttr.MarshalXMLAttr(xml.Name{Local: "blend"})
 	if err != nil {
 		return err

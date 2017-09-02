@@ -23,9 +23,6 @@ func NewEG_RPr() *EG_RPr {
 }
 
 func (m *EG_RPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.RPr != nil {
 		serPr := xml.StartElement{Name: xml.Name{Local: "w:rPr"}}
 		e.EncodeElement(m.RPr, serPr)

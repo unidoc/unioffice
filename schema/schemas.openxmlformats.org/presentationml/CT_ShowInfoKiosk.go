@@ -24,9 +24,6 @@ func NewCT_ShowInfoKiosk() *CT_ShowInfoKiosk {
 }
 
 func (m *CT_ShowInfoKiosk) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.RestartAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "restart"},
 			Value: fmt.Sprintf("%v", *m.RestartAttr)})

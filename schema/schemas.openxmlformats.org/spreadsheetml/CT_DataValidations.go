@@ -33,9 +33,6 @@ func NewCT_DataValidations() *CT_DataValidations {
 }
 
 func (m *CT_DataValidations) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.DisablePromptsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "disablePrompts"},
 			Value: fmt.Sprintf("%v", *m.DisablePromptsAttr)})

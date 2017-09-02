@@ -24,9 +24,6 @@ func NewEG_TextAutofit() *EG_TextAutofit {
 }
 
 func (m *EG_TextAutofit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.NoAutofit != nil {
 		senoAutofit := xml.StartElement{Name: xml.Name{Local: "a:noAutofit"}}
 		e.EncodeElement(m.NoAutofit, senoAutofit)

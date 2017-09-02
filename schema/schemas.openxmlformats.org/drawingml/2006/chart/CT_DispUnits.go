@@ -24,9 +24,6 @@ func NewCT_DispUnits() *CT_DispUnits {
 }
 
 func (m *CT_DispUnits) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Choice != nil {
 		m.Choice.MarshalXML(e, start)

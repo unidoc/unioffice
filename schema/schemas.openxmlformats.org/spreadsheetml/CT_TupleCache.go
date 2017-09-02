@@ -31,9 +31,6 @@ func NewCT_TupleCache() *CT_TupleCache {
 }
 
 func (m *CT_TupleCache) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Entries != nil {
 		seentries := xml.StartElement{Name: xml.Name{Local: "x:entries"}}

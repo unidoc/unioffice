@@ -26,9 +26,6 @@ func NewCT_RelSizeAnchor() *CT_RelSizeAnchor {
 }
 
 func (m *CT_RelSizeAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sefrom := xml.StartElement{Name: xml.Name{Local: "from"}}
 	e.EncodeElement(m.From, sefrom)

@@ -25,9 +25,6 @@ func NewCT_DLbls() *CT_DLbls {
 }
 
 func (m *CT_DLbls) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.DLbl != nil {
 		sedLbl := xml.StartElement{Name: xml.Name{Local: "dLbl"}}

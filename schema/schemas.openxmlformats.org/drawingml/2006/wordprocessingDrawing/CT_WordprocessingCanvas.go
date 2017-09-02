@@ -28,9 +28,6 @@ func NewCT_WordprocessingCanvas() *CT_WordprocessingCanvas {
 }
 
 func (m *CT_WordprocessingCanvas) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Bg != nil {
 		sebg := xml.StartElement{Name: xml.Name{Local: "wp:bg"}}

@@ -32,9 +32,6 @@ func NewCT_Format() *CT_Format {
 }
 
 func (m *CT_Format) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ActionAttr != ST_FormatActionUnset {
 		attr, err := m.ActionAttr.MarshalXMLAttr(xml.Name{Local: "action"})
 		if err != nil {

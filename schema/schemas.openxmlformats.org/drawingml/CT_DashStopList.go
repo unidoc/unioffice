@@ -23,9 +23,6 @@ func NewCT_DashStopList() *CT_DashStopList {
 }
 
 func (m *CT_DashStopList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Ds != nil {
 		seds := xml.StartElement{Name: xml.Name{Local: "a:ds"}}

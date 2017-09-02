@@ -25,9 +25,6 @@ func NewCT_RelativeRect() *CT_RelativeRect {
 }
 
 func (m *CT_RelativeRect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.LAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "l"},
 			Value: fmt.Sprintf("%v", *m.LAttr)})

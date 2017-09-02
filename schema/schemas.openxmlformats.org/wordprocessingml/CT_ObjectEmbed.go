@@ -30,9 +30,6 @@ func NewCT_ObjectEmbed() *CT_ObjectEmbed {
 }
 
 func (m *CT_ObjectEmbed) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.DrawAspectAttr != ST_ObjectDrawAspectUnset {
 		attr, err := m.DrawAspectAttr.MarshalXMLAttr(xml.Name{Local: "w:drawAspect"})
 		if err != nil {

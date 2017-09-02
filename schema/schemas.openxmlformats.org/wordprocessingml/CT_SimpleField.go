@@ -34,9 +34,6 @@ func NewCT_SimpleField() *CT_SimpleField {
 }
 
 func (m *CT_SimpleField) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:instr"},
 		Value: fmt.Sprintf("%v", m.InstrAttr)})
 	if m.FldLockAttr != nil {

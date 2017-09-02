@@ -23,9 +23,6 @@ func NewCT_TblLayoutType() *CT_TblLayoutType {
 }
 
 func (m *CT_TblLayoutType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TypeAttr != ST_TblLayoutTypeUnset {
 		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "w:type"})
 		if err != nil {

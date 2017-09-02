@@ -8,6 +8,7 @@
 package schemaLibrary_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/schemaLibrary"
@@ -21,4 +22,11 @@ func TestSchemaLibraryConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed schemaLibrary.SchemaLibrary should validate: %s", err)
 	}
+}
+
+func TestSchemaLibraryMarshalUnmarshal(t *testing.T) {
+	v := schemaLibrary.NewSchemaLibrary()
+	buf, _ := xml.Marshal(v)
+	v2 := schemaLibrary.NewSchemaLibrary()
+	xml.Unmarshal(buf, v2)
 }

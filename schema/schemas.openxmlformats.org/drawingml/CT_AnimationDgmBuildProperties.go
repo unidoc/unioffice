@@ -24,9 +24,6 @@ func NewCT_AnimationDgmBuildProperties() *CT_AnimationDgmBuildProperties {
 }
 
 func (m *CT_AnimationDgmBuildProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BldAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "bld"},
 			Value: fmt.Sprintf("%v", *m.BldAttr)})

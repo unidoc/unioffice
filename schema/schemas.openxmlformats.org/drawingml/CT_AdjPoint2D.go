@@ -23,9 +23,6 @@ func NewCT_AdjPoint2D() *CT_AdjPoint2D {
 }
 
 func (m *CT_AdjPoint2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "x"},
 		Value: fmt.Sprintf("%v", m.XAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "y"},

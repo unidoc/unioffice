@@ -33,9 +33,6 @@ func NewCT_SdtPrChoice() *CT_SdtPrChoice {
 }
 
 func (m *CT_SdtPrChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Equation != nil {
 		seequation := xml.StartElement{Name: xml.Name{Local: "w:equation"}}
 		e.EncodeElement(m.Equation, seequation)

@@ -30,9 +30,6 @@ func NewCT_DTable() *CT_DTable {
 }
 
 func (m *CT_DTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.ShowHorzBorder != nil {
 		seshowHorzBorder := xml.StartElement{Name: xml.Name{Local: "showHorzBorder"}}

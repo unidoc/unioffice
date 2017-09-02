@@ -29,9 +29,6 @@ func NewCT_NumPr() *CT_NumPr {
 }
 
 func (m *CT_NumPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Ilvl != nil {
 		seilvl := xml.StartElement{Name: xml.Name{Local: "w:ilvl"}}

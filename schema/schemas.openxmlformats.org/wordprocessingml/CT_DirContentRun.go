@@ -33,9 +33,6 @@ func NewCT_DirContentRun() *CT_DirContentRun {
 }
 
 func (m *CT_DirContentRun) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_DirectionUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 		if err != nil {

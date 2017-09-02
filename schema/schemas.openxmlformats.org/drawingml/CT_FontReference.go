@@ -30,9 +30,6 @@ func NewCT_FontReference() *CT_FontReference {
 }
 
 func (m *CT_FontReference) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.IdxAttr.MarshalXMLAttr(xml.Name{Local: "idx"})
 	if err != nil {
 		return err

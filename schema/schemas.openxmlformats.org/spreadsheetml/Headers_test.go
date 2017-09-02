@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestHeadersConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.Headers should validate: %s", err)
 	}
+}
+
+func TestHeadersMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewHeaders()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewHeaders()
+	xml.Unmarshal(buf, v2)
 }

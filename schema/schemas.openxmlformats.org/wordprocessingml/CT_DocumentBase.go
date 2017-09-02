@@ -23,9 +23,6 @@ func NewCT_DocumentBase() *CT_DocumentBase {
 }
 
 func (m *CT_DocumentBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Background != nil {
 		sebackground := xml.StartElement{Name: xml.Name{Local: "w:background"}}

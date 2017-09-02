@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestConnectionsConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.Connections should validate: %s", err)
 	}
+}
+
+func TestConnectionsMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewConnections()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewConnections()
+	xml.Unmarshal(buf, v2)
 }

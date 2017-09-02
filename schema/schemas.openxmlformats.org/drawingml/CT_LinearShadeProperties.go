@@ -24,9 +24,6 @@ func NewCT_LinearShadeProperties() *CT_LinearShadeProperties {
 }
 
 func (m *CT_LinearShadeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AngAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ang"},
 			Value: fmt.Sprintf("%v", *m.AngAttr)})

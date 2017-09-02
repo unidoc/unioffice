@@ -25,9 +25,6 @@ func NewCT_ObjectChoice() *CT_ObjectChoice {
 }
 
 func (m *CT_ObjectChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Control != nil {
 		secontrol := xml.StartElement{Name: xml.Name{Local: "w:control"}}
 		e.EncodeElement(m.Control, secontrol)

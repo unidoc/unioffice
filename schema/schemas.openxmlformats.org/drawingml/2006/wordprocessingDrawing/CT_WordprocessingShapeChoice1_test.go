@@ -8,6 +8,7 @@
 package wordprocessingDrawing_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
@@ -21,4 +22,11 @@ func TestCT_WordprocessingShapeChoice1Constructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingDrawing.CT_WordprocessingShapeChoice1 should validate: %s", err)
 	}
+}
+
+func TestCT_WordprocessingShapeChoice1MarshalUnmarshal(t *testing.T) {
+	v := wordprocessingDrawing.NewCT_WordprocessingShapeChoice1()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingDrawing.NewCT_WordprocessingShapeChoice1()
+	xml.Unmarshal(buf, v2)
 }

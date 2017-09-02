@@ -8,6 +8,7 @@
 package presentationml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/presentationml"
@@ -21,4 +22,11 @@ func TestCT_CommonSlideViewPropertiesConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed presentationml.CT_CommonSlideViewProperties should validate: %s", err)
 	}
+}
+
+func TestCT_CommonSlideViewPropertiesMarshalUnmarshal(t *testing.T) {
+	v := presentationml.NewCT_CommonSlideViewProperties()
+	buf, _ := xml.Marshal(v)
+	v2 := presentationml.NewCT_CommonSlideViewProperties()
+	xml.Unmarshal(buf, v2)
 }

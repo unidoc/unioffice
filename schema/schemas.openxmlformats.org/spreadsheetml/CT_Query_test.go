@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestCT_QueryConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.CT_Query should validate: %s", err)
 	}
+}
+
+func TestCT_QueryMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewCT_Query()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewCT_Query()
+	xml.Unmarshal(buf, v2)
 }

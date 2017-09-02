@@ -23,9 +23,6 @@ func NewCT_NonVisualGraphicFrameProperties() *CT_NonVisualGraphicFrameProperties
 }
 
 func (m *CT_NonVisualGraphicFrameProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.GraphicFrameLocks != nil {
 		segraphicFrameLocks := xml.StartElement{Name: xml.Name{Local: "a:graphicFrameLocks"}}

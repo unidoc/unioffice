@@ -8,6 +8,7 @@
 package chart_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
@@ -21,4 +22,11 @@ func TestEG_BarChartSharedConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed chart.EG_BarChartShared should validate: %s", err)
 	}
+}
+
+func TestEG_BarChartSharedMarshalUnmarshal(t *testing.T) {
+	v := chart.NewEG_BarChartShared()
+	buf, _ := xml.Marshal(v)
+	v2 := chart.NewEG_BarChartShared()
+	xml.Unmarshal(buf, v2)
 }

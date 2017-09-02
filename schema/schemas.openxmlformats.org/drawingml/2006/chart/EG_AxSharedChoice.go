@@ -23,9 +23,6 @@ func NewEG_AxSharedChoice() *EG_AxSharedChoice {
 }
 
 func (m *EG_AxSharedChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Crosses != nil {
 		secrosses := xml.StartElement{Name: xml.Name{Local: "crosses"}}
 		e.EncodeElement(m.Crosses, secrosses)

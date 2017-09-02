@@ -101,9 +101,6 @@ func NewCT_RPr() *CT_RPr {
 }
 
 func (m *CT_RPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.RStyle != nil {
 		serStyle := xml.StartElement{Name: xml.Name{Local: "w:rStyle"}}

@@ -8,6 +8,7 @@
 package diagram_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/diagram"
@@ -21,4 +22,11 @@ func TestLayoutDefConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed diagram.LayoutDef should validate: %s", err)
 	}
+}
+
+func TestLayoutDefMarshalUnmarshal(t *testing.T) {
+	v := diagram.NewLayoutDef()
+	buf, _ := xml.Marshal(v)
+	v2 := diagram.NewLayoutDef()
+	xml.Unmarshal(buf, v2)
 }

@@ -46,9 +46,6 @@ func NewCT_TrPrBase() *CT_TrPrBase {
 }
 
 func (m *CT_TrPrBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.CnfStyle != nil {
 		secnfStyle := xml.StartElement{Name: xml.Name{Local: "w:cnfStyle"}}

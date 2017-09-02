@@ -22,9 +22,6 @@ func NewCT_PresetLineDashProperties() *CT_PresetLineDashProperties {
 }
 
 func (m *CT_PresetLineDashProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_PresetLineDashValUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

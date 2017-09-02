@@ -23,9 +23,6 @@ func NewCT_SupplementalFont() *CT_SupplementalFont {
 }
 
 func (m *CT_SupplementalFont) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "script"},
 		Value: fmt.Sprintf("%v", m.ScriptAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "typeface"},

@@ -47,9 +47,6 @@ func NewCT_SlideLayout() *CT_SlideLayout {
 }
 
 func (m *CT_SlideLayout) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.MatchingNameAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "matchingName"},
 			Value: fmt.Sprintf("%v", *m.MatchingNameAttr)})

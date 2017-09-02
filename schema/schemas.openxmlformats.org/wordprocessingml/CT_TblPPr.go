@@ -43,9 +43,6 @@ func NewCT_TblPPr() *CT_TblPPr {
 }
 
 func (m *CT_TblPPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.LeftFromTextAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:leftFromText"},
 			Value: fmt.Sprintf("%v", *m.LeftFromTextAttr)})

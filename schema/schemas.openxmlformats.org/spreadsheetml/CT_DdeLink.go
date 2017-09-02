@@ -28,9 +28,6 @@ func NewCT_DdeLink() *CT_DdeLink {
 }
 
 func (m *CT_DdeLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ddeService"},
 		Value: fmt.Sprintf("%v", m.DdeServiceAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ddeTopic"},

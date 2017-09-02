@@ -33,9 +33,6 @@ func NewCT_BarChart() *CT_BarChart {
 }
 
 func (m *CT_BarChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sebarDir := xml.StartElement{Name: xml.Name{Local: "barDir"}}
 	e.EncodeElement(m.BarDir, sebarDir)

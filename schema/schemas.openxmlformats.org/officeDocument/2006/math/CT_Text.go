@@ -23,9 +23,6 @@ func NewCT_Text() *CT_Text {
 }
 
 func (m *CT_Text) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.SpaceAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xml:space"},
 			Value: fmt.Sprintf("%v", *m.SpaceAttr)})

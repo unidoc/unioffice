@@ -36,9 +36,6 @@ func NewAG_TransitionalPassword() *AG_TransitionalPassword {
 }
 
 func (m *AG_TransitionalPassword) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.CryptProviderTypeAttr != sharedTypes.ST_CryptProvUnset {
 		attr, err := m.CryptProviderTypeAttr.MarshalXMLAttr(xml.Name{Local: "w:cryptProviderType"})
 		if err != nil {

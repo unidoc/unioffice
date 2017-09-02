@@ -25,9 +25,6 @@ func NewCT_Schema() *CT_Schema {
 }
 
 func (m *CT_Schema) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.UriAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ma:uri"},
 			Value: fmt.Sprintf("%v", *m.UriAttr)})

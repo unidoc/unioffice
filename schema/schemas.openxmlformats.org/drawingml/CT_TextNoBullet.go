@@ -21,9 +21,6 @@ func NewCT_TextNoBullet() *CT_TextNoBullet {
 }
 
 func (m *CT_TextNoBullet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

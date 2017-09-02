@@ -24,9 +24,6 @@ func NewCT_SmartTagPr() *CT_SmartTagPr {
 }
 
 func (m *CT_SmartTagPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Attr != nil {
 		seattr := xml.StartElement{Name: xml.Name{Local: "w:attr"}}

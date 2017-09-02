@@ -8,6 +8,7 @@
 package elements_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/purl.org/dc/elements"
@@ -21,4 +22,11 @@ func TestElementContainerConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed elements.ElementContainer should validate: %s", err)
 	}
+}
+
+func TestElementContainerMarshalUnmarshal(t *testing.T) {
+	v := elements.NewElementContainer()
+	buf, _ := xml.Marshal(v)
+	v2 := elements.NewElementContainer()
+	xml.Unmarshal(buf, v2)
 }

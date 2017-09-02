@@ -23,9 +23,6 @@ func NewCT_DLblPos() *CT_DLblPos {
 }
 
 func (m *CT_DLblPos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 	if err != nil {
 		return err

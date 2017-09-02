@@ -8,6 +8,7 @@
 package wordprocessingDrawing_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
@@ -21,4 +22,11 @@ func TestAnchorConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingDrawing.Anchor should validate: %s", err)
 	}
+}
+
+func TestAnchorMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingDrawing.NewAnchor()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingDrawing.NewAnchor()
+	xml.Unmarshal(buf, v2)
 }

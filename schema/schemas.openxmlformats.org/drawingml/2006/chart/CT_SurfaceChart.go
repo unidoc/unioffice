@@ -27,9 +27,6 @@ func NewCT_SurfaceChart() *CT_SurfaceChart {
 }
 
 func (m *CT_SurfaceChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Wireframe != nil {
 		sewireframe := xml.StartElement{Name: xml.Name{Local: "wireframe"}}

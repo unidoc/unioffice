@@ -25,9 +25,6 @@ func NewCT_ObjectStyleDefaults() *CT_ObjectStyleDefaults {
 }
 
 func (m *CT_ObjectStyleDefaults) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.SpDef != nil {
 		sespDef := xml.StartElement{Name: xml.Name{Local: "a:spDef"}}

@@ -27,9 +27,6 @@ func NewCT_AlphaInverseEffect() *CT_AlphaInverseEffect {
 }
 
 func (m *CT_AlphaInverseEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.ScrgbClr != nil {
 		sescrgbClr := xml.StartElement{Name: xml.Name{Local: "a:scrgbClr"}}

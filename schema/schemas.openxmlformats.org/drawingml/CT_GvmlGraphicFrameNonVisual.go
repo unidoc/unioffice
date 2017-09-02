@@ -25,9 +25,6 @@ func NewCT_GvmlGraphicFrameNonVisual() *CT_GvmlGraphicFrameNonVisual {
 }
 
 func (m *CT_GvmlGraphicFrameNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secNvPr := xml.StartElement{Name: xml.Name{Local: "a:cNvPr"}}
 	e.EncodeElement(m.CNvPr, secNvPr)

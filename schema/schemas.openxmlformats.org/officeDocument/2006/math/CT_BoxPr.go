@@ -27,9 +27,6 @@ func NewCT_BoxPr() *CT_BoxPr {
 }
 
 func (m *CT_BoxPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.OpEmu != nil {
 		seopEmu := xml.StartElement{Name: xml.Name{Local: "m:opEmu"}}

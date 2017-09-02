@@ -59,9 +59,6 @@ func NewEG_SectPrContents() *EG_SectPrContents {
 }
 
 func (m *EG_SectPrContents) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.FootnotePr != nil {
 		sefootnotePr := xml.StartElement{Name: xml.Name{Local: "w:footnotePr"}}
 		e.EncodeElement(m.FootnotePr, sefootnotePr)

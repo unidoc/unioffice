@@ -24,9 +24,6 @@ func NewCT_SDCategory() *CT_SDCategory {
 }
 
 func (m *CT_SDCategory) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "type"},
 		Value: fmt.Sprintf("%v", m.TypeAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "pri"},

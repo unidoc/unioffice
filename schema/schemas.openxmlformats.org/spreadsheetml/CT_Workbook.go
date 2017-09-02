@@ -65,9 +65,6 @@ func NewCT_Workbook() *CT_Workbook {
 }
 
 func (m *CT_Workbook) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ConformanceAttr != sharedTypes.ST_ConformanceClassUnset {
 		attr, err := m.ConformanceAttr.MarshalXMLAttr(xml.Name{Local: "conformance"})
 		if err != nil {

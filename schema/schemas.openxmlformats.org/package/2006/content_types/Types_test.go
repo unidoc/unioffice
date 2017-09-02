@@ -8,6 +8,7 @@
 package content_types_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/package/2006/content_types"
@@ -21,4 +22,11 @@ func TestTypesConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed content_types.Types should validate: %s", err)
 	}
+}
+
+func TestTypesMarshalUnmarshal(t *testing.T) {
+	v := content_types.NewTypes()
+	buf, _ := xml.Marshal(v)
+	v2 := content_types.NewTypes()
+	xml.Unmarshal(buf, v2)
 }

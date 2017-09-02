@@ -23,9 +23,6 @@ func NewCT_CrossBetween() *CT_CrossBetween {
 }
 
 func (m *CT_CrossBetween) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 	if err != nil {
 		return err

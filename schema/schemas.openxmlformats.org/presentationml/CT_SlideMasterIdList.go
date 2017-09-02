@@ -24,9 +24,6 @@ func NewCT_SlideMasterIdList() *CT_SlideMasterIdList {
 }
 
 func (m *CT_SlideMasterIdList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.SldMasterId != nil {
 		sesldMasterId := xml.StartElement{Name: xml.Name{Local: "p:sldMasterId"}}

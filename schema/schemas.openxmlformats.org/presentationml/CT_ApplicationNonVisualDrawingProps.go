@@ -32,9 +32,6 @@ func NewCT_ApplicationNonVisualDrawingProps() *CT_ApplicationNonVisualDrawingPro
 }
 
 func (m *CT_ApplicationNonVisualDrawingProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.IsPhotoAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "isPhoto"},
 			Value: fmt.Sprintf("%v", *m.IsPhotoAttr)})

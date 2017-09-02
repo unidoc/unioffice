@@ -24,9 +24,6 @@ func NewCT_Cols() *CT_Cols {
 }
 
 func (m *CT_Cols) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secol := xml.StartElement{Name: xml.Name{Local: "x:col"}}
 	e.EncodeElement(m.Col, secol)

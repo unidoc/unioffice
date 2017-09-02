@@ -28,9 +28,6 @@ func NewCT_TabStop() *CT_TabStop {
 }
 
 func (m *CT_TabStop) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 	if err != nil {
 		return err

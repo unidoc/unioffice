@@ -23,9 +23,6 @@ func NewCT_ManualBreak() *CT_ManualBreak {
 }
 
 func (m *CT_ManualBreak) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AlnAtAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "m:alnAt"},
 			Value: fmt.Sprintf("%v", *m.AlnAtAttr)})

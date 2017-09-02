@@ -50,9 +50,6 @@ func NewCT_Dialogsheet() *CT_Dialogsheet {
 }
 
 func (m *CT_Dialogsheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.SheetPr != nil {
 		sesheetPr := xml.StartElement{Name: xml.Name{Local: "x:sheetPr"}}

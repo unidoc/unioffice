@@ -21,9 +21,6 @@ func NewUDC() *UDC {
 }
 
 func (m *UDC) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "UDC"
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

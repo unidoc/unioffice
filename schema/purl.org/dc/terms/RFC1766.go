@@ -21,9 +21,6 @@ func NewRFC1766() *RFC1766 {
 }
 
 func (m *RFC1766) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "RFC1766"
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

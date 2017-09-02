@@ -87,9 +87,6 @@ func NewEG_RunInnerContent() *EG_RunInnerContent {
 }
 
 func (m *EG_RunInnerContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Br != nil {
 		sebr := xml.StartElement{Name: xml.Name{Local: "w:br"}}
 		e.EncodeElement(m.Br, sebr)

@@ -23,9 +23,6 @@ func NewCT_NonVisualGroupDrawingShapeProps() *CT_NonVisualGroupDrawingShapeProps
 }
 
 func (m *CT_NonVisualGroupDrawingShapeProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.GrpSpLocks != nil {
 		segrpSpLocks := xml.StartElement{Name: xml.Name{Local: "a:grpSpLocks"}}

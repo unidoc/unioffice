@@ -24,9 +24,6 @@ func NewCT_Types() *CT_Types {
 }
 
 func (m *CT_Types) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Default != nil {
 		seDefault := xml.StartElement{Name: xml.Name{Local: "Default"}}

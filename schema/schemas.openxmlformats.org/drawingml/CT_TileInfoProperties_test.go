@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestCT_TileInfoPropertiesConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.CT_TileInfoProperties should validate: %s", err)
 	}
+}
+
+func TestCT_TileInfoPropertiesMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewCT_TileInfoProperties()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewCT_TileInfoProperties()
+	xml.Unmarshal(buf, v2)
 }

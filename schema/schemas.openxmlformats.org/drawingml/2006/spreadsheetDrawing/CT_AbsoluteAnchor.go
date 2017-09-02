@@ -30,9 +30,6 @@ func NewCT_AbsoluteAnchor() *CT_AbsoluteAnchor {
 }
 
 func (m *CT_AbsoluteAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sepos := xml.StartElement{Name: xml.Name{Local: "xdr:pos"}}
 	e.EncodeElement(m.Pos, sepos)

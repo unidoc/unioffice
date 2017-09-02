@@ -22,9 +22,6 @@ func NewCT_BreakBin() *CT_BreakBin {
 }
 
 func (m *CT_BreakBin) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_BreakBinUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "m:val"})
 		if err != nil {

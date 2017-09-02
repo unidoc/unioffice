@@ -24,9 +24,6 @@ func NewCT_CustomShowList() *CT_CustomShowList {
 }
 
 func (m *CT_CustomShowList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.CustShow != nil {
 		secustShow := xml.StartElement{Name: xml.Name{Local: "p:custShow"}}

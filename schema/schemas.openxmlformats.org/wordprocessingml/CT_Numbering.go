@@ -30,9 +30,6 @@ func NewCT_Numbering() *CT_Numbering {
 }
 
 func (m *CT_Numbering) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.NumPicBullet != nil {
 		senumPicBullet := xml.StartElement{Name: xml.Name{Local: "w:numPicBullet"}}

@@ -41,9 +41,6 @@ func NewCT_TLAnimateMotionBehavior() *CT_TLAnimateMotionBehavior {
 }
 
 func (m *CT_TLAnimateMotionBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.OriginAttr != ST_TLAnimateMotionBehaviorOriginUnset {
 		attr, err := m.OriginAttr.MarshalXMLAttr(xml.Name{Local: "origin"})
 		if err != nil {

@@ -26,9 +26,6 @@ func NewCT_Table() *CT_Table {
 }
 
 func (m *CT_Table) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.TblPr != nil {
 		setblPr := xml.StartElement{Name: xml.Name{Local: "a:tblPr"}}

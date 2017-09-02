@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestThemeConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.Theme should validate: %s", err)
 	}
+}
+
+func TestThemeMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewTheme()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewTheme()
+	xml.Unmarshal(buf, v2)
 }

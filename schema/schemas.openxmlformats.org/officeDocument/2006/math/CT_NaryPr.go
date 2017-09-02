@@ -27,9 +27,6 @@ func NewCT_NaryPr() *CT_NaryPr {
 }
 
 func (m *CT_NaryPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Chr != nil {
 		sechr := xml.StartElement{Name: xml.Name{Local: "m:chr"}}

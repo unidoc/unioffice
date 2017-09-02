@@ -32,9 +32,6 @@ func NewCT_ChartsheetView() *CT_ChartsheetView {
 }
 
 func (m *CT_ChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TabSelectedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "tabSelected"},
 			Value: fmt.Sprintf("%v", *m.TabSelectedAttr)})

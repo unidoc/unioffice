@@ -24,9 +24,6 @@ func NewCT_FontsList() *CT_FontsList {
 }
 
 func (m *CT_FontsList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Font != nil {
 		sefont := xml.StartElement{Name: xml.Name{Local: "w:font"}}

@@ -29,9 +29,6 @@ func NewCT_StockChart() *CT_StockChart {
 }
 
 func (m *CT_StockChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seser := xml.StartElement{Name: xml.Name{Local: "ser"}}
 	e.EncodeElement(m.Ser, seser)

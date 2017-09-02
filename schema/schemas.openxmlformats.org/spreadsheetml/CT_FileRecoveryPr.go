@@ -30,9 +30,6 @@ func NewCT_FileRecoveryPr() *CT_FileRecoveryPr {
 }
 
 func (m *CT_FileRecoveryPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AutoRecoverAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoRecover"},
 			Value: fmt.Sprintf("%v", *m.AutoRecoverAttr)})

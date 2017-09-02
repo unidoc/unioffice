@@ -22,9 +22,6 @@ func NewCT_SplitType() *CT_SplitType {
 }
 
 func (m *CT_SplitType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_SplitTypeUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

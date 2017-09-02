@@ -23,9 +23,6 @@ func NewCT_OleObjectChoice() *CT_OleObjectChoice {
 }
 
 func (m *CT_OleObjectChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Embed != nil {
 		seembed := xml.StartElement{Name: xml.Name{Local: "p:embed"}}
 		e.EncodeElement(m.Embed, seembed)

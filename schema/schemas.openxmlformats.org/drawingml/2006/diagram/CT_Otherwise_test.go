@@ -8,6 +8,7 @@
 package diagram_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/diagram"
@@ -21,4 +22,11 @@ func TestCT_OtherwiseConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed diagram.CT_Otherwise should validate: %s", err)
 	}
+}
+
+func TestCT_OtherwiseMarshalUnmarshal(t *testing.T) {
+	v := diagram.NewCT_Otherwise()
+	buf, _ := xml.Marshal(v)
+	v2 := diagram.NewCT_Otherwise()
+	xml.Unmarshal(buf, v2)
 }

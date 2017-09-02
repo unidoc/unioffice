@@ -25,9 +25,6 @@ func NewCT_BorderPr() *CT_BorderPr {
 }
 
 func (m *CT_BorderPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.StyleAttr != ST_BorderStyleUnset {
 		attr, err := m.StyleAttr.MarshalXMLAttr(xml.Name{Local: "style"})
 		if err != nil {

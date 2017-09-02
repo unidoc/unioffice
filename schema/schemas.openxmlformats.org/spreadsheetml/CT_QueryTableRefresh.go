@@ -46,9 +46,6 @@ func NewCT_QueryTableRefresh() *CT_QueryTableRefresh {
 }
 
 func (m *CT_QueryTableRefresh) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PreserveSortFilterLayoutAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "preserveSortFilterLayout"},
 			Value: fmt.Sprintf("%v", *m.PreserveSortFilterLayoutAttr)})

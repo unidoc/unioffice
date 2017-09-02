@@ -32,9 +32,6 @@ func NewCT_Pane() *CT_Pane {
 }
 
 func (m *CT_Pane) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.XSplitAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xSplit"},
 			Value: fmt.Sprintf("%v", *m.XSplitAttr)})

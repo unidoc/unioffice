@@ -24,9 +24,6 @@ func NewCT_Bar() *CT_Bar {
 }
 
 func (m *CT_Bar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.BarPr != nil {
 		sebarPr := xml.StartElement{Name: xml.Name{Local: "m:barPr"}}

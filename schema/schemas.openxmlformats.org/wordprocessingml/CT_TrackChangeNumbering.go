@@ -28,9 +28,6 @@ func NewCT_TrackChangeNumbering() *CT_TrackChangeNumbering {
 }
 
 func (m *CT_TrackChangeNumbering) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.OriginalAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:original"},
 			Value: fmt.Sprintf("%v", *m.OriginalAttr)})

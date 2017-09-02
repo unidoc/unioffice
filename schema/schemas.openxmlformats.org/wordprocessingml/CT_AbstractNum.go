@@ -39,9 +39,6 @@ func NewCT_AbstractNum() *CT_AbstractNum {
 }
 
 func (m *CT_AbstractNum) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:abstractNumId"},
 		Value: fmt.Sprintf("%v", m.AbstractNumIdAttr)})
 	e.EncodeToken(start)

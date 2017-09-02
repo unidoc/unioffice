@@ -25,9 +25,6 @@ func NewCT_Br() *CT_Br {
 }
 
 func (m *CT_Br) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TypeAttr != ST_BrTypeUnset {
 		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "w:type"})
 		if err != nil {

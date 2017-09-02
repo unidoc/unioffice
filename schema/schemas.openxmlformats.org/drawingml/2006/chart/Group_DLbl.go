@@ -37,9 +37,6 @@ func NewGroup_DLbl() *Group_DLbl {
 }
 
 func (m *Group_DLbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Layout != nil {
 		selayout := xml.StartElement{Name: xml.Name{Local: "layout"}}
 		e.EncodeElement(m.Layout, selayout)

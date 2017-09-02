@@ -24,9 +24,6 @@ func NewCT_QuickTimeFile() *CT_QuickTimeFile {
 }
 
 func (m *CT_QuickTimeFile) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:link"},
 		Value: fmt.Sprintf("%v", m.LinkAttr)})
 	e.EncodeToken(start)

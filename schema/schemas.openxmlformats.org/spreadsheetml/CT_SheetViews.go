@@ -26,9 +26,6 @@ func NewCT_SheetViews() *CT_SheetViews {
 }
 
 func (m *CT_SheetViews) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sesheetView := xml.StartElement{Name: xml.Name{Local: "x:sheetView"}}
 	e.EncodeElement(m.SheetView, sesheetView)

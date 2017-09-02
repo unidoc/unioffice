@@ -28,9 +28,6 @@ func NewCT_DoughnutChart() *CT_DoughnutChart {
 }
 
 func (m *CT_DoughnutChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.VaryColors != nil {
 		sevaryColors := xml.StartElement{Name: xml.Name{Local: "varyColors"}}

@@ -23,9 +23,6 @@ func NewEG_TextGeometry() *EG_TextGeometry {
 }
 
 func (m *EG_TextGeometry) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "a:EG_TextGeometry"
 	if m.CustGeom != nil {
 		secustGeom := xml.StartElement{Name: xml.Name{Local: "a:custGeom"}}

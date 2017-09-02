@@ -42,9 +42,6 @@ func NewEG_AxShared() *EG_AxShared {
 }
 
 func (m *EG_AxShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	seaxId := xml.StartElement{Name: xml.Name{Local: "axId"}}
 	e.EncodeElement(m.AxId, seaxId)
 	sescaling := xml.StartElement{Name: xml.Name{Local: "scaling"}}

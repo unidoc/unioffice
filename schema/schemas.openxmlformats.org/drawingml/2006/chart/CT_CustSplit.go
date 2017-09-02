@@ -23,9 +23,6 @@ func NewCT_CustSplit() *CT_CustSplit {
 }
 
 func (m *CT_CustSplit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.SecondPiePt != nil {
 		sesecondPiePt := xml.StartElement{Name: xml.Name{Local: "secondPiePt"}}

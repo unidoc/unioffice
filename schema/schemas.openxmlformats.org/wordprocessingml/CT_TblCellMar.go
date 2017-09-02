@@ -33,9 +33,6 @@ func NewCT_TblCellMar() *CT_TblCellMar {
 }
 
 func (m *CT_TblCellMar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Top != nil {
 		setop := xml.StartElement{Name: xml.Name{Local: "w:top"}}

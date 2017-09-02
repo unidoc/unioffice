@@ -23,9 +23,6 @@ func NewElementsAndRefinementsGroup() *ElementsAndRefinementsGroup {
 }
 
 func (m *ElementsAndRefinementsGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Choice != nil {
 		for _, c := range m.Choice {
 			c.MarshalXML(e, start)

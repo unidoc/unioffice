@@ -33,9 +33,6 @@ func NewCT_PBdr() *CT_PBdr {
 }
 
 func (m *CT_PBdr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Top != nil {
 		setop := xml.StartElement{Name: xml.Name{Local: "w:top"}}

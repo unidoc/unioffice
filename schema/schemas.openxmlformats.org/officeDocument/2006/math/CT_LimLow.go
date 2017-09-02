@@ -26,9 +26,6 @@ func NewCT_LimLow() *CT_LimLow {
 }
 
 func (m *CT_LimLow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.LimLowPr != nil {
 		selimLowPr := xml.StartElement{Name: xml.Name{Local: "m:limLowPr"}}

@@ -25,9 +25,6 @@ func NewCT_TableStyleCellStyle() *CT_TableStyleCellStyle {
 }
 
 func (m *CT_TableStyleCellStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.TcBdr != nil {
 		setcBdr := xml.StartElement{Name: xml.Name{Local: "a:tcBdr"}}

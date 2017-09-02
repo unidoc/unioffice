@@ -24,9 +24,6 @@ func NewCT_AnimationChartBuildProperties() *CT_AnimationChartBuildProperties {
 }
 
 func (m *CT_AnimationChartBuildProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BldAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "bld"},
 			Value: fmt.Sprintf("%v", *m.BldAttr)})

@@ -21,9 +21,6 @@ func NewIMT() *IMT {
 }
 
 func (m *IMT) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "IMT"
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestAG_BlobConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.AG_Blob should validate: %s", err)
 	}
+}
+
+func TestAG_BlobMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewAG_Blob()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewAG_Blob()
+	xml.Unmarshal(buf, v2)
 }

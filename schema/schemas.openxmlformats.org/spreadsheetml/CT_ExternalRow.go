@@ -27,9 +27,6 @@ func NewCT_ExternalRow() *CT_ExternalRow {
 }
 
 func (m *CT_ExternalRow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r"},
 		Value: fmt.Sprintf("%v", m.RAttr)})
 	e.EncodeToken(start)

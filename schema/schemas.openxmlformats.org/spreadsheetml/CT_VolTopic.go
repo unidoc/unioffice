@@ -32,9 +32,6 @@ func NewCT_VolTopic() *CT_VolTopic {
 }
 
 func (m *CT_VolTopic) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TAttr != ST_VolValueTypeUnset {
 		attr, err := m.TAttr.MarshalXMLAttr(xml.Name{Local: "t"})
 		if err != nil {

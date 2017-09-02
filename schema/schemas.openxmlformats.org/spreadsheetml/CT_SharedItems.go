@@ -64,9 +64,6 @@ func NewCT_SharedItems() *CT_SharedItems {
 }
 
 func (m *CT_SharedItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ContainsSemiMixedTypesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "containsSemiMixedTypes"},
 			Value: fmt.Sprintf("%v", *m.ContainsSemiMixedTypesAttr)})

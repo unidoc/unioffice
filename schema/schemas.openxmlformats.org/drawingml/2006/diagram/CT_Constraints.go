@@ -23,9 +23,6 @@ func NewCT_Constraints() *CT_Constraints {
 }
 
 func (m *CT_Constraints) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Constr != nil {
 		seconstr := xml.StartElement{Name: xml.Name{Local: "constr"}}

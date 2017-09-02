@@ -26,9 +26,6 @@ func NewCT_NumFmt() *CT_NumFmt {
 }
 
 func (m *CT_NumFmt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 	if err != nil {
 		return err

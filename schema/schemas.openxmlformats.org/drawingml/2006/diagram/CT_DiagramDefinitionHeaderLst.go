@@ -23,9 +23,6 @@ func NewCT_DiagramDefinitionHeaderLst() *CT_DiagramDefinitionHeaderLst {
 }
 
 func (m *CT_DiagramDefinitionHeaderLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.LayoutDefHdr != nil {
 		selayoutDefHdr := xml.StartElement{Name: xml.Name{Local: "layoutDefHdr"}}

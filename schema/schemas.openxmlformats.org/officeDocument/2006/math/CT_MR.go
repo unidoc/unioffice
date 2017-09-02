@@ -23,9 +23,6 @@ func NewCT_MR() *CT_MR {
 }
 
 func (m *CT_MR) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	see := xml.StartElement{Name: xml.Name{Local: "m:e"}}
 	e.EncodeElement(m.E, see)

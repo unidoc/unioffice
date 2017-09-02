@@ -51,9 +51,6 @@ func NewEG_Effect() *EG_Effect {
 }
 
 func (m *EG_Effect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Cont != nil {
 		secont := xml.StartElement{Name: xml.Name{Local: "a:cont"}}
 		e.EncodeElement(m.Cont, secont)

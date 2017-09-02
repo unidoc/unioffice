@@ -28,9 +28,6 @@ func NewEG_LineChartShared() *EG_LineChartShared {
 }
 
 func (m *EG_LineChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	segrouping := xml.StartElement{Name: xml.Name{Local: "grouping"}}
 	e.EncodeElement(m.Grouping, segrouping)
 	if m.VaryColors != nil {

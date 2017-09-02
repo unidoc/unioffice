@@ -27,9 +27,6 @@ func NewEG_ColorChoice() *EG_ColorChoice {
 }
 
 func (m *EG_ColorChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ScrgbClr != nil {
 		sescrgbClr := xml.StartElement{Name: xml.Name{Local: "a:scrgbClr"}}
 		e.EncodeElement(m.ScrgbClr, sescrgbClr)

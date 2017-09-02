@@ -22,9 +22,6 @@ func NewCT_LegendPos() *CT_LegendPos {
 }
 
 func (m *CT_LegendPos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_LegendPosUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

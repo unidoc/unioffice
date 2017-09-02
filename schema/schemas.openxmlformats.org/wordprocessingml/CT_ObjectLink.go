@@ -35,9 +35,6 @@ func NewCT_ObjectLink() *CT_ObjectLink {
 }
 
 func (m *CT_ObjectLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.UpdateModeAttr.MarshalXMLAttr(xml.Name{Local: "w:updateMode"})
 	if err != nil {
 		return err

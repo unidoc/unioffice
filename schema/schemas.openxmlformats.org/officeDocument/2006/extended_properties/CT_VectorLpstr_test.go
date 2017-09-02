@@ -8,6 +8,7 @@
 package extended_properties_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/extended_properties"
@@ -21,4 +22,11 @@ func TestCT_VectorLpstrConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed extended_properties.CT_VectorLpstr should validate: %s", err)
 	}
+}
+
+func TestCT_VectorLpstrMarshalUnmarshal(t *testing.T) {
+	v := extended_properties.NewCT_VectorLpstr()
+	buf, _ := xml.Marshal(v)
+	v2 := extended_properties.NewCT_VectorLpstr()
+	xml.Unmarshal(buf, v2)
 }

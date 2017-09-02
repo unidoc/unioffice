@@ -25,9 +25,6 @@ func NewEG_TextBullet() *EG_TextBullet {
 }
 
 func (m *EG_TextBullet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BuNone != nil {
 		sebuNone := xml.StartElement{Name: xml.Name{Local: "a:buNone"}}
 		e.EncodeElement(m.BuNone, sebuNone)

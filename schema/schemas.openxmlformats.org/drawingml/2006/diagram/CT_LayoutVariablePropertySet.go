@@ -30,9 +30,6 @@ func NewCT_LayoutVariablePropertySet() *CT_LayoutVariablePropertySet {
 }
 
 func (m *CT_LayoutVariablePropertySet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.OrgChart != nil {
 		seorgChart := xml.StartElement{Name: xml.Name{Local: "orgChart"}}

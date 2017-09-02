@@ -8,6 +8,7 @@
 package math_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/math"
@@ -21,4 +22,11 @@ func TestEG_OMathMathElementsConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed math.EG_OMathMathElements should validate: %s", err)
 	}
+}
+
+func TestEG_OMathMathElementsMarshalUnmarshal(t *testing.T) {
+	v := math.NewEG_OMathMathElements()
+	buf, _ := xml.Marshal(v)
+	v2 := math.NewEG_OMathMathElements()
+	xml.Unmarshal(buf, v2)
 }

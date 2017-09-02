@@ -8,6 +8,7 @@
 package terms_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/purl.org/dc/terms"
@@ -21,4 +22,11 @@ func TestPeriodConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed terms.Period should validate: %s", err)
 	}
+}
+
+func TestPeriodMarshalUnmarshal(t *testing.T) {
+	v := terms.NewPeriod()
+	buf, _ := xml.Marshal(v)
+	v2 := terms.NewPeriod()
+	xml.Unmarshal(buf, v2)
 }

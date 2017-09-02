@@ -24,9 +24,6 @@ func NewCT_AutoSortScope() *CT_AutoSortScope {
 }
 
 func (m *CT_AutoSortScope) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sepivotArea := xml.StartElement{Name: xml.Name{Local: "x:pivotArea"}}
 	e.EncodeElement(m.PivotArea, sepivotArea)

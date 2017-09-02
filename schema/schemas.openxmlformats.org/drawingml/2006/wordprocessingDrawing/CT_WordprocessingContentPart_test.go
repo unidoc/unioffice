@@ -8,6 +8,7 @@
 package wordprocessingDrawing_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
@@ -21,4 +22,11 @@ func TestCT_WordprocessingContentPartConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingDrawing.CT_WordprocessingContentPart should validate: %s", err)
 	}
+}
+
+func TestCT_WordprocessingContentPartMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingDrawing.NewCT_WordprocessingContentPart()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingDrawing.NewCT_WordprocessingContentPart()
+	xml.Unmarshal(buf, v2)
 }

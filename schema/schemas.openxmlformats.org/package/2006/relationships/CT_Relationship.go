@@ -26,9 +26,6 @@ func NewCT_Relationship() *CT_Relationship {
 }
 
 func (m *CT_Relationship) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TargetModeAttr != ST_TargetModeUnset {
 		attr, err := m.TargetModeAttr.MarshalXMLAttr(xml.Name{Local: "TargetMode"})
 		if err != nil {

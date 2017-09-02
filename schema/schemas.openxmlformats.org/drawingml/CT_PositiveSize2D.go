@@ -26,9 +26,6 @@ func NewCT_PositiveSize2D() *CT_PositiveSize2D {
 }
 
 func (m *CT_PositiveSize2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "cx"},
 		Value: fmt.Sprintf("%v", m.CxAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "cy"},

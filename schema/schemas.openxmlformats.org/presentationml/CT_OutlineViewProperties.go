@@ -27,9 +27,6 @@ func NewCT_OutlineViewProperties() *CT_OutlineViewProperties {
 }
 
 func (m *CT_OutlineViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secViewPr := xml.StartElement{Name: xml.Name{Local: "p:cViewPr"}}
 	e.EncodeElement(m.CViewPr, secViewPr)

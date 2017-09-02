@@ -40,9 +40,6 @@ func NewCT_TLBuildParagraph() *CT_TLBuildParagraph {
 }
 
 func (m *CT_TLBuildParagraph) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BuildAttr != ST_TLParaBuildTypeUnset {
 		attr, err := m.BuildAttr.MarshalXMLAttr(xml.Name{Local: "build"})
 		if err != nil {

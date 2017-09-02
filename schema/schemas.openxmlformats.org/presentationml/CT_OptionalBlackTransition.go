@@ -24,9 +24,6 @@ func NewCT_OptionalBlackTransition() *CT_OptionalBlackTransition {
 }
 
 func (m *CT_OptionalBlackTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ThruBlkAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "thruBlk"},
 			Value: fmt.Sprintf("%v", *m.ThruBlkAttr)})

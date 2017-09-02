@@ -25,9 +25,6 @@ func NewCT_Path2DArcTo() *CT_Path2DArcTo {
 }
 
 func (m *CT_Path2DArcTo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "wR"},
 		Value: fmt.Sprintf("%v", m.WRAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hR"},

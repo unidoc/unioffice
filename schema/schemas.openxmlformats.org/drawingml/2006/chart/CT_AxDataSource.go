@@ -23,9 +23,6 @@ func NewCT_AxDataSource() *CT_AxDataSource {
 }
 
 func (m *CT_AxDataSource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	m.Choice.MarshalXML(e, start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

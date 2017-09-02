@@ -27,9 +27,6 @@ func NewCT_LevelText() *CT_LevelText {
 }
 
 func (m *CT_LevelText) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:val"},
 			Value: fmt.Sprintf("%v", *m.ValAttr)})

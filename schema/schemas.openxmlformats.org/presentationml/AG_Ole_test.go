@@ -8,6 +8,7 @@
 package presentationml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/presentationml"
@@ -21,4 +22,11 @@ func TestAG_OleConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed presentationml.AG_Ole should validate: %s", err)
 	}
+}
+
+func TestAG_OleMarshalUnmarshal(t *testing.T) {
+	v := presentationml.NewAG_Ole()
+	buf, _ := xml.Marshal(v)
+	v2 := presentationml.NewAG_Ole()
+	xml.Unmarshal(buf, v2)
 }

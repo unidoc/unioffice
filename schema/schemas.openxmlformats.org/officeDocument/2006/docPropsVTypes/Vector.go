@@ -25,9 +25,6 @@ func NewVector() *Vector {
 }
 
 func (m *Vector) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	return m.CT_Vector.MarshalXML(e, start)
 }
 

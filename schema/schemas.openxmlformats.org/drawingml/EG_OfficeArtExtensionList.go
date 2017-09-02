@@ -23,9 +23,6 @@ func NewEG_OfficeArtExtensionList() *EG_OfficeArtExtensionList {
 }
 
 func (m *EG_OfficeArtExtensionList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Ext != nil {
 		seext := xml.StartElement{Name: xml.Name{Local: "a:ext"}}
 		e.EncodeElement(m.Ext, seext)

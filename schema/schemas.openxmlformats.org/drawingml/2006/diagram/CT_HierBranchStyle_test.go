@@ -8,6 +8,7 @@
 package diagram_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/diagram"
@@ -21,4 +22,11 @@ func TestCT_HierBranchStyleConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed diagram.CT_HierBranchStyle should validate: %s", err)
 	}
+}
+
+func TestCT_HierBranchStyleMarshalUnmarshal(t *testing.T) {
+	v := diagram.NewCT_HierBranchStyle()
+	buf, _ := xml.Marshal(v)
+	v2 := diagram.NewCT_HierBranchStyle()
+	xml.Unmarshal(buf, v2)
 }

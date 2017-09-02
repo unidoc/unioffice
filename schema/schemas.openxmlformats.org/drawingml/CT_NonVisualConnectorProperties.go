@@ -25,9 +25,6 @@ func NewCT_NonVisualConnectorProperties() *CT_NonVisualConnectorProperties {
 }
 
 func (m *CT_NonVisualConnectorProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.CxnSpLocks != nil {
 		secxnSpLocks := xml.StartElement{Name: xml.Name{Local: "a:cxnSpLocks"}}

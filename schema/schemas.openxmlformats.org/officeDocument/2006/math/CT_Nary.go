@@ -28,9 +28,6 @@ func NewCT_Nary() *CT_Nary {
 }
 
 func (m *CT_Nary) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.NaryPr != nil {
 		senaryPr := xml.StartElement{Name: xml.Name{Local: "m:naryPr"}}

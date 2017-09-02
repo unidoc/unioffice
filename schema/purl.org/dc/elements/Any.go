@@ -23,9 +23,6 @@ func NewAny() *Any {
 }
 
 func (m *Any) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	return m.SimpleLiteral.MarshalXML(e, start)
 }
 

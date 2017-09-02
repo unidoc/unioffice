@@ -30,9 +30,6 @@ func NewCT_StyleMatrixReference() *CT_StyleMatrixReference {
 }
 
 func (m *CT_StyleMatrixReference) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "idx"},
 		Value: fmt.Sprintf("%v", m.IdxAttr)})
 	e.EncodeToken(start)

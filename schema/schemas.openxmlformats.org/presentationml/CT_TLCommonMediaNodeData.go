@@ -38,9 +38,6 @@ func NewCT_TLCommonMediaNodeData() *CT_TLCommonMediaNodeData {
 }
 
 func (m *CT_TLCommonMediaNodeData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.VolAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "vol"},
 			Value: fmt.Sprintf("%v", *m.VolAttr)})

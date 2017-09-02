@@ -28,9 +28,6 @@ func NewEG_BarChartShared() *EG_BarChartShared {
 }
 
 func (m *EG_BarChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	sebarDir := xml.StartElement{Name: xml.Name{Local: "barDir"}}
 	e.EncodeElement(m.BarDir, sebarDir)
 	if m.Grouping != nil {

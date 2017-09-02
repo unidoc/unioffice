@@ -25,9 +25,6 @@ func NewCT_NotesTextViewProperties() *CT_NotesTextViewProperties {
 }
 
 func (m *CT_NotesTextViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secViewPr := xml.StartElement{Name: xml.Name{Local: "p:cViewPr"}}
 	e.EncodeElement(m.CViewPr, secViewPr)

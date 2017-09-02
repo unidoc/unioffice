@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestCT_TextUnderlineFillGroupWrapperConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.CT_TextUnderlineFillGroupWrapper should validate: %s", err)
 	}
+}
+
+func TestCT_TextUnderlineFillGroupWrapperMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewCT_TextUnderlineFillGroupWrapper()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewCT_TextUnderlineFillGroupWrapper()
+	xml.Unmarshal(buf, v2)
 }

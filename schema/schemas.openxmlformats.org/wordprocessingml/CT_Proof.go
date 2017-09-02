@@ -25,9 +25,6 @@ func NewCT_Proof() *CT_Proof {
 }
 
 func (m *CT_Proof) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.SpellingAttr != ST_ProofUnset {
 		attr, err := m.SpellingAttr.MarshalXMLAttr(xml.Name{Local: "w:spelling"})
 		if err != nil {

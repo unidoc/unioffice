@@ -23,9 +23,6 @@ func NewCT_ThemeableLineStyle() *CT_ThemeableLineStyle {
 }
 
 func (m *CT_ThemeableLineStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Ln != nil {
 		seln := xml.StartElement{Name: xml.Name{Local: "a:ln"}}

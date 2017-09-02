@@ -27,9 +27,6 @@ func NewCT_FillEffect() *CT_FillEffect {
 }
 
 func (m *CT_FillEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.NoFill != nil {
 		senoFill := xml.StartElement{Name: xml.Name{Local: "a:noFill"}}

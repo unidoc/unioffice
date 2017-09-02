@@ -23,9 +23,6 @@ func NewCT_AnimationGraphicalObjectBuildProperties() *CT_AnimationGraphicalObjec
 }
 
 func (m *CT_AnimationGraphicalObjectBuildProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "a:CT_AnimationGraphicalObjectBuildProperties"
 	e.EncodeToken(start)
 	if m.BldDgm != nil {

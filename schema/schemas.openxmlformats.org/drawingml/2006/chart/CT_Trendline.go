@@ -37,9 +37,6 @@ func NewCT_Trendline() *CT_Trendline {
 }
 
 func (m *CT_Trendline) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Name != nil {
 		sename := xml.StartElement{Name: xml.Name{Local: "name"}}

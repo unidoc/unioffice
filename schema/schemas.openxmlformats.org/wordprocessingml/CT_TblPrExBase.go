@@ -39,9 +39,6 @@ func NewCT_TblPrExBase() *CT_TblPrExBase {
 }
 
 func (m *CT_TblPrExBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.TblW != nil {
 		setblW := xml.StartElement{Name: xml.Name{Local: "w:tblW"}}

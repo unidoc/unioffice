@@ -8,6 +8,7 @@
 package wordprocessingDrawing_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
@@ -21,4 +22,11 @@ func TestWgpConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingDrawing.Wgp should validate: %s", err)
 	}
+}
+
+func TestWgpMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingDrawing.NewWgp()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingDrawing.NewWgp()
+	xml.Unmarshal(buf, v2)
 }

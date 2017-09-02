@@ -22,9 +22,6 @@ func NewCT_RPRChoice() *CT_RPRChoice {
 }
 
 func (m *CT_RPRChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Nor != nil {
 		senor := xml.StartElement{Name: xml.Name{Local: "m:nor"}}
 		e.EncodeElement(m.Nor, senor)

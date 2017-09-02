@@ -40,9 +40,6 @@ func NewCT_BarSer() *CT_BarSer {
 }
 
 func (m *CT_BarSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
 	e.EncodeElement(m.Idx, seidx)

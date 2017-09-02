@@ -23,9 +23,6 @@ func NewCT_NumDataSourceChoice() *CT_NumDataSourceChoice {
 }
 
 func (m *CT_NumDataSourceChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.NumRef != nil {
 		senumRef := xml.StartElement{Name: xml.Name{Local: "numRef"}}
 		e.EncodeElement(m.NumRef, senumRef)

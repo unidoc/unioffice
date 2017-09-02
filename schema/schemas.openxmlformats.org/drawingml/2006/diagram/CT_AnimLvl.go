@@ -22,9 +22,6 @@ func NewCT_AnimLvl() *CT_AnimLvl {
 }
 
 func (m *CT_AnimLvl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_AnimLvlStrUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

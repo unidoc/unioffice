@@ -54,9 +54,6 @@ func NewCT_FramePr() *CT_FramePr {
 }
 
 func (m *CT_FramePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.DropCapAttr != ST_DropCapUnset {
 		attr, err := m.DropCapAttr.MarshalXMLAttr(xml.Name{Local: "w:dropCap"})
 		if err != nil {

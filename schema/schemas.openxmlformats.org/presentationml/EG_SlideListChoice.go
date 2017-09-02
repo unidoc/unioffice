@@ -27,9 +27,6 @@ func NewEG_SlideListChoice() *EG_SlideListChoice {
 }
 
 func (m *EG_SlideListChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.SldAll != nil {
 		sesldAll := xml.StartElement{Name: xml.Name{Local: "p:sldAll"}}
 		e.EncodeElement(m.SldAll, sesldAll)

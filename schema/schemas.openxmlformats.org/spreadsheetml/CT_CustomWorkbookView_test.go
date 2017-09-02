@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestCT_CustomWorkbookViewConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.CT_CustomWorkbookView should validate: %s", err)
 	}
+}
+
+func TestCT_CustomWorkbookViewMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewCT_CustomWorkbookView()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewCT_CustomWorkbookView()
+	xml.Unmarshal(buf, v2)
 }

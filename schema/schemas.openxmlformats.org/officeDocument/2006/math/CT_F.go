@@ -26,9 +26,6 @@ func NewCT_F() *CT_F {
 }
 
 func (m *CT_F) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.FPr != nil {
 		sefPr := xml.StartElement{Name: xml.Name{Local: "m:fPr"}}

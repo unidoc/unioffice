@@ -56,9 +56,6 @@ func NewCT_TblPr() *CT_TblPr {
 }
 
 func (m *CT_TblPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.TblStyle != nil {
 		setblStyle := xml.StartElement{Name: xml.Name{Local: "w:tblStyle"}}

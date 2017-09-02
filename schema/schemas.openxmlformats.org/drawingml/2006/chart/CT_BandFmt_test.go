@@ -8,6 +8,7 @@
 package chart_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
@@ -21,4 +22,11 @@ func TestCT_BandFmtConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed chart.CT_BandFmt should validate: %s", err)
 	}
+}
+
+func TestCT_BandFmtMarshalUnmarshal(t *testing.T) {
+	v := chart.NewCT_BandFmt()
+	buf, _ := xml.Marshal(v)
+	v2 := chart.NewCT_BandFmt()
+	xml.Unmarshal(buf, v2)
 }

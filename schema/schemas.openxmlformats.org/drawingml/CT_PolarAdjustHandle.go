@@ -30,9 +30,6 @@ func NewCT_PolarAdjustHandle() *CT_PolarAdjustHandle {
 }
 
 func (m *CT_PolarAdjustHandle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.GdRefRAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "gdRefR"},
 			Value: fmt.Sprintf("%v", *m.GdRefRAttr)})

@@ -29,9 +29,6 @@ func NewCT_AreaChart() *CT_AreaChart {
 }
 
 func (m *CT_AreaChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Grouping != nil {
 		segrouping := xml.StartElement{Name: xml.Name{Local: "grouping"}}

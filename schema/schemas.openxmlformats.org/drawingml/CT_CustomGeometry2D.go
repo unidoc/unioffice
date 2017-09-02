@@ -28,9 +28,6 @@ func NewCT_CustomGeometry2D() *CT_CustomGeometry2D {
 }
 
 func (m *CT_CustomGeometry2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.AvLst != nil {
 		seavLst := xml.StartElement{Name: xml.Name{Local: "a:avLst"}}

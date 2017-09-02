@@ -27,9 +27,6 @@ func NewCT_Guide() *CT_Guide {
 }
 
 func (m *CT_Guide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.OrientAttr != ST_DirectionUnset {
 		attr, err := m.OrientAttr.MarshalXMLAttr(xml.Name{Local: "orient"})
 		if err != nil {

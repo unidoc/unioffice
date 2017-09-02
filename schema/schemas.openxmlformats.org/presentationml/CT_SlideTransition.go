@@ -33,9 +33,6 @@ func NewCT_SlideTransition() *CT_SlideTransition {
 }
 
 func (m *CT_SlideTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.SpdAttr != ST_TransitionSpeedUnset {
 		attr, err := m.SpdAttr.MarshalXMLAttr(xml.Name{Local: "spd"})
 		if err != nil {

@@ -37,9 +37,6 @@ func NewCT_Shape() *CT_Shape {
 }
 
 func (m *CT_Shape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.UseBgFillAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "useBgFill"},
 			Value: fmt.Sprintf("%v", *m.UseBgFillAttr)})

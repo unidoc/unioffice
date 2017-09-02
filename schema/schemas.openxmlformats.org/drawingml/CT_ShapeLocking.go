@@ -35,9 +35,6 @@ func NewCT_ShapeLocking() *CT_ShapeLocking {
 }
 
 func (m *CT_ShapeLocking) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.NoTextEditAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "noTextEdit"},
 			Value: fmt.Sprintf("%v", *m.NoTextEditAttr)})

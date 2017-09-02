@@ -39,9 +39,6 @@ func NewCT_Comment() *CT_Comment {
 }
 
 func (m *CT_Comment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "authorId"},
 		Value: fmt.Sprintf("%v", m.AuthorIdAttr)})
 	if m.DtAttr != nil {

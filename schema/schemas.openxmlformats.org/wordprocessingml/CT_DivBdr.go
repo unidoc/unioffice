@@ -29,9 +29,6 @@ func NewCT_DivBdr() *CT_DivBdr {
 }
 
 func (m *CT_DivBdr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Top != nil {
 		setop := xml.StartElement{Name: xml.Name{Local: "w:top"}}

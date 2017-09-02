@@ -24,9 +24,6 @@ func NewCT_TagList() *CT_TagList {
 }
 
 func (m *CT_TagList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Tag != nil {
 		setag := xml.StartElement{Name: xml.Name{Local: "p:tag"}}

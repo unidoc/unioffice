@@ -24,9 +24,6 @@ func NewCT_Tabs() *CT_Tabs {
 }
 
 func (m *CT_Tabs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	setab := xml.StartElement{Name: xml.Name{Local: "w:tab"}}
 	e.EncodeElement(m.Tab, setab)

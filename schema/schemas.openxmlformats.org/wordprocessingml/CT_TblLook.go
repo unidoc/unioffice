@@ -37,9 +37,6 @@ func NewCT_TblLook() *CT_TblLook {
 }
 
 func (m *CT_TblLook) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.FirstRowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:firstRow"},
 			Value: fmt.Sprintf("%v", *m.FirstRowAttr)})

@@ -23,9 +23,6 @@ func NewEG_TextBulletColor() *EG_TextBulletColor {
 }
 
 func (m *EG_TextBulletColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BuClrTx != nil {
 		sebuClrTx := xml.StartElement{Name: xml.Name{Local: "a:buClrTx"}}
 		e.EncodeElement(m.BuClrTx, sebuClrTx)

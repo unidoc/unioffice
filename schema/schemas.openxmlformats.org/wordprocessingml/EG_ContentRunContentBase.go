@@ -27,9 +27,6 @@ func NewEG_ContentRunContentBase() *EG_ContentRunContentBase {
 }
 
 func (m *EG_ContentRunContentBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.SmartTag != nil {
 		sesmartTag := xml.StartElement{Name: xml.Name{Local: "w:smartTag"}}
 		e.EncodeElement(m.SmartTag, sesmartTag)

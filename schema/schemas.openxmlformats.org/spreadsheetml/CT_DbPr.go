@@ -30,9 +30,6 @@ func NewCT_DbPr() *CT_DbPr {
 }
 
 func (m *CT_DbPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "connection"},
 		Value: fmt.Sprintf("%v", m.ConnectionAttr)})
 	if m.CommandAttr != nil {

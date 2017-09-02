@@ -23,9 +23,6 @@ func NewEG_TextBulletTypeface() *EG_TextBulletTypeface {
 }
 
 func (m *EG_TextBulletTypeface) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BuFontTx != nil {
 		sebuFontTx := xml.StartElement{Name: xml.Name{Local: "a:buFontTx"}}
 		e.EncodeElement(m.BuFontTx, sebuFontTx)

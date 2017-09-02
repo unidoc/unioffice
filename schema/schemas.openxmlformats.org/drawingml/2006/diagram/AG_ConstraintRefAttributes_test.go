@@ -8,6 +8,7 @@
 package diagram_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/diagram"
@@ -21,4 +22,11 @@ func TestAG_ConstraintRefAttributesConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed diagram.AG_ConstraintRefAttributes should validate: %s", err)
 	}
+}
+
+func TestAG_ConstraintRefAttributesMarshalUnmarshal(t *testing.T) {
+	v := diagram.NewAG_ConstraintRefAttributes()
+	buf, _ := xml.Marshal(v)
+	v2 := diagram.NewAG_ConstraintRefAttributes()
+	xml.Unmarshal(buf, v2)
 }

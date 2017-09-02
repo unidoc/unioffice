@@ -35,9 +35,6 @@ func NewCT_Chart() *CT_Chart {
 }
 
 func (m *CT_Chart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Title != nil {
 		setitle := xml.StartElement{Name: xml.Name{Local: "title"}}

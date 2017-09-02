@@ -34,9 +34,6 @@ func NewCT_LineChart() *CT_LineChart {
 }
 
 func (m *CT_LineChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	segrouping := xml.StartElement{Name: xml.Name{Local: "grouping"}}
 	e.EncodeElement(m.Grouping, segrouping)

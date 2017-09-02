@@ -27,9 +27,6 @@ func NewCT_GroupShapeNonVisual() *CT_GroupShapeNonVisual {
 }
 
 func (m *CT_GroupShapeNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secNvPr := xml.StartElement{Name: xml.Name{Local: "cNvPr"}}
 	e.EncodeElement(m.CNvPr, secNvPr)

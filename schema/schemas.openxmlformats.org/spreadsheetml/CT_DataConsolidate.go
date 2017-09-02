@@ -35,9 +35,6 @@ func NewCT_DataConsolidate() *CT_DataConsolidate {
 }
 
 func (m *CT_DataConsolidate) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.FunctionAttr != ST_DataConsolidateFunctionUnset {
 		attr, err := m.FunctionAttr.MarshalXMLAttr(xml.Name{Local: "function"})
 		if err != nil {

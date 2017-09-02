@@ -34,9 +34,6 @@ func NewCT_PrintProperties() *CT_PrintProperties {
 }
 
 func (m *CT_PrintProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PrnWhatAttr != ST_PrintWhatUnset {
 		attr, err := m.PrnWhatAttr.MarshalXMLAttr(xml.Name{Local: "prnWhat"})
 		if err != nil {

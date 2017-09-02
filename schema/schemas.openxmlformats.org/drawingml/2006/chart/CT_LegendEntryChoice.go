@@ -25,9 +25,6 @@ func NewCT_LegendEntryChoice() *CT_LegendEntryChoice {
 }
 
 func (m *CT_LegendEntryChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Delete != nil {
 		sedelete := xml.StartElement{Name: xml.Name{Local: "delete"}}
 		e.EncodeElement(m.Delete, sedelete)

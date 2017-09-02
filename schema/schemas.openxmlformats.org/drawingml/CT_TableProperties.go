@@ -40,9 +40,6 @@ func NewCT_TableProperties() *CT_TableProperties {
 }
 
 func (m *CT_TableProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.RtlAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rtl"},
 			Value: fmt.Sprintf("%v", *m.RtlAttr)})

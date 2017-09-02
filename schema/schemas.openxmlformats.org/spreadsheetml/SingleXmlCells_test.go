@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestSingleXmlCellsConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.SingleXmlCells should validate: %s", err)
 	}
+}
+
+func TestSingleXmlCellsMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewSingleXmlCells()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewSingleXmlCells()
+	xml.Unmarshal(buf, v2)
 }

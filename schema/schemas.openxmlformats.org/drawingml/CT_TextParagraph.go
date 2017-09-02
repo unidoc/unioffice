@@ -25,9 +25,6 @@ func NewCT_TextParagraph() *CT_TextParagraph {
 }
 
 func (m *CT_TextParagraph) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.PPr != nil {
 		sepPr := xml.StartElement{Name: xml.Name{Local: "a:pPr"}}

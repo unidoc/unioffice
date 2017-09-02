@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestCT_TextAutonumberBulletConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.CT_TextAutonumberBullet should validate: %s", err)
 	}
+}
+
+func TestCT_TextAutonumberBulletMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewCT_TextAutonumberBullet()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewCT_TextAutonumberBullet()
+	xml.Unmarshal(buf, v2)
 }

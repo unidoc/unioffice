@@ -76,9 +76,6 @@ func NewCT_Macrosheet() *CT_Macrosheet {
 }
 
 func (m *CT_Macrosheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "x:CT_Macrosheet"
 	e.EncodeToken(start)
 	if m.SheetPr != nil {

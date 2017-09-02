@@ -29,9 +29,6 @@ func NewCT_TLOleBuildChart() *CT_TLOleBuildChart {
 }
 
 func (m *CT_TLOleBuildChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BldAttr != ST_TLOleChartBuildTypeUnset {
 		attr, err := m.BldAttr.MarshalXMLAttr(xml.Name{Local: "bld"})
 		if err != nil {

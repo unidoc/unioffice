@@ -24,9 +24,6 @@ func NewCT_BookViews() *CT_BookViews {
 }
 
 func (m *CT_BookViews) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seworkbookView := xml.StartElement{Name: xml.Name{Local: "x:workbookView"}}
 	e.EncodeElement(m.WorkbookView, seworkbookView)

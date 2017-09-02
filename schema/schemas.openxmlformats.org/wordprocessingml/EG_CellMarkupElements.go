@@ -27,9 +27,6 @@ func NewEG_CellMarkupElements() *EG_CellMarkupElements {
 }
 
 func (m *EG_CellMarkupElements) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.CellIns != nil {
 		secellIns := xml.StartElement{Name: xml.Name{Local: "w:cellIns"}}
 		e.EncodeElement(m.CellIns, secellIns)

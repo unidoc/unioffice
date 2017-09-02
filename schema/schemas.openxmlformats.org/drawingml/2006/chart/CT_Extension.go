@@ -25,9 +25,6 @@ func NewCT_Extension() *CT_Extension {
 }
 
 func (m *CT_Extension) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.UriAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "uri"},
 			Value: fmt.Sprintf("%v", *m.UriAttr)})

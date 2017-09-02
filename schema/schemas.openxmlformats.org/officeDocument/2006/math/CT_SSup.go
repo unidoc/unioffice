@@ -26,9 +26,6 @@ func NewCT_SSup() *CT_SSup {
 }
 
 func (m *CT_SSup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.SSupPr != nil {
 		sesSupPr := xml.StartElement{Name: xml.Name{Local: "m:sSupPr"}}

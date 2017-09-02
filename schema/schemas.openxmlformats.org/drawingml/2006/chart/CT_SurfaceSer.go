@@ -32,9 +32,6 @@ func NewCT_SurfaceSer() *CT_SurfaceSer {
 }
 
 func (m *CT_SurfaceSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
 	e.EncodeElement(m.Idx, seidx)

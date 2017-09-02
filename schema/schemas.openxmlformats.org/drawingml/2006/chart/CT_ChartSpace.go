@@ -38,9 +38,6 @@ func NewCT_ChartSpace() *CT_ChartSpace {
 }
 
 func (m *CT_ChartSpace) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Date1904 != nil {
 		sedate1904 := xml.StartElement{Name: xml.Name{Local: "date1904"}}

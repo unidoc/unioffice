@@ -8,6 +8,7 @@
 package terms_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/purl.org/dc/terms"
@@ -21,4 +22,11 @@ func TestRFC1766Constructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed terms.RFC1766 should validate: %s", err)
 	}
+}
+
+func TestRFC1766MarshalUnmarshal(t *testing.T) {
+	v := terms.NewRFC1766()
+	buf, _ := xml.Marshal(v)
+	v2 := terms.NewRFC1766()
+	xml.Unmarshal(buf, v2)
 }

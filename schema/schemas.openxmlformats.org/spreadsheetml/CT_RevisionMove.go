@@ -40,9 +40,6 @@ func NewCT_RevisionMove() *CT_RevisionMove {
 }
 
 func (m *CT_RevisionMove) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "sheetId"},
 		Value: fmt.Sprintf("%v", m.SheetIdAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "source"},

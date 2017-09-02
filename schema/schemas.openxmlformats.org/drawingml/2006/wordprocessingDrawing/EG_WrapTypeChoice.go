@@ -26,9 +26,6 @@ func NewEG_WrapTypeChoice() *EG_WrapTypeChoice {
 }
 
 func (m *EG_WrapTypeChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.WrapNone != nil {
 		sewrapNone := xml.StartElement{Name: xml.Name{Local: "wp:wrapNone"}}
 		e.EncodeElement(m.WrapNone, sewrapNone)

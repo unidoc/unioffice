@@ -21,9 +21,6 @@ func NewW3CDTF() *W3CDTF {
 }
 
 func (m *W3CDTF) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "W3CDTF"
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -31,9 +31,6 @@ func NewEG_ContentRowContent() *EG_ContentRowContent {
 }
 
 func (m *EG_ContentRowContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Tr != nil {
 		setr := xml.StartElement{Name: xml.Name{Local: "w:tr"}}
 		e.EncodeElement(m.Tr, setr)

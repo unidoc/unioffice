@@ -49,9 +49,6 @@ func NewCT_CsPageSetup() *CT_CsPageSetup {
 }
 
 func (m *CT_CsPageSetup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PaperSizeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "paperSize"},
 			Value: fmt.Sprintf("%v", *m.PaperSizeAttr)})

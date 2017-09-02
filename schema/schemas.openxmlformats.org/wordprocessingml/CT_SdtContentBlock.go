@@ -33,9 +33,6 @@ func NewCT_SdtContentBlock() *CT_SdtContentBlock {
 }
 
 func (m *CT_SdtContentBlock) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.CustomXml != nil {
 		secustomXml := xml.StartElement{Name: xml.Name{Local: "w:customXml"}}

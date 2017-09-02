@@ -25,9 +25,6 @@ func NewCT_CellSmartTagPr() *CT_CellSmartTagPr {
 }
 
 func (m *CT_CellSmartTagPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "key"},
 		Value: fmt.Sprintf("%v", m.KeyAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "val"},

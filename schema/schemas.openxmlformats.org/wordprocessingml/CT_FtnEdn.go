@@ -30,9 +30,6 @@ func NewCT_FtnEdn() *CT_FtnEdn {
 }
 
 func (m *CT_FtnEdn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TypeAttr != ST_FtnEdnUnset {
 		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "w:type"})
 		if err != nil {

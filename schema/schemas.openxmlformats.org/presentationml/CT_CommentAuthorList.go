@@ -24,9 +24,6 @@ func NewCT_CommentAuthorList() *CT_CommentAuthorList {
 }
 
 func (m *CT_CommentAuthorList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.CmAuthor != nil {
 		secmAuthor := xml.StartElement{Name: xml.Name{Local: "p:cmAuthor"}}

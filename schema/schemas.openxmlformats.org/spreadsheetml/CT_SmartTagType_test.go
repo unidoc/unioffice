@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestCT_SmartTagTypeConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.CT_SmartTagType should validate: %s", err)
 	}
+}
+
+func TestCT_SmartTagTypeMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewCT_SmartTagType()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewCT_SmartTagType()
+	xml.Unmarshal(buf, v2)
 }

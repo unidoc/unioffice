@@ -46,9 +46,6 @@ func NewCT_TopPageBorder() *CT_TopPageBorder {
 }
 
 func (m *CT_TopPageBorder) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TopLeftAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:topLeft"},
 			Value: fmt.Sprintf("%v", *m.TopLeftAttr)})

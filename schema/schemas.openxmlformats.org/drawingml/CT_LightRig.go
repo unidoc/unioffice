@@ -27,9 +27,6 @@ func NewCT_LightRig() *CT_LightRig {
 }
 
 func (m *CT_LightRig) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.RigAttr.MarshalXMLAttr(xml.Name{Local: "rig"})
 	if err != nil {
 		return err

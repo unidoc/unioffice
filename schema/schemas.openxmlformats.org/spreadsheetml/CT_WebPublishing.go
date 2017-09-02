@@ -40,9 +40,6 @@ func NewCT_WebPublishing() *CT_WebPublishing {
 }
 
 func (m *CT_WebPublishing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.CssAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "css"},
 			Value: fmt.Sprintf("%v", *m.CssAttr)})

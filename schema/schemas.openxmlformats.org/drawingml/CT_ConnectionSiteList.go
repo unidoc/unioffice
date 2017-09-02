@@ -23,9 +23,6 @@ func NewCT_ConnectionSiteList() *CT_ConnectionSiteList {
 }
 
 func (m *CT_ConnectionSiteList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Cxn != nil {
 		secxn := xml.StartElement{Name: xml.Name{Local: "a:cxn"}}

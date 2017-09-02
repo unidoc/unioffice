@@ -40,9 +40,6 @@ func NewCT_CellAlignment() *CT_CellAlignment {
 }
 
 func (m *CT_CellAlignment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.HorizontalAttr != ST_HorizontalAlignmentUnset {
 		attr, err := m.HorizontalAttr.MarshalXMLAttr(xml.Name{Local: "horizontal"})
 		if err != nil {

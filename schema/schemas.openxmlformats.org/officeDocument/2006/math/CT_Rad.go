@@ -26,9 +26,6 @@ func NewCT_Rad() *CT_Rad {
 }
 
 func (m *CT_Rad) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.RadPr != nil {
 		seradPr := xml.StartElement{Name: xml.Name{Local: "m:radPr"}}

@@ -42,9 +42,6 @@ func NewCT_DocProtect() *CT_DocProtect {
 }
 
 func (m *CT_DocProtect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.EditAttr != ST_DocProtectUnset {
 		attr, err := m.EditAttr.MarshalXMLAttr(xml.Name{Local: "w:edit"})
 		if err != nil {

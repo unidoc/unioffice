@@ -34,9 +34,6 @@ func NewCT_OfPieChart() *CT_OfPieChart {
 }
 
 func (m *CT_OfPieChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seofPieType := xml.StartElement{Name: xml.Name{Local: "ofPieType"}}
 	e.EncodeElement(m.OfPieType, seofPieType)

@@ -26,9 +26,6 @@ func NewCT_AxDataSourceChoice() *CT_AxDataSourceChoice {
 }
 
 func (m *CT_AxDataSourceChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.MultiLvlStrRef != nil {
 		semultiLvlStrRef := xml.StartElement{Name: xml.Name{Local: "multiLvlStrRef"}}
 		e.EncodeElement(m.MultiLvlStrRef, semultiLvlStrRef)

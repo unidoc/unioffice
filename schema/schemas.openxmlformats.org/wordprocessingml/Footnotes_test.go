@@ -8,6 +8,7 @@
 package wordprocessingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -21,4 +22,11 @@ func TestFootnotesConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingml.Footnotes should validate: %s", err)
 	}
+}
+
+func TestFootnotesMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingml.NewFootnotes()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingml.NewFootnotes()
+	xml.Unmarshal(buf, v2)
 }

@@ -28,9 +28,6 @@ func NewCT_SSubSup() *CT_SSubSup {
 }
 
 func (m *CT_SSubSup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.SSubSupPr != nil {
 		sesSubSupPr := xml.StartElement{Name: xml.Name{Local: "m:sSubSupPr"}}

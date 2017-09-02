@@ -33,9 +33,6 @@ func NewCT_NotesSlide() *CT_NotesSlide {
 }
 
 func (m *CT_NotesSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ShowMasterSpAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showMasterSp"},
 			Value: fmt.Sprintf("%v", *m.ShowMasterSpAttr)})

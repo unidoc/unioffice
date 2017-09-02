@@ -34,9 +34,6 @@ func NewCT_CacheSource() *CT_CacheSource {
 }
 
 func (m *CT_CacheSource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 	if err != nil {
 		return err

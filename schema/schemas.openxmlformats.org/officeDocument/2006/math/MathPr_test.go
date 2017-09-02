@@ -8,6 +8,7 @@
 package math_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/math"
@@ -21,4 +22,11 @@ func TestMathPrConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed math.MathPr should validate: %s", err)
 	}
+}
+
+func TestMathPrMarshalUnmarshal(t *testing.T) {
+	v := math.NewMathPr()
+	buf, _ := xml.Marshal(v)
+	v2 := math.NewMathPr()
+	xml.Unmarshal(buf, v2)
 }

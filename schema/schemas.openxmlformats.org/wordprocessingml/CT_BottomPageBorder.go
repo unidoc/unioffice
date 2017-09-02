@@ -46,9 +46,6 @@ func NewCT_BottomPageBorder() *CT_BottomPageBorder {
 }
 
 func (m *CT_BottomPageBorder) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BottomLeftAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:bottomLeft"},
 			Value: fmt.Sprintf("%v", *m.BottomLeftAttr)})

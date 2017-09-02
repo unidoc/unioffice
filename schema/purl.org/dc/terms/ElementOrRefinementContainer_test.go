@@ -8,6 +8,7 @@
 package terms_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/purl.org/dc/terms"
@@ -21,4 +22,11 @@ func TestElementOrRefinementContainerConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed terms.ElementOrRefinementContainer should validate: %s", err)
 	}
+}
+
+func TestElementOrRefinementContainerMarshalUnmarshal(t *testing.T) {
+	v := terms.NewElementOrRefinementContainer()
+	buf, _ := xml.Marshal(v)
+	v2 := terms.NewElementOrRefinementContainer()
+	xml.Unmarshal(buf, v2)
 }

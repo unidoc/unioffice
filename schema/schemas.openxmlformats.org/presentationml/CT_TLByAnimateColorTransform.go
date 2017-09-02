@@ -25,9 +25,6 @@ func NewCT_TLByAnimateColorTransform() *CT_TLByAnimateColorTransform {
 }
 
 func (m *CT_TLByAnimateColorTransform) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Rgb != nil {
 		sergb := xml.StartElement{Name: xml.Name{Local: "p:rgb"}}

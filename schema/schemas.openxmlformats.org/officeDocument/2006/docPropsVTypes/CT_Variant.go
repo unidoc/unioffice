@@ -60,9 +60,6 @@ func NewCT_Variant() *CT_Variant {
 }
 
 func (m *CT_Variant) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Variant != nil {
 		sevariant := xml.StartElement{Name: xml.Name{Local: "vt:variant"}}

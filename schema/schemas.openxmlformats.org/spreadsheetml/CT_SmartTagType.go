@@ -27,9 +27,6 @@ func NewCT_SmartTagType() *CT_SmartTagType {
 }
 
 func (m *CT_SmartTagType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.NamespaceUriAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "namespaceUri"},
 			Value: fmt.Sprintf("%v", *m.NamespaceUriAttr)})

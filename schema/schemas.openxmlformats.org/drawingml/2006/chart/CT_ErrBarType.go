@@ -22,9 +22,6 @@ func NewCT_ErrBarType() *CT_ErrBarType {
 }
 
 func (m *CT_ErrBarType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_ErrBarTypeUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

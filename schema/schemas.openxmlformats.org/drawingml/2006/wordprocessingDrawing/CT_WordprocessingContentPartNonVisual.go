@@ -25,9 +25,6 @@ func NewCT_WordprocessingContentPartNonVisual() *CT_WordprocessingContentPartNon
 }
 
 func (m *CT_WordprocessingContentPartNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.CNvPr != nil {
 		secNvPr := xml.StartElement{Name: xml.Name{Local: "wp:cNvPr"}}

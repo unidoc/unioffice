@@ -26,9 +26,6 @@ func NewCT_IndexRange() *CT_IndexRange {
 }
 
 func (m *CT_IndexRange) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "st"},
 		Value: fmt.Sprintf("%v", m.StAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "end"},

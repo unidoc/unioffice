@@ -39,9 +39,6 @@ func NewCT_BlipChoice() *CT_BlipChoice {
 }
 
 func (m *CT_BlipChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AlphaBiLevel != nil {
 		sealphaBiLevel := xml.StartElement{Name: xml.Name{Local: "a:alphaBiLevel"}}
 		e.EncodeElement(m.AlphaBiLevel, sealphaBiLevel)

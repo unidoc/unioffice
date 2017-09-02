@@ -23,9 +23,6 @@ func NewCT_AlphaModulateEffect() *CT_AlphaModulateEffect {
 }
 
 func (m *CT_AlphaModulateEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secont := xml.StartElement{Name: xml.Name{Local: "a:cont"}}
 	e.EncodeElement(m.Cont, secont)

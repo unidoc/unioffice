@@ -32,9 +32,6 @@ func NewCT_TLTimeCondition() *CT_TLTimeCondition {
 }
 
 func (m *CT_TLTimeCondition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.EvtAttr != ST_TLTriggerEventUnset {
 		attr, err := m.EvtAttr.MarshalXMLAttr(xml.Name{Local: "evt"})
 		if err != nil {

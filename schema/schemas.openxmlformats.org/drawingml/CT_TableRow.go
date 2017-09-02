@@ -25,9 +25,6 @@ func NewCT_TableRow() *CT_TableRow {
 }
 
 func (m *CT_TableRow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "h"},
 		Value: fmt.Sprintf("%v", m.HAttr)})
 	e.EncodeToken(start)

@@ -59,9 +59,6 @@ func NewCT_PivotSelection() *CT_PivotSelection {
 }
 
 func (m *CT_PivotSelection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PaneAttr != ST_PaneUnset {
 		attr, err := m.PaneAttr.MarshalXMLAttr(xml.Name{Local: "pane"})
 		if err != nil {

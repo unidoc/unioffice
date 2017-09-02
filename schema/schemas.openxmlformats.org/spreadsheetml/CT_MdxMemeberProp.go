@@ -26,9 +26,6 @@ func NewCT_MdxMemeberProp() *CT_MdxMemeberProp {
 }
 
 func (m *CT_MdxMemeberProp) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "n"},
 		Value: fmt.Sprintf("%v", m.NAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "np"},

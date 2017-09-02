@@ -24,9 +24,6 @@ func NewCT_TLTimeNodeExclusive() *CT_TLTimeNodeExclusive {
 }
 
 func (m *CT_TLTimeNodeExclusive) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secTn := xml.StartElement{Name: xml.Name{Local: "p:cTn"}}
 	e.EncodeElement(m.CTn, secTn)

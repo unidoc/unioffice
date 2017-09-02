@@ -24,9 +24,6 @@ func NewCT_CommentList() *CT_CommentList {
 }
 
 func (m *CT_CommentList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Comment != nil {
 		secomment := xml.StartElement{Name: xml.Name{Local: "x:comment"}}

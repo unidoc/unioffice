@@ -26,9 +26,6 @@ func NewCT_Captions() *CT_Captions {
 }
 
 func (m *CT_Captions) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secaption := xml.StartElement{Name: xml.Name{Local: "w:caption"}}
 	e.EncodeElement(m.Caption, secaption)

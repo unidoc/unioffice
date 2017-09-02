@@ -99,9 +99,6 @@ func NewCT_RPrOriginal() *CT_RPrOriginal {
 }
 
 func (m *CT_RPrOriginal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.RStyle != nil {
 		serStyle := xml.StartElement{Name: xml.Name{Local: "w:rStyle"}}

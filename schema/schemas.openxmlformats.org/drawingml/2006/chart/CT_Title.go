@@ -29,9 +29,6 @@ func NewCT_Title() *CT_Title {
 }
 
 func (m *CT_Title) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Tx != nil {
 		setx := xml.StartElement{Name: xml.Name{Local: "tx"}}

@@ -26,9 +26,6 @@ func NewCT_BlendEffect() *CT_BlendEffect {
 }
 
 func (m *CT_BlendEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.BlendAttr.MarshalXMLAttr(xml.Name{Local: "blend"})
 	if err != nil {
 		return err

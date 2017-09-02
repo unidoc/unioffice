@@ -23,9 +23,6 @@ func NewCT_GeomGuideList() *CT_GeomGuideList {
 }
 
 func (m *CT_GeomGuideList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Gd != nil {
 		segd := xml.StartElement{Name: xml.Name{Local: "a:gd"}}

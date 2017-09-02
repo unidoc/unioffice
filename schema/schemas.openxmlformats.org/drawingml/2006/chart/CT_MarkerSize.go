@@ -23,9 +23,6 @@ func NewCT_MarkerSize() *CT_MarkerSize {
 }
 
 func (m *CT_MarkerSize) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "val"},
 			Value: fmt.Sprintf("%v", *m.ValAttr)})

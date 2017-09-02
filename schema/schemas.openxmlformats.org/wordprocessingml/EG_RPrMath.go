@@ -27,9 +27,6 @@ func NewEG_RPrMath() *EG_RPrMath {
 }
 
 func (m *EG_RPrMath) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "w:EG_RPrMath"
 	if m.Ins != nil {
 		seins := xml.StartElement{Name: xml.Name{Local: "w:ins"}}

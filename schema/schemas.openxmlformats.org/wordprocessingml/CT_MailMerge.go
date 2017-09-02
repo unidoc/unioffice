@@ -55,9 +55,6 @@ func NewCT_MailMerge() *CT_MailMerge {
 }
 
 func (m *CT_MailMerge) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	semainDocumentType := xml.StartElement{Name: xml.Name{Local: "w:mainDocumentType"}}
 	e.EncodeElement(m.MainDocumentType, semainDocumentType)

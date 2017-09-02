@@ -24,9 +24,6 @@ func NewCT_Headers() *CT_Headers {
 }
 
 func (m *CT_Headers) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seheader := xml.StartElement{Name: xml.Name{Local: "w:header"}}
 	e.EncodeElement(m.Header, seheader)

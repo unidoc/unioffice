@@ -23,9 +23,6 @@ func NewOverride() *Override {
 }
 
 func (m *Override) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	return m.CT_Override.MarshalXML(e, start)
 }
 

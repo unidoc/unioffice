@@ -25,9 +25,6 @@ func NewCT_PresetTextShape() *CT_PresetTextShape {
 }
 
 func (m *CT_PresetTextShape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.PrstAttr.MarshalXMLAttr(xml.Name{Local: "prst"})
 	if err != nil {
 		return err

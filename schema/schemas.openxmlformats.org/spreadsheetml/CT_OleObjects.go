@@ -24,9 +24,6 @@ func NewCT_OleObjects() *CT_OleObjects {
 }
 
 func (m *CT_OleObjects) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seoleObject := xml.StartElement{Name: xml.Name{Local: "x:oleObject"}}
 	e.EncodeElement(m.OleObject, seoleObject)

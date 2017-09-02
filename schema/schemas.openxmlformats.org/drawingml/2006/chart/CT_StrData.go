@@ -25,9 +25,6 @@ func NewCT_StrData() *CT_StrData {
 }
 
 func (m *CT_StrData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.PtCount != nil {
 		septCount := xml.StartElement{Name: xml.Name{Local: "ptCount"}}

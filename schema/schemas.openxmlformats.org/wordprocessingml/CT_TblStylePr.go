@@ -35,9 +35,6 @@ func NewCT_TblStylePr() *CT_TblStylePr {
 }
 
 func (m *CT_TblStylePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "w:type"})
 	if err != nil {
 		return err

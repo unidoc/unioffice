@@ -23,9 +23,6 @@ func NewEG_LineDashProperties() *EG_LineDashProperties {
 }
 
 func (m *EG_LineDashProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PrstDash != nil {
 		seprstDash := xml.StartElement{Name: xml.Name{Local: "a:prstDash"}}
 		e.EncodeElement(m.PrstDash, seprstDash)

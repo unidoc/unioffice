@@ -77,9 +77,6 @@ func NewCT_Properties() *CT_Properties {
 }
 
 func (m *CT_Properties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Template != nil {
 		seTemplate := xml.StartElement{Name: xml.Name{Local: "Template"}}

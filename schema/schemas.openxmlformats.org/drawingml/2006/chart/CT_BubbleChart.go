@@ -31,9 +31,6 @@ func NewCT_BubbleChart() *CT_BubbleChart {
 }
 
 func (m *CT_BubbleChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.VaryColors != nil {
 		sevaryColors := xml.StartElement{Name: xml.Name{Local: "varyColors"}}

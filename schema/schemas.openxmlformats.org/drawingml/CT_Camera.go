@@ -28,9 +28,6 @@ func NewCT_Camera() *CT_Camera {
 }
 
 func (m *CT_Camera) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.PrstAttr.MarshalXMLAttr(xml.Name{Local: "prst"})
 	if err != nil {
 		return err

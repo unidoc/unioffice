@@ -27,9 +27,6 @@ func NewCT_PictureNonVisual() *CT_PictureNonVisual {
 }
 
 func (m *CT_PictureNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secNvPr := xml.StartElement{Name: xml.Name{Local: "xdr:cNvPr"}}
 	e.EncodeElement(m.CNvPr, secNvPr)

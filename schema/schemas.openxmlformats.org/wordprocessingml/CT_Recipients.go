@@ -24,9 +24,6 @@ func NewCT_Recipients() *CT_Recipients {
 }
 
 func (m *CT_Recipients) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	serecipientData := xml.StartElement{Name: xml.Name{Local: "w:recipientData"}}
 	e.EncodeElement(m.RecipientData, serecipientData)

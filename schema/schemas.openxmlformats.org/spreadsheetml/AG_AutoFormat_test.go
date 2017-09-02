@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestAG_AutoFormatConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.AG_AutoFormat should validate: %s", err)
 	}
+}
+
+func TestAG_AutoFormatMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewAG_AutoFormat()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewAG_AutoFormat()
+	xml.Unmarshal(buf, v2)
 }

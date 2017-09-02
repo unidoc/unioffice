@@ -21,9 +21,6 @@ func NewLCC() *LCC {
 }
 
 func (m *LCC) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "LCC"
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestAG_LockingConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.AG_Locking should validate: %s", err)
 	}
+}
+
+func TestAG_LockingMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewAG_Locking()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewAG_Locking()
+	xml.Unmarshal(buf, v2)
 }

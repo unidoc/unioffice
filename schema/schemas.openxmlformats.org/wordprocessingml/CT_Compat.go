@@ -154,9 +154,6 @@ func NewCT_Compat() *CT_Compat {
 }
 
 func (m *CT_Compat) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.UseSingleBorderforContiguousCells != nil {
 		seuseSingleBorderforContiguousCells := xml.StartElement{Name: xml.Name{Local: "w:useSingleBorderforContiguousCells"}}

@@ -24,9 +24,6 @@ func NewCT_HdrFtrRef() *CT_HdrFtrRef {
 }
 
 func (m *CT_HdrFtrRef) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "w:type"})
 	if err != nil {
 		return err

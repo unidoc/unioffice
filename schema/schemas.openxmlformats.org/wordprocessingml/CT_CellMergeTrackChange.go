@@ -29,9 +29,6 @@ func NewCT_CellMergeTrackChange() *CT_CellMergeTrackChange {
 }
 
 func (m *CT_CellMergeTrackChange) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.VMergeAttr != ST_AnnotationVMergeUnset {
 		attr, err := m.VMergeAttr.MarshalXMLAttr(xml.Name{Local: "w:vMerge"})
 		if err != nil {

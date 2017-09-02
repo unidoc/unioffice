@@ -29,9 +29,6 @@ func NewCT_SlideSorterViewProperties() *CT_SlideSorterViewProperties {
 }
 
 func (m *CT_SlideSorterViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ShowFormattingAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showFormatting"},
 			Value: fmt.Sprintf("%v", *m.ShowFormattingAttr)})

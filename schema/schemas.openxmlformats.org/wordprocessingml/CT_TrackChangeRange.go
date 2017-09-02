@@ -28,9 +28,6 @@ func NewCT_TrackChangeRange() *CT_TrackChangeRange {
 }
 
 func (m *CT_TrackChangeRange) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.DisplacedByCustomXmlAttr != ST_DisplacedByCustomXmlUnset {
 		attr, err := m.DisplacedByCustomXmlAttr.MarshalXMLAttr(xml.Name{Local: "w:displacedByCustomXml"})
 		if err != nil {

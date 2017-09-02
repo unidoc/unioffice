@@ -23,9 +23,6 @@ func NewCT_RChoice() *CT_RChoice {
 }
 
 func (m *CT_RChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.T != nil {
 		set := xml.StartElement{Name: xml.Name{Local: "m:t"}}
 		e.EncodeElement(m.T, set)

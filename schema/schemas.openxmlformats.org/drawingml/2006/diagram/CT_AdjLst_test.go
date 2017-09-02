@@ -8,6 +8,7 @@
 package diagram_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/diagram"
@@ -21,4 +22,11 @@ func TestCT_AdjLstConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed diagram.CT_AdjLst should validate: %s", err)
 	}
+}
+
+func TestCT_AdjLstMarshalUnmarshal(t *testing.T) {
+	v := diagram.NewCT_AdjLst()
+	buf, _ := xml.Marshal(v)
+	v2 := diagram.NewCT_AdjLst()
+	xml.Unmarshal(buf, v2)
 }

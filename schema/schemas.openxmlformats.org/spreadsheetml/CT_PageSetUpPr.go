@@ -26,9 +26,6 @@ func NewCT_PageSetUpPr() *CT_PageSetUpPr {
 }
 
 func (m *CT_PageSetUpPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AutoPageBreaksAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoPageBreaks"},
 			Value: fmt.Sprintf("%v", *m.AutoPageBreaksAttr)})

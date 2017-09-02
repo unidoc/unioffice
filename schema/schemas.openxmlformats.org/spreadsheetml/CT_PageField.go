@@ -35,9 +35,6 @@ func NewCT_PageField() *CT_PageField {
 }
 
 func (m *CT_PageField) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fld"},
 		Value: fmt.Sprintf("%v", m.FldAttr)})
 	if m.ItemAttr != nil {

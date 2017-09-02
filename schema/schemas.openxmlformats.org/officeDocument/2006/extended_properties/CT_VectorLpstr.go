@@ -25,9 +25,6 @@ func NewCT_VectorLpstr() *CT_VectorLpstr {
 }
 
 func (m *CT_VectorLpstr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sevector := xml.StartElement{Name: xml.Name{Local: "vt:vector"}}
 	e.EncodeElement(m.Vector, sevector)

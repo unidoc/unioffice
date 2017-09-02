@@ -24,9 +24,6 @@ func NewCT_MetadataBlock() *CT_MetadataBlock {
 }
 
 func (m *CT_MetadataBlock) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	serc := xml.StartElement{Name: xml.Name{Local: "x:rc"}}
 	e.EncodeElement(m.Rc, serc)

@@ -36,9 +36,6 @@ func NewCT_ChartsheetProtection() *CT_ChartsheetProtection {
 }
 
 func (m *CT_ChartsheetProtection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PasswordAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "password"},
 			Value: fmt.Sprintf("%v", *m.PasswordAttr)})

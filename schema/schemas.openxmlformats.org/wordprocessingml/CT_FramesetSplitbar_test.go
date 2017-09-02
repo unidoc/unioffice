@@ -8,6 +8,7 @@
 package wordprocessingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -21,4 +22,11 @@ func TestCT_FramesetSplitbarConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingml.CT_FramesetSplitbar should validate: %s", err)
 	}
+}
+
+func TestCT_FramesetSplitbarMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingml.NewCT_FramesetSplitbar()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingml.NewCT_FramesetSplitbar()
+	xml.Unmarshal(buf, v2)
 }

@@ -45,9 +45,6 @@ func NewCT_MdxTuple() *CT_MdxTuple {
 }
 
 func (m *CT_MdxTuple) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.CAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "c"},
 			Value: fmt.Sprintf("%v", *m.CAttr)})

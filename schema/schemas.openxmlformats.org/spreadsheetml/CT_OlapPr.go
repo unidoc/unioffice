@@ -40,9 +40,6 @@ func NewCT_OlapPr() *CT_OlapPr {
 }
 
 func (m *CT_OlapPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.LocalAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "local"},
 			Value: fmt.Sprintf("%v", *m.LocalAttr)})

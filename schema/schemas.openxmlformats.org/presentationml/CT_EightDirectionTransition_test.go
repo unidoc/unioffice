@@ -8,6 +8,7 @@
 package presentationml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/presentationml"
@@ -21,4 +22,11 @@ func TestCT_EightDirectionTransitionConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed presentationml.CT_EightDirectionTransition should validate: %s", err)
 	}
+}
+
+func TestCT_EightDirectionTransitionMarshalUnmarshal(t *testing.T) {
+	v := presentationml.NewCT_EightDirectionTransition()
+	buf, _ := xml.Marshal(v)
+	v2 := presentationml.NewCT_EightDirectionTransition()
+	xml.Unmarshal(buf, v2)
 }

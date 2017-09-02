@@ -28,9 +28,6 @@ func NewCT_NormalViewPortion() *CT_NormalViewPortion {
 }
 
 func (m *CT_NormalViewPortion) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "sz"},
 		Value: fmt.Sprintf("%v", m.SzAttr)})
 	if m.AutoAdjustAttr != nil {

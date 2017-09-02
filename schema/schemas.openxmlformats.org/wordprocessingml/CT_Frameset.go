@@ -30,9 +30,6 @@ func NewCT_Frameset() *CT_Frameset {
 }
 
 func (m *CT_Frameset) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Sz != nil {
 		sesz := xml.StartElement{Name: xml.Name{Local: "w:sz"}}

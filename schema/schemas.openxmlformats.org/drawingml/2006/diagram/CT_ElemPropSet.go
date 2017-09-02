@@ -55,9 +55,6 @@ func NewCT_ElemPropSet() *CT_ElemPropSet {
 }
 
 func (m *CT_ElemPropSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PresAssocIDAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "presAssocID"},
 			Value: fmt.Sprintf("%v", *m.PresAssocIDAttr)})

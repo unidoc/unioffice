@@ -23,9 +23,6 @@ func NewElementContainer() *ElementContainer {
 }
 
 func (m *ElementContainer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "elementContainer"
 	e.EncodeToken(start)
 	if m.Choice != nil {

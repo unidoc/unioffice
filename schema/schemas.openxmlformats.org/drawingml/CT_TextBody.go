@@ -26,9 +26,6 @@ func NewCT_TextBody() *CT_TextBody {
 }
 
 func (m *CT_TextBody) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sebodyPr := xml.StartElement{Name: xml.Name{Local: "a:bodyPr"}}
 	e.EncodeElement(m.BodyPr, sebodyPr)

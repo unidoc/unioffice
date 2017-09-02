@@ -27,9 +27,6 @@ func NewCT_DispUnitsLbl() *CT_DispUnitsLbl {
 }
 
 func (m *CT_DispUnitsLbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Layout != nil {
 		selayout := xml.StartElement{Name: xml.Name{Local: "layout"}}

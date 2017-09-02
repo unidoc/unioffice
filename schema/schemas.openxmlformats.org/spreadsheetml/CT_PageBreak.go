@@ -29,9 +29,6 @@ func NewCT_PageBreak() *CT_PageBreak {
 }
 
 func (m *CT_PageBreak) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.CountAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "count"},
 			Value: fmt.Sprintf("%v", *m.CountAttr)})

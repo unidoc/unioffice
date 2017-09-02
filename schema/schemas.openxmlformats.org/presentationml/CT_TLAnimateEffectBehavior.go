@@ -32,9 +32,6 @@ func NewCT_TLAnimateEffectBehavior() *CT_TLAnimateEffectBehavior {
 }
 
 func (m *CT_TLAnimateEffectBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TransitionAttr != ST_TLAnimateEffectTransitionUnset {
 		attr, err := m.TransitionAttr.MarshalXMLAttr(xml.Name{Local: "transition"})
 		if err != nil {

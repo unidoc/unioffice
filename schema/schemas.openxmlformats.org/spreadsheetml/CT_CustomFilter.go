@@ -25,9 +25,6 @@ func NewCT_CustomFilter() *CT_CustomFilter {
 }
 
 func (m *CT_CustomFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.OperatorAttr != ST_FilterOperatorUnset {
 		attr, err := m.OperatorAttr.MarshalXMLAttr(xml.Name{Local: "operator"})
 		if err != nil {

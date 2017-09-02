@@ -52,9 +52,6 @@ func NewCT_WorkbookProtection() *CT_WorkbookProtection {
 }
 
 func (m *CT_WorkbookProtection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.WorkbookPasswordAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "workbookPassword"},
 			Value: fmt.Sprintf("%v", *m.WorkbookPasswordAttr)})

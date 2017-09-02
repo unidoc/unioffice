@@ -23,9 +23,6 @@ func NewCT_VMerge() *CT_VMerge {
 }
 
 func (m *CT_VMerge) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_MergeUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 		if err != nil {

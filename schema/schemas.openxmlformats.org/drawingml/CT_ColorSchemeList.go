@@ -23,9 +23,6 @@ func NewCT_ColorSchemeList() *CT_ColorSchemeList {
 }
 
 func (m *CT_ColorSchemeList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.ExtraClrScheme != nil {
 		seextraClrScheme := xml.StartElement{Name: xml.Name{Local: "a:extraClrScheme"}}

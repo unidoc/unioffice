@@ -27,9 +27,6 @@ func NewCT_IconFilter() *CT_IconFilter {
 }
 
 func (m *CT_IconFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.IconSetAttr.MarshalXMLAttr(xml.Name{Local: "iconSet"})
 	if err != nil {
 		return err

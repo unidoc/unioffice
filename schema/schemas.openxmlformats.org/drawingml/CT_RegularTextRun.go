@@ -25,9 +25,6 @@ func NewCT_RegularTextRun() *CT_RegularTextRun {
 }
 
 func (m *CT_RegularTextRun) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.RPr != nil {
 		serPr := xml.StartElement{Name: xml.Name{Local: "a:rPr"}}

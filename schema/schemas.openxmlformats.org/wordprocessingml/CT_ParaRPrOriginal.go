@@ -107,9 +107,6 @@ func NewCT_ParaRPrOriginal() *CT_ParaRPrOriginal {
 }
 
 func (m *CT_ParaRPrOriginal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Ins != nil {
 		seins := xml.StartElement{Name: xml.Name{Local: "w:ins"}}

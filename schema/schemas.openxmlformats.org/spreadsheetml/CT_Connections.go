@@ -24,9 +24,6 @@ func NewCT_Connections() *CT_Connections {
 }
 
 func (m *CT_Connections) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seconnection := xml.StartElement{Name: xml.Name{Local: "x:connection"}}
 	e.EncodeElement(m.Connection, seconnection)

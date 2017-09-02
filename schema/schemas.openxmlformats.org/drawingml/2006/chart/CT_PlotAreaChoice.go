@@ -38,9 +38,6 @@ func NewCT_PlotAreaChoice() *CT_PlotAreaChoice {
 }
 
 func (m *CT_PlotAreaChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AreaChart != nil {
 		seareaChart := xml.StartElement{Name: xml.Name{Local: "areaChart"}}
 		e.EncodeElement(m.AreaChart, seareaChart)

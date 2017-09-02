@@ -26,9 +26,6 @@ func NewCT_MetadataRecord() *CT_MetadataRecord {
 }
 
 func (m *CT_MetadataRecord) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "t"},
 		Value: fmt.Sprintf("%v", m.TAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "v"},

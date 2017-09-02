@@ -23,9 +23,6 @@ func NewCT_PPrDefault() *CT_PPrDefault {
 }
 
 func (m *CT_PPrDefault) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.PPr != nil {
 		sepPr := xml.StartElement{Name: xml.Name{Local: "w:pPr"}}

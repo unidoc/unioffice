@@ -33,9 +33,6 @@ func NewCT_XmlColumnPr() *CT_XmlColumnPr {
 }
 
 func (m *CT_XmlColumnPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "mapId"},
 		Value: fmt.Sprintf("%v", m.MapIdAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xpath"},

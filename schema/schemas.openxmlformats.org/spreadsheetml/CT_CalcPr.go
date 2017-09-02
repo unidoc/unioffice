@@ -48,9 +48,6 @@ func NewCT_CalcPr() *CT_CalcPr {
 }
 
 func (m *CT_CalcPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.CalcIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "calcId"},
 			Value: fmt.Sprintf("%v", *m.CalcIdAttr)})

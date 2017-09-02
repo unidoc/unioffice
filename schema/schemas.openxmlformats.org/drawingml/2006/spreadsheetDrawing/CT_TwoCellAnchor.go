@@ -29,9 +29,6 @@ func NewCT_TwoCellAnchor() *CT_TwoCellAnchor {
 }
 
 func (m *CT_TwoCellAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.EditAsAttr != ST_EditAsUnset {
 		attr, err := m.EditAsAttr.MarshalXMLAttr(xml.Name{Local: "editAs"})
 		if err != nil {

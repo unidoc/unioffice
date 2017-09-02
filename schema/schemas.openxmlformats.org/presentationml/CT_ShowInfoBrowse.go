@@ -24,9 +24,6 @@ func NewCT_ShowInfoBrowse() *CT_ShowInfoBrowse {
 }
 
 func (m *CT_ShowInfoBrowse) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ShowScrollbarAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showScrollbar"},
 			Value: fmt.Sprintf("%v", *m.ShowScrollbarAttr)})

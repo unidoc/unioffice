@@ -8,6 +8,7 @@
 package diagram_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/diagram"
@@ -21,4 +22,11 @@ func TestLayoutDefHdrConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed diagram.LayoutDefHdr should validate: %s", err)
 	}
+}
+
+func TestLayoutDefHdrMarshalUnmarshal(t *testing.T) {
+	v := diagram.NewLayoutDefHdr()
+	buf, _ := xml.Marshal(v)
+	v2 := diagram.NewLayoutDefHdr()
+	xml.Unmarshal(buf, v2)
 }

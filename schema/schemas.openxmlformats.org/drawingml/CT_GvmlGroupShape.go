@@ -28,9 +28,6 @@ func NewCT_GvmlGroupShape() *CT_GvmlGroupShape {
 }
 
 func (m *CT_GvmlGroupShape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	senvGrpSpPr := xml.StartElement{Name: xml.Name{Local: "a:nvGrpSpPr"}}
 	e.EncodeElement(m.NvGrpSpPr, senvGrpSpPr)

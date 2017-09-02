@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestGraphicConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.Graphic should validate: %s", err)
 	}
+}
+
+func TestGraphicMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewGraphic()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewGraphic()
+	xml.Unmarshal(buf, v2)
 }

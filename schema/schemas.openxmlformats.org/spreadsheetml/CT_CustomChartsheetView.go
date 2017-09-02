@@ -38,9 +38,6 @@ func NewCT_CustomChartsheetView() *CT_CustomChartsheetView {
 }
 
 func (m *CT_CustomChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "guid"},
 		Value: fmt.Sprintf("%v", m.GuidAttr)})
 	if m.ScaleAttr != nil {

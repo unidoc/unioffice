@@ -30,9 +30,6 @@ func NewCT_FontCollection() *CT_FontCollection {
 }
 
 func (m *CT_FontCollection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	selatin := xml.StartElement{Name: xml.Name{Local: "a:latin"}}
 	e.EncodeElement(m.Latin, selatin)

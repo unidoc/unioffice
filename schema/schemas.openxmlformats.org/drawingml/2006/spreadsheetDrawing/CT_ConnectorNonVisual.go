@@ -27,9 +27,6 @@ func NewCT_ConnectorNonVisual() *CT_ConnectorNonVisual {
 }
 
 func (m *CT_ConnectorNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secNvPr := xml.StartElement{Name: xml.Name{Local: "xdr:cNvPr"}}
 	e.EncodeElement(m.CNvPr, secNvPr)

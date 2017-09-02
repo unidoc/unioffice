@@ -49,9 +49,6 @@ func NewEG_ColorTransform() *EG_ColorTransform {
 }
 
 func (m *EG_ColorTransform) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Tint != nil {
 		setint := xml.StartElement{Name: xml.Name{Local: "a:tint"}}
 		e.EncodeElement(m.Tint, setint)

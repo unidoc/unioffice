@@ -22,9 +22,6 @@ func NewCT_BiLevelEffect() *CT_BiLevelEffect {
 }
 
 func (m *CT_BiLevelEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "thresh"},
 		Value: fmt.Sprintf("%v", m.ThreshAttr)})
 	e.EncodeToken(start)

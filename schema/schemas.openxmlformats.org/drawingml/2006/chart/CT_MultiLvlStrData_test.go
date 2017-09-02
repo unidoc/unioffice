@@ -8,6 +8,7 @@
 package chart_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
@@ -21,4 +22,11 @@ func TestCT_MultiLvlStrDataConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed chart.CT_MultiLvlStrData should validate: %s", err)
 	}
+}
+
+func TestCT_MultiLvlStrDataMarshalUnmarshal(t *testing.T) {
+	v := chart.NewCT_MultiLvlStrData()
+	buf, _ := xml.Marshal(v)
+	v2 := chart.NewCT_MultiLvlStrData()
+	xml.Unmarshal(buf, v2)
 }

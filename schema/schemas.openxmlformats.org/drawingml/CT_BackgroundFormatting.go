@@ -29,9 +29,6 @@ func NewCT_BackgroundFormatting() *CT_BackgroundFormatting {
 }
 
 func (m *CT_BackgroundFormatting) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "a:CT_BackgroundFormatting"
 	e.EncodeToken(start)
 	if m.NoFill != nil {

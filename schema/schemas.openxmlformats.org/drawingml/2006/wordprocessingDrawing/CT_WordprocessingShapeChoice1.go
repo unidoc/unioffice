@@ -23,9 +23,6 @@ func NewCT_WordprocessingShapeChoice1() *CT_WordprocessingShapeChoice1 {
 }
 
 func (m *CT_WordprocessingShapeChoice1) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Txbx != nil {
 		setxbx := xml.StartElement{Name: xml.Name{Local: "wp:txbx"}}
 		e.EncodeElement(m.Txbx, setxbx)

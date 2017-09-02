@@ -25,9 +25,6 @@ func NewEG_LineFillProperties() *EG_LineFillProperties {
 }
 
 func (m *EG_LineFillProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.NoFill != nil {
 		senoFill := xml.StartElement{Name: xml.Name{Local: "a:noFill"}}
 		e.EncodeElement(m.NoFill, senoFill)

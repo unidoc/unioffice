@@ -23,9 +23,6 @@ func NewCT_StyleDefinitionHeaderLst() *CT_StyleDefinitionHeaderLst {
 }
 
 func (m *CT_StyleDefinitionHeaderLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.StyleDefHdr != nil {
 		sestyleDefHdr := xml.StartElement{Name: xml.Name{Local: "styleDefHdr"}}

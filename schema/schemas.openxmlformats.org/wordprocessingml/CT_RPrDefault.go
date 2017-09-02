@@ -23,9 +23,6 @@ func NewCT_RPrDefault() *CT_RPrDefault {
 }
 
 func (m *CT_RPrDefault) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.RPr != nil {
 		serPr := xml.StartElement{Name: xml.Name{Local: "w:rPr"}}

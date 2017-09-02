@@ -33,9 +33,6 @@ func NewCT_GroupShapeProperties() *CT_GroupShapeProperties {
 }
 
 func (m *CT_GroupShapeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BwModeAttr != ST_BlackWhiteModeUnset {
 		attr, err := m.BwModeAttr.MarshalXMLAttr(xml.Name{Local: "bwMode"})
 		if err != nil {

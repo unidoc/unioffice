@@ -37,9 +37,6 @@ func NewCT_Row() *CT_Row {
 }
 
 func (m *CT_Row) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.RsidRPrAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:rsidRPr"},
 			Value: fmt.Sprintf("%v", *m.RsidRPrAttr)})

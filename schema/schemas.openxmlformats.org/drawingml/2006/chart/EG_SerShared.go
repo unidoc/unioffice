@@ -29,9 +29,6 @@ func NewEG_SerShared() *EG_SerShared {
 }
 
 func (m *EG_SerShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
 	e.EncodeElement(m.Idx, seidx)
 	seorder := xml.StartElement{Name: xml.Name{Local: "order"}}

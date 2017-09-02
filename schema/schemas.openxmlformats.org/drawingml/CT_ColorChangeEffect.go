@@ -28,9 +28,6 @@ func NewCT_ColorChangeEffect() *CT_ColorChangeEffect {
 }
 
 func (m *CT_ColorChangeEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.UseAAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "useA"},
 			Value: fmt.Sprintf("%v", *m.UseAAttr)})

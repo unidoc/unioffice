@@ -23,9 +23,6 @@ func NewCT_FontName() *CT_FontName {
 }
 
 func (m *CT_FontName) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "val"},
 		Value: fmt.Sprintf("%v", m.ValAttr)})
 	e.EncodeToken(start)
