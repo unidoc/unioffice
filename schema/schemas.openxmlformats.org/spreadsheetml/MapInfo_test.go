@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestMapInfoConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.MapInfo should validate: %s", err)
 	}
+}
+
+func TestMapInfoMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewMapInfo()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewMapInfo()
+	xml.Unmarshal(buf, v2)
 }

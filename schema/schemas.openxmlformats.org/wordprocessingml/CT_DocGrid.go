@@ -28,9 +28,6 @@ func NewCT_DocGrid() *CT_DocGrid {
 }
 
 func (m *CT_DocGrid) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TypeAttr != ST_DocGridUnset {
 		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "w:type"})
 		if err != nil {

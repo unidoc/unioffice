@@ -25,9 +25,6 @@ func NewAG_ConstraintRefAttributes() *AG_ConstraintRefAttributes {
 }
 
 func (m *AG_ConstraintRefAttributes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.RefTypeAttr != ST_ConstraintTypeUnset {
 		attr, err := m.RefTypeAttr.MarshalXMLAttr(xml.Name{Local: "refType"})
 		if err != nil {

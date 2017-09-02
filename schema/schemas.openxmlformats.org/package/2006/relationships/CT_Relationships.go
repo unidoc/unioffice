@@ -23,9 +23,6 @@ func NewCT_Relationships() *CT_Relationships {
 }
 
 func (m *CT_Relationships) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Relationship != nil {
 		seRelationship := xml.StartElement{Name: xml.Name{Local: "Relationship"}}

@@ -37,9 +37,6 @@ func NewCT_GradientFill() *CT_GradientFill {
 }
 
 func (m *CT_GradientFill) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TypeAttr != ST_GradientTypeUnset {
 		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 		if err != nil {

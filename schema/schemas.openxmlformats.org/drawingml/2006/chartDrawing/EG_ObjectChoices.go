@@ -22,9 +22,6 @@ func NewEG_ObjectChoices() *EG_ObjectChoices {
 }
 
 func (m *EG_ObjectChoices) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Choice != nil {
 		m.Choice.MarshalXML(e, start)
 	}

@@ -29,9 +29,6 @@ func NewCT_GroupShape() *CT_GroupShape {
 }
 
 func (m *CT_GroupShape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	senvGrpSpPr := xml.StartElement{Name: xml.Name{Local: "nvGrpSpPr"}}
 	e.EncodeElement(m.NvGrpSpPr, senvGrpSpPr)

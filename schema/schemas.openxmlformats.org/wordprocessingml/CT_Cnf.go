@@ -49,9 +49,6 @@ func NewCT_Cnf() *CT_Cnf {
 }
 
 func (m *CT_Cnf) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:val"},
 			Value: fmt.Sprintf("%v", *m.ValAttr)})

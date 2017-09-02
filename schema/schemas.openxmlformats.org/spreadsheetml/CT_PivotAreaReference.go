@@ -60,9 +60,6 @@ func NewCT_PivotAreaReference() *CT_PivotAreaReference {
 }
 
 func (m *CT_PivotAreaReference) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.FieldAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "field"},
 			Value: fmt.Sprintf("%v", *m.FieldAttr)})

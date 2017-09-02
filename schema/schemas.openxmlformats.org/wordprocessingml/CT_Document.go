@@ -29,9 +29,6 @@ func NewCT_Document() *CT_Document {
 }
 
 func (m *CT_Document) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ConformanceAttr.MarshalXMLAttr(xml.Name{Local: "w:conformance"})
 	if err != nil {
 		return err

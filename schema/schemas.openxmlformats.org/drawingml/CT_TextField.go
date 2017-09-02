@@ -31,9 +31,6 @@ func NewCT_TextField() *CT_TextField {
 }
 
 func (m *CT_TextField) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "id"},
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	if m.TypeAttr != nil {

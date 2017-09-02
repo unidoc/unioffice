@@ -28,9 +28,6 @@ func NewCT_FitText() *CT_FitText {
 }
 
 func (m *CT_FitText) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:val"},
 		Value: fmt.Sprintf("%v", m.ValAttr)})
 	if m.IdAttr != nil {

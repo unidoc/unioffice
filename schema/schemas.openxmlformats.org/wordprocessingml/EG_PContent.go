@@ -31,9 +31,6 @@ func NewEG_PContent() *EG_PContent {
 }
 
 func (m *EG_PContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.FldSimple != nil {
 		sefldSimple := xml.StartElement{Name: xml.Name{Local: "w:fldSimple"}}
 		e.EncodeElement(m.FldSimple, sefldSimple)

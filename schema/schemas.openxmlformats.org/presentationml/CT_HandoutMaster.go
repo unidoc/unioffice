@@ -32,9 +32,6 @@ func NewCT_HandoutMaster() *CT_HandoutMaster {
 }
 
 func (m *CT_HandoutMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secSld := xml.StartElement{Name: xml.Name{Local: "p:cSld"}}
 	e.EncodeElement(m.CSld, secSld)

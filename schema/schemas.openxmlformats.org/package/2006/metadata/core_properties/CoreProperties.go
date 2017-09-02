@@ -26,9 +26,6 @@ func NewCoreProperties() *CoreProperties {
 }
 
 func (m *CoreProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns"}, Value: "http://schemas.openxmlformats.org/package/2006/metadata/core-properties"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:cp"}, Value: "http://schemas.openxmlformats.org/package/2006/metadata/core-properties"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:dc"}, Value: "http://purl.org/dc/elements/1.1/"})

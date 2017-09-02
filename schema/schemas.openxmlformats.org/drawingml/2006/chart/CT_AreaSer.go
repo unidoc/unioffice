@@ -38,9 +38,6 @@ func NewCT_AreaSer() *CT_AreaSer {
 }
 
 func (m *CT_AreaSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
 	e.EncodeElement(m.Idx, seidx)

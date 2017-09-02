@@ -22,9 +22,6 @@ func NewCT_OMathJc() *CT_OMathJc {
 }
 
 func (m *CT_OMathJc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_JcUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "m:val"})
 		if err != nil {

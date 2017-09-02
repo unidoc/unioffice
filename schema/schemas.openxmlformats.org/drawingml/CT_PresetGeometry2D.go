@@ -25,9 +25,6 @@ func NewCT_PresetGeometry2D() *CT_PresetGeometry2D {
 }
 
 func (m *CT_PresetGeometry2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.PrstAttr.MarshalXMLAttr(xml.Name{Local: "prst"})
 	if err != nil {
 		return err

@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestEG_ExtensionListConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.EG_ExtensionList should validate: %s", err)
 	}
+}
+
+func TestEG_ExtensionListMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewEG_ExtensionList()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewEG_ExtensionList()
+	xml.Unmarshal(buf, v2)
 }

@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestMetadataConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.Metadata should validate: %s", err)
 	}
+}
+
+func TestMetadataMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewMetadata()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewMetadata()
+	xml.Unmarshal(buf, v2)
 }

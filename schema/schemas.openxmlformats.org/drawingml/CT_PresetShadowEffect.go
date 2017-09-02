@@ -33,9 +33,6 @@ func NewCT_PresetShadowEffect() *CT_PresetShadowEffect {
 }
 
 func (m *CT_PresetShadowEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.PrstAttr.MarshalXMLAttr(xml.Name{Local: "prst"})
 	if err != nil {
 		return err

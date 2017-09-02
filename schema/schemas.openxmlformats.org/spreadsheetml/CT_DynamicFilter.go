@@ -34,9 +34,6 @@ func NewCT_DynamicFilter() *CT_DynamicFilter {
 }
 
 func (m *CT_DynamicFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 	if err != nil {
 		return err

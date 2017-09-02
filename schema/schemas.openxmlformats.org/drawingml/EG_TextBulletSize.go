@@ -24,9 +24,6 @@ func NewEG_TextBulletSize() *EG_TextBulletSize {
 }
 
 func (m *EG_TextBulletSize) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BuSzTx != nil {
 		sebuSzTx := xml.StartElement{Name: xml.Name{Local: "a:buSzTx"}}
 		e.EncodeElement(m.BuSzTx, sebuSzTx)

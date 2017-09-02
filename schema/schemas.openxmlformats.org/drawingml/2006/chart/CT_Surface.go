@@ -27,9 +27,6 @@ func NewCT_Surface() *CT_Surface {
 }
 
 func (m *CT_Surface) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Thickness != nil {
 		sethickness := xml.StartElement{Name: xml.Name{Local: "thickness"}}

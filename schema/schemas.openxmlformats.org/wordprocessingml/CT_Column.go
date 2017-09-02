@@ -27,9 +27,6 @@ func NewCT_Column() *CT_Column {
 }
 
 func (m *CT_Column) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.WAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:w"},
 			Value: fmt.Sprintf("%v", *m.WAttr)})

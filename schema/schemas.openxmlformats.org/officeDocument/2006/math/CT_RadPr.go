@@ -23,9 +23,6 @@ func NewCT_RadPr() *CT_RadPr {
 }
 
 func (m *CT_RadPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.DegHide != nil {
 		sedegHide := xml.StartElement{Name: xml.Name{Local: "m:degHide"}}

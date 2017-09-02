@@ -47,9 +47,6 @@ func NewCT_WebSettings() *CT_WebSettings {
 }
 
 func (m *CT_WebSettings) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Frameset != nil {
 		seframeset := xml.StartElement{Name: xml.Name{Local: "w:frameset"}}

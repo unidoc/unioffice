@@ -23,9 +23,6 @@ func NewCT_FutureMetadataBlock() *CT_FutureMetadataBlock {
 }
 
 func (m *CT_FutureMetadataBlock) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}

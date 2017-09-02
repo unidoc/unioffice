@@ -31,9 +31,6 @@ func NewCT_Control() *CT_Control {
 }
 
 func (m *CT_Control) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.SpidAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "spid"},
 			Value: fmt.Sprintf("%v", *m.SpidAttr)})

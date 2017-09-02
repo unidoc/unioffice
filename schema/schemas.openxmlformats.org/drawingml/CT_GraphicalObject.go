@@ -23,9 +23,6 @@ func NewCT_GraphicalObject() *CT_GraphicalObject {
 }
 
 func (m *CT_GraphicalObject) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	segraphicData := xml.StartElement{Name: xml.Name{Local: "a:graphicData"}}
 	e.EncodeElement(m.GraphicData, segraphicData)

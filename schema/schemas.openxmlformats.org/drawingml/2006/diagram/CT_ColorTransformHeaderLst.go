@@ -23,9 +23,6 @@ func NewCT_ColorTransformHeaderLst() *CT_ColorTransformHeaderLst {
 }
 
 func (m *CT_ColorTransformHeaderLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.ColorsDefHdr != nil {
 		secolorsDefHdr := xml.StartElement{Name: xml.Name{Local: "colorsDefHdr"}}

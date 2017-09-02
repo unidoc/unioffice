@@ -29,9 +29,6 @@ func NewCT_WrapThrough() *CT_WrapThrough {
 }
 
 func (m *CT_WrapThrough) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.WrapTextAttr.MarshalXMLAttr(xml.Name{Local: "wrapText"})
 	if err != nil {
 		return err

@@ -27,9 +27,6 @@ func NewCT_TablePropertiesChoice() *CT_TablePropertiesChoice {
 }
 
 func (m *CT_TablePropertiesChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TableStyle != nil {
 		setableStyle := xml.StartElement{Name: xml.Name{Local: "a:tableStyle"}}
 		e.EncodeElement(m.TableStyle, setableStyle)

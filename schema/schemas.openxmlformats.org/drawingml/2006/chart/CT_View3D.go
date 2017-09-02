@@ -28,9 +28,6 @@ func NewCT_View3D() *CT_View3D {
 }
 
 func (m *CT_View3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.RotX != nil {
 		serotX := xml.StartElement{Name: xml.Name{Local: "rotX"}}

@@ -34,9 +34,6 @@ func NewCT_Otherwise() *CT_Otherwise {
 }
 
 func (m *CT_Otherwise) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.NameAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "name"},
 			Value: fmt.Sprintf("%v", *m.NameAttr)})

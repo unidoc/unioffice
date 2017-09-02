@@ -25,9 +25,6 @@ func NewCT_Picture() *CT_Picture {
 }
 
 func (m *CT_Picture) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Movie != nil {
 		semovie := xml.StartElement{Name: xml.Name{Local: "w:movie"}}

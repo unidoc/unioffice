@@ -8,6 +8,7 @@
 package wordprocessingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -21,4 +22,11 @@ func TestWebSettingsConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingml.WebSettings should validate: %s", err)
 	}
+}
+
+func TestWebSettingsMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingml.NewWebSettings()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingml.NewWebSettings()
+	xml.Unmarshal(buf, v2)
 }

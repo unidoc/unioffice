@@ -24,9 +24,6 @@ func NewCT_Box() *CT_Box {
 }
 
 func (m *CT_Box) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.BoxPr != nil {
 		seboxPr := xml.StartElement{Name: xml.Name{Local: "m:boxPr"}}

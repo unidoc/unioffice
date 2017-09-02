@@ -27,9 +27,6 @@ func NewEG_Background() *EG_Background {
 }
 
 func (m *EG_Background) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BgPr != nil {
 		sebgPr := xml.StartElement{Name: xml.Name{Local: "p:bgPr"}}
 		e.EncodeElement(m.BgPr, sebgPr)

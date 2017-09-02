@@ -23,9 +23,6 @@ func NewCT_CornerDirectionTransition() *CT_CornerDirectionTransition {
 }
 
 func (m *CT_CornerDirectionTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.DirAttr != ST_TransitionCornerDirectionTypeUnset {
 		attr, err := m.DirAttr.MarshalXMLAttr(xml.Name{Local: "dir"})
 		if err != nil {

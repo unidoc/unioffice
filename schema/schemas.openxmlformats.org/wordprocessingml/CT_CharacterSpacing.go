@@ -24,9 +24,6 @@ func NewCT_CharacterSpacing() *CT_CharacterSpacing {
 }
 
 func (m *CT_CharacterSpacing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 	if err != nil {
 		return err

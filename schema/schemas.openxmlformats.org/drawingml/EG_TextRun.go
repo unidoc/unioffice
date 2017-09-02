@@ -24,9 +24,6 @@ func NewEG_TextRun() *EG_TextRun {
 }
 
 func (m *EG_TextRun) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.R != nil {
 		ser := xml.StartElement{Name: xml.Name{Local: "a:r"}}
 		e.EncodeElement(m.R, ser)

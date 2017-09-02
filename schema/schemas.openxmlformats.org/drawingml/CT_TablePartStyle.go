@@ -23,9 +23,6 @@ func NewCT_TablePartStyle() *CT_TablePartStyle {
 }
 
 func (m *CT_TablePartStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.TcTxStyle != nil {
 		setcTxStyle := xml.StartElement{Name: xml.Name{Local: "a:tcTxStyle"}}

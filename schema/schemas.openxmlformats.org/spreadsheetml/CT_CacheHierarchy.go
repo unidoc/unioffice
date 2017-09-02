@@ -73,9 +73,6 @@ func NewCT_CacheHierarchy() *CT_CacheHierarchy {
 }
 
 func (m *CT_CacheHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "uniqueName"},
 		Value: fmt.Sprintf("%v", m.UniqueNameAttr)})
 	if m.CaptionAttr != nil {

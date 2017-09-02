@@ -8,6 +8,7 @@
 package chartDrawing_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chartDrawing"
@@ -21,4 +22,11 @@ func TestEG_ObjectChoicesConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed chartDrawing.EG_ObjectChoices should validate: %s", err)
 	}
+}
+
+func TestEG_ObjectChoicesMarshalUnmarshal(t *testing.T) {
+	v := chartDrawing.NewEG_ObjectChoices()
+	buf, _ := xml.Marshal(v)
+	v2 := chartDrawing.NewEG_ObjectChoices()
+	xml.Unmarshal(buf, v2)
 }

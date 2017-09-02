@@ -23,9 +23,6 @@ func NewCT_FPr() *CT_FPr {
 }
 
 func (m *CT_FPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Type != nil {
 		setype := xml.StartElement{Name: xml.Name{Local: "m:type"}}

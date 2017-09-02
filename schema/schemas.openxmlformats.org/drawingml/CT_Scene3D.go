@@ -27,9 +27,6 @@ func NewCT_Scene3D() *CT_Scene3D {
 }
 
 func (m *CT_Scene3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secamera := xml.StartElement{Name: xml.Name{Local: "a:camera"}}
 	e.EncodeElement(m.Camera, secamera)

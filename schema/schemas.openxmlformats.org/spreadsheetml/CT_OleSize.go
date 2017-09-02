@@ -23,9 +23,6 @@ func NewCT_OleSize() *CT_OleSize {
 }
 
 func (m *CT_OleSize) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ref"},
 		Value: fmt.Sprintf("%v", m.RefAttr)})
 	e.EncodeToken(start)

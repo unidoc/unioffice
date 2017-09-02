@@ -23,9 +23,6 @@ func NewCT_GradientStopList() *CT_GradientStopList {
 }
 
 func (m *CT_GradientStopList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	segs := xml.StartElement{Name: xml.Name{Local: "a:gs"}}
 	e.EncodeElement(m.Gs, segs)

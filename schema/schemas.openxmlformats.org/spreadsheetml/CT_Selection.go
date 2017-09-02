@@ -30,9 +30,6 @@ func NewCT_Selection() *CT_Selection {
 }
 
 func (m *CT_Selection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PaneAttr != ST_PaneUnset {
 		attr, err := m.PaneAttr.MarshalXMLAttr(xml.Name{Local: "pane"})
 		if err != nil {

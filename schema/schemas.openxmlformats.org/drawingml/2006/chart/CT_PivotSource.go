@@ -28,9 +28,6 @@ func NewCT_PivotSource() *CT_PivotSource {
 }
 
 func (m *CT_PivotSource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sename := xml.StartElement{Name: xml.Name{Local: "name"}}
 	gooxml.AddPreserveSpaceAttr(&sename, m.Name)

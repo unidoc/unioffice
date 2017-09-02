@@ -24,9 +24,6 @@ func NewCT_TLTimeNodeParallel() *CT_TLTimeNodeParallel {
 }
 
 func (m *CT_TLTimeNodeParallel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secTn := xml.StartElement{Name: xml.Name{Local: "p:cTn"}}
 	e.EncodeElement(m.CTn, secTn)

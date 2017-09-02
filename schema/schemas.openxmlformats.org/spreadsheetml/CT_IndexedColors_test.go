@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestCT_IndexedColorsConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.CT_IndexedColors should validate: %s", err)
 	}
+}
+
+func TestCT_IndexedColorsMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewCT_IndexedColors()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewCT_IndexedColors()
+	xml.Unmarshal(buf, v2)
 }

@@ -31,9 +31,6 @@ func NewCT_Underline() *CT_Underline {
 }
 
 func (m *CT_Underline) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_UnderlineUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 		if err != nil {

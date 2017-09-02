@@ -27,9 +27,6 @@ func NewCT_HdrFtr() *CT_HdrFtr {
 }
 
 func (m *CT_HdrFtr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.AltChunk != nil {
 		sealtChunk := xml.StartElement{Name: xml.Name{Local: "w:altChunk"}}

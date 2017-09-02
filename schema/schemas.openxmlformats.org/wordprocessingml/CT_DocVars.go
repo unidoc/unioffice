@@ -24,9 +24,6 @@ func NewCT_DocVars() *CT_DocVars {
 }
 
 func (m *CT_DocVars) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.DocVar != nil {
 		sedocVar := xml.StartElement{Name: xml.Name{Local: "w:docVar"}}

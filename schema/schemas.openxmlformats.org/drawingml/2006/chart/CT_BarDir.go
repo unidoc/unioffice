@@ -22,9 +22,6 @@ func NewCT_BarDir() *CT_BarDir {
 }
 
 func (m *CT_BarDir) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_BarDirUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

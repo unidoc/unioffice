@@ -24,9 +24,6 @@ func NewCT_SpacingRule() *CT_SpacingRule {
 }
 
 func (m *CT_SpacingRule) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "m:val"},
 		Value: fmt.Sprintf("%v", m.ValAttr)})
 	e.EncodeToken(start)

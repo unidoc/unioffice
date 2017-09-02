@@ -25,9 +25,6 @@ func NewCT_GvmlTextShape() *CT_GvmlTextShape {
 }
 
 func (m *CT_GvmlTextShape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	setxBody := xml.StartElement{Name: xml.Name{Local: "a:txBody"}}
 	e.EncodeElement(m.TxBody, setxBody)

@@ -8,6 +8,7 @@
 package chart_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
@@ -21,4 +22,11 @@ func TestCT_StyleConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed chart.CT_Style should validate: %s", err)
 	}
+}
+
+func TestCT_StyleMarshalUnmarshal(t *testing.T) {
+	v := chart.NewCT_Style()
+	buf, _ := xml.Marshal(v)
+	v2 := chart.NewCT_Style()
+	xml.Unmarshal(buf, v2)
 }

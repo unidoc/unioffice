@@ -25,9 +25,6 @@ func NewCT_Scale2D() *CT_Scale2D {
 }
 
 func (m *CT_Scale2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "a:CT_Scale2D"
 	e.EncodeToken(start)
 	sesx := xml.StartElement{Name: xml.Name{Local: "a:sx"}}

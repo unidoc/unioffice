@@ -24,9 +24,6 @@ func NewCT_GuideList() *CT_GuideList {
 }
 
 func (m *CT_GuideList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Guide != nil {
 		seguide := xml.StartElement{Name: xml.Name{Local: "p:guide"}}

@@ -52,9 +52,6 @@ func NewCT_RPrElt() *CT_RPrElt {
 }
 
 func (m *CT_RPrElt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.RFont != nil {
 		serFont := xml.StartElement{Name: xml.Name{Local: "x:rFont"}}

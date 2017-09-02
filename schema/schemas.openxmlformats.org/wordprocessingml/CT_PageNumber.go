@@ -30,9 +30,6 @@ func NewCT_PageNumber() *CT_PageNumber {
 }
 
 func (m *CT_PageNumber) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.FmtAttr != ST_NumberFormatUnset {
 		attr, err := m.FmtAttr.MarshalXMLAttr(xml.Name{Local: "w:fmt"})
 		if err != nil {

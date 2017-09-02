@@ -25,9 +25,6 @@ func NewCT_OMathArg() *CT_OMathArg {
 }
 
 func (m *CT_OMathArg) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.ArgPr != nil {
 		seargPr := xml.StartElement{Name: xml.Name{Local: "m:argPr"}}

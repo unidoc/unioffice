@@ -24,9 +24,6 @@ func NewCT_PivotCaches() *CT_PivotCaches {
 }
 
 func (m *CT_PivotCaches) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sepivotCache := xml.StartElement{Name: xml.Name{Local: "x:pivotCache"}}
 	e.EncodeElement(m.PivotCache, sepivotCache)

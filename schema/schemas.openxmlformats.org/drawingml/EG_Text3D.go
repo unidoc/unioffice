@@ -23,9 +23,6 @@ func NewEG_Text3D() *EG_Text3D {
 }
 
 func (m *EG_Text3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Sp3d != nil {
 		sesp3d := xml.StartElement{Name: xml.Name{Local: "a:sp3d"}}
 		e.EncodeElement(m.Sp3d, sesp3d)

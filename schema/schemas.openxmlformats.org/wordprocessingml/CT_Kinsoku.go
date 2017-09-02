@@ -25,9 +25,6 @@ func NewCT_Kinsoku() *CT_Kinsoku {
 }
 
 func (m *CT_Kinsoku) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:lang"},
 		Value: fmt.Sprintf("%v", m.LangAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:val"},

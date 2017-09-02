@@ -33,9 +33,6 @@ func NewCT_Constraint() *CT_Constraint {
 }
 
 func (m *CT_Constraint) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.OpAttr != ST_BoolOperatorUnset {
 		attr, err := m.OpAttr.MarshalXMLAttr(xml.Name{Local: "op"})
 		if err != nil {

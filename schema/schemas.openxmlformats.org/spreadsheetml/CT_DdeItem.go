@@ -33,9 +33,6 @@ func NewCT_DdeItem() *CT_DdeItem {
 }
 
 func (m *CT_DdeItem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.NameAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "name"},
 			Value: fmt.Sprintf("%v", *m.NameAttr)})

@@ -43,9 +43,6 @@ func NewCT_RevisionRowColumn() *CT_RevisionRowColumn {
 }
 
 func (m *CT_RevisionRowColumn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "sId"},
 		Value: fmt.Sprintf("%v", m.SIdAttr)})
 	if m.EolAttr != nil {

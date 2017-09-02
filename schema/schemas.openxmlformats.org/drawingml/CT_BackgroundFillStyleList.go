@@ -23,9 +23,6 @@ func NewCT_BackgroundFillStyleList() *CT_BackgroundFillStyleList {
 }
 
 func (m *CT_BackgroundFillStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	for _, c := range m.EG_FillProperties {
 		c.MarshalXML(e, start)

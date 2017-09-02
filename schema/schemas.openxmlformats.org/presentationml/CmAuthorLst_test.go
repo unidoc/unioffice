@@ -8,6 +8,7 @@
 package presentationml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/presentationml"
@@ -21,4 +22,11 @@ func TestCmAuthorLstConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed presentationml.CmAuthorLst should validate: %s", err)
 	}
+}
+
+func TestCmAuthorLstMarshalUnmarshal(t *testing.T) {
+	v := presentationml.NewCmAuthorLst()
+	buf, _ := xml.Marshal(v)
+	v2 := presentationml.NewCmAuthorLst()
+	xml.Unmarshal(buf, v2)
 }

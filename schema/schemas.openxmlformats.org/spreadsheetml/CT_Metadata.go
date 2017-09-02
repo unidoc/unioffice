@@ -36,9 +36,6 @@ func NewCT_Metadata() *CT_Metadata {
 }
 
 func (m *CT_Metadata) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.MetadataTypes != nil {
 		semetadataTypes := xml.StartElement{Name: xml.Name{Local: "x:metadataTypes"}}

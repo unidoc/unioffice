@@ -48,9 +48,6 @@ func NewCT_TimeNodeList() *CT_TimeNodeList {
 }
 
 func (m *CT_TimeNodeList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Par != nil {
 		separ := xml.StartElement{Name: xml.Name{Local: "p:par"}}

@@ -39,9 +39,6 @@ func NewCT_RangePr() *CT_RangePr {
 }
 
 func (m *CT_RangePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AutoStartAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoStart"},
 			Value: fmt.Sprintf("%v", *m.AutoStartAttr)})

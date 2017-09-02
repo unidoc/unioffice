@@ -26,9 +26,6 @@ func NewAG_Password() *AG_Password {
 }
 
 func (m *AG_Password) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AlgorithmNameAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:algorithmName"},
 			Value: fmt.Sprintf("%v", *m.AlgorithmNameAttr)})

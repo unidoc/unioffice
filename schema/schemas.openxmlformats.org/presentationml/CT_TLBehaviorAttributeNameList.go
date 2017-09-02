@@ -23,9 +23,6 @@ func NewCT_TLBehaviorAttributeNameList() *CT_TLBehaviorAttributeNameList {
 }
 
 func (m *CT_TLBehaviorAttributeNameList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seattrName := xml.StartElement{Name: xml.Name{Local: "p:attrName"}}
 	e.EncodeElement(m.AttrName, seattrName)

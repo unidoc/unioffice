@@ -44,9 +44,6 @@ func NewCT_ViewProperties() *CT_ViewProperties {
 }
 
 func (m *CT_ViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.LastViewAttr != ST_ViewTypeUnset {
 		attr, err := m.LastViewAttr.MarshalXMLAttr(xml.Name{Local: "lastView"})
 		if err != nil {

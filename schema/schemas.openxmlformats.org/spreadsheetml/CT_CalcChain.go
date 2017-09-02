@@ -25,9 +25,6 @@ func NewCT_CalcChain() *CT_CalcChain {
 }
 
 func (m *CT_CalcChain) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sec := xml.StartElement{Name: xml.Name{Local: "x:c"}}
 	e.EncodeElement(m.C, sec)

@@ -27,9 +27,6 @@ func NewCT_DocPartCategory() *CT_DocPartCategory {
 }
 
 func (m *CT_DocPartCategory) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sename := xml.StartElement{Name: xml.Name{Local: "w:name"}}
 	e.EncodeElement(m.Name, sename)

@@ -23,9 +23,6 @@ func NewCT_SDDescription() *CT_SDDescription {
 }
 
 func (m *CT_SDDescription) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.LangAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "lang"},
 			Value: fmt.Sprintf("%v", *m.LangAttr)})

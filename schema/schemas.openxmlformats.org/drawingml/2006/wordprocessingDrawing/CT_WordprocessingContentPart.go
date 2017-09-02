@@ -29,9 +29,6 @@ func NewCT_WordprocessingContentPart() *CT_WordprocessingContentPart {
 }
 
 func (m *CT_WordprocessingContentPart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BwModeAttr != drawingml.ST_BlackWhiteModeUnset {
 		attr, err := m.BwModeAttr.MarshalXMLAttr(xml.Name{Local: "bwMode"})
 		if err != nil {

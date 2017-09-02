@@ -24,9 +24,6 @@ func NewCT_EqArr() *CT_EqArr {
 }
 
 func (m *CT_EqArr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.EqArrPr != nil {
 		seeqArrPr := xml.StartElement{Name: xml.Name{Local: "m:eqArrPr"}}

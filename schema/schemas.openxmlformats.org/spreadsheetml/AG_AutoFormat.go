@@ -29,9 +29,6 @@ func NewAG_AutoFormat() *AG_AutoFormat {
 }
 
 func (m *AG_AutoFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AutoFormatIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoFormatId"},
 			Value: fmt.Sprintf("%v", *m.AutoFormatIdAttr)})

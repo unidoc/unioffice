@@ -23,9 +23,6 @@ func NewCT_RgbColor() *CT_RgbColor {
 }
 
 func (m *CT_RgbColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.RgbAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rgb"},
 			Value: fmt.Sprintf("%v", *m.RgbAttr)})

@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestEG_MediaConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.EG_Media should validate: %s", err)
 	}
+}
+
+func TestEG_MediaMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewEG_Media()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewEG_Media()
+	xml.Unmarshal(buf, v2)
 }

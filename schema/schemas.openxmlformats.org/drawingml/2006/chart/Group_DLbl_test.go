@@ -8,6 +8,7 @@
 package chart_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
@@ -21,4 +22,11 @@ func TestGroup_DLblConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed chart.Group_DLbl should validate: %s", err)
 	}
+}
+
+func TestGroup_DLblMarshalUnmarshal(t *testing.T) {
+	v := chart.NewGroup_DLbl()
+	buf, _ := xml.Marshal(v)
+	v2 := chart.NewGroup_DLbl()
+	xml.Unmarshal(buf, v2)
 }

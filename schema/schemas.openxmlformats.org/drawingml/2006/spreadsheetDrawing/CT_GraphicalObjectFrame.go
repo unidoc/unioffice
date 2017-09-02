@@ -33,9 +33,6 @@ func NewCT_GraphicalObjectFrame() *CT_GraphicalObjectFrame {
 }
 
 func (m *CT_GraphicalObjectFrame) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.MacroAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "macro"},
 			Value: fmt.Sprintf("%v", *m.MacroAttr)})

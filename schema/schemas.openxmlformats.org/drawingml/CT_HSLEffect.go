@@ -25,9 +25,6 @@ func NewCT_HSLEffect() *CT_HSLEffect {
 }
 
 func (m *CT_HSLEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.HueAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hue"},
 			Value: fmt.Sprintf("%v", *m.HueAttr)})

@@ -47,9 +47,6 @@ func NewCT_ColorMapping() *CT_ColorMapping {
 }
 
 func (m *CT_ColorMapping) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.Bg1Attr.MarshalXMLAttr(xml.Name{Local: "bg1"})
 	if err != nil {
 		return err

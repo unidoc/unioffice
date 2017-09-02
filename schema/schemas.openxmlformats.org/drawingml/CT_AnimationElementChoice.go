@@ -23,9 +23,6 @@ func NewCT_AnimationElementChoice() *CT_AnimationElementChoice {
 }
 
 func (m *CT_AnimationElementChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "a:CT_AnimationElementChoice"
 	e.EncodeToken(start)
 	if m.Dgm != nil {

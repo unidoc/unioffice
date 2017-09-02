@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestEG_TextUnderlineFillConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.EG_TextUnderlineFill should validate: %s", err)
 	}
+}
+
+func TestEG_TextUnderlineFillMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewEG_TextUnderlineFill()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewEG_TextUnderlineFill()
+	xml.Unmarshal(buf, v2)
 }

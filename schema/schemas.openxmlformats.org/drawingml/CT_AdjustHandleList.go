@@ -24,9 +24,6 @@ func NewCT_AdjustHandleList() *CT_AdjustHandleList {
 }
 
 func (m *CT_AdjustHandleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.AhXY != nil {
 		seahXY := xml.StartElement{Name: xml.Name{Local: "a:ahXY"}}

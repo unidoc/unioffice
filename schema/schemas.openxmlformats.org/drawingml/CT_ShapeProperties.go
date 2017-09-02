@@ -37,9 +37,6 @@ func NewCT_ShapeProperties() *CT_ShapeProperties {
 }
 
 func (m *CT_ShapeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BwModeAttr != ST_BlackWhiteModeUnset {
 		attr, err := m.BwModeAttr.MarshalXMLAttr(xml.Name{Local: "bwMode"})
 		if err != nil {

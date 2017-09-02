@@ -38,9 +38,6 @@ func NewCT_WriteProtection() *CT_WriteProtection {
 }
 
 func (m *CT_WriteProtection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.RecommendedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:recommended"},
 			Value: fmt.Sprintf("%v", *m.RecommendedAttr)})

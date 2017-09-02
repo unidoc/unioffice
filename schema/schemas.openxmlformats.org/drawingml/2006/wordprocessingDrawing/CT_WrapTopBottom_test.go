@@ -8,6 +8,7 @@
 package wordprocessingDrawing_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
@@ -21,4 +22,11 @@ func TestCT_WrapTopBottomConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingDrawing.CT_WrapTopBottom should validate: %s", err)
 	}
+}
+
+func TestCT_WrapTopBottomMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingDrawing.NewCT_WrapTopBottom()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingDrawing.NewCT_WrapTopBottom()
+	xml.Unmarshal(buf, v2)
 }

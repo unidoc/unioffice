@@ -24,9 +24,6 @@ func NewCT_Endnotes() *CT_Endnotes {
 }
 
 func (m *CT_Endnotes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Endnote != nil {
 		seendnote := xml.StartElement{Name: xml.Name{Local: "w:endnote"}}

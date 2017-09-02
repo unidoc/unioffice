@@ -24,9 +24,6 @@ func NewEG_ExtensionList() *EG_ExtensionList {
 }
 
 func (m *EG_ExtensionList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Ext != nil {
 		seext := xml.StartElement{Name: xml.Name{Local: "x:ext"}}
 		e.EncodeElement(m.Ext, seext)

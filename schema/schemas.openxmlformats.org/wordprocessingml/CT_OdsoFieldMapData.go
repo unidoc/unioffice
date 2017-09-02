@@ -33,9 +33,6 @@ func NewCT_OdsoFieldMapData() *CT_OdsoFieldMapData {
 }
 
 func (m *CT_OdsoFieldMapData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Type != nil {
 		setype := xml.StartElement{Name: xml.Name{Local: "w:type"}}

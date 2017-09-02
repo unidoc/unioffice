@@ -23,9 +23,6 @@ func NewCT_Tx() *CT_Tx {
 }
 
 func (m *CT_Tx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	m.Choice.MarshalXML(e, start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

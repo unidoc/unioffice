@@ -29,9 +29,6 @@ func NewCT_GradientFillProperties() *CT_GradientFillProperties {
 }
 
 func (m *CT_GradientFillProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.FlipAttr != ST_TileFlipModeUnset {
 		attr, err := m.FlipAttr.MarshalXMLAttr(xml.Name{Local: "flip"})
 		if err != nil {

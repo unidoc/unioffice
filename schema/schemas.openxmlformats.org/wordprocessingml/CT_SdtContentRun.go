@@ -31,9 +31,6 @@ func NewCT_SdtContentRun() *CT_SdtContentRun {
 }
 
 func (m *CT_SdtContentRun) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.FldSimple != nil {
 		sefldSimple := xml.StartElement{Name: xml.Name{Local: "w:fldSimple"}}

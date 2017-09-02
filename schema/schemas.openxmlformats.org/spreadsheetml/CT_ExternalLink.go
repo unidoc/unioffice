@@ -23,9 +23,6 @@ func NewCT_ExternalLink() *CT_ExternalLink {
 }
 
 func (m *CT_ExternalLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Choice != nil {
 		m.Choice.MarshalXML(e, start)

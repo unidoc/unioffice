@@ -24,9 +24,6 @@ func NewCT_GroupChr() *CT_GroupChr {
 }
 
 func (m *CT_GroupChr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.GroupChrPr != nil {
 		segroupChrPr := xml.StartElement{Name: xml.Name{Local: "m:groupChrPr"}}

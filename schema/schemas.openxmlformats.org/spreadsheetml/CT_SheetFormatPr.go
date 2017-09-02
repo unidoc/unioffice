@@ -40,9 +40,6 @@ func NewCT_SheetFormatPr() *CT_SheetFormatPr {
 }
 
 func (m *CT_SheetFormatPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BaseColWidthAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "baseColWidth"},
 			Value: fmt.Sprintf("%v", *m.BaseColWidthAttr)})

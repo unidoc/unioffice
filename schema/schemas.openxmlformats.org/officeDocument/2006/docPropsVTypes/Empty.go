@@ -23,9 +23,6 @@ func NewEmpty() *Empty {
 }
 
 func (m *Empty) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	return m.CT_Empty.MarshalXML(e, start)
 }
 

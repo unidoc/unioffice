@@ -30,9 +30,6 @@ func NewCT_BuildList() *CT_BuildList {
 }
 
 func (m *CT_BuildList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.BldP != nil {
 		sebldP := xml.StartElement{Name: xml.Name{Local: "p:bldP"}}

@@ -8,6 +8,7 @@
 package chart_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
@@ -21,4 +22,11 @@ func TestChartSpaceConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed chart.ChartSpace should validate: %s", err)
 	}
+}
+
+func TestChartSpaceMarshalUnmarshal(t *testing.T) {
+	v := chart.NewChartSpace()
+	buf, _ := xml.Marshal(v)
+	v2 := chart.NewChartSpace()
+	xml.Unmarshal(buf, v2)
 }

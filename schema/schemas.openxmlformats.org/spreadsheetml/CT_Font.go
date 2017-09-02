@@ -52,9 +52,6 @@ func NewCT_Font() *CT_Font {
 }
 
 func (m *CT_Font) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Name != nil {
 		sename := xml.StartElement{Name: xml.Name{Local: "x:name"}}

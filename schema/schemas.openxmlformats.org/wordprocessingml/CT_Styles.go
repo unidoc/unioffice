@@ -28,9 +28,6 @@ func NewCT_Styles() *CT_Styles {
 }
 
 func (m *CT_Styles) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.DocDefaults != nil {
 		sedocDefaults := xml.StartElement{Name: xml.Name{Local: "w:docDefaults"}}

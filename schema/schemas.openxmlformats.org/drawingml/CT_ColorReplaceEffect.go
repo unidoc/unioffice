@@ -27,9 +27,6 @@ func NewCT_ColorReplaceEffect() *CT_ColorReplaceEffect {
 }
 
 func (m *CT_ColorReplaceEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.ScrgbClr != nil {
 		sescrgbClr := xml.StartElement{Name: xml.Name{Local: "a:scrgbClr"}}

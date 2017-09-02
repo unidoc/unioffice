@@ -27,9 +27,6 @@ func NewCT_TableStyleList() *CT_TableStyleList {
 }
 
 func (m *CT_TableStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "def"},
 		Value: fmt.Sprintf("%v", m.DefAttr)})
 	e.EncodeToken(start)

@@ -28,9 +28,6 @@ func NewCT_MapInfo() *CT_MapInfo {
 }
 
 func (m *CT_MapInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "SelectionNamespaces"},
 		Value: fmt.Sprintf("%v", m.SelectionNamespacesAttr)})
 	e.EncodeToken(start)

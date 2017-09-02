@@ -23,9 +23,6 @@ func NewCT_ShapeDefaults() *CT_ShapeDefaults {
 }
 
 func (m *CT_ShapeDefaults) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Any != nil {
 		for _, c := range m.Any {

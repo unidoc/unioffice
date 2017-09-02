@@ -29,9 +29,6 @@ func NewCT_RecipientData() *CT_RecipientData {
 }
 
 func (m *CT_RecipientData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Active != nil {
 		seactive := xml.StartElement{Name: xml.Name{Local: "w:active"}}

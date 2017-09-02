@@ -8,6 +8,7 @@
 package presentationml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/presentationml"
@@ -21,4 +22,11 @@ func TestCT_TLByAnimateColorTransformConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed presentationml.CT_TLByAnimateColorTransform should validate: %s", err)
 	}
+}
+
+func TestCT_TLByAnimateColorTransformMarshalUnmarshal(t *testing.T) {
+	v := presentationml.NewCT_TLByAnimateColorTransform()
+	buf, _ := xml.Marshal(v)
+	v2 := presentationml.NewCT_TLByAnimateColorTransform()
+	xml.Unmarshal(buf, v2)
 }

@@ -27,9 +27,6 @@ func NewCT_Body() *CT_Body {
 }
 
 func (m *CT_Body) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.EG_BlockLevelElts != nil {
 		for _, c := range m.EG_BlockLevelElts {

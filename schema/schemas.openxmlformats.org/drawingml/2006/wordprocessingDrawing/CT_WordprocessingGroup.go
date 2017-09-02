@@ -31,9 +31,6 @@ func NewCT_WordprocessingGroup() *CT_WordprocessingGroup {
 }
 
 func (m *CT_WordprocessingGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.CNvPr != nil {
 		secNvPr := xml.StartElement{Name: xml.Name{Local: "wp:cNvPr"}}

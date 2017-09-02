@@ -26,9 +26,6 @@ func NewCT_PosV() *CT_PosV {
 }
 
 func (m *CT_PosV) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.RelativeFromAttr.MarshalXMLAttr(xml.Name{Local: "relativeFrom"})
 	if err != nil {
 		return err

@@ -30,9 +30,6 @@ func NewCT_MPr() *CT_MPr {
 }
 
 func (m *CT_MPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.BaseJc != nil {
 		sebaseJc := xml.StartElement{Name: xml.Name{Local: "m:baseJc"}}

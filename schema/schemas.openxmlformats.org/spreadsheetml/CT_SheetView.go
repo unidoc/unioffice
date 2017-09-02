@@ -69,9 +69,6 @@ func NewCT_SheetView() *CT_SheetView {
 }
 
 func (m *CT_SheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.WindowProtectionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "windowProtection"},
 			Value: fmt.Sprintf("%v", *m.WindowProtectionAttr)})

@@ -35,9 +35,6 @@ func NewEG_DLblShared() *EG_DLblShared {
 }
 
 func (m *EG_DLblShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.NumFmt != nil {
 		senumFmt := xml.StartElement{Name: xml.Name{Local: "numFmt"}}
 		e.EncodeElement(m.NumFmt, senumFmt)

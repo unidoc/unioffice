@@ -23,9 +23,6 @@ func NewCT_PtList() *CT_PtList {
 }
 
 func (m *CT_PtList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Pt != nil {
 		sept := xml.StartElement{Name: xml.Name{Local: "pt"}}

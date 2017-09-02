@@ -8,6 +8,7 @@
 package presentationml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/presentationml"
@@ -21,4 +22,11 @@ func TestCT_TLTimeAnimateValueConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed presentationml.CT_TLTimeAnimateValue should validate: %s", err)
 	}
+}
+
+func TestCT_TLTimeAnimateValueMarshalUnmarshal(t *testing.T) {
+	v := presentationml.NewCT_TLTimeAnimateValue()
+	buf, _ := xml.Marshal(v)
+	v2 := presentationml.NewCT_TLTimeAnimateValue()
+	xml.Unmarshal(buf, v2)
 }

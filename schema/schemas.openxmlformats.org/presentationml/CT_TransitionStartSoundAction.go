@@ -30,9 +30,6 @@ func NewCT_TransitionStartSoundAction() *CT_TransitionStartSoundAction {
 }
 
 func (m *CT_TransitionStartSoundAction) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.LoopAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "loop"},
 			Value: fmt.Sprintf("%v", *m.LoopAttr)})

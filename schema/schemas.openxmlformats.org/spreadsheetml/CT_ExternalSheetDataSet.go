@@ -24,9 +24,6 @@ func NewCT_ExternalSheetDataSet() *CT_ExternalSheetDataSet {
 }
 
 func (m *CT_ExternalSheetDataSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sesheetData := xml.StartElement{Name: xml.Name{Local: "x:sheetData"}}
 	e.EncodeElement(m.SheetData, sesheetData)

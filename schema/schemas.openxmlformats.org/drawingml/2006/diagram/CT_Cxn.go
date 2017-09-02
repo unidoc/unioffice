@@ -35,9 +35,6 @@ func NewCT_Cxn() *CT_Cxn {
 }
 
 func (m *CT_Cxn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "modelId"},
 		Value: fmt.Sprintf("%v", m.ModelIdAttr)})
 	if m.TypeAttr != ST_CxnTypeUnset {

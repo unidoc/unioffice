@@ -24,9 +24,6 @@ func NewCT_OMathPara() *CT_OMathPara {
 }
 
 func (m *CT_OMathPara) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.OMathParaPr != nil {
 		seoMathParaPr := xml.StartElement{Name: xml.Name{Local: "m:oMathParaPr"}}

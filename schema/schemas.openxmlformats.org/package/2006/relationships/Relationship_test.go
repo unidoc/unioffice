@@ -8,6 +8,7 @@
 package relationships_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/package/2006/relationships"
@@ -21,4 +22,11 @@ func TestRelationshipConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed relationships.Relationship should validate: %s", err)
 	}
+}
+
+func TestRelationshipMarshalUnmarshal(t *testing.T) {
+	v := relationships.NewRelationship()
+	buf, _ := xml.Marshal(v)
+	v2 := relationships.NewRelationship()
+	xml.Unmarshal(buf, v2)
 }

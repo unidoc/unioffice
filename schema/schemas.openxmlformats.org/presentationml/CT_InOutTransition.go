@@ -23,9 +23,6 @@ func NewCT_InOutTransition() *CT_InOutTransition {
 }
 
 func (m *CT_InOutTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.DirAttr != ST_TransitionInOutDirectionTypeUnset {
 		attr, err := m.DirAttr.MarshalXMLAttr(xml.Name{Local: "dir"})
 		if err != nil {

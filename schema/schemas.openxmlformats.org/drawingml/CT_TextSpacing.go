@@ -23,9 +23,6 @@ func NewCT_TextSpacing() *CT_TextSpacing {
 }
 
 func (m *CT_TextSpacing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.SpcPct != nil {
 		sespcPct := xml.StartElement{Name: xml.Name{Local: "a:spcPct"}}

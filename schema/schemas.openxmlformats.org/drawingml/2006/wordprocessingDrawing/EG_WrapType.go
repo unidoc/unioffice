@@ -22,9 +22,6 @@ func NewEG_WrapType() *EG_WrapType {
 }
 
 func (m *EG_WrapType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Choice != nil {
 		m.Choice.MarshalXML(e, start)
 	}

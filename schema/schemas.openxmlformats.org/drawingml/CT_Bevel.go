@@ -25,9 +25,6 @@ func NewCT_Bevel() *CT_Bevel {
 }
 
 func (m *CT_Bevel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.WAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w"},
 			Value: fmt.Sprintf("%v", *m.WAttr)})

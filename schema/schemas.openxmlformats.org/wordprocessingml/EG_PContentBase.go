@@ -25,9 +25,6 @@ func NewEG_PContentBase() *EG_PContentBase {
 }
 
 func (m *EG_PContentBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.CustomXml != nil {
 		secustomXml := xml.StartElement{Name: xml.Name{Local: "w:customXml"}}
 		e.EncodeElement(m.CustomXml, secustomXml)

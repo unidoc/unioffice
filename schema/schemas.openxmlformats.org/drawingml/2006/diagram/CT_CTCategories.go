@@ -23,9 +23,6 @@ func NewCT_CTCategories() *CT_CTCategories {
 }
 
 func (m *CT_CTCategories) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Cat != nil {
 		secat := xml.StartElement{Name: xml.Name{Local: "cat"}}

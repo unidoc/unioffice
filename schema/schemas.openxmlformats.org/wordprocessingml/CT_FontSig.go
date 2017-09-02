@@ -33,9 +33,6 @@ func NewCT_FontSig() *CT_FontSig {
 }
 
 func (m *CT_FontSig) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:usb0"},
 		Value: fmt.Sprintf("%v", m.Usb0Attr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:usb1"},

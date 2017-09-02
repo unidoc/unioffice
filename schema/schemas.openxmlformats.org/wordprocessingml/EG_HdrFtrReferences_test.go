@@ -8,6 +8,7 @@
 package wordprocessingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -21,4 +22,11 @@ func TestEG_HdrFtrReferencesConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingml.EG_HdrFtrReferences should validate: %s", err)
 	}
+}
+
+func TestEG_HdrFtrReferencesMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingml.NewEG_HdrFtrReferences()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingml.NewEG_HdrFtrReferences()
+	xml.Unmarshal(buf, v2)
 }

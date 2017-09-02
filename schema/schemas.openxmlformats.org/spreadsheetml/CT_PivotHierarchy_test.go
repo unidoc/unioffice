@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestCT_PivotHierarchyConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.CT_PivotHierarchy should validate: %s", err)
 	}
+}
+
+func TestCT_PivotHierarchyMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewCT_PivotHierarchy()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewCT_PivotHierarchy()
+	xml.Unmarshal(buf, v2)
 }

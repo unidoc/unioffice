@@ -39,9 +39,6 @@ func NewCT_CoreProperties() *CT_CoreProperties {
 }
 
 func (m *CT_CoreProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Category != nil {
 		secategory := xml.StartElement{Name: xml.Name{Local: "cp:category"}}

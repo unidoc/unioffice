@@ -30,9 +30,6 @@ func NewCT_OneCellAnchor() *CT_OneCellAnchor {
 }
 
 func (m *CT_OneCellAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sefrom := xml.StartElement{Name: xml.Name{Local: "xdr:from"}}
 	e.EncodeElement(m.From, sefrom)

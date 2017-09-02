@@ -31,9 +31,6 @@ func NewCT_MdxSet() *CT_MdxSet {
 }
 
 func (m *CT_MdxSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ns"},
 		Value: fmt.Sprintf("%v", m.NsAttr)})
 	if m.CAttr != nil {

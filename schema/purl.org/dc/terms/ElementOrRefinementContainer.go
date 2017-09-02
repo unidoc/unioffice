@@ -23,9 +23,6 @@ func NewElementOrRefinementContainer() *ElementOrRefinementContainer {
 }
 
 func (m *ElementOrRefinementContainer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "elementOrRefinementContainer"
 	e.EncodeToken(start)
 	if m.Choice != nil {

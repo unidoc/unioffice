@@ -44,9 +44,6 @@ func NewCT_SdtPr() *CT_SdtPr {
 }
 
 func (m *CT_SdtPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.RPr != nil {
 		serPr := xml.StartElement{Name: xml.Name{Local: "w:rPr"}}

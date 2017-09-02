@@ -47,9 +47,6 @@ func NewCT_SheetPr() *CT_SheetPr {
 }
 
 func (m *CT_SheetPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.SyncHorizontalAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "syncHorizontal"},
 			Value: fmt.Sprintf("%v", *m.SyncHorizontalAttr)})

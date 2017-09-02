@@ -49,9 +49,6 @@ func NewCT_CommentPr() *CT_CommentPr {
 }
 
 func (m *CT_CommentPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.LockedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "locked"},
 			Value: fmt.Sprintf("%v", *m.LockedAttr)})

@@ -23,9 +23,6 @@ func NewCT_LineStyleList() *CT_LineStyleList {
 }
 
 func (m *CT_LineStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seln := xml.StartElement{Name: xml.Name{Local: "a:ln"}}
 	e.EncodeElement(m.Ln, seln)

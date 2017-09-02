@@ -32,9 +32,6 @@ func NewCT_StyleDefinition() *CT_StyleDefinition {
 }
 
 func (m *CT_StyleDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.UniqueIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "uniqueId"},
 			Value: fmt.Sprintf("%v", *m.UniqueIdAttr)})

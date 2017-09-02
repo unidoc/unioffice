@@ -85,9 +85,6 @@ func NewCT_PivotCacheDefinition() *CT_PivotCacheDefinition {
 }
 
 func (m *CT_PivotCacheDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.IdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:id"},
 			Value: fmt.Sprintf("%v", *m.IdAttr)})

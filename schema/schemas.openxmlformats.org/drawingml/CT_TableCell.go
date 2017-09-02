@@ -31,9 +31,6 @@ func NewCT_TableCell() *CT_TableCell {
 }
 
 func (m *CT_TableCell) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.RowSpanAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rowSpan"},
 			Value: fmt.Sprintf("%v", *m.RowSpanAttr)})

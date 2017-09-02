@@ -8,6 +8,7 @@
 package terms_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/purl.org/dc/terms"
@@ -21,4 +22,11 @@ func TestISO3166Constructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed terms.ISO3166 should validate: %s", err)
 	}
+}
+
+func TestISO3166MarshalUnmarshal(t *testing.T) {
+	v := terms.NewISO3166()
+	buf, _ := xml.Marshal(v)
+	v2 := terms.NewISO3166()
+	xml.Unmarshal(buf, v2)
 }

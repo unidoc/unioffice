@@ -28,9 +28,6 @@ func NewCT_Backdrop() *CT_Backdrop {
 }
 
 func (m *CT_Backdrop) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seanchor := xml.StartElement{Name: xml.Name{Local: "a:anchor"}}
 	e.EncodeElement(m.Anchor, seanchor)

@@ -25,9 +25,6 @@ func NewCT_AudioFile() *CT_AudioFile {
 }
 
 func (m *CT_AudioFile) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:link"},
 		Value: fmt.Sprintf("%v", m.LinkAttr)})
 	if m.ContentTypeAttr != nil {

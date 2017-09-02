@@ -24,9 +24,6 @@ func NewEG_LineJoinProperties() *EG_LineJoinProperties {
 }
 
 func (m *EG_LineJoinProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Round != nil {
 		seround := xml.StartElement{Name: xml.Name{Local: "a:round"}}
 		e.EncodeElement(m.Round, seround)

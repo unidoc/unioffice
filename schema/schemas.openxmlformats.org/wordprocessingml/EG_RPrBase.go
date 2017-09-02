@@ -99,9 +99,6 @@ func NewEG_RPrBase() *EG_RPrBase {
 }
 
 func (m *EG_RPrBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.RStyle != nil {
 		serStyle := xml.StartElement{Name: xml.Name{Local: "w:rStyle"}}
 		e.EncodeElement(m.RStyle, serStyle)

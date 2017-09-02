@@ -25,9 +25,6 @@ func NewCT_MarkupRange() *CT_MarkupRange {
 }
 
 func (m *CT_MarkupRange) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.DisplacedByCustomXmlAttr != ST_DisplacedByCustomXmlUnset {
 		attr, err := m.DisplacedByCustomXmlAttr.MarshalXMLAttr(xml.Name{Local: "w:displacedByCustomXml"})
 		if err != nil {

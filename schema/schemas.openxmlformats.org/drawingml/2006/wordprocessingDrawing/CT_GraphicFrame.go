@@ -32,9 +32,6 @@ func NewCT_GraphicFrame() *CT_GraphicFrame {
 }
 
 func (m *CT_GraphicFrame) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secNvPr := xml.StartElement{Name: xml.Name{Local: "wp:cNvPr"}}
 	e.EncodeElement(m.CNvPr, secNvPr)

@@ -23,9 +23,6 @@ func NewCT_Lvl() *CT_Lvl {
 }
 
 func (m *CT_Lvl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Pt != nil {
 		sept := xml.StartElement{Name: xml.Name{Local: "pt"}}

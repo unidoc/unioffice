@@ -25,9 +25,6 @@ func NewCT_ClipboardStyleSheet() *CT_ClipboardStyleSheet {
 }
 
 func (m *CT_ClipboardStyleSheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "a:CT_ClipboardStyleSheet"
 	e.EncodeToken(start)
 	sethemeElements := xml.StartElement{Name: xml.Name{Local: "a:themeElements"}}

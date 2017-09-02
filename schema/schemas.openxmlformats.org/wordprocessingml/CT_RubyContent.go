@@ -27,9 +27,6 @@ func NewCT_RubyContent() *CT_RubyContent {
 }
 
 func (m *CT_RubyContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.R != nil {
 		ser := xml.StartElement{Name: xml.Name{Local: "w:r"}}

@@ -23,9 +23,6 @@ func NewCT_OfficeArtExtensionList() *CT_OfficeArtExtensionList {
 }
 
 func (m *CT_OfficeArtExtensionList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Ext != nil {
 		seext := xml.StartElement{Name: xml.Name{Local: "a:ext"}}

@@ -54,9 +54,6 @@ func NewCT_EffectContainer() *CT_EffectContainer {
 }
 
 func (m *CT_EffectContainer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TypeAttr != ST_EffectContainerTypeUnset {
 		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 		if err != nil {

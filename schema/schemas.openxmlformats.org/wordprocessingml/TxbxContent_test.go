@@ -8,6 +8,7 @@
 package wordprocessingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -21,4 +22,11 @@ func TestTxbxContentConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingml.TxbxContent should validate: %s", err)
 	}
+}
+
+func TestTxbxContentMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingml.NewTxbxContent()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingml.NewTxbxContent()
+	xml.Unmarshal(buf, v2)
 }

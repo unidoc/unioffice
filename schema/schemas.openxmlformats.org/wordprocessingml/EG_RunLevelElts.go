@@ -40,9 +40,6 @@ func NewEG_RunLevelElts() *EG_RunLevelElts {
 }
 
 func (m *EG_RunLevelElts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ProofErr != nil {
 		seproofErr := xml.StartElement{Name: xml.Name{Local: "w:proofErr"}}
 		e.EncodeElement(m.ProofErr, seproofErr)

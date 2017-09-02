@@ -23,9 +23,6 @@ func NewCT_MathPrChoice() *CT_MathPrChoice {
 }
 
 func (m *CT_MathPrChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.WrapIndent != nil {
 		sewrapIndent := xml.StartElement{Name: xml.Name{Local: "m:wrapIndent"}}
 		e.EncodeElement(m.WrapIndent, sewrapIndent)

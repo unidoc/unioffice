@@ -23,9 +23,6 @@ func NewCT_EffectStyleList() *CT_EffectStyleList {
 }
 
 func (m *CT_EffectStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seeffectStyle := xml.StartElement{Name: xml.Name{Local: "a:effectStyle"}}
 	e.EncodeElement(m.EffectStyle, seeffectStyle)

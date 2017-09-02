@@ -23,9 +23,6 @@ func NewCT_FFCheckBoxChoice() *CT_FFCheckBoxChoice {
 }
 
 func (m *CT_FFCheckBoxChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Size != nil {
 		sesize := xml.StartElement{Name: xml.Name{Local: "w:size"}}
 		e.EncodeElement(m.Size, sesize)

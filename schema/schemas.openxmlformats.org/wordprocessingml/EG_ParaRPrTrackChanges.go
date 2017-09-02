@@ -29,9 +29,6 @@ func NewEG_ParaRPrTrackChanges() *EG_ParaRPrTrackChanges {
 }
 
 func (m *EG_ParaRPrTrackChanges) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Ins != nil {
 		seins := xml.StartElement{Name: xml.Name{Local: "w:ins"}}
 		e.EncodeElement(m.Ins, seins)

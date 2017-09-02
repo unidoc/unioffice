@@ -25,9 +25,6 @@ func NewCT_IgnoredErrors() *CT_IgnoredErrors {
 }
 
 func (m *CT_IgnoredErrors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seignoredError := xml.StartElement{Name: xml.Name{Local: "x:ignoredError"}}
 	e.EncodeElement(m.IgnoredError, seignoredError)

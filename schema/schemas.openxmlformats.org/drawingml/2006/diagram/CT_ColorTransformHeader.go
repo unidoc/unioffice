@@ -32,9 +32,6 @@ func NewCT_ColorTransformHeader() *CT_ColorTransformHeader {
 }
 
 func (m *CT_ColorTransformHeader) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "uniqueId"},
 		Value: fmt.Sprintf("%v", m.UniqueIdAttr)})
 	if m.MinVerAttr != nil {

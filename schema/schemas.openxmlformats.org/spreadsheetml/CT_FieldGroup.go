@@ -33,9 +33,6 @@ func NewCT_FieldGroup() *CT_FieldGroup {
 }
 
 func (m *CT_FieldGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ParAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "par"},
 			Value: fmt.Sprintf("%v", *m.ParAttr)})

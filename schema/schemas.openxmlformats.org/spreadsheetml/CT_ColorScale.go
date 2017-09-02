@@ -26,9 +26,6 @@ func NewCT_ColorScale() *CT_ColorScale {
 }
 
 func (m *CT_ColorScale) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secfvo := xml.StartElement{Name: xml.Name{Local: "x:cfvo"}}
 	e.EncodeElement(m.Cfvo, secfvo)

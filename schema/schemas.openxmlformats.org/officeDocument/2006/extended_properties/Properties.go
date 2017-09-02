@@ -23,9 +23,6 @@ func NewProperties() *Properties {
 }
 
 func (m *Properties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:vt"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:xml"}, Value: "http://www.w3.org/XML/1998/namespace"})

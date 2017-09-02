@@ -8,6 +8,7 @@
 package terms_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/purl.org/dc/terms"
@@ -21,4 +22,11 @@ func TestDCMITypeConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed terms.DCMIType should validate: %s", err)
 	}
+}
+
+func TestDCMITypeMarshalUnmarshal(t *testing.T) {
+	v := terms.NewDCMIType()
+	buf, _ := xml.Marshal(v)
+	v2 := terms.NewDCMIType()
+	xml.Unmarshal(buf, v2)
 }

@@ -23,9 +23,6 @@ func NewCT_Path2DQuadBezierTo() *CT_Path2DQuadBezierTo {
 }
 
 func (m *CT_Path2DQuadBezierTo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sept := xml.StartElement{Name: xml.Name{Local: "a:pt"}}
 	e.EncodeElement(m.Pt, sept)

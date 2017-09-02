@@ -28,9 +28,6 @@ func NewCT_NumData() *CT_NumData {
 }
 
 func (m *CT_NumData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.FormatCode != nil {
 		seformatCode := xml.StartElement{Name: xml.Name{Local: "formatCode"}}

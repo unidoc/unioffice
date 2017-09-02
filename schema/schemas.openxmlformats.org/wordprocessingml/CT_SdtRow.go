@@ -27,9 +27,6 @@ func NewCT_SdtRow() *CT_SdtRow {
 }
 
 func (m *CT_SdtRow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.SdtPr != nil {
 		sesdtPr := xml.StartElement{Name: xml.Name{Local: "w:sdtPr"}}

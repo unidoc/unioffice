@@ -23,9 +23,6 @@ func NewCT_AltChunkPr() *CT_AltChunkPr {
 }
 
 func (m *CT_AltChunkPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.MatchSrc != nil {
 		sematchSrc := xml.StartElement{Name: xml.Name{Local: "w:matchSrc"}}

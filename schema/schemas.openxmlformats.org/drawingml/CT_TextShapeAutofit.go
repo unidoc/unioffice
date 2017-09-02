@@ -21,9 +21,6 @@ func NewCT_TextShapeAutofit() *CT_TextShapeAutofit {
 }
 
 func (m *CT_TextShapeAutofit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

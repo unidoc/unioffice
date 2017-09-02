@@ -23,9 +23,6 @@ func NewElementsGroupChoice() *ElementsGroupChoice {
 }
 
 func (m *ElementsGroupChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Any != nil {
 		seany := xml.StartElement{Name: xml.Name{Local: "dc:any"}}
 		e.EncodeElement(m.Any, seany)

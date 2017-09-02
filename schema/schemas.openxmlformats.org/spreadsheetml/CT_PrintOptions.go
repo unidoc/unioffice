@@ -32,9 +32,6 @@ func NewCT_PrintOptions() *CT_PrintOptions {
 }
 
 func (m *CT_PrintOptions) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.HorizontalCenteredAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "horizontalCentered"},
 			Value: fmt.Sprintf("%v", *m.HorizontalCenteredAttr)})

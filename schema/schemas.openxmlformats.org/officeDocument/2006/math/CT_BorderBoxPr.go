@@ -30,9 +30,6 @@ func NewCT_BorderBoxPr() *CT_BorderBoxPr {
 }
 
 func (m *CT_BorderBoxPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.HideTop != nil {
 		sehideTop := xml.StartElement{Name: xml.Name{Local: "m:hideTop"}}

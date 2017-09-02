@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestRevisionsConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.Revisions should validate: %s", err)
 	}
+}
+
+func TestRevisionsMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewRevisions()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewRevisions()
+	xml.Unmarshal(buf, v2)
 }

@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestEG_ColorTransformConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.EG_ColorTransform should validate: %s", err)
 	}
+}
+
+func TestEG_ColorTransformMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewEG_ColorTransform()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewEG_ColorTransform()
+	xml.Unmarshal(buf, v2)
 }

@@ -27,9 +27,6 @@ func NewCT_DPr() *CT_DPr {
 }
 
 func (m *CT_DPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.BegChr != nil {
 		sebegChr := xml.StartElement{Name: xml.Name{Local: "m:begChr"}}

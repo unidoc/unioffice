@@ -29,9 +29,6 @@ func NewCT_Picture() *CT_Picture {
 }
 
 func (m *CT_Picture) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	senvPicPr := xml.StartElement{Name: xml.Name{Local: "pic:nvPicPr"}}
 	e.EncodeElement(m.NvPicPr, senvPicPr)

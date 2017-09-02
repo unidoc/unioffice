@@ -30,9 +30,6 @@ func NewCT_WrapSquare() *CT_WrapSquare {
 }
 
 func (m *CT_WrapSquare) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.WrapTextAttr.MarshalXMLAttr(xml.Name{Local: "wrapText"})
 	if err != nil {
 		return err

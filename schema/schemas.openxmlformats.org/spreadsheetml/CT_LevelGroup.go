@@ -36,9 +36,6 @@ func NewCT_LevelGroup() *CT_LevelGroup {
 }
 
 func (m *CT_LevelGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "name"},
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "uniqueName"},

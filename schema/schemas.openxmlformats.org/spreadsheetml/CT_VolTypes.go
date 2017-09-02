@@ -25,9 +25,6 @@ func NewCT_VolTypes() *CT_VolTypes {
 }
 
 func (m *CT_VolTypes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sevolType := xml.StartElement{Name: xml.Name{Local: "x:volType"}}
 	e.EncodeElement(m.VolType, sevolType)

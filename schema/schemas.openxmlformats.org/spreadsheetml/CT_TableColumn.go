@@ -55,9 +55,6 @@ func NewCT_TableColumn() *CT_TableColumn {
 }
 
 func (m *CT_TableColumn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "id"},
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	if m.UniqueNameAttr != nil {

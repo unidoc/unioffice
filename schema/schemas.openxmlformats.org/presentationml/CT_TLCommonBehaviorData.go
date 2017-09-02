@@ -45,9 +45,6 @@ func NewCT_TLCommonBehaviorData() *CT_TLCommonBehaviorData {
 }
 
 func (m *CT_TLCommonBehaviorData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AdditiveAttr != ST_TLBehaviorAdditiveTypeUnset {
 		attr, err := m.AdditiveAttr.MarshalXMLAttr(xml.Name{Local: "additive"})
 		if err != nil {

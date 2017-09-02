@@ -25,9 +25,6 @@ func NewCT_Zoom() *CT_Zoom {
 }
 
 func (m *CT_Zoom) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_ZoomUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 		if err != nil {

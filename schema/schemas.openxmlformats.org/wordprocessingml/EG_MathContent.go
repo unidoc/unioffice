@@ -25,9 +25,6 @@ func NewEG_MathContent() *EG_MathContent {
 }
 
 func (m *EG_MathContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.OMathPara != nil {
 		seoMathPara := xml.StartElement{Name: xml.Name{Local: "m:oMathPara"}}
 		e.EncodeElement(m.OMathPara, seoMathPara)

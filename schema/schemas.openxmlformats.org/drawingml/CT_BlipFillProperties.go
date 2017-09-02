@@ -29,9 +29,6 @@ func NewCT_BlipFillProperties() *CT_BlipFillProperties {
 }
 
 func (m *CT_BlipFillProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.DpiAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dpi"},
 			Value: fmt.Sprintf("%v", *m.DpiAttr)})

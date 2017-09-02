@@ -27,9 +27,6 @@ func NewEG_AreaChartShared() *EG_AreaChartShared {
 }
 
 func (m *EG_AreaChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Grouping != nil {
 		segrouping := xml.StartElement{Name: xml.Name{Local: "grouping"}}
 		e.EncodeElement(m.Grouping, segrouping)

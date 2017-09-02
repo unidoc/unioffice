@@ -23,9 +23,6 @@ func NewCT_SchemaLibrary() *CT_SchemaLibrary {
 }
 
 func (m *CT_SchemaLibrary) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Schema != nil {
 		seschema := xml.StartElement{Name: xml.Name{Local: "ma:schema"}}

@@ -26,9 +26,6 @@ func NewCT_TextField() *CT_TextField {
 }
 
 func (m *CT_TextField) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TypeAttr != ST_ExternalConnectionTypeUnset {
 		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 		if err != nil {

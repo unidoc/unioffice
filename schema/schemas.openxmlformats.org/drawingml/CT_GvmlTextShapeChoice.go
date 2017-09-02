@@ -23,9 +23,6 @@ func NewCT_GvmlTextShapeChoice() *CT_GvmlTextShapeChoice {
 }
 
 func (m *CT_GvmlTextShapeChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.UseSpRect != nil {
 		seuseSpRect := xml.StartElement{Name: xml.Name{Local: "a:useSpRect"}}
 		e.EncodeElement(m.UseSpRect, seuseSpRect)

@@ -24,9 +24,6 @@ func NewCT_Parameter() *CT_Parameter {
 }
 
 func (m *CT_Parameter) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 	if err != nil {
 		return err

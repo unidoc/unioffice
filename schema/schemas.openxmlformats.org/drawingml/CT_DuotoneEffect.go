@@ -23,9 +23,6 @@ func NewCT_DuotoneEffect() *CT_DuotoneEffect {
 }
 
 func (m *CT_DuotoneEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	for _, c := range m.EG_ColorChoice {
 		c.MarshalXML(e, start)

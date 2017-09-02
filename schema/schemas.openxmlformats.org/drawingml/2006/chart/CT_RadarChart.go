@@ -29,9 +29,6 @@ func NewCT_RadarChart() *CT_RadarChart {
 }
 
 func (m *CT_RadarChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seradarStyle := xml.StartElement{Name: xml.Name{Local: "radarStyle"}}
 	e.EncodeElement(m.RadarStyle, seradarStyle)

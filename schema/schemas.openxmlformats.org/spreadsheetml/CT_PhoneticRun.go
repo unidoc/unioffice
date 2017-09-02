@@ -31,9 +31,6 @@ func NewCT_PhoneticRun() *CT_PhoneticRun {
 }
 
 func (m *CT_PhoneticRun) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "sb"},
 		Value: fmt.Sprintf("%v", m.SbAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "eb"},

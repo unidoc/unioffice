@@ -37,9 +37,6 @@ func NewCT_FldChar() *CT_FldChar {
 }
 
 func (m *CT_FldChar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.FldCharTypeAttr.MarshalXMLAttr(xml.Name{Local: "w:fldCharType"})
 	if err != nil {
 		return err

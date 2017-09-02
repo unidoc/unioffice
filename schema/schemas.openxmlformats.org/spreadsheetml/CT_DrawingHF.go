@@ -59,9 +59,6 @@ func NewCT_DrawingHF() *CT_DrawingHF {
 }
 
 func (m *CT_DrawingHF) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:id"},
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	if m.LhoAttr != nil {

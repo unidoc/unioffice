@@ -26,9 +26,6 @@ func NewCT_Func() *CT_Func {
 }
 
 func (m *CT_Func) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.FuncPr != nil {
 		sefuncPr := xml.StartElement{Name: xml.Name{Local: "m:funcPr"}}

@@ -75,9 +75,6 @@ func NewCT_RevisionDefinedName() *CT_RevisionDefinedName {
 }
 
 func (m *CT_RevisionDefinedName) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.LocalSheetIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "localSheetId"},
 			Value: fmt.Sprintf("%v", *m.LocalSheetIdAttr)})

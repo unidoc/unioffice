@@ -8,6 +8,7 @@
 package diagram_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/diagram"
@@ -21,4 +22,11 @@ func TestStyleDefConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed diagram.StyleDef should validate: %s", err)
 	}
+}
+
+func TestStyleDefMarshalUnmarshal(t *testing.T) {
+	v := diagram.NewStyleDef()
+	buf, _ := xml.Marshal(v)
+	v2 := diagram.NewStyleDef()
+	xml.Unmarshal(buf, v2)
 }

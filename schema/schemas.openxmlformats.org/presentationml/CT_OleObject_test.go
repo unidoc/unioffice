@@ -8,6 +8,7 @@
 package presentationml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/presentationml"
@@ -21,4 +22,11 @@ func TestCT_OleObjectConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed presentationml.CT_OleObject should validate: %s", err)
 	}
+}
+
+func TestCT_OleObjectMarshalUnmarshal(t *testing.T) {
+	v := presentationml.NewCT_OleObject()
+	buf, _ := xml.Marshal(v)
+	v2 := presentationml.NewCT_OleObject()
+	xml.Unmarshal(buf, v2)
 }

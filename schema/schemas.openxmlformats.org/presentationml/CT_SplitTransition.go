@@ -25,9 +25,6 @@ func NewCT_SplitTransition() *CT_SplitTransition {
 }
 
 func (m *CT_SplitTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.OrientAttr != ST_DirectionUnset {
 		attr, err := m.OrientAttr.MarshalXMLAttr(xml.Name{Local: "orient"})
 		if err != nil {

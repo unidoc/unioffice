@@ -24,9 +24,6 @@ func NewCT_SingleXmlCells() *CT_SingleXmlCells {
 }
 
 func (m *CT_SingleXmlCells) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sesingleXmlCell := xml.StartElement{Name: xml.Name{Local: "x:singleXmlCell"}}
 	e.EncodeElement(m.SingleXmlCell, sesingleXmlCell)

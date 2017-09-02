@@ -220,9 +220,6 @@ func NewCT_Settings() *CT_Settings {
 }
 
 func (m *CT_Settings) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.WriteProtection != nil {
 		sewriteProtection := xml.StartElement{Name: xml.Name{Local: "w:writeProtection"}}

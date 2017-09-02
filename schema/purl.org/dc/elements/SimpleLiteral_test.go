@@ -8,6 +8,7 @@
 package elements_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/purl.org/dc/elements"
@@ -21,4 +22,11 @@ func TestSimpleLiteralConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed elements.SimpleLiteral should validate: %s", err)
 	}
+}
+
+func TestSimpleLiteralMarshalUnmarshal(t *testing.T) {
+	v := elements.NewSimpleLiteral()
+	buf, _ := xml.Marshal(v)
+	v2 := elements.NewSimpleLiteral()
+	xml.Unmarshal(buf, v2)
 }

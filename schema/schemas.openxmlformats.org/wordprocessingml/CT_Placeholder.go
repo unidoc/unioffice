@@ -24,9 +24,6 @@ func NewCT_Placeholder() *CT_Placeholder {
 }
 
 func (m *CT_Placeholder) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sedocPart := xml.StartElement{Name: xml.Name{Local: "w:docPart"}}
 	e.EncodeElement(m.DocPart, sedocPart)

@@ -25,9 +25,6 @@ func NewCT_EffectStyleItem() *CT_EffectStyleItem {
 }
 
 func (m *CT_EffectStyleItem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.EffectLst != nil {
 		seeffectLst := xml.StartElement{Name: xml.Name{Local: "a:effectLst"}}

@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestCT_TextBulletSizePointConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.CT_TextBulletSizePoint should validate: %s", err)
 	}
+}
+
+func TestCT_TextBulletSizePointMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewCT_TextBulletSizePoint()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewCT_TextBulletSizePoint()
+	xml.Unmarshal(buf, v2)
 }

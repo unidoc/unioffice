@@ -23,9 +23,6 @@ func NewCT_GeomGuide() *CT_GeomGuide {
 }
 
 func (m *CT_GeomGuide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "name"},
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fmla"},

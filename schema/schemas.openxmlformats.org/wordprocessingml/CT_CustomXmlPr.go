@@ -26,9 +26,6 @@ func NewCT_CustomXmlPr() *CT_CustomXmlPr {
 }
 
 func (m *CT_CustomXmlPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Placeholder != nil {
 		seplaceholder := xml.StartElement{Name: xml.Name{Local: "w:placeholder"}}

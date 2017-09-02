@@ -8,6 +8,7 @@
 package wordprocessingDrawing_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
@@ -21,4 +22,11 @@ func TestEG_WrapTypeChoiceConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingDrawing.EG_WrapTypeChoice should validate: %s", err)
 	}
+}
+
+func TestEG_WrapTypeChoiceMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingDrawing.NewEG_WrapTypeChoice()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingDrawing.NewEG_WrapTypeChoice()
+	xml.Unmarshal(buf, v2)
 }

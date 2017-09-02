@@ -33,9 +33,6 @@ func NewCT_Filters() *CT_Filters {
 }
 
 func (m *CT_Filters) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BlankAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "blank"},
 			Value: fmt.Sprintf("%v", *m.BlankAttr)})

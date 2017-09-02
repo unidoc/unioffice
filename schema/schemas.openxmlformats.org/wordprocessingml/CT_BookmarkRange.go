@@ -27,9 +27,6 @@ func NewCT_BookmarkRange() *CT_BookmarkRange {
 }
 
 func (m *CT_BookmarkRange) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ColFirstAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:colFirst"},
 			Value: fmt.Sprintf("%v", *m.ColFirstAttr)})

@@ -26,9 +26,6 @@ func NewCT_StrRef() *CT_StrRef {
 }
 
 func (m *CT_StrRef) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sef := xml.StartElement{Name: xml.Name{Local: "f"}}
 	gooxml.AddPreserveSpaceAttr(&sef, m.F)

@@ -31,9 +31,6 @@ func NewCT_Scenarios() *CT_Scenarios {
 }
 
 func (m *CT_Scenarios) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.CurrentAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "current"},
 			Value: fmt.Sprintf("%v", *m.CurrentAttr)})

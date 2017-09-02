@@ -23,9 +23,6 @@ func NewCT_EmbeddedWAVAudioFile() *CT_EmbeddedWAVAudioFile {
 }
 
 func (m *CT_EmbeddedWAVAudioFile) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:embed"},
 		Value: fmt.Sprintf("%v", m.EmbedAttr)})
 	if m.NameAttr != nil {

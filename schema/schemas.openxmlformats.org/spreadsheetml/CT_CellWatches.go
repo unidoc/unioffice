@@ -24,9 +24,6 @@ func NewCT_CellWatches() *CT_CellWatches {
 }
 
 func (m *CT_CellWatches) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secellWatch := xml.StartElement{Name: xml.Name{Local: "x:cellWatch"}}
 	e.EncodeElement(m.CellWatch, secellWatch)

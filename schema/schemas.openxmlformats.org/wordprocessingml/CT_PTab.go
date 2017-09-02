@@ -30,9 +30,6 @@ func NewCT_PTab() *CT_PTab {
 }
 
 func (m *CT_PTab) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.AlignmentAttr.MarshalXMLAttr(xml.Name{Local: "w:alignment"})
 	if err != nil {
 		return err

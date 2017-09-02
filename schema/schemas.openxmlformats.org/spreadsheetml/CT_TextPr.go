@@ -57,9 +57,6 @@ func NewCT_TextPr() *CT_TextPr {
 }
 
 func (m *CT_TextPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PromptAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "prompt"},
 			Value: fmt.Sprintf("%v", *m.PromptAttr)})

@@ -47,9 +47,6 @@ func NewCT_ValAx() *CT_ValAx {
 }
 
 func (m *CT_ValAx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seaxId := xml.StartElement{Name: xml.Name{Local: "axId"}}
 	e.EncodeElement(m.AxId, seaxId)

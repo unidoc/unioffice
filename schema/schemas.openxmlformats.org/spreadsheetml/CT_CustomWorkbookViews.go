@@ -24,9 +24,6 @@ func NewCT_CustomWorkbookViews() *CT_CustomWorkbookViews {
 }
 
 func (m *CT_CustomWorkbookViews) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secustomWorkbookView := xml.StartElement{Name: xml.Name{Local: "x:customWorkbookView"}}
 	e.EncodeElement(m.CustomWorkbookView, secustomWorkbookView)

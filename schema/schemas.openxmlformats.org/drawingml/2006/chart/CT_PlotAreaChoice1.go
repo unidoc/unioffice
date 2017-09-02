@@ -26,9 +26,6 @@ func NewCT_PlotAreaChoice1() *CT_PlotAreaChoice1 {
 }
 
 func (m *CT_PlotAreaChoice1) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAx != nil {
 		sevalAx := xml.StartElement{Name: xml.Name{Local: "valAx"}}
 		e.EncodeElement(m.ValAx, sevalAx)

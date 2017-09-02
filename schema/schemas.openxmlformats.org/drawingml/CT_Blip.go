@@ -27,9 +27,6 @@ func NewCT_Blip() *CT_Blip {
 }
 
 func (m *CT_Blip) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.CstateAttr != ST_BlipCompressionUnset {
 		attr, err := m.CstateAttr.MarshalXMLAttr(xml.Name{Local: "cstate"})
 		if err != nil {

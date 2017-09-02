@@ -27,9 +27,6 @@ func NewEG_ShowType() *EG_ShowType {
 }
 
 func (m *EG_ShowType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Present != nil {
 		sepresent := xml.StartElement{Name: xml.Name{Local: "p:present"}}
 		e.EncodeElement(m.Present, sepresent)

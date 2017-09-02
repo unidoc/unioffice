@@ -26,9 +26,6 @@ func NewCT_Protection() *CT_Protection {
 }
 
 func (m *CT_Protection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.ChartObject != nil {
 		sechartObject := xml.StartElement{Name: xml.Name{Local: "chartObject"}}

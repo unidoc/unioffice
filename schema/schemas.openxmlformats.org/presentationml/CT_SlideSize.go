@@ -30,9 +30,6 @@ func NewCT_SlideSize() *CT_SlideSize {
 }
 
 func (m *CT_SlideSize) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "cx"},
 		Value: fmt.Sprintf("%v", m.CxAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "cy"},

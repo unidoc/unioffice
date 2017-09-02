@@ -29,9 +29,6 @@ func NewCT_TableStyleElement() *CT_TableStyleElement {
 }
 
 func (m *CT_TableStyleElement) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 	if err != nil {
 		return err

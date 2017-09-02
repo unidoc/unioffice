@@ -31,9 +31,6 @@ func NewCT_Legend() *CT_Legend {
 }
 
 func (m *CT_Legend) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.LegendPos != nil {
 		selegendPos := xml.StartElement{Name: xml.Name{Local: "legendPos"}}

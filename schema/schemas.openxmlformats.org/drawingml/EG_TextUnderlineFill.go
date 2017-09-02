@@ -23,9 +23,6 @@ func NewEG_TextUnderlineFill() *EG_TextUnderlineFill {
 }
 
 func (m *EG_TextUnderlineFill) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.UFillTx != nil {
 		seuFillTx := xml.StartElement{Name: xml.Name{Local: "a:uFillTx"}}
 		e.EncodeElement(m.UFillTx, seuFillTx)

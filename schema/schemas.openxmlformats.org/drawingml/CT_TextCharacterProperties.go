@@ -64,9 +64,6 @@ func NewCT_TextCharacterProperties() *CT_TextCharacterProperties {
 }
 
 func (m *CT_TextCharacterProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.KumimojiAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "kumimoji"},
 			Value: fmt.Sprintf("%v", *m.KumimojiAttr)})

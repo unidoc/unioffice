@@ -34,9 +34,6 @@ func NewCT_DataBar() *CT_DataBar {
 }
 
 func (m *CT_DataBar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.MinLengthAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "minLength"},
 			Value: fmt.Sprintf("%v", *m.MinLengthAttr)})

@@ -29,9 +29,6 @@ func NewCT_FramesetSplitbar() *CT_FramesetSplitbar {
 }
 
 func (m *CT_FramesetSplitbar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.W != nil {
 		sew := xml.StartElement{Name: xml.Name{Local: "w:w"}}

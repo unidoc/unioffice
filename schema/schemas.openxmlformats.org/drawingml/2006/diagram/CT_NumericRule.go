@@ -33,9 +33,6 @@ func NewCT_NumericRule() *CT_NumericRule {
 }
 
 func (m *CT_NumericRule) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "val"},
 			Value: fmt.Sprintf("%v", *m.ValAttr)})

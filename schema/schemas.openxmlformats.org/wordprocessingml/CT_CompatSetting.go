@@ -27,9 +27,6 @@ func NewCT_CompatSetting() *CT_CompatSetting {
 }
 
 func (m *CT_CompatSetting) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.NameAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:name"},
 			Value: fmt.Sprintf("%v", *m.NameAttr)})

@@ -24,9 +24,6 @@ func NewCT_Hyperlinks() *CT_Hyperlinks {
 }
 
 func (m *CT_Hyperlinks) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sehyperlink := xml.StartElement{Name: xml.Name{Local: "x:hyperlink"}}
 	e.EncodeElement(m.Hyperlink, sehyperlink)

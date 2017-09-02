@@ -24,9 +24,6 @@ func NewCT_Sheets() *CT_Sheets {
 }
 
 func (m *CT_Sheets) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sesheet := xml.StartElement{Name: xml.Name{Local: "x:sheet"}}
 	e.EncodeElement(m.Sheet, sesheet)

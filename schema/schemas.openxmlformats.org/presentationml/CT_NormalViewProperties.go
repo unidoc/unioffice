@@ -40,9 +40,6 @@ func NewCT_NormalViewProperties() *CT_NormalViewProperties {
 }
 
 func (m *CT_NormalViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ShowOutlineIconsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showOutlineIcons"},
 			Value: fmt.Sprintf("%v", *m.ShowOutlineIconsAttr)})

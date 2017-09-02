@@ -38,9 +38,6 @@ func NewCT_Caption() *CT_Caption {
 }
 
 func (m *CT_Caption) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:name"},
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	if m.PosAttr != ST_CaptionPosUnset {

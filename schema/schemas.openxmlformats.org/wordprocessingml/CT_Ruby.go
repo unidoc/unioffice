@@ -30,9 +30,6 @@ func NewCT_Ruby() *CT_Ruby {
 }
 
 func (m *CT_Ruby) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	serubyPr := xml.StartElement{Name: xml.Name{Local: "w:rubyPr"}}
 	e.EncodeElement(m.RubyPr, serubyPr)

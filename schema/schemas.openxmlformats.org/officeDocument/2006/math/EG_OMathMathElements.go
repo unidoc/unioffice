@@ -41,9 +41,6 @@ func NewEG_OMathMathElements() *EG_OMathMathElements {
 }
 
 func (m *EG_OMathMathElements) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Acc != nil {
 		seacc := xml.StartElement{Name: xml.Name{Local: "m:acc"}}
 		e.EncodeElement(m.Acc, seacc)

@@ -26,9 +26,6 @@ func NewCT_MeasureDimensionMap() *CT_MeasureDimensionMap {
 }
 
 func (m *CT_MeasureDimensionMap) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.MeasureGroupAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "measureGroup"},
 			Value: fmt.Sprintf("%v", *m.MeasureGroupAttr)})

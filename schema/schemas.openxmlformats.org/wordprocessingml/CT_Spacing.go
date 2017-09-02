@@ -40,9 +40,6 @@ func NewCT_Spacing() *CT_Spacing {
 }
 
 func (m *CT_Spacing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BeforeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:before"},
 			Value: fmt.Sprintf("%v", *m.BeforeAttr)})

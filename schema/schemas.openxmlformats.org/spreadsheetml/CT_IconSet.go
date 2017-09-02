@@ -33,9 +33,6 @@ func NewCT_IconSet() *CT_IconSet {
 }
 
 func (m *CT_IconSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.IconSetAttr != ST_IconSetTypeUnset {
 		attr, err := m.IconSetAttr.MarshalXMLAttr(xml.Name{Local: "iconSet"})
 		if err != nil {

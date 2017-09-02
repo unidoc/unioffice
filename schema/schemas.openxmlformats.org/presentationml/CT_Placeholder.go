@@ -34,9 +34,6 @@ func NewCT_Placeholder() *CT_Placeholder {
 }
 
 func (m *CT_Placeholder) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TypeAttr != ST_PlaceholderTypeUnset {
 		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 		if err != nil {

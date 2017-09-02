@@ -24,9 +24,6 @@ func NewCT_Override() *CT_Override {
 }
 
 func (m *CT_Override) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ContentType"},
 		Value: fmt.Sprintf("%v", m.ContentTypeAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "PartName"},

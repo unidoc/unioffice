@@ -36,9 +36,6 @@ func NewCT_RadarSer() *CT_RadarSer {
 }
 
 func (m *CT_RadarSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
 	e.EncodeElement(m.Idx, seidx)

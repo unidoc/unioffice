@@ -25,9 +25,6 @@ func NewCT_TblGrid() *CT_TblGrid {
 }
 
 func (m *CT_TblGrid) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.GridCol != nil {
 		segridCol := xml.StartElement{Name: xml.Name{Local: "w:gridCol"}}

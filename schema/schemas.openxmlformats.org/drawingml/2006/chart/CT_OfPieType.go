@@ -22,9 +22,6 @@ func NewCT_OfPieType() *CT_OfPieType {
 }
 
 func (m *CT_OfPieType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_OfPieTypeUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

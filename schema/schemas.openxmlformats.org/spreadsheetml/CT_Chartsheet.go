@@ -44,9 +44,6 @@ func NewCT_Chartsheet() *CT_Chartsheet {
 }
 
 func (m *CT_Chartsheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.SheetPr != nil {
 		sesheetPr := xml.StartElement{Name: xml.Name{Local: "x:sheetPr"}}

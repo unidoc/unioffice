@@ -49,9 +49,6 @@ func NewCT_Vector() *CT_Vector {
 }
 
 func (m *CT_Vector) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.BaseTypeAttr.MarshalXMLAttr(xml.Name{Local: "baseType"})
 	if err != nil {
 		return err

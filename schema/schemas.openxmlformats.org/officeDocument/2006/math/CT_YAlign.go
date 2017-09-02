@@ -25,9 +25,6 @@ func NewCT_YAlign() *CT_YAlign {
 }
 
 func (m *CT_YAlign) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "m:val"})
 	if err != nil {
 		return err

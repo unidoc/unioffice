@@ -24,9 +24,6 @@ func NewCT_ChartLines() *CT_ChartLines {
 }
 
 func (m *CT_ChartLines) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.SpPr != nil {
 		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}

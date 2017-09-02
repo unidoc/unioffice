@@ -25,9 +25,6 @@ func NewCT_TextAutonumberBullet() *CT_TextAutonumberBullet {
 }
 
 func (m *CT_TextAutonumberBullet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 	if err != nil {
 		return err

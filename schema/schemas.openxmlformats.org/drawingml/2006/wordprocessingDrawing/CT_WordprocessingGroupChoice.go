@@ -29,9 +29,6 @@ func NewCT_WordprocessingGroupChoice() *CT_WordprocessingGroupChoice {
 }
 
 func (m *CT_WordprocessingGroupChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Wsp != nil {
 		sewsp := xml.StartElement{Name: xml.Name{Local: "wp:wsp"}}
 		e.EncodeElement(m.Wsp, sewsp)

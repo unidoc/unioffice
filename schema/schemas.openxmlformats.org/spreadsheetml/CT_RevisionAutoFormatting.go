@@ -33,9 +33,6 @@ func NewCT_RevisionAutoFormatting() *CT_RevisionAutoFormatting {
 }
 
 func (m *CT_RevisionAutoFormatting) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "sheetId"},
 		Value: fmt.Sprintf("%v", m.SheetIdAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ref"},

@@ -26,9 +26,6 @@ func NewCT_SmartTagPr() *CT_SmartTagPr {
 }
 
 func (m *CT_SmartTagPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.EmbedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "embed"},
 			Value: fmt.Sprintf("%v", *m.EmbedAttr)})

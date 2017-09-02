@@ -30,9 +30,6 @@ func NewCT_Area3DChart() *CT_Area3DChart {
 }
 
 func (m *CT_Area3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Grouping != nil {
 		segrouping := xml.StartElement{Name: xml.Name{Local: "grouping"}}

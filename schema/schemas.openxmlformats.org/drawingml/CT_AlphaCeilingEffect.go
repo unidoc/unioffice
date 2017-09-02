@@ -21,9 +21,6 @@ func NewCT_AlphaCeilingEffect() *CT_AlphaCeilingEffect {
 }
 
 func (m *CT_AlphaCeilingEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

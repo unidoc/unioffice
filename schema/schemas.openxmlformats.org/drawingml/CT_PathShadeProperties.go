@@ -23,9 +23,6 @@ func NewCT_PathShadeProperties() *CT_PathShadeProperties {
 }
 
 func (m *CT_PathShadeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PathAttr != ST_PathShadeTypeUnset {
 		attr, err := m.PathAttr.MarshalXMLAttr(xml.Name{Local: "path"})
 		if err != nil {

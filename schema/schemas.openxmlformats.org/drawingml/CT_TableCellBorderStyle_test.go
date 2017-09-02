@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestCT_TableCellBorderStyleConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.CT_TableCellBorderStyle should validate: %s", err)
 	}
+}
+
+func TestCT_TableCellBorderStyleMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewCT_TableCellBorderStyle()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewCT_TableCellBorderStyle()
+	xml.Unmarshal(buf, v2)
 }

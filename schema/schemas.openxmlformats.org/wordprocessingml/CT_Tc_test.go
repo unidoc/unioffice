@@ -8,6 +8,7 @@
 package wordprocessingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -21,4 +22,11 @@ func TestCT_TcConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingml.CT_Tc should validate: %s", err)
 	}
+}
+
+func TestCT_TcMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingml.NewCT_Tc()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingml.NewCT_Tc()
+	xml.Unmarshal(buf, v2)
 }

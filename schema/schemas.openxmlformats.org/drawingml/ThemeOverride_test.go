@@ -8,6 +8,7 @@
 package drawingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,4 +22,11 @@ func TestThemeOverrideConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed drawingml.ThemeOverride should validate: %s", err)
 	}
+}
+
+func TestThemeOverrideMarshalUnmarshal(t *testing.T) {
+	v := drawingml.NewThemeOverride()
+	buf, _ := xml.Marshal(v)
+	v2 := drawingml.NewThemeOverride()
+	xml.Unmarshal(buf, v2)
 }

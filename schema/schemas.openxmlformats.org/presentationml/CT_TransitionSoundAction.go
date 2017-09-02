@@ -25,9 +25,6 @@ func NewCT_TransitionSoundAction() *CT_TransitionSoundAction {
 }
 
 func (m *CT_TransitionSoundAction) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.StSnd != nil {
 		sestSnd := xml.StartElement{Name: xml.Name{Local: "p:stSnd"}}

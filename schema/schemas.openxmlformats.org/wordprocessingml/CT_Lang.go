@@ -23,9 +23,6 @@ func NewCT_Lang() *CT_Lang {
 }
 
 func (m *CT_Lang) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:val"},
 		Value: fmt.Sprintf("%v", m.ValAttr)})
 	e.EncodeToken(start)

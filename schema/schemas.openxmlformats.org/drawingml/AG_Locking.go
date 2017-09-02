@@ -32,9 +32,6 @@ func NewAG_Locking() *AG_Locking {
 }
 
 func (m *AG_Locking) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.NoGrpAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "noGrp"},
 			Value: fmt.Sprintf("%v", *m.NoGrpAttr)})

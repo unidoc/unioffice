@@ -23,9 +23,6 @@ func NewCT_SdtDateMappingType() *CT_SdtDateMappingType {
 }
 
 func (m *CT_SdtDateMappingType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_SdtDateMappingTypeUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 		if err != nil {

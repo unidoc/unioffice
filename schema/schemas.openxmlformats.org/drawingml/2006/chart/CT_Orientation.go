@@ -22,9 +22,6 @@ func NewCT_Orientation() *CT_Orientation {
 }
 
 func (m *CT_Orientation) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_OrientationUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

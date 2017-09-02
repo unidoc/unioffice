@@ -23,9 +23,6 @@ func NewEG_FillModeProperties() *EG_FillModeProperties {
 }
 
 func (m *EG_FillModeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Tile != nil {
 		setile := xml.StartElement{Name: xml.Name{Local: "a:tile"}}
 		e.EncodeElement(m.Tile, setile)

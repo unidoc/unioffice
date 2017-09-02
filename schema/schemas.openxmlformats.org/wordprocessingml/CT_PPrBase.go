@@ -87,9 +87,6 @@ func NewCT_PPrBase() *CT_PPrBase {
 }
 
 func (m *CT_PPrBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.PStyle != nil {
 		sepStyle := xml.StartElement{Name: xml.Name{Local: "w:pStyle"}}

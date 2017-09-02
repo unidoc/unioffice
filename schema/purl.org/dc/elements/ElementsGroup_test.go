@@ -8,6 +8,7 @@
 package elements_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/purl.org/dc/elements"
@@ -21,4 +22,11 @@ func TestElementsGroupConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed elements.ElementsGroup should validate: %s", err)
 	}
+}
+
+func TestElementsGroupMarshalUnmarshal(t *testing.T) {
+	v := elements.NewElementsGroup()
+	buf, _ := xml.Marshal(v)
+	v2 := elements.NewElementsGroup()
+	xml.Unmarshal(buf, v2)
 }

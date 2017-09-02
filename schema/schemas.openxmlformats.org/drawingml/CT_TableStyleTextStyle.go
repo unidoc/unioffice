@@ -32,9 +32,6 @@ func NewCT_TableStyleTextStyle() *CT_TableStyleTextStyle {
 }
 
 func (m *CT_TableStyleTextStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BAttr != ST_OnOffStyleTypeUnset {
 		attr, err := m.BAttr.MarshalXMLAttr(xml.Name{Local: "b"})
 		if err != nil {

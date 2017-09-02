@@ -24,9 +24,6 @@ func NewCT_Phant() *CT_Phant {
 }
 
 func (m *CT_Phant) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.PhantPr != nil {
 		sephantPr := xml.StartElement{Name: xml.Name{Local: "m:phantPr"}}

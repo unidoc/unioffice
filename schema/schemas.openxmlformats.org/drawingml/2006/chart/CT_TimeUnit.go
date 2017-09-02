@@ -22,9 +22,6 @@ func NewCT_TimeUnit() *CT_TimeUnit {
 }
 
 func (m *CT_TimeUnit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_TimeUnitUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

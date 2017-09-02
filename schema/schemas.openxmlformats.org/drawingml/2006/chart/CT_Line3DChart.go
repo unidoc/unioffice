@@ -31,9 +31,6 @@ func NewCT_Line3DChart() *CT_Line3DChart {
 }
 
 func (m *CT_Line3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	segrouping := xml.StartElement{Name: xml.Name{Local: "grouping"}}
 	e.EncodeElement(m.Grouping, segrouping)

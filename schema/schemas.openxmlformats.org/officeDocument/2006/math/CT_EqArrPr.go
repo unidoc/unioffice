@@ -27,9 +27,6 @@ func NewCT_EqArrPr() *CT_EqArrPr {
 }
 
 func (m *CT_EqArrPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.BaseJc != nil {
 		sebaseJc := xml.StartElement{Name: xml.Name{Local: "m:baseJc"}}

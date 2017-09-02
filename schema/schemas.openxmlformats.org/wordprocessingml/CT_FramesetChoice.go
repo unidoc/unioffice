@@ -24,9 +24,6 @@ func NewCT_FramesetChoice() *CT_FramesetChoice {
 }
 
 func (m *CT_FramesetChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Frameset != nil {
 		seframeset := xml.StartElement{Name: xml.Name{Local: "w:frameset"}}
 		e.EncodeElement(m.Frameset, seframeset)

@@ -24,9 +24,6 @@ func NewCT_SoftEdgesEffect() *CT_SoftEdgesEffect {
 }
 
 func (m *CT_SoftEdgesEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rad"},
 		Value: fmt.Sprintf("%v", m.RadAttr)})
 	e.EncodeToken(start)

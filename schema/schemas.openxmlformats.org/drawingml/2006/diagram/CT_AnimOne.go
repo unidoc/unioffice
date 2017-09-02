@@ -22,9 +22,6 @@ func NewCT_AnimOne() *CT_AnimOne {
 }
 
 func (m *CT_AnimOne) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_AnimOneStrUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

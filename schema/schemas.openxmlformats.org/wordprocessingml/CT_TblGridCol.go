@@ -25,9 +25,6 @@ func NewCT_TblGridCol() *CT_TblGridCol {
 }
 
 func (m *CT_TblGridCol) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.WAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:w"},
 			Value: fmt.Sprintf("%v", *m.WAttr)})

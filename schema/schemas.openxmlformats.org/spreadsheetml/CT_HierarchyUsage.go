@@ -24,9 +24,6 @@ func NewCT_HierarchyUsage() *CT_HierarchyUsage {
 }
 
 func (m *CT_HierarchyUsage) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hierarchyUsage"},
 		Value: fmt.Sprintf("%v", m.HierarchyUsageAttr)})
 	e.EncodeToken(start)

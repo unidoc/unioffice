@@ -24,9 +24,6 @@ func NewCT_WholeE2oFormatting() *CT_WholeE2oFormatting {
 }
 
 func (m *CT_WholeE2oFormatting) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "a:CT_WholeE2oFormatting"
 	e.EncodeToken(start)
 	if m.Ln != nil {

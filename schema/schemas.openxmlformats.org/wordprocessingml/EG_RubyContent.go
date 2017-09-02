@@ -27,9 +27,6 @@ func NewEG_RubyContent() *EG_RubyContent {
 }
 
 func (m *EG_RubyContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.R != nil {
 		ser := xml.StartElement{Name: xml.Name{Local: "w:r"}}
 		e.EncodeElement(m.R, ser)

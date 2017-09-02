@@ -24,9 +24,6 @@ func NewCT_CustomProperties() *CT_CustomProperties {
 }
 
 func (m *CT_CustomProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secustomPr := xml.StartElement{Name: xml.Name{Local: "x:customPr"}}
 	e.EncodeElement(m.CustomPr, secustomPr)

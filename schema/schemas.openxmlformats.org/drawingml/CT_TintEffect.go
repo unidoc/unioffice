@@ -24,9 +24,6 @@ func NewCT_TintEffect() *CT_TintEffect {
 }
 
 func (m *CT_TintEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.HueAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hue"},
 			Value: fmt.Sprintf("%v", *m.HueAttr)})

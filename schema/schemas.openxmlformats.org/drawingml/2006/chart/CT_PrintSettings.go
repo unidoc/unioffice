@@ -25,9 +25,6 @@ func NewCT_PrintSettings() *CT_PrintSettings {
 }
 
 func (m *CT_PrintSettings) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.HeaderFooter != nil {
 		seheaderFooter := xml.StartElement{Name: xml.Name{Local: "headerFooter"}}

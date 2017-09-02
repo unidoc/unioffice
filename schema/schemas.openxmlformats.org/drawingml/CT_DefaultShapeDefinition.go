@@ -29,9 +29,6 @@ func NewCT_DefaultShapeDefinition() *CT_DefaultShapeDefinition {
 }
 
 func (m *CT_DefaultShapeDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sespPr := xml.StartElement{Name: xml.Name{Local: "a:spPr"}}
 	e.EncodeElement(m.SpPr, sespPr)

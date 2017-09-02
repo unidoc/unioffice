@@ -23,9 +23,6 @@ func NewCT_OrientationTransition() *CT_OrientationTransition {
 }
 
 func (m *CT_OrientationTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.DirAttr != ST_DirectionUnset {
 		attr, err := m.DirAttr.MarshalXMLAttr(xml.Name{Local: "dir"})
 		if err != nil {

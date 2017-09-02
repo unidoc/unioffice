@@ -33,9 +33,6 @@ func NewCT_TcMar() *CT_TcMar {
 }
 
 func (m *CT_TcMar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Top != nil {
 		setop := xml.StartElement{Name: xml.Name{Local: "w:top"}}

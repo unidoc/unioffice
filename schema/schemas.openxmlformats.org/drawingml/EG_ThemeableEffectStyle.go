@@ -23,9 +23,6 @@ func NewEG_ThemeableEffectStyle() *EG_ThemeableEffectStyle {
 }
 
 func (m *EG_ThemeableEffectStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Effect != nil {
 		seeffect := xml.StartElement{Name: xml.Name{Local: "a:effect"}}
 		e.EncodeElement(m.Effect, seeffect)

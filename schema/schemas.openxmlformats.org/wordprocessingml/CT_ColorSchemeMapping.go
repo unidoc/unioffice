@@ -45,9 +45,6 @@ func NewCT_ColorSchemeMapping() *CT_ColorSchemeMapping {
 }
 
 func (m *CT_ColorSchemeMapping) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Bg1Attr != ST_WmlColorSchemeIndexUnset {
 		attr, err := m.Bg1Attr.MarshalXMLAttr(xml.Name{Local: "w:bg1"})
 		if err != nil {

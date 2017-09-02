@@ -34,9 +34,6 @@ func NewCT_CommonSlideViewProperties() *CT_CommonSlideViewProperties {
 }
 
 func (m *CT_CommonSlideViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.SnapToGridAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "snapToGrid"},
 			Value: fmt.Sprintf("%v", *m.SnapToGridAttr)})

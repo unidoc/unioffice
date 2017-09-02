@@ -26,9 +26,6 @@ func NewCT_TLSetBehavior() *CT_TLSetBehavior {
 }
 
 func (m *CT_TLSetBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secBhvr := xml.StartElement{Name: xml.Name{Local: "p:cBhvr"}}
 	e.EncodeElement(m.CBhvr, secBhvr)

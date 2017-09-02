@@ -33,9 +33,6 @@ func NewCT_FileVersion() *CT_FileVersion {
 }
 
 func (m *CT_FileVersion) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AppNameAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "appName"},
 			Value: fmt.Sprintf("%v", *m.AppNameAttr)})

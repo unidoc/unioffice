@@ -23,9 +23,6 @@ func NewEG_ScriptStyle() *EG_ScriptStyle {
 }
 
 func (m *EG_ScriptStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "m:EG_ScriptStyle"
 	if m.Scr != nil {
 		sescr := xml.StartElement{Name: xml.Name{Local: "m:scr"}}

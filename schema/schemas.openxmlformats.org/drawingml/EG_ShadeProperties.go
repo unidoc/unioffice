@@ -23,9 +23,6 @@ func NewEG_ShadeProperties() *EG_ShadeProperties {
 }
 
 func (m *EG_ShadeProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Lin != nil {
 		selin := xml.StartElement{Name: xml.Name{Local: "a:lin"}}
 		e.EncodeElement(m.Lin, selin)

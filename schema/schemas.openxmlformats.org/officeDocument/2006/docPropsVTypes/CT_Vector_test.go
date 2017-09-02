@@ -8,6 +8,7 @@
 package docPropsVTypes_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
@@ -21,4 +22,11 @@ func TestCT_VectorConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed docPropsVTypes.CT_Vector should validate: %s", err)
 	}
+}
+
+func TestCT_VectorMarshalUnmarshal(t *testing.T) {
+	v := docPropsVTypes.NewCT_Vector()
+	buf, _ := xml.Marshal(v)
+	v2 := docPropsVTypes.NewCT_Vector()
+	xml.Unmarshal(buf, v2)
 }

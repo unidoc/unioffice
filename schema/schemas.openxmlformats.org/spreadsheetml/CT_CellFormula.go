@@ -35,9 +35,6 @@ func NewCT_CellFormula() *CT_CellFormula {
 }
 
 func (m *CT_CellFormula) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TAttr != ST_CellFormulaTypeUnset {
 		attr, err := m.TAttr.MarshalXMLAttr(xml.Name{Local: "t"})
 		if err != nil {

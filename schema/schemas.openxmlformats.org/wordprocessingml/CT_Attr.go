@@ -27,9 +27,6 @@ func NewCT_Attr() *CT_Attr {
 }
 
 func (m *CT_Attr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.UriAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:uri"},
 			Value: fmt.Sprintf("%v", *m.UriAttr)})

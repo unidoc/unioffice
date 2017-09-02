@@ -35,9 +35,6 @@ func NewCT_TLAnimateColorBehavior() *CT_TLAnimateColorBehavior {
 }
 
 func (m *CT_TLAnimateColorBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ClrSpcAttr != ST_TLAnimateColorSpaceUnset {
 		attr, err := m.ClrSpcAttr.MarshalXMLAttr(xml.Name{Local: "clrSpc"})
 		if err != nil {

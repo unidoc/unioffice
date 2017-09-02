@@ -25,9 +25,6 @@ func NewCT_Perm() *CT_Perm {
 }
 
 func (m *CT_Perm) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:id"},
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	if m.DisplacedByCustomXmlAttr != ST_DisplacedByCustomXmlUnset {

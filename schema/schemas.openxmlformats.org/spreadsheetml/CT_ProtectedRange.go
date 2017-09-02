@@ -41,9 +41,6 @@ func NewCT_ProtectedRange() *CT_ProtectedRange {
 }
 
 func (m *CT_ProtectedRange) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PasswordAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "password"},
 			Value: fmt.Sprintf("%v", *m.PasswordAttr)})

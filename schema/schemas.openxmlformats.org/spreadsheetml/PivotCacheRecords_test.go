@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestPivotCacheRecordsConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.PivotCacheRecords should validate: %s", err)
 	}
+}
+
+func TestPivotCacheRecordsMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewPivotCacheRecords()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewPivotCacheRecords()
+	xml.Unmarshal(buf, v2)
 }

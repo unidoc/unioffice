@@ -23,9 +23,6 @@ func NewCT_Drawing() *CT_Drawing {
 }
 
 func (m *CT_Drawing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "CT_Drawing"
 	e.EncodeToken(start)
 	if m.EG_Anchor != nil {

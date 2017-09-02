@@ -43,9 +43,6 @@ func NewCT_Stylesheet() *CT_Stylesheet {
 }
 
 func (m *CT_Stylesheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.NumFmts != nil {
 		senumFmts := xml.StartElement{Name: xml.Name{Local: "x:numFmts"}}

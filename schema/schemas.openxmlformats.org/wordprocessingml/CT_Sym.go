@@ -25,9 +25,6 @@ func NewCT_Sym() *CT_Sym {
 }
 
 func (m *CT_Sym) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.FontAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:font"},
 			Value: fmt.Sprintf("%v", *m.FontAttr)})

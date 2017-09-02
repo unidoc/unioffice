@@ -26,9 +26,6 @@ func NewCT_VerticalAlignFontProperty() *CT_VerticalAlignFontProperty {
 }
 
 func (m *CT_VerticalAlignFontProperty) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 	if err != nil {
 		return err

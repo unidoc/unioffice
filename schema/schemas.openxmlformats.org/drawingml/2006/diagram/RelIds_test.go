@@ -8,6 +8,7 @@
 package diagram_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/diagram"
@@ -21,4 +22,11 @@ func TestRelIdsConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed diagram.RelIds should validate: %s", err)
 	}
+}
+
+func TestRelIdsMarshalUnmarshal(t *testing.T) {
+	v := diagram.NewRelIds()
+	buf, _ := xml.Marshal(v)
+	v2 := diagram.NewRelIds()
+	xml.Unmarshal(buf, v2)
 }

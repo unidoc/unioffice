@@ -23,9 +23,6 @@ func NewCT_AdjLst() *CT_AdjLst {
 }
 
 func (m *CT_AdjLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Adj != nil {
 		seadj := xml.StartElement{Name: xml.Name{Local: "adj"}}

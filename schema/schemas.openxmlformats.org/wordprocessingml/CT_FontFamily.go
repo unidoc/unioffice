@@ -24,9 +24,6 @@ func NewCT_FontFamily() *CT_FontFamily {
 }
 
 func (m *CT_FontFamily) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 	if err != nil {
 		return err

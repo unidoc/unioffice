@@ -27,9 +27,6 @@ func NewCT_GroupShapeChoice() *CT_GroupShapeChoice {
 }
 
 func (m *CT_GroupShapeChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Sp != nil {
 		sesp := xml.StartElement{Name: xml.Name{Local: "xdr:sp"}}
 		e.EncodeElement(m.Sp, sesp)

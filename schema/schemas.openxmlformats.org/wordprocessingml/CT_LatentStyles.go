@@ -39,9 +39,6 @@ func NewCT_LatentStyles() *CT_LatentStyles {
 }
 
 func (m *CT_LatentStyles) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.DefLockedStateAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:defLockedState"},
 			Value: fmt.Sprintf("%v", *m.DefLockedStateAttr)})

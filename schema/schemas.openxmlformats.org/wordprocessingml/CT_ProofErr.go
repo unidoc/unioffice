@@ -24,9 +24,6 @@ func NewCT_ProofErr() *CT_ProofErr {
 }
 
 func (m *CT_ProofErr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "w:type"})
 	if err != nil {
 		return err

@@ -38,9 +38,6 @@ func NewCT_RubyPr() *CT_RubyPr {
 }
 
 func (m *CT_RubyPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	serubyAlign := xml.StartElement{Name: xml.Name{Local: "w:rubyAlign"}}
 	e.EncodeElement(m.RubyAlign, serubyAlign)

@@ -27,9 +27,6 @@ func NewEG_BlockLevelElts() *EG_BlockLevelElts {
 }
 
 func (m *EG_BlockLevelElts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AltChunk != nil {
 		sealtChunk := xml.StartElement{Name: xml.Name{Local: "w:altChunk"}}
 		e.EncodeElement(m.AltChunk, sealtChunk)

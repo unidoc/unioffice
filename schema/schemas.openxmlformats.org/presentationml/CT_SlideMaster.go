@@ -44,9 +44,6 @@ func NewCT_SlideMaster() *CT_SlideMaster {
 }
 
 func (m *CT_SlideMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PreserveAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "preserve"},
 			Value: fmt.Sprintf("%v", *m.PreserveAttr)})

@@ -24,9 +24,6 @@ func NewCT_MailMergeOdsoFMDFieldType() *CT_MailMergeOdsoFMDFieldType {
 }
 
 func (m *CT_MailMergeOdsoFMDFieldType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 	if err != nil {
 		return err

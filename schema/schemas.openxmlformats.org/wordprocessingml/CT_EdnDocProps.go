@@ -31,9 +31,6 @@ func NewCT_EdnDocProps() *CT_EdnDocProps {
 }
 
 func (m *CT_EdnDocProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Pos != nil {
 		sepos := xml.StartElement{Name: xml.Name{Local: "w:pos"}}

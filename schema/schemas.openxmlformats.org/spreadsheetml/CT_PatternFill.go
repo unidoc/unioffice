@@ -27,9 +27,6 @@ func NewCT_PatternFill() *CT_PatternFill {
 }
 
 func (m *CT_PatternFill) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.PatternTypeAttr != ST_PatternTypeUnset {
 		attr, err := m.PatternTypeAttr.MarshalXMLAttr(xml.Name{Local: "patternType"})
 		if err != nil {

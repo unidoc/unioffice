@@ -24,9 +24,6 @@ func NewEG_Anchor() *EG_Anchor {
 }
 
 func (m *EG_Anchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TwoCellAnchor != nil {
 		setwoCellAnchor := xml.StartElement{Name: xml.Name{Local: "xdr:twoCellAnchor"}}
 		e.EncodeElement(m.TwoCellAnchor, setwoCellAnchor)

@@ -30,9 +30,6 @@ func NewCT_Algorithm() *CT_Algorithm {
 }
 
 func (m *CT_Algorithm) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 	if err != nil {
 		return err

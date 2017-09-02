@@ -29,9 +29,6 @@ func NewCT_ShapeStyle() *CT_ShapeStyle {
 }
 
 func (m *CT_ShapeStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	selnRef := xml.StartElement{Name: xml.Name{Local: "a:lnRef"}}
 	e.EncodeElement(m.LnRef, selnRef)

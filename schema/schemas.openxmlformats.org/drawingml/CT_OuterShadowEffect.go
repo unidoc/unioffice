@@ -38,9 +38,6 @@ func NewCT_OuterShadowEffect() *CT_OuterShadowEffect {
 }
 
 func (m *CT_OuterShadowEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BlurRadAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "blurRad"},
 			Value: fmt.Sprintf("%v", *m.BlurRadAttr)})

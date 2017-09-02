@@ -8,6 +8,7 @@
 package math_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/math"
@@ -21,4 +22,11 @@ func TestCT_UnSignedIntegerConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed math.CT_UnSignedInteger should validate: %s", err)
 	}
+}
+
+func TestCT_UnSignedIntegerMarshalUnmarshal(t *testing.T) {
+	v := math.NewCT_UnSignedInteger()
+	buf, _ := xml.Marshal(v)
+	v2 := math.NewCT_UnSignedInteger()
+	xml.Unmarshal(buf, v2)
 }

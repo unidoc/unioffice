@@ -32,9 +32,6 @@ func NewCT_InputCells() *CT_InputCells {
 }
 
 func (m *CT_InputCells) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r"},
 		Value: fmt.Sprintf("%v", m.RAttr)})
 	if m.DeletedAttr != nil {

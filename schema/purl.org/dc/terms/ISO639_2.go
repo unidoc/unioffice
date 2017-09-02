@@ -21,9 +21,6 @@ func NewISO639_2() *ISO639_2 {
 }
 
 func (m *ISO639_2) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "ISO639-2"
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

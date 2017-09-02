@@ -29,9 +29,6 @@ func NewCT_OfficeStyleSheet() *CT_OfficeStyleSheet {
 }
 
 func (m *CT_OfficeStyleSheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.NameAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "name"},
 			Value: fmt.Sprintf("%v", *m.NameAttr)})

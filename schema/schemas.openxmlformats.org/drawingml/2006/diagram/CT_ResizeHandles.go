@@ -22,9 +22,6 @@ func NewCT_ResizeHandles() *CT_ResizeHandles {
 }
 
 func (m *CT_ResizeHandles) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_ResizeHandlesStrUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

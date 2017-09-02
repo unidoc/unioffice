@@ -24,9 +24,6 @@ func NewCT_ExternalLinkChoice() *CT_ExternalLinkChoice {
 }
 
 func (m *CT_ExternalLinkChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ExternalBook != nil {
 		seexternalBook := xml.StartElement{Name: xml.Name{Local: "x:externalBook"}}
 		e.EncodeElement(m.ExternalBook, seexternalBook)

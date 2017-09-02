@@ -30,9 +30,6 @@ func NewCT_Marker() *CT_Marker {
 }
 
 func (m *CT_Marker) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secol := xml.StartElement{Name: xml.Name{Local: "xdr:col"}}
 	e.EncodeElement(m.Col, secol)

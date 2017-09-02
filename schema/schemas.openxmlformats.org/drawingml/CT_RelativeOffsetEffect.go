@@ -23,9 +23,6 @@ func NewCT_RelativeOffsetEffect() *CT_RelativeOffsetEffect {
 }
 
 func (m *CT_RelativeOffsetEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.TxAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "tx"},
 			Value: fmt.Sprintf("%v", *m.TxAttr)})

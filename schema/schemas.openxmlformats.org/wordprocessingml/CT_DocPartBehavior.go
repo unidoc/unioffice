@@ -24,9 +24,6 @@ func NewCT_DocPartBehavior() *CT_DocPartBehavior {
 }
 
 func (m *CT_DocPartBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 	if err != nil {
 		return err

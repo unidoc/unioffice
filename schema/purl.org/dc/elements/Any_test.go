@@ -8,6 +8,7 @@
 package elements_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/purl.org/dc/elements"
@@ -21,4 +22,11 @@ func TestAnyConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed elements.Any should validate: %s", err)
 	}
+}
+
+func TestAnyMarshalUnmarshal(t *testing.T) {
+	v := elements.NewAny()
+	buf, _ := xml.Marshal(v)
+	v2 := elements.NewAny()
+	xml.Unmarshal(buf, v2)
 }

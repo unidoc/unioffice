@@ -23,9 +23,6 @@ func NewEG_ThemeableFontStyles() *EG_ThemeableFontStyles {
 }
 
 func (m *EG_ThemeableFontStyles) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Font != nil {
 		sefont := xml.StartElement{Name: xml.Name{Local: "a:font"}}
 		e.EncodeElement(m.Font, sefont)

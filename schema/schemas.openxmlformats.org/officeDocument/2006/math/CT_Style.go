@@ -22,9 +22,6 @@ func NewCT_Style() *CT_Style {
 }
 
 func (m *CT_Style) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_StyleUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "m:val"})
 		if err != nil {

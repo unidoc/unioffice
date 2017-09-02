@@ -24,9 +24,6 @@ func NewCT_OleObjectEmbed() *CT_OleObjectEmbed {
 }
 
 func (m *CT_OleObjectEmbed) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.FollowColorSchemeAttr != ST_OleObjectFollowColorSchemeUnset {
 		attr, err := m.FollowColorSchemeAttr.MarshalXMLAttr(xml.Name{Local: "followColorScheme"})
 		if err != nil {

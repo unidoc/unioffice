@@ -23,9 +23,6 @@ func NewCT_Path2DMoveTo() *CT_Path2DMoveTo {
 }
 
 func (m *CT_Path2DMoveTo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sept := xml.StartElement{Name: xml.Name{Local: "a:pt"}}
 	e.EncodeElement(m.Pt, sept)

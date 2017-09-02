@@ -8,6 +8,7 @@
 package wordprocessingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -21,4 +22,11 @@ func TestEG_PContentConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingml.EG_PContent should validate: %s", err)
 	}
+}
+
+func TestEG_PContentMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingml.NewEG_PContent()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingml.NewEG_PContent()
+	xml.Unmarshal(buf, v2)
 }

@@ -23,9 +23,6 @@ func NewCT_ColorMRU() *CT_ColorMRU {
 }
 
 func (m *CT_ColorMRU) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "a:CT_ColorMRU"
 	e.EncodeToken(start)
 	if m.EG_ColorChoice != nil {

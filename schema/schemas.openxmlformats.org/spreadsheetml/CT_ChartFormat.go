@@ -32,9 +32,6 @@ func NewCT_ChartFormat() *CT_ChartFormat {
 }
 
 func (m *CT_ChartFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "chart"},
 		Value: fmt.Sprintf("%v", m.ChartAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "format"},

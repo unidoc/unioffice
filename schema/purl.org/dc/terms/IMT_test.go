@@ -8,6 +8,7 @@
 package terms_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/purl.org/dc/terms"
@@ -21,4 +22,11 @@ func TestIMTConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed terms.IMT should validate: %s", err)
 	}
+}
+
+func TestIMTMarshalUnmarshal(t *testing.T) {
+	v := terms.NewIMT()
+	buf, _ := xml.Marshal(v)
+	v2 := terms.NewIMT()
+	xml.Unmarshal(buf, v2)
 }

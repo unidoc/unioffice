@@ -51,9 +51,6 @@ func NewCT_Anchor() *CT_Anchor {
 }
 
 func (m *CT_Anchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.DistTAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "distT"},
 			Value: fmt.Sprintf("%v", *m.DistTAttr)})

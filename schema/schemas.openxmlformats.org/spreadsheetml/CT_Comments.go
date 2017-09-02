@@ -28,9 +28,6 @@ func NewCT_Comments() *CT_Comments {
 }
 
 func (m *CT_Comments) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seauthors := xml.StartElement{Name: xml.Name{Local: "x:authors"}}
 	e.EncodeElement(m.Authors, seauthors)

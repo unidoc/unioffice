@@ -67,9 +67,6 @@ func NewCT_SectPr() *CT_SectPr {
 }
 
 func (m *CT_SectPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.RsidRPrAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:rsidRPr"},
 			Value: fmt.Sprintf("%v", *m.RsidRPrAttr)})

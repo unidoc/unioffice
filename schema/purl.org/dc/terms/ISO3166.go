@@ -21,9 +21,6 @@ func NewISO3166() *ISO3166 {
 }
 
 func (m *ISO3166) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "ISO3166"
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -29,9 +29,6 @@ func NewCT_GvmlPicture() *CT_GvmlPicture {
 }
 
 func (m *CT_GvmlPicture) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	senvPicPr := xml.StartElement{Name: xml.Name{Local: "a:nvPicPr"}}
 	e.EncodeElement(m.NvPicPr, senvPicPr)

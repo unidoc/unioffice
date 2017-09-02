@@ -25,9 +25,6 @@ func NewCT_Fill() *CT_Fill {
 }
 
 func (m *CT_Fill) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.PatternFill != nil {
 		sepatternFill := xml.StartElement{Name: xml.Name{Local: "x:patternFill"}}

@@ -33,9 +33,6 @@ func NewCT_ObjectAnchor() *CT_ObjectAnchor {
 }
 
 func (m *CT_ObjectAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.MoveWithCellsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "moveWithCells"},
 			Value: fmt.Sprintf("%v", *m.MoveWithCellsAttr)})

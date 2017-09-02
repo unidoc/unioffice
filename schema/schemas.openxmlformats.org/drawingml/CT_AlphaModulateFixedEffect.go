@@ -22,9 +22,6 @@ func NewCT_AlphaModulateFixedEffect() *CT_AlphaModulateFixedEffect {
 }
 
 func (m *CT_AlphaModulateFixedEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.AmtAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "amt"},
 			Value: fmt.Sprintf("%v", *m.AmtAttr)})

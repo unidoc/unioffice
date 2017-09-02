@@ -23,9 +23,6 @@ func NewEG_ThemeableFillStyle() *EG_ThemeableFillStyle {
 }
 
 func (m *EG_ThemeableFillStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Fill != nil {
 		sefill := xml.StartElement{Name: xml.Name{Local: "a:fill"}}
 		e.EncodeElement(m.Fill, sefill)

@@ -29,9 +29,6 @@ func NewCT_NumLvl() *CT_NumLvl {
 }
 
 func (m *CT_NumLvl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:ilvl"},
 		Value: fmt.Sprintf("%v", m.IlvlAttr)})
 	e.EncodeToken(start)

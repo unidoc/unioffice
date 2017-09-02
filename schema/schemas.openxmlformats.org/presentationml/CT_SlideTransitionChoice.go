@@ -42,9 +42,6 @@ func NewCT_SlideTransitionChoice() *CT_SlideTransitionChoice {
 }
 
 func (m *CT_SlideTransitionChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Blinds != nil {
 		seblinds := xml.StartElement{Name: xml.Name{Local: "p:blinds"}}
 		e.EncodeElement(m.Blinds, seblinds)

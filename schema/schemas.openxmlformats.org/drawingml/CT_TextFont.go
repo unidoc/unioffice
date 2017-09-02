@@ -26,9 +26,6 @@ func NewCT_TextFont() *CT_TextFont {
 }
 
 func (m *CT_TextFont) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "typeface"},
 		Value: fmt.Sprintf("%v", m.TypefaceAttr)})
 	if m.PanoseAttr != nil {

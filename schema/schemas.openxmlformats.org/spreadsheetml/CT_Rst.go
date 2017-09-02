@@ -32,9 +32,6 @@ func NewCT_Rst() *CT_Rst {
 }
 
 func (m *CT_Rst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.T != nil {
 		set := xml.StartElement{Name: xml.Name{Local: "x:t"}}

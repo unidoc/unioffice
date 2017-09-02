@@ -32,9 +32,6 @@ func NewCT_Connector() *CT_Connector {
 }
 
 func (m *CT_Connector) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	senvCxnSpPr := xml.StartElement{Name: xml.Name{Local: "p:nvCxnSpPr"}}
 	e.EncodeElement(m.NvCxnSpPr, senvCxnSpPr)

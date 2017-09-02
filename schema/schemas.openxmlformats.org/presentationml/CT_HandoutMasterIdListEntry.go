@@ -24,9 +24,6 @@ func NewCT_HandoutMasterIdListEntry() *CT_HandoutMasterIdListEntry {
 }
 
 func (m *CT_HandoutMasterIdListEntry) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:id"},
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	e.EncodeToken(start)

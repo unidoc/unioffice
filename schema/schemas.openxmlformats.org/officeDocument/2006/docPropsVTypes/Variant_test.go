@@ -8,6 +8,7 @@
 package docPropsVTypes_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
@@ -21,4 +22,11 @@ func TestVariantConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed docPropsVTypes.Variant should validate: %s", err)
 	}
+}
+
+func TestVariantMarshalUnmarshal(t *testing.T) {
+	v := docPropsVTypes.NewVariant()
+	buf, _ := xml.Marshal(v)
+	v2 := docPropsVTypes.NewVariant()
+	xml.Unmarshal(buf, v2)
 }

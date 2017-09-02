@@ -8,6 +8,7 @@
 package content_types_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/package/2006/content_types"
@@ -21,4 +22,11 @@ func TestOverrideConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed content_types.Override should validate: %s", err)
 	}
+}
+
+func TestOverrideMarshalUnmarshal(t *testing.T) {
+	v := content_types.NewOverride()
+	buf, _ := xml.Marshal(v)
+	v2 := content_types.NewOverride()
+	xml.Unmarshal(buf, v2)
 }

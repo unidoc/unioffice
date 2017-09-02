@@ -21,9 +21,6 @@ func NewBox() *Box {
 }
 
 func (m *Box) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Name.Local = "Box"
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -25,9 +25,6 @@ func NewEG_PieChartShared() *EG_PieChartShared {
 }
 
 func (m *EG_PieChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.VaryColors != nil {
 		sevaryColors := xml.StartElement{Name: xml.Name{Local: "varyColors"}}
 		e.EncodeElement(m.VaryColors, sevaryColors)

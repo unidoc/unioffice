@@ -28,9 +28,6 @@ func NewCT_WorksheetSource() *CT_WorksheetSource {
 }
 
 func (m *CT_WorksheetSource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.RefAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ref"},
 			Value: fmt.Sprintf("%v", *m.RefAttr)})

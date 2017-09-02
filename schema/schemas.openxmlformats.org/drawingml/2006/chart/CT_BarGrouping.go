@@ -22,9 +22,6 @@ func NewCT_BarGrouping() *CT_BarGrouping {
 }
 
 func (m *CT_BarGrouping) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_BarGroupingUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

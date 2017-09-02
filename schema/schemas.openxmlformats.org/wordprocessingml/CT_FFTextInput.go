@@ -29,9 +29,6 @@ func NewCT_FFTextInput() *CT_FFTextInput {
 }
 
 func (m *CT_FFTextInput) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Type != nil {
 		setype := xml.StartElement{Name: xml.Name{Local: "w:type"}}

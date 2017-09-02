@@ -31,9 +31,6 @@ func NewCT_Cfvo() *CT_Cfvo {
 }
 
 func (m *CT_Cfvo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
 	if err != nil {
 		return err

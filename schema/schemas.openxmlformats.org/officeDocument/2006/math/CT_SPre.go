@@ -28,9 +28,6 @@ func NewCT_SPre() *CT_SPre {
 }
 
 func (m *CT_SPre) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.SPrePr != nil {
 		sesPrePr := xml.StartElement{Name: xml.Name{Local: "m:sPrePr"}}

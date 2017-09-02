@@ -33,9 +33,6 @@ func NewCT_ConditionalFormat() *CT_ConditionalFormat {
 }
 
 func (m *CT_ConditionalFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ScopeAttr != ST_ScopeUnset {
 		attr, err := m.ScopeAttr.MarshalXMLAttr(xml.Name{Local: "scope"})
 		if err != nil {

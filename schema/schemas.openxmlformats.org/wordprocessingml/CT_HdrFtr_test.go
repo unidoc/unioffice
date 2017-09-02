@@ -8,6 +8,7 @@
 package wordprocessingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -21,4 +22,11 @@ func TestCT_HdrFtrConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingml.CT_HdrFtr should validate: %s", err)
 	}
+}
+
+func TestCT_HdrFtrMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingml.NewCT_HdrFtr()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingml.NewCT_HdrFtr()
+	xml.Unmarshal(buf, v2)
 }

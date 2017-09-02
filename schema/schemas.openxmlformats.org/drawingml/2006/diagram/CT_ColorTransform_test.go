@@ -8,6 +8,7 @@
 package diagram_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/diagram"
@@ -21,4 +22,11 @@ func TestCT_ColorTransformConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed diagram.CT_ColorTransform should validate: %s", err)
 	}
+}
+
+func TestCT_ColorTransformMarshalUnmarshal(t *testing.T) {
+	v := diagram.NewCT_ColorTransform()
+	buf, _ := xml.Marshal(v)
+	v2 := diagram.NewCT_ColorTransform()
+	xml.Unmarshal(buf, v2)
 }

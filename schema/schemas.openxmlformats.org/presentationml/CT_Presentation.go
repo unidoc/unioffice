@@ -81,9 +81,6 @@ func NewCT_Presentation() *CT_Presentation {
 }
 
 func (m *CT_Presentation) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ServerZoomAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "serverZoom"},
 			Value: fmt.Sprintf("%v", *m.ServerZoomAttr)})

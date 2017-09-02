@@ -37,9 +37,6 @@ func NewCT_RangeSet() *CT_RangeSet {
 }
 
 func (m *CT_RangeSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.I1Attr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "i1"},
 			Value: fmt.Sprintf("%v", *m.I1Attr)})

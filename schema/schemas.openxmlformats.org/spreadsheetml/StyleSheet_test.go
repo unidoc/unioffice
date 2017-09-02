@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestStyleSheetConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.StyleSheet should validate: %s", err)
 	}
+}
+
+func TestStyleSheetMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewStyleSheet()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewStyleSheet()
+	xml.Unmarshal(buf, v2)
 }

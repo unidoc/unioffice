@@ -25,9 +25,6 @@ func NewEG_SurfaceChartShared() *EG_SurfaceChartShared {
 }
 
 func (m *EG_SurfaceChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Wireframe != nil {
 		sewireframe := xml.StartElement{Name: xml.Name{Local: "wireframe"}}
 		e.EncodeElement(m.Wireframe, sewireframe)

@@ -22,9 +22,6 @@ func NewCT_Script() *CT_Script {
 }
 
 func (m *CT_Script) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_ScriptUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "m:val"})
 		if err != nil {

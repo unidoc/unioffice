@@ -28,9 +28,6 @@ func NewCT_NumPicBullet() *CT_NumPicBullet {
 }
 
 func (m *CT_NumPicBullet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:numPicBulletId"},
 		Value: fmt.Sprintf("%v", m.NumPicBulletIdAttr)})
 	e.EncodeToken(start)

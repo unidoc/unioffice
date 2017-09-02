@@ -29,9 +29,6 @@ func NewCT_FtnProps() *CT_FtnProps {
 }
 
 func (m *CT_FtnProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.Pos != nil {
 		sepos := xml.StartElement{Name: xml.Name{Local: "w:pos"}}

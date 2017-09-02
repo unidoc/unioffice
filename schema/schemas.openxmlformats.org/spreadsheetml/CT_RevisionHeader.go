@@ -46,9 +46,6 @@ func NewCT_RevisionHeader() *CT_RevisionHeader {
 }
 
 func (m *CT_RevisionHeader) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "guid"},
 		Value: fmt.Sprintf("%v", m.GuidAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dateTime"},

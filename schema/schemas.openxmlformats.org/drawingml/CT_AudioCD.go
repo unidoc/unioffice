@@ -26,9 +26,6 @@ func NewCT_AudioCD() *CT_AudioCD {
 }
 
 func (m *CT_AudioCD) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	sest := xml.StartElement{Name: xml.Name{Local: "a:st"}}
 	e.EncodeElement(m.St, sest)

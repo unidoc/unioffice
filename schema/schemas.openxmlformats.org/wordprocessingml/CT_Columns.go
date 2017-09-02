@@ -35,9 +35,6 @@ func NewCT_Columns() *CT_Columns {
 }
 
 func (m *CT_Columns) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.EqualWidthAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:equalWidth"},
 			Value: fmt.Sprintf("%v", *m.EqualWidthAttr)})

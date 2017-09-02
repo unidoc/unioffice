@@ -23,9 +23,6 @@ func NewEG_Geometry() *EG_Geometry {
 }
 
 func (m *EG_Geometry) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.CustGeom != nil {
 		secustGeom := xml.StartElement{Name: xml.Name{Local: "a:custGeom"}}
 		e.EncodeElement(m.CustGeom, secustGeom)

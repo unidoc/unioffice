@@ -25,9 +25,6 @@ func NewEG_HdrFtrReferences() *EG_HdrFtrReferences {
 }
 
 func (m *EG_HdrFtrReferences) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.HeaderReference != nil {
 		seheaderReference := xml.StartElement{Name: xml.Name{Local: "w:headerReference"}}
 		e.EncodeElement(m.HeaderReference, seheaderReference)

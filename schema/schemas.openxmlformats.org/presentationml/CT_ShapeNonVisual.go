@@ -32,9 +32,6 @@ func NewCT_ShapeNonVisual() *CT_ShapeNonVisual {
 }
 
 func (m *CT_ShapeNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	secNvPr := xml.StartElement{Name: xml.Name{Local: "p:cNvPr"}}
 	e.EncodeElement(m.CNvPr, secNvPr)

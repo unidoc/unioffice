@@ -8,6 +8,7 @@
 package wordprocessingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -21,4 +22,11 @@ func TestCT_FontsConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingml.CT_Fonts should validate: %s", err)
 	}
+}
+
+func TestCT_FontsMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingml.NewCT_Fonts()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingml.NewCT_Fonts()
+	xml.Unmarshal(buf, v2)
 }

@@ -22,9 +22,6 @@ func NewCT_TickMark() *CT_TickMark {
 }
 
 func (m *CT_TickMark) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ValAttr != ST_TickMarkUnset {
 		attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "val"})
 		if err != nil {

@@ -25,9 +25,6 @@ func NewCT_SerTxChoice() *CT_SerTxChoice {
 }
 
 func (m *CT_SerTxChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.StrRef != nil {
 		sestrRef := xml.StartElement{Name: xml.Name{Local: "strRef"}}
 		e.EncodeElement(m.StrRef, sestrRef)

@@ -26,9 +26,6 @@ func NewCT_MetadataStringIndex() *CT_MetadataStringIndex {
 }
 
 func (m *CT_MetadataStringIndex) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "x"},
 		Value: fmt.Sprintf("%v", m.XAttr)})
 	if m.SAttr != nil {

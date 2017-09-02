@@ -31,9 +31,6 @@ func NewEG_ContentCellContent() *EG_ContentCellContent {
 }
 
 func (m *EG_ContentCellContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.Tc != nil {
 		setc := xml.StartElement{Name: xml.Name{Local: "w:tc"}}
 		e.EncodeElement(m.Tc, setc)

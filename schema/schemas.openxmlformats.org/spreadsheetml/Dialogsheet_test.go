@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestDialogsheetConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.Dialogsheet should validate: %s", err)
 	}
+}
+
+func TestDialogsheetMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewDialogsheet()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewDialogsheet()
+	xml.Unmarshal(buf, v2)
 }

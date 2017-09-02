@@ -25,9 +25,6 @@ func NewEG_ChildSlide() *EG_ChildSlide {
 }
 
 func (m *EG_ChildSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.ClrMapOvr != nil {
 		seclrMapOvr := xml.StartElement{Name: xml.Name{Local: "p:clrMapOvr"}}
 		e.EncodeElement(m.ClrMapOvr, seclrMapOvr)

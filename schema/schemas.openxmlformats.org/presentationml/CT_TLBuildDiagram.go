@@ -27,9 +27,6 @@ func NewCT_TLBuildDiagram() *CT_TLBuildDiagram {
 }
 
 func (m *CT_TLBuildDiagram) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	if m.BldAttr != ST_TLDiagramBuildTypeUnset {
 		attr, err := m.BldAttr.MarshalXMLAttr(xml.Name{Local: "bld"})
 		if err != nil {

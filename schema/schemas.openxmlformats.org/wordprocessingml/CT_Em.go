@@ -24,9 +24,6 @@ func NewCT_Em() *CT_Em {
 }
 
 func (m *CT_Em) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	attr, err := m.ValAttr.MarshalXMLAttr(xml.Name{Local: "w:val"})
 	if err != nil {
 		return err

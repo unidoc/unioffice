@@ -8,6 +8,7 @@
 package wordprocessingml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -21,4 +22,11 @@ func TestAG_TransitionalPasswordConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed wordprocessingml.AG_TransitionalPassword should validate: %s", err)
 	}
+}
+
+func TestAG_TransitionalPasswordMarshalUnmarshal(t *testing.T) {
+	v := wordprocessingml.NewAG_TransitionalPassword()
+	buf, _ := xml.Marshal(v)
+	v2 := wordprocessingml.NewAG_TransitionalPassword()
+	xml.Unmarshal(buf, v2)
 }

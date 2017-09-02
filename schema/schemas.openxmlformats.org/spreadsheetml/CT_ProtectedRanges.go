@@ -24,9 +24,6 @@ func NewCT_ProtectedRanges() *CT_ProtectedRanges {
 }
 
 func (m *CT_ProtectedRanges) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	seprotectedRange := xml.StartElement{Name: xml.Name{Local: "x:protectedRange"}}
 	e.EncodeElement(m.ProtectedRange, seprotectedRange)

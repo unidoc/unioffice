@@ -8,6 +8,7 @@
 package spreadsheetml_test
 
 import (
+	"encoding/xml"
 	"testing"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -21,4 +22,11 @@ func TestChartsheetConstructor(t *testing.T) {
 	if err := v.Validate(); err != nil {
 		t.Errorf("newly constructed spreadsheetml.Chartsheet should validate: %s", err)
 	}
+}
+
+func TestChartsheetMarshalUnmarshal(t *testing.T) {
+	v := spreadsheetml.NewChartsheet()
+	buf, _ := xml.Marshal(v)
+	v2 := spreadsheetml.NewChartsheet()
+	xml.Unmarshal(buf, v2)
 }

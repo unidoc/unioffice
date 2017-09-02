@@ -26,9 +26,6 @@ func NewCT_Scaling() *CT_Scaling {
 }
 
 func (m *CT_Scaling) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.LogBase != nil {
 		selogBase := xml.StartElement{Name: xml.Name{Local: "logBase"}}

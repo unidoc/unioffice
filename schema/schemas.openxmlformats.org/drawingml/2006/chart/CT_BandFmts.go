@@ -23,9 +23,6 @@ func NewCT_BandFmts() *CT_BandFmts {
 }
 
 func (m *CT_BandFmts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m == nil {
-		return nil
-	}
 	e.EncodeToken(start)
 	if m.BandFmt != nil {
 		sebandFmt := xml.StartElement{Name: xml.Name{Local: "bandFmt"}}
