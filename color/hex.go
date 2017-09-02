@@ -20,7 +20,7 @@ func FromHex(s string) Color {
 	var r, g, b uint8
 	n, _ := fmt.Sscanf(s, "%02x%02x%02x", &r, &g, &b)
 	if n == 3 {
-		return RGB(r,g,b)
+		return RGB(r, g, b)
 	}
-return Auto
+	return Auto
 }
