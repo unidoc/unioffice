@@ -23,6 +23,7 @@ var nl = []byte{'\r', '\n'}
 // with a standard XML header.
 func MarshalXML(z *zip.Writer, filename string, v interface{}) error {
 	fh := &zip.FileHeader{}
+	fh.Method = zip.Deflate
 	fh.Name = filename
 	fh.SetModTime(time.Now())
 
