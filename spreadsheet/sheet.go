@@ -27,6 +27,16 @@ func (s Sheet) AddRow() Row {
 	return Row{s.w, r}
 }
 
+// Name returns the sheet name
+func (s Sheet) Name() string {
+	return s.x.NameAttr
+}
+
+// SetName sets the sheet name.
+func (s Sheet) SetName(name string) {
+	s.x.NameAttr = name
+}
+
 // Validate validates the sheet, returning an error if it is found to be invalid.
 func (s Sheet) Validate() error {
 	return s.x.Validate()
