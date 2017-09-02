@@ -11,7 +11,6 @@ import (
 	"fmt"
 
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -57,7 +56,6 @@ func (s Styles) InitializeDefault() {
 	s.initializeDocDefaults()
 	s.initializeStyleDefaults()
 }
-
 func (s Styles) initializeStyleDefaults() {
 	// Normal
 	normal := s.AddStyle("Normal", wml.ST_StyleTypeParagraph, true)
@@ -71,32 +69,38 @@ func (s Styles) initializeStyleDefaults() {
 	dpf.SetSemiHidden(true)
 	dpf.SetUnhideWhenUsed(true)
 
-	// Heading1
-	heading1Char := s.AddStyle("Heading1Char", wml.ST_StyleTypeCharacter, true)
-	heading1Char.SetName("Heading 1 Char")
-	heading1Char.SetLinkedStyle("Heading1")
-	heading1Char.SetBasedOn(dpf.StyleID())
-	heading1Char.RunProperties().SetSize(32 / measurement.HalfPoint)
-	heading1Char.RunProperties().Fonts().SetASCIITheme(wml.ST_ThemeMajorAscii)
-	heading1Char.RunProperties().Fonts().SetEastAsiaTheme(wml.ST_ThemeMajorEastAsia)
-	heading1Char.RunProperties().Fonts().SetHANSITheme(wml.ST_ThemeMajorHAnsi)
-	heading1Char.RunProperties().Fonts().SetCSTheme(wml.ST_ThemeMajorBidi)
-	heading1Char.RunProperties().Color().SetColor(color.FromHex("2F5496"))
-	heading1Char.RunProperties().Color().SetThemeColor(wml.ST_ThemeColorAccent1)
-	heading1Char.RunProperties().Color().SetThemeShade(0xbf)
+	// Title
+	titleChar := s.AddStyle("TitleChar", wml.ST_StyleTypeCharacter, false)
+	titleChar.SetName("Title Char")
+	titleChar.SetBasedOn(dpf.StyleID())
+	titleChar.SetLinkedStyle("Title")
+	titleChar.SetUISortOrder(10)
+	titleChar.RunProperties().Fonts().SetASCIITheme(wml.ST_ThemeMajorAscii)
+	titleChar.RunProperties().Fonts().SetEastAsiaTheme(wml.ST_ThemeMajorEastAsia)
+	titleChar.RunProperties().Fonts().SetHANSITheme(wml.ST_ThemeMajorHAnsi)
+	titleChar.RunProperties().Fonts().SetCSTheme(wml.ST_ThemeMajorBidi)
+	titleChar.RunProperties().SetSize(28 * measurement.Point)
+	titleChar.RunProperties().SetKerning(14 * measurement.Point)
+	titleChar.RunProperties().SetCharacterSpacing(-10 * measurement.Twips)
 
-	heading1 := s.AddStyle("Heading1", wml.ST_StyleTypeParagraph, true)
-	heading1.SetName("heading 1")
-	heading1.SetBasedOn(normal.StyleID())
-	heading1.SetNextStyle(normal.StyleID())
-	heading1.SetPrimaryStyle(true)
-	heading1.ParagraphProperties().SetKeepNext(true)
-	heading1.ParagraphProperties().SetKeepOnOnePage(true)
-	heading1.ParagraphProperties().SetSpacing(240*measurement.Twips, measurement.Zero)
-	heading1.ParagraphProperties().SetOutlineLevel(0)
+	titlePara := s.AddStyle("Title", wml.ST_StyleTypeParagraph, false)
+	titlePara.SetName("Title")
+	titlePara.SetBasedOn(normal.StyleID())
+	titlePara.SetNextStyle(normal.StyleID())
+	titlePara.SetLinkedStyle(titleChar.StyleID())
+	titlePara.SetUISortOrder(10)
+	titlePara.SetPrimaryStyle(true)
+	titlePara.ParagraphProperties().SetContextualSpacing(true)
+	titlePara.RunProperties().Fonts().SetASCIITheme(wml.ST_ThemeMajorAscii)
+	titlePara.RunProperties().Fonts().SetEastAsiaTheme(wml.ST_ThemeMajorEastAsia)
+	titlePara.RunProperties().Fonts().SetHANSITheme(wml.ST_ThemeMajorHAnsi)
+	titlePara.RunProperties().Fonts().SetCSTheme(wml.ST_ThemeMajorBidi)
+	titlePara.RunProperties().SetSize(28 * measurement.Point)
+	titlePara.RunProperties().SetKerning(14 * measurement.Point)
+	titlePara.RunProperties().SetCharacterSpacing(-10 * measurement.Twips)
 
 	// TableNormal
-	tbl := s.AddStyle("TableNormal", wml.ST_StyleTypeTable, true)
+	tbl := s.AddStyle("TableNormal", wml.ST_StyleTypeTable, false)
 	tbl.SetName("Normal Table")
 	tbl.SetUISortOrder(99)
 	tbl.SetSemiHidden(true)
@@ -126,49 +130,11 @@ func (s Styles) initializeStyleDefaults() {
 	tw.SetValue(108 * measurement.Dxa)
 
 	// NoList
-	nbr := s.AddStyle("NoList", wml.ST_StyleTypeNumbering, true)
+	nbr := s.AddStyle("NoList", wml.ST_StyleTypeNumbering, false)
 	nbr.SetName("No List")
 	nbr.SetUISortOrder(1)
 	nbr.SetSemiHidden(true)
 	nbr.SetUnhideWhenUsed(true)
-
-	// HeaderChar
-	hc := s.AddStyle("HeaderChar", wml.ST_StyleTypeCharacter, true)
-	hc.SetName("Header Char")
-	hc.SetBasedOn(dpf.StyleID())
-	hc.SetLinkedStyle("Header")
-	hc.SetUISortOrder(99)
-
-	// Header
-	hdr := s.AddStyle("Header", wml.ST_StyleTypeParagraph, true)
-	hdr.SetName("header")
-	hdr.SetBasedOn(normal.StyleID())
-	hdr.SetUISortOrder(1)
-	hdr.SetSemiHidden(true)
-	hdr.SetUnhideWhenUsed(true)
-	hdr.SetLinkedStyle(hc.StyleID())
-	hdr.ParagraphProperties().AddTabStop(4680*measurement.Twips, wml.ST_TabJcCenter, wml.ST_TabTlcUnset)
-	hdr.ParagraphProperties().AddTabStop(9360*measurement.Twips, wml.ST_TabJcRight, wml.ST_TabTlcUnset)
-	hdr.ParagraphProperties().SetSpacing(0, 240*measurement.Twips)
-
-	// FooterChar
-	fc := s.AddStyle("FooterChar", wml.ST_StyleTypeCharacter, true)
-	fc.SetName("Footer Char")
-	fc.SetBasedOn(dpf.StyleID())
-	fc.SetLinkedStyle("Footer")
-	fc.SetUISortOrder(99)
-
-	// Footer
-	ftr := s.AddStyle("Footer", wml.ST_StyleTypeParagraph, true)
-	ftr.SetName("footer")
-	ftr.SetBasedOn(normal.StyleID())
-	ftr.SetUISortOrder(1)
-	ftr.SetSemiHidden(true)
-	ftr.SetUnhideWhenUsed(true)
-	ftr.SetLinkedStyle(fc.StyleID())
-	ftr.ParagraphProperties().AddTabStop(4680*measurement.Twips, wml.ST_TabJcCenter, wml.ST_TabTlcUnset)
-	ftr.ParagraphProperties().AddTabStop(9360*measurement.Twips, wml.ST_TabJcRight, wml.ST_TabTlcUnset)
-	ftr.ParagraphProperties().SetSpacing(0, 240*measurement.Twips)
 
 	fontSizes := []measurement.Distance{16, 13, 12, 11, 11, 11, 11, 11, 11}
 	spacing := []measurement.Distance{240, 40, 40, 40, 40, 40, 40, 40, 40}
@@ -221,9 +187,11 @@ func (s Styles) initializeDocDefaults() {
 	base = wml.NewEG_RPrBase()
 	s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase = append(s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase, base)
 	base.Lang = wml.NewCT_Language()
-	base.Lang.ValAttr = gooxml.String("en-us")
-	base.Lang.EastAsiaAttr = gooxml.String("en-us")
+	base.Lang.ValAttr = gooxml.String("en-US")
+	base.Lang.EastAsiaAttr = gooxml.String("en-US")
 	base.Lang.BidiAttr = gooxml.String("ar-SA")
+
+	s.x.DocDefaults.PPrDefault = wml.NewCT_PPrDefault()
 }
 
 // Styles returns all styles.

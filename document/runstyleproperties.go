@@ -57,6 +57,40 @@ func (r RunStyleProperties) SetSize(size measurement.Distance) {
 	szCs.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(size / measurement.HalfPoint))
 }
 
+// SetKerning sets the run's font kerning.
+func (r RunStyleProperties) SetKerning(size measurement.Distance) {
+	var kern *wml.CT_HpsMeasure
+	for _, b := range r.x.EG_RPrBase {
+		if b.Kern != nil {
+			kern = b.Kern
+		}
+	}
+	if kern == nil {
+		b := wml.NewEG_RPrBase()
+		b.Kern = wml.NewCT_HpsMeasure()
+		kern = b.Kern
+		r.x.EG_RPrBase = append(r.x.EG_RPrBase, b)
+	}
+	kern.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(size / measurement.HalfPoint))
+}
+
+// SetCharacterSpacing sets the run's Character Spacing Adjustment.
+func (r RunStyleProperties) SetCharacterSpacing(size measurement.Distance) {
+	var spacing *wml.CT_SignedTwipsMeasure
+	for _, b := range r.x.EG_RPrBase {
+		if b.Spacing != nil {
+			spacing = b.Spacing
+		}
+	}
+	if spacing == nil {
+		b := wml.NewEG_RPrBase()
+		b.Spacing = wml.NewCT_SignedTwipsMeasure()
+		spacing = b.Spacing
+		r.x.EG_RPrBase = append(r.x.EG_RPrBase, b)
+	}
+	spacing.ValAttr.Int64 = gooxml.Int64(int64(size / measurement.Twips))
+}
+
 // Fonts returns the style's Fonts.
 func (r RunStyleProperties) Fonts() Fonts {
 	var ctf *wml.CT_Fonts

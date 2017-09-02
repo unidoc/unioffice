@@ -16,6 +16,21 @@ func main() {
 	run.AddText("Simple Document Formatting")
 
 	para = doc.AddParagraph()
+	para.SetStyle("Heading1")
+	run = para.AddRun()
+	run.AddText("Some Heading Text")
+
+	para = doc.AddParagraph()
+	para.SetStyle("Heading2")
+	run = para.AddRun()
+	run.AddText("Some Heading Text")
+
+	para = doc.AddParagraph()
+	para.SetStyle("Heading3")
+	run = para.AddRun()
+	run.AddText("Some Heading Text")
+
+	para = doc.AddParagraph()
 	run = para.AddRun()
 	run.AddText("A run is a string of characters with the same formatting. ")
 
@@ -25,6 +40,7 @@ func main() {
 	run.SetFontSize(15)
 	run.SetColor(color.Red)
 	run.AddText("Multiple runs with different formatting can exist in the same paragraph. ")
+
 	run = para.AddRun()
 	run.AddText("Adding breaks to a run will insert line breaks after the run. ")
 	run.AddBreak()

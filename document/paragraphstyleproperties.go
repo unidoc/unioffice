@@ -81,3 +81,13 @@ func (p ParagraphStyleProperties) SetOutlineLevel(lvl int) {
 	p.x.OutlineLvl = wml.NewCT_DecimalNumber()
 	p.x.OutlineLvl.ValAttr = int64(lvl)
 }
+
+// SetContextualSpacing controls whether to Ignore Spacing Above and Below When
+// Using Identical Styles
+func (p ParagraphStyleProperties) SetContextualSpacing(b bool) {
+	if !b {
+		p.x.ContextualSpacing = nil
+	} else {
+		p.x.ContextualSpacing = wml.NewCT_OnOff()
+	}
+}
