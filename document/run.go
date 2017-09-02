@@ -56,6 +56,10 @@ func (r Run) AddText(s string) {
 	ic := wml.NewEG_RunInnerContent()
 	r.x.EG_RunInnerContent = append(r.x.EG_RunInnerContent, ic)
 	ic.T = wml.NewCT_Text()
+	if gooxml.NeedsSpacePreserve(s) {
+		p := "preserve"
+		ic.T.SpaceAttr = &p
+	}
 	ic.T.Content = s
 }
 
