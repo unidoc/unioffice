@@ -170,6 +170,9 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 			decMap[basePaths[wb.wbRels]+zippkg.RelationsPathFor(r.Target())] = wksRel.X()
 			basePaths[wksRel] = basePath
 			wb.xwsRels = append(wb.xwsRels, wksRel)
+			// fix the relationship target so it points to where we'll save
+			// the worksheet
+			r.SetTarget(fmt.Sprintf("worksheets/sheet%d.xml", len(wb.xws)))
 		case common.StylesType:
 			wb.StyleSheet = NewStyleSheet()
 			decMap[basePaths[wb.wbRels]+r.Target()] = wb.StyleSheet.X()
