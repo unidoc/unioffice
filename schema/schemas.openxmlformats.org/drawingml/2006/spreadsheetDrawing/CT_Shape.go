@@ -55,16 +55,16 @@ func (m *CT_Shape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.FPublishedAttr)})
 	}
 	e.EncodeToken(start)
-	senvSpPr := xml.StartElement{Name: xml.Name{Local: "nvSpPr"}}
+	senvSpPr := xml.StartElement{Name: xml.Name{Local: "xdr:nvSpPr"}}
 	e.EncodeElement(m.NvSpPr, senvSpPr)
-	sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+	sespPr := xml.StartElement{Name: xml.Name{Local: "xdr:spPr"}}
 	e.EncodeElement(m.SpPr, sespPr)
 	if m.Style != nil {
-		sestyle := xml.StartElement{Name: xml.Name{Local: "style"}}
+		sestyle := xml.StartElement{Name: xml.Name{Local: "xdr:style"}}
 		e.EncodeElement(m.Style, sestyle)
 	}
 	if m.TxBody != nil {
-		setxBody := xml.StartElement{Name: xml.Name{Local: "txBody"}}
+		setxBody := xml.StartElement{Name: xml.Name{Local: "xdr:txBody"}}
 		e.EncodeElement(m.TxBody, setxBody)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

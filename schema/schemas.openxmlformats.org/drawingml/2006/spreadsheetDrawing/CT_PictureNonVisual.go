@@ -31,9 +31,9 @@ func (m *CT_PictureNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		return nil
 	}
 	e.EncodeToken(start)
-	secNvPr := xml.StartElement{Name: xml.Name{Local: "cNvPr"}}
+	secNvPr := xml.StartElement{Name: xml.Name{Local: "xdr:cNvPr"}}
 	e.EncodeElement(m.CNvPr, secNvPr)
-	secNvPicPr := xml.StartElement{Name: xml.Name{Local: "cNvPicPr"}}
+	secNvPicPr := xml.StartElement{Name: xml.Name{Local: "xdr:cNvPicPr"}}
 	e.EncodeElement(m.CNvPicPr, secNvPicPr)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

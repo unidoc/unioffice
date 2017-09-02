@@ -31,9 +31,9 @@ func (m *CT_ConnectorNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		return nil
 	}
 	e.EncodeToken(start)
-	secNvPr := xml.StartElement{Name: xml.Name{Local: "cNvPr"}}
+	secNvPr := xml.StartElement{Name: xml.Name{Local: "xdr:cNvPr"}}
 	e.EncodeElement(m.CNvPr, secNvPr)
-	secNvCxnSpPr := xml.StartElement{Name: xml.Name{Local: "cNvCxnSpPr"}}
+	secNvCxnSpPr := xml.StartElement{Name: xml.Name{Local: "xdr:cNvCxnSpPr"}}
 	e.EncodeElement(m.CNvCxnSpPr, secNvCxnSpPr)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

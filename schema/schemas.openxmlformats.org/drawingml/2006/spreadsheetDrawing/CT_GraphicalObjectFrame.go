@@ -45,9 +45,9 @@ func (m *CT_GraphicalObjectFrame) MarshalXML(e *xml.Encoder, start xml.StartElem
 			Value: fmt.Sprintf("%v", *m.FPublishedAttr)})
 	}
 	e.EncodeToken(start)
-	senvGraphicFramePr := xml.StartElement{Name: xml.Name{Local: "nvGraphicFramePr"}}
+	senvGraphicFramePr := xml.StartElement{Name: xml.Name{Local: "xdr:nvGraphicFramePr"}}
 	e.EncodeElement(m.NvGraphicFramePr, senvGraphicFramePr)
-	sexfrm := xml.StartElement{Name: xml.Name{Local: "xfrm"}}
+	sexfrm := xml.StartElement{Name: xml.Name{Local: "xdr:xfrm"}}
 	e.EncodeElement(m.Xfrm, sexfrm)
 	segraphic := xml.StartElement{Name: xml.Name{Local: "a:graphic"}}
 	e.EncodeElement(m.Graphic, segraphic)

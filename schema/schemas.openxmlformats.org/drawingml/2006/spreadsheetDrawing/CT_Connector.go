@@ -44,12 +44,12 @@ func (m *CT_Connector) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.FPublishedAttr)})
 	}
 	e.EncodeToken(start)
-	senvCxnSpPr := xml.StartElement{Name: xml.Name{Local: "nvCxnSpPr"}}
+	senvCxnSpPr := xml.StartElement{Name: xml.Name{Local: "xdr:nvCxnSpPr"}}
 	e.EncodeElement(m.NvCxnSpPr, senvCxnSpPr)
-	sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+	sespPr := xml.StartElement{Name: xml.Name{Local: "xdr:spPr"}}
 	e.EncodeElement(m.SpPr, sespPr)
 	if m.Style != nil {
-		sestyle := xml.StartElement{Name: xml.Name{Local: "style"}}
+		sestyle := xml.StartElement{Name: xml.Name{Local: "xdr:style"}}
 		e.EncodeElement(m.Style, sestyle)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

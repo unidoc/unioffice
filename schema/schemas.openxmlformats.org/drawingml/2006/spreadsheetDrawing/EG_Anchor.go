@@ -28,15 +28,15 @@ func (m *EG_Anchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	if m.TwoCellAnchor != nil {
-		setwoCellAnchor := xml.StartElement{Name: xml.Name{Local: "twoCellAnchor"}}
+		setwoCellAnchor := xml.StartElement{Name: xml.Name{Local: "xdr:twoCellAnchor"}}
 		e.EncodeElement(m.TwoCellAnchor, setwoCellAnchor)
 	}
 	if m.OneCellAnchor != nil {
-		seoneCellAnchor := xml.StartElement{Name: xml.Name{Local: "oneCellAnchor"}}
+		seoneCellAnchor := xml.StartElement{Name: xml.Name{Local: "xdr:oneCellAnchor"}}
 		e.EncodeElement(m.OneCellAnchor, seoneCellAnchor)
 	}
 	if m.AbsoluteAnchor != nil {
-		seabsoluteAnchor := xml.StartElement{Name: xml.Name{Local: "absoluteAnchor"}}
+		seabsoluteAnchor := xml.StartElement{Name: xml.Name{Local: "xdr:absoluteAnchor"}}
 		e.EncodeElement(m.AbsoluteAnchor, seabsoluteAnchor)
 	}
 	return nil

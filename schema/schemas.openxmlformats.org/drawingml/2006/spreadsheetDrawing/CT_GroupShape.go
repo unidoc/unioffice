@@ -33,9 +33,9 @@ func (m *CT_GroupShape) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		return nil
 	}
 	e.EncodeToken(start)
-	senvGrpSpPr := xml.StartElement{Name: xml.Name{Local: "nvGrpSpPr"}}
+	senvGrpSpPr := xml.StartElement{Name: xml.Name{Local: "xdr:nvGrpSpPr"}}
 	e.EncodeElement(m.NvGrpSpPr, senvGrpSpPr)
-	segrpSpPr := xml.StartElement{Name: xml.Name{Local: "grpSpPr"}}
+	segrpSpPr := xml.StartElement{Name: xml.Name{Local: "xdr:grpSpPr"}}
 	e.EncodeElement(m.GrpSpPr, segrpSpPr)
 	if m.Choice != nil {
 		for _, c := range m.Choice {
