@@ -13,18 +13,18 @@ import (
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 )
 
-// RunStyle controls run styling properties
-type RunStyle struct {
+// RunStyleProperties controls run styling properties
+type RunStyleProperties struct {
 	x *wml.CT_RPr
 }
 
 // X returns the inner wrapped XML type.
-func (r RunStyle) X() *wml.CT_RPr {
+func (r RunStyleProperties) X() *wml.CT_RPr {
 	return r.x
 }
 
 // SetSize sets the font size for a run.
-func (r RunStyle) SetSize(size measurement.Distance) {
+func (r RunStyleProperties) SetSize(size measurement.Distance) {
 	var sz *wml.CT_HpsMeasure
 	var szCs *wml.CT_HpsMeasure
 

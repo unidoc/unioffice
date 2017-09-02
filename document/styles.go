@@ -151,7 +151,7 @@ func (s Styles) InitializeDefault() {
 		hdngChar.SetBasedOn(dpf.StyleID())
 		hdngChar.SetLinkedStyle(id)
 		hdngChar.SetUISortOrder(9 + i)
-		hdngChar.RunStyle().SetSize(fontSizes[i] * measurement.Point)
+		hdngChar.RunProperties().SetSize(fontSizes[i] * measurement.Point)
 
 		hdng := s.AddStyle(id, wml.ST_StyleTypeParagraph, false)
 		hdng.SetName(fmt.Sprintf("heading %d", i+1))
@@ -162,9 +162,8 @@ func (s Styles) InitializeDefault() {
 		hdng.ParagraphStyleProperties().SetKeepNext(true)
 		hdng.ParagraphStyleProperties().SetSpacing(spacing[i]*measurement.Twips, 0)
 		hdng.ParagraphStyleProperties().SetOutlineLevel(i)
-		hdng.RunStyle().SetSize(fontSizes[i] * measurement.Point)
+		hdng.RunProperties().SetSize(fontSizes[i] * measurement.Point)
 	}
-
 }
 
 func (s Styles) initializeDocDefaults() {
