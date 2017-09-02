@@ -8,7 +8,6 @@
 package common
 
 import (
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/extended_properties"
 )
 
@@ -21,12 +20,54 @@ type AppProperties struct {
 // NewAppProperties constructs a new AppProperties.
 func NewAppProperties() AppProperties {
 	p := AppProperties{x: extended_properties.NewProperties()}
-	p.x.Application = gooxml.String("baliance.com/gooxml")
-	p.x.AppVersion = gooxml.String("1.0")
+	p.SetApplication("baliance.com/gooxml")
+	p.SetApplicationVersion("0.1")
 	return p
+}
+
+// Application returns the name of the application that created the document.
+// For gooxml created documents, it defaults to baliance.com/gooxml
+func (a AppProperties) Application() string {
+	if a.x.Application != nil {
+		return *a.x.Application
+	}
+	return ""
+}
+
+// SetApplication sets the name of the application that created the document.
+func (a AppProperties) SetApplication(s string) {
+	a.x.Application = &s
+}
+
+// ApplicationVersion returns the version of the application that created the
+// document.
+func (a AppProperties) ApplicationVersion() string {
+	if a.x.AppVersion != nil {
+		return *a.x.AppVersion
+	}
+	return ""
+}
+
+// SetApplicationVersion sets the version of the application that created the document.
+func (a AppProperties) SetApplicationVersion(s string) {
+	a.x.AppVersion = &s
 }
 
 // X returns the inner wrapped XML type.
 func (a AppProperties) X() *extended_properties.Properties {
 	return a.x
+}
+
+// Company returns the name of the company that created the document.
+// For gooxml created documents, it defaults to baliance.com/gooxml
+func (a AppProperties) Company() string {
+	if a.x.Company != nil {
+		return *a.x.Company
+	}
+	return ""
+}
+
+// SetCompany sets the name of the company that created the document.
+func (a AppProperties) SetCompany(s string) {
+	a.x.Company = &s
 }
