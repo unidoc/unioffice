@@ -66,6 +66,16 @@ func (p ParagraphStyleProperties) SetKeepNext(b bool) {
 	}
 }
 
+// SetKeepOnOnePage controls if all lines in a paragraph are kept on the same
+// page.
+func (p ParagraphStyleProperties) SetKeepOnOnePage(b bool) {
+	if !b {
+		p.x.KeepLines = nil
+	} else {
+		p.x.KeepLines = wml.NewCT_OnOff()
+	}
+}
+
 // SetOutlineLevel sets the outline level of this style.
 func (p ParagraphStyleProperties) SetOutlineLevel(lvl int) {
 	p.x.OutlineLvl = wml.NewCT_DecimalNumber()
