@@ -57,8 +57,8 @@ func New() *Workbook {
 	wb.wbRels.AddRelationship("styles.xml", common.StylesType)
 
 	wb.ContentTypes = common.NewContentTypes()
-	wb.ContentTypes.AddOverride("/xl/workbook.xml", "application/vnd.openxmlformats-officedocument.sml.sheet.main+xml")
-	wb.ContentTypes.AddOverride("/xl/styles.xml", "application/vnd.openxmlformats-officedocument.sml.styles+xml")
+	wb.ContentTypes.AddOverride("/xl/workbook.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml")
+	wb.ContentTypes.AddOverride("/xl/styles.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml")
 
 	wb.SharedStrings = NewSharedStrings()
 	wb.ContentTypes.AddOverride("/xl/sharedStrings.xml", common.SharedStringsContentType)
@@ -225,17 +225,17 @@ func (wb *Workbook) AddSheet() Sheet {
 	ws.Dimension = sml.NewCT_SheetDimension()
 	ws.Dimension.RefAttr = "A1"
 	wb.xws = append(wb.xws, ws)
-
+	wb.xwsRels = append(wb.xwsRels, common.NewRelationships())
 	ws.SheetData = sml.NewCT_SheetData()
 
 	// update the references
-	rid := wb.wbRels.AddRelationship(fmt.Sprintf("worksheets/sheet%d.xml", rs.SheetIdAttr),
+	rid := wb.wbRels.AddRelationship(fmt.Sprintf("worksheets/sheet%d.xml", len(wb.x.Sheets.Sheet)),
 		"http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet")
 	rs.IdAttr = rid.ID()
 
 	// add the content type
-	wb.ContentTypes.AddOverride(fmt.Sprintf("/xl/worksheets/sheet%d.xml", rs.SheetIdAttr),
-		"application/vnd.openxmlformats-officedocument.sml.worksheet+xml")
+	wb.ContentTypes.AddOverride(fmt.Sprintf("/xl/worksheets/sheet%d.xml", len(wb.x.Sheets.Sheet)),
+		"application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml")
 
 	return Sheet{wb, rs, ws}
 }
@@ -284,8 +284,9 @@ func (wb *Workbook) Save(w io.Writer) error {
 		}
 	}
 	for i, sheet := range wb.xws {
-		wbs := wb.x.Sheets.Sheet[i]
-		zippkg.MarshalXML(z, fmt.Sprintf("xl/worksheets/sheet%d.xml", wbs.SheetIdAttr), sheet)
+		fn := fmt.Sprintf("xl/worksheets/sheet%d.xml", i+1)
+		zippkg.MarshalXML(z, fn, sheet)
+		zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.xwsRels[i].X())
 	}
 	if wb.Thumbnail != nil {
 		tn, err := z.Create("docProps/thumbnail.jpeg")
@@ -296,7 +297,9 @@ func (wb *Workbook) Save(w io.Writer) error {
 			return err
 		}
 	}
-	wb.WriteExtraFiles(z)
+	if err := wb.WriteExtraFiles(z); err != nil {
+		return err
+	}
 	return z.Close()
 }
 
