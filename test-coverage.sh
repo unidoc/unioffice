@@ -1,6 +1,6 @@
 #!/bin/bash
 PKG=baliance.com/gooxml
-ALLPKGS=`go list $PKG/...`
+ALLPKGS=`go list $PKG/... | grep -iv schema`
 
 cd $GOPATH/src/$PKG
 echo "Prebuilding"

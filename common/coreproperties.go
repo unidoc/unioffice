@@ -163,5 +163,5 @@ func (c CoreProperties) SetDescription(s string) {
 	if c.x.Description == nil {
 		c.x.Description = &gooxml.XSDAny{XMLName: xml.Name{Local: "dc:description"}}
 	}
-	c.x.Title.Data = []byte(s)
+	c.x.Description.Data = []byte(s)
 }
