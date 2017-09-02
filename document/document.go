@@ -20,11 +20,11 @@ import (
 	"path/filepath"
 
 	"baliance.com/gooxml/common"
+	"baliance.com/gooxml/zippkg"
+
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	st "baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
-
-	"baliance.com/gooxml/zippkg"
 )
 
 // Document is a text document that can be written out in the OOXML .docx
@@ -189,7 +189,6 @@ func (d *Document) Save(w io.Writer) error {
 		if err := zippkg.MarshalXML(z, fmt.Sprintf("word/theme/theme%d.xml", i+1), thm); err != nil {
 			return err
 		}
-
 	}
 	for i, hdr := range d.headers {
 		fn := fmt.Sprintf("word/header%d.xml", i+1)

@@ -20,27 +20,30 @@ import (
 	"path/filepath"
 
 	"baliance.com/gooxml/common"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
 	"baliance.com/gooxml/zippkg"
+
+	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
+	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
 )
 
 // Workbook is the top level container item for a set of spreadsheets.
 type Workbook struct {
 	common.DocBase
-	x *spreadsheetml.Workbook
+	x *sml.Workbook
 
 	StyleSheet    StyleSheet
-	Theme         common.Theme
 	SharedStrings SharedStrings
-	xws           []*spreadsheetml.Worksheet
-	xwsRels       []common.Relationships
-	wbRels        common.Relationships
+
+	xws     []*sml.Worksheet
+	xwsRels []common.Relationships
+	wbRels  common.Relationships
+	themes  []*dml.Theme
 }
 
 // New constructs a new workbook.
 func New() *Workbook {
 	wb := &Workbook{}
-	wb.x = spreadsheetml.NewWorkbook()
+	wb.x = sml.NewWorkbook()
 
 	wb.AppProperties = common.NewAppProperties()
 	wb.CoreProperties = common.NewCoreProperties()
@@ -54,8 +57,8 @@ func New() *Workbook {
 	wb.wbRels.AddRelationship("styles.xml", common.StylesType)
 
 	wb.ContentTypes = common.NewContentTypes()
-	wb.ContentTypes.AddOverride("/xl/workbook.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml")
-	wb.ContentTypes.AddOverride("/xl/styles.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml")
+	wb.ContentTypes.AddOverride("/xl/workbook.xml", "application/vnd.openxmlformats-officedocument.sml.sheet.main+xml")
+	wb.ContentTypes.AddOverride("/xl/styles.xml", "application/vnd.openxmlformats-officedocument.sml.styles+xml")
 
 	wb.SharedStrings = NewSharedStrings()
 	wb.ContentTypes.AddOverride("/xl/sharedStrings.xml", common.SharedStringsContentType)
@@ -115,7 +118,7 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 	for _, r := range wb.Rels.Relationships() {
 		switch r.Type() {
 		case common.OfficeDocumentType:
-			wb.x = spreadsheetml.NewWorkbook()
+			wb.x = sml.NewWorkbook()
 			decMap[r.Target()] = wb.x
 			// look for the workbook relationships file as well
 			basePath, _ := filepath.Split(r.Target())
@@ -157,7 +160,7 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 	for _, r := range wb.wbRels.Relationships() {
 		switch r.Type() {
 		case common.WorksheetType:
-			ws := spreadsheetml.NewWorksheet()
+			ws := sml.NewWorksheet()
 			wb.xws = append(wb.xws, ws)
 			decMap[basePaths[wb.wbRels]+r.Target()] = ws
 
@@ -171,8 +174,9 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 			wb.StyleSheet = NewStyleSheet()
 			decMap[basePaths[wb.wbRels]+r.Target()] = wb.StyleSheet.X()
 		case common.ThemeType:
-			wb.Theme = common.NewTheme()
-			decMap[basePaths[wb.wbRels]+r.Target()] = wb.Theme.X()
+			thm := dml.NewTheme()
+			wb.themes = append(wb.themes, thm)
+			decMap[basePaths[wb.wbRels]+r.Target()] = thm
 		case common.SharedStingsType:
 			wb.SharedStrings = NewSharedStrings()
 			decMap[basePaths[wb.wbRels]+r.Target()] = wb.SharedStrings.X()
@@ -197,13 +201,13 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 }
 
 // X returns the inner wrapped XML type.
-func (wb *Workbook) X() *spreadsheetml.Workbook {
+func (wb *Workbook) X() *sml.Workbook {
 	return wb.x
 }
 
 // AddSheet adds a new sheet with a given name to a workbook.
 func (wb *Workbook) AddSheet() Sheet {
-	rs := spreadsheetml.NewCT_Sheet()
+	rs := sml.NewCT_Sheet()
 
 	// Assign a unique sheet ID
 	rs.SheetIdAttr = 1
@@ -217,12 +221,12 @@ func (wb *Workbook) AddSheet() Sheet {
 	rs.NameAttr = fmt.Sprintf("Sheet %d", rs.SheetIdAttr)
 
 	// create the actual worksheet
-	ws := spreadsheetml.NewWorksheet()
-	ws.Dimension = spreadsheetml.NewCT_SheetDimension()
+	ws := sml.NewWorksheet()
+	ws.Dimension = sml.NewCT_SheetDimension()
 	ws.Dimension.RefAttr = "A1"
 	wb.xws = append(wb.xws, ws)
 
-	ws.SheetData = spreadsheetml.NewCT_SheetData()
+	ws.SheetData = sml.NewCT_SheetData()
 
 	// update the references
 	rid := wb.wbRels.AddRelationship(fmt.Sprintf("worksheets/sheet%d.xml", rs.SheetIdAttr),
@@ -231,7 +235,7 @@ func (wb *Workbook) AddSheet() Sheet {
 
 	// add the content type
 	wb.ContentTypes.AddOverride(fmt.Sprintf("/xl/worksheets/sheet%d.xml", rs.SheetIdAttr),
-		"application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml")
+		"application/vnd.openxmlformats-officedocument.sml.worksheet+xml")
 
 	return Sheet{wb, rs, ws}
 }
@@ -273,6 +277,11 @@ func (wb *Workbook) Save(w io.Writer) error {
 	}
 	if err := zippkg.MarshalXML(z, "xl/_rels/workbook.xml.rels", wb.wbRels.X()); err != nil {
 		return err
+	}
+	for i, thm := range wb.themes {
+		if err := zippkg.MarshalXML(z, fmt.Sprintf("xl/theme/theme%d.xml", i+1), thm); err != nil {
+			return err
+		}
 	}
 	for i, sheet := range wb.xws {
 		wbs := wb.x.Sheets.Sheet[i]
