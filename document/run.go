@@ -105,30 +105,26 @@ func (r Run) AddField(code string) {
 func (r Run) ensureRPR() {
 	if r.x.RPr == nil {
 		r.x.RPr = wml.NewCT_RPr()
-		b := wml.NewEG_RPrBase()
-		r.x.RPr.EG_RPrBase = append(r.x.RPr.EG_RPrBase, b)
 	}
 }
 
 // SetFontFamily sets the Ascii & HAnsi fonly family for a run.
 func (r Run) SetFontFamily(family string) {
 	r.ensureRPR()
-	b := r.x.RPr.EG_RPrBase[0]
-	if b.RFonts == nil {
-		b.RFonts = wml.NewCT_Fonts()
+	if r.x.RPr.RFonts == nil {
+		r.x.RPr.RFonts = wml.NewCT_Fonts()
 	}
-	b.RFonts.AsciiAttr = gooxml.String(family)
-	b.RFonts.HAnsiAttr = gooxml.String(family)
+	r.x.RPr.RFonts.AsciiAttr = gooxml.String(family)
+	r.x.RPr.RFonts.HAnsiAttr = gooxml.String(family)
 }
 
 // SetFontSize sets the font size.
 func (r Run) SetFontSize(sz measurement.Distance) {
-	b := r.x.RPr.EG_RPrBase[0]
-	b.Sz = wml.NewCT_HpsMeasure()
+	r.x.RPr.Sz = wml.NewCT_HpsMeasure()
 	// size is measured in half points
-	b.Sz.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(sz / measurement.HalfPoint))
-	b.SzCs = wml.NewCT_HpsMeasure()
-	b.SzCs.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(sz / measurement.HalfPoint))
+	r.x.RPr.Sz.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(sz / measurement.HalfPoint))
+	r.x.RPr.SzCs = wml.NewCT_HpsMeasure()
+	r.x.RPr.SzCs.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(sz / measurement.HalfPoint))
 }
 
 // IsBold returns true if the run has been set to bold.
@@ -136,23 +132,18 @@ func (r Run) IsBold() bool {
 	if r.x.RPr == nil {
 		return false
 	}
-	for _, b := range r.x.RPr.EG_RPrBase {
-		if b.B != nil {
-			return true
-		}
-	}
-	return false
+	return r.x.RPr.B != nil
 }
 
 // SetBold sets the run to bold.
 func (r Run) SetBold(b bool) {
 	r.ensureRPR()
 	if !b {
-		r.x.RPr.EG_RPrBase[0].B = nil
-		r.x.RPr.EG_RPrBase[0].BCs = nil
+		r.x.RPr.B = nil
+		r.x.RPr.BCs = nil
 	} else {
-		r.x.RPr.EG_RPrBase[0].B = wml.NewCT_OnOff()
-		r.x.RPr.EG_RPrBase[0].BCs = wml.NewCT_OnOff()
+		r.x.RPr.B = wml.NewCT_OnOff()
+		r.x.RPr.BCs = wml.NewCT_OnOff()
 	}
 }
 
@@ -161,23 +152,18 @@ func (r Run) IsItalic() bool {
 	if r.x.RPr == nil {
 		return false
 	}
-	for _, b := range r.x.RPr.EG_RPrBase {
-		if b.I != nil {
-			return true
-		}
-	}
-	return false
+	return r.x.RPr.I != nil
 }
 
 // SetItalic sets the run to italic.
 func (r Run) SetItalic(b bool) {
 	r.ensureRPR()
 	if !b {
-		r.x.RPr.EG_RPrBase[0].I = nil
-		r.x.RPr.EG_RPrBase[0].ICs = nil
+		r.x.RPr.I = nil
+		r.x.RPr.ICs = nil
 	} else {
-		r.x.RPr.EG_RPrBase[0].I = wml.NewCT_OnOff()
-		r.x.RPr.EG_RPrBase[0].ICs = wml.NewCT_OnOff()
+		r.x.RPr.I = wml.NewCT_OnOff()
+		r.x.RPr.ICs = wml.NewCT_OnOff()
 	}
 }
 
@@ -185,9 +171,9 @@ func (r Run) SetItalic(b bool) {
 func (r Run) SetAllCaps(b bool) {
 	r.ensureRPR()
 	if !b {
-		r.x.RPr.EG_RPrBase[0].Caps = nil
+		r.x.RPr.Caps = nil
 	} else {
-		r.x.RPr.EG_RPrBase[0].Caps = wml.NewCT_OnOff()
+		r.x.RPr.Caps = wml.NewCT_OnOff()
 	}
 }
 
@@ -195,9 +181,9 @@ func (r Run) SetAllCaps(b bool) {
 func (r Run) SetSmallCaps(b bool) {
 	r.ensureRPR()
 	if !b {
-		r.x.RPr.EG_RPrBase[0].SmallCaps = nil
+		r.x.RPr.SmallCaps = nil
 	} else {
-		r.x.RPr.EG_RPrBase[0].SmallCaps = wml.NewCT_OnOff()
+		r.x.RPr.SmallCaps = wml.NewCT_OnOff()
 	}
 }
 
@@ -205,12 +191,12 @@ func (r Run) SetSmallCaps(b bool) {
 func (r Run) SetUnderline(style wml.ST_Underline, c color.Color) {
 	r.ensureRPR()
 	if style == wml.ST_UnderlineUnset {
-		r.x.RPr.EG_RPrBase[0].U = nil
+		r.x.RPr.U = nil
 	} else {
-		r.x.RPr.EG_RPrBase[0].U = wml.NewCT_Underline()
-		r.x.RPr.EG_RPrBase[0].U.ColorAttr = &wml.ST_HexColor{}
-		r.x.RPr.EG_RPrBase[0].U.ColorAttr.ST_HexColorRGB = c.AsRGBString()
-		r.x.RPr.EG_RPrBase[0].U.ValAttr = style
+		r.x.RPr.U = wml.NewCT_Underline()
+		r.x.RPr.U.ColorAttr = &wml.ST_HexColor{}
+		r.x.RPr.U.ColorAttr.ST_HexColorRGB = c.AsRGBString()
+		r.x.RPr.U.ValAttr = style
 	}
 }
 
@@ -218,9 +204,9 @@ func (r Run) SetUnderline(style wml.ST_Underline, c color.Color) {
 func (r Run) SetStrikeThrough(b bool) {
 	r.ensureRPR()
 	if !b {
-		r.x.RPr.EG_RPrBase[0].Strike = nil
+		r.x.RPr.Strike = nil
 	} else {
-		r.x.RPr.EG_RPrBase[0].Strike = wml.NewCT_OnOff()
+		r.x.RPr.Strike = wml.NewCT_OnOff()
 	}
 }
 
@@ -228,9 +214,9 @@ func (r Run) SetStrikeThrough(b bool) {
 func (r Run) SetDoubleStrikeThrough(b bool) {
 	r.ensureRPR()
 	if !b {
-		r.x.RPr.EG_RPrBase[0].Dstrike = nil
+		r.x.RPr.Dstrike = nil
 	} else {
-		r.x.RPr.EG_RPrBase[0].Dstrike = wml.NewCT_OnOff()
+		r.x.RPr.Dstrike = wml.NewCT_OnOff()
 	}
 }
 
@@ -238,9 +224,9 @@ func (r Run) SetDoubleStrikeThrough(b bool) {
 func (r Run) SetOutline(b bool) {
 	r.ensureRPR()
 	if !b {
-		r.x.RPr.EG_RPrBase[0].Outline = nil
+		r.x.RPr.Outline = nil
 	} else {
-		r.x.RPr.EG_RPrBase[0].Outline = wml.NewCT_OnOff()
+		r.x.RPr.Outline = wml.NewCT_OnOff()
 	}
 }
 
@@ -248,9 +234,9 @@ func (r Run) SetOutline(b bool) {
 func (r Run) SetShadow(b bool) {
 	r.ensureRPR()
 	if !b {
-		r.x.RPr.EG_RPrBase[0].Shadow = nil
+		r.x.RPr.Shadow = nil
 	} else {
-		r.x.RPr.EG_RPrBase[0].Shadow = wml.NewCT_OnOff()
+		r.x.RPr.Shadow = wml.NewCT_OnOff()
 	}
 }
 
@@ -258,9 +244,9 @@ func (r Run) SetShadow(b bool) {
 func (r Run) SetEmboss(b bool) {
 	r.ensureRPR()
 	if !b {
-		r.x.RPr.EG_RPrBase[0].Emboss = nil
+		r.x.RPr.Emboss = nil
 	} else {
-		r.x.RPr.EG_RPrBase[0].Emboss = wml.NewCT_OnOff()
+		r.x.RPr.Emboss = wml.NewCT_OnOff()
 	}
 }
 
@@ -268,40 +254,40 @@ func (r Run) SetEmboss(b bool) {
 func (r Run) SetImprint(b bool) {
 	r.ensureRPR()
 	if !b {
-		r.x.RPr.EG_RPrBase[0].Imprint = nil
+		r.x.RPr.Imprint = nil
 	} else {
-		r.x.RPr.EG_RPrBase[0].Imprint = wml.NewCT_OnOff()
+		r.x.RPr.Imprint = wml.NewCT_OnOff()
 	}
 }
 
 // ClearColor clears the text color.
 func (r Run) ClearColor() {
 	r.ensureRPR()
-	r.x.RPr.EG_RPrBase[0].Color = nil
+	r.x.RPr.Color = nil
 }
 
 // SetColor sets the text color.
 func (r Run) SetColor(c color.Color) {
 	r.ensureRPR()
-	r.x.RPr.EG_RPrBase[0].Color = wml.NewCT_Color()
-	r.x.RPr.EG_RPrBase[0].Color.ValAttr.ST_HexColorRGB = c.AsRGBString()
+	r.x.RPr.Color = wml.NewCT_Color()
+	r.x.RPr.Color.ValAttr.ST_HexColorRGB = c.AsRGBString()
 }
 
 // SetHighlight highlights text in a specified color.
 func (r Run) SetHighlight(c wml.ST_HighlightColor) {
 	r.ensureRPR()
-	r.x.RPr.EG_RPrBase[0].Highlight = wml.NewCT_Highlight()
-	r.x.RPr.EG_RPrBase[0].Highlight.ValAttr = c
+	r.x.RPr.Highlight = wml.NewCT_Highlight()
+	r.x.RPr.Highlight.ValAttr = c
 }
 
 // SetEffect sets a text effect on the run.
 func (r Run) SetEffect(e wml.ST_TextEffect) {
 	r.ensureRPR()
 	if e == wml.ST_TextEffectUnset {
-		r.x.RPr.EG_RPrBase[0].Effect = nil
+		r.x.RPr.Effect = nil
 	} else {
-		r.x.RPr.EG_RPrBase[0].Effect = wml.NewCT_TextEffect()
-		r.x.RPr.EG_RPrBase[0].Effect.ValAttr = wml.ST_TextEffectShimmer
+		r.x.RPr.Effect = wml.NewCT_TextEffect()
+		r.x.RPr.Effect.ValAttr = wml.ST_TextEffectShimmer
 	}
 }
 

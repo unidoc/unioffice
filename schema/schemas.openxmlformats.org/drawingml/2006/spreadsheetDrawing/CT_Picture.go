@@ -46,14 +46,14 @@ func (m *CT_Picture) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.FPublishedAttr)})
 	}
 	e.EncodeToken(start)
-	senvPicPr := xml.StartElement{Name: xml.Name{Local: "nvPicPr"}}
+	senvPicPr := xml.StartElement{Name: xml.Name{Local: "xdr:nvPicPr"}}
 	e.EncodeElement(m.NvPicPr, senvPicPr)
-	seblipFill := xml.StartElement{Name: xml.Name{Local: "blipFill"}}
+	seblipFill := xml.StartElement{Name: xml.Name{Local: "xdr:blipFill"}}
 	e.EncodeElement(m.BlipFill, seblipFill)
-	sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+	sespPr := xml.StartElement{Name: xml.Name{Local: "xdr:spPr"}}
 	e.EncodeElement(m.SpPr, sespPr)
 	if m.Style != nil {
-		sestyle := xml.StartElement{Name: xml.Name{Local: "style"}}
+		sestyle := xml.StartElement{Name: xml.Name{Local: "xdr:style"}}
 		e.EncodeElement(m.Style, sestyle)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

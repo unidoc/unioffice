@@ -34,13 +34,13 @@ func (m *CT_Marker) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		return nil
 	}
 	e.EncodeToken(start)
-	secol := xml.StartElement{Name: xml.Name{Local: "col"}}
+	secol := xml.StartElement{Name: xml.Name{Local: "xdr:col"}}
 	e.EncodeElement(m.Col, secol)
-	secolOff := xml.StartElement{Name: xml.Name{Local: "colOff"}}
+	secolOff := xml.StartElement{Name: xml.Name{Local: "xdr:colOff"}}
 	e.EncodeElement(m.ColOff, secolOff)
-	serow := xml.StartElement{Name: xml.Name{Local: "row"}}
+	serow := xml.StartElement{Name: xml.Name{Local: "xdr:row"}}
 	e.EncodeElement(m.Row, serow)
-	serowOff := xml.StartElement{Name: xml.Name{Local: "rowOff"}}
+	serowOff := xml.StartElement{Name: xml.Name{Local: "xdr:rowOff"}}
 	e.EncodeElement(m.RowOff, serowOff)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

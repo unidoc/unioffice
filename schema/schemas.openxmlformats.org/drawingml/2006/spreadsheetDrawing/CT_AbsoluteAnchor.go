@@ -34,14 +34,14 @@ func (m *CT_AbsoluteAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		return nil
 	}
 	e.EncodeToken(start)
-	sepos := xml.StartElement{Name: xml.Name{Local: "pos"}}
+	sepos := xml.StartElement{Name: xml.Name{Local: "xdr:pos"}}
 	e.EncodeElement(m.Pos, sepos)
-	seext := xml.StartElement{Name: xml.Name{Local: "ext"}}
+	seext := xml.StartElement{Name: xml.Name{Local: "xdr:ext"}}
 	e.EncodeElement(m.Ext, seext)
 	if m.Choice != nil {
 		m.Choice.MarshalXML(e, start)
 	}
-	seclientData := xml.StartElement{Name: xml.Name{Local: "clientData"}}
+	seclientData := xml.StartElement{Name: xml.Name{Local: "xdr:clientData"}}
 	e.EncodeElement(m.ClientData, seclientData)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

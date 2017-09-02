@@ -166,30 +166,17 @@ func (s Styles) initializeDocDefaults() {
 	s.x.DocDefaults.RPrDefault = wml.NewCT_RPrDefault()
 	s.x.DocDefaults.RPrDefault.RPr = wml.NewCT_RPr()
 
-	base := wml.NewEG_RPrBase()
-	s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase = append(s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase, base)
-	base.RFonts = wml.NewCT_Fonts()
-	base.RFonts.AsciiThemeAttr = wml.ST_ThemeMinorHAnsi
-	base.RFonts.EastAsiaThemeAttr = wml.ST_ThemeMinorHAnsi
-	base.RFonts.HAnsiThemeAttr = wml.ST_ThemeMinorHAnsi
-	base.RFonts.CsthemeAttr = wml.ST_ThemeMinorBidi
+	rpr := RunStyleProperties{s.x.DocDefaults.RPrDefault.RPr}
+	rpr.SetSize(12 * measurement.Point)
+	rpr.Fonts().SetASCIITheme(wml.ST_ThemeMajorAscii)
+	rpr.Fonts().SetEastAsiaTheme(wml.ST_ThemeMajorEastAsia)
+	rpr.Fonts().SetHANSITheme(wml.ST_ThemeMajorHAnsi)
+	rpr.Fonts().SetCSTheme(wml.ST_ThemeMajorBidi)
 
-	base = wml.NewEG_RPrBase()
-	s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase = append(s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase, base)
-	base.Sz = wml.NewCT_HpsMeasure()
-	base.Sz.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(12 / measurement.HalfPoint)
-
-	base = wml.NewEG_RPrBase()
-	s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase = append(s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase, base)
-	base.SzCs = wml.NewCT_HpsMeasure()
-	base.SzCs.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(12 / measurement.HalfPoint)
-
-	base = wml.NewEG_RPrBase()
-	s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase = append(s.x.DocDefaults.RPrDefault.RPr.EG_RPrBase, base)
-	base.Lang = wml.NewCT_Language()
-	base.Lang.ValAttr = gooxml.String("en-US")
-	base.Lang.EastAsiaAttr = gooxml.String("en-US")
-	base.Lang.BidiAttr = gooxml.String("ar-SA")
+	rpr.X().Lang = wml.NewCT_Language()
+	rpr.X().Lang.ValAttr = gooxml.String("en-US")
+	rpr.X().Lang.EastAsiaAttr = gooxml.String("en-US")
+	rpr.X().Lang.BidiAttr = gooxml.String("ar-SA")
 
 	s.x.DocDefaults.PPrDefault = wml.NewCT_PPrDefault()
 }

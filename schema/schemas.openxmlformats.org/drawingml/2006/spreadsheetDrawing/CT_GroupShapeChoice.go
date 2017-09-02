@@ -31,23 +31,23 @@ func (m *CT_GroupShapeChoice) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		return nil
 	}
 	if m.Sp != nil {
-		sesp := xml.StartElement{Name: xml.Name{Local: "sp"}}
+		sesp := xml.StartElement{Name: xml.Name{Local: "xdr:sp"}}
 		e.EncodeElement(m.Sp, sesp)
 	}
 	if m.GrpSp != nil {
-		segrpSp := xml.StartElement{Name: xml.Name{Local: "grpSp"}}
+		segrpSp := xml.StartElement{Name: xml.Name{Local: "xdr:grpSp"}}
 		e.EncodeElement(m.GrpSp, segrpSp)
 	}
 	if m.GraphicFrame != nil {
-		segraphicFrame := xml.StartElement{Name: xml.Name{Local: "graphicFrame"}}
+		segraphicFrame := xml.StartElement{Name: xml.Name{Local: "xdr:graphicFrame"}}
 		e.EncodeElement(m.GraphicFrame, segraphicFrame)
 	}
 	if m.CxnSp != nil {
-		secxnSp := xml.StartElement{Name: xml.Name{Local: "cxnSp"}}
+		secxnSp := xml.StartElement{Name: xml.Name{Local: "xdr:cxnSp"}}
 		e.EncodeElement(m.CxnSp, secxnSp)
 	}
 	if m.Pic != nil {
-		sepic := xml.StartElement{Name: xml.Name{Local: "pic"}}
+		sepic := xml.StartElement{Name: xml.Name{Local: "xdr:pic"}}
 		e.EncodeElement(m.Pic, sepic)
 	}
 	return nil

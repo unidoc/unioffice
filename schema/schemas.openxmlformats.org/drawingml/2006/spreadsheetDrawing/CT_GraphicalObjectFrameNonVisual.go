@@ -31,9 +31,9 @@ func (m *CT_GraphicalObjectFrameNonVisual) MarshalXML(e *xml.Encoder, start xml.
 		return nil
 	}
 	e.EncodeToken(start)
-	secNvPr := xml.StartElement{Name: xml.Name{Local: "cNvPr"}}
+	secNvPr := xml.StartElement{Name: xml.Name{Local: "xdr:cNvPr"}}
 	e.EncodeElement(m.CNvPr, secNvPr)
-	secNvGraphicFramePr := xml.StartElement{Name: xml.Name{Local: "cNvGraphicFramePr"}}
+	secNvGraphicFramePr := xml.StartElement{Name: xml.Name{Local: "xdr:cNvGraphicFramePr"}}
 	e.EncodeElement(m.CNvGraphicFramePr, secNvGraphicFramePr)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
