@@ -26,8 +26,10 @@ const (
 
 	// SML
 	WorksheetType            = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
-	SharedStringsContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"
+	WorksheetContentType     = "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
 	SharedStingsType         = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings"
+	SharedStringsContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"
+	SMLStyleSheetContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"
 
 	// WML
 	HeaderType      = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header"

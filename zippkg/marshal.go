@@ -12,12 +12,24 @@ import (
 	"encoding/xml"
 	"fmt"
 	"time"
+
+	"baliance.com/gooxml"
 )
 
 // XMLHeader is a header that MarshalXML uses to prefix the XML files it creates.
 const XMLHeader = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` + "\n"
 
 var nl = []byte{'\r', '\n'}
+
+func MarshalXMLByTypeIndex(z *zip.Writer, dt gooxml.DocType, typ string, idx int, v interface{}) error {
+	fn := gooxml.AbsoluteFilename(dt, typ, idx)
+	return MarshalXML(z, fn, v)
+}
+
+func MarshalXMLByType(z *zip.Writer, dt gooxml.DocType, typ string, v interface{}) error {
+	fn := gooxml.AbsoluteFilename(dt, typ, 0)
+	return MarshalXML(z, fn, v)
+}
 
 // MarshalXML creates a file inside of a zip and marshals an object as xml, prefixing it
 // with a standard XML header.

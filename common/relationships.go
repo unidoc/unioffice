@@ -12,6 +12,7 @@ import (
 	"log"
 	"strings"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/package/2006/relationships"
 )
 
@@ -46,6 +47,13 @@ func (r Relationships) FindRIDForN(i int, t string) string {
 		}
 	}
 	return ""
+}
+
+// AddAutoRelationship adds a relationship with an automatically generated
+// filename based off of the type. It should be preferred over AddRelationship
+// to ensure consistent filenames are maintained.
+func (r Relationships) AddAutoRelationship(dt gooxml.DocType, idx int, ctype string) Relationship {
+	return r.AddRelationship(gooxml.RelativeFilename(dt, ctype, idx), ctype)
 }
 
 // AddRelationship adds a relationship.
