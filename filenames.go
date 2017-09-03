@@ -39,7 +39,7 @@ func RelativeFilename(dt DocType, typ string, index int) string {
 	case StylesType:
 		return "styles.xml"
 	case ChartType:
-		return fmt.Sprintf("charts/chart%d.xml", index)
+		return fmt.Sprintf("../charts/chart%d.xml", index)
 	case DrawingType:
 		return fmt.Sprintf("drawings/drawing%d.xml", index)
 

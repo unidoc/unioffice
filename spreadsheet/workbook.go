@@ -295,3 +295,12 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 	}
 	return nil
 }
+
+func (wb *Workbook) AddDrawing() Drawing {
+	drawing := sd.NewWsDr()
+	wb.drawings = append(wb.drawings, drawing)
+	fn := gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.DrawingType, len(wb.drawings))
+	wb.ContentTypes.AddOverride(fn, gooxml.DrawingType)
+	wb.drawingRels = append(wb.drawingRels, common.NewRelationships())
+	return Drawing{wb, drawing}
+}
