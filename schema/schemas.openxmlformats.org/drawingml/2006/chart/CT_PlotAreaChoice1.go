@@ -9,15 +9,14 @@ package chart
 
 import (
 	"encoding/xml"
-	"fmt"
 	"log"
 )
 
 type CT_PlotAreaChoice1 struct {
-	ValAx  []*CT_ValAx
-	CatAx  []*CT_CatAx
-	DateAx []*CT_DateAx
-	SerAx  []*CT_SerAx
+	ValAx  *CT_ValAx
+	CatAx  *CT_CatAx
+	DateAx *CT_DateAx
+	SerAx  *CT_SerAx
 }
 
 func NewCT_PlotAreaChoice1() *CT_PlotAreaChoice1 {
@@ -57,29 +56,25 @@ lCT_PlotAreaChoice1:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "valAx":
-				tmp := NewCT_ValAx()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.ValAx = NewCT_ValAx()
+				if err := d.DecodeElement(m.ValAx, &el); err != nil {
 					return err
 				}
-				m.ValAx = append(m.ValAx, tmp)
 			case "catAx":
-				tmp := NewCT_CatAx()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.CatAx = NewCT_CatAx()
+				if err := d.DecodeElement(m.CatAx, &el); err != nil {
 					return err
 				}
-				m.CatAx = append(m.CatAx, tmp)
 			case "dateAx":
-				tmp := NewCT_DateAx()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.DateAx = NewCT_DateAx()
+				if err := d.DecodeElement(m.DateAx, &el); err != nil {
 					return err
 				}
-				m.DateAx = append(m.DateAx, tmp)
 			case "serAx":
-				tmp := NewCT_SerAx()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.SerAx = NewCT_SerAx()
+				if err := d.DecodeElement(m.SerAx, &el); err != nil {
 					return err
 				}
-				m.SerAx = append(m.SerAx, tmp)
 			default:
 				log.Printf("skipping unsupported element on CT_PlotAreaChoice1 %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -101,23 +96,23 @@ func (m *CT_PlotAreaChoice1) Validate() error {
 
 // ValidateWithPath validates the CT_PlotAreaChoice1 and its children, prefixing error messages with path
 func (m *CT_PlotAreaChoice1) ValidateWithPath(path string) error {
-	for i, v := range m.ValAx {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/ValAx[%d]", path, i)); err != nil {
+	if m.ValAx != nil {
+		if err := m.ValAx.ValidateWithPath(path + "/ValAx"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.CatAx {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/CatAx[%d]", path, i)); err != nil {
+	if m.CatAx != nil {
+		if err := m.CatAx.ValidateWithPath(path + "/CatAx"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.DateAx {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/DateAx[%d]", path, i)); err != nil {
+	if m.DateAx != nil {
+		if err := m.DateAx.ValidateWithPath(path + "/DateAx"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.SerAx {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/SerAx[%d]", path, i)); err != nil {
+	if m.SerAx != nil {
+		if err := m.SerAx.ValidateWithPath(path + "/SerAx"); err != nil {
 			return err
 		}
 	}

@@ -9,27 +9,26 @@ package chart
 
 import (
 	"encoding/xml"
-	"fmt"
 	"log"
 )
 
 type CT_PlotAreaChoice struct {
-	AreaChart      []*CT_AreaChart
-	Area3DChart    []*CT_Area3DChart
-	LineChart      []*CT_LineChart
-	Line3DChart    []*CT_Line3DChart
-	StockChart     []*CT_StockChart
-	RadarChart     []*CT_RadarChart
-	ScatterChart   []*CT_ScatterChart
-	PieChart       []*CT_PieChart
-	Pie3DChart     []*CT_Pie3DChart
-	DoughnutChart  []*CT_DoughnutChart
-	BarChart       []*CT_BarChart
-	Bar3DChart     []*CT_Bar3DChart
-	OfPieChart     []*CT_OfPieChart
-	SurfaceChart   []*CT_SurfaceChart
-	Surface3DChart []*CT_Surface3DChart
-	BubbleChart    []*CT_BubbleChart
+	AreaChart      *CT_AreaChart
+	Area3DChart    *CT_Area3DChart
+	LineChart      *CT_LineChart
+	Line3DChart    *CT_Line3DChart
+	StockChart     *CT_StockChart
+	RadarChart     *CT_RadarChart
+	ScatterChart   *CT_ScatterChart
+	PieChart       *CT_PieChart
+	Pie3DChart     *CT_Pie3DChart
+	DoughnutChart  *CT_DoughnutChart
+	BarChart       *CT_BarChart
+	Bar3DChart     *CT_Bar3DChart
+	OfPieChart     *CT_OfPieChart
+	SurfaceChart   *CT_SurfaceChart
+	Surface3DChart *CT_Surface3DChart
+	BubbleChart    *CT_BubbleChart
 }
 
 func NewCT_PlotAreaChoice() *CT_PlotAreaChoice {
@@ -117,101 +116,85 @@ lCT_PlotAreaChoice:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "areaChart":
-				tmp := NewCT_AreaChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.AreaChart = NewCT_AreaChart()
+				if err := d.DecodeElement(m.AreaChart, &el); err != nil {
 					return err
 				}
-				m.AreaChart = append(m.AreaChart, tmp)
 			case "area3DChart":
-				tmp := NewCT_Area3DChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Area3DChart = NewCT_Area3DChart()
+				if err := d.DecodeElement(m.Area3DChart, &el); err != nil {
 					return err
 				}
-				m.Area3DChart = append(m.Area3DChart, tmp)
 			case "lineChart":
-				tmp := NewCT_LineChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.LineChart = NewCT_LineChart()
+				if err := d.DecodeElement(m.LineChart, &el); err != nil {
 					return err
 				}
-				m.LineChart = append(m.LineChart, tmp)
 			case "line3DChart":
-				tmp := NewCT_Line3DChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Line3DChart = NewCT_Line3DChart()
+				if err := d.DecodeElement(m.Line3DChart, &el); err != nil {
 					return err
 				}
-				m.Line3DChart = append(m.Line3DChart, tmp)
 			case "stockChart":
-				tmp := NewCT_StockChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.StockChart = NewCT_StockChart()
+				if err := d.DecodeElement(m.StockChart, &el); err != nil {
 					return err
 				}
-				m.StockChart = append(m.StockChart, tmp)
 			case "radarChart":
-				tmp := NewCT_RadarChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.RadarChart = NewCT_RadarChart()
+				if err := d.DecodeElement(m.RadarChart, &el); err != nil {
 					return err
 				}
-				m.RadarChart = append(m.RadarChart, tmp)
 			case "scatterChart":
-				tmp := NewCT_ScatterChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.ScatterChart = NewCT_ScatterChart()
+				if err := d.DecodeElement(m.ScatterChart, &el); err != nil {
 					return err
 				}
-				m.ScatterChart = append(m.ScatterChart, tmp)
 			case "pieChart":
-				tmp := NewCT_PieChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.PieChart = NewCT_PieChart()
+				if err := d.DecodeElement(m.PieChart, &el); err != nil {
 					return err
 				}
-				m.PieChart = append(m.PieChart, tmp)
 			case "pie3DChart":
-				tmp := NewCT_Pie3DChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Pie3DChart = NewCT_Pie3DChart()
+				if err := d.DecodeElement(m.Pie3DChart, &el); err != nil {
 					return err
 				}
-				m.Pie3DChart = append(m.Pie3DChart, tmp)
 			case "doughnutChart":
-				tmp := NewCT_DoughnutChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.DoughnutChart = NewCT_DoughnutChart()
+				if err := d.DecodeElement(m.DoughnutChart, &el); err != nil {
 					return err
 				}
-				m.DoughnutChart = append(m.DoughnutChart, tmp)
 			case "barChart":
-				tmp := NewCT_BarChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.BarChart = NewCT_BarChart()
+				if err := d.DecodeElement(m.BarChart, &el); err != nil {
 					return err
 				}
-				m.BarChart = append(m.BarChart, tmp)
 			case "bar3DChart":
-				tmp := NewCT_Bar3DChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Bar3DChart = NewCT_Bar3DChart()
+				if err := d.DecodeElement(m.Bar3DChart, &el); err != nil {
 					return err
 				}
-				m.Bar3DChart = append(m.Bar3DChart, tmp)
 			case "ofPieChart":
-				tmp := NewCT_OfPieChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.OfPieChart = NewCT_OfPieChart()
+				if err := d.DecodeElement(m.OfPieChart, &el); err != nil {
 					return err
 				}
-				m.OfPieChart = append(m.OfPieChart, tmp)
 			case "surfaceChart":
-				tmp := NewCT_SurfaceChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.SurfaceChart = NewCT_SurfaceChart()
+				if err := d.DecodeElement(m.SurfaceChart, &el); err != nil {
 					return err
 				}
-				m.SurfaceChart = append(m.SurfaceChart, tmp)
 			case "surface3DChart":
-				tmp := NewCT_Surface3DChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Surface3DChart = NewCT_Surface3DChart()
+				if err := d.DecodeElement(m.Surface3DChart, &el); err != nil {
 					return err
 				}
-				m.Surface3DChart = append(m.Surface3DChart, tmp)
 			case "bubbleChart":
-				tmp := NewCT_BubbleChart()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.BubbleChart = NewCT_BubbleChart()
+				if err := d.DecodeElement(m.BubbleChart, &el); err != nil {
 					return err
 				}
-				m.BubbleChart = append(m.BubbleChart, tmp)
 			default:
 				log.Printf("skipping unsupported element on CT_PlotAreaChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -233,83 +216,83 @@ func (m *CT_PlotAreaChoice) Validate() error {
 
 // ValidateWithPath validates the CT_PlotAreaChoice and its children, prefixing error messages with path
 func (m *CT_PlotAreaChoice) ValidateWithPath(path string) error {
-	for i, v := range m.AreaChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/AreaChart[%d]", path, i)); err != nil {
+	if m.AreaChart != nil {
+		if err := m.AreaChart.ValidateWithPath(path + "/AreaChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Area3DChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Area3DChart[%d]", path, i)); err != nil {
+	if m.Area3DChart != nil {
+		if err := m.Area3DChart.ValidateWithPath(path + "/Area3DChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.LineChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/LineChart[%d]", path, i)); err != nil {
+	if m.LineChart != nil {
+		if err := m.LineChart.ValidateWithPath(path + "/LineChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Line3DChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Line3DChart[%d]", path, i)); err != nil {
+	if m.Line3DChart != nil {
+		if err := m.Line3DChart.ValidateWithPath(path + "/Line3DChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.StockChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/StockChart[%d]", path, i)); err != nil {
+	if m.StockChart != nil {
+		if err := m.StockChart.ValidateWithPath(path + "/StockChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.RadarChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/RadarChart[%d]", path, i)); err != nil {
+	if m.RadarChart != nil {
+		if err := m.RadarChart.ValidateWithPath(path + "/RadarChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.ScatterChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/ScatterChart[%d]", path, i)); err != nil {
+	if m.ScatterChart != nil {
+		if err := m.ScatterChart.ValidateWithPath(path + "/ScatterChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.PieChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/PieChart[%d]", path, i)); err != nil {
+	if m.PieChart != nil {
+		if err := m.PieChart.ValidateWithPath(path + "/PieChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Pie3DChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Pie3DChart[%d]", path, i)); err != nil {
+	if m.Pie3DChart != nil {
+		if err := m.Pie3DChart.ValidateWithPath(path + "/Pie3DChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.DoughnutChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/DoughnutChart[%d]", path, i)); err != nil {
+	if m.DoughnutChart != nil {
+		if err := m.DoughnutChart.ValidateWithPath(path + "/DoughnutChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.BarChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/BarChart[%d]", path, i)); err != nil {
+	if m.BarChart != nil {
+		if err := m.BarChart.ValidateWithPath(path + "/BarChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Bar3DChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Bar3DChart[%d]", path, i)); err != nil {
+	if m.Bar3DChart != nil {
+		if err := m.Bar3DChart.ValidateWithPath(path + "/Bar3DChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.OfPieChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/OfPieChart[%d]", path, i)); err != nil {
+	if m.OfPieChart != nil {
+		if err := m.OfPieChart.ValidateWithPath(path + "/OfPieChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.SurfaceChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/SurfaceChart[%d]", path, i)); err != nil {
+	if m.SurfaceChart != nil {
+		if err := m.SurfaceChart.ValidateWithPath(path + "/SurfaceChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Surface3DChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Surface3DChart[%d]", path, i)); err != nil {
+	if m.Surface3DChart != nil {
+		if err := m.Surface3DChart.ValidateWithPath(path + "/Surface3DChart"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.BubbleChart {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/BubbleChart[%d]", path, i)); err != nil {
+	if m.BubbleChart != nil {
+		if err := m.BubbleChart.ValidateWithPath(path + "/BubbleChart"); err != nil {
 			return err
 		}
 	}
