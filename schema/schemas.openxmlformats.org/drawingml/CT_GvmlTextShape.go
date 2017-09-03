@@ -60,13 +60,11 @@ lCT_GvmlTextShape:
 				if err := d.DecodeElement(&m.Choice.UseSpRect, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "xfrm":
 				m.Choice = NewCT_GvmlTextShapeChoice()
 				if err := d.DecodeElement(&m.Choice.Xfrm, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "extLst":
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {

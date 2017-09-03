@@ -63,85 +63,71 @@ lCT_DLbls:
 				if err := d.DecodeElement(&m.Choice.Delete, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "numFmt":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.NumFmt, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "spPr":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.SpPr, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "txPr":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.TxPr, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "dLblPos":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.DLblPos, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "showLegendKey":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.ShowLegendKey, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "showVal":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.ShowVal, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "showCatName":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.ShowCatName, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "showSerName":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.ShowSerName, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "showPercent":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.ShowPercent, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "showBubbleSize":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.ShowBubbleSize, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "separator":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.Separator, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "showLeaderLines":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.ShowLeaderLines, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "leaderLines":
 				m.Choice = NewCT_DLblsChoice()
 				if err := d.DecodeElement(&m.Choice.LeaderLines, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "extLst":
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {

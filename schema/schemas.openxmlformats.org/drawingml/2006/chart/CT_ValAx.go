@@ -209,13 +209,11 @@ lCT_ValAx:
 				if err := d.DecodeElement(&m.Choice.Crosses, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "crossesAt":
 				m.Choice = NewEG_AxSharedChoice()
 				if err := d.DecodeElement(&m.Choice.CrossesAt, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "crossBetween":
 				m.CrossBetween = NewCT_CrossBetween()
 				if err := d.DecodeElement(m.CrossBetween, &el); err != nil {

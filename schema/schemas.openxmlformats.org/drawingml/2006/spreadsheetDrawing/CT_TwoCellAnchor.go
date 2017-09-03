@@ -82,37 +82,31 @@ lCT_TwoCellAnchor:
 				if err := d.DecodeElement(&m.Choice.Sp, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "grpSp":
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.GrpSp, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "graphicFrame":
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.GraphicFrame, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "cxnSp":
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.CxnSp, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "pic":
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.Pic, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "contentPart":
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.ContentPart, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "clientData":
 				if err := d.DecodeElement(m.ClientData, &el); err != nil {
 					return err

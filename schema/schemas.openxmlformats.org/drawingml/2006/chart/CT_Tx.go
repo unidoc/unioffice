@@ -46,13 +46,11 @@ lCT_Tx:
 				if err := d.DecodeElement(&m.Choice.StrRef, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "rich":
 				m.Choice = NewCT_TxChoice()
 				if err := d.DecodeElement(&m.Choice.Rich, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			default:
 				log.Printf("skipping unsupported element on CT_Tx %v", el.Name)
 				if err := d.Skip(); err != nil {

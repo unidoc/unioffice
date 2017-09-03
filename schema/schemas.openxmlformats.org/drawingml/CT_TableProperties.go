@@ -219,13 +219,11 @@ lCT_TableProperties:
 				if err := d.DecodeElement(&m.Choice.TableStyle, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "tableStyleId":
 				m.Choice = NewCT_TablePropertiesChoice()
 				if err := d.DecodeElement(&m.Choice.TableStyleId, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "extLst":
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {

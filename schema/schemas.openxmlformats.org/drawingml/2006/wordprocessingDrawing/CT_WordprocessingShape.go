@@ -98,13 +98,11 @@ lCT_WordprocessingShape:
 				if err := d.DecodeElement(&m.Choice.CNvSpPr, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "cNvCnPr":
 				m.Choice = NewCT_WordprocessingShapeChoice()
 				if err := d.DecodeElement(&m.Choice.CNvCnPr, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "spPr":
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
@@ -124,13 +122,11 @@ lCT_WordprocessingShape:
 				if err := d.DecodeElement(&m.CChoice.Txbx, &el); err != nil {
 					return err
 				}
-				_ = m.CChoice
 			case "linkedTxbx":
 				m.CChoice = NewCT_WordprocessingShapeChoice1()
 				if err := d.DecodeElement(&m.CChoice.LinkedTxbx, &el); err != nil {
 					return err
 				}
-				_ = m.CChoice
 			case "bodyPr":
 				if err := d.DecodeElement(m.BodyPr, &el); err != nil {
 					return err

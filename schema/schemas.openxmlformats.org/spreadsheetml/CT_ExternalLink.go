@@ -51,19 +51,16 @@ lCT_ExternalLink:
 				if err := d.DecodeElement(&m.Choice.ExternalBook, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "ddeLink":
 				m.Choice = NewCT_ExternalLinkChoice()
 				if err := d.DecodeElement(&m.Choice.DdeLink, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "oleLink":
 				m.Choice = NewCT_ExternalLinkChoice()
 				if err := d.DecodeElement(&m.Choice.OleLink, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "extLst":
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {

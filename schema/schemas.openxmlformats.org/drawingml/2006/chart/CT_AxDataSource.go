@@ -46,31 +46,26 @@ lCT_AxDataSource:
 				if err := d.DecodeElement(&m.Choice.MultiLvlStrRef, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "numRef":
 				m.Choice = NewCT_AxDataSourceChoice()
 				if err := d.DecodeElement(&m.Choice.NumRef, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "numLit":
 				m.Choice = NewCT_AxDataSourceChoice()
 				if err := d.DecodeElement(&m.Choice.NumLit, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "strRef":
 				m.Choice = NewCT_AxDataSourceChoice()
 				if err := d.DecodeElement(&m.Choice.StrRef, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "strLit":
 				m.Choice = NewCT_AxDataSourceChoice()
 				if err := d.DecodeElement(&m.Choice.StrLit, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			default:
 				log.Printf("skipping unsupported element on CT_AxDataSource %v", el.Name)
 				if err := d.Skip(); err != nil {

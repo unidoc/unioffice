@@ -104,13 +104,11 @@ lOleObj:
 				if err := d.DecodeElement(&m.Choice.Embed, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "link":
 				m.Choice = NewCT_OleObjectChoice()
 				if err := d.DecodeElement(&m.Choice.Link, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "pic":
 				m.Pic = NewCT_Picture()
 				if err := d.DecodeElement(m.Pic, &el); err != nil {

@@ -182,13 +182,11 @@ lEG_AxShared:
 				if err := d.DecodeElement(&m.Choice.Crosses, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "crossesAt":
 				m.Choice = NewEG_AxSharedChoice()
 				if err := d.DecodeElement(&m.Choice.CrossesAt, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			default:
 				log.Printf("skipping unsupported element on EG_AxShared %v", el.Name)
 				if err := d.Skip(); err != nil {

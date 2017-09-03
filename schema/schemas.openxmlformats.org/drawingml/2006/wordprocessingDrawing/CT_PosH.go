@@ -60,13 +60,11 @@ lCT_PosH:
 				if err := d.DecodeElement(&m.Choice.Align, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "posOffset":
 				m.Choice = NewCT_PosHChoice()
 				if err := d.DecodeElement(&m.Choice.PosOffset, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			default:
 				log.Printf("skipping unsupported element on CT_PosH %v", el.Name)
 				if err := d.Skip(); err != nil {

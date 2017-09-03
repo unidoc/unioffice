@@ -224,13 +224,11 @@ lCT_DateAx:
 				if err := d.DecodeElement(&m.Choice.Crosses, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "crossesAt":
 				m.Choice = NewEG_AxSharedChoice()
 				if err := d.DecodeElement(&m.Choice.CrossesAt, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "auto":
 				m.Auto = NewCT_Boolean()
 				if err := d.DecodeElement(m.Auto, &el); err != nil {

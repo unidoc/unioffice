@@ -47,13 +47,11 @@ lCT_ColorMappingOverride:
 				if err := d.DecodeElement(&m.Choice.MasterClrMapping, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "overrideClrMapping":
 				m.Choice = NewCT_ColorMappingOverrideChoice()
 				if err := d.DecodeElement(&m.Choice.OverrideClrMapping, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			default:
 				log.Printf("skipping unsupported element on CT_ColorMappingOverride %v", el.Name)
 				if err := d.Skip(); err != nil {

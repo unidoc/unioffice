@@ -66,31 +66,26 @@ lCT_AbsSizeAnchor:
 				if err := d.DecodeElement(&m.Choice.Sp, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "grpSp":
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.GrpSp, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "graphicFrame":
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.GraphicFrame, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "cxnSp":
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.CxnSp, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "pic":
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.Pic, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			default:
 				log.Printf("skipping unsupported element on CT_AbsSizeAnchor %v", el.Name)
 				if err := d.Skip(); err != nil {

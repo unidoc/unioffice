@@ -167,73 +167,61 @@ lCT_SdtPr:
 				if err := d.DecodeElement(&m.Choice.Equation, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "comboBox":
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.ComboBox, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "date":
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Date, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "docPartObj":
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.DocPartObj, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "docPartList":
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.DocPartList, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "dropDownList":
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.DropDownList, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "picture":
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Picture, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "richText":
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.RichText, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "text":
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Text, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "citation":
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Citation, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "group":
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Group, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "bibliography":
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Bibliography, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			default:
 				log.Printf("skipping unsupported element on CT_SdtPr %v", el.Name)
 				if err := d.Skip(); err != nil {
