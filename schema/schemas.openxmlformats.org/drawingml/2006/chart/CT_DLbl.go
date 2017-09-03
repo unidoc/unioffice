@@ -56,72 +56,100 @@ lCT_DLbl:
 					return err
 				}
 			case "delete":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.Delete, &el); err != nil {
 					return err
 				}
 			case "layout":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.Layout, &el); err != nil {
 					return err
 				}
 			case "tx":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.Tx, &el); err != nil {
 					return err
 				}
 			case "numFmt":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.NumFmt, &el); err != nil {
 					return err
 				}
 			case "spPr":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.SpPr, &el); err != nil {
 					return err
 				}
 			case "txPr":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.TxPr, &el); err != nil {
 					return err
 				}
 			case "dLblPos":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.DLblPos, &el); err != nil {
 					return err
 				}
 			case "showLegendKey":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.ShowLegendKey, &el); err != nil {
 					return err
 				}
 			case "showVal":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.ShowVal, &el); err != nil {
 					return err
 				}
 			case "showCatName":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.ShowCatName, &el); err != nil {
 					return err
 				}
 			case "showSerName":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.ShowSerName, &el); err != nil {
 					return err
 				}
 			case "showPercent":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.ShowPercent, &el); err != nil {
 					return err
 				}
 			case "showBubbleSize":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.ShowBubbleSize, &el); err != nil {
 					return err
 				}
 			case "separator":
-				m.Choice = NewCT_DLblChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_DLblChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.Separator, &el); err != nil {
 					return err
 				}
