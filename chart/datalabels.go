@@ -1,0 +1,61 @@
+// Copyright 2017 Baliance. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
+package chart
+
+import (
+	"baliance.com/gooxml"
+	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
+)
+
+type DataLabels struct {
+	x *crt.CT_DLbls
+}
+
+func MakeDataLabels(x *crt.CT_DLbls) DataLabels {
+	return DataLabels{x}
+}
+func (d DataLabels) ensureChoice() {
+	if d.x.Choice == nil {
+		d.x.Choice = crt.NewCT_DLblsChoice()
+	}
+}
+func (d DataLabels) SetShowLegendKey(b bool) {
+	d.ensureChoice()
+	d.x.Choice.ShowLegendKey = crt.NewCT_Boolean()
+	d.x.Choice.ShowLegendKey.ValAttr = gooxml.Bool(b)
+}
+
+func (d DataLabels) SetShowValue(b bool) {
+	d.ensureChoice()
+	d.x.Choice.ShowVal = crt.NewCT_Boolean()
+	d.x.Choice.ShowVal.ValAttr = gooxml.Bool(b)
+}
+
+func (d DataLabels) SetShowCategoryName(b bool) {
+	d.ensureChoice()
+	d.x.Choice.ShowCatName = crt.NewCT_Boolean()
+	d.x.Choice.ShowCatName.ValAttr = gooxml.Bool(b)
+}
+
+func (d DataLabels) SetShowSeriesName(b bool) {
+	d.ensureChoice()
+	d.x.Choice.ShowSerName = crt.NewCT_Boolean()
+	d.x.Choice.ShowSerName.ValAttr = gooxml.Bool(b)
+}
+
+func (d DataLabels) SetShowPercent(b bool) {
+	d.ensureChoice()
+	d.x.Choice.ShowPercent = crt.NewCT_Boolean()
+	d.x.Choice.ShowPercent.ValAttr = gooxml.Bool(b)
+}
+
+func (d DataLabels) SetShowLeaderLines(b bool) {
+	d.ensureChoice()
+	d.x.Choice.ShowLeaderLines = crt.NewCT_Boolean()
+	d.x.Choice.ShowLeaderLines.ValAttr = gooxml.Bool(b)
+}
