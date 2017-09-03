@@ -33,34 +33,34 @@ func NewCT_DPt() *CT_DPt {
 
 func (m *CT_DPt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
+	seidx := xml.StartElement{Name: xml.Name{Local: "c:idx"}}
 	e.EncodeElement(m.Idx, seidx)
 	if m.InvertIfNegative != nil {
-		seinvertIfNegative := xml.StartElement{Name: xml.Name{Local: "invertIfNegative"}}
+		seinvertIfNegative := xml.StartElement{Name: xml.Name{Local: "c:invertIfNegative"}}
 		e.EncodeElement(m.InvertIfNegative, seinvertIfNegative)
 	}
 	if m.Marker != nil {
-		semarker := xml.StartElement{Name: xml.Name{Local: "marker"}}
+		semarker := xml.StartElement{Name: xml.Name{Local: "c:marker"}}
 		e.EncodeElement(m.Marker, semarker)
 	}
 	if m.Bubble3D != nil {
-		sebubble3D := xml.StartElement{Name: xml.Name{Local: "bubble3D"}}
+		sebubble3D := xml.StartElement{Name: xml.Name{Local: "c:bubble3D"}}
 		e.EncodeElement(m.Bubble3D, sebubble3D)
 	}
 	if m.Explosion != nil {
-		seexplosion := xml.StartElement{Name: xml.Name{Local: "explosion"}}
+		seexplosion := xml.StartElement{Name: xml.Name{Local: "c:explosion"}}
 		e.EncodeElement(m.Explosion, seexplosion)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.PictureOptions != nil {
-		sepictureOptions := xml.StartElement{Name: xml.Name{Local: "pictureOptions"}}
+		sepictureOptions := xml.StartElement{Name: xml.Name{Local: "c:pictureOptions"}}
 		e.EncodeElement(m.PictureOptions, sepictureOptions)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

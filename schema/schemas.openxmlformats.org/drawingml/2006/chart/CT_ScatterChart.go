@@ -30,24 +30,24 @@ func NewCT_ScatterChart() *CT_ScatterChart {
 
 func (m *CT_ScatterChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	sescatterStyle := xml.StartElement{Name: xml.Name{Local: "scatterStyle"}}
+	sescatterStyle := xml.StartElement{Name: xml.Name{Local: "c:scatterStyle"}}
 	e.EncodeElement(m.ScatterStyle, sescatterStyle)
 	if m.VaryColors != nil {
-		sevaryColors := xml.StartElement{Name: xml.Name{Local: "varyColors"}}
+		sevaryColors := xml.StartElement{Name: xml.Name{Local: "c:varyColors"}}
 		e.EncodeElement(m.VaryColors, sevaryColors)
 	}
 	if m.Ser != nil {
-		seser := xml.StartElement{Name: xml.Name{Local: "ser"}}
+		seser := xml.StartElement{Name: xml.Name{Local: "c:ser"}}
 		e.EncodeElement(m.Ser, seser)
 	}
 	if m.DLbls != nil {
-		sedLbls := xml.StartElement{Name: xml.Name{Local: "dLbls"}}
+		sedLbls := xml.StartElement{Name: xml.Name{Local: "c:dLbls"}}
 		e.EncodeElement(m.DLbls, sedLbls)
 	}
-	seaxId := xml.StartElement{Name: xml.Name{Local: "axId"}}
+	seaxId := xml.StartElement{Name: xml.Name{Local: "c:axId"}}
 	e.EncodeElement(m.AxId, seaxId)
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

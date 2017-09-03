@@ -31,27 +31,27 @@ func NewCT_Title() *CT_Title {
 func (m *CT_Title) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Tx != nil {
-		setx := xml.StartElement{Name: xml.Name{Local: "tx"}}
+		setx := xml.StartElement{Name: xml.Name{Local: "c:tx"}}
 		e.EncodeElement(m.Tx, setx)
 	}
 	if m.Layout != nil {
-		selayout := xml.StartElement{Name: xml.Name{Local: "layout"}}
+		selayout := xml.StartElement{Name: xml.Name{Local: "c:layout"}}
 		e.EncodeElement(m.Layout, selayout)
 	}
 	if m.Overlay != nil {
-		seoverlay := xml.StartElement{Name: xml.Name{Local: "overlay"}}
+		seoverlay := xml.StartElement{Name: xml.Name{Local: "c:overlay"}}
 		e.EncodeElement(m.Overlay, seoverlay)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.TxPr != nil {
-		setxPr := xml.StartElement{Name: xml.Name{Local: "txPr"}}
+		setxPr := xml.StartElement{Name: xml.Name{Local: "c:txPr"}}
 		e.EncodeElement(m.TxPr, setxPr)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

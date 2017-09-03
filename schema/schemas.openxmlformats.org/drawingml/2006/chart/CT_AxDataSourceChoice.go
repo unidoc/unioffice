@@ -27,23 +27,23 @@ func NewCT_AxDataSourceChoice() *CT_AxDataSourceChoice {
 
 func (m *CT_AxDataSourceChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.MultiLvlStrRef != nil {
-		semultiLvlStrRef := xml.StartElement{Name: xml.Name{Local: "multiLvlStrRef"}}
+		semultiLvlStrRef := xml.StartElement{Name: xml.Name{Local: "c:multiLvlStrRef"}}
 		e.EncodeElement(m.MultiLvlStrRef, semultiLvlStrRef)
 	}
 	if m.NumRef != nil {
-		senumRef := xml.StartElement{Name: xml.Name{Local: "numRef"}}
+		senumRef := xml.StartElement{Name: xml.Name{Local: "c:numRef"}}
 		e.EncodeElement(m.NumRef, senumRef)
 	}
 	if m.NumLit != nil {
-		senumLit := xml.StartElement{Name: xml.Name{Local: "numLit"}}
+		senumLit := xml.StartElement{Name: xml.Name{Local: "c:numLit"}}
 		e.EncodeElement(m.NumLit, senumLit)
 	}
 	if m.StrRef != nil {
-		sestrRef := xml.StartElement{Name: xml.Name{Local: "strRef"}}
+		sestrRef := xml.StartElement{Name: xml.Name{Local: "c:strRef"}}
 		e.EncodeElement(m.StrRef, sestrRef)
 	}
 	if m.StrLit != nil {
-		sestrLit := xml.StartElement{Name: xml.Name{Local: "strLit"}}
+		sestrLit := xml.StartElement{Name: xml.Name{Local: "c:strLit"}}
 		e.EncodeElement(m.StrLit, sestrLit)
 	}
 	return nil

@@ -33,28 +33,28 @@ func NewCT_SurfaceSer() *CT_SurfaceSer {
 
 func (m *CT_SurfaceSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
+	seidx := xml.StartElement{Name: xml.Name{Local: "c:idx"}}
 	e.EncodeElement(m.Idx, seidx)
-	seorder := xml.StartElement{Name: xml.Name{Local: "order"}}
+	seorder := xml.StartElement{Name: xml.Name{Local: "c:order"}}
 	e.EncodeElement(m.Order, seorder)
 	if m.Tx != nil {
-		setx := xml.StartElement{Name: xml.Name{Local: "tx"}}
+		setx := xml.StartElement{Name: xml.Name{Local: "c:tx"}}
 		e.EncodeElement(m.Tx, setx)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.Cat != nil {
-		secat := xml.StartElement{Name: xml.Name{Local: "cat"}}
+		secat := xml.StartElement{Name: xml.Name{Local: "c:cat"}}
 		e.EncodeElement(m.Cat, secat)
 	}
 	if m.Val != nil {
-		seval := xml.StartElement{Name: xml.Name{Local: "val"}}
+		seval := xml.StartElement{Name: xml.Name{Local: "c:val"}}
 		e.EncodeElement(m.Val, seval)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

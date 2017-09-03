@@ -28,22 +28,22 @@ func NewEG_BarChartShared() *EG_BarChartShared {
 }
 
 func (m *EG_BarChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	sebarDir := xml.StartElement{Name: xml.Name{Local: "barDir"}}
+	sebarDir := xml.StartElement{Name: xml.Name{Local: "c:barDir"}}
 	e.EncodeElement(m.BarDir, sebarDir)
 	if m.Grouping != nil {
-		segrouping := xml.StartElement{Name: xml.Name{Local: "grouping"}}
+		segrouping := xml.StartElement{Name: xml.Name{Local: "c:grouping"}}
 		e.EncodeElement(m.Grouping, segrouping)
 	}
 	if m.VaryColors != nil {
-		sevaryColors := xml.StartElement{Name: xml.Name{Local: "varyColors"}}
+		sevaryColors := xml.StartElement{Name: xml.Name{Local: "c:varyColors"}}
 		e.EncodeElement(m.VaryColors, sevaryColors)
 	}
 	if m.Ser != nil {
-		seser := xml.StartElement{Name: xml.Name{Local: "ser"}}
+		seser := xml.StartElement{Name: xml.Name{Local: "c:ser"}}
 		e.EncodeElement(m.Ser, seser)
 	}
 	if m.DLbls != nil {
-		sedLbls := xml.StartElement{Name: xml.Name{Local: "dLbls"}}
+		sedLbls := xml.StartElement{Name: xml.Name{Local: "c:dLbls"}}
 		e.EncodeElement(m.DLbls, sedLbls)
 	}
 	return nil

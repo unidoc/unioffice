@@ -37,53 +37,53 @@ func NewCT_Chart() *CT_Chart {
 func (m *CT_Chart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Title != nil {
-		setitle := xml.StartElement{Name: xml.Name{Local: "title"}}
+		setitle := xml.StartElement{Name: xml.Name{Local: "c:title"}}
 		e.EncodeElement(m.Title, setitle)
 	}
 	if m.AutoTitleDeleted != nil {
-		seautoTitleDeleted := xml.StartElement{Name: xml.Name{Local: "autoTitleDeleted"}}
+		seautoTitleDeleted := xml.StartElement{Name: xml.Name{Local: "c:autoTitleDeleted"}}
 		e.EncodeElement(m.AutoTitleDeleted, seautoTitleDeleted)
 	}
 	if m.PivotFmts != nil {
-		sepivotFmts := xml.StartElement{Name: xml.Name{Local: "pivotFmts"}}
+		sepivotFmts := xml.StartElement{Name: xml.Name{Local: "c:pivotFmts"}}
 		e.EncodeElement(m.PivotFmts, sepivotFmts)
 	}
 	if m.View3D != nil {
-		seview3D := xml.StartElement{Name: xml.Name{Local: "view3D"}}
+		seview3D := xml.StartElement{Name: xml.Name{Local: "c:view3D"}}
 		e.EncodeElement(m.View3D, seview3D)
 	}
 	if m.Floor != nil {
-		sefloor := xml.StartElement{Name: xml.Name{Local: "floor"}}
+		sefloor := xml.StartElement{Name: xml.Name{Local: "c:floor"}}
 		e.EncodeElement(m.Floor, sefloor)
 	}
 	if m.SideWall != nil {
-		sesideWall := xml.StartElement{Name: xml.Name{Local: "sideWall"}}
+		sesideWall := xml.StartElement{Name: xml.Name{Local: "c:sideWall"}}
 		e.EncodeElement(m.SideWall, sesideWall)
 	}
 	if m.BackWall != nil {
-		sebackWall := xml.StartElement{Name: xml.Name{Local: "backWall"}}
+		sebackWall := xml.StartElement{Name: xml.Name{Local: "c:backWall"}}
 		e.EncodeElement(m.BackWall, sebackWall)
 	}
-	seplotArea := xml.StartElement{Name: xml.Name{Local: "plotArea"}}
+	seplotArea := xml.StartElement{Name: xml.Name{Local: "c:plotArea"}}
 	e.EncodeElement(m.PlotArea, seplotArea)
 	if m.Legend != nil {
-		selegend := xml.StartElement{Name: xml.Name{Local: "legend"}}
+		selegend := xml.StartElement{Name: xml.Name{Local: "c:legend"}}
 		e.EncodeElement(m.Legend, selegend)
 	}
 	if m.PlotVisOnly != nil {
-		seplotVisOnly := xml.StartElement{Name: xml.Name{Local: "plotVisOnly"}}
+		seplotVisOnly := xml.StartElement{Name: xml.Name{Local: "c:plotVisOnly"}}
 		e.EncodeElement(m.PlotVisOnly, seplotVisOnly)
 	}
 	if m.DispBlanksAs != nil {
-		sedispBlanksAs := xml.StartElement{Name: xml.Name{Local: "dispBlanksAs"}}
+		sedispBlanksAs := xml.StartElement{Name: xml.Name{Local: "c:dispBlanksAs"}}
 		e.EncodeElement(m.DispBlanksAs, sedispBlanksAs)
 	}
 	if m.ShowDLblsOverMax != nil {
-		seshowDLblsOverMax := xml.StartElement{Name: xml.Name{Local: "showDLblsOverMax"}}
+		seshowDLblsOverMax := xml.StartElement{Name: xml.Name{Local: "c:showDLblsOverMax"}}
 		e.EncodeElement(m.ShowDLblsOverMax, seshowDLblsOverMax)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

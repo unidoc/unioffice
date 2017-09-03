@@ -35,44 +35,44 @@ func NewCT_LineChart() *CT_LineChart {
 
 func (m *CT_LineChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	segrouping := xml.StartElement{Name: xml.Name{Local: "grouping"}}
+	segrouping := xml.StartElement{Name: xml.Name{Local: "c:grouping"}}
 	e.EncodeElement(m.Grouping, segrouping)
 	if m.VaryColors != nil {
-		sevaryColors := xml.StartElement{Name: xml.Name{Local: "varyColors"}}
+		sevaryColors := xml.StartElement{Name: xml.Name{Local: "c:varyColors"}}
 		e.EncodeElement(m.VaryColors, sevaryColors)
 	}
 	if m.Ser != nil {
-		seser := xml.StartElement{Name: xml.Name{Local: "ser"}}
+		seser := xml.StartElement{Name: xml.Name{Local: "c:ser"}}
 		e.EncodeElement(m.Ser, seser)
 	}
 	if m.DLbls != nil {
-		sedLbls := xml.StartElement{Name: xml.Name{Local: "dLbls"}}
+		sedLbls := xml.StartElement{Name: xml.Name{Local: "c:dLbls"}}
 		e.EncodeElement(m.DLbls, sedLbls)
 	}
 	if m.DropLines != nil {
-		sedropLines := xml.StartElement{Name: xml.Name{Local: "dropLines"}}
+		sedropLines := xml.StartElement{Name: xml.Name{Local: "c:dropLines"}}
 		e.EncodeElement(m.DropLines, sedropLines)
 	}
 	if m.HiLowLines != nil {
-		sehiLowLines := xml.StartElement{Name: xml.Name{Local: "hiLowLines"}}
+		sehiLowLines := xml.StartElement{Name: xml.Name{Local: "c:hiLowLines"}}
 		e.EncodeElement(m.HiLowLines, sehiLowLines)
 	}
 	if m.UpDownBars != nil {
-		seupDownBars := xml.StartElement{Name: xml.Name{Local: "upDownBars"}}
+		seupDownBars := xml.StartElement{Name: xml.Name{Local: "c:upDownBars"}}
 		e.EncodeElement(m.UpDownBars, seupDownBars)
 	}
 	if m.Marker != nil {
-		semarker := xml.StartElement{Name: xml.Name{Local: "marker"}}
+		semarker := xml.StartElement{Name: xml.Name{Local: "c:marker"}}
 		e.EncodeElement(m.Marker, semarker)
 	}
 	if m.Smooth != nil {
-		sesmooth := xml.StartElement{Name: xml.Name{Local: "smooth"}}
+		sesmooth := xml.StartElement{Name: xml.Name{Local: "c:smooth"}}
 		e.EncodeElement(m.Smooth, sesmooth)
 	}
-	seaxId := xml.StartElement{Name: xml.Name{Local: "axId"}}
+	seaxId := xml.StartElement{Name: xml.Name{Local: "c:axId"}}
 	e.EncodeElement(m.AxId, seaxId)
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

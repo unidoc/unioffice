@@ -26,7 +26,7 @@ func NewCT_UpDownBar() *CT_UpDownBar {
 func (m *CT_UpDownBar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

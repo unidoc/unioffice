@@ -27,15 +27,15 @@ func NewCT_MultiLvlStrRef() *CT_MultiLvlStrRef {
 
 func (m *CT_MultiLvlStrRef) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	sef := xml.StartElement{Name: xml.Name{Local: "f"}}
+	sef := xml.StartElement{Name: xml.Name{Local: "c:f"}}
 	gooxml.AddPreserveSpaceAttr(&sef, m.F)
 	e.EncodeElement(m.F, sef)
 	if m.MultiLvlStrCache != nil {
-		semultiLvlStrCache := xml.StartElement{Name: xml.Name{Local: "multiLvlStrCache"}}
+		semultiLvlStrCache := xml.StartElement{Name: xml.Name{Local: "c:multiLvlStrCache"}}
 		e.EncodeElement(m.MultiLvlStrCache, semultiLvlStrCache)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

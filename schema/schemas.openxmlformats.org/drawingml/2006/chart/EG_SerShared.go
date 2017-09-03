@@ -29,16 +29,16 @@ func NewEG_SerShared() *EG_SerShared {
 }
 
 func (m *EG_SerShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
+	seidx := xml.StartElement{Name: xml.Name{Local: "c:idx"}}
 	e.EncodeElement(m.Idx, seidx)
-	seorder := xml.StartElement{Name: xml.Name{Local: "order"}}
+	seorder := xml.StartElement{Name: xml.Name{Local: "c:order"}}
 	e.EncodeElement(m.Order, seorder)
 	if m.Tx != nil {
-		setx := xml.StartElement{Name: xml.Name{Local: "tx"}}
+		setx := xml.StartElement{Name: xml.Name{Local: "c:tx"}}
 		e.EncodeElement(m.Tx, setx)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	return nil

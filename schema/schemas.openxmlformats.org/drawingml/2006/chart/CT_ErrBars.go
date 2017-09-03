@@ -36,35 +36,35 @@ func NewCT_ErrBars() *CT_ErrBars {
 func (m *CT_ErrBars) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.ErrDir != nil {
-		seerrDir := xml.StartElement{Name: xml.Name{Local: "errDir"}}
+		seerrDir := xml.StartElement{Name: xml.Name{Local: "c:errDir"}}
 		e.EncodeElement(m.ErrDir, seerrDir)
 	}
-	seerrBarType := xml.StartElement{Name: xml.Name{Local: "errBarType"}}
+	seerrBarType := xml.StartElement{Name: xml.Name{Local: "c:errBarType"}}
 	e.EncodeElement(m.ErrBarType, seerrBarType)
-	seerrValType := xml.StartElement{Name: xml.Name{Local: "errValType"}}
+	seerrValType := xml.StartElement{Name: xml.Name{Local: "c:errValType"}}
 	e.EncodeElement(m.ErrValType, seerrValType)
 	if m.NoEndCap != nil {
-		senoEndCap := xml.StartElement{Name: xml.Name{Local: "noEndCap"}}
+		senoEndCap := xml.StartElement{Name: xml.Name{Local: "c:noEndCap"}}
 		e.EncodeElement(m.NoEndCap, senoEndCap)
 	}
 	if m.Plus != nil {
-		seplus := xml.StartElement{Name: xml.Name{Local: "plus"}}
+		seplus := xml.StartElement{Name: xml.Name{Local: "c:plus"}}
 		e.EncodeElement(m.Plus, seplus)
 	}
 	if m.Minus != nil {
-		seminus := xml.StartElement{Name: xml.Name{Local: "minus"}}
+		seminus := xml.StartElement{Name: xml.Name{Local: "c:minus"}}
 		e.EncodeElement(m.Minus, seminus)
 	}
 	if m.Val != nil {
-		seval := xml.StartElement{Name: xml.Name{Local: "val"}}
+		seval := xml.StartElement{Name: xml.Name{Local: "c:val"}}
 		e.EncodeElement(m.Val, seval)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

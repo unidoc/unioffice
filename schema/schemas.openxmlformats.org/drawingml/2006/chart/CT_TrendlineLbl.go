@@ -31,27 +31,27 @@ func NewCT_TrendlineLbl() *CT_TrendlineLbl {
 func (m *CT_TrendlineLbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Layout != nil {
-		selayout := xml.StartElement{Name: xml.Name{Local: "layout"}}
+		selayout := xml.StartElement{Name: xml.Name{Local: "c:layout"}}
 		e.EncodeElement(m.Layout, selayout)
 	}
 	if m.Tx != nil {
-		setx := xml.StartElement{Name: xml.Name{Local: "tx"}}
+		setx := xml.StartElement{Name: xml.Name{Local: "c:tx"}}
 		e.EncodeElement(m.Tx, setx)
 	}
 	if m.NumFmt != nil {
-		senumFmt := xml.StartElement{Name: xml.Name{Local: "numFmt"}}
+		senumFmt := xml.StartElement{Name: xml.Name{Local: "c:numFmt"}}
 		e.EncodeElement(m.NumFmt, senumFmt)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.TxPr != nil {
-		setxPr := xml.StartElement{Name: xml.Name{Local: "txPr"}}
+		setxPr := xml.StartElement{Name: xml.Name{Local: "c:txPr"}}
 		e.EncodeElement(m.TxPr, setxPr)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

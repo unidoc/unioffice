@@ -28,23 +28,23 @@ func NewCT_Scaling() *CT_Scaling {
 func (m *CT_Scaling) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.LogBase != nil {
-		selogBase := xml.StartElement{Name: xml.Name{Local: "logBase"}}
+		selogBase := xml.StartElement{Name: xml.Name{Local: "c:logBase"}}
 		e.EncodeElement(m.LogBase, selogBase)
 	}
 	if m.Orientation != nil {
-		seorientation := xml.StartElement{Name: xml.Name{Local: "orientation"}}
+		seorientation := xml.StartElement{Name: xml.Name{Local: "c:orientation"}}
 		e.EncodeElement(m.Orientation, seorientation)
 	}
 	if m.Max != nil {
-		semax := xml.StartElement{Name: xml.Name{Local: "max"}}
+		semax := xml.StartElement{Name: xml.Name{Local: "c:max"}}
 		e.EncodeElement(m.Max, semax)
 	}
 	if m.Min != nil {
-		semin := xml.StartElement{Name: xml.Name{Local: "min"}}
+		semin := xml.StartElement{Name: xml.Name{Local: "c:min"}}
 		e.EncodeElement(m.Min, semin)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

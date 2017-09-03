@@ -40,57 +40,57 @@ func NewCT_ChartSpace() *CT_ChartSpace {
 func (m *CT_ChartSpace) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Date1904 != nil {
-		sedate1904 := xml.StartElement{Name: xml.Name{Local: "date1904"}}
+		sedate1904 := xml.StartElement{Name: xml.Name{Local: "c:date1904"}}
 		e.EncodeElement(m.Date1904, sedate1904)
 	}
 	if m.Lang != nil {
-		selang := xml.StartElement{Name: xml.Name{Local: "lang"}}
+		selang := xml.StartElement{Name: xml.Name{Local: "c:lang"}}
 		e.EncodeElement(m.Lang, selang)
 	}
 	if m.RoundedCorners != nil {
-		seroundedCorners := xml.StartElement{Name: xml.Name{Local: "roundedCorners"}}
+		seroundedCorners := xml.StartElement{Name: xml.Name{Local: "c:roundedCorners"}}
 		e.EncodeElement(m.RoundedCorners, seroundedCorners)
 	}
 	if m.Style != nil {
-		sestyle := xml.StartElement{Name: xml.Name{Local: "style"}}
+		sestyle := xml.StartElement{Name: xml.Name{Local: "c:style"}}
 		e.EncodeElement(m.Style, sestyle)
 	}
 	if m.ClrMapOvr != nil {
-		seclrMapOvr := xml.StartElement{Name: xml.Name{Local: "clrMapOvr"}}
+		seclrMapOvr := xml.StartElement{Name: xml.Name{Local: "c:clrMapOvr"}}
 		e.EncodeElement(m.ClrMapOvr, seclrMapOvr)
 	}
 	if m.PivotSource != nil {
-		sepivotSource := xml.StartElement{Name: xml.Name{Local: "pivotSource"}}
+		sepivotSource := xml.StartElement{Name: xml.Name{Local: "c:pivotSource"}}
 		e.EncodeElement(m.PivotSource, sepivotSource)
 	}
 	if m.Protection != nil {
-		seprotection := xml.StartElement{Name: xml.Name{Local: "protection"}}
+		seprotection := xml.StartElement{Name: xml.Name{Local: "c:protection"}}
 		e.EncodeElement(m.Protection, seprotection)
 	}
-	sechart := xml.StartElement{Name: xml.Name{Local: "chart"}}
+	sechart := xml.StartElement{Name: xml.Name{Local: "c:chart"}}
 	e.EncodeElement(m.Chart, sechart)
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.TxPr != nil {
-		setxPr := xml.StartElement{Name: xml.Name{Local: "txPr"}}
+		setxPr := xml.StartElement{Name: xml.Name{Local: "c:txPr"}}
 		e.EncodeElement(m.TxPr, setxPr)
 	}
 	if m.ExternalData != nil {
-		seexternalData := xml.StartElement{Name: xml.Name{Local: "externalData"}}
+		seexternalData := xml.StartElement{Name: xml.Name{Local: "c:externalData"}}
 		e.EncodeElement(m.ExternalData, seexternalData)
 	}
 	if m.PrintSettings != nil {
-		seprintSettings := xml.StartElement{Name: xml.Name{Local: "printSettings"}}
+		seprintSettings := xml.StartElement{Name: xml.Name{Local: "c:printSettings"}}
 		e.EncodeElement(m.PrintSettings, seprintSettings)
 	}
 	if m.UserShapes != nil {
-		seuserShapes := xml.StartElement{Name: xml.Name{Local: "userShapes"}}
+		seuserShapes := xml.StartElement{Name: xml.Name{Local: "c:userShapes"}}
 		e.EncodeElement(m.UserShapes, seuserShapes)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

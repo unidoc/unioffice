@@ -24,11 +24,11 @@ func NewEG_AxSharedChoice() *EG_AxSharedChoice {
 
 func (m *EG_AxSharedChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.Crosses != nil {
-		secrosses := xml.StartElement{Name: xml.Name{Local: "crosses"}}
+		secrosses := xml.StartElement{Name: xml.Name{Local: "c:crosses"}}
 		e.EncodeElement(m.Crosses, secrosses)
 	}
 	if m.CrossesAt != nil {
-		secrossesAt := xml.StartElement{Name: xml.Name{Local: "crossesAt"}}
+		secrossesAt := xml.StartElement{Name: xml.Name{Local: "c:crossesAt"}}
 		e.EncodeElement(m.CrossesAt, secrossesAt)
 	}
 	return nil

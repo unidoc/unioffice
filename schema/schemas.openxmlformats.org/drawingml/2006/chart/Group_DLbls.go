@@ -38,56 +38,56 @@ func NewGroup_DLbls() *Group_DLbls {
 
 func (m *Group_DLbls) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.NumFmt != nil {
-		senumFmt := xml.StartElement{Name: xml.Name{Local: "numFmt"}}
+		senumFmt := xml.StartElement{Name: xml.Name{Local: "c:numFmt"}}
 		e.EncodeElement(m.NumFmt, senumFmt)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.TxPr != nil {
-		setxPr := xml.StartElement{Name: xml.Name{Local: "txPr"}}
+		setxPr := xml.StartElement{Name: xml.Name{Local: "c:txPr"}}
 		e.EncodeElement(m.TxPr, setxPr)
 	}
 	if m.DLblPos != nil {
-		sedLblPos := xml.StartElement{Name: xml.Name{Local: "dLblPos"}}
+		sedLblPos := xml.StartElement{Name: xml.Name{Local: "c:dLblPos"}}
 		e.EncodeElement(m.DLblPos, sedLblPos)
 	}
 	if m.ShowLegendKey != nil {
-		seshowLegendKey := xml.StartElement{Name: xml.Name{Local: "showLegendKey"}}
+		seshowLegendKey := xml.StartElement{Name: xml.Name{Local: "c:showLegendKey"}}
 		e.EncodeElement(m.ShowLegendKey, seshowLegendKey)
 	}
 	if m.ShowVal != nil {
-		seshowVal := xml.StartElement{Name: xml.Name{Local: "showVal"}}
+		seshowVal := xml.StartElement{Name: xml.Name{Local: "c:showVal"}}
 		e.EncodeElement(m.ShowVal, seshowVal)
 	}
 	if m.ShowCatName != nil {
-		seshowCatName := xml.StartElement{Name: xml.Name{Local: "showCatName"}}
+		seshowCatName := xml.StartElement{Name: xml.Name{Local: "c:showCatName"}}
 		e.EncodeElement(m.ShowCatName, seshowCatName)
 	}
 	if m.ShowSerName != nil {
-		seshowSerName := xml.StartElement{Name: xml.Name{Local: "showSerName"}}
+		seshowSerName := xml.StartElement{Name: xml.Name{Local: "c:showSerName"}}
 		e.EncodeElement(m.ShowSerName, seshowSerName)
 	}
 	if m.ShowPercent != nil {
-		seshowPercent := xml.StartElement{Name: xml.Name{Local: "showPercent"}}
+		seshowPercent := xml.StartElement{Name: xml.Name{Local: "c:showPercent"}}
 		e.EncodeElement(m.ShowPercent, seshowPercent)
 	}
 	if m.ShowBubbleSize != nil {
-		seshowBubbleSize := xml.StartElement{Name: xml.Name{Local: "showBubbleSize"}}
+		seshowBubbleSize := xml.StartElement{Name: xml.Name{Local: "c:showBubbleSize"}}
 		e.EncodeElement(m.ShowBubbleSize, seshowBubbleSize)
 	}
 	if m.Separator != nil {
-		seseparator := xml.StartElement{Name: xml.Name{Local: "separator"}}
+		seseparator := xml.StartElement{Name: xml.Name{Local: "c:separator"}}
 		gooxml.AddPreserveSpaceAttr(&seseparator, *m.Separator)
 		e.EncodeElement(m.Separator, seseparator)
 	}
 	if m.ShowLeaderLines != nil {
-		seshowLeaderLines := xml.StartElement{Name: xml.Name{Local: "showLeaderLines"}}
+		seshowLeaderLines := xml.StartElement{Name: xml.Name{Local: "c:showLeaderLines"}}
 		e.EncodeElement(m.ShowLeaderLines, seshowLeaderLines)
 	}
 	if m.LeaderLines != nil {
-		seleaderLines := xml.StartElement{Name: xml.Name{Local: "leaderLines"}}
+		seleaderLines := xml.StartElement{Name: xml.Name{Local: "c:leaderLines"}}
 		e.EncodeElement(m.LeaderLines, seleaderLines)
 	}
 	return nil

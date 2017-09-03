@@ -29,11 +29,11 @@ func (m *CT_DispUnits) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		m.Choice.MarshalXML(e, start)
 	}
 	if m.DispUnitsLbl != nil {
-		sedispUnitsLbl := xml.StartElement{Name: xml.Name{Local: "dispUnitsLbl"}}
+		sedispUnitsLbl := xml.StartElement{Name: xml.Name{Local: "c:dispUnitsLbl"}}
 		e.EncodeElement(m.DispUnitsLbl, sedispUnitsLbl)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

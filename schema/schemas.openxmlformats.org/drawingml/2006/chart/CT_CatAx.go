@@ -50,83 +50,83 @@ func NewCT_CatAx() *CT_CatAx {
 
 func (m *CT_CatAx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	seaxId := xml.StartElement{Name: xml.Name{Local: "axId"}}
+	seaxId := xml.StartElement{Name: xml.Name{Local: "c:axId"}}
 	e.EncodeElement(m.AxId, seaxId)
-	sescaling := xml.StartElement{Name: xml.Name{Local: "scaling"}}
+	sescaling := xml.StartElement{Name: xml.Name{Local: "c:scaling"}}
 	e.EncodeElement(m.Scaling, sescaling)
 	if m.Delete != nil {
-		sedelete := xml.StartElement{Name: xml.Name{Local: "delete"}}
+		sedelete := xml.StartElement{Name: xml.Name{Local: "c:delete"}}
 		e.EncodeElement(m.Delete, sedelete)
 	}
-	seaxPos := xml.StartElement{Name: xml.Name{Local: "axPos"}}
+	seaxPos := xml.StartElement{Name: xml.Name{Local: "c:axPos"}}
 	e.EncodeElement(m.AxPos, seaxPos)
 	if m.MajorGridlines != nil {
-		semajorGridlines := xml.StartElement{Name: xml.Name{Local: "majorGridlines"}}
+		semajorGridlines := xml.StartElement{Name: xml.Name{Local: "c:majorGridlines"}}
 		e.EncodeElement(m.MajorGridlines, semajorGridlines)
 	}
 	if m.MinorGridlines != nil {
-		seminorGridlines := xml.StartElement{Name: xml.Name{Local: "minorGridlines"}}
+		seminorGridlines := xml.StartElement{Name: xml.Name{Local: "c:minorGridlines"}}
 		e.EncodeElement(m.MinorGridlines, seminorGridlines)
 	}
 	if m.Title != nil {
-		setitle := xml.StartElement{Name: xml.Name{Local: "title"}}
+		setitle := xml.StartElement{Name: xml.Name{Local: "c:title"}}
 		e.EncodeElement(m.Title, setitle)
 	}
 	if m.NumFmt != nil {
-		senumFmt := xml.StartElement{Name: xml.Name{Local: "numFmt"}}
+		senumFmt := xml.StartElement{Name: xml.Name{Local: "c:numFmt"}}
 		e.EncodeElement(m.NumFmt, senumFmt)
 	}
 	if m.MajorTickMark != nil {
-		semajorTickMark := xml.StartElement{Name: xml.Name{Local: "majorTickMark"}}
+		semajorTickMark := xml.StartElement{Name: xml.Name{Local: "c:majorTickMark"}}
 		e.EncodeElement(m.MajorTickMark, semajorTickMark)
 	}
 	if m.MinorTickMark != nil {
-		seminorTickMark := xml.StartElement{Name: xml.Name{Local: "minorTickMark"}}
+		seminorTickMark := xml.StartElement{Name: xml.Name{Local: "c:minorTickMark"}}
 		e.EncodeElement(m.MinorTickMark, seminorTickMark)
 	}
 	if m.TickLblPos != nil {
-		setickLblPos := xml.StartElement{Name: xml.Name{Local: "tickLblPos"}}
+		setickLblPos := xml.StartElement{Name: xml.Name{Local: "c:tickLblPos"}}
 		e.EncodeElement(m.TickLblPos, setickLblPos)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.TxPr != nil {
-		setxPr := xml.StartElement{Name: xml.Name{Local: "txPr"}}
+		setxPr := xml.StartElement{Name: xml.Name{Local: "c:txPr"}}
 		e.EncodeElement(m.TxPr, setxPr)
 	}
-	secrossAx := xml.StartElement{Name: xml.Name{Local: "crossAx"}}
+	secrossAx := xml.StartElement{Name: xml.Name{Local: "c:crossAx"}}
 	e.EncodeElement(m.CrossAx, secrossAx)
 	if m.Choice != nil {
 		m.Choice.MarshalXML(e, start)
 	}
 	if m.Auto != nil {
-		seauto := xml.StartElement{Name: xml.Name{Local: "auto"}}
+		seauto := xml.StartElement{Name: xml.Name{Local: "c:auto"}}
 		e.EncodeElement(m.Auto, seauto)
 	}
 	if m.LblAlgn != nil {
-		selblAlgn := xml.StartElement{Name: xml.Name{Local: "lblAlgn"}}
+		selblAlgn := xml.StartElement{Name: xml.Name{Local: "c:lblAlgn"}}
 		e.EncodeElement(m.LblAlgn, selblAlgn)
 	}
 	if m.LblOffset != nil {
-		selblOffset := xml.StartElement{Name: xml.Name{Local: "lblOffset"}}
+		selblOffset := xml.StartElement{Name: xml.Name{Local: "c:lblOffset"}}
 		e.EncodeElement(m.LblOffset, selblOffset)
 	}
 	if m.TickLblSkip != nil {
-		setickLblSkip := xml.StartElement{Name: xml.Name{Local: "tickLblSkip"}}
+		setickLblSkip := xml.StartElement{Name: xml.Name{Local: "c:tickLblSkip"}}
 		e.EncodeElement(m.TickLblSkip, setickLblSkip)
 	}
 	if m.TickMarkSkip != nil {
-		setickMarkSkip := xml.StartElement{Name: xml.Name{Local: "tickMarkSkip"}}
+		setickMarkSkip := xml.StartElement{Name: xml.Name{Local: "c:tickMarkSkip"}}
 		e.EncodeElement(m.TickMarkSkip, setickMarkSkip)
 	}
 	if m.NoMultiLvlLbl != nil {
-		senoMultiLvlLbl := xml.StartElement{Name: xml.Name{Local: "noMultiLvlLbl"}}
+		senoMultiLvlLbl := xml.StartElement{Name: xml.Name{Local: "c:noMultiLvlLbl"}}
 		e.EncodeElement(m.NoMultiLvlLbl, senoMultiLvlLbl)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -32,7 +32,7 @@ func NewCT_PlotArea() *CT_PlotArea {
 func (m *CT_PlotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Layout != nil {
-		selayout := xml.StartElement{Name: xml.Name{Local: "layout"}}
+		selayout := xml.StartElement{Name: xml.Name{Local: "c:layout"}}
 		e.EncodeElement(m.Layout, selayout)
 	}
 	for _, c := range m.Choice {
@@ -44,15 +44,15 @@ func (m *CT_PlotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		}
 	}
 	if m.DTable != nil {
-		sedTable := xml.StartElement{Name: xml.Name{Local: "dTable"}}
+		sedTable := xml.StartElement{Name: xml.Name{Local: "c:dTable"}}
 		e.EncodeElement(m.DTable, sedTable)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -28,23 +28,23 @@ func NewCT_PictureOptions() *CT_PictureOptions {
 func (m *CT_PictureOptions) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.ApplyToFront != nil {
-		seapplyToFront := xml.StartElement{Name: xml.Name{Local: "applyToFront"}}
+		seapplyToFront := xml.StartElement{Name: xml.Name{Local: "c:applyToFront"}}
 		e.EncodeElement(m.ApplyToFront, seapplyToFront)
 	}
 	if m.ApplyToSides != nil {
-		seapplyToSides := xml.StartElement{Name: xml.Name{Local: "applyToSides"}}
+		seapplyToSides := xml.StartElement{Name: xml.Name{Local: "c:applyToSides"}}
 		e.EncodeElement(m.ApplyToSides, seapplyToSides)
 	}
 	if m.ApplyToEnd != nil {
-		seapplyToEnd := xml.StartElement{Name: xml.Name{Local: "applyToEnd"}}
+		seapplyToEnd := xml.StartElement{Name: xml.Name{Local: "c:applyToEnd"}}
 		e.EncodeElement(m.ApplyToEnd, seapplyToEnd)
 	}
 	if m.PictureFormat != nil {
-		sepictureFormat := xml.StartElement{Name: xml.Name{Local: "pictureFormat"}}
+		sepictureFormat := xml.StartElement{Name: xml.Name{Local: "c:pictureFormat"}}
 		e.EncodeElement(m.PictureFormat, sepictureFormat)
 	}
 	if m.PictureStackUnit != nil {
-		sepictureStackUnit := xml.StartElement{Name: xml.Name{Local: "pictureStackUnit"}}
+		sepictureStackUnit := xml.StartElement{Name: xml.Name{Local: "c:pictureStackUnit"}}
 		e.EncodeElement(m.PictureStackUnit, sepictureStackUnit)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

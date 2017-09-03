@@ -28,23 +28,23 @@ func NewCT_Protection() *CT_Protection {
 func (m *CT_Protection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.ChartObject != nil {
-		sechartObject := xml.StartElement{Name: xml.Name{Local: "chartObject"}}
+		sechartObject := xml.StartElement{Name: xml.Name{Local: "c:chartObject"}}
 		e.EncodeElement(m.ChartObject, sechartObject)
 	}
 	if m.Data != nil {
-		sedata := xml.StartElement{Name: xml.Name{Local: "data"}}
+		sedata := xml.StartElement{Name: xml.Name{Local: "c:data"}}
 		e.EncodeElement(m.Data, sedata)
 	}
 	if m.Formatting != nil {
-		seformatting := xml.StartElement{Name: xml.Name{Local: "formatting"}}
+		seformatting := xml.StartElement{Name: xml.Name{Local: "c:formatting"}}
 		e.EncodeElement(m.Formatting, seformatting)
 	}
 	if m.Selection != nil {
-		seselection := xml.StartElement{Name: xml.Name{Local: "selection"}}
+		seselection := xml.StartElement{Name: xml.Name{Local: "c:selection"}}
 		e.EncodeElement(m.Selection, seselection)
 	}
 	if m.UserInterface != nil {
-		seuserInterface := xml.StartElement{Name: xml.Name{Local: "userInterface"}}
+		seuserInterface := xml.StartElement{Name: xml.Name{Local: "c:userInterface"}}
 		e.EncodeElement(m.UserInterface, seuserInterface)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

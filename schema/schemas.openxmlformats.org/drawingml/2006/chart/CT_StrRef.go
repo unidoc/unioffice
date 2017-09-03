@@ -27,15 +27,15 @@ func NewCT_StrRef() *CT_StrRef {
 
 func (m *CT_StrRef) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	sef := xml.StartElement{Name: xml.Name{Local: "f"}}
+	sef := xml.StartElement{Name: xml.Name{Local: "c:f"}}
 	gooxml.AddPreserveSpaceAttr(&sef, m.F)
 	e.EncodeElement(m.F, sef)
 	if m.StrCache != nil {
-		sestrCache := xml.StartElement{Name: xml.Name{Local: "strCache"}}
+		sestrCache := xml.StartElement{Name: xml.Name{Local: "c:strCache"}}
 		e.EncodeElement(m.StrCache, sestrCache)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

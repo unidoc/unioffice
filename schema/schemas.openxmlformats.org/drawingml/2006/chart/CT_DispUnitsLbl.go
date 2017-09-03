@@ -29,19 +29,19 @@ func NewCT_DispUnitsLbl() *CT_DispUnitsLbl {
 func (m *CT_DispUnitsLbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Layout != nil {
-		selayout := xml.StartElement{Name: xml.Name{Local: "layout"}}
+		selayout := xml.StartElement{Name: xml.Name{Local: "c:layout"}}
 		e.EncodeElement(m.Layout, selayout)
 	}
 	if m.Tx != nil {
-		setx := xml.StartElement{Name: xml.Name{Local: "tx"}}
+		setx := xml.StartElement{Name: xml.Name{Local: "c:tx"}}
 		e.EncodeElement(m.Tx, setx)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.TxPr != nil {
-		setxPr := xml.StartElement{Name: xml.Name{Local: "txPr"}}
+		setxPr := xml.StartElement{Name: xml.Name{Local: "c:txPr"}}
 		e.EncodeElement(m.TxPr, setxPr)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

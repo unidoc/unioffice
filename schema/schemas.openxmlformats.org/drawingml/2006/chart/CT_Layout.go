@@ -25,11 +25,11 @@ func NewCT_Layout() *CT_Layout {
 func (m *CT_Layout) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.ManualLayout != nil {
-		semanualLayout := xml.StartElement{Name: xml.Name{Local: "manualLayout"}}
+		semanualLayout := xml.StartElement{Name: xml.Name{Local: "c:manualLayout"}}
 		e.EncodeElement(m.ManualLayout, semanualLayout)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

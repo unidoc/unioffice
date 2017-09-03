@@ -39,50 +39,50 @@ func NewCT_Trendline() *CT_Trendline {
 func (m *CT_Trendline) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Name != nil {
-		sename := xml.StartElement{Name: xml.Name{Local: "name"}}
+		sename := xml.StartElement{Name: xml.Name{Local: "c:name"}}
 		gooxml.AddPreserveSpaceAttr(&sename, *m.Name)
 		e.EncodeElement(m.Name, sename)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
-	setrendlineType := xml.StartElement{Name: xml.Name{Local: "trendlineType"}}
+	setrendlineType := xml.StartElement{Name: xml.Name{Local: "c:trendlineType"}}
 	e.EncodeElement(m.TrendlineType, setrendlineType)
 	if m.Order != nil {
-		seorder := xml.StartElement{Name: xml.Name{Local: "order"}}
+		seorder := xml.StartElement{Name: xml.Name{Local: "c:order"}}
 		e.EncodeElement(m.Order, seorder)
 	}
 	if m.Period != nil {
-		seperiod := xml.StartElement{Name: xml.Name{Local: "period"}}
+		seperiod := xml.StartElement{Name: xml.Name{Local: "c:period"}}
 		e.EncodeElement(m.Period, seperiod)
 	}
 	if m.Forward != nil {
-		seforward := xml.StartElement{Name: xml.Name{Local: "forward"}}
+		seforward := xml.StartElement{Name: xml.Name{Local: "c:forward"}}
 		e.EncodeElement(m.Forward, seforward)
 	}
 	if m.Backward != nil {
-		sebackward := xml.StartElement{Name: xml.Name{Local: "backward"}}
+		sebackward := xml.StartElement{Name: xml.Name{Local: "c:backward"}}
 		e.EncodeElement(m.Backward, sebackward)
 	}
 	if m.Intercept != nil {
-		seintercept := xml.StartElement{Name: xml.Name{Local: "intercept"}}
+		seintercept := xml.StartElement{Name: xml.Name{Local: "c:intercept"}}
 		e.EncodeElement(m.Intercept, seintercept)
 	}
 	if m.DispRSqr != nil {
-		sedispRSqr := xml.StartElement{Name: xml.Name{Local: "dispRSqr"}}
+		sedispRSqr := xml.StartElement{Name: xml.Name{Local: "c:dispRSqr"}}
 		e.EncodeElement(m.DispRSqr, sedispRSqr)
 	}
 	if m.DispEq != nil {
-		sedispEq := xml.StartElement{Name: xml.Name{Local: "dispEq"}}
+		sedispEq := xml.StartElement{Name: xml.Name{Local: "c:dispEq"}}
 		e.EncodeElement(m.DispEq, sedispEq)
 	}
 	if m.TrendlineLbl != nil {
-		setrendlineLbl := xml.StartElement{Name: xml.Name{Local: "trendlineLbl"}}
+		setrendlineLbl := xml.StartElement{Name: xml.Name{Local: "c:trendlineLbl"}}
 		e.EncodeElement(m.TrendlineLbl, setrendlineLbl)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

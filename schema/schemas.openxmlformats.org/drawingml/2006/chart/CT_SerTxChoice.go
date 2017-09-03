@@ -26,11 +26,11 @@ func NewCT_SerTxChoice() *CT_SerTxChoice {
 
 func (m *CT_SerTxChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.StrRef != nil {
-		sestrRef := xml.StartElement{Name: xml.Name{Local: "strRef"}}
+		sestrRef := xml.StartElement{Name: xml.Name{Local: "c:strRef"}}
 		e.EncodeElement(m.StrRef, sestrRef)
 	}
 	if m.V != nil {
-		sev := xml.StartElement{Name: xml.Name{Local: "v"}}
+		sev := xml.StartElement{Name: xml.Name{Local: "c:v"}}
 		gooxml.AddPreserveSpaceAttr(&sev, *m.V)
 		e.EncodeElement(m.V, sev)
 	}
