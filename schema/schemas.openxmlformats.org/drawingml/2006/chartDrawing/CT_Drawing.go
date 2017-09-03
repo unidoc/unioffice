@@ -9,12 +9,12 @@ package chartDrawing
 
 import (
 	"encoding/xml"
-	"fmt"
 	"log"
 )
 
 type CT_Drawing struct {
-	EG_Anchor []*EG_Anchor
+	RelSizeAnchor *CT_RelSizeAnchor
+	AbsSizeAnchor *CT_AbsSizeAnchor
 }
 
 func NewCT_Drawing() *CT_Drawing {
@@ -25,10 +25,13 @@ func NewCT_Drawing() *CT_Drawing {
 func (m *CT_Drawing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "CT_Drawing"
 	e.EncodeToken(start)
-	if m.EG_Anchor != nil {
-		for _, c := range m.EG_Anchor {
-			c.MarshalXML(e, start)
-		}
+	if m.RelSizeAnchor != nil {
+		serelSizeAnchor := xml.StartElement{Name: xml.Name{Local: "relSizeAnchor"}}
+		e.EncodeElement(m.RelSizeAnchor, serelSizeAnchor)
+	}
+	if m.AbsSizeAnchor != nil {
+		seabsSizeAnchor := xml.StartElement{Name: xml.Name{Local: "absSizeAnchor"}}
+		e.EncodeElement(m.AbsSizeAnchor, seabsSizeAnchor)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -46,19 +49,15 @@ lCT_Drawing:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "relSizeAnchor":
-				tmpanchor := NewEG_Anchor()
-				tmpanchor.RelSizeAnchor = NewCT_RelSizeAnchor()
-				if err := d.DecodeElement(tmpanchor.RelSizeAnchor, &el); err != nil {
+				m.RelSizeAnchor = NewCT_RelSizeAnchor()
+				if err := d.DecodeElement(m.RelSizeAnchor, &el); err != nil {
 					return err
 				}
-				m.EG_Anchor = append(m.EG_Anchor, tmpanchor)
 			case "absSizeAnchor":
-				tmpanchor := NewEG_Anchor()
-				tmpanchor.AbsSizeAnchor = NewCT_AbsSizeAnchor()
-				if err := d.DecodeElement(tmpanchor.AbsSizeAnchor, &el); err != nil {
+				m.AbsSizeAnchor = NewCT_AbsSizeAnchor()
+				if err := d.DecodeElement(m.AbsSizeAnchor, &el); err != nil {
 					return err
 				}
-				m.EG_Anchor = append(m.EG_Anchor, tmpanchor)
 			default:
 				log.Printf("skipping unsupported element on CT_Drawing %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -80,8 +79,13 @@ func (m *CT_Drawing) Validate() error {
 
 // ValidateWithPath validates the CT_Drawing and its children, prefixing error messages with path
 func (m *CT_Drawing) ValidateWithPath(path string) error {
-	for i, v := range m.EG_Anchor {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/EG_Anchor[%d]", path, i)); err != nil {
+	if m.RelSizeAnchor != nil {
+		if err := m.RelSizeAnchor.ValidateWithPath(path + "/RelSizeAnchor"); err != nil {
+			return err
+		}
+	}
+	if m.AbsSizeAnchor != nil {
+		if err := m.AbsSizeAnchor.ValidateWithPath(path + "/AbsSizeAnchor"); err != nil {
 			return err
 		}
 	}
