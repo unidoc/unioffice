@@ -38,10 +38,10 @@ func RelativeFilename(dt DocType, typ string, index int) string {
 
 	case StylesType:
 		return "styles.xml"
-	case ChartType:
+	case ChartType, ChartContentType:
 		return fmt.Sprintf("../charts/chart%d.xml", index)
-	case DrawingType:
-		return fmt.Sprintf("drawings/drawing%d.xml", index)
+	case DrawingType, DrawingContentType:
+		return fmt.Sprintf("../drawings/drawing%d.xml", index)
 
 	case ThemeType, ThemeContentType:
 		return fmt.Sprintf("theme/theme%d.xml", index)
@@ -96,7 +96,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			return "xl/styles.xml"
 		}
 
-	case ChartType:
+	case ChartType, ChartContentType:
 		switch dt {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/charts/chart%d.xml", index)
@@ -104,7 +104,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			log.Printf("unsupported type %s pair and %v", typ, dt)
 		}
 
-	case DrawingType:
+	case DrawingType, DrawingContentType:
 		switch dt {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/drawings/drawing%d.xml", index)

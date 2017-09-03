@@ -79,3 +79,15 @@ func (c LineChartSeries) Axis() chart.AxisDataSource {
 	}
 	return chart.MakeAxisDataSource(c.x.Cat)
 }
+
+func (c LineChartSeries) Values() chart.NumberDataSource {
+	if c.x.Val == nil {
+		c.x.Val = crt.NewCT_NumDataSource()
+	}
+	return chart.MakeNumberDataSource(c.x.Val)
+}
+
+func (c LineChartSeries) SetSmooth(b bool) {
+	c.x.Smooth = crt.NewCT_Boolean()
+	c.x.Smooth.ValAttr = &b
+}
