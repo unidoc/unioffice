@@ -72,14 +72,15 @@ func (wb *Workbook) AddSheet() Sheet {
 	wb.xwsRels = append(wb.xwsRels, common.NewRelationships())
 	ws.SheetData = sml.NewCT_SheetData()
 
+	dt := gooxml.DocTypeSpreadsheet
 	// update the references
-	rid := wb.wbRels.AddRelationship(fmt.Sprintf("worksheets/sheet%d.xml", len(wb.x.Sheets.Sheet)),
-		"http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet")
+	rid := wb.wbRels.AddAutoRelationship(dt, len(wb.x.Sheets.Sheet), gooxml.WorksheetType)
 	rs.IdAttr = rid.ID()
 
 	// add the content type
-	wb.ContentTypes.AddOverride(fmt.Sprintf("/xl/worksheets/sheet%d.xml", len(wb.x.Sheets.Sheet)),
-		"application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml")
+
+	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(dt, gooxml.WorksheetContentType, len(wb.x.Sheets.Sheet)),
+		gooxml.WorksheetContentType)
 
 	return Sheet{wb, rs, ws}
 }
@@ -98,42 +99,49 @@ func (wb *Workbook) SaveToFile(path string) error {
 func (wb *Workbook) Save(w io.Writer) error {
 	z := zip.NewWriter(w)
 	defer z.Close()
+	dt := gooxml.DocTypeSpreadsheet
+
 	if err := zippkg.MarshalXML(z, zippkg.ContentTypesFilename, wb.ContentTypes.X()); err != nil {
 		return err
 	}
 	if err := zippkg.MarshalXML(z, zippkg.BaseRelsFilename, wb.Rels.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, zippkg.AppPropsFilename, wb.AppProperties.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, gooxml.ExtendedPropertiesType, wb.AppProperties.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, zippkg.CorePropsFilename, wb.CoreProperties.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, gooxml.CorePropertiesType, wb.CoreProperties.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, "xl/workbook.xml", wb.x); err != nil {
+
+	workbookFn := gooxml.AbsoluteFilename(dt, gooxml.OfficeDocumentType, 0)
+	if err := zippkg.MarshalXML(z, workbookFn, wb.x); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, "xl/styles.xml", wb.StyleSheet.X()); err != nil {
+	if err := zippkg.MarshalXML(z, zippkg.RelationsPathFor(workbookFn), wb.wbRels.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, "xl/sharedStrings.xml", wb.SharedStrings.X()); err != nil {
+
+	if err := zippkg.MarshalXMLByType(z, dt, gooxml.StylesType, wb.StyleSheet.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, "xl/_rels/workbook.xml.rels", wb.wbRels.X()); err != nil {
+
+	if err := zippkg.MarshalXMLByType(z, dt, gooxml.SharedStingsType, wb.SharedStrings.X()); err != nil {
 		return err
 	}
 	for i, thm := range wb.themes {
-		if err := zippkg.MarshalXML(z, fmt.Sprintf("xl/theme/theme%d.xml", i+1), thm); err != nil {
+		if err := zippkg.MarshalXMLByTypeIndex(z, dt, gooxml.ThemeType, i+1, thm); err != nil {
 			return err
 		}
 	}
 	for i, sheet := range wb.xws {
-		fn := fmt.Sprintf("xl/worksheets/sheet%d.xml", i+1)
+		fn := gooxml.AbsoluteFilename(dt, gooxml.WorksheetType, i+1)
 		zippkg.MarshalXML(z, fn, sheet)
 		zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.xwsRels[i].X())
 	}
 	if wb.Thumbnail != nil {
-		tn, err := z.Create("docProps/thumbnail.jpeg")
+		fn := gooxml.AbsoluteFilename(dt, gooxml.ThumbnailType, 0)
+		tn, err := z.Create(fn)
 		if err != nil {
 			return err
 		}
@@ -142,11 +150,11 @@ func (wb *Workbook) Save(w io.Writer) error {
 		}
 	}
 	for i, chart := range wb.charts {
-		fn := fmt.Sprintf("xl/charts/chart%d.xml", i+1)
+		fn := gooxml.AbsoluteFilename(dt, gooxml.ChartType, i+1)
 		zippkg.MarshalXML(z, fn, chart)
 	}
 	for i, drawing := range wb.drawings {
-		fn := fmt.Sprintf("xl/drawings/drawing%d.xml", i+1)
+		fn := gooxml.AbsoluteFilename(dt, gooxml.DrawingType, i+1)
 		zippkg.MarshalXML(z, fn, drawing)
 		zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.drawingRels[i].X())
 	}
@@ -204,6 +212,9 @@ func (wb Workbook) SheetCount() int {
 }
 
 func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship) error {
+	dt := gooxml.DocTypeSpreadsheet
+	rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+
 	switch typ {
 	case gooxml.OfficeDocumentType:
 		wb.x = sml.NewWorkbook()
@@ -228,7 +239,7 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		wb.xwsRels = append(wb.xwsRels, wksRel)
 		// fix the relationship target so it points to where we'll save
 		// the worksheet
-		rel.TargetAttr = fmt.Sprintf("worksheets/sheet%d.xml", len(wb.xws))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.xws))
 
 	case gooxml.StylesType:
 		wb.StyleSheet = NewStyleSheet()
@@ -271,11 +282,13 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		drel := common.NewRelationships()
 		decMap.AddTarget(zippkg.RelationsPathFor(target), drel.X())
 		wb.drawingRels = append(wb.drawingRels, drel)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.drawings))
 
 	case gooxml.ChartType:
 		chart := crt.NewChartSpace()
 		decMap.AddTarget(target, chart)
 		wb.charts = append(wb.charts, chart)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.charts))
 
 	default:
 		fmt.Println("unsupported relationship", target, typ)

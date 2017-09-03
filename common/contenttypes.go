@@ -8,7 +8,6 @@
 package common
 
 import (
-	"log"
 	"strings"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/package/2006/content_types"
@@ -52,7 +51,7 @@ func (c ContentTypes) AddDefault(fileExtension string, contentType string) {
 // AddOverride adds an override content type for a given path name.
 func (c ContentTypes) AddOverride(path, contentType string) {
 	if !strings.HasPrefix(path, "/") {
-		log.Printf("override path %s should start with a '/'", path)
+		path = "/" + path
 	}
 	or := content_types.NewOverride()
 	or.PartNameAttr = path
