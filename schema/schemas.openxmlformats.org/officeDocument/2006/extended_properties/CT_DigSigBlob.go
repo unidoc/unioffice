@@ -44,7 +44,7 @@ lCT_DigSigBlob:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "blob":
-				if err := d.DecodeElement(m.Blob, &el); err != nil {
+				if err := d.DecodeElement(&m.Blob, &el); err != nil {
 					return err
 				}
 			default:

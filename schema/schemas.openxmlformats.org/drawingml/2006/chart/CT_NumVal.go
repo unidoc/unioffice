@@ -70,7 +70,7 @@ lCT_NumVal:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "v":
-				if err := d.DecodeElement(m.V, &el); err != nil {
+				if err := d.DecodeElement(&m.V, &el); err != nil {
 					return err
 				}
 			default:

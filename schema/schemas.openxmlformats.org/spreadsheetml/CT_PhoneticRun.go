@@ -71,7 +71,7 @@ lCT_PhoneticRun:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "t":
-				if err := d.DecodeElement(m.T, &el); err != nil {
+				if err := d.DecodeElement(&m.T, &el); err != nil {
 					return err
 				}
 			default:

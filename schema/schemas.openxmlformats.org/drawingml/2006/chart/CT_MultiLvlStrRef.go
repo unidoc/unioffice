@@ -54,7 +54,7 @@ lCT_MultiLvlStrRef:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "f":
-				if err := d.DecodeElement(m.F, &el); err != nil {
+				if err := d.DecodeElement(&m.F, &el); err != nil {
 					return err
 				}
 			case "multiLvlStrCache":

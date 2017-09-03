@@ -101,7 +101,7 @@ lCT_Comment:
 					return err
 				}
 			case "text":
-				if err := d.DecodeElement(m.Text, &el); err != nil {
+				if err := d.DecodeElement(&m.Text, &el); err != nil {
 					return err
 				}
 			case "extLst":

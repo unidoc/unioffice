@@ -54,7 +54,7 @@ lCT_RegularTextRun:
 					return err
 				}
 			case "t":
-				if err := d.DecodeElement(m.T, &el); err != nil {
+				if err := d.DecodeElement(&m.T, &el); err != nil {
 					return err
 				}
 			default:
