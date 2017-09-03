@@ -29,6 +29,9 @@ func (d Drawing) AddChart() Chart {
 	chart := crt.NewChartSpace()
 	d.wb.charts = append(d.wb.charts, chart)
 
+	fn := gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.ChartContentType, len(d.wb.charts))
+	d.wb.ContentTypes.AddOverride(fn, gooxml.ChartContentType)
+
 	var chartID string
 	// add relationship from drawing to the chart
 	for i, dr := range d.wb.drawings {
@@ -42,7 +45,14 @@ func (d Drawing) AddChart() Chart {
 
 	// maybe use a one cell anchor?
 	tca := sd.NewCT_TwoCellAnchor()
+	tca.EditAsAttr = sd.ST_EditAsOneCell
+	tca.From.Col = 5
+	tca.From.Row = 0
+	tca.To.Col = 10
+	tca.To.Row = 20
+
 	d.x.EG_Anchor = []*sd.EG_Anchor{&sd.EG_Anchor{TwoCellAnchor: tca}}
+
 	tca.Choice = &sd.EG_ObjectChoicesChoice{}
 	tca.Choice.GraphicFrame = sd.NewCT_GraphicalObjectFrame()
 	tca.Choice.GraphicFrame.Graphic = dml.NewGraphic()

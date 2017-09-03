@@ -9,6 +9,7 @@ package spreadsheet
 
 import (
 	"baliance.com/gooxml"
+	"baliance.com/gooxml/common"
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
 )
 
@@ -55,4 +56,27 @@ func (s Sheet) Rows() []Row {
 		ret = append(ret, Row{s.w, r})
 	}
 	return ret
+}
+
+// SetDrawing sets the worksheet drawing.  A worksheet can have a reference to a
+// single drawing, but the drawing can have many charts.
+func (s Sheet) SetDrawing(d Drawing) {
+	var rel common.Relationships
+	for i, wks := range s.w.xws {
+		if wks == s.ws {
+			rel = s.w.xwsRels[i]
+			break
+		}
+	}
+	// add relationship from drawing to the sheet
+	var drawingID string
+	for i, dr := range d.wb.drawings {
+		if dr == d.x {
+			rel := rel.AddAutoRelationship(gooxml.DocTypeSpreadsheet, i+1, gooxml.DrawingType)
+			drawingID = rel.ID()
+			break
+		}
+	}
+	s.ws.Drawing = sml.NewCT_Drawing()
+	s.ws.Drawing.IdAttr = drawingID
 }

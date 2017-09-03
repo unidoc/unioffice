@@ -19,7 +19,9 @@ const (
 	CommentsType       = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments"
 	ThumbnailType      = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail"
 	DrawingType        = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing"
+	DrawingContentType = "application/vnd.openxmlformats-officedocument.drawing+xml"
 	ChartType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart"
+	ChartContentType   = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml"
 
 	ExtendedPropertiesType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties"
 	CorePropertiesType     = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"

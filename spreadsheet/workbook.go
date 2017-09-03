@@ -69,7 +69,8 @@ func (wb *Workbook) AddSheet() Sheet {
 	ws.Dimension = sml.NewCT_SheetDimension()
 	ws.Dimension.RefAttr = "A1"
 	wb.xws = append(wb.xws, ws)
-	wb.xwsRels = append(wb.xwsRels, common.NewRelationships())
+	wsRel := common.NewRelationships()
+	wb.xwsRels = append(wb.xwsRels, wsRel)
 	ws.SheetData = sml.NewCT_SheetData()
 
 	dt := gooxml.DocTypeSpreadsheet
@@ -78,7 +79,6 @@ func (wb *Workbook) AddSheet() Sheet {
 	rs.IdAttr = rid.ID()
 
 	// add the content type
-
 	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(dt, gooxml.WorksheetContentType, len(wb.x.Sheets.Sheet)),
 		gooxml.WorksheetContentType)
 
@@ -126,9 +126,6 @@ func (wb *Workbook) Save(w io.Writer) error {
 		return err
 	}
 
-	if err := zippkg.MarshalXMLByType(z, dt, gooxml.SharedStingsType, wb.SharedStrings.X()); err != nil {
-		return err
-	}
 	for i, thm := range wb.themes {
 		if err := zippkg.MarshalXMLByTypeIndex(z, dt, gooxml.ThemeType, i+1, thm); err != nil {
 			return err
@@ -139,6 +136,10 @@ func (wb *Workbook) Save(w io.Writer) error {
 		zippkg.MarshalXML(z, fn, sheet)
 		zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.xwsRels[i].X())
 	}
+	if err := zippkg.MarshalXMLByType(z, dt, gooxml.SharedStingsType, wb.SharedStrings.X()); err != nil {
+		return err
+	}
+
 	if wb.Thumbnail != nil {
 		fn := gooxml.AbsoluteFilename(dt, gooxml.ThumbnailType, 0)
 		tn, err := z.Create(fn)
@@ -300,7 +301,7 @@ func (wb *Workbook) AddDrawing() Drawing {
 	drawing := sd.NewWsDr()
 	wb.drawings = append(wb.drawings, drawing)
 	fn := gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.DrawingType, len(wb.drawings))
-	wb.ContentTypes.AddOverride(fn, gooxml.DrawingType)
+	wb.ContentTypes.AddOverride(fn, gooxml.DrawingContentType)
 	wb.drawingRels = append(wb.drawingRels, common.NewRelationships())
 	return Drawing{wb, drawing}
 }
