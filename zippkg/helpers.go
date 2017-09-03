@@ -27,23 +27,6 @@ func RelationsPathFor(path string) string {
 	return pathPortion + filePortion
 }
 
-// DecodeFromMap iterates over a slice of *zip.File, decoding the entries in
-// decMap with a matching filename.
-func DecodeFromMap(files []*zip.File, decMap map[string]interface{}) error {
-	for i, f := range files {
-		if f == nil {
-			continue
-		}
-		if dest, ok := decMap[f.Name]; ok {
-			if err := Decode(f, dest); err != nil {
-				return err
-			}
-			files[i] = nil
-		}
-	}
-	return nil
-}
-
 // Decode unmarshals the content of a *zip.File as XML to a given destination.
 func Decode(f *zip.File, dest interface{}) error {
 	rc, err := f.Open()

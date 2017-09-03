@@ -14,15 +14,15 @@ import (
 	"image"
 	"image/jpeg"
 	"io"
-	"io/ioutil"
-	"log"
 	"os"
-	"path/filepath"
 
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/zippkg"
 
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
+	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
+	sd "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"
+	"baliance.com/gooxml/schema/schemas.openxmlformats.org/package/2006/relationships"
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
 )
 
@@ -34,173 +34,13 @@ type Workbook struct {
 	StyleSheet    StyleSheet
 	SharedStrings SharedStrings
 
-	xws     []*sml.Worksheet
-	xwsRels []common.Relationships
-	wbRels  common.Relationships
-	themes  []*dml.Theme
-}
-
-// New constructs a new workbook.
-func New() *Workbook {
-	wb := &Workbook{}
-	wb.x = sml.NewWorkbook()
-
-	wb.AppProperties = common.NewAppProperties()
-	wb.CoreProperties = common.NewCoreProperties()
-	wb.StyleSheet = NewStyleSheet()
-
-	wb.Rels = common.NewRelationships()
-	wb.wbRels = common.NewRelationships()
-	wb.Rels.AddRelationship(zippkg.AppPropsFilename, common.ExtendedPropertiesType)
-	wb.Rels.AddRelationship(zippkg.CorePropsFilename, common.CorePropertiesType)
-	wb.Rels.AddRelationship("xl/workbook.xml", common.OfficeDocumentType)
-	wb.wbRels.AddRelationship("styles.xml", common.StylesType)
-
-	wb.ContentTypes = common.NewContentTypes()
-	wb.ContentTypes.AddOverride("/xl/workbook.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml")
-	wb.ContentTypes.AddOverride("/xl/styles.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml")
-
-	wb.SharedStrings = NewSharedStrings()
-	wb.ContentTypes.AddOverride("/xl/sharedStrings.xml", common.SharedStringsContentType)
-	wb.wbRels.AddRelationship("sharedStrings.xml", common.SharedStingsType)
-
-	return wb
-}
-
-// Open opens and reads a workbook from a file (.xlsx).
-func Open(filename string) (*Workbook, error) {
-	f, err := os.Open(filename)
-	if err != nil {
-		return nil, fmt.Errorf("error opening %s: %s", filename, err)
-	}
-	defer f.Close()
-	fi, err := os.Stat(filename)
-	if err != nil {
-		return nil, fmt.Errorf("error opening %s: %s", filename, err)
-	}
-	return Read(f, fi.Size())
-}
-
-// Read reads a workbook from an io.Reader(.xlsx).
-func Read(r io.ReaderAt, size int64) (*Workbook, error) {
-	wb := New()
-	td, err := ioutil.TempDir("", "gooxml-xlsx")
-	if err != nil {
-		return nil, err
-	}
-	wb.TmpPath = td
-
-	zr, err := zip.NewReader(r, size)
-	if err != nil {
-		return nil, fmt.Errorf("parsing zip: %s", err)
-	}
-
-	files := []*zip.File{}
-	files = append(files, zr.File...)
-	// first pass, identify the files that should always be there
-	for i, f := range files {
-		switch f.Name {
-		case zippkg.ContentTypesFilename:
-			if err := zippkg.Decode(f, wb.ContentTypes.X()); err != nil {
-				return nil, err
-			}
-			files[i] = nil
-		case zippkg.BaseRelsFilename:
-			if err := zippkg.Decode(f, wb.Rels.X()); err != nil {
-				return nil, err
-			}
-			files[i] = nil
-		}
-	}
-
-	basePaths := map[interface{}]string{}
-	decMap := make(map[string]interface{})
-	for _, r := range wb.Rels.Relationships() {
-		switch r.Type() {
-		case common.OfficeDocumentType:
-			wb.x = sml.NewWorkbook()
-			decMap[r.Target()] = wb.x
-			// look for the workbook relationships file as well
-			basePath, _ := filepath.Split(r.Target())
-			wb.wbRels = common.NewRelationships()
-			decMap[zippkg.RelationsPathFor(r.Target())] = wb.wbRels.X()
-			basePaths[wb.wbRels] = basePath
-		case common.CorePropertiesType:
-			decMap[r.Target()] = wb.CoreProperties.X()
-		case common.ExtendedPropertiesType:
-			decMap[r.Target()] = wb.AppProperties.X()
-		case common.ThumbnailType:
-			// read our thumbnail
-			for i, f := range files {
-				if f == nil {
-					continue
-				}
-				if f.Name == r.Target() {
-					rc, err := f.Open()
-					if err != nil {
-						return nil, fmt.Errorf("error reading thumbnail: %s", err)
-					}
-					wb.Thumbnail, _, err = image.Decode(rc)
-					rc.Close()
-					if err != nil {
-						return nil, fmt.Errorf("error decoding thumbnail: %s", err)
-					}
-					files[i] = nil
-				}
-			}
-		default:
-			log.Printf("unsupported type: %s", r.Type())
-		}
-	}
-
-	if err := zippkg.DecodeFromMap(files, decMap); err != nil {
-		return nil, err
-	}
-
-	for _, r := range wb.wbRels.Relationships() {
-		switch r.Type() {
-		case common.WorksheetType:
-			ws := sml.NewWorksheet()
-			wb.xws = append(wb.xws, ws)
-			decMap[basePaths[wb.wbRels]+r.Target()] = ws
-
-			// look for worksheet rels
-			basePath, _ := filepath.Split(r.Target())
-			wksRel := common.NewRelationships()
-			decMap[basePaths[wb.wbRels]+zippkg.RelationsPathFor(r.Target())] = wksRel.X()
-			basePaths[wksRel] = basePath
-			wb.xwsRels = append(wb.xwsRels, wksRel)
-			// fix the relationship target so it points to where we'll save
-			// the worksheet
-			r.SetTarget(fmt.Sprintf("worksheets/sheet%d.xml", len(wb.xws)))
-		case common.StylesType:
-			wb.StyleSheet = NewStyleSheet()
-			decMap[basePaths[wb.wbRels]+r.Target()] = wb.StyleSheet.X()
-		case common.ThemeType:
-			thm := dml.NewTheme()
-			wb.themes = append(wb.themes, thm)
-			decMap[basePaths[wb.wbRels]+r.Target()] = thm
-		case common.SharedStingsType:
-			wb.SharedStrings = NewSharedStrings()
-			decMap[basePaths[wb.wbRels]+r.Target()] = wb.SharedStrings.X()
-		default:
-			fmt.Println("unsupported worksheet rel", r)
-		}
-	}
-
-	if err := zippkg.DecodeFromMap(files, decMap); err != nil {
-		return nil, err
-	}
-
-	for _, f := range files {
-		if f == nil {
-			continue
-		}
-		if err := wb.AddExtraFileFromZip(f); err != nil {
-			return nil, err
-		}
-	}
-	return wb, nil
+	xws         []*sml.Worksheet
+	xwsRels     []common.Relationships
+	wbRels      common.Relationships
+	themes      []*dml.Theme
+	drawings    []*sd.WsDr
+	drawingRels []common.Relationships
+	charts      []*crt.ChartSpace
 }
 
 // X returns the inner wrapped XML type.
@@ -328,7 +168,7 @@ func (wb *Workbook) Validate() error {
 	for i, s := range wb.x.Sheets.Sheet {
 		sw := Sheet{wb, s, wb.xws[i]}
 		if _, ok := usedNames[sw.Name()]; ok {
-			return errors.New(fmt.Sprintf("workbook/Sheet[%d] has duplicate name '%s'", i, sw.Name()))
+			return fmt.Errorf("workbook/Sheet[%d] has duplicate name '%s'", i, sw.Name())
 		}
 		usedNames[sw.Name()] = struct{}{}
 		if err := sw.ValidateWithPath(fmt.Sprintf("workbook/Sheet[%d]", i)); err != nil {
@@ -350,6 +190,85 @@ func (wb *Workbook) Sheets() []Sheet {
 
 // SheetCount returns the number of sheets in the workbook.
 func (wb Workbook) SheetCount() int {
-
 	return len(wb.xws)
+}
+
+func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship) error {
+	switch typ {
+	case common.OfficeDocumentType:
+		wb.x = sml.NewWorkbook()
+		decMap.AddTarget(target, wb.x)
+		// look for the workbook relationships file as well
+		wb.wbRels = common.NewRelationships()
+		decMap.AddTarget(zippkg.RelationsPathFor(target), wb.wbRels.X())
+
+	case common.CorePropertiesType:
+		decMap.AddTarget(target, wb.CoreProperties.X())
+
+	case common.ExtendedPropertiesType:
+		decMap.AddTarget(target, wb.AppProperties.X())
+
+	case common.WorksheetType:
+		ws := sml.NewWorksheet()
+		wb.xws = append(wb.xws, ws)
+		decMap.AddTarget(target, ws)
+		// look for worksheet rels
+		wksRel := common.NewRelationships()
+		decMap.AddTarget(zippkg.RelationsPathFor(target), wksRel.X())
+		wb.xwsRels = append(wb.xwsRels, wksRel)
+		// fix the relationship target so it points to where we'll save
+		// the worksheet
+		rel.TargetAttr = fmt.Sprintf("worksheets/sheet%d.xml", len(wb.xws))
+
+	case common.StylesType:
+		wb.StyleSheet = NewStyleSheet()
+		decMap.AddTarget(target, wb.StyleSheet.X())
+
+	case common.ThemeType:
+		thm := dml.NewTheme()
+		wb.themes = append(wb.themes, thm)
+		decMap.AddTarget(target, thm)
+
+	case common.SharedStingsType:
+		wb.SharedStrings = NewSharedStrings()
+		decMap.AddTarget(target, wb.SharedStrings.X())
+
+	case common.ThumbnailType:
+		// read our thumbnail
+		for i, f := range files {
+			if f == nil {
+				continue
+			}
+			if f.Name == target {
+				rc, err := f.Open()
+				if err != nil {
+					return fmt.Errorf("error reading thumbnail: %s", err)
+				}
+				wb.Thumbnail, _, err = image.Decode(rc)
+				rc.Close()
+				if err != nil {
+					return fmt.Errorf("error decoding thumbnail: %s", err)
+				}
+				files[i] = nil
+			}
+		}
+
+	case common.DrawingType:
+		drawing := sd.NewWsDr()
+		decMap.AddTarget(target, drawing)
+		wb.drawings = append(wb.drawings, drawing)
+
+		drel := common.NewRelationships()
+		decMap.AddTarget(zippkg.RelationsPathFor(target), drel.X())
+		wb.drawingRels = append(wb.drawingRels, drel)
+
+	case common.ChartType:
+		chart := crt.NewChartSpace()
+		decMap.AddTarget(target, chart)
+		wb.charts = append(wb.charts, chart)
+
+	default:
+		fmt.Println("unsupported relationship", target, typ)
+	}
+	return nil
 }
