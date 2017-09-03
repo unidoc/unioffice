@@ -140,6 +140,15 @@ func (wb *Workbook) Save(w io.Writer) error {
 			return err
 		}
 	}
+	for i, chart := range wb.charts {
+		fn := fmt.Sprintf("xl/charts/chart%d.xml", i+1)
+		zippkg.MarshalXML(z, fn, chart)
+	}
+	for i, drawing := range wb.drawings {
+		fn := fmt.Sprintf("xl/drawings/drawing%d.xml", i+1)
+		zippkg.MarshalXML(z, fn, drawing)
+		zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.drawingRels[i].X())
+	}
 	if err := wb.WriteExtraFiles(z); err != nil {
 		return err
 	}
