@@ -18,7 +18,7 @@ import (
 type CT_PlotArea struct {
 	Layout  *CT_Layout
 	Choice  []*CT_PlotAreaChoice
-	CChoice []*CT_PlotAreaChoice1
+	CChoice *CT_PlotAreaChoice1
 	DTable  *CT_DTable
 	SpPr    *drawingml.CT_ShapeProperties
 	ExtLst  *CT_ExtensionList
@@ -39,9 +39,7 @@ func (m *CT_PlotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		c.MarshalXML(e, start)
 	}
 	if m.CChoice != nil {
-		for _, c := range m.CChoice {
-			c.MarshalXML(e, start)
-		}
+		m.CChoice.MarshalXML(e, start)
 	}
 	if m.DTable != nil {
 		sedTable := xml.StartElement{Name: xml.Name{Local: "c:dTable"}}
@@ -172,29 +170,25 @@ lCT_PlotArea:
 				}
 				m.Choice = append(m.Choice, tmp)
 			case "valAx":
-				tmp := NewCT_PlotAreaChoice1()
-				if err := d.DecodeElement(&tmp.ValAx, &el); err != nil {
+				m.CChoice = NewCT_PlotAreaChoice1()
+				if err := d.DecodeElement(&m.CChoice.ValAx, &el); err != nil {
 					return err
 				}
-				m.CChoice = append(m.CChoice, tmp)
 			case "catAx":
-				tmp := NewCT_PlotAreaChoice1()
-				if err := d.DecodeElement(&tmp.CatAx, &el); err != nil {
+				m.CChoice = NewCT_PlotAreaChoice1()
+				if err := d.DecodeElement(&m.CChoice.CatAx, &el); err != nil {
 					return err
 				}
-				m.CChoice = append(m.CChoice, tmp)
 			case "dateAx":
-				tmp := NewCT_PlotAreaChoice1()
-				if err := d.DecodeElement(&tmp.DateAx, &el); err != nil {
+				m.CChoice = NewCT_PlotAreaChoice1()
+				if err := d.DecodeElement(&m.CChoice.DateAx, &el); err != nil {
 					return err
 				}
-				m.CChoice = append(m.CChoice, tmp)
 			case "serAx":
-				tmp := NewCT_PlotAreaChoice1()
-				if err := d.DecodeElement(&tmp.SerAx, &el); err != nil {
+				m.CChoice = NewCT_PlotAreaChoice1()
+				if err := d.DecodeElement(&m.CChoice.SerAx, &el); err != nil {
 					return err
 				}
-				m.CChoice = append(m.CChoice, tmp)
 			case "dTable":
 				m.DTable = NewCT_DTable()
 				if err := d.DecodeElement(m.DTable, &el); err != nil {
@@ -241,8 +235,8 @@ func (m *CT_PlotArea) ValidateWithPath(path string) error {
 			return err
 		}
 	}
-	for i, v := range m.CChoice {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/CChoice[%d]", path, i)); err != nil {
+	if m.CChoice != nil {
+		if err := m.CChoice.ValidateWithPath(path + "/CChoice"); err != nil {
 			return err
 		}
 	}
