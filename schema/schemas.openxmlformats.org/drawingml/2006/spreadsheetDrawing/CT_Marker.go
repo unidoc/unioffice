@@ -57,19 +57,19 @@ lCT_Marker:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "col":
-				if err := d.DecodeElement(m.Col, &el); err != nil {
+				if err := d.DecodeElement(&m.Col, &el); err != nil {
 					return err
 				}
 			case "colOff":
-				if err := d.DecodeElement(m.ColOff, &el); err != nil {
+				if err := d.DecodeElement(&m.ColOff, &el); err != nil {
 					return err
 				}
 			case "row":
-				if err := d.DecodeElement(m.Row, &el); err != nil {
+				if err := d.DecodeElement(&m.Row, &el); err != nil {
 					return err
 				}
 			case "rowOff":
-				if err := d.DecodeElement(m.RowOff, &el); err != nil {
+				if err := d.DecodeElement(&m.RowOff, &el); err != nil {
 					return err
 				}
 			default:

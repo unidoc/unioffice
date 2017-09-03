@@ -49,11 +49,11 @@ lCT_Marker:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "x":
-				if err := d.DecodeElement(m.X, &el); err != nil {
+				if err := d.DecodeElement(&m.X, &el); err != nil {
 					return err
 				}
 			case "y":
-				if err := d.DecodeElement(m.Y, &el); err != nil {
+				if err := d.DecodeElement(&m.Y, &el); err != nil {
 					return err
 				}
 			default:

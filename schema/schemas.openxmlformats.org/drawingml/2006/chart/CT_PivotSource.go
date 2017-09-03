@@ -55,7 +55,7 @@ lCT_PivotSource:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "name":
-				if err := d.DecodeElement(m.Name, &el); err != nil {
+				if err := d.DecodeElement(&m.Name, &el); err != nil {
 					return err
 				}
 			case "fmtId":
