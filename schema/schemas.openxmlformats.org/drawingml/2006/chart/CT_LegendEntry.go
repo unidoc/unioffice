@@ -56,12 +56,16 @@ lCT_LegendEntry:
 					return err
 				}
 			case "delete":
-				m.Choice = NewCT_LegendEntryChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_LegendEntryChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.Delete, &el); err != nil {
 					return err
 				}
 			case "txPr":
-				m.Choice = NewCT_LegendEntryChoice()
+				if m.Choice == nil {
+					m.Choice = NewCT_LegendEntryChoice()
+				}
 				if err := d.DecodeElement(&m.Choice.TxPr, &el); err != nil {
 					return err
 				}
