@@ -18,6 +18,8 @@ const (
 	ImageType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
 	CommentsType       = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments"
 	ThumbnailType      = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail"
+	DrawingType        = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing"
+	ChartType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart"
 
 	ExtendedPropertiesType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties"
 	CorePropertiesType     = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"

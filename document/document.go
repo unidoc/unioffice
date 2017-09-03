@@ -17,13 +17,13 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"path/filepath"
 
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/zippkg"
 
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	st "baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
+	"baliance.com/gooxml/schema/schemas.openxmlformats.org/package/2006/relationships"
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 )
 
@@ -317,128 +317,13 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 
 	files := []*zip.File{}
 	files = append(files, zr.File...)
-	// first pass, identify the files that should always be there
-	for i, f := range files {
-		switch f.Name {
-		case zippkg.ContentTypesFilename:
-			if err := zippkg.Decode(f, doc.ContentTypes.X()); err != nil {
-				return nil, err
-			}
-			files[i] = nil
-		case zippkg.BaseRelsFilename:
-			if err := zippkg.Decode(f, doc.Rels.X()); err != nil {
-				return nil, err
-			}
-			files[i] = nil
-		}
-	}
 
-	basePaths := map[interface{}]string{}
-	decMap := make(map[string]interface{})
-	for _, r := range doc.Rels.Relationships() {
-		switch r.Type() {
-		case common.OfficeDocumentType:
-			doc.x = wml.NewDocument()
-			decMap[r.Target()] = doc.x
-
-			// look for the document relationships file as well
-			basePath, _ := filepath.Split(r.Target())
-			decMap[zippkg.RelationsPathFor(r.Target())] = doc.docRels.X()
-			basePaths[doc.docRels] = basePath
-		case common.CorePropertiesType:
-			decMap[r.Target()] = doc.CoreProperties.X()
-		case common.ExtendedPropertiesType:
-			decMap[r.Target()] = doc.AppProperties.X()
-		case common.ThumbnailType:
-			// read our thumbnail
-			for i, f := range files {
-				if f == nil {
-					continue
-				}
-				if f.Name == r.Target() {
-					rc, err := f.Open()
-					if err != nil {
-						return nil, fmt.Errorf("error reading thumbnail: %s", err)
-					}
-					doc.Thumbnail, _, err = image.Decode(rc)
-					rc.Close()
-					if err != nil {
-						return nil, fmt.Errorf("error decoding thumbnail: %s", err)
-					}
-					files[i] = nil
-				}
-			}
-		default:
-			log.Printf("unsupported type: %s", r.Type())
-		}
-	}
-
-	if err := zippkg.DecodeFromMap(files, decMap); err != nil {
-		return nil, err
-	}
-
-	for _, r := range doc.docRels.Relationships() {
-		switch r.Type() {
-		case common.SettingsType:
-			decMap[basePaths[doc.docRels]+r.Target()] = doc.Settings.X()
-		case common.NumberingType:
-			doc.Numbering = NewNumbering()
-			decMap[basePaths[doc.docRels]+r.Target()] = doc.Numbering.X()
-		case common.StylesType:
-			doc.Styles.Clear()
-			decMap[basePaths[doc.docRels]+r.Target()] = doc.Styles.X()
-		case common.HeaderType:
-			hdr := wml.NewHdr()
-			doc.headers = append(doc.headers, hdr)
-			decMap[basePaths[doc.docRels]+r.Target()] = hdr
-		case common.FooterType:
-			ftr := wml.NewFtr()
-			doc.footers = append(doc.footers, ftr)
-			decMap[basePaths[doc.docRels]+r.Target()] = ftr
-		case common.ThemeType:
-			thm := dml.NewTheme()
-			doc.themes = append(doc.themes, thm)
-			decMap[basePaths[doc.docRels]+r.Target()] = thm
-		case common.WebSettingsType:
-			doc.webSettings = wml.NewWebSettings()
-			decMap[basePaths[doc.docRels]+r.Target()] = doc.webSettings
-		case common.FontTableType:
-			doc.fontTable = wml.NewFonts()
-			decMap[basePaths[doc.docRels]+r.Target()] = doc.fontTable
-		case common.EndNotesType:
-			doc.endNotes = wml.NewEndnotes()
-			decMap[basePaths[doc.docRels]+r.Target()] = doc.endNotes
-		case common.FootNotesType:
-			doc.footNotes = wml.NewFootnotes()
-			decMap[basePaths[doc.docRels]+r.Target()] = doc.footNotes
-		case common.ImageType:
-			imgPath := basePaths[doc.docRels] + r.Target()
-			for i, f := range files {
-				if f == nil {
-					continue
-				}
-				if f.Name == imgPath {
-					path, err := zippkg.ExtractToDiskTmp(f, doc.TmpPath)
-					if err != nil {
-						return nil, err
-					}
-					img, err := ImageFromFile(path)
-					if err != nil {
-						return nil, err
-					}
-					_ = img
-					ref := &iref{path: img.Path}
-					doc.images = append(doc.images, ref)
-					files[i] = nil
-				}
-			}
-		default:
-			fmt.Println("unsupported document rel", r)
-		}
-	}
-	if err := zippkg.DecodeFromMap(files, decMap); err != nil {
-		return nil, err
-	}
+	decMap := zippkg.DecodeMap{}
+	decMap.SetOnNewRelationshipFunc(doc.onNewRelationship)
+	// we should discover all contents by starting with these two files
+	decMap.AddTarget(zippkg.ContentTypesFilename, doc.ContentTypes.X())
+	decMap.AddTarget(zippkg.BaseRelsFilename, doc.Rels.X())
+	decMap.Decode(files)
 
 	for _, f := range files {
 		if f == nil {
@@ -572,4 +457,92 @@ func (d *Document) FormFields() []FormField {
 		}
 	}
 	return ret
+}
+
+func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship) error {
+	switch typ {
+	case common.OfficeDocumentType:
+		doc.x = wml.NewDocument()
+		decMap.AddTarget(target, doc.x)
+		// look for the document relationships file as well
+		decMap.AddTarget(zippkg.RelationsPathFor(target), doc.docRels.X())
+	case common.CorePropertiesType:
+		decMap.AddTarget(target, doc.CoreProperties.X())
+	case common.ExtendedPropertiesType:
+		decMap.AddTarget(target, doc.AppProperties.X())
+	case common.ThumbnailType:
+		// read our thumbnail
+		for i, f := range files {
+			if f == nil {
+				continue
+			}
+			if f.Name == target {
+				rc, err := f.Open()
+				if err != nil {
+					return fmt.Errorf("error reading thumbnail: %s", err)
+				}
+				doc.Thumbnail, _, err = image.Decode(rc)
+				rc.Close()
+				if err != nil {
+					return fmt.Errorf("error decoding thumbnail: %s", err)
+				}
+				files[i] = nil
+			}
+		}
+	case common.SettingsType:
+		decMap.AddTarget(target, doc.Settings.X())
+	case common.NumberingType:
+		doc.Numbering = NewNumbering()
+		decMap.AddTarget(target, doc.Numbering.X())
+	case common.StylesType:
+		doc.Styles.Clear()
+		decMap.AddTarget(target, doc.Styles.X())
+	case common.HeaderType:
+		hdr := wml.NewHdr()
+		doc.headers = append(doc.headers, hdr)
+		decMap.AddTarget(target, hdr)
+	case common.FooterType:
+		ftr := wml.NewFtr()
+		doc.footers = append(doc.footers, ftr)
+		decMap.AddTarget(target, ftr)
+	case common.ThemeType:
+		thm := dml.NewTheme()
+		doc.themes = append(doc.themes, thm)
+		decMap.AddTarget(target, thm)
+	case common.WebSettingsType:
+		doc.webSettings = wml.NewWebSettings()
+		decMap.AddTarget(target, doc.webSettings)
+	case common.FontTableType:
+		doc.fontTable = wml.NewFonts()
+		decMap.AddTarget(target, doc.fontTable)
+	case common.EndNotesType:
+		doc.endNotes = wml.NewEndnotes()
+		decMap.AddTarget(target, doc.endNotes)
+	case common.FootNotesType:
+		doc.footNotes = wml.NewFootnotes()
+		decMap.AddTarget(target, doc.footNotes)
+	case common.ImageType:
+		for i, f := range files {
+			if f == nil {
+				continue
+			}
+			if f.Name == target {
+				path, err := zippkg.ExtractToDiskTmp(f, doc.TmpPath)
+				if err != nil {
+					return err
+				}
+				img, err := ImageFromFile(path)
+				if err != nil {
+					return err
+				}
+				_ = img
+				ref := &iref{path: img.Path}
+				doc.images = append(doc.images, ref)
+				files[i] = nil
+			}
+		}
+	default:
+		log.Printf("unsupported relationship type: %s tgt: %s", typ, target)
+	}
+	return nil
 }
