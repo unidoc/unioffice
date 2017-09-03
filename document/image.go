@@ -16,7 +16,7 @@ import (
 	_ "image/jpeg"
 	_ "image/png"
 
-	"baliance.com/gooxml/common"
+	"baliance.com/gooxml"
 )
 
 // Image is a container for image information.
@@ -41,7 +41,7 @@ type ImageRef struct {
 func (i ImageRef) RelID() string {
 	for imgIdx, ir := range i.d.images {
 		if ir == i.ref {
-			imgID := i.d.docRels.FindRIDForN(imgIdx, common.ImageType)
+			imgID := i.d.docRels.FindRIDForN(imgIdx, gooxml.ImageType)
 			return imgID
 		}
 	}

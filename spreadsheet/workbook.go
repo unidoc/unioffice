@@ -16,6 +16,7 @@ import (
 	"io"
 	"os"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/zippkg"
 
@@ -204,20 +205,20 @@ func (wb Workbook) SheetCount() int {
 
 func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship) error {
 	switch typ {
-	case common.OfficeDocumentType:
+	case gooxml.OfficeDocumentType:
 		wb.x = sml.NewWorkbook()
 		decMap.AddTarget(target, wb.x)
 		// look for the workbook relationships file as well
 		wb.wbRels = common.NewRelationships()
 		decMap.AddTarget(zippkg.RelationsPathFor(target), wb.wbRels.X())
 
-	case common.CorePropertiesType:
+	case gooxml.CorePropertiesType:
 		decMap.AddTarget(target, wb.CoreProperties.X())
 
-	case common.ExtendedPropertiesType:
+	case gooxml.ExtendedPropertiesType:
 		decMap.AddTarget(target, wb.AppProperties.X())
 
-	case common.WorksheetType:
+	case gooxml.WorksheetType:
 		ws := sml.NewWorksheet()
 		wb.xws = append(wb.xws, ws)
 		decMap.AddTarget(target, ws)
@@ -229,20 +230,20 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		// the worksheet
 		rel.TargetAttr = fmt.Sprintf("worksheets/sheet%d.xml", len(wb.xws))
 
-	case common.StylesType:
+	case gooxml.StylesType:
 		wb.StyleSheet = NewStyleSheet()
 		decMap.AddTarget(target, wb.StyleSheet.X())
 
-	case common.ThemeType:
+	case gooxml.ThemeType:
 		thm := dml.NewTheme()
 		wb.themes = append(wb.themes, thm)
 		decMap.AddTarget(target, thm)
 
-	case common.SharedStingsType:
+	case gooxml.SharedStingsType:
 		wb.SharedStrings = NewSharedStrings()
 		decMap.AddTarget(target, wb.SharedStrings.X())
 
-	case common.ThumbnailType:
+	case gooxml.ThumbnailType:
 		// read our thumbnail
 		for i, f := range files {
 			if f == nil {
@@ -262,7 +263,7 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 			}
 		}
 
-	case common.DrawingType:
+	case gooxml.DrawingType:
 		drawing := sd.NewWsDr()
 		decMap.AddTarget(target, drawing)
 		wb.drawings = append(wb.drawings, drawing)
@@ -271,7 +272,7 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		decMap.AddTarget(zippkg.RelationsPathFor(target), drel.X())
 		wb.drawingRels = append(wb.drawingRels, drel)
 
-	case common.ChartType:
+	case gooxml.ChartType:
 		chart := crt.NewChartSpace()
 		decMap.AddTarget(target, chart)
 		wb.charts = append(wb.charts, chart)

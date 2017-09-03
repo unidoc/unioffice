@@ -5,7 +5,7 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package common
+package gooxml
 
 // Consts for content types used throughout the package
 const (

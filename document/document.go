@@ -18,6 +18,7 @@ import (
 	"log"
 	"os"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/zippkg"
 
@@ -63,23 +64,23 @@ func New() *Document {
 	d.ContentTypes.AddOverride("/word/document.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml")
 
 	d.Settings = NewSettings()
-	d.docRels.AddRelationship("settings.xml", common.SettingsType)
+	d.docRels.AddRelationship("settings.xml", gooxml.SettingsType)
 	d.ContentTypes.AddOverride("/word/settings.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml")
 
 	d.Rels = common.NewRelationships()
-	d.Rels.AddRelationship("docProps/core.xml", common.CorePropertiesType)
-	d.Rels.AddRelationship("docProps/app.xml", common.ExtendedPropertiesType)
-	d.Rels.AddRelationship("word/document.xml", common.OfficeDocumentType)
+	d.Rels.AddRelationship("docProps/core.xml", gooxml.CorePropertiesType)
+	d.Rels.AddRelationship("docProps/app.xml", gooxml.ExtendedPropertiesType)
+	d.Rels.AddRelationship("word/document.xml", gooxml.OfficeDocumentType)
 
 	d.Numbering = NewNumbering()
 	d.Numbering.InitializeDefault()
 	d.ContentTypes.AddOverride("/word/numbering.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml")
-	d.docRels.AddRelationship("numbering.xml", common.NumberingType)
+	d.docRels.AddRelationship("numbering.xml", gooxml.NumberingType)
 
 	d.Styles = NewStyles()
 	d.Styles.InitializeDefault()
 	d.ContentTypes.AddOverride("/word/styles.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml")
-	d.docRels.AddRelationship("styles.xml", common.StylesType)
+	d.docRels.AddRelationship("styles.xml", gooxml.StylesType)
 
 	d.x.Body = wml.NewCT_Body()
 	return d
@@ -96,7 +97,7 @@ func (d *Document) AddHeader() Header {
 	hdr := wml.NewHdr()
 	d.headers = append(d.headers, hdr)
 	path := fmt.Sprintf("header%d.xml", len(d.headers))
-	d.docRels.AddRelationship(path, common.HeaderType)
+	d.docRels.AddRelationship(path, gooxml.HeaderType)
 
 	d.ContentTypes.AddOverride("/word/"+path, "application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml")
 	return Header{d, hdr}
@@ -108,7 +109,7 @@ func (d *Document) AddFooter() Footer {
 	ftr := wml.NewFtr()
 	d.footers = append(d.footers, ftr)
 	path := fmt.Sprintf("footer%d.xml", len(d.footers))
-	d.docRels.AddRelationship(path, common.FooterType)
+	d.docRels.AddRelationship(path, gooxml.FooterType)
 	d.ContentTypes.AddOverride("/word/"+path, "application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml")
 	return Footer{d, ftr}
 }
@@ -368,7 +369,7 @@ func (d *Document) AddImage(i Image) (ImageRef, error) {
 	}
 
 	fn := fmt.Sprintf("media/image%d.%s", len(d.images), i.Format)
-	d.docRels.AddRelationship(fn, common.ImageType)
+	d.docRels.AddRelationship(fn, gooxml.ImageType)
 	return r, nil
 }
 
@@ -390,7 +391,7 @@ func (d *Document) Images() []ImageRef {
 	_ = t
 	imgIdx := 0
 	for _, rel := range d.docRels.Relationships() {
-		if rel.Type() != common.ImageType {
+		if rel.Type() != gooxml.ImageType {
 			continue
 		}
 		if imgIdx < len(d.images) {
@@ -461,16 +462,16 @@ func (d *Document) FormFields() []FormField {
 
 func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship) error {
 	switch typ {
-	case common.OfficeDocumentType:
+	case gooxml.OfficeDocumentType:
 		doc.x = wml.NewDocument()
 		decMap.AddTarget(target, doc.x)
 		// look for the document relationships file as well
 		decMap.AddTarget(zippkg.RelationsPathFor(target), doc.docRels.X())
-	case common.CorePropertiesType:
+	case gooxml.CorePropertiesType:
 		decMap.AddTarget(target, doc.CoreProperties.X())
-	case common.ExtendedPropertiesType:
+	case gooxml.ExtendedPropertiesType:
 		decMap.AddTarget(target, doc.AppProperties.X())
-	case common.ThumbnailType:
+	case gooxml.ThumbnailType:
 		// read our thumbnail
 		for i, f := range files {
 			if f == nil {
@@ -489,39 +490,39 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 				files[i] = nil
 			}
 		}
-	case common.SettingsType:
+	case gooxml.SettingsType:
 		decMap.AddTarget(target, doc.Settings.X())
-	case common.NumberingType:
+	case gooxml.NumberingType:
 		doc.Numbering = NewNumbering()
 		decMap.AddTarget(target, doc.Numbering.X())
-	case common.StylesType:
+	case gooxml.StylesType:
 		doc.Styles.Clear()
 		decMap.AddTarget(target, doc.Styles.X())
-	case common.HeaderType:
+	case gooxml.HeaderType:
 		hdr := wml.NewHdr()
 		doc.headers = append(doc.headers, hdr)
 		decMap.AddTarget(target, hdr)
-	case common.FooterType:
+	case gooxml.FooterType:
 		ftr := wml.NewFtr()
 		doc.footers = append(doc.footers, ftr)
 		decMap.AddTarget(target, ftr)
-	case common.ThemeType:
+	case gooxml.ThemeType:
 		thm := dml.NewTheme()
 		doc.themes = append(doc.themes, thm)
 		decMap.AddTarget(target, thm)
-	case common.WebSettingsType:
+	case gooxml.WebSettingsType:
 		doc.webSettings = wml.NewWebSettings()
 		decMap.AddTarget(target, doc.webSettings)
-	case common.FontTableType:
+	case gooxml.FontTableType:
 		doc.fontTable = wml.NewFonts()
 		decMap.AddTarget(target, doc.fontTable)
-	case common.EndNotesType:
+	case gooxml.EndNotesType:
 		doc.endNotes = wml.NewEndnotes()
 		decMap.AddTarget(target, doc.endNotes)
-	case common.FootNotesType:
+	case gooxml.FootNotesType:
 		doc.footNotes = wml.NewFootnotes()
 		decMap.AddTarget(target, doc.footNotes)
-	case common.ImageType:
+	case gooxml.ImageType:
 		for i, f := range files {
 			if f == nil {
 				continue

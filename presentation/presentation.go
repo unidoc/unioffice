@@ -75,8 +75,8 @@ func New() *Presentation {
 
 	p.masters = append(p.masters, m)
 
-	p.ContentTypes.AddOverride("/ppt/slideMasters/slideMaster1.xml", common.SlideMasterContentType)
-	mrelID := p.prels.AddRelationship("slideMasters/slideMaster1.xml", common.SlideMasterRelationshipType)
+	p.ContentTypes.AddOverride("/ppt/slideMasters/slideMaster1.xml", gooxml.SlideMasterContentType)
+	mrelID := p.prels.AddRelationship("slideMasters/slideMaster1.xml", gooxml.SlideMasterRelationshipType)
 	smid := pml.NewCT_SlideMasterIdListEntry()
 	smid.IdAttr = gooxml.Uint32(2147483648)
 	smid.RIdAttr = mrelID.ID()
@@ -85,9 +85,9 @@ func New() *Presentation {
 	p.masterRels = append(p.masterRels, mrel)
 
 	ls := pml.NewSldLayout()
-	lrid := mrel.AddRelationship("../slideLayouts/slideLayout1.xml", common.SlideLayoutType)
-	p.ContentTypes.AddOverride("/ppt/slideLayouts/slideLayout1.xml", common.SlideLayoutContentType)
-	mrel.AddRelationship("../theme/theme1.xml", common.ThemeType)
+	lrid := mrel.AddRelationship("../slideLayouts/slideLayout1.xml", gooxml.SlideLayoutType)
+	p.ContentTypes.AddOverride("/ppt/slideLayouts/slideLayout1.xml", gooxml.SlideLayoutContentType)
+	mrel.AddRelationship("../theme/theme1.xml", gooxml.ThemeType)
 	p.layouts = append(p.layouts, ls)
 
 	m.SldLayoutIdLst = pml.NewCT_SlideLayoutIdList()
@@ -98,7 +98,7 @@ func New() *Presentation {
 
 	lrel := common.NewRelationships()
 	p.layoutRels = append(p.layoutRels, lrel)
-	lrel.AddRelationship("../slideMasters/slideMaster1.xml", common.SlideMasterRelationshipType)
+	lrel.AddRelationship("../slideMasters/slideMaster1.xml", gooxml.SlideMasterRelationshipType)
 	p.x.NotesSz.CxAttr = 6858000
 	p.x.NotesSz.CyAttr = 9144000
 
@@ -206,8 +206,8 @@ func New() *Presentation {
 		fp)
 
 	p.themes = append(p.themes, thm)
-	p.ContentTypes.AddOverride("/ppt/theme/theme1.xml", common.ThemeContentType)
-	p.prels.AddRelationship("theme/theme1.xml", common.ThemeType)
+	p.ContentTypes.AddOverride("/ppt/theme/theme1.xml", gooxml.ThemeContentType)
+	p.prels.AddRelationship("theme/theme1.xml", gooxml.ThemeType)
 	return p
 }
 
@@ -252,14 +252,14 @@ func (p *Presentation) AddSlide() Slide {
 
 	p.slides = append(p.slides, slide)
 	fn := fmt.Sprintf("slides/slide%d.xml", len(p.slides))
-	srelID := p.prels.AddRelationship(fn, common.SlideType)
+	srelID := p.prels.AddRelationship(fn, gooxml.SlideType)
 	sd.RIdAttr = srelID.ID()
 
-	p.ContentTypes.AddOverride(fmt.Sprintf("/ppt/slides/slide%d.xml", len(p.slides)), common.SlideContentType)
+	p.ContentTypes.AddOverride(fmt.Sprintf("/ppt/slides/slide%d.xml", len(p.slides)), gooxml.SlideContentType)
 
 	srel := common.NewRelationships()
 	p.slideRels = append(p.slideRels, srel)
-	srel.AddRelationship("../slideLayouts/slideLayout1.xml", common.SlideLayoutType)
+	srel.AddRelationship("../slideLayouts/slideLayout1.xml", gooxml.SlideLayoutType)
 
 	return Slide{sd, slide}
 }
@@ -337,7 +337,7 @@ func (p *Presentation) Validate() error {
 		}
 	}
 	for i, sl := range p.layouts {
-		if err := sl.ValidateWithPath(fmt.Sprintf("SlideMAter[%d]", i)); err != nil {
+		if err := sl.ValidateWithPath(fmt.Sprintf("SlideLayout[%d]", i)); err != nil {
 			return err
 		}
 	}

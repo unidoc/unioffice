@@ -14,7 +14,6 @@ import (
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/color"
-	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	pic "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/picture"
@@ -363,7 +362,7 @@ func (r Run) AddDrawingAnchored(img ImageRef) (AnchoredDrawing, error) {
 	if imgIdx == -1 {
 		return ad, errors.New("couldn't find reference to image within document")
 	}
-	imgID := r.d.docRels.FindRIDForN(imgIdx, common.ImageType)
+	imgID := r.d.docRels.FindRIDForN(imgIdx, gooxml.ImageType)
 	if imgID == "" {
 		return ad, errors.New("couldn't find reference to image within document relations")
 	}

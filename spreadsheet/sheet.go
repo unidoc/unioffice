@@ -9,19 +9,19 @@ package spreadsheet
 
 import (
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
 )
 
 // Sheet is a single sheet within a workbook.
 type Sheet struct {
 	w  *Workbook
-	x  *spreadsheetml.CT_Sheet
-	ws *spreadsheetml.Worksheet
+	x  *sml.CT_Sheet
+	ws *sml.Worksheet
 }
 
 // AddRow adds a new row to a sheet.
 func (s Sheet) AddRow() Row {
-	r := spreadsheetml.NewCT_Row()
+	r := sml.NewCT_Row()
 	r.RAttr = gooxml.Uint32(uint32(len(s.ws.SheetData.Row) + 1))
 	s.ws.SheetData.Row = append(s.ws.SheetData.Row, r)
 	return Row{s.w, r}

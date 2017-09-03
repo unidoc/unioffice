@@ -10,7 +10,7 @@ package document
 import (
 	"log"
 
-	"baliance.com/gooxml/common"
+	"baliance.com/gooxml"
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 )
 
@@ -31,7 +31,7 @@ func (s Section) SetHeader(h Header, t wml.ST_HdrFtr) {
 	s.x.EG_HdrFtrReferences = append(s.x.EG_HdrFtrReferences, hdrRef)
 	hdrRef.HeaderReference = wml.NewCT_HdrFtrRef()
 	hdrRef.HeaderReference.TypeAttr = t
-	hdrID := s.d.docRels.FindRIDForN(h.Index(), common.HeaderType)
+	hdrID := s.d.docRels.FindRIDForN(h.Index(), gooxml.HeaderType)
 	if hdrID == "" {
 		log.Print("unable to determine header ID")
 	}
@@ -44,7 +44,7 @@ func (s Section) SetFooter(f Footer, t wml.ST_HdrFtr) {
 	s.x.EG_HdrFtrReferences = append(s.x.EG_HdrFtrReferences, ftrRef)
 	ftrRef.FooterReference = wml.NewCT_HdrFtrRef()
 	ftrRef.FooterReference.TypeAttr = t
-	hdrID := s.d.docRels.FindRIDForN(f.Index(), common.FooterType)
+	hdrID := s.d.docRels.FindRIDForN(f.Index(), gooxml.FooterType)
 	if hdrID == "" {
 		log.Print("unable to determine footer ID")
 	}
