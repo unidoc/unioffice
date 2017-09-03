@@ -12,7 +12,7 @@ import "fmt"
 // Color is a 24 bit color that can be converted to
 // internal ECMA-376 formats as needed.
 type Color struct {
-	a, r, g, b uint8
+	r, g, b, a uint8
 	isAuto     bool
 }
 
