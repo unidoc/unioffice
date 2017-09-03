@@ -44,31 +44,26 @@ lEG_WrapType:
 				if err := d.DecodeElement(&m.Choice.WrapNone, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "wrapSquare":
 				m.Choice = NewEG_WrapTypeChoice()
 				if err := d.DecodeElement(&m.Choice.WrapSquare, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "wrapTight":
 				m.Choice = NewEG_WrapTypeChoice()
 				if err := d.DecodeElement(&m.Choice.WrapTight, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "wrapThrough":
 				m.Choice = NewEG_WrapTypeChoice()
 				if err := d.DecodeElement(&m.Choice.WrapThrough, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "wrapTopAndBottom":
 				m.Choice = NewEG_WrapTypeChoice()
 				if err := d.DecodeElement(&m.Choice.WrapTopAndBottom, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			default:
 				log.Printf("skipping unsupported element on EG_WrapType %v", el.Name)
 				if err := d.Skip(); err != nil {

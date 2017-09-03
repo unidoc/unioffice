@@ -46,13 +46,11 @@ lCT_NumDataSource:
 				if err := d.DecodeElement(&m.Choice.NumRef, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "numLit":
 				m.Choice = NewCT_NumDataSourceChoice()
 				if err := d.DecodeElement(&m.Choice.NumLit, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			default:
 				log.Printf("skipping unsupported element on CT_NumDataSource %v", el.Name)
 				if err := d.Skip(); err != nil {

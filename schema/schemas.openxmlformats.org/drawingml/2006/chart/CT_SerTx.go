@@ -46,13 +46,11 @@ lCT_SerTx:
 				if err := d.DecodeElement(&m.Choice.StrRef, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "v":
 				m.Choice = NewCT_SerTxChoice()
 				if err := d.DecodeElement(&m.Choice.V, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			default:
 				log.Printf("skipping unsupported element on CT_SerTx %v", el.Name)
 				if err := d.Skip(); err != nil {

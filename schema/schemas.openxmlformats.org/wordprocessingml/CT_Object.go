@@ -87,25 +87,21 @@ lCT_Object:
 				if err := d.DecodeElement(&m.Choice.Control, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "objectLink":
 				m.Choice = NewCT_ObjectChoice()
 				if err := d.DecodeElement(&m.Choice.ObjectLink, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "objectEmbed":
 				m.Choice = NewCT_ObjectChoice()
 				if err := d.DecodeElement(&m.Choice.ObjectEmbed, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "movie":
 				m.Choice = NewCT_ObjectChoice()
 				if err := d.DecodeElement(&m.Choice.Movie, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			default:
 				log.Printf("skipping unsupported element on CT_Object %v", el.Name)
 				if err := d.Skip(); err != nil {

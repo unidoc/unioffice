@@ -58,13 +58,11 @@ lCT_FFCheckBox:
 				if err := d.DecodeElement(&m.Choice.Size, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "sizeAuto":
 				m.Choice = NewCT_FFCheckBoxChoice()
 				if err := d.DecodeElement(&m.Choice.SizeAuto, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "default":
 				m.Default = NewCT_OnOff()
 				if err := d.DecodeElement(m.Default, &el); err != nil {

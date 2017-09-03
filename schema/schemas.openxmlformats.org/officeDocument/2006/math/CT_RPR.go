@@ -66,7 +66,6 @@ lCT_RPR:
 				if err := d.DecodeElement(&m.Choice.Nor, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "brk":
 				m.Brk = NewCT_ManualBreak()
 				if err := d.DecodeElement(m.Brk, &el); err != nil {

@@ -176,13 +176,11 @@ lCT_MathPr:
 				if err := d.DecodeElement(&m.Choice.WrapIndent, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "wrapRight":
 				m.Choice = NewCT_MathPrChoice()
 				if err := d.DecodeElement(&m.Choice.WrapRight, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "intLim":
 				m.IntLim = NewCT_LimLoc()
 				if err := d.DecodeElement(m.IntLim, &el); err != nil {

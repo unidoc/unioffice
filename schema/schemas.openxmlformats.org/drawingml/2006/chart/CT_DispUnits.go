@@ -56,13 +56,11 @@ lCT_DispUnits:
 				if err := d.DecodeElement(&m.Choice.CustUnit, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "builtInUnit":
 				m.Choice = NewCT_DispUnitsChoice()
 				if err := d.DecodeElement(&m.Choice.BuiltInUnit, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "dispUnitsLbl":
 				m.DispUnitsLbl = NewCT_DispUnitsLbl()
 				if err := d.DecodeElement(m.DispUnitsLbl, &el); err != nil {

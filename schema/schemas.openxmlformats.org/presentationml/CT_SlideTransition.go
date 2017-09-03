@@ -100,127 +100,106 @@ lCT_SlideTransition:
 				if err := d.DecodeElement(&m.Choice.Blinds, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "checker":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Checker, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "circle":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Circle, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "dissolve":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Dissolve, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "comb":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Comb, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "cover":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Cover, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "cut":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Cut, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "diamond":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Diamond, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "fade":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Fade, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "newsflash":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Newsflash, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "plus":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Plus, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "pull":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Pull, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "push":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Push, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "random":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Random, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "randomBar":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.RandomBar, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "split":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Split, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "strips":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Strips, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "wedge":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Wedge, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "wheel":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Wheel, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "wipe":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Wipe, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "zoom":
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Zoom, &el); err != nil {
 					return err
 				}
-				_ = m.Choice
 			case "sndAc":
 				m.SndAc = NewCT_TransitionSoundAction()
 				if err := d.DecodeElement(m.SndAc, &el); err != nil {
