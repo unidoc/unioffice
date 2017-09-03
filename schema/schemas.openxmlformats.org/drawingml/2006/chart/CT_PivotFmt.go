@@ -31,26 +31,26 @@ func NewCT_PivotFmt() *CT_PivotFmt {
 
 func (m *CT_PivotFmt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
+	seidx := xml.StartElement{Name: xml.Name{Local: "c:idx"}}
 	e.EncodeElement(m.Idx, seidx)
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.TxPr != nil {
-		setxPr := xml.StartElement{Name: xml.Name{Local: "txPr"}}
+		setxPr := xml.StartElement{Name: xml.Name{Local: "c:txPr"}}
 		e.EncodeElement(m.TxPr, setxPr)
 	}
 	if m.Marker != nil {
-		semarker := xml.StartElement{Name: xml.Name{Local: "marker"}}
+		semarker := xml.StartElement{Name: xml.Name{Local: "c:marker"}}
 		e.EncodeElement(m.Marker, semarker)
 	}
 	if m.DLbl != nil {
-		sedLbl := xml.StartElement{Name: xml.Name{Local: "dLbl"}}
+		sedLbl := xml.StartElement{Name: xml.Name{Local: "c:dLbl"}}
 		e.EncodeElement(m.DLbl, sedLbl)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

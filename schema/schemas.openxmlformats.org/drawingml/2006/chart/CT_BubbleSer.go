@@ -41,56 +41,56 @@ func NewCT_BubbleSer() *CT_BubbleSer {
 
 func (m *CT_BubbleSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
+	seidx := xml.StartElement{Name: xml.Name{Local: "c:idx"}}
 	e.EncodeElement(m.Idx, seidx)
-	seorder := xml.StartElement{Name: xml.Name{Local: "order"}}
+	seorder := xml.StartElement{Name: xml.Name{Local: "c:order"}}
 	e.EncodeElement(m.Order, seorder)
 	if m.Tx != nil {
-		setx := xml.StartElement{Name: xml.Name{Local: "tx"}}
+		setx := xml.StartElement{Name: xml.Name{Local: "c:tx"}}
 		e.EncodeElement(m.Tx, setx)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.InvertIfNegative != nil {
-		seinvertIfNegative := xml.StartElement{Name: xml.Name{Local: "invertIfNegative"}}
+		seinvertIfNegative := xml.StartElement{Name: xml.Name{Local: "c:invertIfNegative"}}
 		e.EncodeElement(m.InvertIfNegative, seinvertIfNegative)
 	}
 	if m.DPt != nil {
-		sedPt := xml.StartElement{Name: xml.Name{Local: "dPt"}}
+		sedPt := xml.StartElement{Name: xml.Name{Local: "c:dPt"}}
 		e.EncodeElement(m.DPt, sedPt)
 	}
 	if m.DLbls != nil {
-		sedLbls := xml.StartElement{Name: xml.Name{Local: "dLbls"}}
+		sedLbls := xml.StartElement{Name: xml.Name{Local: "c:dLbls"}}
 		e.EncodeElement(m.DLbls, sedLbls)
 	}
 	if m.Trendline != nil {
-		setrendline := xml.StartElement{Name: xml.Name{Local: "trendline"}}
+		setrendline := xml.StartElement{Name: xml.Name{Local: "c:trendline"}}
 		e.EncodeElement(m.Trendline, setrendline)
 	}
 	if m.ErrBars != nil {
-		seerrBars := xml.StartElement{Name: xml.Name{Local: "errBars"}}
+		seerrBars := xml.StartElement{Name: xml.Name{Local: "c:errBars"}}
 		e.EncodeElement(m.ErrBars, seerrBars)
 	}
 	if m.XVal != nil {
-		sexVal := xml.StartElement{Name: xml.Name{Local: "xVal"}}
+		sexVal := xml.StartElement{Name: xml.Name{Local: "c:xVal"}}
 		e.EncodeElement(m.XVal, sexVal)
 	}
 	if m.YVal != nil {
-		seyVal := xml.StartElement{Name: xml.Name{Local: "yVal"}}
+		seyVal := xml.StartElement{Name: xml.Name{Local: "c:yVal"}}
 		e.EncodeElement(m.YVal, seyVal)
 	}
 	if m.BubbleSize != nil {
-		sebubbleSize := xml.StartElement{Name: xml.Name{Local: "bubbleSize"}}
+		sebubbleSize := xml.StartElement{Name: xml.Name{Local: "c:bubbleSize"}}
 		e.EncodeElement(m.BubbleSize, sebubbleSize)
 	}
 	if m.Bubble3D != nil {
-		sebubble3D := xml.StartElement{Name: xml.Name{Local: "bubble3D"}}
+		sebubble3D := xml.StartElement{Name: xml.Name{Local: "c:bubble3D"}}
 		e.EncodeElement(m.Bubble3D, sebubble3D)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

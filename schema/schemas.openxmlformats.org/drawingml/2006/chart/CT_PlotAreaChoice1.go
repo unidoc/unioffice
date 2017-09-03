@@ -27,19 +27,19 @@ func NewCT_PlotAreaChoice1() *CT_PlotAreaChoice1 {
 
 func (m *CT_PlotAreaChoice1) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ValAx != nil {
-		sevalAx := xml.StartElement{Name: xml.Name{Local: "valAx"}}
+		sevalAx := xml.StartElement{Name: xml.Name{Local: "c:valAx"}}
 		e.EncodeElement(m.ValAx, sevalAx)
 	}
 	if m.CatAx != nil {
-		secatAx := xml.StartElement{Name: xml.Name{Local: "catAx"}}
+		secatAx := xml.StartElement{Name: xml.Name{Local: "c:catAx"}}
 		e.EncodeElement(m.CatAx, secatAx)
 	}
 	if m.DateAx != nil {
-		sedateAx := xml.StartElement{Name: xml.Name{Local: "dateAx"}}
+		sedateAx := xml.StartElement{Name: xml.Name{Local: "c:dateAx"}}
 		e.EncodeElement(m.DateAx, sedateAx)
 	}
 	if m.SerAx != nil {
-		seserAx := xml.StartElement{Name: xml.Name{Local: "serAx"}}
+		seserAx := xml.StartElement{Name: xml.Name{Local: "c:serAx"}}
 		e.EncodeElement(m.SerAx, seserAx)
 	}
 	return nil

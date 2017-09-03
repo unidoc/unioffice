@@ -25,7 +25,7 @@ func NewCT_ExtensionList() *CT_ExtensionList {
 func (m *CT_ExtensionList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Ext != nil {
-		seext := xml.StartElement{Name: xml.Name{Local: "ext"}}
+		seext := xml.StartElement{Name: xml.Name{Local: "c:ext"}}
 		e.EncodeElement(m.Ext, seext)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

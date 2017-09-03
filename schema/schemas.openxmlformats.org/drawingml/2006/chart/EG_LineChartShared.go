@@ -28,22 +28,22 @@ func NewEG_LineChartShared() *EG_LineChartShared {
 }
 
 func (m *EG_LineChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	segrouping := xml.StartElement{Name: xml.Name{Local: "grouping"}}
+	segrouping := xml.StartElement{Name: xml.Name{Local: "c:grouping"}}
 	e.EncodeElement(m.Grouping, segrouping)
 	if m.VaryColors != nil {
-		sevaryColors := xml.StartElement{Name: xml.Name{Local: "varyColors"}}
+		sevaryColors := xml.StartElement{Name: xml.Name{Local: "c:varyColors"}}
 		e.EncodeElement(m.VaryColors, sevaryColors)
 	}
 	if m.Ser != nil {
-		seser := xml.StartElement{Name: xml.Name{Local: "ser"}}
+		seser := xml.StartElement{Name: xml.Name{Local: "c:ser"}}
 		e.EncodeElement(m.Ser, seser)
 	}
 	if m.DLbls != nil {
-		sedLbls := xml.StartElement{Name: xml.Name{Local: "dLbls"}}
+		sedLbls := xml.StartElement{Name: xml.Name{Local: "c:dLbls"}}
 		e.EncodeElement(m.DLbls, sedLbls)
 	}
 	if m.DropLines != nil {
-		sedropLines := xml.StartElement{Name: xml.Name{Local: "dropLines"}}
+		sedropLines := xml.StartElement{Name: xml.Name{Local: "c:dropLines"}}
 		e.EncodeElement(m.DropLines, sedropLines)
 	}
 	return nil

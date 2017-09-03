@@ -33,37 +33,37 @@ func NewCT_BubbleChart() *CT_BubbleChart {
 func (m *CT_BubbleChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.VaryColors != nil {
-		sevaryColors := xml.StartElement{Name: xml.Name{Local: "varyColors"}}
+		sevaryColors := xml.StartElement{Name: xml.Name{Local: "c:varyColors"}}
 		e.EncodeElement(m.VaryColors, sevaryColors)
 	}
 	if m.Ser != nil {
-		seser := xml.StartElement{Name: xml.Name{Local: "ser"}}
+		seser := xml.StartElement{Name: xml.Name{Local: "c:ser"}}
 		e.EncodeElement(m.Ser, seser)
 	}
 	if m.DLbls != nil {
-		sedLbls := xml.StartElement{Name: xml.Name{Local: "dLbls"}}
+		sedLbls := xml.StartElement{Name: xml.Name{Local: "c:dLbls"}}
 		e.EncodeElement(m.DLbls, sedLbls)
 	}
 	if m.Bubble3D != nil {
-		sebubble3D := xml.StartElement{Name: xml.Name{Local: "bubble3D"}}
+		sebubble3D := xml.StartElement{Name: xml.Name{Local: "c:bubble3D"}}
 		e.EncodeElement(m.Bubble3D, sebubble3D)
 	}
 	if m.BubbleScale != nil {
-		sebubbleScale := xml.StartElement{Name: xml.Name{Local: "bubbleScale"}}
+		sebubbleScale := xml.StartElement{Name: xml.Name{Local: "c:bubbleScale"}}
 		e.EncodeElement(m.BubbleScale, sebubbleScale)
 	}
 	if m.ShowNegBubbles != nil {
-		seshowNegBubbles := xml.StartElement{Name: xml.Name{Local: "showNegBubbles"}}
+		seshowNegBubbles := xml.StartElement{Name: xml.Name{Local: "c:showNegBubbles"}}
 		e.EncodeElement(m.ShowNegBubbles, seshowNegBubbles)
 	}
 	if m.SizeRepresents != nil {
-		sesizeRepresents := xml.StartElement{Name: xml.Name{Local: "sizeRepresents"}}
+		sesizeRepresents := xml.StartElement{Name: xml.Name{Local: "c:sizeRepresents"}}
 		e.EncodeElement(m.SizeRepresents, sesizeRepresents)
 	}
-	seaxId := xml.StartElement{Name: xml.Name{Local: "axId"}}
+	seaxId := xml.StartElement{Name: xml.Name{Local: "c:axId"}}
 	e.EncodeElement(m.AxId, seaxId)
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

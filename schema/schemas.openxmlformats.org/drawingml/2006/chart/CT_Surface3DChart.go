@@ -29,21 +29,21 @@ func NewCT_Surface3DChart() *CT_Surface3DChart {
 func (m *CT_Surface3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Wireframe != nil {
-		sewireframe := xml.StartElement{Name: xml.Name{Local: "wireframe"}}
+		sewireframe := xml.StartElement{Name: xml.Name{Local: "c:wireframe"}}
 		e.EncodeElement(m.Wireframe, sewireframe)
 	}
 	if m.Ser != nil {
-		seser := xml.StartElement{Name: xml.Name{Local: "ser"}}
+		seser := xml.StartElement{Name: xml.Name{Local: "c:ser"}}
 		e.EncodeElement(m.Ser, seser)
 	}
 	if m.BandFmts != nil {
-		sebandFmts := xml.StartElement{Name: xml.Name{Local: "bandFmts"}}
+		sebandFmts := xml.StartElement{Name: xml.Name{Local: "c:bandFmts"}}
 		e.EncodeElement(m.BandFmts, sebandFmts)
 	}
-	seaxId := xml.StartElement{Name: xml.Name{Local: "axId"}}
+	seaxId := xml.StartElement{Name: xml.Name{Local: "c:axId"}}
 	e.EncodeElement(m.AxId, seaxId)
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

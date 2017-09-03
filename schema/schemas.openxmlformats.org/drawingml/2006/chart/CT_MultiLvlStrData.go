@@ -27,15 +27,15 @@ func NewCT_MultiLvlStrData() *CT_MultiLvlStrData {
 func (m *CT_MultiLvlStrData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.PtCount != nil {
-		septCount := xml.StartElement{Name: xml.Name{Local: "ptCount"}}
+		septCount := xml.StartElement{Name: xml.Name{Local: "c:ptCount"}}
 		e.EncodeElement(m.PtCount, septCount)
 	}
 	if m.Lvl != nil {
-		selvl := xml.StartElement{Name: xml.Name{Local: "lvl"}}
+		selvl := xml.StartElement{Name: xml.Name{Local: "c:lvl"}}
 		e.EncodeElement(m.Lvl, selvl)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

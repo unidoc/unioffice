@@ -27,19 +27,19 @@ func NewCT_PrintSettings() *CT_PrintSettings {
 func (m *CT_PrintSettings) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.HeaderFooter != nil {
-		seheaderFooter := xml.StartElement{Name: xml.Name{Local: "headerFooter"}}
+		seheaderFooter := xml.StartElement{Name: xml.Name{Local: "c:headerFooter"}}
 		e.EncodeElement(m.HeaderFooter, seheaderFooter)
 	}
 	if m.PageMargins != nil {
-		sepageMargins := xml.StartElement{Name: xml.Name{Local: "pageMargins"}}
+		sepageMargins := xml.StartElement{Name: xml.Name{Local: "c:pageMargins"}}
 		e.EncodeElement(m.PageMargins, sepageMargins)
 	}
 	if m.PageSetup != nil {
-		sepageSetup := xml.StartElement{Name: xml.Name{Local: "pageSetup"}}
+		sepageSetup := xml.StartElement{Name: xml.Name{Local: "c:pageSetup"}}
 		e.EncodeElement(m.PageSetup, sepageSetup)
 	}
 	if m.LegacyDrawingHF != nil {
-		selegacyDrawingHF := xml.StartElement{Name: xml.Name{Local: "legacyDrawingHF"}}
+		selegacyDrawingHF := xml.StartElement{Name: xml.Name{Local: "c:legacyDrawingHF"}}
 		e.EncodeElement(m.LegacyDrawingHF, selegacyDrawingHF)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

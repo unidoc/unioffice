@@ -27,19 +27,19 @@ func NewCT_UpDownBars() *CT_UpDownBars {
 func (m *CT_UpDownBars) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.GapWidth != nil {
-		segapWidth := xml.StartElement{Name: xml.Name{Local: "gapWidth"}}
+		segapWidth := xml.StartElement{Name: xml.Name{Local: "c:gapWidth"}}
 		e.EncodeElement(m.GapWidth, segapWidth)
 	}
 	if m.UpBars != nil {
-		seupBars := xml.StartElement{Name: xml.Name{Local: "upBars"}}
+		seupBars := xml.StartElement{Name: xml.Name{Local: "c:upBars"}}
 		e.EncodeElement(m.UpBars, seupBars)
 	}
 	if m.DownBars != nil {
-		sedownBars := xml.StartElement{Name: xml.Name{Local: "downBars"}}
+		sedownBars := xml.StartElement{Name: xml.Name{Local: "c:downBars"}}
 		e.EncodeElement(m.DownBars, sedownBars)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

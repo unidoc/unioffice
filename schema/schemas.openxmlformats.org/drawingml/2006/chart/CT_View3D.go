@@ -30,31 +30,31 @@ func NewCT_View3D() *CT_View3D {
 func (m *CT_View3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.RotX != nil {
-		serotX := xml.StartElement{Name: xml.Name{Local: "rotX"}}
+		serotX := xml.StartElement{Name: xml.Name{Local: "c:rotX"}}
 		e.EncodeElement(m.RotX, serotX)
 	}
 	if m.HPercent != nil {
-		sehPercent := xml.StartElement{Name: xml.Name{Local: "hPercent"}}
+		sehPercent := xml.StartElement{Name: xml.Name{Local: "c:hPercent"}}
 		e.EncodeElement(m.HPercent, sehPercent)
 	}
 	if m.RotY != nil {
-		serotY := xml.StartElement{Name: xml.Name{Local: "rotY"}}
+		serotY := xml.StartElement{Name: xml.Name{Local: "c:rotY"}}
 		e.EncodeElement(m.RotY, serotY)
 	}
 	if m.DepthPercent != nil {
-		sedepthPercent := xml.StartElement{Name: xml.Name{Local: "depthPercent"}}
+		sedepthPercent := xml.StartElement{Name: xml.Name{Local: "c:depthPercent"}}
 		e.EncodeElement(m.DepthPercent, sedepthPercent)
 	}
 	if m.RAngAx != nil {
-		serAngAx := xml.StartElement{Name: xml.Name{Local: "rAngAx"}}
+		serAngAx := xml.StartElement{Name: xml.Name{Local: "c:rAngAx"}}
 		e.EncodeElement(m.RAngAx, serAngAx)
 	}
 	if m.Perspective != nil {
-		seperspective := xml.StartElement{Name: xml.Name{Local: "perspective"}}
+		seperspective := xml.StartElement{Name: xml.Name{Local: "c:perspective"}}
 		e.EncodeElement(m.Perspective, seperspective)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

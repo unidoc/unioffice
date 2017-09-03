@@ -32,31 +32,31 @@ func NewCT_DTable() *CT_DTable {
 func (m *CT_DTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.ShowHorzBorder != nil {
-		seshowHorzBorder := xml.StartElement{Name: xml.Name{Local: "showHorzBorder"}}
+		seshowHorzBorder := xml.StartElement{Name: xml.Name{Local: "c:showHorzBorder"}}
 		e.EncodeElement(m.ShowHorzBorder, seshowHorzBorder)
 	}
 	if m.ShowVertBorder != nil {
-		seshowVertBorder := xml.StartElement{Name: xml.Name{Local: "showVertBorder"}}
+		seshowVertBorder := xml.StartElement{Name: xml.Name{Local: "c:showVertBorder"}}
 		e.EncodeElement(m.ShowVertBorder, seshowVertBorder)
 	}
 	if m.ShowOutline != nil {
-		seshowOutline := xml.StartElement{Name: xml.Name{Local: "showOutline"}}
+		seshowOutline := xml.StartElement{Name: xml.Name{Local: "c:showOutline"}}
 		e.EncodeElement(m.ShowOutline, seshowOutline)
 	}
 	if m.ShowKeys != nil {
-		seshowKeys := xml.StartElement{Name: xml.Name{Local: "showKeys"}}
+		seshowKeys := xml.StartElement{Name: xml.Name{Local: "c:showKeys"}}
 		e.EncodeElement(m.ShowKeys, seshowKeys)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.TxPr != nil {
-		setxPr := xml.StartElement{Name: xml.Name{Local: "txPr"}}
+		setxPr := xml.StartElement{Name: xml.Name{Local: "c:txPr"}}
 		e.EncodeElement(m.TxPr, setxPr)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

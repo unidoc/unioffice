@@ -25,7 +25,7 @@ func NewEG_LegendEntryData() *EG_LegendEntryData {
 
 func (m *EG_LegendEntryData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.TxPr != nil {
-		setxPr := xml.StartElement{Name: xml.Name{Local: "txPr"}}
+		setxPr := xml.StartElement{Name: xml.Name{Local: "c:txPr"}}
 		e.EncodeElement(m.TxPr, setxPr)
 	}
 	return nil

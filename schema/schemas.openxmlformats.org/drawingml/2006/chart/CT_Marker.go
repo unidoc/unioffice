@@ -29,19 +29,19 @@ func NewCT_Marker() *CT_Marker {
 func (m *CT_Marker) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Symbol != nil {
-		sesymbol := xml.StartElement{Name: xml.Name{Local: "symbol"}}
+		sesymbol := xml.StartElement{Name: xml.Name{Local: "c:symbol"}}
 		e.EncodeElement(m.Symbol, sesymbol)
 	}
 	if m.Size != nil {
-		sesize := xml.StartElement{Name: xml.Name{Local: "size"}}
+		sesize := xml.StartElement{Name: xml.Name{Local: "c:size"}}
 		e.EncodeElement(m.Size, sesize)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

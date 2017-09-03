@@ -27,15 +27,15 @@ func NewCT_StrData() *CT_StrData {
 func (m *CT_StrData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.PtCount != nil {
-		septCount := xml.StartElement{Name: xml.Name{Local: "ptCount"}}
+		septCount := xml.StartElement{Name: xml.Name{Local: "c:ptCount"}}
 		e.EncodeElement(m.PtCount, septCount)
 	}
 	if m.Pt != nil {
-		sept := xml.StartElement{Name: xml.Name{Local: "pt"}}
+		sept := xml.StartElement{Name: xml.Name{Local: "c:pt"}}
 		e.EncodeElement(m.Pt, sept)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

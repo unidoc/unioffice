@@ -27,14 +27,14 @@ func NewCT_DLbls() *CT_DLbls {
 func (m *CT_DLbls) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.DLbl != nil {
-		sedLbl := xml.StartElement{Name: xml.Name{Local: "dLbl"}}
+		sedLbl := xml.StartElement{Name: xml.Name{Local: "c:dLbl"}}
 		e.EncodeElement(m.DLbl, sedLbl)
 	}
 	if m.Choice != nil {
 		m.Choice.MarshalXML(e, start)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

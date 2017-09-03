@@ -39,67 +39,67 @@ func NewCT_PlotAreaChoice() *CT_PlotAreaChoice {
 
 func (m *CT_PlotAreaChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.AreaChart != nil {
-		seareaChart := xml.StartElement{Name: xml.Name{Local: "areaChart"}}
+		seareaChart := xml.StartElement{Name: xml.Name{Local: "c:areaChart"}}
 		e.EncodeElement(m.AreaChart, seareaChart)
 	}
 	if m.Area3DChart != nil {
-		searea3DChart := xml.StartElement{Name: xml.Name{Local: "area3DChart"}}
+		searea3DChart := xml.StartElement{Name: xml.Name{Local: "c:area3DChart"}}
 		e.EncodeElement(m.Area3DChart, searea3DChart)
 	}
 	if m.LineChart != nil {
-		selineChart := xml.StartElement{Name: xml.Name{Local: "lineChart"}}
+		selineChart := xml.StartElement{Name: xml.Name{Local: "c:lineChart"}}
 		e.EncodeElement(m.LineChart, selineChart)
 	}
 	if m.Line3DChart != nil {
-		seline3DChart := xml.StartElement{Name: xml.Name{Local: "line3DChart"}}
+		seline3DChart := xml.StartElement{Name: xml.Name{Local: "c:line3DChart"}}
 		e.EncodeElement(m.Line3DChart, seline3DChart)
 	}
 	if m.StockChart != nil {
-		sestockChart := xml.StartElement{Name: xml.Name{Local: "stockChart"}}
+		sestockChart := xml.StartElement{Name: xml.Name{Local: "c:stockChart"}}
 		e.EncodeElement(m.StockChart, sestockChart)
 	}
 	if m.RadarChart != nil {
-		seradarChart := xml.StartElement{Name: xml.Name{Local: "radarChart"}}
+		seradarChart := xml.StartElement{Name: xml.Name{Local: "c:radarChart"}}
 		e.EncodeElement(m.RadarChart, seradarChart)
 	}
 	if m.ScatterChart != nil {
-		sescatterChart := xml.StartElement{Name: xml.Name{Local: "scatterChart"}}
+		sescatterChart := xml.StartElement{Name: xml.Name{Local: "c:scatterChart"}}
 		e.EncodeElement(m.ScatterChart, sescatterChart)
 	}
 	if m.PieChart != nil {
-		sepieChart := xml.StartElement{Name: xml.Name{Local: "pieChart"}}
+		sepieChart := xml.StartElement{Name: xml.Name{Local: "c:pieChart"}}
 		e.EncodeElement(m.PieChart, sepieChart)
 	}
 	if m.Pie3DChart != nil {
-		sepie3DChart := xml.StartElement{Name: xml.Name{Local: "pie3DChart"}}
+		sepie3DChart := xml.StartElement{Name: xml.Name{Local: "c:pie3DChart"}}
 		e.EncodeElement(m.Pie3DChart, sepie3DChart)
 	}
 	if m.DoughnutChart != nil {
-		sedoughnutChart := xml.StartElement{Name: xml.Name{Local: "doughnutChart"}}
+		sedoughnutChart := xml.StartElement{Name: xml.Name{Local: "c:doughnutChart"}}
 		e.EncodeElement(m.DoughnutChart, sedoughnutChart)
 	}
 	if m.BarChart != nil {
-		sebarChart := xml.StartElement{Name: xml.Name{Local: "barChart"}}
+		sebarChart := xml.StartElement{Name: xml.Name{Local: "c:barChart"}}
 		e.EncodeElement(m.BarChart, sebarChart)
 	}
 	if m.Bar3DChart != nil {
-		sebar3DChart := xml.StartElement{Name: xml.Name{Local: "bar3DChart"}}
+		sebar3DChart := xml.StartElement{Name: xml.Name{Local: "c:bar3DChart"}}
 		e.EncodeElement(m.Bar3DChart, sebar3DChart)
 	}
 	if m.OfPieChart != nil {
-		seofPieChart := xml.StartElement{Name: xml.Name{Local: "ofPieChart"}}
+		seofPieChart := xml.StartElement{Name: xml.Name{Local: "c:ofPieChart"}}
 		e.EncodeElement(m.OfPieChart, seofPieChart)
 	}
 	if m.SurfaceChart != nil {
-		sesurfaceChart := xml.StartElement{Name: xml.Name{Local: "surfaceChart"}}
+		sesurfaceChart := xml.StartElement{Name: xml.Name{Local: "c:surfaceChart"}}
 		e.EncodeElement(m.SurfaceChart, sesurfaceChart)
 	}
 	if m.Surface3DChart != nil {
-		sesurface3DChart := xml.StartElement{Name: xml.Name{Local: "surface3DChart"}}
+		sesurface3DChart := xml.StartElement{Name: xml.Name{Local: "c:surface3DChart"}}
 		e.EncodeElement(m.Surface3DChart, sesurface3DChart)
 	}
 	if m.BubbleChart != nil {
-		sebubbleChart := xml.StartElement{Name: xml.Name{Local: "bubbleChart"}}
+		sebubbleChart := xml.StartElement{Name: xml.Name{Local: "c:bubbleChart"}}
 		e.EncodeElement(m.BubbleChart, sebubbleChart)
 	}
 	return nil

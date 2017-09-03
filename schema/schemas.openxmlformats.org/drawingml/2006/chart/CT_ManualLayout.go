@@ -33,43 +33,43 @@ func NewCT_ManualLayout() *CT_ManualLayout {
 func (m *CT_ManualLayout) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.LayoutTarget != nil {
-		selayoutTarget := xml.StartElement{Name: xml.Name{Local: "layoutTarget"}}
+		selayoutTarget := xml.StartElement{Name: xml.Name{Local: "c:layoutTarget"}}
 		e.EncodeElement(m.LayoutTarget, selayoutTarget)
 	}
 	if m.XMode != nil {
-		sexMode := xml.StartElement{Name: xml.Name{Local: "xMode"}}
+		sexMode := xml.StartElement{Name: xml.Name{Local: "c:xMode"}}
 		e.EncodeElement(m.XMode, sexMode)
 	}
 	if m.YMode != nil {
-		seyMode := xml.StartElement{Name: xml.Name{Local: "yMode"}}
+		seyMode := xml.StartElement{Name: xml.Name{Local: "c:yMode"}}
 		e.EncodeElement(m.YMode, seyMode)
 	}
 	if m.WMode != nil {
-		sewMode := xml.StartElement{Name: xml.Name{Local: "wMode"}}
+		sewMode := xml.StartElement{Name: xml.Name{Local: "c:wMode"}}
 		e.EncodeElement(m.WMode, sewMode)
 	}
 	if m.HMode != nil {
-		sehMode := xml.StartElement{Name: xml.Name{Local: "hMode"}}
+		sehMode := xml.StartElement{Name: xml.Name{Local: "c:hMode"}}
 		e.EncodeElement(m.HMode, sehMode)
 	}
 	if m.X != nil {
-		sex := xml.StartElement{Name: xml.Name{Local: "x"}}
+		sex := xml.StartElement{Name: xml.Name{Local: "c:x"}}
 		e.EncodeElement(m.X, sex)
 	}
 	if m.Y != nil {
-		sey := xml.StartElement{Name: xml.Name{Local: "y"}}
+		sey := xml.StartElement{Name: xml.Name{Local: "c:y"}}
 		e.EncodeElement(m.Y, sey)
 	}
 	if m.W != nil {
-		sew := xml.StartElement{Name: xml.Name{Local: "w"}}
+		sew := xml.StartElement{Name: xml.Name{Local: "c:w"}}
 		e.EncodeElement(m.W, sew)
 	}
 	if m.H != nil {
-		seh := xml.StartElement{Name: xml.Name{Local: "h"}}
+		seh := xml.StartElement{Name: xml.Name{Local: "c:h"}}
 		e.EncodeElement(m.H, seh)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

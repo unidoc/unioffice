@@ -25,7 +25,7 @@ func NewCT_PivotFmts() *CT_PivotFmts {
 func (m *CT_PivotFmts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.PivotFmt != nil {
-		sepivotFmt := xml.StartElement{Name: xml.Name{Local: "pivotFmt"}}
+		sepivotFmt := xml.StartElement{Name: xml.Name{Local: "c:pivotFmt"}}
 		e.EncodeElement(m.PivotFmt, sepivotFmt)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

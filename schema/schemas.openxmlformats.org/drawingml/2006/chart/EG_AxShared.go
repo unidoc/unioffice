@@ -42,53 +42,53 @@ func NewEG_AxShared() *EG_AxShared {
 }
 
 func (m *EG_AxShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	seaxId := xml.StartElement{Name: xml.Name{Local: "axId"}}
+	seaxId := xml.StartElement{Name: xml.Name{Local: "c:axId"}}
 	e.EncodeElement(m.AxId, seaxId)
-	sescaling := xml.StartElement{Name: xml.Name{Local: "scaling"}}
+	sescaling := xml.StartElement{Name: xml.Name{Local: "c:scaling"}}
 	e.EncodeElement(m.Scaling, sescaling)
 	if m.Delete != nil {
-		sedelete := xml.StartElement{Name: xml.Name{Local: "delete"}}
+		sedelete := xml.StartElement{Name: xml.Name{Local: "c:delete"}}
 		e.EncodeElement(m.Delete, sedelete)
 	}
-	seaxPos := xml.StartElement{Name: xml.Name{Local: "axPos"}}
+	seaxPos := xml.StartElement{Name: xml.Name{Local: "c:axPos"}}
 	e.EncodeElement(m.AxPos, seaxPos)
 	if m.MajorGridlines != nil {
-		semajorGridlines := xml.StartElement{Name: xml.Name{Local: "majorGridlines"}}
+		semajorGridlines := xml.StartElement{Name: xml.Name{Local: "c:majorGridlines"}}
 		e.EncodeElement(m.MajorGridlines, semajorGridlines)
 	}
 	if m.MinorGridlines != nil {
-		seminorGridlines := xml.StartElement{Name: xml.Name{Local: "minorGridlines"}}
+		seminorGridlines := xml.StartElement{Name: xml.Name{Local: "c:minorGridlines"}}
 		e.EncodeElement(m.MinorGridlines, seminorGridlines)
 	}
 	if m.Title != nil {
-		setitle := xml.StartElement{Name: xml.Name{Local: "title"}}
+		setitle := xml.StartElement{Name: xml.Name{Local: "c:title"}}
 		e.EncodeElement(m.Title, setitle)
 	}
 	if m.NumFmt != nil {
-		senumFmt := xml.StartElement{Name: xml.Name{Local: "numFmt"}}
+		senumFmt := xml.StartElement{Name: xml.Name{Local: "c:numFmt"}}
 		e.EncodeElement(m.NumFmt, senumFmt)
 	}
 	if m.MajorTickMark != nil {
-		semajorTickMark := xml.StartElement{Name: xml.Name{Local: "majorTickMark"}}
+		semajorTickMark := xml.StartElement{Name: xml.Name{Local: "c:majorTickMark"}}
 		e.EncodeElement(m.MajorTickMark, semajorTickMark)
 	}
 	if m.MinorTickMark != nil {
-		seminorTickMark := xml.StartElement{Name: xml.Name{Local: "minorTickMark"}}
+		seminorTickMark := xml.StartElement{Name: xml.Name{Local: "c:minorTickMark"}}
 		e.EncodeElement(m.MinorTickMark, seminorTickMark)
 	}
 	if m.TickLblPos != nil {
-		setickLblPos := xml.StartElement{Name: xml.Name{Local: "tickLblPos"}}
+		setickLblPos := xml.StartElement{Name: xml.Name{Local: "c:tickLblPos"}}
 		e.EncodeElement(m.TickLblPos, setickLblPos)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.TxPr != nil {
-		setxPr := xml.StartElement{Name: xml.Name{Local: "txPr"}}
+		setxPr := xml.StartElement{Name: xml.Name{Local: "c:txPr"}}
 		e.EncodeElement(m.TxPr, setxPr)
 	}
-	secrossAx := xml.StartElement{Name: xml.Name{Local: "crossAx"}}
+	secrossAx := xml.StartElement{Name: xml.Name{Local: "c:crossAx"}}
 	e.EncodeElement(m.CrossAx, secrossAx)
 	if m.Choice != nil {
 		m.Choice.MarshalXML(e, start)

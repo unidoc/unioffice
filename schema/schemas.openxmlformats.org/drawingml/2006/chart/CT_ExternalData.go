@@ -28,7 +28,7 @@ func (m *CT_ExternalData) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	e.EncodeToken(start)
 	if m.AutoUpdate != nil {
-		seautoUpdate := xml.StartElement{Name: xml.Name{Local: "autoUpdate"}}
+		seautoUpdate := xml.StartElement{Name: xml.Name{Local: "c:autoUpdate"}}
 		e.EncodeElement(m.AutoUpdate, seautoUpdate)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -26,15 +26,15 @@ func NewEG_SurfaceChartShared() *EG_SurfaceChartShared {
 
 func (m *EG_SurfaceChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.Wireframe != nil {
-		sewireframe := xml.StartElement{Name: xml.Name{Local: "wireframe"}}
+		sewireframe := xml.StartElement{Name: xml.Name{Local: "c:wireframe"}}
 		e.EncodeElement(m.Wireframe, sewireframe)
 	}
 	if m.Ser != nil {
-		seser := xml.StartElement{Name: xml.Name{Local: "ser"}}
+		seser := xml.StartElement{Name: xml.Name{Local: "c:ser"}}
 		e.EncodeElement(m.Ser, seser)
 	}
 	if m.BandFmts != nil {
-		sebandFmts := xml.StartElement{Name: xml.Name{Local: "bandFmts"}}
+		sebandFmts := xml.StartElement{Name: xml.Name{Local: "c:bandFmts"}}
 		e.EncodeElement(m.BandFmts, sebandFmts)
 	}
 	return nil

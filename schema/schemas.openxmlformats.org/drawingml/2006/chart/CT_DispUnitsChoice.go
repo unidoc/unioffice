@@ -24,11 +24,11 @@ func NewCT_DispUnitsChoice() *CT_DispUnitsChoice {
 
 func (m *CT_DispUnitsChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.CustUnit != nil {
-		secustUnit := xml.StartElement{Name: xml.Name{Local: "custUnit"}}
+		secustUnit := xml.StartElement{Name: xml.Name{Local: "c:custUnit"}}
 		e.EncodeElement(m.CustUnit, secustUnit)
 	}
 	if m.BuiltInUnit != nil {
-		sebuiltInUnit := xml.StartElement{Name: xml.Name{Local: "builtInUnit"}}
+		sebuiltInUnit := xml.StartElement{Name: xml.Name{Local: "c:builtInUnit"}}
 		e.EncodeElement(m.BuiltInUnit, sebuiltInUnit)
 	}
 	return nil

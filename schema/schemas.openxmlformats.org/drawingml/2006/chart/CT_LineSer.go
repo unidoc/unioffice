@@ -40,52 +40,52 @@ func NewCT_LineSer() *CT_LineSer {
 
 func (m *CT_LineSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	seidx := xml.StartElement{Name: xml.Name{Local: "idx"}}
+	seidx := xml.StartElement{Name: xml.Name{Local: "c:idx"}}
 	e.EncodeElement(m.Idx, seidx)
-	seorder := xml.StartElement{Name: xml.Name{Local: "order"}}
+	seorder := xml.StartElement{Name: xml.Name{Local: "c:order"}}
 	e.EncodeElement(m.Order, seorder)
 	if m.Tx != nil {
-		setx := xml.StartElement{Name: xml.Name{Local: "tx"}}
+		setx := xml.StartElement{Name: xml.Name{Local: "c:tx"}}
 		e.EncodeElement(m.Tx, setx)
 	}
 	if m.SpPr != nil {
-		sespPr := xml.StartElement{Name: xml.Name{Local: "spPr"}}
+		sespPr := xml.StartElement{Name: xml.Name{Local: "c:spPr"}}
 		e.EncodeElement(m.SpPr, sespPr)
 	}
 	if m.Marker != nil {
-		semarker := xml.StartElement{Name: xml.Name{Local: "marker"}}
+		semarker := xml.StartElement{Name: xml.Name{Local: "c:marker"}}
 		e.EncodeElement(m.Marker, semarker)
 	}
 	if m.DPt != nil {
-		sedPt := xml.StartElement{Name: xml.Name{Local: "dPt"}}
+		sedPt := xml.StartElement{Name: xml.Name{Local: "c:dPt"}}
 		e.EncodeElement(m.DPt, sedPt)
 	}
 	if m.DLbls != nil {
-		sedLbls := xml.StartElement{Name: xml.Name{Local: "dLbls"}}
+		sedLbls := xml.StartElement{Name: xml.Name{Local: "c:dLbls"}}
 		e.EncodeElement(m.DLbls, sedLbls)
 	}
 	if m.Trendline != nil {
-		setrendline := xml.StartElement{Name: xml.Name{Local: "trendline"}}
+		setrendline := xml.StartElement{Name: xml.Name{Local: "c:trendline"}}
 		e.EncodeElement(m.Trendline, setrendline)
 	}
 	if m.ErrBars != nil {
-		seerrBars := xml.StartElement{Name: xml.Name{Local: "errBars"}}
+		seerrBars := xml.StartElement{Name: xml.Name{Local: "c:errBars"}}
 		e.EncodeElement(m.ErrBars, seerrBars)
 	}
 	if m.Cat != nil {
-		secat := xml.StartElement{Name: xml.Name{Local: "cat"}}
+		secat := xml.StartElement{Name: xml.Name{Local: "c:cat"}}
 		e.EncodeElement(m.Cat, secat)
 	}
 	if m.Val != nil {
-		seval := xml.StartElement{Name: xml.Name{Local: "val"}}
+		seval := xml.StartElement{Name: xml.Name{Local: "c:val"}}
 		e.EncodeElement(m.Val, seval)
 	}
 	if m.Smooth != nil {
-		sesmooth := xml.StartElement{Name: xml.Name{Local: "smooth"}}
+		sesmooth := xml.StartElement{Name: xml.Name{Local: "c:smooth"}}
 		e.EncodeElement(m.Smooth, sesmooth)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
