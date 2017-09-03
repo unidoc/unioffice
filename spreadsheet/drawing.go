@@ -44,21 +44,46 @@ func (d Drawing) AddChart() Chart {
 	}
 
 	// maybe use a one cell anchor?
-	tca := sd.NewCT_TwoCellAnchor()
-	tca.EditAsAttr = sd.ST_EditAsOneCell
-	tca.From.Col = 5
-	tca.From.Row = 0
-	tca.To.Col = 10
-	tca.To.Row = 20
+	d.x.TwoCellAnchor = sd.NewCT_TwoCellAnchor()
+	d.x.TwoCellAnchor.EditAsAttr = sd.ST_EditAsOneCell
 
-	d.x.EG_Anchor = []*sd.EG_Anchor{&sd.EG_Anchor{TwoCellAnchor: tca}}
+	// provide a default size so its visible, if from/to are both 0,0 then the
+	// chart won't show up.
+	d.x.TwoCellAnchor.From.Col = 5
+	d.x.TwoCellAnchor.From.Row = 0
+	d.x.TwoCellAnchor.To.Col = 10
+	d.x.TwoCellAnchor.To.Row = 20
 
-	tca.Choice = &sd.EG_ObjectChoicesChoice{}
-	tca.Choice.GraphicFrame = sd.NewCT_GraphicalObjectFrame()
-	tca.Choice.GraphicFrame.Graphic = dml.NewGraphic()
-	tca.Choice.GraphicFrame.Graphic.GraphicData.UriAttr = "http://schemas.openxmlformats.org/drawingml/2006/chart"
+	d.x.TwoCellAnchor.Choice = &sd.EG_ObjectChoicesChoice{}
+	d.x.TwoCellAnchor.Choice.GraphicFrame = sd.NewCT_GraphicalObjectFrame()
+	d.x.TwoCellAnchor.Choice.GraphicFrame.Graphic = dml.NewGraphic()
+	d.x.TwoCellAnchor.Choice.GraphicFrame.Graphic.GraphicData.UriAttr = "http://schemas.openxmlformats.org/drawingml/2006/chart"
 	c := c.NewChart()
 	c.IdAttr = chartID
-	tca.Choice.GraphicFrame.Graphic.GraphicData.Any = []gooxml.Any{c}
+
+	d.x.TwoCellAnchor.Choice.GraphicFrame.Graphic.GraphicData.Any = []gooxml.Any{c}
 	return Chart{chart}
+}
+
+// TopLeft allows manipulating the top left position of the drawing.
+func (d Drawing) TopLeft() CellMarker {
+	if d.x.TwoCellAnchor != nil {
+		return CellMarker{d.x.TwoCellAnchor.From}
+	}
+	if d.x.OneCellAnchor != nil {
+		return CellMarker{d.x.OneCellAnchor.From}
+	}
+
+	// this will crash if used...
+	return CellMarker{}
+}
+
+// BottomRight allows manipulating the bottom right position of the drawing.
+func (d Drawing) BottomRight() CellMarker {
+	if d.x.TwoCellAnchor != nil {
+		return CellMarker{d.x.TwoCellAnchor.To}
+	}
+
+	// this will crash if used...
+	return CellMarker{}
 }
