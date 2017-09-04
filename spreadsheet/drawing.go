@@ -26,6 +26,19 @@ func (d Drawing) X() *sd.WsDr {
 	return d.x
 }
 
+func (d Drawing) InitializeDefault() {
+	d.x.TwoCellAnchor = sd.NewCT_TwoCellAnchor()
+	d.x.TwoCellAnchor.EditAsAttr = sd.ST_EditAsOneCell
+
+	// provide a default size so its visible, if from/to are both 0,0 then the
+	// chart won't show up.
+	d.x.TwoCellAnchor.From.Col = 5
+	d.x.TwoCellAnchor.From.Row = 0
+	d.x.TwoCellAnchor.From.ColOff.ST_CoordinateUnqualified = gooxml.Int64(0)
+	d.x.TwoCellAnchor.To.Col = 10
+	d.x.TwoCellAnchor.To.Row = 20
+	d.x.TwoCellAnchor.To.ColOff.ST_CoordinateUnqualified = gooxml.Int64(0)
+}
 func (d Drawing) AddChart() Chart {
 	chart := crt.NewChartSpace()
 	d.wb.charts = append(d.wb.charts, chart)
@@ -47,17 +60,8 @@ func (d Drawing) AddChart() Chart {
 
 	// maybe use a one cell anchor?
 	if d.x.TwoCellAnchor == nil {
-		d.x.TwoCellAnchor = sd.NewCT_TwoCellAnchor()
+		d.InitializeDefault()
 	}
-	d.x.TwoCellAnchor.EditAsAttr = sd.ST_EditAsOneCell
-
-	// provide a default size so its visible, if from/to are both 0,0 then the
-	// chart won't show up.
-	d.x.TwoCellAnchor.From.Col = 5
-	d.x.TwoCellAnchor.From.Row = 0
-	d.x.TwoCellAnchor.To.Col = 10
-	d.x.TwoCellAnchor.To.Row = 20
-
 	d.x.TwoCellAnchor.Choice = &sd.EG_ObjectChoicesChoice{}
 	d.x.TwoCellAnchor.Choice.GraphicFrame = sd.NewCT_GraphicalObjectFrame()
 	d.x.TwoCellAnchor.Choice.GraphicFrame.Graphic = dml.NewGraphic()
