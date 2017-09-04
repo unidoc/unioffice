@@ -43,7 +43,7 @@ func (c Chart) AddLineChart() LineChart {
 	// TODO: needed?
 	chc.LineChart.Marker = crt.NewCT_Boolean()
 	chc.LineChart.Marker.ValAttr = gooxml.Bool(true)
-	return LineChart{chc.LineChart}
+	return LineChart{x: chc.LineChart}
 }
 
 // AddBarChart adds a new bar chart to a chart.
@@ -54,7 +54,9 @@ func (c Chart) AddBarChart() BarChart {
 	chc.BarChart.Grouping = crt.NewCT_BarGrouping()
 	chc.BarChart.Grouping.ValAttr = crt.ST_BarGroupingStandard
 
-	return BarChart{chc.BarChart}
+	b := BarChart{x: chc.BarChart}
+	b.InitializeDefaults()
+	return b
 }
 
 func (c Chart) Properties() drawing.ShapeProperties {
