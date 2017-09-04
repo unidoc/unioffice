@@ -303,5 +303,7 @@ func (wb *Workbook) AddDrawing() Drawing {
 	fn := gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.DrawingType, len(wb.drawings))
 	wb.ContentTypes.AddOverride(fn, gooxml.DrawingContentType)
 	wb.drawingRels = append(wb.drawingRels, common.NewRelationships())
-	return Drawing{wb, drawing}
+	d := Drawing{wb, drawing}
+	d.InitializeDefault()
+	return d
 }
