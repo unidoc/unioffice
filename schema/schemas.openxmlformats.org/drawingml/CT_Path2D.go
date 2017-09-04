@@ -51,11 +51,11 @@ func (m *CT_Path2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.StrokeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "stroke"},
-			Value: fmt.Sprintf("%v", *m.StrokeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.StrokeAttr))})
 	}
 	if m.ExtrusionOkAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "extrusionOk"},
-			Value: fmt.Sprintf("%v", *m.ExtrusionOkAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ExtrusionOkAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Close != nil {

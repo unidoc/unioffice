@@ -85,19 +85,19 @@ func (m *CT_DataValidation) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.AllowBlankAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "allowBlank"},
-			Value: fmt.Sprintf("%v", *m.AllowBlankAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AllowBlankAttr))})
 	}
 	if m.ShowDropDownAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showDropDown"},
-			Value: fmt.Sprintf("%v", *m.ShowDropDownAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowDropDownAttr))})
 	}
 	if m.ShowInputMessageAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showInputMessage"},
-			Value: fmt.Sprintf("%v", *m.ShowInputMessageAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowInputMessageAttr))})
 	}
 	if m.ShowErrorMessageAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showErrorMessage"},
-			Value: fmt.Sprintf("%v", *m.ShowErrorMessageAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowErrorMessageAttr))})
 	}
 	if m.ErrorTitleAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "errorTitle"},

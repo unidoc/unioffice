@@ -77,35 +77,35 @@ func (m *CT_Xf) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.QuotePrefixAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "quotePrefix"},
-			Value: fmt.Sprintf("%v", *m.QuotePrefixAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.QuotePrefixAttr))})
 	}
 	if m.PivotButtonAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "pivotButton"},
-			Value: fmt.Sprintf("%v", *m.PivotButtonAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PivotButtonAttr))})
 	}
 	if m.ApplyNumberFormatAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyNumberFormat"},
-			Value: fmt.Sprintf("%v", *m.ApplyNumberFormatAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyNumberFormatAttr))})
 	}
 	if m.ApplyFontAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyFont"},
-			Value: fmt.Sprintf("%v", *m.ApplyFontAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyFontAttr))})
 	}
 	if m.ApplyFillAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyFill"},
-			Value: fmt.Sprintf("%v", *m.ApplyFillAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyFillAttr))})
 	}
 	if m.ApplyBorderAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyBorder"},
-			Value: fmt.Sprintf("%v", *m.ApplyBorderAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyBorderAttr))})
 	}
 	if m.ApplyAlignmentAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyAlignment"},
-			Value: fmt.Sprintf("%v", *m.ApplyAlignmentAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyAlignmentAttr))})
 	}
 	if m.ApplyProtectionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyProtection"},
-			Value: fmt.Sprintf("%v", *m.ApplyProtectionAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyProtectionAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Alignment != nil {

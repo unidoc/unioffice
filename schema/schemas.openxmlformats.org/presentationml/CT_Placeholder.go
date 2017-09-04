@@ -61,7 +61,7 @@ func (m *CT_Placeholder) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.HasCustomPromptAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hasCustomPrompt"},
-			Value: fmt.Sprintf("%v", *m.HasCustomPromptAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HasCustomPromptAttr))})
 	}
 	e.EncodeToken(start)
 	if m.ExtLst != nil {

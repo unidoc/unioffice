@@ -60,7 +60,7 @@ func (m *CT_CellAlignment) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	}
 	if m.WrapTextAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "wrapText"},
-			Value: fmt.Sprintf("%v", *m.WrapTextAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.WrapTextAttr))})
 	}
 	if m.IndentAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "indent"},
@@ -72,11 +72,11 @@ func (m *CT_CellAlignment) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	}
 	if m.JustifyLastLineAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "justifyLastLine"},
-			Value: fmt.Sprintf("%v", *m.JustifyLastLineAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.JustifyLastLineAttr))})
 	}
 	if m.ShrinkToFitAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "shrinkToFit"},
-			Value: fmt.Sprintf("%v", *m.ShrinkToFitAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShrinkToFitAttr))})
 	}
 	if m.ReadingOrderAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "readingOrder"},

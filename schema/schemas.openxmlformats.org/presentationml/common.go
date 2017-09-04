@@ -44,6 +44,12 @@ func ParseUnionST_PositivePercentage(s string) (drawingml.ST_PositivePercentage,
 func ParseUnionST_TransitionEightDirectionType(s string) (ST_TransitionEightDirectionType, error) {
 	return ST_TransitionEightDirectionType{}, nil
 }
+func b2i(b bool) uint8 {
+	if b {
+		return 1
+	}
+	return 0
+}
 
 type ST_TransitionSideDirectionType byte
 

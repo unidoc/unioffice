@@ -58,11 +58,11 @@ func (m *CT_ChartsheetProtection) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.ContentAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "content"},
-			Value: fmt.Sprintf("%v", *m.ContentAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ContentAttr))})
 	}
 	if m.ObjectsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "objects"},
-			Value: fmt.Sprintf("%v", *m.ObjectsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ObjectsAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -44,7 +44,7 @@ func (m *CT_DataBar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.ShowValueAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showValue"},
-			Value: fmt.Sprintf("%v", *m.ShowValueAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowValueAttr))})
 	}
 	e.EncodeToken(start)
 	secfvo := xml.StartElement{Name: xml.Name{Local: "x:cfvo"}}

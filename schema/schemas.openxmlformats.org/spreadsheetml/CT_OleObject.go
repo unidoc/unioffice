@@ -62,7 +62,7 @@ func (m *CT_OleObject) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.AutoLoadAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoLoad"},
-			Value: fmt.Sprintf("%v", *m.AutoLoadAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoLoadAttr))})
 	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "shapeId"},
 		Value: fmt.Sprintf("%v", m.ShapeIdAttr)})

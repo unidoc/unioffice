@@ -53,11 +53,11 @@ func (m *CT_CellStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.HiddenAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hidden"},
-			Value: fmt.Sprintf("%v", *m.HiddenAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HiddenAttr))})
 	}
 	if m.CustomBuiltinAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "customBuiltin"},
-			Value: fmt.Sprintf("%v", *m.CustomBuiltinAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CustomBuiltinAttr))})
 	}
 	e.EncodeToken(start)
 	if m.ExtLst != nil {

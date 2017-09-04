@@ -42,7 +42,7 @@ func (m *CT_TLGraphicalObjectBuild) MarshalXML(e *xml.Encoder, start xml.StartEl
 	}
 	if m.UiExpandAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "uiExpand"},
-			Value: fmt.Sprintf("%v", *m.UiExpandAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UiExpandAttr))})
 	}
 	e.EncodeToken(start)
 	if m.BldAsOne != nil {

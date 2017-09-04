@@ -52,15 +52,15 @@ func (m *CT_Shape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.HideGeomAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hideGeom"},
-			Value: fmt.Sprintf("%v", *m.HideGeomAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HideGeomAttr))})
 	}
 	if m.LkTxEntryAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "lkTxEntry"},
-			Value: fmt.Sprintf("%v", *m.LkTxEntryAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LkTxEntryAttr))})
 	}
 	if m.BlipPhldrAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "blipPhldr"},
-			Value: fmt.Sprintf("%v", *m.BlipPhldrAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BlipPhldrAttr))})
 	}
 	e.EncodeToken(start)
 	if m.AdjLst != nil {

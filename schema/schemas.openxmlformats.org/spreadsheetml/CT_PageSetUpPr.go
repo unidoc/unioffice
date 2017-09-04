@@ -28,11 +28,11 @@ func NewCT_PageSetUpPr() *CT_PageSetUpPr {
 func (m *CT_PageSetUpPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.AutoPageBreaksAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoPageBreaks"},
-			Value: fmt.Sprintf("%v", *m.AutoPageBreaksAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoPageBreaksAttr))})
 	}
 	if m.FitToPageAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fitToPage"},
-			Value: fmt.Sprintf("%v", *m.FitToPageAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FitToPageAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

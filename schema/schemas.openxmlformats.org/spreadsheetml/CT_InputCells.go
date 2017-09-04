@@ -36,11 +36,11 @@ func (m *CT_InputCells) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		Value: fmt.Sprintf("%v", m.RAttr)})
 	if m.DeletedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "deleted"},
-			Value: fmt.Sprintf("%v", *m.DeletedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DeletedAttr))})
 	}
 	if m.UndoneAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "undone"},
-			Value: fmt.Sprintf("%v", *m.UndoneAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UndoneAttr))})
 	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "val"},
 		Value: fmt.Sprintf("%v", m.ValAttr)})

@@ -46,39 +46,39 @@ func (m *CT_IgnoredError) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		Value: fmt.Sprintf("%v", m.SqrefAttr)})
 	if m.EvalErrorAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "evalError"},
-			Value: fmt.Sprintf("%v", *m.EvalErrorAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EvalErrorAttr))})
 	}
 	if m.TwoDigitTextYearAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "twoDigitTextYear"},
-			Value: fmt.Sprintf("%v", *m.TwoDigitTextYearAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.TwoDigitTextYearAttr))})
 	}
 	if m.NumberStoredAsTextAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "numberStoredAsText"},
-			Value: fmt.Sprintf("%v", *m.NumberStoredAsTextAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.NumberStoredAsTextAttr))})
 	}
 	if m.FormulaAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "formula"},
-			Value: fmt.Sprintf("%v", *m.FormulaAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FormulaAttr))})
 	}
 	if m.FormulaRangeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "formulaRange"},
-			Value: fmt.Sprintf("%v", *m.FormulaRangeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FormulaRangeAttr))})
 	}
 	if m.UnlockedFormulaAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "unlockedFormula"},
-			Value: fmt.Sprintf("%v", *m.UnlockedFormulaAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UnlockedFormulaAttr))})
 	}
 	if m.EmptyCellReferenceAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "emptyCellReference"},
-			Value: fmt.Sprintf("%v", *m.EmptyCellReferenceAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EmptyCellReferenceAttr))})
 	}
 	if m.ListDataValidationAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "listDataValidation"},
-			Value: fmt.Sprintf("%v", *m.ListDataValidationAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ListDataValidationAttr))})
 	}
 	if m.CalculatedColumnAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "calculatedColumn"},
-			Value: fmt.Sprintf("%v", *m.CalculatedColumnAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CalculatedColumnAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

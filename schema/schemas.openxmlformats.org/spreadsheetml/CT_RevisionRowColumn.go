@@ -47,7 +47,7 @@ func (m *CT_RevisionRowColumn) MarshalXML(e *xml.Encoder, start xml.StartElement
 		Value: fmt.Sprintf("%v", m.SIdAttr)})
 	if m.EolAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "eol"},
-			Value: fmt.Sprintf("%v", *m.EolAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EolAttr))})
 	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ref"},
 		Value: fmt.Sprintf("%v", m.RefAttr)})
@@ -58,7 +58,7 @@ func (m *CT_RevisionRowColumn) MarshalXML(e *xml.Encoder, start xml.StartElement
 	start.Attr = append(start.Attr, attr)
 	if m.EdgeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "edge"},
-			Value: fmt.Sprintf("%v", *m.EdgeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EdgeAttr))})
 	}
 	if m.RIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rId"},
@@ -66,11 +66,11 @@ func (m *CT_RevisionRowColumn) MarshalXML(e *xml.Encoder, start xml.StartElement
 	}
 	if m.UaAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ua"},
-			Value: fmt.Sprintf("%v", *m.UaAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UaAttr))})
 	}
 	if m.RaAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ra"},
-			Value: fmt.Sprintf("%v", *m.RaAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RaAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Undo != nil {

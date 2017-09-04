@@ -64,27 +64,27 @@ func (m *CT_PivotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.DataOnlyAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dataOnly"},
-			Value: fmt.Sprintf("%v", *m.DataOnlyAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DataOnlyAttr))})
 	}
 	if m.LabelOnlyAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "labelOnly"},
-			Value: fmt.Sprintf("%v", *m.LabelOnlyAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LabelOnlyAttr))})
 	}
 	if m.GrandRowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "grandRow"},
-			Value: fmt.Sprintf("%v", *m.GrandRowAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.GrandRowAttr))})
 	}
 	if m.GrandColAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "grandCol"},
-			Value: fmt.Sprintf("%v", *m.GrandColAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.GrandColAttr))})
 	}
 	if m.CacheIndexAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "cacheIndex"},
-			Value: fmt.Sprintf("%v", *m.CacheIndexAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CacheIndexAttr))})
 	}
 	if m.OutlineAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "outline"},
-			Value: fmt.Sprintf("%v", *m.OutlineAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OutlineAttr))})
 	}
 	if m.OffsetAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "offset"},
@@ -92,7 +92,7 @@ func (m *CT_PivotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.CollapsedLevelsAreSubtotalsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "collapsedLevelsAreSubtotals"},
-			Value: fmt.Sprintf("%v", *m.CollapsedLevelsAreSubtotalsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CollapsedLevelsAreSubtotalsAttr))})
 	}
 	if m.AxisAttr != ST_AxisUnset {
 		attr, err := m.AxisAttr.MarshalXMLAttr(xml.Name{Local: "axis"})

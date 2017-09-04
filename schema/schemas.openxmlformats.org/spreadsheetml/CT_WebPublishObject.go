@@ -50,7 +50,7 @@ func (m *CT_WebPublishObject) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	}
 	if m.AutoRepublishAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoRepublish"},
-			Value: fmt.Sprintf("%v", *m.AutoRepublishAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoRepublishAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

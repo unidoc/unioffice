@@ -32,7 +32,7 @@ func (m *CT_ColorFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.CellColorAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "cellColor"},
-			Value: fmt.Sprintf("%v", *m.CellColorAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CellColorAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

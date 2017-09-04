@@ -87,7 +87,7 @@ func (m *CT_Connection) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.KeepAliveAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "keepAlive"},
-			Value: fmt.Sprintf("%v", *m.KeepAliveAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.KeepAliveAttr))})
 	}
 	if m.IntervalAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "interval"},
@@ -117,31 +117,31 @@ func (m *CT_Connection) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.SavePasswordAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "savePassword"},
-			Value: fmt.Sprintf("%v", *m.SavePasswordAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SavePasswordAttr))})
 	}
 	if m.NewAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "new"},
-			Value: fmt.Sprintf("%v", *m.NewAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.NewAttr))})
 	}
 	if m.DeletedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "deleted"},
-			Value: fmt.Sprintf("%v", *m.DeletedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DeletedAttr))})
 	}
 	if m.OnlyUseConnectionFileAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "onlyUseConnectionFile"},
-			Value: fmt.Sprintf("%v", *m.OnlyUseConnectionFileAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OnlyUseConnectionFileAttr))})
 	}
 	if m.BackgroundAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "background"},
-			Value: fmt.Sprintf("%v", *m.BackgroundAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BackgroundAttr))})
 	}
 	if m.RefreshOnLoadAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "refreshOnLoad"},
-			Value: fmt.Sprintf("%v", *m.RefreshOnLoadAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RefreshOnLoadAttr))})
 	}
 	if m.SaveDataAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "saveData"},
-			Value: fmt.Sprintf("%v", *m.SaveDataAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SaveDataAttr))})
 	}
 	if m.CredentialsAttr != ST_CredMethodUnset {
 		attr, err := m.CredentialsAttr.MarshalXMLAttr(xml.Name{Local: "credentials"})

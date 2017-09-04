@@ -34,7 +34,7 @@ func NewCT_Color() *CT_Color {
 func (m *CT_Color) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.AutoAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "auto"},
-			Value: fmt.Sprintf("%v", *m.AutoAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoAttr))})
 	}
 	if m.IndexedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "indexed"},

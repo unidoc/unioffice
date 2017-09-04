@@ -41,15 +41,15 @@ func NewCT_Slide() *CT_Slide {
 func (m *CT_Slide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ShowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "show"},
-			Value: fmt.Sprintf("%v", *m.ShowAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowAttr))})
 	}
 	if m.ShowMasterSpAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showMasterSp"},
-			Value: fmt.Sprintf("%v", *m.ShowMasterSpAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowMasterSpAttr))})
 	}
 	if m.ShowMasterPhAnimAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showMasterPhAnim"},
-			Value: fmt.Sprintf("%v", *m.ShowMasterPhAnimAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowMasterPhAnimAttr))})
 	}
 	e.EncodeToken(start)
 	secSld := xml.StartElement{Name: xml.Name{Local: "p:cSld"}}

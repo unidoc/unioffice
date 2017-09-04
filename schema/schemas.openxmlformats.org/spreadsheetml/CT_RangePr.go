@@ -41,11 +41,11 @@ func NewCT_RangePr() *CT_RangePr {
 func (m *CT_RangePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.AutoStartAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoStart"},
-			Value: fmt.Sprintf("%v", *m.AutoStartAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoStartAttr))})
 	}
 	if m.AutoEndAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoEnd"},
-			Value: fmt.Sprintf("%v", *m.AutoEndAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoEndAttr))})
 	}
 	if m.GroupByAttr != ST_GroupByUnset {
 		attr, err := m.GroupByAttr.MarshalXMLAttr(xml.Name{Local: "groupBy"})

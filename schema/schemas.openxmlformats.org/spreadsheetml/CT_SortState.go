@@ -36,11 +36,11 @@ func NewCT_SortState() *CT_SortState {
 func (m *CT_SortState) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ColumnSortAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "columnSort"},
-			Value: fmt.Sprintf("%v", *m.ColumnSortAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ColumnSortAttr))})
 	}
 	if m.CaseSensitiveAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "caseSensitive"},
-			Value: fmt.Sprintf("%v", *m.CaseSensitiveAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CaseSensitiveAttr))})
 	}
 	if m.SortMethodAttr != ST_SortMethodUnset {
 		attr, err := m.SortMethodAttr.MarshalXMLAttr(xml.Name{Local: "sortMethod"})

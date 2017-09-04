@@ -44,19 +44,19 @@ func (m *CT_DataConsolidate) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	if m.StartLabelsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "startLabels"},
-			Value: fmt.Sprintf("%v", *m.StartLabelsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.StartLabelsAttr))})
 	}
 	if m.LeftLabelsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "leftLabels"},
-			Value: fmt.Sprintf("%v", *m.LeftLabelsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LeftLabelsAttr))})
 	}
 	if m.TopLabelsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "topLabels"},
-			Value: fmt.Sprintf("%v", *m.TopLabelsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.TopLabelsAttr))})
 	}
 	if m.LinkAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "link"},
-			Value: fmt.Sprintf("%v", *m.LinkAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LinkAttr))})
 	}
 	e.EncodeToken(start)
 	if m.DataRefs != nil {

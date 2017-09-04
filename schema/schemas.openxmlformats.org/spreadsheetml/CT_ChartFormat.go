@@ -38,7 +38,7 @@ func (m *CT_ChartFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		Value: fmt.Sprintf("%v", m.FormatAttr)})
 	if m.SeriesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "series"},
-			Value: fmt.Sprintf("%v", *m.SeriesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SeriesAttr))})
 	}
 	e.EncodeToken(start)
 	sepivotArea := xml.StartElement{Name: xml.Name{Local: "x:pivotArea"}}

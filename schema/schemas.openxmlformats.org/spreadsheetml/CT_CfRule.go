@@ -73,19 +73,19 @@ func (m *CT_CfRule) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		Value: fmt.Sprintf("%v", m.PriorityAttr)})
 	if m.StopIfTrueAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "stopIfTrue"},
-			Value: fmt.Sprintf("%v", *m.StopIfTrueAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.StopIfTrueAttr))})
 	}
 	if m.AboveAverageAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "aboveAverage"},
-			Value: fmt.Sprintf("%v", *m.AboveAverageAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AboveAverageAttr))})
 	}
 	if m.PercentAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "percent"},
-			Value: fmt.Sprintf("%v", *m.PercentAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PercentAttr))})
 	}
 	if m.BottomAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "bottom"},
-			Value: fmt.Sprintf("%v", *m.BottomAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BottomAttr))})
 	}
 	if m.OperatorAttr != ST_ConditionalFormattingOperatorUnset {
 		attr, err := m.OperatorAttr.MarshalXMLAttr(xml.Name{Local: "operator"})
@@ -115,7 +115,7 @@ func (m *CT_CfRule) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.EqualAverageAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "equalAverage"},
-			Value: fmt.Sprintf("%v", *m.EqualAverageAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EqualAverageAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Formula != nil {

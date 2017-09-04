@@ -54,7 +54,7 @@ func (m *CT_Set) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.QueryFailedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "queryFailed"},
-			Value: fmt.Sprintf("%v", *m.QueryFailedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.QueryFailedAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Tpls != nil {

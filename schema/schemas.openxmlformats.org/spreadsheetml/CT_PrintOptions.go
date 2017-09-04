@@ -34,23 +34,23 @@ func NewCT_PrintOptions() *CT_PrintOptions {
 func (m *CT_PrintOptions) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.HorizontalCenteredAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "horizontalCentered"},
-			Value: fmt.Sprintf("%v", *m.HorizontalCenteredAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HorizontalCenteredAttr))})
 	}
 	if m.VerticalCenteredAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "verticalCentered"},
-			Value: fmt.Sprintf("%v", *m.VerticalCenteredAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.VerticalCenteredAttr))})
 	}
 	if m.HeadingsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "headings"},
-			Value: fmt.Sprintf("%v", *m.HeadingsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HeadingsAttr))})
 	}
 	if m.GridLinesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "gridLines"},
-			Value: fmt.Sprintf("%v", *m.GridLinesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.GridLinesAttr))})
 	}
 	if m.GridLinesSetAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "gridLinesSet"},
-			Value: fmt.Sprintf("%v", *m.GridLinesSetAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.GridLinesSetAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

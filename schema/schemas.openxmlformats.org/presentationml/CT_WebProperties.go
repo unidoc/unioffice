@@ -44,27 +44,27 @@ func NewCT_WebProperties() *CT_WebProperties {
 func (m *CT_WebProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ShowAnimationAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showAnimation"},
-			Value: fmt.Sprintf("%v", *m.ShowAnimationAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowAnimationAttr))})
 	}
 	if m.ResizeGraphicsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "resizeGraphics"},
-			Value: fmt.Sprintf("%v", *m.ResizeGraphicsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ResizeGraphicsAttr))})
 	}
 	if m.AllowPngAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "allowPng"},
-			Value: fmt.Sprintf("%v", *m.AllowPngAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AllowPngAttr))})
 	}
 	if m.RelyOnVmlAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "relyOnVml"},
-			Value: fmt.Sprintf("%v", *m.RelyOnVmlAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RelyOnVmlAttr))})
 	}
 	if m.OrganizeInFoldersAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "organizeInFolders"},
-			Value: fmt.Sprintf("%v", *m.OrganizeInFoldersAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OrganizeInFoldersAttr))})
 	}
 	if m.UseLongFilenamesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "useLongFilenames"},
-			Value: fmt.Sprintf("%v", *m.UseLongFilenamesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UseLongFilenamesAttr))})
 	}
 	if m.ImgSzAttr != ST_WebScreenSizeUnset {
 		attr, err := m.ImgSzAttr.MarshalXMLAttr(xml.Name{Local: "imgSz"})

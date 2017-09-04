@@ -49,11 +49,11 @@ func NewCT_SheetPr() *CT_SheetPr {
 func (m *CT_SheetPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.SyncHorizontalAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "syncHorizontal"},
-			Value: fmt.Sprintf("%v", *m.SyncHorizontalAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SyncHorizontalAttr))})
 	}
 	if m.SyncVerticalAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "syncVertical"},
-			Value: fmt.Sprintf("%v", *m.SyncVerticalAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SyncVerticalAttr))})
 	}
 	if m.SyncRefAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "syncRef"},
@@ -61,15 +61,15 @@ func (m *CT_SheetPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.TransitionEvaluationAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "transitionEvaluation"},
-			Value: fmt.Sprintf("%v", *m.TransitionEvaluationAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.TransitionEvaluationAttr))})
 	}
 	if m.TransitionEntryAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "transitionEntry"},
-			Value: fmt.Sprintf("%v", *m.TransitionEntryAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.TransitionEntryAttr))})
 	}
 	if m.PublishedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "published"},
-			Value: fmt.Sprintf("%v", *m.PublishedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PublishedAttr))})
 	}
 	if m.CodeNameAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "codeName"},
@@ -77,11 +77,11 @@ func (m *CT_SheetPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.FilterModeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "filterMode"},
-			Value: fmt.Sprintf("%v", *m.FilterModeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FilterModeAttr))})
 	}
 	if m.EnableFormatConditionsCalculationAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "enableFormatConditionsCalculation"},
-			Value: fmt.Sprintf("%v", *m.EnableFormatConditionsCalculationAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EnableFormatConditionsCalculationAttr))})
 	}
 	e.EncodeToken(start)
 	if m.TabColor != nil {

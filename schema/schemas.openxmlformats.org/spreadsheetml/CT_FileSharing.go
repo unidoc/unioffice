@@ -38,7 +38,7 @@ func NewCT_FileSharing() *CT_FileSharing {
 func (m *CT_FileSharing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ReadOnlyRecommendedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "readOnlyRecommended"},
-			Value: fmt.Sprintf("%v", *m.ReadOnlyRecommendedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ReadOnlyRecommendedAttr))})
 	}
 	if m.UserNameAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "userName"},

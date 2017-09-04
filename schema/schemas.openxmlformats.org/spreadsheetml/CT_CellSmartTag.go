@@ -35,11 +35,11 @@ func (m *CT_CellSmartTag) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		Value: fmt.Sprintf("%v", m.TypeAttr)})
 	if m.DeletedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "deleted"},
-			Value: fmt.Sprintf("%v", *m.DeletedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DeletedAttr))})
 	}
 	if m.XmlBasedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlBased"},
-			Value: fmt.Sprintf("%v", *m.XmlBasedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.XmlBasedAttr))})
 	}
 	e.EncodeToken(start)
 	if m.CellSmartTagPr != nil {

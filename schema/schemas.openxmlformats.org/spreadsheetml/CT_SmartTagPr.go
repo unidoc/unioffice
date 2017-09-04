@@ -28,7 +28,7 @@ func NewCT_SmartTagPr() *CT_SmartTagPr {
 func (m *CT_SmartTagPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.EmbedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "embed"},
-			Value: fmt.Sprintf("%v", *m.EmbedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EmbedAttr))})
 	}
 	if m.ShowAttr != ST_SmartTagShowUnset {
 		attr, err := m.ShowAttr.MarshalXMLAttr(xml.Name{Local: "show"})

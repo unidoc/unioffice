@@ -91,35 +91,35 @@ func (m *CT_Presentation) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	if m.ShowSpecialPlsOnTitleSldAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showSpecialPlsOnTitleSld"},
-			Value: fmt.Sprintf("%v", *m.ShowSpecialPlsOnTitleSldAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowSpecialPlsOnTitleSldAttr))})
 	}
 	if m.RtlAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rtl"},
-			Value: fmt.Sprintf("%v", *m.RtlAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RtlAttr))})
 	}
 	if m.RemovePersonalInfoOnSaveAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "removePersonalInfoOnSave"},
-			Value: fmt.Sprintf("%v", *m.RemovePersonalInfoOnSaveAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RemovePersonalInfoOnSaveAttr))})
 	}
 	if m.CompatModeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "compatMode"},
-			Value: fmt.Sprintf("%v", *m.CompatModeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CompatModeAttr))})
 	}
 	if m.StrictFirstAndLastCharsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "strictFirstAndLastChars"},
-			Value: fmt.Sprintf("%v", *m.StrictFirstAndLastCharsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.StrictFirstAndLastCharsAttr))})
 	}
 	if m.EmbedTrueTypeFontsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "embedTrueTypeFonts"},
-			Value: fmt.Sprintf("%v", *m.EmbedTrueTypeFontsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EmbedTrueTypeFontsAttr))})
 	}
 	if m.SaveSubsetFontsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "saveSubsetFonts"},
-			Value: fmt.Sprintf("%v", *m.SaveSubsetFontsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SaveSubsetFontsAttr))})
 	}
 	if m.AutoCompressPicturesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoCompressPictures"},
-			Value: fmt.Sprintf("%v", *m.AutoCompressPicturesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoCompressPicturesAttr))})
 	}
 	if m.BookmarkIdSeedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "bookmarkIdSeed"},

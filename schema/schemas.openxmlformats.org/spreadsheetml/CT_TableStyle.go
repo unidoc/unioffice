@@ -37,11 +37,11 @@ func (m *CT_TableStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	if m.PivotAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "pivot"},
-			Value: fmt.Sprintf("%v", *m.PivotAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PivotAttr))})
 	}
 	if m.TableAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "table"},
-			Value: fmt.Sprintf("%v", *m.TableAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.TableAttr))})
 	}
 	if m.CountAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "count"},

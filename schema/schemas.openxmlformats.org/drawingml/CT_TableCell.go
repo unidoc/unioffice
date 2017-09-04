@@ -41,11 +41,11 @@ func (m *CT_TableCell) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.HMergeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hMerge"},
-			Value: fmt.Sprintf("%v", *m.HMergeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HMergeAttr))})
 	}
 	if m.VMergeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "vMerge"},
-			Value: fmt.Sprintf("%v", *m.VMergeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.VMergeAttr))})
 	}
 	if m.IdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "id"},

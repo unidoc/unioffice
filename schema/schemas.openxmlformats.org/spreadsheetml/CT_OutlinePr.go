@@ -32,19 +32,19 @@ func NewCT_OutlinePr() *CT_OutlinePr {
 func (m *CT_OutlinePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ApplyStylesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyStyles"},
-			Value: fmt.Sprintf("%v", *m.ApplyStylesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyStylesAttr))})
 	}
 	if m.SummaryBelowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "summaryBelow"},
-			Value: fmt.Sprintf("%v", *m.SummaryBelowAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SummaryBelowAttr))})
 	}
 	if m.SummaryRightAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "summaryRight"},
-			Value: fmt.Sprintf("%v", *m.SummaryRightAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SummaryRightAttr))})
 	}
 	if m.ShowOutlineSymbolsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showOutlineSymbols"},
-			Value: fmt.Sprintf("%v", *m.ShowOutlineSymbolsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowOutlineSymbolsAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

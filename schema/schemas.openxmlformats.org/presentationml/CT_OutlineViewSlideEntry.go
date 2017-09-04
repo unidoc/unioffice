@@ -29,7 +29,7 @@ func (m *CT_OutlineViewSlideEntry) MarshalXML(e *xml.Encoder, start xml.StartEle
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	if m.CollapseAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "collapse"},
-			Value: fmt.Sprintf("%v", *m.CollapseAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CollapseAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

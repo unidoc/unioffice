@@ -26,11 +26,11 @@ func NewAG_ChildSlide() *AG_ChildSlide {
 func (m *AG_ChildSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ShowMasterSpAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showMasterSp"},
-			Value: fmt.Sprintf("%v", *m.ShowMasterSpAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowMasterSpAttr))})
 	}
 	if m.ShowMasterPhAnimAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showMasterPhAnim"},
-			Value: fmt.Sprintf("%v", *m.ShowMasterPhAnimAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowMasterPhAnimAttr))})
 	}
 	return nil
 }

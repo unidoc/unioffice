@@ -32,7 +32,7 @@ func (m *CT_NormalViewPortion) MarshalXML(e *xml.Encoder, start xml.StartElement
 		Value: fmt.Sprintf("%v", m.SzAttr)})
 	if m.AutoAdjustAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoAdjust"},
-			Value: fmt.Sprintf("%v", *m.AutoAdjustAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoAdjustAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

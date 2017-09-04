@@ -44,7 +44,7 @@ func (m *CT_TLCommonMediaNodeData) MarshalXML(e *xml.Encoder, start xml.StartEle
 	}
 	if m.MuteAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "mute"},
-			Value: fmt.Sprintf("%v", *m.MuteAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.MuteAttr))})
 	}
 	if m.NumSldAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "numSld"},
@@ -52,7 +52,7 @@ func (m *CT_TLCommonMediaNodeData) MarshalXML(e *xml.Encoder, start xml.StartEle
 	}
 	if m.ShowWhenStoppedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showWhenStopped"},
-			Value: fmt.Sprintf("%v", *m.ShowWhenStoppedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowWhenStoppedAttr))})
 	}
 	e.EncodeToken(start)
 	secTn := xml.StartElement{Name: xml.Name{Local: "p:cTn"}}

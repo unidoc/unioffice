@@ -42,23 +42,23 @@ func NewCT_WebPublishing() *CT_WebPublishing {
 func (m *CT_WebPublishing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.CssAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "css"},
-			Value: fmt.Sprintf("%v", *m.CssAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CssAttr))})
 	}
 	if m.ThicketAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "thicket"},
-			Value: fmt.Sprintf("%v", *m.ThicketAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ThicketAttr))})
 	}
 	if m.LongFileNamesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "longFileNames"},
-			Value: fmt.Sprintf("%v", *m.LongFileNamesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LongFileNamesAttr))})
 	}
 	if m.VmlAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "vml"},
-			Value: fmt.Sprintf("%v", *m.VmlAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.VmlAttr))})
 	}
 	if m.AllowPngAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "allowPng"},
-			Value: fmt.Sprintf("%v", *m.AllowPngAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AllowPngAttr))})
 	}
 	if m.TargetScreenSizeAttr != ST_TargetScreenSizeUnset {
 		attr, err := m.TargetScreenSizeAttr.MarshalXMLAttr(xml.Name{Local: "targetScreenSize"})

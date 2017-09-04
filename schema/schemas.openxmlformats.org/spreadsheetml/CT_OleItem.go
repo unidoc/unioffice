@@ -34,15 +34,15 @@ func (m *CT_OleItem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	if m.IconAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "icon"},
-			Value: fmt.Sprintf("%v", *m.IconAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.IconAttr))})
 	}
 	if m.AdviseAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "advise"},
-			Value: fmt.Sprintf("%v", *m.AdviseAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AdviseAttr))})
 	}
 	if m.PreferPicAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "preferPic"},
-			Value: fmt.Sprintf("%v", *m.PreferPicAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PreferPicAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

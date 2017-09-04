@@ -68,19 +68,19 @@ func (m *CT_PivotSelection) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.ShowHeaderAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showHeader"},
-			Value: fmt.Sprintf("%v", *m.ShowHeaderAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowHeaderAttr))})
 	}
 	if m.LabelAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "label"},
-			Value: fmt.Sprintf("%v", *m.LabelAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LabelAttr))})
 	}
 	if m.DataAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "data"},
-			Value: fmt.Sprintf("%v", *m.DataAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DataAttr))})
 	}
 	if m.ExtendableAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "extendable"},
-			Value: fmt.Sprintf("%v", *m.ExtendableAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ExtendableAttr))})
 	}
 	if m.CountAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "count"},

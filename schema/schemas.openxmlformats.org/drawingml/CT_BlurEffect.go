@@ -30,7 +30,7 @@ func (m *CT_BlurEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.GrowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "grow"},
-			Value: fmt.Sprintf("%v", *m.GrowAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.GrowAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

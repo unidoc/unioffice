@@ -46,15 +46,15 @@ func (m *CT_MemberProperty) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.ShowCellAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showCell"},
-			Value: fmt.Sprintf("%v", *m.ShowCellAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowCellAttr))})
 	}
 	if m.ShowTipAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showTip"},
-			Value: fmt.Sprintf("%v", *m.ShowTipAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowTipAttr))})
 	}
 	if m.ShowAsCaptionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showAsCaption"},
-			Value: fmt.Sprintf("%v", *m.ShowAsCaptionAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowAsCaptionAttr))})
 	}
 	if m.NameLenAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "nameLen"},

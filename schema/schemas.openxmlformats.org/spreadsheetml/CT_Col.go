@@ -56,19 +56,19 @@ func (m *CT_Col) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.HiddenAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hidden"},
-			Value: fmt.Sprintf("%v", *m.HiddenAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HiddenAttr))})
 	}
 	if m.BestFitAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "bestFit"},
-			Value: fmt.Sprintf("%v", *m.BestFitAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BestFitAttr))})
 	}
 	if m.CustomWidthAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "customWidth"},
-			Value: fmt.Sprintf("%v", *m.CustomWidthAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CustomWidthAttr))})
 	}
 	if m.PhoneticAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "phonetic"},
-			Value: fmt.Sprintf("%v", *m.PhoneticAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PhoneticAttr))})
 	}
 	if m.OutlineLevelAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "outlineLevel"},
@@ -76,7 +76,7 @@ func (m *CT_Col) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.CollapsedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "collapsed"},
-			Value: fmt.Sprintf("%v", *m.CollapsedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CollapsedAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

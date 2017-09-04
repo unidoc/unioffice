@@ -26,7 +26,7 @@ func NewCT_SheetCalcPr() *CT_SheetCalcPr {
 func (m *CT_SheetCalcPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.FullCalcOnLoadAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fullCalcOnLoad"},
-			Value: fmt.Sprintf("%v", *m.FullCalcOnLoadAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FullCalcOnLoadAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

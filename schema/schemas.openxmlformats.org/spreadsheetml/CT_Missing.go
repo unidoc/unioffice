@@ -51,11 +51,11 @@ func NewCT_Missing() *CT_Missing {
 func (m *CT_Missing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.UAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "u"},
-			Value: fmt.Sprintf("%v", *m.UAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UAttr))})
 	}
 	if m.FAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "f"},
-			Value: fmt.Sprintf("%v", *m.FAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FAttr))})
 	}
 	if m.CAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "c"},
@@ -79,19 +79,19 @@ func (m *CT_Missing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.IAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "i"},
-			Value: fmt.Sprintf("%v", *m.IAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.IAttr))})
 	}
 	if m.UnAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "un"},
-			Value: fmt.Sprintf("%v", *m.UnAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UnAttr))})
 	}
 	if m.StAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "st"},
-			Value: fmt.Sprintf("%v", *m.StAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.StAttr))})
 	}
 	if m.BAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "b"},
-			Value: fmt.Sprintf("%v", *m.BAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Tpls != nil {

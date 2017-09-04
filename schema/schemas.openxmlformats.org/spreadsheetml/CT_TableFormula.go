@@ -25,7 +25,7 @@ func NewCT_TableFormula() *CT_TableFormula {
 
 func (m *CT_TableFormula) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "array"},
-		Value: fmt.Sprintf("%v", m.ArrayAttr)})
+		Value: fmt.Sprintf("%d", b2i(m.ArrayAttr))})
 	e.EncodeElement(m.Content, start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

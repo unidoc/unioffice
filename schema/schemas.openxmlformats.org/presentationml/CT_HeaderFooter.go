@@ -34,19 +34,19 @@ func NewCT_HeaderFooter() *CT_HeaderFooter {
 func (m *CT_HeaderFooter) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.SldNumAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "sldNum"},
-			Value: fmt.Sprintf("%v", *m.SldNumAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SldNumAttr))})
 	}
 	if m.HdrAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hdr"},
-			Value: fmt.Sprintf("%v", *m.HdrAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HdrAttr))})
 	}
 	if m.FtrAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ftr"},
-			Value: fmt.Sprintf("%v", *m.FtrAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FtrAttr))})
 	}
 	if m.DtAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dt"},
-			Value: fmt.Sprintf("%v", *m.DtAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DtAttr))})
 	}
 	e.EncodeToken(start)
 	if m.ExtLst != nil {

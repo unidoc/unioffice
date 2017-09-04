@@ -28,7 +28,7 @@ func (m *CT_NumFmt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		Value: fmt.Sprintf("%v", m.FormatCodeAttr)})
 	if m.SourceLinkedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "sourceLinked"},
-			Value: fmt.Sprintf("%v", *m.SourceLinkedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SourceLinkedAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -41,11 +41,11 @@ func (m *CT_GroupLevel) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		Value: fmt.Sprintf("%v", m.CaptionAttr)})
 	if m.UserAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "user"},
-			Value: fmt.Sprintf("%v", *m.UserAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UserAttr))})
 	}
 	if m.CustomRollUpAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "customRollUp"},
-			Value: fmt.Sprintf("%v", *m.CustomRollUpAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CustomRollUpAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Groups != nil {

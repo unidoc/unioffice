@@ -29,7 +29,7 @@ func NewCT_ExtensionListModify() *CT_ExtensionListModify {
 func (m *CT_ExtensionListModify) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ModAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "mod"},
-			Value: fmt.Sprintf("%v", *m.ModAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ModAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Ext != nil {

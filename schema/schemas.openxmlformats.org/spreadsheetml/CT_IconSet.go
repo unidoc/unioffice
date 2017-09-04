@@ -42,15 +42,15 @@ func (m *CT_IconSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.ShowValueAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showValue"},
-			Value: fmt.Sprintf("%v", *m.ShowValueAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowValueAttr))})
 	}
 	if m.PercentAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "percent"},
-			Value: fmt.Sprintf("%v", *m.PercentAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PercentAttr))})
 	}
 	if m.ReverseAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "reverse"},
-			Value: fmt.Sprintf("%v", *m.ReverseAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ReverseAttr))})
 	}
 	e.EncodeToken(start)
 	secfvo := xml.StartElement{Name: xml.Name{Local: "x:cfvo"}}

@@ -30,7 +30,7 @@ func (m *CT_LinearShadeProperties) MarshalXML(e *xml.Encoder, start xml.StartEle
 	}
 	if m.ScaledAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "scaled"},
-			Value: fmt.Sprintf("%v", *m.ScaledAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ScaledAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

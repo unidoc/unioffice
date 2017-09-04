@@ -69,11 +69,11 @@ func (m *CT_CacheField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.ServerFieldAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "serverField"},
-			Value: fmt.Sprintf("%v", *m.ServerFieldAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ServerFieldAttr))})
 	}
 	if m.UniqueListAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "uniqueList"},
-			Value: fmt.Sprintf("%v", *m.UniqueListAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UniqueListAttr))})
 	}
 	if m.NumFmtIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "numFmtId"},
@@ -97,7 +97,7 @@ func (m *CT_CacheField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.DatabaseFieldAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "databaseField"},
-			Value: fmt.Sprintf("%v", *m.DatabaseFieldAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DatabaseFieldAttr))})
 	}
 	if m.MappingCountAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "mappingCount"},
@@ -105,7 +105,7 @@ func (m *CT_CacheField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.MemberPropertyFieldAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "memberPropertyField"},
-			Value: fmt.Sprintf("%v", *m.MemberPropertyFieldAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.MemberPropertyFieldAttr))})
 	}
 	e.EncodeToken(start)
 	if m.SharedItems != nil {

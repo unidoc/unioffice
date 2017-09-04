@@ -53,43 +53,43 @@ func NewCT_PivotHierarchy() *CT_PivotHierarchy {
 func (m *CT_PivotHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.OutlineAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "outline"},
-			Value: fmt.Sprintf("%v", *m.OutlineAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OutlineAttr))})
 	}
 	if m.MultipleItemSelectionAllowedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "multipleItemSelectionAllowed"},
-			Value: fmt.Sprintf("%v", *m.MultipleItemSelectionAllowedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.MultipleItemSelectionAllowedAttr))})
 	}
 	if m.SubtotalTopAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "subtotalTop"},
-			Value: fmt.Sprintf("%v", *m.SubtotalTopAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SubtotalTopAttr))})
 	}
 	if m.ShowInFieldListAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showInFieldList"},
-			Value: fmt.Sprintf("%v", *m.ShowInFieldListAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowInFieldListAttr))})
 	}
 	if m.DragToRowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dragToRow"},
-			Value: fmt.Sprintf("%v", *m.DragToRowAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DragToRowAttr))})
 	}
 	if m.DragToColAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dragToCol"},
-			Value: fmt.Sprintf("%v", *m.DragToColAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DragToColAttr))})
 	}
 	if m.DragToPageAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dragToPage"},
-			Value: fmt.Sprintf("%v", *m.DragToPageAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DragToPageAttr))})
 	}
 	if m.DragToDataAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dragToData"},
-			Value: fmt.Sprintf("%v", *m.DragToDataAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DragToDataAttr))})
 	}
 	if m.DragOffAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dragOff"},
-			Value: fmt.Sprintf("%v", *m.DragOffAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DragOffAttr))})
 	}
 	if m.IncludeNewItemsInFilterAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "includeNewItemsInFilter"},
-			Value: fmt.Sprintf("%v", *m.IncludeNewItemsInFilterAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.IncludeNewItemsInFilterAttr))})
 	}
 	if m.CaptionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "caption"},

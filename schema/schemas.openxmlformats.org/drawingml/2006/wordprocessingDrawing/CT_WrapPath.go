@@ -31,7 +31,7 @@ func NewCT_WrapPath() *CT_WrapPath {
 func (m *CT_WrapPath) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.EditedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "edited"},
-			Value: fmt.Sprintf("%v", *m.EditedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EditedAttr))})
 	}
 	e.EncodeToken(start)
 	sestart := xml.StartElement{Name: xml.Name{Local: "wp:start"}}

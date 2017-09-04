@@ -33,7 +33,7 @@ func (m *CT_ExternalSheetData) MarshalXML(e *xml.Encoder, start xml.StartElement
 		Value: fmt.Sprintf("%v", m.SheetIdAttr)})
 	if m.RefreshErrorAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "refreshError"},
-			Value: fmt.Sprintf("%v", *m.RefreshErrorAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RefreshErrorAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Row != nil {

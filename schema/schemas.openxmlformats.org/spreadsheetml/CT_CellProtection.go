@@ -28,11 +28,11 @@ func NewCT_CellProtection() *CT_CellProtection {
 func (m *CT_CellProtection) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.LockedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "locked"},
-			Value: fmt.Sprintf("%v", *m.LockedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LockedAttr))})
 	}
 	if m.HiddenAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hidden"},
-			Value: fmt.Sprintf("%v", *m.HiddenAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HiddenAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

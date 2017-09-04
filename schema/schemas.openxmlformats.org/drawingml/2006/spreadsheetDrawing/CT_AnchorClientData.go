@@ -26,11 +26,11 @@ func NewCT_AnchorClientData() *CT_AnchorClientData {
 func (m *CT_AnchorClientData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.FLocksWithSheetAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fLocksWithSheet"},
-			Value: fmt.Sprintf("%v", *m.FLocksWithSheetAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FLocksWithSheetAttr))})
 	}
 	if m.FPrintsWithSheetAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fPrintsWithSheet"},
-			Value: fmt.Sprintf("%v", *m.FPrintsWithSheetAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FPrintsWithSheetAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

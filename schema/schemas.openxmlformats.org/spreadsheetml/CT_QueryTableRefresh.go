@@ -48,15 +48,15 @@ func NewCT_QueryTableRefresh() *CT_QueryTableRefresh {
 func (m *CT_QueryTableRefresh) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.PreserveSortFilterLayoutAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "preserveSortFilterLayout"},
-			Value: fmt.Sprintf("%v", *m.PreserveSortFilterLayoutAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PreserveSortFilterLayoutAttr))})
 	}
 	if m.FieldIdWrappedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fieldIdWrapped"},
-			Value: fmt.Sprintf("%v", *m.FieldIdWrappedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FieldIdWrappedAttr))})
 	}
 	if m.HeadersInLastRefreshAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "headersInLastRefresh"},
-			Value: fmt.Sprintf("%v", *m.HeadersInLastRefreshAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HeadersInLastRefreshAttr))})
 	}
 	if m.MinimumVersionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "minimumVersion"},

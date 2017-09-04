@@ -39,7 +39,7 @@ func (m *CT_XmlColumnPr) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		Value: fmt.Sprintf("%v", m.XpathAttr)})
 	if m.DenormalizedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "denormalized"},
-			Value: fmt.Sprintf("%v", *m.DenormalizedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DenormalizedAttr))})
 	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlDataType"},
 		Value: fmt.Sprintf("%v", m.XmlDataTypeAttr)})
