@@ -48,13 +48,18 @@ func main() {
 	totalSeries.Values().SetReference(`'Sheet 1'!D2:D6`)
 
 	// the line chart accepts up to two axes
-	lc.AddAxis(chart.AddCategoryAxis())
-	lc.AddAxis(chart.AddValueAxis())
+	ca := chart.AddCategoryAxis()
+	va := chart.AddValueAxis()
+	lc.AddAxis(ca)
+	lc.AddAxis(va)
+
+	ca.SetCrosses(va)
+	va.SetCrosses(ca)
 
 	// add a title and legend
-	title := chart.AddTitle()
-	title.SetText("Items Sold")
-	chart.AddLegend()
+	//	title := chart.AddTitle()
+	//	title.SetText("Items Sold")
+	//	chart.AddLegend()
 
 	// and finally add the chart to the sheet
 	sheet.SetDrawing(dwng)

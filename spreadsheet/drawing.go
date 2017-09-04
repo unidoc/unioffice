@@ -34,11 +34,15 @@ func (d Drawing) InitializeDefaults() {
 	// chart won't show up.
 	d.x.TwoCellAnchor.From.Col = 5
 	d.x.TwoCellAnchor.From.Row = 0
+	// Mac Excel requires the offsets be present
 	d.x.TwoCellAnchor.From.ColOff.ST_CoordinateUnqualified = gooxml.Int64(0)
+	d.x.TwoCellAnchor.From.RowOff.ST_CoordinateUnqualified = gooxml.Int64(0)
 	d.x.TwoCellAnchor.To.Col = 10
 	d.x.TwoCellAnchor.To.Row = 20
 	d.x.TwoCellAnchor.To.ColOff.ST_CoordinateUnqualified = gooxml.Int64(0)
+	d.x.TwoCellAnchor.To.RowOff.ST_CoordinateUnqualified = gooxml.Int64(0)
 }
+
 func (d Drawing) AddChart() Chart {
 	chart := crt.NewChartSpace()
 	d.wb.charts = append(d.wb.charts, chart)
@@ -64,6 +68,12 @@ func (d Drawing) AddChart() Chart {
 	}
 	d.x.TwoCellAnchor.Choice = &sd.EG_ObjectChoicesChoice{}
 	d.x.TwoCellAnchor.Choice.GraphicFrame = sd.NewCT_GraphicalObjectFrame()
+
+	// required by Mac Excel
+	d.x.TwoCellAnchor.Choice.GraphicFrame.NvGraphicFramePr = sd.NewCT_GraphicalObjectFrameNonVisual()
+	d.x.TwoCellAnchor.Choice.GraphicFrame.NvGraphicFramePr.CNvPr.IdAttr = 2
+	d.x.TwoCellAnchor.Choice.GraphicFrame.NvGraphicFramePr.CNvPr.NameAttr = "Chart"
+
 	d.x.TwoCellAnchor.Choice.GraphicFrame.Graphic = dml.NewGraphic()
 	d.x.TwoCellAnchor.Choice.GraphicFrame.Graphic.GraphicData.UriAttr = "http://schemas.openxmlformats.org/drawingml/2006/chart"
 	c := c.NewChart()
