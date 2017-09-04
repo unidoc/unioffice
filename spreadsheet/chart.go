@@ -7,7 +7,17 @@
 
 package spreadsheet
 
-import crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
+import (
+	"math/rand"
+
+	"baliance.com/gooxml"
+	"baliance.com/gooxml/chart"
+	"baliance.com/gooxml/color"
+	"baliance.com/gooxml/drawing"
+
+	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
+	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
+)
 
 type Chart struct {
 	x *crt.ChartSpace
@@ -24,5 +34,109 @@ func (c Chart) AddLineChart() LineChart {
 	chc.LineChart = crt.NewCT_LineChart()
 	chc.LineChart.Grouping = crt.NewCT_Grouping()
 	chc.LineChart.Grouping.ValAttr = crt.ST_GroupingStandard
+
+	// TODO: needed?
+	chc.LineChart.Marker = crt.NewCT_Boolean()
+	chc.LineChart.Marker.ValAttr = gooxml.Bool(true)
 	return LineChart{chc.LineChart}
+}
+
+func (c Chart) Properties() drawing.ShapeProperties {
+	if c.x.SpPr == nil {
+		c.x.SpPr = dml.NewCT_ShapeProperties()
+	}
+	return drawing.MakeShapeProperties(c.x.SpPr)
+}
+
+func (c Chart) SetDisplayBlanksAs(v crt.ST_DispBlanksAs) {
+	c.x.Chart.DispBlanksAs = crt.NewCT_DispBlanksAs()
+	c.x.Chart.DispBlanksAs.ValAttr = v
+}
+
+func (c Chart) AddValueAxis() chart.ValueAxis {
+	va := crt.NewCT_ValAx()
+	if c.x.Chart.PlotArea.CChoice == nil {
+		c.x.Chart.PlotArea.CChoice = crt.NewCT_PlotAreaChoice1()
+	}
+	va.AxId = crt.NewCT_UnsignedInt()
+	va.AxId.ValAttr = 0x7FFFFFFF & rand.Uint32()
+	c.x.Chart.PlotArea.CChoice.ValAx = append(c.x.Chart.PlotArea.CChoice.ValAx, va)
+
+	va.Delete = crt.NewCT_Boolean()
+	va.Delete.ValAttr = gooxml.Bool(false)
+
+	va.Scaling = crt.NewCT_Scaling()
+	va.Scaling.Orientation = crt.NewCT_Orientation()
+	va.Scaling.Orientation.ValAttr = crt.ST_OrientationMinMax
+
+	va.Choice = &crt.EG_AxSharedChoice{}
+	va.Choice.Crosses = crt.NewCT_Crosses()
+	va.Choice.Crosses.ValAttr = crt.ST_CrossesAutoZero
+
+	va.CrossBetween = crt.NewCT_CrossBetween()
+	va.CrossBetween.ValAttr = crt.ST_CrossBetweenMidCat
+
+	vax := chart.MakeValueAxis(va)
+	vax.MajorGridLines().Properties().LineProperties().SetSolidFill(color.LightGray)
+	vax.SetMajorTickMark(crt.ST_TickMarkOut)
+	vax.SetMinorTickMark(crt.ST_TickMarkIn)
+	vax.SetTickLabelPosition(crt.ST_TickLblPosNextTo)
+	vax.Properties().LineProperties().SetSolidFill(color.Black)
+
+	vax.SetPosition(crt.ST_AxPosL)
+	return vax
+}
+
+func (c Chart) AddCategoryAxis() chart.CategoryAxis {
+	ca := crt.NewCT_CatAx()
+	if c.x.Chart.PlotArea.CChoice == nil {
+		c.x.Chart.PlotArea.CChoice = crt.NewCT_PlotAreaChoice1()
+	}
+
+	ca.AxId = crt.NewCT_UnsignedInt()
+	ca.AxId.ValAttr = 0x7FFFFFFF & rand.Uint32()
+	c.x.Chart.PlotArea.CChoice.CatAx = append(c.x.Chart.PlotArea.CChoice.CatAx, ca)
+
+	ca.Auto = crt.NewCT_Boolean()
+	ca.Auto.ValAttr = gooxml.Bool(true)
+
+	ca.Delete = crt.NewCT_Boolean()
+	ca.Delete.ValAttr = gooxml.Bool(false)
+
+	cax := chart.MakeCategoryAxis(ca)
+	cax.InitializeDefaults()
+
+	return cax
+}
+
+// RemoveLegend removes the legend if the chart has one.
+func (c Chart) RemoveLegend() {
+	c.x.Chart.Legend = nil
+}
+
+// AddLegend adds a legend to a chart, replacing any existing legend.
+func (c Chart) AddLegend() chart.Legend {
+	c.x.Chart.Legend = crt.NewCT_Legend()
+	leg := chart.MakeLegend(c.x.Chart.Legend)
+	leg.InitializeDefaults()
+	return leg
+}
+
+func (c Chart) RemoveTitle() {
+	c.x.Chart.Title = nil
+	c.x.Chart.AutoTitleDeleted = crt.NewCT_Boolean()
+	c.x.Chart.AutoTitleDeleted.ValAttr = gooxml.Bool(true)
+}
+
+func (c Chart) AddTitle() chart.Title {
+	c.x.Chart.Title = crt.NewCT_Title()
+	c.x.Chart.Title.Overlay = crt.NewCT_Boolean()
+	c.x.Chart.Title.Overlay.ValAttr = gooxml.Bool(false)
+
+	c.x.Chart.AutoTitleDeleted = crt.NewCT_Boolean()
+	c.x.Chart.AutoTitleDeleted.ValAttr = gooxml.Bool(false)
+
+	title := chart.MakeTitle(c.x.Chart.Title)
+	title.InitializeDefaults()
+	return title
 }

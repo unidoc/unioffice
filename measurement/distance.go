@@ -13,16 +13,17 @@ type Distance float64
 
 // Constants for various distance units
 const (
-	Zero       Distance = 0
-	Point               = 1
-	Pixel72             = 1.0 / 72.0 * Inch
-	Pixel96             = 1.0 / 96.0 * Inch
-	HalfPoint           = 1.0 / 2.0 * Point
-	Millimeter          = 2.83465 * Point
-	Centimeter          = 10 * Millimeter
-	Inch                = 72 * Point
-	Foot                = 12 * Inch
-	Twips               = 1.0 / 20.0 * Point
-	EMU                 = 1.0 / 914400.0 * Inch
-	Dxa                 = Twips
+	Zero           Distance = 0
+	Point                   = 1
+	Pixel72                 = 1.0 / 72.0 * Inch
+	Pixel96                 = 1.0 / 96.0 * Inch
+	HalfPoint               = 1.0 / 2.0 * Point
+	Millimeter              = 2.83465 * Point
+	Centimeter              = 10 * Millimeter
+	Inch                    = 72 * Point
+	Foot                    = 12 * Inch
+	Twips                   = 1.0 / 20.0 * Point
+	EMU                     = 1.0 / 914400.0 * Inch
+	HundredthPoint          = 1 / 100.0
+	Dxa                     = Twips
 )

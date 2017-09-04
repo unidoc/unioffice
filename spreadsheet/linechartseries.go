@@ -9,7 +9,9 @@ package spreadsheet
 
 import (
 	"baliance.com/gooxml/chart"
+	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/drawing"
+	"baliance.com/gooxml/measurement"
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
 )
@@ -73,7 +75,7 @@ func (c LineChartSeries) Labels() chart.DataLabels {
 	return chart.MakeDataLabels(c.x.DLbls)
 }
 
-func (c LineChartSeries) Axis() chart.AxisDataSource {
+func (c LineChartSeries) CategoryAxis() chart.AxisDataSource {
 	if c.x.Cat == nil {
 		c.x.Cat = crt.NewCT_AxDataSource()
 	}
@@ -90,4 +92,19 @@ func (c LineChartSeries) Values() chart.NumberDataSource {
 func (c LineChartSeries) SetSmooth(b bool) {
 	c.x.Smooth = crt.NewCT_Boolean()
 	c.x.Smooth.ValAttr = &b
+}
+
+func (c LineChartSeries) InitializeDefaults() {
+	c.Properties().LineProperties().SetWidth(1 * measurement.Point)
+	c.Properties().LineProperties().SetSolidFill(color.Black)
+	c.Properties().LineProperties().SetJoin(drawing.LineJoinRound)
+
+	c.Marker().SetSymbol(crt.ST_MarkerStyleNone)
+	c.Labels().SetPosition(crt.ST_DLblPosR)
+	c.Labels().SetShowLegendKey(false)
+	c.Labels().SetShowValue(false)
+	c.Labels().SetShowPercent(false)
+	c.Labels().SetShowCategoryName(false)
+	c.Labels().SetShowSeriesName(false)
+	c.Labels().SetShowLeaderLines(false)
 }
