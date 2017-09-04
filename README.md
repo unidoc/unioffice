@@ -2,14 +2,18 @@
 .pptx).  
 
 [![Build Status](https://travis-ci.org/baliance/gooxml.svg?branch=master)](https://travis-ci.org/baliance/gooxml)
-[![Go Report Card](https://goreportcard.com/badge/baliance.com/gooxml)](https://goreportcard.com/report/baliance.com/gooxml)
+[![GitHub (pre-)release](https://img.shields.io/github/release/baliance/gooxml/all.svg)]()
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![GoDoc](https://godoc.org/baliance.com/gooxml?status.svg)](https://godoc.org/baliance.com/gooxml)
+[![Go Report Card](https://goreportcard.com/badge/baliance.com/gooxml)](https://goreportcard.com/report/baliance.com/gooxml)
 
 ## Status ##
 
-The current focus is on documents (.docx). Some other code exists for
-spreadsheets and presentations, but it is even less complete.  The current plan
-is to get documents working well, then spreadsheets, and finally presentations.
+- Documents (docx) work well, and there are no known issues.
+- Spreadsheets (xlsx) support is very new and the API may change.
+- PowerPoint (pptx) is unsupported at the moment, the XML types exist and some
+  prototype code is checked in but it will be reworked once docx/xlsx are
+  'finished'.
 
 
 ## Installation ##
