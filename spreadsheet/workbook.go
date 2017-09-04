@@ -304,6 +304,6 @@ func (wb *Workbook) AddDrawing() Drawing {
 	wb.ContentTypes.AddOverride(fn, gooxml.DrawingContentType)
 	wb.drawingRels = append(wb.drawingRels, common.NewRelationships())
 	d := Drawing{wb, drawing}
-	d.InitializeDefault()
+	d.InitializeDefaults()
 	return d
 }

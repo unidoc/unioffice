@@ -26,7 +26,7 @@ func (d Drawing) X() *sd.WsDr {
 	return d.x
 }
 
-func (d Drawing) InitializeDefault() {
+func (d Drawing) InitializeDefaults() {
 	d.x.TwoCellAnchor = sd.NewCT_TwoCellAnchor()
 	d.x.TwoCellAnchor.EditAsAttr = sd.ST_EditAsOneCell
 
@@ -60,7 +60,7 @@ func (d Drawing) AddChart() Chart {
 
 	// maybe use a one cell anchor?
 	if d.x.TwoCellAnchor == nil {
-		d.InitializeDefault()
+		d.InitializeDefaults()
 	}
 	d.x.TwoCellAnchor.Choice = &sd.EG_ObjectChoicesChoice{}
 	d.x.TwoCellAnchor.Choice.GraphicFrame = sd.NewCT_GraphicalObjectFrame()
