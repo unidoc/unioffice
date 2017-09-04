@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"baliance.com/gooxml/chart"
 	"baliance.com/gooxml/spreadsheet"
 )
 
@@ -28,11 +29,26 @@ func main() {
 
 	// Charts need to reside in a drawing
 	dwng := ss.AddDrawing()
-	chart, anc := dwng.AddChart()
-	// make it a bit wider than the default
-	anc.BottomRight().SetCol(15)
+	chrt1, anc1 := dwng.AddChart()
+	chrt2, anc2 := dwng.AddChart()
+	addBarChart(chrt1)
+	addLineChart(chrt2)
+	anc1.SetWidth(9)
+	anc1.MoveTo(5, 1)
+	anc2.MoveTo(1, 23)
 
-	lc := chart.AddBarChart()
+	// and finally add the chart to the sheet
+	sheet.SetDrawing(dwng)
+
+	if err := ss.Validate(); err != nil {
+		log.Fatalf("error validating sheet: %s", err)
+	}
+	ss.SaveToFile("multiple-chart.xlsx")
+}
+
+func addBarChart(chrt chart.Chart) {
+	chrt.AddTitle().SetText("Bar Chart")
+	lc := chrt.AddBarChart()
 	priceSeries := lc.AddSeries()
 	priceSeries.SetText("Price")
 	// Set a category axis reference on the first series to pull the product names
@@ -48,24 +64,38 @@ func main() {
 	totalSeries.Values().SetReference(`'Sheet 1'!D2:D6`)
 
 	// the line chart accepts up to two axes
-	ca := chart.AddCategoryAxis()
-	va := chart.AddValueAxis()
+	ca := chrt.AddCategoryAxis()
+	va := chrt.AddValueAxis()
 	lc.AddAxis(ca)
 	lc.AddAxis(va)
 
 	ca.SetCrosses(va)
 	va.SetCrosses(ca)
+}
 
-	// add a title and legend
-	title := chart.AddTitle()
-	title.SetText("Items Sold")
-	chart.AddLegend()
+func addLineChart(chrt chart.Chart) {
+	chrt.AddTitle().SetText("Line Chart")
+	lc := chrt.AddLineChart()
+	priceSeries := lc.AddSeries()
+	priceSeries.SetText("Price")
+	// Set a category axis reference on the first series to pull the product names
+	priceSeries.CategoryAxis().SetReference(`'Sheet 1'!A2:A6`)
+	priceSeries.Values().SetReference(`'Sheet 1'!B2:B6`)
 
-	// and finally add the chart to the sheet
-	sheet.SetDrawing(dwng)
+	soldSeries := lc.AddSeries()
+	soldSeries.SetText("Sold")
+	soldSeries.Values().SetReference(`'Sheet 1'!C2:C6`)
 
-	if err := ss.Validate(); err != nil {
-		log.Fatalf("error validating sheet: %s", err)
-	}
-	ss.SaveToFile("bar-chart.xlsx")
+	totalSeries := lc.AddSeries()
+	totalSeries.SetText("Total")
+	totalSeries.Values().SetReference(`'Sheet 1'!D2:D6`)
+
+	// the line chart accepts up to two axes
+	ca := chrt.AddCategoryAxis()
+	va := chrt.AddValueAxis()
+	lc.AddAxis(ca)
+	lc.AddAxis(va)
+
+	ca.SetCrosses(va)
+	va.SetCrosses(ca)
 }
