@@ -9,6 +9,7 @@ package spreadsheet
 
 import (
 	"baliance.com/gooxml"
+	"baliance.com/gooxml/chart"
 	"baliance.com/gooxml/color"
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	c "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
@@ -43,10 +44,10 @@ func (d Drawing) InitializeDefaults() {
 	d.x.TwoCellAnchor.To.RowOff.ST_CoordinateUnqualified = gooxml.Int64(0)
 }
 
-func (d Drawing) AddChart() Chart {
-	chart := crt.NewChartSpace()
-	d.wb.charts = append(d.wb.charts, chart)
-	chrt := Chart{chart}
+func (d Drawing) AddChart() chart.Chart {
+	chartSpace := crt.NewChartSpace()
+	d.wb.charts = append(d.wb.charts, chartSpace)
+	chrt := chart.MakeChart(chartSpace)
 
 	fn := gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.ChartContentType, len(d.wb.charts))
 	d.wb.ContentTypes.AddOverride(fn, gooxml.ChartContentType)

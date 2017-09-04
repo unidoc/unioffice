@@ -5,10 +5,9 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package spreadsheet
+package chart
 
 import (
-	"baliance.com/gooxml/chart"
 	"baliance.com/gooxml/color"
 	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
 )
@@ -47,7 +46,7 @@ func (c LineChart) AddSeries() LineChartSeries {
 	return ls
 }
 
-func (c LineChart) AddAxis(axis chart.Axis) {
+func (c LineChart) AddAxis(axis Axis) {
 	axisID := crt.NewCT_UnsignedInt()
 	axisID.ValAttr = axis.AxisID()
 	c.x.AxId = append(c.x.AxId, axisID)

@@ -5,10 +5,9 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package spreadsheet
+package chart
 
 import (
-	"baliance.com/gooxml/chart"
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/drawing"
 	"baliance.com/gooxml/measurement"
@@ -60,33 +59,33 @@ func (c LineChartSeries) Properties() drawing.ShapeProperties {
 }
 
 // Marker returns the marker properties.
-func (c LineChartSeries) Marker() chart.Marker {
+func (c LineChartSeries) Marker() Marker {
 	if c.x.Marker == nil {
 		c.x.Marker = crt.NewCT_Marker()
 	}
-	return chart.MakeMarker(c.x.Marker)
+	return MakeMarker(c.x.Marker)
 }
 
 // Labels returns the data label properties.
-func (c LineChartSeries) Labels() chart.DataLabels {
+func (c LineChartSeries) Labels() DataLabels {
 	if c.x.DLbls == nil {
 		c.x.DLbls = crt.NewCT_DLbls()
 	}
-	return chart.MakeDataLabels(c.x.DLbls)
+	return MakeDataLabels(c.x.DLbls)
 }
 
-func (c LineChartSeries) CategoryAxis() chart.AxisDataSource {
+func (c LineChartSeries) CategoryAxis() AxisDataSource {
 	if c.x.Cat == nil {
 		c.x.Cat = crt.NewCT_AxDataSource()
 	}
-	return chart.MakeAxisDataSource(c.x.Cat)
+	return MakeAxisDataSource(c.x.Cat)
 }
 
-func (c LineChartSeries) Values() chart.NumberDataSource {
+func (c LineChartSeries) Values() NumberDataSource {
 	if c.x.Val == nil {
 		c.x.Val = crt.NewCT_NumDataSource()
 	}
-	return chart.MakeNumberDataSource(c.x.Val)
+	return MakeNumberDataSource(c.x.Val)
 }
 
 func (c LineChartSeries) SetSmooth(b bool) {
