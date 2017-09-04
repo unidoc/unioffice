@@ -105,15 +105,15 @@ func (m *CT_PageSetup) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.UsePrinterDefaultsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "usePrinterDefaults"},
-			Value: fmt.Sprintf("%v", *m.UsePrinterDefaultsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UsePrinterDefaultsAttr))})
 	}
 	if m.BlackAndWhiteAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "blackAndWhite"},
-			Value: fmt.Sprintf("%v", *m.BlackAndWhiteAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BlackAndWhiteAttr))})
 	}
 	if m.DraftAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "draft"},
-			Value: fmt.Sprintf("%v", *m.DraftAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DraftAttr))})
 	}
 	if m.CellCommentsAttr != ST_CellCommentsUnset {
 		attr, err := m.CellCommentsAttr.MarshalXMLAttr(xml.Name{Local: "cellComments"})
@@ -124,7 +124,7 @@ func (m *CT_PageSetup) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.UseFirstPageNumberAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "useFirstPageNumber"},
-			Value: fmt.Sprintf("%v", *m.UseFirstPageNumberAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UseFirstPageNumberAttr))})
 	}
 	if m.ErrorsAttr != ST_PrintErrorUnset {
 		attr, err := m.ErrorsAttr.MarshalXMLAttr(xml.Name{Local: "errors"})

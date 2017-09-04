@@ -34,11 +34,11 @@ func NewCT_PhotoAlbum() *CT_PhotoAlbum {
 func (m *CT_PhotoAlbum) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.BwAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "bw"},
-			Value: fmt.Sprintf("%v", *m.BwAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BwAttr))})
 	}
 	if m.ShowCaptionsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showCaptions"},
-			Value: fmt.Sprintf("%v", *m.ShowCaptionsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowCaptionsAttr))})
 	}
 	if m.LayoutAttr != ST_PhotoAlbumLayoutUnset {
 		attr, err := m.LayoutAttr.MarshalXMLAttr(xml.Name{Local: "layout"})

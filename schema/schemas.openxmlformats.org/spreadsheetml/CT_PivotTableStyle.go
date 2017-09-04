@@ -40,23 +40,23 @@ func (m *CT_PivotTableStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	if m.ShowRowHeadersAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showRowHeaders"},
-			Value: fmt.Sprintf("%v", *m.ShowRowHeadersAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowRowHeadersAttr))})
 	}
 	if m.ShowColHeadersAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showColHeaders"},
-			Value: fmt.Sprintf("%v", *m.ShowColHeadersAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowColHeadersAttr))})
 	}
 	if m.ShowRowStripesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showRowStripes"},
-			Value: fmt.Sprintf("%v", *m.ShowRowStripesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowRowStripesAttr))})
 	}
 	if m.ShowColStripesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showColStripes"},
-			Value: fmt.Sprintf("%v", *m.ShowColStripesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowColStripesAttr))})
 	}
 	if m.ShowLastColumnAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showLastColumn"},
-			Value: fmt.Sprintf("%v", *m.ShowLastColumnAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowLastColumnAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

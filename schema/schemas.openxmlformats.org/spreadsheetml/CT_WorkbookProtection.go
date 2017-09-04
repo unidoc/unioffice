@@ -70,15 +70,15 @@ func (m *CT_WorkbookProtection) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	if m.LockStructureAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "lockStructure"},
-			Value: fmt.Sprintf("%v", *m.LockStructureAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LockStructureAttr))})
 	}
 	if m.LockWindowsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "lockWindows"},
-			Value: fmt.Sprintf("%v", *m.LockWindowsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LockWindowsAttr))})
 	}
 	if m.LockRevisionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "lockRevision"},
-			Value: fmt.Sprintf("%v", *m.LockRevisionAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LockRevisionAttr))})
 	}
 	if m.RevisionsAlgorithmNameAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "revisionsAlgorithmName"},

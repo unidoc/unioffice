@@ -80,11 +80,11 @@ func (m *CT_TextParagraphProperties) MarshalXML(e *xml.Encoder, start xml.StartE
 	}
 	if m.RtlAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rtl"},
-			Value: fmt.Sprintf("%v", *m.RtlAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RtlAttr))})
 	}
 	if m.EaLnBrkAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "eaLnBrk"},
-			Value: fmt.Sprintf("%v", *m.EaLnBrkAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EaLnBrkAttr))})
 	}
 	if m.FontAlgnAttr != ST_TextFontAlignTypeUnset {
 		attr, err := m.FontAlgnAttr.MarshalXMLAttr(xml.Name{Local: "fontAlgn"})
@@ -95,11 +95,11 @@ func (m *CT_TextParagraphProperties) MarshalXML(e *xml.Encoder, start xml.StartE
 	}
 	if m.LatinLnBrkAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "latinLnBrk"},
-			Value: fmt.Sprintf("%v", *m.LatinLnBrkAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LatinLnBrkAttr))})
 	}
 	if m.HangingPunctAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hangingPunct"},
-			Value: fmt.Sprintf("%v", *m.HangingPunctAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HangingPunctAttr))})
 	}
 	e.EncodeToken(start)
 	if m.LnSpc != nil {

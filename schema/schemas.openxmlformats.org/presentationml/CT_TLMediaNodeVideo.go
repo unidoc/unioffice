@@ -30,7 +30,7 @@ func NewCT_TLMediaNodeVideo() *CT_TLMediaNodeVideo {
 func (m *CT_TLMediaNodeVideo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.FullScrnAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fullScrn"},
-			Value: fmt.Sprintf("%v", *m.FullScrnAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FullScrnAttr))})
 	}
 	e.EncodeToken(start)
 	secMediaNode := xml.StartElement{Name: xml.Name{Local: "p:cMediaNode"}}

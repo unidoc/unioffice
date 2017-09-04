@@ -51,27 +51,27 @@ func NewCT_CommentPr() *CT_CommentPr {
 func (m *CT_CommentPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.LockedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "locked"},
-			Value: fmt.Sprintf("%v", *m.LockedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LockedAttr))})
 	}
 	if m.DefaultSizeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "defaultSize"},
-			Value: fmt.Sprintf("%v", *m.DefaultSizeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DefaultSizeAttr))})
 	}
 	if m.PrintAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "print"},
-			Value: fmt.Sprintf("%v", *m.PrintAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PrintAttr))})
 	}
 	if m.DisabledAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "disabled"},
-			Value: fmt.Sprintf("%v", *m.DisabledAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DisabledAttr))})
 	}
 	if m.AutoFillAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoFill"},
-			Value: fmt.Sprintf("%v", *m.AutoFillAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoFillAttr))})
 	}
 	if m.AutoLineAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoLine"},
-			Value: fmt.Sprintf("%v", *m.AutoLineAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoLineAttr))})
 	}
 	if m.AltTextAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "altText"},
@@ -93,15 +93,15 @@ func (m *CT_CommentPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.LockTextAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "lockText"},
-			Value: fmt.Sprintf("%v", *m.LockTextAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LockTextAttr))})
 	}
 	if m.JustLastXAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "justLastX"},
-			Value: fmt.Sprintf("%v", *m.JustLastXAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.JustLastXAttr))})
 	}
 	if m.AutoScaleAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoScale"},
-			Value: fmt.Sprintf("%v", *m.AutoScaleAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoScaleAttr))})
 	}
 	e.EncodeToken(start)
 	seanchor := xml.StartElement{Name: xml.Name{Local: "x:anchor"}}

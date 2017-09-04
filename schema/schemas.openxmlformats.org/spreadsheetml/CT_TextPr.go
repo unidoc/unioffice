@@ -59,7 +59,7 @@ func NewCT_TextPr() *CT_TextPr {
 func (m *CT_TextPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.PromptAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "prompt"},
-			Value: fmt.Sprintf("%v", *m.PromptAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PromptAttr))})
 	}
 	if m.FileTypeAttr != ST_FileTypeUnset {
 		attr, err := m.FileTypeAttr.MarshalXMLAttr(xml.Name{Local: "fileType"})
@@ -86,7 +86,7 @@ func (m *CT_TextPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.DelimitedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "delimited"},
-			Value: fmt.Sprintf("%v", *m.DelimitedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DelimitedAttr))})
 	}
 	if m.DecimalAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "decimal"},
@@ -98,23 +98,23 @@ func (m *CT_TextPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.TabAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "tab"},
-			Value: fmt.Sprintf("%v", *m.TabAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.TabAttr))})
 	}
 	if m.SpaceAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "space"},
-			Value: fmt.Sprintf("%v", *m.SpaceAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SpaceAttr))})
 	}
 	if m.CommaAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "comma"},
-			Value: fmt.Sprintf("%v", *m.CommaAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CommaAttr))})
 	}
 	if m.SemicolonAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "semicolon"},
-			Value: fmt.Sprintf("%v", *m.SemicolonAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SemicolonAttr))})
 	}
 	if m.ConsecutiveAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "consecutive"},
-			Value: fmt.Sprintf("%v", *m.ConsecutiveAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ConsecutiveAttr))})
 	}
 	if m.QualifierAttr != ST_QualifierUnset {
 		attr, err := m.QualifierAttr.MarshalXMLAttr(xml.Name{Local: "qualifier"})

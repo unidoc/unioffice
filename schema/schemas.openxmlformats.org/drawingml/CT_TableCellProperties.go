@@ -78,7 +78,7 @@ func (m *CT_TableCellProperties) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	if m.AnchorCtrAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "anchorCtr"},
-			Value: fmt.Sprintf("%v", *m.AnchorCtrAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AnchorCtrAttr))})
 	}
 	if m.HorzOverflowAttr != ST_TextHorzOverflowTypeUnset {
 		attr, err := m.HorzOverflowAttr.MarshalXMLAttr(xml.Name{Local: "horzOverflow"})

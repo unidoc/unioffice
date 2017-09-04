@@ -30,7 +30,7 @@ func (m *CT_AnimationDgmBuildProperties) MarshalXML(e *xml.Encoder, start xml.St
 	}
 	if m.RevAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rev"},
-			Value: fmt.Sprintf("%v", *m.RevAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RevAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

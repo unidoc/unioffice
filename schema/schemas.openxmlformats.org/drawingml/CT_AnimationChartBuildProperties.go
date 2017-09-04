@@ -30,7 +30,7 @@ func (m *CT_AnimationChartBuildProperties) MarshalXML(e *xml.Encoder, start xml.
 	}
 	if m.AnimBgAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "animBg"},
-			Value: fmt.Sprintf("%v", *m.AnimBgAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AnimBgAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

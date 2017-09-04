@@ -32,7 +32,7 @@ func NewCT_ConditionalFormatting() *CT_ConditionalFormatting {
 func (m *CT_ConditionalFormatting) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.PivotAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "pivot"},
-			Value: fmt.Sprintf("%v", *m.PivotAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PivotAttr))})
 	}
 	if m.SqrefAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "sqref"},

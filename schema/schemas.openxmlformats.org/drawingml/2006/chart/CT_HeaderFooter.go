@@ -36,15 +36,15 @@ func NewCT_HeaderFooter() *CT_HeaderFooter {
 func (m *CT_HeaderFooter) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.AlignWithMarginsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "alignWithMargins"},
-			Value: fmt.Sprintf("%v", *m.AlignWithMarginsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AlignWithMarginsAttr))})
 	}
 	if m.DifferentOddEvenAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "differentOddEven"},
-			Value: fmt.Sprintf("%v", *m.DifferentOddEvenAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DifferentOddEvenAttr))})
 	}
 	if m.DifferentFirstAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "differentFirst"},
-			Value: fmt.Sprintf("%v", *m.DifferentFirstAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DifferentFirstAttr))})
 	}
 	e.EncodeToken(start)
 	if m.OddHeader != nil {

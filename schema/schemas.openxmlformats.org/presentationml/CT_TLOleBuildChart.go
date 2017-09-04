@@ -38,7 +38,7 @@ func (m *CT_TLOleBuildChart) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	if m.AnimBgAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "animBg"},
-			Value: fmt.Sprintf("%v", *m.AnimBgAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AnimBgAttr))})
 	}
 	if m.SpidAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "spid"},
@@ -50,7 +50,7 @@ func (m *CT_TLOleBuildChart) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	if m.UiExpandAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "uiExpand"},
-			Value: fmt.Sprintf("%v", *m.UiExpandAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UiExpandAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

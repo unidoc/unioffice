@@ -233,6 +233,13 @@ type Any interface {
 	UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 }
 
+func b2i(b bool) uint8 {
+	if b {
+		return 1
+	}
+	return 0
+}
+
 type ST_FontCollectionIndex byte
 
 const (

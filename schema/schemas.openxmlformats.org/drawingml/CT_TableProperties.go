@@ -42,31 +42,31 @@ func NewCT_TableProperties() *CT_TableProperties {
 func (m *CT_TableProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.RtlAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rtl"},
-			Value: fmt.Sprintf("%v", *m.RtlAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RtlAttr))})
 	}
 	if m.FirstRowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "firstRow"},
-			Value: fmt.Sprintf("%v", *m.FirstRowAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FirstRowAttr))})
 	}
 	if m.FirstColAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "firstCol"},
-			Value: fmt.Sprintf("%v", *m.FirstColAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FirstColAttr))})
 	}
 	if m.LastRowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "lastRow"},
-			Value: fmt.Sprintf("%v", *m.LastRowAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LastRowAttr))})
 	}
 	if m.LastColAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "lastCol"},
-			Value: fmt.Sprintf("%v", *m.LastColAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LastColAttr))})
 	}
 	if m.BandRowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "bandRow"},
-			Value: fmt.Sprintf("%v", *m.BandRowAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BandRowAttr))})
 	}
 	if m.BandColAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "bandCol"},
-			Value: fmt.Sprintf("%v", *m.BandColAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BandColAttr))})
 	}
 	e.EncodeToken(start)
 	if m.NoFill != nil {

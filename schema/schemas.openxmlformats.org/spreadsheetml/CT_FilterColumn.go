@@ -46,11 +46,11 @@ func (m *CT_FilterColumn) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		Value: fmt.Sprintf("%v", m.ColIdAttr)})
 	if m.HiddenButtonAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hiddenButton"},
-			Value: fmt.Sprintf("%v", *m.HiddenButtonAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HiddenButtonAttr))})
 	}
 	if m.ShowButtonAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showButton"},
-			Value: fmt.Sprintf("%v", *m.ShowButtonAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowButtonAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Filters != nil {

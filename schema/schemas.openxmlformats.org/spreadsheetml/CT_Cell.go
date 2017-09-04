@@ -70,7 +70,7 @@ func (m *CT_Cell) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.PhAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ph"},
-			Value: fmt.Sprintf("%v", *m.PhAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PhAttr))})
 	}
 	e.EncodeToken(start)
 	if m.F != nil {

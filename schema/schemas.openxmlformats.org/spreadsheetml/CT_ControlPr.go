@@ -57,39 +57,39 @@ func NewCT_ControlPr() *CT_ControlPr {
 func (m *CT_ControlPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.LockedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "locked"},
-			Value: fmt.Sprintf("%v", *m.LockedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LockedAttr))})
 	}
 	if m.DefaultSizeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "defaultSize"},
-			Value: fmt.Sprintf("%v", *m.DefaultSizeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DefaultSizeAttr))})
 	}
 	if m.PrintAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "print"},
-			Value: fmt.Sprintf("%v", *m.PrintAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PrintAttr))})
 	}
 	if m.DisabledAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "disabled"},
-			Value: fmt.Sprintf("%v", *m.DisabledAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DisabledAttr))})
 	}
 	if m.RecalcAlwaysAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "recalcAlways"},
-			Value: fmt.Sprintf("%v", *m.RecalcAlwaysAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RecalcAlwaysAttr))})
 	}
 	if m.UiObjectAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "uiObject"},
-			Value: fmt.Sprintf("%v", *m.UiObjectAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UiObjectAttr))})
 	}
 	if m.AutoFillAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoFill"},
-			Value: fmt.Sprintf("%v", *m.AutoFillAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoFillAttr))})
 	}
 	if m.AutoLineAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoLine"},
-			Value: fmt.Sprintf("%v", *m.AutoLineAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoLineAttr))})
 	}
 	if m.AutoPictAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoPict"},
-			Value: fmt.Sprintf("%v", *m.AutoPictAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoPictAttr))})
 	}
 	if m.MacroAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "macro"},

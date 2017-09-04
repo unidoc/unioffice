@@ -81,17 +81,17 @@ func (m *CT_RevisionDefinedName) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	if m.CustomViewAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "customView"},
-			Value: fmt.Sprintf("%v", *m.CustomViewAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CustomViewAttr))})
 	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "name"},
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	if m.FunctionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "function"},
-			Value: fmt.Sprintf("%v", *m.FunctionAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FunctionAttr))})
 	}
 	if m.OldFunctionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "oldFunction"},
-			Value: fmt.Sprintf("%v", *m.OldFunctionAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OldFunctionAttr))})
 	}
 	if m.FunctionGroupIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "functionGroupId"},
@@ -111,11 +111,11 @@ func (m *CT_RevisionDefinedName) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	if m.HiddenAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hidden"},
-			Value: fmt.Sprintf("%v", *m.HiddenAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HiddenAttr))})
 	}
 	if m.OldHiddenAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "oldHidden"},
-			Value: fmt.Sprintf("%v", *m.OldHiddenAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OldHiddenAttr))})
 	}
 	if m.CustomMenuAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "customMenu"},
@@ -163,11 +163,11 @@ func (m *CT_RevisionDefinedName) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	if m.UaAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ua"},
-			Value: fmt.Sprintf("%v", *m.UaAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UaAttr))})
 	}
 	if m.RaAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ra"},
-			Value: fmt.Sprintf("%v", *m.RaAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RaAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Formula != nil {

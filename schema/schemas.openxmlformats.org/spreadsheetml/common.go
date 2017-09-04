@@ -32,6 +32,13 @@ func (s ST_CellSpans) String() string {
 	return strings.Join(s, " ")
 }
 
+func b2i(b bool) uint8 {
+	if b {
+		return 1
+	}
+	return 0
+}
+
 type ST_FilterOperator byte
 
 const (

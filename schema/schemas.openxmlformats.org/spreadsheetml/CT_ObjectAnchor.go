@@ -35,11 +35,11 @@ func NewCT_ObjectAnchor() *CT_ObjectAnchor {
 func (m *CT_ObjectAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.MoveWithCellsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "moveWithCells"},
-			Value: fmt.Sprintf("%v", *m.MoveWithCellsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.MoveWithCellsAttr))})
 	}
 	if m.SizeWithCellsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "sizeWithCells"},
-			Value: fmt.Sprintf("%v", *m.SizeWithCellsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SizeWithCellsAttr))})
 	}
 	e.EncodeToken(start)
 	sefrom := xml.StartElement{Name: xml.Name{Local: "xdr:from"}}

@@ -53,15 +53,15 @@ func (m *CT_TLBuildParagraph) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	}
 	if m.AnimBgAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "animBg"},
-			Value: fmt.Sprintf("%v", *m.AnimBgAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AnimBgAttr))})
 	}
 	if m.AutoUpdateAnimBgAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoUpdateAnimBg"},
-			Value: fmt.Sprintf("%v", *m.AutoUpdateAnimBgAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoUpdateAnimBgAttr))})
 	}
 	if m.RevAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rev"},
-			Value: fmt.Sprintf("%v", *m.RevAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RevAttr))})
 	}
 	if m.AdvAutoAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "advAuto"},
@@ -77,7 +77,7 @@ func (m *CT_TLBuildParagraph) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	}
 	if m.UiExpandAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "uiExpand"},
-			Value: fmt.Sprintf("%v", *m.UiExpandAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UiExpandAttr))})
 	}
 	e.EncodeToken(start)
 	if m.TmplLst != nil {

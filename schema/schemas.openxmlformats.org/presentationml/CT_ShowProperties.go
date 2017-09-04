@@ -50,19 +50,19 @@ func NewCT_ShowProperties() *CT_ShowProperties {
 func (m *CT_ShowProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.LoopAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "loop"},
-			Value: fmt.Sprintf("%v", *m.LoopAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LoopAttr))})
 	}
 	if m.ShowNarrationAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showNarration"},
-			Value: fmt.Sprintf("%v", *m.ShowNarrationAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowNarrationAttr))})
 	}
 	if m.ShowAnimationAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showAnimation"},
-			Value: fmt.Sprintf("%v", *m.ShowAnimationAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowAnimationAttr))})
 	}
 	if m.UseTimingsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "useTimings"},
-			Value: fmt.Sprintf("%v", *m.UseTimingsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UseTimingsAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Present != nil {

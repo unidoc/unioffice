@@ -35,7 +35,7 @@ func NewCT_CommonViewProperties() *CT_CommonViewProperties {
 func (m *CT_CommonViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.VarScaleAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "varScale"},
-			Value: fmt.Sprintf("%v", *m.VarScaleAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.VarScaleAttr))})
 	}
 	e.EncodeToken(start)
 	sescale := xml.StartElement{Name: xml.Name{Local: "p:scale"}}

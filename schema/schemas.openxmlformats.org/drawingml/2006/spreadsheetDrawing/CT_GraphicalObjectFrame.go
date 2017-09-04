@@ -39,7 +39,7 @@ func (m *CT_GraphicalObjectFrame) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.FPublishedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fPublished"},
-			Value: fmt.Sprintf("%v", *m.FPublishedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FPublishedAttr))})
 	}
 	e.EncodeToken(start)
 	senvGraphicFramePr := xml.StartElement{Name: xml.Name{Local: "xdr:nvGraphicFramePr"}}

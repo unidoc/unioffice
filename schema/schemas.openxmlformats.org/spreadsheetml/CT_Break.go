@@ -46,11 +46,11 @@ func (m *CT_Break) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.ManAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "man"},
-			Value: fmt.Sprintf("%v", *m.ManAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ManAttr))})
 	}
 	if m.PtAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "pt"},
-			Value: fmt.Sprintf("%v", *m.PtAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PtAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

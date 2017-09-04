@@ -81,11 +81,11 @@ func (m *CT_CacheHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.MeasureAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "measure"},
-			Value: fmt.Sprintf("%v", *m.MeasureAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.MeasureAttr))})
 	}
 	if m.SetAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "set"},
-			Value: fmt.Sprintf("%v", *m.SetAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SetAttr))})
 	}
 	if m.ParentSetAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "parentSet"},
@@ -97,15 +97,15 @@ func (m *CT_CacheHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.AttributeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "attribute"},
-			Value: fmt.Sprintf("%v", *m.AttributeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AttributeAttr))})
 	}
 	if m.TimeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "time"},
-			Value: fmt.Sprintf("%v", *m.TimeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.TimeAttr))})
 	}
 	if m.KeyAttributeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "keyAttribute"},
-			Value: fmt.Sprintf("%v", *m.KeyAttributeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.KeyAttributeAttr))})
 	}
 	if m.DefaultMemberUniqueNameAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "defaultMemberUniqueName"},
@@ -133,13 +133,13 @@ func (m *CT_CacheHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.MeasuresAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "measures"},
-			Value: fmt.Sprintf("%v", *m.MeasuresAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.MeasuresAttr))})
 	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "count"},
 		Value: fmt.Sprintf("%v", m.CountAttr)})
 	if m.OneFieldAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "oneField"},
-			Value: fmt.Sprintf("%v", *m.OneFieldAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OneFieldAttr))})
 	}
 	if m.MemberValueDatatypeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "memberValueDatatype"},
@@ -147,15 +147,15 @@ func (m *CT_CacheHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.UnbalancedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "unbalanced"},
-			Value: fmt.Sprintf("%v", *m.UnbalancedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UnbalancedAttr))})
 	}
 	if m.UnbalancedGroupAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "unbalancedGroup"},
-			Value: fmt.Sprintf("%v", *m.UnbalancedGroupAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UnbalancedGroupAttr))})
 	}
 	if m.HiddenAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hidden"},
-			Value: fmt.Sprintf("%v", *m.HiddenAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HiddenAttr))})
 	}
 	e.EncodeToken(start)
 	if m.FieldsUsage != nil {

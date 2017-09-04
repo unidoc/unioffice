@@ -101,7 +101,7 @@ func (m *CT_ElemPropSet) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.Coherent3DOffAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "coherent3DOff"},
-			Value: fmt.Sprintf("%v", *m.Coherent3DOffAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.Coherent3DOffAttr))})
 	}
 	if m.PhldrTAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "phldrT"},
@@ -109,7 +109,7 @@ func (m *CT_ElemPropSet) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.PhldrAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "phldr"},
-			Value: fmt.Sprintf("%v", *m.PhldrAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PhldrAttr))})
 	}
 	if m.CustAngAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "custAng"},
@@ -117,11 +117,11 @@ func (m *CT_ElemPropSet) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.CustFlipVertAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "custFlipVert"},
-			Value: fmt.Sprintf("%v", *m.CustFlipVertAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CustFlipVertAttr))})
 	}
 	if m.CustFlipHorAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "custFlipHor"},
-			Value: fmt.Sprintf("%v", *m.CustFlipHorAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CustFlipHorAttr))})
 	}
 	if m.CustSzXAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "custSzX"},
@@ -141,7 +141,7 @@ func (m *CT_ElemPropSet) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.CustTAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "custT"},
-			Value: fmt.Sprintf("%v", *m.CustTAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CustTAttr))})
 	}
 	if m.CustLinFactXAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "custLinFactX"},

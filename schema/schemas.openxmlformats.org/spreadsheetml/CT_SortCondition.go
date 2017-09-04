@@ -38,7 +38,7 @@ func NewCT_SortCondition() *CT_SortCondition {
 func (m *CT_SortCondition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.DescendingAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "descending"},
-			Value: fmt.Sprintf("%v", *m.DescendingAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DescendingAttr))})
 	}
 	if m.SortByAttr != ST_SortByUnset {
 		attr, err := m.SortByAttr.MarshalXMLAttr(xml.Name{Local: "sortBy"})

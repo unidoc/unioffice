@@ -30,7 +30,7 @@ func NewCT_TLMediaNodeAudio() *CT_TLMediaNodeAudio {
 func (m *CT_TLMediaNodeAudio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.IsNarrationAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "isNarration"},
-			Value: fmt.Sprintf("%v", *m.IsNarrationAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.IsNarrationAttr))})
 	}
 	e.EncodeToken(start)
 	secMediaNode := xml.StartElement{Name: xml.Name{Local: "p:cMediaNode"}}

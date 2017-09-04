@@ -41,7 +41,7 @@ func (m *CT_DataBinding) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.FileBindingAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "FileBinding"},
-			Value: fmt.Sprintf("%v", *m.FileBindingAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FileBindingAttr))})
 	}
 	if m.ConnectionIDAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ConnectionID"},

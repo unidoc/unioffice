@@ -28,7 +28,7 @@ func NewCT_OleObjectLink() *CT_OleObjectLink {
 func (m *CT_OleObjectLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.UpdateAutomaticAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "updateAutomatic"},
-			Value: fmt.Sprintf("%v", *m.UpdateAutomaticAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UpdateAutomaticAttr))})
 	}
 	e.EncodeToken(start)
 	if m.ExtLst != nil {

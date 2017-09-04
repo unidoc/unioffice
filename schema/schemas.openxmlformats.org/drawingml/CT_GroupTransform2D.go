@@ -36,11 +36,11 @@ func (m *CT_GroupTransform2D) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	}
 	if m.FlipHAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "flipH"},
-			Value: fmt.Sprintf("%v", *m.FlipHAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FlipHAttr))})
 	}
 	if m.FlipVAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "flipV"},
-			Value: fmt.Sprintf("%v", *m.FlipVAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FlipVAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Off != nil {

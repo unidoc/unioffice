@@ -42,7 +42,7 @@ func (m *CT_Cfvo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.GteAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "gte"},
-			Value: fmt.Sprintf("%v", *m.GteAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.GteAttr))})
 	}
 	e.EncodeToken(start)
 	if m.ExtLst != nil {

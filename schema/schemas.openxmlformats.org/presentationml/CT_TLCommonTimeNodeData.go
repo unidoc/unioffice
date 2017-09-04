@@ -128,7 +128,7 @@ func (m *CT_TLCommonTimeNodeData) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.AutoRevAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoRev"},
-			Value: fmt.Sprintf("%v", *m.AutoRevAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoRevAttr))})
 	}
 	if m.RestartAttr != ST_TLTimeNodeRestartTypeUnset {
 		attr, err := m.RestartAttr.MarshalXMLAttr(xml.Name{Local: "restart"})
@@ -161,7 +161,7 @@ func (m *CT_TLCommonTimeNodeData) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.DisplayAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "display"},
-			Value: fmt.Sprintf("%v", *m.DisplayAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DisplayAttr))})
 	}
 	if m.MasterRelAttr != ST_TLTimeNodeMasterRelationUnset {
 		attr, err := m.MasterRelAttr.MarshalXMLAttr(xml.Name{Local: "masterRel"})
@@ -180,7 +180,7 @@ func (m *CT_TLCommonTimeNodeData) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.AfterEffectAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "afterEffect"},
-			Value: fmt.Sprintf("%v", *m.AfterEffectAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AfterEffectAttr))})
 	}
 	if m.NodeTypeAttr != ST_TLTimeNodeTypeUnset {
 		attr, err := m.NodeTypeAttr.MarshalXMLAttr(xml.Name{Local: "nodeType"})
@@ -191,7 +191,7 @@ func (m *CT_TLCommonTimeNodeData) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.NodePhAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "nodePh"},
-			Value: fmt.Sprintf("%v", *m.NodePhAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.NodePhAttr))})
 	}
 	e.EncodeToken(start)
 	if m.StCondLst != nil {

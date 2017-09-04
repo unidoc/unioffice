@@ -38,19 +38,19 @@ func (m *CT_TableStyleInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.ShowFirstColumnAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showFirstColumn"},
-			Value: fmt.Sprintf("%v", *m.ShowFirstColumnAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowFirstColumnAttr))})
 	}
 	if m.ShowLastColumnAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showLastColumn"},
-			Value: fmt.Sprintf("%v", *m.ShowLastColumnAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowLastColumnAttr))})
 	}
 	if m.ShowRowStripesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showRowStripes"},
-			Value: fmt.Sprintf("%v", *m.ShowRowStripesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowRowStripesAttr))})
 	}
 	if m.ShowColumnStripesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showColumnStripes"},
-			Value: fmt.Sprintf("%v", *m.ShowColumnStripesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowColumnStripesAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

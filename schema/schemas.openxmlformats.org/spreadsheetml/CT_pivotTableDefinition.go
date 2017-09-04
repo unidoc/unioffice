@@ -193,7 +193,7 @@ func (m *CT_pivotTableDefinition) MarshalXML(e *xml.Encoder, start xml.StartElem
 		Value: fmt.Sprintf("%v", m.CacheIdAttr)})
 	if m.DataOnRowsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dataOnRows"},
-			Value: fmt.Sprintf("%v", *m.DataOnRowsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DataOnRowsAttr))})
 	}
 	if m.DataPositionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dataPosition"},
@@ -211,7 +211,7 @@ func (m *CT_pivotTableDefinition) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.ShowErrorAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showError"},
-			Value: fmt.Sprintf("%v", *m.ShowErrorAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowErrorAttr))})
 	}
 	if m.MissingCaptionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "missingCaption"},
@@ -219,7 +219,7 @@ func (m *CT_pivotTableDefinition) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.ShowMissingAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showMissing"},
-			Value: fmt.Sprintf("%v", *m.ShowMissingAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowMissingAttr))})
 	}
 	if m.PageStyleAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "pageStyle"},
@@ -247,71 +247,71 @@ func (m *CT_pivotTableDefinition) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.AsteriskTotalsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "asteriskTotals"},
-			Value: fmt.Sprintf("%v", *m.AsteriskTotalsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AsteriskTotalsAttr))})
 	}
 	if m.ShowItemsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showItems"},
-			Value: fmt.Sprintf("%v", *m.ShowItemsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowItemsAttr))})
 	}
 	if m.EditDataAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "editData"},
-			Value: fmt.Sprintf("%v", *m.EditDataAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EditDataAttr))})
 	}
 	if m.DisableFieldListAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "disableFieldList"},
-			Value: fmt.Sprintf("%v", *m.DisableFieldListAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DisableFieldListAttr))})
 	}
 	if m.ShowCalcMbrsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showCalcMbrs"},
-			Value: fmt.Sprintf("%v", *m.ShowCalcMbrsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowCalcMbrsAttr))})
 	}
 	if m.VisualTotalsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "visualTotals"},
-			Value: fmt.Sprintf("%v", *m.VisualTotalsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.VisualTotalsAttr))})
 	}
 	if m.ShowMultipleLabelAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showMultipleLabel"},
-			Value: fmt.Sprintf("%v", *m.ShowMultipleLabelAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowMultipleLabelAttr))})
 	}
 	if m.ShowDataDropDownAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showDataDropDown"},
-			Value: fmt.Sprintf("%v", *m.ShowDataDropDownAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowDataDropDownAttr))})
 	}
 	if m.ShowDrillAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showDrill"},
-			Value: fmt.Sprintf("%v", *m.ShowDrillAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowDrillAttr))})
 	}
 	if m.PrintDrillAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "printDrill"},
-			Value: fmt.Sprintf("%v", *m.PrintDrillAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PrintDrillAttr))})
 	}
 	if m.ShowMemberPropertyTipsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showMemberPropertyTips"},
-			Value: fmt.Sprintf("%v", *m.ShowMemberPropertyTipsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowMemberPropertyTipsAttr))})
 	}
 	if m.ShowDataTipsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showDataTips"},
-			Value: fmt.Sprintf("%v", *m.ShowDataTipsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowDataTipsAttr))})
 	}
 	if m.EnableWizardAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "enableWizard"},
-			Value: fmt.Sprintf("%v", *m.EnableWizardAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EnableWizardAttr))})
 	}
 	if m.EnableDrillAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "enableDrill"},
-			Value: fmt.Sprintf("%v", *m.EnableDrillAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EnableDrillAttr))})
 	}
 	if m.EnableFieldPropertiesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "enableFieldProperties"},
-			Value: fmt.Sprintf("%v", *m.EnableFieldPropertiesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EnableFieldPropertiesAttr))})
 	}
 	if m.PreserveFormattingAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "preserveFormatting"},
-			Value: fmt.Sprintf("%v", *m.PreserveFormattingAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PreserveFormattingAttr))})
 	}
 	if m.UseAutoFormattingAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "useAutoFormatting"},
-			Value: fmt.Sprintf("%v", *m.UseAutoFormattingAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UseAutoFormattingAttr))})
 	}
 	if m.PageWrapAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "pageWrap"},
@@ -319,35 +319,35 @@ func (m *CT_pivotTableDefinition) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.PageOverThenDownAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "pageOverThenDown"},
-			Value: fmt.Sprintf("%v", *m.PageOverThenDownAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PageOverThenDownAttr))})
 	}
 	if m.SubtotalHiddenItemsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "subtotalHiddenItems"},
-			Value: fmt.Sprintf("%v", *m.SubtotalHiddenItemsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SubtotalHiddenItemsAttr))})
 	}
 	if m.RowGrandTotalsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rowGrandTotals"},
-			Value: fmt.Sprintf("%v", *m.RowGrandTotalsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RowGrandTotalsAttr))})
 	}
 	if m.ColGrandTotalsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "colGrandTotals"},
-			Value: fmt.Sprintf("%v", *m.ColGrandTotalsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ColGrandTotalsAttr))})
 	}
 	if m.FieldPrintTitlesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fieldPrintTitles"},
-			Value: fmt.Sprintf("%v", *m.FieldPrintTitlesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FieldPrintTitlesAttr))})
 	}
 	if m.ItemPrintTitlesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "itemPrintTitles"},
-			Value: fmt.Sprintf("%v", *m.ItemPrintTitlesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ItemPrintTitlesAttr))})
 	}
 	if m.MergeItemAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "mergeItem"},
-			Value: fmt.Sprintf("%v", *m.MergeItemAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.MergeItemAttr))})
 	}
 	if m.ShowDropZonesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showDropZones"},
-			Value: fmt.Sprintf("%v", *m.ShowDropZonesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowDropZonesAttr))})
 	}
 	if m.CreatedVersionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "createdVersion"},
@@ -359,47 +359,47 @@ func (m *CT_pivotTableDefinition) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.ShowEmptyRowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showEmptyRow"},
-			Value: fmt.Sprintf("%v", *m.ShowEmptyRowAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowEmptyRowAttr))})
 	}
 	if m.ShowEmptyColAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showEmptyCol"},
-			Value: fmt.Sprintf("%v", *m.ShowEmptyColAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowEmptyColAttr))})
 	}
 	if m.ShowHeadersAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showHeaders"},
-			Value: fmt.Sprintf("%v", *m.ShowHeadersAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowHeadersAttr))})
 	}
 	if m.CompactAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "compact"},
-			Value: fmt.Sprintf("%v", *m.CompactAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CompactAttr))})
 	}
 	if m.OutlineAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "outline"},
-			Value: fmt.Sprintf("%v", *m.OutlineAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OutlineAttr))})
 	}
 	if m.OutlineDataAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "outlineData"},
-			Value: fmt.Sprintf("%v", *m.OutlineDataAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OutlineDataAttr))})
 	}
 	if m.CompactDataAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "compactData"},
-			Value: fmt.Sprintf("%v", *m.CompactDataAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CompactDataAttr))})
 	}
 	if m.PublishedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "published"},
-			Value: fmt.Sprintf("%v", *m.PublishedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PublishedAttr))})
 	}
 	if m.GridDropZonesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "gridDropZones"},
-			Value: fmt.Sprintf("%v", *m.GridDropZonesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.GridDropZonesAttr))})
 	}
 	if m.ImmersiveAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "immersive"},
-			Value: fmt.Sprintf("%v", *m.ImmersiveAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ImmersiveAttr))})
 	}
 	if m.MultipleFieldFiltersAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "multipleFieldFilters"},
-			Value: fmt.Sprintf("%v", *m.MultipleFieldFiltersAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.MultipleFieldFiltersAttr))})
 	}
 	if m.ChartFormatAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "chartFormat"},
@@ -415,15 +415,15 @@ func (m *CT_pivotTableDefinition) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.FieldListSortAscendingAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fieldListSortAscending"},
-			Value: fmt.Sprintf("%v", *m.FieldListSortAscendingAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FieldListSortAscendingAttr))})
 	}
 	if m.MdxSubqueriesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "mdxSubqueries"},
-			Value: fmt.Sprintf("%v", *m.MdxSubqueriesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.MdxSubqueriesAttr))})
 	}
 	if m.CustomListSortAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "customListSort"},
-			Value: fmt.Sprintf("%v", *m.CustomListSortAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CustomListSortAttr))})
 	}
 	if m.AutoFormatIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoFormatId"},
@@ -431,27 +431,27 @@ func (m *CT_pivotTableDefinition) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.ApplyNumberFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyNumberFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyNumberFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyNumberFormatsAttr))})
 	}
 	if m.ApplyBorderFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyBorderFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyBorderFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyBorderFormatsAttr))})
 	}
 	if m.ApplyFontFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyFontFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyFontFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyFontFormatsAttr))})
 	}
 	if m.ApplyPatternFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyPatternFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyPatternFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyPatternFormatsAttr))})
 	}
 	if m.ApplyAlignmentFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyAlignmentFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyAlignmentFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyAlignmentFormatsAttr))})
 	}
 	if m.ApplyWidthHeightFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyWidthHeightFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyWidthHeightFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyWidthHeightFormatsAttr))})
 	}
 	e.EncodeToken(start)
 	selocation := xml.StartElement{Name: xml.Name{Local: "x:location"}}

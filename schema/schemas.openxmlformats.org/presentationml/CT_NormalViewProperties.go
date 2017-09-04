@@ -42,11 +42,11 @@ func NewCT_NormalViewProperties() *CT_NormalViewProperties {
 func (m *CT_NormalViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ShowOutlineIconsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showOutlineIcons"},
-			Value: fmt.Sprintf("%v", *m.ShowOutlineIconsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowOutlineIconsAttr))})
 	}
 	if m.SnapVertSplitterAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "snapVertSplitter"},
-			Value: fmt.Sprintf("%v", *m.SnapVertSplitterAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SnapVertSplitterAttr))})
 	}
 	if m.VertBarStateAttr != ST_SplitterBarStateUnset {
 		attr, err := m.VertBarStateAttr.MarshalXMLAttr(xml.Name{Local: "vertBarState"})
@@ -64,7 +64,7 @@ func (m *CT_NormalViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.PreferSingleViewAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "preferSingleView"},
-			Value: fmt.Sprintf("%v", *m.PreferSingleViewAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PreferSingleViewAttr))})
 	}
 	e.EncodeToken(start)
 	serestoredLeft := xml.StartElement{Name: xml.Name{Local: "p:restoredLeft"}}

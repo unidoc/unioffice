@@ -60,15 +60,15 @@ func (m *CT_PageSetup) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.BlackAndWhiteAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "blackAndWhite"},
-			Value: fmt.Sprintf("%v", *m.BlackAndWhiteAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BlackAndWhiteAttr))})
 	}
 	if m.DraftAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "draft"},
-			Value: fmt.Sprintf("%v", *m.DraftAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DraftAttr))})
 	}
 	if m.UseFirstPageNumberAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "useFirstPageNumber"},
-			Value: fmt.Sprintf("%v", *m.UseFirstPageNumberAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UseFirstPageNumberAttr))})
 	}
 	if m.HorizontalDpiAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "horizontalDpi"},

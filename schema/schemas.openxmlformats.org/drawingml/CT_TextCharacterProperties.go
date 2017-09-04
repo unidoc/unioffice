@@ -66,7 +66,7 @@ func NewCT_TextCharacterProperties() *CT_TextCharacterProperties {
 func (m *CT_TextCharacterProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.KumimojiAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "kumimoji"},
-			Value: fmt.Sprintf("%v", *m.KumimojiAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.KumimojiAttr))})
 	}
 	if m.LangAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "lang"},
@@ -82,11 +82,11 @@ func (m *CT_TextCharacterProperties) MarshalXML(e *xml.Encoder, start xml.StartE
 	}
 	if m.BAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "b"},
-			Value: fmt.Sprintf("%v", *m.BAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BAttr))})
 	}
 	if m.IAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "i"},
-			Value: fmt.Sprintf("%v", *m.IAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.IAttr))})
 	}
 	if m.UAttr != ST_TextUnderlineTypeUnset {
 		attr, err := m.UAttr.MarshalXMLAttr(xml.Name{Local: "u"})
@@ -119,7 +119,7 @@ func (m *CT_TextCharacterProperties) MarshalXML(e *xml.Encoder, start xml.StartE
 	}
 	if m.NormalizeHAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "normalizeH"},
-			Value: fmt.Sprintf("%v", *m.NormalizeHAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.NormalizeHAttr))})
 	}
 	if m.BaselineAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "baseline"},
@@ -127,19 +127,19 @@ func (m *CT_TextCharacterProperties) MarshalXML(e *xml.Encoder, start xml.StartE
 	}
 	if m.NoProofAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "noProof"},
-			Value: fmt.Sprintf("%v", *m.NoProofAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.NoProofAttr))})
 	}
 	if m.DirtyAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dirty"},
-			Value: fmt.Sprintf("%v", *m.DirtyAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DirtyAttr))})
 	}
 	if m.ErrAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "err"},
-			Value: fmt.Sprintf("%v", *m.ErrAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ErrAttr))})
 	}
 	if m.SmtCleanAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "smtClean"},
-			Value: fmt.Sprintf("%v", *m.SmtCleanAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SmtCleanAttr))})
 	}
 	if m.SmtIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "smtId"},

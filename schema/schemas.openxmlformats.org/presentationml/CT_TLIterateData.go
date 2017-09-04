@@ -40,7 +40,7 @@ func (m *CT_TLIterateData) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	}
 	if m.BackwardsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "backwards"},
-			Value: fmt.Sprintf("%v", *m.BackwardsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BackwardsAttr))})
 	}
 	e.EncodeToken(start)
 	if m.TmAbs != nil {

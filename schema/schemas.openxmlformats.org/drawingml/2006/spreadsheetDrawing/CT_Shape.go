@@ -45,11 +45,11 @@ func (m *CT_Shape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.FLocksTextAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fLocksText"},
-			Value: fmt.Sprintf("%v", *m.FLocksTextAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FLocksTextAttr))})
 	}
 	if m.FPublishedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fPublished"},
-			Value: fmt.Sprintf("%v", *m.FPublishedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FPublishedAttr))})
 	}
 	e.EncodeToken(start)
 	senvSpPr := xml.StartElement{Name: xml.Name{Local: "xdr:nvSpPr"}}

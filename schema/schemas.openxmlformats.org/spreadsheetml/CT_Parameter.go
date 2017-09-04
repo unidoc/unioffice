@@ -59,7 +59,7 @@ func (m *CT_Parameter) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.RefreshOnChangeAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "refreshOnChange"},
-			Value: fmt.Sprintf("%v", *m.RefreshOnChangeAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RefreshOnChangeAttr))})
 	}
 	if m.PromptAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "prompt"},
@@ -67,7 +67,7 @@ func (m *CT_Parameter) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.BooleanAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "boolean"},
-			Value: fmt.Sprintf("%v", *m.BooleanAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BooleanAttr))})
 	}
 	if m.DoubleAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "double"},

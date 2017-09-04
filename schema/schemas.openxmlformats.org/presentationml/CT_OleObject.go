@@ -48,7 +48,7 @@ func (m *CT_OleObject) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.ShowAsIconAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showAsIcon"},
-			Value: fmt.Sprintf("%v", *m.ShowAsIconAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowAsIconAttr))})
 	}
 	if m.IdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "r:id"},

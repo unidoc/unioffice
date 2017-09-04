@@ -66,35 +66,35 @@ func NewCT_SharedItems() *CT_SharedItems {
 func (m *CT_SharedItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ContainsSemiMixedTypesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "containsSemiMixedTypes"},
-			Value: fmt.Sprintf("%v", *m.ContainsSemiMixedTypesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ContainsSemiMixedTypesAttr))})
 	}
 	if m.ContainsNonDateAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "containsNonDate"},
-			Value: fmt.Sprintf("%v", *m.ContainsNonDateAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ContainsNonDateAttr))})
 	}
 	if m.ContainsDateAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "containsDate"},
-			Value: fmt.Sprintf("%v", *m.ContainsDateAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ContainsDateAttr))})
 	}
 	if m.ContainsStringAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "containsString"},
-			Value: fmt.Sprintf("%v", *m.ContainsStringAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ContainsStringAttr))})
 	}
 	if m.ContainsBlankAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "containsBlank"},
-			Value: fmt.Sprintf("%v", *m.ContainsBlankAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ContainsBlankAttr))})
 	}
 	if m.ContainsMixedTypesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "containsMixedTypes"},
-			Value: fmt.Sprintf("%v", *m.ContainsMixedTypesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ContainsMixedTypesAttr))})
 	}
 	if m.ContainsNumberAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "containsNumber"},
-			Value: fmt.Sprintf("%v", *m.ContainsNumberAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ContainsNumberAttr))})
 	}
 	if m.ContainsIntegerAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "containsInteger"},
-			Value: fmt.Sprintf("%v", *m.ContainsIntegerAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ContainsIntegerAttr))})
 	}
 	if m.MinValueAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "minValue"},
@@ -118,7 +118,7 @@ func (m *CT_SharedItems) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.LongTextAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "longText"},
-			Value: fmt.Sprintf("%v", *m.LongTextAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LongTextAttr))})
 	}
 	e.EncodeToken(start)
 	if m.M != nil {

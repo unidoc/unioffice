@@ -68,27 +68,27 @@ func (m *CT_QueryTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	if m.HeadersAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "headers"},
-			Value: fmt.Sprintf("%v", *m.HeadersAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HeadersAttr))})
 	}
 	if m.RowNumbersAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rowNumbers"},
-			Value: fmt.Sprintf("%v", *m.RowNumbersAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RowNumbersAttr))})
 	}
 	if m.DisableRefreshAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "disableRefresh"},
-			Value: fmt.Sprintf("%v", *m.DisableRefreshAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DisableRefreshAttr))})
 	}
 	if m.BackgroundRefreshAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "backgroundRefresh"},
-			Value: fmt.Sprintf("%v", *m.BackgroundRefreshAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BackgroundRefreshAttr))})
 	}
 	if m.FirstBackgroundRefreshAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "firstBackgroundRefresh"},
-			Value: fmt.Sprintf("%v", *m.FirstBackgroundRefreshAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FirstBackgroundRefreshAttr))})
 	}
 	if m.RefreshOnLoadAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "refreshOnLoad"},
-			Value: fmt.Sprintf("%v", *m.RefreshOnLoadAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RefreshOnLoadAttr))})
 	}
 	if m.GrowShrinkTypeAttr != ST_GrowShrinkTypeUnset {
 		attr, err := m.GrowShrinkTypeAttr.MarshalXMLAttr(xml.Name{Local: "growShrinkType"})
@@ -99,27 +99,27 @@ func (m *CT_QueryTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.FillFormulasAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fillFormulas"},
-			Value: fmt.Sprintf("%v", *m.FillFormulasAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FillFormulasAttr))})
 	}
 	if m.RemoveDataOnSaveAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "removeDataOnSave"},
-			Value: fmt.Sprintf("%v", *m.RemoveDataOnSaveAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RemoveDataOnSaveAttr))})
 	}
 	if m.DisableEditAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "disableEdit"},
-			Value: fmt.Sprintf("%v", *m.DisableEditAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DisableEditAttr))})
 	}
 	if m.PreserveFormattingAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "preserveFormatting"},
-			Value: fmt.Sprintf("%v", *m.PreserveFormattingAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PreserveFormattingAttr))})
 	}
 	if m.AdjustColumnWidthAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "adjustColumnWidth"},
-			Value: fmt.Sprintf("%v", *m.AdjustColumnWidthAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AdjustColumnWidthAttr))})
 	}
 	if m.IntermediateAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "intermediate"},
-			Value: fmt.Sprintf("%v", *m.IntermediateAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.IntermediateAttr))})
 	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "connectionId"},
 		Value: fmt.Sprintf("%v", m.ConnectionIdAttr)})
@@ -129,27 +129,27 @@ func (m *CT_QueryTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.ApplyNumberFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyNumberFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyNumberFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyNumberFormatsAttr))})
 	}
 	if m.ApplyBorderFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyBorderFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyBorderFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyBorderFormatsAttr))})
 	}
 	if m.ApplyFontFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyFontFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyFontFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyFontFormatsAttr))})
 	}
 	if m.ApplyPatternFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyPatternFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyPatternFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyPatternFormatsAttr))})
 	}
 	if m.ApplyAlignmentFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyAlignmentFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyAlignmentFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyAlignmentFormatsAttr))})
 	}
 	if m.ApplyWidthHeightFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyWidthHeightFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyWidthHeightFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyWidthHeightFormatsAttr))})
 	}
 	e.EncodeToken(start)
 	if m.QueryTableRefresh != nil {

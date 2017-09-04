@@ -36,15 +36,15 @@ func NewCT_CommonSlideViewProperties() *CT_CommonSlideViewProperties {
 func (m *CT_CommonSlideViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.SnapToGridAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "snapToGrid"},
-			Value: fmt.Sprintf("%v", *m.SnapToGridAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SnapToGridAttr))})
 	}
 	if m.SnapToObjectsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "snapToObjects"},
-			Value: fmt.Sprintf("%v", *m.SnapToObjectsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SnapToObjectsAttr))})
 	}
 	if m.ShowGuidesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showGuides"},
-			Value: fmt.Sprintf("%v", *m.ShowGuidesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowGuidesAttr))})
 	}
 	e.EncodeToken(start)
 	secViewPr := xml.StartElement{Name: xml.Name{Local: "p:cViewPr"}}

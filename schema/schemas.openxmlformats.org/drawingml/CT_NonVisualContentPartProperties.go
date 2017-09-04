@@ -28,7 +28,7 @@ func NewCT_NonVisualContentPartProperties() *CT_NonVisualContentPartProperties {
 func (m *CT_NonVisualContentPartProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.IsCommentAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "isComment"},
-			Value: fmt.Sprintf("%v", *m.IsCommentAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.IsCommentAttr))})
 	}
 	start.Name.Local = "a:CT_NonVisualContentPartProperties"
 	e.EncodeToken(start)

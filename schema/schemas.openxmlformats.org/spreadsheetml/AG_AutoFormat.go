@@ -35,27 +35,27 @@ func (m *AG_AutoFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.ApplyNumberFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyNumberFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyNumberFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyNumberFormatsAttr))})
 	}
 	if m.ApplyBorderFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyBorderFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyBorderFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyBorderFormatsAttr))})
 	}
 	if m.ApplyFontFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyFontFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyFontFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyFontFormatsAttr))})
 	}
 	if m.ApplyPatternFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyPatternFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyPatternFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyPatternFormatsAttr))})
 	}
 	if m.ApplyAlignmentFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyAlignmentFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyAlignmentFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyAlignmentFormatsAttr))})
 	}
 	if m.ApplyWidthHeightFormatsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "applyWidthHeightFormats"},
-			Value: fmt.Sprintf("%v", *m.ApplyWidthHeightFormatsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ApplyWidthHeightFormatsAttr))})
 	}
 	return nil
 }

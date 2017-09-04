@@ -47,19 +47,19 @@ func (m *CT_QueryTableField) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	if m.DataBoundAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dataBound"},
-			Value: fmt.Sprintf("%v", *m.DataBoundAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DataBoundAttr))})
 	}
 	if m.RowNumbersAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rowNumbers"},
-			Value: fmt.Sprintf("%v", *m.RowNumbersAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RowNumbersAttr))})
 	}
 	if m.FillFormulasAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fillFormulas"},
-			Value: fmt.Sprintf("%v", *m.FillFormulasAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FillFormulasAttr))})
 	}
 	if m.ClippedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "clipped"},
-			Value: fmt.Sprintf("%v", *m.ClippedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ClippedAttr))})
 	}
 	if m.TableColumnIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "tableColumnId"},

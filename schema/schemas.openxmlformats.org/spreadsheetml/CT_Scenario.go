@@ -41,11 +41,11 @@ func (m *CT_Scenario) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		Value: fmt.Sprintf("%v", m.NameAttr)})
 	if m.LockedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "locked"},
-			Value: fmt.Sprintf("%v", *m.LockedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LockedAttr))})
 	}
 	if m.HiddenAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hidden"},
-			Value: fmt.Sprintf("%v", *m.HiddenAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HiddenAttr))})
 	}
 	if m.CountAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "count"},

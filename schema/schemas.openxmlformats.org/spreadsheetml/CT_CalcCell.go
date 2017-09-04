@@ -49,19 +49,19 @@ func (m *CT_CalcCell) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.SAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "s"},
-			Value: fmt.Sprintf("%v", *m.SAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SAttr))})
 	}
 	if m.LAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "l"},
-			Value: fmt.Sprintf("%v", *m.LAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LAttr))})
 	}
 	if m.TAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "t"},
-			Value: fmt.Sprintf("%v", *m.TAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.TAttr))})
 	}
 	if m.AAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "a"},
-			Value: fmt.Sprintf("%v", *m.AAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

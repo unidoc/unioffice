@@ -105,11 +105,11 @@ func (m *CT_Table) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.InsertRowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "insertRow"},
-			Value: fmt.Sprintf("%v", *m.InsertRowAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.InsertRowAttr))})
 	}
 	if m.InsertRowShiftAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "insertRowShift"},
-			Value: fmt.Sprintf("%v", *m.InsertRowShiftAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.InsertRowShiftAttr))})
 	}
 	if m.TotalsRowCountAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "totalsRowCount"},
@@ -117,11 +117,11 @@ func (m *CT_Table) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.TotalsRowShownAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "totalsRowShown"},
-			Value: fmt.Sprintf("%v", *m.TotalsRowShownAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.TotalsRowShownAttr))})
 	}
 	if m.PublishedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "published"},
-			Value: fmt.Sprintf("%v", *m.PublishedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PublishedAttr))})
 	}
 	if m.HeaderRowDxfIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "headerRowDxfId"},

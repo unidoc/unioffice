@@ -42,7 +42,7 @@ func NewCT_OlapPr() *CT_OlapPr {
 func (m *CT_OlapPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.LocalAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "local"},
-			Value: fmt.Sprintf("%v", *m.LocalAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LocalAttr))})
 	}
 	if m.LocalConnectionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "localConnection"},
@@ -50,11 +50,11 @@ func (m *CT_OlapPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.LocalRefreshAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "localRefresh"},
-			Value: fmt.Sprintf("%v", *m.LocalRefreshAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.LocalRefreshAttr))})
 	}
 	if m.SendLocaleAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "sendLocale"},
-			Value: fmt.Sprintf("%v", *m.SendLocaleAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SendLocaleAttr))})
 	}
 	if m.RowDrillCountAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rowDrillCount"},
@@ -62,19 +62,19 @@ func (m *CT_OlapPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.ServerFillAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "serverFill"},
-			Value: fmt.Sprintf("%v", *m.ServerFillAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ServerFillAttr))})
 	}
 	if m.ServerNumberFormatAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "serverNumberFormat"},
-			Value: fmt.Sprintf("%v", *m.ServerNumberFormatAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ServerNumberFormatAttr))})
 	}
 	if m.ServerFontAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "serverFont"},
-			Value: fmt.Sprintf("%v", *m.ServerFontAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ServerFontAttr))})
 	}
 	if m.ServerFontColorAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "serverFontColor"},
-			Value: fmt.Sprintf("%v", *m.ServerFontColorAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ServerFontColorAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

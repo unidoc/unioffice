@@ -56,11 +56,11 @@ func (m *CT_RevisionMove) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	if m.UaAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ua"},
-			Value: fmt.Sprintf("%v", *m.UaAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UaAttr))})
 	}
 	if m.RaAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ra"},
-			Value: fmt.Sprintf("%v", *m.RaAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RaAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Undo != nil {

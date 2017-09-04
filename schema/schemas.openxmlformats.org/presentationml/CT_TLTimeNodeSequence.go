@@ -38,7 +38,7 @@ func NewCT_TLTimeNodeSequence() *CT_TLTimeNodeSequence {
 func (m *CT_TLTimeNodeSequence) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ConcurrentAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "concurrent"},
-			Value: fmt.Sprintf("%v", *m.ConcurrentAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ConcurrentAttr))})
 	}
 	if m.PrevAcAttr != ST_TLPreviousActionTypeUnset {
 		attr, err := m.PrevAcAttr.MarshalXMLAttr(xml.Name{Local: "prevAc"})

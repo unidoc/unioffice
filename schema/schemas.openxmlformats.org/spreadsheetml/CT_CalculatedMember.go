@@ -61,7 +61,7 @@ func (m *CT_CalculatedMember) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	}
 	if m.SetAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "set"},
-			Value: fmt.Sprintf("%v", *m.SetAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SetAttr))})
 	}
 	e.EncodeToken(start)
 	if m.ExtLst != nil {

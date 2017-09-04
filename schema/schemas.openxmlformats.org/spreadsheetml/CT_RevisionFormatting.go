@@ -42,11 +42,11 @@ func (m *CT_RevisionFormatting) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		Value: fmt.Sprintf("%v", m.SheetIdAttr)})
 	if m.XfDxfAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xfDxf"},
-			Value: fmt.Sprintf("%v", *m.XfDxfAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.XfDxfAttr))})
 	}
 	if m.SAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "s"},
-			Value: fmt.Sprintf("%v", *m.SAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SAttr))})
 	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "sqref"},
 		Value: fmt.Sprintf("%v", m.SqrefAttr)})

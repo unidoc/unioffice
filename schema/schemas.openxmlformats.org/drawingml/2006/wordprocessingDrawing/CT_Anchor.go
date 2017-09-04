@@ -69,22 +69,22 @@ func (m *CT_Anchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.SimplePosAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "simplePos"},
-			Value: fmt.Sprintf("%v", *m.SimplePosAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SimplePosAttr))})
 	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "relativeHeight"},
 		Value: fmt.Sprintf("%v", m.RelativeHeightAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "behindDoc"},
-		Value: fmt.Sprintf("%v", m.BehindDocAttr)})
+		Value: fmt.Sprintf("%d", b2i(m.BehindDocAttr))})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "locked"},
-		Value: fmt.Sprintf("%v", m.LockedAttr)})
+		Value: fmt.Sprintf("%d", b2i(m.LockedAttr))})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "layoutInCell"},
-		Value: fmt.Sprintf("%v", m.LayoutInCellAttr)})
+		Value: fmt.Sprintf("%d", b2i(m.LayoutInCellAttr))})
 	if m.HiddenAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hidden"},
-			Value: fmt.Sprintf("%v", *m.HiddenAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HiddenAttr))})
 	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "allowOverlap"},
-		Value: fmt.Sprintf("%v", m.AllowOverlapAttr)})
+		Value: fmt.Sprintf("%d", b2i(m.AllowOverlapAttr))})
 	e.EncodeToken(start)
 	sesimplePos := xml.StartElement{Name: xml.Name{Local: "wp:simplePos"}}
 	e.EncodeElement(m.SimplePos, sesimplePos)

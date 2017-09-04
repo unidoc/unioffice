@@ -52,15 +52,15 @@ func (m *CT_Map) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "SchemaID"},
 		Value: fmt.Sprintf("%v", m.SchemaIDAttr)})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ShowImportExportValidationErrors"},
-		Value: fmt.Sprintf("%v", m.ShowImportExportValidationErrorsAttr)})
+		Value: fmt.Sprintf("%d", b2i(m.ShowImportExportValidationErrorsAttr))})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "AutoFit"},
-		Value: fmt.Sprintf("%v", m.AutoFitAttr)})
+		Value: fmt.Sprintf("%d", b2i(m.AutoFitAttr))})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "Append"},
-		Value: fmt.Sprintf("%v", m.AppendAttr)})
+		Value: fmt.Sprintf("%d", b2i(m.AppendAttr))})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "PreserveSortAFLayout"},
-		Value: fmt.Sprintf("%v", m.PreserveSortAFLayoutAttr)})
+		Value: fmt.Sprintf("%d", b2i(m.PreserveSortAFLayoutAttr))})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "PreserveFormat"},
-		Value: fmt.Sprintf("%v", m.PreserveFormatAttr)})
+		Value: fmt.Sprintf("%d", b2i(m.PreserveFormatAttr))})
 	e.EncodeToken(start)
 	if m.DataBinding != nil {
 		seDataBinding := xml.StartElement{Name: xml.Name{Local: "x:DataBinding"}}

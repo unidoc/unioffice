@@ -56,7 +56,7 @@ func (m *CT_TextBodyProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	if m.SpcFirstLastParaAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "spcFirstLastPara"},
-			Value: fmt.Sprintf("%v", *m.SpcFirstLastParaAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SpcFirstLastParaAttr))})
 	}
 	if m.VertOverflowAttr != ST_TextVertOverflowTypeUnset {
 		attr, err := m.VertOverflowAttr.MarshalXMLAttr(xml.Name{Local: "vertOverflow"})
@@ -112,11 +112,11 @@ func (m *CT_TextBodyProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	if m.RtlColAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rtlCol"},
-			Value: fmt.Sprintf("%v", *m.RtlColAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RtlColAttr))})
 	}
 	if m.FromWordArtAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fromWordArt"},
-			Value: fmt.Sprintf("%v", *m.FromWordArtAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FromWordArtAttr))})
 	}
 	if m.AnchorAttr != ST_TextAnchoringTypeUnset {
 		attr, err := m.AnchorAttr.MarshalXMLAttr(xml.Name{Local: "anchor"})
@@ -127,19 +127,19 @@ func (m *CT_TextBodyProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	if m.AnchorCtrAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "anchorCtr"},
-			Value: fmt.Sprintf("%v", *m.AnchorCtrAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AnchorCtrAttr))})
 	}
 	if m.ForceAAAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "forceAA"},
-			Value: fmt.Sprintf("%v", *m.ForceAAAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ForceAAAttr))})
 	}
 	if m.UprightAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "upright"},
-			Value: fmt.Sprintf("%v", *m.UprightAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UprightAttr))})
 	}
 	if m.CompatLnSpcAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "compatLnSpc"},
-			Value: fmt.Sprintf("%v", *m.CompatLnSpcAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CompatLnSpcAttr))})
 	}
 	e.EncodeToken(start)
 	if m.PrstTxWarp != nil {

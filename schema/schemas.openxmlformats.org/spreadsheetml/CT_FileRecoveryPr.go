@@ -32,19 +32,19 @@ func NewCT_FileRecoveryPr() *CT_FileRecoveryPr {
 func (m *CT_FileRecoveryPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.AutoRecoverAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoRecover"},
-			Value: fmt.Sprintf("%v", *m.AutoRecoverAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoRecoverAttr))})
 	}
 	if m.CrashSaveAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "crashSave"},
-			Value: fmt.Sprintf("%v", *m.CrashSaveAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CrashSaveAttr))})
 	}
 	if m.DataExtractLoadAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dataExtractLoad"},
-			Value: fmt.Sprintf("%v", *m.DataExtractLoadAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DataExtractLoadAttr))})
 	}
 	if m.RepairLoadAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "repairLoad"},
-			Value: fmt.Sprintf("%v", *m.RepairLoadAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RepairLoadAttr))})
 	}
 	e.EncodeToken(start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})

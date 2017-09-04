@@ -18,6 +18,12 @@ import (
 func ParseUnionST_Coordinate(s string) (drawingml.ST_Coordinate, error) {
 	return drawingml.ParseUnionST_Coordinate(s)
 }
+func b2i(b bool) uint8 {
+	if b {
+		return 1
+	}
+	return 0
+}
 
 type ST_WrapText byte
 

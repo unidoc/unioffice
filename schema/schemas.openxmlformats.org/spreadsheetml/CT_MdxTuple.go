@@ -71,19 +71,19 @@ func (m *CT_MdxTuple) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.IAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "i"},
-			Value: fmt.Sprintf("%v", *m.IAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.IAttr))})
 	}
 	if m.UAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "u"},
-			Value: fmt.Sprintf("%v", *m.UAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UAttr))})
 	}
 	if m.StAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "st"},
-			Value: fmt.Sprintf("%v", *m.StAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.StAttr))})
 	}
 	if m.BAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "b"},
-			Value: fmt.Sprintf("%v", *m.BAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BAttr))})
 	}
 	e.EncodeToken(start)
 	if m.N != nil {

@@ -62,19 +62,19 @@ func (m *CT_RevisionCellChange) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		Value: fmt.Sprintf("%v", m.SIdAttr)})
 	if m.OdxfAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "odxf"},
-			Value: fmt.Sprintf("%v", *m.OdxfAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OdxfAttr))})
 	}
 	if m.XfDxfAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xfDxf"},
-			Value: fmt.Sprintf("%v", *m.XfDxfAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.XfDxfAttr))})
 	}
 	if m.SAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "s"},
-			Value: fmt.Sprintf("%v", *m.SAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SAttr))})
 	}
 	if m.DxfAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "dxf"},
-			Value: fmt.Sprintf("%v", *m.DxfAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.DxfAttr))})
 	}
 	if m.NumFmtIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "numFmtId"},
@@ -82,23 +82,23 @@ func (m *CT_RevisionCellChange) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	if m.QuotePrefixAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "quotePrefix"},
-			Value: fmt.Sprintf("%v", *m.QuotePrefixAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.QuotePrefixAttr))})
 	}
 	if m.OldQuotePrefixAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "oldQuotePrefix"},
-			Value: fmt.Sprintf("%v", *m.OldQuotePrefixAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OldQuotePrefixAttr))})
 	}
 	if m.PhAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ph"},
-			Value: fmt.Sprintf("%v", *m.PhAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PhAttr))})
 	}
 	if m.OldPhAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "oldPh"},
-			Value: fmt.Sprintf("%v", *m.OldPhAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OldPhAttr))})
 	}
 	if m.EndOfListFormulaUpdateAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "endOfListFormulaUpdate"},
-			Value: fmt.Sprintf("%v", *m.EndOfListFormulaUpdateAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EndOfListFormulaUpdateAttr))})
 	}
 	if m.RIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "rId"},
@@ -106,11 +106,11 @@ func (m *CT_RevisionCellChange) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	if m.UaAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ua"},
-			Value: fmt.Sprintf("%v", *m.UaAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UaAttr))})
 	}
 	if m.RaAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "ra"},
-			Value: fmt.Sprintf("%v", *m.RaAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RaAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Oc != nil {

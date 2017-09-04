@@ -60,19 +60,19 @@ func (m *CT_SlideLayout) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.PreserveAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "preserve"},
-			Value: fmt.Sprintf("%v", *m.PreserveAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PreserveAttr))})
 	}
 	if m.UserDrawnAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "userDrawn"},
-			Value: fmt.Sprintf("%v", *m.UserDrawnAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.UserDrawnAttr))})
 	}
 	if m.ShowMasterSpAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showMasterSp"},
-			Value: fmt.Sprintf("%v", *m.ShowMasterSpAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowMasterSpAttr))})
 	}
 	if m.ShowMasterPhAnimAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showMasterPhAnim"},
-			Value: fmt.Sprintf("%v", *m.ShowMasterPhAnimAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowMasterPhAnimAttr))})
 	}
 	e.EncodeToken(start)
 	secSld := xml.StartElement{Name: xml.Name{Local: "p:cSld"}}

@@ -60,7 +60,7 @@ func NewCT_WorkbookPr() *CT_WorkbookPr {
 func (m *CT_WorkbookPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.Date1904Attr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "date1904"},
-			Value: fmt.Sprintf("%v", *m.Date1904Attr)})
+			Value: fmt.Sprintf("%d", b2i(*m.Date1904Attr))})
 	}
 	if m.ShowObjectsAttr != ST_ObjectsUnset {
 		attr, err := m.ShowObjectsAttr.MarshalXMLAttr(xml.Name{Local: "showObjects"})
@@ -71,27 +71,27 @@ func (m *CT_WorkbookPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.ShowBorderUnselectedTablesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showBorderUnselectedTables"},
-			Value: fmt.Sprintf("%v", *m.ShowBorderUnselectedTablesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowBorderUnselectedTablesAttr))})
 	}
 	if m.FilterPrivacyAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "filterPrivacy"},
-			Value: fmt.Sprintf("%v", *m.FilterPrivacyAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FilterPrivacyAttr))})
 	}
 	if m.PromptedSolutionsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "promptedSolutions"},
-			Value: fmt.Sprintf("%v", *m.PromptedSolutionsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PromptedSolutionsAttr))})
 	}
 	if m.ShowInkAnnotationAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showInkAnnotation"},
-			Value: fmt.Sprintf("%v", *m.ShowInkAnnotationAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowInkAnnotationAttr))})
 	}
 	if m.BackupFileAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "backupFile"},
-			Value: fmt.Sprintf("%v", *m.BackupFileAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.BackupFileAttr))})
 	}
 	if m.SaveExternalLinkValuesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "saveExternalLinkValues"},
-			Value: fmt.Sprintf("%v", *m.SaveExternalLinkValuesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.SaveExternalLinkValuesAttr))})
 	}
 	if m.UpdateLinksAttr != ST_UpdateLinksUnset {
 		attr, err := m.UpdateLinksAttr.MarshalXMLAttr(xml.Name{Local: "updateLinks"})
@@ -106,31 +106,31 @@ func (m *CT_WorkbookPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.HidePivotFieldListAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hidePivotFieldList"},
-			Value: fmt.Sprintf("%v", *m.HidePivotFieldListAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HidePivotFieldListAttr))})
 	}
 	if m.ShowPivotChartFilterAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "showPivotChartFilter"},
-			Value: fmt.Sprintf("%v", *m.ShowPivotChartFilterAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ShowPivotChartFilterAttr))})
 	}
 	if m.AllowRefreshQueryAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "allowRefreshQuery"},
-			Value: fmt.Sprintf("%v", *m.AllowRefreshQueryAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AllowRefreshQueryAttr))})
 	}
 	if m.PublishItemsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "publishItems"},
-			Value: fmt.Sprintf("%v", *m.PublishItemsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PublishItemsAttr))})
 	}
 	if m.CheckCompatibilityAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "checkCompatibility"},
-			Value: fmt.Sprintf("%v", *m.CheckCompatibilityAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.CheckCompatibilityAttr))})
 	}
 	if m.AutoCompressPicturesAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "autoCompressPictures"},
-			Value: fmt.Sprintf("%v", *m.AutoCompressPicturesAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AutoCompressPicturesAttr))})
 	}
 	if m.RefreshAllConnectionsAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "refreshAllConnections"},
-			Value: fmt.Sprintf("%v", *m.RefreshAllConnectionsAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.RefreshAllConnectionsAttr))})
 	}
 	if m.DefaultThemeVersionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "defaultThemeVersion"},

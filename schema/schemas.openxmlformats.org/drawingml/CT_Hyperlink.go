@@ -55,15 +55,15 @@ func (m *CT_Hyperlink) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.HistoryAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "history"},
-			Value: fmt.Sprintf("%v", *m.HistoryAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HistoryAttr))})
 	}
 	if m.HighlightClickAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "highlightClick"},
-			Value: fmt.Sprintf("%v", *m.HighlightClickAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HighlightClickAttr))})
 	}
 	if m.EndSndAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "endSnd"},
-			Value: fmt.Sprintf("%v", *m.EndSndAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.EndSndAttr))})
 	}
 	e.EncodeToken(start)
 	if m.Snd != nil {

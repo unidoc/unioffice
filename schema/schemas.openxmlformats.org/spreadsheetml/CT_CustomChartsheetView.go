@@ -53,7 +53,7 @@ func (m *CT_CustomChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.ZoomToFitAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "zoomToFit"},
-			Value: fmt.Sprintf("%v", *m.ZoomToFitAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ZoomToFitAttr))})
 	}
 	e.EncodeToken(start)
 	if m.PageMargins != nil {

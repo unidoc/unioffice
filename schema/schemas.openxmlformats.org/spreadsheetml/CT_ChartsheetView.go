@@ -34,7 +34,7 @@ func NewCT_ChartsheetView() *CT_ChartsheetView {
 func (m *CT_ChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.TabSelectedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "tabSelected"},
-			Value: fmt.Sprintf("%v", *m.TabSelectedAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.TabSelectedAttr))})
 	}
 	if m.ZoomScaleAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "zoomScale"},
@@ -44,7 +44,7 @@ func (m *CT_ChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		Value: fmt.Sprintf("%v", m.WorkbookViewIdAttr)})
 	if m.ZoomToFitAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "zoomToFit"},
-			Value: fmt.Sprintf("%v", *m.ZoomToFitAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.ZoomToFitAttr))})
 	}
 	e.EncodeToken(start)
 	if m.ExtLst != nil {

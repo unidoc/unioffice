@@ -62,19 +62,19 @@ func (m *CT_RevisionComment) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	if m.AlwaysShowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "alwaysShow"},
-			Value: fmt.Sprintf("%v", *m.AlwaysShowAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.AlwaysShowAttr))})
 	}
 	if m.OldAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "old"},
-			Value: fmt.Sprintf("%v", *m.OldAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.OldAttr))})
 	}
 	if m.HiddenRowAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hiddenRow"},
-			Value: fmt.Sprintf("%v", *m.HiddenRowAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HiddenRowAttr))})
 	}
 	if m.HiddenColumnAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hiddenColumn"},
-			Value: fmt.Sprintf("%v", *m.HiddenColumnAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HiddenColumnAttr))})
 	}
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "author"},
 		Value: fmt.Sprintf("%v", m.AuthorAttr)})

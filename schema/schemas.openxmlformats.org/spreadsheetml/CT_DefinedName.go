@@ -66,19 +66,19 @@ func (m *CT_DefinedName) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.HiddenAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "hidden"},
-			Value: fmt.Sprintf("%v", *m.HiddenAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.HiddenAttr))})
 	}
 	if m.FunctionAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "function"},
-			Value: fmt.Sprintf("%v", *m.FunctionAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.FunctionAttr))})
 	}
 	if m.VbProcedureAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "vbProcedure"},
-			Value: fmt.Sprintf("%v", *m.VbProcedureAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.VbProcedureAttr))})
 	}
 	if m.XlmAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xlm"},
-			Value: fmt.Sprintf("%v", *m.XlmAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.XlmAttr))})
 	}
 	if m.FunctionGroupIdAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "functionGroupId"},
@@ -90,11 +90,11 @@ func (m *CT_DefinedName) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.PublishToServerAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "publishToServer"},
-			Value: fmt.Sprintf("%v", *m.PublishToServerAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.PublishToServerAttr))})
 	}
 	if m.WorkbookParameterAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "workbookParameter"},
-			Value: fmt.Sprintf("%v", *m.WorkbookParameterAttr)})
+			Value: fmt.Sprintf("%d", b2i(*m.WorkbookParameterAttr))})
 	}
 	e.EncodeElement(m.Content, start)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
