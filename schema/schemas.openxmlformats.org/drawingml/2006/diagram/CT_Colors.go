@@ -23,6 +23,8 @@ type CT_Colors struct {
 
 func NewCT_Colors() *CT_Colors {
 	ret := &CT_Colors{}
+	ret.MethAttr = ST_ClrAppMethodSpan
+	ret.HueDirAttr = ST_HueDirCw
 	return ret
 }
 
@@ -53,6 +55,8 @@ func (m *CT_Colors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Colors) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.MethAttr = ST_ClrAppMethodSpan
+	m.HueDirAttr = ST_HueDirCw
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "meth" {
 			m.MethAttr.UnmarshalXMLAttr(attr)

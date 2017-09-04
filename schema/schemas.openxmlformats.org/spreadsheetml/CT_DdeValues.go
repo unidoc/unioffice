@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_DdeValues struct {
@@ -25,6 +27,8 @@ type CT_DdeValues struct {
 
 func NewCT_DdeValues() *CT_DdeValues {
 	ret := &CT_DdeValues{}
+	ret.RowsAttr = gooxml.Uint32(1)
+	ret.ColsAttr = gooxml.Uint32(1)
 	return ret
 }
 
@@ -46,6 +50,8 @@ func (m *CT_DdeValues) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_DdeValues) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.RowsAttr = gooxml.Uint32(1)
+	m.ColsAttr = gooxml.Uint32(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "rows" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

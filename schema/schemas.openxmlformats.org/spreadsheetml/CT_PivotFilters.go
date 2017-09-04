@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PivotFilters struct {
@@ -23,6 +25,7 @@ type CT_PivotFilters struct {
 
 func NewCT_PivotFilters() *CT_PivotFilters {
 	ret := &CT_PivotFilters{}
+	ret.CountAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -42,6 +45,7 @@ func (m *CT_PivotFilters) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_PivotFilters) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CountAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -19,6 +19,7 @@ type CT_SectType struct {
 
 func NewCT_SectType() *CT_SectType {
 	ret := &CT_SectType{}
+	ret.ValAttr = ST_SectionMark(1)
 	return ret
 }
 
@@ -37,6 +38,7 @@ func (m *CT_SectType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_SectType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_SectionMark(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

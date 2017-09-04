@@ -39,6 +39,10 @@ type CT_TLCommonBehaviorData struct {
 
 func NewCT_TLCommonBehaviorData() *CT_TLCommonBehaviorData {
 	ret := &CT_TLCommonBehaviorData{}
+	ret.AdditiveAttr = ST_TLBehaviorAdditiveType(1)
+	ret.AccumulateAttr = ST_TLBehaviorAccumulateType(1)
+	ret.XfrmTypeAttr = ST_TLBehaviorTransformType(1)
+	ret.OverrideAttr = ST_TLBehaviorOverrideType(1)
 	ret.CTn = NewCT_TLCommonTimeNodeData()
 	ret.TgtEl = NewCT_TLTimeTargetElement()
 	return ret
@@ -104,6 +108,10 @@ func (m *CT_TLCommonBehaviorData) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *CT_TLCommonBehaviorData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.AdditiveAttr = ST_TLBehaviorAdditiveType(1)
+	m.AccumulateAttr = ST_TLBehaviorAccumulateType(1)
+	m.XfrmTypeAttr = ST_TLBehaviorTransformType(1)
+	m.OverrideAttr = ST_TLBehaviorOverrideType(1)
 	m.CTn = NewCT_TLCommonTimeNodeData()
 	m.TgtEl = NewCT_TLTimeTargetElement()
 	for _, attr := range start.Attr {

@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_WorkbookProtection struct {
@@ -48,6 +50,9 @@ type CT_WorkbookProtection struct {
 
 func NewCT_WorkbookProtection() *CT_WorkbookProtection {
 	ret := &CT_WorkbookProtection{}
+	ret.LockStructureAttr = gooxml.Bool(false)
+	ret.LockWindowsAttr = gooxml.Bool(false)
+	ret.LockRevisionAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -119,6 +124,9 @@ func (m *CT_WorkbookProtection) MarshalXML(e *xml.Encoder, start xml.StartElemen
 
 func (m *CT_WorkbookProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.LockStructureAttr = gooxml.Bool(false)
+	m.LockWindowsAttr = gooxml.Bool(false)
+	m.LockRevisionAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "workbookPassword" {
 			parsed, err := attr.Value, error(nil)

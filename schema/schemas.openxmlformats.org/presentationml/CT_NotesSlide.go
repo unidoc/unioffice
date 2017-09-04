@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -29,6 +30,8 @@ type CT_NotesSlide struct {
 func NewCT_NotesSlide() *CT_NotesSlide {
 	ret := &CT_NotesSlide{}
 	ret.CSld = NewCT_CommonSlideData()
+	ret.ShowMasterSpAttr = gooxml.Bool(true)
+	ret.ShowMasterPhAnimAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -59,6 +62,8 @@ func (m *CT_NotesSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 func (m *CT_NotesSlide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CSld = NewCT_CommonSlideData()
+	m.ShowMasterSpAttr = gooxml.Bool(true)
+	m.ShowMasterPhAnimAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "showMasterSp" {
 			parsed, err := strconv.ParseBool(attr.Value)

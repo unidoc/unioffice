@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_WheelTransition struct {
@@ -20,6 +22,7 @@ type CT_WheelTransition struct {
 
 func NewCT_WheelTransition() *CT_WheelTransition {
 	ret := &CT_WheelTransition{}
+	ret.SpokesAttr = gooxml.Uint32(4)
 	return ret
 }
 
@@ -35,6 +38,7 @@ func (m *CT_WheelTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_WheelTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.SpokesAttr = gooxml.Uint32(4)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "spokes" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

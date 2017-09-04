@@ -23,6 +23,7 @@ type CT_Height struct {
 
 func NewCT_Height() *CT_Height {
 	ret := &CT_Height{}
+	ret.HRuleAttr = ST_HeightRule(1)
 	return ret
 }
 
@@ -45,6 +46,7 @@ func (m *CT_Height) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Height) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.HRuleAttr = ST_HeightRule(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)

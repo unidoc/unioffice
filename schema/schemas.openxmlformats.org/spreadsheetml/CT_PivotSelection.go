@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PivotSelection struct {
@@ -54,6 +56,22 @@ type CT_PivotSelection struct {
 
 func NewCT_PivotSelection() *CT_PivotSelection {
 	ret := &CT_PivotSelection{}
+	ret.PaneAttr = ST_PaneTopLeft
+	ret.ShowHeaderAttr = gooxml.Bool(false)
+	ret.LabelAttr = gooxml.Bool(false)
+	ret.DataAttr = gooxml.Bool(false)
+	ret.ExtendableAttr = gooxml.Bool(false)
+	ret.CountAttr = gooxml.Uint32(0)
+	ret.AxisAttr = ST_Axis(1)
+	ret.DimensionAttr = gooxml.Uint32(0)
+	ret.StartAttr = gooxml.Uint32(0)
+	ret.MinAttr = gooxml.Uint32(0)
+	ret.MaxAttr = gooxml.Uint32(0)
+	ret.ActiveRowAttr = gooxml.Uint32(0)
+	ret.ActiveColAttr = gooxml.Uint32(0)
+	ret.PreviousRowAttr = gooxml.Uint32(0)
+	ret.PreviousColAttr = gooxml.Uint32(0)
+	ret.ClickAttr = gooxml.Uint32(0)
 	ret.PivotArea = NewCT_PivotArea()
 	return ret
 }
@@ -142,6 +160,22 @@ func (m *CT_PivotSelection) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PaneAttr = ST_PaneTopLeft
+	m.ShowHeaderAttr = gooxml.Bool(false)
+	m.LabelAttr = gooxml.Bool(false)
+	m.DataAttr = gooxml.Bool(false)
+	m.ExtendableAttr = gooxml.Bool(false)
+	m.CountAttr = gooxml.Uint32(0)
+	m.AxisAttr = ST_Axis(1)
+	m.DimensionAttr = gooxml.Uint32(0)
+	m.StartAttr = gooxml.Uint32(0)
+	m.MinAttr = gooxml.Uint32(0)
+	m.MaxAttr = gooxml.Uint32(0)
+	m.ActiveRowAttr = gooxml.Uint32(0)
+	m.ActiveColAttr = gooxml.Uint32(0)
+	m.PreviousRowAttr = gooxml.Uint32(0)
+	m.PreviousColAttr = gooxml.Uint32(0)
+	m.ClickAttr = gooxml.Uint32(0)
 	m.PivotArea = NewCT_PivotArea()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "pane" {

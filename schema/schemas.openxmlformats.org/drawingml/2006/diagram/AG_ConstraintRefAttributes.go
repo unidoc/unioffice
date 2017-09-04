@@ -21,6 +21,9 @@ type AG_ConstraintRefAttributes struct {
 
 func NewAG_ConstraintRefAttributes() *AG_ConstraintRefAttributes {
 	ret := &AG_ConstraintRefAttributes{}
+	ret.RefTypeAttr = ST_ConstraintTypeNone
+	ret.RefForAttr = ST_ConstraintRelationshipSelf
+	ret.RefPtTypeAttr = ST_ElementTypeAll
 	return ret
 }
 
@@ -55,6 +58,9 @@ func (m *AG_ConstraintRefAttributes) MarshalXML(e *xml.Encoder, start xml.StartE
 
 func (m *AG_ConstraintRefAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.RefTypeAttr = ST_ConstraintTypeNone
+	m.RefForAttr = ST_ConstraintRelationshipSelf
+	m.RefPtTypeAttr = ST_ElementTypeAll
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "refType" {
 			m.RefTypeAttr.UnmarshalXMLAttr(attr)

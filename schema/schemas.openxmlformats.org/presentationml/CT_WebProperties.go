@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_WebProperties struct {
@@ -38,6 +40,14 @@ type CT_WebProperties struct {
 
 func NewCT_WebProperties() *CT_WebProperties {
 	ret := &CT_WebProperties{}
+	ret.ShowAnimationAttr = gooxml.Bool(false)
+	ret.ResizeGraphicsAttr = gooxml.Bool(true)
+	ret.AllowPngAttr = gooxml.Bool(false)
+	ret.RelyOnVmlAttr = gooxml.Bool(false)
+	ret.OrganizeInFoldersAttr = gooxml.Bool(true)
+	ret.UseLongFilenamesAttr = gooxml.Bool(true)
+	ret.ImgSzAttr = ST_WebScreenSize800x600
+	ret.ClrAttr = ST_WebColorTypeWhiteTextOnBlack
 	return ret
 }
 
@@ -95,6 +105,14 @@ func (m *CT_WebProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_WebProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ShowAnimationAttr = gooxml.Bool(false)
+	m.ResizeGraphicsAttr = gooxml.Bool(true)
+	m.AllowPngAttr = gooxml.Bool(false)
+	m.RelyOnVmlAttr = gooxml.Bool(false)
+	m.OrganizeInFoldersAttr = gooxml.Bool(true)
+	m.UseLongFilenamesAttr = gooxml.Bool(true)
+	m.ImgSzAttr = ST_WebScreenSize800x600
+	m.ClrAttr = ST_WebColorTypeWhiteTextOnBlack
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "showAnimation" {
 			parsed, err := strconv.ParseBool(attr.Value)

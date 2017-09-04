@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_RevisionFormatting struct {
@@ -34,6 +36,8 @@ type CT_RevisionFormatting struct {
 
 func NewCT_RevisionFormatting() *CT_RevisionFormatting {
 	ret := &CT_RevisionFormatting{}
+	ret.XfDxfAttr = gooxml.Bool(false)
+	ret.SAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -73,6 +77,8 @@ func (m *CT_RevisionFormatting) MarshalXML(e *xml.Encoder, start xml.StartElemen
 
 func (m *CT_RevisionFormatting) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.XfDxfAttr = gooxml.Bool(false)
+	m.SAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "sheetId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

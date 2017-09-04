@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_OutlinePr struct {
@@ -26,6 +28,10 @@ type CT_OutlinePr struct {
 
 func NewCT_OutlinePr() *CT_OutlinePr {
 	ret := &CT_OutlinePr{}
+	ret.ApplyStylesAttr = gooxml.Bool(false)
+	ret.SummaryBelowAttr = gooxml.Bool(true)
+	ret.SummaryRightAttr = gooxml.Bool(true)
+	ret.ShowOutlineSymbolsAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -53,6 +59,10 @@ func (m *CT_OutlinePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_OutlinePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ApplyStylesAttr = gooxml.Bool(false)
+	m.SummaryBelowAttr = gooxml.Bool(true)
+	m.SummaryRightAttr = gooxml.Bool(true)
+	m.ShowOutlineSymbolsAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "applyStyles" {
 			parsed, err := strconv.ParseBool(attr.Value)

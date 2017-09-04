@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 )
 
@@ -29,6 +30,8 @@ type CT_Filters struct {
 
 func NewCT_Filters() *CT_Filters {
 	ret := &CT_Filters{}
+	ret.BlankAttr = gooxml.Bool(false)
+	ret.CalendarTypeAttr = sharedTypes.ST_CalendarTypeNone
 	return ret
 }
 
@@ -59,6 +62,8 @@ func (m *CT_Filters) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Filters) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.BlankAttr = gooxml.Bool(false)
+	m.CalendarTypeAttr = sharedTypes.ST_CalendarTypeNone
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "blank" {
 			parsed, err := strconv.ParseBool(attr.Value)

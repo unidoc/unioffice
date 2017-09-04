@@ -18,6 +18,7 @@ type CT_BarDir struct {
 
 func NewCT_BarDir() *CT_BarDir {
 	ret := &CT_BarDir{}
+	ret.ValAttr = ST_BarDirCol
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_BarDir) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_BarDir) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_BarDirCol
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

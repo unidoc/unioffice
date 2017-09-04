@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_MetadataType struct {
@@ -74,6 +76,32 @@ type CT_MetadataType struct {
 
 func NewCT_MetadataType() *CT_MetadataType {
 	ret := &CT_MetadataType{}
+	ret.GhostRowAttr = gooxml.Bool(false)
+	ret.GhostColAttr = gooxml.Bool(false)
+	ret.EditAttr = gooxml.Bool(false)
+	ret.DeleteAttr = gooxml.Bool(false)
+	ret.CopyAttr = gooxml.Bool(false)
+	ret.PasteAllAttr = gooxml.Bool(false)
+	ret.PasteFormulasAttr = gooxml.Bool(false)
+	ret.PasteValuesAttr = gooxml.Bool(false)
+	ret.PasteFormatsAttr = gooxml.Bool(false)
+	ret.PasteCommentsAttr = gooxml.Bool(false)
+	ret.PasteDataValidationAttr = gooxml.Bool(false)
+	ret.PasteBordersAttr = gooxml.Bool(false)
+	ret.PasteColWidthsAttr = gooxml.Bool(false)
+	ret.PasteNumberFormatsAttr = gooxml.Bool(false)
+	ret.MergeAttr = gooxml.Bool(false)
+	ret.SplitFirstAttr = gooxml.Bool(false)
+	ret.SplitAllAttr = gooxml.Bool(false)
+	ret.RowColShiftAttr = gooxml.Bool(false)
+	ret.ClearAllAttr = gooxml.Bool(false)
+	ret.ClearFormatsAttr = gooxml.Bool(false)
+	ret.ClearContentsAttr = gooxml.Bool(false)
+	ret.ClearCommentsAttr = gooxml.Bool(false)
+	ret.AssignAttr = gooxml.Bool(false)
+	ret.CoerceAttr = gooxml.Bool(false)
+	ret.AdjustAttr = gooxml.Bool(false)
+	ret.CellMetaAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -193,6 +221,32 @@ func (m *CT_MetadataType) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_MetadataType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.GhostRowAttr = gooxml.Bool(false)
+	m.GhostColAttr = gooxml.Bool(false)
+	m.EditAttr = gooxml.Bool(false)
+	m.DeleteAttr = gooxml.Bool(false)
+	m.CopyAttr = gooxml.Bool(false)
+	m.PasteAllAttr = gooxml.Bool(false)
+	m.PasteFormulasAttr = gooxml.Bool(false)
+	m.PasteValuesAttr = gooxml.Bool(false)
+	m.PasteFormatsAttr = gooxml.Bool(false)
+	m.PasteCommentsAttr = gooxml.Bool(false)
+	m.PasteDataValidationAttr = gooxml.Bool(false)
+	m.PasteBordersAttr = gooxml.Bool(false)
+	m.PasteColWidthsAttr = gooxml.Bool(false)
+	m.PasteNumberFormatsAttr = gooxml.Bool(false)
+	m.MergeAttr = gooxml.Bool(false)
+	m.SplitFirstAttr = gooxml.Bool(false)
+	m.SplitAllAttr = gooxml.Bool(false)
+	m.RowColShiftAttr = gooxml.Bool(false)
+	m.ClearAllAttr = gooxml.Bool(false)
+	m.ClearFormatsAttr = gooxml.Bool(false)
+	m.ClearContentsAttr = gooxml.Bool(false)
+	m.ClearCommentsAttr = gooxml.Bool(false)
+	m.AssignAttr = gooxml.Bool(false)
+	m.CoerceAttr = gooxml.Bool(false)
+	m.AdjustAttr = gooxml.Bool(false)
+	m.CellMetaAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

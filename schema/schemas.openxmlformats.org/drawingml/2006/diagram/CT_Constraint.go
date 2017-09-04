@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -29,6 +30,12 @@ type CT_Constraint struct {
 
 func NewCT_Constraint() *CT_Constraint {
 	ret := &CT_Constraint{}
+	ret.OpAttr = ST_BoolOperatorNone
+	ret.ValAttr = gooxml.Float64(0)
+	ret.FactAttr = gooxml.Float64(1)
+	ret.RefTypeAttr = ST_ConstraintTypeNone
+	ret.RefForAttr = ST_ConstraintRelationshipSelf
+	ret.RefPtTypeAttr = ST_ElementTypeAll
 	return ret
 }
 
@@ -84,6 +91,12 @@ func (m *CT_Constraint) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_Constraint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.OpAttr = ST_BoolOperatorNone
+	m.ValAttr = gooxml.Float64(0)
+	m.FactAttr = gooxml.Float64(1)
+	m.RefTypeAttr = ST_ConstraintTypeNone
+	m.RefForAttr = ST_ConstraintRelationshipSelf
+	m.RefPtTypeAttr = ST_ElementTypeAll
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "op" {
 			m.OpAttr.UnmarshalXMLAttr(attr)

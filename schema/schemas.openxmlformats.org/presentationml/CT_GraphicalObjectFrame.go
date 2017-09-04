@@ -27,6 +27,7 @@ type CT_GraphicalObjectFrame struct {
 
 func NewCT_GraphicalObjectFrame() *CT_GraphicalObjectFrame {
 	ret := &CT_GraphicalObjectFrame{}
+	ret.BwModeAttr = drawingml.ST_BlackWhiteMode(1)
 	ret.NvGraphicFramePr = NewCT_GraphicalObjectFrameNonVisual()
 	ret.Xfrm = drawingml.NewCT_Transform2D()
 	ret.Graphic = drawingml.NewGraphic()
@@ -58,6 +59,7 @@ func (m *CT_GraphicalObjectFrame) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *CT_GraphicalObjectFrame) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.BwModeAttr = drawingml.ST_BlackWhiteMode(1)
 	m.NvGraphicFramePr = NewCT_GraphicalObjectFrameNonVisual()
 	m.Xfrm = drawingml.NewCT_Transform2D()
 	m.Graphic = drawingml.NewGraphic()

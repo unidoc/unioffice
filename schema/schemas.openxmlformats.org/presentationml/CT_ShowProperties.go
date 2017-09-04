@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -44,6 +45,10 @@ type CT_ShowProperties struct {
 
 func NewCT_ShowProperties() *CT_ShowProperties {
 	ret := &CT_ShowProperties{}
+	ret.LoopAttr = gooxml.Bool(false)
+	ret.ShowNarrationAttr = gooxml.Bool(false)
+	ret.ShowAnimationAttr = gooxml.Bool(true)
+	ret.UseTimingsAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -103,6 +108,10 @@ func (m *CT_ShowProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_ShowProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.LoopAttr = gooxml.Bool(false)
+	m.ShowNarrationAttr = gooxml.Bool(false)
+	m.ShowAnimationAttr = gooxml.Bool(true)
+	m.UseTimingsAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "loop" {
 			parsed, err := strconv.ParseBool(attr.Value)

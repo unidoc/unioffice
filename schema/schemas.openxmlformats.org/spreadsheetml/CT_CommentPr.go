@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CommentPr struct {
@@ -44,6 +46,17 @@ type CT_CommentPr struct {
 
 func NewCT_CommentPr() *CT_CommentPr {
 	ret := &CT_CommentPr{}
+	ret.LockedAttr = gooxml.Bool(true)
+	ret.DefaultSizeAttr = gooxml.Bool(true)
+	ret.PrintAttr = gooxml.Bool(true)
+	ret.DisabledAttr = gooxml.Bool(false)
+	ret.AutoFillAttr = gooxml.Bool(true)
+	ret.AutoLineAttr = gooxml.Bool(true)
+	ret.TextHAlignAttr = ST_TextHAlignLeft
+	ret.TextVAlignAttr = ST_TextVAlignTop
+	ret.LockTextAttr = gooxml.Bool(true)
+	ret.JustLastXAttr = gooxml.Bool(false)
+	ret.AutoScaleAttr = gooxml.Bool(false)
 	ret.Anchor = NewCT_ObjectAnchor()
 	return ret
 }
@@ -112,6 +125,17 @@ func (m *CT_CommentPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_CommentPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.LockedAttr = gooxml.Bool(true)
+	m.DefaultSizeAttr = gooxml.Bool(true)
+	m.PrintAttr = gooxml.Bool(true)
+	m.DisabledAttr = gooxml.Bool(false)
+	m.AutoFillAttr = gooxml.Bool(true)
+	m.AutoLineAttr = gooxml.Bool(true)
+	m.TextHAlignAttr = ST_TextHAlignLeft
+	m.TextVAlignAttr = ST_TextVAlignTop
+	m.LockTextAttr = gooxml.Bool(true)
+	m.JustLastXAttr = gooxml.Bool(false)
+	m.AutoScaleAttr = gooxml.Bool(false)
 	m.Anchor = NewCT_ObjectAnchor()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "locked" {

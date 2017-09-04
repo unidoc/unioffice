@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CalcCell struct {
@@ -31,6 +33,10 @@ type CT_CalcCell struct {
 
 func NewCT_CalcCell() *CT_CalcCell {
 	ret := &CT_CalcCell{}
+	ret.SAttr = gooxml.Bool(false)
+	ret.LAttr = gooxml.Bool(false)
+	ret.TAttr = gooxml.Bool(false)
+	ret.AAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -70,6 +76,10 @@ func (m *CT_CalcCell) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_CalcCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.SAttr = gooxml.Bool(false)
+	m.LAttr = gooxml.Bool(false)
+	m.TAttr = gooxml.Bool(false)
+	m.AAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "r" {
 			parsed, err := attr.Value, error(nil)

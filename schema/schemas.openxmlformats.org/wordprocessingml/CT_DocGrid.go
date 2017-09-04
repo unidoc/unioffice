@@ -24,6 +24,7 @@ type CT_DocGrid struct {
 
 func NewCT_DocGrid() *CT_DocGrid {
 	ret := &CT_DocGrid{}
+	ret.TypeAttr = ST_DocGrid(1)
 	return ret
 }
 
@@ -50,6 +51,7 @@ func (m *CT_DocGrid) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_DocGrid) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_DocGrid(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

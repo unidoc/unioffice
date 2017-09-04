@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 )
 
@@ -34,6 +35,9 @@ type CT_CustomChartsheetView struct {
 func NewCT_CustomChartsheetView() *CT_CustomChartsheetView {
 	ret := &CT_CustomChartsheetView{}
 	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
+	ret.ScaleAttr = gooxml.Uint32(100)
+	ret.StateAttr = ST_SheetStateVisible
+	ret.ZoomToFitAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -75,6 +79,9 @@ func (m *CT_CustomChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElem
 func (m *CT_CustomChartsheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
+	m.ScaleAttr = gooxml.Uint32(100)
+	m.StateAttr = ST_SheetStateVisible
+	m.ZoomToFitAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "guid" {
 			parsed, err := attr.Value, error(nil)

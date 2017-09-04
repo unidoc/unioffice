@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_OrgChart struct {
@@ -19,6 +21,7 @@ type CT_OrgChart struct {
 
 func NewCT_OrgChart() *CT_OrgChart {
 	ret := &CT_OrgChart{}
+	ret.ValAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -34,6 +37,7 @@ func (m *CT_OrgChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_OrgChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseBool(attr.Value)

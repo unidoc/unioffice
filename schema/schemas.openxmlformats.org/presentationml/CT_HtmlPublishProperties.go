@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_HtmlPublishProperties struct {
@@ -33,6 +35,7 @@ type CT_HtmlPublishProperties struct {
 
 func NewCT_HtmlPublishProperties() *CT_HtmlPublishProperties {
 	ret := &CT_HtmlPublishProperties{}
+	ret.ShowSpeakerNotesAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -74,6 +77,7 @@ func (m *CT_HtmlPublishProperties) MarshalXML(e *xml.Encoder, start xml.StartEle
 
 func (m *CT_HtmlPublishProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ShowSpeakerNotesAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "showSpeakerNotes" {
 			parsed, err := strconv.ParseBool(attr.Value)

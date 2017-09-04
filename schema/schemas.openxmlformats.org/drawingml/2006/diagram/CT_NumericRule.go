@@ -29,6 +29,9 @@ type CT_NumericRule struct {
 
 func NewCT_NumericRule() *CT_NumericRule {
 	ret := &CT_NumericRule{}
+	ret.TypeAttr = ST_ConstraintType(1)
+	ret.ForAttr = ST_ConstraintRelationshipSelf
+	ret.PtTypeAttr = ST_ElementTypeAll
 	return ret
 }
 
@@ -81,6 +84,9 @@ func (m *CT_NumericRule) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_NumericRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_ConstraintType(1)
+	m.ForAttr = ST_ConstraintRelationshipSelf
+	m.PtTypeAttr = ST_ElementTypeAll
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)

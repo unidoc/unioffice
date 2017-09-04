@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_GroupMember struct {
@@ -22,6 +24,7 @@ type CT_GroupMember struct {
 
 func NewCT_GroupMember() *CT_GroupMember {
 	ret := &CT_GroupMember{}
+	ret.GroupAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -39,6 +42,7 @@ func (m *CT_GroupMember) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_GroupMember) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.GroupAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "uniqueName" {
 			parsed, err := attr.Value, error(nil)

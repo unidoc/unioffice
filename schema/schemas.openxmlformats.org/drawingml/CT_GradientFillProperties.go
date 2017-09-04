@@ -25,6 +25,7 @@ type CT_GradientFillProperties struct {
 
 func NewCT_GradientFillProperties() *CT_GradientFillProperties {
 	ret := &CT_GradientFillProperties{}
+	ret.FlipAttr = ST_TileFlipMode(1)
 	return ret
 }
 
@@ -63,6 +64,7 @@ func (m *CT_GradientFillProperties) MarshalXML(e *xml.Encoder, start xml.StartEl
 
 func (m *CT_GradientFillProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.FlipAttr = ST_TileFlipMode(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "flip" {
 			m.FlipAttr.UnmarshalXMLAttr(attr)

@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TextFields struct {
@@ -23,6 +25,7 @@ type CT_TextFields struct {
 
 func NewCT_TextFields() *CT_TextFields {
 	ret := &CT_TextFields{}
+	ret.CountAttr = gooxml.Uint32(1)
 	return ret
 }
 
@@ -40,6 +43,7 @@ func (m *CT_TextFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_TextFields) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CountAttr = gooxml.Uint32(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_QueryTableRefresh struct {
@@ -41,6 +43,13 @@ type CT_QueryTableRefresh struct {
 
 func NewCT_QueryTableRefresh() *CT_QueryTableRefresh {
 	ret := &CT_QueryTableRefresh{}
+	ret.PreserveSortFilterLayoutAttr = gooxml.Bool(true)
+	ret.FieldIdWrappedAttr = gooxml.Bool(false)
+	ret.HeadersInLastRefreshAttr = gooxml.Bool(true)
+	ret.MinimumVersionAttr = gooxml.Uint8(0)
+	ret.NextIdAttr = gooxml.Uint32(1)
+	ret.UnboundColumnsLeftAttr = gooxml.Uint32(0)
+	ret.UnboundColumnsRightAttr = gooxml.Uint32(0)
 	ret.QueryTableFields = NewCT_QueryTableFields()
 	return ret
 }
@@ -95,6 +104,13 @@ func (m *CT_QueryTableRefresh) MarshalXML(e *xml.Encoder, start xml.StartElement
 
 func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PreserveSortFilterLayoutAttr = gooxml.Bool(true)
+	m.FieldIdWrappedAttr = gooxml.Bool(false)
+	m.HeadersInLastRefreshAttr = gooxml.Bool(true)
+	m.MinimumVersionAttr = gooxml.Uint8(0)
+	m.NextIdAttr = gooxml.Uint32(1)
+	m.UnboundColumnsLeftAttr = gooxml.Uint32(0)
+	m.UnboundColumnsRightAttr = gooxml.Uint32(0)
 	m.QueryTableFields = NewCT_QueryTableFields()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "preserveSortFilterLayout" {

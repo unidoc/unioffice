@@ -18,6 +18,7 @@ type CT_Direction struct {
 
 func NewCT_Direction() *CT_Direction {
 	ret := &CT_Direction{}
+	ret.ValAttr = ST_DirectionNorm
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_Direction) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_Direction) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_DirectionNorm
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

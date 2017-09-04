@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TextPr struct {
@@ -53,6 +55,17 @@ type CT_TextPr struct {
 
 func NewCT_TextPr() *CT_TextPr {
 	ret := &CT_TextPr{}
+	ret.PromptAttr = gooxml.Bool(true)
+	ret.FileTypeAttr = ST_FileTypeWin
+	ret.CodePageAttr = gooxml.Uint32(1252)
+	ret.FirstRowAttr = gooxml.Uint32(1)
+	ret.DelimitedAttr = gooxml.Bool(true)
+	ret.TabAttr = gooxml.Bool(true)
+	ret.SpaceAttr = gooxml.Bool(false)
+	ret.CommaAttr = gooxml.Bool(false)
+	ret.SemicolonAttr = gooxml.Bool(false)
+	ret.ConsecutiveAttr = gooxml.Bool(false)
+	ret.QualifierAttr = ST_QualifierDoubleQuote
 	return ret
 }
 
@@ -138,6 +151,17 @@ func (m *CT_TextPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_TextPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PromptAttr = gooxml.Bool(true)
+	m.FileTypeAttr = ST_FileTypeWin
+	m.CodePageAttr = gooxml.Uint32(1252)
+	m.FirstRowAttr = gooxml.Uint32(1)
+	m.DelimitedAttr = gooxml.Bool(true)
+	m.TabAttr = gooxml.Bool(true)
+	m.SpaceAttr = gooxml.Bool(false)
+	m.CommaAttr = gooxml.Bool(false)
+	m.SemicolonAttr = gooxml.Bool(false)
+	m.ConsecutiveAttr = gooxml.Bool(false)
+	m.QualifierAttr = ST_QualifierDoubleQuote
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prompt" {
 			parsed, err := strconv.ParseBool(attr.Value)

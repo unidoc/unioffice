@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CommonSlideViewProperties struct {
@@ -29,6 +31,9 @@ type CT_CommonSlideViewProperties struct {
 
 func NewCT_CommonSlideViewProperties() *CT_CommonSlideViewProperties {
 	ret := &CT_CommonSlideViewProperties{}
+	ret.SnapToGridAttr = gooxml.Bool(true)
+	ret.SnapToObjectsAttr = gooxml.Bool(false)
+	ret.ShowGuidesAttr = gooxml.Bool(false)
 	ret.CViewPr = NewCT_CommonViewProperties()
 	return ret
 }
@@ -59,6 +64,9 @@ func (m *CT_CommonSlideViewProperties) MarshalXML(e *xml.Encoder, start xml.Star
 
 func (m *CT_CommonSlideViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.SnapToGridAttr = gooxml.Bool(true)
+	m.SnapToObjectsAttr = gooxml.Bool(false)
+	m.ShowGuidesAttr = gooxml.Bool(false)
 	m.CViewPr = NewCT_CommonViewProperties()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "snapToGrid" {

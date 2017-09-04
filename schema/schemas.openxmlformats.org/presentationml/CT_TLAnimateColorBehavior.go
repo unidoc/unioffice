@@ -30,6 +30,8 @@ type CT_TLAnimateColorBehavior struct {
 
 func NewCT_TLAnimateColorBehavior() *CT_TLAnimateColorBehavior {
 	ret := &CT_TLAnimateColorBehavior{}
+	ret.ClrSpcAttr = ST_TLAnimateColorSpace(1)
+	ret.DirAttr = ST_TLAnimateColorDirection(1)
 	ret.CBhvr = NewCT_TLCommonBehaviorData()
 	return ret
 }
@@ -70,6 +72,8 @@ func (m *CT_TLAnimateColorBehavior) MarshalXML(e *xml.Encoder, start xml.StartEl
 
 func (m *CT_TLAnimateColorBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ClrSpcAttr = ST_TLAnimateColorSpace(1)
+	m.DirAttr = ST_TLAnimateColorDirection(1)
 	m.CBhvr = NewCT_TLCommonBehaviorData()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "clrSpc" {

@@ -25,6 +25,7 @@ type CT_Background struct {
 
 func NewCT_Background() *CT_Background {
 	ret := &CT_Background{}
+	ret.BwModeAttr = drawingml.ST_BlackWhiteModeWhite
 	return ret
 }
 
@@ -51,6 +52,7 @@ func (m *CT_Background) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_Background) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.BwModeAttr = drawingml.ST_BlackWhiteModeWhite
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bwMode" {
 			m.BwModeAttr.UnmarshalXMLAttr(attr)

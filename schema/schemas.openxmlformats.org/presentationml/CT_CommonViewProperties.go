@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -27,6 +28,7 @@ type CT_CommonViewProperties struct {
 
 func NewCT_CommonViewProperties() *CT_CommonViewProperties {
 	ret := &CT_CommonViewProperties{}
+	ret.VarScaleAttr = gooxml.Bool(false)
 	ret.Scale = drawingml.NewCT_Scale2D()
 	ret.Origin = drawingml.NewCT_Point2D()
 	return ret
@@ -48,6 +50,7 @@ func (m *CT_CommonViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *CT_CommonViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.VarScaleAttr = gooxml.Bool(false)
 	m.Scale = drawingml.NewCT_Scale2D()
 	m.Origin = drawingml.NewCT_Point2D()
 	for _, attr := range start.Attr {

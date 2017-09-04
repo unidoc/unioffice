@@ -18,6 +18,7 @@ type CT_DispBlanksAs struct {
 
 func NewCT_DispBlanksAs() *CT_DispBlanksAs {
 	ret := &CT_DispBlanksAs{}
+	ret.ValAttr = ST_DispBlanksAsZero
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_DispBlanksAs) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_DispBlanksAs) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_DispBlanksAsZero
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

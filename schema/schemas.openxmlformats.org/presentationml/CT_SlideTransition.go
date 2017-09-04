@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SlideTransition struct {
@@ -29,6 +31,8 @@ type CT_SlideTransition struct {
 
 func NewCT_SlideTransition() *CT_SlideTransition {
 	ret := &CT_SlideTransition{}
+	ret.SpdAttr = ST_TransitionSpeedFast
+	ret.AdvClickAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -66,6 +70,8 @@ func (m *CT_SlideTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_SlideTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.SpdAttr = ST_TransitionSpeedFast
+	m.AdvClickAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "spd" {
 			m.SpdAttr.UnmarshalXMLAttr(attr)

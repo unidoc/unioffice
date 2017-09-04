@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_BookView struct {
@@ -46,6 +48,15 @@ type CT_BookView struct {
 
 func NewCT_BookView() *CT_BookView {
 	ret := &CT_BookView{}
+	ret.VisibilityAttr = ST_VisibilityVisible
+	ret.MinimizedAttr = gooxml.Bool(false)
+	ret.ShowHorizontalScrollAttr = gooxml.Bool(true)
+	ret.ShowVerticalScrollAttr = gooxml.Bool(true)
+	ret.ShowSheetTabsAttr = gooxml.Bool(true)
+	ret.TabRatioAttr = gooxml.Uint32(600)
+	ret.FirstSheetAttr = gooxml.Uint32(0)
+	ret.ActiveTabAttr = gooxml.Uint32(0)
+	ret.AutoFilterDateGroupingAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -116,6 +127,15 @@ func (m *CT_BookView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.VisibilityAttr = ST_VisibilityVisible
+	m.MinimizedAttr = gooxml.Bool(false)
+	m.ShowHorizontalScrollAttr = gooxml.Bool(true)
+	m.ShowVerticalScrollAttr = gooxml.Bool(true)
+	m.ShowSheetTabsAttr = gooxml.Bool(true)
+	m.TabRatioAttr = gooxml.Uint32(600)
+	m.FirstSheetAttr = gooxml.Uint32(0)
+	m.ActiveTabAttr = gooxml.Uint32(0)
+	m.AutoFilterDateGroupingAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "visibility" {
 			m.VisibilityAttr.UnmarshalXMLAttr(attr)

@@ -22,6 +22,7 @@ type CT_Relationship struct {
 
 func NewCT_Relationship() *CT_Relationship {
 	ret := &CT_Relationship{}
+	ret.TargetModeAttr = ST_TargetMode(1)
 	return ret
 }
 
@@ -46,6 +47,7 @@ func (m *CT_Relationship) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_Relationship) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TargetModeAttr = ST_TargetMode(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "TargetMode" {
 			m.TargetModeAttr.UnmarshalXMLAttr(attr)

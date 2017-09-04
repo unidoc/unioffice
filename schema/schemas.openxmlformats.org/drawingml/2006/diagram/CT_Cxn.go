@@ -31,6 +31,7 @@ type CT_Cxn struct {
 
 func NewCT_Cxn() *CT_Cxn {
 	ret := &CT_Cxn{}
+	ret.TypeAttr = ST_CxnTypeParOf
 	return ret
 }
 
@@ -75,6 +76,7 @@ func (m *CT_Cxn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Cxn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_CxnTypeParOf
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "modelId" {
 			parsed, err := ParseUnionST_ModelId(attr.Value)

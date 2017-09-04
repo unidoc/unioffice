@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ConditionalFormats struct {
@@ -23,6 +25,7 @@ type CT_ConditionalFormats struct {
 
 func NewCT_ConditionalFormats() *CT_ConditionalFormats {
 	ret := &CT_ConditionalFormats{}
+	ret.CountAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -40,6 +43,7 @@ func (m *CT_ConditionalFormats) MarshalXML(e *xml.Encoder, start xml.StartElemen
 
 func (m *CT_ConditionalFormats) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CountAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

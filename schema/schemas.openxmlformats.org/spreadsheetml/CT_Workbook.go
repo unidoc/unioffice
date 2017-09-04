@@ -60,6 +60,7 @@ type CT_Workbook struct {
 
 func NewCT_Workbook() *CT_Workbook {
 	ret := &CT_Workbook{}
+	ret.ConformanceAttr = sharedTypes.ST_ConformanceClass(1)
 	ret.Sheets = NewCT_Sheets()
 	return ret
 }
@@ -153,6 +154,7 @@ func (m *CT_Workbook) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Workbook) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ConformanceAttr = sharedTypes.ST_ConformanceClass(1)
 	m.Sheets = NewCT_Sheets()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "conformance" {

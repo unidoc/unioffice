@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_AudioCDTime struct {
@@ -20,6 +22,7 @@ type CT_AudioCDTime struct {
 
 func NewCT_AudioCDTime() *CT_AudioCDTime {
 	ret := &CT_AudioCDTime{}
+	ret.TimeAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -37,6 +40,7 @@ func (m *CT_AudioCDTime) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_AudioCDTime) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TimeAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "track" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)

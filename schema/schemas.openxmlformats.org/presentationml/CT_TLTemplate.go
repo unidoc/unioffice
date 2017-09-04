@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TLTemplate struct {
@@ -23,6 +25,7 @@ type CT_TLTemplate struct {
 
 func NewCT_TLTemplate() *CT_TLTemplate {
 	ret := &CT_TLTemplate{}
+	ret.LvlAttr = gooxml.Uint32(0)
 	ret.TnLst = NewCT_TimeNodeList()
 	return ret
 }
@@ -41,6 +44,7 @@ func (m *CT_TLTemplate) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_TLTemplate) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.LvlAttr = gooxml.Uint32(0)
 	m.TnLst = NewCT_TimeNodeList()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "lvl" {

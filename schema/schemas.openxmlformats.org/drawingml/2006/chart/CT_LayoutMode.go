@@ -18,6 +18,7 @@ type CT_LayoutMode struct {
 
 func NewCT_LayoutMode() *CT_LayoutMode {
 	ret := &CT_LayoutMode{}
+	ret.ValAttr = ST_LayoutModeFactor
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_LayoutMode) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_LayoutMode) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_LayoutModeFactor
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

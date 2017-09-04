@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ExternalSheetData struct {
@@ -25,6 +27,7 @@ type CT_ExternalSheetData struct {
 
 func NewCT_ExternalSheetData() *CT_ExternalSheetData {
 	ret := &CT_ExternalSheetData{}
+	ret.RefreshErrorAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -46,6 +49,7 @@ func (m *CT_ExternalSheetData) MarshalXML(e *xml.Encoder, start xml.StartElement
 
 func (m *CT_ExternalSheetData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.RefreshErrorAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "sheetId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PivotArea struct {
@@ -47,6 +49,15 @@ type CT_PivotArea struct {
 
 func NewCT_PivotArea() *CT_PivotArea {
 	ret := &CT_PivotArea{}
+	ret.TypeAttr = ST_PivotAreaTypeNormal
+	ret.DataOnlyAttr = gooxml.Bool(true)
+	ret.LabelOnlyAttr = gooxml.Bool(false)
+	ret.GrandRowAttr = gooxml.Bool(false)
+	ret.GrandColAttr = gooxml.Bool(false)
+	ret.CacheIndexAttr = gooxml.Bool(false)
+	ret.OutlineAttr = gooxml.Bool(true)
+	ret.CollapsedLevelsAreSubtotalsAttr = gooxml.Bool(false)
+	ret.AxisAttr = ST_Axis(1)
 	return ret
 }
 
@@ -120,6 +131,15 @@ func (m *CT_PivotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_PivotAreaTypeNormal
+	m.DataOnlyAttr = gooxml.Bool(true)
+	m.LabelOnlyAttr = gooxml.Bool(false)
+	m.GrandRowAttr = gooxml.Bool(false)
+	m.GrandColAttr = gooxml.Bool(false)
+	m.CacheIndexAttr = gooxml.Bool(false)
+	m.OutlineAttr = gooxml.Bool(true)
+	m.CollapsedLevelsAreSubtotalsAttr = gooxml.Bool(false)
+	m.AxisAttr = ST_Axis(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "field" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

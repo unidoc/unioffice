@@ -31,6 +31,9 @@ type CT_PageBorders struct {
 
 func NewCT_PageBorders() *CT_PageBorders {
 	ret := &CT_PageBorders{}
+	ret.ZOrderAttr = ST_PageBorderZOrder(1)
+	ret.DisplayAttr = ST_PageBorderDisplay(1)
+	ret.OffsetFromAttr = ST_PageBorderOffset(1)
 	return ret
 }
 
@@ -79,6 +82,9 @@ func (m *CT_PageBorders) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_PageBorders) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ZOrderAttr = ST_PageBorderZOrder(1)
+	m.DisplayAttr = ST_PageBorderDisplay(1)
+	m.OffsetFromAttr = ST_PageBorderOffset(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "zOrder" {
 			m.ZOrderAttr.UnmarshalXMLAttr(attr)

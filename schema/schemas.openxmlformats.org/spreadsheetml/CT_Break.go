@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Break struct {
@@ -28,6 +30,11 @@ type CT_Break struct {
 
 func NewCT_Break() *CT_Break {
 	ret := &CT_Break{}
+	ret.IdAttr = gooxml.Uint32(0)
+	ret.MinAttr = gooxml.Uint32(0)
+	ret.MaxAttr = gooxml.Uint32(0)
+	ret.ManAttr = gooxml.Bool(false)
+	ret.PtAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -59,6 +66,11 @@ func (m *CT_Break) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Break) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.IdAttr = gooxml.Uint32(0)
+	m.MinAttr = gooxml.Uint32(0)
+	m.MaxAttr = gooxml.Uint32(0)
+	m.ManAttr = gooxml.Bool(false)
+	m.PtAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

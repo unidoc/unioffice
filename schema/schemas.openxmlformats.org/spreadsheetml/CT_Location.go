@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Location struct {
@@ -30,6 +32,8 @@ type CT_Location struct {
 
 func NewCT_Location() *CT_Location {
 	ret := &CT_Location{}
+	ret.RowPageCountAttr = gooxml.Uint32(0)
+	ret.ColPageCountAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -57,6 +61,8 @@ func (m *CT_Location) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Location) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.RowPageCountAttr = gooxml.Uint32(0)
+	m.ColPageCountAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "ref" {
 			parsed, err := attr.Value, error(nil)

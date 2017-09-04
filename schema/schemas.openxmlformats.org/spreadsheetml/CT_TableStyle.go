@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TableStyle struct {
@@ -29,6 +31,8 @@ type CT_TableStyle struct {
 
 func NewCT_TableStyle() *CT_TableStyle {
 	ret := &CT_TableStyle{}
+	ret.PivotAttr = gooxml.Bool(true)
+	ret.TableAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -58,6 +62,8 @@ func (m *CT_TableStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_TableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PivotAttr = gooxml.Bool(true)
+	m.TableAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

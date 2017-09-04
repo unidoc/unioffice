@@ -19,6 +19,7 @@ type CT_PosHChoice struct {
 
 func NewCT_PosHChoice() *CT_PosHChoice {
 	ret := &CT_PosHChoice{}
+	ret.Align = ST_AlignH(1)
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_PosHChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_PosHChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.Align = ST_AlignH(1)
 lCT_PosHChoice:
 	for {
 		tok, err := d.Token()

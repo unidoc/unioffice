@@ -21,6 +21,7 @@ type CT_FFStatusText struct {
 
 func NewCT_FFStatusText() *CT_FFStatusText {
 	ret := &CT_FFStatusText{}
+	ret.TypeAttr = ST_InfoTextType(1)
 	return ret
 }
 
@@ -43,6 +44,7 @@ func (m *CT_FFStatusText) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_FFStatusText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_InfoTextType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

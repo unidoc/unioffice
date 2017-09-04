@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TextBodyProperties struct {
@@ -46,6 +48,12 @@ type CT_TextBodyProperties struct {
 
 func NewCT_TextBodyProperties() *CT_TextBodyProperties {
 	ret := &CT_TextBodyProperties{}
+	ret.VertOverflowAttr = ST_TextVertOverflowType(1)
+	ret.HorzOverflowAttr = ST_TextHorzOverflowType(1)
+	ret.VertAttr = ST_TextVerticalType(1)
+	ret.WrapAttr = ST_TextWrappingType(1)
+	ret.AnchorAttr = ST_TextAnchoringType(1)
+	ret.UprightAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -180,6 +188,12 @@ func (m *CT_TextBodyProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 
 func (m *CT_TextBodyProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.VertOverflowAttr = ST_TextVertOverflowType(1)
+	m.HorzOverflowAttr = ST_TextHorzOverflowType(1)
+	m.VertAttr = ST_TextVerticalType(1)
+	m.WrapAttr = ST_TextWrappingType(1)
+	m.AnchorAttr = ST_TextAnchoringType(1)
+	m.UprightAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "rot" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

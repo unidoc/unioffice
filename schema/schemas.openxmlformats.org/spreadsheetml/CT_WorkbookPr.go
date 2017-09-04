@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_WorkbookPr struct {
@@ -54,6 +56,22 @@ type CT_WorkbookPr struct {
 
 func NewCT_WorkbookPr() *CT_WorkbookPr {
 	ret := &CT_WorkbookPr{}
+	ret.Date1904Attr = gooxml.Bool(false)
+	ret.ShowObjectsAttr = ST_ObjectsAll
+	ret.ShowBorderUnselectedTablesAttr = gooxml.Bool(true)
+	ret.FilterPrivacyAttr = gooxml.Bool(false)
+	ret.PromptedSolutionsAttr = gooxml.Bool(false)
+	ret.ShowInkAnnotationAttr = gooxml.Bool(true)
+	ret.BackupFileAttr = gooxml.Bool(false)
+	ret.SaveExternalLinkValuesAttr = gooxml.Bool(true)
+	ret.UpdateLinksAttr = ST_UpdateLinksUserSet
+	ret.HidePivotFieldListAttr = gooxml.Bool(false)
+	ret.ShowPivotChartFilterAttr = gooxml.Bool(false)
+	ret.AllowRefreshQueryAttr = gooxml.Bool(false)
+	ret.PublishItemsAttr = gooxml.Bool(false)
+	ret.CheckCompatibilityAttr = gooxml.Bool(false)
+	ret.AutoCompressPicturesAttr = gooxml.Bool(true)
+	ret.RefreshAllConnectionsAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -143,6 +161,22 @@ func (m *CT_WorkbookPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_WorkbookPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.Date1904Attr = gooxml.Bool(false)
+	m.ShowObjectsAttr = ST_ObjectsAll
+	m.ShowBorderUnselectedTablesAttr = gooxml.Bool(true)
+	m.FilterPrivacyAttr = gooxml.Bool(false)
+	m.PromptedSolutionsAttr = gooxml.Bool(false)
+	m.ShowInkAnnotationAttr = gooxml.Bool(true)
+	m.BackupFileAttr = gooxml.Bool(false)
+	m.SaveExternalLinkValuesAttr = gooxml.Bool(true)
+	m.UpdateLinksAttr = ST_UpdateLinksUserSet
+	m.HidePivotFieldListAttr = gooxml.Bool(false)
+	m.ShowPivotChartFilterAttr = gooxml.Bool(false)
+	m.AllowRefreshQueryAttr = gooxml.Bool(false)
+	m.PublishItemsAttr = gooxml.Bool(false)
+	m.CheckCompatibilityAttr = gooxml.Bool(false)
+	m.AutoCompressPicturesAttr = gooxml.Bool(true)
+	m.RefreshAllConnectionsAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "date1904" {
 			parsed, err := strconv.ParseBool(attr.Value)

@@ -18,6 +18,7 @@ type CT_Grouping struct {
 
 func NewCT_Grouping() *CT_Grouping {
 	ret := &CT_Grouping{}
+	ret.ValAttr = ST_GroupingStandard
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_Grouping) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Grouping) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_GroupingStandard
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

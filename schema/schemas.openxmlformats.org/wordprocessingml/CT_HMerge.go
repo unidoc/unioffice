@@ -19,6 +19,7 @@ type CT_HMerge struct {
 
 func NewCT_HMerge() *CT_HMerge {
 	ret := &CT_HMerge{}
+	ret.ValAttr = ST_Merge(1)
 	return ret
 }
 
@@ -37,6 +38,7 @@ func (m *CT_HMerge) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_HMerge) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_Merge(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

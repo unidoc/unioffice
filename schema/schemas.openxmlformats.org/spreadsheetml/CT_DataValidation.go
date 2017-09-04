@@ -51,6 +51,14 @@ type CT_DataValidation struct {
 
 func NewCT_DataValidation() *CT_DataValidation {
 	ret := &CT_DataValidation{}
+	ret.TypeAttr = ST_DataValidationTypeNone
+	ret.ErrorStyleAttr = ST_DataValidationErrorStyleStop
+	ret.ImeModeAttr = ST_DataValidationImeModeNoControl
+	ret.OperatorAttr = ST_DataValidationOperatorBetween
+	ret.AllowBlankAttr = gooxml.Bool(false)
+	ret.ShowDropDownAttr = gooxml.Bool(false)
+	ret.ShowInputMessageAttr = gooxml.Bool(false)
+	ret.ShowErrorMessageAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -134,6 +142,14 @@ func (m *CT_DataValidation) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_DataValidation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_DataValidationTypeNone
+	m.ErrorStyleAttr = ST_DataValidationErrorStyleStop
+	m.ImeModeAttr = ST_DataValidationImeModeNoControl
+	m.OperatorAttr = ST_DataValidationOperatorBetween
+	m.AllowBlankAttr = gooxml.Bool(false)
+	m.ShowDropDownAttr = gooxml.Bool(false)
+	m.ShowInputMessageAttr = gooxml.Bool(false)
+	m.ShowErrorMessageAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

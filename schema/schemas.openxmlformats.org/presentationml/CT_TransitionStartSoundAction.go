@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -25,6 +26,7 @@ type CT_TransitionStartSoundAction struct {
 
 func NewCT_TransitionStartSoundAction() *CT_TransitionStartSoundAction {
 	ret := &CT_TransitionStartSoundAction{}
+	ret.LoopAttr = gooxml.Bool(false)
 	ret.Snd = drawingml.NewCT_EmbeddedWAVAudioFile()
 	return ret
 }
@@ -43,6 +45,7 @@ func (m *CT_TransitionStartSoundAction) MarshalXML(e *xml.Encoder, start xml.Sta
 
 func (m *CT_TransitionStartSoundAction) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.LoopAttr = gooxml.Bool(false)
 	m.Snd = drawingml.NewCT_EmbeddedWAVAudioFile()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "loop" {

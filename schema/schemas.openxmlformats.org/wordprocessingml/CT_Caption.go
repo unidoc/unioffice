@@ -34,6 +34,9 @@ type CT_Caption struct {
 
 func NewCT_Caption() *CT_Caption {
 	ret := &CT_Caption{}
+	ret.PosAttr = ST_CaptionPos(1)
+	ret.NumFmtAttr = ST_NumberFormat(1)
+	ret.SepAttr = ST_ChapterSep(1)
 	return ret
 }
 
@@ -80,6 +83,9 @@ func (m *CT_Caption) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Caption) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PosAttr = ST_CaptionPos(1)
+	m.NumFmtAttr = ST_NumberFormat(1)
+	m.SepAttr = ST_ChapterSep(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

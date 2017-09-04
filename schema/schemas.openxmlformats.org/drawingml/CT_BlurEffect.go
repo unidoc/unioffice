@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_BlurEffect struct {
@@ -20,6 +22,7 @@ type CT_BlurEffect struct {
 
 func NewCT_BlurEffect() *CT_BlurEffect {
 	ret := &CT_BlurEffect{}
+	ret.GrowAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -39,6 +42,7 @@ func (m *CT_BlurEffect) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_BlurEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.GrowAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "rad" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)

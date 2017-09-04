@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_BackgroundProperties struct {
@@ -22,6 +24,7 @@ type CT_BackgroundProperties struct {
 
 func NewCT_BackgroundProperties() *CT_BackgroundProperties {
 	ret := &CT_BackgroundProperties{}
+	ret.ShadeToTitleAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -41,6 +44,7 @@ func (m *CT_BackgroundProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *CT_BackgroundProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ShadeToTitleAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "shadeToTitle" {
 			parsed, err := strconv.ParseBool(attr.Value)

@@ -23,6 +23,7 @@ type CT_Guide struct {
 
 func NewCT_Guide() *CT_Guide {
 	ret := &CT_Guide{}
+	ret.OrientAttr = ST_DirectionVert
 	return ret
 }
 
@@ -45,6 +46,7 @@ func (m *CT_Guide) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Guide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.OrientAttr = ST_DirectionVert
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "orient" {
 			m.OrientAttr.UnmarshalXMLAttr(attr)

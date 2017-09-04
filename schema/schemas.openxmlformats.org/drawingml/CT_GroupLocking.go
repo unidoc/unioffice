@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_GroupLocking struct {
@@ -27,6 +29,13 @@ type CT_GroupLocking struct {
 
 func NewCT_GroupLocking() *CT_GroupLocking {
 	ret := &CT_GroupLocking{}
+	ret.NoGrpAttr = gooxml.Bool(false)
+	ret.NoUngrpAttr = gooxml.Bool(false)
+	ret.NoSelectAttr = gooxml.Bool(false)
+	ret.NoRotAttr = gooxml.Bool(false)
+	ret.NoChangeAspectAttr = gooxml.Bool(false)
+	ret.NoMoveAttr = gooxml.Bool(false)
+	ret.NoResizeAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -70,6 +79,13 @@ func (m *CT_GroupLocking) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_GroupLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.NoGrpAttr = gooxml.Bool(false)
+	m.NoUngrpAttr = gooxml.Bool(false)
+	m.NoSelectAttr = gooxml.Bool(false)
+	m.NoRotAttr = gooxml.Bool(false)
+	m.NoChangeAspectAttr = gooxml.Bool(false)
+	m.NoMoveAttr = gooxml.Bool(false)
+	m.NoResizeAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "noGrp" {
 			parsed, err := strconv.ParseBool(attr.Value)

@@ -18,6 +18,7 @@ type CT_Shape struct {
 
 func NewCT_Shape() *CT_Shape {
 	ret := &CT_Shape{}
+	ret.ValAttr = ST_ShapeBox
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_Shape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_ShapeBox
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

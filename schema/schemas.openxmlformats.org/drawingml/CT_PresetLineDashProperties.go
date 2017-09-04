@@ -18,6 +18,7 @@ type CT_PresetLineDashProperties struct {
 
 func NewCT_PresetLineDashProperties() *CT_PresetLineDashProperties {
 	ret := &CT_PresetLineDashProperties{}
+	ret.ValAttr = ST_PresetLineDashVal(1)
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_PresetLineDashProperties) MarshalXML(e *xml.Encoder, start xml.Start
 
 func (m *CT_PresetLineDashProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_PresetLineDashVal(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Scenario struct {
@@ -33,6 +35,8 @@ type CT_Scenario struct {
 
 func NewCT_Scenario() *CT_Scenario {
 	ret := &CT_Scenario{}
+	ret.LockedAttr = gooxml.Bool(false)
+	ret.HiddenAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -68,6 +72,8 @@ func (m *CT_Scenario) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Scenario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.LockedAttr = gooxml.Bool(false)
+	m.HiddenAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

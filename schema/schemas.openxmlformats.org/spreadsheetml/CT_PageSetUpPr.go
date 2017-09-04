@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PageSetUpPr struct {
@@ -22,6 +24,8 @@ type CT_PageSetUpPr struct {
 
 func NewCT_PageSetUpPr() *CT_PageSetUpPr {
 	ret := &CT_PageSetUpPr{}
+	ret.AutoPageBreaksAttr = gooxml.Bool(true)
+	ret.FitToPageAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -41,6 +45,8 @@ func (m *CT_PageSetUpPr) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_PageSetUpPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.AutoPageBreaksAttr = gooxml.Bool(true)
+	m.FitToPageAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "autoPageBreaks" {
 			parsed, err := strconv.ParseBool(attr.Value)

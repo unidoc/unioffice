@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PivotAreaReference struct {
@@ -56,6 +58,21 @@ type CT_PivotAreaReference struct {
 
 func NewCT_PivotAreaReference() *CT_PivotAreaReference {
 	ret := &CT_PivotAreaReference{}
+	ret.SelectedAttr = gooxml.Bool(true)
+	ret.ByPositionAttr = gooxml.Bool(false)
+	ret.RelativeAttr = gooxml.Bool(false)
+	ret.DefaultSubtotalAttr = gooxml.Bool(false)
+	ret.SumSubtotalAttr = gooxml.Bool(false)
+	ret.CountASubtotalAttr = gooxml.Bool(false)
+	ret.AvgSubtotalAttr = gooxml.Bool(false)
+	ret.MaxSubtotalAttr = gooxml.Bool(false)
+	ret.MinSubtotalAttr = gooxml.Bool(false)
+	ret.ProductSubtotalAttr = gooxml.Bool(false)
+	ret.CountSubtotalAttr = gooxml.Bool(false)
+	ret.StdDevSubtotalAttr = gooxml.Bool(false)
+	ret.StdDevPSubtotalAttr = gooxml.Bool(false)
+	ret.VarSubtotalAttr = gooxml.Bool(false)
+	ret.VarPSubtotalAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -143,6 +160,21 @@ func (m *CT_PivotAreaReference) MarshalXML(e *xml.Encoder, start xml.StartElemen
 
 func (m *CT_PivotAreaReference) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.SelectedAttr = gooxml.Bool(true)
+	m.ByPositionAttr = gooxml.Bool(false)
+	m.RelativeAttr = gooxml.Bool(false)
+	m.DefaultSubtotalAttr = gooxml.Bool(false)
+	m.SumSubtotalAttr = gooxml.Bool(false)
+	m.CountASubtotalAttr = gooxml.Bool(false)
+	m.AvgSubtotalAttr = gooxml.Bool(false)
+	m.MaxSubtotalAttr = gooxml.Bool(false)
+	m.MinSubtotalAttr = gooxml.Bool(false)
+	m.ProductSubtotalAttr = gooxml.Bool(false)
+	m.CountSubtotalAttr = gooxml.Bool(false)
+	m.StdDevSubtotalAttr = gooxml.Bool(false)
+	m.StdDevPSubtotalAttr = gooxml.Bool(false)
+	m.VarSubtotalAttr = gooxml.Bool(false)
+	m.VarPSubtotalAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "field" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

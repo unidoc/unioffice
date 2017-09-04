@@ -41,6 +41,10 @@ type CT_HeaderFooter struct {
 
 func NewCT_HeaderFooter() *CT_HeaderFooter {
 	ret := &CT_HeaderFooter{}
+	ret.DifferentOddEvenAttr = gooxml.Bool(false)
+	ret.DifferentFirstAttr = gooxml.Bool(false)
+	ret.ScaleWithDocAttr = gooxml.Bool(true)
+	ret.AlignWithMarginsAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -98,6 +102,10 @@ func (m *CT_HeaderFooter) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_HeaderFooter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.DifferentOddEvenAttr = gooxml.Bool(false)
+	m.DifferentFirstAttr = gooxml.Bool(false)
+	m.ScaleWithDocAttr = gooxml.Bool(true)
+	m.AlignWithMarginsAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "differentOddEven" {
 			parsed, err := strconv.ParseBool(attr.Value)

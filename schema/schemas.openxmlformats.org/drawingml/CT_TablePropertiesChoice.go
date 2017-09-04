@@ -23,6 +23,7 @@ type CT_TablePropertiesChoice struct {
 
 func NewCT_TablePropertiesChoice() *CT_TablePropertiesChoice {
 	ret := &CT_TablePropertiesChoice{}
+	ret.TableStyleId = gooxml.String("{00000000-0000-0000-0000-000000000000}")
 	return ret
 }
 
@@ -41,6 +42,7 @@ func (m *CT_TablePropertiesChoice) MarshalXML(e *xml.Encoder, start xml.StartEle
 
 func (m *CT_TablePropertiesChoice) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TableStyleId = gooxml.String("{00000000-0000-0000-0000-000000000000}")
 lCT_TablePropertiesChoice:
 	for {
 		tok, err := d.Token()

@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ChartFormat struct {
@@ -27,6 +29,7 @@ type CT_ChartFormat struct {
 
 func NewCT_ChartFormat() *CT_ChartFormat {
 	ret := &CT_ChartFormat{}
+	ret.SeriesAttr = gooxml.Bool(false)
 	ret.PivotArea = NewCT_PivotArea()
 	return ret
 }
@@ -49,6 +52,7 @@ func (m *CT_ChartFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_ChartFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.SeriesAttr = gooxml.Bool(false)
 	m.PivotArea = NewCT_PivotArea()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "chart" {

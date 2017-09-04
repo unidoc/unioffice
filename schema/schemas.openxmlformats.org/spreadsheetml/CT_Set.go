@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Set struct {
@@ -33,6 +35,8 @@ type CT_Set struct {
 
 func NewCT_Set() *CT_Set {
 	ret := &CT_Set{}
+	ret.SortTypeAttr = ST_SortTypeNone
+	ret.QueryFailedAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -71,6 +75,8 @@ func (m *CT_Set) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Set) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.SortTypeAttr = ST_SortTypeNone
+	m.QueryFailedAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

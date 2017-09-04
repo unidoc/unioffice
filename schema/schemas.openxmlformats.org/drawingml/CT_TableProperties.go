@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TableProperties struct {
@@ -36,6 +38,13 @@ type CT_TableProperties struct {
 
 func NewCT_TableProperties() *CT_TableProperties {
 	ret := &CT_TableProperties{}
+	ret.RtlAttr = gooxml.Bool(false)
+	ret.FirstRowAttr = gooxml.Bool(false)
+	ret.FirstColAttr = gooxml.Bool(false)
+	ret.LastRowAttr = gooxml.Bool(false)
+	ret.LastColAttr = gooxml.Bool(false)
+	ret.BandRowAttr = gooxml.Bool(false)
+	ret.BandColAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -114,6 +123,13 @@ func (m *CT_TableProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_TableProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.RtlAttr = gooxml.Bool(false)
+	m.FirstRowAttr = gooxml.Bool(false)
+	m.FirstColAttr = gooxml.Bool(false)
+	m.LastRowAttr = gooxml.Bool(false)
+	m.LastColAttr = gooxml.Bool(false)
+	m.BandRowAttr = gooxml.Bool(false)
+	m.BandColAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "rtl" {
 			parsed, err := strconv.ParseBool(attr.Value)

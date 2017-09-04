@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_InputCells struct {
@@ -28,6 +30,8 @@ type CT_InputCells struct {
 
 func NewCT_InputCells() *CT_InputCells {
 	ret := &CT_InputCells{}
+	ret.DeletedAttr = gooxml.Bool(false)
+	ret.UndoneAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -55,6 +59,8 @@ func (m *CT_InputCells) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_InputCells) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.DeletedAttr = gooxml.Bool(false)
+	m.UndoneAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "r" {
 			parsed, err := attr.Value, error(nil)

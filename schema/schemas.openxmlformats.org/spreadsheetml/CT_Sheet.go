@@ -25,6 +25,7 @@ type CT_Sheet struct {
 
 func NewCT_Sheet() *CT_Sheet {
 	ret := &CT_Sheet{}
+	ret.StateAttr = ST_SheetStateVisible
 	return ret
 }
 
@@ -49,6 +50,7 @@ func (m *CT_Sheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Sheet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.StateAttr = ST_SheetStateVisible
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

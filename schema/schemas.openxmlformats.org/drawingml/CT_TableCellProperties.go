@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TableCellProperties struct {
@@ -42,6 +44,10 @@ type CT_TableCellProperties struct {
 
 func NewCT_TableCellProperties() *CT_TableCellProperties {
 	ret := &CT_TableCellProperties{}
+	ret.VertAttr = ST_TextVerticalTypeHorz
+	ret.AnchorAttr = ST_TextAnchoringTypeT
+	ret.AnchorCtrAttr = gooxml.Bool(false)
+	ret.HorzOverflowAttr = ST_TextHorzOverflowTypeClip
 	return ret
 }
 
@@ -154,6 +160,10 @@ func (m *CT_TableCellProperties) MarshalXML(e *xml.Encoder, start xml.StartEleme
 
 func (m *CT_TableCellProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.VertAttr = ST_TextVerticalTypeHorz
+	m.AnchorAttr = ST_TextAnchoringTypeT
+	m.AnchorCtrAttr = gooxml.Bool(false)
+	m.HorzOverflowAttr = ST_TextHorzOverflowTypeClip
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "marL" {
 			parsed, err := ParseUnionST_Coordinate32(attr.Value)

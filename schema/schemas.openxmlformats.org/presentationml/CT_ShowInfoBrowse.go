@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ShowInfoBrowse struct {
@@ -20,6 +22,7 @@ type CT_ShowInfoBrowse struct {
 
 func NewCT_ShowInfoBrowse() *CT_ShowInfoBrowse {
 	ret := &CT_ShowInfoBrowse{}
+	ret.ShowScrollbarAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -35,6 +38,7 @@ func (m *CT_ShowInfoBrowse) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_ShowInfoBrowse) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ShowScrollbarAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "showScrollbar" {
 			parsed, err := strconv.ParseBool(attr.Value)

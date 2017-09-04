@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SortCondition struct {
@@ -32,6 +34,9 @@ type CT_SortCondition struct {
 
 func NewCT_SortCondition() *CT_SortCondition {
 	ret := &CT_SortCondition{}
+	ret.DescendingAttr = gooxml.Bool(false)
+	ret.SortByAttr = ST_SortByValue
+	ret.IconSetAttr = ST_IconSetType3Arrows
 	return ret
 }
 
@@ -75,6 +80,9 @@ func (m *CT_SortCondition) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_SortCondition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.DescendingAttr = gooxml.Bool(false)
+	m.SortByAttr = ST_SortByValue
+	m.IconSetAttr = ST_IconSetType3Arrows
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "descending" {
 			parsed, err := strconv.ParseBool(attr.Value)
