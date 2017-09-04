@@ -7,6 +7,8 @@
 [![GoDoc](https://godoc.org/baliance.com/gooxml?status.svg)](https://godoc.org/baliance.com/gooxml)
 [![Go Report Card](https://goreportcard.com/badge/baliance.com/gooxml)](https://goreportcard.com/report/baliance.com/gooxml)
 
+![https://baliance.com/gooxml/](./_examples/preview.png "gooxml")
+
 ## Status ##
 
 - Documents (docx) work well, and there are no known issues.
