@@ -26,10 +26,25 @@ func (s ShapeProperties) X() *dml.CT_ShapeProperties {
 	return s.x
 }
 
+func (s ShapeProperties) clearFill() {
+	s.x.NoFill = nil
+	s.x.BlipFill = nil
+	s.x.GradFill = nil
+	s.x.GrpFill = nil
+	s.x.SolidFill = nil
+	s.x.PattFill = nil
+}
+
+func (s ShapeProperties) SetNoFill() {
+	s.clearFill()
+	s.x.NoFill = dml.NewCT_NoFillProperties()
+}
+
 func (s ShapeProperties) SetSolidFill(c color.Color) {
+	s.clearFill()
 	s.x.SolidFill = dml.NewCT_SolidColorFillProperties()
 	s.x.SolidFill.SrgbClr = dml.NewCT_SRgbColor()
-	s.x.SolidFill.SrgbClr.ValAttr = *c.AsRGBAString()
+	s.x.SolidFill.SrgbClr.ValAttr = *c.AsRGBString()
 }
 
 func (s ShapeProperties) LineProperties() LineProperties {

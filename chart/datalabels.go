@@ -24,6 +24,12 @@ func (d DataLabels) ensureChoice() {
 		d.x.Choice = crt.NewCT_DLblsChoice()
 	}
 }
+
+func (d DataLabels) SetPosition(p crt.ST_DLblPos) {
+	d.ensureChoice()
+	d.x.Choice.DLblPos = crt.NewCT_DLblPos()
+	d.x.Choice.DLblPos.ValAttr = p
+}
 func (d DataLabels) SetShowLegendKey(b bool) {
 	d.ensureChoice()
 	d.x.Choice.ShowLegendKey = crt.NewCT_Boolean()

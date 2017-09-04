@@ -18,7 +18,7 @@ type Color struct {
 
 // RGB constructs a new RGB color with a given red, green and blue value.
 func RGB(r, g, b uint8) Color {
-	return Color{255, r, g, b, false}
+	return Color{r, g, b, 255, false}
 }
 
 // IsAuto returns true if the color is the 'Auto' type.  If the

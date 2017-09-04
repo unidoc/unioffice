@@ -31,13 +31,23 @@ func (l LineProperties) SetWidth(w measurement.Distance) {
 	l.x.WAttr = gooxml.Int32(int32(w / measurement.EMU))
 }
 
-func (l LineProperties) SetSolidFill(c color.Color) {
+func (l LineProperties) clearFill() {
 	l.x.NoFill = nil
 	l.x.GradFill = nil
+	l.x.SolidFill = nil
 	l.x.PattFill = nil
+}
+
+func (l LineProperties) SetNoFill() {
+	l.clearFill()
+	l.x.NoFill = dml.NewCT_NoFillProperties()
+}
+
+func (l LineProperties) SetSolidFill(c color.Color) {
+	l.clearFill()
 	l.x.SolidFill = dml.NewCT_SolidColorFillProperties()
 	l.x.SolidFill.SrgbClr = dml.NewCT_SRgbColor()
-	l.x.SolidFill.SrgbClr.ValAttr = *c.AsRGBAString()
+	l.x.SolidFill.SrgbClr.ValAttr = *c.AsRGBString()
 }
 
 // LineJoin is the type of line join

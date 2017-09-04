@@ -9,6 +9,7 @@ package spreadsheet
 
 import (
 	"baliance.com/gooxml"
+	"baliance.com/gooxml/color"
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	c "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
 	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
@@ -28,6 +29,7 @@ func (d Drawing) X() *sd.WsDr {
 func (d Drawing) AddChart() Chart {
 	chart := crt.NewChartSpace()
 	d.wb.charts = append(d.wb.charts, chart)
+	chrt := Chart{chart}
 
 	fn := gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.ChartContentType, len(d.wb.charts))
 	d.wb.ContentTypes.AddOverride(fn, gooxml.ChartContentType)
@@ -44,7 +46,9 @@ func (d Drawing) AddChart() Chart {
 	}
 
 	// maybe use a one cell anchor?
-	d.x.TwoCellAnchor = sd.NewCT_TwoCellAnchor()
+	if d.x.TwoCellAnchor == nil {
+		d.x.TwoCellAnchor = sd.NewCT_TwoCellAnchor()
+	}
 	d.x.TwoCellAnchor.EditAsAttr = sd.ST_EditAsOneCell
 
 	// provide a default size so its visible, if from/to are both 0,0 then the
@@ -60,17 +64,28 @@ func (d Drawing) AddChart() Chart {
 	d.x.TwoCellAnchor.Choice.GraphicFrame.Graphic.GraphicData.UriAttr = "http://schemas.openxmlformats.org/drawingml/2006/chart"
 	c := c.NewChart()
 	c.IdAttr = chartID
-
 	d.x.TwoCellAnchor.Choice.GraphicFrame.Graphic.GraphicData.Any = []gooxml.Any{c}
-	return Chart{chart}
+
+	//chart.Chart.PlotVisOnly = crt.NewCT_Boolean()
+	//chart.Chart.PlotVisOnly.ValAttr = gooxml.Bool(true)
+
+	chrt.Properties().SetSolidFill(color.White)
+	chrt.SetDisplayBlanksAs(crt.ST_DispBlanksAsGap)
+	return chrt
 }
 
 // TopLeft allows manipulating the top left position of the drawing.
 func (d Drawing) TopLeft() CellMarker {
 	if d.x.TwoCellAnchor != nil {
+		if d.x.TwoCellAnchor.From == nil {
+			d.x.TwoCellAnchor.From = sd.NewCT_Marker()
+		}
 		return CellMarker{d.x.TwoCellAnchor.From}
 	}
 	if d.x.OneCellAnchor != nil {
+		if d.x.OneCellAnchor.From == nil {
+			d.x.OneCellAnchor.From = sd.NewCT_Marker()
+		}
 		return CellMarker{d.x.OneCellAnchor.From}
 	}
 
@@ -81,6 +96,9 @@ func (d Drawing) TopLeft() CellMarker {
 // BottomRight allows manipulating the bottom right position of the drawing.
 func (d Drawing) BottomRight() CellMarker {
 	if d.x.TwoCellAnchor != nil {
+		if d.x.TwoCellAnchor.To == nil {
+			d.x.TwoCellAnchor.To = sd.NewCT_Marker()
+		}
 		return CellMarker{d.x.TwoCellAnchor.To}
 	}
 
