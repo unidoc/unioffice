@@ -29,7 +29,7 @@ func (m *CT_DLbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	seidx := xml.StartElement{Name: xml.Name{Local: "c:idx"}}
 	e.EncodeElement(m.Idx, seidx)
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}

@@ -31,7 +31,7 @@ func (m *CT_R) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.Choice != nil {
 		for _, c := range m.Choice {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

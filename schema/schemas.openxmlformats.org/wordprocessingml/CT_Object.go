@@ -44,7 +44,7 @@ func (m *CT_Object) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		e.EncodeElement(m.Drawing, sedrawing)
 	}
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

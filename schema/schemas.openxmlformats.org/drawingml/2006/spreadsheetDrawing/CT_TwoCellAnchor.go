@@ -42,7 +42,7 @@ func (m *CT_TwoCellAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	seto := xml.StartElement{Name: xml.Name{Local: "xdr:to"}}
 	e.EncodeElement(m.To, seto)
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	seclientData := xml.StartElement{Name: xml.Name{Local: "xdr:clientData"}}
 	e.EncodeElement(m.ClientData, seclientData)

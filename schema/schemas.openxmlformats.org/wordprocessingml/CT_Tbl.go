@@ -35,7 +35,7 @@ func (m *CT_Tbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.EG_RangeMarkupElements != nil {
 		for _, c := range m.EG_RangeMarkupElements {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	setblPr := xml.StartElement{Name: xml.Name{Local: "w:tblPr"}}
@@ -44,7 +44,7 @@ func (m *CT_Tbl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeElement(m.TblGrid, setblGrid)
 	if m.EG_ContentRowContent != nil {
 		for _, c := range m.EG_ContentRowContent {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

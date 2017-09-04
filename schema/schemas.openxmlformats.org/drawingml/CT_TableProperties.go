@@ -102,7 +102,7 @@ func (m *CT_TableProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 		e.EncodeElement(m.EffectDag, seeffectDag)
 	}
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "a:extLst"}}

@@ -32,7 +32,7 @@ func (m *CT_TextParagraph) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	}
 	if m.EG_TextRun != nil {
 		for _, c := range m.EG_TextRun {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	if m.EndParaRPr != nil {

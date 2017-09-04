@@ -25,7 +25,7 @@ func NewCT_ColorMappingOverride() *CT_ColorMappingOverride {
 func (m *CT_ColorMappingOverride) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "a:CT_ColorMappingOverride"
 	e.EncodeToken(start)
-	m.Choice.MarshalXML(e, start)
+	m.Choice.MarshalXML(e, xml.StartElement{})
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

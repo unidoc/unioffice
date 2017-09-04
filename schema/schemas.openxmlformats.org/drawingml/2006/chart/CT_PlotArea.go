@@ -36,10 +36,10 @@ func (m *CT_PlotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		e.EncodeElement(m.Layout, selayout)
 	}
 	for _, c := range m.Choice {
-		c.MarshalXML(e, start)
+		c.MarshalXML(e, xml.StartElement{})
 	}
 	if m.CChoice != nil {
-		m.CChoice.MarshalXML(e, start)
+		m.CChoice.MarshalXML(e, xml.StartElement{})
 	}
 	if m.DTable != nil {
 		sedTable := xml.StartElement{Name: xml.Name{Local: "c:dTable"}}

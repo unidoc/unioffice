@@ -31,7 +31,7 @@ func (m *CT_RPR) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		e.EncodeElement(m.Lit, selit)
 	}
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	if m.Brk != nil {
 		sebrk := xml.StartElement{Name: xml.Name{Local: "m:brk"}}

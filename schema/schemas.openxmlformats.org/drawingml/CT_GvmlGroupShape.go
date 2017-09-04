@@ -35,7 +35,7 @@ func (m *CT_GvmlGroupShape) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeElement(m.GrpSpPr, segrpSpPr)
 	if m.Choice != nil {
 		for _, c := range m.Choice {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	if m.ExtLst != nil {

@@ -99,7 +99,7 @@ func (m *CT_Anchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		e.EncodeElement(m.EffectExtent, seeffectExtent)
 	}
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	sedocPr := xml.StartElement{Name: xml.Name{Local: "wp:docPr"}}
 	e.EncodeElement(m.DocPr, sedocPr)

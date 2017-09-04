@@ -26,7 +26,7 @@ func NewCT_DispUnits() *CT_DispUnits {
 func (m *CT_DispUnits) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	if m.DispUnitsLbl != nil {
 		sedispUnitsLbl := xml.StartElement{Name: xml.Name{Local: "c:dispUnitsLbl"}}

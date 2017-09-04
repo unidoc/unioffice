@@ -25,7 +25,7 @@ func NewEG_OMathElements() *EG_OMathElements {
 func (m *EG_OMathElements) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.EG_OMathMathElements != nil {
 		for _, c := range m.EG_OMathMathElements {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	return nil

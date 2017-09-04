@@ -55,7 +55,7 @@ func (m *CT_DataBinding) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		Value: fmt.Sprintf("%v", m.DataBindingLoadModeAttr)})
 	e.EncodeToken(start)
 	if m.Any != nil {
-		m.Any.MarshalXML(e, start)
+		m.Any.MarshalXML(e, xml.StartElement{})
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

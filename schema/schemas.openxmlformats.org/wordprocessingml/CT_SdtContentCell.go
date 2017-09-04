@@ -46,7 +46,7 @@ func (m *CT_SdtContentCell) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.EG_RunLevelElts != nil {
 		for _, c := range m.EG_RunLevelElts {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

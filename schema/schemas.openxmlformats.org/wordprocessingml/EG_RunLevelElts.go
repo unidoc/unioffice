@@ -70,12 +70,12 @@ func (m *EG_RunLevelElts) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	if m.EG_RangeMarkupElements != nil {
 		for _, c := range m.EG_RangeMarkupElements {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	if m.EG_MathContent != nil {
 		for _, c := range m.EG_MathContent {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	return nil

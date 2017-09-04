@@ -45,7 +45,7 @@ func (m *CT_WordprocessingShape) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		secNvPr := xml.StartElement{Name: xml.Name{Local: "wp:cNvPr"}}
 		e.EncodeElement(m.CNvPr, secNvPr)
 	}
-	m.Choice.MarshalXML(e, start)
+	m.Choice.MarshalXML(e, xml.StartElement{})
 	sespPr := xml.StartElement{Name: xml.Name{Local: "wp:spPr"}}
 	e.EncodeElement(m.SpPr, sespPr)
 	if m.Style != nil {
@@ -57,7 +57,7 @@ func (m *CT_WordprocessingShape) MarshalXML(e *xml.Encoder, start xml.StartEleme
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	if m.CChoice != nil {
-		m.CChoice.MarshalXML(e, start)
+		m.CChoice.MarshalXML(e, xml.StartElement{})
 	}
 	sebodyPr := xml.StartElement{Name: xml.Name{Local: "wp:bodyPr"}}
 	e.EncodeElement(m.BodyPr, sebodyPr)

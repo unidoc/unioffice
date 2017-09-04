@@ -39,7 +39,7 @@ func (m *CT_WordprocessingCanvas) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	if m.Choice != nil {
 		for _, c := range m.Choice {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	if m.ExtLst != nil {

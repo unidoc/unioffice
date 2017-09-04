@@ -24,7 +24,7 @@ func NewCT_SerTx() *CT_SerTx {
 
 func (m *CT_SerTx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	m.Choice.MarshalXML(e, start)
+	m.Choice.MarshalXML(e, xml.StartElement{})
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }

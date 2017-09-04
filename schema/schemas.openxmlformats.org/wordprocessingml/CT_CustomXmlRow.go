@@ -44,7 +44,7 @@ func (m *CT_CustomXmlRow) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	if m.EG_ContentRowContent != nil {
 		for _, c := range m.EG_ContentRowContent {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

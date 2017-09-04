@@ -25,7 +25,7 @@ func NewCT_ExternalLink() *CT_ExternalLink {
 func (m *CT_ExternalLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}

@@ -50,7 +50,7 @@ func (m *CT_SlideTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	e.EncodeToken(start)
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	if m.SndAc != nil {
 		sesndAc := xml.StartElement{Name: xml.Name{Local: "p:sndAc"}}

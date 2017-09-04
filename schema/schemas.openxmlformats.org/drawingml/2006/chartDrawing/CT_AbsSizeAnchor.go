@@ -34,7 +34,7 @@ func (m *CT_AbsSizeAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	seext := xml.StartElement{Name: xml.Name{Local: "ext"}}
 	e.EncodeElement(m.Ext, seext)
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
