@@ -25,7 +25,7 @@ func NewElementsGroup() *ElementsGroup {
 func (m *ElementsGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.Choice != nil {
 		for _, c := range m.Choice {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	return nil

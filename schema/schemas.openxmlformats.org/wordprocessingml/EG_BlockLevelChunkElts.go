@@ -27,7 +27,7 @@ func NewEG_BlockLevelChunkElts() *EG_BlockLevelChunkElts {
 func (m *EG_BlockLevelChunkElts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.EG_ContentBlockContent != nil {
 		for _, c := range m.EG_ContentBlockContent {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	return nil

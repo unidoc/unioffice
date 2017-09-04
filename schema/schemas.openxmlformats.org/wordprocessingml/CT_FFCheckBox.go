@@ -28,7 +28,7 @@ func NewCT_FFCheckBox() *CT_FFCheckBox {
 func (m *CT_FFCheckBox) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	if m.Default != nil {
 		sedefault := xml.StartElement{Name: xml.Name{Local: "w:default"}}

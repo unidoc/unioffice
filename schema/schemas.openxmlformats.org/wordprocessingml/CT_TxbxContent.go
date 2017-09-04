@@ -34,7 +34,7 @@ func (m *CT_TxbxContent) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.EG_ContentBlockContent != nil {
 		for _, c := range m.EG_ContentBlockContent {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

@@ -100,7 +100,7 @@ func (m *CT_DateAx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	secrossAx := xml.StartElement{Name: xml.Name{Local: "c:crossAx"}}
 	e.EncodeElement(m.CrossAx, secrossAx)
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	if m.Auto != nil {
 		seauto := xml.StartElement{Name: xml.Name{Local: "c:auto"}}

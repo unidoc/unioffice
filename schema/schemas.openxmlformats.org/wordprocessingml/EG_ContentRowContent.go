@@ -45,7 +45,7 @@ func (m *EG_ContentRowContent) MarshalXML(e *xml.Encoder, start xml.StartElement
 	}
 	if m.EG_RunLevelElts != nil {
 		for _, c := range m.EG_RunLevelElts {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	return nil

@@ -32,7 +32,7 @@ func (m *CT_RelSizeAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	seto := xml.StartElement{Name: xml.Name{Local: "to"}}
 	e.EncodeElement(m.To, seto)
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

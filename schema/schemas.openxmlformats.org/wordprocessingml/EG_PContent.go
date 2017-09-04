@@ -45,7 +45,7 @@ func (m *EG_PContent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.EG_ContentRunContent != nil {
 		for _, c := range m.EG_ContentRunContent {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	return nil

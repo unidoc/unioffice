@@ -51,7 +51,7 @@ func (m *EG_ContentBlockContent) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	}
 	if m.EG_RunLevelElts != nil {
 		for _, c := range m.EG_RunLevelElts {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	return nil

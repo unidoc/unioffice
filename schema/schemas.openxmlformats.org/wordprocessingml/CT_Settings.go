@@ -614,7 +614,7 @@ func (m *CT_Settings) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		e.EncodeElement(m.ListSeparator, selistSeparator)
 	}
 	for _, any := range m.Extra {
-		if err := any.MarshalXML(e, start); err != nil {
+		if err := any.MarshalXML(e, xml.StartElement{}); err != nil {
 			return err
 		}
 	}

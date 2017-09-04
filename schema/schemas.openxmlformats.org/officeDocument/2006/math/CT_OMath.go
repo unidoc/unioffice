@@ -26,7 +26,7 @@ func (m *CT_OMath) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.EG_OMathMathElements != nil {
 		for _, c := range m.EG_OMathMathElements {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})

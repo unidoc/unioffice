@@ -29,12 +29,12 @@ func (m *EG_PContentMath) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	start.Name.Local = "w:EG_PContentMath"
 	if m.EG_PContentBase != nil {
 		for _, c := range m.EG_PContentBase {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	if m.EG_ContentRunContentBase != nil {
 		for _, c := range m.EG_ContentRunContentBase {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	return nil

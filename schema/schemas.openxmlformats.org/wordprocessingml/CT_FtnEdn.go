@@ -41,7 +41,7 @@ func (m *CT_FtnEdn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	e.EncodeToken(start)
 	for _, c := range m.EG_BlockLevelElts {
-		c.MarshalXML(e, start)
+		c.MarshalXML(e, xml.StartElement{})
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

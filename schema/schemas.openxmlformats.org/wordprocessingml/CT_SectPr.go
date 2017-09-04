@@ -86,7 +86,7 @@ func (m *CT_SectPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.EG_HdrFtrReferences != nil {
 		for _, c := range m.EG_HdrFtrReferences {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	if m.FootnotePr != nil {

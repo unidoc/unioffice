@@ -42,7 +42,7 @@ func (m *CT_WordprocessingGroup) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeElement(m.GrpSpPr, segrpSpPr)
 	if m.Choice != nil {
 		for _, c := range m.Choice {
-			c.MarshalXML(e, start)
+			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	if m.ExtLst != nil {

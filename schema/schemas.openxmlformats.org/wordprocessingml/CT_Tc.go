@@ -39,7 +39,7 @@ func (m *CT_Tc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		e.EncodeElement(m.TcPr, setcPr)
 	}
 	for _, c := range m.EG_BlockLevelElts {
-		c.MarshalXML(e, start)
+		c.MarshalXML(e, xml.StartElement{})
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil

@@ -36,7 +36,7 @@ func (m *CT_AbsoluteAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	seext := xml.StartElement{Name: xml.Name{Local: "xdr:ext"}}
 	e.EncodeElement(m.Ext, seext)
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	seclientData := xml.StartElement{Name: xml.Name{Local: "xdr:clientData"}}
 	e.EncodeElement(m.ClientData, seclientData)

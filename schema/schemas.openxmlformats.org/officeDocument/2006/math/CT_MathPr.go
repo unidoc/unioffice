@@ -86,7 +86,7 @@ func (m *CT_MathPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		e.EncodeElement(m.IntraSp, seintraSp)
 	}
 	if m.Choice != nil {
-		m.Choice.MarshalXML(e, start)
+		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	if m.IntLim != nil {
 		seintLim := xml.StartElement{Name: xml.Name{Local: "m:intLim"}}
