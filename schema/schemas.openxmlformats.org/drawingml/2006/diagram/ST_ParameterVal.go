@@ -8,6 +8,7 @@
 package diagram
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -53,6 +54,119 @@ type ST_ParameterVal struct {
 
 func (m *ST_ParameterVal) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_ParameterVal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_DiagramHorizontalAlignment != ST_DiagramHorizontalAlignmentUnset {
+		e.EncodeToken(xml.CharData(m.ST_DiagramHorizontalAlignment.String()))
+	}
+	if m.ST_VerticalAlignment != ST_VerticalAlignmentUnset {
+		e.EncodeToken(xml.CharData(m.ST_VerticalAlignment.String()))
+	}
+	if m.ST_ChildDirection != ST_ChildDirectionUnset {
+		e.EncodeToken(xml.CharData(m.ST_ChildDirection.String()))
+	}
+	if m.ST_ChildAlignment != ST_ChildAlignmentUnset {
+		e.EncodeToken(xml.CharData(m.ST_ChildAlignment.String()))
+	}
+	if m.ST_SecondaryChildAlignment != ST_SecondaryChildAlignmentUnset {
+		e.EncodeToken(xml.CharData(m.ST_SecondaryChildAlignment.String()))
+	}
+	if m.ST_LinearDirection != ST_LinearDirectionUnset {
+		e.EncodeToken(xml.CharData(m.ST_LinearDirection.String()))
+	}
+	if m.ST_SecondaryLinearDirection != ST_SecondaryLinearDirectionUnset {
+		e.EncodeToken(xml.CharData(m.ST_SecondaryLinearDirection.String()))
+	}
+	if m.ST_StartingElement != ST_StartingElementUnset {
+		e.EncodeToken(xml.CharData(m.ST_StartingElement.String()))
+	}
+	if m.ST_BendPoint != ST_BendPointUnset {
+		e.EncodeToken(xml.CharData(m.ST_BendPoint.String()))
+	}
+	if m.ST_ConnectorRouting != ST_ConnectorRoutingUnset {
+		e.EncodeToken(xml.CharData(m.ST_ConnectorRouting.String()))
+	}
+	if m.ST_ArrowheadStyle != ST_ArrowheadStyleUnset {
+		e.EncodeToken(xml.CharData(m.ST_ArrowheadStyle.String()))
+	}
+	if m.ST_ConnectorDimension != ST_ConnectorDimensionUnset {
+		e.EncodeToken(xml.CharData(m.ST_ConnectorDimension.String()))
+	}
+	if m.ST_RotationPath != ST_RotationPathUnset {
+		e.EncodeToken(xml.CharData(m.ST_RotationPath.String()))
+	}
+	if m.ST_CenterShapeMapping != ST_CenterShapeMappingUnset {
+		e.EncodeToken(xml.CharData(m.ST_CenterShapeMapping.String()))
+	}
+	if m.ST_NodeHorizontalAlignment != ST_NodeHorizontalAlignmentUnset {
+		e.EncodeToken(xml.CharData(m.ST_NodeHorizontalAlignment.String()))
+	}
+	if m.ST_NodeVerticalAlignment != ST_NodeVerticalAlignmentUnset {
+		e.EncodeToken(xml.CharData(m.ST_NodeVerticalAlignment.String()))
+	}
+	if m.ST_FallbackDimension != ST_FallbackDimensionUnset {
+		e.EncodeToken(xml.CharData(m.ST_FallbackDimension.String()))
+	}
+	if m.ST_TextDirection != ST_TextDirectionUnset {
+		e.EncodeToken(xml.CharData(m.ST_TextDirection.String()))
+	}
+	if m.ST_PyramidAccentPosition != ST_PyramidAccentPositionUnset {
+		e.EncodeToken(xml.CharData(m.ST_PyramidAccentPosition.String()))
+	}
+	if m.ST_PyramidAccentTextMargin != ST_PyramidAccentTextMarginUnset {
+		e.EncodeToken(xml.CharData(m.ST_PyramidAccentTextMargin.String()))
+	}
+	if m.ST_TextBlockDirection != ST_TextBlockDirectionUnset {
+		e.EncodeToken(xml.CharData(m.ST_TextBlockDirection.String()))
+	}
+	if m.ST_TextAnchorHorizontal != ST_TextAnchorHorizontalUnset {
+		e.EncodeToken(xml.CharData(m.ST_TextAnchorHorizontal.String()))
+	}
+	if m.ST_TextAnchorVertical != ST_TextAnchorVerticalUnset {
+		e.EncodeToken(xml.CharData(m.ST_TextAnchorVertical.String()))
+	}
+	if m.ST_DiagramTextAlignment != ST_DiagramTextAlignmentUnset {
+		e.EncodeToken(xml.CharData(m.ST_DiagramTextAlignment.String()))
+	}
+	if m.ST_AutoTextRotation != ST_AutoTextRotationUnset {
+		e.EncodeToken(xml.CharData(m.ST_AutoTextRotation.String()))
+	}
+	if m.ST_GrowDirection != ST_GrowDirectionUnset {
+		e.EncodeToken(xml.CharData(m.ST_GrowDirection.String()))
+	}
+	if m.ST_FlowDirection != ST_FlowDirectionUnset {
+		e.EncodeToken(xml.CharData(m.ST_FlowDirection.String()))
+	}
+	if m.ST_ContinueDirection != ST_ContinueDirectionUnset {
+		e.EncodeToken(xml.CharData(m.ST_ContinueDirection.String()))
+	}
+	if m.ST_Breakpoint != ST_BreakpointUnset {
+		e.EncodeToken(xml.CharData(m.ST_Breakpoint.String()))
+	}
+	if m.ST_Offset != ST_OffsetUnset {
+		e.EncodeToken(xml.CharData(m.ST_Offset.String()))
+	}
+	if m.ST_HierarchyAlignment != ST_HierarchyAlignmentUnset {
+		e.EncodeToken(xml.CharData(m.ST_HierarchyAlignment.String()))
+	}
+	if m.Int32 != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.Int32)))
+	}
+	if m.Float64 != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%f", *m.Float64)))
+	}
+	if m.Bool != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", b2i(*m.Bool))))
+	}
+	if m.StringVal != nil {
+		e.EncodeToken(xml.CharData(*m.StringVal))
+	}
+	if m.ST_ConnectorPoint != ST_ConnectorPointUnset {
+		e.EncodeToken(xml.CharData(m.ST_ConnectorPoint.String()))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_ParameterVal) ValidateWithPath(path string) error {

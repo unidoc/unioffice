@@ -8,6 +8,7 @@
 package chart
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_SecondPieSize struct {
 
 func (m *ST_SecondPieSize) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_SecondPieSize) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_SecondPieSizePercent != nil {
+		e.EncodeToken(xml.CharData(*m.ST_SecondPieSizePercent))
+	}
+	if m.ST_SecondPieSizeUShort != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_SecondPieSizeUShort)))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_SecondPieSize) ValidateWithPath(path string) error {

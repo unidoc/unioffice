@@ -8,6 +8,7 @@
 package presentationml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_TLTime struct {
 
 func (m *ST_TLTime) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_TLTime) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.Uint32 != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.Uint32)))
+	}
+	if m.ST_TLTimeIndefinite != ST_TLTimeIndefiniteUnset {
+		e.EncodeToken(xml.CharData(m.ST_TLTimeIndefinite.String()))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_TLTime) ValidateWithPath(path string) error {

@@ -8,6 +8,7 @@
 package diagram
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -18,6 +19,14 @@ type ST_FunctionArgument struct {
 
 func (m *ST_FunctionArgument) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_FunctionArgument) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_VariableType != ST_VariableTypeUnset {
+		e.EncodeToken(xml.CharData(m.ST_VariableType.String()))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_FunctionArgument) ValidateWithPath(path string) error {

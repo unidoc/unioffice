@@ -8,6 +8,7 @@
 package presentationml
 
 import (
+	"encoding/xml"
 	"fmt"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,6 +22,17 @@ type ST_TLTimeAnimateValueTime struct {
 
 func (m *ST_TLTimeAnimateValueTime) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_TLTimeAnimateValueTime) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_PositiveFixedPercentage != nil {
+		e.Encode(m.ST_PositiveFixedPercentage)
+	}
+	if m.ST_TLTimeIndefinite != ST_TLTimeIndefiniteUnset {
+		e.EncodeToken(xml.CharData(m.ST_TLTimeIndefinite.String()))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_TLTimeAnimateValueTime) ValidateWithPath(path string) error {

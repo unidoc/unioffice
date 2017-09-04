@@ -8,6 +8,7 @@
 package presentationml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_TransitionEightDirectionType struct {
 
 func (m *ST_TransitionEightDirectionType) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_TransitionEightDirectionType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_TransitionSideDirectionType != ST_TransitionSideDirectionTypeUnset {
+		e.EncodeToken(xml.CharData(m.ST_TransitionSideDirectionType.String()))
+	}
+	if m.ST_TransitionCornerDirectionType != ST_TransitionCornerDirectionTypeUnset {
+		e.EncodeToken(xml.CharData(m.ST_TransitionCornerDirectionType.String()))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_TransitionEightDirectionType) ValidateWithPath(path string) error {

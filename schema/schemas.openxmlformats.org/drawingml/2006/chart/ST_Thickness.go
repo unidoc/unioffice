@@ -8,6 +8,7 @@
 package chart
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_Thickness struct {
 
 func (m *ST_Thickness) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_Thickness) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_ThicknessPercent != nil {
+		e.EncodeToken(xml.CharData(*m.ST_ThicknessPercent))
+	}
+	if m.Uint32 != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.Uint32)))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_Thickness) ValidateWithPath(path string) error {

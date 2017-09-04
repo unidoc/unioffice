@@ -8,6 +8,7 @@
 package wordprocessingml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_SignedHpsMeasure struct {
 
 func (m *ST_SignedHpsMeasure) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_SignedHpsMeasure) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.Int64 != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.Int64)))
+	}
+	if m.ST_UniversalMeasure != nil {
+		e.EncodeToken(xml.CharData(*m.ST_UniversalMeasure))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_SignedHpsMeasure) ValidateWithPath(path string) error {

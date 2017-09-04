@@ -8,6 +8,7 @@
 package diagram
 
 import (
+	"encoding/xml"
 	"fmt"
 
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -21,6 +22,17 @@ type ST_LayoutShapeType struct {
 
 func (m *ST_LayoutShapeType) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_LayoutShapeType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_ShapeType != drawingml.ST_ShapeTypeUnset {
+		e.EncodeToken(xml.CharData(m.ST_ShapeType.String()))
+	}
+	if m.ST_OutputShapeType != ST_OutputShapeTypeUnset {
+		e.EncodeToken(xml.CharData(m.ST_OutputShapeType.String()))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_LayoutShapeType) ValidateWithPath(path string) error {

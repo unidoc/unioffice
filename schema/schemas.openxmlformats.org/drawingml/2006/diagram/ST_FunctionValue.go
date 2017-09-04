@@ -8,6 +8,7 @@
 package diagram
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -24,6 +25,32 @@ type ST_FunctionValue struct {
 
 func (m *ST_FunctionValue) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_FunctionValue) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.Int32 != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.Int32)))
+	}
+	if m.Bool != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", b2i(*m.Bool))))
+	}
+	if m.ST_Direction != ST_DirectionUnset {
+		e.EncodeToken(xml.CharData(m.ST_Direction.String()))
+	}
+	if m.ST_HierBranchStyle != ST_HierBranchStyleUnset {
+		e.EncodeToken(xml.CharData(m.ST_HierBranchStyle.String()))
+	}
+	if m.ST_AnimOneStr != ST_AnimOneStrUnset {
+		e.EncodeToken(xml.CharData(m.ST_AnimOneStr.String()))
+	}
+	if m.ST_AnimLvlStr != ST_AnimLvlStrUnset {
+		e.EncodeToken(xml.CharData(m.ST_AnimLvlStr.String()))
+	}
+	if m.ST_ResizeHandlesStr != ST_ResizeHandlesStrUnset {
+		e.EncodeToken(xml.CharData(m.ST_ResizeHandlesStr.String()))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_FunctionValue) ValidateWithPath(path string) error {

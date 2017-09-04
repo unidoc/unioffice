@@ -8,6 +8,7 @@
 package drawingml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_AdjCoordinate struct {
 
 func (m *ST_AdjCoordinate) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_AdjCoordinate) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_Coordinate != nil {
+		e.Encode(m.ST_Coordinate)
+	}
+	if m.ST_GeomGuideName != nil {
+		e.EncodeToken(xml.CharData(*m.ST_GeomGuideName))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_AdjCoordinate) ValidateWithPath(path string) error {

@@ -7,7 +7,10 @@
 
 package sharedTypes
 
-import "fmt"
+import (
+	"encoding/xml"
+	"fmt"
+)
 
 // ST_TwipsMeasure is a union type
 type ST_TwipsMeasure struct {
@@ -17,6 +20,17 @@ type ST_TwipsMeasure struct {
 
 func (m *ST_TwipsMeasure) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_TwipsMeasure) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_UnsignedDecimalNumber != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_UnsignedDecimalNumber)))
+	}
+	if m.ST_PositiveUniversalMeasure != nil {
+		e.EncodeToken(xml.CharData(*m.ST_PositiveUniversalMeasure))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_TwipsMeasure) ValidateWithPath(path string) error {

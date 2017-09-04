@@ -8,6 +8,7 @@
 package wordprocessingml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_TextScale struct {
 
 func (m *ST_TextScale) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_TextScale) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_TextScalePercent != nil {
+		e.EncodeToken(xml.CharData(*m.ST_TextScalePercent))
+	}
+	if m.ST_TextScaleDecimal != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_TextScaleDecimal)))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_TextScale) ValidateWithPath(path string) error {
