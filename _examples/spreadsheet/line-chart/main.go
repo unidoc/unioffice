@@ -28,9 +28,9 @@ func main() {
 
 	// Charts need to reside in a drawing
 	dwng := ss.AddDrawing()
-	chart := dwng.AddChart()
+	chart, anc := dwng.AddChart()
 	// make it a bit wider than the default
-	dwng.BottomRight().SetCol(15)
+	anc.BottomRight().SetCol(15)
 
 	lc := chart.AddLineChart()
 	priceSeries := lc.AddSeries()
@@ -57,9 +57,9 @@ func main() {
 	va.SetCrosses(ca)
 
 	// add a title and legend
-	//	title := chart.AddTitle()
-	//	title.SetText("Items Sold")
-	//	chart.AddLegend()
+	title := chart.AddTitle()
+	title.SetText("Items Sold")
+	chart.AddLegend()
 
 	// and finally add the chart to the sheet
 	sheet.SetDrawing(dwng)
