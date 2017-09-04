@@ -8,6 +8,7 @@
 package chart
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_DepthPercent struct {
 
 func (m *ST_DepthPercent) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_DepthPercent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_DepthPercentWithSymbol != nil {
+		e.EncodeToken(xml.CharData(*m.ST_DepthPercentWithSymbol))
+	}
+	if m.ST_DepthPercentUShort != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_DepthPercentUShort)))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_DepthPercent) ValidateWithPath(path string) error {

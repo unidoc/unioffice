@@ -8,6 +8,7 @@
 package drawingml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_Coordinate32 struct {
 
 func (m *ST_Coordinate32) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_Coordinate32) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_Coordinate32Unqualified != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_Coordinate32Unqualified)))
+	}
+	if m.ST_UniversalMeasure != nil {
+		e.EncodeToken(xml.CharData(*m.ST_UniversalMeasure))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_Coordinate32) ValidateWithPath(path string) error {

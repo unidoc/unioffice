@@ -8,6 +8,7 @@
 package diagram
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_ModelId struct {
 
 func (m *ST_ModelId) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_ModelId) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.Int32 != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.Int32)))
+	}
+	if m.ST_Guid != nil {
+		e.EncodeToken(xml.CharData(*m.ST_Guid))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_ModelId) ValidateWithPath(path string) error {

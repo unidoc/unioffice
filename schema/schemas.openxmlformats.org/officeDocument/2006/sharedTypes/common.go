@@ -54,6 +54,13 @@ func ParseUnionST_OnOff(s string) (ST_OnOff, error) {
 	return r, nil
 }
 
+func b2i(b bool) uint8 {
+	if b {
+		return 1
+	}
+	return 0
+}
+
 type ST_CalendarType byte
 
 const (

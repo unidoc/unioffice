@@ -8,6 +8,7 @@
 package chart
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_LblOffset struct {
 
 func (m *ST_LblOffset) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_LblOffset) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_LblOffsetPercent != nil {
+		e.EncodeToken(xml.CharData(*m.ST_LblOffsetPercent))
+	}
+	if m.ST_LblOffsetUShort != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_LblOffsetUShort)))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_LblOffset) ValidateWithPath(path string) error {

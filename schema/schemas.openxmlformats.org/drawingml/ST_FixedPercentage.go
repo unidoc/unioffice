@@ -8,6 +8,7 @@
 package drawingml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_FixedPercentage struct {
 
 func (m *ST_FixedPercentage) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_FixedPercentage) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_FixedPercentageDecimal != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_FixedPercentageDecimal)))
+	}
+	if m.ST_FixedPercentage != nil {
+		e.Encode(m.ST_FixedPercentage)
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_FixedPercentage) ValidateWithPath(path string) error {

@@ -8,6 +8,7 @@
 package diagram
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_PrSetCustVal struct {
 
 func (m *ST_PrSetCustVal) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_PrSetCustVal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_Percentage != nil {
+		e.EncodeToken(xml.CharData(*m.ST_Percentage))
+	}
+	if m.Int32 != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.Int32)))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_PrSetCustVal) ValidateWithPath(path string) error {

@@ -8,6 +8,7 @@
 package wordprocessingml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_HexColor struct {
 
 func (m *ST_HexColor) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_HexColor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_HexColorAuto != ST_HexColorAutoUnset {
+		e.EncodeToken(xml.CharData(m.ST_HexColorAuto.String()))
+	}
+	if m.ST_HexColorRGB != nil {
+		e.EncodeToken(xml.CharData(*m.ST_HexColorRGB))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_HexColor) ValidateWithPath(path string) error {

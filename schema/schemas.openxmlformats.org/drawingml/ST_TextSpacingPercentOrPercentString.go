@@ -8,6 +8,7 @@
 package drawingml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_TextSpacingPercentOrPercentString struct {
 
 func (m *ST_TextSpacingPercentOrPercentString) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_TextSpacingPercentOrPercentString) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_TextSpacingPercent != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_TextSpacingPercent)))
+	}
+	if m.ST_Percentage != nil {
+		e.EncodeToken(xml.CharData(*m.ST_Percentage))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_TextSpacingPercentOrPercentString) ValidateWithPath(path string) error {

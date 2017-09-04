@@ -8,6 +8,7 @@
 package chart
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_BubbleScale struct {
 
 func (m *ST_BubbleScale) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_BubbleScale) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_BubbleScalePercent != nil {
+		e.EncodeToken(xml.CharData(*m.ST_BubbleScalePercent))
+	}
+	if m.ST_BubbleScaleUInt != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_BubbleScaleUInt)))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_BubbleScale) ValidateWithPath(path string) error {

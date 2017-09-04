@@ -8,6 +8,7 @@
 package drawingml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_PositivePercentage struct {
 
 func (m *ST_PositivePercentage) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_PositivePercentage) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_PositivePercentageDecimal != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_PositivePercentageDecimal)))
+	}
+	if m.ST_PositivePercentage != nil {
+		e.Encode(m.ST_PositivePercentage)
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_PositivePercentage) ValidateWithPath(path string) error {

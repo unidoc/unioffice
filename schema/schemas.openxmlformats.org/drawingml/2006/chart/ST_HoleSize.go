@@ -8,6 +8,7 @@
 package chart
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_HoleSize struct {
 
 func (m *ST_HoleSize) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_HoleSize) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_HoleSizePercent != nil {
+		e.EncodeToken(xml.CharData(*m.ST_HoleSizePercent))
+	}
+	if m.ST_HoleSizeUByte != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_HoleSizeUByte)))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_HoleSize) ValidateWithPath(path string) error {

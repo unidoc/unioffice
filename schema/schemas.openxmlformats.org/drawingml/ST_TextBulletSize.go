@@ -8,6 +8,7 @@
 package drawingml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_TextBulletSize struct {
 
 func (m *ST_TextBulletSize) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_TextBulletSize) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_TextBulletSizePercent != nil {
+		e.EncodeToken(xml.CharData(*m.ST_TextBulletSizePercent))
+	}
+	if m.ST_TextBulletSizeDecimal != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_TextBulletSizeDecimal)))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_TextBulletSize) ValidateWithPath(path string) error {

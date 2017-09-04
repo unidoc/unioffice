@@ -8,6 +8,7 @@
 package chart
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_Overlap struct {
 
 func (m *ST_Overlap) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_Overlap) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_OverlapPercent != nil {
+		e.EncodeToken(xml.CharData(*m.ST_OverlapPercent))
+	}
+	if m.ST_OverlapByte != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_OverlapByte)))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_Overlap) ValidateWithPath(path string) error {

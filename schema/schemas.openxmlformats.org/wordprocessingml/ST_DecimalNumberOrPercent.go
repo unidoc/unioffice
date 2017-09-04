@@ -8,6 +8,7 @@
 package wordprocessingml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_DecimalNumberOrPercent struct {
 
 func (m *ST_DecimalNumberOrPercent) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_DecimalNumberOrPercent) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_UnqualifiedPercentage != nil {
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%d", *m.ST_UnqualifiedPercentage)))
+	}
+	if m.ST_Percentage != nil {
+		e.EncodeToken(xml.CharData(*m.ST_Percentage))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_DecimalNumberOrPercent) ValidateWithPath(path string) error {

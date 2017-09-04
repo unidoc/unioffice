@@ -8,6 +8,7 @@
 package drawingml
 
 import (
+	"encoding/xml"
 	"fmt"
 )
 
@@ -19,6 +20,17 @@ type ST_AnimationDgmBuildType struct {
 
 func (m *ST_AnimationDgmBuildType) Validate() error {
 	return m.ValidateWithPath("")
+}
+
+func (m ST_AnimationDgmBuildType) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	e.EncodeToken(start)
+	if m.ST_AnimationBuildType != ST_AnimationBuildTypeUnset {
+		e.EncodeToken(xml.CharData(m.ST_AnimationBuildType.String()))
+	}
+	if m.ST_AnimationDgmOnlyBuildType != ST_AnimationDgmOnlyBuildTypeUnset {
+		e.EncodeToken(xml.CharData(m.ST_AnimationDgmOnlyBuildType.String()))
+	}
+	return e.EncodeToken(xml.EndElement{Name: start.Name})
 }
 
 func (m *ST_AnimationDgmBuildType) ValidateWithPath(path string) error {
