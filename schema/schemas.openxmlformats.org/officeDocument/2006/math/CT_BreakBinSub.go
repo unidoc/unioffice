@@ -18,6 +18,7 @@ type CT_BreakBinSub struct {
 
 func NewCT_BreakBinSub() *CT_BreakBinSub {
 	ret := &CT_BreakBinSub{}
+	ret.ValAttr = ST_BreakBinSub(1)
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_BreakBinSub) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_BreakBinSub) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_BreakBinSub(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

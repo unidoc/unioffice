@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -24,6 +25,7 @@ type CT_NormalViewPortion struct {
 
 func NewCT_NormalViewPortion() *CT_NormalViewPortion {
 	ret := &CT_NormalViewPortion{}
+	ret.AutoAdjustAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -41,6 +43,7 @@ func (m *CT_NormalViewPortion) MarshalXML(e *xml.Encoder, start xml.StartElement
 
 func (m *CT_NormalViewPortion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.AutoAdjustAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "sz" {
 			parsed, err := ParseUnionST_PositiveFixedPercentage(attr.Value)

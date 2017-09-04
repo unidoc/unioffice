@@ -36,6 +36,8 @@ type CT_TLAnimateMotionBehavior struct {
 
 func NewCT_TLAnimateMotionBehavior() *CT_TLAnimateMotionBehavior {
 	ret := &CT_TLAnimateMotionBehavior{}
+	ret.OriginAttr = ST_TLAnimateMotionBehaviorOrigin(1)
+	ret.PathEditModeAttr = ST_TLAnimateMotionPathEditMode(1)
 	ret.CBhvr = NewCT_TLCommonBehaviorData()
 	return ret
 }
@@ -92,6 +94,8 @@ func (m *CT_TLAnimateMotionBehavior) MarshalXML(e *xml.Encoder, start xml.StartE
 
 func (m *CT_TLAnimateMotionBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.OriginAttr = ST_TLAnimateMotionBehaviorOrigin(1)
+	m.PathEditModeAttr = ST_TLAnimateMotionPathEditMode(1)
 	m.CBhvr = NewCT_TLCommonBehaviorData()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "origin" {

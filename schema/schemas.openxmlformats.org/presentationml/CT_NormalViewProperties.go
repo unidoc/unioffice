@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_NormalViewProperties struct {
@@ -34,6 +36,11 @@ type CT_NormalViewProperties struct {
 
 func NewCT_NormalViewProperties() *CT_NormalViewProperties {
 	ret := &CT_NormalViewProperties{}
+	ret.ShowOutlineIconsAttr = gooxml.Bool(true)
+	ret.SnapVertSplitterAttr = gooxml.Bool(false)
+	ret.VertBarStateAttr = ST_SplitterBarStateRestored
+	ret.HorzBarStateAttr = ST_SplitterBarStateRestored
+	ret.PreferSingleViewAttr = gooxml.Bool(false)
 	ret.RestoredLeft = NewCT_NormalViewPortion()
 	ret.RestoredTop = NewCT_NormalViewPortion()
 	return ret
@@ -81,6 +88,11 @@ func (m *CT_NormalViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *CT_NormalViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ShowOutlineIconsAttr = gooxml.Bool(true)
+	m.SnapVertSplitterAttr = gooxml.Bool(false)
+	m.VertBarStateAttr = ST_SplitterBarStateRestored
+	m.HorzBarStateAttr = ST_SplitterBarStateRestored
+	m.PreferSingleViewAttr = gooxml.Bool(false)
 	m.RestoredLeft = NewCT_NormalViewPortion()
 	m.RestoredTop = NewCT_NormalViewPortion()
 	for _, attr := range start.Attr {

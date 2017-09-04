@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Pane struct {
@@ -28,6 +30,10 @@ type CT_Pane struct {
 
 func NewCT_Pane() *CT_Pane {
 	ret := &CT_Pane{}
+	ret.XSplitAttr = gooxml.Float64(0)
+	ret.YSplitAttr = gooxml.Float64(0)
+	ret.ActivePaneAttr = ST_PaneTopLeft
+	ret.StateAttr = ST_PaneStateSplit
 	return ret
 }
 
@@ -65,6 +71,10 @@ func (m *CT_Pane) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Pane) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.XSplitAttr = gooxml.Float64(0)
+	m.YSplitAttr = gooxml.Float64(0)
+	m.ActivePaneAttr = ST_PaneTopLeft
+	m.StateAttr = ST_PaneStateSplit
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "xSplit" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)

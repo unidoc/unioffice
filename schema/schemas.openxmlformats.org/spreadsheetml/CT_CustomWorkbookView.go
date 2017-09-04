@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 )
 
@@ -71,6 +72,22 @@ type CT_CustomWorkbookView struct {
 func NewCT_CustomWorkbookView() *CT_CustomWorkbookView {
 	ret := &CT_CustomWorkbookView{}
 	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
+	ret.AutoUpdateAttr = gooxml.Bool(false)
+	ret.ChangesSavedWinAttr = gooxml.Bool(false)
+	ret.OnlySyncAttr = gooxml.Bool(false)
+	ret.PersonalViewAttr = gooxml.Bool(false)
+	ret.IncludePrintSettingsAttr = gooxml.Bool(true)
+	ret.IncludeHiddenRowColAttr = gooxml.Bool(true)
+	ret.MaximizedAttr = gooxml.Bool(false)
+	ret.MinimizedAttr = gooxml.Bool(false)
+	ret.ShowHorizontalScrollAttr = gooxml.Bool(true)
+	ret.ShowVerticalScrollAttr = gooxml.Bool(true)
+	ret.ShowSheetTabsAttr = gooxml.Bool(true)
+	ret.TabRatioAttr = gooxml.Uint32(600)
+	ret.ShowFormulaBarAttr = gooxml.Bool(true)
+	ret.ShowStatusbarAttr = gooxml.Bool(true)
+	ret.ShowCommentsAttr = ST_CommentsCommIndicator
+	ret.ShowObjectsAttr = ST_ObjectsAll
 	return ret
 }
 
@@ -179,6 +196,22 @@ func (m *CT_CustomWorkbookView) MarshalXML(e *xml.Encoder, start xml.StartElemen
 func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
+	m.AutoUpdateAttr = gooxml.Bool(false)
+	m.ChangesSavedWinAttr = gooxml.Bool(false)
+	m.OnlySyncAttr = gooxml.Bool(false)
+	m.PersonalViewAttr = gooxml.Bool(false)
+	m.IncludePrintSettingsAttr = gooxml.Bool(true)
+	m.IncludeHiddenRowColAttr = gooxml.Bool(true)
+	m.MaximizedAttr = gooxml.Bool(false)
+	m.MinimizedAttr = gooxml.Bool(false)
+	m.ShowHorizontalScrollAttr = gooxml.Bool(true)
+	m.ShowVerticalScrollAttr = gooxml.Bool(true)
+	m.ShowSheetTabsAttr = gooxml.Bool(true)
+	m.TabRatioAttr = gooxml.Uint32(600)
+	m.ShowFormulaBarAttr = gooxml.Bool(true)
+	m.ShowStatusbarAttr = gooxml.Bool(true)
+	m.ShowCommentsAttr = ST_CommentsCommIndicator
+	m.ShowObjectsAttr = ST_ObjectsAll
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Error struct {
@@ -47,6 +49,10 @@ type CT_Error struct {
 
 func NewCT_Error() *CT_Error {
 	ret := &CT_Error{}
+	ret.IAttr = gooxml.Bool(false)
+	ret.UnAttr = gooxml.Bool(false)
+	ret.StAttr = gooxml.Bool(false)
+	ret.BAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -112,6 +118,10 @@ func (m *CT_Error) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Error) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.IAttr = gooxml.Bool(false)
+	m.UnAttr = gooxml.Bool(false)
+	m.StAttr = gooxml.Bool(false)
+	m.BAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "v" {
 			parsed, err := attr.Value, error(nil)

@@ -35,6 +35,9 @@ type CT_LineProperties struct {
 
 func NewCT_LineProperties() *CT_LineProperties {
 	ret := &CT_LineProperties{}
+	ret.CapAttr = ST_LineCap(1)
+	ret.CmpdAttr = ST_CompoundLine(1)
+	ret.AlgnAttr = ST_PenAlignment(1)
 	return ret
 }
 
@@ -119,6 +122,9 @@ func (m *CT_LineProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_LineProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CapAttr = ST_LineCap(1)
+	m.CmpdAttr = ST_CompoundLine(1)
+	m.AlgnAttr = ST_PenAlignment(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "w" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

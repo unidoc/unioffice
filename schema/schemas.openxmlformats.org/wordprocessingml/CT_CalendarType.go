@@ -21,6 +21,7 @@ type CT_CalendarType struct {
 
 func NewCT_CalendarType() *CT_CalendarType {
 	ret := &CT_CalendarType{}
+	ret.ValAttr = sharedTypes.ST_CalendarType(1)
 	return ret
 }
 
@@ -39,6 +40,7 @@ func (m *CT_CalendarType) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_CalendarType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = sharedTypes.ST_CalendarType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_GradientFill struct {
@@ -33,6 +35,12 @@ type CT_GradientFill struct {
 
 func NewCT_GradientFill() *CT_GradientFill {
 	ret := &CT_GradientFill{}
+	ret.TypeAttr = ST_GradientTypeLinear
+	ret.DegreeAttr = gooxml.Float64(0)
+	ret.LeftAttr = gooxml.Float64(0)
+	ret.RightAttr = gooxml.Float64(0)
+	ret.TopAttr = gooxml.Float64(0)
+	ret.BottomAttr = gooxml.Float64(0)
 	return ret
 }
 
@@ -75,6 +83,12 @@ func (m *CT_GradientFill) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_GradientFill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_GradientTypeLinear
+	m.DegreeAttr = gooxml.Float64(0)
+	m.LeftAttr = gooxml.Float64(0)
+	m.RightAttr = gooxml.Float64(0)
+	m.TopAttr = gooxml.Float64(0)
+	m.BottomAttr = gooxml.Float64(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Control struct {
@@ -27,6 +29,7 @@ type CT_Control struct {
 
 func NewCT_Control() *CT_Control {
 	ret := &CT_Control{}
+	ret.ShowAsIconAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -70,6 +73,7 @@ func (m *CT_Control) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Control) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ShowAsIconAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "spid" {
 			parsed, err := attr.Value, error(nil)

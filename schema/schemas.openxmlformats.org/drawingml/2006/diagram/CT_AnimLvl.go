@@ -18,6 +18,7 @@ type CT_AnimLvl struct {
 
 func NewCT_AnimLvl() *CT_AnimLvl {
 	ret := &CT_AnimLvl{}
+	ret.ValAttr = ST_AnimLvlStrNone
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_AnimLvl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_AnimLvl) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_AnimLvlStrNone
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

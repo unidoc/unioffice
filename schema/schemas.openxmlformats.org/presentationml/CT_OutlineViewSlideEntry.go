@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_OutlineViewSlideEntry struct {
@@ -21,6 +23,7 @@ type CT_OutlineViewSlideEntry struct {
 
 func NewCT_OutlineViewSlideEntry() *CT_OutlineViewSlideEntry {
 	ret := &CT_OutlineViewSlideEntry{}
+	ret.CollapseAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -38,6 +41,7 @@ func (m *CT_OutlineViewSlideEntry) MarshalXML(e *xml.Encoder, start xml.StartEle
 
 func (m *CT_OutlineViewSlideEntry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CollapseAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)

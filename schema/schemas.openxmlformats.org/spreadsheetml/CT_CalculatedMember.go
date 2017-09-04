@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CalculatedMember struct {
@@ -35,6 +37,7 @@ type CT_CalculatedMember struct {
 
 func NewCT_CalculatedMember() *CT_CalculatedMember {
 	ret := &CT_CalculatedMember{}
+	ret.SetAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -74,6 +77,7 @@ func (m *CT_CalculatedMember) MarshalXML(e *xml.Encoder, start xml.StartElement)
 
 func (m *CT_CalculatedMember) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.SetAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

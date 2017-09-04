@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_GroupTransform2D struct {
@@ -26,6 +28,8 @@ type CT_GroupTransform2D struct {
 
 func NewCT_GroupTransform2D() *CT_GroupTransform2D {
 	ret := &CT_GroupTransform2D{}
+	ret.FlipHAttr = gooxml.Bool(false)
+	ret.FlipVAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -65,6 +69,8 @@ func (m *CT_GroupTransform2D) MarshalXML(e *xml.Encoder, start xml.StartElement)
 
 func (m *CT_GroupTransform2D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.FlipHAttr = gooxml.Bool(false)
+	m.FlipVAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "rot" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

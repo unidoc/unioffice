@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 )
@@ -76,6 +77,15 @@ type CT_Presentation struct {
 
 func NewCT_Presentation() *CT_Presentation {
 	ret := &CT_Presentation{}
+	ret.ShowSpecialPlsOnTitleSldAttr = gooxml.Bool(true)
+	ret.RtlAttr = gooxml.Bool(false)
+	ret.RemovePersonalInfoOnSaveAttr = gooxml.Bool(false)
+	ret.CompatModeAttr = gooxml.Bool(false)
+	ret.StrictFirstAndLastCharsAttr = gooxml.Bool(true)
+	ret.EmbedTrueTypeFontsAttr = gooxml.Bool(false)
+	ret.SaveSubsetFontsAttr = gooxml.Bool(false)
+	ret.AutoCompressPicturesAttr = gooxml.Bool(true)
+	ret.ConformanceAttr = sharedTypes.ST_ConformanceClass(1)
 	ret.NotesSz = drawingml.NewCT_PositiveSize2D()
 	return ret
 }
@@ -197,6 +207,15 @@ func (m *CT_Presentation) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_Presentation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ShowSpecialPlsOnTitleSldAttr = gooxml.Bool(true)
+	m.RtlAttr = gooxml.Bool(false)
+	m.RemovePersonalInfoOnSaveAttr = gooxml.Bool(false)
+	m.CompatModeAttr = gooxml.Bool(false)
+	m.StrictFirstAndLastCharsAttr = gooxml.Bool(true)
+	m.EmbedTrueTypeFontsAttr = gooxml.Bool(false)
+	m.SaveSubsetFontsAttr = gooxml.Bool(false)
+	m.AutoCompressPicturesAttr = gooxml.Bool(true)
+	m.ConformanceAttr = sharedTypes.ST_ConformanceClass(1)
 	m.NotesSz = drawingml.NewCT_PositiveSize2D()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "serverZoom" {

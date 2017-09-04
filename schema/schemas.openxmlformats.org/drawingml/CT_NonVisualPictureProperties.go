@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_NonVisualPictureProperties struct {
@@ -22,6 +24,7 @@ type CT_NonVisualPictureProperties struct {
 
 func NewCT_NonVisualPictureProperties() *CT_NonVisualPictureProperties {
 	ret := &CT_NonVisualPictureProperties{}
+	ret.PreferRelativeResizeAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -45,6 +48,7 @@ func (m *CT_NonVisualPictureProperties) MarshalXML(e *xml.Encoder, start xml.Sta
 
 func (m *CT_NonVisualPictureProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PreferRelativeResizeAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "preferRelativeResize" {
 			parsed, err := strconv.ParseBool(attr.Value)

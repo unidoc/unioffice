@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PivotField struct {
@@ -121,6 +123,48 @@ type CT_PivotField struct {
 
 func NewCT_PivotField() *CT_PivotField {
 	ret := &CT_PivotField{}
+	ret.AxisAttr = ST_Axis(1)
+	ret.DataFieldAttr = gooxml.Bool(false)
+	ret.ShowDropDownsAttr = gooxml.Bool(true)
+	ret.HiddenLevelAttr = gooxml.Bool(false)
+	ret.CompactAttr = gooxml.Bool(true)
+	ret.AllDrilledAttr = gooxml.Bool(false)
+	ret.OutlineAttr = gooxml.Bool(true)
+	ret.SubtotalTopAttr = gooxml.Bool(true)
+	ret.DragToRowAttr = gooxml.Bool(true)
+	ret.DragToColAttr = gooxml.Bool(true)
+	ret.MultipleItemSelectionAllowedAttr = gooxml.Bool(false)
+	ret.DragToPageAttr = gooxml.Bool(true)
+	ret.DragToDataAttr = gooxml.Bool(true)
+	ret.DragOffAttr = gooxml.Bool(true)
+	ret.ShowAllAttr = gooxml.Bool(true)
+	ret.InsertBlankRowAttr = gooxml.Bool(false)
+	ret.ServerFieldAttr = gooxml.Bool(false)
+	ret.InsertPageBreakAttr = gooxml.Bool(false)
+	ret.AutoShowAttr = gooxml.Bool(false)
+	ret.TopAutoShowAttr = gooxml.Bool(true)
+	ret.HideNewItemsAttr = gooxml.Bool(false)
+	ret.MeasureFilterAttr = gooxml.Bool(false)
+	ret.IncludeNewItemsInFilterAttr = gooxml.Bool(false)
+	ret.ItemPageCountAttr = gooxml.Uint32(10)
+	ret.SortTypeAttr = ST_FieldSortTypeManual
+	ret.NonAutoSortDefaultAttr = gooxml.Bool(false)
+	ret.DefaultSubtotalAttr = gooxml.Bool(true)
+	ret.SumSubtotalAttr = gooxml.Bool(false)
+	ret.CountASubtotalAttr = gooxml.Bool(false)
+	ret.AvgSubtotalAttr = gooxml.Bool(false)
+	ret.MaxSubtotalAttr = gooxml.Bool(false)
+	ret.MinSubtotalAttr = gooxml.Bool(false)
+	ret.ProductSubtotalAttr = gooxml.Bool(false)
+	ret.CountSubtotalAttr = gooxml.Bool(false)
+	ret.StdDevSubtotalAttr = gooxml.Bool(false)
+	ret.StdDevPSubtotalAttr = gooxml.Bool(false)
+	ret.VarSubtotalAttr = gooxml.Bool(false)
+	ret.VarPSubtotalAttr = gooxml.Bool(false)
+	ret.ShowPropCellAttr = gooxml.Bool(false)
+	ret.ShowPropTipAttr = gooxml.Bool(false)
+	ret.ShowPropAsCaptionAttr = gooxml.Bool(false)
+	ret.DefaultAttributeDrillStateAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -342,6 +386,48 @@ func (m *CT_PivotField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.AxisAttr = ST_Axis(1)
+	m.DataFieldAttr = gooxml.Bool(false)
+	m.ShowDropDownsAttr = gooxml.Bool(true)
+	m.HiddenLevelAttr = gooxml.Bool(false)
+	m.CompactAttr = gooxml.Bool(true)
+	m.AllDrilledAttr = gooxml.Bool(false)
+	m.OutlineAttr = gooxml.Bool(true)
+	m.SubtotalTopAttr = gooxml.Bool(true)
+	m.DragToRowAttr = gooxml.Bool(true)
+	m.DragToColAttr = gooxml.Bool(true)
+	m.MultipleItemSelectionAllowedAttr = gooxml.Bool(false)
+	m.DragToPageAttr = gooxml.Bool(true)
+	m.DragToDataAttr = gooxml.Bool(true)
+	m.DragOffAttr = gooxml.Bool(true)
+	m.ShowAllAttr = gooxml.Bool(true)
+	m.InsertBlankRowAttr = gooxml.Bool(false)
+	m.ServerFieldAttr = gooxml.Bool(false)
+	m.InsertPageBreakAttr = gooxml.Bool(false)
+	m.AutoShowAttr = gooxml.Bool(false)
+	m.TopAutoShowAttr = gooxml.Bool(true)
+	m.HideNewItemsAttr = gooxml.Bool(false)
+	m.MeasureFilterAttr = gooxml.Bool(false)
+	m.IncludeNewItemsInFilterAttr = gooxml.Bool(false)
+	m.ItemPageCountAttr = gooxml.Uint32(10)
+	m.SortTypeAttr = ST_FieldSortTypeManual
+	m.NonAutoSortDefaultAttr = gooxml.Bool(false)
+	m.DefaultSubtotalAttr = gooxml.Bool(true)
+	m.SumSubtotalAttr = gooxml.Bool(false)
+	m.CountASubtotalAttr = gooxml.Bool(false)
+	m.AvgSubtotalAttr = gooxml.Bool(false)
+	m.MaxSubtotalAttr = gooxml.Bool(false)
+	m.MinSubtotalAttr = gooxml.Bool(false)
+	m.ProductSubtotalAttr = gooxml.Bool(false)
+	m.CountSubtotalAttr = gooxml.Bool(false)
+	m.StdDevSubtotalAttr = gooxml.Bool(false)
+	m.StdDevPSubtotalAttr = gooxml.Bool(false)
+	m.VarSubtotalAttr = gooxml.Bool(false)
+	m.VarPSubtotalAttr = gooxml.Bool(false)
+	m.ShowPropCellAttr = gooxml.Bool(false)
+	m.ShowPropTipAttr = gooxml.Bool(false)
+	m.ShowPropAsCaptionAttr = gooxml.Bool(false)
+	m.DefaultAttributeDrillStateAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

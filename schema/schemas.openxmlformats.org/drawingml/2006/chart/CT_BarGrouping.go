@@ -18,6 +18,7 @@ type CT_BarGrouping struct {
 
 func NewCT_BarGrouping() *CT_BarGrouping {
 	ret := &CT_BarGrouping{}
+	ret.ValAttr = ST_BarGroupingClustered
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_BarGrouping) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_BarGrouping) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_BarGroupingClustered
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

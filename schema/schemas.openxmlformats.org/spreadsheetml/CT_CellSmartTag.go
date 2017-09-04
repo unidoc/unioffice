@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CellSmartTag struct {
@@ -27,6 +29,8 @@ type CT_CellSmartTag struct {
 
 func NewCT_CellSmartTag() *CT_CellSmartTag {
 	ret := &CT_CellSmartTag{}
+	ret.DeletedAttr = gooxml.Bool(false)
+	ret.XmlBasedAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -52,6 +56,8 @@ func (m *CT_CellSmartTag) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_CellSmartTag) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.DeletedAttr = gooxml.Bool(false)
+	m.XmlBasedAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

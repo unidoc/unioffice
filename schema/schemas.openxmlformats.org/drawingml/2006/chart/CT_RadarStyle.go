@@ -18,6 +18,7 @@ type CT_RadarStyle struct {
 
 func NewCT_RadarStyle() *CT_RadarStyle {
 	ret := &CT_RadarStyle{}
+	ret.ValAttr = ST_RadarStyleStandard
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_RadarStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_RadarStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_RadarStyleStandard
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

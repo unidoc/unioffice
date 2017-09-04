@@ -18,6 +18,7 @@ type CT_ResizeHandles struct {
 
 func NewCT_ResizeHandles() *CT_ResizeHandles {
 	ret := &CT_ResizeHandles{}
+	ret.ValAttr = ST_ResizeHandlesStrRel
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_ResizeHandles) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_ResizeHandles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_ResizeHandlesStrRel
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

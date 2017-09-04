@@ -29,6 +29,7 @@ type CT_GroupShapeProperties struct {
 
 func NewCT_GroupShapeProperties() *CT_GroupShapeProperties {
 	ret := &CT_GroupShapeProperties{}
+	ret.BwModeAttr = ST_BlackWhiteMode(1)
 	return ret
 }
 
@@ -91,6 +92,7 @@ func (m *CT_GroupShapeProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *CT_GroupShapeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.BwModeAttr = ST_BlackWhiteMode(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bwMode" {
 			m.BwModeAttr.UnmarshalXMLAttr(attr)

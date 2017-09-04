@@ -21,6 +21,7 @@ type CT_CustomFilter struct {
 
 func NewCT_CustomFilter() *CT_CustomFilter {
 	ret := &CT_CustomFilter{}
+	ret.OperatorAttr = ST_FilterOperatorEqual
 	return ret
 }
 
@@ -43,6 +44,7 @@ func (m *CT_CustomFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_CustomFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.OperatorAttr = ST_FilterOperatorEqual
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "operator" {
 			m.OperatorAttr.UnmarshalXMLAttr(attr)

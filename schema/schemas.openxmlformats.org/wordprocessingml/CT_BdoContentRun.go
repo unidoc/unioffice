@@ -29,6 +29,7 @@ type CT_BdoContentRun struct {
 
 func NewCT_BdoContentRun() *CT_BdoContentRun {
 	ret := &CT_BdoContentRun{}
+	ret.ValAttr = ST_Direction(1)
 	return ret
 }
 
@@ -64,6 +65,7 @@ func (m *CT_BdoContentRun) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_BdoContentRun) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_Direction(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

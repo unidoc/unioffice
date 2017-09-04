@@ -19,6 +19,7 @@ type CT_TblLayoutType struct {
 
 func NewCT_TblLayoutType() *CT_TblLayoutType {
 	ret := &CT_TblLayoutType{}
+	ret.TypeAttr = ST_TblLayoutType(1)
 	return ret
 }
 
@@ -37,6 +38,7 @@ func (m *CT_TblLayoutType) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_TblLayoutType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_TblLayoutType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

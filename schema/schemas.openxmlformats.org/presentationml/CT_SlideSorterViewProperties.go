@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SlideSorterViewProperties struct {
@@ -24,6 +26,7 @@ type CT_SlideSorterViewProperties struct {
 
 func NewCT_SlideSorterViewProperties() *CT_SlideSorterViewProperties {
 	ret := &CT_SlideSorterViewProperties{}
+	ret.ShowFormattingAttr = gooxml.Bool(true)
 	ret.CViewPr = NewCT_CommonViewProperties()
 	return ret
 }
@@ -46,6 +49,7 @@ func (m *CT_SlideSorterViewProperties) MarshalXML(e *xml.Encoder, start xml.Star
 
 func (m *CT_SlideSorterViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ShowFormattingAttr = gooxml.Bool(true)
 	m.CViewPr = NewCT_CommonViewProperties()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "showFormatting" {

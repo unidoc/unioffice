@@ -23,6 +23,7 @@ type CT_TLCommandBehavior struct {
 
 func NewCT_TLCommandBehavior() *CT_TLCommandBehavior {
 	ret := &CT_TLCommandBehavior{}
+	ret.TypeAttr = ST_TLCommandType(1)
 	ret.CBhvr = NewCT_TLCommonBehaviorData()
 	return ret
 }
@@ -48,6 +49,7 @@ func (m *CT_TLCommandBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement
 
 func (m *CT_TLCommandBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_TLCommandType(1)
 	m.CBhvr = NewCT_TLCommonBehaviorData()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {

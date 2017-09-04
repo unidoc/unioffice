@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -26,6 +27,7 @@ type CT_Connector struct {
 
 func NewCT_Connector() *CT_Connector {
 	ret := &CT_Connector{}
+	ret.FPublishedAttr = gooxml.Bool(false)
 	ret.NvCxnSpPr = NewCT_ConnectorNonVisual()
 	ret.SpPr = drawingml.NewCT_ShapeProperties()
 	return ret
@@ -55,6 +57,7 @@ func (m *CT_Connector) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_Connector) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.FPublishedAttr = gooxml.Bool(false)
 	m.NvCxnSpPr = NewCT_ConnectorNonVisual()
 	m.SpPr = drawingml.NewCT_ShapeProperties()
 	for _, attr := range start.Attr {

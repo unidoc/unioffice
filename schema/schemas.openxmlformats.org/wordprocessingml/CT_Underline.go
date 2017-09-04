@@ -27,6 +27,8 @@ type CT_Underline struct {
 
 func NewCT_Underline() *CT_Underline {
 	ret := &CT_Underline{}
+	ret.ValAttr = ST_Underline(1)
+	ret.ThemeColorAttr = ST_ThemeColor(1)
 	return ret
 }
 
@@ -64,6 +66,8 @@ func (m *CT_Underline) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_Underline) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_Underline(1)
+	m.ThemeColorAttr = ST_ThemeColor(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

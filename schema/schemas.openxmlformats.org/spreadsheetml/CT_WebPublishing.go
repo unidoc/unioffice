@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_WebPublishing struct {
@@ -36,6 +38,13 @@ type CT_WebPublishing struct {
 
 func NewCT_WebPublishing() *CT_WebPublishing {
 	ret := &CT_WebPublishing{}
+	ret.CssAttr = gooxml.Bool(true)
+	ret.ThicketAttr = gooxml.Bool(true)
+	ret.LongFileNamesAttr = gooxml.Bool(true)
+	ret.VmlAttr = gooxml.Bool(false)
+	ret.AllowPngAttr = gooxml.Bool(false)
+	ret.TargetScreenSizeAttr = ST_TargetScreenSize800x600
+	ret.DpiAttr = gooxml.Uint32(96)
 	return ret
 }
 
@@ -86,6 +95,13 @@ func (m *CT_WebPublishing) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_WebPublishing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CssAttr = gooxml.Bool(true)
+	m.ThicketAttr = gooxml.Bool(true)
+	m.LongFileNamesAttr = gooxml.Bool(true)
+	m.VmlAttr = gooxml.Bool(false)
+	m.AllowPngAttr = gooxml.Bool(false)
+	m.TargetScreenSizeAttr = ST_TargetScreenSize800x600
+	m.DpiAttr = gooxml.Uint32(96)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "css" {
 			parsed, err := strconv.ParseBool(attr.Value)

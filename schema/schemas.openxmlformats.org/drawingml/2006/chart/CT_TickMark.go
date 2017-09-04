@@ -18,6 +18,7 @@ type CT_TickMark struct {
 
 func NewCT_TickMark() *CT_TickMark {
 	ret := &CT_TickMark{}
+	ret.ValAttr = ST_TickMarkCross
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_TickMark) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_TickMark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_TickMarkCross
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

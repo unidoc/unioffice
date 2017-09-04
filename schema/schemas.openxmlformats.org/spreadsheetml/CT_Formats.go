@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Formats struct {
@@ -23,6 +25,7 @@ type CT_Formats struct {
 
 func NewCT_Formats() *CT_Formats {
 	ret := &CT_Formats{}
+	ret.CountAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -40,6 +43,7 @@ func (m *CT_Formats) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Formats) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CountAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -18,6 +18,7 @@ type CT_BreakBin struct {
 
 func NewCT_BreakBin() *CT_BreakBin {
 	ret := &CT_BreakBin{}
+	ret.ValAttr = ST_BreakBin(1)
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_BreakBin) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_BreakBin) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_BreakBin(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

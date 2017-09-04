@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SheetPr struct {
@@ -43,6 +45,13 @@ type CT_SheetPr struct {
 
 func NewCT_SheetPr() *CT_SheetPr {
 	ret := &CT_SheetPr{}
+	ret.SyncHorizontalAttr = gooxml.Bool(false)
+	ret.SyncVerticalAttr = gooxml.Bool(false)
+	ret.TransitionEvaluationAttr = gooxml.Bool(false)
+	ret.TransitionEntryAttr = gooxml.Bool(false)
+	ret.PublishedAttr = gooxml.Bool(true)
+	ret.FilterModeAttr = gooxml.Bool(false)
+	ret.EnableFormatConditionsCalculationAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -102,6 +111,13 @@ func (m *CT_SheetPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_SheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.SyncHorizontalAttr = gooxml.Bool(false)
+	m.SyncVerticalAttr = gooxml.Bool(false)
+	m.TransitionEvaluationAttr = gooxml.Bool(false)
+	m.TransitionEntryAttr = gooxml.Bool(false)
+	m.PublishedAttr = gooxml.Bool(true)
+	m.FilterModeAttr = gooxml.Bool(false)
+	m.EnableFormatConditionsCalculationAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "syncHorizontal" {
 			parsed, err := strconv.ParseBool(attr.Value)

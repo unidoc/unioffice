@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ColorFilter struct {
@@ -22,6 +24,7 @@ type CT_ColorFilter struct {
 
 func NewCT_ColorFilter() *CT_ColorFilter {
 	ret := &CT_ColorFilter{}
+	ret.CellColorAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -41,6 +44,7 @@ func (m *CT_ColorFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_ColorFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CellColorAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "dxfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CacheHierarchy struct {
@@ -69,6 +71,14 @@ type CT_CacheHierarchy struct {
 
 func NewCT_CacheHierarchy() *CT_CacheHierarchy {
 	ret := &CT_CacheHierarchy{}
+	ret.MeasureAttr = gooxml.Bool(false)
+	ret.SetAttr = gooxml.Bool(false)
+	ret.AttributeAttr = gooxml.Bool(false)
+	ret.TimeAttr = gooxml.Bool(false)
+	ret.KeyAttributeAttr = gooxml.Bool(false)
+	ret.MeasuresAttr = gooxml.Bool(false)
+	ret.OneFieldAttr = gooxml.Bool(false)
+	ret.HiddenAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -176,6 +186,14 @@ func (m *CT_CacheHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.MeasureAttr = gooxml.Bool(false)
+	m.SetAttr = gooxml.Bool(false)
+	m.AttributeAttr = gooxml.Bool(false)
+	m.TimeAttr = gooxml.Bool(false)
+	m.KeyAttributeAttr = gooxml.Bool(false)
+	m.MeasuresAttr = gooxml.Bool(false)
+	m.OneFieldAttr = gooxml.Bool(false)
+	m.HiddenAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "uniqueName" {
 			parsed, err := attr.Value, error(nil)

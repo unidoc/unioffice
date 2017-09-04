@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ChartsheetProtection struct {
@@ -32,6 +34,8 @@ type CT_ChartsheetProtection struct {
 
 func NewCT_ChartsheetProtection() *CT_ChartsheetProtection {
 	ret := &CT_ChartsheetProtection{}
+	ret.ContentAttr = gooxml.Bool(false)
+	ret.ObjectsAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -71,6 +75,8 @@ func (m *CT_ChartsheetProtection) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *CT_ChartsheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ContentAttr = gooxml.Bool(false)
+	m.ObjectsAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "password" {
 			parsed, err := attr.Value, error(nil)

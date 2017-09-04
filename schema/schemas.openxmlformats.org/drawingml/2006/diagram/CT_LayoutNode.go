@@ -34,6 +34,7 @@ type CT_LayoutNode struct {
 
 func NewCT_LayoutNode() *CT_LayoutNode {
 	ret := &CT_LayoutNode{}
+	ret.ChOrderAttr = ST_ChildOrderTypeB
 	return ret
 }
 
@@ -104,6 +105,7 @@ func (m *CT_LayoutNode) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_LayoutNode) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ChOrderAttr = ST_ChildOrderTypeB
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

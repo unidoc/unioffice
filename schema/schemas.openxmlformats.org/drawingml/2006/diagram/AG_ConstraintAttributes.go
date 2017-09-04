@@ -21,6 +21,9 @@ type AG_ConstraintAttributes struct {
 
 func NewAG_ConstraintAttributes() *AG_ConstraintAttributes {
 	ret := &AG_ConstraintAttributes{}
+	ret.TypeAttr = ST_ConstraintType(1)
+	ret.ForAttr = ST_ConstraintRelationshipSelf
+	ret.PtTypeAttr = ST_ElementTypeAll
 	return ret
 }
 
@@ -55,6 +58,9 @@ func (m *AG_ConstraintAttributes) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *AG_ConstraintAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_ConstraintType(1)
+	m.ForAttr = ST_ConstraintRelationshipSelf
+	m.PtTypeAttr = ST_ElementTypeAll
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

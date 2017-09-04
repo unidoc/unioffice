@@ -26,6 +26,8 @@ type CT_PermStart struct {
 
 func NewCT_PermStart() *CT_PermStart {
 	ret := &CT_PermStart{}
+	ret.EdGrpAttr = ST_EdGrp(1)
+	ret.DisplacedByCustomXmlAttr = ST_DisplacedByCustomXml(1)
 	return ret
 }
 
@@ -65,6 +67,8 @@ func (m *CT_PermStart) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_PermStart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.EdGrpAttr = ST_EdGrp(1)
+	m.DisplacedByCustomXmlAttr = ST_DisplacedByCustomXml(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "edGrp" {
 			m.EdGrpAttr.UnmarshalXMLAttr(attr)

@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_DataConsolidate struct {
@@ -31,6 +33,11 @@ type CT_DataConsolidate struct {
 
 func NewCT_DataConsolidate() *CT_DataConsolidate {
 	ret := &CT_DataConsolidate{}
+	ret.FunctionAttr = ST_DataConsolidateFunctionSum
+	ret.StartLabelsAttr = gooxml.Bool(false)
+	ret.LeftLabelsAttr = gooxml.Bool(false)
+	ret.TopLabelsAttr = gooxml.Bool(false)
+	ret.LinkAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -69,6 +76,11 @@ func (m *CT_DataConsolidate) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_DataConsolidate) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.FunctionAttr = ST_DataConsolidateFunctionSum
+	m.StartLabelsAttr = gooxml.Bool(false)
+	m.LeftLabelsAttr = gooxml.Bool(false)
+	m.TopLabelsAttr = gooxml.Bool(false)
+	m.LinkAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "function" {
 			m.FunctionAttr.UnmarshalXMLAttr(attr)

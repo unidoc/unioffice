@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_QueryTableFields struct {
@@ -23,6 +25,7 @@ type CT_QueryTableFields struct {
 
 func NewCT_QueryTableFields() *CT_QueryTableFields {
 	ret := &CT_QueryTableFields{}
+	ret.CountAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -42,6 +45,7 @@ func (m *CT_QueryTableFields) MarshalXML(e *xml.Encoder, start xml.StartElement)
 
 func (m *CT_QueryTableFields) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CountAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

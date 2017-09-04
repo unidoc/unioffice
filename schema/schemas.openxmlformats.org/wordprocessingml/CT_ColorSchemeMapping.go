@@ -41,6 +41,18 @@ type CT_ColorSchemeMapping struct {
 
 func NewCT_ColorSchemeMapping() *CT_ColorSchemeMapping {
 	ret := &CT_ColorSchemeMapping{}
+	ret.Bg1Attr = ST_WmlColorSchemeIndex(1)
+	ret.T1Attr = ST_WmlColorSchemeIndex(1)
+	ret.Bg2Attr = ST_WmlColorSchemeIndex(1)
+	ret.T2Attr = ST_WmlColorSchemeIndex(1)
+	ret.Accent1Attr = ST_WmlColorSchemeIndex(1)
+	ret.Accent2Attr = ST_WmlColorSchemeIndex(1)
+	ret.Accent3Attr = ST_WmlColorSchemeIndex(1)
+	ret.Accent4Attr = ST_WmlColorSchemeIndex(1)
+	ret.Accent5Attr = ST_WmlColorSchemeIndex(1)
+	ret.Accent6Attr = ST_WmlColorSchemeIndex(1)
+	ret.HyperlinkAttr = ST_WmlColorSchemeIndex(1)
+	ret.FollowedHyperlinkAttr = ST_WmlColorSchemeIndex(1)
 	return ret
 }
 
@@ -136,6 +148,18 @@ func (m *CT_ColorSchemeMapping) MarshalXML(e *xml.Encoder, start xml.StartElemen
 
 func (m *CT_ColorSchemeMapping) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.Bg1Attr = ST_WmlColorSchemeIndex(1)
+	m.T1Attr = ST_WmlColorSchemeIndex(1)
+	m.Bg2Attr = ST_WmlColorSchemeIndex(1)
+	m.T2Attr = ST_WmlColorSchemeIndex(1)
+	m.Accent1Attr = ST_WmlColorSchemeIndex(1)
+	m.Accent2Attr = ST_WmlColorSchemeIndex(1)
+	m.Accent3Attr = ST_WmlColorSchemeIndex(1)
+	m.Accent4Attr = ST_WmlColorSchemeIndex(1)
+	m.Accent5Attr = ST_WmlColorSchemeIndex(1)
+	m.Accent6Attr = ST_WmlColorSchemeIndex(1)
+	m.HyperlinkAttr = ST_WmlColorSchemeIndex(1)
+	m.FollowedHyperlinkAttr = ST_WmlColorSchemeIndex(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bg1" {
 			m.Bg1Attr.UnmarshalXMLAttr(attr)

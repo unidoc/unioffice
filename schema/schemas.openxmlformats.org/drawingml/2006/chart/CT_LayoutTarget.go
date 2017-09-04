@@ -18,6 +18,7 @@ type CT_LayoutTarget struct {
 
 func NewCT_LayoutTarget() *CT_LayoutTarget {
 	ret := &CT_LayoutTarget{}
+	ret.ValAttr = ST_LayoutTargetOuter
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_LayoutTarget) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_LayoutTarget) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_LayoutTargetOuter
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

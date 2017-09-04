@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_RevisionRowColumn struct {
@@ -38,7 +40,11 @@ type CT_RevisionRowColumn struct {
 
 func NewCT_RevisionRowColumn() *CT_RevisionRowColumn {
 	ret := &CT_RevisionRowColumn{}
+	ret.EolAttr = gooxml.Bool(false)
 	ret.ActionAttr = ST_rwColActionType(1)
+	ret.EdgeAttr = gooxml.Bool(false)
+	ret.UaAttr = gooxml.Bool(false)
+	ret.RaAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -91,7 +97,11 @@ func (m *CT_RevisionRowColumn) MarshalXML(e *xml.Encoder, start xml.StartElement
 
 func (m *CT_RevisionRowColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.EolAttr = gooxml.Bool(false)
 	m.ActionAttr = ST_rwColActionType(1)
+	m.EdgeAttr = gooxml.Bool(false)
+	m.UaAttr = gooxml.Bool(false)
+	m.RaAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "sId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

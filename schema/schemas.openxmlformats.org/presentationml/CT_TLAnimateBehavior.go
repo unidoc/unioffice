@@ -31,6 +31,8 @@ type CT_TLAnimateBehavior struct {
 
 func NewCT_TLAnimateBehavior() *CT_TLAnimateBehavior {
 	ret := &CT_TLAnimateBehavior{}
+	ret.CalcmodeAttr = ST_TLAnimateBehaviorCalcMode(1)
+	ret.ValueTypeAttr = ST_TLAnimateBehaviorValueType(1)
 	ret.CBhvr = NewCT_TLCommonBehaviorData()
 	return ret
 }
@@ -75,6 +77,8 @@ func (m *CT_TLAnimateBehavior) MarshalXML(e *xml.Encoder, start xml.StartElement
 
 func (m *CT_TLAnimateBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CalcmodeAttr = ST_TLAnimateBehaviorCalcMode(1)
+	m.ValueTypeAttr = ST_TLAnimateBehaviorValueType(1)
 	m.CBhvr = NewCT_TLCommonBehaviorData()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "by" {

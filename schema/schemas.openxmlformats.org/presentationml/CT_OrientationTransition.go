@@ -19,6 +19,7 @@ type CT_OrientationTransition struct {
 
 func NewCT_OrientationTransition() *CT_OrientationTransition {
 	ret := &CT_OrientationTransition{}
+	ret.DirAttr = ST_DirectionHorz
 	return ret
 }
 
@@ -37,6 +38,7 @@ func (m *CT_OrientationTransition) MarshalXML(e *xml.Encoder, start xml.StartEle
 
 func (m *CT_OrientationTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.DirAttr = ST_DirectionHorz
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "dir" {
 			m.DirAttr.UnmarshalXMLAttr(attr)

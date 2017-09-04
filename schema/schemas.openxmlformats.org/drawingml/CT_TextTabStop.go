@@ -19,6 +19,7 @@ type CT_TextTabStop struct {
 
 func NewCT_TextTabStop() *CT_TextTabStop {
 	ret := &CT_TextTabStop{}
+	ret.AlgnAttr = ST_TextTabAlignType(1)
 	return ret
 }
 
@@ -41,6 +42,7 @@ func (m *CT_TextTabStop) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_TextTabStop) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.AlgnAttr = ST_TextTabAlignType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "pos" {
 			parsed, err := ParseUnionST_Coordinate32(attr.Value)

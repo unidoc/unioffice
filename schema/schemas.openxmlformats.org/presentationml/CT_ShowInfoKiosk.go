@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ShowInfoKiosk struct {
@@ -20,6 +22,7 @@ type CT_ShowInfoKiosk struct {
 
 func NewCT_ShowInfoKiosk() *CT_ShowInfoKiosk {
 	ret := &CT_ShowInfoKiosk{}
+	ret.RestartAttr = gooxml.Uint32(300000)
 	return ret
 }
 
@@ -35,6 +38,7 @@ func (m *CT_ShowInfoKiosk) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_ShowInfoKiosk) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.RestartAttr = gooxml.Uint32(300000)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "restart" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -24,6 +24,7 @@ type CT_TrackChangeRange struct {
 
 func NewCT_TrackChangeRange() *CT_TrackChangeRange {
 	ret := &CT_TrackChangeRange{}
+	ret.DisplacedByCustomXmlAttr = ST_DisplacedByCustomXml(1)
 	return ret
 }
 
@@ -51,6 +52,7 @@ func (m *CT_TrackChangeRange) MarshalXML(e *xml.Encoder, start xml.StartElement)
 
 func (m *CT_TrackChangeRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.DisplacedByCustomXmlAttr = ST_DisplacedByCustomXml(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "displacedByCustomXml" {
 			m.DisplacedByCustomXmlAttr.UnmarshalXMLAttr(attr)

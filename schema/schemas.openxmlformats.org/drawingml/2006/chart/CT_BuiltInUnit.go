@@ -18,6 +18,7 @@ type CT_BuiltInUnit struct {
 
 func NewCT_BuiltInUnit() *CT_BuiltInUnit {
 	ret := &CT_BuiltInUnit{}
+	ret.ValAttr = ST_BuiltInUnitThousands
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_BuiltInUnit) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_BuiltInUnit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_BuiltInUnitThousands
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

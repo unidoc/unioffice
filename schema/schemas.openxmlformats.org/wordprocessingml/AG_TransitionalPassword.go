@@ -32,6 +32,9 @@ type AG_TransitionalPassword struct {
 
 func NewAG_TransitionalPassword() *AG_TransitionalPassword {
 	ret := &AG_TransitionalPassword{}
+	ret.CryptProviderTypeAttr = sharedTypes.ST_CryptProv(1)
+	ret.CryptAlgorithmClassAttr = sharedTypes.ST_AlgClass(1)
+	ret.CryptAlgorithmTypeAttr = sharedTypes.ST_AlgType(1)
 	return ret
 }
 
@@ -98,6 +101,9 @@ func (m *AG_TransitionalPassword) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CryptProviderTypeAttr = sharedTypes.ST_CryptProv(1)
+	m.CryptAlgorithmClassAttr = sharedTypes.ST_AlgClass(1)
+	m.CryptAlgorithmTypeAttr = sharedTypes.ST_AlgType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "cryptProviderType" {
 			m.CryptProviderTypeAttr.UnmarshalXMLAttr(attr)

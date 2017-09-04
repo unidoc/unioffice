@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PrintProperties struct {
@@ -30,6 +32,11 @@ type CT_PrintProperties struct {
 
 func NewCT_PrintProperties() *CT_PrintProperties {
 	ret := &CT_PrintProperties{}
+	ret.PrnWhatAttr = ST_PrintWhatSlides
+	ret.ClrModeAttr = ST_PrintColorModeClr
+	ret.HiddenSlidesAttr = gooxml.Bool(false)
+	ret.ScaleToFitPaperAttr = gooxml.Bool(false)
+	ret.FrameSlidesAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -71,6 +78,11 @@ func (m *CT_PrintProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_PrintProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PrnWhatAttr = ST_PrintWhatSlides
+	m.ClrModeAttr = ST_PrintColorModeClr
+	m.HiddenSlidesAttr = gooxml.Bool(false)
+	m.ScaleToFitPaperAttr = gooxml.Bool(false)
+	m.FrameSlidesAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prnWhat" {
 			m.PrnWhatAttr.UnmarshalXMLAttr(attr)

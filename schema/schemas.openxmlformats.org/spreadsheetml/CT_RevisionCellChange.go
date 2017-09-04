@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_RevisionCellChange struct {
@@ -53,7 +55,18 @@ type CT_RevisionCellChange struct {
 
 func NewCT_RevisionCellChange() *CT_RevisionCellChange {
 	ret := &CT_RevisionCellChange{}
+	ret.OdxfAttr = gooxml.Bool(false)
+	ret.XfDxfAttr = gooxml.Bool(false)
+	ret.SAttr = gooxml.Bool(false)
+	ret.DxfAttr = gooxml.Bool(false)
+	ret.QuotePrefixAttr = gooxml.Bool(false)
+	ret.OldQuotePrefixAttr = gooxml.Bool(false)
+	ret.PhAttr = gooxml.Bool(false)
+	ret.OldPhAttr = gooxml.Bool(false)
+	ret.EndOfListFormulaUpdateAttr = gooxml.Bool(false)
 	ret.Nc = NewCT_Cell()
+	ret.UaAttr = gooxml.Bool(false)
+	ret.RaAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -137,7 +150,18 @@ func (m *CT_RevisionCellChange) MarshalXML(e *xml.Encoder, start xml.StartElemen
 
 func (m *CT_RevisionCellChange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.OdxfAttr = gooxml.Bool(false)
+	m.XfDxfAttr = gooxml.Bool(false)
+	m.SAttr = gooxml.Bool(false)
+	m.DxfAttr = gooxml.Bool(false)
+	m.QuotePrefixAttr = gooxml.Bool(false)
+	m.OldQuotePrefixAttr = gooxml.Bool(false)
+	m.PhAttr = gooxml.Bool(false)
+	m.OldPhAttr = gooxml.Bool(false)
+	m.EndOfListFormulaUpdateAttr = gooxml.Bool(false)
 	m.Nc = NewCT_Cell()
+	m.UaAttr = gooxml.Bool(false)
+	m.RaAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "sId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

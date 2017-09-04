@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_RevisionInsertSheet struct {
@@ -27,6 +29,8 @@ type CT_RevisionInsertSheet struct {
 
 func NewCT_RevisionInsertSheet() *CT_RevisionInsertSheet {
 	ret := &CT_RevisionInsertSheet{}
+	ret.UaAttr = gooxml.Bool(false)
+	ret.RaAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -56,6 +60,8 @@ func (m *CT_RevisionInsertSheet) MarshalXML(e *xml.Encoder, start xml.StartEleme
 
 func (m *CT_RevisionInsertSheet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.UaAttr = gooxml.Bool(false)
+	m.RaAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "sheetId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

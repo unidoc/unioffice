@@ -52,6 +52,9 @@ type CT_ModifyVerifier struct {
 
 func NewCT_ModifyVerifier() *CT_ModifyVerifier {
 	ret := &CT_ModifyVerifier{}
+	ret.CryptProviderTypeAttr = sharedTypes.ST_CryptProv(1)
+	ret.CryptAlgorithmClassAttr = sharedTypes.ST_AlgClass(1)
+	ret.CryptAlgorithmTypeAttr = sharedTypes.ST_AlgType(1)
 	return ret
 }
 
@@ -136,6 +139,9 @@ func (m *CT_ModifyVerifier) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CryptProviderTypeAttr = sharedTypes.ST_CryptProv(1)
+	m.CryptAlgorithmClassAttr = sharedTypes.ST_AlgClass(1)
+	m.CryptAlgorithmTypeAttr = sharedTypes.ST_AlgType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "algorithmName" {
 			parsed, err := attr.Value, error(nil)

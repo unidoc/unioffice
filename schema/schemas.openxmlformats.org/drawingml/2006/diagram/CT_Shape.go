@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -30,6 +31,10 @@ type CT_Shape struct {
 
 func NewCT_Shape() *CT_Shape {
 	ret := &CT_Shape{}
+	ret.RotAttr = gooxml.Float64(0)
+	ret.HideGeomAttr = gooxml.Bool(false)
+	ret.LkTxEntryAttr = gooxml.Bool(false)
+	ret.BlipPhldrAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -77,6 +82,10 @@ func (m *CT_Shape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.RotAttr = gooxml.Float64(0)
+	m.HideGeomAttr = gooxml.Bool(false)
+	m.LkTxEntryAttr = gooxml.Bool(false)
+	m.BlipPhldrAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "rot" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)

@@ -21,6 +21,7 @@ type CT_Bevel struct {
 
 func NewCT_Bevel() *CT_Bevel {
 	ret := &CT_Bevel{}
+	ret.PrstAttr = ST_BevelPresetTypeCircle
 	return ret
 }
 
@@ -47,6 +48,7 @@ func (m *CT_Bevel) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Bevel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PrstAttr = ST_BevelPresetTypeCircle
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "w" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)

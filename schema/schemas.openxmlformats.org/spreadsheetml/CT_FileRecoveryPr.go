@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_FileRecoveryPr struct {
@@ -26,6 +28,10 @@ type CT_FileRecoveryPr struct {
 
 func NewCT_FileRecoveryPr() *CT_FileRecoveryPr {
 	ret := &CT_FileRecoveryPr{}
+	ret.AutoRecoverAttr = gooxml.Bool(true)
+	ret.CrashSaveAttr = gooxml.Bool(false)
+	ret.DataExtractLoadAttr = gooxml.Bool(false)
+	ret.RepairLoadAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -53,6 +59,10 @@ func (m *CT_FileRecoveryPr) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_FileRecoveryPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.AutoRecoverAttr = gooxml.Bool(true)
+	m.CrashSaveAttr = gooxml.Bool(false)
+	m.DataExtractLoadAttr = gooxml.Bool(false)
+	m.RepairLoadAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "autoRecover" {
 			parsed, err := strconv.ParseBool(attr.Value)

@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TLOleChartTargetElement struct {
@@ -23,6 +25,7 @@ type CT_TLOleChartTargetElement struct {
 func NewCT_TLOleChartTargetElement() *CT_TLOleChartTargetElement {
 	ret := &CT_TLOleChartTargetElement{}
 	ret.TypeAttr = ST_TLChartSubelementType(1)
+	ret.LvlAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -44,6 +47,7 @@ func (m *CT_TLOleChartTargetElement) MarshalXML(e *xml.Encoder, start xml.StartE
 func (m *CT_TLOleChartTargetElement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.TypeAttr = ST_TLChartSubelementType(1)
+	m.LvlAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

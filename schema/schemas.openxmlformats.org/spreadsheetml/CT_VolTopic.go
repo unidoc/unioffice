@@ -28,6 +28,7 @@ type CT_VolTopic struct {
 
 func NewCT_VolTopic() *CT_VolTopic {
 	ret := &CT_VolTopic{}
+	ret.TAttr = ST_VolValueTypeN
 	return ret
 }
 
@@ -55,6 +56,7 @@ func (m *CT_VolTopic) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_VolTopic) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TAttr = ST_VolValueTypeN
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "t" {
 			m.TAttr.UnmarshalXMLAttr(attr)

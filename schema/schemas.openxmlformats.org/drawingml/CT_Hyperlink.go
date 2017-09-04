@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Hyperlink struct {
@@ -29,6 +31,9 @@ type CT_Hyperlink struct {
 
 func NewCT_Hyperlink() *CT_Hyperlink {
 	ret := &CT_Hyperlink{}
+	ret.HistoryAttr = gooxml.Bool(true)
+	ret.HighlightClickAttr = gooxml.Bool(false)
+	ret.EndSndAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -80,6 +85,9 @@ func (m *CT_Hyperlink) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.HistoryAttr = gooxml.Bool(true)
+	m.HighlightClickAttr = gooxml.Bool(false)
+	m.EndSndAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)

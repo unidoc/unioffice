@@ -11,6 +11,7 @@ import (
 	"encoding/xml"
 	"fmt"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 )
 
@@ -21,6 +22,8 @@ type CT_AnimationDgmElement struct {
 
 func NewCT_AnimationDgmElement() *CT_AnimationDgmElement {
 	ret := &CT_AnimationDgmElement{}
+	ret.IdAttr = gooxml.String("{00000000-0000-0000-0000-000000000000}")
+	ret.BldStepAttr = ST_DgmBuildStepSp
 	return ret
 }
 
@@ -43,6 +46,8 @@ func (m *CT_AnimationDgmElement) MarshalXML(e *xml.Encoder, start xml.StartEleme
 
 func (m *CT_AnimationDgmElement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.IdAttr = gooxml.String("{00000000-0000-0000-0000-000000000000}")
+	m.BldStepAttr = ST_DgmBuildStepSp
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)

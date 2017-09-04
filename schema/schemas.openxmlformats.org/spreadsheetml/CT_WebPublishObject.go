@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_WebPublishObject struct {
@@ -30,6 +32,7 @@ type CT_WebPublishObject struct {
 
 func NewCT_WebPublishObject() *CT_WebPublishObject {
 	ret := &CT_WebPublishObject{}
+	ret.AutoRepublishAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -59,6 +62,7 @@ func (m *CT_WebPublishObject) MarshalXML(e *xml.Encoder, start xml.StartElement)
 
 func (m *CT_WebPublishObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.AutoRepublishAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

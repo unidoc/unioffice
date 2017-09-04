@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_MdxTuple struct {
@@ -41,6 +43,11 @@ type CT_MdxTuple struct {
 
 func NewCT_MdxTuple() *CT_MdxTuple {
 	ret := &CT_MdxTuple{}
+	ret.CAttr = gooxml.Uint32(0)
+	ret.IAttr = gooxml.Bool(false)
+	ret.UAttr = gooxml.Bool(false)
+	ret.StAttr = gooxml.Bool(false)
+	ret.BAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -96,6 +103,11 @@ func (m *CT_MdxTuple) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_MdxTuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CAttr = gooxml.Uint32(0)
+	m.IAttr = gooxml.Bool(false)
+	m.UAttr = gooxml.Bool(false)
+	m.StAttr = gooxml.Bool(false)
+	m.BAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "c" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ShapeLocking struct {
@@ -31,6 +33,17 @@ type CT_ShapeLocking struct {
 
 func NewCT_ShapeLocking() *CT_ShapeLocking {
 	ret := &CT_ShapeLocking{}
+	ret.NoTextEditAttr = gooxml.Bool(false)
+	ret.NoGrpAttr = gooxml.Bool(false)
+	ret.NoSelectAttr = gooxml.Bool(false)
+	ret.NoRotAttr = gooxml.Bool(false)
+	ret.NoChangeAspectAttr = gooxml.Bool(false)
+	ret.NoMoveAttr = gooxml.Bool(false)
+	ret.NoResizeAttr = gooxml.Bool(false)
+	ret.NoEditPointsAttr = gooxml.Bool(false)
+	ret.NoAdjustHandlesAttr = gooxml.Bool(false)
+	ret.NoChangeArrowheadsAttr = gooxml.Bool(false)
+	ret.NoChangeShapeTypeAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -90,6 +103,17 @@ func (m *CT_ShapeLocking) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_ShapeLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.NoTextEditAttr = gooxml.Bool(false)
+	m.NoGrpAttr = gooxml.Bool(false)
+	m.NoSelectAttr = gooxml.Bool(false)
+	m.NoRotAttr = gooxml.Bool(false)
+	m.NoChangeAspectAttr = gooxml.Bool(false)
+	m.NoMoveAttr = gooxml.Bool(false)
+	m.NoResizeAttr = gooxml.Bool(false)
+	m.NoEditPointsAttr = gooxml.Bool(false)
+	m.NoAdjustHandlesAttr = gooxml.Bool(false)
+	m.NoChangeArrowheadsAttr = gooxml.Bool(false)
+	m.NoChangeShapeTypeAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "noTextEdit" {
 			parsed, err := strconv.ParseBool(attr.Value)

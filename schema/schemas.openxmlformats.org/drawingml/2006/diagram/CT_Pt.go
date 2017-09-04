@@ -27,6 +27,7 @@ type CT_Pt struct {
 
 func NewCT_Pt() *CT_Pt {
 	ret := &CT_Pt{}
+	ret.TypeAttr = ST_PtTypeNode
 	return ret
 }
 
@@ -67,6 +68,7 @@ func (m *CT_Pt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Pt) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_PtTypeNode
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "modelId" {
 			parsed, err := ParseUnionST_ModelId(attr.Value)

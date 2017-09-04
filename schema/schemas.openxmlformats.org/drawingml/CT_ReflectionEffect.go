@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ReflectionEffect struct {
@@ -32,6 +34,8 @@ type CT_ReflectionEffect struct {
 
 func NewCT_ReflectionEffect() *CT_ReflectionEffect {
 	ret := &CT_ReflectionEffect{}
+	ret.AlgnAttr = ST_RectAlignmentB
+	ret.RotWithShapeAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -102,6 +106,8 @@ func (m *CT_ReflectionEffect) MarshalXML(e *xml.Encoder, start xml.StartElement)
 
 func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.AlgnAttr = ST_RectAlignmentB
+	m.RotWithShapeAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "blurRad" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)

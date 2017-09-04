@@ -71,6 +71,13 @@ type CT_RevisionDefinedName struct {
 
 func NewCT_RevisionDefinedName() *CT_RevisionDefinedName {
 	ret := &CT_RevisionDefinedName{}
+	ret.CustomViewAttr = gooxml.Bool(false)
+	ret.FunctionAttr = gooxml.Bool(false)
+	ret.OldFunctionAttr = gooxml.Bool(false)
+	ret.HiddenAttr = gooxml.Bool(false)
+	ret.OldHiddenAttr = gooxml.Bool(false)
+	ret.UaAttr = gooxml.Bool(false)
+	ret.RaAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -190,6 +197,13 @@ func (m *CT_RevisionDefinedName) MarshalXML(e *xml.Encoder, start xml.StartEleme
 
 func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CustomViewAttr = gooxml.Bool(false)
+	m.FunctionAttr = gooxml.Bool(false)
+	m.OldFunctionAttr = gooxml.Bool(false)
+	m.HiddenAttr = gooxml.Bool(false)
+	m.OldHiddenAttr = gooxml.Bool(false)
+	m.UaAttr = gooxml.Bool(false)
+	m.RaAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "localSheetId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

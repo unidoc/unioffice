@@ -21,6 +21,8 @@ type CT_Proof struct {
 
 func NewCT_Proof() *CT_Proof {
 	ret := &CT_Proof{}
+	ret.SpellingAttr = ST_Proof(1)
+	ret.GrammarAttr = ST_Proof(1)
 	return ret
 }
 
@@ -46,6 +48,8 @@ func (m *CT_Proof) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Proof) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.SpellingAttr = ST_Proof(1)
+	m.GrammarAttr = ST_Proof(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "spelling" {
 			m.SpellingAttr.UnmarshalXMLAttr(attr)

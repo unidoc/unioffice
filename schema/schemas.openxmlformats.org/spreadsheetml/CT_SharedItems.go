@@ -13,6 +13,8 @@ import (
 	"log"
 	"strconv"
 	"time"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SharedItems struct {
@@ -60,6 +62,15 @@ type CT_SharedItems struct {
 
 func NewCT_SharedItems() *CT_SharedItems {
 	ret := &CT_SharedItems{}
+	ret.ContainsSemiMixedTypesAttr = gooxml.Bool(true)
+	ret.ContainsNonDateAttr = gooxml.Bool(true)
+	ret.ContainsDateAttr = gooxml.Bool(false)
+	ret.ContainsStringAttr = gooxml.Bool(true)
+	ret.ContainsBlankAttr = gooxml.Bool(false)
+	ret.ContainsMixedTypesAttr = gooxml.Bool(false)
+	ret.ContainsNumberAttr = gooxml.Bool(false)
+	ret.ContainsIntegerAttr = gooxml.Bool(false)
+	ret.LongTextAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -151,6 +162,15 @@ func (m *CT_SharedItems) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_SharedItems) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ContainsSemiMixedTypesAttr = gooxml.Bool(true)
+	m.ContainsNonDateAttr = gooxml.Bool(true)
+	m.ContainsDateAttr = gooxml.Bool(false)
+	m.ContainsStringAttr = gooxml.Bool(true)
+	m.ContainsBlankAttr = gooxml.Bool(false)
+	m.ContainsMixedTypesAttr = gooxml.Bool(false)
+	m.ContainsNumberAttr = gooxml.Bool(false)
+	m.ContainsIntegerAttr = gooxml.Bool(false)
+	m.LongTextAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "containsSemiMixedTypes" {
 			parsed, err := strconv.ParseBool(attr.Value)

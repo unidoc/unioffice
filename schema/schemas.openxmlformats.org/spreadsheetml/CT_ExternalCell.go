@@ -29,6 +29,8 @@ type CT_ExternalCell struct {
 
 func NewCT_ExternalCell() *CT_ExternalCell {
 	ret := &CT_ExternalCell{}
+	ret.TAttr = ST_CellTypeN
+	ret.VmAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -60,6 +62,8 @@ func (m *CT_ExternalCell) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_ExternalCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TAttr = ST_CellTypeN
+	m.VmAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "r" {
 			parsed, err := attr.Value, error(nil)

@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 )
 
@@ -81,6 +82,24 @@ type CT_CustomSheetView struct {
 func NewCT_CustomSheetView() *CT_CustomSheetView {
 	ret := &CT_CustomSheetView{}
 	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
+	ret.ScaleAttr = gooxml.Uint32(100)
+	ret.ColorIdAttr = gooxml.Uint32(64)
+	ret.ShowPageBreaksAttr = gooxml.Bool(false)
+	ret.ShowFormulasAttr = gooxml.Bool(false)
+	ret.ShowGridLinesAttr = gooxml.Bool(true)
+	ret.ShowRowColAttr = gooxml.Bool(true)
+	ret.OutlineSymbolsAttr = gooxml.Bool(true)
+	ret.ZeroValuesAttr = gooxml.Bool(true)
+	ret.FitToPageAttr = gooxml.Bool(false)
+	ret.PrintAreaAttr = gooxml.Bool(false)
+	ret.FilterAttr = gooxml.Bool(false)
+	ret.ShowAutoFilterAttr = gooxml.Bool(false)
+	ret.HiddenRowsAttr = gooxml.Bool(false)
+	ret.HiddenColumnsAttr = gooxml.Bool(false)
+	ret.StateAttr = ST_SheetStateVisible
+	ret.FilterUniqueAttr = gooxml.Bool(false)
+	ret.ViewAttr = ST_SheetViewTypeNormal
+	ret.ShowRulerAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -217,6 +236,24 @@ func (m *CT_CustomSheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 func (m *CT_CustomSheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
+	m.ScaleAttr = gooxml.Uint32(100)
+	m.ColorIdAttr = gooxml.Uint32(64)
+	m.ShowPageBreaksAttr = gooxml.Bool(false)
+	m.ShowFormulasAttr = gooxml.Bool(false)
+	m.ShowGridLinesAttr = gooxml.Bool(true)
+	m.ShowRowColAttr = gooxml.Bool(true)
+	m.OutlineSymbolsAttr = gooxml.Bool(true)
+	m.ZeroValuesAttr = gooxml.Bool(true)
+	m.FitToPageAttr = gooxml.Bool(false)
+	m.PrintAreaAttr = gooxml.Bool(false)
+	m.FilterAttr = gooxml.Bool(false)
+	m.ShowAutoFilterAttr = gooxml.Bool(false)
+	m.HiddenRowsAttr = gooxml.Bool(false)
+	m.HiddenColumnsAttr = gooxml.Bool(false)
+	m.StateAttr = ST_SheetStateVisible
+	m.FilterUniqueAttr = gooxml.Bool(false)
+	m.ViewAttr = ST_SheetViewTypeNormal
+	m.ShowRulerAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "guid" {
 			parsed, err := attr.Value, error(nil)

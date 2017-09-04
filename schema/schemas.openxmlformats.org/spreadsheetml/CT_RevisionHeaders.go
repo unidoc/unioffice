@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 )
 
@@ -48,6 +49,16 @@ type CT_RevisionHeaders struct {
 func NewCT_RevisionHeaders() *CT_RevisionHeaders {
 	ret := &CT_RevisionHeaders{}
 	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
+	ret.LastGuidAttr = gooxml.String("{00000000-0000-0000-0000-000000000000}")
+	ret.SharedAttr = gooxml.Bool(true)
+	ret.DiskRevisionsAttr = gooxml.Bool(false)
+	ret.HistoryAttr = gooxml.Bool(true)
+	ret.TrackRevisionsAttr = gooxml.Bool(true)
+	ret.ExclusiveAttr = gooxml.Bool(false)
+	ret.RevisionIdAttr = gooxml.Uint32(0)
+	ret.KeepChangeHistoryAttr = gooxml.Bool(true)
+	ret.ProtectedAttr = gooxml.Bool(false)
+	ret.PreserveHistoryAttr = gooxml.Uint32(30)
 	return ret
 }
 
@@ -108,6 +119,16 @@ func (m *CT_RevisionHeaders) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
+	m.LastGuidAttr = gooxml.String("{00000000-0000-0000-0000-000000000000}")
+	m.SharedAttr = gooxml.Bool(true)
+	m.DiskRevisionsAttr = gooxml.Bool(false)
+	m.HistoryAttr = gooxml.Bool(true)
+	m.TrackRevisionsAttr = gooxml.Bool(true)
+	m.ExclusiveAttr = gooxml.Bool(false)
+	m.RevisionIdAttr = gooxml.Uint32(0)
+	m.KeepChangeHistoryAttr = gooxml.Bool(true)
+	m.ProtectedAttr = gooxml.Bool(false)
+	m.PreserveHistoryAttr = gooxml.Uint32(30)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "guid" {
 			parsed, err := attr.Value, error(nil)

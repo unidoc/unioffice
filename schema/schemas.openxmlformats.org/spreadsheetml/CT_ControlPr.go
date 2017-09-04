@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ControlPr struct {
@@ -50,6 +52,15 @@ type CT_ControlPr struct {
 
 func NewCT_ControlPr() *CT_ControlPr {
 	ret := &CT_ControlPr{}
+	ret.LockedAttr = gooxml.Bool(true)
+	ret.DefaultSizeAttr = gooxml.Bool(true)
+	ret.PrintAttr = gooxml.Bool(true)
+	ret.DisabledAttr = gooxml.Bool(false)
+	ret.RecalcAlwaysAttr = gooxml.Bool(false)
+	ret.UiObjectAttr = gooxml.Bool(false)
+	ret.AutoFillAttr = gooxml.Bool(true)
+	ret.AutoLineAttr = gooxml.Bool(true)
+	ret.AutoPictAttr = gooxml.Bool(true)
 	ret.Anchor = NewCT_ObjectAnchor()
 	return ret
 }
@@ -124,6 +135,15 @@ func (m *CT_ControlPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_ControlPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.LockedAttr = gooxml.Bool(true)
+	m.DefaultSizeAttr = gooxml.Bool(true)
+	m.PrintAttr = gooxml.Bool(true)
+	m.DisabledAttr = gooxml.Bool(false)
+	m.RecalcAlwaysAttr = gooxml.Bool(false)
+	m.UiObjectAttr = gooxml.Bool(false)
+	m.AutoFillAttr = gooxml.Bool(true)
+	m.AutoLineAttr = gooxml.Bool(true)
+	m.AutoPictAttr = gooxml.Bool(true)
 	m.Anchor = NewCT_ObjectAnchor()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "locked" {

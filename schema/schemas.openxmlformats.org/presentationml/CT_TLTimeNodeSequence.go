@@ -31,6 +31,8 @@ type CT_TLTimeNodeSequence struct {
 
 func NewCT_TLTimeNodeSequence() *CT_TLTimeNodeSequence {
 	ret := &CT_TLTimeNodeSequence{}
+	ret.PrevAcAttr = ST_TLPreviousActionType(1)
+	ret.NextAcAttr = ST_TLNextActionType(1)
 	ret.CTn = NewCT_TLCommonTimeNodeData()
 	return ret
 }
@@ -71,6 +73,8 @@ func (m *CT_TLTimeNodeSequence) MarshalXML(e *xml.Encoder, start xml.StartElemen
 
 func (m *CT_TLTimeNodeSequence) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PrevAcAttr = ST_TLPreviousActionType(1)
+	m.NextAcAttr = ST_TLNextActionType(1)
 	m.CTn = NewCT_TLCommonTimeNodeData()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "concurrent" {

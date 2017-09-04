@@ -13,6 +13,7 @@ import (
 	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -27,6 +28,7 @@ type CT_Picture struct {
 
 func NewCT_Picture() *CT_Picture {
 	ret := &CT_Picture{}
+	ret.FPublishedAttr = gooxml.Bool(false)
 	ret.NvPicPr = NewCT_PictureNonVisual()
 	ret.BlipFill = drawingml.NewCT_BlipFillProperties()
 	ret.SpPr = drawingml.NewCT_ShapeProperties()
@@ -59,6 +61,7 @@ func (m *CT_Picture) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Picture) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.FPublishedAttr = gooxml.Bool(false)
 	m.NvPicPr = NewCT_PictureNonVisual()
 	m.BlipFill = drawingml.NewCT_BlipFillProperties()
 	m.SpPr = drawingml.NewCT_ShapeProperties()

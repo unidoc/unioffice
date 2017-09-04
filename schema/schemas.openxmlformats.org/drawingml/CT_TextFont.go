@@ -22,6 +22,7 @@ type CT_TextFont struct {
 
 func NewCT_TextFont() *CT_TextFont {
 	ret := &CT_TextFont{}
+	ret.PitchFamilyAttr = ST_PitchFamily(0)
 	return ret
 }
 
@@ -50,6 +51,7 @@ func (m *CT_TextFont) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_TextFont) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.PitchFamilyAttr = ST_PitchFamily(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "typeface" {
 			parsed, err := attr.Value, error(nil)

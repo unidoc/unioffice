@@ -42,6 +42,7 @@ type CT_BottomPageBorder struct {
 func NewCT_BottomPageBorder() *CT_BottomPageBorder {
 	ret := &CT_BottomPageBorder{}
 	ret.ValAttr = ST_Border(1)
+	ret.ThemeColorAttr = ST_ThemeColor(1)
 	return ret
 }
 
@@ -106,6 +107,7 @@ func (m *CT_BottomPageBorder) MarshalXML(e *xml.Encoder, start xml.StartElement)
 func (m *CT_BottomPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = ST_Border(1)
+	m.ThemeColorAttr = ST_ThemeColor(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bottomLeft" {
 			parsed, err := attr.Value, error(nil)

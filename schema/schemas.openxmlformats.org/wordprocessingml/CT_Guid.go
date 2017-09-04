@@ -11,6 +11,7 @@ import (
 	"encoding/xml"
 	"fmt"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 )
 
@@ -21,6 +22,7 @@ type CT_Guid struct {
 
 func NewCT_Guid() *CT_Guid {
 	ret := &CT_Guid{}
+	ret.ValAttr = gooxml.String("{00000000-0000-0000-0000-000000000000}")
 	return ret
 }
 
@@ -36,6 +38,7 @@ func (m *CT_Guid) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Guid) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = gooxml.String("{00000000-0000-0000-0000-000000000000}")
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := attr.Value, error(nil)

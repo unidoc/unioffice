@@ -21,6 +21,7 @@ type CT_BorderPr struct {
 
 func NewCT_BorderPr() *CT_BorderPr {
 	ret := &CT_BorderPr{}
+	ret.StyleAttr = ST_BorderStyleNone
 	return ret
 }
 
@@ -43,6 +44,7 @@ func (m *CT_BorderPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_BorderPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.StyleAttr = ST_BorderStyleNone
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "style" {
 			m.StyleAttr.UnmarshalXMLAttr(attr)

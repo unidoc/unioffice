@@ -11,6 +11,8 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_AnimationDgmBuildProperties struct {
@@ -20,6 +22,7 @@ type CT_AnimationDgmBuildProperties struct {
 
 func NewCT_AnimationDgmBuildProperties() *CT_AnimationDgmBuildProperties {
 	ret := &CT_AnimationDgmBuildProperties{}
+	ret.RevAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -39,6 +42,7 @@ func (m *CT_AnimationDgmBuildProperties) MarshalXML(e *xml.Encoder, start xml.St
 
 func (m *CT_AnimationDgmBuildProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.RevAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bld" {
 			parsed, err := ParseUnionST_AnimationDgmBuildType(attr.Value)

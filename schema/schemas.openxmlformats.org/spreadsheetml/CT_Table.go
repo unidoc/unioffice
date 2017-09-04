@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Table struct {
@@ -73,6 +75,13 @@ type CT_Table struct {
 
 func NewCT_Table() *CT_Table {
 	ret := &CT_Table{}
+	ret.TableTypeAttr = ST_TableTypeWorksheet
+	ret.HeaderRowCountAttr = gooxml.Uint32(1)
+	ret.InsertRowAttr = gooxml.Bool(false)
+	ret.InsertRowShiftAttr = gooxml.Bool(false)
+	ret.TotalsRowCountAttr = gooxml.Uint32(0)
+	ret.TotalsRowShownAttr = gooxml.Bool(true)
+	ret.PublishedAttr = gooxml.Bool(false)
 	ret.TableColumns = NewCT_TableColumns()
 	return ret
 }
@@ -188,6 +197,13 @@ func (m *CT_Table) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Table) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TableTypeAttr = ST_TableTypeWorksheet
+	m.HeaderRowCountAttr = gooxml.Uint32(1)
+	m.InsertRowAttr = gooxml.Bool(false)
+	m.InsertRowShiftAttr = gooxml.Bool(false)
+	m.TotalsRowCountAttr = gooxml.Uint32(0)
+	m.TotalsRowShownAttr = gooxml.Bool(true)
+	m.PublishedAttr = gooxml.Bool(false)
 	m.TableColumns = NewCT_TableColumns()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {

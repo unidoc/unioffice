@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TLBuildParagraph struct {
@@ -36,6 +38,12 @@ type CT_TLBuildParagraph struct {
 
 func NewCT_TLBuildParagraph() *CT_TLBuildParagraph {
 	ret := &CT_TLBuildParagraph{}
+	ret.BuildAttr = ST_TLParaBuildTypeWhole
+	ret.BldLvlAttr = gooxml.Uint32(1)
+	ret.AnimBgAttr = gooxml.Bool(false)
+	ret.AutoUpdateAnimBgAttr = gooxml.Bool(true)
+	ret.RevAttr = gooxml.Bool(false)
+	ret.UiExpandAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -90,6 +98,12 @@ func (m *CT_TLBuildParagraph) MarshalXML(e *xml.Encoder, start xml.StartElement)
 
 func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.BuildAttr = ST_TLParaBuildTypeWhole
+	m.BldLvlAttr = gooxml.Uint32(1)
+	m.AnimBgAttr = gooxml.Bool(false)
+	m.AutoUpdateAnimBgAttr = gooxml.Bool(true)
+	m.RevAttr = gooxml.Bool(false)
+	m.UiExpandAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "build" {
 			m.BuildAttr.UnmarshalXMLAttr(attr)

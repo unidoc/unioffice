@@ -26,6 +26,7 @@ type CT_FtnEdn struct {
 
 func NewCT_FtnEdn() *CT_FtnEdn {
 	ret := &CT_FtnEdn{}
+	ret.TypeAttr = ST_FtnEdn(1)
 	return ret
 }
 
@@ -49,6 +50,7 @@ func (m *CT_FtnEdn) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_FtnEdn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.TypeAttr = ST_FtnEdn(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

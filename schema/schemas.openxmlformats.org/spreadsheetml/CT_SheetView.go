@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SheetView struct {
@@ -65,6 +67,23 @@ type CT_SheetView struct {
 
 func NewCT_SheetView() *CT_SheetView {
 	ret := &CT_SheetView{}
+	ret.WindowProtectionAttr = gooxml.Bool(false)
+	ret.ShowFormulasAttr = gooxml.Bool(false)
+	ret.ShowGridLinesAttr = gooxml.Bool(true)
+	ret.ShowRowColHeadersAttr = gooxml.Bool(true)
+	ret.ShowZerosAttr = gooxml.Bool(true)
+	ret.RightToLeftAttr = gooxml.Bool(false)
+	ret.TabSelectedAttr = gooxml.Bool(false)
+	ret.ShowRulerAttr = gooxml.Bool(true)
+	ret.ShowOutlineSymbolsAttr = gooxml.Bool(true)
+	ret.DefaultGridColorAttr = gooxml.Bool(true)
+	ret.ShowWhiteSpaceAttr = gooxml.Bool(true)
+	ret.ViewAttr = ST_SheetViewTypeNormal
+	ret.ColorIdAttr = gooxml.Uint32(64)
+	ret.ZoomScaleAttr = gooxml.Uint32(100)
+	ret.ZoomScaleNormalAttr = gooxml.Uint32(0)
+	ret.ZoomScaleSheetLayoutViewAttr = gooxml.Uint32(0)
+	ret.ZoomScalePageLayoutViewAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -169,6 +188,23 @@ func (m *CT_SheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.WindowProtectionAttr = gooxml.Bool(false)
+	m.ShowFormulasAttr = gooxml.Bool(false)
+	m.ShowGridLinesAttr = gooxml.Bool(true)
+	m.ShowRowColHeadersAttr = gooxml.Bool(true)
+	m.ShowZerosAttr = gooxml.Bool(true)
+	m.RightToLeftAttr = gooxml.Bool(false)
+	m.TabSelectedAttr = gooxml.Bool(false)
+	m.ShowRulerAttr = gooxml.Bool(true)
+	m.ShowOutlineSymbolsAttr = gooxml.Bool(true)
+	m.DefaultGridColorAttr = gooxml.Bool(true)
+	m.ShowWhiteSpaceAttr = gooxml.Bool(true)
+	m.ViewAttr = ST_SheetViewTypeNormal
+	m.ColorIdAttr = gooxml.Uint32(64)
+	m.ZoomScaleAttr = gooxml.Uint32(100)
+	m.ZoomScaleNormalAttr = gooxml.Uint32(0)
+	m.ZoomScaleSheetLayoutViewAttr = gooxml.Uint32(0)
+	m.ZoomScalePageLayoutViewAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "windowProtection" {
 			parsed, err := strconv.ParseBool(attr.Value)

@@ -36,6 +36,8 @@ type CT_CellAlignment struct {
 
 func NewCT_CellAlignment() *CT_CellAlignment {
 	ret := &CT_CellAlignment{}
+	ret.HorizontalAttr = ST_HorizontalAlignment(1)
+	ret.VerticalAttr = ST_VerticalAlignment(1)
 	return ret
 }
 
@@ -89,6 +91,8 @@ func (m *CT_CellAlignment) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_CellAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.HorizontalAttr = ST_HorizontalAlignment(1)
+	m.VerticalAttr = ST_VerticalAlignment(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "horizontal" {
 			m.HorizontalAttr.UnmarshalXMLAttr(attr)

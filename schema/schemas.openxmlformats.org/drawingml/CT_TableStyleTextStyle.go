@@ -28,6 +28,8 @@ type CT_TableStyleTextStyle struct {
 
 func NewCT_TableStyleTextStyle() *CT_TableStyleTextStyle {
 	ret := &CT_TableStyleTextStyle{}
+	ret.BAttr = ST_OnOffStyleTypeDef
+	ret.IAttr = ST_OnOffStyleTypeDef
 	return ret
 }
 
@@ -89,6 +91,8 @@ func (m *CT_TableStyleTextStyle) MarshalXML(e *xml.Encoder, start xml.StartEleme
 
 func (m *CT_TableStyleTextStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.BAttr = ST_OnOffStyleTypeDef
+	m.IAttr = ST_OnOffStyleTypeDef
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "b" {
 			m.BAttr.UnmarshalXMLAttr(attr)

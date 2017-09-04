@@ -22,6 +22,7 @@ type CT_TwoCellAnchor struct {
 
 func NewCT_TwoCellAnchor() *CT_TwoCellAnchor {
 	ret := &CT_TwoCellAnchor{}
+	ret.EditAsAttr = ST_EditAsTwoCell
 	ret.From = NewCT_Marker()
 	ret.To = NewCT_Marker()
 	ret.ClientData = NewCT_AnchorClientData()
@@ -52,6 +53,7 @@ func (m *CT_TwoCellAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_TwoCellAnchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.EditAsAttr = ST_EditAsTwoCell
 	m.From = NewCT_Marker()
 	m.To = NewCT_Marker()
 	m.ClientData = NewCT_AnchorClientData()

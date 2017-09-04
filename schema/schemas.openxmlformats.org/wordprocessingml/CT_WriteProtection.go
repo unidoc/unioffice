@@ -34,6 +34,9 @@ type CT_WriteProtection struct {
 
 func NewCT_WriteProtection() *CT_WriteProtection {
 	ret := &CT_WriteProtection{}
+	ret.CryptProviderTypeAttr = sharedTypes.ST_CryptProv(1)
+	ret.CryptAlgorithmClassAttr = sharedTypes.ST_AlgClass(1)
+	ret.CryptAlgorithmTypeAttr = sharedTypes.ST_AlgType(1)
 	return ret
 }
 
@@ -106,6 +109,9 @@ func (m *CT_WriteProtection) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.CryptProviderTypeAttr = sharedTypes.ST_CryptProv(1)
+	m.CryptAlgorithmClassAttr = sharedTypes.ST_AlgClass(1)
+	m.CryptAlgorithmTypeAttr = sharedTypes.ST_AlgType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "recommended" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)

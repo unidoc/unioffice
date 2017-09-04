@@ -18,6 +18,7 @@ type CT_TickLblPos struct {
 
 func NewCT_TickLblPos() *CT_TickLblPos {
 	ret := &CT_TickLblPos{}
+	ret.ValAttr = ST_TickLblPosNextTo
 	return ret
 }
 
@@ -36,6 +37,7 @@ func (m *CT_TickLblPos) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_TickLblPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
+	m.ValAttr = ST_TickLblPosNextTo
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)
