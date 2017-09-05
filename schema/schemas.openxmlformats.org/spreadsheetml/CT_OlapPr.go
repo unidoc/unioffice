@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_OlapPr struct {
@@ -38,13 +36,6 @@ type CT_OlapPr struct {
 
 func NewCT_OlapPr() *CT_OlapPr {
 	ret := &CT_OlapPr{}
-	ret.LocalAttr = gooxml.Bool(false)
-	ret.LocalRefreshAttr = gooxml.Bool(true)
-	ret.SendLocaleAttr = gooxml.Bool(false)
-	ret.ServerFillAttr = gooxml.Bool(true)
-	ret.ServerNumberFormatAttr = gooxml.Bool(true)
-	ret.ServerFontAttr = gooxml.Bool(true)
-	ret.ServerFontColorAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -92,13 +83,6 @@ func (m *CT_OlapPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_OlapPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.LocalAttr = gooxml.Bool(false)
-	m.LocalRefreshAttr = gooxml.Bool(true)
-	m.SendLocaleAttr = gooxml.Bool(false)
-	m.ServerFillAttr = gooxml.Bool(true)
-	m.ServerNumberFormatAttr = gooxml.Bool(true)
-	m.ServerFontAttr = gooxml.Bool(true)
-	m.ServerFontColorAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "local" {
 			parsed, err := strconv.ParseBool(attr.Value)

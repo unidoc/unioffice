@@ -13,7 +13,6 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -25,7 +24,6 @@ type CT_TextboxInfo struct {
 
 func NewCT_TextboxInfo() *CT_TextboxInfo {
 	ret := &CT_TextboxInfo{}
-	ret.IdAttr = gooxml.Uint16(0)
 	ret.TxbxContent = NewCT_TxbxContent()
 	return ret
 }
@@ -48,7 +46,6 @@ func (m *CT_TextboxInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_TextboxInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.IdAttr = gooxml.Uint16(0)
 	m.TxbxContent = NewCT_TxbxContent()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {

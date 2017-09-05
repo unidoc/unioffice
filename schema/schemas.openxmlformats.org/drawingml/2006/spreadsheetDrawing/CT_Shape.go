@@ -13,7 +13,6 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -30,8 +29,6 @@ type CT_Shape struct {
 
 func NewCT_Shape() *CT_Shape {
 	ret := &CT_Shape{}
-	ret.FLocksTextAttr = gooxml.Bool(true)
-	ret.FPublishedAttr = gooxml.Bool(false)
 	ret.NvSpPr = NewCT_ShapeNonVisual()
 	ret.SpPr = drawingml.NewCT_ShapeProperties()
 	return ret
@@ -73,8 +70,6 @@ func (m *CT_Shape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.FLocksTextAttr = gooxml.Bool(true)
-	m.FPublishedAttr = gooxml.Bool(false)
 	m.NvSpPr = NewCT_ShapeNonVisual()
 	m.SpPr = drawingml.NewCT_ShapeProperties()
 	for _, attr := range start.Attr {

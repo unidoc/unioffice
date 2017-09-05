@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 )
 
@@ -58,22 +57,6 @@ type CT_PageSetup struct {
 
 func NewCT_PageSetup() *CT_PageSetup {
 	ret := &CT_PageSetup{}
-	ret.PaperSizeAttr = gooxml.Uint32(1)
-	ret.ScaleAttr = gooxml.Uint32(100)
-	ret.FirstPageNumberAttr = gooxml.Uint32(1)
-	ret.FitToWidthAttr = gooxml.Uint32(1)
-	ret.FitToHeightAttr = gooxml.Uint32(1)
-	ret.PageOrderAttr = ST_PageOrderDownThenOver
-	ret.OrientationAttr = ST_OrientationDefault
-	ret.UsePrinterDefaultsAttr = gooxml.Bool(true)
-	ret.BlackAndWhiteAttr = gooxml.Bool(false)
-	ret.DraftAttr = gooxml.Bool(false)
-	ret.CellCommentsAttr = ST_CellCommentsNone
-	ret.UseFirstPageNumberAttr = gooxml.Bool(false)
-	ret.ErrorsAttr = ST_PrintErrorDisplayed
-	ret.HorizontalDpiAttr = gooxml.Uint32(600)
-	ret.VerticalDpiAttr = gooxml.Uint32(600)
-	ret.CopiesAttr = gooxml.Uint32(1)
 	return ret
 }
 
@@ -173,22 +156,6 @@ func (m *CT_PageSetup) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.PaperSizeAttr = gooxml.Uint32(1)
-	m.ScaleAttr = gooxml.Uint32(100)
-	m.FirstPageNumberAttr = gooxml.Uint32(1)
-	m.FitToWidthAttr = gooxml.Uint32(1)
-	m.FitToHeightAttr = gooxml.Uint32(1)
-	m.PageOrderAttr = ST_PageOrderDownThenOver
-	m.OrientationAttr = ST_OrientationDefault
-	m.UsePrinterDefaultsAttr = gooxml.Bool(true)
-	m.BlackAndWhiteAttr = gooxml.Bool(false)
-	m.DraftAttr = gooxml.Bool(false)
-	m.CellCommentsAttr = ST_CellCommentsNone
-	m.UseFirstPageNumberAttr = gooxml.Bool(false)
-	m.ErrorsAttr = ST_PrintErrorDisplayed
-	m.HorizontalDpiAttr = gooxml.Uint32(600)
-	m.VerticalDpiAttr = gooxml.Uint32(600)
-	m.CopiesAttr = gooxml.Uint32(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "paperSize" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

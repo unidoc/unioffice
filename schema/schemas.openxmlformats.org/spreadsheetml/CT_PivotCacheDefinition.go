@@ -13,8 +13,6 @@ import (
 	"log"
 	"strconv"
 	"time"
-
-	"baliance.com/gooxml"
 )
 
 type CT_PivotCacheDefinition struct {
@@ -81,19 +79,6 @@ type CT_PivotCacheDefinition struct {
 
 func NewCT_PivotCacheDefinition() *CT_PivotCacheDefinition {
 	ret := &CT_PivotCacheDefinition{}
-	ret.InvalidAttr = gooxml.Bool(false)
-	ret.SaveDataAttr = gooxml.Bool(true)
-	ret.RefreshOnLoadAttr = gooxml.Bool(false)
-	ret.OptimizeMemoryAttr = gooxml.Bool(false)
-	ret.EnableRefreshAttr = gooxml.Bool(true)
-	ret.BackgroundQueryAttr = gooxml.Bool(false)
-	ret.CreatedVersionAttr = gooxml.Uint8(0)
-	ret.RefreshedVersionAttr = gooxml.Uint8(0)
-	ret.MinRefreshableVersionAttr = gooxml.Uint8(0)
-	ret.UpgradeOnRefreshAttr = gooxml.Bool(false)
-	ret.TupleCacheAttr = gooxml.Bool(false)
-	ret.SupportSubqueryAttr = gooxml.Bool(false)
-	ret.SupportAdvancedDrillAttr = gooxml.Bool(false)
 	ret.CacheSource = NewCT_CacheSource()
 	ret.CacheFields = NewCT_CacheFields()
 	return ret
@@ -223,19 +208,6 @@ func (m *CT_PivotCacheDefinition) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *CT_PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.InvalidAttr = gooxml.Bool(false)
-	m.SaveDataAttr = gooxml.Bool(true)
-	m.RefreshOnLoadAttr = gooxml.Bool(false)
-	m.OptimizeMemoryAttr = gooxml.Bool(false)
-	m.EnableRefreshAttr = gooxml.Bool(true)
-	m.BackgroundQueryAttr = gooxml.Bool(false)
-	m.CreatedVersionAttr = gooxml.Uint8(0)
-	m.RefreshedVersionAttr = gooxml.Uint8(0)
-	m.MinRefreshableVersionAttr = gooxml.Uint8(0)
-	m.UpgradeOnRefreshAttr = gooxml.Bool(false)
-	m.TupleCacheAttr = gooxml.Bool(false)
-	m.SupportSubqueryAttr = gooxml.Bool(false)
-	m.SupportAdvancedDrillAttr = gooxml.Bool(false)
 	m.CacheSource = NewCT_CacheSource()
 	m.CacheFields = NewCT_CacheFields()
 	for _, attr := range start.Attr {

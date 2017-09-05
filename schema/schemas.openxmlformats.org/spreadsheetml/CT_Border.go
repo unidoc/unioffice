@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Border struct {
@@ -45,7 +43,6 @@ type CT_Border struct {
 
 func NewCT_Border() *CT_Border {
 	ret := &CT_Border{}
-	ret.OutlineAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -105,7 +102,6 @@ func (m *CT_Border) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Border) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.OutlineAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "diagonalUp" {
 			parsed, err := strconv.ParseBool(attr.Value)

@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_PageBreak struct {
@@ -27,8 +25,6 @@ type CT_PageBreak struct {
 
 func NewCT_PageBreak() *CT_PageBreak {
 	ret := &CT_PageBreak{}
-	ret.CountAttr = gooxml.Uint32(0)
-	ret.ManualBreakCountAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -52,8 +48,6 @@ func (m *CT_PageBreak) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_PageBreak) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CountAttr = gooxml.Uint32(0)
-	m.ManualBreakCountAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

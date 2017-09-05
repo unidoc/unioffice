@@ -31,7 +31,6 @@ type CT_CellFormula struct {
 
 func NewCT_CellFormula() *CT_CellFormula {
 	ret := &CT_CellFormula{}
-	ret.TAttr = ST_CellFormulaType(1)
 	return ret
 }
 
@@ -94,7 +93,6 @@ func (m *CT_CellFormula) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TAttr = ST_CellFormulaType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "t" {
 			m.TAttr.UnmarshalXMLAttr(attr)

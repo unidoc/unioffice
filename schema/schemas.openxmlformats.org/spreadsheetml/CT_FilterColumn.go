@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_FilterColumn struct {
@@ -40,8 +38,6 @@ type CT_FilterColumn struct {
 
 func NewCT_FilterColumn() *CT_FilterColumn {
 	ret := &CT_FilterColumn{}
-	ret.HiddenButtonAttr = gooxml.Bool(false)
-	ret.ShowButtonAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -91,8 +87,6 @@ func (m *CT_FilterColumn) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_FilterColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.HiddenButtonAttr = gooxml.Bool(false)
-	m.ShowButtonAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "colId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

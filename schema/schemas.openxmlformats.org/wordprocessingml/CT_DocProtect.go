@@ -38,10 +38,6 @@ type CT_DocProtect struct {
 
 func NewCT_DocProtect() *CT_DocProtect {
 	ret := &CT_DocProtect{}
-	ret.EditAttr = ST_DocProtect(1)
-	ret.CryptProviderTypeAttr = sharedTypes.ST_CryptProv(1)
-	ret.CryptAlgorithmClassAttr = sharedTypes.ST_AlgClass(1)
-	ret.CryptAlgorithmTypeAttr = sharedTypes.ST_AlgType(1)
 	return ret
 }
 
@@ -125,10 +121,6 @@ func (m *CT_DocProtect) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_DocProtect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.EditAttr = ST_DocProtect(1)
-	m.CryptProviderTypeAttr = sharedTypes.ST_CryptProv(1)
-	m.CryptAlgorithmClassAttr = sharedTypes.ST_AlgClass(1)
-	m.CryptAlgorithmTypeAttr = sharedTypes.ST_AlgType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "edit" {
 			m.EditAttr.UnmarshalXMLAttr(attr)

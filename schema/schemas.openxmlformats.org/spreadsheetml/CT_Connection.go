@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Connection struct {
@@ -73,18 +71,6 @@ type CT_Connection struct {
 
 func NewCT_Connection() *CT_Connection {
 	ret := &CT_Connection{}
-	ret.KeepAliveAttr = gooxml.Bool(false)
-	ret.IntervalAttr = gooxml.Uint32(0)
-	ret.ReconnectionMethodAttr = gooxml.Uint32(1)
-	ret.MinRefreshableVersionAttr = gooxml.Uint8(0)
-	ret.SavePasswordAttr = gooxml.Bool(false)
-	ret.NewAttr = gooxml.Bool(false)
-	ret.DeletedAttr = gooxml.Bool(false)
-	ret.OnlyUseConnectionFileAttr = gooxml.Bool(false)
-	ret.BackgroundAttr = gooxml.Bool(false)
-	ret.RefreshOnLoadAttr = gooxml.Bool(false)
-	ret.SaveDataAttr = gooxml.Bool(false)
-	ret.CredentialsAttr = ST_CredMethodIntegrated
 	return ret
 }
 
@@ -199,18 +185,6 @@ func (m *CT_Connection) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.KeepAliveAttr = gooxml.Bool(false)
-	m.IntervalAttr = gooxml.Uint32(0)
-	m.ReconnectionMethodAttr = gooxml.Uint32(1)
-	m.MinRefreshableVersionAttr = gooxml.Uint8(0)
-	m.SavePasswordAttr = gooxml.Bool(false)
-	m.NewAttr = gooxml.Bool(false)
-	m.DeletedAttr = gooxml.Bool(false)
-	m.OnlyUseConnectionFileAttr = gooxml.Bool(false)
-	m.BackgroundAttr = gooxml.Bool(false)
-	m.RefreshOnLoadAttr = gooxml.Bool(false)
-	m.SaveDataAttr = gooxml.Bool(false)
-	m.CredentialsAttr = ST_CredMethodIntegrated
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

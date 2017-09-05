@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Xf struct {
@@ -53,8 +51,6 @@ type CT_Xf struct {
 
 func NewCT_Xf() *CT_Xf {
 	ret := &CT_Xf{}
-	ret.QuotePrefixAttr = gooxml.Bool(false)
-	ret.PivotButtonAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -130,8 +126,6 @@ func (m *CT_Xf) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.QuotePrefixAttr = gooxml.Bool(false)
-	m.PivotButtonAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "numFmtId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

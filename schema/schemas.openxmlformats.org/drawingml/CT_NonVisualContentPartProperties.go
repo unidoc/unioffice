@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_NonVisualContentPartProperties struct {
@@ -24,7 +22,6 @@ type CT_NonVisualContentPartProperties struct {
 
 func NewCT_NonVisualContentPartProperties() *CT_NonVisualContentPartProperties {
 	ret := &CT_NonVisualContentPartProperties{}
-	ret.IsCommentAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -49,7 +46,6 @@ func (m *CT_NonVisualContentPartProperties) MarshalXML(e *xml.Encoder, start xml
 
 func (m *CT_NonVisualContentPartProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.IsCommentAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "isComment" {
 			parsed, err := strconv.ParseBool(attr.Value)

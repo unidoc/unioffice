@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_ApplicationNonVisualDrawingProps struct {
@@ -30,8 +28,6 @@ type CT_ApplicationNonVisualDrawingProps struct {
 
 func NewCT_ApplicationNonVisualDrawingProps() *CT_ApplicationNonVisualDrawingProps {
 	ret := &CT_ApplicationNonVisualDrawingProps{}
-	ret.IsPhotoAttr = gooxml.Bool(false)
-	ret.UserDrawnAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -63,8 +59,6 @@ func (m *CT_ApplicationNonVisualDrawingProps) MarshalXML(e *xml.Encoder, start x
 
 func (m *CT_ApplicationNonVisualDrawingProps) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.IsPhotoAttr = gooxml.Bool(false)
-	m.UserDrawnAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "isPhoto" {
 			parsed, err := strconv.ParseBool(attr.Value)

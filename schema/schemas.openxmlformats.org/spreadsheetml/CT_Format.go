@@ -27,7 +27,6 @@ type CT_Format struct {
 
 func NewCT_Format() *CT_Format {
 	ret := &CT_Format{}
-	ret.ActionAttr = ST_FormatActionFormatting
 	ret.PivotArea = NewCT_PivotArea()
 	return ret
 }
@@ -57,7 +56,6 @@ func (m *CT_Format) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Format) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ActionAttr = ST_FormatActionFormatting
 	m.PivotArea = NewCT_PivotArea()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "action" {

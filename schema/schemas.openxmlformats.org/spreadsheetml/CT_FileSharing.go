@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_FileSharing struct {
@@ -34,7 +32,6 @@ type CT_FileSharing struct {
 
 func NewCT_FileSharing() *CT_FileSharing {
 	ret := &CT_FileSharing{}
-	ret.ReadOnlyRecommendedAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -74,7 +71,6 @@ func (m *CT_FileSharing) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_FileSharing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ReadOnlyRecommendedAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "readOnlyRecommended" {
 			parsed, err := strconv.ParseBool(attr.Value)

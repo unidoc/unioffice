@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_HeaderFooter struct {
@@ -30,10 +28,6 @@ type CT_HeaderFooter struct {
 
 func NewCT_HeaderFooter() *CT_HeaderFooter {
 	ret := &CT_HeaderFooter{}
-	ret.SldNumAttr = gooxml.Bool(true)
-	ret.HdrAttr = gooxml.Bool(true)
-	ret.FtrAttr = gooxml.Bool(true)
-	ret.DtAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -65,10 +59,6 @@ func (m *CT_HeaderFooter) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_HeaderFooter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.SldNumAttr = gooxml.Bool(true)
-	m.HdrAttr = gooxml.Bool(true)
-	m.FtrAttr = gooxml.Bool(true)
-	m.DtAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "sldNum" {
 			parsed, err := strconv.ParseBool(attr.Value)

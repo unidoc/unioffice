@@ -23,8 +23,6 @@ type CT_TileInfoProperties struct {
 
 func NewCT_TileInfoProperties() *CT_TileInfoProperties {
 	ret := &CT_TileInfoProperties{}
-	ret.FlipAttr = ST_TileFlipMode(1)
-	ret.AlgnAttr = ST_RectAlignment(1)
 	return ret
 }
 
@@ -66,8 +64,6 @@ func (m *CT_TileInfoProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 
 func (m *CT_TileInfoProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.FlipAttr = ST_TileFlipMode(1)
-	m.AlgnAttr = ST_RectAlignment(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "tx" {
 			parsed, err := ParseUnionST_Coordinate(attr.Value)

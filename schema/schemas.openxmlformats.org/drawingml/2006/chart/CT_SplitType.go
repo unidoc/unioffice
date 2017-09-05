@@ -18,7 +18,6 @@ type CT_SplitType struct {
 
 func NewCT_SplitType() *CT_SplitType {
 	ret := &CT_SplitType{}
-	ret.ValAttr = ST_SplitTypeAuto
 	return ret
 }
 
@@ -37,7 +36,6 @@ func (m *CT_SplitType) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_SplitType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_SplitTypeAuto
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

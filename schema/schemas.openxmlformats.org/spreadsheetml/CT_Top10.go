@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Top10 struct {
@@ -28,8 +26,6 @@ type CT_Top10 struct {
 
 func NewCT_Top10() *CT_Top10 {
 	ret := &CT_Top10{}
-	ret.TopAttr = gooxml.Bool(true)
-	ret.PercentAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -55,8 +51,6 @@ func (m *CT_Top10) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Top10) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TopAttr = gooxml.Bool(true)
-	m.PercentAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "top" {
 			parsed, err := strconv.ParseBool(attr.Value)

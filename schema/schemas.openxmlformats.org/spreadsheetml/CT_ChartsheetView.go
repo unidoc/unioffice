@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_ChartsheetView struct {
@@ -30,9 +28,6 @@ type CT_ChartsheetView struct {
 
 func NewCT_ChartsheetView() *CT_ChartsheetView {
 	ret := &CT_ChartsheetView{}
-	ret.TabSelectedAttr = gooxml.Bool(false)
-	ret.ZoomScaleAttr = gooxml.Uint32(100)
-	ret.ZoomToFitAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -62,9 +57,6 @@ func (m *CT_ChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_ChartsheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TabSelectedAttr = gooxml.Bool(false)
-	m.ZoomScaleAttr = gooxml.Uint32(100)
-	m.ZoomToFitAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "tabSelected" {
 			parsed, err := strconv.ParseBool(attr.Value)

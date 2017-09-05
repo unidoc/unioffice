@@ -24,8 +24,6 @@ type CT_PhoneticPr struct {
 
 func NewCT_PhoneticPr() *CT_PhoneticPr {
 	ret := &CT_PhoneticPr{}
-	ret.TypeAttr = ST_PhoneticTypeFullwidthKatakana
-	ret.AlignmentAttr = ST_PhoneticAlignmentLeft
 	return ret
 }
 
@@ -53,8 +51,6 @@ func (m *CT_PhoneticPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_PhoneticPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TypeAttr = ST_PhoneticTypeFullwidthKatakana
-	m.AlignmentAttr = ST_PhoneticAlignmentLeft
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "fontId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

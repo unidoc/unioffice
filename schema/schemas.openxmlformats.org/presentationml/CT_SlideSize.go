@@ -26,7 +26,6 @@ func NewCT_SlideSize() *CT_SlideSize {
 	ret := &CT_SlideSize{}
 	ret.CxAttr = 914400
 	ret.CyAttr = 914400
-	ret.TypeAttr = ST_SlideSizeTypeCustom
 	return ret
 }
 
@@ -51,7 +50,6 @@ func (m *CT_SlideSize) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	// initialize to default
 	m.CxAttr = 914400
 	m.CyAttr = 914400
-	m.TypeAttr = ST_SlideSizeTypeCustom
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "cx" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_RevisionConflict struct {
@@ -25,8 +23,6 @@ type CT_RevisionConflict struct {
 
 func NewCT_RevisionConflict() *CT_RevisionConflict {
 	ret := &CT_RevisionConflict{}
-	ret.UaAttr = gooxml.Bool(false)
-	ret.RaAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -54,8 +50,6 @@ func (m *CT_RevisionConflict) MarshalXML(e *xml.Encoder, start xml.StartElement)
 
 func (m *CT_RevisionConflict) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.UaAttr = gooxml.Bool(false)
-	m.RaAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "sheetId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -13,7 +13,6 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -30,7 +29,6 @@ type CT_WordprocessingShape struct {
 
 func NewCT_WordprocessingShape() *CT_WordprocessingShape {
 	ret := &CT_WordprocessingShape{}
-	ret.NormalEastAsianFlowAttr = gooxml.Bool(false)
 	ret.Choice = NewCT_WordprocessingShapeChoice()
 	ret.SpPr = drawingml.NewCT_ShapeProperties()
 	ret.BodyPr = drawingml.NewCT_TextBodyProperties()
@@ -69,7 +67,6 @@ func (m *CT_WordprocessingShape) MarshalXML(e *xml.Encoder, start xml.StartEleme
 
 func (m *CT_WordprocessingShape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.NormalEastAsianFlowAttr = gooxml.Bool(false)
 	m.Choice = NewCT_WordprocessingShapeChoice()
 	m.SpPr = drawingml.NewCT_ShapeProperties()
 	m.BodyPr = drawingml.NewCT_TextBodyProperties()

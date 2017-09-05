@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_TextCharacterProperties struct {
@@ -62,13 +60,6 @@ type CT_TextCharacterProperties struct {
 
 func NewCT_TextCharacterProperties() *CT_TextCharacterProperties {
 	ret := &CT_TextCharacterProperties{}
-	ret.UAttr = ST_TextUnderlineType(1)
-	ret.StrikeAttr = ST_TextStrikeType(1)
-	ret.CapAttr = ST_TextCapsType(1)
-	ret.DirtyAttr = gooxml.Bool(true)
-	ret.ErrAttr = gooxml.Bool(false)
-	ret.SmtCleanAttr = gooxml.Bool(true)
-	ret.SmtIdAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -253,13 +244,6 @@ func (m *CT_TextCharacterProperties) MarshalXML(e *xml.Encoder, start xml.StartE
 
 func (m *CT_TextCharacterProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.UAttr = ST_TextUnderlineType(1)
-	m.StrikeAttr = ST_TextStrikeType(1)
-	m.CapAttr = ST_TextCapsType(1)
-	m.DirtyAttr = gooxml.Bool(true)
-	m.ErrAttr = gooxml.Bool(false)
-	m.SmtCleanAttr = gooxml.Bool(true)
-	m.SmtIdAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "kumimoji" {
 			parsed, err := strconv.ParseBool(attr.Value)

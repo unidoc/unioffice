@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_ChartsheetPr struct {
@@ -26,7 +24,6 @@ type CT_ChartsheetPr struct {
 
 func NewCT_ChartsheetPr() *CT_ChartsheetPr {
 	ret := &CT_ChartsheetPr{}
-	ret.PublishedAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -50,7 +47,6 @@ func (m *CT_ChartsheetPr) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_ChartsheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.PublishedAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "published" {
 			parsed, err := strconv.ParseBool(attr.Value)

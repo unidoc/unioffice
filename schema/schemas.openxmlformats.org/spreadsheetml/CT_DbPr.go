@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_DbPr struct {
@@ -28,7 +26,6 @@ type CT_DbPr struct {
 
 func NewCT_DbPr() *CT_DbPr {
 	ret := &CT_DbPr{}
-	ret.CommandTypeAttr = gooxml.Uint32(2)
 	return ret
 }
 
@@ -54,7 +51,6 @@ func (m *CT_DbPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_DbPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CommandTypeAttr = gooxml.Uint32(2)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "connection" {
 			parsed, err := attr.Value, error(nil)

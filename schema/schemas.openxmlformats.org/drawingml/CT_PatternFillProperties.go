@@ -20,7 +20,6 @@ type CT_PatternFillProperties struct {
 
 func NewCT_PatternFillProperties() *CT_PatternFillProperties {
 	ret := &CT_PatternFillProperties{}
-	ret.PrstAttr = ST_PresetPatternVal(1)
 	return ret
 }
 
@@ -47,7 +46,6 @@ func (m *CT_PatternFillProperties) MarshalXML(e *xml.Encoder, start xml.StartEle
 
 func (m *CT_PatternFillProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.PrstAttr = ST_PresetPatternVal(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prst" {
 			m.PrstAttr.UnmarshalXMLAttr(attr)

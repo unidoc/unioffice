@@ -40,7 +40,6 @@ type CT_PageBorder struct {
 func NewCT_PageBorder() *CT_PageBorder {
 	ret := &CT_PageBorder{}
 	ret.ValAttr = ST_Border(1)
-	ret.ThemeColorAttr = ST_ThemeColor(1)
 	return ret
 }
 
@@ -97,7 +96,6 @@ func (m *CT_PageBorder) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 func (m *CT_PageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = ST_Border(1)
-	m.ThemeColorAttr = ST_ThemeColor(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)

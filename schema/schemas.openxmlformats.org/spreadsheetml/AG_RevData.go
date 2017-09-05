@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type AG_RevData struct {
@@ -23,8 +21,6 @@ type AG_RevData struct {
 
 func NewAG_RevData() *AG_RevData {
 	ret := &AG_RevData{}
-	ret.UaAttr = gooxml.Bool(false)
-	ret.RaAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -46,8 +42,6 @@ func (m *AG_RevData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *AG_RevData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.UaAttr = gooxml.Bool(false)
-	m.RaAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "rId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

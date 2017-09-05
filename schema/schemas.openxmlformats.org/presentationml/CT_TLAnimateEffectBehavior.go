@@ -27,7 +27,6 @@ type CT_TLAnimateEffectBehavior struct {
 
 func NewCT_TLAnimateEffectBehavior() *CT_TLAnimateEffectBehavior {
 	ret := &CT_TLAnimateEffectBehavior{}
-	ret.TransitionAttr = ST_TLAnimateEffectTransition(1)
 	ret.CBhvr = NewCT_TLCommonBehaviorData()
 	return ret
 }
@@ -61,7 +60,6 @@ func (m *CT_TLAnimateEffectBehavior) MarshalXML(e *xml.Encoder, start xml.StartE
 
 func (m *CT_TLAnimateEffectBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TransitionAttr = ST_TLAnimateEffectTransition(1)
 	m.CBhvr = NewCT_TLCommonBehaviorData()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "transition" {

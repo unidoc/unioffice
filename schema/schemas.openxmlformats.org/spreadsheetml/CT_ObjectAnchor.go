@@ -13,7 +13,6 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"
 )
 
@@ -28,8 +27,6 @@ type CT_ObjectAnchor struct {
 
 func NewCT_ObjectAnchor() *CT_ObjectAnchor {
 	ret := &CT_ObjectAnchor{}
-	ret.MoveWithCellsAttr = gooxml.Bool(false)
-	ret.SizeWithCellsAttr = gooxml.Bool(false)
 	ret.From = spreadsheetDrawing.NewFrom()
 	ret.To = spreadsheetDrawing.NewTo()
 	return ret
@@ -55,8 +52,6 @@ func (m *CT_ObjectAnchor) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_ObjectAnchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.MoveWithCellsAttr = gooxml.Bool(false)
-	m.SizeWithCellsAttr = gooxml.Bool(false)
 	m.From = spreadsheetDrawing.NewFrom()
 	m.To = spreadsheetDrawing.NewTo()
 	for _, attr := range start.Attr {

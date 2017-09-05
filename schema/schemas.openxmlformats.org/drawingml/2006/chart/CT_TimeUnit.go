@@ -18,7 +18,6 @@ type CT_TimeUnit struct {
 
 func NewCT_TimeUnit() *CT_TimeUnit {
 	ret := &CT_TimeUnit{}
-	ret.ValAttr = ST_TimeUnitDays
 	return ret
 }
 
@@ -37,7 +36,6 @@ func (m *CT_TimeUnit) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_TimeUnit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_TimeUnitDays
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

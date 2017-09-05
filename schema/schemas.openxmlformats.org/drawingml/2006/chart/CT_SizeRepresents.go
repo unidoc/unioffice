@@ -18,7 +18,6 @@ type CT_SizeRepresents struct {
 
 func NewCT_SizeRepresents() *CT_SizeRepresents {
 	ret := &CT_SizeRepresents{}
-	ret.ValAttr = ST_SizeRepresentsArea
 	return ret
 }
 
@@ -37,7 +36,6 @@ func (m *CT_SizeRepresents) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_SizeRepresents) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_SizeRepresentsArea
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

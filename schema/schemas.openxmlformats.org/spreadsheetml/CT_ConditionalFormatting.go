@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_ConditionalFormatting struct {
@@ -28,7 +26,6 @@ type CT_ConditionalFormatting struct {
 
 func NewCT_ConditionalFormatting() *CT_ConditionalFormatting {
 	ret := &CT_ConditionalFormatting{}
-	ret.PivotAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -54,7 +51,6 @@ func (m *CT_ConditionalFormatting) MarshalXML(e *xml.Encoder, start xml.StartEle
 
 func (m *CT_ConditionalFormatting) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.PivotAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "pivot" {
 			parsed, err := strconv.ParseBool(attr.Value)

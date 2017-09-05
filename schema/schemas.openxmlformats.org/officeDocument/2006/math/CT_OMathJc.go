@@ -18,7 +18,6 @@ type CT_OMathJc struct {
 
 func NewCT_OMathJc() *CT_OMathJc {
 	ret := &CT_OMathJc{}
-	ret.ValAttr = ST_Jc(1)
 	return ret
 }
 
@@ -37,7 +36,6 @@ func (m *CT_OMathJc) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_OMathJc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_Jc(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

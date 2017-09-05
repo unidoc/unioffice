@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Row struct {
@@ -49,15 +47,6 @@ type CT_Row struct {
 
 func NewCT_Row() *CT_Row {
 	ret := &CT_Row{}
-	ret.SAttr = gooxml.Uint32(0)
-	ret.CustomFormatAttr = gooxml.Bool(false)
-	ret.HiddenAttr = gooxml.Bool(false)
-	ret.CustomHeightAttr = gooxml.Bool(false)
-	ret.OutlineLevelAttr = gooxml.Uint8(0)
-	ret.CollapsedAttr = gooxml.Bool(false)
-	ret.ThickTopAttr = gooxml.Bool(false)
-	ret.ThickBotAttr = gooxml.Bool(false)
-	ret.PhAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -125,15 +114,6 @@ func (m *CT_Row) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.SAttr = gooxml.Uint32(0)
-	m.CustomFormatAttr = gooxml.Bool(false)
-	m.HiddenAttr = gooxml.Bool(false)
-	m.CustomHeightAttr = gooxml.Bool(false)
-	m.OutlineLevelAttr = gooxml.Uint8(0)
-	m.CollapsedAttr = gooxml.Bool(false)
-	m.ThickTopAttr = gooxml.Bool(false)
-	m.ThickBotAttr = gooxml.Bool(false)
-	m.PhAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "r" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_XmlColumnPr struct {
@@ -31,7 +29,6 @@ type CT_XmlColumnPr struct {
 
 func NewCT_XmlColumnPr() *CT_XmlColumnPr {
 	ret := &CT_XmlColumnPr{}
-	ret.DenormalizedAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -57,7 +54,6 @@ func (m *CT_XmlColumnPr) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_XmlColumnPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.DenormalizedAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "mapId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

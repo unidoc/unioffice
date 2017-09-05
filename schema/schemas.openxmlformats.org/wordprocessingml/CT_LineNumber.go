@@ -28,7 +28,6 @@ type CT_LineNumber struct {
 
 func NewCT_LineNumber() *CT_LineNumber {
 	ret := &CT_LineNumber{}
-	ret.RestartAttr = ST_LineNumberRestart(1)
 	return ret
 }
 
@@ -59,7 +58,6 @@ func (m *CT_LineNumber) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_LineNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.RestartAttr = ST_LineNumberRestart(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "countBy" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)

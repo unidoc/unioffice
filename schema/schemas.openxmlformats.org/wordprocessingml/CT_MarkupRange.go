@@ -21,7 +21,6 @@ type CT_MarkupRange struct {
 
 func NewCT_MarkupRange() *CT_MarkupRange {
 	ret := &CT_MarkupRange{}
-	ret.DisplacedByCustomXmlAttr = ST_DisplacedByCustomXml(1)
 	return ret
 }
 
@@ -42,7 +41,6 @@ func (m *CT_MarkupRange) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_MarkupRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.DisplacedByCustomXmlAttr = ST_DisplacedByCustomXml(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "displacedByCustomXml" {
 			m.DisplacedByCustomXmlAttr.UnmarshalXMLAttr(attr)

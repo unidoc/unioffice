@@ -13,7 +13,6 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -80,13 +79,6 @@ type CT_TLCommonTimeNodeData struct {
 
 func NewCT_TLCommonTimeNodeData() *CT_TLCommonTimeNodeData {
 	ret := &CT_TLCommonTimeNodeData{}
-	ret.PresetClassAttr = ST_TLTimeNodePresetClassType(1)
-	ret.AutoRevAttr = gooxml.Bool(false)
-	ret.RestartAttr = ST_TLTimeNodeRestartType(1)
-	ret.FillAttr = ST_TLTimeNodeFillType(1)
-	ret.SyncBehaviorAttr = ST_TLTimeNodeSyncType(1)
-	ret.MasterRelAttr = ST_TLTimeNodeMasterRelation(1)
-	ret.NodeTypeAttr = ST_TLTimeNodeType(1)
 	return ret
 }
 
@@ -232,13 +224,6 @@ func (m *CT_TLCommonTimeNodeData) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.PresetClassAttr = ST_TLTimeNodePresetClassType(1)
-	m.AutoRevAttr = gooxml.Bool(false)
-	m.RestartAttr = ST_TLTimeNodeRestartType(1)
-	m.FillAttr = ST_TLTimeNodeFillType(1)
-	m.SyncBehaviorAttr = ST_TLTimeNodeSyncType(1)
-	m.MasterRelAttr = ST_TLTimeNodeMasterRelation(1)
-	m.NodeTypeAttr = ST_TLTimeNodeType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

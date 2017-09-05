@@ -13,7 +13,6 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -39,7 +38,6 @@ type CT_SlideMaster struct {
 
 func NewCT_SlideMaster() *CT_SlideMaster {
 	ret := &CT_SlideMaster{}
-	ret.PreserveAttr = gooxml.Bool(false)
 	ret.CSld = NewCT_CommonSlideData()
 	ret.ClrMap = drawingml.NewCT_ColorMapping()
 	return ret
@@ -85,7 +83,6 @@ func (m *CT_SlideMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_SlideMaster) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.PreserveAttr = gooxml.Bool(false)
 	m.CSld = NewCT_CommonSlideData()
 	m.ClrMap = drawingml.NewCT_ColorMapping()
 	for _, attr := range start.Attr {

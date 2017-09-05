@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_FunctionGroups struct {
@@ -25,7 +23,6 @@ type CT_FunctionGroups struct {
 
 func NewCT_FunctionGroups() *CT_FunctionGroups {
 	ret := &CT_FunctionGroups{}
-	ret.BuiltInGroupCountAttr = gooxml.Uint32(16)
 	return ret
 }
 
@@ -45,7 +42,6 @@ func (m *CT_FunctionGroups) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_FunctionGroups) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.BuiltInGroupCountAttr = gooxml.Uint32(16)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "builtInGroupCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

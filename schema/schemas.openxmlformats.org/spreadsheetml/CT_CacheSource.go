@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_CacheSource struct {
@@ -32,7 +30,6 @@ type CT_CacheSource struct {
 func NewCT_CacheSource() *CT_CacheSource {
 	ret := &CT_CacheSource{}
 	ret.TypeAttr = ST_SourceType(1)
-	ret.ConnectionIdAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -66,7 +63,6 @@ func (m *CT_CacheSource) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 func (m *CT_CacheSource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.TypeAttr = ST_SourceType(1)
-	m.ConnectionIdAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

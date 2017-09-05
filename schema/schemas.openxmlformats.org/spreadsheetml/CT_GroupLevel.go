@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_GroupLevel struct {
@@ -33,8 +31,6 @@ type CT_GroupLevel struct {
 
 func NewCT_GroupLevel() *CT_GroupLevel {
 	ret := &CT_GroupLevel{}
-	ret.UserAttr = gooxml.Bool(false)
-	ret.CustomRollUpAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -66,8 +62,6 @@ func (m *CT_GroupLevel) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_GroupLevel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.UserAttr = gooxml.Bool(false)
-	m.CustomRollUpAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "uniqueName" {
 			parsed, err := attr.Value, error(nil)

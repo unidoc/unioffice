@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_IconSet struct {
@@ -31,10 +29,6 @@ type CT_IconSet struct {
 
 func NewCT_IconSet() *CT_IconSet {
 	ret := &CT_IconSet{}
-	ret.IconSetAttr = ST_IconSetType3TrafficLights1
-	ret.ShowValueAttr = gooxml.Bool(true)
-	ret.PercentAttr = gooxml.Bool(true)
-	ret.ReverseAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -67,10 +61,6 @@ func (m *CT_IconSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_IconSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.IconSetAttr = ST_IconSetType3TrafficLights1
-	m.ShowValueAttr = gooxml.Bool(true)
-	m.PercentAttr = gooxml.Bool(true)
-	m.ReverseAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "iconSet" {
 			m.IconSetAttr.UnmarshalXMLAttr(attr)

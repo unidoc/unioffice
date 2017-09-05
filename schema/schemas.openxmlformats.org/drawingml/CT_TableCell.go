@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_TableCell struct {
@@ -29,8 +27,6 @@ type CT_TableCell struct {
 
 func NewCT_TableCell() *CT_TableCell {
 	ret := &CT_TableCell{}
-	ret.HMergeAttr = gooxml.Bool(false)
-	ret.VMergeAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -74,8 +70,6 @@ func (m *CT_TableCell) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_TableCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.HMergeAttr = gooxml.Bool(false)
-	m.VMergeAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "rowSpan" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

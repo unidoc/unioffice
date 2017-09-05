@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Path2D struct {
@@ -32,9 +30,6 @@ type CT_Path2D struct {
 
 func NewCT_Path2D() *CT_Path2D {
 	ret := &CT_Path2D{}
-	ret.FillAttr = ST_PathFillModeNorm
-	ret.StrokeAttr = gooxml.Bool(true)
-	ret.ExtrusionOkAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -93,9 +88,6 @@ func (m *CT_Path2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Path2D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.FillAttr = ST_PathFillModeNorm
-	m.StrokeAttr = gooxml.Bool(true)
-	m.ExtrusionOkAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "w" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)

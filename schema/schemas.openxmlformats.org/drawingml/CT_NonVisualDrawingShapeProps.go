@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_NonVisualDrawingShapeProps struct {
@@ -24,7 +22,6 @@ type CT_NonVisualDrawingShapeProps struct {
 
 func NewCT_NonVisualDrawingShapeProps() *CT_NonVisualDrawingShapeProps {
 	ret := &CT_NonVisualDrawingShapeProps{}
-	ret.TxBoxAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -48,7 +45,6 @@ func (m *CT_NonVisualDrawingShapeProps) MarshalXML(e *xml.Encoder, start xml.Sta
 
 func (m *CT_NonVisualDrawingShapeProps) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TxBoxAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "txBox" {
 			parsed, err := strconv.ParseBool(attr.Value)

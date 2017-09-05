@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_QueryTable struct {
@@ -62,19 +60,6 @@ type CT_QueryTable struct {
 
 func NewCT_QueryTable() *CT_QueryTable {
 	ret := &CT_QueryTable{}
-	ret.HeadersAttr = gooxml.Bool(true)
-	ret.RowNumbersAttr = gooxml.Bool(false)
-	ret.DisableRefreshAttr = gooxml.Bool(false)
-	ret.BackgroundRefreshAttr = gooxml.Bool(true)
-	ret.FirstBackgroundRefreshAttr = gooxml.Bool(false)
-	ret.RefreshOnLoadAttr = gooxml.Bool(false)
-	ret.GrowShrinkTypeAttr = ST_GrowShrinkTypeInsertDelete
-	ret.FillFormulasAttr = gooxml.Bool(false)
-	ret.RemoveDataOnSaveAttr = gooxml.Bool(false)
-	ret.DisableEditAttr = gooxml.Bool(false)
-	ret.PreserveFormattingAttr = gooxml.Bool(true)
-	ret.AdjustColumnWidthAttr = gooxml.Bool(true)
-	ret.IntermediateAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -181,19 +166,6 @@ func (m *CT_QueryTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_QueryTable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.HeadersAttr = gooxml.Bool(true)
-	m.RowNumbersAttr = gooxml.Bool(false)
-	m.DisableRefreshAttr = gooxml.Bool(false)
-	m.BackgroundRefreshAttr = gooxml.Bool(true)
-	m.FirstBackgroundRefreshAttr = gooxml.Bool(false)
-	m.RefreshOnLoadAttr = gooxml.Bool(false)
-	m.GrowShrinkTypeAttr = ST_GrowShrinkTypeInsertDelete
-	m.FillFormulasAttr = gooxml.Bool(false)
-	m.RemoveDataOnSaveAttr = gooxml.Bool(false)
-	m.DisableEditAttr = gooxml.Bool(false)
-	m.PreserveFormattingAttr = gooxml.Bool(true)
-	m.AdjustColumnWidthAttr = gooxml.Bool(true)
-	m.IntermediateAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

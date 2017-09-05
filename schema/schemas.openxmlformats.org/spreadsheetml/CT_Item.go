@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Item struct {
@@ -42,15 +40,6 @@ type CT_Item struct {
 
 func NewCT_Item() *CT_Item {
 	ret := &CT_Item{}
-	ret.TAttr = ST_ItemTypeData
-	ret.HAttr = gooxml.Bool(false)
-	ret.SAttr = gooxml.Bool(false)
-	ret.SdAttr = gooxml.Bool(true)
-	ret.FAttr = gooxml.Bool(false)
-	ret.MAttr = gooxml.Bool(false)
-	ret.CAttr = gooxml.Bool(false)
-	ret.DAttr = gooxml.Bool(false)
-	ret.EAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -109,15 +98,6 @@ func (m *CT_Item) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Item) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TAttr = ST_ItemTypeData
-	m.HAttr = gooxml.Bool(false)
-	m.SAttr = gooxml.Bool(false)
-	m.SdAttr = gooxml.Bool(true)
-	m.FAttr = gooxml.Bool(false)
-	m.MAttr = gooxml.Bool(false)
-	m.CAttr = gooxml.Bool(false)
-	m.DAttr = gooxml.Bool(false)
-	m.EAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "n" {
 			parsed, err := attr.Value, error(nil)

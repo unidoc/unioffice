@@ -21,7 +21,6 @@ type CT_Perm struct {
 
 func NewCT_Perm() *CT_Perm {
 	ret := &CT_Perm{}
-	ret.DisplacedByCustomXmlAttr = ST_DisplacedByCustomXml(1)
 	return ret
 }
 
@@ -42,7 +41,6 @@ func (m *CT_Perm) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Perm) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.DisplacedByCustomXmlAttr = ST_DisplacedByCustomXml(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)

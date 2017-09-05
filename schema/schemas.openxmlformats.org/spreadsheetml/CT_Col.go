@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Col struct {
@@ -40,13 +38,6 @@ type CT_Col struct {
 
 func NewCT_Col() *CT_Col {
 	ret := &CT_Col{}
-	ret.StyleAttr = gooxml.Uint32(0)
-	ret.HiddenAttr = gooxml.Bool(false)
-	ret.BestFitAttr = gooxml.Bool(false)
-	ret.CustomWidthAttr = gooxml.Bool(false)
-	ret.PhoneticAttr = gooxml.Bool(false)
-	ret.OutlineLevelAttr = gooxml.Uint8(0)
-	ret.CollapsedAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -94,13 +85,6 @@ func (m *CT_Col) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.StyleAttr = gooxml.Uint32(0)
-	m.HiddenAttr = gooxml.Bool(false)
-	m.BestFitAttr = gooxml.Bool(false)
-	m.CustomWidthAttr = gooxml.Bool(false)
-	m.PhoneticAttr = gooxml.Bool(false)
-	m.OutlineLevelAttr = gooxml.Uint8(0)
-	m.CollapsedAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "min" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

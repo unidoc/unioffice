@@ -25,8 +25,6 @@ type CT_CellMergeTrackChange struct {
 
 func NewCT_CellMergeTrackChange() *CT_CellMergeTrackChange {
 	ret := &CT_CellMergeTrackChange{}
-	ret.VMergeAttr = ST_AnnotationVMerge(1)
-	ret.VMergeOrigAttr = ST_AnnotationVMerge(1)
 	return ret
 }
 
@@ -60,8 +58,6 @@ func (m *CT_CellMergeTrackChange) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *CT_CellMergeTrackChange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.VMergeAttr = ST_AnnotationVMerge(1)
-	m.VMergeOrigAttr = ST_AnnotationVMerge(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "vMerge" {
 			m.VMergeAttr.UnmarshalXMLAttr(attr)

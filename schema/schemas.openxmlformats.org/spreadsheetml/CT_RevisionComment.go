@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 )
 
@@ -44,13 +43,6 @@ type CT_RevisionComment struct {
 func NewCT_RevisionComment() *CT_RevisionComment {
 	ret := &CT_RevisionComment{}
 	ret.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
-	ret.ActionAttr = ST_RevisionActionAdd
-	ret.AlwaysShowAttr = gooxml.Bool(false)
-	ret.OldAttr = gooxml.Bool(false)
-	ret.HiddenRowAttr = gooxml.Bool(false)
-	ret.HiddenColumnAttr = gooxml.Bool(false)
-	ret.OldLengthAttr = gooxml.Uint32(0)
-	ret.NewLengthAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -102,13 +94,6 @@ func (m *CT_RevisionComment) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 func (m *CT_RevisionComment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
-	m.ActionAttr = ST_RevisionActionAdd
-	m.AlwaysShowAttr = gooxml.Bool(false)
-	m.OldAttr = gooxml.Bool(false)
-	m.HiddenRowAttr = gooxml.Bool(false)
-	m.HiddenColumnAttr = gooxml.Bool(false)
-	m.OldLengthAttr = gooxml.Uint32(0)
-	m.NewLengthAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "sheetId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_QueryTableField struct {
@@ -37,11 +35,6 @@ type CT_QueryTableField struct {
 
 func NewCT_QueryTableField() *CT_QueryTableField {
 	ret := &CT_QueryTableField{}
-	ret.DataBoundAttr = gooxml.Bool(true)
-	ret.RowNumbersAttr = gooxml.Bool(false)
-	ret.FillFormulasAttr = gooxml.Bool(false)
-	ret.ClippedAttr = gooxml.Bool(false)
-	ret.TableColumnIdAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -83,11 +76,6 @@ func (m *CT_QueryTableField) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_QueryTableField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.DataBoundAttr = gooxml.Bool(true)
-	m.RowNumbersAttr = gooxml.Bool(false)
-	m.FillFormulasAttr = gooxml.Bool(false)
-	m.ClippedAttr = gooxml.Bool(false)
-	m.TableColumnIdAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Color struct {
@@ -30,7 +28,6 @@ type CT_Color struct {
 
 func NewCT_Color() *CT_Color {
 	ret := &CT_Color{}
-	ret.TintAttr = gooxml.Float64(0.0)
 	return ret
 }
 
@@ -62,7 +59,6 @@ func (m *CT_Color) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TintAttr = gooxml.Float64(0.0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "auto" {
 			parsed, err := strconv.ParseBool(attr.Value)

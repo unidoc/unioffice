@@ -39,10 +39,6 @@ type CT_TblPPr struct {
 
 func NewCT_TblPPr() *CT_TblPPr {
 	ret := &CT_TblPPr{}
-	ret.VertAnchorAttr = ST_VAnchor(1)
-	ret.HorzAnchorAttr = ST_HAnchor(1)
-	ret.TblpXSpecAttr = sharedTypes.ST_XAlign(1)
-	ret.TblpYSpecAttr = sharedTypes.ST_YAlign(1)
 	return ret
 }
 
@@ -106,10 +102,6 @@ func (m *CT_TblPPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_TblPPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.VertAnchorAttr = ST_VAnchor(1)
-	m.HorzAnchorAttr = ST_HAnchor(1)
-	m.TblpXSpecAttr = sharedTypes.ST_XAlign(1)
-	m.TblpYSpecAttr = sharedTypes.ST_YAlign(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "leftFromText" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)

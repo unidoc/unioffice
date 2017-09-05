@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_MemberProperty struct {
@@ -38,9 +36,6 @@ type CT_MemberProperty struct {
 
 func NewCT_MemberProperty() *CT_MemberProperty {
 	ret := &CT_MemberProperty{}
-	ret.ShowCellAttr = gooxml.Bool(false)
-	ret.ShowTipAttr = gooxml.Bool(false)
-	ret.ShowAsCaptionAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -86,9 +81,6 @@ func (m *CT_MemberProperty) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ShowCellAttr = gooxml.Bool(false)
-	m.ShowTipAttr = gooxml.Bool(false)
-	m.ShowAsCaptionAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

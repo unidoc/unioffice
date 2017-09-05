@@ -21,7 +21,6 @@ type CT_TblWidth struct {
 
 func NewCT_TblWidth() *CT_TblWidth {
 	ret := &CT_TblWidth{}
-	ret.TypeAttr = ST_TblWidth(1)
 	return ret
 }
 
@@ -44,7 +43,6 @@ func (m *CT_TblWidth) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_TblWidth) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TypeAttr = ST_TblWidth(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "w" {
 			parsed, err := ParseUnionST_MeasurementOrPercent(attr.Value)

@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Missing struct {
@@ -47,10 +45,6 @@ type CT_Missing struct {
 
 func NewCT_Missing() *CT_Missing {
 	ret := &CT_Missing{}
-	ret.IAttr = gooxml.Bool(false)
-	ret.UnAttr = gooxml.Bool(false)
-	ret.StAttr = gooxml.Bool(false)
-	ret.BAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -114,10 +108,6 @@ func (m *CT_Missing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Missing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.IAttr = gooxml.Bool(false)
-	m.UnAttr = gooxml.Bool(false)
-	m.StAttr = gooxml.Bool(false)
-	m.BAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "u" {
 			parsed, err := strconv.ParseBool(attr.Value)

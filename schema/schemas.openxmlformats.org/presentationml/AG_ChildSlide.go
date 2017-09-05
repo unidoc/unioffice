@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type AG_ChildSlide struct {
@@ -22,8 +20,6 @@ type AG_ChildSlide struct {
 
 func NewAG_ChildSlide() *AG_ChildSlide {
 	ret := &AG_ChildSlide{}
-	ret.ShowMasterSpAttr = gooxml.Bool(true)
-	ret.ShowMasterPhAnimAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -41,8 +37,6 @@ func (m *AG_ChildSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *AG_ChildSlide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ShowMasterSpAttr = gooxml.Bool(true)
-	m.ShowMasterPhAnimAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "showMasterSp" {
 			parsed, err := strconv.ParseBool(attr.Value)

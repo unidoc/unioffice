@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_DataValidations struct {
@@ -31,7 +29,6 @@ type CT_DataValidations struct {
 
 func NewCT_DataValidations() *CT_DataValidations {
 	ret := &CT_DataValidations{}
-	ret.DisablePromptsAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -61,7 +58,6 @@ func (m *CT_DataValidations) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_DataValidations) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.DisablePromptsAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "disablePrompts" {
 			parsed, err := strconv.ParseBool(attr.Value)

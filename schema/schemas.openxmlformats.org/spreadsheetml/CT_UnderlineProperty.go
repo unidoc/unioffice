@@ -19,7 +19,6 @@ type CT_UnderlineProperty struct {
 
 func NewCT_UnderlineProperty() *CT_UnderlineProperty {
 	ret := &CT_UnderlineProperty{}
-	ret.ValAttr = ST_UnderlineValuesSingle
 	return ret
 }
 
@@ -38,7 +37,6 @@ func (m *CT_UnderlineProperty) MarshalXML(e *xml.Encoder, start xml.StartElement
 
 func (m *CT_UnderlineProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_UnderlineValuesSingle
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

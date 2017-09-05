@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Selection struct {
@@ -28,8 +26,6 @@ type CT_Selection struct {
 
 func NewCT_Selection() *CT_Selection {
 	ret := &CT_Selection{}
-	ret.PaneAttr = ST_PaneTopLeft
-	ret.ActiveCellIdAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -60,8 +56,6 @@ func (m *CT_Selection) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_Selection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.PaneAttr = ST_PaneTopLeft
-	m.ActiveCellIdAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "pane" {
 			m.PaneAttr.UnmarshalXMLAttr(attr)

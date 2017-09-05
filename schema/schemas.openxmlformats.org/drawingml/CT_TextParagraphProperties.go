@@ -47,8 +47,6 @@ type CT_TextParagraphProperties struct {
 
 func NewCT_TextParagraphProperties() *CT_TextParagraphProperties {
 	ret := &CT_TextParagraphProperties{}
-	ret.AlgnAttr = ST_TextAlignType(1)
-	ret.FontAlgnAttr = ST_TextFontAlignType(1)
 	return ret
 }
 
@@ -178,8 +176,6 @@ func (m *CT_TextParagraphProperties) MarshalXML(e *xml.Encoder, start xml.StartE
 
 func (m *CT_TextParagraphProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.AlgnAttr = ST_TextAlignType(1)
-	m.FontAlgnAttr = ST_TextFontAlignType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "marL" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)

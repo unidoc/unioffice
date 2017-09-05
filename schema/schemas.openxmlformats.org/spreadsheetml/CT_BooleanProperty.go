@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_BooleanProperty struct {
@@ -22,7 +20,6 @@ type CT_BooleanProperty struct {
 
 func NewCT_BooleanProperty() *CT_BooleanProperty {
 	ret := &CT_BooleanProperty{}
-	ret.ValAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -38,7 +35,6 @@ func (m *CT_BooleanProperty) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_BooleanProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseBool(attr.Value)

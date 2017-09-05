@@ -18,7 +18,6 @@ type CT_HierBranchStyle struct {
 
 func NewCT_HierBranchStyle() *CT_HierBranchStyle {
 	ret := &CT_HierBranchStyle{}
-	ret.ValAttr = ST_HierBranchStyleStd
 	return ret
 }
 
@@ -37,7 +36,6 @@ func (m *CT_HierBranchStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_HierBranchStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_HierBranchStyleStd
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

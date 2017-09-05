@@ -26,8 +26,6 @@ type CT_PageNumber struct {
 
 func NewCT_PageNumber() *CT_PageNumber {
 	ret := &CT_PageNumber{}
-	ret.FmtAttr = ST_NumberFormat(1)
-	ret.ChapSepAttr = ST_ChapterSep(1)
 	return ret
 }
 
@@ -61,8 +59,6 @@ func (m *CT_PageNumber) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_PageNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.FmtAttr = ST_NumberFormat(1)
-	m.ChapSepAttr = ST_ChapterSep(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "fmt" {
 			m.FmtAttr.UnmarshalXMLAttr(attr)

@@ -41,11 +41,6 @@ type CT_Cell struct {
 
 func NewCT_Cell() *CT_Cell {
 	ret := &CT_Cell{}
-	ret.SAttr = gooxml.Uint32(0)
-	ret.TAttr = ST_CellTypeN
-	ret.CmAttr = gooxml.Uint32(0)
-	ret.VmAttr = gooxml.Uint32(0)
-	ret.PhAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -101,11 +96,6 @@ func (m *CT_Cell) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Cell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.SAttr = gooxml.Uint32(0)
-	m.TAttr = ST_CellTypeN
-	m.CmAttr = gooxml.Uint32(0)
-	m.VmAttr = gooxml.Uint32(0)
-	m.PhAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "r" {
 			parsed, err := attr.Value, error(nil)

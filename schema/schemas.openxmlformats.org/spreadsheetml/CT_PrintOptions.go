@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_PrintOptions struct {
@@ -30,11 +28,6 @@ type CT_PrintOptions struct {
 
 func NewCT_PrintOptions() *CT_PrintOptions {
 	ret := &CT_PrintOptions{}
-	ret.HorizontalCenteredAttr = gooxml.Bool(false)
-	ret.VerticalCenteredAttr = gooxml.Bool(false)
-	ret.HeadingsAttr = gooxml.Bool(false)
-	ret.GridLinesAttr = gooxml.Bool(false)
-	ret.GridLinesSetAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -66,11 +59,6 @@ func (m *CT_PrintOptions) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_PrintOptions) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.HorizontalCenteredAttr = gooxml.Bool(false)
-	m.VerticalCenteredAttr = gooxml.Bool(false)
-	m.HeadingsAttr = gooxml.Bool(false)
-	m.GridLinesAttr = gooxml.Bool(false)
-	m.GridLinesSetAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "horizontalCentered" {
 			parsed, err := strconv.ParseBool(attr.Value)

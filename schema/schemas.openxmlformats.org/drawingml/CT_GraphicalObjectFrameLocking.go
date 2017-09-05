@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_GraphicalObjectFrameLocking struct {
@@ -28,12 +26,6 @@ type CT_GraphicalObjectFrameLocking struct {
 
 func NewCT_GraphicalObjectFrameLocking() *CT_GraphicalObjectFrameLocking {
 	ret := &CT_GraphicalObjectFrameLocking{}
-	ret.NoGrpAttr = gooxml.Bool(false)
-	ret.NoDrilldownAttr = gooxml.Bool(false)
-	ret.NoSelectAttr = gooxml.Bool(false)
-	ret.NoChangeAspectAttr = gooxml.Bool(false)
-	ret.NoMoveAttr = gooxml.Bool(false)
-	ret.NoResizeAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -73,12 +65,6 @@ func (m *CT_GraphicalObjectFrameLocking) MarshalXML(e *xml.Encoder, start xml.St
 
 func (m *CT_GraphicalObjectFrameLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.NoGrpAttr = gooxml.Bool(false)
-	m.NoDrilldownAttr = gooxml.Bool(false)
-	m.NoSelectAttr = gooxml.Bool(false)
-	m.NoChangeAspectAttr = gooxml.Bool(false)
-	m.NoMoveAttr = gooxml.Bool(false)
-	m.NoResizeAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "noGrp" {
 			parsed, err := strconv.ParseBool(attr.Value)

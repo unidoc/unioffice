@@ -36,7 +36,6 @@ type CT_Spacing struct {
 
 func NewCT_Spacing() *CT_Spacing {
 	ret := &CT_Spacing{}
-	ret.LineRuleAttr = ST_LineSpacingRule(1)
 	return ret
 }
 
@@ -83,7 +82,6 @@ func (m *CT_Spacing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Spacing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.LineRuleAttr = ST_LineSpacingRule(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "before" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)

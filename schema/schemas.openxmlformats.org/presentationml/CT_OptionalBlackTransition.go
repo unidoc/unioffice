@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_OptionalBlackTransition struct {
@@ -22,7 +20,6 @@ type CT_OptionalBlackTransition struct {
 
 func NewCT_OptionalBlackTransition() *CT_OptionalBlackTransition {
 	ret := &CT_OptionalBlackTransition{}
-	ret.ThruBlkAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -38,7 +35,6 @@ func (m *CT_OptionalBlackTransition) MarshalXML(e *xml.Encoder, start xml.StartE
 
 func (m *CT_OptionalBlackTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ThruBlkAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "thruBlk" {
 			parsed, err := strconv.ParseBool(attr.Value)

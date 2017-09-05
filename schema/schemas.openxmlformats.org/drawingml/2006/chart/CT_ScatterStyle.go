@@ -18,7 +18,6 @@ type CT_ScatterStyle struct {
 
 func NewCT_ScatterStyle() *CT_ScatterStyle {
 	ret := &CT_ScatterStyle{}
-	ret.ValAttr = ST_ScatterStyleMarker
 	return ret
 }
 
@@ -37,7 +36,6 @@ func (m *CT_ScatterStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_ScatterStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_ScatterStyleMarker
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

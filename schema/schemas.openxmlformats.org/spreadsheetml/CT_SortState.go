@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_SortState struct {
@@ -32,9 +30,6 @@ type CT_SortState struct {
 
 func NewCT_SortState() *CT_SortState {
 	ret := &CT_SortState{}
-	ret.ColumnSortAttr = gooxml.Bool(false)
-	ret.CaseSensitiveAttr = gooxml.Bool(false)
-	ret.SortMethodAttr = ST_SortMethodNone
 	return ret
 }
 
@@ -71,9 +66,6 @@ func (m *CT_SortState) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_SortState) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ColumnSortAttr = gooxml.Bool(false)
-	m.CaseSensitiveAttr = gooxml.Bool(false)
-	m.SortMethodAttr = ST_SortMethodNone
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "columnSort" {
 			parsed, err := strconv.ParseBool(attr.Value)

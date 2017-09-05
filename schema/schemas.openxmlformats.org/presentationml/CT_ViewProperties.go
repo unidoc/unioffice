@@ -13,7 +13,6 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -41,8 +40,6 @@ type CT_ViewProperties struct {
 
 func NewCT_ViewProperties() *CT_ViewProperties {
 	ret := &CT_ViewProperties{}
-	ret.LastViewAttr = ST_ViewTypeSldView
-	ret.ShowCommentsAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -97,8 +94,6 @@ func (m *CT_ViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_ViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.LastViewAttr = ST_ViewTypeSldView
-	m.ShowCommentsAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "lastView" {
 			m.LastViewAttr.UnmarshalXMLAttr(attr)

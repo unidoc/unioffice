@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_MetadataStringIndex struct {
@@ -24,7 +22,6 @@ type CT_MetadataStringIndex struct {
 
 func NewCT_MetadataStringIndex() *CT_MetadataStringIndex {
 	ret := &CT_MetadataStringIndex{}
-	ret.SAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -42,7 +39,6 @@ func (m *CT_MetadataStringIndex) MarshalXML(e *xml.Encoder, start xml.StartEleme
 
 func (m *CT_MetadataStringIndex) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.SAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "x" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -19,7 +19,6 @@ type CT_Lock struct {
 
 func NewCT_Lock() *CT_Lock {
 	ret := &CT_Lock{}
-	ret.ValAttr = ST_Lock(1)
 	return ret
 }
 
@@ -38,7 +37,6 @@ func (m *CT_Lock) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Lock) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_Lock(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

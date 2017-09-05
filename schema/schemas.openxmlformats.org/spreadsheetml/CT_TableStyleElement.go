@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_TableStyleElement struct {
@@ -27,7 +25,6 @@ type CT_TableStyleElement struct {
 func NewCT_TableStyleElement() *CT_TableStyleElement {
 	ret := &CT_TableStyleElement{}
 	ret.TypeAttr = ST_TableStyleType(1)
-	ret.SizeAttr = gooxml.Uint32(1)
 	return ret
 }
 
@@ -53,7 +50,6 @@ func (m *CT_TableStyleElement) MarshalXML(e *xml.Encoder, start xml.StartElement
 func (m *CT_TableStyleElement) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.TypeAttr = ST_TableStyleType(1)
-	m.SizeAttr = gooxml.Uint32(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

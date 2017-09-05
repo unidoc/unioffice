@@ -56,7 +56,6 @@ type CT_Variant struct {
 
 func NewCT_Variant() *CT_Variant {
 	ret := &CT_Variant{}
-	ret.Clsid = gooxml.String("{00000000-0000-0000-0000-000000000000}")
 	return ret
 }
 
@@ -216,7 +215,6 @@ func (m *CT_Variant) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Variant) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.Clsid = gooxml.String("{00000000-0000-0000-0000-000000000000}")
 lCT_Variant:
 	for {
 		tok, err := d.Token()

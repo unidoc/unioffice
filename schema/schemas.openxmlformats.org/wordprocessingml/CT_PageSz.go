@@ -28,7 +28,6 @@ type CT_PageSz struct {
 
 func NewCT_PageSz() *CT_PageSz {
 	ret := &CT_PageSz{}
-	ret.OrientAttr = ST_PageOrientation(1)
 	return ret
 }
 
@@ -59,7 +58,6 @@ func (m *CT_PageSz) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_PageSz) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.OrientAttr = ST_PageOrientation(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "w" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)

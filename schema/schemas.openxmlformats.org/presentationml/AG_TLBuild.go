@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type AG_TLBuild struct {
@@ -23,7 +21,6 @@ type AG_TLBuild struct {
 
 func NewAG_TLBuild() *AG_TLBuild {
 	ret := &AG_TLBuild{}
-	ret.UiExpandAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -45,7 +42,6 @@ func (m *AG_TLBuild) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *AG_TLBuild) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.UiExpandAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "spid" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

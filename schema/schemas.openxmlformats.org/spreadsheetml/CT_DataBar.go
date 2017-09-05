@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_DataBar struct {
@@ -31,9 +29,6 @@ type CT_DataBar struct {
 
 func NewCT_DataBar() *CT_DataBar {
 	ret := &CT_DataBar{}
-	ret.MinLengthAttr = gooxml.Uint32(10)
-	ret.MaxLengthAttr = gooxml.Uint32(90)
-	ret.ShowValueAttr = gooxml.Bool(true)
 	ret.Color = NewCT_Color()
 	return ret
 }
@@ -62,9 +57,6 @@ func (m *CT_DataBar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_DataBar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.MinLengthAttr = gooxml.Uint32(10)
-	m.MaxLengthAttr = gooxml.Uint32(90)
-	m.ShowValueAttr = gooxml.Bool(true)
 	m.Color = NewCT_Color()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "minLength" {

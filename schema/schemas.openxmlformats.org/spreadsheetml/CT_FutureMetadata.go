@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_FutureMetadata struct {
@@ -29,7 +27,6 @@ type CT_FutureMetadata struct {
 
 func NewCT_FutureMetadata() *CT_FutureMetadata {
 	ret := &CT_FutureMetadata{}
-	ret.CountAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -55,7 +52,6 @@ func (m *CT_FutureMetadata) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_FutureMetadata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CountAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

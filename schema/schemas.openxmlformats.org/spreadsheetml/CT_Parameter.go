@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Parameter struct {
@@ -40,8 +38,6 @@ type CT_Parameter struct {
 
 func NewCT_Parameter() *CT_Parameter {
 	ret := &CT_Parameter{}
-	ret.ParameterTypeAttr = ST_ParameterTypePrompt
-	ret.RefreshOnChangeAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -96,8 +92,6 @@ func (m *CT_Parameter) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ParameterTypeAttr = ST_ParameterTypePrompt
-	m.RefreshOnChangeAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

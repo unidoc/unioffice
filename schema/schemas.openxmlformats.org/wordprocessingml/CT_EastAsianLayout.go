@@ -30,7 +30,6 @@ type CT_EastAsianLayout struct {
 
 func NewCT_EastAsianLayout() *CT_EastAsianLayout {
 	ret := &CT_EastAsianLayout{}
-	ret.CombineBracketsAttr = ST_CombineBrackets(1)
 	return ret
 }
 
@@ -65,7 +64,6 @@ func (m *CT_EastAsianLayout) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_EastAsianLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CombineBracketsAttr = ST_CombineBrackets(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)

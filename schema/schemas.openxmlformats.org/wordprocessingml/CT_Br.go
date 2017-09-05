@@ -21,8 +21,6 @@ type CT_Br struct {
 
 func NewCT_Br() *CT_Br {
 	ret := &CT_Br{}
-	ret.TypeAttr = ST_BrType(1)
-	ret.ClearAttr = ST_BrClear(1)
 	return ret
 }
 
@@ -48,8 +46,6 @@ func (m *CT_Br) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Br) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TypeAttr = ST_BrType(1)
-	m.ClearAttr = ST_BrClear(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

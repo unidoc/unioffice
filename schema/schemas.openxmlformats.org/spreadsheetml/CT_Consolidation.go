@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Consolidation struct {
@@ -27,7 +25,6 @@ type CT_Consolidation struct {
 
 func NewCT_Consolidation() *CT_Consolidation {
 	ret := &CT_Consolidation{}
-	ret.AutoPageAttr = gooxml.Bool(true)
 	ret.RangeSets = NewCT_RangeSets()
 	return ret
 }
@@ -50,7 +47,6 @@ func (m *CT_Consolidation) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_Consolidation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.AutoPageAttr = gooxml.Bool(true)
 	m.RangeSets = NewCT_RangeSets()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "autoPage" {

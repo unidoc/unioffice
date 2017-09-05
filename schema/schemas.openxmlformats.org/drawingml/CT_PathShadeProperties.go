@@ -19,7 +19,6 @@ type CT_PathShadeProperties struct {
 
 func NewCT_PathShadeProperties() *CT_PathShadeProperties {
 	ret := &CT_PathShadeProperties{}
-	ret.PathAttr = ST_PathShadeType(1)
 	return ret
 }
 
@@ -42,7 +41,6 @@ func (m *CT_PathShadeProperties) MarshalXML(e *xml.Encoder, start xml.StartEleme
 
 func (m *CT_PathShadeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.PathAttr = ST_PathShadeType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "path" {
 			m.PathAttr.UnmarshalXMLAttr(attr)

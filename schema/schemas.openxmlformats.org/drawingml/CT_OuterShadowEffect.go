@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_OuterShadowEffect struct {
@@ -36,8 +34,6 @@ type CT_OuterShadowEffect struct {
 
 func NewCT_OuterShadowEffect() *CT_OuterShadowEffect {
 	ret := &CT_OuterShadowEffect{}
-	ret.AlgnAttr = ST_RectAlignmentB
-	ret.RotWithShapeAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -112,8 +108,6 @@ func (m *CT_OuterShadowEffect) MarshalXML(e *xml.Encoder, start xml.StartElement
 
 func (m *CT_OuterShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.AlgnAttr = ST_RectAlignmentB
-	m.RotWithShapeAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "blurRad" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)

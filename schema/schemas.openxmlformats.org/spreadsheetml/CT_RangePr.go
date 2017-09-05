@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"strconv"
 	"time"
-
-	"baliance.com/gooxml"
 )
 
 type CT_RangePr struct {
@@ -37,10 +35,6 @@ type CT_RangePr struct {
 
 func NewCT_RangePr() *CT_RangePr {
 	ret := &CT_RangePr{}
-	ret.AutoStartAttr = gooxml.Bool(true)
-	ret.AutoEndAttr = gooxml.Bool(true)
-	ret.GroupByAttr = ST_GroupByRange
-	ret.GroupIntervalAttr = gooxml.Float64(1)
 	return ret
 }
 
@@ -87,10 +81,6 @@ func (m *CT_RangePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_RangePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.AutoStartAttr = gooxml.Bool(true)
-	m.AutoEndAttr = gooxml.Bool(true)
-	m.GroupByAttr = ST_GroupByRange
-	m.GroupIntervalAttr = gooxml.Float64(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "autoStart" {
 			parsed, err := strconv.ParseBool(attr.Value)

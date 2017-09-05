@@ -21,7 +21,6 @@ type CT_FFHelpText struct {
 
 func NewCT_FFHelpText() *CT_FFHelpText {
 	ret := &CT_FFHelpText{}
-	ret.TypeAttr = ST_InfoTextType(1)
 	return ret
 }
 
@@ -44,7 +43,6 @@ func (m *CT_FFHelpText) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_FFHelpText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TypeAttr = ST_InfoTextType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

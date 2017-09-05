@@ -50,13 +50,6 @@ type CT_FramePr struct {
 
 func NewCT_FramePr() *CT_FramePr {
 	ret := &CT_FramePr{}
-	ret.DropCapAttr = ST_DropCap(1)
-	ret.WrapAttr = ST_Wrap(1)
-	ret.HAnchorAttr = ST_HAnchor(1)
-	ret.VAnchorAttr = ST_VAnchor(1)
-	ret.XAlignAttr = sharedTypes.ST_XAlign(1)
-	ret.YAlignAttr = sharedTypes.ST_YAlign(1)
-	ret.HRuleAttr = ST_HeightRule(1)
 	return ret
 }
 
@@ -149,13 +142,6 @@ func (m *CT_FramePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_FramePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.DropCapAttr = ST_DropCap(1)
-	m.WrapAttr = ST_Wrap(1)
-	m.HAnchorAttr = ST_HAnchor(1)
-	m.VAnchorAttr = ST_VAnchor(1)
-	m.XAlignAttr = sharedTypes.ST_XAlign(1)
-	m.YAlignAttr = sharedTypes.ST_YAlign(1)
-	m.HRuleAttr = ST_HeightRule(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "dropCap" {
 			m.DropCapAttr.UnmarshalXMLAttr(attr)

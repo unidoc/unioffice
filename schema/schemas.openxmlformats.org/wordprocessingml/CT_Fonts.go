@@ -35,11 +35,6 @@ type CT_Fonts struct {
 
 func NewCT_Fonts() *CT_Fonts {
 	ret := &CT_Fonts{}
-	ret.HintAttr = ST_Hint(1)
-	ret.AsciiThemeAttr = ST_Theme(1)
-	ret.HAnsiThemeAttr = ST_Theme(1)
-	ret.EastAsiaThemeAttr = ST_Theme(1)
-	ret.CsthemeAttr = ST_Theme(1)
 	return ret
 }
 
@@ -102,11 +97,6 @@ func (m *CT_Fonts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Fonts) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.HintAttr = ST_Hint(1)
-	m.AsciiThemeAttr = ST_Theme(1)
-	m.HAnsiThemeAttr = ST_Theme(1)
-	m.EastAsiaThemeAttr = ST_Theme(1)
-	m.CsthemeAttr = ST_Theme(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "hint" {
 			m.HintAttr.UnmarshalXMLAttr(attr)

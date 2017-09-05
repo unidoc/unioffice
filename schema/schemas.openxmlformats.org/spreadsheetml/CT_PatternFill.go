@@ -23,7 +23,6 @@ type CT_PatternFill struct {
 
 func NewCT_PatternFill() *CT_PatternFill {
 	ret := &CT_PatternFill{}
-	ret.PatternTypeAttr = ST_PatternType(1)
 	return ret
 }
 
@@ -50,7 +49,6 @@ func (m *CT_PatternFill) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_PatternFill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.PatternTypeAttr = ST_PatternType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "patternType" {
 			m.PatternTypeAttr.UnmarshalXMLAttr(attr)

@@ -24,7 +24,6 @@ type CT_Bookmark struct {
 
 func NewCT_Bookmark() *CT_Bookmark {
 	ret := &CT_Bookmark{}
-	ret.DisplacedByCustomXmlAttr = ST_DisplacedByCustomXml(1)
 	return ret
 }
 
@@ -55,7 +54,6 @@ func (m *CT_Bookmark) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Bookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.DisplacedByCustomXmlAttr = ST_DisplacedByCustomXml(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

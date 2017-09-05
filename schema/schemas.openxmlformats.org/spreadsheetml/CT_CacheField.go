@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_CacheField struct {
@@ -55,11 +53,6 @@ type CT_CacheField struct {
 
 func NewCT_CacheField() *CT_CacheField {
 	ret := &CT_CacheField{}
-	ret.ServerFieldAttr = gooxml.Bool(false)
-	ret.UniqueListAttr = gooxml.Bool(true)
-	ret.LevelAttr = gooxml.Uint32(0)
-	ret.DatabaseFieldAttr = gooxml.Bool(true)
-	ret.MemberPropertyFieldAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -137,11 +130,6 @@ func (m *CT_CacheField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ServerFieldAttr = gooxml.Bool(false)
-	m.UniqueListAttr = gooxml.Bool(true)
-	m.LevelAttr = gooxml.Uint32(0)
-	m.DatabaseFieldAttr = gooxml.Bool(true)
-	m.MemberPropertyFieldAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

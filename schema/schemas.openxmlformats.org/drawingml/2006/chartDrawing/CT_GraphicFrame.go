@@ -13,7 +13,6 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -27,7 +26,6 @@ type CT_GraphicFrame struct {
 
 func NewCT_GraphicFrame() *CT_GraphicFrame {
 	ret := &CT_GraphicFrame{}
-	ret.FPublishedAttr = gooxml.Bool(false)
 	ret.NvGraphicFramePr = NewCT_GraphicFrameNonVisual()
 	ret.Xfrm = drawingml.NewCT_Transform2D()
 	ret.Graphic = drawingml.NewGraphic()
@@ -56,7 +54,6 @@ func (m *CT_GraphicFrame) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_GraphicFrame) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.FPublishedAttr = gooxml.Bool(false)
 	m.NvGraphicFramePr = NewCT_GraphicFrameNonVisual()
 	m.Xfrm = drawingml.NewCT_Transform2D()
 	m.Graphic = drawingml.NewGraphic()

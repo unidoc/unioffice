@@ -23,7 +23,6 @@ type CT_Blip struct {
 
 func NewCT_Blip() *CT_Blip {
 	ret := &CT_Blip{}
-	ret.CstateAttr = ST_BlipCompressionNone
 	return ret
 }
 
@@ -59,7 +58,6 @@ func (m *CT_Blip) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Blip) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CstateAttr = ST_BlipCompressionNone
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "cstate" {
 			m.CstateAttr.UnmarshalXMLAttr(attr)

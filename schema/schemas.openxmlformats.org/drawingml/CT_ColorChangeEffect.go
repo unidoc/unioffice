@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_ColorChangeEffect struct {
@@ -24,7 +22,6 @@ type CT_ColorChangeEffect struct {
 
 func NewCT_ColorChangeEffect() *CT_ColorChangeEffect {
 	ret := &CT_ColorChangeEffect{}
-	ret.UseAAttr = gooxml.Bool(true)
 	ret.ClrFrom = NewCT_Color()
 	ret.ClrTo = NewCT_Color()
 	return ret
@@ -46,7 +43,6 @@ func (m *CT_ColorChangeEffect) MarshalXML(e *xml.Encoder, start xml.StartElement
 
 func (m *CT_ColorChangeEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.UseAAttr = gooxml.Bool(true)
 	m.ClrFrom = NewCT_Color()
 	m.ClrTo = NewCT_Color()
 	for _, attr := range start.Attr {

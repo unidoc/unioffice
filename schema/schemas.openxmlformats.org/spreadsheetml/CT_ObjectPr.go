@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_ObjectPr struct {
@@ -45,15 +43,6 @@ type CT_ObjectPr struct {
 
 func NewCT_ObjectPr() *CT_ObjectPr {
 	ret := &CT_ObjectPr{}
-	ret.LockedAttr = gooxml.Bool(true)
-	ret.DefaultSizeAttr = gooxml.Bool(true)
-	ret.PrintAttr = gooxml.Bool(true)
-	ret.DisabledAttr = gooxml.Bool(false)
-	ret.UiObjectAttr = gooxml.Bool(false)
-	ret.AutoFillAttr = gooxml.Bool(true)
-	ret.AutoLineAttr = gooxml.Bool(true)
-	ret.AutoPictAttr = gooxml.Bool(true)
-	ret.DdeAttr = gooxml.Bool(false)
 	ret.Anchor = NewCT_ObjectAnchor()
 	return ret
 }
@@ -116,15 +105,6 @@ func (m *CT_ObjectPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_ObjectPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.LockedAttr = gooxml.Bool(true)
-	m.DefaultSizeAttr = gooxml.Bool(true)
-	m.PrintAttr = gooxml.Bool(true)
-	m.DisabledAttr = gooxml.Bool(false)
-	m.UiObjectAttr = gooxml.Bool(false)
-	m.AutoFillAttr = gooxml.Bool(true)
-	m.AutoLineAttr = gooxml.Bool(true)
-	m.AutoPictAttr = gooxml.Bool(true)
-	m.DdeAttr = gooxml.Bool(false)
 	m.Anchor = NewCT_ObjectAnchor()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "locked" {

@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_OleObjectLink struct {
@@ -24,7 +22,6 @@ type CT_OleObjectLink struct {
 
 func NewCT_OleObjectLink() *CT_OleObjectLink {
 	ret := &CT_OleObjectLink{}
-	ret.UpdateAutomaticAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -44,7 +41,6 @@ func (m *CT_OleObjectLink) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_OleObjectLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.UpdateAutomaticAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "updateAutomatic" {
 			parsed, err := strconv.ParseBool(attr.Value)

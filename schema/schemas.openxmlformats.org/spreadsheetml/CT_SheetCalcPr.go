@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_SheetCalcPr struct {
@@ -22,7 +20,6 @@ type CT_SheetCalcPr struct {
 
 func NewCT_SheetCalcPr() *CT_SheetCalcPr {
 	ret := &CT_SheetCalcPr{}
-	ret.FullCalcOnLoadAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -38,7 +35,6 @@ func (m *CT_SheetCalcPr) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_SheetCalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.FullCalcOnLoadAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "fullCalcOnLoad" {
 			parsed, err := strconv.ParseBool(attr.Value)

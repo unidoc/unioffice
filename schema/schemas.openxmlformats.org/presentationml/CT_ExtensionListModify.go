@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_ExtensionListModify struct {
@@ -25,7 +23,6 @@ type CT_ExtensionListModify struct {
 
 func NewCT_ExtensionListModify() *CT_ExtensionListModify {
 	ret := &CT_ExtensionListModify{}
-	ret.ModAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -45,7 +42,6 @@ func (m *CT_ExtensionListModify) MarshalXML(e *xml.Encoder, start xml.StartEleme
 
 func (m *CT_ExtensionListModify) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ModAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "mod" {
 			parsed, err := strconv.ParseBool(attr.Value)

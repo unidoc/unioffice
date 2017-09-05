@@ -18,7 +18,6 @@ type CT_ErrBarType struct {
 
 func NewCT_ErrBarType() *CT_ErrBarType {
 	ret := &CT_ErrBarType{}
-	ret.ValAttr = ST_ErrBarTypeBoth
 	return ret
 }
 
@@ -37,7 +36,6 @@ func (m *CT_ErrBarType) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_ErrBarType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_ErrBarTypeBoth
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

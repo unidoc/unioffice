@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_SampleData struct {
@@ -23,7 +21,6 @@ type CT_SampleData struct {
 
 func NewCT_SampleData() *CT_SampleData {
 	ret := &CT_SampleData{}
-	ret.UseDefAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -43,7 +40,6 @@ func (m *CT_SampleData) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_SampleData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.UseDefAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "useDef" {
 			parsed, err := strconv.ParseBool(attr.Value)

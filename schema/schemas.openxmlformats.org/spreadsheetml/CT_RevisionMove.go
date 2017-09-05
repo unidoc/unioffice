@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_RevisionMove struct {
@@ -38,9 +36,6 @@ type CT_RevisionMove struct {
 
 func NewCT_RevisionMove() *CT_RevisionMove {
 	ret := &CT_RevisionMove{}
-	ret.SourceSheetIdAttr = gooxml.Uint32(0)
-	ret.UaAttr = gooxml.Bool(false)
-	ret.RaAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -86,9 +81,6 @@ func (m *CT_RevisionMove) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_RevisionMove) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.SourceSheetIdAttr = gooxml.Uint32(0)
-	m.UaAttr = gooxml.Bool(false)
-	m.RaAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "sheetId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

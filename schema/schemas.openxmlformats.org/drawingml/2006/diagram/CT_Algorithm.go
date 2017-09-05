@@ -13,7 +13,6 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -27,7 +26,6 @@ type CT_Algorithm struct {
 func NewCT_Algorithm() *CT_Algorithm {
 	ret := &CT_Algorithm{}
 	ret.TypeAttr = ST_AlgorithmType(1)
-	ret.RevAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -57,7 +55,6 @@ func (m *CT_Algorithm) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 func (m *CT_Algorithm) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.TypeAttr = ST_AlgorithmType(1)
-	m.RevAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

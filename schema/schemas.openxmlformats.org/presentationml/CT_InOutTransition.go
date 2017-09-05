@@ -19,7 +19,6 @@ type CT_InOutTransition struct {
 
 func NewCT_InOutTransition() *CT_InOutTransition {
 	ret := &CT_InOutTransition{}
-	ret.DirAttr = ST_TransitionInOutDirectionTypeOut
 	return ret
 }
 
@@ -38,7 +37,6 @@ func (m *CT_InOutTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_InOutTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.DirAttr = ST_TransitionInOutDirectionTypeOut
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "dir" {
 			m.DirAttr.UnmarshalXMLAttr(attr)

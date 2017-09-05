@@ -26,7 +26,6 @@ type CT_ObjectEmbed struct {
 
 func NewCT_ObjectEmbed() *CT_ObjectEmbed {
 	ret := &CT_ObjectEmbed{}
-	ret.DrawAspectAttr = ST_ObjectDrawAspect(1)
 	return ret
 }
 
@@ -59,7 +58,6 @@ func (m *CT_ObjectEmbed) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_ObjectEmbed) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.DrawAspectAttr = ST_ObjectDrawAspect(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "drawAspect" {
 			m.DrawAspectAttr.UnmarshalXMLAttr(attr)

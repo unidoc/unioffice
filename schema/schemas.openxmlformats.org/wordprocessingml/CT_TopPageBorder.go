@@ -42,7 +42,6 @@ type CT_TopPageBorder struct {
 func NewCT_TopPageBorder() *CT_TopPageBorder {
 	ret := &CT_TopPageBorder{}
 	ret.ValAttr = ST_Border(1)
-	ret.ThemeColorAttr = ST_ThemeColor(1)
 	return ret
 }
 
@@ -107,7 +106,6 @@ func (m *CT_TopPageBorder) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 func (m *CT_TopPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ValAttr = ST_Border(1)
-	m.ThemeColorAttr = ST_ThemeColor(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "topLeft" {
 			parsed, err := attr.Value, error(nil)

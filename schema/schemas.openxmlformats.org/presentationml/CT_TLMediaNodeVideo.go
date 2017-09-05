@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_TLMediaNodeVideo struct {
@@ -25,7 +23,6 @@ type CT_TLMediaNodeVideo struct {
 
 func NewCT_TLMediaNodeVideo() *CT_TLMediaNodeVideo {
 	ret := &CT_TLMediaNodeVideo{}
-	ret.FullScrnAttr = gooxml.Bool(false)
 	ret.CMediaNode = NewCT_TLCommonMediaNodeData()
 	return ret
 }
@@ -44,7 +41,6 @@ func (m *CT_TLMediaNodeVideo) MarshalXML(e *xml.Encoder, start xml.StartElement)
 
 func (m *CT_TLMediaNodeVideo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.FullScrnAttr = gooxml.Bool(false)
 	m.CMediaNode = NewCT_TLCommonMediaNodeData()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "fullScrn" {

@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_SheetFormatPr struct {
@@ -38,13 +36,6 @@ type CT_SheetFormatPr struct {
 
 func NewCT_SheetFormatPr() *CT_SheetFormatPr {
 	ret := &CT_SheetFormatPr{}
-	ret.BaseColWidthAttr = gooxml.Uint32(8)
-	ret.CustomHeightAttr = gooxml.Bool(false)
-	ret.ZeroHeightAttr = gooxml.Bool(false)
-	ret.ThickTopAttr = gooxml.Bool(false)
-	ret.ThickBottomAttr = gooxml.Bool(false)
-	ret.OutlineLevelRowAttr = gooxml.Uint8(0)
-	ret.OutlineLevelColAttr = gooxml.Uint8(0)
 	return ret
 }
 
@@ -90,13 +81,6 @@ func (m *CT_SheetFormatPr) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.BaseColWidthAttr = gooxml.Uint32(8)
-	m.CustomHeightAttr = gooxml.Bool(false)
-	m.ZeroHeightAttr = gooxml.Bool(false)
-	m.ThickTopAttr = gooxml.Bool(false)
-	m.ThickBottomAttr = gooxml.Bool(false)
-	m.OutlineLevelRowAttr = gooxml.Uint8(0)
-	m.OutlineLevelColAttr = gooxml.Uint8(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "baseColWidth" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

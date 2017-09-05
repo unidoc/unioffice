@@ -23,7 +23,6 @@ type CT_DdeValue struct {
 
 func NewCT_DdeValue() *CT_DdeValue {
 	ret := &CT_DdeValue{}
-	ret.TAttr = ST_DdeValueTypeN
 	return ret
 }
 
@@ -45,7 +44,6 @@ func (m *CT_DdeValue) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_DdeValue) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TAttr = ST_DdeValueTypeN
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "t" {
 			m.TAttr.UnmarshalXMLAttr(attr)

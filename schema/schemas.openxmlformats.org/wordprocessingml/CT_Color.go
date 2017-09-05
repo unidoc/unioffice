@@ -25,7 +25,6 @@ type CT_Color struct {
 
 func NewCT_Color() *CT_Color {
 	ret := &CT_Color{}
-	ret.ThemeColorAttr = ST_ThemeColor(1)
 	return ret
 }
 
@@ -54,7 +53,6 @@ func (m *CT_Color) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ThemeColorAttr = ST_ThemeColor(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := ParseUnionST_HexColor(attr.Value)

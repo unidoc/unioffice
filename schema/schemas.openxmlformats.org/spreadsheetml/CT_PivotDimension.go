@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_PivotDimension struct {
@@ -28,7 +26,6 @@ type CT_PivotDimension struct {
 
 func NewCT_PivotDimension() *CT_PivotDimension {
 	ret := &CT_PivotDimension{}
-	ret.MeasureAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -50,7 +47,6 @@ func (m *CT_PivotDimension) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_PivotDimension) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.MeasureAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "measure" {
 			parsed, err := strconv.ParseBool(attr.Value)

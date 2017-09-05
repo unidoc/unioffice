@@ -18,7 +18,6 @@ type CT_Orientation struct {
 
 func NewCT_Orientation() *CT_Orientation {
 	ret := &CT_Orientation{}
-	ret.ValAttr = ST_OrientationMinMax
 	return ret
 }
 
@@ -37,7 +36,6 @@ func (m *CT_Orientation) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_Orientation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_OrientationMinMax
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

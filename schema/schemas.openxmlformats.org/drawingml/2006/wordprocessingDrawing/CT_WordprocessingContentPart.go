@@ -25,7 +25,6 @@ type CT_WordprocessingContentPart struct {
 
 func NewCT_WordprocessingContentPart() *CT_WordprocessingContentPart {
 	ret := &CT_WordprocessingContentPart{}
-	ret.BwModeAttr = drawingml.ST_BlackWhiteMode(1)
 	return ret
 }
 
@@ -58,7 +57,6 @@ func (m *CT_WordprocessingContentPart) MarshalXML(e *xml.Encoder, start xml.Star
 
 func (m *CT_WordprocessingContentPart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.BwModeAttr = drawingml.ST_BlackWhiteMode(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bwMode" {
 			m.BwModeAttr.UnmarshalXMLAttr(attr)

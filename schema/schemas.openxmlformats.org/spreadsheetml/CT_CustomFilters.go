@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_CustomFilters struct {
@@ -25,7 +23,6 @@ type CT_CustomFilters struct {
 
 func NewCT_CustomFilters() *CT_CustomFilters {
 	ret := &CT_CustomFilters{}
-	ret.AndAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -43,7 +40,6 @@ func (m *CT_CustomFilters) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_CustomFilters) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.AndAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "and" {
 			parsed, err := strconv.ParseBool(attr.Value)

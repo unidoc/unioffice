@@ -20,7 +20,6 @@ type CT_OleObjectEmbed struct {
 
 func NewCT_OleObjectEmbed() *CT_OleObjectEmbed {
 	ret := &CT_OleObjectEmbed{}
-	ret.FollowColorSchemeAttr = ST_OleObjectFollowColorSchemeNone
 	return ret
 }
 
@@ -43,7 +42,6 @@ func (m *CT_OleObjectEmbed) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_OleObjectEmbed) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.FollowColorSchemeAttr = ST_OleObjectFollowColorSchemeNone
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "followColorScheme" {
 			m.FollowColorSchemeAttr.UnmarshalXMLAttr(attr)

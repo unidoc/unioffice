@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_Placeholder struct {
@@ -32,11 +30,6 @@ type CT_Placeholder struct {
 
 func NewCT_Placeholder() *CT_Placeholder {
 	ret := &CT_Placeholder{}
-	ret.TypeAttr = ST_PlaceholderTypeObj
-	ret.OrientAttr = ST_DirectionHorz
-	ret.SzAttr = ST_PlaceholderSizeFull
-	ret.IdxAttr = gooxml.Uint32(0)
-	ret.HasCustomPromptAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -81,11 +74,6 @@ func (m *CT_Placeholder) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_Placeholder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TypeAttr = ST_PlaceholderTypeObj
-	m.OrientAttr = ST_DirectionHorz
-	m.SzAttr = ST_PlaceholderSizeFull
-	m.IdxAttr = gooxml.Uint32(0)
-	m.HasCustomPromptAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

@@ -21,8 +21,6 @@ type CT_SplitTransition struct {
 
 func NewCT_SplitTransition() *CT_SplitTransition {
 	ret := &CT_SplitTransition{}
-	ret.OrientAttr = ST_DirectionHorz
-	ret.DirAttr = ST_TransitionInOutDirectionTypeOut
 	return ret
 }
 
@@ -48,8 +46,6 @@ func (m *CT_SplitTransition) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_SplitTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.OrientAttr = ST_DirectionHorz
-	m.DirAttr = ST_TransitionInOutDirectionTypeOut
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "orient" {
 			m.OrientAttr.UnmarshalXMLAttr(attr)

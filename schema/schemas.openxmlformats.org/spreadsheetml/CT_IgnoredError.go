@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_IgnoredError struct {
@@ -40,15 +38,6 @@ type CT_IgnoredError struct {
 
 func NewCT_IgnoredError() *CT_IgnoredError {
 	ret := &CT_IgnoredError{}
-	ret.EvalErrorAttr = gooxml.Bool(false)
-	ret.TwoDigitTextYearAttr = gooxml.Bool(false)
-	ret.NumberStoredAsTextAttr = gooxml.Bool(false)
-	ret.FormulaAttr = gooxml.Bool(false)
-	ret.FormulaRangeAttr = gooxml.Bool(false)
-	ret.UnlockedFormulaAttr = gooxml.Bool(false)
-	ret.EmptyCellReferenceAttr = gooxml.Bool(false)
-	ret.ListDataValidationAttr = gooxml.Bool(false)
-	ret.CalculatedColumnAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -98,15 +87,6 @@ func (m *CT_IgnoredError) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_IgnoredError) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.EvalErrorAttr = gooxml.Bool(false)
-	m.TwoDigitTextYearAttr = gooxml.Bool(false)
-	m.NumberStoredAsTextAttr = gooxml.Bool(false)
-	m.FormulaAttr = gooxml.Bool(false)
-	m.FormulaRangeAttr = gooxml.Bool(false)
-	m.UnlockedFormulaAttr = gooxml.Bool(false)
-	m.EmptyCellReferenceAttr = gooxml.Bool(false)
-	m.ListDataValidationAttr = gooxml.Bool(false)
-	m.CalculatedColumnAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "sqref" {
 			parsed, err := ParseSliceST_Sqref(attr.Value)

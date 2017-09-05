@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_SmartTagPr struct {
@@ -24,8 +22,6 @@ type CT_SmartTagPr struct {
 
 func NewCT_SmartTagPr() *CT_SmartTagPr {
 	ret := &CT_SmartTagPr{}
-	ret.EmbedAttr = gooxml.Bool(false)
-	ret.ShowAttr = ST_SmartTagShowAll
 	return ret
 }
 
@@ -48,8 +44,6 @@ func (m *CT_SmartTagPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_SmartTagPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.EmbedAttr = gooxml.Bool(false)
-	m.ShowAttr = ST_SmartTagShowAll
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "embed" {
 			parsed, err := strconv.ParseBool(attr.Value)

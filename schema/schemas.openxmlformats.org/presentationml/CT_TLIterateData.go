@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_TLIterateData struct {
@@ -29,8 +27,6 @@ type CT_TLIterateData struct {
 
 func NewCT_TLIterateData() *CT_TLIterateData {
 	ret := &CT_TLIterateData{}
-	ret.TypeAttr = ST_IterateTypeEl
-	ret.BackwardsAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -61,8 +57,6 @@ func (m *CT_TLIterateData) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_TLIterateData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TypeAttr = ST_IterateTypeEl
-	m.BackwardsAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

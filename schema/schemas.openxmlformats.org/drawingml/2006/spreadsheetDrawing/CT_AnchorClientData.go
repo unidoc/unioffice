@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_AnchorClientData struct {
@@ -22,8 +20,6 @@ type CT_AnchorClientData struct {
 
 func NewCT_AnchorClientData() *CT_AnchorClientData {
 	ret := &CT_AnchorClientData{}
-	ret.FLocksWithSheetAttr = gooxml.Bool(true)
-	ret.FPrintsWithSheetAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -43,8 +39,6 @@ func (m *CT_AnchorClientData) MarshalXML(e *xml.Encoder, start xml.StartElement)
 
 func (m *CT_AnchorClientData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.FLocksWithSheetAttr = gooxml.Bool(true)
-	m.FPrintsWithSheetAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "fLocksWithSheet" {
 			parsed, err := strconv.ParseBool(attr.Value)

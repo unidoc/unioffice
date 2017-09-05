@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_OleItem struct {
@@ -28,9 +26,6 @@ type CT_OleItem struct {
 
 func NewCT_OleItem() *CT_OleItem {
 	ret := &CT_OleItem{}
-	ret.IconAttr = gooxml.Bool(false)
-	ret.AdviseAttr = gooxml.Bool(false)
-	ret.PreferPicAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -56,9 +51,6 @@ func (m *CT_OleItem) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_OleItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.IconAttr = gooxml.Bool(false)
-	m.AdviseAttr = gooxml.Bool(false)
-	m.PreferPicAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

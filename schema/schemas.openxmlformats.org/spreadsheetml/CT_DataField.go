@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_DataField struct {
@@ -37,9 +35,6 @@ type CT_DataField struct {
 
 func NewCT_DataField() *CT_DataField {
 	ret := &CT_DataField{}
-	ret.SubtotalAttr = ST_DataConsolidateFunctionSum
-	ret.ShowDataAsAttr = ST_ShowDataAsNormal
-	ret.BaseItemAttr = gooxml.Uint32(1048832)
 	return ret
 }
 
@@ -87,9 +82,6 @@ func (m *CT_DataField) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_DataField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.SubtotalAttr = ST_DataConsolidateFunctionSum
-	m.ShowDataAsAttr = ST_ShowDataAsNormal
-	m.BaseItemAttr = gooxml.Uint32(1048832)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)

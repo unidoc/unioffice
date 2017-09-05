@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_CfRule struct {
@@ -56,14 +54,6 @@ type CT_CfRule struct {
 
 func NewCT_CfRule() *CT_CfRule {
 	ret := &CT_CfRule{}
-	ret.TypeAttr = ST_CfType(1)
-	ret.StopIfTrueAttr = gooxml.Bool(false)
-	ret.AboveAverageAttr = gooxml.Bool(true)
-	ret.PercentAttr = gooxml.Bool(false)
-	ret.BottomAttr = gooxml.Bool(false)
-	ret.OperatorAttr = ST_ConditionalFormattingOperator(1)
-	ret.TimePeriodAttr = ST_TimePeriod(1)
-	ret.EqualAverageAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -154,14 +144,6 @@ func (m *CT_CfRule) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_CfRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TypeAttr = ST_CfType(1)
-	m.StopIfTrueAttr = gooxml.Bool(false)
-	m.AboveAverageAttr = gooxml.Bool(true)
-	m.PercentAttr = gooxml.Bool(false)
-	m.BottomAttr = gooxml.Bool(false)
-	m.OperatorAttr = ST_ConditionalFormattingOperator(1)
-	m.TimePeriodAttr = ST_TimePeriod(1)
-	m.EqualAverageAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

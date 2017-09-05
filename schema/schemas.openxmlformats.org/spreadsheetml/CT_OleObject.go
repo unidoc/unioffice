@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_OleObject struct {
@@ -36,9 +34,6 @@ type CT_OleObject struct {
 
 func NewCT_OleObject() *CT_OleObject {
 	ret := &CT_OleObject{}
-	ret.DvAspectAttr = ST_DvAspectDVASPECT_CONTENT
-	ret.OleUpdateAttr = ST_OleUpdate(1)
-	ret.AutoLoadAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -86,9 +81,6 @@ func (m *CT_OleObject) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_OleObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.DvAspectAttr = ST_DvAspectDVASPECT_CONTENT
-	m.OleUpdateAttr = ST_OleUpdate(1)
-	m.AutoLoadAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "progId" {
 			parsed, err := attr.Value, error(nil)

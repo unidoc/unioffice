@@ -13,7 +13,6 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -33,9 +32,6 @@ type CT_TLCommonMediaNodeData struct {
 
 func NewCT_TLCommonMediaNodeData() *CT_TLCommonMediaNodeData {
 	ret := &CT_TLCommonMediaNodeData{}
-	ret.MuteAttr = gooxml.Bool(false)
-	ret.NumSldAttr = gooxml.Uint32(1)
-	ret.ShowWhenStoppedAttr = gooxml.Bool(true)
 	ret.CTn = NewCT_TLCommonTimeNodeData()
 	ret.TgtEl = NewCT_TLTimeTargetElement()
 	return ret
@@ -69,9 +65,6 @@ func (m *CT_TLCommonMediaNodeData) MarshalXML(e *xml.Encoder, start xml.StartEle
 
 func (m *CT_TLCommonMediaNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.MuteAttr = gooxml.Bool(false)
-	m.NumSldAttr = gooxml.Uint32(1)
-	m.ShowWhenStoppedAttr = gooxml.Bool(true)
 	m.CTn = NewCT_TLCommonTimeNodeData()
 	m.TgtEl = NewCT_TLTimeTargetElement()
 	for _, attr := range start.Attr {

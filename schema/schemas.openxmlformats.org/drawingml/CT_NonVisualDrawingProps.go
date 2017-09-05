@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_NonVisualDrawingProps struct {
@@ -29,7 +27,6 @@ type CT_NonVisualDrawingProps struct {
 
 func NewCT_NonVisualDrawingProps() *CT_NonVisualDrawingProps {
 	ret := &CT_NonVisualDrawingProps{}
-	ret.HiddenAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -69,7 +66,6 @@ func (m *CT_NonVisualDrawingProps) MarshalXML(e *xml.Encoder, start xml.StartEle
 
 func (m *CT_NonVisualDrawingProps) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.HiddenAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type AG_Ole struct {
@@ -26,7 +24,6 @@ type AG_Ole struct {
 
 func NewAG_Ole() *AG_Ole {
 	ret := &AG_Ole{}
-	ret.ShowAsIconAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -60,7 +57,6 @@ func (m *AG_Ole) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *AG_Ole) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ShowAsIconAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "spid" {
 			parsed, err := attr.Value, error(nil)

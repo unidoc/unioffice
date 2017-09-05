@@ -13,7 +13,6 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 )
 
@@ -34,7 +33,6 @@ type CT_Comment struct {
 
 func NewCT_Comment() *CT_Comment {
 	ret := &CT_Comment{}
-	ret.GuidAttr = gooxml.String("{00000000-0000-0000-0000-000000000000}")
 	ret.Text = NewCT_Rst()
 	return ret
 }
@@ -65,7 +63,6 @@ func (m *CT_Comment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Comment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.GuidAttr = gooxml.String("{00000000-0000-0000-0000-000000000000}")
 	m.Text = NewCT_Rst()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "ref" {

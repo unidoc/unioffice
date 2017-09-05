@@ -51,7 +51,6 @@ type CT_TableColumn struct {
 
 func NewCT_TableColumn() *CT_TableColumn {
 	ret := &CT_TableColumn{}
-	ret.TotalsRowFunctionAttr = ST_TotalsRowFunctionNone
 	return ret
 }
 
@@ -126,7 +125,6 @@ func (m *CT_TableColumn) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 
 func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TotalsRowFunctionAttr = ST_TotalsRowFunctionNone
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

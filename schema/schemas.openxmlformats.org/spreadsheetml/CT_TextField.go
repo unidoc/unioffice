@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_TextField struct {
@@ -24,8 +22,6 @@ type CT_TextField struct {
 
 func NewCT_TextField() *CT_TextField {
 	ret := &CT_TextField{}
-	ret.TypeAttr = ST_ExternalConnectionTypeGeneral
-	ret.PositionAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -48,8 +44,6 @@ func (m *CT_TextField) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_TextField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TypeAttr = ST_ExternalConnectionTypeGeneral
-	m.PositionAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

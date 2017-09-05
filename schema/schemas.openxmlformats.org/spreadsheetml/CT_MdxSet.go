@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_MdxSet struct {
@@ -29,8 +27,6 @@ type CT_MdxSet struct {
 
 func NewCT_MdxSet() *CT_MdxSet {
 	ret := &CT_MdxSet{}
-	ret.CAttr = gooxml.Uint32(0)
-	ret.OAttr = ST_MdxSetOrderU
 	return ret
 }
 
@@ -59,8 +55,6 @@ func (m *CT_MdxSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_MdxSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CAttr = gooxml.Uint32(0)
-	m.OAttr = ST_MdxSetOrderU
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "ns" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

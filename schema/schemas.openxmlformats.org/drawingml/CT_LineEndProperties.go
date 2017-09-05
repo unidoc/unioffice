@@ -20,9 +20,6 @@ type CT_LineEndProperties struct {
 
 func NewCT_LineEndProperties() *CT_LineEndProperties {
 	ret := &CT_LineEndProperties{}
-	ret.TypeAttr = ST_LineEndType(1)
-	ret.WAttr = ST_LineEndWidth(1)
-	ret.LenAttr = ST_LineEndLength(1)
 	return ret
 }
 
@@ -55,9 +52,6 @@ func (m *CT_LineEndProperties) MarshalXML(e *xml.Encoder, start xml.StartElement
 
 func (m *CT_LineEndProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TypeAttr = ST_LineEndType(1)
-	m.WAttr = ST_LineEndWidth(1)
-	m.LenAttr = ST_LineEndLength(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

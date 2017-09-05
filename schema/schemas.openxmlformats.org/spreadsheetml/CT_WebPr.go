@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_WebPr struct {
@@ -49,16 +47,6 @@ type CT_WebPr struct {
 
 func NewCT_WebPr() *CT_WebPr {
 	ret := &CT_WebPr{}
-	ret.XmlAttr = gooxml.Bool(false)
-	ret.SourceDataAttr = gooxml.Bool(false)
-	ret.ParsePreAttr = gooxml.Bool(false)
-	ret.ConsecutiveAttr = gooxml.Bool(false)
-	ret.FirstRowAttr = gooxml.Bool(false)
-	ret.Xl97Attr = gooxml.Bool(false)
-	ret.TextDatesAttr = gooxml.Bool(false)
-	ret.Xl2000Attr = gooxml.Bool(false)
-	ret.HtmlTablesAttr = gooxml.Bool(false)
-	ret.HtmlFormatAttr = ST_HtmlFmtNone
 	return ret
 }
 
@@ -129,16 +117,6 @@ func (m *CT_WebPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_WebPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.XmlAttr = gooxml.Bool(false)
-	m.SourceDataAttr = gooxml.Bool(false)
-	m.ParsePreAttr = gooxml.Bool(false)
-	m.ConsecutiveAttr = gooxml.Bool(false)
-	m.FirstRowAttr = gooxml.Bool(false)
-	m.Xl97Attr = gooxml.Bool(false)
-	m.TextDatesAttr = gooxml.Bool(false)
-	m.Xl2000Attr = gooxml.Bool(false)
-	m.HtmlTablesAttr = gooxml.Bool(false)
-	m.HtmlFormatAttr = ST_HtmlFmtNone
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "xml" {
 			parsed, err := strconv.ParseBool(attr.Value)

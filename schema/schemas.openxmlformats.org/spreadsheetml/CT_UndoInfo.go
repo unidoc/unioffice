@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_UndoInfo struct {
@@ -43,11 +41,6 @@ type CT_UndoInfo struct {
 func NewCT_UndoInfo() *CT_UndoInfo {
 	ret := &CT_UndoInfo{}
 	ret.ExpAttr = ST_FormulaExpression(1)
-	ret.Ref3DAttr = gooxml.Bool(false)
-	ret.ArrayAttr = gooxml.Bool(false)
-	ret.VAttr = gooxml.Bool(false)
-	ret.NfAttr = gooxml.Bool(false)
-	ret.CsAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -101,11 +94,6 @@ func (m *CT_UndoInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.ExpAttr = ST_FormulaExpression(1)
-	m.Ref3DAttr = gooxml.Bool(false)
-	m.ArrayAttr = gooxml.Bool(false)
-	m.VAttr = gooxml.Bool(false)
-	m.NfAttr = gooxml.Bool(false)
-	m.CsAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "index" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

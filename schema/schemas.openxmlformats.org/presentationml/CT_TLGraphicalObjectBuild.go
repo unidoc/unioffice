@@ -13,7 +13,6 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
@@ -29,7 +28,6 @@ type CT_TLGraphicalObjectBuild struct {
 
 func NewCT_TLGraphicalObjectBuild() *CT_TLGraphicalObjectBuild {
 	ret := &CT_TLGraphicalObjectBuild{}
-	ret.UiExpandAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -61,7 +59,6 @@ func (m *CT_TLGraphicalObjectBuild) MarshalXML(e *xml.Encoder, start xml.StartEl
 
 func (m *CT_TLGraphicalObjectBuild) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.UiExpandAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "spid" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

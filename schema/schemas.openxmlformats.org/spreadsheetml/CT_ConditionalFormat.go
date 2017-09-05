@@ -28,8 +28,6 @@ type CT_ConditionalFormat struct {
 
 func NewCT_ConditionalFormat() *CT_ConditionalFormat {
 	ret := &CT_ConditionalFormat{}
-	ret.ScopeAttr = ST_ScopeSelection
-	ret.TypeAttr = ST_TypeNone
 	ret.PivotAreas = NewCT_PivotAreas()
 	return ret
 }
@@ -64,8 +62,6 @@ func (m *CT_ConditionalFormat) MarshalXML(e *xml.Encoder, start xml.StartElement
 
 func (m *CT_ConditionalFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ScopeAttr = ST_ScopeSelection
-	m.TypeAttr = ST_TypeNone
 	m.PivotAreas = NewCT_PivotAreas()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "scope" {

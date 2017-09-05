@@ -18,7 +18,6 @@ type CT_Script struct {
 
 func NewCT_Script() *CT_Script {
 	ret := &CT_Script{}
-	ret.ValAttr = ST_Script(1)
 	return ret
 }
 
@@ -37,7 +36,6 @@ func (m *CT_Script) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Script) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_Script(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

@@ -28,7 +28,6 @@ type CT_TLTimeCondition struct {
 
 func NewCT_TLTimeCondition() *CT_TLTimeCondition {
 	ret := &CT_TLTimeCondition{}
-	ret.EvtAttr = ST_TLTriggerEvent(1)
 	return ret
 }
 
@@ -63,7 +62,6 @@ func (m *CT_TLTimeCondition) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_TLTimeCondition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.EvtAttr = ST_TLTriggerEvent(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "evt" {
 			m.EvtAttr.UnmarshalXMLAttr(attr)

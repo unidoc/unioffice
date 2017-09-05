@@ -18,7 +18,6 @@ type CT_ErrValType struct {
 
 func NewCT_ErrValType() *CT_ErrValType {
 	ret := &CT_ErrValType{}
-	ret.ValAttr = ST_ErrValTypeFixedVal
 	return ret
 }
 
@@ -37,7 +36,6 @@ func (m *CT_ErrValType) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_ErrValType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_ErrValTypeFixedVal
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

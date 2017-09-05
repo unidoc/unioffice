@@ -18,7 +18,6 @@ type CT_LegendPos struct {
 
 func NewCT_LegendPos() *CT_LegendPos {
 	ret := &CT_LegendPos{}
-	ret.ValAttr = ST_LegendPosR
 	return ret
 }
 
@@ -37,7 +36,6 @@ func (m *CT_LegendPos) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 
 func (m *CT_LegendPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = ST_LegendPosR
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)

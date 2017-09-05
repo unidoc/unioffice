@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_BulletEnabled struct {
@@ -21,7 +19,6 @@ type CT_BulletEnabled struct {
 
 func NewCT_BulletEnabled() *CT_BulletEnabled {
 	ret := &CT_BulletEnabled{}
-	ret.ValAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -37,7 +34,6 @@ func (m *CT_BulletEnabled) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *CT_BulletEnabled) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ValAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseBool(attr.Value)

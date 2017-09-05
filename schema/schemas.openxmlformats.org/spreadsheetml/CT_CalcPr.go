@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_CalcPr struct {
@@ -46,16 +44,6 @@ type CT_CalcPr struct {
 
 func NewCT_CalcPr() *CT_CalcPr {
 	ret := &CT_CalcPr{}
-	ret.CalcModeAttr = ST_CalcModeAuto
-	ret.FullCalcOnLoadAttr = gooxml.Bool(false)
-	ret.RefModeAttr = ST_RefModeA1
-	ret.IterateAttr = gooxml.Bool(false)
-	ret.IterateCountAttr = gooxml.Uint32(100)
-	ret.IterateDeltaAttr = gooxml.Float64(0.001)
-	ret.FullPrecisionAttr = gooxml.Bool(true)
-	ret.CalcCompletedAttr = gooxml.Bool(true)
-	ret.CalcOnSaveAttr = gooxml.Bool(true)
-	ret.ConcurrentCalcAttr = gooxml.Bool(true)
 	return ret
 }
 
@@ -125,16 +113,6 @@ func (m *CT_CalcPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CalcModeAttr = ST_CalcModeAuto
-	m.FullCalcOnLoadAttr = gooxml.Bool(false)
-	m.RefModeAttr = ST_RefModeA1
-	m.IterateAttr = gooxml.Bool(false)
-	m.IterateCountAttr = gooxml.Uint32(100)
-	m.IterateDeltaAttr = gooxml.Float64(0.001)
-	m.FullPrecisionAttr = gooxml.Bool(true)
-	m.CalcCompletedAttr = gooxml.Bool(true)
-	m.CalcOnSaveAttr = gooxml.Bool(true)
-	m.ConcurrentCalcAttr = gooxml.Bool(true)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "calcId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_I struct {
@@ -29,9 +27,6 @@ type CT_I struct {
 
 func NewCT_I() *CT_I {
 	ret := &CT_I{}
-	ret.TAttr = ST_ItemTypeData
-	ret.RAttr = gooxml.Uint32(0)
-	ret.IAttr = gooxml.Uint32(0)
 	return ret
 }
 
@@ -62,9 +57,6 @@ func (m *CT_I) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_I) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TAttr = ST_ItemTypeData
-	m.RAttr = gooxml.Uint32(0)
-	m.IAttr = gooxml.Uint32(0)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "t" {
 			m.TAttr.UnmarshalXMLAttr(attr)

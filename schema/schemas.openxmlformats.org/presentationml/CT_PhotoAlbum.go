@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_PhotoAlbum struct {
@@ -30,10 +28,6 @@ type CT_PhotoAlbum struct {
 
 func NewCT_PhotoAlbum() *CT_PhotoAlbum {
 	ret := &CT_PhotoAlbum{}
-	ret.BwAttr = gooxml.Bool(false)
-	ret.ShowCaptionsAttr = gooxml.Bool(false)
-	ret.LayoutAttr = ST_PhotoAlbumLayoutFitToSlide
-	ret.FrameAttr = ST_PhotoAlbumFrameShapeFrameStyle1
 	return ret
 }
 
@@ -71,10 +65,6 @@ func (m *CT_PhotoAlbum) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *CT_PhotoAlbum) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.BwAttr = gooxml.Bool(false)
-	m.ShowCaptionsAttr = gooxml.Bool(false)
-	m.LayoutAttr = ST_PhotoAlbumLayoutFitToSlide
-	m.FrameAttr = ST_PhotoAlbumFrameShapeFrameStyle1
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bw" {
 			parsed, err := strconv.ParseBool(attr.Value)

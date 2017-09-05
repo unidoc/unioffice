@@ -50,7 +50,6 @@ type CT_EffectContainer struct {
 
 func NewCT_EffectContainer() *CT_EffectContainer {
 	ret := &CT_EffectContainer{}
-	ret.TypeAttr = ST_EffectContainerTypeSib
 	return ret
 }
 
@@ -193,7 +192,6 @@ func (m *CT_EffectContainer) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_EffectContainer) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TypeAttr = ST_EffectContainerTypeSib
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

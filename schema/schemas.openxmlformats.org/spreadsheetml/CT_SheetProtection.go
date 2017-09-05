@@ -11,8 +11,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_SheetProtection struct {
@@ -62,22 +60,6 @@ type CT_SheetProtection struct {
 
 func NewCT_SheetProtection() *CT_SheetProtection {
 	ret := &CT_SheetProtection{}
-	ret.SheetAttr = gooxml.Bool(false)
-	ret.ObjectsAttr = gooxml.Bool(false)
-	ret.ScenariosAttr = gooxml.Bool(false)
-	ret.FormatCellsAttr = gooxml.Bool(true)
-	ret.FormatColumnsAttr = gooxml.Bool(true)
-	ret.FormatRowsAttr = gooxml.Bool(true)
-	ret.InsertColumnsAttr = gooxml.Bool(true)
-	ret.InsertRowsAttr = gooxml.Bool(true)
-	ret.InsertHyperlinksAttr = gooxml.Bool(true)
-	ret.DeleteColumnsAttr = gooxml.Bool(true)
-	ret.DeleteRowsAttr = gooxml.Bool(true)
-	ret.SelectLockedCellsAttr = gooxml.Bool(false)
-	ret.SortAttr = gooxml.Bool(true)
-	ret.AutoFilterAttr = gooxml.Bool(true)
-	ret.PivotTablesAttr = gooxml.Bool(true)
-	ret.SelectUnlockedCellsAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -173,22 +155,6 @@ func (m *CT_SheetProtection) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 
 func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.SheetAttr = gooxml.Bool(false)
-	m.ObjectsAttr = gooxml.Bool(false)
-	m.ScenariosAttr = gooxml.Bool(false)
-	m.FormatCellsAttr = gooxml.Bool(true)
-	m.FormatColumnsAttr = gooxml.Bool(true)
-	m.FormatRowsAttr = gooxml.Bool(true)
-	m.InsertColumnsAttr = gooxml.Bool(true)
-	m.InsertRowsAttr = gooxml.Bool(true)
-	m.InsertHyperlinksAttr = gooxml.Bool(true)
-	m.DeleteColumnsAttr = gooxml.Bool(true)
-	m.DeleteRowsAttr = gooxml.Bool(true)
-	m.SelectLockedCellsAttr = gooxml.Bool(false)
-	m.SortAttr = gooxml.Bool(true)
-	m.AutoFilterAttr = gooxml.Bool(true)
-	m.PivotTablesAttr = gooxml.Bool(true)
-	m.SelectUnlockedCellsAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "password" {
 			parsed, err := attr.Value, error(nil)

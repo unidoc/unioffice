@@ -28,7 +28,6 @@ type CT_Shape3D struct {
 
 func NewCT_Shape3D() *CT_Shape3D {
 	ret := &CT_Shape3D{}
-	ret.PrstMaterialAttr = ST_PresetMaterialTypeWarmMatte
 	return ret
 }
 
@@ -79,7 +78,6 @@ func (m *CT_Shape3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Shape3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.PrstMaterialAttr = ST_PresetMaterialTypeWarmMatte
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "z" {
 			parsed, err := ParseUnionST_Coordinate(attr.Value)

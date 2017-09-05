@@ -72,7 +72,6 @@ type CT_Style struct {
 
 func NewCT_Style() *CT_Style {
 	ret := &CT_Style{}
-	ret.TypeAttr = ST_StyleType(1)
 	return ret
 }
 
@@ -191,7 +190,6 @@ func (m *CT_Style) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Style) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.TypeAttr = ST_StyleType(1)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)

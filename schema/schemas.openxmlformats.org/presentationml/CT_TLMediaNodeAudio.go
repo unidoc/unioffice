@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_TLMediaNodeAudio struct {
@@ -25,7 +23,6 @@ type CT_TLMediaNodeAudio struct {
 
 func NewCT_TLMediaNodeAudio() *CT_TLMediaNodeAudio {
 	ret := &CT_TLMediaNodeAudio{}
-	ret.IsNarrationAttr = gooxml.Bool(false)
 	ret.CMediaNode = NewCT_TLCommonMediaNodeData()
 	return ret
 }
@@ -44,7 +41,6 @@ func (m *CT_TLMediaNodeAudio) MarshalXML(e *xml.Encoder, start xml.StartElement)
 
 func (m *CT_TLMediaNodeAudio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.IsNarrationAttr = gooxml.Bool(false)
 	m.CMediaNode = NewCT_TLCommonMediaNodeData()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "isNarration" {

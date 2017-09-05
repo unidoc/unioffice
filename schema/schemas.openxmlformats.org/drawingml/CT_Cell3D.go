@@ -21,7 +21,6 @@ type CT_Cell3D struct {
 
 func NewCT_Cell3D() *CT_Cell3D {
 	ret := &CT_Cell3D{}
-	ret.PrstMaterialAttr = ST_PresetMaterialTypePlastic
 	ret.Bevel = NewCT_Bevel()
 	return ret
 }
@@ -51,7 +50,6 @@ func (m *CT_Cell3D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Cell3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.PrstMaterialAttr = ST_PresetMaterialTypePlastic
 	m.Bevel = NewCT_Bevel()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prstMaterial" {

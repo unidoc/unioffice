@@ -12,8 +12,6 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-
-	"baliance.com/gooxml"
 )
 
 type CT_PivotHierarchy struct {
@@ -49,16 +47,6 @@ type CT_PivotHierarchy struct {
 
 func NewCT_PivotHierarchy() *CT_PivotHierarchy {
 	ret := &CT_PivotHierarchy{}
-	ret.OutlineAttr = gooxml.Bool(false)
-	ret.MultipleItemSelectionAllowedAttr = gooxml.Bool(false)
-	ret.SubtotalTopAttr = gooxml.Bool(false)
-	ret.ShowInFieldListAttr = gooxml.Bool(true)
-	ret.DragToRowAttr = gooxml.Bool(true)
-	ret.DragToColAttr = gooxml.Bool(true)
-	ret.DragToPageAttr = gooxml.Bool(true)
-	ret.DragToDataAttr = gooxml.Bool(false)
-	ret.DragOffAttr = gooxml.Bool(true)
-	ret.IncludeNewItemsInFilterAttr = gooxml.Bool(false)
 	return ret
 }
 
@@ -126,16 +114,6 @@ func (m *CT_PivotHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *CT_PivotHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.OutlineAttr = gooxml.Bool(false)
-	m.MultipleItemSelectionAllowedAttr = gooxml.Bool(false)
-	m.SubtotalTopAttr = gooxml.Bool(false)
-	m.ShowInFieldListAttr = gooxml.Bool(true)
-	m.DragToRowAttr = gooxml.Bool(true)
-	m.DragToColAttr = gooxml.Bool(true)
-	m.DragToPageAttr = gooxml.Bool(true)
-	m.DragToDataAttr = gooxml.Bool(false)
-	m.DragOffAttr = gooxml.Bool(true)
-	m.IncludeNewItemsInFilterAttr = gooxml.Bool(false)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "outline" {
 			parsed, err := strconv.ParseBool(attr.Value)
