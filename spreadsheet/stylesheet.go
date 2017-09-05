@@ -16,11 +16,12 @@ import (
 
 // StyleSheet is a document style sheet.
 type StyleSheet struct {
-	x *sml.StyleSheet
+	wb *Workbook
+	x  *sml.StyleSheet
 }
 
 // NewStyleSheet constructs a new default stylesheet.
-func NewStyleSheet() StyleSheet {
+func NewStyleSheet(wb *Workbook) StyleSheet {
 	ss := sml.NewStyleSheet()
 	b := NewBorders()
 	ss.Borders = b.X()
@@ -52,7 +53,7 @@ func NewStyleSheet() StyleSheet {
 
 	ss.Fonts = sml.NewCT_Fonts()
 
-	s := StyleSheet{ss}
+	s := StyleSheet{wb, ss}
 	fnt := s.AddFont()
 	fnt.SetName("Calibri")
 	fnt.SetSize(11)
@@ -66,7 +67,7 @@ func NewStyleSheet() StyleSheet {
 	return s
 }
 
-// X returns the innter XML entity for a stylesheet.
+// X returns the inner XML entity for a stylesheet.
 func (s StyleSheet) X() *sml.StyleSheet {
 	return s.x
 }
@@ -106,10 +107,61 @@ func (s StyleSheet) AddCellStyle() CellStyle {
 	xf := sml.NewCT_Xf()
 	s.x.CellXfs.Xf = append(s.x.CellXfs.Xf, xf)
 	s.x.CellXfs.CountAttr = gooxml.Uint32(uint32(len(s.x.CellXfs.Xf)))
-	return CellStyle{xf, s.x.CellXfs}
+	return CellStyle{s.wb, xf, s.x.CellXfs}
+}
+
+// CellStyles returns the list of defined cell styles
+func (s StyleSheet) CellStyles() []CellStyle {
+	ret := []CellStyle{}
+	for _, xf := range s.x.CellXfs.Xf {
+		ret = append(ret, CellStyle{s.wb, xf, s.x.CellXfs})
+	}
+	return ret
+}
+
+// GetOrCreateStandardNumberFormat gets or creates a cell style with a given
+// standard format. This should only be used when you want to perform
+// number/date/time formatting only.  Manipulating the style returned will cause
+// all cells using style returned from this for a given format to be formatted.
+func (s StyleSheet) GetOrCreateStandardNumberFormat(f StandardFormat) CellStyle {
+	for _, cs := range s.CellStyles() {
+		// found an existing number format
+		if cs.HasNumberFormat() && cs.NumberFormat() == uint32(f) {
+			return cs
+		}
+	}
+	// need to create a new format
+	cs := s.AddCellStyle()
+	cs.SetNumberFormatStandard(f)
+	return cs
+}
+
+// AddNumberFormat adds a new blank number format to the stylesheet.
+func (s StyleSheet) AddNumberFormat() NumberFormat {
+	if s.x.NumFmts == nil {
+		s.x.NumFmts = sml.NewCT_NumFmts()
+	}
+	nf := sml.NewCT_NumFmt()
+	// start our IDs at 200 so we can ensure we don't conflict with any
+	// pre-defined formats
+	nf.NumFmtIdAttr = uint32(200 + len(s.x.NumFmts.NumFmt))
+	s.x.NumFmts.NumFmt = append(s.x.NumFmts.NumFmt, nf)
+	s.x.NumFmts.CountAttr = gooxml.Uint32(uint32(len(s.x.NumFmts.NumFmt)))
+	return NumberFormat{s.wb, nf}
 }
 
 // Fills returns a Fills object that can be used to add/create/edit fills.
 func (s StyleSheet) Fills() Fills {
 	return Fills{s.x.Fills}
 }
+
+/*
+func (s StyleSheet) NumberFormats() {
+	if s.x.NumFmts == nil {
+		return
+	}
+	for _, nfmt := range s.x.NumFmts.NumFmt {
+
+	}
+}
+*/

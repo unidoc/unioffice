@@ -69,6 +69,12 @@ func (c Cell) SetNumber(v float64) {
 	c.x.TAttr = sml.ST_CellTypeN
 }
 
+// SetNumberWithStyle sets a number and applies a standard format to the cell.
+func (c Cell) SetNumberWithStyle(v float64, f StandardFormat) {
+	c.SetNumber(v)
+	c.SetStyle(c.w.StyleSheet.GetOrCreateStandardNumberFormat(f))
+}
+
 // SetBool sets the cell type to boolean and the value to the given boolean
 // value.
 func (c Cell) SetBool(v bool) {
@@ -108,7 +114,8 @@ func (c Cell) SetTime(d time.Time) {
 // SetDate sets the cell value to a date. It's stored as the number of days past
 // th sheet epoch. When we support v5 strict, we can store an ISO 8601 date
 // string directly, however that's not allowed with v5 transitional  (even
-// though it works in Excel).
+// though it works in Excel). The cell is not styled via this method, so it will
+// display as a number. SetDateWithStyle should normally be used instead.
 func (c Cell) SetDate(d time.Time) {
 	d = asUTC(d)
 	epoch := c.w.Epoch()
@@ -122,10 +129,32 @@ func (c Cell) SetDate(d time.Time) {
 	c.x.V = gooxml.Stringf("%d", int(delta.Hours()/24))
 }
 
-// SetStyle applies a style to the cell.  This style is referenced in the generated XML
-// via CellStyle.Index().
+// SetDateWithStyle sets a date with the default date style applied.
+func (c Cell) SetDateWithStyle(d time.Time) {
+	c.SetDate(d)
+	for _, cs := range c.w.StyleSheet.CellStyles() {
+		// found an existing number format
+		if cs.HasNumberFormat() && cs.NumberFormat() == uint32(StandardFormatDate) {
+			c.SetStyle(cs)
+			return
+		}
+	}
+	// need to create a new format
+	cs := c.w.StyleSheet.AddCellStyle()
+	cs.SetNumberFormatStandard(StandardFormatDate)
+	c.SetStyle(cs)
+}
+
+// SetStyle applies a style to the cell.  This style is referenced in the
+// generated XML via CellStyle.Index().
 func (c Cell) SetStyle(cs CellStyle) {
-	c.x.SAttr = gooxml.Uint32(cs.Index())
+	c.SetStyleIndex(cs.Index())
+}
+
+// SetStyleIndex directly sets a style index to the cell.  This should only be
+// called with an index retrieved from CellStyle.Index()
+func (c Cell) SetStyleIndex(idx uint32) {
+	c.x.SAttr = gooxml.Uint32(idx)
 }
 
 func (c Cell) GetValue() (string, error) {

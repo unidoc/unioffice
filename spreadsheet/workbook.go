@@ -267,7 +267,7 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.xws))
 
 	case gooxml.StylesType:
-		wb.StyleSheet = NewStyleSheet()
+		wb.StyleSheet = NewStyleSheet(wb)
 		decMap.AddTarget(target, wb.StyleSheet.X())
 
 	case gooxml.ThemeType:
