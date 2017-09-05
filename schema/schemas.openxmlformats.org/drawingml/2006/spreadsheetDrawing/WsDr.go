@@ -45,20 +45,26 @@ lWsDr:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "twoCellAnchor":
-				m.TwoCellAnchor = NewCT_TwoCellAnchor()
-				if err := d.DecodeElement(m.TwoCellAnchor, &el); err != nil {
+				tmpanchor := NewEG_Anchor()
+				tmpanchor.TwoCellAnchor = NewCT_TwoCellAnchor()
+				if err := d.DecodeElement(tmpanchor.TwoCellAnchor, &el); err != nil {
 					return err
 				}
+				m.EG_Anchor = append(m.EG_Anchor, tmpanchor)
 			case "oneCellAnchor":
-				m.OneCellAnchor = NewCT_OneCellAnchor()
-				if err := d.DecodeElement(m.OneCellAnchor, &el); err != nil {
+				tmpanchor := NewEG_Anchor()
+				tmpanchor.OneCellAnchor = NewCT_OneCellAnchor()
+				if err := d.DecodeElement(tmpanchor.OneCellAnchor, &el); err != nil {
 					return err
 				}
+				m.EG_Anchor = append(m.EG_Anchor, tmpanchor)
 			case "absoluteAnchor":
-				m.AbsoluteAnchor = NewCT_AbsoluteAnchor()
-				if err := d.DecodeElement(m.AbsoluteAnchor, &el); err != nil {
+				tmpanchor := NewEG_Anchor()
+				tmpanchor.AbsoluteAnchor = NewCT_AbsoluteAnchor()
+				if err := d.DecodeElement(tmpanchor.AbsoluteAnchor, &el); err != nil {
 					return err
 				}
+				m.EG_Anchor = append(m.EG_Anchor, tmpanchor)
 			default:
 				log.Printf("skipping unsupported element on WsDr %v", el.Name)
 				if err := d.Skip(); err != nil {
