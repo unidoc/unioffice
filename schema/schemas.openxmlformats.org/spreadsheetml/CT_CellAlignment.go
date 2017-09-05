@@ -19,7 +19,7 @@ type CT_CellAlignment struct {
 	// Vertical Alignment
 	VerticalAttr ST_VerticalAlignment
 	// Text Rotation
-	TextRotationAttr *uint32
+	TextRotationAttr *uint8
 	// Wrap Text
 	WrapTextAttr *bool
 	// Indent
@@ -97,11 +97,11 @@ func (m *CT_CellAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			m.VerticalAttr.UnmarshalXMLAttr(attr)
 		}
 		if attr.Name.Local == "textRotation" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
 			if err != nil {
 				return err
 			}
-			pt := uint32(parsed)
+			pt := uint8(parsed)
 			m.TextRotationAttr = &pt
 		}
 		if attr.Name.Local == "wrapText" {
