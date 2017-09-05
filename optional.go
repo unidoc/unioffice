@@ -7,6 +7,8 @@
 
 package gooxml
 
+import "fmt"
+
 // Float64 returns a copy of v as a pointer.
 func Float64(v float64) *float64 {
 	x := v
@@ -46,5 +48,11 @@ func Bool(v bool) *bool {
 // String returns a copy of v as a pointer.
 func String(v string) *string {
 	x := v
+	return &x
+}
+
+// String returns a copy of v as a pointer.
+func Stringf(f string, args ...interface{}) *string {
+	x := fmt.Sprintf(f, args...)
 	return &x
 }
