@@ -15,6 +15,7 @@ import (
 	"image/jpeg"
 	"io"
 	"os"
+	"time"
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
@@ -93,6 +94,23 @@ func (wb *Workbook) SaveToFile(path string) error {
 	}
 	defer f.Close()
 	return wb.Save(f)
+}
+
+// Uses1904Dates returns true if the the workbook uses dates relative to
+// 1 Jan 1904. This is uncommon.
+func (wb *Workbook) Uses1904Dates() bool {
+	if wb.x.WorkbookPr == nil || wb.x.WorkbookPr.Date1904Attr == nil {
+		return false
+	}
+	return *wb.x.WorkbookPr.Date1904Attr
+}
+
+// Epoch returns the point at which the dates/times in the workbook are relative to.
+func (wb *Workbook) Epoch() time.Time {
+	if wb.Uses1904Dates() {
+		time.Date(1904, 1, 1, 0, 0, 0, 0, time.UTC)
+	}
+	return time.Date(1899, 12, 30, 0, 0, 0, 0, time.UTC)
 }
 
 // Save writes the workbook out to a writer in the zipped xlsx format.
