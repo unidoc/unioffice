@@ -15,8 +15,24 @@ import (
 // CellStyle is a formatting style for a cell.  CellStyles are spreadsheet global
 // and can be applied to cells across sheets.
 type CellStyle struct {
+	wb  *Workbook
 	xf  *sml.CT_Xf
 	xfs *sml.CT_CellXfs
+}
+
+// HasNumberFormat returns true if the cell style has a number format applied.
+func (cs CellStyle) HasNumberFormat() bool {
+	return cs.xf.NumFmtIdAttr != nil && cs.xf.ApplyNumberFormatAttr != nil &&
+		*cs.xf.ApplyNumberFormatAttr
+}
+
+// NumberFormat returns the number format that the cell style uses, or zero if
+// it is not set.
+func (cs CellStyle) NumberFormat() uint32 {
+	if cs.xf.NumFmtIdAttr == nil {
+		return 0
+	}
+	return *cs.xf.NumFmtIdAttr
 }
 
 // ClearNumberFormat removes any number formatting from the style.
@@ -30,6 +46,15 @@ func (cs CellStyle) ClearNumberFormat() {
 func (cs CellStyle) SetNumberFormatStandard(s StandardFormat) {
 	cs.xf.NumFmtIdAttr = gooxml.Uint32(uint32(s))
 	cs.xf.ApplyNumberFormatAttr = gooxml.Bool(true)
+}
+
+func (cs CellStyle) SetNumberFormat(s string) {
+
+	//SetNumberFormat
+	nf := cs.wb.StyleSheet.AddNumberFormat()
+	nf.SetCode(s)
+	cs.xf.ApplyNumberFormatAttr = gooxml.Bool(true)
+	cs.xf.NumFmtIdAttr = gooxml.Uint32(nf.ID())
 }
 
 // Wrapped returns true if the cell will wrap text.

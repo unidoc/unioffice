@@ -21,7 +21,7 @@ func New() *Workbook {
 
 	wb.AppProperties = common.NewAppProperties()
 	wb.CoreProperties = common.NewCoreProperties()
-	wb.StyleSheet = NewStyleSheet()
+	wb.StyleSheet = NewStyleSheet(wb)
 
 	wb.Rels = common.NewRelationships()
 	wb.wbRels = common.NewRelationships()

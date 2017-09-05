@@ -25,7 +25,7 @@ func TestStyleSheetUnmarshal(t *testing.T) {
 		t.Fatalf("error reading styles.xml")
 	}
 	dec := xml.NewDecoder(f)
-	r := spreadsheet.NewStyleSheet()
+	r := spreadsheet.NewStyleSheet(nil)
 	if err := dec.Decode(r.X()); err != nil {
 		t.Errorf("error decoding styles.xml: %s", err)
 	}
@@ -40,7 +40,7 @@ func TestStyleSheetUnmarshal(t *testing.T) {
 }
 
 func TestStyleSheetFonts(t *testing.T) {
-	ss := spreadsheet.NewStyleSheet()
+	ss := spreadsheet.NewStyleSheet(nil)
 	fc := len(ss.Fonts())
 	ft := ss.AddFont()
 
