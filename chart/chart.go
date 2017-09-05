@@ -40,9 +40,6 @@ func (c Chart) AddLineChart() LineChart {
 	chc.LineChart.Grouping = crt.NewCT_Grouping()
 	chc.LineChart.Grouping.ValAttr = crt.ST_GroupingStandard
 
-	// TODO: needed?
-	chc.LineChart.Marker = crt.NewCT_Boolean()
-	chc.LineChart.Marker.ValAttr = gooxml.Bool(true)
 	return LineChart{x: chc.LineChart}
 }
 
@@ -59,6 +56,7 @@ func (c Chart) AddBarChart() BarChart {
 	return b
 }
 
+// Properties returns the chart's shape properties.
 func (c Chart) Properties() drawing.ShapeProperties {
 	if c.x.SpPr == nil {
 		c.x.SpPr = dml.NewCT_ShapeProperties()
@@ -66,11 +64,13 @@ func (c Chart) Properties() drawing.ShapeProperties {
 	return drawing.MakeShapeProperties(c.x.SpPr)
 }
 
+// SetDisplayBlanksAs controls how missing values are displayed.
 func (c Chart) SetDisplayBlanksAs(v crt.ST_DispBlanksAs) {
 	c.x.Chart.DispBlanksAs = crt.NewCT_DispBlanksAs()
 	c.x.Chart.DispBlanksAs.ValAttr = v
 }
 
+// AddValueAxis adds a value axis to the chart.
 func (c Chart) AddValueAxis() ValueAxis {
 	va := crt.NewCT_ValAx()
 	if c.x.Chart.PlotArea.CChoice == nil {
@@ -105,6 +105,7 @@ func (c Chart) AddValueAxis() ValueAxis {
 	return vax
 }
 
+// AddCategoryAxis adds a category axis.
 func (c Chart) AddCategoryAxis() CategoryAxis {
 	ca := crt.NewCT_CatAx()
 	if c.x.Chart.PlotArea.CChoice == nil {
@@ -140,12 +141,14 @@ func (c Chart) AddLegend() Legend {
 	return leg
 }
 
+// RemoveTitle removes any existing title from the chart.
 func (c Chart) RemoveTitle() {
 	c.x.Chart.Title = nil
 	c.x.Chart.AutoTitleDeleted = crt.NewCT_Boolean()
 	c.x.Chart.AutoTitleDeleted.ValAttr = gooxml.Bool(true)
 }
 
+// AddTitle sets a new title on the chart.
 func (c Chart) AddTitle() Title {
 	c.x.Chart.Title = crt.NewCT_Title()
 	c.x.Chart.Title.Overlay = crt.NewCT_Boolean()
