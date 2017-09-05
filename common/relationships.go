@@ -31,6 +31,11 @@ func (r Relationships) X() *relationships.Relationships {
 	return r.x
 }
 
+// IsEmpty returns true if there are no relationships.
+func (r Relationships) IsEmpty() bool {
+	return len(r.x.Relationship) == 0
+}
+
 // Clear removes any existing relationships.
 func (r Relationships) Clear() {
 	r.x.Relationship = nil

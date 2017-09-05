@@ -101,9 +101,6 @@ func (wb *Workbook) Save(w io.Writer) error {
 	defer z.Close()
 	dt := gooxml.DocTypeSpreadsheet
 
-	if err := zippkg.MarshalXML(z, zippkg.ContentTypesFilename, wb.ContentTypes.X()); err != nil {
-		return err
-	}
 	if err := zippkg.MarshalXML(z, zippkg.BaseRelsFilename, wb.Rels.X()); err != nil {
 		return err
 	}
@@ -157,8 +154,14 @@ func (wb *Workbook) Save(w io.Writer) error {
 	for i, drawing := range wb.drawings {
 		fn := gooxml.AbsoluteFilename(dt, gooxml.DrawingType, i+1)
 		zippkg.MarshalXML(z, fn, drawing)
-		zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.drawingRels[i].X())
+		if !wb.drawingRels[i].IsEmpty() {
+			zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.drawingRels[i].X())
+		}
 	}
+	if err := zippkg.MarshalXML(z, zippkg.ContentTypesFilename, wb.ContentTypes.X()); err != nil {
+		return err
+	}
+
 	if err := wb.WriteExtraFiles(z); err != nil {
 		return err
 	}
@@ -214,7 +217,10 @@ func (wb Workbook) SheetCount() int {
 
 func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship) error {
 	dt := gooxml.DocTypeSpreadsheet
-	rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+	// if we know of a better filename
+	if fn := gooxml.RelativeFilename(dt, typ, 0); fn != "" {
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+	}
 
 	switch typ {
 	case gooxml.OfficeDocumentType:
