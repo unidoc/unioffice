@@ -8857,7 +8857,6 @@ const (
 	ST_HintUnset    ST_Hint = 0
 	ST_HintDefault  ST_Hint = 1
 	ST_HintEastAsia ST_Hint = 2
-	ST_HintCs       ST_Hint = 3
 )
 
 func (e ST_Hint) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
@@ -8870,8 +8869,6 @@ func (e ST_Hint) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 		attr.Value = "default"
 	case ST_HintEastAsia:
 		attr.Value = "eastAsia"
-	case ST_HintCs:
-		attr.Value = "cs"
 	}
 	return attr, nil
 }
@@ -8884,8 +8881,6 @@ func (e *ST_Hint) UnmarshalXMLAttr(attr xml.Attr) error {
 		*e = 1
 	case "eastAsia":
 		*e = 2
-	case "cs":
-		*e = 3
 	}
 	return nil
 }
@@ -8909,8 +8904,6 @@ func (m *ST_Hint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			*m = 1
 		case "eastAsia":
 			*m = 2
-		case "cs":
-			*m = 3
 		}
 	}
 	tok, err = d.Token()
@@ -8931,8 +8924,6 @@ func (m ST_Hint) String() string {
 		return "default"
 	case 2:
 		return "eastAsia"
-	case 3:
-		return "cs"
 	}
 	return ""
 }
@@ -8943,7 +8934,7 @@ func (m ST_Hint) Validate() error {
 
 func (m ST_Hint) ValidateWithPath(path string) error {
 	switch m {
-	case 0, 1, 2, 3:
+	case 0, 1, 2:
 	default:
 		return fmt.Errorf("%s: out of range value %d", path, int(m))
 	}
