@@ -9,13 +9,12 @@ package spreadsheetDrawing
 
 import (
 	"encoding/xml"
+	"fmt"
 	"log"
 )
 
 type CT_Drawing struct {
-	TwoCellAnchor  *CT_TwoCellAnchor
-	OneCellAnchor  *CT_OneCellAnchor
-	AbsoluteAnchor *CT_AbsoluteAnchor
+	EG_Anchor []*EG_Anchor
 }
 
 func NewCT_Drawing() *CT_Drawing {
@@ -25,17 +24,10 @@ func NewCT_Drawing() *CT_Drawing {
 
 func (m *CT_Drawing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	if m.TwoCellAnchor != nil {
-		setwoCellAnchor := xml.StartElement{Name: xml.Name{Local: "xdr:twoCellAnchor"}}
-		e.EncodeElement(m.TwoCellAnchor, setwoCellAnchor)
-	}
-	if m.OneCellAnchor != nil {
-		seoneCellAnchor := xml.StartElement{Name: xml.Name{Local: "xdr:oneCellAnchor"}}
-		e.EncodeElement(m.OneCellAnchor, seoneCellAnchor)
-	}
-	if m.AbsoluteAnchor != nil {
-		seabsoluteAnchor := xml.StartElement{Name: xml.Name{Local: "xdr:absoluteAnchor"}}
-		e.EncodeElement(m.AbsoluteAnchor, seabsoluteAnchor)
+	if m.EG_Anchor != nil {
+		for _, c := range m.EG_Anchor {
+			c.MarshalXML(e, xml.StartElement{})
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -53,20 +45,26 @@ lCT_Drawing:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "twoCellAnchor":
-				m.TwoCellAnchor = NewCT_TwoCellAnchor()
-				if err := d.DecodeElement(m.TwoCellAnchor, &el); err != nil {
+				tmpanchor := NewEG_Anchor()
+				tmpanchor.TwoCellAnchor = NewCT_TwoCellAnchor()
+				if err := d.DecodeElement(tmpanchor.TwoCellAnchor, &el); err != nil {
 					return err
 				}
+				m.EG_Anchor = append(m.EG_Anchor, tmpanchor)
 			case "oneCellAnchor":
-				m.OneCellAnchor = NewCT_OneCellAnchor()
-				if err := d.DecodeElement(m.OneCellAnchor, &el); err != nil {
+				tmpanchor := NewEG_Anchor()
+				tmpanchor.OneCellAnchor = NewCT_OneCellAnchor()
+				if err := d.DecodeElement(tmpanchor.OneCellAnchor, &el); err != nil {
 					return err
 				}
+				m.EG_Anchor = append(m.EG_Anchor, tmpanchor)
 			case "absoluteAnchor":
-				m.AbsoluteAnchor = NewCT_AbsoluteAnchor()
-				if err := d.DecodeElement(m.AbsoluteAnchor, &el); err != nil {
+				tmpanchor := NewEG_Anchor()
+				tmpanchor.AbsoluteAnchor = NewCT_AbsoluteAnchor()
+				if err := d.DecodeElement(tmpanchor.AbsoluteAnchor, &el); err != nil {
 					return err
 				}
+				m.EG_Anchor = append(m.EG_Anchor, tmpanchor)
 			default:
 				log.Printf("skipping unsupported element on CT_Drawing %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -88,18 +86,8 @@ func (m *CT_Drawing) Validate() error {
 
 // ValidateWithPath validates the CT_Drawing and its children, prefixing error messages with path
 func (m *CT_Drawing) ValidateWithPath(path string) error {
-	if m.TwoCellAnchor != nil {
-		if err := m.TwoCellAnchor.ValidateWithPath(path + "/TwoCellAnchor"); err != nil {
-			return err
-		}
-	}
-	if m.OneCellAnchor != nil {
-		if err := m.OneCellAnchor.ValidateWithPath(path + "/OneCellAnchor"); err != nil {
-			return err
-		}
-	}
-	if m.AbsoluteAnchor != nil {
-		if err := m.AbsoluteAnchor.ValidateWithPath(path + "/AbsoluteAnchor"); err != nil {
+	for i, v := range m.EG_Anchor {
+		if err := v.ValidateWithPath(fmt.Sprintf("%s/EG_Anchor[%d]", path, i)); err != nil {
 			return err
 		}
 	}
