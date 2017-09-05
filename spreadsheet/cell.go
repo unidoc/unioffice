@@ -4,15 +4,20 @@
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
+
 package spreadsheet
 
 import (
 	"errors"
+	"log"
 	"strconv"
+	"time"
 
 	"baliance.com/gooxml"
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
 )
+
+const iso8601Format = "2006-01-02T15:04:05Z07:00"
 
 // Cell is a single cell within a sheet.
 type Cell struct {
@@ -64,10 +69,57 @@ func (c Cell) SetNumber(v float64) {
 	c.x.TAttr = sml.ST_CellTypeN
 }
 
-// SetBool sets the cell type to boolean and the value to the given boolean value.
+// SetBool sets the cell type to boolean and the value to the given boolean
+// value.
 func (c Cell) SetBool(v bool) {
-	c.x.V = gooxml.String(strconv.Itoa(boolToInt(v)))
+	c.x.V = gooxml.String(strconv.Itoa(b2i(v)))
 	c.x.TAttr = sml.ST_CellTypeB
+}
+
+func asUTC(d time.Time) time.Time {
+	// Excel appears to interpret and serial dates in the local timezone, so
+	// first ensure the time is converted internally.
+	d = d.Local()
+
+	// Then to avoid any daylight savings differences showing up between our
+	// epoch and the current time, we 'cast' the time to UTC and later subtract
+	// from the epoch in UTC.
+	return time.Date(d.Year(), d.Month(), d.Day(), d.Hour(),
+		d.Minute(), d.Second(), d.Nanosecond(), time.UTC)
+}
+
+// SetTime sets the cell value to a date. It's stored as the number of days past
+// th sheet epoch. When we support v5 strict, we can store an ISO 8601 date
+// string directly, however that's not allowed with v5 transitional  (even
+// though it works in Excel).
+func (c Cell) SetTime(d time.Time) {
+	d = asUTC(d)
+	epoch := c.w.Epoch()
+	if d.Before(epoch) {
+		// the ECMA 376 standard says these works, but Excel doesn't appear to
+		// support negative serial dates
+		log.Printf("times before 1900 are not supported")
+		return
+	}
+	delta := d.Sub(epoch)
+	c.x.V = gooxml.Stringf("%G", delta.Hours()/24)
+}
+
+// SetDate sets the cell value to a date. It's stored as the number of days past
+// th sheet epoch. When we support v5 strict, we can store an ISO 8601 date
+// string directly, however that's not allowed with v5 transitional  (even
+// though it works in Excel).
+func (c Cell) SetDate(d time.Time) {
+	d = asUTC(d)
+	epoch := c.w.Epoch()
+	if d.Before(epoch) {
+		// the ECMA 376 standard says these works, but Excel doesn't appear to
+		// support negative serial dates
+		log.Printf("dates before 1900 are not supported")
+		return
+	}
+	delta := d.Sub(epoch)
+	c.x.V = gooxml.Stringf("%d", int(delta.Hours()/24))
 }
 
 // SetStyle applies a style to the cell.  This style is referenced in the generated XML
@@ -100,10 +152,12 @@ func (c Cell) GetValue() (string, error) {
 	case sml.ST_CellTypeE:
 	case sml.ST_CellTypeN:
 	case sml.ST_CellTypeStr:
+	default:
 	}
 	return "", errors.New("unsupported cell type")
 }
-func boolToInt(v bool) int {
+
+func b2i(v bool) int {
 	if v {
 		return 1
 	}
