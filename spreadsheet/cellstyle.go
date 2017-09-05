@@ -19,6 +19,19 @@ type CellStyle struct {
 	xfs *sml.CT_CellXfs
 }
 
+// ClearNumberFormat removes any number formatting from the style.
+func (cs CellStyle) ClearNumberFormat() {
+	cs.xf.NumFmtIdAttr = nil
+	cs.xf.ApplyNumberFormatAttr = nil
+}
+
+// SetNumberFormatStandard sets the format based off of the ECMA 376 standard formats.  These
+// formats are standardized and don't need to be defined in the styles.
+func (cs CellStyle) SetNumberFormatStandard(s StandardFormat) {
+	cs.xf.NumFmtIdAttr = gooxml.Uint32(uint32(s))
+	cs.xf.ApplyNumberFormatAttr = gooxml.Bool(true)
+}
+
 // Wrapped returns true if the cell will wrap text.
 func (cs CellStyle) Wrapped() bool {
 	if cs.xf.Alignment == nil {
