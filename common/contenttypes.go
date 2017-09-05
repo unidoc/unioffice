@@ -62,3 +62,23 @@ func (c ContentTypes) AddOverride(path, contentType string) {
 	or.ContentTypeAttr = contentType
 	c.x.Override = append(c.x.Override, or)
 }
+
+// EnsureOverride ensures that an override for the given path exists, adding it if necessary
+func (c ContentTypes) EnsureOverride(path, contentType string) {
+	for _, ovr := range c.x.Override {
+		// found one, so just ensure the content type matches and bail
+		if ovr.PartNameAttr == path {
+			if !strings.HasPrefix(path, "/") {
+				path = "/" + path
+			}
+			if strings.HasPrefix(contentType, "http") {
+				log.Printf("content type '%s' is incorrect, must not start with http", contentType)
+			}
+			ovr.ContentTypeAttr = contentType
+			return
+		}
+	}
+
+	// Didn't find a matching override for the target path, so add one
+	c.AddOverride(path, contentType)
+}
