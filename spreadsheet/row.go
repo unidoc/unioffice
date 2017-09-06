@@ -8,6 +8,8 @@
 package spreadsheet
 
 import (
+	"fmt"
+
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -63,6 +65,8 @@ func (r Row) AddCell() Cell {
 	return Cell{r.w, c}
 }
 
+// Cells returns a slice of cells.  The cells can be manipulated, but appending
+// to the slice will have no effect.
 func (r Row) Cells() []Cell {
 	ret := []Cell{}
 	for _, c := range r.x.C {
@@ -71,10 +75,24 @@ func (r Row) Cells() []Cell {
 	return ret
 }
 
-// AddCell adds a cell to a row and returns it
-func (r Row) AddNamedCell(n string) Cell {
+// AddNamedCell adds a new named cell to a row and returns it. You should
+// normally prefer Cell() as it will return the existing cell if the cell
+// already exists, while AddNamedCell will duplicate the cell creating an
+// invaild spreadsheet.
+func (r Row) AddNamedCell(col string) Cell {
 	c := spreadsheetml.NewCT_Cell()
 	r.x.C = append(r.x.C, c)
-	c.RAttr = gooxml.String(n)
+	c.RAttr = gooxml.Stringf("%s%d", col, r.Number())
 	return Cell{r.w, c}
+}
+
+// Cell retrieves or adds a new cell to a row. Col is the column (e.g. 'A', 'B')
+func (r Row) Cell(col string) Cell {
+	name := fmt.Sprintf("%s%d", col, r.Number())
+	for _, c := range r.x.C {
+		if c.RAttr != nil && *c.RAttr == name {
+			return Cell{r.w, c}
+		}
+	}
+	return r.AddNamedCell(col)
 }

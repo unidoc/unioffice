@@ -40,7 +40,7 @@ func TestAddNumberedRow(t *testing.T) {
 	if r10.Number() != 10 {
 		t.Errorf("expected row number 10, got %d", r10.Number())
 	}
-	r102 := sheet.EnsureRow(10)
+	r102 := sheet.Row(10)
 	if r102.Number() != 10 {
 		t.Errorf("expected row number 10, got %d", r102.Number())
 	}
@@ -59,11 +59,11 @@ func TestEnsureRow(t *testing.T) {
 	wb := spreadsheet.New()
 	sheet := wb.AddSheet()
 
-	r101 := sheet.EnsureRow(10)
+	r101 := sheet.Row(10)
 	if r101.Number() != 10 {
 		t.Errorf("expected row number 10, got %d", r101.Number())
 	}
-	r102 := sheet.EnsureRow(10)
+	r102 := sheet.Row(10)
 	if r102.Number() != 10 {
 		t.Errorf("expected row number 10, got %d", r102.Number())
 	}
