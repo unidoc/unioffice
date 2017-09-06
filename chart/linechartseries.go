@@ -74,7 +74,7 @@ func (c LineChartSeries) Labels() DataLabels {
 	return MakeDataLabels(c.x.DLbls)
 }
 
-func (c LineChartSeries) CategoryAxis() AxisDataSource {
+func (c LineChartSeries) CategoryAxis() CategoryAxisDataSource {
 	if c.x.Cat == nil {
 		c.x.Cat = crt.NewCT_AxDataSource()
 	}

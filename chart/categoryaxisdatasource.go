@@ -11,24 +11,26 @@ import (
 	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
 )
 
-// AxisDataSource specifies the data for an axis.  It's commonly used with
+// CategoryAxisDataSource specifies the data for an axis.  It's commonly used with
 // SetReference to set the axis data to a range of cells.
-type AxisDataSource struct {
+type CategoryAxisDataSource struct {
 	x *crt.CT_AxDataSource
 }
 
 // MakeAxisDataSource constructs an AxisDataSource wrapper.
-func MakeAxisDataSource(x *crt.CT_AxDataSource) AxisDataSource {
-	return AxisDataSource{x}
+func MakeAxisDataSource(x *crt.CT_AxDataSource) CategoryAxisDataSource {
+	return CategoryAxisDataSource{x}
 }
 
-func (a AxisDataSource) SetReference(s string) {
+// SetReference is used to set the source data to a range of cells.
+func (a CategoryAxisDataSource) SetReference(s string) {
 	a.x.Choice = crt.NewCT_AxDataSourceChoice()
 	a.x.Choice.StrRef = crt.NewCT_StrRef()
 	a.x.Choice.StrRef.F = s
 }
 
-func (a AxisDataSource) SetValues(v []string) {
+// SetValues is used to set the source data to a set of values.
+func (a CategoryAxisDataSource) SetValues(v []string) {
 	a.x.Choice = crt.NewCT_AxDataSourceChoice()
 	a.x.Choice.StrLit = crt.NewCT_StrData()
 	a.x.Choice.StrLit.PtCount = crt.NewCT_UnsignedInt()

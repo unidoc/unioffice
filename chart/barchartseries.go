@@ -33,14 +33,15 @@ func (c BarChartSeries) SetText(s string) {
 	c.x.Tx.Choice.V = &s
 }
 
-func (c BarChartSeries) CategoryAxis() AxisDataSource {
+// CategoryAxis returns the category data source.
+func (c BarChartSeries) CategoryAxis() CategoryAxisDataSource {
 	if c.x.Cat == nil {
 		c.x.Cat = crt.NewCT_AxDataSource()
 	}
 	return MakeAxisDataSource(c.x.Cat)
 }
 
-//
+// Values returns the value data source.
 func (c BarChartSeries) Values() NumberDataSource {
 	if c.x.Val == nil {
 		c.x.Val = crt.NewCT_NumDataSource()
