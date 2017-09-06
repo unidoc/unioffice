@@ -30,11 +30,25 @@ func (c Cell) X() *sml.CT_Cell {
 	return c.x
 }
 
+func (c Cell) clearValue() {
+	c.x.F = nil
+	c.x.Is = nil
+	c.x.V = nil
+}
+
 // SetInlineString adds a string inline instead of in the shared strings table.
 func (c Cell) SetInlineString(s string) {
+	c.clearValue()
 	c.x.Is = sml.NewCT_Rst()
 	c.x.Is.T = gooxml.String(s)
 	c.x.TAttr = sml.ST_CellTypeInlineStr
+}
+
+func (c Cell) SetRichTextString() RichText {
+	c.clearValue()
+	c.x.Is = sml.NewCT_Rst()
+	c.x.TAttr = sml.ST_CellTypeInlineStr
+	return RichText{c.x.Is}
 }
 
 // SetFormulaRaw sets the cell type to formula, and the raw formula to the given string
@@ -49,6 +63,7 @@ func (c Cell) SetFormulaRaw(s string) {
 // returning an ID from the shared strings table. To reuse a string, call
 // SetStringByID with the ID returned.
 func (c Cell) SetString(s string) int {
+	c.clearValue()
 	id := c.w.SharedStrings.AddString(s)
 	c.x.V = gooxml.String(strconv.Itoa(id))
 	c.x.TAttr = sml.ST_CellTypeS
@@ -58,12 +73,14 @@ func (c Cell) SetString(s string) int {
 // SetStringByID sets the cell type to string, and the value a string in the
 // shared strings table.
 func (c Cell) SetStringByID(id int) {
+	c.clearValue()
 	c.x.V = gooxml.String(strconv.Itoa(id))
 	c.x.TAttr = sml.ST_CellTypeS
 }
 
 // SetNumber sets the cell type to number, and the value to the given number
 func (c Cell) SetNumber(v float64) {
+	c.clearValue()
 	c.x.V = gooxml.String(strconv.FormatFloat(v, 'g', -1, 64))
 	// cell type number
 	c.x.TAttr = sml.ST_CellTypeN
@@ -78,6 +95,7 @@ func (c Cell) SetNumberWithStyle(v float64, f StandardFormat) {
 // SetBool sets the cell type to boolean and the value to the given boolean
 // value.
 func (c Cell) SetBool(v bool) {
+	c.clearValue()
 	c.x.V = gooxml.String(strconv.Itoa(b2i(v)))
 	c.x.TAttr = sml.ST_CellTypeB
 }
@@ -99,6 +117,7 @@ func asUTC(d time.Time) time.Time {
 // string directly, however that's not allowed with v5 transitional  (even
 // though it works in Excel).
 func (c Cell) SetTime(d time.Time) {
+	c.clearValue()
 	d = asUTC(d)
 	epoch := c.w.Epoch()
 	if d.Before(epoch) {
@@ -117,6 +136,7 @@ func (c Cell) SetTime(d time.Time) {
 // though it works in Excel). The cell is not styled via this method, so it will
 // display as a number. SetDateWithStyle should normally be used instead.
 func (c Cell) SetDate(d time.Time) {
+	c.clearValue()
 	d = asUTC(d)
 	epoch := c.w.Epoch()
 	if d.Before(epoch) {

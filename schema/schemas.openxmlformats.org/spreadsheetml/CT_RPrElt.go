@@ -9,41 +9,40 @@ package spreadsheetml
 
 import (
 	"encoding/xml"
-	"fmt"
 	"log"
 )
 
 type CT_RPrElt struct {
 	// Font
-	RFont []*CT_FontName
+	RFont *CT_FontName
 	// Character Set
-	Charset []*CT_IntProperty
+	Charset *CT_IntProperty
 	// Font Family
-	Family []*CT_IntProperty
+	Family *CT_IntProperty
 	// Bold
-	B []*CT_BooleanProperty
+	B *CT_BooleanProperty
 	// Italic
-	I []*CT_BooleanProperty
+	I *CT_BooleanProperty
 	// Strike Through
-	Strike []*CT_BooleanProperty
+	Strike *CT_BooleanProperty
 	// Outline
-	Outline []*CT_BooleanProperty
+	Outline *CT_BooleanProperty
 	// Shadow
-	Shadow []*CT_BooleanProperty
+	Shadow *CT_BooleanProperty
 	// Condense
-	Condense []*CT_BooleanProperty
+	Condense *CT_BooleanProperty
 	// Extend
-	Extend []*CT_BooleanProperty
+	Extend *CT_BooleanProperty
 	// Text Color
-	Color []*CT_Color
+	Color *CT_Color
 	// Font Size
-	Sz []*CT_FontSize
+	Sz *CT_FontSize
 	// Underline
-	U []*CT_UnderlineProperty
+	U *CT_UnderlineProperty
 	// Vertical Alignment
-	VertAlign []*CT_VerticalAlignFontProperty
+	VertAlign *CT_VerticalAlignFontProperty
 	// Font Scheme
-	Scheme []*CT_FontScheme
+	Scheme *CT_FontScheme
 }
 
 func NewCT_RPrElt() *CT_RPrElt {
@@ -129,95 +128,80 @@ lCT_RPrElt:
 		case xml.StartElement:
 			switch el.Name.Local {
 			case "rFont":
-				tmp := NewCT_FontName()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.RFont = NewCT_FontName()
+				if err := d.DecodeElement(m.RFont, &el); err != nil {
 					return err
 				}
-				m.RFont = append(m.RFont, tmp)
 			case "charset":
-				tmp := NewCT_IntProperty()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Charset = NewCT_IntProperty()
+				if err := d.DecodeElement(m.Charset, &el); err != nil {
 					return err
 				}
-				m.Charset = append(m.Charset, tmp)
 			case "family":
-				tmp := NewCT_IntProperty()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Family = NewCT_IntProperty()
+				if err := d.DecodeElement(m.Family, &el); err != nil {
 					return err
 				}
-				m.Family = append(m.Family, tmp)
 			case "b":
-				tmp := NewCT_BooleanProperty()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.B = NewCT_BooleanProperty()
+				if err := d.DecodeElement(m.B, &el); err != nil {
 					return err
 				}
-				m.B = append(m.B, tmp)
 			case "i":
-				tmp := NewCT_BooleanProperty()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.I = NewCT_BooleanProperty()
+				if err := d.DecodeElement(m.I, &el); err != nil {
 					return err
 				}
-				m.I = append(m.I, tmp)
 			case "strike":
-				tmp := NewCT_BooleanProperty()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Strike = NewCT_BooleanProperty()
+				if err := d.DecodeElement(m.Strike, &el); err != nil {
 					return err
 				}
-				m.Strike = append(m.Strike, tmp)
 			case "outline":
-				tmp := NewCT_BooleanProperty()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Outline = NewCT_BooleanProperty()
+				if err := d.DecodeElement(m.Outline, &el); err != nil {
 					return err
 				}
-				m.Outline = append(m.Outline, tmp)
 			case "shadow":
-				tmp := NewCT_BooleanProperty()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Shadow = NewCT_BooleanProperty()
+				if err := d.DecodeElement(m.Shadow, &el); err != nil {
 					return err
 				}
-				m.Shadow = append(m.Shadow, tmp)
 			case "condense":
-				tmp := NewCT_BooleanProperty()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Condense = NewCT_BooleanProperty()
+				if err := d.DecodeElement(m.Condense, &el); err != nil {
 					return err
 				}
-				m.Condense = append(m.Condense, tmp)
 			case "extend":
-				tmp := NewCT_BooleanProperty()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Extend = NewCT_BooleanProperty()
+				if err := d.DecodeElement(m.Extend, &el); err != nil {
 					return err
 				}
-				m.Extend = append(m.Extend, tmp)
 			case "color":
-				tmp := NewCT_Color()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Color = NewCT_Color()
+				if err := d.DecodeElement(m.Color, &el); err != nil {
 					return err
 				}
-				m.Color = append(m.Color, tmp)
 			case "sz":
-				tmp := NewCT_FontSize()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Sz = NewCT_FontSize()
+				if err := d.DecodeElement(m.Sz, &el); err != nil {
 					return err
 				}
-				m.Sz = append(m.Sz, tmp)
 			case "u":
-				tmp := NewCT_UnderlineProperty()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.U = NewCT_UnderlineProperty()
+				if err := d.DecodeElement(m.U, &el); err != nil {
 					return err
 				}
-				m.U = append(m.U, tmp)
 			case "vertAlign":
-				tmp := NewCT_VerticalAlignFontProperty()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.VertAlign = NewCT_VerticalAlignFontProperty()
+				if err := d.DecodeElement(m.VertAlign, &el); err != nil {
 					return err
 				}
-				m.VertAlign = append(m.VertAlign, tmp)
 			case "scheme":
-				tmp := NewCT_FontScheme()
-				if err := d.DecodeElement(tmp, &el); err != nil {
+				m.Scheme = NewCT_FontScheme()
+				if err := d.DecodeElement(m.Scheme, &el); err != nil {
 					return err
 				}
-				m.Scheme = append(m.Scheme, tmp)
 			default:
 				log.Printf("skipping unsupported element on CT_RPrElt %v", el.Name)
 				if err := d.Skip(); err != nil {
@@ -239,78 +223,78 @@ func (m *CT_RPrElt) Validate() error {
 
 // ValidateWithPath validates the CT_RPrElt and its children, prefixing error messages with path
 func (m *CT_RPrElt) ValidateWithPath(path string) error {
-	for i, v := range m.RFont {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/RFont[%d]", path, i)); err != nil {
+	if m.RFont != nil {
+		if err := m.RFont.ValidateWithPath(path + "/RFont"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Charset {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Charset[%d]", path, i)); err != nil {
+	if m.Charset != nil {
+		if err := m.Charset.ValidateWithPath(path + "/Charset"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Family {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Family[%d]", path, i)); err != nil {
+	if m.Family != nil {
+		if err := m.Family.ValidateWithPath(path + "/Family"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.B {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/B[%d]", path, i)); err != nil {
+	if m.B != nil {
+		if err := m.B.ValidateWithPath(path + "/B"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.I {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/I[%d]", path, i)); err != nil {
+	if m.I != nil {
+		if err := m.I.ValidateWithPath(path + "/I"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Strike {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Strike[%d]", path, i)); err != nil {
+	if m.Strike != nil {
+		if err := m.Strike.ValidateWithPath(path + "/Strike"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Outline {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Outline[%d]", path, i)); err != nil {
+	if m.Outline != nil {
+		if err := m.Outline.ValidateWithPath(path + "/Outline"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Shadow {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Shadow[%d]", path, i)); err != nil {
+	if m.Shadow != nil {
+		if err := m.Shadow.ValidateWithPath(path + "/Shadow"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Condense {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Condense[%d]", path, i)); err != nil {
+	if m.Condense != nil {
+		if err := m.Condense.ValidateWithPath(path + "/Condense"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Extend {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Extend[%d]", path, i)); err != nil {
+	if m.Extend != nil {
+		if err := m.Extend.ValidateWithPath(path + "/Extend"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Color {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Color[%d]", path, i)); err != nil {
+	if m.Color != nil {
+		if err := m.Color.ValidateWithPath(path + "/Color"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Sz {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Sz[%d]", path, i)); err != nil {
+	if m.Sz != nil {
+		if err := m.Sz.ValidateWithPath(path + "/Sz"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.U {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/U[%d]", path, i)); err != nil {
+	if m.U != nil {
+		if err := m.U.ValidateWithPath(path + "/U"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.VertAlign {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/VertAlign[%d]", path, i)); err != nil {
+	if m.VertAlign != nil {
+		if err := m.VertAlign.ValidateWithPath(path + "/VertAlign"); err != nil {
 			return err
 		}
 	}
-	for i, v := range m.Scheme {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/Scheme[%d]", path, i)); err != nil {
+	if m.Scheme != nil {
+		if err := m.Scheme.ValidateWithPath(path + "/Scheme"); err != nil {
 			return err
 		}
 	}
