@@ -46,3 +46,48 @@ func TestCell(t *testing.T) {
 	}
 
 }
+
+func TestCellGetNumber(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	row := sheet.AddRow()
+	cell := row.AddCell()
+
+	cell.SetNumber(1.234)
+	f, err := cell.GetValueAsNumber()
+	if err != nil {
+		t.Errorf("expected no error")
+	}
+	if f != 1.234 {
+		t.Errorf("expected f = 1.234, got %f", f)
+	}
+}
+
+func TestCellGetNumberFromText(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	row := sheet.AddRow()
+	cell := row.AddCell()
+
+	cell.SetString("foo")
+	_, err := cell.GetValueAsNumber()
+	if err == nil {
+		t.Errorf("expected an error")
+	}
+}
+
+func TestCellGetBool(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	row := sheet.AddRow()
+	cell := row.AddCell()
+
+	cell.SetBool(true)
+	b, err := cell.GetValueAsBool()
+	if err != nil {
+		t.Errorf("expected no error")
+	}
+	if !b {
+		t.Errorf("expected b = true, got false")
+	}
+}

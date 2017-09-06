@@ -10,6 +10,7 @@ package spreadsheet
 import (
 	"errors"
 	"log"
+	"math"
 	"strconv"
 	"time"
 
@@ -30,6 +31,12 @@ func (c Cell) X() *sml.CT_Cell {
 	return c.x
 }
 
+// Clear clears the cell's value and type.
+func (c Cell) Clear() {
+	c.clearValue()
+	c.x.TAttr = sml.ST_CellTypeUnset
+}
+
 func (c Cell) clearValue() {
 	c.x.F = nil
 	c.x.Is = nil
@@ -44,6 +51,8 @@ func (c Cell) SetInlineString(s string) {
 	c.x.TAttr = sml.ST_CellTypeInlineStr
 }
 
+// SetRichTextString sets the cell to rich string mode and returns a struct that
+// can be used to add formatted text to the cell.
 func (c Cell) SetRichTextString() RichText {
 	c.clearValue()
 	c.x.Is = sml.NewCT_Rst()
@@ -86,6 +95,17 @@ func (c Cell) SetNumber(v float64) {
 	c.x.TAttr = sml.ST_CellTypeN
 }
 
+// GetValueAsNumber retrieves the cell's value as a number
+func (c Cell) GetValueAsNumber() (float64, error) {
+	if c.x.TAttr != sml.ST_CellTypeN {
+		return math.NaN(), errors.New("cell is not of number type")
+	}
+	if c.x.V == nil {
+		return math.NaN(), errors.New("cell has no value")
+	}
+	return strconv.ParseFloat(*c.x.V, 64)
+}
+
 // SetNumberWithStyle sets a number and applies a standard format to the cell.
 func (c Cell) SetNumberWithStyle(v float64, f StandardFormat) {
 	c.SetNumber(v)
@@ -98,6 +118,17 @@ func (c Cell) SetBool(v bool) {
 	c.clearValue()
 	c.x.V = gooxml.String(strconv.Itoa(b2i(v)))
 	c.x.TAttr = sml.ST_CellTypeB
+}
+
+// GetValueAsBool retrieves the cell's value as a boolean
+func (c Cell) GetValueAsBool() (bool, error) {
+	if c.x.TAttr != sml.ST_CellTypeB {
+		return false, errors.New("cell is not of bool type")
+	}
+	if c.x.V == nil {
+		return false, errors.New("cell has no value")
+	}
+	return strconv.ParseBool(*c.x.V)
 }
 
 func asUTC(d time.Time) time.Time {
