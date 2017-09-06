@@ -39,8 +39,37 @@ func (c Chart) AddLineChart() LineChart {
 	chc.LineChart = crt.NewCT_LineChart()
 	chc.LineChart.Grouping = crt.NewCT_Grouping()
 	chc.LineChart.Grouping.ValAttr = crt.ST_GroupingStandard
-
 	return LineChart{x: chc.LineChart}
+}
+
+// AddLineChart3D adds a new line chart to a chart.
+func (c Chart) AddLine3DChart() Line3DChart {
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.View3D = crt.NewCT_View3D()
+	c.x.Chart.View3D.RotX = crt.NewCT_RotX()
+	c.x.Chart.View3D.RotX.ValAttr = gooxml.Int8(15)
+	c.x.Chart.View3D.RotY = crt.NewCT_RotY()
+	c.x.Chart.View3D.RotY.ValAttr = gooxml.Uint16(20)
+	c.x.Chart.View3D.RAngAx = crt.NewCT_Boolean()
+	c.x.Chart.View3D.RAngAx.ValAttr = gooxml.Bool(false)
+
+	c.x.Chart.Floor = crt.NewCT_Surface()
+	c.x.Chart.Floor.Thickness = crt.NewCT_Thickness()
+	c.x.Chart.Floor.Thickness.ValAttr.Uint32 = gooxml.Uint32(0)
+
+	c.x.Chart.SideWall = crt.NewCT_Surface()
+	c.x.Chart.SideWall.Thickness = crt.NewCT_Thickness()
+	c.x.Chart.SideWall.Thickness.ValAttr.Uint32 = gooxml.Uint32(0)
+
+	c.x.Chart.BackWall = crt.NewCT_Surface()
+	c.x.Chart.BackWall.Thickness = crt.NewCT_Thickness()
+	c.x.Chart.BackWall.Thickness.ValAttr.Uint32 = gooxml.Uint32(0)
+
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.Line3DChart = crt.NewCT_Line3DChart()
+	chc.Line3DChart.Grouping = crt.NewCT_Grouping()
+	chc.Line3DChart.Grouping.ValAttr = crt.ST_GroupingStandard
+	return Line3DChart{x: chc.Line3DChart}
 }
 
 // AddBarChart adds a new bar chart to a chart.
@@ -126,6 +155,25 @@ func (c Chart) AddCategoryAxis() CategoryAxis {
 	cax.InitializeDefaults()
 
 	return cax
+}
+
+func (c Chart) AddSeriesAxis() SeriesAxis {
+	sa := crt.NewCT_SerAx()
+	if c.x.Chart.PlotArea.CChoice == nil {
+		c.x.Chart.PlotArea.CChoice = crt.NewCT_PlotAreaChoice1()
+	}
+
+	sa.AxId = crt.NewCT_UnsignedInt()
+	sa.AxId.ValAttr = 0x7FFFFFFF & rand.Uint32()
+	c.x.Chart.PlotArea.CChoice.SerAx = append(c.x.Chart.PlotArea.CChoice.SerAx, sa)
+
+	sa.Delete = crt.NewCT_Boolean()
+	sa.Delete.ValAttr = gooxml.Bool(false)
+
+	sax := MakeSeriesAxis(sa)
+	sax.InitializeDefaults()
+
+	return sax
 }
 
 // RemoveLegend removes the legend if the chart has one.
