@@ -148,6 +148,18 @@ func (c Chart) AddPieChart() PieChart {
 	return b
 }
 
+// AddPie3DChart adds a new pie chart to a chart.
+func (c Chart) AddPie3DChart() Pie3DChart {
+	setup3DChart(c.x.Chart)
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.Pie3DChart = crt.NewCT_Pie3DChart()
+
+	b := Pie3DChart{x: chc.Pie3DChart}
+	b.InitializeDefaults()
+	return b
+}
+
 // Properties returns the chart's shape properties.
 func (c Chart) Properties() drawing.ShapeProperties {
 	if c.x.SpPr == nil {
