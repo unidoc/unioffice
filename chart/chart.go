@@ -126,6 +126,17 @@ func (c Chart) AddArea3DChart() Area3DChart {
 	return b
 }
 
+// AddRadarChart adds a new radar chart to a chart.
+func (c Chart) AddRadarChart() RadarChart {
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.RadarChart = crt.NewCT_RadarChart()
+
+	b := RadarChart{x: chc.RadarChart}
+	b.InitializeDefaults()
+	return b
+}
+
 // Properties returns the chart's shape properties.
 func (c Chart) Properties() drawing.ShapeProperties {
 	if c.x.SpPr == nil {
