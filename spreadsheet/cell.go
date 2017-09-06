@@ -131,6 +131,11 @@ func (c Cell) GetValueAsBool() (bool, error) {
 	return strconv.ParseBool(*c.x.V)
 }
 
+func asLocal(d time.Time) time.Time {
+	d = d.UTC()
+	return time.Date(d.Year(), d.Month(), d.Day(), d.Hour(),
+		d.Minute(), d.Second(), d.Nanosecond(), time.Local)
+}
 func asUTC(d time.Time) time.Time {
 	// Excel appears to interpret and serial dates in the local timezone, so
 	// first ensure the time is converted internally.
@@ -178,6 +183,26 @@ func (c Cell) SetDate(d time.Time) {
 	}
 	delta := d.Sub(epoch)
 	c.x.V = gooxml.Stringf("%d", int(delta.Hours()/24))
+}
+
+// GetValueAsTime retrieves the cell's value as a time.  There is no difference
+// in SpreadsheetML between a time/date cell other than formatting, and that
+// typically a date cell won't have a fractional component. GetValueAsTime will
+// work for date cells as well.
+func (c Cell) GetValueAsTime() (time.Time, error) {
+	if c.x.TAttr != sml.ST_CellTypeUnset {
+		return time.Time{}, errors.New("cell type should be unset")
+	}
+	if c.x.V == nil {
+		return time.Time{}, errors.New("cell has no value")
+	}
+	f, err := strconv.ParseFloat(*c.x.V, 64)
+	if err != nil {
+		return time.Time{}, err
+	}
+
+	t := c.w.Epoch().Add(time.Duration(f * float64(24*time.Hour)))
+	return asLocal(t), nil
 }
 
 // SetDateWithStyle sets a date with the default date style applied.

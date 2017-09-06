@@ -7,9 +7,13 @@
 
 package spreadsheet_test
 
-import "testing"
-import "baliance.com/gooxml/spreadsheet"
-import sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+import (
+	"testing"
+	"time"
+
+	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	"baliance.com/gooxml/spreadsheet"
+)
 
 func TestCell(t *testing.T) {
 	wb := spreadsheet.New()
@@ -89,5 +93,43 @@ func TestCellGetBool(t *testing.T) {
 	}
 	if !b {
 		t.Errorf("expected b = true, got false")
+	}
+}
+
+func TestCellGetDate(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	row := sheet.AddRow()
+	cell := row.AddCell()
+
+	tm := time.Date(1991, time.April, 8, 1, 2, 3, 0, time.Local)
+
+	cell.SetDate(tm)
+	f, err := cell.GetValueAsTime()
+	if err != nil {
+		t.Errorf("expected no error")
+	}
+
+	// SetDate truncates time
+	exp := time.Date(1991, time.April, 8, 0, 0, 0, 0, time.Local)
+	if !f.Equal(exp) {
+		t.Errorf("expected f = %s, got %s", exp, f)
+	}
+}
+
+func TestCellGetTime(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	row := sheet.AddRow()
+	cell := row.AddCell()
+
+	tm := time.Date(1991, time.April, 8, 1, 2, 3, 0, time.Local)
+	cell.SetTime(tm)
+	f, err := cell.GetValueAsTime()
+	if err != nil {
+		t.Errorf("expected no error")
+	}
+	if !f.Equal(tm) {
+		t.Errorf("expected f = %s, got %s", tm, f)
 	}
 }
