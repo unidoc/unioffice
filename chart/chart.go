@@ -103,6 +103,17 @@ func (c Chart) AddBar3DChart() Bar3DChart {
 	return b
 }
 
+// AddAreaChart adds a new area chart to a chart.
+func (c Chart) AddAreaChart() AreaChart {
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.AreaChart = crt.NewCT_AreaChart()
+
+	b := AreaChart{x: chc.AreaChart}
+	b.InitializeDefaults()
+	return b
+}
+
 // Properties returns the chart's shape properties.
 func (c Chart) Properties() drawing.ShapeProperties {
 	if c.x.SpPr == nil {
