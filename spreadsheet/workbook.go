@@ -214,6 +214,10 @@ func (wb *Workbook) Validate() error {
 		if err := sw.ValidateWithPath(fmt.Sprintf("workbook/Sheet[%d]", i)); err != nil {
 			return err
 		}
+
+		if err := sw.Validate(); err != nil {
+			return err
+		}
 	}
 	return nil
 }

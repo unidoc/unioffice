@@ -19,6 +19,19 @@ type Row struct {
 	x *spreadsheetml.CT_Row
 }
 
+// X returns the inner wrapped XML type.
+func (r Row) X() *spreadsheetml.CT_Row {
+	return r.x
+}
+
+// Number returns the row number, or zero if it is unset.
+func (r Row) Number() uint32 {
+	if r.x.RAttr != nil {
+		return *r.x.RAttr
+	}
+	return 0
+}
+
 // SetHeight sets the row height in points.
 func (r Row) SetHeight(d measurement.Distance) {
 	r.x.HtAttr = gooxml.Float64(float64(d))
@@ -56,4 +69,12 @@ func (r Row) Cells() []Cell {
 		ret = append(ret, Cell{r.w, c})
 	}
 	return ret
+}
+
+// AddCell adds a cell to a row and returns it
+func (r Row) AddNamedCell(n string) Cell {
+	c := spreadsheetml.NewCT_Cell()
+	r.x.C = append(r.x.C, c)
+	c.RAttr = gooxml.String(n)
+	return Cell{r.w, c}
 }

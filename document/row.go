@@ -7,7 +7,9 @@
 
 package document
 
-import wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+import (
+	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+)
 
 // Row is a row within a table within a document.
 type Row struct {
