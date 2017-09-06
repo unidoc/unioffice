@@ -13,6 +13,7 @@ import (
 	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
 )
 
+// BarChartSeries is a series to be used on a bar chart.
 type BarChartSeries struct {
 	x *crt.CT_BarSer
 }
@@ -26,7 +27,7 @@ func (c BarChartSeries) X() *crt.CT_BarSer {
 func (c BarChartSeries) InitializeDefaults() {
 }
 
-// SetText sets the series text
+// SetText sets the series text.
 func (c BarChartSeries) SetText(s string) {
 	c.x.Tx = crt.NewCT_SerTx()
 	c.x.Tx.Choice.V = &s
@@ -39,6 +40,7 @@ func (c BarChartSeries) CategoryAxis() AxisDataSource {
 	return MakeAxisDataSource(c.x.Cat)
 }
 
+//
 func (c BarChartSeries) Values() NumberDataSource {
 	if c.x.Val == nil {
 		c.x.Val = crt.NewCT_NumDataSource()

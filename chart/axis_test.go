@@ -5,19 +5,16 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package chart
+package chart_test
 
-// Axis is the interface implemented by different axes when assigning to a
-// chart.
-type Axis interface {
-	AxisID() uint32
+import (
+	"testing"
+
+	"baliance.com/gooxml/chart"
+)
+
+func TestNullAxis(t *testing.T) {
+	if chart.NullAxis.AxisID() != 0 {
+		t.Errorf("expected null axis to have ID 0, go %d", chart.NullAxis.AxisID())
+	}
 }
-
-type nullAxis byte
-
-func (n nullAxis) AxisID() uint32 {
-	return 0
-}
-
-// NullAxis is a null axis with an ID of zero
-var NullAxis Axis = nullAxis(0)
