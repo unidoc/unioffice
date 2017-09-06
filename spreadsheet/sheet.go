@@ -9,6 +9,7 @@ package spreadsheet
 
 import (
 	"fmt"
+	"log"
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
@@ -22,9 +23,9 @@ type Sheet struct {
 	ws *sml.Worksheet
 }
 
-// EnsureRow will return a row with a given row number, creating a new row if
+// Row will return a row with a given row number, creating a new row if
 // necessary.
-func (s Sheet) EnsureRow(rowNum uint32) Row {
+func (s Sheet) Row(rowNum uint32) Row {
 	// see if the row exists
 	for _, r := range s.ws.SheetData.Row {
 		if r.RAttr != nil && *r.RAttr == rowNum {
@@ -35,9 +36,19 @@ func (s Sheet) EnsureRow(rowNum uint32) Row {
 	return s.AddNumberedRow(rowNum)
 }
 
+// Cell creates or returns a cell given a cell reference of the form 'A10'
+func (s Sheet) Cell(cellRef string) Cell {
+	col, row, err := ParseCellReference(cellRef)
+	if err != nil {
+		log.Printf("error parsing cell reference: %s", err)
+		return s.AddRow().AddCell()
+	}
+	return s.Row(row).Cell(col)
+}
+
 // AddNumberedRow adds a row with a given row number.  If you reuse a row number
 // the resulting file will fail validation and fail to open in Office programs. Use
-// EnsureRow instead which creates a new row or returns an existing row.
+// Row instead which creates a new row or returns an existing row.
 func (s Sheet) AddNumberedRow(rowNum uint32) Row {
 	r := sml.NewCT_Row()
 	r.RAttr = gooxml.Uint32(rowNum)
@@ -45,7 +56,9 @@ func (s Sheet) AddNumberedRow(rowNum uint32) Row {
 	return Row{s.w, r}
 }
 
-// AddRow adds a new row to a sheet.
+// AddRow adds a new row to a sheet.  You can mix this with numbered rows,
+// however it will get confusing. You should prefer to use either automatically
+// numbered rows with AddRow or manually numbered rows with Row/AddNumberedRow
 func (s Sheet) AddRow() Row {
 	maxRowID := uint32(0)
 	// find the max row number
@@ -84,6 +97,7 @@ func (s Sheet) Validate() error {
 			if c.RAttr == nil {
 				continue
 			}
+
 			if _, reusedCell := usedCells[*c.RAttr]; reusedCell {
 				return fmt.Errorf("'%s' reused cell %s", s.Name(), *c.RAttr)
 			}
