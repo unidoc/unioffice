@@ -99,7 +99,7 @@ func (c LineChartSeries) InitializeDefaults() {
 	c.Properties().LineProperties().SetJoin(drawing.LineJoinRound)
 
 	c.Marker().SetSymbol(crt.ST_MarkerStyleNone)
-	c.Labels().SetPosition(crt.ST_DLblPosR)
+	// don't set position by default as it breaks line 3d chart in Excel
 	c.Labels().SetShowLegendKey(false)
 	c.Labels().SetShowValue(false)
 	c.Labels().SetShowPercent(false)

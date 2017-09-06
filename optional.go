@@ -27,6 +27,12 @@ func Uint32(v uint32) *uint32 {
 	return &x
 }
 
+// Uint16 returns a copy of v as a pointer.
+func Uint16(v uint16) *uint16 {
+	x := v
+	return &x
+}
+
 // Int64 returns a copy of v as a pointer.
 func Int64(v int64) *int64 {
 	x := v
@@ -35,6 +41,12 @@ func Int64(v int64) *int64 {
 
 // Int32 returns a copy of v as a pointer.
 func Int32(v int32) *int32 {
+	x := v
+	return &x
+}
+
+// Int8 returns a copy of v as a pointer.
+func Int8(v int8) *int8 {
 	x := v
 	return &x
 }
