@@ -42,29 +42,33 @@ func (c Chart) AddLineChart() LineChart {
 	return LineChart{x: chc.LineChart}
 }
 
-// AddLineChart3D adds a new line chart to a chart.
+func setup3DChart(c *crt.CT_Chart) {
+	c.View3D = crt.NewCT_View3D()
+	c.View3D.RotX = crt.NewCT_RotX()
+	c.View3D.RotX.ValAttr = gooxml.Int8(15)
+	c.View3D.RotY = crt.NewCT_RotY()
+	c.View3D.RotY.ValAttr = gooxml.Uint16(20)
+	c.View3D.RAngAx = crt.NewCT_Boolean()
+	c.View3D.RAngAx.ValAttr = gooxml.Bool(false)
+
+	c.Floor = crt.NewCT_Surface()
+	c.Floor.Thickness = crt.NewCT_Thickness()
+	c.Floor.Thickness.ValAttr.Uint32 = gooxml.Uint32(0)
+
+	c.SideWall = crt.NewCT_Surface()
+	c.SideWall.Thickness = crt.NewCT_Thickness()
+	c.SideWall.Thickness.ValAttr.Uint32 = gooxml.Uint32(0)
+
+	c.BackWall = crt.NewCT_Surface()
+	c.BackWall.Thickness = crt.NewCT_Thickness()
+	c.BackWall.Thickness.ValAttr.Uint32 = gooxml.Uint32(0)
+
+}
+
+// AddLine3DChart adds a new 3D line chart to a chart.
 func (c Chart) AddLine3DChart() Line3DChart {
+	setup3DChart(c.x.Chart)
 	chc := crt.NewCT_PlotAreaChoice()
-	c.x.Chart.View3D = crt.NewCT_View3D()
-	c.x.Chart.View3D.RotX = crt.NewCT_RotX()
-	c.x.Chart.View3D.RotX.ValAttr = gooxml.Int8(15)
-	c.x.Chart.View3D.RotY = crt.NewCT_RotY()
-	c.x.Chart.View3D.RotY.ValAttr = gooxml.Uint16(20)
-	c.x.Chart.View3D.RAngAx = crt.NewCT_Boolean()
-	c.x.Chart.View3D.RAngAx.ValAttr = gooxml.Bool(false)
-
-	c.x.Chart.Floor = crt.NewCT_Surface()
-	c.x.Chart.Floor.Thickness = crt.NewCT_Thickness()
-	c.x.Chart.Floor.Thickness.ValAttr.Uint32 = gooxml.Uint32(0)
-
-	c.x.Chart.SideWall = crt.NewCT_Surface()
-	c.x.Chart.SideWall.Thickness = crt.NewCT_Thickness()
-	c.x.Chart.SideWall.Thickness.ValAttr.Uint32 = gooxml.Uint32(0)
-
-	c.x.Chart.BackWall = crt.NewCT_Surface()
-	c.x.Chart.BackWall.Thickness = crt.NewCT_Thickness()
-	c.x.Chart.BackWall.Thickness.ValAttr.Uint32 = gooxml.Uint32(0)
-
 	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
 	chc.Line3DChart = crt.NewCT_Line3DChart()
 	chc.Line3DChart.Grouping = crt.NewCT_Grouping()
@@ -81,6 +85,20 @@ func (c Chart) AddBarChart() BarChart {
 	chc.BarChart.Grouping.ValAttr = crt.ST_BarGroupingStandard
 
 	b := BarChart{x: chc.BarChart}
+	b.InitializeDefaults()
+	return b
+}
+
+// AddBar3DChart adds a new 3D bar chart to a chart.
+func (c Chart) AddBar3DChart() Bar3DChart {
+	setup3DChart(c.x.Chart)
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.Bar3DChart = crt.NewCT_Bar3DChart()
+	chc.Bar3DChart.Grouping = crt.NewCT_BarGrouping()
+	chc.Bar3DChart.Grouping.ValAttr = crt.ST_BarGroupingStandard
+
+	b := Bar3DChart{x: chc.Bar3DChart}
 	b.InitializeDefaults()
 	return b
 }
