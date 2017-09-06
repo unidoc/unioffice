@@ -8,6 +8,8 @@
 package spreadsheet
 
 import (
+	"fmt"
+
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -20,12 +22,40 @@ type Sheet struct {
 	ws *sml.Worksheet
 }
 
-// AddRow adds a new row to a sheet.
-func (s Sheet) AddRow() Row {
+// EnsureRow will return a row with a given row number, creating a new row if
+// necessary.
+func (s Sheet) EnsureRow(rowNum uint32) Row {
+	// see if the row exists
+	for _, r := range s.ws.SheetData.Row {
+		if r.RAttr != nil && *r.RAttr == rowNum {
+			return Row{s.w, r}
+		}
+	}
+	// create a new row
+	return s.AddNumberedRow(rowNum)
+}
+
+// AddNumberedRow adds a row with a given row number.  If you reuse a row number
+// the resulting file will fail validation and fail to open in Office programs. Use
+// EnsureRow instead which creates a new row or returns an existing row.
+func (s Sheet) AddNumberedRow(rowNum uint32) Row {
 	r := sml.NewCT_Row()
-	r.RAttr = gooxml.Uint32(uint32(len(s.ws.SheetData.Row) + 1))
+	r.RAttr = gooxml.Uint32(rowNum)
 	s.ws.SheetData.Row = append(s.ws.SheetData.Row, r)
 	return Row{s.w, r}
+}
+
+// AddRow adds a new row to a sheet.
+func (s Sheet) AddRow() Row {
+	maxRowID := uint32(0)
+	// find the max row number
+	for _, r := range s.ws.SheetData.Row {
+		if r.RAttr != nil && *r.RAttr > maxRowID {
+			maxRowID = *r.RAttr
+		}
+	}
+
+	return s.AddNumberedRow(maxRowID + 1)
 }
 
 // Name returns the sheet name
@@ -40,7 +70,30 @@ func (s Sheet) SetName(name string) {
 
 // Validate validates the sheet, returning an error if it is found to be invalid.
 func (s Sheet) Validate() error {
-	return s.x.Validate()
+
+	usedRows := map[uint32]struct{}{}
+	for _, r := range s.ws.SheetData.Row {
+		if r.RAttr != nil {
+			if _, reusedRow := usedRows[*r.RAttr]; reusedRow {
+				return fmt.Errorf("'%s' reused row %d", s.Name(), *r.RAttr)
+			}
+			usedRows[*r.RAttr] = struct{}{}
+		}
+		usedCells := map[string]struct{}{}
+		for _, c := range r.C {
+			if c.RAttr == nil {
+				continue
+			}
+			if _, reusedCell := usedCells[*c.RAttr]; reusedCell {
+				return fmt.Errorf("'%s' reused cell %s", s.Name(), *c.RAttr)
+			}
+			usedCells[*c.RAttr] = struct{}{}
+		}
+	}
+	if err := s.x.Validate(); err != nil {
+		return err
+	}
+	return s.ws.Validate()
 }
 
 // ValidateWithPath validates the sheet passing path informaton for a better
