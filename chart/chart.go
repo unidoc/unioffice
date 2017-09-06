@@ -137,6 +137,17 @@ func (c Chart) AddRadarChart() RadarChart {
 	return b
 }
 
+// AddPieChart adds a new pie chart to a chart.
+func (c Chart) AddPieChart() PieChart {
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.PieChart = crt.NewCT_PieChart()
+
+	b := PieChart{x: chc.PieChart}
+	b.InitializeDefaults()
+	return b
+}
+
 // Properties returns the chart's shape properties.
 func (c Chart) Properties() drawing.ShapeProperties {
 	if c.x.SpPr == nil {
