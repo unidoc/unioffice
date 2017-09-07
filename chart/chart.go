@@ -76,6 +76,17 @@ func (c Chart) AddLine3DChart() Line3DChart {
 	return Line3DChart{x: chc.Line3DChart}
 }
 
+// AddStockChart adds a new stock chart.
+func (c Chart) AddStockChart() StockChart {
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.StockChart = crt.NewCT_StockChart()
+
+	b := StockChart{x: chc.StockChart}
+	b.InitializeDefaults()
+	return b
+}
+
 // AddBarChart adds a new bar chart to a chart.
 func (c Chart) AddBarChart() BarChart {
 	chc := crt.NewCT_PlotAreaChoice()
@@ -270,7 +281,7 @@ func (c Chart) AddValueAxis() ValueAxis {
 	va.Choice.Crosses.ValAttr = crt.ST_CrossesAutoZero
 
 	va.CrossBetween = crt.NewCT_CrossBetween()
-	va.CrossBetween.ValAttr = crt.ST_CrossBetweenMidCat
+	va.CrossBetween.ValAttr = crt.ST_CrossBetweenBetween
 
 	vax := MakeValueAxis(va)
 	vax.MajorGridLines().Properties().LineProperties().SetSolidFill(color.LightGray)
@@ -306,6 +317,37 @@ func (c Chart) AddCategoryAxis() CategoryAxis {
 	return cax
 }
 
+// AddDateAxis adds a value axis to the chart.
+func (c Chart) AddDateAxis() DateAxis {
+	va := crt.NewCT_DateAx()
+	if c.x.Chart.PlotArea.CChoice == nil {
+		c.x.Chart.PlotArea.CChoice = crt.NewCT_PlotAreaChoice1()
+	}
+	va.AxId = crt.NewCT_UnsignedInt()
+	va.AxId.ValAttr = 0x7FFFFFFF & rand.Uint32()
+	c.x.Chart.PlotArea.CChoice.DateAx = append(c.x.Chart.PlotArea.CChoice.DateAx, va)
+
+	va.Delete = crt.NewCT_Boolean()
+	va.Delete.ValAttr = gooxml.Bool(false)
+
+	va.Scaling = crt.NewCT_Scaling()
+	va.Scaling.Orientation = crt.NewCT_Orientation()
+	va.Scaling.Orientation.ValAttr = crt.ST_OrientationMinMax
+
+	va.Choice = &crt.EG_AxSharedChoice{}
+	va.Choice.Crosses = crt.NewCT_Crosses()
+	va.Choice.Crosses.ValAttr = crt.ST_CrossesAutoZero
+
+	vax := DateAxis{va}
+	vax.MajorGridLines().Properties().LineProperties().SetSolidFill(color.LightGray)
+	vax.SetMajorTickMark(crt.ST_TickMarkOut)
+	vax.SetMinorTickMark(crt.ST_TickMarkIn)
+	vax.SetTickLabelPosition(crt.ST_TickLblPosNextTo)
+	vax.Properties().LineProperties().SetSolidFill(color.Black)
+
+	vax.SetPosition(crt.ST_AxPosL)
+	return vax
+}
 func (c Chart) AddSeriesAxis() SeriesAxis {
 	sa := crt.NewCT_SerAx()
 	if c.x.Chart.PlotArea.CChoice == nil {

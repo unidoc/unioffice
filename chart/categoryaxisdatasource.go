@@ -29,6 +29,13 @@ func (a CategoryAxisDataSource) SetReference(s string) {
 	a.x.Choice.StrRef.F = s
 }
 
+// SetReference is used to set the source data to a range of cells.
+func (a CategoryAxisDataSource) SetNumberReference(s string) {
+	a.x.Choice = crt.NewCT_AxDataSourceChoice()
+	a.x.Choice.NumRef = crt.NewCT_NumRef()
+	a.x.Choice.NumRef.F = s
+}
+
 // SetValues is used to set the source data to a set of values.
 func (a CategoryAxisDataSource) SetValues(v []string) {
 	a.x.Choice = crt.NewCT_AxDataSourceChoice()
