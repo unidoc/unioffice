@@ -52,7 +52,7 @@ func addBarChart(chrt chart.Chart) {
 	priceSeries := lc.AddSeries()
 	priceSeries.SetText("Price")
 	// Set a category axis reference on the first series to pull the product names
-	priceSeries.CategoryAxis().SetReference(`'Sheet 1'!A2:A6`)
+	priceSeries.CategoryAxis().SetLabelReference(`'Sheet 1'!A2:A6`)
 	priceSeries.Values().SetReference(`'Sheet 1'!B2:B6`)
 
 	soldSeries := lc.AddSeries()
@@ -79,7 +79,7 @@ func addLineChart(chrt chart.Chart) {
 	priceSeries := lc.AddSeries()
 	priceSeries.SetText("Price")
 	// Set a category axis reference on the first series to pull the product names
-	priceSeries.CategoryAxis().SetReference(`'Sheet 1'!A2:A6`)
+	priceSeries.CategoryAxis().SetLabelReference(`'Sheet 1'!A2:A6`)
 	priceSeries.Values().SetReference(`'Sheet 1'!B2:B6`)
 
 	soldSeries := lc.AddSeries()
