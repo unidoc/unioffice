@@ -25,6 +25,11 @@ type Sheet struct {
 	x   *sml.Worksheet
 }
 
+// X returns the inner wrapped XML type.
+func (s Sheet) X() *sml.Worksheet {
+	return s.x
+}
+
 // Row will return a row with a given row number, creating a new row if
 // necessary.
 func (s Sheet) Row(rowNum uint32) Row {
@@ -192,4 +197,57 @@ func (s Sheet) RangeReference(n string) string {
 	tc, tr, _ := ParseCellReference(sp[1])
 	to := fmt.Sprintf("$%s$%d", tc, tr)
 	return fmt.Sprintf(`'%s'!%s:%s`, s.Name(), from, to)
+}
+
+const autoFilterName = "_xlnm._FilterDatabase"
+
+// ClearAutoFilter removes the autofilters from the sheet.
+func (s Sheet) ClearAutoFilter() {
+	s.x.AutoFilter = nil
+	sn := "'" + s.Name() + "'!"
+	// see if we have a defined auto filter name for the sheet
+	for _, dn := range s.w.DefinedNames() {
+		if dn.Name() == autoFilterName {
+			if strings.HasPrefix(dn.Content(), sn) {
+				s.w.RemoveDefinedName(dn)
+				break
+			}
+		}
+	}
+}
+
+// SetAutoFilter creates autofilters on the sheet. These are the automatic
+// filters that are common for a header row.  The RangeRef should be of the form
+// "A1:C5" and cover the entire range of cells to be filtered, not just the
+// header. SetAutoFilter replaces any existing auto filter on the sheet.
+func (s Sheet) SetAutoFilter(rangeRef string) {
+	// this should have no $ in it
+	rangeRef = strings.Replace(rangeRef, "$", "", -1)
+
+	s.x.AutoFilter = sml.NewCT_AutoFilter()
+	s.x.AutoFilter.RefAttr = gooxml.String(rangeRef)
+	sn := "'" + s.Name() + "'!"
+	var sdn DefinedName
+
+	// see if we already have a defined auto filter name for the sheet
+	for _, dn := range s.w.DefinedNames() {
+		if dn.Name() == autoFilterName {
+			if strings.HasPrefix(dn.Content(), sn) {
+				sdn = dn
+				// name must match, but make sure rangeRef matches as well
+				sdn.SetContent(s.RangeReference(rangeRef))
+				break
+			}
+		}
+	}
+	// no existing name found, so add a new one
+	if sdn.X() == nil {
+		sdn = s.w.AddDefinedName(autoFilterName, s.RangeReference(rangeRef))
+	}
+
+	for i, ws := range s.w.xws {
+		if ws == s.x {
+			sdn.SetLocalSheetID(uint32(i))
+		}
+	}
 }

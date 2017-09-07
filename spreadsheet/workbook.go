@@ -351,6 +351,22 @@ func (wb *Workbook) AddDefinedName(name, ref string) DefinedName {
 	return DefinedName{dn}
 }
 
+// RemoveDefinedName removes an existing defined name.
+func (wb *Workbook) RemoveDefinedName(dn DefinedName) error {
+	if dn.X() == nil {
+		return errors.New("attempt to remove nil DefinedName")
+	}
+	for i, sdn := range wb.x.DefinedNames.DefinedName {
+		if sdn == dn.X() {
+			copy(wb.x.DefinedNames.DefinedName[i:], wb.x.DefinedNames.DefinedName[i+1:])
+			wb.x.DefinedNames.DefinedName[len(wb.x.DefinedNames.DefinedName)-1] = nil
+			wb.x.DefinedNames.DefinedName = wb.x.DefinedNames.DefinedName[:len(wb.x.DefinedNames.DefinedName)-1]
+			return nil
+		}
+	}
+	return errors.New("defined name not found")
+}
+
 // DefinedNames returns a slice of all defined names in the workbook.
 func (wb *Workbook) DefinedNames() []DefinedName {
 	if wb.x.DefinedNames == nil {

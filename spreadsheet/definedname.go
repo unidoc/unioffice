@@ -8,6 +8,7 @@
 package spreadsheet
 
 import sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+import "baliance.com/gooxml"
 
 // DefinedName is a named range, formula, etc.
 type DefinedName struct {
@@ -27,4 +28,19 @@ func (d DefinedName) Name() string {
 // Content returns the content of the defined range (the range in most cases)/
 func (d DefinedName) Content() string {
 	return d.x.Content
+}
+
+// SetContent sets the defined name content.
+func (d DefinedName) SetContent(s string) {
+	d.x.Content = s
+}
+
+// SetHidden marks the defined name as hidden.
+func (d DefinedName) SetHidden(b bool) {
+	d.x.HiddenAttr = gooxml.Bool(b)
+}
+
+// SetHidden marks the defined name as hidden.
+func (d DefinedName) SetLocalSheetID(id uint32) {
+	d.x.LocalSheetIdAttr = gooxml.Uint32(id)
 }

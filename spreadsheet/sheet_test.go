@@ -82,3 +82,42 @@ func TestRowNumberValidation(t *testing.T) {
 		t.Errorf("expected validation error with identically numbered rows")
 	}
 }
+
+func TestAutoFilter(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	if len(wb.DefinedNames()) != 0 {
+		t.Errorf("expected no defined names for new workbook")
+	}
+	sheet.SetAutoFilter("A1:C10")
+	if len(wb.DefinedNames()) != 1 {
+		t.Errorf("expected a new defined names for the autofilter")
+	}
+	dn := wb.DefinedNames()[0]
+	expContent := "'Sheet 1'!$A$1:$C$10"
+	if dn.Content() != expContent {
+		t.Errorf("expected defined name content = '%s', got %s", expContent, dn.Content())
+	}
+
+	sheet.SetAutoFilter("A1:B10")
+	expContent = "'Sheet 1'!$A$1:$B$10"
+	// setting the filter again should re-write the defined name and not create a new one
+	if len(wb.DefinedNames()) != 1 {
+		t.Errorf("expected a new defined names for the autofilter")
+	}
+	dn = wb.DefinedNames()[0]
+	// but the content should have changed
+	if dn.Content() != expContent {
+		t.Errorf("expected defined name content = '%s', got %s", expContent, dn.Content())
+	}
+
+	sheet.ClearAutoFilter()
+	if len(wb.DefinedNames()) != 0 {
+		t.Errorf("clearing the filter should have removed the defined name")
+	}
+
+	if sheet.X().AutoFilter != nil {
+		t.Errorf("autofilter should have been nil after clear")
+	}
+
+}
