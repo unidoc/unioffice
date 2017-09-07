@@ -202,6 +202,16 @@ func (c Chart) AddPieOfPieChart() PieOfPieChart {
 	return b
 }
 
+// AddDoughnutChart adds a new doughnut (pie with a hole in the center) chart to a chart.
+func (c Chart) AddDoughnutChart() DoughnutChart {
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.DoughnutChart = crt.NewCT_DoughnutChart()
+	b := DoughnutChart{x: chc.DoughnutChart}
+	b.InitializeDefaults()
+	return b
+}
+
 // AddScatterChart adds a scatter (X/Y) chart.
 func (c Chart) AddScatterChart() ScatterChart {
 	chc := crt.NewCT_PlotAreaChoice()
