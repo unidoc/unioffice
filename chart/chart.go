@@ -191,6 +191,17 @@ func (c Chart) AddSurface3DChart() Surface3DChart {
 	return b
 }
 
+// AddPieOfPieChart adds a new pie chart to a chart.
+func (c Chart) AddPieOfPieChart() PieOfPieChart {
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.OfPieChart = crt.NewCT_OfPieChart()
+
+	b := PieOfPieChart{x: chc.OfPieChart}
+	b.InitializeDefaults()
+	return b
+}
+
 // AddScatterChart adds a scatter (X/Y) chart.
 func (c Chart) AddScatterChart() ScatterChart {
 	chc := crt.NewCT_PlotAreaChoice()

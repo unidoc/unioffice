@@ -25,6 +25,7 @@ func (c PieChart) X() *crt.CT_PieChart {
 func (c PieChart) InitializeDefaults() {
 	c.x.VaryColors = crt.NewCT_Boolean()
 	c.x.VaryColors.ValAttr = gooxml.Bool(true)
+
 }
 
 // AddSeries adds a default series to an Pie chart.
