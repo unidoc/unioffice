@@ -22,6 +22,7 @@ const (
 	DrawingContentType = "application/vnd.openxmlformats-officedocument.drawing+xml"
 	ChartType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart"
 	ChartContentType   = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml"
+	HyperLinkType      = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
 
 	ExtendedPropertiesType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties"
 	CorePropertiesType     = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"
