@@ -15,8 +15,8 @@ the ECMA-376 standard when marshaling/unmarshaling XML documents.  From there it
 adds wrappers around the ECMA-376 derived types that provide a more convenient
 interface.
 
-The raw XML based types reside in the ```schema/``` directory. These types are
-always accessible from the wrapper types via a ```X()``` method that returns the
+The raw XML based types reside in the `schema/`` directory. These types are
+always accessible from the wrapper types via a `X() method that returns the
 raw type.  Except for the base documents (document.Document,
 spreadsheet.Workbook and presentation.Presentation), the other wrapper types are
 value types with non-pointer methods.  They exist solely to modify and return
