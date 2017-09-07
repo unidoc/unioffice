@@ -3,7 +3,7 @@ and .pptx).
 
 [![Build Status](https://travis-ci.org/baliance/gooxml.svg?branch=master)](https://travis-ci.org/baliance/gooxml)
 [![GitHub (pre-)release](https://img.shields.io/github/release/baliance/gooxml/all.svg)]()
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![License: AGPL v3](https://img.shields.io/badge/License-Dual%20AGPL%20v3/Commercial-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![GoDoc](https://godoc.org/baliance.com/gooxml?status.svg)](https://godoc.org/baliance.com/gooxml)
 [![Go Report Card](https://goreportcard.com/badge/baliance.com/gooxml)](https://goreportcard.com/report/baliance.com/gooxml)
 
@@ -12,11 +12,10 @@ and .pptx).
 ## Status ##
 
 - Documents (docx) work well, and there are no known issues.
-- Spreadsheets (xlsx) support is very new and the API may change.
+- Spreadsheets (xlsx) support is new and the API may change.  
 - PowerPoint (pptx) is unsupported at the moment, the XML types exist and some
   prototype code is checked in but it will be reworked once docx/xlsx are
   'finished'.
-
 
 ## Installation ##
     
@@ -34,6 +33,14 @@ and .pptx).
 - [Using Existing Word Document as a Template](https://github.com/baliance/gooxml/tree/master/_examples/document/use-template) Opening a document as a template to re-use the styles created in the document.
 - [Filling out Form Fields](https://github.com/baliance/gooxml/tree/master/_examples/document/fill-out-form) Opening a document with embedded form fields, filling out the fields and saving the result as  a new filled form.
 
+## Spreadsheet Examples ##
+- [Simple](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/simple) A simple sheet with a few cells
+- [Named Cells](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/named-cells) Different ways of referencing rows and cells.
+- [Cell Number/Date/Time Formats](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/number-date-time-formats) Creating cells with various number/date/time formats.
+- [Line Chart](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/line-chart)/[Line Chart 3D](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/line-chart-3d) Line Charts
+- [Bar Chart](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/bar-chart) Bar Charts
+- [Mutiple Charts](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/multiple-charts) Multiple charts on a single sheet
+- [Named Cell Ranges](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/named-ranges) Naming cell ranges
 
 ## Raw Types ##
 
