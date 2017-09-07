@@ -74,6 +74,16 @@ func (r Relationships) AddRelationship(target, ctype string) Relationship {
 	return Relationship{rel}
 }
 
+// Hyperlink is just an appropriately configured relationship.
+type Hyperlink Relationship
+
+// AddHyperlink adds an external hyperlink relationship.
+func (r Relationships) AddHyperlink(target string) Hyperlink {
+	rel := r.AddRelationship(target, gooxml.HyperLinkType)
+	rel.x.TargetModeAttr = relationships.ST_TargetModeExternal
+	return Hyperlink(rel)
+}
+
 // Relationships returns a slice of all of the relationships.
 func (r Relationships) Relationships() []Relationship {
 	ret := []Relationship{}

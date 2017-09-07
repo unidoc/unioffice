@@ -147,3 +147,18 @@ func (s Sheet) SetDrawing(d Drawing) {
 	s.x.Drawing = sml.NewCT_Drawing()
 	s.x.Drawing.IdAttr = drawingID
 }
+
+// AddHyperlink adds a hyperlink to a sheet. Adding the hyperlink to the sheet
+// and setting it on a cell is more efficient than setting hyperlinks directly
+// on a cell.
+func (s Sheet) AddHyperlink(url string) common.Hyperlink {
+	// store the relationships so we don't need to do a lookup here?
+	for i, ws := range s.w.xws {
+		if ws == s.x {
+			// add a hyperlink relationship in the worksheet relationships file
+			return s.w.xwsRels[i].AddHyperlink(url)
+		}
+	}
+	// should never occur
+	return common.Hyperlink{}
+}

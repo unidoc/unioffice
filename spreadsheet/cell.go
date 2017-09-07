@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"baliance.com/gooxml"
+	"baliance.com/gooxml/common"
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
 )
 
@@ -273,20 +274,27 @@ func (c Cell) GetValue() (string, error) {
 	return "", errors.New("unsupported cell type")
 }
 
-func (c Cell) SetHyperlink(url string) {
+// SetHyperlink sets a hyperlink on a cell.
+func (c Cell) SetHyperlink(hl common.Hyperlink) {
 	if c.s.Hyperlinks == nil {
 		c.s.Hyperlinks = sml.NewCT_Hyperlinks()
 	}
-	hl := sml.NewCT_Hyperlink()
-	hl.RefAttr = "A1"
-	c.s.Hyperlinks.Hyperlink = append(c.s.Hyperlinks.Hyperlink, hl)
+	rel := common.Relationship(hl)
 
+	hle := sml.NewCT_Hyperlink()
+	hle.RefAttr = c.Reference()
+	hle.IdAttr = gooxml.String(rel.ID())
+	c.s.Hyperlinks.Hyperlink = append(c.s.Hyperlinks.Hyperlink, hle)
+}
+
+// AddHyperlink creates and sets a hyperlink on a cell.
+func (c Cell) AddHyperlink(url string) {
 	// store the relationships so we don't need to do a lookup here?
 	for i, ws := range c.w.xws {
 		if ws == c.s {
-			rel := c.w.xwsRels[i].AddHyperlink(url)
-			hl.IdAttr = gooxml.String(rel.ID())
-			break
+			// add a hyperlink relationship in the worksheet relationships file
+			c.SetHyperlink(c.w.xwsRels[i].AddHyperlink(url))
+			return
 		}
 	}
 }
