@@ -22,14 +22,16 @@ func MakeAxisDataSource(x *crt.CT_AxDataSource) CategoryAxisDataSource {
 	return CategoryAxisDataSource{x}
 }
 
-// SetReference is used to set the source data to a range of cells.
-func (a CategoryAxisDataSource) SetReference(s string) {
+// SetLabelReference is used to set the source data to a range of cells
+// containing strings.
+func (a CategoryAxisDataSource) SetLabelReference(s string) {
 	a.x.Choice = crt.NewCT_AxDataSourceChoice()
 	a.x.Choice.StrRef = crt.NewCT_StrRef()
 	a.x.Choice.StrRef.F = s
 }
 
-// SetReference is used to set the source data to a range of cells.
+// SetNumberReference is used to set the source data to a range of cells containing
+// numbers.
 func (a CategoryAxisDataSource) SetNumberReference(s string) {
 	a.x.Choice = crt.NewCT_AxDataSourceChoice()
 	a.x.Choice.NumRef = crt.NewCT_NumRef()

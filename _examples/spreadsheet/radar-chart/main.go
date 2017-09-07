@@ -36,17 +36,17 @@ func main() {
 	priceSeries := lc.AddSeries()
 	priceSeries.SetText("Price")
 	// Set a category axis reference on the first series to pull the product names
-	priceSeries.CategoryAxis().SetReference(`'Sheet 1'!A2:A6`)
+	priceSeries.CategoryAxis().SetLabelReference(`'Sheet 1'!A2:A6`)
 	priceSeries.Values().SetReference(`'Sheet 1'!B2:B6`)
 
 	soldSeries := lc.AddSeries()
 	soldSeries.SetText("Sold")
-	soldSeries.CategoryAxis().SetReference(`'Sheet 1'!A2:A6`)
+	soldSeries.CategoryAxis().SetLabelReference(`'Sheet 1'!A2:A6`)
 	soldSeries.Values().SetReference(`'Sheet 1'!C2:C6`)
 
 	totalSeries := lc.AddSeries()
 	totalSeries.SetText("Total")
-	totalSeries.CategoryAxis().SetReference(`'Sheet 1'!A2:A6`)
+	totalSeries.CategoryAxis().SetLabelReference(`'Sheet 1'!A2:A6`)
 	totalSeries.Values().SetReference(`'Sheet 1'!D2:D6`)
 
 	// the radar chart accepts two axes

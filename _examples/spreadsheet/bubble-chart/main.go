@@ -35,7 +35,7 @@ func main() {
 	lc := chart.AddBubbleChart()
 
 	soldSeries := lc.AddSeries()
-	soldSeries.CategoryAxis().SetReference(`'Sheet 1'!A2:A6`)
+	soldSeries.CategoryAxis().SetLabelReference(`'Sheet 1'!A2:A6`)
 	soldSeries.SetText("Sold")
 	soldSeries.Values().SetReference(`'Sheet 1'!C2:C6`)
 	soldSeries.BubbleSizes().SetReference(`'Sheet 1'!D2:D6`)

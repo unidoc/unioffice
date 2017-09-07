@@ -47,7 +47,7 @@ func main() {
 	priceSeries.SetText("Price")
 
 	// Set a category axis reference on the first series to pull the product names
-	priceSeries.CategoryAxis().SetReference(`'Sheet 1'!` + productNames.Name())
+	priceSeries.CategoryAxis().SetLabelReference(`'Sheet 1'!` + productNames.Name())
 	priceSeries.Values().SetReference(`'Sheet 1'!` + prices.Name())
 
 	soldSeries := lc.AddSeries()
