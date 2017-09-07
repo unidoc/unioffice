@@ -8,51 +8,49 @@
 package chart
 
 import (
-	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/drawing"
-	"baliance.com/gooxml/measurement"
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
 )
 
-// LineChartSeries is the data series for a line chart.
-type LineChartSeries struct {
-	x *crt.CT_LineSer
+// ScatterChartSeries is the data series for a scatter chart.
+type ScatterChartSeries struct {
+	x *crt.CT_ScatterSer
 }
 
 // X returns the inner wrapped XML type.
-func (c LineChartSeries) X() *crt.CT_LineSer {
+func (c ScatterChartSeries) X() *crt.CT_ScatterSer {
 	return c.x
 }
 
 // Index returns the index of the series
-func (c LineChartSeries) Index() uint32 {
+func (c ScatterChartSeries) Index() uint32 {
 	return c.x.Idx.ValAttr
 }
 
 // SetIndex sets the index of the series
-func (c LineChartSeries) SetIndex(idx uint32) {
+func (c ScatterChartSeries) SetIndex(idx uint32) {
 	c.x.Idx.ValAttr = idx
 }
 
 // Order returns the order of the series
-func (c LineChartSeries) Order() uint32 {
+func (c ScatterChartSeries) Order() uint32 {
 	return c.x.Order.ValAttr
 }
 
 // SetOrder sets the order of the series
-func (c LineChartSeries) SetOrder(idx uint32) {
+func (c ScatterChartSeries) SetOrder(idx uint32) {
 	c.x.Order.ValAttr = idx
 }
 
 // SetText sets the series text
-func (c LineChartSeries) SetText(s string) {
+func (c ScatterChartSeries) SetText(s string) {
 	c.x.Tx = crt.NewCT_SerTx()
 	c.x.Tx.Choice.V = &s
 }
 
 // Properties returns the line chart series shape properties.
-func (c LineChartSeries) Properties() drawing.ShapeProperties {
+func (c ScatterChartSeries) Properties() drawing.ShapeProperties {
 	if c.x.SpPr == nil {
 		c.x.SpPr = dml.NewCT_ShapeProperties()
 	}
@@ -60,7 +58,7 @@ func (c LineChartSeries) Properties() drawing.ShapeProperties {
 }
 
 // Marker returns the marker properties.
-func (c LineChartSeries) Marker() Marker {
+func (c ScatterChartSeries) Marker() Marker {
 	if c.x.Marker == nil {
 		c.x.Marker = crt.NewCT_Marker()
 	}
@@ -68,41 +66,38 @@ func (c LineChartSeries) Marker() Marker {
 }
 
 // Labels returns the data label properties.
-func (c LineChartSeries) Labels() DataLabels {
+func (c ScatterChartSeries) Labels() DataLabels {
 	if c.x.DLbls == nil {
 		c.x.DLbls = crt.NewCT_DLbls()
 	}
 	return MakeDataLabels(c.x.DLbls)
 }
 
-func (c LineChartSeries) CategoryAxis() CategoryAxisDataSource {
-	if c.x.Cat == nil {
-		c.x.Cat = crt.NewCT_AxDataSource()
+func (c ScatterChartSeries) CategoryAxis() CategoryAxisDataSource {
+	if c.x.XVal == nil {
+		c.x.XVal = crt.NewCT_AxDataSource()
 	}
-	return MakeAxisDataSource(c.x.Cat)
+	return MakeAxisDataSource(c.x.XVal)
 }
 
-func (c LineChartSeries) Values() NumberDataSource {
-	if c.x.Val == nil {
-		c.x.Val = crt.NewCT_NumDataSource()
+func (c ScatterChartSeries) Values() NumberDataSource {
+	if c.x.YVal == nil {
+		c.x.YVal = crt.NewCT_NumDataSource()
 	}
-	return MakeNumberDataSource(c.x.Val)
+	return MakeNumberDataSource(c.x.YVal)
 }
 
-func (c LineChartSeries) SetSmooth(b bool) {
+func (c ScatterChartSeries) SetSmooth(b bool) {
 	c.x.Smooth = crt.NewCT_Boolean()
 	c.x.Smooth.ValAttr = &b
 }
 
-func (c LineChartSeries) InitializeDefaults() {
-	c.Properties().LineProperties().SetWidth(1 * measurement.Point)
-	c.Properties().LineProperties().SetSolidFill(color.Black)
-	c.Properties().LineProperties().SetJoin(drawing.LineJoinRound)
-
-	c.Marker().SetSymbol(crt.ST_MarkerStyleNone)
-	// don't set position by default as it breaks line 3d chart in Excel
+func (c ScatterChartSeries) InitializeDefaults() {
+	// turn off the line
+	c.Properties().LineProperties().SetNoFill()
+	c.Marker().SetSymbol(crt.ST_MarkerStyleAuto)
 	c.Labels().SetShowLegendKey(false)
-	c.Labels().SetShowValue(false)
+	c.Labels().SetShowValue(true)
 	c.Labels().SetShowPercent(false)
 	c.Labels().SetShowCategoryName(false)
 	c.Labels().SetShowSeriesName(false)

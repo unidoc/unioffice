@@ -32,7 +32,7 @@ func main() {
 	// make it a bit wider than the default
 	anc.BottomRight().SetCol(15)
 
-	lc := chart.AddLineChart()
+	lc := chart.AddScatterChart()
 	priceSeries := lc.AddSeries()
 	priceSeries.SetText("Price")
 	// Set a category axis reference on the first series to pull the product names

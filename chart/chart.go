@@ -191,6 +191,17 @@ func (c Chart) AddSurface3DChart() Surface3DChart {
 	return b
 }
 
+// AddScatterChart adds a scatter (X/Y) chart.
+func (c Chart) AddScatterChart() ScatterChart {
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.ScatterChart = crt.NewCT_ScatterChart()
+
+	b := ScatterChart{x: chc.ScatterChart}
+	b.InitializeDefaults()
+	return b
+}
+
 // Properties returns the chart's shape properties.
 func (c Chart) Properties() drawing.ShapeProperties {
 	if c.x.SpPr == nil {
