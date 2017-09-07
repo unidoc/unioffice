@@ -257,3 +257,46 @@ func (s Sheet) SetAutoFilter(rangeRef string) {
 		}
 	}
 }
+
+// AddMergedCells merges cells within a sheet.
+func (s Sheet) AddMergedCells(fromRef, toRef string) MergedCell {
+	// TODO: we might need to actually create the merged cells if they don't
+	// exist, but it appears to work fine on both Excel and LibreOffice just
+	// creating the merged region
+
+	if s.x.MergeCells == nil {
+		s.x.MergeCells = sml.NewCT_MergeCells()
+	}
+
+	merge := sml.NewCT_MergeCell()
+	merge.RefAttr = fmt.Sprintf("%s:%s", fromRef, toRef)
+
+	s.x.MergeCells.MergeCell = append(s.x.MergeCells.MergeCell, merge)
+	s.x.MergeCells.CountAttr = gooxml.Uint32(uint32(len(s.x.MergeCells.MergeCell)))
+	return MergedCell{s.w, s.x, merge}
+}
+
+// MergedCells returns the merged cell regions within the sheet.
+func (s Sheet) MergedCells() []MergedCell {
+	if s.x.MergeCells == nil {
+		return nil
+	}
+	ret := []MergedCell{}
+	for _, c := range s.x.MergeCells.MergeCell {
+		ret = append(ret, MergedCell{s.w, s.x, c})
+	}
+	return ret
+}
+
+// RemoveMergedCell removes merging from a cell range within a sheet.  The cells
+// that made up the merged cell remain, but are no lon merged.
+func (s Sheet) RemoveMergedCell(mc MergedCell) {
+	for i, c := range s.x.MergeCells.MergeCell {
+		if c == mc.X() {
+			copy(s.x.MergeCells.MergeCell[i:], s.x.MergeCells.MergeCell[i+1:])
+			s.x.MergeCells.MergeCell[len(s.x.MergeCells.MergeCell)-1] = nil
+			s.x.MergeCells.MergeCell = s.x.MergeCells.MergeCell[:len(s.x.MergeCells.MergeCell)-1]
+		}
+	}
+
+}

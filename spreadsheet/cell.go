@@ -245,6 +245,31 @@ func (c Cell) SetStyleIndex(idx uint32) {
 	c.x.SAttr = gooxml.Uint32(idx)
 }
 
+// GetString returns the string in a cell if it's an inline or string table
+// string.  Otherwise it returns an empty string.
+func (c Cell) GetString() string {
+	switch c.x.TAttr {
+	case sml.ST_CellTypeInlineStr:
+		if c.x.Is == nil || c.x.Is.T == nil {
+			return ""
+		}
+	case sml.ST_CellTypeS:
+		if c.x.V == nil {
+			return ""
+		}
+		id, err := strconv.Atoi(*c.x.V)
+		if err != nil {
+			return ""
+		}
+		s, err := c.w.SharedStrings.GetString(id)
+		if err != nil {
+			return ""
+		}
+		return s
+	}
+	return ""
+}
+
 func (c Cell) GetValue() (string, error) {
 	switch c.x.TAttr {
 	case sml.ST_CellTypeInlineStr:

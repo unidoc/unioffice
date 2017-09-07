@@ -41,6 +41,7 @@ and .pptx).
 - [Bar Chart](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/bar-chart) Bar Charts
 - [Mutiple Charts](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/multiple-charts) Multiple charts on a single sheet
 - [Named Cell Ranges](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/named-ranges) Naming cell ranges
+- [Merged Cells](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/merged) Merge and unmerge cells.
 
 ## Raw Types ##
 
