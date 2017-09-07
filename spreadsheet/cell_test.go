@@ -8,6 +8,7 @@
 package spreadsheet_test
 
 import (
+	"strconv"
 	"testing"
 	"time"
 
@@ -131,5 +132,65 @@ func TestCellGetTime(t *testing.T) {
 	}
 	if !f.Equal(tm) {
 		t.Errorf("expected f = %s, got %s", tm, f)
+	}
+}
+
+func TestCellClear(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	row := sheet.AddRow()
+	cell := row.AddCell()
+
+	cell.SetInlineString("a")
+	if cell.X().Is == nil {
+		t.Errorf("expected is non nil")
+	}
+
+	cell.SetFormulaRaw("=1+2")
+	if cell.X().F == nil {
+		t.Errorf("expected f != nilnil")
+	}
+
+	cell.SetDate(time.Now())
+	if cell.X().V == nil {
+		t.Errorf("expected v != nil")
+	}
+
+	cell.Clear()
+
+	if cell.X().F != nil {
+		t.Errorf("expected f = nil")
+	}
+	if cell.X().Is != nil {
+		t.Errorf("expected is = nil")
+	}
+	if cell.X().V != nil {
+		t.Errorf("expected v = nil")
+	}
+}
+
+func TestCellRichTextString(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	row := sheet.AddRow()
+	cell := row.AddCell()
+	rt := cell.SetRichTextString()
+	if rt.X() != cell.X().Is {
+		t.Errorf("rich text should wrap cell Is")
+	}
+}
+
+func TestCellStringByID(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	row := sheet.AddRow()
+	cell := row.AddCell()
+	// this isn't proper usage of SetStringByID, but it verifies
+	// the functionality
+	cell.SetStringByID(1)
+
+	v, err := strconv.ParseUint(*cell.X().V, 10, 32)
+	if v != 1 || err != nil {
+		t.Errorf("expected 1 and no error, got %d %s", v, err)
 	}
 }

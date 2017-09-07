@@ -62,10 +62,10 @@ func (c Cell) SetRichTextString() RichText {
 
 // SetFormulaRaw sets the cell type to formula, and the raw formula to the given string
 func (c Cell) SetFormulaRaw(s string) {
+	c.clearValue()
 	c.x.TAttr = sml.ST_CellTypeStr
 	c.x.F = sml.NewCT_CellFormula()
 	c.x.F.Content = s
-	c.x.V = nil
 }
 
 // SetString sets the cell type to string, and the value to the given string,
@@ -235,11 +235,6 @@ func (c Cell) SetStyleIndex(idx uint32) {
 
 func (c Cell) GetValue() (string, error) {
 	switch c.x.TAttr {
-	case sml.ST_CellTypeB:
-		if c.x.V == nil {
-			return "", nil
-		}
-		return *c.x.V, nil
 	case sml.ST_CellTypeInlineStr:
 		if c.x.Is == nil || c.x.Is.T == nil {
 			return "", nil
@@ -254,10 +249,15 @@ func (c Cell) GetValue() (string, error) {
 			return "", err
 		}
 		return c.w.SharedStrings.GetString(id)
-	case sml.ST_CellTypeE:
-	case sml.ST_CellTypeN:
 	case sml.ST_CellTypeStr:
+		if c.x.F != nil {
+			return c.x.F.Content, nil
+		}
 	default:
+		if c.x.V == nil {
+			return "", nil
+		}
+		return *c.x.V, nil
 	}
 	return "", errors.New("unsupported cell type")
 }
