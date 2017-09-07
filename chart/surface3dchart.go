@@ -14,18 +14,18 @@ import (
 	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
 )
 
-// SurfaceChart is a 3D surface chart, viewed from the top-down.
-type SurfaceChart struct {
+// Surface3DChart is a 3D view of a surface chart.
+type Surface3DChart struct {
 	chartBase
-	x *crt.CT_SurfaceChart
+	x *crt.CT_Surface3DChart
 }
 
 // X returns the inner wrapped XML type.
-func (c SurfaceChart) X() *crt.CT_SurfaceChart {
+func (c Surface3DChart) X() *crt.CT_Surface3DChart {
 	return c.x
 }
 
-func (c SurfaceChart) InitializeDefaults() {
+func (c Surface3DChart) InitializeDefaults() {
 	c.x.Wireframe = crt.NewCT_Boolean()
 	c.x.Wireframe.ValAttr = gooxml.Bool(false)
 
@@ -42,7 +42,7 @@ func (c SurfaceChart) InitializeDefaults() {
 }
 
 // AddSeries adds a default series to a Surface chart.
-func (c SurfaceChart) AddSeries() SurfaceChartSeries {
+func (c Surface3DChart) AddSeries() SurfaceChartSeries {
 	color := c.nextColor(len(c.x.Ser))
 	ser := crt.NewCT_SurfaceSer()
 	c.x.Ser = append(c.x.Ser, ser)
@@ -56,7 +56,7 @@ func (c SurfaceChart) AddSeries() SurfaceChartSeries {
 }
 
 // AddAxis adds an axis to a Surface chart.
-func (c SurfaceChart) AddAxis(axis Axis) {
+func (c Surface3DChart) AddAxis(axis Axis) {
 	axisID := crt.NewCT_UnsignedInt()
 	axisID.ValAttr = axis.AxisID()
 	c.x.AxId = append(c.x.AxId, axisID)
