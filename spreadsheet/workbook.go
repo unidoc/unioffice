@@ -335,3 +335,28 @@ func (wb *Workbook) AddDrawing() Drawing {
 	d.InitializeDefaults()
 	return d
 }
+
+// AddDefinedName adds a name for a cell or range reference that can be used in
+// formulas and charts.
+func (wb *Workbook) AddDefinedName(name, ref string) DefinedName {
+	if wb.x.DefinedNames == nil {
+		wb.x.DefinedNames = sml.NewCT_DefinedNames()
+	}
+	dn := sml.NewCT_DefinedName()
+	dn.Content = ref
+	dn.NameAttr = name
+	wb.x.DefinedNames.DefinedName = append(wb.x.DefinedNames.DefinedName, dn)
+	return DefinedName{dn}
+}
+
+// DefinedNames returns a slice of all defined names in the workbook.
+func (wb *Workbook) DefinedNames() []DefinedName {
+	if wb.x.DefinedNames == nil {
+		return nil
+	}
+	ret := []DefinedName{}
+	for _, dn := range wb.x.DefinedNames.DefinedName {
+		ret = append(ret, DefinedName{dn})
+	}
+	return ret
+}

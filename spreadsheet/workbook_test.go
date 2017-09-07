@@ -176,3 +176,30 @@ func TestPreserveSpace(t *testing.T) {
 		}
 	}
 }
+
+func TestAddDefinedName(t *testing.T) {
+	wb := spreadsheet.New()
+	if len(wb.DefinedNames()) != 0 {
+		t.Errorf("expeced no defined names on new wb")
+	}
+	name := "foo"
+	ref := "bar"
+	dn := wb.AddDefinedName(name, ref)
+	if len(wb.DefinedNames()) != 1 {
+		t.Errorf("expected 1 defined names on wb")
+	}
+	if dn.Name() != name {
+		t.Errorf("expected name = %s, got %s", name, dn.Name())
+	}
+	if dn.Content() != ref {
+		t.Errorf("expected content = %s, got %s", ref, dn.Content())
+	}
+}
+func ExampleWorkbook_AddDefinedName() {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	productNames := wb.AddDefinedName("ProductNames", sheet.RangeReference("A2:A6"))
+	// now 'ProductNames' can be used in formulas, charts, etc.
+	fmt.Printf("%s refers to %s", productNames.Name(), productNames.Content())
+	// Output: ProductNames refers to 'Sheet 1'!$A$2:$A$6
+}
