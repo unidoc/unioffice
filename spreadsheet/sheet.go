@@ -10,6 +10,7 @@ package spreadsheet
 import (
 	"fmt"
 	"log"
+	"strings"
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
@@ -161,4 +162,19 @@ func (s Sheet) AddHyperlink(url string) common.Hyperlink {
 	}
 	// should never occur
 	return common.Hyperlink{}
+}
+
+// RangeReference converts a range reference of the form 'A1:A5' to 'Sheet
+// 1'!$A$1:$A$5 . Renaming a sheet after calculating a range reference will
+// invalidate the reference.
+func (s Sheet) RangeReference(n string) string {
+	sp := strings.Split(n, ":")
+	fc, fr, _ := ParseCellReference(sp[0])
+	from := fmt.Sprintf("$%s$%d", fc, fr)
+	if len(sp) == 1 {
+		return fmt.Sprintf(`'%s'!%s`, s.Name(), from)
+	}
+	tc, tr, _ := ParseCellReference(sp[1])
+	to := fmt.Sprintf("$%s$%d", tc, tr)
+	return fmt.Sprintf(`'%s'!%s:%s`, s.Name(), from, to)
 }
