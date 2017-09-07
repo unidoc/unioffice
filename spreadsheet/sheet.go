@@ -105,6 +105,7 @@ func (s Sheet) SetName(name string) {
 // Validate validates the sheet, returning an error if it is found to be invalid.
 func (s Sheet) Validate() error {
 
+	// check for re-used row numbers
 	usedRows := map[uint32]struct{}{}
 	for _, r := range s.x.SheetData.Row {
 		if r.RAttr != nil {
@@ -113,6 +114,7 @@ func (s Sheet) Validate() error {
 			}
 			usedRows[*r.RAttr] = struct{}{}
 		}
+		// or re-used column labels within a row
 		usedCells := map[string]struct{}{}
 		for _, c := range r.C {
 			if c.RAttr == nil {
@@ -124,6 +126,10 @@ func (s Sheet) Validate() error {
 			}
 			usedCells[*c.RAttr] = struct{}{}
 		}
+	}
+
+	if len(s.Name()) > 31 {
+		return fmt.Errorf("sheet name '%s' has %d characters, max length is 31", s.Name(), len(s.Name()))
 	}
 	if err := s.cts.Validate(); err != nil {
 		return err
