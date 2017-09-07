@@ -25,7 +25,12 @@ func (c PieChartSeries) X() *crt.CT_PieSer {
 
 // InitializeDefaults initializes an Pie series to the default values.
 func (c PieChartSeries) InitializeDefaults() {
+}
 
+// SetExplosion sets the value that the segements of the pie are 'exploded' by
+func (c PieChartSeries) SetExplosion(v uint32) {
+	c.x.Explosion = crt.NewCT_UnsignedInt()
+	c.x.Explosion.ValAttr = v
 }
 
 // SetText sets the series text.

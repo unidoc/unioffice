@@ -38,6 +38,7 @@ func main() {
 	// Set a category axis reference on the first series to pull the product names
 	priceSeries.CategoryAxis().SetReference(`'Sheet 1'!A2:A6`)
 	priceSeries.Values().SetReference(`'Sheet 1'!B2:B6`)
+	priceSeries.SetExplosion(3)
 
 	// add a title and legend
 	title := chart.AddTitle()
