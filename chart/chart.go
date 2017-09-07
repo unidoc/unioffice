@@ -179,6 +179,18 @@ func (c Chart) AddSurfaceChart() SurfaceChart {
 	return b
 }
 
+// AddSurface3DChart adds a new 3D surface chart to a chart.
+func (c Chart) AddSurface3DChart() Surface3DChart {
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.Surface3DChart = crt.NewCT_Surface3DChart()
+
+	setup3DChart(c.x.Chart)
+	b := Surface3DChart{x: chc.Surface3DChart}
+	b.InitializeDefaults()
+	return b
+}
+
 // Properties returns the chart's shape properties.
 func (c Chart) Properties() drawing.ShapeProperties {
 	if c.x.SpPr == nil {
