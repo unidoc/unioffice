@@ -10,6 +10,7 @@ package spreadsheet
 import (
 	"fmt"
 	"log"
+	"sort"
 	"strings"
 
 	"baliance.com/gooxml"
@@ -54,6 +55,20 @@ func (s Sheet) AddNumberedRow(rowNum uint32) Row {
 	r := sml.NewCT_Row()
 	r.RAttr = gooxml.Uint32(rowNum)
 	s.x.SheetData.Row = append(s.x.SheetData.Row, r)
+
+	// Excel wants the rows to be sorted
+	sort.Slice(s.x.SheetData.Row, func(i, j int) bool {
+		l := s.x.SheetData.Row[i].RAttr
+		r := s.x.SheetData.Row[j].RAttr
+		if l == nil {
+			return true
+		}
+		if r == nil {
+			return true
+		}
+		return *l < *r
+	})
+
 	return Row{s.w, s.x, r}
 }
 
