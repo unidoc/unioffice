@@ -29,7 +29,7 @@ func (s Sheet) Row(rowNum uint32) Row {
 	// see if the row exists
 	for _, r := range s.ws.SheetData.Row {
 		if r.RAttr != nil && *r.RAttr == rowNum {
-			return Row{s.w, r}
+			return Row{s.w, s.x, r}
 		}
 	}
 	// create a new row
@@ -53,7 +53,7 @@ func (s Sheet) AddNumberedRow(rowNum uint32) Row {
 	r := sml.NewCT_Row()
 	r.RAttr = gooxml.Uint32(rowNum)
 	s.ws.SheetData.Row = append(s.ws.SheetData.Row, r)
-	return Row{s.w, r}
+	return Row{s.w, s.x, r}
 }
 
 // AddRow adds a new row to a sheet.  You can mix this with numbered rows,
@@ -120,7 +120,7 @@ func (s Sheet) ValidateWithPath(path string) error {
 func (s Sheet) Rows() []Row {
 	ret := []Row{}
 	for _, r := range s.ws.SheetData.Row {
-		ret = append(ret, Row{s.w, r})
+		ret = append(ret, Row{s.w, s.x, r})
 	}
 	return ret
 }

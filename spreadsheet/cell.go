@@ -23,6 +23,8 @@ const iso8601Format = "2006-01-02T15:04:05Z07:00"
 // Cell is a single cell within a sheet.
 type Cell struct {
 	w *Workbook
+	s *sml.CT_Sheet
+	r *sml.CT_Row
 	x *sml.CT_Cell
 }
 
