@@ -7,7 +7,7 @@
 
 /*
 
-Package gooxml provides creation, reading, and writing of ECMA 376 Open Office
+Package gooxml provides creation, reading, and writing of ECMA 376 Office Open
 XML documents, spreadsheets and presentations.  It is still early in
 development, but is progressing quickly.  This library takes a slightly
 different approach from others, in that it starts by trying to support all of

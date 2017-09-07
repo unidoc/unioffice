@@ -1,5 +1,5 @@
-**gooxml** is a library for creation of OpenOffice documents (.docx, .xlsx and
-.pptx).  
+**gooxml** is a library for creation of Office Open XML documents (.docx, .xlsx
+and .pptx).  
 
 [![Build Status](https://travis-ci.org/baliance/gooxml.svg?branch=master)](https://travis-ci.org/baliance/gooxml)
 [![GitHub (pre-)release](https://img.shields.io/github/release/baliance/gooxml/all.svg)]()
