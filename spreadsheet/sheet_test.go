@@ -132,3 +132,34 @@ func TestSheetNameLength(t *testing.T) {
 		t.Errorf("expected validation error with sheet name too long")
 	}
 }
+
+func TestMergedCell(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+
+	expContent := "testing 123"
+	sheet.Cell("A1").SetString(expContent)
+	sheet.Cell("B1").SetString("in range, but not visible")
+	if len(sheet.MergedCells()) != 0 {
+		t.Errorf("new sheet should have no merged cells")
+	}
+	sheet.AddMergedCells("A1", "C2")
+	if len(sheet.MergedCells()) != 1 {
+		t.Errorf("sheet should have a single merged cells")
+	}
+
+	mc := sheet.MergedCells()[0]
+	expRef := "A1:C2"
+	if mc.Reference() != expRef {
+		t.Errorf("expected merged cell reference %s, got %s", expRef, mc.Reference())
+	}
+
+	if mc.Cell().GetString() != expContent {
+		t.Errorf("expected merged cell content to be '%s', got '%s'", expContent, mc.Cell().GetString())
+	}
+
+	sheet.RemoveMergedCell(mc)
+	if len(sheet.MergedCells()) != 0 {
+		t.Errorf("after removal, sheet should have no merged cells")
+	}
+}
