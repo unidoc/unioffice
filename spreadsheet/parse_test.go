@@ -45,3 +45,27 @@ func TestParseCellReference(t *testing.T) {
 		}
 	}
 }
+
+func TestColumnToIndex(t *testing.T) {
+	td := []struct {
+		Inp      string
+		ExpIndex uint32
+	}{
+		{"A", 0},
+		{"B", 1},
+		{"Z", 25},
+		{"AA", 26},
+		{"AB", 27},
+		{"AC", 28},
+		{"GOOXML", 90304485},
+	}
+	for _, tc := range td {
+
+		if got := spreadsheet.ColumnToIndex(tc.Inp); got != tc.ExpIndex {
+			t.Errorf("expected %s = %d, got %d", tc.Inp, tc.ExpIndex, got)
+		}
+		if got := spreadsheet.IndexToColumn(tc.ExpIndex); got != tc.Inp {
+			t.Errorf("expected %d = %s, got %s", tc.ExpIndex, tc.Inp, got)
+		}
+	}
+}

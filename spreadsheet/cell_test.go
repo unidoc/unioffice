@@ -8,6 +8,7 @@
 package spreadsheet_test
 
 import (
+	"fmt"
 	"strconv"
 	"testing"
 	"time"
@@ -192,5 +193,20 @@ func TestCellStringByID(t *testing.T) {
 	v, err := strconv.ParseUint(*cell.X().V, 10, 32)
 	if v != 1 || err != nil {
 		t.Errorf("expected 1 and no error, got %d %s", v, err)
+	}
+}
+
+func TestCellReference(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	for r := 1; r <= 5; r++ {
+		row := sheet.AddRow()
+		for i := 0; i < 5; i++ {
+			expRef := fmt.Sprintf("%c%d", 'A'+i, r)
+			cell := row.AddCell()
+			if cell.Reference() != expRef {
+				t.Errorf("expected ref=%s, got %s", expRef, cell.Reference())
+			}
+		}
 	}
 }
