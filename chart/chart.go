@@ -223,6 +223,17 @@ func (c Chart) AddScatterChart() ScatterChart {
 	return b
 }
 
+// AddBubbleChart adds a new bubble chart.
+func (c Chart) AddBubbleChart() BubbleChart {
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.BubbleChart = crt.NewCT_BubbleChart()
+
+	b := BubbleChart{x: chc.BubbleChart}
+	b.InitializeDefaults()
+	return b
+}
+
 // Properties returns the chart's shape properties.
 func (c Chart) Properties() drawing.ShapeProperties {
 	if c.x.SpPr == nil {
