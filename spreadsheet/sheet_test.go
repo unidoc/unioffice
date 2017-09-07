@@ -119,5 +119,16 @@ func TestAutoFilter(t *testing.T) {
 	if sheet.X().AutoFilter != nil {
 		t.Errorf("autofilter should have been nil after clear")
 	}
+}
 
+func TestSheetNameLength(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	if err := sheet.Validate(); err != nil {
+		t.Errorf("expected no validaton error on new sheet, got %s:", err)
+	}
+	sheet.SetName("01234567890123456789012345678901")
+	if err := sheet.Validate(); err == nil {
+		t.Errorf("expected validation error with sheet name too long")
+	}
 }
