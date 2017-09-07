@@ -160,6 +160,25 @@ func (c Chart) AddPie3DChart() Pie3DChart {
 	return b
 }
 
+// AddSurfaceChart adds a new surface chart to a chart.
+func (c Chart) AddSurfaceChart() SurfaceChart {
+	chc := crt.NewCT_PlotAreaChoice()
+	c.x.Chart.PlotArea.Choice = append(c.x.Chart.PlotArea.Choice, chc)
+	chc.SurfaceChart = crt.NewCT_SurfaceChart()
+
+	// The surface chart is in 3d, only rotated to an initial straight down view and
+	// perspective = 0
+	setup3DChart(c.x.Chart)
+	c.x.Chart.View3D.RotX.ValAttr = gooxml.Int8(90)
+	c.x.Chart.View3D.RotY.ValAttr = gooxml.Uint16(0)
+	c.x.Chart.View3D.Perspective = crt.NewCT_Perspective()
+	c.x.Chart.View3D.Perspective.ValAttr = gooxml.Uint8(0)
+
+	b := SurfaceChart{x: chc.SurfaceChart}
+	b.InitializeDefaults()
+	return b
+}
+
 // Properties returns the chart's shape properties.
 func (c Chart) Properties() drawing.ShapeProperties {
 	if c.x.SpPr == nil {
