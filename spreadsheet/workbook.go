@@ -239,10 +239,6 @@ func (wb Workbook) SheetCount() int {
 
 func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship) error {
 	dt := gooxml.DocTypeSpreadsheet
-	// if we know of a better filename
-	if fn := gooxml.RelativeFilename(dt, typ, 0); fn != "" {
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
-	}
 
 	switch typ {
 	case gooxml.OfficeDocumentType:
@@ -251,12 +247,15 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		// look for the workbook relationships file as well
 		wb.wbRels = common.NewRelationships()
 		decMap.AddTarget(zippkg.RelationsPathFor(target), wb.wbRels.X())
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.CorePropertiesType:
 		decMap.AddTarget(target, wb.CoreProperties.X())
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.ExtendedPropertiesType:
 		decMap.AddTarget(target, wb.AppProperties.X())
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.WorksheetType:
 		ws := sml.NewWorksheet()
@@ -273,15 +272,18 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 	case gooxml.StylesType:
 		wb.StyleSheet = NewStyleSheet(wb)
 		decMap.AddTarget(target, wb.StyleSheet.X())
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.ThemeType:
 		thm := dml.NewTheme()
 		wb.themes = append(wb.themes, thm)
 		decMap.AddTarget(target, thm)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.themes))
 
 	case gooxml.SharedStingsType:
 		wb.SharedStrings = NewSharedStrings()
 		decMap.AddTarget(target, wb.SharedStrings.X())
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.ThumbnailType:
 		// read our thumbnail
