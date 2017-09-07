@@ -10,6 +10,7 @@ package spreadsheet
 import (
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 // ParseCellReference parses a cell reference of the form 'A10' and splits it
@@ -35,4 +36,31 @@ lfor:
 	r64, err := strconv.ParseUint(s[split:], 10, 32)
 	row = uint32(r64)
 	return col, row, err
+}
+
+// ColumnToIndex maps a column to a zero based index (e.g. A = 0, B = 1, AA = 26)
+func ColumnToIndex(col string) uint32 {
+	col = strings.ToUpper(col)
+	res := uint32(0)
+	for _, c := range col {
+		res *= 26
+		res += uint32(c - 'A' + 1)
+	}
+	return res - 1
+}
+
+// IndexToColumn maps a column number to a coumn name (e.g. 0 = A, 1 = B, 26 = AA)
+func IndexToColumn(col uint32) string {
+	col++
+	res := []byte{}
+	for col > 26 {
+		res = append(res, byte('A'+(col-1)%26))
+		col /= 26
+	}
+	res = append(res, byte('A'+(col-1)%26))
+	// reverse it
+	for i := 0; i < len(res)/2; i++ {
+		res[i], res[len(res)-i-1] = res[len(res)-i-1], res[i]
+	}
+	return string(res)
 }

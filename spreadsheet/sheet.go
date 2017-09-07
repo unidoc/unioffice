@@ -18,16 +18,16 @@ import (
 
 // Sheet is a single sheet within a workbook.
 type Sheet struct {
-	w  *Workbook
-	x  *sml.CT_Sheet
-	ws *sml.Worksheet
+	w   *Workbook
+	cts *sml.CT_Sheet
+	x   *sml.Worksheet
 }
 
 // Row will return a row with a given row number, creating a new row if
 // necessary.
 func (s Sheet) Row(rowNum uint32) Row {
 	// see if the row exists
-	for _, r := range s.ws.SheetData.Row {
+	for _, r := range s.x.SheetData.Row {
 		if r.RAttr != nil && *r.RAttr == rowNum {
 			return Row{s.w, s.x, r}
 		}
@@ -52,7 +52,7 @@ func (s Sheet) Cell(cellRef string) Cell {
 func (s Sheet) AddNumberedRow(rowNum uint32) Row {
 	r := sml.NewCT_Row()
 	r.RAttr = gooxml.Uint32(rowNum)
-	s.ws.SheetData.Row = append(s.ws.SheetData.Row, r)
+	s.x.SheetData.Row = append(s.x.SheetData.Row, r)
 	return Row{s.w, s.x, r}
 }
 
@@ -62,7 +62,7 @@ func (s Sheet) AddNumberedRow(rowNum uint32) Row {
 func (s Sheet) AddRow() Row {
 	maxRowID := uint32(0)
 	// find the max row number
-	for _, r := range s.ws.SheetData.Row {
+	for _, r := range s.x.SheetData.Row {
 		if r.RAttr != nil && *r.RAttr > maxRowID {
 			maxRowID = *r.RAttr
 		}
@@ -73,19 +73,19 @@ func (s Sheet) AddRow() Row {
 
 // Name returns the sheet name
 func (s Sheet) Name() string {
-	return s.x.NameAttr
+	return s.cts.NameAttr
 }
 
 // SetName sets the sheet name.
 func (s Sheet) SetName(name string) {
-	s.x.NameAttr = name
+	s.cts.NameAttr = name
 }
 
 // Validate validates the sheet, returning an error if it is found to be invalid.
 func (s Sheet) Validate() error {
 
 	usedRows := map[uint32]struct{}{}
-	for _, r := range s.ws.SheetData.Row {
+	for _, r := range s.x.SheetData.Row {
 		if r.RAttr != nil {
 			if _, reusedRow := usedRows[*r.RAttr]; reusedRow {
 				return fmt.Errorf("'%s' reused row %d", s.Name(), *r.RAttr)
@@ -104,22 +104,22 @@ func (s Sheet) Validate() error {
 			usedCells[*c.RAttr] = struct{}{}
 		}
 	}
-	if err := s.x.Validate(); err != nil {
+	if err := s.cts.Validate(); err != nil {
 		return err
 	}
-	return s.ws.Validate()
+	return s.x.Validate()
 }
 
 // ValidateWithPath validates the sheet passing path informaton for a better
 // error message
 func (s Sheet) ValidateWithPath(path string) error {
-	return s.x.ValidateWithPath(path)
+	return s.cts.ValidateWithPath(path)
 }
 
 // Rows returns all of the rows in a sheet.
 func (s Sheet) Rows() []Row {
 	ret := []Row{}
-	for _, r := range s.ws.SheetData.Row {
+	for _, r := range s.x.SheetData.Row {
 		ret = append(ret, Row{s.w, s.x, r})
 	}
 	return ret
@@ -130,7 +130,7 @@ func (s Sheet) Rows() []Row {
 func (s Sheet) SetDrawing(d Drawing) {
 	var rel common.Relationships
 	for i, wks := range s.w.xws {
-		if wks == s.ws {
+		if wks == s.x {
 			rel = s.w.xwsRels[i]
 			break
 		}
@@ -144,6 +144,6 @@ func (s Sheet) SetDrawing(d Drawing) {
 			break
 		}
 	}
-	s.ws.Drawing = sml.NewCT_Drawing()
-	s.ws.Drawing.IdAttr = drawingID
+	s.x.Drawing = sml.NewCT_Drawing()
+	s.x.Drawing.IdAttr = drawingID
 }

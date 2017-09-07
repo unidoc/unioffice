@@ -23,7 +23,7 @@ const iso8601Format = "2006-01-02T15:04:05Z07:00"
 // Cell is a single cell within a sheet.
 type Cell struct {
 	w *Workbook
-	s *sml.CT_Sheet
+	s *sml.Worksheet
 	r *sml.CT_Row
 	x *sml.CT_Cell
 }
@@ -31,6 +31,15 @@ type Cell struct {
 // X returns the inner wrapped XML type.
 func (c Cell) X() *sml.CT_Cell {
 	return c.x
+}
+
+// Reference returns the cell reference (e.g. "A4"). This is not required,
+// however both gooxml and Excel will always set it.
+func (c Cell) Reference() string {
+	if c.x.RAttr != nil {
+		return *c.x.RAttr
+	}
+	return ""
 }
 
 // Clear clears the cell's value and type.
@@ -262,6 +271,24 @@ func (c Cell) GetValue() (string, error) {
 		return *c.x.V, nil
 	}
 	return "", errors.New("unsupported cell type")
+}
+
+func (c Cell) SetHyperlink(url string) {
+	if c.s.Hyperlinks == nil {
+		c.s.Hyperlinks = sml.NewCT_Hyperlinks()
+	}
+	hl := sml.NewCT_Hyperlink()
+	hl.RefAttr = "A1"
+	c.s.Hyperlinks.Hyperlink = append(c.s.Hyperlinks.Hyperlink, hl)
+
+	// store the relationships so we don't need to do a lookup here?
+	for i, ws := range c.w.xws {
+		if ws == c.s {
+			rel := c.w.xwsRels[i].AddHyperlink(url)
+			hl.IdAttr = gooxml.String(rel.ID())
+			break
+		}
+	}
 }
 
 func b2i(v bool) int {

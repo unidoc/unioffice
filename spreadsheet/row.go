@@ -18,7 +18,7 @@ import (
 // Row is a row within a spreadsheet.
 type Row struct {
 	w *Workbook
-	s *spreadsheetml.CT_Sheet
+	s *spreadsheetml.Worksheet
 	x *spreadsheetml.CT_Row
 }
 
@@ -63,6 +63,16 @@ func (r Row) SetHidden(hidden bool) {
 func (r Row) AddCell() Cell {
 	c := spreadsheetml.NewCT_Cell()
 	r.x.C = append(r.x.C, c)
+	nextIdx := uint32(0)
+	for _, c := range r.x.C {
+		if c.RAttr != nil {
+			col, _, _ := ParseCellReference(*c.RAttr)
+			if col := ColumnToIndex(col); col >= nextIdx {
+				nextIdx = col + 1
+			}
+		}
+	}
+	c.RAttr = gooxml.Stringf("%s%d", IndexToColumn(nextIdx), r.Number())
 	return Cell{r.w, r.s, r.x, c}
 }
 
