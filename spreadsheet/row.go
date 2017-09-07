@@ -18,6 +18,7 @@ import (
 // Row is a row within a spreadsheet.
 type Row struct {
 	w *Workbook
+	s *spreadsheetml.CT_Sheet
 	x *spreadsheetml.CT_Row
 }
 
@@ -62,7 +63,7 @@ func (r Row) SetHidden(hidden bool) {
 func (r Row) AddCell() Cell {
 	c := spreadsheetml.NewCT_Cell()
 	r.x.C = append(r.x.C, c)
-	return Cell{r.w, c}
+	return Cell{r.w, r.s, r.x, c}
 }
 
 // Cells returns a slice of cells.  The cells can be manipulated, but appending
@@ -70,7 +71,7 @@ func (r Row) AddCell() Cell {
 func (r Row) Cells() []Cell {
 	ret := []Cell{}
 	for _, c := range r.x.C {
-		ret = append(ret, Cell{r.w, c})
+		ret = append(ret, Cell{r.w, r.s, r.x, c})
 	}
 	return ret
 }
@@ -83,7 +84,7 @@ func (r Row) AddNamedCell(col string) Cell {
 	c := spreadsheetml.NewCT_Cell()
 	r.x.C = append(r.x.C, c)
 	c.RAttr = gooxml.Stringf("%s%d", col, r.Number())
-	return Cell{r.w, c}
+	return Cell{r.w, r.s, r.x, c}
 }
 
 // Cell retrieves or adds a new cell to a row. Col is the column (e.g. 'A', 'B')
@@ -91,7 +92,7 @@ func (r Row) Cell(col string) Cell {
 	name := fmt.Sprintf("%s%d", col, r.Number())
 	for _, c := range r.x.C {
 		if c.RAttr != nil && *c.RAttr == name {
-			return Cell{r.w, c}
+			return Cell{r.w, r.s, r.x, c}
 		}
 	}
 	return r.AddNamedCell(col)
