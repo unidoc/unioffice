@@ -119,7 +119,7 @@ func (wb *Workbook) Save(w io.Writer) error {
 	defer z.Close()
 	dt := gooxml.DocTypeSpreadsheet
 
-	if err := zippkg.MarshalXML(z, zippkg.BaseRelsFilename, wb.Rels.X()); err != nil {
+	if err := zippkg.MarshalXML(z, gooxml.BaseRelsFilename, wb.Rels.X()); err != nil {
 		return err
 	}
 	if err := zippkg.MarshalXMLByType(z, dt, gooxml.ExtendedPropertiesType, wb.AppProperties.X()); err != nil {
@@ -176,7 +176,7 @@ func (wb *Workbook) Save(w io.Writer) error {
 			zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.drawingRels[i].X())
 		}
 	}
-	if err := zippkg.MarshalXML(z, zippkg.ContentTypesFilename, wb.ContentTypes.X()); err != nil {
+	if err := zippkg.MarshalXML(z, gooxml.ContentTypesFilename, wb.ContentTypes.X()); err != nil {
 		return err
 	}
 

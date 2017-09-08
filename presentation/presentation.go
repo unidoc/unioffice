@@ -268,7 +268,7 @@ func (p *Presentation) AddSlide() Slide {
 func (p *Presentation) Save(w io.Writer) error {
 	z := zip.NewWriter(w)
 	defer z.Close()
-	if err := zippkg.MarshalXML(z, "[Content_Types].xml", p.ContentTypes.X()); err != nil {
+	if err := zippkg.MarshalXML(z, gooxml.ContentTypesFilename, p.ContentTypes.X()); err != nil {
 		return err
 	}
 	if err := zippkg.MarshalXML(z, "_rels/.rels", p.Rels.X()); err != nil {

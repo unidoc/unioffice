@@ -68,7 +68,7 @@ func New() *Document {
 	d.ContentTypes.AddOverride("/word/settings.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml")
 
 	d.Rels = common.NewRelationships()
-	d.Rels.AddRelationship("docProps/core.xml", gooxml.CorePropertiesType)
+	d.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeDocument, gooxml.CorePropertiesType, 0), gooxml.CorePropertiesType)
 	d.Rels.AddRelationship("docProps/app.xml", gooxml.ExtendedPropertiesType)
 	d.Rels.AddRelationship("word/document.xml", gooxml.OfficeDocumentType)
 
@@ -129,17 +129,20 @@ func (d *Document) Save(w io.Writer) error {
 	if err := d.x.Validate(); err != nil {
 		log.Printf("validation error in document: %s", err)
 	}
+	dt := gooxml.DocTypeDocument
+
 	z := zip.NewWriter(w)
 	defer z.Close()
-	if err := zippkg.MarshalXML(z, "_rels/.rels", d.Rels.X()); err != nil {
+	if err := zippkg.MarshalXML(z, gooxml.BaseRelsFilename, d.Rels.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, "docProps/app.xml", d.AppProperties.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, gooxml.ExtendedPropertiesType, d.AppProperties.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, "docProps/core.xml", d.CoreProperties.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, gooxml.CorePropertiesType, d.CoreProperties.X()); err != nil {
 		return err
 	}
+
 	if d.Thumbnail != nil {
 		tn, err := z.Create("docProps/thumbnail.jpeg")
 		if err != nil {
@@ -149,60 +152,63 @@ func (d *Document) Save(w io.Writer) error {
 			return err
 		}
 	}
-	if err := zippkg.MarshalXML(z, "word/settings.xml", d.Settings.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, gooxml.SettingsType, d.Settings.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, "word/document.xml", d.x); err != nil {
+	documentFn := gooxml.AbsoluteFilename(dt, gooxml.OfficeDocumentType, 0)
+	if err := zippkg.MarshalXML(z, documentFn, d.x); err != nil {
 		return err
 	}
+	if err := zippkg.MarshalXML(z, zippkg.RelationsPathFor(documentFn), d.docRels.X()); err != nil {
+		return err
+	}
+
 	if d.Numbering.X() != nil {
-		if err := zippkg.MarshalXML(z, "word/numbering.xml", d.Numbering.X()); err != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, gooxml.NumberingType, d.Numbering.X()); err != nil {
 			return err
 		}
 	}
-	if err := zippkg.MarshalXML(z, "word/styles.xml", d.Styles.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, gooxml.StylesType, d.Styles.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, "word/_rels/document.xml.rels", d.docRels.X()); err != nil {
-		return err
-	}
+
 	if d.webSettings != nil {
-		if err := zippkg.MarshalXML(z, "word/webSettings.xml", d.webSettings); err != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, gooxml.WebSettingsType, d.webSettings); err != nil {
 			return err
 		}
 	}
 	if d.fontTable != nil {
-		if err := zippkg.MarshalXML(z, "word/fontTable.xml", d.fontTable); err != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, gooxml.FontTableType, d.fontTable); err != nil {
 			return err
 		}
 	}
 	if d.endNotes != nil {
-		if err := zippkg.MarshalXML(z, "word/endnotes.xml", d.endNotes); err != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, gooxml.EndNotesType, d.endNotes); err != nil {
 			return err
 		}
 	}
 	if d.footNotes != nil {
-		if err := zippkg.MarshalXML(z, "word/footnotes.xml", d.footNotes); err != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, gooxml.FootNotesType, d.footNotes); err != nil {
 			return err
 		}
 	}
 	for i, thm := range d.themes {
-		if err := zippkg.MarshalXML(z, fmt.Sprintf("word/theme/theme%d.xml", i+1), thm); err != nil {
+		if err := zippkg.MarshalXMLByTypeIndex(z, dt, gooxml.ThemeType, i+1, thm); err != nil {
 			return err
 		}
 	}
 	for i, hdr := range d.headers {
-		fn := fmt.Sprintf("word/header%d.xml", i+1)
-		if err := zippkg.MarshalXML(z, fn, hdr); err != nil {
+		if err := zippkg.MarshalXMLByTypeIndex(z, dt, gooxml.HeaderType, i+1, hdr); err != nil {
 			return err
 		}
 	}
 	for i, ftr := range d.footers {
-		fn := fmt.Sprintf("word/footer%d.xml", i+1)
-		if err := zippkg.MarshalXML(z, fn, ftr); err != nil {
+		if err := zippkg.MarshalXMLByTypeIndex(z, dt, gooxml.FooterType, i+1, ftr); err != nil {
 			return err
 		}
 	}
+
+	// TODO: use computer filenames for images
 	for i, img := range d.images {
 		fn := fmt.Sprintf("word/media/image%d.png", i+1)
 		if img.path != "" {
@@ -213,7 +219,8 @@ func (d *Document) Save(w io.Writer) error {
 			log.Printf("unsupported image source: %+v", img)
 		}
 	}
-	if err := zippkg.MarshalXML(z, "[Content_Types].xml", d.ContentTypes.X()); err != nil {
+
+	if err := zippkg.MarshalXML(z, gooxml.ContentTypesFilename, d.ContentTypes.X()); err != nil {
 		return err
 	}
 	if err := d.WriteExtraFiles(z); err != nil {
@@ -322,8 +329,8 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(doc.onNewRelationship)
 	// we should discover all contents by starting with these two files
-	decMap.AddTarget(zippkg.ContentTypesFilename, doc.ContentTypes.X())
-	decMap.AddTarget(zippkg.BaseRelsFilename, doc.Rels.X())
+	decMap.AddTarget(gooxml.ContentTypesFilename, doc.ContentTypes.X())
+	decMap.AddTarget(gooxml.BaseRelsFilename, doc.Rels.X())
 	decMap.Decode(files)
 
 	for _, f := range files {
@@ -461,16 +468,24 @@ func (d *Document) FormFields() []FormField {
 }
 
 func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship) error {
+	dt := gooxml.DocTypeDocument
+
 	switch typ {
 	case gooxml.OfficeDocumentType:
 		doc.x = wml.NewDocument()
 		decMap.AddTarget(target, doc.x)
 		// look for the document relationships file as well
 		decMap.AddTarget(zippkg.RelationsPathFor(target), doc.docRels.X())
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+
 	case gooxml.CorePropertiesType:
 		decMap.AddTarget(target, doc.CoreProperties.X())
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+
 	case gooxml.ExtendedPropertiesType:
 		decMap.AddTarget(target, doc.AppProperties.X())
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+
 	case gooxml.ThumbnailType:
 		// read our thumbnail
 		for i, f := range files {
@@ -490,38 +505,59 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 				files[i] = nil
 			}
 		}
+
 	case gooxml.SettingsType:
 		decMap.AddTarget(target, doc.Settings.X())
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+
 	case gooxml.NumberingType:
 		doc.Numbering = NewNumbering()
 		decMap.AddTarget(target, doc.Numbering.X())
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+
 	case gooxml.StylesType:
 		doc.Styles.Clear()
 		decMap.AddTarget(target, doc.Styles.X())
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+
 	case gooxml.HeaderType:
 		hdr := wml.NewHdr()
 		doc.headers = append(doc.headers, hdr)
 		decMap.AddTarget(target, hdr)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(doc.headers))
+
 	case gooxml.FooterType:
 		ftr := wml.NewFtr()
 		doc.footers = append(doc.footers, ftr)
 		decMap.AddTarget(target, ftr)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(doc.footers))
+
 	case gooxml.ThemeType:
 		thm := dml.NewTheme()
 		doc.themes = append(doc.themes, thm)
 		decMap.AddTarget(target, thm)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(doc.themes))
+
 	case gooxml.WebSettingsType:
 		doc.webSettings = wml.NewWebSettings()
 		decMap.AddTarget(target, doc.webSettings)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+
 	case gooxml.FontTableType:
 		doc.fontTable = wml.NewFonts()
 		decMap.AddTarget(target, doc.fontTable)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+
 	case gooxml.EndNotesType:
 		doc.endNotes = wml.NewEndnotes()
 		decMap.AddTarget(target, doc.endNotes)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+
 	case gooxml.FootNotesType:
 		doc.footNotes = wml.NewFootnotes()
 		decMap.AddTarget(target, doc.footNotes)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+
 	case gooxml.ImageType:
 		for i, f := range files {
 			if f == nil {
@@ -542,6 +578,7 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 				files[i] = nil
 			}
 		}
+		// TODO: fix filename here?
 	default:
 		log.Printf("unsupported relationship type: %s tgt: %s", typ, target)
 	}
