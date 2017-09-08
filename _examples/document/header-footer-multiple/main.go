@@ -12,7 +12,7 @@ var lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lobo
 func main() {
 	doc := document.New()
 
-	// Headers/footers apply to the preceeding paragraphs in the document. There
+	// Headers/footers apply to the preceding paragraphs in the document. There
 	// is a section properties on the document body itself acessible via
 	// BodySection().  To have multiple different headers (aside from the
 	// supported even/odd/first), we need to add multiple sections.

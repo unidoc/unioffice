@@ -14,7 +14,7 @@ import (
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 )
 
-// Section is the begining of a new section.
+// Section is the beginning of a new section.
 type Section struct {
 	d *Document
 	x *wml.CT_SectPr
