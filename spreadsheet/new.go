@@ -11,7 +11,6 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
-	"baliance.com/gooxml/zippkg"
 )
 
 // New constructs a new workbook.
@@ -25,18 +24,18 @@ func New() *Workbook {
 
 	wb.Rels = common.NewRelationships()
 	wb.wbRels = common.NewRelationships()
-	wb.Rels.AddRelationship(zippkg.AppPropsFilename, gooxml.ExtendedPropertiesType)
-	wb.Rels.AddRelationship(zippkg.CorePropsFilename, gooxml.CorePropertiesType)
-	wb.Rels.AddRelationship("xl/workbook.xml", gooxml.OfficeDocumentType)
-	wb.wbRels.AddRelationship("styles.xml", gooxml.StylesType)
+	wb.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.ExtendedPropertiesType, 0), gooxml.ExtendedPropertiesType)
+	wb.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.CorePropertiesType, 0), gooxml.CorePropertiesType)
+	wb.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.OfficeDocumentType, 0), gooxml.OfficeDocumentType)
+	wb.wbRels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.StylesType, 0), gooxml.StylesType)
 
 	wb.ContentTypes = common.NewContentTypes()
-	wb.ContentTypes.AddOverride("/xl/workbook.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml")
-	wb.ContentTypes.AddOverride("/xl/styles.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml")
+	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.OfficeDocumentType, 0), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml")
+	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.StylesType, 0), "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml")
 
 	wb.SharedStrings = NewSharedStrings()
-	wb.ContentTypes.AddOverride("/xl/sharedStrings.xml", gooxml.SharedStringsContentType)
-	wb.wbRels.AddRelationship("sharedStrings.xml", gooxml.SharedStingsType)
+	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.SharedStingsType, 0), gooxml.SharedStringsContentType)
+	wb.wbRels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.SharedStingsType, 0), gooxml.SharedStingsType)
 
 	return wb
 }

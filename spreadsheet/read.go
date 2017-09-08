@@ -14,6 +14,7 @@ import (
 	"io/ioutil"
 	"os"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/zippkg"
 )
 
@@ -36,8 +37,8 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(wb.onNewRelationship)
 	// we should discover all contents by starting with these two files
-	decMap.AddTarget(zippkg.ContentTypesFilename, wb.ContentTypes.X())
-	decMap.AddTarget(zippkg.BaseRelsFilename, wb.Rels.X())
+	decMap.AddTarget(gooxml.ContentTypesFilename, wb.ContentTypes.X())
+	decMap.AddTarget(gooxml.BaseRelsFilename, wb.Rels.X())
 	decMap.Decode(files)
 
 	// etra files are things we don't handle yet, or files that happened to have
