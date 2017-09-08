@@ -114,7 +114,7 @@ func (d *Document) AddFooter() Footer {
 	return Footer{d, ftr}
 }
 
-// BodySection returns the default body section used for all preceeding
+// BodySection returns the default body section used for all preceding
 // paragraphs until the previous Section. If there is no previous sections, the
 // body section applies to the entire document.
 func (d *Document) BodySection() Section {
