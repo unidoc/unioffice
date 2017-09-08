@@ -21,6 +21,19 @@ import (
 	"baliance.com/gooxml/zippkg"
 )
 
+func TestSimpleWorkbook(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	sheet.Cell("A1").SetString("Hello World!")
+
+	got := bytes.Buffer{}
+	if err := wb.Validate(); err != nil {
+		t.Errorf("created an invalid sheet: %s", err)
+	}
+	wb.Save(&got)
+	testhelper.CompareGoldenZip(t, "simple-2.xlsx", got.Bytes())
+}
+
 func TestConstructor(t *testing.T) {
 	wb := spreadsheet.New()
 	if wb == nil {

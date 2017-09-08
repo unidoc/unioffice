@@ -139,7 +139,7 @@ func compareFiles(exp, got *zip.File) func(t *testing.T) {
 		gotAll, _ := ioutil.ReadAll(gf)
 		if !bytes.Equal(expAll, gotAll) {
 			dumpXmlDiff(t, expAll, gotAll)
-			t.Errorf("mismatched contents")
+			t.Errorf("mismatched contents %d vs %d", len(expAll), len(gotAll))
 		}
 
 	}
