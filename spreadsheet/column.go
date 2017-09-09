@@ -29,15 +29,6 @@ func (c Column) SetWidth(w measurement.Distance) {
 	c.x.WidthAttr = gooxml.Float64(float64(w / measurement.Character))
 }
 
-// SetBestFit controls if the column width should be 'best fit'.
-func (c Column) SetBestFit(b bool) {
-	if !b {
-		c.x.BestFitAttr = nil
-	} else {
-		c.x.BestFitAttr = gooxml.Bool(true)
-	}
-}
-
 // SetStyle sets the cell style for an entire column.
 func (c Column) SetStyle(cs CellStyle) {
 	c.x.StyleAttr = gooxml.Uint32(cs.Index())
