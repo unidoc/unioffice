@@ -300,3 +300,33 @@ func (s Sheet) RemoveMergedCell(mc MergedCell) {
 	}
 
 }
+
+// Extents returns the sheet extents in the form "A1:B15". This requires
+// scanning the entire sheet.
+func (s Sheet) Extents() string {
+	var minRow, maxRow, minCol, maxCol uint32 = 1, 1, 0, 0
+	for _, r := range s.Rows() {
+		if r.RowNumber() < minRow {
+			minRow = r.RowNumber()
+		} else if r.RowNumber() > maxRow {
+			maxRow = r.RowNumber()
+		}
+
+		for _, c := range r.Cells() {
+			col, _, err := ParseCellReference(c.Reference())
+			if err == nil {
+				// column index is zero based here
+				colIdx := ColumnToIndex(col)
+				if colIdx < minCol {
+					minCol = colIdx
+				} else if colIdx > maxCol {
+					maxCol = colIdx
+				}
+			}
+		}
+	}
+
+	return fmt.Sprintf("%s%d:%s%d",
+		IndexToColumn(minCol), minRow,
+		IndexToColumn(maxCol), maxRow)
+}

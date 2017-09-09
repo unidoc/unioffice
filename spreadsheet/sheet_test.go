@@ -8,6 +8,7 @@
 package spreadsheet_test
 
 import (
+	"math/rand"
 	"testing"
 
 	"baliance.com/gooxml/spreadsheet"
@@ -23,8 +24,8 @@ func TestRowNumIncreases(t *testing.T) {
 	// add 5 rows
 	for i := 1; i < 5; i++ {
 		r := sheet.AddRow()
-		if r.Number() != uint32(i) {
-			t.Errorf("expected row number %d, got %d", i, r.Number())
+		if r.RowNumber() != uint32(i) {
+			t.Errorf("expected row number %d, got %d", i, r.RowNumber())
 		}
 	}
 }
@@ -37,12 +38,12 @@ func TestAddNumberedRow(t *testing.T) {
 	}
 
 	r10 := sheet.AddNumberedRow(10)
-	if r10.Number() != 10 {
-		t.Errorf("expected row number 10, got %d", r10.Number())
+	if r10.RowNumber() != 10 {
+		t.Errorf("expected row number 10, got %d", r10.RowNumber())
 	}
 	r102 := sheet.Row(10)
-	if r102.Number() != 10 {
-		t.Errorf("expected row number 10, got %d", r102.Number())
+	if r102.RowNumber() != 10 {
+		t.Errorf("expected row number 10, got %d", r102.RowNumber())
 	}
 	if r10.X() != r102.X() {
 		t.Errorf("rows should wrap the same inner element")
@@ -50,8 +51,8 @@ func TestAddNumberedRow(t *testing.T) {
 
 	// next row should be one after the last row
 	r11 := sheet.AddRow()
-	if r11.Number() != 11 {
-		t.Errorf("expected row number 11, got %d", r11.Number())
+	if r11.RowNumber() != 11 {
+		t.Errorf("expected row number 11, got %d", r11.RowNumber())
 	}
 }
 
@@ -60,12 +61,12 @@ func TestEnsureRow(t *testing.T) {
 	sheet := wb.AddSheet()
 
 	r101 := sheet.Row(10)
-	if r101.Number() != 10 {
-		t.Errorf("expected row number 10, got %d", r101.Number())
+	if r101.RowNumber() != 10 {
+		t.Errorf("expected row number 10, got %d", r101.RowNumber())
 	}
 	r102 := sheet.Row(10)
-	if r102.Number() != 10 {
-		t.Errorf("expected row number 10, got %d", r102.Number())
+	if r102.RowNumber() != 10 {
+		t.Errorf("expected row number 10, got %d", r102.RowNumber())
 	}
 	if r101.X() != r102.X() {
 		t.Errorf("rows should wrap the same inner element")
@@ -162,4 +163,26 @@ func TestMergedCell(t *testing.T) {
 	if len(sheet.MergedCells()) != 0 {
 		t.Errorf("after removal, sheet should have no merged cells")
 	}
+}
+
+func TestSheetExtents(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+	if sheet.Extents() != "A1:A1" {
+		t.Errorf("expected 'A1:A1' for empty sheet, got %s", sheet.Extents())
+	}
+
+	for r := 0; r < 5; r++ {
+		row := sheet.AddRow()
+		for c := 0; c < 5; c++ {
+			cell := row.AddCell()
+			cell.SetNumber(float64(rand.Intn(1000)) / 100.0)
+		}
+	}
+
+	exp := "A1:E5"
+	if sheet.Extents() != exp {
+		t.Errorf("expected %s , got %s", exp, sheet.Extents())
+	}
+
 }
