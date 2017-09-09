@@ -19,6 +19,12 @@ type Fill struct {
 }
 
 func (f Fill) Index() uint32 {
+	// in differential formats, CT_Fill is not held in a CT_Fills and index
+	// doesn't mean anything
+	if f.fills == nil {
+		return 0
+
+	}
 	for i, sf := range f.fills.Fill {
 		if f.x == sf {
 			return uint32(i)
@@ -27,39 +33,46 @@ func (f Fill) Index() uint32 {
 	return 0
 }
 
+func (f Fill) SetPatternFill() PatternFill {
+	f.x.GradientFill = nil
+	f.x.PatternFill = sml.NewCT_PatternFill()
+	return PatternFill{f.x.PatternFill, f.x}
+}
+
 type PatternFill struct {
-	Fill
+	x *sml.CT_PatternFill
+	f *sml.CT_Fill
 }
 
 func NewPatternFill(fills *sml.CT_Fills) PatternFill {
 	x := sml.NewCT_Fill()
 	x.PatternFill = sml.NewCT_PatternFill()
-	return PatternFill{Fill{x, fills}}
+	return PatternFill{x.PatternFill, x}
+}
+
+func (f PatternFill) X() *sml.CT_PatternFill {
+	return f.x
 }
 
 // SetPattern sets the pattern of the fill.
 func (f PatternFill) SetPattern(p sml.ST_PatternType) {
-	f.x.PatternFill.PatternTypeAttr = p
+	f.x.PatternTypeAttr = p
 }
 
 func (f PatternFill) ClearBgColor() {
-	f.x.PatternFill.BgColor = nil
+	f.x.BgColor = nil
 }
 func (f PatternFill) SetBgColor(c color.Color) {
-	f.x.PatternFill.BgColor = sml.NewCT_Color()
-	f.x.PatternFill.BgColor.RgbAttr = c.AsRGBAString()
+	f.x.BgColor = sml.NewCT_Color()
+	f.x.BgColor.RgbAttr = c.AsRGBAString()
 }
 func (f PatternFill) ClearFgColor() {
-	f.x.PatternFill.FgColor = nil
+	f.x.FgColor = nil
 }
 
 // SetFgColor sets the *fill* foreground color.  As an example, the solid pattern foreground color becomes the
 // background color of the cell when applied.
 func (f PatternFill) SetFgColor(c color.Color) {
-	f.x.PatternFill.FgColor = sml.NewCT_Color()
-	f.x.PatternFill.FgColor.RgbAttr = c.AsRGBAString()
-}
-
-func (f PatternFill) X() *sml.CT_Fill {
-	return f.x
+	f.x.FgColor = sml.NewCT_Color()
+	f.x.FgColor.RgbAttr = c.AsRGBAString()
 }
