@@ -331,9 +331,10 @@ func (s Sheet) Extents() string {
 		IndexToColumn(maxCol), maxRow)
 }
 
-func (c Sheet) AddConditionalFormatting(cellRanges []string) ConditionalFormatting {
+// AddConditionalFormatting adds conditional formatting to the sheet.
+func (s Sheet) AddConditionalFormatting(cellRanges []string) ConditionalFormatting {
 	cfmt := sml.NewCT_ConditionalFormatting()
-	c.x.ConditionalFormatting = append(c.x.ConditionalFormatting, cfmt)
+	s.x.ConditionalFormatting = append(s.x.ConditionalFormatting, cfmt)
 
 	// TODO: fix generator so this is not a pointer to a slice
 	slc := make(sml.ST_Sqref, 0, 0)
@@ -342,4 +343,34 @@ func (c Sheet) AddConditionalFormatting(cellRanges []string) ConditionalFormatti
 		*cfmt.SqrefAttr = append(*cfmt.SqrefAttr, r)
 	}
 	return ConditionalFormatting{cfmt}
+}
+
+// Column returns or creates a column that with a given index (1-N).  Columns
+// can span multiple column indices, this method will return the column that
+// applies to a column index if it exists or create a new column that only
+// applies to the index passed in otherwise.
+func (s Sheet) Column(idx uint32) Column {
+	// scan for any existing column that covers this index
+	for _, colSet := range s.x.Cols {
+		for _, col := range colSet.Col {
+			if idx >= col.MinAttr && idx <= col.MaxAttr {
+				return Column{col}
+			}
+		}
+	}
+	// does a column set exist?
+	var colSet *sml.CT_Cols
+	if len(s.x.Cols) == 0 {
+		colSet = sml.NewCT_Cols()
+		s.x.Cols = append(s.x.Cols, colSet)
+	} else {
+		colSet = s.x.Cols[0]
+	}
+
+	// create our new column
+	col := sml.NewCT_Col()
+	col.MinAttr = idx
+	col.MaxAttr = idx
+	colSet.Col = append(colSet.Col, col)
+	return Column{col}
 }

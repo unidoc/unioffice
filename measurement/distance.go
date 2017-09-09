@@ -18,6 +18,7 @@ const (
 	Pixel72                 = 1.0 / 72.0 * Inch
 	Pixel96                 = 1.0 / 96.0 * Inch
 	HalfPoint               = 1.0 / 2.0 * Point
+	Character               = 7 * Point
 	Millimeter              = 2.83465 * Point
 	Centimeter              = 10 * Millimeter
 	Inch                    = 72 * Point
