@@ -46,9 +46,9 @@ func NewStyleSheet(wb *Workbook) StyleSheet {
 
 	fills := NewFills()
 	ss.Fills = fills.X()
-	fill := fills.AddPatternFill()
+	fill := fills.AddFill().SetPatternFill()
 	fill.SetPattern(sml.ST_PatternTypeNone)
-	fill = fills.AddPatternFill()
+	fill = fills.AddFill().SetPatternFill()
 	fill.SetPattern(sml.ST_PatternTypeGray125)
 
 	ss.Fonts = sml.NewCT_Fonts()

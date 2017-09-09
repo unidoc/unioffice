@@ -24,10 +24,9 @@ func (f Fills) X() *sml.CT_Fills {
 	return f.x
 }
 
-func (f Fills) AddPatternFill() PatternFill {
-	pfill := NewPatternFill(f.x)
-	pfill.SetPattern(sml.ST_PatternTypeSolid)
-	f.x.Fill = append(f.x.Fill, pfill.f)
+func (f Fills) AddFill() Fill {
+	fill := sml.NewCT_Fill()
+	f.x.Fill = append(f.x.Fill, fill)
 	f.x.CountAttr = gooxml.Uint32(uint32(len(f.x.Fill)))
-	return pfill
+	return Fill{fill, f.x}
 }
