@@ -8,6 +8,7 @@ import (
 
 	"baliance.com/gooxml/chart"
 	"baliance.com/gooxml/color"
+	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/spreadsheet"
 
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -17,17 +18,31 @@ func main() {
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
-	// Create all of our data
+	hdrStyle := ss.StyleSheet.AddCellStyle()
+
+	f := ss.StyleSheet.Fills().AddFill()
+	pf := f.SetPatternFill()
+	pf.SetFgColor(color.LightGray)
+	hdrStyle.SetFill(f)
+
+	fnt := ss.StyleSheet.AddFont()
+	fnt.SetBold(true)
+	hdrStyle.SetFont(fnt)
+
 	row := sheet.AddRow()
-	/*	hdrStyle := ss.StyleSheet.AddCellStyle()
-		pf := ss.StyleSheet.Fills().AddPatternFill()
-		pf.SetFgColor(color.LightGray)
-		hdrStyle.SetFill(pf)
-	*/
-	row.AddCell().SetString("Item")
-	row.AddCell().SetString("Price")
-	row.AddCell().SetString("# Sold")
-	row.AddCell().SetString("Total")
+	row.Cell("A").SetString("Item")
+	row.Cell("A").SetStyle(hdrStyle)
+	row.Cell("B").SetString("Price")
+	row.Cell("B").SetStyle(hdrStyle)
+	row.Cell("C").SetString("# Sold")
+	row.Cell("C").SetStyle(hdrStyle)
+	row.Cell("D").SetString("Total")
+	row.Cell("D").SetStyle(hdrStyle)
+
+	// Set some column widths
+	sheet.Column(1).SetWidth(1.5 * measurement.Inch)
+	sheet.Column(4).SetWidth(2 * measurement.Inch)
+
 	for r := 0; r < 5; r++ {
 		row := sheet.AddRow()
 		row.AddCell().SetString(fmt.Sprintf("Product %d", r+1))
@@ -66,8 +81,8 @@ func main() {
 	addBar3DChart(chrt1)
 	addLineChart(chrt2)
 	anc1.SetWidth(9)
-	anc1.MoveTo(5, 1)
-	anc2.MoveTo(1, 23)
+	anc1.MoveTo(6, 1)
+	anc2.MoveTo(0, 9)
 
 	// and finally add the chart to the sheet
 	sheet.SetDrawing(dwng)

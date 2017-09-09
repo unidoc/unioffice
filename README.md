@@ -35,14 +35,15 @@ and .pptx).
 
 ## Spreadsheet Examples ##
 - [Simple](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/simple) A simple sheet with a few cells
-- [Named Cells](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/named-cells) Different ways of referencing rows and cells.
-- [Cell Number/Date/Time Formats](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/number-date-time-formats) Creating cells with various number/date/time formats.
+- [Named Cells](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/named-cells) Different ways of referencing rows and cells
+- [Cell Number/Date/Time Formats](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/number-date-time-formats) Creating cells with various number/date/time formats
 - [Line Chart](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/line-chart)/[Line Chart 3D](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/line-chart-3d) Line Charts
 - [Bar Chart](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/bar-chart) Bar Charts
 - [Mutiple Charts](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/multiple-charts) Multiple charts on a single sheet
 - [Named Cell Ranges](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/named-ranges) Naming cell ranges
-- [Merged Cells](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/merged) Merge and unmerge cells.
-- [Conditional Formatting](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/conditional-formatting) Conditionally formatting cells, styling, gradients, icons, data bar.
+- [Merged Cells](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/merged) Merge and unmerge cells
+- [Conditional Formatting](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/conditional-formatting) Conditionally formatting cells, styling, gradients, icons, data bar
+- [Complex](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/complex) Multiple charts, auto filtering and conditional formatting
 
 ## Raw Types ##
 
