@@ -330,3 +330,16 @@ func (s Sheet) Extents() string {
 		IndexToColumn(minCol), minRow,
 		IndexToColumn(maxCol), maxRow)
 }
+
+func (c Sheet) AddConditionalFormatting(cellRanges []string) ConditionalFormatting {
+	cfmt := sml.NewCT_ConditionalFormatting()
+	c.x.ConditionalFormatting = append(c.x.ConditionalFormatting, cfmt)
+
+	// TODO: fix generator so this is not a pointer to a slice
+	slc := make(sml.ST_Sqref, 0, 0)
+	cfmt.SqrefAttr = &slc
+	for _, r := range cellRanges {
+		*cfmt.SqrefAttr = append(*cfmt.SqrefAttr, r)
+	}
+	return ConditionalFormatting{cfmt}
+}
