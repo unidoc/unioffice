@@ -7,7 +7,10 @@
 
 package spreadsheet
 
-import sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+import (
+	"baliance.com/gooxml"
+	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+)
 
 type Fills struct {
 	x *sml.CT_Fills
@@ -22,10 +25,9 @@ func (f Fills) X() *sml.CT_Fills {
 }
 
 func (f Fills) AddPatternFill() PatternFill {
-	fill := NewPatternFill(f.x)
-	fill.SetPattern(sml.ST_PatternTypeSolid)
-	f.x.Fill = append(f.x.Fill, fill.X())
-	v := uint32(len(f.x.Fill))
-	f.x.CountAttr = &v
-	return fill
+	pfill := NewPatternFill(f.x)
+	pfill.SetPattern(sml.ST_PatternTypeSolid)
+	f.x.Fill = append(f.x.Fill, pfill.f)
+	f.x.CountAttr = gooxml.Uint32(uint32(len(f.x.Fill)))
+	return pfill
 }
