@@ -16,6 +16,7 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	"baliance.com/gooxml/vmldrawing"
 )
 
 // Sheet is a single sheet within a workbook.
@@ -373,4 +374,30 @@ func (s Sheet) Column(idx uint32) Column {
 	col.MaxAttr = idx
 	colSet.Col = append(colSet.Col, col)
 	return Column{col}
+}
+
+// Comments returns the comments for a sheet.
+func (s Sheet) Comments() Comments {
+	for i, wks := range s.w.xws {
+		if wks == s.x {
+			if s.w.comments[i] == nil {
+				s.w.comments[i] = sml.NewComments()
+				s.w.xwsRels[i].AddAutoRelationship(gooxml.DocTypeSpreadsheet, i+1, gooxml.CommentsType)
+				s.w.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.CommentsType, i+1), gooxml.CommentsContentType)
+			}
+			if len(s.w.vmlDrawings) == 0 {
+				s.w.vmlDrawings = append(s.w.vmlDrawings, vmldrawing.NewCommentDrawing())
+				vmlID := s.w.xwsRels[i].AddAutoRelationship(gooxml.DocTypeSpreadsheet, 1, gooxml.VMLDrawingType)
+				if s.x.LegacyDrawing == nil {
+					s.x.LegacyDrawing = sml.NewCT_LegacyDrawing()
+				}
+				s.x.LegacyDrawing.IdAttr = vmlID.ID()
+			}
+			return Comments{s.w, s.w.comments[i]}
+		}
+	}
+
+	log.Printf("attempted to access comments for non-existent sheet")
+	// should never occur
+	return Comments{}
 }

@@ -26,32 +26,38 @@ import (
 // target doesn't match where gooxml will write the file (e.g. read in
 // 'xl/worksheets/MyWorksheet.xml' and we'll write out
 // 'xl/worksheets/sheet1.xml')
-type OnNewRelationshipFunc func(decMap *DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship) error
+type OnNewRelationshipFunc func(decMap *DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship, src Target) error
 
 // DecodeMap is used to walk a tree of relationships, decoding files and passing
 // control back to the document.
 type DecodeMap struct {
-	pathsToIfcs map[string]interface{}
+	pathsToIfcs map[string]Target
 	basePaths   map[*relationships.Relationships]string
-	rels        []*relationships.Relationships
-	decFunc     OnNewRelationshipFunc
+	rels        []Target
+	decodeFunc  OnNewRelationshipFunc
 }
 
 // SetOnNewRelationshipFunc sets the function to be called when a new
 // relationship has been discovered.
 func (d *DecodeMap) SetOnNewRelationshipFunc(fn OnNewRelationshipFunc) {
-	d.decFunc = fn
+	d.decodeFunc = fn
+}
+
+type Target struct {
+	Path  string
+	Ifc   interface{}
+	Index uint32
 }
 
 // AddTarget allows documents to register decode targets. Path is a path that
 // will be found in the zip file and ifc is an XML element that the file will be
 // unmarshaled to.
-func (d *DecodeMap) AddTarget(path string, ifc interface{}) {
+func (d *DecodeMap) AddTarget(tgt Target) {
 	if d.pathsToIfcs == nil {
-		d.pathsToIfcs = make(map[string]interface{})
+		d.pathsToIfcs = make(map[string]Target)
 		d.basePaths = make(map[*relationships.Relationships]string)
 	}
-	d.pathsToIfcs[filepath.Clean(path)] = ifc
+	d.pathsToIfcs[filepath.Clean(tgt.Path)] = tgt
 }
 
 // Decode loops decoding targets registered with AddTarget and calling th
@@ -62,11 +68,12 @@ func (d *DecodeMap) Decode(files []*zip.File) error {
 		// if we've loaded any relationships files, notify the document so it
 		// can create elements to receive the decoded version
 		for len(d.rels) > 0 {
-			relFile := d.rels[len(d.rels)-1]
+			relSource := d.rels[len(d.rels)-1]
 			d.rels = d.rels[0 : len(d.rels)-1]
-			for _, r := range relFile.Relationship {
-				bp, _ := d.basePaths[relFile]
-				d.decFunc(d, bp+r.TargetAttr, r.TypeAttr, files, r)
+			relRaw := relSource.Ifc.(*relationships.Relationships)
+			for _, r := range relRaw.Relationship {
+				bp, _ := d.basePaths[relRaw]
+				d.decodeFunc(d, bp+r.TargetAttr, r.TypeAttr, files, r, relSource)
 			}
 		}
 
@@ -74,19 +81,20 @@ func (d *DecodeMap) Decode(files []*zip.File) error {
 			if f == nil {
 				continue
 			}
+
 			// if there is a registered target for the file
 			if dest, ok := d.pathsToIfcs[f.Name]; ok {
 				delete(d.pathsToIfcs, f.Name)
 				// decode to the target and mark the file as nil so we'll skip
 				// it later
-				if err := Decode(f, dest); err != nil {
+				if err := Decode(f, dest.Ifc); err != nil {
 					return err
 				}
 				files[i] = nil
 
 				// we decoded a relationships file, so we need to traverse it
-				if drel, ok := dest.(*relationships.Relationships); ok {
-					d.rels = append(d.rels, drel)
+				if drel, ok := dest.Ifc.(*relationships.Relationships); ok {
+					d.rels = append(d.rels, dest)
 					// find the path that any files mentioned in the
 					// relationships file are relative to
 					basePath, _ := filepath.Split(filepath.Clean(f.Name + "/../"))

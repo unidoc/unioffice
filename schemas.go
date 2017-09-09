@@ -10,20 +10,20 @@ package gooxml
 // Consts for content types used throughout the package
 const (
 	// Common
-	OfficeDocumentType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
-	StylesType         = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles"
-	ThemeType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme"
-	ThemeContentType   = "application/vnd.openxmlformats-officedocument.theme+xml"
-	SettingsType       = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings"
-	ImageType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
-	CommentsType       = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments"
-	ThumbnailType      = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail"
-	DrawingType        = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing"
-	DrawingContentType = "application/vnd.openxmlformats-officedocument.drawing+xml"
-	ChartType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart"
-	ChartContentType   = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml"
-	HyperLinkType      = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
-
+	OfficeDocumentType     = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
+	StylesType             = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles"
+	ThemeType              = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme"
+	ThemeContentType       = "application/vnd.openxmlformats-officedocument.theme+xml"
+	SettingsType           = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings"
+	ImageType              = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image"
+	CommentsType           = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments"
+	CommentsContentType    = "application/vnd.openxmlformats-officedocument.spreadsheetml.comments+xml"
+	ThumbnailType          = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/thumbnail"
+	DrawingType            = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing"
+	DrawingContentType     = "application/vnd.openxmlformats-officedocument.drawing+xml"
+	ChartType              = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart"
+	ChartContentType       = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml"
+	HyperLinkType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
 	ExtendedPropertiesType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties"
 	CorePropertiesType     = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"
 
@@ -50,4 +50,8 @@ const (
 	SlideMasterContentType      = "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
 	SlideLayoutType             = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
 	SlideLayoutContentType      = "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml"
+
+	// VML
+	VMLDrawingType        = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing"
+	VMLDrawingContentType = "application/vnd.openxmlformats-officedocument.vmlDrawing"
 )

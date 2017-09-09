@@ -30,8 +30,9 @@ func New() *Workbook {
 	wb.wbRels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.StylesType, 0), gooxml.StylesType)
 
 	wb.ContentTypes = common.NewContentTypes()
+	wb.ContentTypes.AddDefault("vml", gooxml.VMLDrawingContentType)
 	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.OfficeDocumentType, 0), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml")
-	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.StylesType, 0), "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml")
+	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.StylesType, 0), gooxml.SMLStyleSheetContentType)
 
 	wb.SharedStrings = NewSharedStrings()
 	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.SharedStingsType, 0), gooxml.SharedStringsContentType)

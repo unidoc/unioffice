@@ -19,6 +19,7 @@ import (
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
+	"baliance.com/gooxml/vmldrawing"
 	"baliance.com/gooxml/zippkg"
 
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
@@ -36,12 +37,14 @@ type Workbook struct {
 	StyleSheet    StyleSheet
 	SharedStrings SharedStrings
 
+	comments    []*sml.Comments
 	xws         []*sml.Worksheet
 	xwsRels     []common.Relationships
 	wbRels      common.Relationships
 	themes      []*dml.Theme
 	drawings    []*sd.WsDr
 	drawingRels []common.Relationships
+	vmlDrawings []*vmldrawing.Container
 	charts      []*crt.ChartSpace
 }
 
@@ -71,8 +74,11 @@ func (wb *Workbook) AddSheet() Sheet {
 	ws.Dimension.RefAttr = "A1"
 	wb.xws = append(wb.xws, ws)
 	wsRel := common.NewRelationships()
+
 	wb.xwsRels = append(wb.xwsRels, wsRel)
 	ws.SheetData = sml.NewCT_SheetData()
+
+	wb.comments = append(wb.comments, nil)
 
 	dt := gooxml.DocTypeSpreadsheet
 	// update the references
@@ -176,8 +182,19 @@ func (wb *Workbook) Save(w io.Writer) error {
 			zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.drawingRels[i].X())
 		}
 	}
+	for i, drawing := range wb.vmlDrawings {
+		zippkg.MarshalXML(z, gooxml.AbsoluteFilename(dt, gooxml.VMLDrawingType, i+1), drawing)
+		// never seen relationships for a VML drawing yet
+	}
+
 	if err := zippkg.MarshalXML(z, gooxml.ContentTypesFilename, wb.ContentTypes.X()); err != nil {
 		return err
+	}
+	for i, cmt := range wb.comments {
+		if cmt == nil {
+			continue
+		}
+		zippkg.MarshalXML(z, gooxml.AbsoluteFilename(dt, gooxml.CommentsType, i+1), cmt)
 	}
 
 	if err := wb.WriteExtraFiles(z); err != nil {
@@ -237,52 +254,58 @@ func (wb Workbook) SheetCount() int {
 	return len(wb.xws)
 }
 
-func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship) error {
+func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship, src zippkg.Target) error {
 	dt := gooxml.DocTypeSpreadsheet
 
 	switch typ {
 	case gooxml.OfficeDocumentType:
 		wb.x = sml.NewWorkbook()
-		decMap.AddTarget(target, wb.x)
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: wb.x})
 		// look for the workbook relationships file as well
 		wb.wbRels = common.NewRelationships()
-		decMap.AddTarget(zippkg.RelationsPathFor(target), wb.wbRels.X())
+		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(target), Ifc: wb.wbRels.X()})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.CorePropertiesType:
-		decMap.AddTarget(target, wb.CoreProperties.X())
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: wb.CoreProperties.X()})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.ExtendedPropertiesType:
-		decMap.AddTarget(target, wb.AppProperties.X())
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: wb.AppProperties.X()})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.WorksheetType:
 		ws := sml.NewWorksheet()
+		idx := uint32(len(wb.xws))
 		wb.xws = append(wb.xws, ws)
-		decMap.AddTarget(target, ws)
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: ws, Index: idx})
 		// look for worksheet rels
 		wksRel := common.NewRelationships()
-		decMap.AddTarget(zippkg.RelationsPathFor(target), wksRel.X())
+		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(target), Ifc: wksRel.X(), Index: idx})
 		wb.xwsRels = append(wb.xwsRels, wksRel)
+
+		// add a comments placeholder that will be replaced if we see a comments
+		// relationship for the current sheet
+		wb.comments = append(wb.comments, nil)
+
 		// fix the relationship target so it points to where we'll save
 		// the worksheet
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.xws))
 
 	case gooxml.StylesType:
 		wb.StyleSheet = NewStyleSheet(wb)
-		decMap.AddTarget(target, wb.StyleSheet.X())
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: wb.StyleSheet.X()})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.ThemeType:
 		thm := dml.NewTheme()
 		wb.themes = append(wb.themes, thm)
-		decMap.AddTarget(target, thm)
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: thm})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.themes))
 
 	case gooxml.SharedStingsType:
 		wb.SharedStrings = NewSharedStrings()
-		decMap.AddTarget(target, wb.SharedStrings.X())
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: wb.SharedStrings.X()})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.ThumbnailType:
@@ -307,17 +330,30 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 
 	case gooxml.DrawingType:
 		drawing := sd.NewWsDr()
-		decMap.AddTarget(target, drawing)
+		idx := uint32(len(wb.drawings))
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: drawing, Index: idx})
 		wb.drawings = append(wb.drawings, drawing)
 
 		drel := common.NewRelationships()
-		decMap.AddTarget(zippkg.RelationsPathFor(target), drel.X())
+		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(target), Ifc: drel.X(), Index: idx})
 		wb.drawingRels = append(wb.drawingRels, drel)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.drawings))
 
+	case gooxml.VMLDrawingType:
+		vd := vmldrawing.NewContainer()
+		idx := uint32(len(wb.vmlDrawings))
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: vd, Index: idx})
+		wb.vmlDrawings = append(wb.vmlDrawings, vd)
+
+	case gooxml.CommentsType:
+		wb.comments[src.Index] = sml.NewComments()
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: wb.comments[src.Index], Index: src.Index})
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.comments))
+
 	case gooxml.ChartType:
 		chart := crt.NewChartSpace()
-		decMap.AddTarget(target, chart)
+		idx := uint32(len(wb.charts))
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: chart, Index: idx})
 		wb.charts = append(wb.charts, chart)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.charts))
 

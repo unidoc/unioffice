@@ -9,6 +9,12 @@ package gooxml
 
 import "fmt"
 
+// Float32 returns a copy of v as a pointer.
+func Float32(v float32) *float32 {
+	x := v
+	return &x
+}
+
 // Float64 returns a copy of v as a pointer.
 func Float64(v float64) *float64 {
 	x := v

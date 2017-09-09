@@ -208,6 +208,7 @@ func TestAddDefinedName(t *testing.T) {
 		t.Errorf("expected content = %s, got %s", ref, dn.Content())
 	}
 }
+
 func ExampleWorkbook_AddDefinedName() {
 	wb := spreadsheet.New()
 	sheet := wb.AddSheet()
@@ -215,4 +216,20 @@ func ExampleWorkbook_AddDefinedName() {
 	// now 'ProductNames' can be used in formulas, charts, etc.
 	fmt.Printf("%s refers to %s", productNames.Name(), productNames.Content())
 	// Output: ProductNames refers to 'Sheet 1'!$A$2:$A$6
+}
+
+func TestOpenComments(t *testing.T) {
+	wb, err := spreadsheet.Open("./testdata/comments.xlsx")
+	if err != nil {
+		t.Fatalf("error opening workbook: %s", err)
+	}
+
+	sheet := wb.Sheets()[0]
+	if len(sheet.Comments().Comments()) != 1 {
+		t.Fatalf("sheet should have returned 1 existing comments")
+	}
+	cmt := sheet.Comments().Comments()[0]
+	if cmt.Author() != "John Doe" {
+		t.Errorf("error reading comment author")
+	}
 }
