@@ -27,8 +27,8 @@ func (r Row) X() *spreadsheetml.CT_Row {
 	return r.x
 }
 
-// Number returns the row number, or zero if it is unset.
-func (r Row) Number() uint32 {
+// RowNumber returns the row number (1-N), or zero if it is unset.
+func (r Row) RowNumber() uint32 {
 	if r.x.RAttr != nil {
 		return *r.x.RAttr
 	}
@@ -72,7 +72,7 @@ func (r Row) AddCell() Cell {
 			}
 		}
 	}
-	c.RAttr = gooxml.Stringf("%s%d", IndexToColumn(nextIdx), r.Number())
+	c.RAttr = gooxml.Stringf("%s%d", IndexToColumn(nextIdx), r.RowNumber())
 	return Cell{r.w, r.s, r.x, c}
 }
 
@@ -93,13 +93,13 @@ func (r Row) Cells() []Cell {
 func (r Row) AddNamedCell(col string) Cell {
 	c := spreadsheetml.NewCT_Cell()
 	r.x.C = append(r.x.C, c)
-	c.RAttr = gooxml.Stringf("%s%d", col, r.Number())
+	c.RAttr = gooxml.Stringf("%s%d", col, r.RowNumber())
 	return Cell{r.w, r.s, r.x, c}
 }
 
 // Cell retrieves or adds a new cell to a row. Col is the column (e.g. 'A', 'B')
 func (r Row) Cell(col string) Cell {
-	name := fmt.Sprintf("%s%d", col, r.Number())
+	name := fmt.Sprintf("%s%d", col, r.RowNumber())
 	for _, c := range r.x.C {
 		if c.RAttr != nil && *c.RAttr == name {
 			return Cell{r.w, r.s, r.x, c}
