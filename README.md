@@ -42,6 +42,7 @@ and .pptx).
 - [Mutiple Charts](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/multiple-charts) Multiple charts on a single sheet
 - [Named Cell Ranges](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/named-ranges) Naming cell ranges
 - [Merged Cells](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/merged) Merge and unmerge cells.
+- [Conditional Formatting](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/conditional-formatting) Conditionally formatting cells, styling, gradients, icons, data bar.
 
 ## Raw Types ##
 
