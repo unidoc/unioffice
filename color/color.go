@@ -7,7 +7,9 @@
 
 package color
 
-import "fmt"
+import (
+	"baliance.com/gooxml"
+)
 
 // Color is a 24 bit color that can be converted to
 // internal ECMA-376 formats as needed.
@@ -30,13 +32,11 @@ func (c Color) IsAuto() bool {
 // AsRGBString is used by the various wrappers to return a pointer
 // to a string containing a six digit hex RGB value.
 func (c Color) AsRGBString() *string {
-	v := fmt.Sprintf("%02x%02x%02x", c.r, c.g, c.b)
-	return &v
+	return gooxml.Stringf("%02x%02x%02x", c.r, c.g, c.b)
 }
 
 // AsRGBAString is used by the various wrappers to return a pointer
 // to a string containing a six digit hex RGB value.
 func (c Color) AsRGBAString() *string {
-	v := fmt.Sprintf("%02x%02x%02x%02x", c.a, c.r, c.g, c.b)
-	return &v
+	return gooxml.Stringf("%02x%02x%02x%02x", c.a, c.r, c.g, c.b)
 }
