@@ -119,6 +119,17 @@ func (s StyleSheet) CellStyles() []CellStyle {
 	return ret
 }
 
+// AddDifferentialStyle adds a new empty differential cell style to the stylesheet.
+func (s StyleSheet) AddDifferentialStyle() DifferentialStyle {
+	if s.x.Dxfs == nil {
+		s.x.Dxfs = sml.NewCT_Dxfs()
+	}
+	dxf := sml.NewCT_Dxf()
+	s.x.Dxfs.Dxf = append(s.x.Dxfs.Dxf, dxf)
+	s.x.Dxfs.CountAttr = gooxml.Uint32(uint32(len(s.x.Dxfs.Dxf)))
+	return DifferentialStyle{dxf, s.wb, s.x.Dxfs}
+}
+
 // GetOrCreateStandardNumberFormat gets or creates a cell style with a given
 // standard format. This should only be used when you want to perform
 // number/date/time formatting only.  Manipulating the style returned will cause
