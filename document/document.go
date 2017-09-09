@@ -329,9 +329,11 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(doc.onNewRelationship)
 	// we should discover all contents by starting with these two files
-	decMap.AddTarget(gooxml.ContentTypesFilename, doc.ContentTypes.X())
-	decMap.AddTarget(gooxml.BaseRelsFilename, doc.Rels.X())
-	decMap.Decode(files)
+	decMap.AddTarget(zippkg.Target{Path: gooxml.ContentTypesFilename, Ifc: doc.ContentTypes.X()})
+	decMap.AddTarget(zippkg.Target{Path: gooxml.BaseRelsFilename, Ifc: doc.Rels.X()})
+	if err := decMap.Decode(files); err != nil {
+		return nil, err
+	}
 
 	for _, f := range files {
 		if f == nil {
@@ -467,23 +469,23 @@ func (d *Document) FormFields() []FormField {
 	return ret
 }
 
-func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship) error {
+func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship, src zippkg.Target) error {
 	dt := gooxml.DocTypeDocument
 
 	switch typ {
 	case gooxml.OfficeDocumentType:
 		doc.x = wml.NewDocument()
-		decMap.AddTarget(target, doc.x)
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.x})
 		// look for the document relationships file as well
-		decMap.AddTarget(zippkg.RelationsPathFor(target), doc.docRels.X())
+		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(target), Ifc: doc.docRels.X()})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.CorePropertiesType:
-		decMap.AddTarget(target, doc.CoreProperties.X())
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.CoreProperties.X()})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.ExtendedPropertiesType:
-		decMap.AddTarget(target, doc.AppProperties.X())
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.AppProperties.X()})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.ThumbnailType:
@@ -507,55 +509,55 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 		}
 
 	case gooxml.SettingsType:
-		decMap.AddTarget(target, doc.Settings.X())
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.Settings.X()})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.NumberingType:
 		doc.Numbering = NewNumbering()
-		decMap.AddTarget(target, doc.Numbering.X())
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.Numbering.X()})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.StylesType:
 		doc.Styles.Clear()
-		decMap.AddTarget(target, doc.Styles.X())
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.Styles.X()})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.HeaderType:
 		hdr := wml.NewHdr()
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: hdr, Index: uint32(len(doc.headers))})
 		doc.headers = append(doc.headers, hdr)
-		decMap.AddTarget(target, hdr)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(doc.headers))
 
 	case gooxml.FooterType:
 		ftr := wml.NewFtr()
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: ftr, Index: uint32(len(doc.footers))})
 		doc.footers = append(doc.footers, ftr)
-		decMap.AddTarget(target, ftr)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(doc.footers))
 
 	case gooxml.ThemeType:
 		thm := dml.NewTheme()
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: thm, Index: uint32(len(doc.themes))})
 		doc.themes = append(doc.themes, thm)
-		decMap.AddTarget(target, thm)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(doc.themes))
 
 	case gooxml.WebSettingsType:
 		doc.webSettings = wml.NewWebSettings()
-		decMap.AddTarget(target, doc.webSettings)
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.webSettings})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.FontTableType:
 		doc.fontTable = wml.NewFonts()
-		decMap.AddTarget(target, doc.fontTable)
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.fontTable})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.EndNotesType:
 		doc.endNotes = wml.NewEndnotes()
-		decMap.AddTarget(target, doc.endNotes)
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.endNotes})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.FootNotesType:
 		doc.footNotes = wml.NewFootnotes()
-		decMap.AddTarget(target, doc.footNotes)
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.footNotes})
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
 
 	case gooxml.ImageType:

@@ -13,6 +13,7 @@ import (
 	"bytes"
 	"encoding/xml"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -139,6 +140,8 @@ func compareFiles(exp, got *zip.File) func(t *testing.T) {
 		gotAll, _ := ioutil.ReadAll(gf)
 		if !bytes.Equal(expAll, gotAll) {
 			dumpXmlDiff(t, expAll, gotAll)
+			fmt.Println(string(expAll))
+			fmt.Println(string(gotAll))
 			t.Errorf("mismatched contents %d vs %d", len(expAll), len(gotAll))
 		}
 
@@ -181,19 +184,19 @@ func dumpXmlDiff(t *testing.T, exp, got []byte) {
 	xmlIndentFile(expF)
 	xmlIndentFile(gotF)
 
-	a := exec.Command("diff", "-u", expF, gotF)
-	outp, err := a.StdoutPipe()
+	diff := exec.Command("diff", "-u", expF, gotF)
+	outp, err := diff.StdoutPipe()
 	if err != nil {
 		t.Fatalf("error running xmlindent: %s", err)
 	}
 	defer outp.Close()
-	errp, err := a.StderrPipe()
+	errp, err := diff.StderrPipe()
 	if err != nil {
 		t.Fatalf("error running xmlindent: %s", err)
 	}
 	defer errp.Close()
 
-	if err := a.Start(); err != nil {
+	if err := diff.Start(); err != nil {
 		t.Fatalf("error string xmlindent: %s", err)
 	}
 	scanner := bufio.NewScanner(outp)
@@ -201,7 +204,7 @@ func dumpXmlDiff(t *testing.T, exp, got []byte) {
 		log.Println(scanner.Text())
 	}
 
-	if err := a.Wait(); err != nil {
+	if err := diff.Wait(); err != nil {
 		errOutput, _ := ioutil.ReadAll(errp)
 		t.Fatalf("error waiting on xmlindent: %s [%s]", string(errOutput), err)
 	}

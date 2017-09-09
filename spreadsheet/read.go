@@ -37,9 +37,11 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(wb.onNewRelationship)
 	// we should discover all contents by starting with these two files
-	decMap.AddTarget(gooxml.ContentTypesFilename, wb.ContentTypes.X())
-	decMap.AddTarget(gooxml.BaseRelsFilename, wb.Rels.X())
-	decMap.Decode(files)
+	decMap.AddTarget(zippkg.Target{Path: gooxml.ContentTypesFilename, Ifc: wb.ContentTypes.X()})
+	decMap.AddTarget(zippkg.Target{Path: gooxml.BaseRelsFilename, Ifc: wb.Rels.X()})
+	if err := decMap.Decode(files); err != nil {
+		return nil, err
+	}
 
 	// etra files are things we don't handle yet, or files that happened to have
 	// been in the zip before.  We just round-trip them.
