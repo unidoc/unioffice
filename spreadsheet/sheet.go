@@ -519,3 +519,63 @@ func (s *Sheet) ClearCachedFormulaResults() {
 		}
 	}
 }
+
+// SheetViews returns the sheet views defined.  This is where splits and frozen
+// rows/cols are configured.  Multiple sheet views are allowed, but I'm not
+// aware of there being a use for more than a single sheet view.
+func (s *Sheet) SheetViews() []SheetView {
+	if s.x.SheetViews == nil {
+		return nil
+	}
+	r := []SheetView{}
+	for _, sv := range s.x.SheetViews.SheetView {
+		r = append(r, SheetView{sv})
+	}
+	return r
+}
+
+// AddView adds a sheet view.
+func (s *Sheet) AddView() SheetView {
+	if s.x.SheetViews == nil {
+		s.x.SheetViews = sml.NewCT_SheetViews()
+	}
+	sv := sml.NewCT_SheetView()
+	s.x.SheetViews.SheetView = append(s.x.SheetViews.SheetView, sv)
+	return SheetView{sv}
+}
+
+// ClearSheetViews clears the list of sheet views.  This will clear the results
+// of AddView() or SetFrozen.
+func (s *Sheet) ClearSheetViews() {
+	s.x.SheetViews = nil
+}
+
+// InitialView returns the first defined sheet view. If there are no views, one
+// is created and returned.
+func (s *Sheet) InitialView() SheetView {
+	if s.x.SheetViews == nil || len(s.x.SheetViews.SheetView) == 0 {
+		return s.AddView()
+	}
+	return SheetView{s.x.SheetViews.SheetView[0]}
+}
+
+// SetFrozen removes any existing sheet views and creates a new single view with
+// either the first row, first column or both frozen.
+func (s *Sheet) SetFrozen(firstRow, firstCol bool) {
+	s.x.SheetViews = nil
+	v := s.AddView()
+	v.SetState(sml.ST_PaneStateFrozen)
+	switch {
+	case firstRow && firstCol:
+		v.SetYSplit(1)
+		v.SetXSplit(1)
+		v.SetTopLeft("B2")
+	case firstRow:
+		v.SetYSplit(1)
+		v.SetTopLeft("A2")
+	case firstCol:
+		v.SetXSplit(1)
+		v.SetTopLeft("B1")
+	}
+
+}
