@@ -17,7 +17,6 @@ import (
 	"baliance.com/gooxml/measurement"
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	pic "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/picture"
-	wd "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 )
@@ -314,7 +313,7 @@ func (r Run) DrawingAnchored() []AnchoredDrawing {
 func (r Run) AddDrawingAnchored(img ImageRef) (AnchoredDrawing, error) {
 	ic := r.newIC()
 	ic.Drawing = wml.NewCT_Drawing()
-	anchor := wd.NewAnchor()
+	anchor := wml.NewWdAnchor()
 
 	ad := AnchoredDrawing{r.d, anchor}
 
@@ -330,19 +329,19 @@ func (r Run) AddDrawingAnchored(img ImageRef) (AnchoredDrawing, error) {
 	anchor.Graphic.GraphicData.UriAttr = "http://schemas.openxmlformats.org/drawingml/2006/picture"
 	anchor.SimplePos.XAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
 	anchor.SimplePos.YAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
-	anchor.PositionH.RelativeFromAttr = wd.ST_RelFromHPage
-	anchor.PositionH.Choice = &wd.CT_PosHChoice{}
+	anchor.PositionH.RelativeFromAttr = wml.WdST_RelFromHPage
+	anchor.PositionH.Choice = &wml.WdCT_PosHChoice{}
 	anchor.PositionH.Choice.PosOffset = gooxml.Int32(0)
 
-	anchor.PositionV.RelativeFromAttr = wd.ST_RelFromVPage
-	anchor.PositionV.Choice = &wd.CT_PosVChoice{}
+	anchor.PositionV.RelativeFromAttr = wml.WdST_RelFromVPage
+	anchor.PositionV.Choice = &wml.WdCT_PosVChoice{}
 	anchor.PositionV.Choice.PosOffset = gooxml.Int32(0)
 
 	anchor.Extent.CxAttr = int64(float64(img.img.Size.X*measurement.Pixel72) / measurement.EMU)
 	anchor.Extent.CyAttr = int64(float64(img.img.Size.Y*measurement.Pixel72) / measurement.EMU)
-	anchor.Choice = &wd.EG_WrapTypeChoice{}
-	anchor.Choice.WrapSquare = wd.NewCT_WrapSquare()
-	anchor.Choice.WrapSquare.WrapTextAttr = wd.ST_WrapTextBothSides
+	anchor.Choice = &wml.WdEG_WrapTypeChoice{}
+	anchor.Choice.WrapSquare = wml.NewWdCT_WrapSquare()
+	anchor.Choice.WrapSquare.WrapTextAttr = wml.WdST_WrapTextBothSides
 
 	// Mac Word chokes if the ID is greater than an int32, even though the field is a
 	// uint32 in the XSD

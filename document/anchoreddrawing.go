@@ -11,17 +11,17 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/measurement"
 	pic "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/picture"
-	wd "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 )
 
 // AnchoredDrawing is an absolutely positioned image within a document page.
 type AnchoredDrawing struct {
 	d *Document
-	x *wd.Anchor
+	x *wml.WdAnchor
 }
 
 // X returns the inner wrapped XML type.
-func (a AnchoredDrawing) X() *wd.Anchor {
+func (a AnchoredDrawing) X() *wml.WdAnchor {
 	return a.x
 }
 
@@ -52,7 +52,7 @@ func (a AnchoredDrawing) SetName(name string) {
 
 // SetOrigin sets the origin of the image.  It defaults to ST_RelFromHPage and
 // ST_RelFromVPage
-func (a AnchoredDrawing) SetOrigin(h wd.ST_RelFromH, v wd.ST_RelFromV) {
+func (a AnchoredDrawing) SetOrigin(h wml.WdST_RelFromH, v wml.WdST_RelFromV) {
 	a.x.PositionH.RelativeFromAttr = h
 	a.x.PositionV.RelativeFromAttr = v
 }
@@ -67,32 +67,32 @@ func (a AnchoredDrawing) SetOffset(x, y measurement.Distance) {
 
 // SetXOffset sets the X offset for an image relative to the origin.
 func (a AnchoredDrawing) SetXOffset(x measurement.Distance) {
-	a.x.PositionH.Choice = &wd.CT_PosHChoice{}
+	a.x.PositionH.Choice = &wml.WdCT_PosHChoice{}
 	a.x.PositionH.Choice.PosOffset = gooxml.Int32(int32(x / measurement.EMU))
 }
 
 // SetYOffset sets the Y offset for an image relative to the origin.
 func (a AnchoredDrawing) SetYOffset(y measurement.Distance) {
-	a.x.PositionV.Choice = &wd.CT_PosVChoice{}
+	a.x.PositionV.Choice = &wml.WdCT_PosVChoice{}
 	a.x.PositionV.Choice.PosOffset = gooxml.Int32(int32(y / measurement.EMU))
 }
 
 // SetAlignment positions an anchored image via alignment.  Offset is
 // incompatible with SetOffset, whichever is called last is applied.
-func (a AnchoredDrawing) SetAlignment(h wd.ST_AlignH, v wd.ST_AlignV) {
+func (a AnchoredDrawing) SetAlignment(h wml.WdST_AlignH, v wml.WdST_AlignV) {
 	a.SetHAlignment(h)
 	a.SetVAlignment(v)
 }
 
 // SetHAlignment sets the horizontal alignment for an anchored image.
-func (a AnchoredDrawing) SetHAlignment(h wd.ST_AlignH) {
-	a.x.PositionH.Choice = &wd.CT_PosHChoice{}
+func (a AnchoredDrawing) SetHAlignment(h wml.WdST_AlignH) {
+	a.x.PositionH.Choice = &wml.WdCT_PosHChoice{}
 	a.x.PositionH.Choice.Align = h
 }
 
 // SetVAlignment sets the vertical alignment for an anchored image.
-func (a AnchoredDrawing) SetVAlignment(v wd.ST_AlignV) {
-	a.x.PositionV.Choice = &wd.CT_PosVChoice{}
+func (a AnchoredDrawing) SetVAlignment(v wml.WdST_AlignV) {
+	a.x.PositionV.Choice = &wml.WdCT_PosVChoice{}
 	a.x.PositionV.Choice.Align = v
 }
 
@@ -107,13 +107,13 @@ func (a AnchoredDrawing) SetSize(w, h measurement.Distance) {
 // used to place a logo at the top of a page at an absolute position that
 // doesn't interfere with text.
 func (a AnchoredDrawing) SetTextWrapNone() {
-	a.x.Choice = &wd.EG_WrapTypeChoice{}
-	a.x.Choice.WrapNone = wd.NewCT_WrapNone()
+	a.x.Choice = &wml.WdEG_WrapTypeChoice{}
+	a.x.Choice.WrapNone = wml.NewWdCT_WrapNone()
 }
 
 // SetTextWrapSquare sets the text wrap to square with a given wrap type.
-func (a AnchoredDrawing) SetTextWrapSquare(t wd.ST_WrapText) {
-	a.x.Choice = &wd.EG_WrapTypeChoice{}
-	a.x.Choice.WrapSquare = wd.NewCT_WrapSquare()
+func (a AnchoredDrawing) SetTextWrapSquare(t wml.WdST_WrapText) {
+	a.x.Choice = &wml.WdEG_WrapTypeChoice{}
+	a.x.Choice.WrapSquare = wml.NewWdCT_WrapSquare()
 	a.x.Choice.WrapSquare.WrapTextAttr = t
 }
