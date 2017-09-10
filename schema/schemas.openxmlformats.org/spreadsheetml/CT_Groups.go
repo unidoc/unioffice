@@ -34,8 +34,10 @@ func (m *CT_Groups) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	segroup := xml.StartElement{Name: xml.Name{Local: "x:group"}}
-	e.EncodeElement(m.Group, segroup)
+	segroup := xml.StartElement{Name: xml.Name{Local: "ma:group"}}
+	for _, c := range m.Group {
+		e.EncodeElement(c, segroup)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_Groups:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "group":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "group"}:
 				tmp := NewCT_LevelGroup()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

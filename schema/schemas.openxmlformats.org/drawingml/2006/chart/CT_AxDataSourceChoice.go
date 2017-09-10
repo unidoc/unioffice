@@ -61,28 +61,28 @@ lCT_AxDataSourceChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "multiLvlStrRef":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "multiLvlStrRef"}:
 				m.MultiLvlStrRef = NewCT_MultiLvlStrRef()
 				if err := d.DecodeElement(m.MultiLvlStrRef, &el); err != nil {
 					return err
 				}
-			case "numRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "numRef"}:
 				m.NumRef = NewCT_NumRef()
 				if err := d.DecodeElement(m.NumRef, &el); err != nil {
 					return err
 				}
-			case "numLit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "numLit"}:
 				m.NumLit = NewCT_NumData()
 				if err := d.DecodeElement(m.NumLit, &el); err != nil {
 					return err
 				}
-			case "strRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "strRef"}:
 				m.StrRef = NewCT_StrRef()
 				if err := d.DecodeElement(m.StrRef, &el); err != nil {
 					return err
 				}
-			case "strLit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "strLit"}:
 				m.StrLit = NewCT_StrData()
 				if err := d.DecodeElement(m.StrLit, &el); err != nil {
 					return err

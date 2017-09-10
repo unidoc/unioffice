@@ -83,48 +83,48 @@ lCT_LayoutVariablePropertySet:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "orgChart":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "orgChart"}:
 				m.OrgChart = NewCT_OrgChart()
 				if err := d.DecodeElement(m.OrgChart, &el); err != nil {
 					return err
 				}
-			case "chMax":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "chMax"}:
 				m.ChMax = NewCT_ChildMax()
 				if err := d.DecodeElement(m.ChMax, &el); err != nil {
 					return err
 				}
-			case "chPref":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "chPref"}:
 				m.ChPref = NewCT_ChildPref()
 				if err := d.DecodeElement(m.ChPref, &el); err != nil {
 					return err
 				}
-			case "bulletEnabled":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "bulletEnabled"}:
 				m.BulletEnabled = NewCT_BulletEnabled()
 				if err := d.DecodeElement(m.BulletEnabled, &el); err != nil {
 					return err
 				}
-			case "dir":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "dir"}:
 				m.Dir = NewCT_Direction()
 				if err := d.DecodeElement(m.Dir, &el); err != nil {
 					return err
 				}
-			case "hierBranch":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "hierBranch"}:
 				m.HierBranch = NewCT_HierBranchStyle()
 				if err := d.DecodeElement(m.HierBranch, &el); err != nil {
 					return err
 				}
-			case "animOne":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "animOne"}:
 				m.AnimOne = NewCT_AnimOne()
 				if err := d.DecodeElement(m.AnimOne, &el); err != nil {
 					return err
 				}
-			case "animLvl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "animLvl"}:
 				m.AnimLvl = NewCT_AnimLvl()
 				if err := d.DecodeElement(m.AnimLvl, &el); err != nil {
 					return err
 				}
-			case "resizeHandles":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "resizeHandles"}:
 				m.ResizeHandles = NewCT_ResizeHandles()
 				if err := d.DecodeElement(m.ResizeHandles, &el); err != nil {
 					return err

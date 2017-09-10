@@ -48,13 +48,13 @@ lEG_HdrFtrReferences:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "headerReference":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "headerReference"}:
 				m.HeaderReference = NewCT_HdrFtrRef()
 				if err := d.DecodeElement(m.HeaderReference, &el); err != nil {
 					return err
 				}
-			case "footerReference":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footerReference"}:
 				m.FooterReference = NewCT_HdrFtrRef()
 				if err := d.DecodeElement(m.FooterReference, &el); err != nil {
 					return err

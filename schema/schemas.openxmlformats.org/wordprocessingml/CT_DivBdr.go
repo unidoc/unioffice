@@ -62,23 +62,23 @@ lCT_DivBdr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "top":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "top"}:
 				m.Top = NewCT_Border()
 				if err := d.DecodeElement(m.Top, &el); err != nil {
 					return err
 				}
-			case "left":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "left"}:
 				m.Left = NewCT_Border()
 				if err := d.DecodeElement(m.Left, &el); err != nil {
 					return err
 				}
-			case "bottom":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bottom"}:
 				m.Bottom = NewCT_Border()
 				if err := d.DecodeElement(m.Bottom, &el); err != nil {
 					return err
 				}
-			case "right":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "right"}:
 				m.Right = NewCT_Border()
 				if err := d.DecodeElement(m.Right, &el); err != nil {
 					return err

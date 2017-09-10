@@ -28,7 +28,9 @@ func NewCT_TLTimeConditionList() *CT_TLTimeConditionList {
 func (m *CT_TLTimeConditionList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	second := xml.StartElement{Name: xml.Name{Local: "p:cond"}}
-	e.EncodeElement(m.Cond, second)
+	for _, c := range m.Cond {
+		e.EncodeElement(c, second)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_TLTimeConditionList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cond":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cond"}:
 				tmp := NewCT_TLTimeCondition()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

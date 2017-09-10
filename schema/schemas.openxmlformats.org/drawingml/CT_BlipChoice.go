@@ -43,71 +43,105 @@ func NewCT_BlipChoice() *CT_BlipChoice {
 func (m *CT_BlipChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.AlphaBiLevel != nil {
 		sealphaBiLevel := xml.StartElement{Name: xml.Name{Local: "a:alphaBiLevel"}}
-		e.EncodeElement(m.AlphaBiLevel, sealphaBiLevel)
+		for _, c := range m.AlphaBiLevel {
+			e.EncodeElement(c, sealphaBiLevel)
+		}
 	}
 	if m.AlphaCeiling != nil {
 		sealphaCeiling := xml.StartElement{Name: xml.Name{Local: "a:alphaCeiling"}}
-		e.EncodeElement(m.AlphaCeiling, sealphaCeiling)
+		for _, c := range m.AlphaCeiling {
+			e.EncodeElement(c, sealphaCeiling)
+		}
 	}
 	if m.AlphaFloor != nil {
 		sealphaFloor := xml.StartElement{Name: xml.Name{Local: "a:alphaFloor"}}
-		e.EncodeElement(m.AlphaFloor, sealphaFloor)
+		for _, c := range m.AlphaFloor {
+			e.EncodeElement(c, sealphaFloor)
+		}
 	}
 	if m.AlphaInv != nil {
 		sealphaInv := xml.StartElement{Name: xml.Name{Local: "a:alphaInv"}}
-		e.EncodeElement(m.AlphaInv, sealphaInv)
+		for _, c := range m.AlphaInv {
+			e.EncodeElement(c, sealphaInv)
+		}
 	}
 	if m.AlphaMod != nil {
 		sealphaMod := xml.StartElement{Name: xml.Name{Local: "a:alphaMod"}}
-		e.EncodeElement(m.AlphaMod, sealphaMod)
+		for _, c := range m.AlphaMod {
+			e.EncodeElement(c, sealphaMod)
+		}
 	}
 	if m.AlphaModFix != nil {
 		sealphaModFix := xml.StartElement{Name: xml.Name{Local: "a:alphaModFix"}}
-		e.EncodeElement(m.AlphaModFix, sealphaModFix)
+		for _, c := range m.AlphaModFix {
+			e.EncodeElement(c, sealphaModFix)
+		}
 	}
 	if m.AlphaRepl != nil {
 		sealphaRepl := xml.StartElement{Name: xml.Name{Local: "a:alphaRepl"}}
-		e.EncodeElement(m.AlphaRepl, sealphaRepl)
+		for _, c := range m.AlphaRepl {
+			e.EncodeElement(c, sealphaRepl)
+		}
 	}
 	if m.BiLevel != nil {
 		sebiLevel := xml.StartElement{Name: xml.Name{Local: "a:biLevel"}}
-		e.EncodeElement(m.BiLevel, sebiLevel)
+		for _, c := range m.BiLevel {
+			e.EncodeElement(c, sebiLevel)
+		}
 	}
 	if m.Blur != nil {
 		seblur := xml.StartElement{Name: xml.Name{Local: "a:blur"}}
-		e.EncodeElement(m.Blur, seblur)
+		for _, c := range m.Blur {
+			e.EncodeElement(c, seblur)
+		}
 	}
 	if m.ClrChange != nil {
 		seclrChange := xml.StartElement{Name: xml.Name{Local: "a:clrChange"}}
-		e.EncodeElement(m.ClrChange, seclrChange)
+		for _, c := range m.ClrChange {
+			e.EncodeElement(c, seclrChange)
+		}
 	}
 	if m.ClrRepl != nil {
 		seclrRepl := xml.StartElement{Name: xml.Name{Local: "a:clrRepl"}}
-		e.EncodeElement(m.ClrRepl, seclrRepl)
+		for _, c := range m.ClrRepl {
+			e.EncodeElement(c, seclrRepl)
+		}
 	}
 	if m.Duotone != nil {
 		seduotone := xml.StartElement{Name: xml.Name{Local: "a:duotone"}}
-		e.EncodeElement(m.Duotone, seduotone)
+		for _, c := range m.Duotone {
+			e.EncodeElement(c, seduotone)
+		}
 	}
 	if m.FillOverlay != nil {
 		sefillOverlay := xml.StartElement{Name: xml.Name{Local: "a:fillOverlay"}}
-		e.EncodeElement(m.FillOverlay, sefillOverlay)
+		for _, c := range m.FillOverlay {
+			e.EncodeElement(c, sefillOverlay)
+		}
 	}
 	if m.Grayscl != nil {
 		segrayscl := xml.StartElement{Name: xml.Name{Local: "a:grayscl"}}
-		e.EncodeElement(m.Grayscl, segrayscl)
+		for _, c := range m.Grayscl {
+			e.EncodeElement(c, segrayscl)
+		}
 	}
 	if m.Hsl != nil {
 		sehsl := xml.StartElement{Name: xml.Name{Local: "a:hsl"}}
-		e.EncodeElement(m.Hsl, sehsl)
+		for _, c := range m.Hsl {
+			e.EncodeElement(c, sehsl)
+		}
 	}
 	if m.Lum != nil {
 		selum := xml.StartElement{Name: xml.Name{Local: "a:lum"}}
-		e.EncodeElement(m.Lum, selum)
+		for _, c := range m.Lum {
+			e.EncodeElement(c, selum)
+		}
 	}
 	if m.Tint != nil {
 		setint := xml.StartElement{Name: xml.Name{Local: "a:tint"}}
-		e.EncodeElement(m.Tint, setint)
+		for _, c := range m.Tint {
+			e.EncodeElement(c, setint)
+		}
 	}
 	return nil
 }
@@ -122,104 +156,104 @@ lCT_BlipChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "alphaBiLevel":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaBiLevel"}:
 				tmp := NewCT_AlphaBiLevelEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AlphaBiLevel = append(m.AlphaBiLevel, tmp)
-			case "alphaCeiling":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaCeiling"}:
 				tmp := NewCT_AlphaCeilingEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AlphaCeiling = append(m.AlphaCeiling, tmp)
-			case "alphaFloor":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaFloor"}:
 				tmp := NewCT_AlphaFloorEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AlphaFloor = append(m.AlphaFloor, tmp)
-			case "alphaInv":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaInv"}:
 				tmp := NewCT_AlphaInverseEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AlphaInv = append(m.AlphaInv, tmp)
-			case "alphaMod":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaMod"}:
 				tmp := NewCT_AlphaModulateEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AlphaMod = append(m.AlphaMod, tmp)
-			case "alphaModFix":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaModFix"}:
 				tmp := NewCT_AlphaModulateFixedEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AlphaModFix = append(m.AlphaModFix, tmp)
-			case "alphaRepl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaRepl"}:
 				tmp := NewCT_AlphaReplaceEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AlphaRepl = append(m.AlphaRepl, tmp)
-			case "biLevel":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "biLevel"}:
 				tmp := NewCT_BiLevelEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.BiLevel = append(m.BiLevel, tmp)
-			case "blur":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blur"}:
 				tmp := NewCT_BlurEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Blur = append(m.Blur, tmp)
-			case "clrChange":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "clrChange"}:
 				tmp := NewCT_ColorChangeEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.ClrChange = append(m.ClrChange, tmp)
-			case "clrRepl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "clrRepl"}:
 				tmp := NewCT_ColorReplaceEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.ClrRepl = append(m.ClrRepl, tmp)
-			case "duotone":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "duotone"}:
 				tmp := NewCT_DuotoneEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Duotone = append(m.Duotone, tmp)
-			case "fillOverlay":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillOverlay"}:
 				tmp := NewCT_FillOverlayEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.FillOverlay = append(m.FillOverlay, tmp)
-			case "grayscl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grayscl"}:
 				tmp := NewCT_GrayscaleEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Grayscl = append(m.Grayscl, tmp)
-			case "hsl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hsl"}:
 				tmp := NewCT_HSLEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Hsl = append(m.Hsl, tmp)
-			case "lum":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lum"}:
 				tmp := NewCT_LuminanceEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Lum = append(m.Lum, tmp)
-			case "tint":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tint"}:
 				tmp := NewCT_TintEffect()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

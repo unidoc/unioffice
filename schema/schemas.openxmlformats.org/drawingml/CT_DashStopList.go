@@ -28,7 +28,9 @@ func (m *CT_DashStopList) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(start)
 	if m.Ds != nil {
 		seds := xml.StartElement{Name: xml.Name{Local: "a:ds"}}
-		e.EncodeElement(m.Ds, seds)
+		for _, c := range m.Ds {
+			e.EncodeElement(c, seds)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_DashStopList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ds":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ds"}:
 				tmp := NewCT_DashStop()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

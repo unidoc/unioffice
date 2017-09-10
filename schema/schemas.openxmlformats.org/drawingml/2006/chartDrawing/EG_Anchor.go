@@ -46,13 +46,13 @@ lEG_Anchor:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "relSizeAnchor":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "relSizeAnchor"}:
 				m.RelSizeAnchor = NewCT_RelSizeAnchor()
 				if err := d.DecodeElement(m.RelSizeAnchor, &el); err != nil {
 					return err
 				}
-			case "absSizeAnchor":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "absSizeAnchor"}:
 				m.AbsSizeAnchor = NewCT_AbsSizeAnchor()
 				if err := d.DecodeElement(m.AbsSizeAnchor, &el); err != nil {
 					return err

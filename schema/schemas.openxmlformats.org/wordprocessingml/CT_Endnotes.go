@@ -29,7 +29,9 @@ func (m *CT_Endnotes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Endnote != nil {
 		seendnote := xml.StartElement{Name: xml.Name{Local: "w:endnote"}}
-		e.EncodeElement(m.Endnote, seendnote)
+		for _, c := range m.Endnote {
+			e.EncodeElement(c, seendnote)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_Endnotes:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "endnote":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "endnote"}:
 				tmp := NewCT_FtnEdn()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -28,7 +28,9 @@ func (m *CT_GeomGuideList) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(start)
 	if m.Gd != nil {
 		segd := xml.StartElement{Name: xml.Name{Local: "a:gd"}}
-		e.EncodeElement(m.Gd, segd)
+		for _, c := range m.Gd {
+			e.EncodeElement(c, segd)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_GeomGuideList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "gd":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gd"}:
 				tmp := NewCT_GeomGuide()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

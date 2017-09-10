@@ -46,13 +46,13 @@ lEG_ThemeableFillStyle:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "fill":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fill"}:
 				m.Fill = NewCT_FillProperties()
 				if err := d.DecodeElement(m.Fill, &el); err != nil {
 					return err
 				}
-			case "fillRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillRef"}:
 				m.FillRef = NewCT_StyleMatrixReference()
 				if err := d.DecodeElement(m.FillRef, &el); err != nil {
 					return err

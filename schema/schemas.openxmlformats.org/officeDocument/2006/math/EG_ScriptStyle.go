@@ -47,13 +47,13 @@ lEG_ScriptStyle:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "scr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "scr"}:
 				m.Scr = NewCT_Script()
 				if err := d.DecodeElement(m.Scr, &el); err != nil {
 					return err
 				}
-			case "sty":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sty"}:
 				m.Sty = NewCT_Style()
 				if err := d.DecodeElement(m.Sty, &el); err != nil {
 					return err

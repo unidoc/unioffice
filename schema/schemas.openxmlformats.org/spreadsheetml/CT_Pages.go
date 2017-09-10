@@ -34,8 +34,10 @@ func (m *CT_Pages) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sepage := xml.StartElement{Name: xml.Name{Local: "x:page"}}
-	e.EncodeElement(m.Page, sepage)
+	sepage := xml.StartElement{Name: xml.Name{Local: "ma:page"}}
+	for _, c := range m.Page {
+		e.EncodeElement(c, sepage)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_Pages:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "page":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "page"}:
 				tmp := NewCT_PCDSCPage()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

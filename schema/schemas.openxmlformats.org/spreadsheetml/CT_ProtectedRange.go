@@ -73,8 +73,10 @@ func (m *CT_ProtectedRange) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	e.EncodeToken(start)
 	if m.SecurityDescriptor != nil {
-		sesecurityDescriptor := xml.StartElement{Name: xml.Name{Local: "x:securityDescriptor"}}
-		e.EncodeElement(m.SecurityDescriptor, sesecurityDescriptor)
+		sesecurityDescriptor := xml.StartElement{Name: xml.Name{Local: "ma:securityDescriptor"}}
+		for _, c := range m.SecurityDescriptor {
+			e.EncodeElement(c, sesecurityDescriptor)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -149,8 +151,8 @@ lCT_ProtectedRange:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "securityDescriptor":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "securityDescriptor"}:
 				var tmp string
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err

@@ -63,28 +63,28 @@ lCT_Protection:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "chartObject":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "chartObject"}:
 				m.ChartObject = NewCT_Boolean()
 				if err := d.DecodeElement(m.ChartObject, &el); err != nil {
 					return err
 				}
-			case "data":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "data"}:
 				m.Data = NewCT_Boolean()
 				if err := d.DecodeElement(m.Data, &el); err != nil {
 					return err
 				}
-			case "formatting":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "formatting"}:
 				m.Formatting = NewCT_Boolean()
 				if err := d.DecodeElement(m.Formatting, &el); err != nil {
 					return err
 				}
-			case "selection":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "selection"}:
 				m.Selection = NewCT_Boolean()
 				if err := d.DecodeElement(m.Selection, &el); err != nil {
 					return err
 				}
-			case "userInterface":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "userInterface"}:
 				m.UserInterface = NewCT_Boolean()
 				if err := d.DecodeElement(m.UserInterface, &el); err != nil {
 					return err

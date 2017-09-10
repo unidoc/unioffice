@@ -51,18 +51,18 @@ lEG_TextAutofit:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "noAutofit":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noAutofit"}:
 				m.NoAutofit = NewCT_TextNoAutofit()
 				if err := d.DecodeElement(m.NoAutofit, &el); err != nil {
 					return err
 				}
-			case "normAutofit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "normAutofit"}:
 				m.NormAutofit = NewCT_TextNormalAutofit()
 				if err := d.DecodeElement(m.NormAutofit, &el); err != nil {
 					return err
 				}
-			case "spAutoFit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spAutoFit"}:
 				m.SpAutoFit = NewCT_TextShapeAutofit()
 				if err := d.DecodeElement(m.SpAutoFit, &el); err != nil {
 					return err

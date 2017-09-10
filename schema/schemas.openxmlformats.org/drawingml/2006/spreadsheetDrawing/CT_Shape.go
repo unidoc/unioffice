@@ -112,21 +112,21 @@ lCT_Shape:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "nvSpPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "nvSpPr"}:
 				if err := d.DecodeElement(m.NvSpPr, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "spPr"}:
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "style":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "style"}:
 				m.Style = drawingml.NewCT_ShapeStyle()
 				if err := d.DecodeElement(m.Style, &el); err != nil {
 					return err
 				}
-			case "txBody":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "txBody"}:
 				m.TxBody = drawingml.NewCT_TextBody()
 				if err := d.DecodeElement(m.TxBody, &el); err != nil {
 					return err

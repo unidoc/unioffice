@@ -35,8 +35,10 @@ func (m *CT_MeasureDimensionMaps) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	e.EncodeToken(start)
 	if m.Map != nil {
-		semap := xml.StartElement{Name: xml.Name{Local: "x:map"}}
-		e.EncodeElement(m.Map, semap)
+		semap := xml.StartElement{Name: xml.Name{Local: "ma:map"}}
+		for _, c := range m.Map {
+			e.EncodeElement(c, semap)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -62,8 +64,8 @@ lCT_MeasureDimensionMaps:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "map":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "map"}:
 				tmp := NewCT_MeasureDimensionMap()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

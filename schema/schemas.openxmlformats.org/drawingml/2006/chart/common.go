@@ -136,6 +136,10 @@ func (m *ST_LayoutTarget) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -226,6 +230,10 @@ func (m *ST_LayoutMode) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -315,6 +323,10 @@ func (m *ST_SizeRepresents) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -420,6 +432,10 @@ func (m *ST_SplitType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -527,6 +543,10 @@ func (m *ST_LblAlgn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -656,6 +676,10 @@ func (m *ST_DLblPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -825,6 +849,10 @@ func (m *ST_MarkerStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -975,6 +1003,10 @@ func (m *ST_TrendlineType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -1081,6 +1113,10 @@ func (m *ST_ErrDir) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -1175,6 +1211,10 @@ func (m *ST_ErrBarType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -1285,6 +1325,10 @@ func (m *ST_ErrValType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -1391,6 +1435,10 @@ func (m *ST_Grouping) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -1506,6 +1554,10 @@ func (m *ST_ScatterStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -1617,6 +1669,10 @@ func (m *ST_RadarStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -1721,6 +1777,10 @@ func (m *ST_BarGrouping) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -1818,6 +1878,10 @@ func (m *ST_BarDir) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -1929,6 +1993,10 @@ func (m *ST_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -2035,6 +2103,10 @@ func (m *ST_OfPieType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -2134,6 +2206,10 @@ func (m *ST_AxPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -2238,6 +2314,10 @@ func (m *ST_Crosses) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -2331,6 +2411,10 @@ func (m *ST_CrossBetween) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -2431,6 +2515,10 @@ func (m *ST_TickMark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -2540,6 +2628,10 @@ func (m *ST_TickLblPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -2642,6 +2734,10 @@ func (m *ST_TimeUnit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -2772,6 +2868,10 @@ func (m *ST_BuiltInUnit) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -2895,6 +2995,10 @@ func (m *ST_PictureFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -2988,6 +3092,10 @@ func (m *ST_Orientation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -3093,6 +3201,10 @@ func (m *ST_LegendPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -3201,6 +3313,10 @@ func (m *ST_DispBlanksAs) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -3299,6 +3415,10 @@ func (m *ST_PageSetupOrientation) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)

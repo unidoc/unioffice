@@ -46,13 +46,13 @@ lEG_Text3D:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sp3d":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sp3d"}:
 				m.Sp3d = NewCT_Shape3D()
 				if err := d.DecodeElement(m.Sp3d, &el); err != nil {
 					return err
 				}
-			case "flatTx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "flatTx"}:
 				m.FlatTx = NewCT_FlatText()
 				if err := d.DecodeElement(m.FlatTx, &el); err != nil {
 					return err

@@ -52,36 +52,36 @@ lCT_RelSizeAnchor:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "from":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "from"}:
 				if err := d.DecodeElement(m.From, &el); err != nil {
 					return err
 				}
-			case "to":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "to"}:
 				if err := d.DecodeElement(m.To, &el); err != nil {
 					return err
 				}
-			case "sp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "sp"}:
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.Sp, &el); err != nil {
 					return err
 				}
-			case "grpSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "grpSp"}:
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.GrpSp, &el); err != nil {
 					return err
 				}
-			case "graphicFrame":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "graphicFrame"}:
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.GraphicFrame, &el); err != nil {
 					return err
 				}
-			case "cxnSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "cxnSp"}:
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.CxnSp, &el); err != nil {
 					return err
 				}
-			case "pic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "pic"}:
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.Pic, &el); err != nil {
 					return err

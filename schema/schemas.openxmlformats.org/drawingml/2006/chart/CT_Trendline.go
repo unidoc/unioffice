@@ -102,62 +102,62 @@ lCT_Trendline:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "name":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "name"}:
 				m.Name = new(string)
 				if err := d.DecodeElement(m.Name, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"}:
 				m.SpPr = drawingml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "trendlineType":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "trendlineType"}:
 				if err := d.DecodeElement(m.TrendlineType, &el); err != nil {
 					return err
 				}
-			case "order":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "order"}:
 				m.Order = NewCT_Order()
 				if err := d.DecodeElement(m.Order, &el); err != nil {
 					return err
 				}
-			case "period":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "period"}:
 				m.Period = NewCT_Period()
 				if err := d.DecodeElement(m.Period, &el); err != nil {
 					return err
 				}
-			case "forward":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "forward"}:
 				m.Forward = NewCT_Double()
 				if err := d.DecodeElement(m.Forward, &el); err != nil {
 					return err
 				}
-			case "backward":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "backward"}:
 				m.Backward = NewCT_Double()
 				if err := d.DecodeElement(m.Backward, &el); err != nil {
 					return err
 				}
-			case "intercept":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "intercept"}:
 				m.Intercept = NewCT_Double()
 				if err := d.DecodeElement(m.Intercept, &el); err != nil {
 					return err
 				}
-			case "dispRSqr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dispRSqr"}:
 				m.DispRSqr = NewCT_Boolean()
 				if err := d.DecodeElement(m.DispRSqr, &el); err != nil {
 					return err
 				}
-			case "dispEq":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dispEq"}:
 				m.DispEq = NewCT_Boolean()
 				if err := d.DecodeElement(m.DispEq, &el); err != nil {
 					return err
 				}
-			case "trendlineLbl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "trendlineLbl"}:
 				m.TrendlineLbl = NewCT_TrendlineLbl()
 				if err := d.DecodeElement(m.TrendlineLbl, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

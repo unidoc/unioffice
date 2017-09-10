@@ -42,14 +42,14 @@ lTypes:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "Default":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/content-types", Local: "Default"}:
 				tmp := NewDefault()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Default = append(m.Default, tmp)
-			case "Override":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/content-types", Local: "Override"}:
 				tmp := NewOverride()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

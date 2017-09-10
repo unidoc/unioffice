@@ -184,7 +184,9 @@ func (m *CT_Style) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.TblStylePr != nil {
 		setblStylePr := xml.StartElement{Name: xml.Name{Local: "w:tblStylePr"}}
-		e.EncodeElement(m.TblStylePr, setblStylePr)
+		for _, c := range m.TblStylePr {
+			e.EncodeElement(c, setblStylePr)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -226,113 +228,113 @@ lCT_Style:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "name":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "name"}:
 				m.Name = NewCT_String()
 				if err := d.DecodeElement(m.Name, &el); err != nil {
 					return err
 				}
-			case "aliases":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "aliases"}:
 				m.Aliases = NewCT_String()
 				if err := d.DecodeElement(m.Aliases, &el); err != nil {
 					return err
 				}
-			case "basedOn":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "basedOn"}:
 				m.BasedOn = NewCT_String()
 				if err := d.DecodeElement(m.BasedOn, &el); err != nil {
 					return err
 				}
-			case "next":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "next"}:
 				m.Next = NewCT_String()
 				if err := d.DecodeElement(m.Next, &el); err != nil {
 					return err
 				}
-			case "link":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "link"}:
 				m.Link = NewCT_String()
 				if err := d.DecodeElement(m.Link, &el); err != nil {
 					return err
 				}
-			case "autoRedefine":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autoRedefine"}:
 				m.AutoRedefine = NewCT_OnOff()
 				if err := d.DecodeElement(m.AutoRedefine, &el); err != nil {
 					return err
 				}
-			case "hidden":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "hidden"}:
 				m.Hidden = NewCT_OnOff()
 				if err := d.DecodeElement(m.Hidden, &el); err != nil {
 					return err
 				}
-			case "uiPriority":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "uiPriority"}:
 				m.UiPriority = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.UiPriority, &el); err != nil {
 					return err
 				}
-			case "semiHidden":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "semiHidden"}:
 				m.SemiHidden = NewCT_OnOff()
 				if err := d.DecodeElement(m.SemiHidden, &el); err != nil {
 					return err
 				}
-			case "unhideWhenUsed":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "unhideWhenUsed"}:
 				m.UnhideWhenUsed = NewCT_OnOff()
 				if err := d.DecodeElement(m.UnhideWhenUsed, &el); err != nil {
 					return err
 				}
-			case "qFormat":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "qFormat"}:
 				m.QFormat = NewCT_OnOff()
 				if err := d.DecodeElement(m.QFormat, &el); err != nil {
 					return err
 				}
-			case "locked":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "locked"}:
 				m.Locked = NewCT_OnOff()
 				if err := d.DecodeElement(m.Locked, &el); err != nil {
 					return err
 				}
-			case "personal":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "personal"}:
 				m.Personal = NewCT_OnOff()
 				if err := d.DecodeElement(m.Personal, &el); err != nil {
 					return err
 				}
-			case "personalCompose":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "personalCompose"}:
 				m.PersonalCompose = NewCT_OnOff()
 				if err := d.DecodeElement(m.PersonalCompose, &el); err != nil {
 					return err
 				}
-			case "personalReply":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "personalReply"}:
 				m.PersonalReply = NewCT_OnOff()
 				if err := d.DecodeElement(m.PersonalReply, &el); err != nil {
 					return err
 				}
-			case "rsid":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rsid"}:
 				m.Rsid = NewCT_LongHexNumber()
 				if err := d.DecodeElement(m.Rsid, &el); err != nil {
 					return err
 				}
-			case "pPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pPr"}:
 				m.PPr = NewCT_PPrGeneral()
 				if err := d.DecodeElement(m.PPr, &el); err != nil {
 					return err
 				}
-			case "rPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rPr"}:
 				m.RPr = NewCT_RPr()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err
 				}
-			case "tblPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblPr"}:
 				m.TblPr = NewCT_TblPrBase()
 				if err := d.DecodeElement(m.TblPr, &el); err != nil {
 					return err
 				}
-			case "trPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "trPr"}:
 				m.TrPr = NewCT_TrPr()
 				if err := d.DecodeElement(m.TrPr, &el); err != nil {
 					return err
 				}
-			case "tcPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tcPr"}:
 				m.TcPr = NewCT_TcPr()
 				if err := d.DecodeElement(m.TcPr, &el); err != nil {
 					return err
 				}
-			case "tblStylePr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblStylePr"}:
 				tmp := NewCT_TblStylePr()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -138,18 +138,18 @@ lCT_OleObject:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "embed":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "embed"}:
 				m.Choice = NewCT_OleObjectChoice()
 				if err := d.DecodeElement(&m.Choice.Embed, &el); err != nil {
 					return err
 				}
-			case "link":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "link"}:
 				m.Choice = NewCT_OleObjectChoice()
 				if err := d.DecodeElement(&m.Choice.Link, &el); err != nil {
 					return err
 				}
-			case "pic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "pic"}:
 				m.Pic = NewCT_Picture()
 				if err := d.DecodeElement(m.Pic, &el); err != nil {
 					return err

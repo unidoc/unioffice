@@ -56,16 +56,16 @@ lCT_Ruby:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rubyPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rubyPr"}:
 				if err := d.DecodeElement(m.RubyPr, &el); err != nil {
 					return err
 				}
-			case "rt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rt"}:
 				if err := d.DecodeElement(m.Rt, &el); err != nil {
 					return err
 				}
-			case "rubyBase":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rubyBase"}:
 				if err := d.DecodeElement(m.RubyBase, &el); err != nil {
 					return err
 				}

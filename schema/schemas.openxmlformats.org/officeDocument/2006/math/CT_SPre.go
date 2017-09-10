@@ -58,21 +58,21 @@ lCT_SPre:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sPrePr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sPrePr"}:
 				m.SPrePr = NewCT_SPrePr()
 				if err := d.DecodeElement(m.SPrePr, &el); err != nil {
 					return err
 				}
-			case "sub":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sub"}:
 				if err := d.DecodeElement(m.Sub, &el); err != nil {
 					return err
 				}
-			case "sup":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sup"}:
 				if err := d.DecodeElement(m.Sup, &el); err != nil {
 					return err
 				}
-			case "e":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"}:
 				if err := d.DecodeElement(m.E, &el); err != nil {
 					return err
 				}

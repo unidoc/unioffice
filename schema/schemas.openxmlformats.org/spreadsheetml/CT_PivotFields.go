@@ -34,8 +34,10 @@ func (m *CT_PivotFields) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sepivotField := xml.StartElement{Name: xml.Name{Local: "x:pivotField"}}
-	e.EncodeElement(m.PivotField, sepivotField)
+	sepivotField := xml.StartElement{Name: xml.Name{Local: "ma:pivotField"}}
+	for _, c := range m.PivotField {
+		e.EncodeElement(c, sepivotField)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_PivotFields:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pivotField":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotField"}:
 				tmp := NewCT_PivotField()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

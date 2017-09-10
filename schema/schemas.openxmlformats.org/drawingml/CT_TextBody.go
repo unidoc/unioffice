@@ -36,7 +36,9 @@ func (m *CT_TextBody) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		e.EncodeElement(m.LstStyle, selstStyle)
 	}
 	sep := xml.StartElement{Name: xml.Name{Local: "a:p"}}
-	e.EncodeElement(m.P, sep)
+	for _, c := range m.P {
+		e.EncodeElement(c, sep)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -52,17 +54,17 @@ lCT_TextBody:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "bodyPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bodyPr"}:
 				if err := d.DecodeElement(m.BodyPr, &el); err != nil {
 					return err
 				}
-			case "lstStyle":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lstStyle"}:
 				m.LstStyle = NewCT_TextListStyle()
 				if err := d.DecodeElement(m.LstStyle, &el); err != nil {
 					return err
 				}
-			case "p":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "p"}:
 				tmp := NewCT_TextParagraph()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

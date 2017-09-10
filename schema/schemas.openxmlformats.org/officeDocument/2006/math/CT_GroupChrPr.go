@@ -58,23 +58,23 @@ lCT_GroupChrPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "chr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "chr"}:
 				m.Chr = NewCT_Char()
 				if err := d.DecodeElement(m.Chr, &el); err != nil {
 					return err
 				}
-			case "pos":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "pos"}:
 				m.Pos = NewCT_TopBot()
 				if err := d.DecodeElement(m.Pos, &el); err != nil {
 					return err
 				}
-			case "vertJc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "vertJc"}:
 				m.VertJc = NewCT_TopBot()
 				if err := d.DecodeElement(m.VertJc, &el); err != nil {
 					return err
 				}
-			case "ctrlPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "ctrlPr"}:
 				m.CtrlPr = NewCT_CtrlPr()
 				if err := d.DecodeElement(m.CtrlPr, &el); err != nil {
 					return err

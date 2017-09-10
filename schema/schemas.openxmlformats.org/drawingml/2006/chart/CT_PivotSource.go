@@ -38,7 +38,9 @@ func (m *CT_PivotSource) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeElement(m.FmtId, sefmtId)
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
-		e.EncodeElement(m.ExtLst, seextLst)
+		for _, c := range m.ExtLst {
+			e.EncodeElement(c, seextLst)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -55,16 +57,16 @@ lCT_PivotSource:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "name":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "name"}:
 				if err := d.DecodeElement(&m.Name, &el); err != nil {
 					return err
 				}
-			case "fmtId":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "fmtId"}:
 				if err := d.DecodeElement(m.FmtId, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				tmp := NewCT_ExtensionList()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

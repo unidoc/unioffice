@@ -64,52 +64,52 @@ lCT_GroupShape:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "nvGrpSpPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "nvGrpSpPr"}:
 				if err := d.DecodeElement(m.NvGrpSpPr, &el); err != nil {
 					return err
 				}
-			case "grpSpPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "grpSpPr"}:
 				if err := d.DecodeElement(m.GrpSpPr, &el); err != nil {
 					return err
 				}
-			case "sp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sp"}:
 				tmp := NewCT_GroupShapeChoice()
 				if err := d.DecodeElement(&tmp.Sp, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "grpSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "grpSp"}:
 				tmp := NewCT_GroupShapeChoice()
 				if err := d.DecodeElement(&tmp.GrpSp, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "graphicFrame":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "graphicFrame"}:
 				tmp := NewCT_GroupShapeChoice()
 				if err := d.DecodeElement(&tmp.GraphicFrame, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "cxnSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cxnSp"}:
 				tmp := NewCT_GroupShapeChoice()
 				if err := d.DecodeElement(&tmp.CxnSp, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "pic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "pic"}:
 				tmp := NewCT_GroupShapeChoice()
 				if err := d.DecodeElement(&tmp.Pic, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "contentPart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "contentPart"}:
 				tmp := NewCT_GroupShapeChoice()
 				if err := d.DecodeElement(&tmp.ContentPart, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionListModify()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -58,23 +58,23 @@ lCT_TableStyleCellStyle:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tcBdr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tcBdr"}:
 				m.TcBdr = NewCT_TableCellBorderStyle()
 				if err := d.DecodeElement(m.TcBdr, &el); err != nil {
 					return err
 				}
-			case "fill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fill"}:
 				m.Fill = NewCT_FillProperties()
 				if err := d.DecodeElement(m.Fill, &el); err != nil {
 					return err
 				}
-			case "fillRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillRef"}:
 				m.FillRef = NewCT_StyleMatrixReference()
 				if err := d.DecodeElement(m.FillRef, &el); err != nil {
 					return err
 				}
-			case "cell3D":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cell3D"}:
 				m.Cell3D = NewCT_Cell3D()
 				if err := d.DecodeElement(m.Cell3D, &el); err != nil {
 					return err

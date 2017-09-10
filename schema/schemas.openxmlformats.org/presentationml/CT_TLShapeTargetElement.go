@@ -85,28 +85,28 @@ lCT_TLShapeTargetElement:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "bg":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bg"}:
 				m.Bg = NewCT_Empty()
 				if err := d.DecodeElement(m.Bg, &el); err != nil {
 					return err
 				}
-			case "subSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "subSp"}:
 				m.SubSp = NewCT_TLSubShapeId()
 				if err := d.DecodeElement(m.SubSp, &el); err != nil {
 					return err
 				}
-			case "oleChartEl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "oleChartEl"}:
 				m.OleChartEl = NewCT_TLOleChartTargetElement()
 				if err := d.DecodeElement(m.OleChartEl, &el); err != nil {
 					return err
 				}
-			case "txEl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "txEl"}:
 				m.TxEl = NewCT_TLTextTargetElement()
 				if err := d.DecodeElement(m.TxEl, &el); err != nil {
 					return err
 				}
-			case "graphicEl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "graphicEl"}:
 				m.GraphicEl = drawingml.NewCT_AnimationElementChoice()
 				if err := d.DecodeElement(m.GraphicEl, &el); err != nil {
 					return err

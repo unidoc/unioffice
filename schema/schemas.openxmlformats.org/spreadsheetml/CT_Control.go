@@ -42,7 +42,7 @@ func (m *CT_Control) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.ControlPr != nil {
-		secontrolPr := xml.StartElement{Name: xml.Name{Local: "x:controlPr"}}
+		secontrolPr := xml.StartElement{Name: xml.Name{Local: "ma:controlPr"}}
 		e.EncodeElement(m.ControlPr, secontrolPr)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -82,8 +82,8 @@ lCT_Control:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "controlPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "controlPr"}:
 				m.ControlPr = NewCT_ControlPr()
 				if err := d.DecodeElement(m.ControlPr, &el); err != nil {
 					return err

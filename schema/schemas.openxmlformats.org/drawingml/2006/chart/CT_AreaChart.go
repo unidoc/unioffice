@@ -42,7 +42,9 @@ func (m *CT_AreaChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	if m.Ser != nil {
 		seser := xml.StartElement{Name: xml.Name{Local: "c:ser"}}
-		e.EncodeElement(m.Ser, seser)
+		for _, c := range m.Ser {
+			e.EncodeElement(c, seser)
+		}
 	}
 	if m.DLbls != nil {
 		sedLbls := xml.StartElement{Name: xml.Name{Local: "c:dLbls"}}
@@ -53,7 +55,9 @@ func (m *CT_AreaChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		e.EncodeElement(m.DropLines, sedropLines)
 	}
 	seaxId := xml.StartElement{Name: xml.Name{Local: "c:axId"}}
-	e.EncodeElement(m.AxId, seaxId)
+	for _, c := range m.AxId {
+		e.EncodeElement(c, seaxId)
+	}
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
@@ -72,40 +76,40 @@ lCT_AreaChart:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "grouping":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "grouping"}:
 				m.Grouping = NewCT_Grouping()
 				if err := d.DecodeElement(m.Grouping, &el); err != nil {
 					return err
 				}
-			case "varyColors":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "varyColors"}:
 				m.VaryColors = NewCT_Boolean()
 				if err := d.DecodeElement(m.VaryColors, &el); err != nil {
 					return err
 				}
-			case "ser":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ser"}:
 				tmp := NewCT_AreaSer()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Ser = append(m.Ser, tmp)
-			case "dLbls":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dLbls"}:
 				m.DLbls = NewCT_DLbls()
 				if err := d.DecodeElement(m.DLbls, &el); err != nil {
 					return err
 				}
-			case "dropLines":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dropLines"}:
 				m.DropLines = NewCT_ChartLines()
 				if err := d.DecodeElement(m.DropLines, &el); err != nil {
 					return err
 				}
-			case "axId":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "axId"}:
 				tmp := NewCT_UnsignedInt()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AxId = append(m.AxId, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

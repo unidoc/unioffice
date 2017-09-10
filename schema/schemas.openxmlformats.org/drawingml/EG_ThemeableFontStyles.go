@@ -46,13 +46,13 @@ lEG_ThemeableFontStyles:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "font":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "font"}:
 				m.Font = NewCT_FontCollection()
 				if err := d.DecodeElement(m.Font, &el); err != nil {
 					return err
 				}
-			case "fontRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fontRef"}:
 				m.FontRef = NewCT_FontReference()
 				if err := d.DecodeElement(m.FontRef, &el); err != nil {
 					return err

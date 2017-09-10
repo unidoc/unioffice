@@ -35,7 +35,9 @@ func (m *CT_CustomXmlPr) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.Attr != nil {
 		seattr := xml.StartElement{Name: xml.Name{Local: "w:attr"}}
-		e.EncodeElement(m.Attr, seattr)
+		for _, c := range m.Attr {
+			e.EncodeElement(c, seattr)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -51,13 +53,13 @@ lCT_CustomXmlPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "placeholder":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "placeholder"}:
 				m.Placeholder = NewCT_String()
 				if err := d.DecodeElement(m.Placeholder, &el); err != nil {
 					return err
 				}
-			case "attr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "attr"}:
 				tmp := NewCT_Attr()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

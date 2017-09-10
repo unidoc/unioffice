@@ -62,43 +62,63 @@ func (m *CT_LayoutNode) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(start)
 	if m.Alg != nil {
 		sealg := xml.StartElement{Name: xml.Name{Local: "alg"}}
-		e.EncodeElement(m.Alg, sealg)
+		for _, c := range m.Alg {
+			e.EncodeElement(c, sealg)
+		}
 	}
 	if m.Shape != nil {
 		seshape := xml.StartElement{Name: xml.Name{Local: "shape"}}
-		e.EncodeElement(m.Shape, seshape)
+		for _, c := range m.Shape {
+			e.EncodeElement(c, seshape)
+		}
 	}
 	if m.PresOf != nil {
 		sepresOf := xml.StartElement{Name: xml.Name{Local: "presOf"}}
-		e.EncodeElement(m.PresOf, sepresOf)
+		for _, c := range m.PresOf {
+			e.EncodeElement(c, sepresOf)
+		}
 	}
 	if m.ConstrLst != nil {
 		seconstrLst := xml.StartElement{Name: xml.Name{Local: "constrLst"}}
-		e.EncodeElement(m.ConstrLst, seconstrLst)
+		for _, c := range m.ConstrLst {
+			e.EncodeElement(c, seconstrLst)
+		}
 	}
 	if m.RuleLst != nil {
 		seruleLst := xml.StartElement{Name: xml.Name{Local: "ruleLst"}}
-		e.EncodeElement(m.RuleLst, seruleLst)
+		for _, c := range m.RuleLst {
+			e.EncodeElement(c, seruleLst)
+		}
 	}
 	if m.VarLst != nil {
 		sevarLst := xml.StartElement{Name: xml.Name{Local: "varLst"}}
-		e.EncodeElement(m.VarLst, sevarLst)
+		for _, c := range m.VarLst {
+			e.EncodeElement(c, sevarLst)
+		}
 	}
 	if m.ForEach != nil {
 		seforEach := xml.StartElement{Name: xml.Name{Local: "forEach"}}
-		e.EncodeElement(m.ForEach, seforEach)
+		for _, c := range m.ForEach {
+			e.EncodeElement(c, seforEach)
+		}
 	}
 	if m.LayoutNode != nil {
 		selayoutNode := xml.StartElement{Name: xml.Name{Local: "layoutNode"}}
-		e.EncodeElement(m.LayoutNode, selayoutNode)
+		for _, c := range m.LayoutNode {
+			e.EncodeElement(c, selayoutNode)
+		}
 	}
 	if m.Choose != nil {
 		sechoose := xml.StartElement{Name: xml.Name{Local: "choose"}}
-		e.EncodeElement(m.Choose, sechoose)
+		for _, c := range m.Choose {
+			e.EncodeElement(c, sechoose)
+		}
 	}
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
-		e.EncodeElement(m.ExtLst, seextLst)
+		for _, c := range m.ExtLst {
+			e.EncodeElement(c, seextLst)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -140,62 +160,62 @@ lCT_LayoutNode:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "alg":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "alg"}:
 				tmp := NewCT_Algorithm()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Alg = append(m.Alg, tmp)
-			case "shape":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "shape"}:
 				tmp := NewCT_Shape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Shape = append(m.Shape, tmp)
-			case "presOf":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "presOf"}:
 				tmp := NewCT_PresentationOf()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.PresOf = append(m.PresOf, tmp)
-			case "constrLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "constrLst"}:
 				tmp := NewCT_Constraints()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.ConstrLst = append(m.ConstrLst, tmp)
-			case "ruleLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "ruleLst"}:
 				tmp := NewCT_Rules()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.RuleLst = append(m.RuleLst, tmp)
-			case "varLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "varLst"}:
 				tmp := NewCT_LayoutVariablePropertySet()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.VarLst = append(m.VarLst, tmp)
-			case "forEach":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "forEach"}:
 				tmp := NewCT_ForEach()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.ForEach = append(m.ForEach, tmp)
-			case "layoutNode":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "layoutNode"}:
 				tmp := NewCT_LayoutNode()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.LayoutNode = append(m.LayoutNode, tmp)
-			case "choose":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "choose"}:
 				tmp := NewCT_Choose()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Choose = append(m.Choose, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "extLst"}:
 				tmp := drawingml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

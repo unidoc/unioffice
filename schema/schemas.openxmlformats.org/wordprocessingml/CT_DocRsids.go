@@ -35,7 +35,9 @@ func (m *CT_DocRsids) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.Rsid != nil {
 		sersid := xml.StartElement{Name: xml.Name{Local: "w:rsid"}}
-		e.EncodeElement(m.Rsid, sersid)
+		for _, c := range m.Rsid {
+			e.EncodeElement(c, sersid)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -51,13 +53,13 @@ lCT_DocRsids:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rsidRoot":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rsidRoot"}:
 				m.RsidRoot = NewCT_LongHexNumber()
 				if err := d.DecodeElement(m.RsidRoot, &el); err != nil {
 					return err
 				}
-			case "rsid":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rsid"}:
 				tmp := NewCT_LongHexNumber()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -118,58 +118,58 @@ lCT_Font:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "altName":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "altName"}:
 				m.AltName = NewCT_String()
 				if err := d.DecodeElement(m.AltName, &el); err != nil {
 					return err
 				}
-			case "panose1":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "panose1"}:
 				m.Panose1 = NewCT_Panose()
 				if err := d.DecodeElement(m.Panose1, &el); err != nil {
 					return err
 				}
-			case "charset":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "charset"}:
 				m.Charset = NewCT_Charset()
 				if err := d.DecodeElement(m.Charset, &el); err != nil {
 					return err
 				}
-			case "family":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "family"}:
 				m.Family = NewCT_FontFamily()
 				if err := d.DecodeElement(m.Family, &el); err != nil {
 					return err
 				}
-			case "notTrueType":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "notTrueType"}:
 				m.NotTrueType = NewCT_OnOff()
 				if err := d.DecodeElement(m.NotTrueType, &el); err != nil {
 					return err
 				}
-			case "pitch":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pitch"}:
 				m.Pitch = NewCT_Pitch()
 				if err := d.DecodeElement(m.Pitch, &el); err != nil {
 					return err
 				}
-			case "sig":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sig"}:
 				m.Sig = NewCT_FontSig()
 				if err := d.DecodeElement(m.Sig, &el); err != nil {
 					return err
 				}
-			case "embedRegular":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "embedRegular"}:
 				m.EmbedRegular = NewCT_FontRel()
 				if err := d.DecodeElement(m.EmbedRegular, &el); err != nil {
 					return err
 				}
-			case "embedBold":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "embedBold"}:
 				m.EmbedBold = NewCT_FontRel()
 				if err := d.DecodeElement(m.EmbedBold, &el); err != nil {
 					return err
 				}
-			case "embedItalic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "embedItalic"}:
 				m.EmbedItalic = NewCT_FontRel()
 				if err := d.DecodeElement(m.EmbedItalic, &el); err != nil {
 					return err
 				}
-			case "embedBoldItalic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "embedBoldItalic"}:
 				m.EmbedBoldItalic = NewCT_FontRel()
 				if err := d.DecodeElement(m.EmbedBoldItalic, &el); err != nil {
 					return err

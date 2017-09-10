@@ -28,10 +28,12 @@ func NewCT_VolTypes() *CT_VolTypes {
 
 func (m *CT_VolTypes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	sevolType := xml.StartElement{Name: xml.Name{Local: "x:volType"}}
-	e.EncodeElement(m.VolType, sevolType)
+	sevolType := xml.StartElement{Name: xml.Name{Local: "ma:volType"}}
+	for _, c := range m.VolType {
+		e.EncodeElement(c, sevolType)
+	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -48,14 +50,14 @@ lCT_VolTypes:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "volType":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "volType"}:
 				tmp := NewCT_VolType()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.VolType = append(m.VolType, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

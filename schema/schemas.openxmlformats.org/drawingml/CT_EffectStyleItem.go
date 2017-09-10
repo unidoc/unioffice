@@ -58,23 +58,23 @@ lCT_EffectStyleItem:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "effectLst":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectLst"}:
 				m.EffectLst = NewCT_EffectList()
 				if err := d.DecodeElement(m.EffectLst, &el); err != nil {
 					return err
 				}
-			case "effectDag":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectDag"}:
 				m.EffectDag = NewCT_EffectContainer()
 				if err := d.DecodeElement(m.EffectDag, &el); err != nil {
 					return err
 				}
-			case "scene3d":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "scene3d"}:
 				m.Scene3d = NewCT_Scene3D()
 				if err := d.DecodeElement(m.Scene3d, &el); err != nil {
 					return err
 				}
-			case "sp3d":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sp3d"}:
 				m.Sp3d = NewCT_Shape3D()
 				if err := d.DecodeElement(m.Sp3d, &el); err != nil {
 					return err

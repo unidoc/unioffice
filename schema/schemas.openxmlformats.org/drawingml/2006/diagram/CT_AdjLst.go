@@ -28,7 +28,9 @@ func (m *CT_AdjLst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Adj != nil {
 		seadj := xml.StartElement{Name: xml.Name{Local: "adj"}}
-		e.EncodeElement(m.Adj, seadj)
+		for _, c := range m.Adj {
+			e.EncodeElement(c, seadj)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_AdjLst:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "adj":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "adj"}:
 				tmp := NewCT_Adj()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

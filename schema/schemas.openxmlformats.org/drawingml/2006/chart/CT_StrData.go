@@ -34,7 +34,9 @@ func (m *CT_StrData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.Pt != nil {
 		sept := xml.StartElement{Name: xml.Name{Local: "c:pt"}}
-		e.EncodeElement(m.Pt, sept)
+		for _, c := range m.Pt {
+			e.EncodeElement(c, sept)
+		}
 	}
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
@@ -54,19 +56,19 @@ lCT_StrData:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ptCount":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ptCount"}:
 				m.PtCount = NewCT_UnsignedInt()
 				if err := d.DecodeElement(m.PtCount, &el); err != nil {
 					return err
 				}
-			case "pt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pt"}:
 				tmp := NewCT_StrVal()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Pt = append(m.Pt, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

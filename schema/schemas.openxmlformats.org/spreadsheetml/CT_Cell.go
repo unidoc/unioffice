@@ -76,20 +76,20 @@ func (m *CT_Cell) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.F != nil {
-		sef := xml.StartElement{Name: xml.Name{Local: "x:f"}}
+		sef := xml.StartElement{Name: xml.Name{Local: "ma:f"}}
 		e.EncodeElement(m.F, sef)
 	}
 	if m.V != nil {
-		sev := xml.StartElement{Name: xml.Name{Local: "x:v"}}
+		sev := xml.StartElement{Name: xml.Name{Local: "ma:v"}}
 		gooxml.AddPreserveSpaceAttr(&sev, *m.V)
 		e.EncodeElement(m.V, sev)
 	}
 	if m.Is != nil {
-		seis := xml.StartElement{Name: xml.Name{Local: "x:is"}}
+		seis := xml.StartElement{Name: xml.Name{Local: "ma:is"}}
 		e.EncodeElement(m.Is, seis)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -149,23 +149,23 @@ lCT_Cell:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "f":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "f"}:
 				m.F = NewCT_CellFormula()
 				if err := d.DecodeElement(m.F, &el); err != nil {
 					return err
 				}
-			case "v":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "v"}:
 				m.V = new(string)
 				if err := d.DecodeElement(m.V, &el); err != nil {
 					return err
 				}
-			case "is":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "is"}:
 				m.Is = NewCT_Rst()
 				if err := d.DecodeElement(m.Is, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

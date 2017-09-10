@@ -29,7 +29,9 @@ func (m *CT_CustomShowList) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(start)
 	if m.CustShow != nil {
 		secustShow := xml.StartElement{Name: xml.Name{Local: "p:custShow"}}
-		e.EncodeElement(m.CustShow, secustShow)
+		for _, c := range m.CustShow {
+			e.EncodeElement(c, secustShow)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_CustomShowList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "custShow":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custShow"}:
 				tmp := NewCT_CustomShow()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

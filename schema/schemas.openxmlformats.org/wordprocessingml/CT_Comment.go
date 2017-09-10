@@ -96,8 +96,8 @@ lCT_Comment:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "altChunk":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "altChunk"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmp := NewCT_AltChunk()
 				if err := d.DecodeElement(tmp, &el); err != nil {
@@ -105,7 +105,7 @@ lCT_Comment:
 				}
 				tmpblocklevelelts.AltChunk = append(tmpblocklevelelts.AltChunk, tmp)
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
-			case "customXml":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXml"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmpcontentblockcontent.CustomXml = NewCT_CustomXmlBlock()
@@ -114,7 +114,7 @@ lCT_Comment:
 				}
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
-			case "sdt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sdt"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmpcontentblockcontent.Sdt = NewCT_SdtBlock()
@@ -123,7 +123,7 @@ lCT_Comment:
 				}
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
-			case "p":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "p"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmp := NewCT_P()
@@ -133,7 +133,7 @@ lCT_Comment:
 				tmpcontentblockcontent.P = append(tmpcontentblockcontent.P, tmp)
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
-			case "tbl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tbl"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmp := NewCT_Tbl()
@@ -143,7 +143,7 @@ lCT_Comment:
 				tmpcontentblockcontent.Tbl = append(tmpcontentblockcontent.Tbl, tmp)
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
-			case "proofErr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "proofErr"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -154,7 +154,7 @@ lCT_Comment:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case "permStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "permStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -165,7 +165,7 @@ lCT_Comment:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case "permEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "permEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -176,7 +176,7 @@ lCT_Comment:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case "ins":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ins"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -187,7 +187,7 @@ lCT_Comment:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case "del":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "del"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -198,7 +198,7 @@ lCT_Comment:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case "moveFrom":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFrom"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -209,7 +209,7 @@ lCT_Comment:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case "moveTo":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveTo"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -220,7 +220,7 @@ lCT_Comment:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case "bookmarkStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -233,7 +233,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "bookmarkEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -246,7 +246,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "moveFromRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -259,7 +259,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "moveFromRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -272,7 +272,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "moveToRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -285,7 +285,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "moveToRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -298,7 +298,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "commentRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -311,7 +311,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "commentRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -324,7 +324,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlInsRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -337,7 +337,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlInsRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -350,7 +350,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlDelRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -363,7 +363,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlDelRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -376,7 +376,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlMoveFromRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -389,7 +389,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlMoveFromRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -402,7 +402,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlMoveToRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -415,7 +415,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlMoveToRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -428,7 +428,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "oMathPara":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMathPara"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -441,7 +441,7 @@ lCT_Comment:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_MathContent = append(tmprunlevelelts.EG_MathContent, tmpmathcontent)
-			case "oMath":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMath"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()

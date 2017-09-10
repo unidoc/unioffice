@@ -48,39 +48,57 @@ func (m *CT_FFData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Name != nil {
 		sename := xml.StartElement{Name: xml.Name{Local: "w:name"}}
-		e.EncodeElement(m.Name, sename)
+		for _, c := range m.Name {
+			e.EncodeElement(c, sename)
+		}
 	}
 	if m.Label != nil {
 		selabel := xml.StartElement{Name: xml.Name{Local: "w:label"}}
-		e.EncodeElement(m.Label, selabel)
+		for _, c := range m.Label {
+			e.EncodeElement(c, selabel)
+		}
 	}
 	if m.TabIndex != nil {
 		setabIndex := xml.StartElement{Name: xml.Name{Local: "w:tabIndex"}}
-		e.EncodeElement(m.TabIndex, setabIndex)
+		for _, c := range m.TabIndex {
+			e.EncodeElement(c, setabIndex)
+		}
 	}
 	if m.Enabled != nil {
 		seenabled := xml.StartElement{Name: xml.Name{Local: "w:enabled"}}
-		e.EncodeElement(m.Enabled, seenabled)
+		for _, c := range m.Enabled {
+			e.EncodeElement(c, seenabled)
+		}
 	}
 	if m.CalcOnExit != nil {
 		secalcOnExit := xml.StartElement{Name: xml.Name{Local: "w:calcOnExit"}}
-		e.EncodeElement(m.CalcOnExit, secalcOnExit)
+		for _, c := range m.CalcOnExit {
+			e.EncodeElement(c, secalcOnExit)
+		}
 	}
 	if m.EntryMacro != nil {
 		seentryMacro := xml.StartElement{Name: xml.Name{Local: "w:entryMacro"}}
-		e.EncodeElement(m.EntryMacro, seentryMacro)
+		for _, c := range m.EntryMacro {
+			e.EncodeElement(c, seentryMacro)
+		}
 	}
 	if m.ExitMacro != nil {
 		seexitMacro := xml.StartElement{Name: xml.Name{Local: "w:exitMacro"}}
-		e.EncodeElement(m.ExitMacro, seexitMacro)
+		for _, c := range m.ExitMacro {
+			e.EncodeElement(c, seexitMacro)
+		}
 	}
 	if m.HelpText != nil {
 		sehelpText := xml.StartElement{Name: xml.Name{Local: "w:helpText"}}
-		e.EncodeElement(m.HelpText, sehelpText)
+		for _, c := range m.HelpText {
+			e.EncodeElement(c, sehelpText)
+		}
 	}
 	if m.StatusText != nil {
 		sestatusText := xml.StartElement{Name: xml.Name{Local: "w:statusText"}}
-		e.EncodeElement(m.StatusText, sestatusText)
+		for _, c := range m.StatusText {
+			e.EncodeElement(c, sestatusText)
+		}
 	}
 	if m.CheckBox != nil {
 		secheckBox := xml.StartElement{Name: xml.Name{Local: "w:checkBox"}}
@@ -108,72 +126,72 @@ lCT_FFData:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "name":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "name"}:
 				tmp := NewCT_FFName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Name = append(m.Name, tmp)
-			case "label":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "label"}:
 				tmp := NewCT_DecimalNumber()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Label = append(m.Label, tmp)
-			case "tabIndex":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tabIndex"}:
 				tmp := NewCT_UnsignedDecimalNumber()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.TabIndex = append(m.TabIndex, tmp)
-			case "enabled":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "enabled"}:
 				tmp := NewCT_OnOff()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Enabled = append(m.Enabled, tmp)
-			case "calcOnExit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "calcOnExit"}:
 				tmp := NewCT_OnOff()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CalcOnExit = append(m.CalcOnExit, tmp)
-			case "entryMacro":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "entryMacro"}:
 				tmp := NewCT_MacroName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.EntryMacro = append(m.EntryMacro, tmp)
-			case "exitMacro":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "exitMacro"}:
 				tmp := NewCT_MacroName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.ExitMacro = append(m.ExitMacro, tmp)
-			case "helpText":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "helpText"}:
 				tmp := NewCT_FFHelpText()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.HelpText = append(m.HelpText, tmp)
-			case "statusText":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "statusText"}:
 				tmp := NewCT_FFStatusText()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.StatusText = append(m.StatusText, tmp)
-			case "checkBox":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "checkBox"}:
 				m.CheckBox = NewCT_FFCheckBox()
 				if err := d.DecodeElement(m.CheckBox, &el); err != nil {
 					return err
 				}
-			case "ddList":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ddList"}:
 				m.DdList = NewCT_FFDDList()
 				if err := d.DecodeElement(m.DdList, &el); err != nil {
 					return err
 				}
-			case "textInput":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "textInput"}:
 				m.TextInput = NewCT_FFTextInput()
 				if err := d.DecodeElement(m.TextInput, &el); err != nil {
 					return err

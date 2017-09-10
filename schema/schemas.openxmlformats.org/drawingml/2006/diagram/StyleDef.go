@@ -63,36 +63,36 @@ lStyleDef:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "title":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "title"}:
 				tmp := NewCT_SDName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Title = append(m.Title, tmp)
-			case "desc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "desc"}:
 				tmp := NewCT_SDDescription()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Desc = append(m.Desc, tmp)
-			case "catLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "catLst"}:
 				m.CatLst = NewCT_SDCategories()
 				if err := d.DecodeElement(m.CatLst, &el); err != nil {
 					return err
 				}
-			case "scene3d":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "scene3d"}:
 				m.Scene3d = drawingml.NewCT_Scene3D()
 				if err := d.DecodeElement(m.Scene3d, &el); err != nil {
 					return err
 				}
-			case "styleLbl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "styleLbl"}:
 				tmp := NewCT_StyleLabel()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.StyleLbl = append(m.StyleLbl, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "extLst"}:
 				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

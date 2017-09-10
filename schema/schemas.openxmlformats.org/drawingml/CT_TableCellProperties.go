@@ -210,78 +210,78 @@ lCT_TableCellProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "lnL":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnL"}:
 				m.LnL = NewCT_LineProperties()
 				if err := d.DecodeElement(m.LnL, &el); err != nil {
 					return err
 				}
-			case "lnR":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnR"}:
 				m.LnR = NewCT_LineProperties()
 				if err := d.DecodeElement(m.LnR, &el); err != nil {
 					return err
 				}
-			case "lnT":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnT"}:
 				m.LnT = NewCT_LineProperties()
 				if err := d.DecodeElement(m.LnT, &el); err != nil {
 					return err
 				}
-			case "lnB":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnB"}:
 				m.LnB = NewCT_LineProperties()
 				if err := d.DecodeElement(m.LnB, &el); err != nil {
 					return err
 				}
-			case "lnTlToBr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnTlToBr"}:
 				m.LnTlToBr = NewCT_LineProperties()
 				if err := d.DecodeElement(m.LnTlToBr, &el); err != nil {
 					return err
 				}
-			case "lnBlToTr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnBlToTr"}:
 				m.LnBlToTr = NewCT_LineProperties()
 				if err := d.DecodeElement(m.LnBlToTr, &el); err != nil {
 					return err
 				}
-			case "cell3D":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cell3D"}:
 				m.Cell3D = NewCT_Cell3D()
 				if err := d.DecodeElement(m.Cell3D, &el); err != nil {
 					return err
 				}
-			case "noFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noFill"}:
 				m.NoFill = NewCT_NoFillProperties()
 				if err := d.DecodeElement(m.NoFill, &el); err != nil {
 					return err
 				}
-			case "solidFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "solidFill"}:
 				m.SolidFill = NewCT_SolidColorFillProperties()
 				if err := d.DecodeElement(m.SolidFill, &el); err != nil {
 					return err
 				}
-			case "gradFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gradFill"}:
 				m.GradFill = NewCT_GradientFillProperties()
 				if err := d.DecodeElement(m.GradFill, &el); err != nil {
 					return err
 				}
-			case "blipFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blipFill"}:
 				m.BlipFill = NewCT_BlipFillProperties()
 				if err := d.DecodeElement(m.BlipFill, &el); err != nil {
 					return err
 				}
-			case "pattFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pattFill"}:
 				m.PattFill = NewCT_PatternFillProperties()
 				if err := d.DecodeElement(m.PattFill, &el); err != nil {
 					return err
 				}
-			case "grpFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpFill"}:
 				m.GrpFill = NewCT_GroupFillProperties()
 				if err := d.DecodeElement(m.GrpFill, &el); err != nil {
 					return err
 				}
-			case "headers":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "headers"}:
 				m.Headers = NewCT_Headers()
 				if err := d.DecodeElement(m.Headers, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

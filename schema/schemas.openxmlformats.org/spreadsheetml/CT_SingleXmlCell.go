@@ -43,10 +43,10 @@ func (m *CT_SingleXmlCell) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "connectionId"},
 		Value: fmt.Sprintf("%v", m.ConnectionIdAttr)})
 	e.EncodeToken(start)
-	sexmlCellPr := xml.StartElement{Name: xml.Name{Local: "x:xmlCellPr"}}
+	sexmlCellPr := xml.StartElement{Name: xml.Name{Local: "ma:xmlCellPr"}}
 	e.EncodeElement(m.XmlCellPr, sexmlCellPr)
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -87,12 +87,12 @@ lCT_SingleXmlCell:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "xmlCellPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "xmlCellPr"}:
 				if err := d.DecodeElement(m.XmlCellPr, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -27,7 +27,9 @@ func NewCT_MCS() *CT_MCS {
 func (m *CT_MCS) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	semc := xml.StartElement{Name: xml.Name{Local: "m:mc"}}
-	e.EncodeElement(m.Mc, semc)
+	for _, c := range m.Mc {
+		e.EncodeElement(c, semc)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -42,8 +44,8 @@ lCT_MCS:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "mc":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mc"}:
 				tmp := NewCT_MC()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

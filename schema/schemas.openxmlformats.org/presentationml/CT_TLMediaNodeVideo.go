@@ -61,8 +61,8 @@ lCT_TLMediaNodeVideo:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cMediaNode":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cMediaNode"}:
 				if err := d.DecodeElement(m.CMediaNode, &el); err != nil {
 					return err
 				}

@@ -46,13 +46,13 @@ lCT_GvmlTextShapeChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "useSpRect":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "useSpRect"}:
 				m.UseSpRect = NewCT_GvmlUseShapeRectangle()
 				if err := d.DecodeElement(m.UseSpRect, &el); err != nil {
 					return err
 				}
-			case "xfrm":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "xfrm"}:
 				m.Xfrm = NewCT_Transform2D()
 				if err := d.DecodeElement(m.Xfrm, &el); err != nil {
 					return err

@@ -28,7 +28,7 @@ func (m *Theme) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns"}, Value: "http://schemas.openxmlformats.org/drawingml/2006/main"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:a"}, Value: "http://schemas.openxmlformats.org/drawingml/2006/main"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:r"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/relationships"})
-	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:s"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:sh"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:xml"}, Value: "http://www.w3.org/XML/1998/namespace"})
 	start.Name.Local = "a:theme"
 	return m.CT_OfficeStyleSheet.MarshalXML(e, start)
@@ -54,27 +54,27 @@ lTheme:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "themeElements":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "themeElements"}:
 				if err := d.DecodeElement(m.ThemeElements, &el); err != nil {
 					return err
 				}
-			case "objectDefaults":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "objectDefaults"}:
 				m.ObjectDefaults = NewCT_ObjectStyleDefaults()
 				if err := d.DecodeElement(m.ObjectDefaults, &el); err != nil {
 					return err
 				}
-			case "extraClrSchemeLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extraClrSchemeLst"}:
 				m.ExtraClrSchemeLst = NewCT_ColorSchemeList()
 				if err := d.DecodeElement(m.ExtraClrSchemeLst, &el); err != nil {
 					return err
 				}
-			case "custClrLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custClrLst"}:
 				m.CustClrLst = NewCT_CustomColorList()
 				if err := d.DecodeElement(m.CustClrLst, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

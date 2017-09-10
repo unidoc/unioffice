@@ -136,103 +136,103 @@ lEG_OMathMathElements:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "acc":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "acc"}:
 				m.Acc = NewCT_Acc()
 				if err := d.DecodeElement(m.Acc, &el); err != nil {
 					return err
 				}
-			case "bar":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "bar"}:
 				m.Bar = NewCT_Bar()
 				if err := d.DecodeElement(m.Bar, &el); err != nil {
 					return err
 				}
-			case "box":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "box"}:
 				m.Box = NewCT_Box()
 				if err := d.DecodeElement(m.Box, &el); err != nil {
 					return err
 				}
-			case "borderBox":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "borderBox"}:
 				m.BorderBox = NewCT_BorderBox()
 				if err := d.DecodeElement(m.BorderBox, &el); err != nil {
 					return err
 				}
-			case "d":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "d"}:
 				m.D = NewCT_D()
 				if err := d.DecodeElement(m.D, &el); err != nil {
 					return err
 				}
-			case "eqArr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "eqArr"}:
 				m.EqArr = NewCT_EqArr()
 				if err := d.DecodeElement(m.EqArr, &el); err != nil {
 					return err
 				}
-			case "f":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "f"}:
 				m.F = NewCT_F()
 				if err := d.DecodeElement(m.F, &el); err != nil {
 					return err
 				}
-			case "func":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "func"}:
 				m.Func = NewCT_Func()
 				if err := d.DecodeElement(m.Func, &el); err != nil {
 					return err
 				}
-			case "groupChr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "groupChr"}:
 				m.GroupChr = NewCT_GroupChr()
 				if err := d.DecodeElement(m.GroupChr, &el); err != nil {
 					return err
 				}
-			case "limLow":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "limLow"}:
 				m.LimLow = NewCT_LimLow()
 				if err := d.DecodeElement(m.LimLow, &el); err != nil {
 					return err
 				}
-			case "limUpp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "limUpp"}:
 				m.LimUpp = NewCT_LimUpp()
 				if err := d.DecodeElement(m.LimUpp, &el); err != nil {
 					return err
 				}
-			case "m":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "m"}:
 				m.M = NewCT_M()
 				if err := d.DecodeElement(m.M, &el); err != nil {
 					return err
 				}
-			case "nary":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "nary"}:
 				m.Nary = NewCT_Nary()
 				if err := d.DecodeElement(m.Nary, &el); err != nil {
 					return err
 				}
-			case "phant":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "phant"}:
 				m.Phant = NewCT_Phant()
 				if err := d.DecodeElement(m.Phant, &el); err != nil {
 					return err
 				}
-			case "rad":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "rad"}:
 				m.Rad = NewCT_Rad()
 				if err := d.DecodeElement(m.Rad, &el); err != nil {
 					return err
 				}
-			case "sPre":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sPre"}:
 				m.SPre = NewCT_SPre()
 				if err := d.DecodeElement(m.SPre, &el); err != nil {
 					return err
 				}
-			case "sSub":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sSub"}:
 				m.SSub = NewCT_SSub()
 				if err := d.DecodeElement(m.SSub, &el); err != nil {
 					return err
 				}
-			case "sSubSup":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sSubSup"}:
 				m.SSubSup = NewCT_SSubSup()
 				if err := d.DecodeElement(m.SSubSup, &el); err != nil {
 					return err
 				}
-			case "sSup":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sSup"}:
 				m.SSup = NewCT_SSup()
 				if err := d.DecodeElement(m.SSup, &el); err != nil {
 					return err
 				}
-			case "r":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "r"}:
 				m.R = NewCT_R()
 				if err := d.DecodeElement(m.R, &el); err != nil {
 					return err

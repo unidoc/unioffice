@@ -55,63 +55,63 @@ func NewCT_RPrElt() *CT_RPrElt {
 func (m *CT_RPrElt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.RFont != nil {
-		serFont := xml.StartElement{Name: xml.Name{Local: "x:rFont"}}
+		serFont := xml.StartElement{Name: xml.Name{Local: "ma:rFont"}}
 		e.EncodeElement(m.RFont, serFont)
 	}
 	if m.Charset != nil {
-		secharset := xml.StartElement{Name: xml.Name{Local: "x:charset"}}
+		secharset := xml.StartElement{Name: xml.Name{Local: "ma:charset"}}
 		e.EncodeElement(m.Charset, secharset)
 	}
 	if m.Family != nil {
-		sefamily := xml.StartElement{Name: xml.Name{Local: "x:family"}}
+		sefamily := xml.StartElement{Name: xml.Name{Local: "ma:family"}}
 		e.EncodeElement(m.Family, sefamily)
 	}
 	if m.B != nil {
-		seb := xml.StartElement{Name: xml.Name{Local: "x:b"}}
+		seb := xml.StartElement{Name: xml.Name{Local: "ma:b"}}
 		e.EncodeElement(m.B, seb)
 	}
 	if m.I != nil {
-		sei := xml.StartElement{Name: xml.Name{Local: "x:i"}}
+		sei := xml.StartElement{Name: xml.Name{Local: "ma:i"}}
 		e.EncodeElement(m.I, sei)
 	}
 	if m.Strike != nil {
-		sestrike := xml.StartElement{Name: xml.Name{Local: "x:strike"}}
+		sestrike := xml.StartElement{Name: xml.Name{Local: "ma:strike"}}
 		e.EncodeElement(m.Strike, sestrike)
 	}
 	if m.Outline != nil {
-		seoutline := xml.StartElement{Name: xml.Name{Local: "x:outline"}}
+		seoutline := xml.StartElement{Name: xml.Name{Local: "ma:outline"}}
 		e.EncodeElement(m.Outline, seoutline)
 	}
 	if m.Shadow != nil {
-		seshadow := xml.StartElement{Name: xml.Name{Local: "x:shadow"}}
+		seshadow := xml.StartElement{Name: xml.Name{Local: "ma:shadow"}}
 		e.EncodeElement(m.Shadow, seshadow)
 	}
 	if m.Condense != nil {
-		secondense := xml.StartElement{Name: xml.Name{Local: "x:condense"}}
+		secondense := xml.StartElement{Name: xml.Name{Local: "ma:condense"}}
 		e.EncodeElement(m.Condense, secondense)
 	}
 	if m.Extend != nil {
-		seextend := xml.StartElement{Name: xml.Name{Local: "x:extend"}}
+		seextend := xml.StartElement{Name: xml.Name{Local: "ma:extend"}}
 		e.EncodeElement(m.Extend, seextend)
 	}
 	if m.Color != nil {
-		secolor := xml.StartElement{Name: xml.Name{Local: "x:color"}}
+		secolor := xml.StartElement{Name: xml.Name{Local: "ma:color"}}
 		e.EncodeElement(m.Color, secolor)
 	}
 	if m.Sz != nil {
-		sesz := xml.StartElement{Name: xml.Name{Local: "x:sz"}}
+		sesz := xml.StartElement{Name: xml.Name{Local: "ma:sz"}}
 		e.EncodeElement(m.Sz, sesz)
 	}
 	if m.U != nil {
-		seu := xml.StartElement{Name: xml.Name{Local: "x:u"}}
+		seu := xml.StartElement{Name: xml.Name{Local: "ma:u"}}
 		e.EncodeElement(m.U, seu)
 	}
 	if m.VertAlign != nil {
-		severtAlign := xml.StartElement{Name: xml.Name{Local: "x:vertAlign"}}
+		severtAlign := xml.StartElement{Name: xml.Name{Local: "ma:vertAlign"}}
 		e.EncodeElement(m.VertAlign, severtAlign)
 	}
 	if m.Scheme != nil {
-		sescheme := xml.StartElement{Name: xml.Name{Local: "x:scheme"}}
+		sescheme := xml.StartElement{Name: xml.Name{Local: "ma:scheme"}}
 		e.EncodeElement(m.Scheme, sescheme)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -128,78 +128,78 @@ lCT_RPrElt:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rFont":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rFont"}:
 				m.RFont = NewCT_FontName()
 				if err := d.DecodeElement(m.RFont, &el); err != nil {
 					return err
 				}
-			case "charset":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "charset"}:
 				m.Charset = NewCT_IntProperty()
 				if err := d.DecodeElement(m.Charset, &el); err != nil {
 					return err
 				}
-			case "family":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "family"}:
 				m.Family = NewCT_IntProperty()
 				if err := d.DecodeElement(m.Family, &el); err != nil {
 					return err
 				}
-			case "b":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "b"}:
 				m.B = NewCT_BooleanProperty()
 				if err := d.DecodeElement(m.B, &el); err != nil {
 					return err
 				}
-			case "i":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "i"}:
 				m.I = NewCT_BooleanProperty()
 				if err := d.DecodeElement(m.I, &el); err != nil {
 					return err
 				}
-			case "strike":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "strike"}:
 				m.Strike = NewCT_BooleanProperty()
 				if err := d.DecodeElement(m.Strike, &el); err != nil {
 					return err
 				}
-			case "outline":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "outline"}:
 				m.Outline = NewCT_BooleanProperty()
 				if err := d.DecodeElement(m.Outline, &el); err != nil {
 					return err
 				}
-			case "shadow":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "shadow"}:
 				m.Shadow = NewCT_BooleanProperty()
 				if err := d.DecodeElement(m.Shadow, &el); err != nil {
 					return err
 				}
-			case "condense":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "condense"}:
 				m.Condense = NewCT_BooleanProperty()
 				if err := d.DecodeElement(m.Condense, &el); err != nil {
 					return err
 				}
-			case "extend":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extend"}:
 				m.Extend = NewCT_BooleanProperty()
 				if err := d.DecodeElement(m.Extend, &el); err != nil {
 					return err
 				}
-			case "color":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "color"}:
 				m.Color = NewCT_Color()
 				if err := d.DecodeElement(m.Color, &el); err != nil {
 					return err
 				}
-			case "sz":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sz"}:
 				m.Sz = NewCT_FontSize()
 				if err := d.DecodeElement(m.Sz, &el); err != nil {
 					return err
 				}
-			case "u":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "u"}:
 				m.U = NewCT_UnderlineProperty()
 				if err := d.DecodeElement(m.U, &el); err != nil {
 					return err
 				}
-			case "vertAlign":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "vertAlign"}:
 				m.VertAlign = NewCT_VerticalAlignFontProperty()
 				if err := d.DecodeElement(m.VertAlign, &el); err != nil {
 					return err
 				}
-			case "scheme":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "scheme"}:
 				m.Scheme = NewCT_FontScheme()
 				if err := d.DecodeElement(m.Scheme, &el); err != nil {
 					return err

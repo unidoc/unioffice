@@ -46,13 +46,13 @@ lCT_MathPrChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "wrapIndent":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "wrapIndent"}:
 				m.WrapIndent = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.WrapIndent, &el); err != nil {
 					return err
 				}
-			case "wrapRight":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "wrapRight"}:
 				m.WrapRight = NewCT_OnOff()
 				if err := d.DecodeElement(m.WrapRight, &el); err != nil {
 					return err

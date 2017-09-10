@@ -378,33 +378,33 @@ lCT_TLCommonTimeNodeData:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "stCondLst":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "stCondLst"}:
 				m.StCondLst = NewCT_TLTimeConditionList()
 				if err := d.DecodeElement(m.StCondLst, &el); err != nil {
 					return err
 				}
-			case "endCondLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "endCondLst"}:
 				m.EndCondLst = NewCT_TLTimeConditionList()
 				if err := d.DecodeElement(m.EndCondLst, &el); err != nil {
 					return err
 				}
-			case "endSync":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "endSync"}:
 				m.EndSync = NewCT_TLTimeCondition()
 				if err := d.DecodeElement(m.EndSync, &el); err != nil {
 					return err
 				}
-			case "iterate":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "iterate"}:
 				m.Iterate = NewCT_TLIterateData()
 				if err := d.DecodeElement(m.Iterate, &el); err != nil {
 					return err
 				}
-			case "childTnLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "childTnLst"}:
 				m.ChildTnLst = NewCT_TimeNodeList()
 				if err := d.DecodeElement(m.ChildTnLst, &el); err != nil {
 					return err
 				}
-			case "subTnLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "subTnLst"}:
 				m.SubTnLst = NewCT_TimeNodeList()
 				if err := d.DecodeElement(m.SubTnLst, &el); err != nil {
 					return err

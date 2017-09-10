@@ -28,7 +28,9 @@ func (m *CT_CTCategories) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(start)
 	if m.Cat != nil {
 		secat := xml.StartElement{Name: xml.Name{Local: "cat"}}
-		e.EncodeElement(m.Cat, secat)
+		for _, c := range m.Cat {
+			e.EncodeElement(c, secat)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_CTCategories:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cat":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "cat"}:
 				tmp := NewCT_CTCategory()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

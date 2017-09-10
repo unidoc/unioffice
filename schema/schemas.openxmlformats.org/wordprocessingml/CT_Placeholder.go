@@ -44,8 +44,8 @@ lCT_Placeholder:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "docPart":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docPart"}:
 				if err := d.DecodeElement(m.DocPart, &el); err != nil {
 					return err
 				}

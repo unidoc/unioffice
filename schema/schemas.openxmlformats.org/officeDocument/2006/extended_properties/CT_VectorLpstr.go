@@ -45,8 +45,8 @@ lCT_VectorLpstr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "vector":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "vector"}:
 				if err := d.DecodeElement(m.Vector, &el); err != nil {
 					return err
 				}

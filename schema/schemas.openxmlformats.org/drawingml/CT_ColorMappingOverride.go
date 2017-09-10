@@ -43,13 +43,13 @@ lCT_ColorMappingOverride:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "masterClrMapping":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "masterClrMapping"}:
 				m.Choice = NewCT_ColorMappingOverrideChoice()
 				if err := d.DecodeElement(&m.Choice.MasterClrMapping, &el); err != nil {
 					return err
 				}
-			case "overrideClrMapping":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "overrideClrMapping"}:
 				m.Choice = NewCT_ColorMappingOverrideChoice()
 				if err := d.DecodeElement(&m.Choice.OverrideClrMapping, &el); err != nil {
 					return err

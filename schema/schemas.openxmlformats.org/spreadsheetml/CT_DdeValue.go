@@ -37,7 +37,7 @@ func (m *CT_DdeValue) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	seval := xml.StartElement{Name: xml.Name{Local: "x:val"}}
+	seval := xml.StartElement{Name: xml.Name{Local: "ma:val"}}
 	gooxml.AddPreserveSpaceAttr(&seval, m.Val)
 	e.EncodeElement(m.Val, seval)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -59,8 +59,8 @@ lCT_DdeValue:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "val":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "val"}:
 				if err := d.DecodeElement(&m.Val, &el); err != nil {
 					return err
 				}

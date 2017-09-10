@@ -28,7 +28,9 @@ func (m *CT_DiagramDefinitionHeaderLst) MarshalXML(e *xml.Encoder, start xml.Sta
 	e.EncodeToken(start)
 	if m.LayoutDefHdr != nil {
 		selayoutDefHdr := xml.StartElement{Name: xml.Name{Local: "layoutDefHdr"}}
-		e.EncodeElement(m.LayoutDefHdr, selayoutDefHdr)
+		for _, c := range m.LayoutDefHdr {
+			e.EncodeElement(c, selayoutDefHdr)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_DiagramDefinitionHeaderLst:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "layoutDefHdr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "layoutDefHdr"}:
 				tmp := NewCT_DiagramDefinitionHeader()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

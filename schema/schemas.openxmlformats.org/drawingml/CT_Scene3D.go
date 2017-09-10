@@ -58,21 +58,21 @@ lCT_Scene3D:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "camera":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "camera"}:
 				if err := d.DecodeElement(m.Camera, &el); err != nil {
 					return err
 				}
-			case "lightRig":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lightRig"}:
 				if err := d.DecodeElement(m.LightRig, &el); err != nil {
 					return err
 				}
-			case "backdrop":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "backdrop"}:
 				m.Backdrop = NewCT_Backdrop()
 				if err := d.DecodeElement(m.Backdrop, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

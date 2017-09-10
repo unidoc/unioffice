@@ -97,17 +97,17 @@ lCT_TLTimeNodeSequence:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cTn":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cTn"}:
 				if err := d.DecodeElement(m.CTn, &el); err != nil {
 					return err
 				}
-			case "prevCondLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "prevCondLst"}:
 				m.PrevCondLst = NewCT_TLTimeConditionList()
 				if err := d.DecodeElement(m.PrevCondLst, &el); err != nil {
 					return err
 				}
-			case "nextCondLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "nextCondLst"}:
 				m.NextCondLst = NewCT_TLTimeConditionList()
 				if err := d.DecodeElement(m.NextCondLst, &el); err != nil {
 					return err

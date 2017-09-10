@@ -59,71 +59,105 @@ func (m *CT_Array) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Variant != nil {
 		sevariant := xml.StartElement{Name: xml.Name{Local: "vt:variant"}}
-		e.EncodeElement(m.Variant, sevariant)
+		for _, c := range m.Variant {
+			e.EncodeElement(c, sevariant)
+		}
 	}
 	if m.I1 != nil {
 		sei1 := xml.StartElement{Name: xml.Name{Local: "vt:i1"}}
-		e.EncodeElement(m.I1, sei1)
+		for _, c := range m.I1 {
+			e.EncodeElement(c, sei1)
+		}
 	}
 	if m.I2 != nil {
 		sei2 := xml.StartElement{Name: xml.Name{Local: "vt:i2"}}
-		e.EncodeElement(m.I2, sei2)
+		for _, c := range m.I2 {
+			e.EncodeElement(c, sei2)
+		}
 	}
 	if m.I4 != nil {
 		sei4 := xml.StartElement{Name: xml.Name{Local: "vt:i4"}}
-		e.EncodeElement(m.I4, sei4)
+		for _, c := range m.I4 {
+			e.EncodeElement(c, sei4)
+		}
 	}
 	if m.Int != nil {
 		seint := xml.StartElement{Name: xml.Name{Local: "vt:int"}}
-		e.EncodeElement(m.Int, seint)
+		for _, c := range m.Int {
+			e.EncodeElement(c, seint)
+		}
 	}
 	if m.Ui1 != nil {
 		seui1 := xml.StartElement{Name: xml.Name{Local: "vt:ui1"}}
-		e.EncodeElement(m.Ui1, seui1)
+		for _, c := range m.Ui1 {
+			e.EncodeElement(c, seui1)
+		}
 	}
 	if m.Ui2 != nil {
 		seui2 := xml.StartElement{Name: xml.Name{Local: "vt:ui2"}}
-		e.EncodeElement(m.Ui2, seui2)
+		for _, c := range m.Ui2 {
+			e.EncodeElement(c, seui2)
+		}
 	}
 	if m.Ui4 != nil {
 		seui4 := xml.StartElement{Name: xml.Name{Local: "vt:ui4"}}
-		e.EncodeElement(m.Ui4, seui4)
+		for _, c := range m.Ui4 {
+			e.EncodeElement(c, seui4)
+		}
 	}
 	if m.Uint != nil {
 		seuint := xml.StartElement{Name: xml.Name{Local: "vt:uint"}}
-		e.EncodeElement(m.Uint, seuint)
+		for _, c := range m.Uint {
+			e.EncodeElement(c, seuint)
+		}
 	}
 	if m.R4 != nil {
 		ser4 := xml.StartElement{Name: xml.Name{Local: "vt:r4"}}
-		e.EncodeElement(m.R4, ser4)
+		for _, c := range m.R4 {
+			e.EncodeElement(c, ser4)
+		}
 	}
 	if m.R8 != nil {
 		ser8 := xml.StartElement{Name: xml.Name{Local: "vt:r8"}}
-		e.EncodeElement(m.R8, ser8)
+		for _, c := range m.R8 {
+			e.EncodeElement(c, ser8)
+		}
 	}
 	if m.Decimal != nil {
 		sedecimal := xml.StartElement{Name: xml.Name{Local: "vt:decimal"}}
-		e.EncodeElement(m.Decimal, sedecimal)
+		for _, c := range m.Decimal {
+			e.EncodeElement(c, sedecimal)
+		}
 	}
 	if m.Bstr != nil {
 		sebstr := xml.StartElement{Name: xml.Name{Local: "vt:bstr"}}
-		e.EncodeElement(m.Bstr, sebstr)
+		for _, c := range m.Bstr {
+			e.EncodeElement(c, sebstr)
+		}
 	}
 	if m.Date != nil {
 		sedate := xml.StartElement{Name: xml.Name{Local: "vt:date"}}
-		e.EncodeElement(m.Date, sedate)
+		for _, c := range m.Date {
+			e.EncodeElement(c, sedate)
+		}
 	}
 	if m.Bool != nil {
 		sebool := xml.StartElement{Name: xml.Name{Local: "vt:bool"}}
-		e.EncodeElement(m.Bool, sebool)
+		for _, c := range m.Bool {
+			e.EncodeElement(c, sebool)
+		}
 	}
 	if m.Error != nil {
 		seerror := xml.StartElement{Name: xml.Name{Local: "vt:error"}}
-		e.EncodeElement(m.Error, seerror)
+		for _, c := range m.Error {
+			e.EncodeElement(c, seerror)
+		}
 	}
 	if m.Cy != nil {
 		secy := xml.StartElement{Name: xml.Name{Local: "vt:cy"}}
-		e.EncodeElement(m.Cy, secy)
+		for _, c := range m.Cy {
+			e.EncodeElement(c, secy)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -159,104 +193,104 @@ lCT_Array:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "variant":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "variant"}:
 				tmp := NewVariant()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Variant = append(m.Variant, tmp)
-			case "i1":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "i1"}:
 				var tmp int8
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.I1 = append(m.I1, tmp)
-			case "i2":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "i2"}:
 				var tmp int16
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.I2 = append(m.I2, tmp)
-			case "i4":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "i4"}:
 				var tmp int32
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.I4 = append(m.I4, tmp)
-			case "int":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "int"}:
 				var tmp int32
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.Int = append(m.Int, tmp)
-			case "ui1":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "ui1"}:
 				var tmp uint8
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.Ui1 = append(m.Ui1, tmp)
-			case "ui2":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "ui2"}:
 				var tmp uint16
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.Ui2 = append(m.Ui2, tmp)
-			case "ui4":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "ui4"}:
 				var tmp uint32
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.Ui4 = append(m.Ui4, tmp)
-			case "uint":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "uint"}:
 				var tmp uint32
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.Uint = append(m.Uint, tmp)
-			case "r4":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "r4"}:
 				var tmp float32
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.R4 = append(m.R4, tmp)
-			case "r8":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "r8"}:
 				var tmp float64
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.R8 = append(m.R8, tmp)
-			case "decimal":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "decimal"}:
 				var tmp float64
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.Decimal = append(m.Decimal, tmp)
-			case "bstr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "bstr"}:
 				var tmp string
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.Bstr = append(m.Bstr, tmp)
-			case "date":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "date"}:
 				var tmp time.Time
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.Date = append(m.Date, tmp)
-			case "bool":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "bool"}:
 				var tmp bool
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.Bool = append(m.Bool, tmp)
-			case "error":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "error"}:
 				var tmp string
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.Error = append(m.Error, tmp)
-			case "cy":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "cy"}:
 				var tmp string
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err

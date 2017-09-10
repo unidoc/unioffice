@@ -28,7 +28,9 @@ func (m *CT_Relationships) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(start)
 	if m.Relationship != nil {
 		seRelationship := xml.StartElement{Name: xml.Name{Local: "Relationship"}}
-		e.EncodeElement(m.Relationship, seRelationship)
+		for _, c := range m.Relationship {
+			e.EncodeElement(c, seRelationship)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_Relationships:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "Relationship":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/relationships", Local: "Relationship"}:
 				tmp := NewRelationship()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

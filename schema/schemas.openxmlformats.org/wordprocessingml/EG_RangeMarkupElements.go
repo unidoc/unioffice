@@ -132,83 +132,83 @@ lEG_RangeMarkupElements:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "bookmarkStart":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkStart"}:
 				m.BookmarkStart = NewCT_Bookmark()
 				if err := d.DecodeElement(m.BookmarkStart, &el); err != nil {
 					return err
 				}
-			case "bookmarkEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkEnd"}:
 				m.BookmarkEnd = NewCT_MarkupRange()
 				if err := d.DecodeElement(m.BookmarkEnd, &el); err != nil {
 					return err
 				}
-			case "moveFromRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeStart"}:
 				m.MoveFromRangeStart = NewCT_MoveBookmark()
 				if err := d.DecodeElement(m.MoveFromRangeStart, &el); err != nil {
 					return err
 				}
-			case "moveFromRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeEnd"}:
 				m.MoveFromRangeEnd = NewCT_MarkupRange()
 				if err := d.DecodeElement(m.MoveFromRangeEnd, &el); err != nil {
 					return err
 				}
-			case "moveToRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeStart"}:
 				m.MoveToRangeStart = NewCT_MoveBookmark()
 				if err := d.DecodeElement(m.MoveToRangeStart, &el); err != nil {
 					return err
 				}
-			case "moveToRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeEnd"}:
 				m.MoveToRangeEnd = NewCT_MarkupRange()
 				if err := d.DecodeElement(m.MoveToRangeEnd, &el); err != nil {
 					return err
 				}
-			case "commentRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeStart"}:
 				m.CommentRangeStart = NewCT_MarkupRange()
 				if err := d.DecodeElement(m.CommentRangeStart, &el); err != nil {
 					return err
 				}
-			case "commentRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeEnd"}:
 				m.CommentRangeEnd = NewCT_MarkupRange()
 				if err := d.DecodeElement(m.CommentRangeEnd, &el); err != nil {
 					return err
 				}
-			case "customXmlInsRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeStart"}:
 				m.CustomXmlInsRangeStart = NewCT_TrackChange()
 				if err := d.DecodeElement(m.CustomXmlInsRangeStart, &el); err != nil {
 					return err
 				}
-			case "customXmlInsRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeEnd"}:
 				m.CustomXmlInsRangeEnd = NewCT_Markup()
 				if err := d.DecodeElement(m.CustomXmlInsRangeEnd, &el); err != nil {
 					return err
 				}
-			case "customXmlDelRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeStart"}:
 				m.CustomXmlDelRangeStart = NewCT_TrackChange()
 				if err := d.DecodeElement(m.CustomXmlDelRangeStart, &el); err != nil {
 					return err
 				}
-			case "customXmlDelRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeEnd"}:
 				m.CustomXmlDelRangeEnd = NewCT_Markup()
 				if err := d.DecodeElement(m.CustomXmlDelRangeEnd, &el); err != nil {
 					return err
 				}
-			case "customXmlMoveFromRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeStart"}:
 				m.CustomXmlMoveFromRangeStart = NewCT_TrackChange()
 				if err := d.DecodeElement(m.CustomXmlMoveFromRangeStart, &el); err != nil {
 					return err
 				}
-			case "customXmlMoveFromRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeEnd"}:
 				m.CustomXmlMoveFromRangeEnd = NewCT_Markup()
 				if err := d.DecodeElement(m.CustomXmlMoveFromRangeEnd, &el); err != nil {
 					return err
 				}
-			case "customXmlMoveToRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeStart"}:
 				m.CustomXmlMoveToRangeStart = NewCT_TrackChange()
 				if err := d.DecodeElement(m.CustomXmlMoveToRangeStart, &el); err != nil {
 					return err
 				}
-			case "customXmlMoveToRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeEnd"}:
 				m.CustomXmlMoveToRangeEnd = NewCT_Markup()
 				if err := d.DecodeElement(m.CustomXmlMoveToRangeEnd, &el); err != nil {
 					return err

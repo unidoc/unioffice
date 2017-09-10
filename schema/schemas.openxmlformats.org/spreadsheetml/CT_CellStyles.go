@@ -34,8 +34,10 @@ func (m *CT_CellStyles) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	secellStyle := xml.StartElement{Name: xml.Name{Local: "x:cellStyle"}}
-	e.EncodeElement(m.CellStyle, secellStyle)
+	secellStyle := xml.StartElement{Name: xml.Name{Local: "ma:cellStyle"}}
+	for _, c := range m.CellStyle {
+		e.EncodeElement(c, secellStyle)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_CellStyles:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cellStyle":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cellStyle"}:
 				tmp := NewCT_CellStyle()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -27,7 +27,9 @@ func NewEG_OfficeArtExtensionList() *EG_OfficeArtExtensionList {
 func (m *EG_OfficeArtExtensionList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.Ext != nil {
 		seext := xml.StartElement{Name: xml.Name{Local: "a:ext"}}
-		e.EncodeElement(m.Ext, seext)
+		for _, c := range m.Ext {
+			e.EncodeElement(c, seext)
+		}
 	}
 	return nil
 }
@@ -42,8 +44,8 @@ lEG_OfficeArtExtensionList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ext":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ext"}:
 				tmp := NewCT_OfficeArtExtension()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

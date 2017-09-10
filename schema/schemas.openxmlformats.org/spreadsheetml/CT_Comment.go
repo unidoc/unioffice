@@ -53,10 +53,10 @@ func (m *CT_Comment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.ShapeIdAttr)})
 	}
 	e.EncodeToken(start)
-	setext := xml.StartElement{Name: xml.Name{Local: "x:text"}}
+	setext := xml.StartElement{Name: xml.Name{Local: "ma:text"}}
 	e.EncodeElement(m.Text, setext)
 	if m.CommentPr != nil {
-		secommentPr := xml.StartElement{Name: xml.Name{Local: "x:commentPr"}}
+		secommentPr := xml.StartElement{Name: xml.Name{Local: "ma:commentPr"}}
 		e.EncodeElement(m.CommentPr, secommentPr)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -105,12 +105,12 @@ lCT_Comment:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "text":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "text"}:
 				if err := d.DecodeElement(m.Text, &el); err != nil {
 					return err
 				}
-			case "commentPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "commentPr"}:
 				m.CommentPr = NewCT_CommentPr()
 				if err := d.DecodeElement(m.CommentPr, &el); err != nil {
 					return err

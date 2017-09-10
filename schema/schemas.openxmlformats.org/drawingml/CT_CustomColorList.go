@@ -28,7 +28,9 @@ func (m *CT_CustomColorList) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(start)
 	if m.CustClr != nil {
 		secustClr := xml.StartElement{Name: xml.Name{Local: "a:custClr"}}
-		e.EncodeElement(m.CustClr, secustClr)
+		for _, c := range m.CustClr {
+			e.EncodeElement(c, secustClr)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_CustomColorList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "custClr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custClr"}:
 				tmp := NewCT_CustomColor()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

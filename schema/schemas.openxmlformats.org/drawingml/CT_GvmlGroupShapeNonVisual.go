@@ -48,12 +48,12 @@ lCT_GvmlGroupShapeNonVisual:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cNvPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cNvPr"}:
 				if err := d.DecodeElement(m.CNvPr, &el); err != nil {
 					return err
 				}
-			case "cNvGrpSpPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cNvGrpSpPr"}:
 				if err := d.DecodeElement(m.CNvGrpSpPr, &el); err != nil {
 					return err
 				}

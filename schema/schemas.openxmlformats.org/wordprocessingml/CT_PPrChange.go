@@ -81,8 +81,8 @@ lCT_PPrChange:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pPr"}:
 				if err := d.DecodeElement(m.PPr, &el); err != nil {
 					return err
 				}

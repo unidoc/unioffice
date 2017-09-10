@@ -49,12 +49,12 @@ lCT_Scale2D:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sx":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sx"}:
 				if err := d.DecodeElement(m.Sx, &el); err != nil {
 					return err
 				}
-			case "sy":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sy"}:
 				if err := d.DecodeElement(m.Sy, &el); err != nil {
 					return err
 				}

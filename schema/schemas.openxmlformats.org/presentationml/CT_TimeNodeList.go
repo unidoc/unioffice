@@ -53,55 +53,81 @@ func (m *CT_TimeNodeList) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(start)
 	if m.Par != nil {
 		separ := xml.StartElement{Name: xml.Name{Local: "p:par"}}
-		e.EncodeElement(m.Par, separ)
+		for _, c := range m.Par {
+			e.EncodeElement(c, separ)
+		}
 	}
 	if m.Seq != nil {
 		seseq := xml.StartElement{Name: xml.Name{Local: "p:seq"}}
-		e.EncodeElement(m.Seq, seseq)
+		for _, c := range m.Seq {
+			e.EncodeElement(c, seseq)
+		}
 	}
 	if m.Excl != nil {
 		seexcl := xml.StartElement{Name: xml.Name{Local: "p:excl"}}
-		e.EncodeElement(m.Excl, seexcl)
+		for _, c := range m.Excl {
+			e.EncodeElement(c, seexcl)
+		}
 	}
 	if m.Anim != nil {
 		seanim := xml.StartElement{Name: xml.Name{Local: "p:anim"}}
-		e.EncodeElement(m.Anim, seanim)
+		for _, c := range m.Anim {
+			e.EncodeElement(c, seanim)
+		}
 	}
 	if m.AnimClr != nil {
 		seanimClr := xml.StartElement{Name: xml.Name{Local: "p:animClr"}}
-		e.EncodeElement(m.AnimClr, seanimClr)
+		for _, c := range m.AnimClr {
+			e.EncodeElement(c, seanimClr)
+		}
 	}
 	if m.AnimEffect != nil {
 		seanimEffect := xml.StartElement{Name: xml.Name{Local: "p:animEffect"}}
-		e.EncodeElement(m.AnimEffect, seanimEffect)
+		for _, c := range m.AnimEffect {
+			e.EncodeElement(c, seanimEffect)
+		}
 	}
 	if m.AnimMotion != nil {
 		seanimMotion := xml.StartElement{Name: xml.Name{Local: "p:animMotion"}}
-		e.EncodeElement(m.AnimMotion, seanimMotion)
+		for _, c := range m.AnimMotion {
+			e.EncodeElement(c, seanimMotion)
+		}
 	}
 	if m.AnimRot != nil {
 		seanimRot := xml.StartElement{Name: xml.Name{Local: "p:animRot"}}
-		e.EncodeElement(m.AnimRot, seanimRot)
+		for _, c := range m.AnimRot {
+			e.EncodeElement(c, seanimRot)
+		}
 	}
 	if m.AnimScale != nil {
 		seanimScale := xml.StartElement{Name: xml.Name{Local: "p:animScale"}}
-		e.EncodeElement(m.AnimScale, seanimScale)
+		for _, c := range m.AnimScale {
+			e.EncodeElement(c, seanimScale)
+		}
 	}
 	if m.Cmd != nil {
 		secmd := xml.StartElement{Name: xml.Name{Local: "p:cmd"}}
-		e.EncodeElement(m.Cmd, secmd)
+		for _, c := range m.Cmd {
+			e.EncodeElement(c, secmd)
+		}
 	}
 	if m.Set != nil {
 		seset := xml.StartElement{Name: xml.Name{Local: "p:set"}}
-		e.EncodeElement(m.Set, seset)
+		for _, c := range m.Set {
+			e.EncodeElement(c, seset)
+		}
 	}
 	if m.Audio != nil {
 		seaudio := xml.StartElement{Name: xml.Name{Local: "p:audio"}}
-		e.EncodeElement(m.Audio, seaudio)
+		for _, c := range m.Audio {
+			e.EncodeElement(c, seaudio)
+		}
 	}
 	if m.Video != nil {
 		sevideo := xml.StartElement{Name: xml.Name{Local: "p:video"}}
-		e.EncodeElement(m.Video, sevideo)
+		for _, c := range m.Video {
+			e.EncodeElement(c, sevideo)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -117,80 +143,80 @@ lCT_TimeNodeList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "par":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "par"}:
 				tmp := NewCT_TLTimeNodeParallel()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Par = append(m.Par, tmp)
-			case "seq":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "seq"}:
 				tmp := NewCT_TLTimeNodeSequence()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Seq = append(m.Seq, tmp)
-			case "excl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "excl"}:
 				tmp := NewCT_TLTimeNodeExclusive()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Excl = append(m.Excl, tmp)
-			case "anim":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "anim"}:
 				tmp := NewCT_TLAnimateBehavior()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Anim = append(m.Anim, tmp)
-			case "animClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "animClr"}:
 				tmp := NewCT_TLAnimateColorBehavior()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AnimClr = append(m.AnimClr, tmp)
-			case "animEffect":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "animEffect"}:
 				tmp := NewCT_TLAnimateEffectBehavior()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AnimEffect = append(m.AnimEffect, tmp)
-			case "animMotion":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "animMotion"}:
 				tmp := NewCT_TLAnimateMotionBehavior()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AnimMotion = append(m.AnimMotion, tmp)
-			case "animRot":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "animRot"}:
 				tmp := NewCT_TLAnimateRotationBehavior()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AnimRot = append(m.AnimRot, tmp)
-			case "animScale":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "animScale"}:
 				tmp := NewCT_TLAnimateScaleBehavior()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AnimScale = append(m.AnimScale, tmp)
-			case "cmd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cmd"}:
 				tmp := NewCT_TLCommandBehavior()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Cmd = append(m.Cmd, tmp)
-			case "set":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "set"}:
 				tmp := NewCT_TLSetBehavior()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Set = append(m.Set, tmp)
-			case "audio":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "audio"}:
 				tmp := NewCT_TLMediaNodeAudio()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Audio = append(m.Audio, tmp)
-			case "video":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "video"}:
 				tmp := NewCT_TLMediaNodeVideo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

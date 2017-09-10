@@ -53,17 +53,17 @@ lCT_F:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "fPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "fPr"}:
 				m.FPr = NewCT_FPr()
 				if err := d.DecodeElement(m.FPr, &el); err != nil {
 					return err
 				}
-			case "num":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "num"}:
 				if err := d.DecodeElement(m.Num, &el); err != nil {
 					return err
 				}
-			case "den":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "den"}:
 				if err := d.DecodeElement(m.Den, &el); err != nil {
 					return err
 				}

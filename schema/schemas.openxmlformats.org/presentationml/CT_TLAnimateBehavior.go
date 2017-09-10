@@ -115,12 +115,12 @@ lCT_TLAnimateBehavior:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cBhvr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cBhvr"}:
 				if err := d.DecodeElement(m.CBhvr, &el); err != nil {
 					return err
 				}
-			case "tavLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tavLst"}:
 				m.TavLst = NewCT_TLTimeAnimateValueList()
 				if err := d.DecodeElement(m.TavLst, &el); err != nil {
 					return err

@@ -29,7 +29,9 @@ func (m *CT_ControlList) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(start)
 	if m.Control != nil {
 		secontrol := xml.StartElement{Name: xml.Name{Local: "p:control"}}
-		e.EncodeElement(m.Control, secontrol)
+		for _, c := range m.Control {
+			e.EncodeElement(c, secontrol)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_ControlList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "control":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "control"}:
 				tmp := NewCT_Control()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

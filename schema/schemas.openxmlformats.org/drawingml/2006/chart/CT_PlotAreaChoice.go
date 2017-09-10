@@ -116,83 +116,83 @@ lCT_PlotAreaChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "areaChart":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "areaChart"}:
 				m.AreaChart = NewCT_AreaChart()
 				if err := d.DecodeElement(m.AreaChart, &el); err != nil {
 					return err
 				}
-			case "area3DChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "area3DChart"}:
 				m.Area3DChart = NewCT_Area3DChart()
 				if err := d.DecodeElement(m.Area3DChart, &el); err != nil {
 					return err
 				}
-			case "lineChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "lineChart"}:
 				m.LineChart = NewCT_LineChart()
 				if err := d.DecodeElement(m.LineChart, &el); err != nil {
 					return err
 				}
-			case "line3DChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "line3DChart"}:
 				m.Line3DChart = NewCT_Line3DChart()
 				if err := d.DecodeElement(m.Line3DChart, &el); err != nil {
 					return err
 				}
-			case "stockChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "stockChart"}:
 				m.StockChart = NewCT_StockChart()
 				if err := d.DecodeElement(m.StockChart, &el); err != nil {
 					return err
 				}
-			case "radarChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "radarChart"}:
 				m.RadarChart = NewCT_RadarChart()
 				if err := d.DecodeElement(m.RadarChart, &el); err != nil {
 					return err
 				}
-			case "scatterChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "scatterChart"}:
 				m.ScatterChart = NewCT_ScatterChart()
 				if err := d.DecodeElement(m.ScatterChart, &el); err != nil {
 					return err
 				}
-			case "pieChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pieChart"}:
 				m.PieChart = NewCT_PieChart()
 				if err := d.DecodeElement(m.PieChart, &el); err != nil {
 					return err
 				}
-			case "pie3DChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pie3DChart"}:
 				m.Pie3DChart = NewCT_Pie3DChart()
 				if err := d.DecodeElement(m.Pie3DChart, &el); err != nil {
 					return err
 				}
-			case "doughnutChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "doughnutChart"}:
 				m.DoughnutChart = NewCT_DoughnutChart()
 				if err := d.DecodeElement(m.DoughnutChart, &el); err != nil {
 					return err
 				}
-			case "barChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "barChart"}:
 				m.BarChart = NewCT_BarChart()
 				if err := d.DecodeElement(m.BarChart, &el); err != nil {
 					return err
 				}
-			case "bar3DChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "bar3DChart"}:
 				m.Bar3DChart = NewCT_Bar3DChart()
 				if err := d.DecodeElement(m.Bar3DChart, &el); err != nil {
 					return err
 				}
-			case "ofPieChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ofPieChart"}:
 				m.OfPieChart = NewCT_OfPieChart()
 				if err := d.DecodeElement(m.OfPieChart, &el); err != nil {
 					return err
 				}
-			case "surfaceChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "surfaceChart"}:
 				m.SurfaceChart = NewCT_SurfaceChart()
 				if err := d.DecodeElement(m.SurfaceChart, &el); err != nil {
 					return err
 				}
-			case "surface3DChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "surface3DChart"}:
 				m.Surface3DChart = NewCT_Surface3DChart()
 				if err := d.DecodeElement(m.Surface3DChart, &el); err != nil {
 					return err
 				}
-			case "bubbleChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "bubbleChart"}:
 				m.BubbleChart = NewCT_BubbleChart()
 				if err := d.DecodeElement(m.BubbleChart, &el); err != nil {
 					return err

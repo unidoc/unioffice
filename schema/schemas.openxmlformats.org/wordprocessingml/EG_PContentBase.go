@@ -33,7 +33,9 @@ func (m *EG_PContentBase) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	if m.FldSimple != nil {
 		sefldSimple := xml.StartElement{Name: xml.Name{Local: "w:fldSimple"}}
-		e.EncodeElement(m.FldSimple, sefldSimple)
+		for _, c := range m.FldSimple {
+			e.EncodeElement(c, sefldSimple)
+		}
 	}
 	if m.Hyperlink != nil {
 		sehyperlink := xml.StartElement{Name: xml.Name{Local: "w:hyperlink"}}
@@ -52,19 +54,19 @@ lEG_PContentBase:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "customXml":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXml"}:
 				m.CustomXml = NewCT_CustomXmlRun()
 				if err := d.DecodeElement(m.CustomXml, &el); err != nil {
 					return err
 				}
-			case "fldSimple":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "fldSimple"}:
 				tmp := NewCT_SimpleField()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.FldSimple = append(m.FldSimple, tmp)
-			case "hyperlink":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "hyperlink"}:
 				m.Hyperlink = NewCT_Hyperlink()
 				if err := d.DecodeElement(m.Hyperlink, &el); err != nil {
 					return err

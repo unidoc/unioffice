@@ -50,52 +50,76 @@ func NewCT_Revisions() *CT_Revisions {
 func (m *CT_Revisions) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Rrc != nil {
-		serrc := xml.StartElement{Name: xml.Name{Local: "x:rrc"}}
-		e.EncodeElement(m.Rrc, serrc)
+		serrc := xml.StartElement{Name: xml.Name{Local: "ma:rrc"}}
+		for _, c := range m.Rrc {
+			e.EncodeElement(c, serrc)
+		}
 	}
 	if m.Rm != nil {
-		serm := xml.StartElement{Name: xml.Name{Local: "x:rm"}}
-		e.EncodeElement(m.Rm, serm)
+		serm := xml.StartElement{Name: xml.Name{Local: "ma:rm"}}
+		for _, c := range m.Rm {
+			e.EncodeElement(c, serm)
+		}
 	}
 	if m.Rcv != nil {
-		sercv := xml.StartElement{Name: xml.Name{Local: "x:rcv"}}
-		e.EncodeElement(m.Rcv, sercv)
+		sercv := xml.StartElement{Name: xml.Name{Local: "ma:rcv"}}
+		for _, c := range m.Rcv {
+			e.EncodeElement(c, sercv)
+		}
 	}
 	if m.Rsnm != nil {
-		sersnm := xml.StartElement{Name: xml.Name{Local: "x:rsnm"}}
-		e.EncodeElement(m.Rsnm, sersnm)
+		sersnm := xml.StartElement{Name: xml.Name{Local: "ma:rsnm"}}
+		for _, c := range m.Rsnm {
+			e.EncodeElement(c, sersnm)
+		}
 	}
 	if m.Ris != nil {
-		seris := xml.StartElement{Name: xml.Name{Local: "x:ris"}}
-		e.EncodeElement(m.Ris, seris)
+		seris := xml.StartElement{Name: xml.Name{Local: "ma:ris"}}
+		for _, c := range m.Ris {
+			e.EncodeElement(c, seris)
+		}
 	}
 	if m.Rcc != nil {
-		sercc := xml.StartElement{Name: xml.Name{Local: "x:rcc"}}
-		e.EncodeElement(m.Rcc, sercc)
+		sercc := xml.StartElement{Name: xml.Name{Local: "ma:rcc"}}
+		for _, c := range m.Rcc {
+			e.EncodeElement(c, sercc)
+		}
 	}
 	if m.Rfmt != nil {
-		serfmt := xml.StartElement{Name: xml.Name{Local: "x:rfmt"}}
-		e.EncodeElement(m.Rfmt, serfmt)
+		serfmt := xml.StartElement{Name: xml.Name{Local: "ma:rfmt"}}
+		for _, c := range m.Rfmt {
+			e.EncodeElement(c, serfmt)
+		}
 	}
 	if m.Raf != nil {
-		seraf := xml.StartElement{Name: xml.Name{Local: "x:raf"}}
-		e.EncodeElement(m.Raf, seraf)
+		seraf := xml.StartElement{Name: xml.Name{Local: "ma:raf"}}
+		for _, c := range m.Raf {
+			e.EncodeElement(c, seraf)
+		}
 	}
 	if m.Rdn != nil {
-		serdn := xml.StartElement{Name: xml.Name{Local: "x:rdn"}}
-		e.EncodeElement(m.Rdn, serdn)
+		serdn := xml.StartElement{Name: xml.Name{Local: "ma:rdn"}}
+		for _, c := range m.Rdn {
+			e.EncodeElement(c, serdn)
+		}
 	}
 	if m.Rcmt != nil {
-		sercmt := xml.StartElement{Name: xml.Name{Local: "x:rcmt"}}
-		e.EncodeElement(m.Rcmt, sercmt)
+		sercmt := xml.StartElement{Name: xml.Name{Local: "ma:rcmt"}}
+		for _, c := range m.Rcmt {
+			e.EncodeElement(c, sercmt)
+		}
 	}
 	if m.Rqt != nil {
-		serqt := xml.StartElement{Name: xml.Name{Local: "x:rqt"}}
-		e.EncodeElement(m.Rqt, serqt)
+		serqt := xml.StartElement{Name: xml.Name{Local: "ma:rqt"}}
+		for _, c := range m.Rqt {
+			e.EncodeElement(c, serqt)
+		}
 	}
 	if m.Rcft != nil {
-		sercft := xml.StartElement{Name: xml.Name{Local: "x:rcft"}}
-		e.EncodeElement(m.Rcft, sercft)
+		sercft := xml.StartElement{Name: xml.Name{Local: "ma:rcft"}}
+		for _, c := range m.Rcft {
+			e.EncodeElement(c, sercft)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -111,74 +135,74 @@ lCT_Revisions:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rrc":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rrc"}:
 				tmp := NewCT_RevisionRowColumn()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Rrc = append(m.Rrc, tmp)
-			case "rm":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rm"}:
 				tmp := NewCT_RevisionMove()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Rm = append(m.Rm, tmp)
-			case "rcv":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rcv"}:
 				tmp := NewCT_RevisionCustomView()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Rcv = append(m.Rcv, tmp)
-			case "rsnm":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rsnm"}:
 				tmp := NewCT_RevisionSheetRename()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Rsnm = append(m.Rsnm, tmp)
-			case "ris":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ris"}:
 				tmp := NewCT_RevisionInsertSheet()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Ris = append(m.Ris, tmp)
-			case "rcc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rcc"}:
 				tmp := NewCT_RevisionCellChange()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Rcc = append(m.Rcc, tmp)
-			case "rfmt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rfmt"}:
 				tmp := NewCT_RevisionFormatting()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Rfmt = append(m.Rfmt, tmp)
-			case "raf":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "raf"}:
 				tmp := NewCT_RevisionAutoFormatting()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Raf = append(m.Raf, tmp)
-			case "rdn":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rdn"}:
 				tmp := NewCT_RevisionDefinedName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Rdn = append(m.Rdn, tmp)
-			case "rcmt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rcmt"}:
 				tmp := NewCT_RevisionComment()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Rcmt = append(m.Rcmt, tmp)
-			case "rqt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rqt"}:
 				tmp := NewCT_RevisionQueryTableField()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Rqt = append(m.Rqt, tmp)
-			case "rcft":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rcft"}:
 				tmp := NewCT_RevisionConflict()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

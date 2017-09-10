@@ -34,8 +34,10 @@ func (m *CT_ColHierarchiesUsage) MarshalXML(e *xml.Encoder, start xml.StartEleme
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	secolHierarchyUsage := xml.StartElement{Name: xml.Name{Local: "x:colHierarchyUsage"}}
-	e.EncodeElement(m.ColHierarchyUsage, secolHierarchyUsage)
+	secolHierarchyUsage := xml.StartElement{Name: xml.Name{Local: "ma:colHierarchyUsage"}}
+	for _, c := range m.ColHierarchyUsage {
+		e.EncodeElement(c, secolHierarchyUsage)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_ColHierarchiesUsage:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "colHierarchyUsage":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "colHierarchyUsage"}:
 				tmp := NewCT_HierarchyUsage()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

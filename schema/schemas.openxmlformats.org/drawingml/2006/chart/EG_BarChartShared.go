@@ -42,7 +42,9 @@ func (m *EG_BarChartShared) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.Ser != nil {
 		seser := xml.StartElement{Name: xml.Name{Local: "c:ser"}}
-		e.EncodeElement(m.Ser, seser)
+		for _, c := range m.Ser {
+			e.EncodeElement(c, seser)
+		}
 	}
 	if m.DLbls != nil {
 		sedLbls := xml.StartElement{Name: xml.Name{Local: "c:dLbls"}}
@@ -62,28 +64,28 @@ lEG_BarChartShared:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "barDir":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "barDir"}:
 				if err := d.DecodeElement(m.BarDir, &el); err != nil {
 					return err
 				}
-			case "grouping":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "grouping"}:
 				m.Grouping = NewCT_BarGrouping()
 				if err := d.DecodeElement(m.Grouping, &el); err != nil {
 					return err
 				}
-			case "varyColors":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "varyColors"}:
 				m.VaryColors = NewCT_Boolean()
 				if err := d.DecodeElement(m.VaryColors, &el); err != nil {
 					return err
 				}
-			case "ser":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ser"}:
 				tmp := NewCT_BarSer()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Ser = append(m.Ser, tmp)
-			case "dLbls":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dLbls"}:
 				m.DLbls = NewCT_DLbls()
 				if err := d.DecodeElement(m.DLbls, &el); err != nil {
 					return err

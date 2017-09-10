@@ -84,18 +84,18 @@ lCT_TextField:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "rPr"}:
 				m.RPr = NewCT_TextCharacterProperties()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err
 				}
-			case "pPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pPr"}:
 				m.PPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.PPr, &el); err != nil {
 					return err
 				}
-			case "t":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "t"}:
 				m.T = new(string)
 				if err := d.DecodeElement(m.T, &el); err != nil {
 					return err

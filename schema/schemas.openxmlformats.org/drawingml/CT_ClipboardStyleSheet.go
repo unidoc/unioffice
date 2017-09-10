@@ -49,12 +49,12 @@ lCT_ClipboardStyleSheet:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "themeElements":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "themeElements"}:
 				if err := d.DecodeElement(m.ThemeElements, &el); err != nil {
 					return err
 				}
-			case "clrMap":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "clrMap"}:
 				if err := d.DecodeElement(m.ClrMap, &el); err != nil {
 					return err
 				}

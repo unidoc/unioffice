@@ -47,13 +47,13 @@ lEG_TextGeometry:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "custGeom":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custGeom"}:
 				m.CustGeom = NewCT_CustomGeometry2D()
 				if err := d.DecodeElement(m.CustGeom, &el); err != nil {
 					return err
 				}
-			case "prstTxWarp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "prstTxWarp"}:
 				m.PrstTxWarp = NewCT_PresetTextShape()
 				if err := d.DecodeElement(m.PrstTxWarp, &el); err != nil {
 					return err

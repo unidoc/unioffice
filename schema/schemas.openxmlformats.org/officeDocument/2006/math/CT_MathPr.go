@@ -112,83 +112,83 @@ lCT_MathPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "mathFont":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mathFont"}:
 				m.MathFont = NewCT_String()
 				if err := d.DecodeElement(m.MathFont, &el); err != nil {
 					return err
 				}
-			case "brkBin":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "brkBin"}:
 				m.BrkBin = NewCT_BreakBin()
 				if err := d.DecodeElement(m.BrkBin, &el); err != nil {
 					return err
 				}
-			case "brkBinSub":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "brkBinSub"}:
 				m.BrkBinSub = NewCT_BreakBinSub()
 				if err := d.DecodeElement(m.BrkBinSub, &el); err != nil {
 					return err
 				}
-			case "smallFrac":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "smallFrac"}:
 				m.SmallFrac = NewCT_OnOff()
 				if err := d.DecodeElement(m.SmallFrac, &el); err != nil {
 					return err
 				}
-			case "dispDef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "dispDef"}:
 				m.DispDef = NewCT_OnOff()
 				if err := d.DecodeElement(m.DispDef, &el); err != nil {
 					return err
 				}
-			case "lMargin":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "lMargin"}:
 				m.LMargin = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.LMargin, &el); err != nil {
 					return err
 				}
-			case "rMargin":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "rMargin"}:
 				m.RMargin = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.RMargin, &el); err != nil {
 					return err
 				}
-			case "defJc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "defJc"}:
 				m.DefJc = NewCT_OMathJc()
 				if err := d.DecodeElement(m.DefJc, &el); err != nil {
 					return err
 				}
-			case "preSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "preSp"}:
 				m.PreSp = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.PreSp, &el); err != nil {
 					return err
 				}
-			case "postSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "postSp"}:
 				m.PostSp = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.PostSp, &el); err != nil {
 					return err
 				}
-			case "interSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "interSp"}:
 				m.InterSp = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.InterSp, &el); err != nil {
 					return err
 				}
-			case "intraSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "intraSp"}:
 				m.IntraSp = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.IntraSp, &el); err != nil {
 					return err
 				}
-			case "wrapIndent":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "wrapIndent"}:
 				m.Choice = NewCT_MathPrChoice()
 				if err := d.DecodeElement(&m.Choice.WrapIndent, &el); err != nil {
 					return err
 				}
-			case "wrapRight":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "wrapRight"}:
 				m.Choice = NewCT_MathPrChoice()
 				if err := d.DecodeElement(&m.Choice.WrapRight, &el); err != nil {
 					return err
 				}
-			case "intLim":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "intLim"}:
 				m.IntLim = NewCT_LimLoc()
 				if err := d.DecodeElement(m.IntLim, &el); err != nil {
 					return err
 				}
-			case "naryLim":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "naryLim"}:
 				m.NaryLim = NewCT_LimLoc()
 				if err := d.DecodeElement(m.NaryLim, &el); err != nil {
 					return err

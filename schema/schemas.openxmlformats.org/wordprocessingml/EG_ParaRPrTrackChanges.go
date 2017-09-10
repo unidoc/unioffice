@@ -60,23 +60,23 @@ lEG_ParaRPrTrackChanges:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ins":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ins"}:
 				m.Ins = NewCT_TrackChange()
 				if err := d.DecodeElement(m.Ins, &el); err != nil {
 					return err
 				}
-			case "del":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "del"}:
 				m.Del = NewCT_TrackChange()
 				if err := d.DecodeElement(m.Del, &el); err != nil {
 					return err
 				}
-			case "moveFrom":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFrom"}:
 				m.MoveFrom = NewCT_TrackChange()
 				if err := d.DecodeElement(m.MoveFrom, &el); err != nil {
 					return err
 				}
-			case "moveTo":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveTo"}:
 				m.MoveTo = NewCT_TrackChange()
 				if err := d.DecodeElement(m.MoveTo, &el); err != nil {
 					return err

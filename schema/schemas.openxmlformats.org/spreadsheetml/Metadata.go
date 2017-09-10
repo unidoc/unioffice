@@ -26,12 +26,12 @@ func NewMetadata() *Metadata {
 
 func (m *Metadata) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns"}, Value: "http://schemas.openxmlformats.org/spreadsheetml/2006/main"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:ma"}, Value: "http://schemas.openxmlformats.org/spreadsheetml/2006/main"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:r"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/relationships"})
-	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:sh"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
-	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:x"}, Value: "http://schemas.openxmlformats.org/spreadsheetml/2006/main"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:s"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:xdr"}, Value: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:xml"}, Value: "http://www.w3.org/XML/1998/namespace"})
-	start.Name.Local = "x:metadata"
+	start.Name.Local = "ma:metadata"
 	return m.CT_Metadata.MarshalXML(e, start)
 }
 
@@ -46,39 +46,39 @@ lMetadata:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "metadataTypes":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "metadataTypes"}:
 				m.MetadataTypes = NewCT_MetadataTypes()
 				if err := d.DecodeElement(m.MetadataTypes, &el); err != nil {
 					return err
 				}
-			case "metadataStrings":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "metadataStrings"}:
 				m.MetadataStrings = NewCT_MetadataStrings()
 				if err := d.DecodeElement(m.MetadataStrings, &el); err != nil {
 					return err
 				}
-			case "mdxMetadata":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mdxMetadata"}:
 				m.MdxMetadata = NewCT_MdxMetadata()
 				if err := d.DecodeElement(m.MdxMetadata, &el); err != nil {
 					return err
 				}
-			case "futureMetadata":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "futureMetadata"}:
 				tmp := NewCT_FutureMetadata()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.FutureMetadata = append(m.FutureMetadata, tmp)
-			case "cellMetadata":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cellMetadata"}:
 				m.CellMetadata = NewCT_MetadataBlocks()
 				if err := d.DecodeElement(m.CellMetadata, &el); err != nil {
 					return err
 				}
-			case "valueMetadata":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "valueMetadata"}:
 				m.ValueMetadata = NewCT_MetadataBlocks()
 				if err := d.DecodeElement(m.ValueMetadata, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

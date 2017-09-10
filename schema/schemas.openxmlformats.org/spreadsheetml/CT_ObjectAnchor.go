@@ -80,12 +80,12 @@ lCT_ObjectAnchor:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "from":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "from"}:
 				if err := d.DecodeElement(m.From, &el); err != nil {
 					return err
 				}
-			case "to":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "to"}:
 				if err := d.DecodeElement(m.To, &el); err != nil {
 					return err
 				}

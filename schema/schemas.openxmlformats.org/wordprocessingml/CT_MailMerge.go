@@ -134,81 +134,81 @@ lCT_MailMerge:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "mainDocumentType":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "mainDocumentType"}:
 				if err := d.DecodeElement(m.MainDocumentType, &el); err != nil {
 					return err
 				}
-			case "linkToQuery":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "linkToQuery"}:
 				m.LinkToQuery = NewCT_OnOff()
 				if err := d.DecodeElement(m.LinkToQuery, &el); err != nil {
 					return err
 				}
-			case "dataType":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "dataType"}:
 				if err := d.DecodeElement(m.DataType, &el); err != nil {
 					return err
 				}
-			case "connectString":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "connectString"}:
 				m.ConnectString = NewCT_String()
 				if err := d.DecodeElement(m.ConnectString, &el); err != nil {
 					return err
 				}
-			case "query":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "query"}:
 				m.Query = NewCT_String()
 				if err := d.DecodeElement(m.Query, &el); err != nil {
 					return err
 				}
-			case "dataSource":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "dataSource"}:
 				m.DataSource = NewCT_Rel()
 				if err := d.DecodeElement(m.DataSource, &el); err != nil {
 					return err
 				}
-			case "headerSource":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "headerSource"}:
 				m.HeaderSource = NewCT_Rel()
 				if err := d.DecodeElement(m.HeaderSource, &el); err != nil {
 					return err
 				}
-			case "doNotSuppressBlankLines":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSuppressBlankLines"}:
 				m.DoNotSuppressBlankLines = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotSuppressBlankLines, &el); err != nil {
 					return err
 				}
-			case "destination":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "destination"}:
 				m.Destination = NewCT_MailMergeDest()
 				if err := d.DecodeElement(m.Destination, &el); err != nil {
 					return err
 				}
-			case "addressFieldName":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "addressFieldName"}:
 				m.AddressFieldName = NewCT_String()
 				if err := d.DecodeElement(m.AddressFieldName, &el); err != nil {
 					return err
 				}
-			case "mailSubject":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "mailSubject"}:
 				m.MailSubject = NewCT_String()
 				if err := d.DecodeElement(m.MailSubject, &el); err != nil {
 					return err
 				}
-			case "mailAsAttachment":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "mailAsAttachment"}:
 				m.MailAsAttachment = NewCT_OnOff()
 				if err := d.DecodeElement(m.MailAsAttachment, &el); err != nil {
 					return err
 				}
-			case "viewMergedData":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "viewMergedData"}:
 				m.ViewMergedData = NewCT_OnOff()
 				if err := d.DecodeElement(m.ViewMergedData, &el); err != nil {
 					return err
 				}
-			case "activeRecord":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "activeRecord"}:
 				m.ActiveRecord = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.ActiveRecord, &el); err != nil {
 					return err
 				}
-			case "checkErrors":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "checkErrors"}:
 				m.CheckErrors = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.CheckErrors, &el); err != nil {
 					return err
 				}
-			case "odso":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "odso"}:
 				m.Odso = NewCT_Odso()
 				if err := d.DecodeElement(m.Odso, &el); err != nil {
 					return err

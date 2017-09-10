@@ -61,28 +61,28 @@ lEG_ObjectChoicesChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sp":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "sp"}:
 				m.Sp = NewCT_Shape()
 				if err := d.DecodeElement(m.Sp, &el); err != nil {
 					return err
 				}
-			case "grpSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "grpSp"}:
 				m.GrpSp = NewCT_GroupShape()
 				if err := d.DecodeElement(m.GrpSp, &el); err != nil {
 					return err
 				}
-			case "graphicFrame":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "graphicFrame"}:
 				m.GraphicFrame = NewCT_GraphicFrame()
 				if err := d.DecodeElement(m.GraphicFrame, &el); err != nil {
 					return err
 				}
-			case "cxnSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "cxnSp"}:
 				m.CxnSp = NewCT_Connector()
 				if err := d.DecodeElement(m.CxnSp, &el); err != nil {
 					return err
 				}
-			case "pic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "pic"}:
 				m.Pic = NewCT_Picture()
 				if err := d.DecodeElement(m.Pic, &el); err != nil {
 					return err

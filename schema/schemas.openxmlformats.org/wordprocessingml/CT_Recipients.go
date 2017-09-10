@@ -28,7 +28,9 @@ func NewCT_Recipients() *CT_Recipients {
 func (m *CT_Recipients) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	serecipientData := xml.StartElement{Name: xml.Name{Local: "w:recipientData"}}
-	e.EncodeElement(m.RecipientData, serecipientData)
+	for _, c := range m.RecipientData {
+		e.EncodeElement(c, serecipientData)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_Recipients:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "recipientData":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "recipientData"}:
 				tmp := NewCT_RecipientData()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

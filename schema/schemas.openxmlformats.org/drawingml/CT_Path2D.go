@@ -62,27 +62,39 @@ func (m *CT_Path2D) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Close != nil {
 		seclose := xml.StartElement{Name: xml.Name{Local: "a:close"}}
-		e.EncodeElement(m.Close, seclose)
+		for _, c := range m.Close {
+			e.EncodeElement(c, seclose)
+		}
 	}
 	if m.MoveTo != nil {
 		semoveTo := xml.StartElement{Name: xml.Name{Local: "a:moveTo"}}
-		e.EncodeElement(m.MoveTo, semoveTo)
+		for _, c := range m.MoveTo {
+			e.EncodeElement(c, semoveTo)
+		}
 	}
 	if m.LnTo != nil {
 		selnTo := xml.StartElement{Name: xml.Name{Local: "a:lnTo"}}
-		e.EncodeElement(m.LnTo, selnTo)
+		for _, c := range m.LnTo {
+			e.EncodeElement(c, selnTo)
+		}
 	}
 	if m.ArcTo != nil {
 		searcTo := xml.StartElement{Name: xml.Name{Local: "a:arcTo"}}
-		e.EncodeElement(m.ArcTo, searcTo)
+		for _, c := range m.ArcTo {
+			e.EncodeElement(c, searcTo)
+		}
 	}
 	if m.QuadBezTo != nil {
 		sequadBezTo := xml.StartElement{Name: xml.Name{Local: "a:quadBezTo"}}
-		e.EncodeElement(m.QuadBezTo, sequadBezTo)
+		for _, c := range m.QuadBezTo {
+			e.EncodeElement(c, sequadBezTo)
+		}
 	}
 	if m.CubicBezTo != nil {
 		secubicBezTo := xml.StartElement{Name: xml.Name{Local: "a:cubicBezTo"}}
-		e.EncodeElement(m.CubicBezTo, secubicBezTo)
+		for _, c := range m.CubicBezTo {
+			e.EncodeElement(c, secubicBezTo)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -131,38 +143,38 @@ lCT_Path2D:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "close":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "close"}:
 				tmp := NewCT_Path2DClose()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Close = append(m.Close, tmp)
-			case "moveTo":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "moveTo"}:
 				tmp := NewCT_Path2DMoveTo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.MoveTo = append(m.MoveTo, tmp)
-			case "lnTo":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnTo"}:
 				tmp := NewCT_Path2DLineTo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.LnTo = append(m.LnTo, tmp)
-			case "arcTo":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "arcTo"}:
 				tmp := NewCT_Path2DArcTo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.ArcTo = append(m.ArcTo, tmp)
-			case "quadBezTo":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "quadBezTo"}:
 				tmp := NewCT_Path2DQuadBezierTo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.QuadBezTo = append(m.QuadBezTo, tmp)
-			case "cubicBezTo":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cubicBezTo"}:
 				tmp := NewCT_Path2DCubicBezierTo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

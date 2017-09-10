@@ -43,8 +43,8 @@ lCT_StretchInfoProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "fillRect":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillRect"}:
 				m.FillRect = NewCT_RelativeRect()
 				if err := d.DecodeElement(m.FillRect, &el); err != nil {
 					return err

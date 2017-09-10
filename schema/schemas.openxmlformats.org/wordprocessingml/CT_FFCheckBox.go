@@ -54,23 +54,23 @@ lCT_FFCheckBox:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "size":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "size"}:
 				m.Choice = NewCT_FFCheckBoxChoice()
 				if err := d.DecodeElement(&m.Choice.Size, &el); err != nil {
 					return err
 				}
-			case "sizeAuto":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sizeAuto"}:
 				m.Choice = NewCT_FFCheckBoxChoice()
 				if err := d.DecodeElement(&m.Choice.SizeAuto, &el); err != nil {
 					return err
 				}
-			case "default":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "default"}:
 				m.Default = NewCT_OnOff()
 				if err := d.DecodeElement(m.Default, &el); err != nil {
 					return err
 				}
-			case "checked":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "checked"}:
 				m.Checked = NewCT_OnOff()
 				if err := d.DecodeElement(m.Checked, &el); err != nil {
 					return err

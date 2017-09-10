@@ -76,16 +76,22 @@ func (m *CT_RevisionRowColumn) MarshalXML(e *xml.Encoder, start xml.StartElement
 	}
 	e.EncodeToken(start)
 	if m.Undo != nil {
-		seundo := xml.StartElement{Name: xml.Name{Local: "x:undo"}}
-		e.EncodeElement(m.Undo, seundo)
+		seundo := xml.StartElement{Name: xml.Name{Local: "ma:undo"}}
+		for _, c := range m.Undo {
+			e.EncodeElement(c, seundo)
+		}
 	}
 	if m.Rcc != nil {
-		sercc := xml.StartElement{Name: xml.Name{Local: "x:rcc"}}
-		e.EncodeElement(m.Rcc, sercc)
+		sercc := xml.StartElement{Name: xml.Name{Local: "ma:rcc"}}
+		for _, c := range m.Rcc {
+			e.EncodeElement(c, sercc)
+		}
 	}
 	if m.Rfmt != nil {
-		serfmt := xml.StartElement{Name: xml.Name{Local: "x:rfmt"}}
-		e.EncodeElement(m.Rfmt, serfmt)
+		serfmt := xml.StartElement{Name: xml.Name{Local: "ma:rfmt"}}
+		for _, c := range m.Rfmt {
+			e.EncodeElement(c, serfmt)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -157,20 +163,20 @@ lCT_RevisionRowColumn:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "undo":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "undo"}:
 				tmp := NewCT_UndoInfo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Undo = append(m.Undo, tmp)
-			case "rcc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rcc"}:
 				tmp := NewCT_RevisionCellChange()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Rcc = append(m.Rcc, tmp)
-			case "rfmt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rfmt"}:
 				tmp := NewCT_RevisionFormatting()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

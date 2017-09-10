@@ -27,12 +27,12 @@ func NewPivotCacheDefinition() *PivotCacheDefinition {
 
 func (m *PivotCacheDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns"}, Value: "http://schemas.openxmlformats.org/spreadsheetml/2006/main"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:ma"}, Value: "http://schemas.openxmlformats.org/spreadsheetml/2006/main"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:r"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/relationships"})
-	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:sh"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
-	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:x"}, Value: "http://schemas.openxmlformats.org/spreadsheetml/2006/main"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:s"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:xdr"}, Value: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:xml"}, Value: "http://www.w3.org/XML/1998/namespace"})
-	start.Name.Local = "x:pivotCacheDefinition"
+	start.Name.Local = "ma:pivotCacheDefinition"
 	return m.CT_PivotCacheDefinition.MarshalXML(e, start)
 }
 
@@ -187,56 +187,56 @@ lPivotCacheDefinition:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cacheSource":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cacheSource"}:
 				if err := d.DecodeElement(m.CacheSource, &el); err != nil {
 					return err
 				}
-			case "cacheFields":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cacheFields"}:
 				if err := d.DecodeElement(m.CacheFields, &el); err != nil {
 					return err
 				}
-			case "cacheHierarchies":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cacheHierarchies"}:
 				m.CacheHierarchies = NewCT_CacheHierarchies()
 				if err := d.DecodeElement(m.CacheHierarchies, &el); err != nil {
 					return err
 				}
-			case "kpis":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "kpis"}:
 				m.Kpis = NewCT_PCDKPIs()
 				if err := d.DecodeElement(m.Kpis, &el); err != nil {
 					return err
 				}
-			case "tupleCache":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tupleCache"}:
 				m.TupleCache = NewCT_TupleCache()
 				if err := d.DecodeElement(m.TupleCache, &el); err != nil {
 					return err
 				}
-			case "calculatedItems":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "calculatedItems"}:
 				m.CalculatedItems = NewCT_CalculatedItems()
 				if err := d.DecodeElement(m.CalculatedItems, &el); err != nil {
 					return err
 				}
-			case "calculatedMembers":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "calculatedMembers"}:
 				m.CalculatedMembers = NewCT_CalculatedMembers()
 				if err := d.DecodeElement(m.CalculatedMembers, &el); err != nil {
 					return err
 				}
-			case "dimensions":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dimensions"}:
 				m.Dimensions = NewCT_Dimensions()
 				if err := d.DecodeElement(m.Dimensions, &el); err != nil {
 					return err
 				}
-			case "measureGroups":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "measureGroups"}:
 				m.MeasureGroups = NewCT_MeasureGroups()
 				if err := d.DecodeElement(m.MeasureGroups, &el); err != nil {
 					return err
 				}
-			case "maps":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "maps"}:
 				m.Maps = NewCT_MeasureDimensionMaps()
 				if err := d.DecodeElement(m.Maps, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -54,18 +54,18 @@ lCT_SlideTiming:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tnLst":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tnLst"}:
 				m.TnLst = NewCT_TimeNodeList()
 				if err := d.DecodeElement(m.TnLst, &el); err != nil {
 					return err
 				}
-			case "bldLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldLst"}:
 				m.BldLst = NewCT_BuildList()
 				if err := d.DecodeElement(m.BldLst, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionListModify()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

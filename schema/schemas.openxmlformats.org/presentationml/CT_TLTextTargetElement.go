@@ -50,13 +50,13 @@ lCT_TLTextTargetElement:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "charRg":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "charRg"}:
 				m.CharRg = NewCT_IndexRange()
 				if err := d.DecodeElement(m.CharRg, &el); err != nil {
 					return err
 				}
-			case "pRg":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "pRg"}:
 				m.PRg = NewCT_IndexRange()
 				if err := d.DecodeElement(m.PRg, &el); err != nil {
 					return err

@@ -56,23 +56,23 @@ lCT_ObjectChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "control":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "control"}:
 				m.Control = NewCT_Control()
 				if err := d.DecodeElement(m.Control, &el); err != nil {
 					return err
 				}
-			case "objectLink":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "objectLink"}:
 				m.ObjectLink = NewCT_ObjectLink()
 				if err := d.DecodeElement(m.ObjectLink, &el); err != nil {
 					return err
 				}
-			case "objectEmbed":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "objectEmbed"}:
 				m.ObjectEmbed = NewCT_ObjectEmbed()
 				if err := d.DecodeElement(m.ObjectEmbed, &el); err != nil {
 					return err
 				}
-			case "movie":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "movie"}:
 				m.Movie = NewCT_Rel()
 				if err := d.DecodeElement(m.Movie, &el); err != nil {
 					return err

@@ -27,7 +27,9 @@ func NewCT_GradientStopList() *CT_GradientStopList {
 func (m *CT_GradientStopList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	segs := xml.StartElement{Name: xml.Name{Local: "a:gs"}}
-	e.EncodeElement(m.Gs, segs)
+	for _, c := range m.Gs {
+		e.EncodeElement(c, segs)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -42,8 +44,8 @@ lCT_GradientStopList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "gs":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gs"}:
 				tmp := NewCT_GradientStop()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

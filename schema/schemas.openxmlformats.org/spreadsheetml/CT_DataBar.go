@@ -49,9 +49,11 @@ func (m *CT_DataBar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%d", b2i(*m.ShowValueAttr))})
 	}
 	e.EncodeToken(start)
-	secfvo := xml.StartElement{Name: xml.Name{Local: "x:cfvo"}}
-	e.EncodeElement(m.Cfvo, secfvo)
-	secolor := xml.StartElement{Name: xml.Name{Local: "x:color"}}
+	secfvo := xml.StartElement{Name: xml.Name{Local: "ma:cfvo"}}
+	for _, c := range m.Cfvo {
+		e.EncodeElement(c, secfvo)
+	}
+	secolor := xml.StartElement{Name: xml.Name{Local: "ma:color"}}
 	e.EncodeElement(m.Color, secolor)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -93,14 +95,14 @@ lCT_DataBar:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cfvo":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cfvo"}:
 				tmp := NewCT_Cfvo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Cfvo = append(m.Cfvo, tmp)
-			case "color":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "color"}:
 				if err := d.DecodeElement(m.Color, &el); err != nil {
 					return err
 				}

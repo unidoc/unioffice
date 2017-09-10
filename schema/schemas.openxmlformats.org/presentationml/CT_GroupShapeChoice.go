@@ -32,27 +32,39 @@ func NewCT_GroupShapeChoice() *CT_GroupShapeChoice {
 func (m *CT_GroupShapeChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.Sp != nil {
 		sesp := xml.StartElement{Name: xml.Name{Local: "p:sp"}}
-		e.EncodeElement(m.Sp, sesp)
+		for _, c := range m.Sp {
+			e.EncodeElement(c, sesp)
+		}
 	}
 	if m.GrpSp != nil {
 		segrpSp := xml.StartElement{Name: xml.Name{Local: "p:grpSp"}}
-		e.EncodeElement(m.GrpSp, segrpSp)
+		for _, c := range m.GrpSp {
+			e.EncodeElement(c, segrpSp)
+		}
 	}
 	if m.GraphicFrame != nil {
 		segraphicFrame := xml.StartElement{Name: xml.Name{Local: "p:graphicFrame"}}
-		e.EncodeElement(m.GraphicFrame, segraphicFrame)
+		for _, c := range m.GraphicFrame {
+			e.EncodeElement(c, segraphicFrame)
+		}
 	}
 	if m.CxnSp != nil {
 		secxnSp := xml.StartElement{Name: xml.Name{Local: "p:cxnSp"}}
-		e.EncodeElement(m.CxnSp, secxnSp)
+		for _, c := range m.CxnSp {
+			e.EncodeElement(c, secxnSp)
+		}
 	}
 	if m.Pic != nil {
 		sepic := xml.StartElement{Name: xml.Name{Local: "p:pic"}}
-		e.EncodeElement(m.Pic, sepic)
+		for _, c := range m.Pic {
+			e.EncodeElement(c, sepic)
+		}
 	}
 	if m.ContentPart != nil {
 		secontentPart := xml.StartElement{Name: xml.Name{Local: "p:contentPart"}}
-		e.EncodeElement(m.ContentPart, secontentPart)
+		for _, c := range m.ContentPart {
+			e.EncodeElement(c, secontentPart)
+		}
 	}
 	return nil
 }
@@ -67,38 +79,38 @@ lCT_GroupShapeChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sp":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sp"}:
 				tmp := NewCT_Shape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Sp = append(m.Sp, tmp)
-			case "grpSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "grpSp"}:
 				tmp := NewCT_GroupShape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GrpSp = append(m.GrpSp, tmp)
-			case "graphicFrame":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "graphicFrame"}:
 				tmp := NewCT_GraphicalObjectFrame()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GraphicFrame = append(m.GraphicFrame, tmp)
-			case "cxnSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cxnSp"}:
 				tmp := NewCT_Connector()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CxnSp = append(m.CxnSp, tmp)
-			case "pic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "pic"}:
 				tmp := NewCT_Picture()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Pic = append(m.Pic, tmp)
-			case "contentPart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "contentPart"}:
 				tmp := NewCT_Rel()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

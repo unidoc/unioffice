@@ -28,7 +28,9 @@ func (m *CT_TextTabStopList) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(start)
 	if m.Tab != nil {
 		setab := xml.StartElement{Name: xml.Name{Local: "a:tab"}}
-		e.EncodeElement(m.Tab, setab)
+		for _, c := range m.Tab {
+			e.EncodeElement(c, setab)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_TextTabStopList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tab":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tab"}:
 				tmp := NewCT_TextTabStop()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -251,183 +251,183 @@ lCT_PPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pStyle":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pStyle"}:
 				m.PStyle = NewCT_String()
 				if err := d.DecodeElement(m.PStyle, &el); err != nil {
 					return err
 				}
-			case "keepNext":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "keepNext"}:
 				m.KeepNext = NewCT_OnOff()
 				if err := d.DecodeElement(m.KeepNext, &el); err != nil {
 					return err
 				}
-			case "keepLines":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "keepLines"}:
 				m.KeepLines = NewCT_OnOff()
 				if err := d.DecodeElement(m.KeepLines, &el); err != nil {
 					return err
 				}
-			case "pageBreakBefore":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pageBreakBefore"}:
 				m.PageBreakBefore = NewCT_OnOff()
 				if err := d.DecodeElement(m.PageBreakBefore, &el); err != nil {
 					return err
 				}
-			case "framePr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "framePr"}:
 				m.FramePr = NewCT_FramePr()
 				if err := d.DecodeElement(m.FramePr, &el); err != nil {
 					return err
 				}
-			case "widowControl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "widowControl"}:
 				m.WidowControl = NewCT_OnOff()
 				if err := d.DecodeElement(m.WidowControl, &el); err != nil {
 					return err
 				}
-			case "numPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numPr"}:
 				m.NumPr = NewCT_NumPr()
 				if err := d.DecodeElement(m.NumPr, &el); err != nil {
 					return err
 				}
-			case "suppressLineNumbers":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressLineNumbers"}:
 				m.SuppressLineNumbers = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressLineNumbers, &el); err != nil {
 					return err
 				}
-			case "pBdr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pBdr"}:
 				m.PBdr = NewCT_PBdr()
 				if err := d.DecodeElement(m.PBdr, &el); err != nil {
 					return err
 				}
-			case "shd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "shd"}:
 				m.Shd = NewCT_Shd()
 				if err := d.DecodeElement(m.Shd, &el); err != nil {
 					return err
 				}
-			case "tabs":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tabs"}:
 				m.Tabs = NewCT_Tabs()
 				if err := d.DecodeElement(m.Tabs, &el); err != nil {
 					return err
 				}
-			case "suppressAutoHyphens":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressAutoHyphens"}:
 				m.SuppressAutoHyphens = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressAutoHyphens, &el); err != nil {
 					return err
 				}
-			case "kinsoku":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "kinsoku"}:
 				m.Kinsoku = NewCT_OnOff()
 				if err := d.DecodeElement(m.Kinsoku, &el); err != nil {
 					return err
 				}
-			case "wordWrap":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wordWrap"}:
 				m.WordWrap = NewCT_OnOff()
 				if err := d.DecodeElement(m.WordWrap, &el); err != nil {
 					return err
 				}
-			case "overflowPunct":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "overflowPunct"}:
 				m.OverflowPunct = NewCT_OnOff()
 				if err := d.DecodeElement(m.OverflowPunct, &el); err != nil {
 					return err
 				}
-			case "topLinePunct":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "topLinePunct"}:
 				m.TopLinePunct = NewCT_OnOff()
 				if err := d.DecodeElement(m.TopLinePunct, &el); err != nil {
 					return err
 				}
-			case "autoSpaceDE":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autoSpaceDE"}:
 				m.AutoSpaceDE = NewCT_OnOff()
 				if err := d.DecodeElement(m.AutoSpaceDE, &el); err != nil {
 					return err
 				}
-			case "autoSpaceDN":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autoSpaceDN"}:
 				m.AutoSpaceDN = NewCT_OnOff()
 				if err := d.DecodeElement(m.AutoSpaceDN, &el); err != nil {
 					return err
 				}
-			case "bidi":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bidi"}:
 				m.Bidi = NewCT_OnOff()
 				if err := d.DecodeElement(m.Bidi, &el); err != nil {
 					return err
 				}
-			case "adjustRightInd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "adjustRightInd"}:
 				m.AdjustRightInd = NewCT_OnOff()
 				if err := d.DecodeElement(m.AdjustRightInd, &el); err != nil {
 					return err
 				}
-			case "snapToGrid":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "snapToGrid"}:
 				m.SnapToGrid = NewCT_OnOff()
 				if err := d.DecodeElement(m.SnapToGrid, &el); err != nil {
 					return err
 				}
-			case "spacing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "spacing"}:
 				m.Spacing = NewCT_Spacing()
 				if err := d.DecodeElement(m.Spacing, &el); err != nil {
 					return err
 				}
-			case "ind":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ind"}:
 				m.Ind = NewCT_Ind()
 				if err := d.DecodeElement(m.Ind, &el); err != nil {
 					return err
 				}
-			case "contextualSpacing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "contextualSpacing"}:
 				m.ContextualSpacing = NewCT_OnOff()
 				if err := d.DecodeElement(m.ContextualSpacing, &el); err != nil {
 					return err
 				}
-			case "mirrorIndents":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "mirrorIndents"}:
 				m.MirrorIndents = NewCT_OnOff()
 				if err := d.DecodeElement(m.MirrorIndents, &el); err != nil {
 					return err
 				}
-			case "suppressOverlap":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressOverlap"}:
 				m.SuppressOverlap = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressOverlap, &el); err != nil {
 					return err
 				}
-			case "jc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "jc"}:
 				m.Jc = NewCT_Jc()
 				if err := d.DecodeElement(m.Jc, &el); err != nil {
 					return err
 				}
-			case "textDirection":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "textDirection"}:
 				m.TextDirection = NewCT_TextDirection()
 				if err := d.DecodeElement(m.TextDirection, &el); err != nil {
 					return err
 				}
-			case "textAlignment":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "textAlignment"}:
 				m.TextAlignment = NewCT_TextAlignment()
 				if err := d.DecodeElement(m.TextAlignment, &el); err != nil {
 					return err
 				}
-			case "textboxTightWrap":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "textboxTightWrap"}:
 				m.TextboxTightWrap = NewCT_TextboxTightWrap()
 				if err := d.DecodeElement(m.TextboxTightWrap, &el); err != nil {
 					return err
 				}
-			case "outlineLvl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "outlineLvl"}:
 				m.OutlineLvl = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.OutlineLvl, &el); err != nil {
 					return err
 				}
-			case "divId":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "divId"}:
 				m.DivId = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.DivId, &el); err != nil {
 					return err
 				}
-			case "cnfStyle":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cnfStyle"}:
 				m.CnfStyle = NewCT_Cnf()
 				if err := d.DecodeElement(m.CnfStyle, &el); err != nil {
 					return err
 				}
-			case "rPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rPr"}:
 				m.RPr = NewCT_ParaRPr()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err
 				}
-			case "sectPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sectPr"}:
 				m.SectPr = NewCT_SectPr()
 				if err := d.DecodeElement(m.SectPr, &el); err != nil {
 					return err
 				}
-			case "pPrChange":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pPrChange"}:
 				m.PPrChange = NewCT_PPrChange()
 				if err := d.DecodeElement(m.PPrChange, &el); err != nil {
 					return err

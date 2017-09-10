@@ -62,8 +62,8 @@ lCT_TLTemplate:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tnLst":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tnLst"}:
 				if err := d.DecodeElement(m.TnLst, &el); err != nil {
 					return err
 				}

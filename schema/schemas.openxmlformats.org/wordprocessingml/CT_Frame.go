@@ -98,53 +98,53 @@ lCT_Frame:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sz":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sz"}:
 				m.Sz = NewCT_String()
 				if err := d.DecodeElement(m.Sz, &el); err != nil {
 					return err
 				}
-			case "name":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "name"}:
 				m.Name = NewCT_String()
 				if err := d.DecodeElement(m.Name, &el); err != nil {
 					return err
 				}
-			case "title":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "title"}:
 				m.Title = NewCT_String()
 				if err := d.DecodeElement(m.Title, &el); err != nil {
 					return err
 				}
-			case "longDesc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "longDesc"}:
 				m.LongDesc = NewCT_Rel()
 				if err := d.DecodeElement(m.LongDesc, &el); err != nil {
 					return err
 				}
-			case "sourceFileName":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sourceFileName"}:
 				m.SourceFileName = NewCT_Rel()
 				if err := d.DecodeElement(m.SourceFileName, &el); err != nil {
 					return err
 				}
-			case "marW":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "marW"}:
 				m.MarW = NewCT_PixelsMeasure()
 				if err := d.DecodeElement(m.MarW, &el); err != nil {
 					return err
 				}
-			case "marH":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "marH"}:
 				m.MarH = NewCT_PixelsMeasure()
 				if err := d.DecodeElement(m.MarH, &el); err != nil {
 					return err
 				}
-			case "scrollbar":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "scrollbar"}:
 				m.Scrollbar = NewCT_FrameScrollbar()
 				if err := d.DecodeElement(m.Scrollbar, &el); err != nil {
 					return err
 				}
-			case "noResizeAllowed":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noResizeAllowed"}:
 				m.NoResizeAllowed = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoResizeAllowed, &el); err != nil {
 					return err
 				}
-			case "linkedToFile":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "linkedToFile"}:
 				m.LinkedToFile = NewCT_OnOff()
 				if err := d.DecodeElement(m.LinkedToFile, &el); err != nil {
 					return err

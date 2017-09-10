@@ -27,8 +27,10 @@ func NewCT_ExternalSheetNames() *CT_ExternalSheetNames {
 
 func (m *CT_ExternalSheetNames) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	sesheetName := xml.StartElement{Name: xml.Name{Local: "x:sheetName"}}
-	e.EncodeElement(m.SheetName, sesheetName)
+	sesheetName := xml.StartElement{Name: xml.Name{Local: "ma:sheetName"}}
+	for _, c := range m.SheetName {
+		e.EncodeElement(c, sesheetName)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_ExternalSheetNames:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sheetName":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetName"}:
 				tmp := NewCT_ExternalSheetName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

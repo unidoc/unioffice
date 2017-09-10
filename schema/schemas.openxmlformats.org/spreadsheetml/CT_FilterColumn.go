@@ -56,31 +56,31 @@ func (m *CT_FilterColumn) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	e.EncodeToken(start)
 	if m.Filters != nil {
-		sefilters := xml.StartElement{Name: xml.Name{Local: "x:filters"}}
+		sefilters := xml.StartElement{Name: xml.Name{Local: "ma:filters"}}
 		e.EncodeElement(m.Filters, sefilters)
 	}
 	if m.Top10 != nil {
-		setop10 := xml.StartElement{Name: xml.Name{Local: "x:top10"}}
+		setop10 := xml.StartElement{Name: xml.Name{Local: "ma:top10"}}
 		e.EncodeElement(m.Top10, setop10)
 	}
 	if m.CustomFilters != nil {
-		secustomFilters := xml.StartElement{Name: xml.Name{Local: "x:customFilters"}}
+		secustomFilters := xml.StartElement{Name: xml.Name{Local: "ma:customFilters"}}
 		e.EncodeElement(m.CustomFilters, secustomFilters)
 	}
 	if m.DynamicFilter != nil {
-		sedynamicFilter := xml.StartElement{Name: xml.Name{Local: "x:dynamicFilter"}}
+		sedynamicFilter := xml.StartElement{Name: xml.Name{Local: "ma:dynamicFilter"}}
 		e.EncodeElement(m.DynamicFilter, sedynamicFilter)
 	}
 	if m.ColorFilter != nil {
-		secolorFilter := xml.StartElement{Name: xml.Name{Local: "x:colorFilter"}}
+		secolorFilter := xml.StartElement{Name: xml.Name{Local: "ma:colorFilter"}}
 		e.EncodeElement(m.ColorFilter, secolorFilter)
 	}
 	if m.IconFilter != nil {
-		seiconFilter := xml.StartElement{Name: xml.Name{Local: "x:iconFilter"}}
+		seiconFilter := xml.StartElement{Name: xml.Name{Local: "ma:iconFilter"}}
 		e.EncodeElement(m.IconFilter, seiconFilter)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -120,38 +120,38 @@ lCT_FilterColumn:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "filters":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "filters"}:
 				m.Filters = NewCT_Filters()
 				if err := d.DecodeElement(m.Filters, &el); err != nil {
 					return err
 				}
-			case "top10":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "top10"}:
 				m.Top10 = NewCT_Top10()
 				if err := d.DecodeElement(m.Top10, &el); err != nil {
 					return err
 				}
-			case "customFilters":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customFilters"}:
 				m.CustomFilters = NewCT_CustomFilters()
 				if err := d.DecodeElement(m.CustomFilters, &el); err != nil {
 					return err
 				}
-			case "dynamicFilter":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dynamicFilter"}:
 				m.DynamicFilter = NewCT_DynamicFilter()
 				if err := d.DecodeElement(m.DynamicFilter, &el); err != nil {
 					return err
 				}
-			case "colorFilter":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "colorFilter"}:
 				m.ColorFilter = NewCT_ColorFilter()
 				if err := d.DecodeElement(m.ColorFilter, &el); err != nil {
 					return err
 				}
-			case "iconFilter":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "iconFilter"}:
 				m.IconFilter = NewCT_IconFilter()
 				if err := d.DecodeElement(m.IconFilter, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

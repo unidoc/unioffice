@@ -87,23 +87,23 @@ lCT_BlipFillProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "blip":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blip"}:
 				m.Blip = NewCT_Blip()
 				if err := d.DecodeElement(m.Blip, &el); err != nil {
 					return err
 				}
-			case "srcRect":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "srcRect"}:
 				m.SrcRect = NewCT_RelativeRect()
 				if err := d.DecodeElement(m.SrcRect, &el); err != nil {
 					return err
 				}
-			case "tile":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tile"}:
 				m.Tile = NewCT_TileInfoProperties()
 				if err := d.DecodeElement(m.Tile, &el); err != nil {
 					return err
 				}
-			case "stretch":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "stretch"}:
 				m.Stretch = NewCT_StretchInfoProperties()
 				if err := d.DecodeElement(m.Stretch, &el); err != nil {
 					return err

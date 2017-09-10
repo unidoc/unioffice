@@ -27,8 +27,10 @@ func NewCT_MetadataBlock() *CT_MetadataBlock {
 
 func (m *CT_MetadataBlock) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	serc := xml.StartElement{Name: xml.Name{Local: "x:rc"}}
-	e.EncodeElement(m.Rc, serc)
+	serc := xml.StartElement{Name: xml.Name{Local: "ma:rc"}}
+	for _, c := range m.Rc {
+		e.EncodeElement(c, serc)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_MetadataBlock:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rc":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rc"}:
 				tmp := NewCT_MetadataRecord()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

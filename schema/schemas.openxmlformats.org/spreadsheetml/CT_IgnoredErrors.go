@@ -28,10 +28,12 @@ func NewCT_IgnoredErrors() *CT_IgnoredErrors {
 
 func (m *CT_IgnoredErrors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	seignoredError := xml.StartElement{Name: xml.Name{Local: "x:ignoredError"}}
-	e.EncodeElement(m.IgnoredError, seignoredError)
+	seignoredError := xml.StartElement{Name: xml.Name{Local: "ma:ignoredError"}}
+	for _, c := range m.IgnoredError {
+		e.EncodeElement(c, seignoredError)
+	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -48,14 +50,14 @@ lCT_IgnoredErrors:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ignoredError":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ignoredError"}:
 				tmp := NewCT_IgnoredError()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.IgnoredError = append(m.IgnoredError, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

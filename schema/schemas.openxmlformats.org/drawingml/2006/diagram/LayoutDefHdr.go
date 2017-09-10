@@ -79,25 +79,25 @@ lLayoutDefHdr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "title":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "title"}:
 				tmp := NewCT_Name()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Title = append(m.Title, tmp)
-			case "desc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "desc"}:
 				tmp := NewCT_Description()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Desc = append(m.Desc, tmp)
-			case "catLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "catLst"}:
 				m.CatLst = NewCT_Categories()
 				if err := d.DecodeElement(m.CatLst, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "extLst"}:
 				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

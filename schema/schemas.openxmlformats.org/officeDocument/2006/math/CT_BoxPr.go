@@ -68,33 +68,33 @@ lCT_BoxPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "opEmu":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "opEmu"}:
 				m.OpEmu = NewCT_OnOff()
 				if err := d.DecodeElement(m.OpEmu, &el); err != nil {
 					return err
 				}
-			case "noBreak":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "noBreak"}:
 				m.NoBreak = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoBreak, &el); err != nil {
 					return err
 				}
-			case "diff":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "diff"}:
 				m.Diff = NewCT_OnOff()
 				if err := d.DecodeElement(m.Diff, &el); err != nil {
 					return err
 				}
-			case "brk":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "brk"}:
 				m.Brk = NewCT_ManualBreak()
 				if err := d.DecodeElement(m.Brk, &el); err != nil {
 					return err
 				}
-			case "aln":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "aln"}:
 				m.Aln = NewCT_OnOff()
 				if err := d.DecodeElement(m.Aln, &el); err != nil {
 					return err
 				}
-			case "ctrlPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "ctrlPr"}:
 				m.CtrlPr = NewCT_CtrlPr()
 				if err := d.DecodeElement(m.CtrlPr, &el); err != nil {
 					return err

@@ -29,7 +29,9 @@ func (m *CT_SdtEndPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.RPr != nil {
 		serPr := xml.StartElement{Name: xml.Name{Local: "w:rPr"}}
-		e.EncodeElement(m.RPr, serPr)
+		for _, c := range m.RPr {
+			e.EncodeElement(c, serPr)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_SdtEndPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rPr"}:
 				tmp := NewCT_RPr()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

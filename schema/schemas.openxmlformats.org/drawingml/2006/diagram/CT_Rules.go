@@ -28,7 +28,9 @@ func (m *CT_Rules) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Rule != nil {
 		serule := xml.StartElement{Name: xml.Name{Local: "rule"}}
-		e.EncodeElement(m.Rule, serule)
+		for _, c := range m.Rule {
+			e.EncodeElement(c, serule)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_Rules:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rule":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "rule"}:
 				tmp := NewCT_NumericRule()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -38,11 +38,11 @@ func (m *CT_PatternFill) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	e.EncodeToken(start)
 	if m.FgColor != nil {
-		sefgColor := xml.StartElement{Name: xml.Name{Local: "x:fgColor"}}
+		sefgColor := xml.StartElement{Name: xml.Name{Local: "ma:fgColor"}}
 		e.EncodeElement(m.FgColor, sefgColor)
 	}
 	if m.BgColor != nil {
-		sebgColor := xml.StartElement{Name: xml.Name{Local: "x:bgColor"}}
+		sebgColor := xml.StartElement{Name: xml.Name{Local: "ma:bgColor"}}
 		e.EncodeElement(m.BgColor, sebgColor)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -64,13 +64,13 @@ lCT_PatternFill:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "fgColor":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fgColor"}:
 				m.FgColor = NewCT_Color()
 				if err := d.DecodeElement(m.FgColor, &el); err != nil {
 					return err
 				}
-			case "bgColor":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "bgColor"}:
 				m.BgColor = NewCT_Color()
 				if err := d.DecodeElement(m.BgColor, &el); err != nil {
 					return err

@@ -59,15 +59,15 @@ func (m *CT_CustomChartsheetView) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	e.EncodeToken(start)
 	if m.PageMargins != nil {
-		sepageMargins := xml.StartElement{Name: xml.Name{Local: "x:pageMargins"}}
+		sepageMargins := xml.StartElement{Name: xml.Name{Local: "ma:pageMargins"}}
 		e.EncodeElement(m.PageMargins, sepageMargins)
 	}
 	if m.PageSetup != nil {
-		sepageSetup := xml.StartElement{Name: xml.Name{Local: "x:pageSetup"}}
+		sepageSetup := xml.StartElement{Name: xml.Name{Local: "ma:pageSetup"}}
 		e.EncodeElement(m.PageSetup, sepageSetup)
 	}
 	if m.HeaderFooter != nil {
-		seheaderFooter := xml.StartElement{Name: xml.Name{Local: "x:headerFooter"}}
+		seheaderFooter := xml.StartElement{Name: xml.Name{Local: "ma:headerFooter"}}
 		e.EncodeElement(m.HeaderFooter, seheaderFooter)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -112,18 +112,18 @@ lCT_CustomChartsheetView:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pageMargins":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageMargins"}:
 				m.PageMargins = NewCT_PageMargins()
 				if err := d.DecodeElement(m.PageMargins, &el); err != nil {
 					return err
 				}
-			case "pageSetup":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageSetup"}:
 				m.PageSetup = NewCT_CsPageSetup()
 				if err := d.DecodeElement(m.PageSetup, &el); err != nil {
 					return err
 				}
-			case "headerFooter":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "headerFooter"}:
 				m.HeaderFooter = NewCT_HeaderFooter()
 				if err := d.DecodeElement(m.HeaderFooter, &el); err != nil {
 					return err

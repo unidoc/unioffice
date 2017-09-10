@@ -34,8 +34,10 @@ func (m *CT_MemberProperties) MarshalXML(e *xml.Encoder, start xml.StartElement)
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	semp := xml.StartElement{Name: xml.Name{Local: "x:mp"}}
-	e.EncodeElement(m.Mp, semp)
+	semp := xml.StartElement{Name: xml.Name{Local: "ma:mp"}}
+	for _, c := range m.Mp {
+		e.EncodeElement(c, semp)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_MemberProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "mp":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mp"}:
 				tmp := NewCT_MemberProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

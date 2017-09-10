@@ -114,28 +114,28 @@ lCT_Shape3D:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "bevelT":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bevelT"}:
 				m.BevelT = NewCT_Bevel()
 				if err := d.DecodeElement(m.BevelT, &el); err != nil {
 					return err
 				}
-			case "bevelB":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bevelB"}:
 				m.BevelB = NewCT_Bevel()
 				if err := d.DecodeElement(m.BevelB, &el); err != nil {
 					return err
 				}
-			case "extrusionClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extrusionClr"}:
 				m.ExtrusionClr = NewCT_Color()
 				if err := d.DecodeElement(m.ExtrusionClr, &el); err != nil {
 					return err
 				}
-			case "contourClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "contourClr"}:
 				m.ContourClr = NewCT_Color()
 				if err := d.DecodeElement(m.ContourClr, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

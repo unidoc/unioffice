@@ -83,48 +83,48 @@ lCT_BorderBoxPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "hideTop":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "hideTop"}:
 				m.HideTop = NewCT_OnOff()
 				if err := d.DecodeElement(m.HideTop, &el); err != nil {
 					return err
 				}
-			case "hideBot":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "hideBot"}:
 				m.HideBot = NewCT_OnOff()
 				if err := d.DecodeElement(m.HideBot, &el); err != nil {
 					return err
 				}
-			case "hideLeft":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "hideLeft"}:
 				m.HideLeft = NewCT_OnOff()
 				if err := d.DecodeElement(m.HideLeft, &el); err != nil {
 					return err
 				}
-			case "hideRight":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "hideRight"}:
 				m.HideRight = NewCT_OnOff()
 				if err := d.DecodeElement(m.HideRight, &el); err != nil {
 					return err
 				}
-			case "strikeH":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "strikeH"}:
 				m.StrikeH = NewCT_OnOff()
 				if err := d.DecodeElement(m.StrikeH, &el); err != nil {
 					return err
 				}
-			case "strikeV":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "strikeV"}:
 				m.StrikeV = NewCT_OnOff()
 				if err := d.DecodeElement(m.StrikeV, &el); err != nil {
 					return err
 				}
-			case "strikeBLTR":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "strikeBLTR"}:
 				m.StrikeBLTR = NewCT_OnOff()
 				if err := d.DecodeElement(m.StrikeBLTR, &el); err != nil {
 					return err
 				}
-			case "strikeTLBR":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "strikeTLBR"}:
 				m.StrikeTLBR = NewCT_OnOff()
 				if err := d.DecodeElement(m.StrikeTLBR, &el); err != nil {
 					return err
 				}
-			case "ctrlPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "ctrlPr"}:
 				m.CtrlPr = NewCT_CtrlPr()
 				if err := d.DecodeElement(m.CtrlPr, &el); err != nil {
 					return err

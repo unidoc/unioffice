@@ -36,7 +36,9 @@ func (m *CT_ExtensionListModify) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(start)
 	if m.Ext != nil {
 		seext := xml.StartElement{Name: xml.Name{Local: "p:ext"}}
-		e.EncodeElement(m.Ext, seext)
+		for _, c := range m.Ext {
+			e.EncodeElement(c, seext)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -61,8 +63,8 @@ lCT_ExtensionListModify:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ext":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "ext"}:
 				tmp := NewCT_Extension()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

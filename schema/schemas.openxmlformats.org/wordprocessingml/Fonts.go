@@ -50,8 +50,8 @@ lFonts:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "font":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "font"}:
 				tmp := NewCT_Font()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

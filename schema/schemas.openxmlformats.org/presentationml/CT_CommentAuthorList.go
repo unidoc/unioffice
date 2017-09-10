@@ -29,7 +29,9 @@ func (m *CT_CommentAuthorList) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(start)
 	if m.CmAuthor != nil {
 		secmAuthor := xml.StartElement{Name: xml.Name{Local: "p:cmAuthor"}}
-		e.EncodeElement(m.CmAuthor, secmAuthor)
+		for _, c := range m.CmAuthor {
+			e.EncodeElement(c, secmAuthor)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_CommentAuthorList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cmAuthor":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cmAuthor"}:
 				tmp := NewCT_CommentAuthor()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

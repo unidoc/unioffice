@@ -110,7 +110,7 @@ func (m *CT_WebPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.Tables != nil {
-		setables := xml.StartElement{Name: xml.Name{Local: "x:tables"}}
+		setables := xml.StartElement{Name: xml.Name{Local: "ma:tables"}}
 		e.EncodeElement(m.Tables, setables)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -216,8 +216,8 @@ lCT_WebPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tables":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tables"}:
 				m.Tables = NewCT_Tables()
 				if err := d.DecodeElement(m.Tables, &el); err != nil {
 					return err

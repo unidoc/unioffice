@@ -41,7 +41,9 @@ func (m *CT_Styles) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.Style != nil {
 		sestyle := xml.StartElement{Name: xml.Name{Local: "w:style"}}
-		e.EncodeElement(m.Style, sestyle)
+		for _, c := range m.Style {
+			e.EncodeElement(c, sestyle)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -57,18 +59,18 @@ lCT_Styles:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "docDefaults":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docDefaults"}:
 				m.DocDefaults = NewCT_DocDefaults()
 				if err := d.DecodeElement(m.DocDefaults, &el); err != nil {
 					return err
 				}
-			case "latentStyles":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "latentStyles"}:
 				m.LatentStyles = NewCT_LatentStyles()
 				if err := d.DecodeElement(m.LatentStyles, &el); err != nil {
 					return err
 				}
-			case "style":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "style"}:
 				tmp := NewCT_Style()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

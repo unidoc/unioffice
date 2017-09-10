@@ -27,7 +27,9 @@ func NewCT_EffectStyleList() *CT_EffectStyleList {
 func (m *CT_EffectStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	seeffectStyle := xml.StartElement{Name: xml.Name{Local: "a:effectStyle"}}
-	e.EncodeElement(m.EffectStyle, seeffectStyle)
+	for _, c := range m.EffectStyle {
+		e.EncodeElement(c, seeffectStyle)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -42,8 +44,8 @@ lCT_EffectStyleList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "effectStyle":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectStyle"}:
 				tmp := NewCT_EffectStyleItem()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

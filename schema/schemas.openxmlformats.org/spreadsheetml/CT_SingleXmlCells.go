@@ -27,8 +27,10 @@ func NewCT_SingleXmlCells() *CT_SingleXmlCells {
 
 func (m *CT_SingleXmlCells) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	sesingleXmlCell := xml.StartElement{Name: xml.Name{Local: "x:singleXmlCell"}}
-	e.EncodeElement(m.SingleXmlCell, sesingleXmlCell)
+	sesingleXmlCell := xml.StartElement{Name: xml.Name{Local: "ma:singleXmlCell"}}
+	for _, c := range m.SingleXmlCell {
+		e.EncodeElement(c, sesingleXmlCell)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_SingleXmlCells:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "singleXmlCell":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "singleXmlCell"}:
 				tmp := NewCT_SingleXmlCell()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

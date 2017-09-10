@@ -87,110 +87,110 @@ lCT_Blip:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "alphaBiLevel":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaBiLevel"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.AlphaBiLevel, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "alphaCeiling":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaCeiling"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.AlphaCeiling, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "alphaFloor":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaFloor"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.AlphaFloor, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "alphaInv":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaInv"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.AlphaInv, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "alphaMod":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaMod"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.AlphaMod, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "alphaModFix":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaModFix"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.AlphaModFix, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "alphaRepl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaRepl"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.AlphaRepl, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "biLevel":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "biLevel"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.BiLevel, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "blur":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blur"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.Blur, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "clrChange":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "clrChange"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.ClrChange, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "clrRepl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "clrRepl"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.ClrRepl, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "duotone":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "duotone"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.Duotone, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "fillOverlay":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillOverlay"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.FillOverlay, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "grayscl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grayscl"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.Grayscl, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "hsl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hsl"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.Hsl, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "lum":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lum"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.Lum, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "tint":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tint"}:
 				tmp := NewCT_BlipChoice()
 				if err := d.DecodeElement(&tmp.Tint, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -58,8 +58,10 @@ func (m *CT_DateTime) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.X != nil {
-		sex := xml.StartElement{Name: xml.Name{Local: "x:x"}}
-		e.EncodeElement(m.X, sex)
+		sex := xml.StartElement{Name: xml.Name{Local: "ma:x"}}
+		for _, c := range m.X {
+			e.EncodeElement(c, sex)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -113,8 +115,8 @@ lCT_DateTime:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "x":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "x"}:
 				tmp := NewCT_X()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

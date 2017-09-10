@@ -29,11 +29,15 @@ func (m *CT_Types) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Default != nil {
 		seDefault := xml.StartElement{Name: xml.Name{Local: "Default"}}
-		e.EncodeElement(m.Default, seDefault)
+		for _, c := range m.Default {
+			e.EncodeElement(c, seDefault)
+		}
 	}
 	if m.Override != nil {
 		seOverride := xml.StartElement{Name: xml.Name{Local: "Override"}}
-		e.EncodeElement(m.Override, seOverride)
+		for _, c := range m.Override {
+			e.EncodeElement(c, seOverride)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -49,14 +53,14 @@ lCT_Types:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "Default":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/content-types", Local: "Default"}:
 				tmp := NewDefault()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Default = append(m.Default, tmp)
-			case "Override":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/content-types", Local: "Override"}:
 				tmp := NewOverride()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

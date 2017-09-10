@@ -28,10 +28,12 @@ func NewCT_ChartsheetViews() *CT_ChartsheetViews {
 
 func (m *CT_ChartsheetViews) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	sesheetView := xml.StartElement{Name: xml.Name{Local: "x:sheetView"}}
-	e.EncodeElement(m.SheetView, sesheetView)
+	sesheetView := xml.StartElement{Name: xml.Name{Local: "ma:sheetView"}}
+	for _, c := range m.SheetView {
+		e.EncodeElement(c, sesheetView)
+	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -48,14 +50,14 @@ lCT_ChartsheetViews:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sheetView":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetView"}:
 				tmp := NewCT_ChartsheetView()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.SheetView = append(m.SheetView, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

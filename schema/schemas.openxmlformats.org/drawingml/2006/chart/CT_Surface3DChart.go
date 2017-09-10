@@ -36,14 +36,18 @@ func (m *CT_Surface3DChart) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.Ser != nil {
 		seser := xml.StartElement{Name: xml.Name{Local: "c:ser"}}
-		e.EncodeElement(m.Ser, seser)
+		for _, c := range m.Ser {
+			e.EncodeElement(c, seser)
+		}
 	}
 	if m.BandFmts != nil {
 		sebandFmts := xml.StartElement{Name: xml.Name{Local: "c:bandFmts"}}
 		e.EncodeElement(m.BandFmts, sebandFmts)
 	}
 	seaxId := xml.StartElement{Name: xml.Name{Local: "c:axId"}}
-	e.EncodeElement(m.AxId, seaxId)
+	for _, c := range m.AxId {
+		e.EncodeElement(c, seaxId)
+	}
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
@@ -62,30 +66,30 @@ lCT_Surface3DChart:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "wireframe":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "wireframe"}:
 				m.Wireframe = NewCT_Boolean()
 				if err := d.DecodeElement(m.Wireframe, &el); err != nil {
 					return err
 				}
-			case "ser":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ser"}:
 				tmp := NewCT_SurfaceSer()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Ser = append(m.Ser, tmp)
-			case "bandFmts":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "bandFmts"}:
 				m.BandFmts = NewCT_BandFmts()
 				if err := d.DecodeElement(m.BandFmts, &el); err != nil {
 					return err
 				}
-			case "axId":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "axId"}:
 				tmp := NewCT_UnsignedInt()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AxId = append(m.AxId, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -88,53 +88,53 @@ lCT_ManualLayout:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "layoutTarget":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "layoutTarget"}:
 				m.LayoutTarget = NewCT_LayoutTarget()
 				if err := d.DecodeElement(m.LayoutTarget, &el); err != nil {
 					return err
 				}
-			case "xMode":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "xMode"}:
 				m.XMode = NewCT_LayoutMode()
 				if err := d.DecodeElement(m.XMode, &el); err != nil {
 					return err
 				}
-			case "yMode":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "yMode"}:
 				m.YMode = NewCT_LayoutMode()
 				if err := d.DecodeElement(m.YMode, &el); err != nil {
 					return err
 				}
-			case "wMode":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "wMode"}:
 				m.WMode = NewCT_LayoutMode()
 				if err := d.DecodeElement(m.WMode, &el); err != nil {
 					return err
 				}
-			case "hMode":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "hMode"}:
 				m.HMode = NewCT_LayoutMode()
 				if err := d.DecodeElement(m.HMode, &el); err != nil {
 					return err
 				}
-			case "x":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "x"}:
 				m.X = NewCT_Double()
 				if err := d.DecodeElement(m.X, &el); err != nil {
 					return err
 				}
-			case "y":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "y"}:
 				m.Y = NewCT_Double()
 				if err := d.DecodeElement(m.Y, &el); err != nil {
 					return err
 				}
-			case "w":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "w"}:
 				m.W = NewCT_Double()
 				if err := d.DecodeElement(m.W, &el); err != nil {
 					return err
 				}
-			case "h":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "h"}:
 				m.H = NewCT_Double()
 				if err := d.DecodeElement(m.H, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

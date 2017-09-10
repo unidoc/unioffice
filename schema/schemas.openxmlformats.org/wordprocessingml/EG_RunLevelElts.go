@@ -93,162 +93,162 @@ lEG_RunLevelElts:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "proofErr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "proofErr"}:
 				m.ProofErr = NewCT_ProofErr()
 				if err := d.DecodeElement(m.ProofErr, &el); err != nil {
 					return err
 				}
-			case "permStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "permStart"}:
 				m.PermStart = NewCT_PermStart()
 				if err := d.DecodeElement(m.PermStart, &el); err != nil {
 					return err
 				}
-			case "permEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "permEnd"}:
 				m.PermEnd = NewCT_Perm()
 				if err := d.DecodeElement(m.PermEnd, &el); err != nil {
 					return err
 				}
-			case "ins":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ins"}:
 				m.Ins = NewCT_RunTrackChange()
 				if err := d.DecodeElement(m.Ins, &el); err != nil {
 					return err
 				}
-			case "del":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "del"}:
 				m.Del = NewCT_RunTrackChange()
 				if err := d.DecodeElement(m.Del, &el); err != nil {
 					return err
 				}
-			case "moveFrom":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFrom"}:
 				m.MoveFrom = NewCT_RunTrackChange()
 				if err := d.DecodeElement(m.MoveFrom, &el); err != nil {
 					return err
 				}
-			case "moveTo":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveTo"}:
 				m.MoveTo = NewCT_RunTrackChange()
 				if err := d.DecodeElement(m.MoveTo, &el); err != nil {
 					return err
 				}
-			case "bookmarkStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkStart"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.BookmarkStart = NewCT_Bookmark()
 				if err := d.DecodeElement(tmprangemarkupelements.BookmarkStart, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "bookmarkEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkEnd"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.BookmarkEnd = NewCT_MarkupRange()
 				if err := d.DecodeElement(tmprangemarkupelements.BookmarkEnd, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "moveFromRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeStart"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.MoveFromRangeStart = NewCT_MoveBookmark()
 				if err := d.DecodeElement(tmprangemarkupelements.MoveFromRangeStart, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "moveFromRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeEnd"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.MoveFromRangeEnd = NewCT_MarkupRange()
 				if err := d.DecodeElement(tmprangemarkupelements.MoveFromRangeEnd, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "moveToRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeStart"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.MoveToRangeStart = NewCT_MoveBookmark()
 				if err := d.DecodeElement(tmprangemarkupelements.MoveToRangeStart, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "moveToRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeEnd"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.MoveToRangeEnd = NewCT_MarkupRange()
 				if err := d.DecodeElement(tmprangemarkupelements.MoveToRangeEnd, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "commentRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeStart"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.CommentRangeStart = NewCT_MarkupRange()
 				if err := d.DecodeElement(tmprangemarkupelements.CommentRangeStart, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "commentRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeEnd"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.CommentRangeEnd = NewCT_MarkupRange()
 				if err := d.DecodeElement(tmprangemarkupelements.CommentRangeEnd, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlInsRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeStart"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.CustomXmlInsRangeStart = NewCT_TrackChange()
 				if err := d.DecodeElement(tmprangemarkupelements.CustomXmlInsRangeStart, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlInsRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeEnd"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.CustomXmlInsRangeEnd = NewCT_Markup()
 				if err := d.DecodeElement(tmprangemarkupelements.CustomXmlInsRangeEnd, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlDelRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeStart"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.CustomXmlDelRangeStart = NewCT_TrackChange()
 				if err := d.DecodeElement(tmprangemarkupelements.CustomXmlDelRangeStart, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlDelRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeEnd"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.CustomXmlDelRangeEnd = NewCT_Markup()
 				if err := d.DecodeElement(tmprangemarkupelements.CustomXmlDelRangeEnd, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlMoveFromRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeStart"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.CustomXmlMoveFromRangeStart = NewCT_TrackChange()
 				if err := d.DecodeElement(tmprangemarkupelements.CustomXmlMoveFromRangeStart, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlMoveFromRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeEnd"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.CustomXmlMoveFromRangeEnd = NewCT_Markup()
 				if err := d.DecodeElement(tmprangemarkupelements.CustomXmlMoveFromRangeEnd, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlMoveToRangeStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeStart"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.CustomXmlMoveToRangeStart = NewCT_TrackChange()
 				if err := d.DecodeElement(tmprangemarkupelements.CustomXmlMoveToRangeStart, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "customXmlMoveToRangeEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeEnd"}:
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
 				tmprangemarkupelements.CustomXmlMoveToRangeEnd = NewCT_Markup()
 				if err := d.DecodeElement(tmprangemarkupelements.CustomXmlMoveToRangeEnd, &el); err != nil {
 					return err
 				}
 				m.EG_RangeMarkupElements = append(m.EG_RangeMarkupElements, tmprangemarkupelements)
-			case "oMathPara":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMathPara"}:
 				tmpmathcontent := NewEG_MathContent()
 				tmpmathcontent.OMathPara = math.NewOMathPara()
 				if err := d.DecodeElement(tmpmathcontent.OMathPara, &el); err != nil {
 					return err
 				}
 				m.EG_MathContent = append(m.EG_MathContent, tmpmathcontent)
-			case "oMath":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMath"}:
 				tmpmathcontent := NewEG_MathContent()
 				tmpmathcontent.OMath = math.NewOMath()
 				if err := d.DecodeElement(tmpmathcontent.OMath, &el); err != nil {

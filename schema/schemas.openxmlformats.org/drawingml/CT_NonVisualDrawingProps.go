@@ -113,18 +113,18 @@ lCT_NonVisualDrawingProps:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "hlinkClick":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hlinkClick"}:
 				m.HlinkClick = NewCT_Hyperlink()
 				if err := d.DecodeElement(m.HlinkClick, &el); err != nil {
 					return err
 				}
-			case "hlinkHover":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hlinkHover"}:
 				m.HlinkHover = NewCT_Hyperlink()
 				if err := d.DecodeElement(m.HlinkHover, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

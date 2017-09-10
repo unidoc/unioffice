@@ -35,19 +35,27 @@ func (m *CT_BuildList) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(start)
 	if m.BldP != nil {
 		sebldP := xml.StartElement{Name: xml.Name{Local: "p:bldP"}}
-		e.EncodeElement(m.BldP, sebldP)
+		for _, c := range m.BldP {
+			e.EncodeElement(c, sebldP)
+		}
 	}
 	if m.BldDgm != nil {
 		sebldDgm := xml.StartElement{Name: xml.Name{Local: "p:bldDgm"}}
-		e.EncodeElement(m.BldDgm, sebldDgm)
+		for _, c := range m.BldDgm {
+			e.EncodeElement(c, sebldDgm)
+		}
 	}
 	if m.BldOleChart != nil {
 		sebldOleChart := xml.StartElement{Name: xml.Name{Local: "p:bldOleChart"}}
-		e.EncodeElement(m.BldOleChart, sebldOleChart)
+		for _, c := range m.BldOleChart {
+			e.EncodeElement(c, sebldOleChart)
+		}
 	}
 	if m.BldGraphic != nil {
 		sebldGraphic := xml.StartElement{Name: xml.Name{Local: "p:bldGraphic"}}
-		e.EncodeElement(m.BldGraphic, sebldGraphic)
+		for _, c := range m.BldGraphic {
+			e.EncodeElement(c, sebldGraphic)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -63,26 +71,26 @@ lCT_BuildList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "bldP":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldP"}:
 				tmp := NewCT_TLBuildParagraph()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.BldP = append(m.BldP, tmp)
-			case "bldDgm":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldDgm"}:
 				tmp := NewCT_TLBuildDiagram()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.BldDgm = append(m.BldDgm, tmp)
-			case "bldOleChart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldOleChart"}:
 				tmp := NewCT_TLOleBuildChart()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.BldOleChart = append(m.BldOleChart, tmp)
-			case "bldGraphic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldGraphic"}:
 				tmp := NewCT_TLGraphicalObjectBuild()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -28,8 +28,10 @@ func NewCT_DefinedNames() *CT_DefinedNames {
 func (m *CT_DefinedNames) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.DefinedName != nil {
-		sedefinedName := xml.StartElement{Name: xml.Name{Local: "x:definedName"}}
-		e.EncodeElement(m.DefinedName, sedefinedName)
+		sedefinedName := xml.StartElement{Name: xml.Name{Local: "ma:definedName"}}
+		for _, c := range m.DefinedName {
+			e.EncodeElement(c, sedefinedName)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_DefinedNames:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "definedName":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "definedName"}:
 				tmp := NewCT_DefinedName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

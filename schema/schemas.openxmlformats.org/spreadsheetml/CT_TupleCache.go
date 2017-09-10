@@ -35,23 +35,23 @@ func NewCT_TupleCache() *CT_TupleCache {
 func (m *CT_TupleCache) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Entries != nil {
-		seentries := xml.StartElement{Name: xml.Name{Local: "x:entries"}}
+		seentries := xml.StartElement{Name: xml.Name{Local: "ma:entries"}}
 		e.EncodeElement(m.Entries, seentries)
 	}
 	if m.Sets != nil {
-		sesets := xml.StartElement{Name: xml.Name{Local: "x:sets"}}
+		sesets := xml.StartElement{Name: xml.Name{Local: "ma:sets"}}
 		e.EncodeElement(m.Sets, sesets)
 	}
 	if m.QueryCache != nil {
-		sequeryCache := xml.StartElement{Name: xml.Name{Local: "x:queryCache"}}
+		sequeryCache := xml.StartElement{Name: xml.Name{Local: "ma:queryCache"}}
 		e.EncodeElement(m.QueryCache, sequeryCache)
 	}
 	if m.ServerFormats != nil {
-		seserverFormats := xml.StartElement{Name: xml.Name{Local: "x:serverFormats"}}
+		seserverFormats := xml.StartElement{Name: xml.Name{Local: "ma:serverFormats"}}
 		e.EncodeElement(m.ServerFormats, seserverFormats)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -68,28 +68,28 @@ lCT_TupleCache:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "entries":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "entries"}:
 				m.Entries = NewCT_PCDSDTCEntries()
 				if err := d.DecodeElement(m.Entries, &el); err != nil {
 					return err
 				}
-			case "sets":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sets"}:
 				m.Sets = NewCT_Sets()
 				if err := d.DecodeElement(m.Sets, &el); err != nil {
 					return err
 				}
-			case "queryCache":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "queryCache"}:
 				m.QueryCache = NewCT_QueryCache()
 				if err := d.DecodeElement(m.QueryCache, &el); err != nil {
 					return err
 				}
-			case "serverFormats":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "serverFormats"}:
 				m.ServerFormats = NewCT_ServerFormats()
 				if err := d.DecodeElement(m.ServerFormats, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -57,40 +57,40 @@ lCT_GroupShape:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "nvGrpSpPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "nvGrpSpPr"}:
 				if err := d.DecodeElement(m.NvGrpSpPr, &el); err != nil {
 					return err
 				}
-			case "grpSpPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "grpSpPr"}:
 				if err := d.DecodeElement(m.GrpSpPr, &el); err != nil {
 					return err
 				}
-			case "sp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "sp"}:
 				tmp := NewCT_GroupShapeChoice()
 				if err := d.DecodeElement(&tmp.Sp, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "grpSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "grpSp"}:
 				tmp := NewCT_GroupShapeChoice()
 				if err := d.DecodeElement(&tmp.GrpSp, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "graphicFrame":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "graphicFrame"}:
 				tmp := NewCT_GroupShapeChoice()
 				if err := d.DecodeElement(&tmp.GraphicFrame, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "cxnSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "cxnSp"}:
 				tmp := NewCT_GroupShapeChoice()
 				if err := d.DecodeElement(&tmp.CxnSp, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case "pic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "pic"}:
 				tmp := NewCT_GroupShapeChoice()
 				if err := d.DecodeElement(&tmp.Pic, &el); err != nil {
 					return err

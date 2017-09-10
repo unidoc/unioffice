@@ -68,33 +68,33 @@ lCT_NaryPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "chr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "chr"}:
 				m.Chr = NewCT_Char()
 				if err := d.DecodeElement(m.Chr, &el); err != nil {
 					return err
 				}
-			case "limLoc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "limLoc"}:
 				m.LimLoc = NewCT_LimLoc()
 				if err := d.DecodeElement(m.LimLoc, &el); err != nil {
 					return err
 				}
-			case "grow":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "grow"}:
 				m.Grow = NewCT_OnOff()
 				if err := d.DecodeElement(m.Grow, &el); err != nil {
 					return err
 				}
-			case "subHide":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "subHide"}:
 				m.SubHide = NewCT_OnOff()
 				if err := d.DecodeElement(m.SubHide, &el); err != nil {
 					return err
 				}
-			case "supHide":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "supHide"}:
 				m.SupHide = NewCT_OnOff()
 				if err := d.DecodeElement(m.SupHide, &el); err != nil {
 					return err
 				}
-			case "ctrlPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "ctrlPr"}:
 				m.CtrlPr = NewCT_CtrlPr()
 				if err := d.DecodeElement(m.CtrlPr, &el); err != nil {
 					return err

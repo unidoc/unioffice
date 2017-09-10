@@ -327,15 +327,15 @@ func (m *CT_PivotField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	e.EncodeToken(start)
 	if m.Items != nil {
-		seitems := xml.StartElement{Name: xml.Name{Local: "x:items"}}
+		seitems := xml.StartElement{Name: xml.Name{Local: "ma:items"}}
 		e.EncodeElement(m.Items, seitems)
 	}
 	if m.AutoSortScope != nil {
-		seautoSortScope := xml.StartElement{Name: xml.Name{Local: "x:autoSortScope"}}
+		seautoSortScope := xml.StartElement{Name: xml.Name{Local: "ma:autoSortScope"}}
 		e.EncodeElement(m.AutoSortScope, seautoSortScope)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -685,18 +685,18 @@ lCT_PivotField:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "items":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "items"}:
 				m.Items = NewCT_Items()
 				if err := d.DecodeElement(m.Items, &el); err != nil {
 					return err
 				}
-			case "autoSortScope":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "autoSortScope"}:
 				m.AutoSortScope = NewCT_AutoSortScope()
 				if err := d.DecodeElement(m.AutoSortScope, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -56,18 +56,18 @@ lCT_SdtDocPart:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "docPartGallery":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docPartGallery"}:
 				m.DocPartGallery = NewCT_String()
 				if err := d.DecodeElement(m.DocPartGallery, &el); err != nil {
 					return err
 				}
-			case "docPartCategory":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docPartCategory"}:
 				m.DocPartCategory = NewCT_String()
 				if err := d.DecodeElement(m.DocPartCategory, &el); err != nil {
 					return err
 				}
-			case "docPartUnique":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docPartUnique"}:
 				m.DocPartUnique = NewCT_OnOff()
 				if err := d.DecodeElement(m.DocPartUnique, &el); err != nil {
 					return err

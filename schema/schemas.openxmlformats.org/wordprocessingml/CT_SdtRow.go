@@ -56,18 +56,18 @@ lCT_SdtRow:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sdtPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sdtPr"}:
 				m.SdtPr = NewCT_SdtPr()
 				if err := d.DecodeElement(m.SdtPr, &el); err != nil {
 					return err
 				}
-			case "sdtEndPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sdtEndPr"}:
 				m.SdtEndPr = NewCT_SdtEndPr()
 				if err := d.DecodeElement(m.SdtEndPr, &el); err != nil {
 					return err
 				}
-			case "sdtContent":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sdtContent"}:
 				m.SdtContent = NewCT_SdtContentRow()
 				if err := d.DecodeElement(m.SdtContent, &el); err != nil {
 					return err

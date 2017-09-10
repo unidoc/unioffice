@@ -52,7 +52,9 @@ func (m *CT_EdnDocProps) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.Endnote != nil {
 		seendnote := xml.StartElement{Name: xml.Name{Local: "w:endnote"}}
-		e.EncodeElement(m.Endnote, seendnote)
+		for _, c := range m.Endnote {
+			e.EncodeElement(c, seendnote)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -68,28 +70,28 @@ lCT_EdnDocProps:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pos":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pos"}:
 				m.Pos = NewCT_EdnPos()
 				if err := d.DecodeElement(m.Pos, &el); err != nil {
 					return err
 				}
-			case "numFmt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numFmt"}:
 				m.NumFmt = NewCT_NumFmt()
 				if err := d.DecodeElement(m.NumFmt, &el); err != nil {
 					return err
 				}
-			case "numStart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numStart"}:
 				m.NumStart = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.NumStart, &el); err != nil {
 					return err
 				}
-			case "numRestart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numRestart"}:
 				m.NumRestart = NewCT_NumRestart()
 				if err := d.DecodeElement(m.NumRestart, &el); err != nil {
 					return err
 				}
-			case "endnote":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "endnote"}:
 				tmp := NewCT_FtnEdnSepRef()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

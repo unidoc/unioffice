@@ -65,7 +65,9 @@ func (m *CT_BarSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.DPt != nil {
 		sedPt := xml.StartElement{Name: xml.Name{Local: "c:dPt"}}
-		e.EncodeElement(m.DPt, sedPt)
+		for _, c := range m.DPt {
+			e.EncodeElement(c, sedPt)
+		}
 	}
 	if m.DLbls != nil {
 		sedLbls := xml.StartElement{Name: xml.Name{Local: "c:dLbls"}}
@@ -73,7 +75,9 @@ func (m *CT_BarSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.Trendline != nil {
 		setrendline := xml.StartElement{Name: xml.Name{Local: "c:trendline"}}
-		e.EncodeElement(m.Trendline, setrendline)
+		for _, c := range m.Trendline {
+			e.EncodeElement(c, setrendline)
+		}
 	}
 	if m.ErrBars != nil {
 		seerrBars := xml.StartElement{Name: xml.Name{Local: "c:errBars"}}
@@ -111,73 +115,73 @@ lCT_BarSer:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "idx":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "idx"}:
 				if err := d.DecodeElement(m.Idx, &el); err != nil {
 					return err
 				}
-			case "order":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "order"}:
 				if err := d.DecodeElement(m.Order, &el); err != nil {
 					return err
 				}
-			case "tx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "tx"}:
 				m.Tx = NewCT_SerTx()
 				if err := d.DecodeElement(m.Tx, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"}:
 				m.SpPr = drawingml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "invertIfNegative":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "invertIfNegative"}:
 				m.InvertIfNegative = NewCT_Boolean()
 				if err := d.DecodeElement(m.InvertIfNegative, &el); err != nil {
 					return err
 				}
-			case "pictureOptions":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pictureOptions"}:
 				m.PictureOptions = NewCT_PictureOptions()
 				if err := d.DecodeElement(m.PictureOptions, &el); err != nil {
 					return err
 				}
-			case "dPt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dPt"}:
 				tmp := NewCT_DPt()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.DPt = append(m.DPt, tmp)
-			case "dLbls":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dLbls"}:
 				m.DLbls = NewCT_DLbls()
 				if err := d.DecodeElement(m.DLbls, &el); err != nil {
 					return err
 				}
-			case "trendline":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "trendline"}:
 				tmp := NewCT_Trendline()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Trendline = append(m.Trendline, tmp)
-			case "errBars":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "errBars"}:
 				m.ErrBars = NewCT_ErrBars()
 				if err := d.DecodeElement(m.ErrBars, &el); err != nil {
 					return err
 				}
-			case "cat":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "cat"}:
 				m.Cat = NewCT_AxDataSource()
 				if err := d.DecodeElement(m.Cat, &el); err != nil {
 					return err
 				}
-			case "val":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "val"}:
 				m.Val = NewCT_NumDataSource()
 				if err := d.DecodeElement(m.Val, &el); err != nil {
 					return err
 				}
-			case "shape":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "shape"}:
 				m.Shape = NewCT_Shape()
 				if err := d.DecodeElement(m.Shape, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

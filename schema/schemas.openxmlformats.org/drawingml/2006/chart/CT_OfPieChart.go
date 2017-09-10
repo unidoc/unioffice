@@ -45,7 +45,9 @@ func (m *CT_OfPieChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.Ser != nil {
 		seser := xml.StartElement{Name: xml.Name{Local: "c:ser"}}
-		e.EncodeElement(m.Ser, seser)
+		for _, c := range m.Ser {
+			e.EncodeElement(c, seser)
+		}
 	}
 	if m.DLbls != nil {
 		sedLbls := xml.StartElement{Name: xml.Name{Local: "c:dLbls"}}
@@ -73,7 +75,9 @@ func (m *CT_OfPieChart) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.SerLines != nil {
 		seserLines := xml.StartElement{Name: xml.Name{Local: "c:serLines"}}
-		e.EncodeElement(m.SerLines, seserLines)
+		for _, c := range m.SerLines {
+			e.EncodeElement(c, seserLines)
+		}
 	}
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "c:extLst"}}
@@ -94,59 +98,59 @@ lCT_OfPieChart:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ofPieType":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ofPieType"}:
 				if err := d.DecodeElement(m.OfPieType, &el); err != nil {
 					return err
 				}
-			case "varyColors":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "varyColors"}:
 				m.VaryColors = NewCT_Boolean()
 				if err := d.DecodeElement(m.VaryColors, &el); err != nil {
 					return err
 				}
-			case "ser":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ser"}:
 				tmp := NewCT_PieSer()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Ser = append(m.Ser, tmp)
-			case "dLbls":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dLbls"}:
 				m.DLbls = NewCT_DLbls()
 				if err := d.DecodeElement(m.DLbls, &el); err != nil {
 					return err
 				}
-			case "gapWidth":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "gapWidth"}:
 				m.GapWidth = NewCT_GapAmount()
 				if err := d.DecodeElement(m.GapWidth, &el); err != nil {
 					return err
 				}
-			case "splitType":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "splitType"}:
 				m.SplitType = NewCT_SplitType()
 				if err := d.DecodeElement(m.SplitType, &el); err != nil {
 					return err
 				}
-			case "splitPos":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "splitPos"}:
 				m.SplitPos = NewCT_Double()
 				if err := d.DecodeElement(m.SplitPos, &el); err != nil {
 					return err
 				}
-			case "custSplit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "custSplit"}:
 				m.CustSplit = NewCT_CustSplit()
 				if err := d.DecodeElement(m.CustSplit, &el); err != nil {
 					return err
 				}
-			case "secondPieSize":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "secondPieSize"}:
 				m.SecondPieSize = NewCT_SecondPieSize()
 				if err := d.DecodeElement(m.SecondPieSize, &el); err != nil {
 					return err
 				}
-			case "serLines":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "serLines"}:
 				tmp := NewCT_ChartLines()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.SerLines = append(m.SerLines, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

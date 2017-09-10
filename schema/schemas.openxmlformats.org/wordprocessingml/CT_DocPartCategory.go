@@ -50,12 +50,12 @@ lCT_DocPartCategory:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "name":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "name"}:
 				if err := d.DecodeElement(m.Name, &el); err != nil {
 					return err
 				}
-			case "gallery":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "gallery"}:
 				if err := d.DecodeElement(m.Gallery, &el); err != nil {
 					return err
 				}

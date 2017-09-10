@@ -44,11 +44,15 @@ func (m *CT_ColorTransform) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(start)
 	if m.Title != nil {
 		setitle := xml.StartElement{Name: xml.Name{Local: "title"}}
-		e.EncodeElement(m.Title, setitle)
+		for _, c := range m.Title {
+			e.EncodeElement(c, setitle)
+		}
 	}
 	if m.Desc != nil {
 		sedesc := xml.StartElement{Name: xml.Name{Local: "desc"}}
-		e.EncodeElement(m.Desc, sedesc)
+		for _, c := range m.Desc {
+			e.EncodeElement(c, sedesc)
+		}
 	}
 	if m.CatLst != nil {
 		secatLst := xml.StartElement{Name: xml.Name{Local: "catLst"}}
@@ -56,7 +60,9 @@ func (m *CT_ColorTransform) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	if m.StyleLbl != nil {
 		sestyleLbl := xml.StartElement{Name: xml.Name{Local: "styleLbl"}}
-		e.EncodeElement(m.StyleLbl, sestyleLbl)
+		for _, c := range m.StyleLbl {
+			e.EncodeElement(c, sestyleLbl)
+		}
 	}
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
@@ -92,31 +98,31 @@ lCT_ColorTransform:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "title":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "title"}:
 				tmp := NewCT_CTName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Title = append(m.Title, tmp)
-			case "desc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "desc"}:
 				tmp := NewCT_CTDescription()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Desc = append(m.Desc, tmp)
-			case "catLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "catLst"}:
 				m.CatLst = NewCT_CTCategories()
 				if err := d.DecodeElement(m.CatLst, &el); err != nil {
 					return err
 				}
-			case "styleLbl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "styleLbl"}:
 				tmp := NewCT_CTStyleLabel()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.StyleLbl = append(m.StyleLbl, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "extLst"}:
 				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

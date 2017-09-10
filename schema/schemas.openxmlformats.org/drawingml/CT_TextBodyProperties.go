@@ -308,43 +308,43 @@ lCT_TextBodyProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "prstTxWarp":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "prstTxWarp"}:
 				m.PrstTxWarp = NewCT_PresetTextShape()
 				if err := d.DecodeElement(m.PrstTxWarp, &el); err != nil {
 					return err
 				}
-			case "noAutofit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noAutofit"}:
 				m.NoAutofit = NewCT_TextNoAutofit()
 				if err := d.DecodeElement(m.NoAutofit, &el); err != nil {
 					return err
 				}
-			case "normAutofit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "normAutofit"}:
 				m.NormAutofit = NewCT_TextNormalAutofit()
 				if err := d.DecodeElement(m.NormAutofit, &el); err != nil {
 					return err
 				}
-			case "spAutoFit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spAutoFit"}:
 				m.SpAutoFit = NewCT_TextShapeAutofit()
 				if err := d.DecodeElement(m.SpAutoFit, &el); err != nil {
 					return err
 				}
-			case "scene3d":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "scene3d"}:
 				m.Scene3d = NewCT_Scene3D()
 				if err := d.DecodeElement(m.Scene3d, &el); err != nil {
 					return err
 				}
-			case "sp3d":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sp3d"}:
 				m.Sp3d = NewCT_Shape3D()
 				if err := d.DecodeElement(m.Sp3d, &el); err != nil {
 					return err
 				}
-			case "flatTx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "flatTx"}:
 				m.FlatTx = NewCT_FlatText()
 				if err := d.DecodeElement(m.FlatTx, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

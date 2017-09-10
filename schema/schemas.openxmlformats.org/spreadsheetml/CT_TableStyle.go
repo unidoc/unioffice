@@ -51,8 +51,10 @@ func (m *CT_TableStyle) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	e.EncodeToken(start)
 	if m.TableStyleElement != nil {
-		setableStyleElement := xml.StartElement{Name: xml.Name{Local: "x:tableStyleElement"}}
-		e.EncodeElement(m.TableStyleElement, setableStyleElement)
+		setableStyleElement := xml.StartElement{Name: xml.Name{Local: "ma:tableStyleElement"}}
+		for _, c := range m.TableStyleElement {
+			e.EncodeElement(c, setableStyleElement)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -99,8 +101,8 @@ lCT_TableStyle:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tableStyleElement":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tableStyleElement"}:
 				tmp := NewCT_TableStyleElement()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

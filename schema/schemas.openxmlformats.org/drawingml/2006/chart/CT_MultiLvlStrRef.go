@@ -54,17 +54,17 @@ lCT_MultiLvlStrRef:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "f":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "f"}:
 				if err := d.DecodeElement(&m.F, &el); err != nil {
 					return err
 				}
-			case "multiLvlStrCache":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "multiLvlStrCache"}:
 				m.MultiLvlStrCache = NewCT_MultiLvlStrData()
 				if err := d.DecodeElement(m.MultiLvlStrCache, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

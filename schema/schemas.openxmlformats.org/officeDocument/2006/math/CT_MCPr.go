@@ -48,13 +48,13 @@ lCT_MCPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "count":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "count"}:
 				m.Count = NewCT_Integer255()
 				if err := d.DecodeElement(m.Count, &el); err != nil {
 					return err
 				}
-			case "mcJc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mcJc"}:
 				m.McJc = NewCT_XAlign()
 				if err := d.DecodeElement(m.McJc, &el); err != nil {
 					return err

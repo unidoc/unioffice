@@ -28,7 +28,9 @@ func (m *CT_SchemaLibrary) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	e.EncodeToken(start)
 	if m.Schema != nil {
 		seschema := xml.StartElement{Name: xml.Name{Local: "ma:schema"}}
-		e.EncodeElement(m.Schema, seschema)
+		for _, c := range m.Schema {
+			e.EncodeElement(c, seschema)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_SchemaLibrary:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "schema":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/schemaLibrary/2006/main", Local: "schema"}:
 				tmp := NewCT_Schema()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -29,7 +29,9 @@ func (m *CT_TblGridBase) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(start)
 	if m.GridCol != nil {
 		segridCol := xml.StartElement{Name: xml.Name{Local: "w:gridCol"}}
-		e.EncodeElement(m.GridCol, segridCol)
+		for _, c := range m.GridCol {
+			e.EncodeElement(c, segridCol)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_TblGridBase:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "gridCol":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "gridCol"}:
 				tmp := NewCT_TblGridCol()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

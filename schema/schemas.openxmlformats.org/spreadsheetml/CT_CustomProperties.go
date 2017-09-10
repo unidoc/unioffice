@@ -27,8 +27,10 @@ func NewCT_CustomProperties() *CT_CustomProperties {
 
 func (m *CT_CustomProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	secustomPr := xml.StartElement{Name: xml.Name{Local: "x:customPr"}}
-	e.EncodeElement(m.CustomPr, secustomPr)
+	secustomPr := xml.StartElement{Name: xml.Name{Local: "ma:customPr"}}
+	for _, c := range m.CustomPr {
+		e.EncodeElement(c, secustomPr)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_CustomProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "customPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customPr"}:
 				tmp := NewCT_CustomProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

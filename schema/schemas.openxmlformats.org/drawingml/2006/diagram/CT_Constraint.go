@@ -23,6 +23,10 @@ type CT_Constraint struct {
 	ValAttr        *float64
 	FactAttr       *float64
 	ExtLst         *drawingml.CT_OfficeArtExtensionList
+	TypeAttr       ST_ConstraintType
+	ForAttr        ST_ConstraintRelationship
+	ForNameAttr    *string
+	PtTypeAttr     ST_ElementType
 	RefTypeAttr    ST_ConstraintType
 	RefForAttr     ST_ConstraintRelationship
 	RefForNameAttr *string
@@ -49,6 +53,31 @@ func (m *CT_Constraint) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	if m.FactAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "fact"},
 			Value: fmt.Sprintf("%v", *m.FactAttr)})
+	}
+	if m.TypeAttr != ST_ConstraintTypeUnset {
+		attr, err := m.TypeAttr.MarshalXMLAttr(xml.Name{Local: "type"})
+		if err != nil {
+			return err
+		}
+		start.Attr = append(start.Attr, attr)
+	}
+	if m.ForAttr != ST_ConstraintRelationshipUnset {
+		attr, err := m.ForAttr.MarshalXMLAttr(xml.Name{Local: "for"})
+		if err != nil {
+			return err
+		}
+		start.Attr = append(start.Attr, attr)
+	}
+	if m.ForNameAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "forName"},
+			Value: fmt.Sprintf("%v", *m.ForNameAttr)})
+	}
+	if m.PtTypeAttr != ST_ElementTypeUnset {
+		attr, err := m.PtTypeAttr.MarshalXMLAttr(xml.Name{Local: "ptType"})
+		if err != nil {
+			return err
+		}
+		start.Attr = append(start.Attr, attr)
 	}
 	if m.RefTypeAttr != ST_ConstraintTypeUnset {
 		attr, err := m.RefTypeAttr.MarshalXMLAttr(xml.Name{Local: "refType"})
@@ -104,6 +133,22 @@ func (m *CT_Constraint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			m.FactAttr = &parsed
 		}
+		if attr.Name.Local == "type" {
+			m.TypeAttr.UnmarshalXMLAttr(attr)
+		}
+		if attr.Name.Local == "for" {
+			m.ForAttr.UnmarshalXMLAttr(attr)
+		}
+		if attr.Name.Local == "forName" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.ForNameAttr = &parsed
+		}
+		if attr.Name.Local == "ptType" {
+			m.PtTypeAttr.UnmarshalXMLAttr(attr)
+		}
 		if attr.Name.Local == "refType" {
 			m.RefTypeAttr.UnmarshalXMLAttr(attr)
 		}
@@ -129,8 +174,8 @@ lCT_Constraint:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "extLst":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "extLst"}:
 				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
@@ -163,6 +208,15 @@ func (m *CT_Constraint) ValidateWithPath(path string) error {
 		if err := m.ExtLst.ValidateWithPath(path + "/ExtLst"); err != nil {
 			return err
 		}
+	}
+	if err := m.TypeAttr.ValidateWithPath(path + "/TypeAttr"); err != nil {
+		return err
+	}
+	if err := m.ForAttr.ValidateWithPath(path + "/ForAttr"); err != nil {
+		return err
+	}
+	if err := m.PtTypeAttr.ValidateWithPath(path + "/PtTypeAttr"); err != nil {
+		return err
 	}
 	if err := m.RefTypeAttr.ValidateWithPath(path + "/RefTypeAttr"); err != nil {
 		return err

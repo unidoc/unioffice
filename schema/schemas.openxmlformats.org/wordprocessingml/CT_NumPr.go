@@ -62,23 +62,23 @@ lCT_NumPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ilvl":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ilvl"}:
 				m.Ilvl = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.Ilvl, &el); err != nil {
 					return err
 				}
-			case "numId":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numId"}:
 				m.NumId = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.NumId, &el); err != nil {
 					return err
 				}
-			case "numberingChange":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numberingChange"}:
 				m.NumberingChange = NewCT_TrackChangeNumbering()
 				if err := d.DecodeElement(m.NumberingChange, &el); err != nil {
 					return err
 				}
-			case "ins":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ins"}:
 				m.Ins = NewCT_TrackChange()
 				if err := d.DecodeElement(m.Ins, &el); err != nil {
 					return err

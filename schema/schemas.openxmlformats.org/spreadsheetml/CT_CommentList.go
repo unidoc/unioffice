@@ -28,8 +28,10 @@ func NewCT_CommentList() *CT_CommentList {
 func (m *CT_CommentList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Comment != nil {
-		secomment := xml.StartElement{Name: xml.Name{Local: "x:comment"}}
-		e.EncodeElement(m.Comment, secomment)
+		secomment := xml.StartElement{Name: xml.Name{Local: "ma:comment"}}
+		for _, c := range m.Comment {
+			e.EncodeElement(c, secomment)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_CommentList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "comment":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "comment"}:
 				tmp := NewCT_Comment()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

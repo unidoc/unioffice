@@ -50,13 +50,13 @@ lCT_DocDefaults:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rPrDefault":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rPrDefault"}:
 				m.RPrDefault = NewCT_RPrDefault()
 				if err := d.DecodeElement(m.RPrDefault, &el); err != nil {
 					return err
 				}
-			case "pPrDefault":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pPrDefault"}:
 				m.PPrDefault = NewCT_PPrDefault()
 				if err := d.DecodeElement(m.PPrDefault, &el); err != nil {
 					return err

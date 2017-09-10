@@ -35,8 +35,10 @@ func (m *CT_FunctionGroups) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	e.EncodeToken(start)
 	if m.FunctionGroup != nil {
-		sefunctionGroup := xml.StartElement{Name: xml.Name{Local: "x:functionGroup"}}
-		e.EncodeElement(m.FunctionGroup, sefunctionGroup)
+		sefunctionGroup := xml.StartElement{Name: xml.Name{Local: "ma:functionGroup"}}
+		for _, c := range m.FunctionGroup {
+			e.EncodeElement(c, sefunctionGroup)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -62,8 +64,8 @@ lCT_FunctionGroups:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "functionGroup":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "functionGroup"}:
 				tmp := NewCT_FunctionGroup()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

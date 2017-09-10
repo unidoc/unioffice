@@ -28,7 +28,9 @@ func (m *CT_ColorTransformHeaderLst) MarshalXML(e *xml.Encoder, start xml.StartE
 	e.EncodeToken(start)
 	if m.ColorsDefHdr != nil {
 		secolorsDefHdr := xml.StartElement{Name: xml.Name{Local: "colorsDefHdr"}}
-		e.EncodeElement(m.ColorsDefHdr, secolorsDefHdr)
+		for _, c := range m.ColorsDefHdr {
+			e.EncodeElement(c, secolorsDefHdr)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_ColorTransformHeaderLst:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "colorsDefHdr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "colorsDefHdr"}:
 				tmp := NewCT_ColorTransformHeader()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -51,18 +51,18 @@ lEG_TextBulletSize:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "buSzTx":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buSzTx"}:
 				m.BuSzTx = NewCT_TextBulletSizeFollowText()
 				if err := d.DecodeElement(m.BuSzTx, &el); err != nil {
 					return err
 				}
-			case "buSzPct":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buSzPct"}:
 				m.BuSzPct = NewCT_TextBulletSizePercent()
 				if err := d.DecodeElement(m.BuSzPct, &el); err != nil {
 					return err
 				}
-			case "buSzPts":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buSzPts"}:
 				m.BuSzPts = NewCT_TextBulletSizePoint()
 				if err := d.DecodeElement(m.BuSzPts, &el); err != nil {
 					return err

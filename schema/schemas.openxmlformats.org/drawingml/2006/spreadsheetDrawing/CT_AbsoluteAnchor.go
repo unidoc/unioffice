@@ -59,46 +59,46 @@ lCT_AbsoluteAnchor:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pos":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "pos"}:
 				if err := d.DecodeElement(m.Pos, &el); err != nil {
 					return err
 				}
-			case "ext":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "ext"}:
 				if err := d.DecodeElement(m.Ext, &el); err != nil {
 					return err
 				}
-			case "sp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "sp"}:
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.Sp, &el); err != nil {
 					return err
 				}
-			case "grpSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "grpSp"}:
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.GrpSp, &el); err != nil {
 					return err
 				}
-			case "graphicFrame":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "graphicFrame"}:
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.GraphicFrame, &el); err != nil {
 					return err
 				}
-			case "cxnSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "cxnSp"}:
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.CxnSp, &el); err != nil {
 					return err
 				}
-			case "pic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "pic"}:
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.Pic, &el); err != nil {
 					return err
 				}
-			case "contentPart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "contentPart"}:
 				m.Choice = NewEG_ObjectChoicesChoice()
 				if err := d.DecodeElement(&m.Choice.ContentPart, &el); err != nil {
 					return err
 				}
-			case "clientData":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "clientData"}:
 				if err := d.DecodeElement(m.ClientData, &el); err != nil {
 					return err
 				}

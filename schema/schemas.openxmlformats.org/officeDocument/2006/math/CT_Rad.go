@@ -53,17 +53,17 @@ lCT_Rad:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "radPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "radPr"}:
 				m.RadPr = NewCT_RadPr()
 				if err := d.DecodeElement(m.RadPr, &el); err != nil {
 					return err
 				}
-			case "deg":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "deg"}:
 				if err := d.DecodeElement(m.Deg, &el); err != nil {
 					return err
 				}
-			case "e":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"}:
 				if err := d.DecodeElement(m.E, &el); err != nil {
 					return err
 				}

@@ -56,8 +56,8 @@ lCT_PathShadeProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "fillToRect":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillToRect"}:
 				m.FillToRect = NewCT_RelativeRect()
 				if err := d.DecodeElement(m.FillToRect, &el); err != nil {
 					return err

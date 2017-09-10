@@ -46,9 +46,13 @@ func (m *CT_ColorTransformHeader) MarshalXML(e *xml.Encoder, start xml.StartElem
 	}
 	e.EncodeToken(start)
 	setitle := xml.StartElement{Name: xml.Name{Local: "title"}}
-	e.EncodeElement(m.Title, setitle)
+	for _, c := range m.Title {
+		e.EncodeElement(c, setitle)
+	}
 	sedesc := xml.StartElement{Name: xml.Name{Local: "desc"}}
-	e.EncodeElement(m.Desc, sedesc)
+	for _, c := range m.Desc {
+		e.EncodeElement(c, sedesc)
+	}
 	if m.CatLst != nil {
 		secatLst := xml.StartElement{Name: xml.Name{Local: "catLst"}}
 		e.EncodeElement(m.CatLst, secatLst)
@@ -95,25 +99,25 @@ lCT_ColorTransformHeader:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "title":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "title"}:
 				tmp := NewCT_CTName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Title = append(m.Title, tmp)
-			case "desc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "desc"}:
 				tmp := NewCT_CTDescription()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Desc = append(m.Desc, tmp)
-			case "catLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "catLst"}:
 				m.CatLst = NewCT_CTCategories()
 				if err := d.DecodeElement(m.CatLst, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "extLst"}:
 				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

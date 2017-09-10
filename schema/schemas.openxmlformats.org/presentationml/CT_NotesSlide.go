@@ -85,17 +85,17 @@ lCT_NotesSlide:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cSld":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cSld"}:
 				if err := d.DecodeElement(m.CSld, &el); err != nil {
 					return err
 				}
-			case "clrMapOvr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "clrMapOvr"}:
 				m.ClrMapOvr = drawingml.NewCT_ColorMappingOverride()
 				if err := d.DecodeElement(m.ClrMapOvr, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionListModify()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

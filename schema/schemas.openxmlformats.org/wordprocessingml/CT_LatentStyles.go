@@ -68,7 +68,9 @@ func (m *CT_LatentStyles) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(start)
 	if m.LsdException != nil {
 		selsdException := xml.StartElement{Name: xml.Name{Local: "w:lsdException"}}
-		e.EncodeElement(m.LsdException, selsdException)
+		for _, c := range m.LsdException {
+			e.EncodeElement(c, selsdException)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -128,8 +130,8 @@ lCT_LatentStyles:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "lsdException":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lsdException"}:
 				tmp := NewCT_LsdException()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -41,8 +41,8 @@ lCT_RPRChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "nor":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "nor"}:
 				m.Nor = NewCT_OnOff()
 				if err := d.DecodeElement(m.Nor, &el); err != nil {
 					return err

@@ -41,7 +41,9 @@ func (m *CT_FFDDList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.ListEntry != nil {
 		selistEntry := xml.StartElement{Name: xml.Name{Local: "w:listEntry"}}
-		e.EncodeElement(m.ListEntry, selistEntry)
+		for _, c := range m.ListEntry {
+			e.EncodeElement(c, selistEntry)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -57,18 +59,18 @@ lCT_FFDDList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "result":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "result"}:
 				m.Result = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.Result, &el); err != nil {
 					return err
 				}
-			case "default":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "default"}:
 				m.Default = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.Default, &el); err != nil {
 					return err
 				}
-			case "listEntry":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "listEntry"}:
 				tmp := NewCT_String()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

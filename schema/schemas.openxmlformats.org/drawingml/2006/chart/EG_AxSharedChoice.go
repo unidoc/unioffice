@@ -46,13 +46,13 @@ lEG_AxSharedChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "crosses":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "crosses"}:
 				m.Crosses = NewCT_Crosses()
 				if err := d.DecodeElement(m.Crosses, &el); err != nil {
 					return err
 				}
-			case "crossesAt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "crossesAt"}:
 				m.CrossesAt = NewCT_Double()
 				if err := d.DecodeElement(m.CrossesAt, &el); err != nil {
 					return err

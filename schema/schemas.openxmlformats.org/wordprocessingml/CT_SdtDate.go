@@ -79,23 +79,23 @@ lCT_SdtDate:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "dateFormat":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "dateFormat"}:
 				m.DateFormat = NewCT_String()
 				if err := d.DecodeElement(m.DateFormat, &el); err != nil {
 					return err
 				}
-			case "lid":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lid"}:
 				m.Lid = NewCT_Lang()
 				if err := d.DecodeElement(m.Lid, &el); err != nil {
 					return err
 				}
-			case "storeMappedDataAs":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "storeMappedDataAs"}:
 				m.StoreMappedDataAs = NewCT_SdtDateMappingType()
 				if err := d.DecodeElement(m.StoreMappedDataAs, &el); err != nil {
 					return err
 				}
-			case "calendar":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "calendar"}:
 				m.Calendar = NewCT_CalendarType()
 				if err := d.DecodeElement(m.Calendar, &el); err != nil {
 					return err

@@ -35,8 +35,10 @@ func (m *CT_Fills) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.Fill != nil {
-		sefill := xml.StartElement{Name: xml.Name{Local: "x:fill"}}
-		e.EncodeElement(m.Fill, sefill)
+		sefill := xml.StartElement{Name: xml.Name{Local: "ma:fill"}}
+		for _, c := range m.Fill {
+			e.EncodeElement(c, sefill)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -62,8 +64,8 @@ lCT_Fills:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "fill":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fill"}:
 				tmp := NewCT_Fill()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -63,23 +63,23 @@ lCT_SlideMasterTextStyles:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "titleStyle":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "titleStyle"}:
 				m.TitleStyle = drawingml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.TitleStyle, &el); err != nil {
 					return err
 				}
-			case "bodyStyle":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bodyStyle"}:
 				m.BodyStyle = drawingml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.BodyStyle, &el); err != nil {
 					return err
 				}
-			case "otherStyle":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "otherStyle"}:
 				m.OtherStyle = drawingml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.OtherStyle, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

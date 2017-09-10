@@ -140,88 +140,88 @@ lCT_TblPrBase:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tblStyle":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblStyle"}:
 				m.TblStyle = NewCT_String()
 				if err := d.DecodeElement(m.TblStyle, &el); err != nil {
 					return err
 				}
-			case "tblpPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblpPr"}:
 				m.TblpPr = NewCT_TblPPr()
 				if err := d.DecodeElement(m.TblpPr, &el); err != nil {
 					return err
 				}
-			case "tblOverlap":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblOverlap"}:
 				m.TblOverlap = NewCT_TblOverlap()
 				if err := d.DecodeElement(m.TblOverlap, &el); err != nil {
 					return err
 				}
-			case "bidiVisual":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bidiVisual"}:
 				m.BidiVisual = NewCT_OnOff()
 				if err := d.DecodeElement(m.BidiVisual, &el); err != nil {
 					return err
 				}
-			case "tblStyleRowBandSize":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblStyleRowBandSize"}:
 				m.TblStyleRowBandSize = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.TblStyleRowBandSize, &el); err != nil {
 					return err
 				}
-			case "tblStyleColBandSize":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblStyleColBandSize"}:
 				m.TblStyleColBandSize = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.TblStyleColBandSize, &el); err != nil {
 					return err
 				}
-			case "tblW":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblW"}:
 				m.TblW = NewCT_TblWidth()
 				if err := d.DecodeElement(m.TblW, &el); err != nil {
 					return err
 				}
-			case "jc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "jc"}:
 				m.Jc = NewCT_JcTable()
 				if err := d.DecodeElement(m.Jc, &el); err != nil {
 					return err
 				}
-			case "tblCellSpacing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblCellSpacing"}:
 				m.TblCellSpacing = NewCT_TblWidth()
 				if err := d.DecodeElement(m.TblCellSpacing, &el); err != nil {
 					return err
 				}
-			case "tblInd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblInd"}:
 				m.TblInd = NewCT_TblWidth()
 				if err := d.DecodeElement(m.TblInd, &el); err != nil {
 					return err
 				}
-			case "tblBorders":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblBorders"}:
 				m.TblBorders = NewCT_TblBorders()
 				if err := d.DecodeElement(m.TblBorders, &el); err != nil {
 					return err
 				}
-			case "shd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "shd"}:
 				m.Shd = NewCT_Shd()
 				if err := d.DecodeElement(m.Shd, &el); err != nil {
 					return err
 				}
-			case "tblLayout":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblLayout"}:
 				m.TblLayout = NewCT_TblLayoutType()
 				if err := d.DecodeElement(m.TblLayout, &el); err != nil {
 					return err
 				}
-			case "tblCellMar":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblCellMar"}:
 				m.TblCellMar = NewCT_TblCellMar()
 				if err := d.DecodeElement(m.TblCellMar, &el); err != nil {
 					return err
 				}
-			case "tblLook":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblLook"}:
 				m.TblLook = NewCT_TblLook()
 				if err := d.DecodeElement(m.TblLook, &el); err != nil {
 					return err
 				}
-			case "tblCaption":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblCaption"}:
 				m.TblCaption = NewCT_String()
 				if err := d.DecodeElement(m.TblCaption, &el); err != nil {
 					return err
 				}
-			case "tblDescription":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblDescription"}:
 				m.TblDescription = NewCT_String()
 				if err := d.DecodeElement(m.TblDescription, &el); err != nil {
 					return err

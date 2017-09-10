@@ -29,7 +29,9 @@ func (m *CT_SmartTagPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(start)
 	if m.Attr != nil {
 		seattr := xml.StartElement{Name: xml.Name{Local: "w:attr"}}
-		e.EncodeElement(m.Attr, seattr)
+		for _, c := range m.Attr {
+			e.EncodeElement(c, seattr)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_SmartTagPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "attr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "attr"}:
 				tmp := NewCT_Attr()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

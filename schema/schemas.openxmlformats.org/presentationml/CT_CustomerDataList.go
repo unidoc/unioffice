@@ -31,7 +31,9 @@ func (m *CT_CustomerDataList) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(start)
 	if m.CustData != nil {
 		secustData := xml.StartElement{Name: xml.Name{Local: "p:custData"}}
-		e.EncodeElement(m.CustData, secustData)
+		for _, c := range m.CustData {
+			e.EncodeElement(c, secustData)
+		}
 	}
 	if m.Tags != nil {
 		setags := xml.StartElement{Name: xml.Name{Local: "p:tags"}}
@@ -51,14 +53,14 @@ lCT_CustomerDataList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "custData":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custData"}:
 				tmp := NewCT_CustomerData()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CustData = append(m.CustData, tmp)
-			case "tags":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tags"}:
 				m.Tags = NewCT_TagsData()
 				if err := d.DecodeElement(m.Tags, &el); err != nil {
 					return err

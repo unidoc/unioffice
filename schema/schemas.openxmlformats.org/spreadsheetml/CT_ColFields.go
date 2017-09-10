@@ -34,8 +34,10 @@ func (m *CT_ColFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sefield := xml.StartElement{Name: xml.Name{Local: "x:field"}}
-	e.EncodeElement(m.Field, sefield)
+	sefield := xml.StartElement{Name: xml.Name{Local: "ma:field"}}
+	for _, c := range m.Field {
+		e.EncodeElement(c, sefield)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_ColFields:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "field":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "field"}:
 				tmp := NewCT_Field()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

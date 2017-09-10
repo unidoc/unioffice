@@ -55,18 +55,18 @@ lEG_RPrMath:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ins":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ins"}:
 				m.Ins = NewCT_MathCtrlIns()
 				if err := d.DecodeElement(m.Ins, &el); err != nil {
 					return err
 				}
-			case "del":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "del"}:
 				m.Del = NewCT_MathCtrlDel()
 				if err := d.DecodeElement(m.Del, &el); err != nil {
 					return err
 				}
-			case "rPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rPr"}:
 				m.RPr = NewCT_RPr()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err

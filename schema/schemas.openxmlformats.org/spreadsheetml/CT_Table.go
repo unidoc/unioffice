@@ -167,21 +167,21 @@ func (m *CT_Table) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.AutoFilter != nil {
-		seautoFilter := xml.StartElement{Name: xml.Name{Local: "x:autoFilter"}}
+		seautoFilter := xml.StartElement{Name: xml.Name{Local: "ma:autoFilter"}}
 		e.EncodeElement(m.AutoFilter, seautoFilter)
 	}
 	if m.SortState != nil {
-		sesortState := xml.StartElement{Name: xml.Name{Local: "x:sortState"}}
+		sesortState := xml.StartElement{Name: xml.Name{Local: "ma:sortState"}}
 		e.EncodeElement(m.SortState, sesortState)
 	}
-	setableColumns := xml.StartElement{Name: xml.Name{Local: "x:tableColumns"}}
+	setableColumns := xml.StartElement{Name: xml.Name{Local: "ma:tableColumns"}}
 	e.EncodeElement(m.TableColumns, setableColumns)
 	if m.TableStyleInfo != nil {
-		setableStyleInfo := xml.StartElement{Name: xml.Name{Local: "x:tableStyleInfo"}}
+		setableStyleInfo := xml.StartElement{Name: xml.Name{Local: "ma:tableStyleInfo"}}
 		e.EncodeElement(m.TableStyleInfo, setableStyleInfo)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -360,27 +360,27 @@ lCT_Table:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "autoFilter":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "autoFilter"}:
 				m.AutoFilter = NewCT_AutoFilter()
 				if err := d.DecodeElement(m.AutoFilter, &el); err != nil {
 					return err
 				}
-			case "sortState":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sortState"}:
 				m.SortState = NewCT_SortState()
 				if err := d.DecodeElement(m.SortState, &el); err != nil {
 					return err
 				}
-			case "tableColumns":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tableColumns"}:
 				if err := d.DecodeElement(m.TableColumns, &el); err != nil {
 					return err
 				}
-			case "tableStyleInfo":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tableStyleInfo"}:
 				m.TableStyleInfo = NewCT_TableStyleInfo()
 				if err := d.DecodeElement(m.TableStyleInfo, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

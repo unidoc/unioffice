@@ -41,8 +41,10 @@ func (m *CT_PageBreak) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	e.EncodeToken(start)
 	if m.Brk != nil {
-		sebrk := xml.StartElement{Name: xml.Name{Local: "x:brk"}}
-		e.EncodeElement(m.Brk, sebrk)
+		sebrk := xml.StartElement{Name: xml.Name{Local: "ma:brk"}}
+		for _, c := range m.Brk {
+			e.EncodeElement(c, sebrk)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -76,8 +78,8 @@ lCT_PageBreak:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "brk":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "brk"}:
 				tmp := NewCT_Break()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

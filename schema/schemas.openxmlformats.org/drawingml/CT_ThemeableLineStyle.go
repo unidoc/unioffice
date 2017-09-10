@@ -48,13 +48,13 @@ lCT_ThemeableLineStyle:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ln":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ln"}:
 				m.Ln = NewCT_LineProperties()
 				if err := d.DecodeElement(m.Ln, &el); err != nil {
 					return err
 				}
-			case "lnRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnRef"}:
 				m.LnRef = NewCT_StyleMatrixReference()
 				if err := d.DecodeElement(m.LnRef, &el); err != nil {
 					return err

@@ -54,18 +54,18 @@ lEG_ShowType:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "present":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "present"}:
 				m.Present = NewCT_Empty()
 				if err := d.DecodeElement(m.Present, &el); err != nil {
 					return err
 				}
-			case "browse":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "browse"}:
 				m.Browse = NewCT_ShowInfoBrowse()
 				if err := d.DecodeElement(m.Browse, &el); err != nil {
 					return err
 				}
-			case "kiosk":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "kiosk"}:
 				m.Kiosk = NewCT_ShowInfoKiosk()
 				if err := d.DecodeElement(m.Kiosk, &el); err != nil {
 					return err

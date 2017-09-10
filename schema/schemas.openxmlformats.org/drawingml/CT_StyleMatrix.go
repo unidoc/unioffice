@@ -73,20 +73,20 @@ lCT_StyleMatrix:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "fillStyleLst":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillStyleLst"}:
 				if err := d.DecodeElement(m.FillStyleLst, &el); err != nil {
 					return err
 				}
-			case "lnStyleLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnStyleLst"}:
 				if err := d.DecodeElement(m.LnStyleLst, &el); err != nil {
 					return err
 				}
-			case "effectStyleLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectStyleLst"}:
 				if err := d.DecodeElement(m.EffectStyleLst, &el); err != nil {
 					return err
 				}
-			case "bgFillStyleLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bgFillStyleLst"}:
 				if err := d.DecodeElement(m.BgFillStyleLst, &el); err != nil {
 					return err
 				}

@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"baliance.com/gooxml"
+	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
 )
 
@@ -150,6 +151,17 @@ func ParseUnionST_TextScale(s string) (ST_TextScale, error) {
 	return r, nil
 }
 
+func ParseUnionST_Coordinate(s string) (drawingml.ST_Coordinate, error) {
+	return drawingml.ParseUnionST_Coordinate(s)
+}
+
+func b2i(b bool) uint8 {
+	if b {
+		return 1
+	}
+	return 0
+}
+
 type ST_HighlightColor byte
 
 const (
@@ -267,6 +279,10 @@ func (m *ST_HighlightColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -412,6 +428,10 @@ func (m *ST_HexColorAuto) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -578,6 +598,10 @@ func (m *ST_Underline) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -757,6 +781,10 @@ func (m *ST_TextEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -1823,6 +1851,10 @@ func (m *ST_Border) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -2857,6 +2889,10 @@ func (m *ST_Shd) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -3106,6 +3142,10 @@ func (m *ST_Em) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -3223,6 +3263,10 @@ func (m *ST_CombineBrackets) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -3329,6 +3373,10 @@ func (m *ST_HeightRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -3444,6 +3492,10 @@ func (m *ST_Wrap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -3555,6 +3607,10 @@ func (m *ST_VAnchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -3654,6 +3710,10 @@ func (m *ST_HAnchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -3752,6 +3812,10 @@ func (m *ST_DropCap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -3881,6 +3945,10 @@ func (m *ST_TabJc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -4020,6 +4088,10 @@ func (m *ST_TabTlc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -4130,6 +4202,10 @@ func (m *ST_LineSpacingRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -4274,6 +4350,10 @@ func (m *ST_Jc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -4420,6 +4500,10 @@ func (m *ST_JcTable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -4542,6 +4626,10 @@ func (m *ST_View) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -4658,6 +4746,10 @@ func (m *ST_Zoom) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -4755,6 +4847,10 @@ func (m *ST_Proof) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -4860,6 +4956,10 @@ func (m *ST_DocProtect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -4983,6 +5083,10 @@ func (m *ST_MailMergeDocType) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -5099,6 +5203,10 @@ func (m *ST_MailMergeDest) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -5196,6 +5304,10 @@ func (m *ST_MailMergeOdsoFMDFieldType) UnmarshalXML(d *xml.Decoder, start xml.St
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -5336,6 +5448,10 @@ func (m *ST_TextDirection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -5482,6 +5598,10 @@ func (m *ST_TextAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -5584,6 +5704,10 @@ func (m *ST_DisplacedByCustomXml) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -5673,6 +5797,10 @@ func (m *ST_AnnotationVMerge) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -5779,6 +5907,10 @@ func (m *ST_TextboxTightWrap) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -5881,6 +6013,10 @@ func (m *ST_ObjectDrawAspect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -5970,6 +6106,10 @@ func (m *ST_ObjectUpdateMode) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -6066,6 +6206,10 @@ func (m *ST_FldCharType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -6159,6 +6303,10 @@ func (m *ST_InfoTextType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -6269,6 +6417,10 @@ func (m *ST_FFTextType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -6390,6 +6542,10 @@ func (m *ST_SectionMark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -6798,6 +6954,10 @@ func (m *ST_NumberFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -7132,6 +7292,10 @@ func (m *ST_PageOrientation) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -7221,6 +7385,10 @@ func (m *ST_PageBorderZOrder) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -7317,6 +7485,10 @@ func (m *ST_PageBorderDisplay) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -7410,6 +7582,10 @@ func (m *ST_PageBorderOffset) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -7515,6 +7691,10 @@ func (m *ST_ChapterSep) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -7623,6 +7803,10 @@ func (m *ST_LineNumberRestart) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -7726,6 +7910,10 @@ func (m *ST_VerticalJc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -7835,6 +8023,10 @@ func (m *ST_DocGrid) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -7937,6 +8129,10 @@ func (m *ST_HdrFtr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -8042,6 +8238,10 @@ func (m *ST_FtnEdn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -8144,6 +8344,10 @@ func (m *ST_BrType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -8249,6 +8453,10 @@ func (m *ST_BrClear) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -8352,6 +8560,10 @@ func (m *ST_PTabAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -8445,6 +8657,10 @@ func (m *ST_PTabRelativeTo) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -8550,6 +8766,10 @@ func (m *ST_PTabLeader) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -8662,6 +8882,10 @@ func (m *ST_ProofErr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -8786,6 +9010,10 @@ func (m *ST_EdGrp) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -8895,6 +9123,10 @@ func (m *ST_Hint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -9015,6 +9247,10 @@ func (m *ST_Theme) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -9150,6 +9386,10 @@ func (m *ST_RubyAlign) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -9266,6 +9506,10 @@ func (m *ST_Lock) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -9369,6 +9613,10 @@ func (m *ST_SdtDateMappingType) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -9462,6 +9710,10 @@ func (m *ST_Direction) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -9563,6 +9815,10 @@ func (m *ST_TblWidth) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -9661,6 +9917,10 @@ func (m *ST_Merge) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -9751,6 +10011,10 @@ func (m *ST_TblLayoutType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -9840,6 +10104,10 @@ func (m *ST_TblOverlap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -9941,6 +10209,10 @@ func (m *ST_FtnPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -10039,6 +10311,10 @@ func (m *ST_EdnPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -10133,6 +10409,10 @@ func (m *ST_RestartNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -10262,6 +10542,10 @@ func (m *ST_MailMergeSourceType) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -10426,6 +10710,10 @@ func (m *ST_TargetScreenSz) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -10556,6 +10844,10 @@ func (m *ST_CharacterSpacing) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -10700,6 +10992,10 @@ func (m *ST_WmlColorSchemeIndex) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -10881,6 +11177,10 @@ func (m *ST_StyleSort) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -11016,6 +11316,10 @@ func (m *ST_FrameScrollbar) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -11114,6 +11418,10 @@ func (m *ST_FrameLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -11214,6 +11522,10 @@ func (m *ST_LevelSuffix) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -11312,6 +11624,10 @@ func (m *ST_MultiLevelType) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -11462,6 +11778,10 @@ func (m *ST_TblStyleOverrideType) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -11606,6 +11926,10 @@ func (m *ST_StyleType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -11724,6 +12048,10 @@ func (m *ST_FontFamily) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -11834,6 +12162,10 @@ func (m *ST_Pitch) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -12004,6 +12336,10 @@ func (m *ST_ThemeColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -12159,6 +12495,10 @@ func (m *ST_DocPartBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -12277,6 +12617,10 @@ func (m *ST_DocPartType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -12568,6 +12912,10 @@ func (m *ST_DocPartGallery) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -12811,6 +13159,10 @@ func (m *ST_CaptionPos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
@@ -13195,4 +13547,684 @@ func init() {
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "AG_Password", NewAG_Password)
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "AG_TransitionalPassword", NewAG_TransitionalPassword)
 	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "AG_SectPrAttributes", NewAG_SectPrAttributes)
+}
+
+type WdST_WrapText byte
+
+const (
+	WdST_WrapTextUnset     WdST_WrapText = 0
+	WdST_WrapTextBothSides WdST_WrapText = 1
+	WdST_WrapTextLeft      WdST_WrapText = 2
+	WdST_WrapTextRight     WdST_WrapText = 3
+	WdST_WrapTextLargest   WdST_WrapText = 4
+)
+
+func (e WdST_WrapText) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
+	attr := xml.Attr{}
+	attr.Name = name
+	switch e {
+	case WdST_WrapTextUnset:
+		attr.Value = ""
+	case WdST_WrapTextBothSides:
+		attr.Value = "bothSides"
+	case WdST_WrapTextLeft:
+		attr.Value = "left"
+	case WdST_WrapTextRight:
+		attr.Value = "right"
+	case WdST_WrapTextLargest:
+		attr.Value = "largest"
+	}
+	return attr, nil
+}
+
+func (e *WdST_WrapText) UnmarshalXMLAttr(attr xml.Attr) error {
+	switch attr.Value {
+	case "":
+		*e = 0
+	case "bothSides":
+		*e = 1
+	case "left":
+		*e = 2
+	case "right":
+		*e = 3
+	case "largest":
+		*e = 4
+	}
+	return nil
+}
+
+func (m WdST_WrapText) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	return e.EncodeElement(m.String(), start)
+}
+
+func (m *WdST_WrapText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	tok, err := d.Token()
+	if err != nil {
+		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
+	if cd, ok := tok.(xml.CharData); !ok {
+		return fmt.Errorf("expected char data, got %T", tok)
+	} else {
+		switch string(cd) {
+		case "":
+			*m = 0
+		case "bothSides":
+			*m = 1
+		case "left":
+			*m = 2
+		case "right":
+			*m = 3
+		case "largest":
+			*m = 4
+		}
+	}
+	tok, err = d.Token()
+	if err != nil {
+		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		return nil
+	}
+	return fmt.Errorf("expected end element, got %v", tok)
+}
+
+func (m WdST_WrapText) String() string {
+	switch m {
+	case 0:
+		return ""
+	case 1:
+		return "bothSides"
+	case 2:
+		return "left"
+	case 3:
+		return "right"
+	case 4:
+		return "largest"
+	}
+	return ""
+}
+
+func (m WdST_WrapText) Validate() error {
+	return m.ValidateWithPath("")
+}
+
+func (m WdST_WrapText) ValidateWithPath(path string) error {
+	switch m {
+	case 0, 1, 2, 3, 4:
+	default:
+		return fmt.Errorf("%s: out of range value %d", path, int(m))
+	}
+	return nil
+}
+
+type WdST_AlignH byte
+
+const (
+	WdST_AlignHUnset   WdST_AlignH = 0
+	WdST_AlignHLeft    WdST_AlignH = 1
+	WdST_AlignHRight   WdST_AlignH = 2
+	WdST_AlignHCenter  WdST_AlignH = 3
+	WdST_AlignHInside  WdST_AlignH = 4
+	WdST_AlignHOutside WdST_AlignH = 5
+)
+
+func (e WdST_AlignH) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
+	attr := xml.Attr{}
+	attr.Name = name
+	switch e {
+	case WdST_AlignHUnset:
+		attr.Value = ""
+	case WdST_AlignHLeft:
+		attr.Value = "left"
+	case WdST_AlignHRight:
+		attr.Value = "right"
+	case WdST_AlignHCenter:
+		attr.Value = "center"
+	case WdST_AlignHInside:
+		attr.Value = "inside"
+	case WdST_AlignHOutside:
+		attr.Value = "outside"
+	}
+	return attr, nil
+}
+
+func (e *WdST_AlignH) UnmarshalXMLAttr(attr xml.Attr) error {
+	switch attr.Value {
+	case "":
+		*e = 0
+	case "left":
+		*e = 1
+	case "right":
+		*e = 2
+	case "center":
+		*e = 3
+	case "inside":
+		*e = 4
+	case "outside":
+		*e = 5
+	}
+	return nil
+}
+
+func (m WdST_AlignH) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	return e.EncodeElement(m.String(), start)
+}
+
+func (m *WdST_AlignH) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	tok, err := d.Token()
+	if err != nil {
+		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
+	if cd, ok := tok.(xml.CharData); !ok {
+		return fmt.Errorf("expected char data, got %T", tok)
+	} else {
+		switch string(cd) {
+		case "":
+			*m = 0
+		case "left":
+			*m = 1
+		case "right":
+			*m = 2
+		case "center":
+			*m = 3
+		case "inside":
+			*m = 4
+		case "outside":
+			*m = 5
+		}
+	}
+	tok, err = d.Token()
+	if err != nil {
+		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		return nil
+	}
+	return fmt.Errorf("expected end element, got %v", tok)
+}
+
+func (m WdST_AlignH) String() string {
+	switch m {
+	case 0:
+		return ""
+	case 1:
+		return "left"
+	case 2:
+		return "right"
+	case 3:
+		return "center"
+	case 4:
+		return "inside"
+	case 5:
+		return "outside"
+	}
+	return ""
+}
+
+func (m WdST_AlignH) Validate() error {
+	return m.ValidateWithPath("")
+}
+
+func (m WdST_AlignH) ValidateWithPath(path string) error {
+	switch m {
+	case 0, 1, 2, 3, 4, 5:
+	default:
+		return fmt.Errorf("%s: out of range value %d", path, int(m))
+	}
+	return nil
+}
+
+type WdST_RelFromH byte
+
+const (
+	WdST_RelFromHUnset         WdST_RelFromH = 0
+	WdST_RelFromHMargin        WdST_RelFromH = 1
+	WdST_RelFromHPage          WdST_RelFromH = 2
+	WdST_RelFromHColumn        WdST_RelFromH = 3
+	WdST_RelFromHCharacter     WdST_RelFromH = 4
+	WdST_RelFromHLeftMargin    WdST_RelFromH = 5
+	WdST_RelFromHRightMargin   WdST_RelFromH = 6
+	WdST_RelFromHInsideMargin  WdST_RelFromH = 7
+	WdST_RelFromHOutsideMargin WdST_RelFromH = 8
+)
+
+func (e WdST_RelFromH) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
+	attr := xml.Attr{}
+	attr.Name = name
+	switch e {
+	case WdST_RelFromHUnset:
+		attr.Value = ""
+	case WdST_RelFromHMargin:
+		attr.Value = "margin"
+	case WdST_RelFromHPage:
+		attr.Value = "page"
+	case WdST_RelFromHColumn:
+		attr.Value = "column"
+	case WdST_RelFromHCharacter:
+		attr.Value = "character"
+	case WdST_RelFromHLeftMargin:
+		attr.Value = "leftMargin"
+	case WdST_RelFromHRightMargin:
+		attr.Value = "rightMargin"
+	case WdST_RelFromHInsideMargin:
+		attr.Value = "insideMargin"
+	case WdST_RelFromHOutsideMargin:
+		attr.Value = "outsideMargin"
+	}
+	return attr, nil
+}
+
+func (e *WdST_RelFromH) UnmarshalXMLAttr(attr xml.Attr) error {
+	switch attr.Value {
+	case "":
+		*e = 0
+	case "margin":
+		*e = 1
+	case "page":
+		*e = 2
+	case "column":
+		*e = 3
+	case "character":
+		*e = 4
+	case "leftMargin":
+		*e = 5
+	case "rightMargin":
+		*e = 6
+	case "insideMargin":
+		*e = 7
+	case "outsideMargin":
+		*e = 8
+	}
+	return nil
+}
+
+func (m WdST_RelFromH) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	return e.EncodeElement(m.String(), start)
+}
+
+func (m *WdST_RelFromH) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	tok, err := d.Token()
+	if err != nil {
+		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
+	if cd, ok := tok.(xml.CharData); !ok {
+		return fmt.Errorf("expected char data, got %T", tok)
+	} else {
+		switch string(cd) {
+		case "":
+			*m = 0
+		case "margin":
+			*m = 1
+		case "page":
+			*m = 2
+		case "column":
+			*m = 3
+		case "character":
+			*m = 4
+		case "leftMargin":
+			*m = 5
+		case "rightMargin":
+			*m = 6
+		case "insideMargin":
+			*m = 7
+		case "outsideMargin":
+			*m = 8
+		}
+	}
+	tok, err = d.Token()
+	if err != nil {
+		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		return nil
+	}
+	return fmt.Errorf("expected end element, got %v", tok)
+}
+
+func (m WdST_RelFromH) String() string {
+	switch m {
+	case 0:
+		return ""
+	case 1:
+		return "margin"
+	case 2:
+		return "page"
+	case 3:
+		return "column"
+	case 4:
+		return "character"
+	case 5:
+		return "leftMargin"
+	case 6:
+		return "rightMargin"
+	case 7:
+		return "insideMargin"
+	case 8:
+		return "outsideMargin"
+	}
+	return ""
+}
+
+func (m WdST_RelFromH) Validate() error {
+	return m.ValidateWithPath("")
+}
+
+func (m WdST_RelFromH) ValidateWithPath(path string) error {
+	switch m {
+	case 0, 1, 2, 3, 4, 5, 6, 7, 8:
+	default:
+		return fmt.Errorf("%s: out of range value %d", path, int(m))
+	}
+	return nil
+}
+
+type WdST_AlignV byte
+
+const (
+	WdST_AlignVUnset   WdST_AlignV = 0
+	WdST_AlignVTop     WdST_AlignV = 1
+	WdST_AlignVBottom  WdST_AlignV = 2
+	WdST_AlignVCenter  WdST_AlignV = 3
+	WdST_AlignVInside  WdST_AlignV = 4
+	WdST_AlignVOutside WdST_AlignV = 5
+)
+
+func (e WdST_AlignV) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
+	attr := xml.Attr{}
+	attr.Name = name
+	switch e {
+	case WdST_AlignVUnset:
+		attr.Value = ""
+	case WdST_AlignVTop:
+		attr.Value = "top"
+	case WdST_AlignVBottom:
+		attr.Value = "bottom"
+	case WdST_AlignVCenter:
+		attr.Value = "center"
+	case WdST_AlignVInside:
+		attr.Value = "inside"
+	case WdST_AlignVOutside:
+		attr.Value = "outside"
+	}
+	return attr, nil
+}
+
+func (e *WdST_AlignV) UnmarshalXMLAttr(attr xml.Attr) error {
+	switch attr.Value {
+	case "":
+		*e = 0
+	case "top":
+		*e = 1
+	case "bottom":
+		*e = 2
+	case "center":
+		*e = 3
+	case "inside":
+		*e = 4
+	case "outside":
+		*e = 5
+	}
+	return nil
+}
+
+func (m WdST_AlignV) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	return e.EncodeElement(m.String(), start)
+}
+
+func (m *WdST_AlignV) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	tok, err := d.Token()
+	if err != nil {
+		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
+	if cd, ok := tok.(xml.CharData); !ok {
+		return fmt.Errorf("expected char data, got %T", tok)
+	} else {
+		switch string(cd) {
+		case "":
+			*m = 0
+		case "top":
+			*m = 1
+		case "bottom":
+			*m = 2
+		case "center":
+			*m = 3
+		case "inside":
+			*m = 4
+		case "outside":
+			*m = 5
+		}
+	}
+	tok, err = d.Token()
+	if err != nil {
+		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		return nil
+	}
+	return fmt.Errorf("expected end element, got %v", tok)
+}
+
+func (m WdST_AlignV) String() string {
+	switch m {
+	case 0:
+		return ""
+	case 1:
+		return "top"
+	case 2:
+		return "bottom"
+	case 3:
+		return "center"
+	case 4:
+		return "inside"
+	case 5:
+		return "outside"
+	}
+	return ""
+}
+
+func (m WdST_AlignV) Validate() error {
+	return m.ValidateWithPath("")
+}
+
+func (m WdST_AlignV) ValidateWithPath(path string) error {
+	switch m {
+	case 0, 1, 2, 3, 4, 5:
+	default:
+		return fmt.Errorf("%s: out of range value %d", path, int(m))
+	}
+	return nil
+}
+
+type WdST_RelFromV byte
+
+const (
+	WdST_RelFromVUnset         WdST_RelFromV = 0
+	WdST_RelFromVMargin        WdST_RelFromV = 1
+	WdST_RelFromVPage          WdST_RelFromV = 2
+	WdST_RelFromVParagraph     WdST_RelFromV = 3
+	WdST_RelFromVLine          WdST_RelFromV = 4
+	WdST_RelFromVTopMargin     WdST_RelFromV = 5
+	WdST_RelFromVBottomMargin  WdST_RelFromV = 6
+	WdST_RelFromVInsideMargin  WdST_RelFromV = 7
+	WdST_RelFromVOutsideMargin WdST_RelFromV = 8
+)
+
+func (e WdST_RelFromV) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
+	attr := xml.Attr{}
+	attr.Name = name
+	switch e {
+	case WdST_RelFromVUnset:
+		attr.Value = ""
+	case WdST_RelFromVMargin:
+		attr.Value = "margin"
+	case WdST_RelFromVPage:
+		attr.Value = "page"
+	case WdST_RelFromVParagraph:
+		attr.Value = "paragraph"
+	case WdST_RelFromVLine:
+		attr.Value = "line"
+	case WdST_RelFromVTopMargin:
+		attr.Value = "topMargin"
+	case WdST_RelFromVBottomMargin:
+		attr.Value = "bottomMargin"
+	case WdST_RelFromVInsideMargin:
+		attr.Value = "insideMargin"
+	case WdST_RelFromVOutsideMargin:
+		attr.Value = "outsideMargin"
+	}
+	return attr, nil
+}
+
+func (e *WdST_RelFromV) UnmarshalXMLAttr(attr xml.Attr) error {
+	switch attr.Value {
+	case "":
+		*e = 0
+	case "margin":
+		*e = 1
+	case "page":
+		*e = 2
+	case "paragraph":
+		*e = 3
+	case "line":
+		*e = 4
+	case "topMargin":
+		*e = 5
+	case "bottomMargin":
+		*e = 6
+	case "insideMargin":
+		*e = 7
+	case "outsideMargin":
+		*e = 8
+	}
+	return nil
+}
+
+func (m WdST_RelFromV) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	return e.EncodeElement(m.String(), start)
+}
+
+func (m *WdST_RelFromV) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	tok, err := d.Token()
+	if err != nil {
+		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
+	if cd, ok := tok.(xml.CharData); !ok {
+		return fmt.Errorf("expected char data, got %T", tok)
+	} else {
+		switch string(cd) {
+		case "":
+			*m = 0
+		case "margin":
+			*m = 1
+		case "page":
+			*m = 2
+		case "paragraph":
+			*m = 3
+		case "line":
+			*m = 4
+		case "topMargin":
+			*m = 5
+		case "bottomMargin":
+			*m = 6
+		case "insideMargin":
+			*m = 7
+		case "outsideMargin":
+			*m = 8
+		}
+	}
+	tok, err = d.Token()
+	if err != nil {
+		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		return nil
+	}
+	return fmt.Errorf("expected end element, got %v", tok)
+}
+
+func (m WdST_RelFromV) String() string {
+	switch m {
+	case 0:
+		return ""
+	case 1:
+		return "margin"
+	case 2:
+		return "page"
+	case 3:
+		return "paragraph"
+	case 4:
+		return "line"
+	case 5:
+		return "topMargin"
+	case 6:
+		return "bottomMargin"
+	case 7:
+		return "insideMargin"
+	case 8:
+		return "outsideMargin"
+	}
+	return ""
+}
+
+func (m WdST_RelFromV) Validate() error {
+	return m.ValidateWithPath("")
+}
+
+func (m WdST_RelFromV) ValidateWithPath(path string) error {
+	switch m {
+	case 0, 1, 2, 3, 4, 5, 6, 7, 8:
+	default:
+		return fmt.Errorf("%s: out of range value %d", path, int(m))
+	}
+	return nil
+}
+
+// init registers constructor functions for dynamically creating elements based off the XML namespace and name
+func init() {
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_EffectExtent", NewWdCT_EffectExtent)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_Inline", NewWdCT_Inline)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_WrapPath", NewWdCT_WrapPath)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_WrapNone", NewWdCT_WrapNone)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_WrapSquare", NewWdCT_WrapSquare)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_WrapTight", NewWdCT_WrapTight)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_WrapThrough", NewWdCT_WrapThrough)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_WrapTopBottom", NewWdCT_WrapTopBottom)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_PosH", NewWdCT_PosH)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_PosV", NewWdCT_PosV)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_Anchor", NewWdCT_Anchor)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_TxbxContent", NewWdCT_TxbxContent)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_TextboxInfo", NewWdCT_TextboxInfo)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_LinkedTextboxInformation", NewWdCT_LinkedTextboxInformation)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_WordprocessingShape", NewWdCT_WordprocessingShape)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_GraphicFrame", NewWdCT_GraphicFrame)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_WordprocessingContentPartNonVisual", NewWdCT_WordprocessingContentPartNonVisual)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_WordprocessingContentPart", NewWdCT_WordprocessingContentPart)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_WordprocessingGroup", NewWdCT_WordprocessingGroup)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "CT_WordprocessingCanvas", NewWdCT_WordprocessingCanvas)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "wpc", NewWdWpc)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "wgp", NewWdWgp)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "wsp", NewWdWsp)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "inline", NewWdInline)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "anchor", NewWdAnchor)
+	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "EG_WrapType", NewWdEG_WrapType)
 }

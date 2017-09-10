@@ -34,8 +34,10 @@ func (m *CT_SheetIdMap) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sesheetId := xml.StartElement{Name: xml.Name{Local: "x:sheetId"}}
-	e.EncodeElement(m.SheetId, sesheetId)
+	sesheetId := xml.StartElement{Name: xml.Name{Local: "ma:sheetId"}}
+	for _, c := range m.SheetId {
+		e.EncodeElement(c, sesheetId)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_SheetIdMap:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sheetId":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetId"}:
 				tmp := NewCT_SheetId()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

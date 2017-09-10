@@ -74,28 +74,28 @@ lCT_RubyPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rubyAlign":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rubyAlign"}:
 				if err := d.DecodeElement(m.RubyAlign, &el); err != nil {
 					return err
 				}
-			case "hps":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "hps"}:
 				if err := d.DecodeElement(m.Hps, &el); err != nil {
 					return err
 				}
-			case "hpsRaise":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "hpsRaise"}:
 				if err := d.DecodeElement(m.HpsRaise, &el); err != nil {
 					return err
 				}
-			case "hpsBaseText":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "hpsBaseText"}:
 				if err := d.DecodeElement(m.HpsBaseText, &el); err != nil {
 					return err
 				}
-			case "lid":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lid"}:
 				if err := d.DecodeElement(m.Lid, &el); err != nil {
 					return err
 				}
-			case "dirty":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "dirty"}:
 				m.Dirty = NewCT_OnOff()
 				if err := d.DecodeElement(m.Dirty, &el); err != nil {
 					return err

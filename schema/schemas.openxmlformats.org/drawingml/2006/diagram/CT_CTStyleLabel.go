@@ -88,38 +88,38 @@ lCT_CTStyleLabel:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "fillClrLst":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "fillClrLst"}:
 				m.FillClrLst = NewCT_Colors()
 				if err := d.DecodeElement(m.FillClrLst, &el); err != nil {
 					return err
 				}
-			case "linClrLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "linClrLst"}:
 				m.LinClrLst = NewCT_Colors()
 				if err := d.DecodeElement(m.LinClrLst, &el); err != nil {
 					return err
 				}
-			case "effectClrLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "effectClrLst"}:
 				m.EffectClrLst = NewCT_Colors()
 				if err := d.DecodeElement(m.EffectClrLst, &el); err != nil {
 					return err
 				}
-			case "txLinClrLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "txLinClrLst"}:
 				m.TxLinClrLst = NewCT_Colors()
 				if err := d.DecodeElement(m.TxLinClrLst, &el); err != nil {
 					return err
 				}
-			case "txFillClrLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "txFillClrLst"}:
 				m.TxFillClrLst = NewCT_Colors()
 				if err := d.DecodeElement(m.TxFillClrLst, &el); err != nil {
 					return err
 				}
-			case "txEffectClrLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "txEffectClrLst"}:
 				m.TxEffectClrLst = NewCT_Colors()
 				if err := d.DecodeElement(m.TxEffectClrLst, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "extLst"}:
 				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

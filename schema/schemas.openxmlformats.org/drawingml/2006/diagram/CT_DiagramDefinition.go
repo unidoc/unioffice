@@ -53,11 +53,15 @@ func (m *CT_DiagramDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(start)
 	if m.Title != nil {
 		setitle := xml.StartElement{Name: xml.Name{Local: "title"}}
-		e.EncodeElement(m.Title, setitle)
+		for _, c := range m.Title {
+			e.EncodeElement(c, setitle)
+		}
 	}
 	if m.Desc != nil {
 		sedesc := xml.StartElement{Name: xml.Name{Local: "desc"}}
-		e.EncodeElement(m.Desc, sedesc)
+		for _, c := range m.Desc {
+			e.EncodeElement(c, sedesc)
+		}
 	}
 	if m.CatLst != nil {
 		secatLst := xml.StartElement{Name: xml.Name{Local: "catLst"}}
@@ -119,44 +123,44 @@ lCT_DiagramDefinition:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "title":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "title"}:
 				tmp := NewCT_Name()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Title = append(m.Title, tmp)
-			case "desc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "desc"}:
 				tmp := NewCT_Description()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Desc = append(m.Desc, tmp)
-			case "catLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "catLst"}:
 				m.CatLst = NewCT_Categories()
 				if err := d.DecodeElement(m.CatLst, &el); err != nil {
 					return err
 				}
-			case "sampData":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "sampData"}:
 				m.SampData = NewCT_SampleData()
 				if err := d.DecodeElement(m.SampData, &el); err != nil {
 					return err
 				}
-			case "styleData":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "styleData"}:
 				m.StyleData = NewCT_SampleData()
 				if err := d.DecodeElement(m.StyleData, &el); err != nil {
 					return err
 				}
-			case "clrData":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "clrData"}:
 				m.ClrData = NewCT_SampleData()
 				if err := d.DecodeElement(m.ClrData, &el); err != nil {
 					return err
 				}
-			case "layoutNode":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "layoutNode"}:
 				if err := d.DecodeElement(m.LayoutNode, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "extLst"}:
 				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

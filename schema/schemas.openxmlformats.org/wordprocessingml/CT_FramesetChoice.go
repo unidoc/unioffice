@@ -28,11 +28,15 @@ func NewCT_FramesetChoice() *CT_FramesetChoice {
 func (m *CT_FramesetChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.Frameset != nil {
 		seframeset := xml.StartElement{Name: xml.Name{Local: "w:frameset"}}
-		e.EncodeElement(m.Frameset, seframeset)
+		for _, c := range m.Frameset {
+			e.EncodeElement(c, seframeset)
+		}
 	}
 	if m.Frame != nil {
 		seframe := xml.StartElement{Name: xml.Name{Local: "w:frame"}}
-		e.EncodeElement(m.Frame, seframe)
+		for _, c := range m.Frame {
+			e.EncodeElement(c, seframe)
+		}
 	}
 	return nil
 }
@@ -47,14 +51,14 @@ lCT_FramesetChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "frameset":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frameset"}:
 				tmp := NewCT_Frameset()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Frameset = append(m.Frameset, tmp)
-			case "frame":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frame"}:
 				tmp := NewCT_Frame()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

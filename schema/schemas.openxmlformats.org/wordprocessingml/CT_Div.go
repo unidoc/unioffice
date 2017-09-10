@@ -72,7 +72,9 @@ func (m *CT_Div) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.DivsChild != nil {
 		sedivsChild := xml.StartElement{Name: xml.Name{Local: "w:divsChild"}}
-		e.EncodeElement(m.DivsChild, sedivsChild)
+		for _, c := range m.DivsChild {
+			e.EncodeElement(c, sedivsChild)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -101,39 +103,39 @@ lCT_Div:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "blockQuote":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "blockQuote"}:
 				m.BlockQuote = NewCT_OnOff()
 				if err := d.DecodeElement(m.BlockQuote, &el); err != nil {
 					return err
 				}
-			case "bodyDiv":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bodyDiv"}:
 				m.BodyDiv = NewCT_OnOff()
 				if err := d.DecodeElement(m.BodyDiv, &el); err != nil {
 					return err
 				}
-			case "marLeft":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "marLeft"}:
 				if err := d.DecodeElement(m.MarLeft, &el); err != nil {
 					return err
 				}
-			case "marRight":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "marRight"}:
 				if err := d.DecodeElement(m.MarRight, &el); err != nil {
 					return err
 				}
-			case "marTop":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "marTop"}:
 				if err := d.DecodeElement(m.MarTop, &el); err != nil {
 					return err
 				}
-			case "marBottom":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "marBottom"}:
 				if err := d.DecodeElement(m.MarBottom, &el); err != nil {
 					return err
 				}
-			case "divBdr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "divBdr"}:
 				m.DivBdr = NewCT_DivBdr()
 				if err := d.DecodeElement(m.DivBdr, &el); err != nil {
 					return err
 				}
-			case "divsChild":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "divsChild"}:
 				tmp := NewCT_Divs()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -45,20 +45,20 @@ lFrom:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "col":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "col"}:
 				if err := d.DecodeElement(&m.Col, &el); err != nil {
 					return err
 				}
-			case "colOff":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "colOff"}:
 				if err := d.DecodeElement(&m.ColOff, &el); err != nil {
 					return err
 				}
-			case "row":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "row"}:
 				if err := d.DecodeElement(&m.Row, &el); err != nil {
 					return err
 				}
-			case "rowOff":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "rowOff"}:
 				if err := d.DecodeElement(&m.RowOff, &el); err != nil {
 					return err
 				}

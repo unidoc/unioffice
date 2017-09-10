@@ -35,7 +35,9 @@ func (m *CT_SdtDropDownList) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(start)
 	if m.ListItem != nil {
 		selistItem := xml.StartElement{Name: xml.Name{Local: "w:listItem"}}
-		e.EncodeElement(m.ListItem, selistItem)
+		for _, c := range m.ListItem {
+			e.EncodeElement(c, selistItem)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -60,8 +62,8 @@ lCT_SdtDropDownList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "listItem":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "listItem"}:
 				tmp := NewCT_SdtListItem()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -57,8 +57,8 @@ lCT_PresetTextShape:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "avLst":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "avLst"}:
 				m.AvLst = NewCT_GeomGuideList()
 				if err := d.DecodeElement(m.AvLst, &el); err != nil {
 					return err

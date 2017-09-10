@@ -96,118 +96,118 @@ lCT_SlideTransition:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "blinds":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "blinds"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Blinds, &el); err != nil {
 					return err
 				}
-			case "checker":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "checker"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Checker, &el); err != nil {
 					return err
 				}
-			case "circle":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "circle"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Circle, &el); err != nil {
 					return err
 				}
-			case "dissolve":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "dissolve"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Dissolve, &el); err != nil {
 					return err
 				}
-			case "comb":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "comb"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Comb, &el); err != nil {
 					return err
 				}
-			case "cover":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cover"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Cover, &el); err != nil {
 					return err
 				}
-			case "cut":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cut"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Cut, &el); err != nil {
 					return err
 				}
-			case "diamond":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "diamond"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Diamond, &el); err != nil {
 					return err
 				}
-			case "fade":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "fade"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Fade, &el); err != nil {
 					return err
 				}
-			case "newsflash":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "newsflash"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Newsflash, &el); err != nil {
 					return err
 				}
-			case "plus":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "plus"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Plus, &el); err != nil {
 					return err
 				}
-			case "pull":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "pull"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Pull, &el); err != nil {
 					return err
 				}
-			case "push":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "push"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Push, &el); err != nil {
 					return err
 				}
-			case "random":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "random"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Random, &el); err != nil {
 					return err
 				}
-			case "randomBar":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "randomBar"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.RandomBar, &el); err != nil {
 					return err
 				}
-			case "split":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "split"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Split, &el); err != nil {
 					return err
 				}
-			case "strips":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "strips"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Strips, &el); err != nil {
 					return err
 				}
-			case "wedge":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "wedge"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Wedge, &el); err != nil {
 					return err
 				}
-			case "wheel":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "wheel"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Wheel, &el); err != nil {
 					return err
 				}
-			case "wipe":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "wipe"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Wipe, &el); err != nil {
 					return err
 				}
-			case "zoom":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "zoom"}:
 				m.Choice = NewCT_SlideTransitionChoice()
 				if err := d.DecodeElement(&m.Choice.Zoom, &el); err != nil {
 					return err
 				}
-			case "sndAc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sndAc"}:
 				m.SndAc = NewCT_TransitionSoundAction()
 				if err := d.DecodeElement(m.SndAc, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionListModify()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

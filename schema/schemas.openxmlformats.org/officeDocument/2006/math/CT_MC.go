@@ -43,8 +43,8 @@ lCT_MC:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "mcPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mcPr"}:
 				m.McPr = NewCT_MCPr()
 				if err := d.DecodeElement(m.McPr, &el); err != nil {
 					return err
