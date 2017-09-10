@@ -6,7 +6,8 @@ import (
 
 	"baliance.com/gooxml/document"
 	"baliance.com/gooxml/measurement"
-	wd "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+
+	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
 )
 
 var lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lobortis, lectus dictum feugiat tempus, sem neque finibus enim, sed eleifend sem nunc ac diam. Vestibulum tempus sagittis elementum`
@@ -31,10 +32,10 @@ func main() {
 	}
 	anchored.SetName("Gopher")
 	anchored.SetSize(2*measurement.Inch, 2*measurement.Inch)
-	anchored.SetOrigin(wd.ST_RelFromHPage, wd.ST_RelFromVTopMargin)
-	anchored.SetHAlignment(wd.ST_AlignHCenter)
+	anchored.SetOrigin(wml.WdST_RelFromHPage, wml.WdST_RelFromVTopMargin)
+	anchored.SetHAlignment(wml.WdST_AlignHCenter)
 	anchored.SetYOffset(3 * measurement.Inch)
-	anchored.SetTextWrapSquare(wd.ST_WrapTextBothSides)
+	anchored.SetTextWrapSquare(wml.WdST_WrapTextBothSides)
 
 	run := para.AddRun()
 	for i := 0; i < 16; i++ {
