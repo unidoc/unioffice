@@ -23,8 +23,7 @@ type StyleSheet struct {
 // NewStyleSheet constructs a new default stylesheet.
 func NewStyleSheet(wb *Workbook) StyleSheet {
 	ss := sml.NewStyleSheet()
-	b := NewBorders()
-	ss.Borders = b.X()
+
 	ss.CellStyleXfs = sml.NewCT_CellStyleXfs()
 	ss.CellXfs = sml.NewCT_CellXfs()
 	ss.CellStyles = sml.NewCT_CellStyles()
@@ -53,7 +52,12 @@ func NewStyleSheet(wb *Workbook) StyleSheet {
 
 	ss.Fonts = sml.NewCT_Fonts()
 
+	ss.Borders = sml.NewCT_Borders()
+
 	s := StyleSheet{wb, ss}
+	// default empty border
+	s.AddBorder().InitializeDefaults()
+
 	fnt := s.AddFont()
 	fnt.SetName("Calibri")
 	fnt.SetSize(11)
@@ -78,6 +82,14 @@ func (s StyleSheet) AddFont() Font {
 	s.x.Fonts.Font = append(s.x.Fonts.Font, font)
 	s.x.Fonts.CountAttr = gooxml.Uint32(uint32(len(s.x.Fonts.Font)))
 	return Font{font, s.x}
+}
+
+// AddBorder creates a new empty border that can be applied to a cell style.
+func (s StyleSheet) AddBorder() Border {
+	b := sml.NewCT_Border()
+	s.x.Borders.Border = append(s.x.Borders.Border, b)
+	s.x.Borders.CountAttr = gooxml.Uint32(uint32(len(s.x.Borders.Border)))
+	return Border{b, s.x.Borders}
 }
 
 // RemoveFont removes a font from the style sheet.  It *does not* update styles that refer
@@ -165,14 +177,3 @@ func (s StyleSheet) AddNumberFormat() NumberFormat {
 func (s StyleSheet) Fills() Fills {
 	return Fills{s.x.Fills}
 }
-
-/*
-func (s StyleSheet) NumberFormats() {
-	if s.x.NumFmts == nil {
-		return
-	}
-	for _, nfmt := range s.x.NumFmts.NumFmt {
-
-	}
-}
-*/

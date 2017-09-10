@@ -111,19 +111,45 @@ func (cs CellStyle) SetShrinkToFit(b bool) {
 	}
 }
 
+// ClearFont clears any font configuration from the cell style.
 func (cs CellStyle) ClearFont() {
 	cs.xf.FontIdAttr = nil
 	cs.xf.ApplyFontAttr = nil
 }
 
+// SetFont applies a font to a cell style.  The font is referenced by its
+// index so modifying the font afterward will affect all styles that reference
+// it.
 func (cs CellStyle) SetFont(f Font) {
 	cs.xf.FontIdAttr = gooxml.Uint32(f.Index())
 	cs.xf.ApplyFontAttr = gooxml.Bool(true)
 }
 
+// SetBorder applies a border to a cell style.  The border is referenced by its
+// index so modifying the border afterward will affect all styles that reference
+// it.
+func (cs CellStyle) SetBorder(b Border) {
+	cs.xf.BorderIdAttr = gooxml.Uint32(b.Index())
+	cs.xf.ApplyBorderAttr = gooxml.Bool(true)
+}
+
+// ClearBorder clears any border configuration from the cell style.
+func (cs CellStyle) ClearBorder() {
+	cs.xf.BorderIdAttr = nil
+	cs.xf.ApplyBorderAttr = nil
+}
+
+// SetFill applies a fill to a cell style.  The fill is referenced by its index
+// so modifying the fill afterward will affect all styles that reference it.
 func (cs CellStyle) SetFill(f Fill) {
 	cs.xf.FillIdAttr = gooxml.Uint32(f.Index())
 	cs.xf.ApplyFillAttr = gooxml.Bool(true)
+}
+
+// ClearFill clears any fill configuration from the cell style.
+func (cs CellStyle) ClearFill() {
+	cs.xf.FillIdAttr = nil
+	cs.xf.ApplyFillAttr = nil
 }
 
 func (cs CellStyle) Index() uint32 {
