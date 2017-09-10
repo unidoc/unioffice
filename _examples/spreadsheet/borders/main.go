@@ -23,13 +23,19 @@ func main() {
 	// easily construct the cell style and then apply it to the cell)
 	bAll := ss.StyleSheet.AddBorder()
 	cs.SetBorder(bAll)
-	bAll.SetLeft(sml.ST_BorderStyleMedium, color.Blue)
-	bAll.SetRight(sml.ST_BorderStyleMedium, color.Blue)
-	bAll.SetTop(sml.ST_BorderStyleMedium, color.Blue)
-	bAll.SetBottom(sml.ST_BorderStyleMedium, color.Blue)
-
+	bAll.SetLeft(sml.ST_BorderStyleThin, color.Blue)
+	bAll.SetRight(sml.ST_BorderStyleThin, color.Blue)
+	bAll.SetTop(sml.ST_BorderStyleThin, color.Blue)
+	bAll.SetBottom(sml.ST_BorderStyleThin, color.Blue)
 	// red dashed line from top left down to bottom right
 	bAll.SetDiagonal(sml.ST_BorderStyleDashed, color.Red, false, true)
+
+	// Cell styles and thus border styles only apply to a single cell.  This
+	// means to apply a boxed border around multiple cells, you would need to
+	// create individual styles for the corners, left, right, top and bottom
+	// sides.  There is a helper that can do this for you, ignoring any diagonal
+	// borders.
+	sheet.SetBorder("B6:D10", bAll)
 
 	if err := ss.Validate(); err != nil {
 		log.Fatalf("error validating sheet: %s", err)
