@@ -493,3 +493,15 @@ func (s Sheet) SetBorder(cellRange string, border Border) {
 	}
 
 }
+
+// AddDataValidation adds a data validation rule to a sheet.
+func (s Sheet) AddDataValidation() DataValidation {
+	if s.x.DataValidations == nil {
+		s.x.DataValidations = sml.NewCT_DataValidations()
+	}
+	dv := sml.NewCT_DataValidation()
+	dv.ShowErrorMessageAttr = gooxml.Bool(true)
+	s.x.DataValidations.DataValidation = append(s.x.DataValidations.DataValidation, dv)
+	s.x.DataValidations.CountAttr = gooxml.Uint32(uint32(len(s.x.DataValidations.DataValidation)))
+	return DataValidation{dv}
+}

@@ -45,6 +45,7 @@ and .pptx).
 - [Conditional Formatting](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/conditional-formatting) Conditionally formatting cells, styling, gradients, icons, data bar
 - [Complex](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/complex) Multiple charts, auto filtering and conditional formatting
 - [Borders](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/borders) Individual cell borders and rectangular borders around a range of cells.
+- [Validation](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/validation) Data validation including combo box dropdowns.
 
 ## Raw Types ##
 
