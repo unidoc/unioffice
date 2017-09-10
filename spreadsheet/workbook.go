@@ -414,3 +414,13 @@ func (wb *Workbook) DefinedNames() []DefinedName {
 	}
 	return ret
 }
+
+// ClearCachedFormulaResults clears any computed formula values that are stored
+// in the sheet. This may be required if you modify cells that are used as a
+// formula input to force the formulas to be recomputed the next time the sheet
+// is opened in Excel.
+func (wb *Workbook) ClearCachedFormulaResults() {
+	for _, s := range wb.Sheets() {
+		s.ClearCachedFormulaResults()
+	}
+}

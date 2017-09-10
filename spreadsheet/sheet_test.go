@@ -11,6 +11,7 @@ import (
 	"math/rand"
 	"testing"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/spreadsheet"
 )
 
@@ -183,6 +184,19 @@ func TestSheetExtents(t *testing.T) {
 	exp := "A1:E5"
 	if sheet.Extents() != exp {
 		t.Errorf("expected %s , got %s", exp, sheet.Extents())
+	}
+
+}
+
+func TestSheetClearCachedFormula(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+	cell := sheet.Cell("A1")
+	cell.SetFormulaRaw("foo")
+	cell.X().V = gooxml.String("cached-results")
+	sheet.ClearCachedFormulaResults()
+	if cell.X().V != nil {
+		t.Errorf("cached result not cleared")
 	}
 
 }

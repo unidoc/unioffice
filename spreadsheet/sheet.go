@@ -505,3 +505,17 @@ func (s Sheet) AddDataValidation() DataValidation {
 	s.x.DataValidations.CountAttr = gooxml.Uint32(uint32(len(s.x.DataValidations.DataValidation)))
 	return DataValidation{dv}
 }
+
+// ClearCachedFormulaResults clears any computed formula values that are stored
+// in the sheet. This may be required if you modify cells that are used as a
+// formula input to force the formulas to be recomputed the next time the sheet
+// is opened in Excel.
+func (s *Sheet) ClearCachedFormulaResults() {
+	for _, r := range s.Rows() {
+		for _, c := range r.Cells() {
+			if c.X().F != nil {
+				c.X().V = nil
+			}
+		}
+	}
+}
