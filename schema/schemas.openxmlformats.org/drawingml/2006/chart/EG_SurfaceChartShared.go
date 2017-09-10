@@ -33,7 +33,9 @@ func (m *EG_SurfaceChartShared) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	if m.Ser != nil {
 		seser := xml.StartElement{Name: xml.Name{Local: "c:ser"}}
-		e.EncodeElement(m.Ser, seser)
+		for _, c := range m.Ser {
+			e.EncodeElement(c, seser)
+		}
 	}
 	if m.BandFmts != nil {
 		sebandFmts := xml.StartElement{Name: xml.Name{Local: "c:bandFmts"}}
@@ -52,19 +54,19 @@ lEG_SurfaceChartShared:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "wireframe":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "wireframe"}:
 				m.Wireframe = NewCT_Boolean()
 				if err := d.DecodeElement(m.Wireframe, &el); err != nil {
 					return err
 				}
-			case "ser":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ser"}:
 				tmp := NewCT_SurfaceSer()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Ser = append(m.Ser, tmp)
-			case "bandFmts":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "bandFmts"}:
 				m.BandFmts = NewCT_BandFmts()
 				if err := d.DecodeElement(m.BandFmts, &el); err != nil {
 					return err

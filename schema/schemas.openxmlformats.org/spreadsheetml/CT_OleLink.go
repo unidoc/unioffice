@@ -35,7 +35,7 @@ func (m *CT_OleLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		Value: fmt.Sprintf("%v", m.ProgIdAttr)})
 	e.EncodeToken(start)
 	if m.OleItems != nil {
-		seoleItems := xml.StartElement{Name: xml.Name{Local: "x:oleItems"}}
+		seoleItems := xml.StartElement{Name: xml.Name{Local: "ma:oleItems"}}
 		e.EncodeElement(m.OleItems, seoleItems)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -68,8 +68,8 @@ lCT_OleLink:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "oleItems":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleItems"}:
 				m.OleItems = NewCT_OleItems()
 				if err := d.DecodeElement(m.OleItems, &el); err != nil {
 					return err

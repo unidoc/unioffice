@@ -234,168 +234,168 @@ lEG_RunInnerContent:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "br":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "br"}:
 				m.Br = NewCT_Br()
 				if err := d.DecodeElement(m.Br, &el); err != nil {
 					return err
 				}
-			case "t":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "t"}:
 				m.T = NewCT_Text()
 				if err := d.DecodeElement(m.T, &el); err != nil {
 					return err
 				}
-			case "contentPart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "contentPart"}:
 				m.ContentPart = NewCT_Rel()
 				if err := d.DecodeElement(m.ContentPart, &el); err != nil {
 					return err
 				}
-			case "delText":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "delText"}:
 				m.DelText = NewCT_Text()
 				if err := d.DecodeElement(m.DelText, &el); err != nil {
 					return err
 				}
-			case "instrText":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "instrText"}:
 				m.InstrText = NewCT_Text()
 				if err := d.DecodeElement(m.InstrText, &el); err != nil {
 					return err
 				}
-			case "delInstrText":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "delInstrText"}:
 				m.DelInstrText = NewCT_Text()
 				if err := d.DecodeElement(m.DelInstrText, &el); err != nil {
 					return err
 				}
-			case "noBreakHyphen":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noBreakHyphen"}:
 				m.NoBreakHyphen = NewCT_Empty()
 				if err := d.DecodeElement(m.NoBreakHyphen, &el); err != nil {
 					return err
 				}
-			case "softHyphen":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "softHyphen"}:
 				m.SoftHyphen = NewCT_Empty()
 				if err := d.DecodeElement(m.SoftHyphen, &el); err != nil {
 					return err
 				}
-			case "dayShort":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "dayShort"}:
 				m.DayShort = NewCT_Empty()
 				if err := d.DecodeElement(m.DayShort, &el); err != nil {
 					return err
 				}
-			case "monthShort":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "monthShort"}:
 				m.MonthShort = NewCT_Empty()
 				if err := d.DecodeElement(m.MonthShort, &el); err != nil {
 					return err
 				}
-			case "yearShort":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "yearShort"}:
 				m.YearShort = NewCT_Empty()
 				if err := d.DecodeElement(m.YearShort, &el); err != nil {
 					return err
 				}
-			case "dayLong":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "dayLong"}:
 				m.DayLong = NewCT_Empty()
 				if err := d.DecodeElement(m.DayLong, &el); err != nil {
 					return err
 				}
-			case "monthLong":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "monthLong"}:
 				m.MonthLong = NewCT_Empty()
 				if err := d.DecodeElement(m.MonthLong, &el); err != nil {
 					return err
 				}
-			case "yearLong":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "yearLong"}:
 				m.YearLong = NewCT_Empty()
 				if err := d.DecodeElement(m.YearLong, &el); err != nil {
 					return err
 				}
-			case "annotationRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "annotationRef"}:
 				m.AnnotationRef = NewCT_Empty()
 				if err := d.DecodeElement(m.AnnotationRef, &el); err != nil {
 					return err
 				}
-			case "footnoteRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footnoteRef"}:
 				m.FootnoteRef = NewCT_Empty()
 				if err := d.DecodeElement(m.FootnoteRef, &el); err != nil {
 					return err
 				}
-			case "endnoteRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "endnoteRef"}:
 				m.EndnoteRef = NewCT_Empty()
 				if err := d.DecodeElement(m.EndnoteRef, &el); err != nil {
 					return err
 				}
-			case "separator":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "separator"}:
 				m.Separator = NewCT_Empty()
 				if err := d.DecodeElement(m.Separator, &el); err != nil {
 					return err
 				}
-			case "continuationSeparator":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "continuationSeparator"}:
 				m.ContinuationSeparator = NewCT_Empty()
 				if err := d.DecodeElement(m.ContinuationSeparator, &el); err != nil {
 					return err
 				}
-			case "sym":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sym"}:
 				m.Sym = NewCT_Sym()
 				if err := d.DecodeElement(m.Sym, &el); err != nil {
 					return err
 				}
-			case "pgNum":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pgNum"}:
 				m.PgNum = NewCT_Empty()
 				if err := d.DecodeElement(m.PgNum, &el); err != nil {
 					return err
 				}
-			case "cr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cr"}:
 				m.Cr = NewCT_Empty()
 				if err := d.DecodeElement(m.Cr, &el); err != nil {
 					return err
 				}
-			case "tab":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tab"}:
 				m.Tab = NewCT_Empty()
 				if err := d.DecodeElement(m.Tab, &el); err != nil {
 					return err
 				}
-			case "object":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "object"}:
 				m.Object = NewCT_Object()
 				if err := d.DecodeElement(m.Object, &el); err != nil {
 					return err
 				}
-			case "pict":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pict"}:
 				m.Pict = NewCT_Picture()
 				if err := d.DecodeElement(m.Pict, &el); err != nil {
 					return err
 				}
-			case "fldChar":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "fldChar"}:
 				m.FldChar = NewCT_FldChar()
 				if err := d.DecodeElement(m.FldChar, &el); err != nil {
 					return err
 				}
-			case "ruby":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ruby"}:
 				m.Ruby = NewCT_Ruby()
 				if err := d.DecodeElement(m.Ruby, &el); err != nil {
 					return err
 				}
-			case "footnoteReference":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footnoteReference"}:
 				m.FootnoteReference = NewCT_FtnEdnRef()
 				if err := d.DecodeElement(m.FootnoteReference, &el); err != nil {
 					return err
 				}
-			case "endnoteReference":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "endnoteReference"}:
 				m.EndnoteReference = NewCT_FtnEdnRef()
 				if err := d.DecodeElement(m.EndnoteReference, &el); err != nil {
 					return err
 				}
-			case "commentReference":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentReference"}:
 				m.CommentReference = NewCT_Markup()
 				if err := d.DecodeElement(m.CommentReference, &el); err != nil {
 					return err
 				}
-			case "drawing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "drawing"}:
 				m.Drawing = NewCT_Drawing()
 				if err := d.DecodeElement(m.Drawing, &el); err != nil {
 					return err
 				}
-			case "ptab":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ptab"}:
 				m.Ptab = NewCT_PTab()
 				if err := d.DecodeElement(m.Ptab, &el); err != nil {
 					return err
 				}
-			case "lastRenderedPageBreak":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lastRenderedPageBreak"}:
 				m.LastRenderedPageBreak = NewCT_Empty()
 				if err := d.DecodeElement(m.LastRenderedPageBreak, &el); err != nil {
 					return err

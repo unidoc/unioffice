@@ -83,28 +83,28 @@ lCT_TblStylePr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pPr"}:
 				m.PPr = NewCT_PPrGeneral()
 				if err := d.DecodeElement(m.PPr, &el); err != nil {
 					return err
 				}
-			case "rPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rPr"}:
 				m.RPr = NewCT_RPr()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err
 				}
-			case "tblPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblPr"}:
 				m.TblPr = NewCT_TblPrBase()
 				if err := d.DecodeElement(m.TblPr, &el); err != nil {
 					return err
 				}
-			case "trPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "trPr"}:
 				m.TrPr = NewCT_TrPr()
 				if err := d.DecodeElement(m.TrPr, &el); err != nil {
 					return err
 				}
-			case "tcPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tcPr"}:
 				m.TcPr = NewCT_TcPr()
 				if err := d.DecodeElement(m.TcPr, &el); err != nil {
 					return err

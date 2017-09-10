@@ -37,7 +37,9 @@ func (m *CT_DocPartTypes) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(start)
 	if m.Type != nil {
 		setype := xml.StartElement{Name: xml.Name{Local: "w:type"}}
-		e.EncodeElement(m.Type, setype)
+		for _, c := range m.Type {
+			e.EncodeElement(c, setype)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -62,8 +64,8 @@ lCT_DocPartTypes:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "type":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "type"}:
 				tmp := NewCT_DocPartType()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

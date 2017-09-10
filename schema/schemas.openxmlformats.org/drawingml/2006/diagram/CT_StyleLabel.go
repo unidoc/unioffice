@@ -78,28 +78,28 @@ lCT_StyleLabel:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "scene3d":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "scene3d"}:
 				m.Scene3d = drawingml.NewCT_Scene3D()
 				if err := d.DecodeElement(m.Scene3d, &el); err != nil {
 					return err
 				}
-			case "sp3d":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "sp3d"}:
 				m.Sp3d = drawingml.NewCT_Shape3D()
 				if err := d.DecodeElement(m.Sp3d, &el); err != nil {
 					return err
 				}
-			case "txPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "txPr"}:
 				m.TxPr = NewCT_TextProps()
 				if err := d.DecodeElement(m.TxPr, &el); err != nil {
 					return err
 				}
-			case "style":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "style"}:
 				m.Style = drawingml.NewCT_ShapeStyle()
 				if err := d.DecodeElement(m.Style, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "extLst"}:
 				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

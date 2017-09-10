@@ -71,6 +71,10 @@ func (m *ST_EditAs) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {

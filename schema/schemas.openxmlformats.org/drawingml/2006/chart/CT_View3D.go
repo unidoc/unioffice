@@ -73,38 +73,38 @@ lCT_View3D:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rotX":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "rotX"}:
 				m.RotX = NewCT_RotX()
 				if err := d.DecodeElement(m.RotX, &el); err != nil {
 					return err
 				}
-			case "hPercent":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "hPercent"}:
 				m.HPercent = NewCT_HPercent()
 				if err := d.DecodeElement(m.HPercent, &el); err != nil {
 					return err
 				}
-			case "rotY":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "rotY"}:
 				m.RotY = NewCT_RotY()
 				if err := d.DecodeElement(m.RotY, &el); err != nil {
 					return err
 				}
-			case "depthPercent":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "depthPercent"}:
 				m.DepthPercent = NewCT_DepthPercent()
 				if err := d.DecodeElement(m.DepthPercent, &el); err != nil {
 					return err
 				}
-			case "rAngAx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "rAngAx"}:
 				m.RAngAx = NewCT_Boolean()
 				if err := d.DecodeElement(m.RAngAx, &el); err != nil {
 					return err
 				}
-			case "perspective":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "perspective"}:
 				m.Perspective = NewCT_Perspective()
 				if err := d.DecodeElement(m.Perspective, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

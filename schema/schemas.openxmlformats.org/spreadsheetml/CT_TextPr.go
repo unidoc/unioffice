@@ -131,7 +131,7 @@ func (m *CT_TextPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.TextFields != nil {
-		setextFields := xml.StartElement{Name: xml.Name{Local: "x:textFields"}}
+		setextFields := xml.StartElement{Name: xml.Name{Local: "ma:textFields"}}
 		e.EncodeElement(m.TextFields, setextFields)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -256,8 +256,8 @@ lCT_TextPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "textFields":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "textFields"}:
 				m.TextFields = NewCT_TextFields()
 				if err := d.DecodeElement(m.TextFields, &el); err != nil {
 					return err

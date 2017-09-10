@@ -103,157 +103,161 @@ func NewCT_Worksheet() *CT_Worksheet {
 func (m *CT_Worksheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.SheetPr != nil {
-		sesheetPr := xml.StartElement{Name: xml.Name{Local: "x:sheetPr"}}
+		sesheetPr := xml.StartElement{Name: xml.Name{Local: "ma:sheetPr"}}
 		e.EncodeElement(m.SheetPr, sesheetPr)
 	}
 	if m.Dimension != nil {
-		sedimension := xml.StartElement{Name: xml.Name{Local: "x:dimension"}}
+		sedimension := xml.StartElement{Name: xml.Name{Local: "ma:dimension"}}
 		e.EncodeElement(m.Dimension, sedimension)
 	}
 	if m.SheetViews != nil {
-		sesheetViews := xml.StartElement{Name: xml.Name{Local: "x:sheetViews"}}
+		sesheetViews := xml.StartElement{Name: xml.Name{Local: "ma:sheetViews"}}
 		e.EncodeElement(m.SheetViews, sesheetViews)
 	}
 	if m.SheetFormatPr != nil {
-		sesheetFormatPr := xml.StartElement{Name: xml.Name{Local: "x:sheetFormatPr"}}
+		sesheetFormatPr := xml.StartElement{Name: xml.Name{Local: "ma:sheetFormatPr"}}
 		e.EncodeElement(m.SheetFormatPr, sesheetFormatPr)
 	}
 	if m.Cols != nil {
-		secols := xml.StartElement{Name: xml.Name{Local: "x:cols"}}
-		e.EncodeElement(m.Cols, secols)
+		secols := xml.StartElement{Name: xml.Name{Local: "ma:cols"}}
+		for _, c := range m.Cols {
+			e.EncodeElement(c, secols)
+		}
 	}
-	sesheetData := xml.StartElement{Name: xml.Name{Local: "x:sheetData"}}
+	sesheetData := xml.StartElement{Name: xml.Name{Local: "ma:sheetData"}}
 	e.EncodeElement(m.SheetData, sesheetData)
 	if m.SheetCalcPr != nil {
-		sesheetCalcPr := xml.StartElement{Name: xml.Name{Local: "x:sheetCalcPr"}}
+		sesheetCalcPr := xml.StartElement{Name: xml.Name{Local: "ma:sheetCalcPr"}}
 		e.EncodeElement(m.SheetCalcPr, sesheetCalcPr)
 	}
 	if m.SheetProtection != nil {
-		sesheetProtection := xml.StartElement{Name: xml.Name{Local: "x:sheetProtection"}}
+		sesheetProtection := xml.StartElement{Name: xml.Name{Local: "ma:sheetProtection"}}
 		e.EncodeElement(m.SheetProtection, sesheetProtection)
 	}
 	if m.ProtectedRanges != nil {
-		seprotectedRanges := xml.StartElement{Name: xml.Name{Local: "x:protectedRanges"}}
+		seprotectedRanges := xml.StartElement{Name: xml.Name{Local: "ma:protectedRanges"}}
 		e.EncodeElement(m.ProtectedRanges, seprotectedRanges)
 	}
 	if m.Scenarios != nil {
-		sescenarios := xml.StartElement{Name: xml.Name{Local: "x:scenarios"}}
+		sescenarios := xml.StartElement{Name: xml.Name{Local: "ma:scenarios"}}
 		e.EncodeElement(m.Scenarios, sescenarios)
 	}
 	if m.AutoFilter != nil {
-		seautoFilter := xml.StartElement{Name: xml.Name{Local: "x:autoFilter"}}
+		seautoFilter := xml.StartElement{Name: xml.Name{Local: "ma:autoFilter"}}
 		e.EncodeElement(m.AutoFilter, seautoFilter)
 	}
 	if m.SortState != nil {
-		sesortState := xml.StartElement{Name: xml.Name{Local: "x:sortState"}}
+		sesortState := xml.StartElement{Name: xml.Name{Local: "ma:sortState"}}
 		e.EncodeElement(m.SortState, sesortState)
 	}
 	if m.DataConsolidate != nil {
-		sedataConsolidate := xml.StartElement{Name: xml.Name{Local: "x:dataConsolidate"}}
+		sedataConsolidate := xml.StartElement{Name: xml.Name{Local: "ma:dataConsolidate"}}
 		e.EncodeElement(m.DataConsolidate, sedataConsolidate)
 	}
 	if m.CustomSheetViews != nil {
-		secustomSheetViews := xml.StartElement{Name: xml.Name{Local: "x:customSheetViews"}}
+		secustomSheetViews := xml.StartElement{Name: xml.Name{Local: "ma:customSheetViews"}}
 		e.EncodeElement(m.CustomSheetViews, secustomSheetViews)
 	}
 	if m.MergeCells != nil {
-		semergeCells := xml.StartElement{Name: xml.Name{Local: "x:mergeCells"}}
+		semergeCells := xml.StartElement{Name: xml.Name{Local: "ma:mergeCells"}}
 		e.EncodeElement(m.MergeCells, semergeCells)
 	}
 	if m.PhoneticPr != nil {
-		sephoneticPr := xml.StartElement{Name: xml.Name{Local: "x:phoneticPr"}}
+		sephoneticPr := xml.StartElement{Name: xml.Name{Local: "ma:phoneticPr"}}
 		e.EncodeElement(m.PhoneticPr, sephoneticPr)
 	}
 	if m.ConditionalFormatting != nil {
-		seconditionalFormatting := xml.StartElement{Name: xml.Name{Local: "x:conditionalFormatting"}}
-		e.EncodeElement(m.ConditionalFormatting, seconditionalFormatting)
+		seconditionalFormatting := xml.StartElement{Name: xml.Name{Local: "ma:conditionalFormatting"}}
+		for _, c := range m.ConditionalFormatting {
+			e.EncodeElement(c, seconditionalFormatting)
+		}
 	}
 	if m.DataValidations != nil {
-		sedataValidations := xml.StartElement{Name: xml.Name{Local: "x:dataValidations"}}
+		sedataValidations := xml.StartElement{Name: xml.Name{Local: "ma:dataValidations"}}
 		e.EncodeElement(m.DataValidations, sedataValidations)
 	}
 	if m.Hyperlinks != nil {
-		sehyperlinks := xml.StartElement{Name: xml.Name{Local: "x:hyperlinks"}}
+		sehyperlinks := xml.StartElement{Name: xml.Name{Local: "ma:hyperlinks"}}
 		e.EncodeElement(m.Hyperlinks, sehyperlinks)
 	}
 	if m.PrintOptions != nil {
-		seprintOptions := xml.StartElement{Name: xml.Name{Local: "x:printOptions"}}
+		seprintOptions := xml.StartElement{Name: xml.Name{Local: "ma:printOptions"}}
 		e.EncodeElement(m.PrintOptions, seprintOptions)
 	}
 	if m.PageMargins != nil {
-		sepageMargins := xml.StartElement{Name: xml.Name{Local: "x:pageMargins"}}
+		sepageMargins := xml.StartElement{Name: xml.Name{Local: "ma:pageMargins"}}
 		e.EncodeElement(m.PageMargins, sepageMargins)
 	}
 	if m.PageSetup != nil {
-		sepageSetup := xml.StartElement{Name: xml.Name{Local: "x:pageSetup"}}
+		sepageSetup := xml.StartElement{Name: xml.Name{Local: "ma:pageSetup"}}
 		e.EncodeElement(m.PageSetup, sepageSetup)
 	}
 	if m.HeaderFooter != nil {
-		seheaderFooter := xml.StartElement{Name: xml.Name{Local: "x:headerFooter"}}
+		seheaderFooter := xml.StartElement{Name: xml.Name{Local: "ma:headerFooter"}}
 		e.EncodeElement(m.HeaderFooter, seheaderFooter)
 	}
 	if m.RowBreaks != nil {
-		serowBreaks := xml.StartElement{Name: xml.Name{Local: "x:rowBreaks"}}
+		serowBreaks := xml.StartElement{Name: xml.Name{Local: "ma:rowBreaks"}}
 		e.EncodeElement(m.RowBreaks, serowBreaks)
 	}
 	if m.ColBreaks != nil {
-		secolBreaks := xml.StartElement{Name: xml.Name{Local: "x:colBreaks"}}
+		secolBreaks := xml.StartElement{Name: xml.Name{Local: "ma:colBreaks"}}
 		e.EncodeElement(m.ColBreaks, secolBreaks)
 	}
 	if m.CustomProperties != nil {
-		secustomProperties := xml.StartElement{Name: xml.Name{Local: "x:customProperties"}}
+		secustomProperties := xml.StartElement{Name: xml.Name{Local: "ma:customProperties"}}
 		e.EncodeElement(m.CustomProperties, secustomProperties)
 	}
 	if m.CellWatches != nil {
-		secellWatches := xml.StartElement{Name: xml.Name{Local: "x:cellWatches"}}
+		secellWatches := xml.StartElement{Name: xml.Name{Local: "ma:cellWatches"}}
 		e.EncodeElement(m.CellWatches, secellWatches)
 	}
 	if m.IgnoredErrors != nil {
-		seignoredErrors := xml.StartElement{Name: xml.Name{Local: "x:ignoredErrors"}}
+		seignoredErrors := xml.StartElement{Name: xml.Name{Local: "ma:ignoredErrors"}}
 		e.EncodeElement(m.IgnoredErrors, seignoredErrors)
 	}
 	if m.SmartTags != nil {
-		sesmartTags := xml.StartElement{Name: xml.Name{Local: "x:smartTags"}}
+		sesmartTags := xml.StartElement{Name: xml.Name{Local: "ma:smartTags"}}
 		e.EncodeElement(m.SmartTags, sesmartTags)
 	}
 	if m.Drawing != nil {
-		sedrawing := xml.StartElement{Name: xml.Name{Local: "x:drawing"}}
+		sedrawing := xml.StartElement{Name: xml.Name{Local: "ma:drawing"}}
 		e.EncodeElement(m.Drawing, sedrawing)
 	}
 	if m.LegacyDrawing != nil {
-		selegacyDrawing := xml.StartElement{Name: xml.Name{Local: "x:legacyDrawing"}}
+		selegacyDrawing := xml.StartElement{Name: xml.Name{Local: "ma:legacyDrawing"}}
 		e.EncodeElement(m.LegacyDrawing, selegacyDrawing)
 	}
 	if m.LegacyDrawingHF != nil {
-		selegacyDrawingHF := xml.StartElement{Name: xml.Name{Local: "x:legacyDrawingHF"}}
+		selegacyDrawingHF := xml.StartElement{Name: xml.Name{Local: "ma:legacyDrawingHF"}}
 		e.EncodeElement(m.LegacyDrawingHF, selegacyDrawingHF)
 	}
 	if m.DrawingHF != nil {
-		sedrawingHF := xml.StartElement{Name: xml.Name{Local: "x:drawingHF"}}
+		sedrawingHF := xml.StartElement{Name: xml.Name{Local: "ma:drawingHF"}}
 		e.EncodeElement(m.DrawingHF, sedrawingHF)
 	}
 	if m.Picture != nil {
-		sepicture := xml.StartElement{Name: xml.Name{Local: "x:picture"}}
+		sepicture := xml.StartElement{Name: xml.Name{Local: "ma:picture"}}
 		e.EncodeElement(m.Picture, sepicture)
 	}
 	if m.OleObjects != nil {
-		seoleObjects := xml.StartElement{Name: xml.Name{Local: "x:oleObjects"}}
+		seoleObjects := xml.StartElement{Name: xml.Name{Local: "ma:oleObjects"}}
 		e.EncodeElement(m.OleObjects, seoleObjects)
 	}
 	if m.Controls != nil {
-		secontrols := xml.StartElement{Name: xml.Name{Local: "x:controls"}}
+		secontrols := xml.StartElement{Name: xml.Name{Local: "ma:controls"}}
 		e.EncodeElement(m.Controls, secontrols)
 	}
 	if m.WebPublishItems != nil {
-		sewebPublishItems := xml.StartElement{Name: xml.Name{Local: "x:webPublishItems"}}
+		sewebPublishItems := xml.StartElement{Name: xml.Name{Local: "ma:webPublishItems"}}
 		e.EncodeElement(m.WebPublishItems, sewebPublishItems)
 	}
 	if m.TableParts != nil {
-		setableParts := xml.StartElement{Name: xml.Name{Local: "x:tableParts"}}
+		setableParts := xml.StartElement{Name: xml.Name{Local: "ma:tableParts"}}
 		e.EncodeElement(m.TableParts, setableParts)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -271,199 +275,199 @@ lCT_Worksheet:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sheetPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetPr"}:
 				m.SheetPr = NewCT_SheetPr()
 				if err := d.DecodeElement(m.SheetPr, &el); err != nil {
 					return err
 				}
-			case "dimension":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dimension"}:
 				m.Dimension = NewCT_SheetDimension()
 				if err := d.DecodeElement(m.Dimension, &el); err != nil {
 					return err
 				}
-			case "sheetViews":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetViews"}:
 				m.SheetViews = NewCT_SheetViews()
 				if err := d.DecodeElement(m.SheetViews, &el); err != nil {
 					return err
 				}
-			case "sheetFormatPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetFormatPr"}:
 				m.SheetFormatPr = NewCT_SheetFormatPr()
 				if err := d.DecodeElement(m.SheetFormatPr, &el); err != nil {
 					return err
 				}
-			case "cols":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cols"}:
 				tmp := NewCT_Cols()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Cols = append(m.Cols, tmp)
-			case "sheetData":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetData"}:
 				if err := d.DecodeElement(m.SheetData, &el); err != nil {
 					return err
 				}
-			case "sheetCalcPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetCalcPr"}:
 				m.SheetCalcPr = NewCT_SheetCalcPr()
 				if err := d.DecodeElement(m.SheetCalcPr, &el); err != nil {
 					return err
 				}
-			case "sheetProtection":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetProtection"}:
 				m.SheetProtection = NewCT_SheetProtection()
 				if err := d.DecodeElement(m.SheetProtection, &el); err != nil {
 					return err
 				}
-			case "protectedRanges":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "protectedRanges"}:
 				m.ProtectedRanges = NewCT_ProtectedRanges()
 				if err := d.DecodeElement(m.ProtectedRanges, &el); err != nil {
 					return err
 				}
-			case "scenarios":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "scenarios"}:
 				m.Scenarios = NewCT_Scenarios()
 				if err := d.DecodeElement(m.Scenarios, &el); err != nil {
 					return err
 				}
-			case "autoFilter":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "autoFilter"}:
 				m.AutoFilter = NewCT_AutoFilter()
 				if err := d.DecodeElement(m.AutoFilter, &el); err != nil {
 					return err
 				}
-			case "sortState":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sortState"}:
 				m.SortState = NewCT_SortState()
 				if err := d.DecodeElement(m.SortState, &el); err != nil {
 					return err
 				}
-			case "dataConsolidate":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataConsolidate"}:
 				m.DataConsolidate = NewCT_DataConsolidate()
 				if err := d.DecodeElement(m.DataConsolidate, &el); err != nil {
 					return err
 				}
-			case "customSheetViews":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customSheetViews"}:
 				m.CustomSheetViews = NewCT_CustomSheetViews()
 				if err := d.DecodeElement(m.CustomSheetViews, &el); err != nil {
 					return err
 				}
-			case "mergeCells":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mergeCells"}:
 				m.MergeCells = NewCT_MergeCells()
 				if err := d.DecodeElement(m.MergeCells, &el); err != nil {
 					return err
 				}
-			case "phoneticPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "phoneticPr"}:
 				m.PhoneticPr = NewCT_PhoneticPr()
 				if err := d.DecodeElement(m.PhoneticPr, &el); err != nil {
 					return err
 				}
-			case "conditionalFormatting":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "conditionalFormatting"}:
 				tmp := NewCT_ConditionalFormatting()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.ConditionalFormatting = append(m.ConditionalFormatting, tmp)
-			case "dataValidations":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataValidations"}:
 				m.DataValidations = NewCT_DataValidations()
 				if err := d.DecodeElement(m.DataValidations, &el); err != nil {
 					return err
 				}
-			case "hyperlinks":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "hyperlinks"}:
 				m.Hyperlinks = NewCT_Hyperlinks()
 				if err := d.DecodeElement(m.Hyperlinks, &el); err != nil {
 					return err
 				}
-			case "printOptions":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "printOptions"}:
 				m.PrintOptions = NewCT_PrintOptions()
 				if err := d.DecodeElement(m.PrintOptions, &el); err != nil {
 					return err
 				}
-			case "pageMargins":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageMargins"}:
 				m.PageMargins = NewCT_PageMargins()
 				if err := d.DecodeElement(m.PageMargins, &el); err != nil {
 					return err
 				}
-			case "pageSetup":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageSetup"}:
 				m.PageSetup = NewCT_PageSetup()
 				if err := d.DecodeElement(m.PageSetup, &el); err != nil {
 					return err
 				}
-			case "headerFooter":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "headerFooter"}:
 				m.HeaderFooter = NewCT_HeaderFooter()
 				if err := d.DecodeElement(m.HeaderFooter, &el); err != nil {
 					return err
 				}
-			case "rowBreaks":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rowBreaks"}:
 				m.RowBreaks = NewCT_PageBreak()
 				if err := d.DecodeElement(m.RowBreaks, &el); err != nil {
 					return err
 				}
-			case "colBreaks":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "colBreaks"}:
 				m.ColBreaks = NewCT_PageBreak()
 				if err := d.DecodeElement(m.ColBreaks, &el); err != nil {
 					return err
 				}
-			case "customProperties":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customProperties"}:
 				m.CustomProperties = NewCT_CustomProperties()
 				if err := d.DecodeElement(m.CustomProperties, &el); err != nil {
 					return err
 				}
-			case "cellWatches":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cellWatches"}:
 				m.CellWatches = NewCT_CellWatches()
 				if err := d.DecodeElement(m.CellWatches, &el); err != nil {
 					return err
 				}
-			case "ignoredErrors":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ignoredErrors"}:
 				m.IgnoredErrors = NewCT_IgnoredErrors()
 				if err := d.DecodeElement(m.IgnoredErrors, &el); err != nil {
 					return err
 				}
-			case "smartTags":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "smartTags"}:
 				m.SmartTags = NewCT_SmartTags()
 				if err := d.DecodeElement(m.SmartTags, &el); err != nil {
 					return err
 				}
-			case "drawing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "drawing"}:
 				m.Drawing = NewCT_Drawing()
 				if err := d.DecodeElement(m.Drawing, &el); err != nil {
 					return err
 				}
-			case "legacyDrawing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "legacyDrawing"}:
 				m.LegacyDrawing = NewCT_LegacyDrawing()
 				if err := d.DecodeElement(m.LegacyDrawing, &el); err != nil {
 					return err
 				}
-			case "legacyDrawingHF":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "legacyDrawingHF"}:
 				m.LegacyDrawingHF = NewCT_LegacyDrawing()
 				if err := d.DecodeElement(m.LegacyDrawingHF, &el); err != nil {
 					return err
 				}
-			case "drawingHF":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "drawingHF"}:
 				m.DrawingHF = NewCT_DrawingHF()
 				if err := d.DecodeElement(m.DrawingHF, &el); err != nil {
 					return err
 				}
-			case "picture":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "picture"}:
 				m.Picture = NewCT_SheetBackgroundPicture()
 				if err := d.DecodeElement(m.Picture, &el); err != nil {
 					return err
 				}
-			case "oleObjects":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleObjects"}:
 				m.OleObjects = NewCT_OleObjects()
 				if err := d.DecodeElement(m.OleObjects, &el); err != nil {
 					return err
 				}
-			case "controls":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "controls"}:
 				m.Controls = NewCT_Controls()
 				if err := d.DecodeElement(m.Controls, &el); err != nil {
 					return err
 				}
-			case "webPublishItems":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPublishItems"}:
 				m.WebPublishItems = NewCT_WebPublishItems()
 				if err := d.DecodeElement(m.WebPublishItems, &el); err != nil {
 					return err
 				}
-			case "tableParts":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tableParts"}:
 				m.TableParts = NewCT_TableParts()
 				if err := d.DecodeElement(m.TableParts, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

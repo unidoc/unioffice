@@ -32,7 +32,9 @@ func (m *CT_OMathPara) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		e.EncodeElement(m.OMathParaPr, seoMathParaPr)
 	}
 	seoMath := xml.StartElement{Name: xml.Name{Local: "m:oMath"}}
-	e.EncodeElement(m.OMath, seoMath)
+	for _, c := range m.OMath {
+		e.EncodeElement(c, seoMath)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -47,13 +49,13 @@ lCT_OMathPara:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "oMathParaPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMathParaPr"}:
 				m.OMathParaPr = NewCT_OMathParaPr()
 				if err := d.DecodeElement(m.OMathParaPr, &el); err != nil {
 					return err
 				}
-			case "oMath":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMath"}:
 				tmp := NewCT_OMath()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

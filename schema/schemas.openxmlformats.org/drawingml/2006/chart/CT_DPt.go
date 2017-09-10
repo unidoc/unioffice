@@ -80,42 +80,42 @@ lCT_DPt:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "idx":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "idx"}:
 				if err := d.DecodeElement(m.Idx, &el); err != nil {
 					return err
 				}
-			case "invertIfNegative":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "invertIfNegative"}:
 				m.InvertIfNegative = NewCT_Boolean()
 				if err := d.DecodeElement(m.InvertIfNegative, &el); err != nil {
 					return err
 				}
-			case "marker":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "marker"}:
 				m.Marker = NewCT_Marker()
 				if err := d.DecodeElement(m.Marker, &el); err != nil {
 					return err
 				}
-			case "bubble3D":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "bubble3D"}:
 				m.Bubble3D = NewCT_Boolean()
 				if err := d.DecodeElement(m.Bubble3D, &el); err != nil {
 					return err
 				}
-			case "explosion":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "explosion"}:
 				m.Explosion = NewCT_UnsignedInt()
 				if err := d.DecodeElement(m.Explosion, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"}:
 				m.SpPr = drawingml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "pictureOptions":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pictureOptions"}:
 				m.PictureOptions = NewCT_PictureOptions()
 				if err := d.DecodeElement(m.PictureOptions, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

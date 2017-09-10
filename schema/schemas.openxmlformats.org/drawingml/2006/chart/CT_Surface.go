@@ -60,23 +60,23 @@ lCT_Surface:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "thickness":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "thickness"}:
 				m.Thickness = NewCT_Thickness()
 				if err := d.DecodeElement(m.Thickness, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"}:
 				m.SpPr = drawingml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "pictureOptions":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pictureOptions"}:
 				m.PictureOptions = NewCT_PictureOptions()
 				if err := d.DecodeElement(m.PictureOptions, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

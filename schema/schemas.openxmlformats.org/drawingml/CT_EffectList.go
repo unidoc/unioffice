@@ -78,43 +78,43 @@ lCT_EffectList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "blur":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blur"}:
 				m.Blur = NewCT_BlurEffect()
 				if err := d.DecodeElement(m.Blur, &el); err != nil {
 					return err
 				}
-			case "fillOverlay":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillOverlay"}:
 				m.FillOverlay = NewCT_FillOverlayEffect()
 				if err := d.DecodeElement(m.FillOverlay, &el); err != nil {
 					return err
 				}
-			case "glow":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "glow"}:
 				m.Glow = NewCT_GlowEffect()
 				if err := d.DecodeElement(m.Glow, &el); err != nil {
 					return err
 				}
-			case "innerShdw":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "innerShdw"}:
 				m.InnerShdw = NewCT_InnerShadowEffect()
 				if err := d.DecodeElement(m.InnerShdw, &el); err != nil {
 					return err
 				}
-			case "outerShdw":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "outerShdw"}:
 				m.OuterShdw = NewCT_OuterShadowEffect()
 				if err := d.DecodeElement(m.OuterShdw, &el); err != nil {
 					return err
 				}
-			case "prstShdw":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "prstShdw"}:
 				m.PrstShdw = NewCT_PresetShadowEffect()
 				if err := d.DecodeElement(m.PrstShdw, &el); err != nil {
 					return err
 				}
-			case "reflection":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "reflection"}:
 				m.Reflection = NewCT_ReflectionEffect()
 				if err := d.DecodeElement(m.Reflection, &el); err != nil {
 					return err
 				}
-			case "softEdge":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "softEdge"}:
 				m.SoftEdge = NewCT_SoftEdgesEffect()
 				if err := d.DecodeElement(m.SoftEdge, &el); err != nil {
 					return err

@@ -116,68 +116,68 @@ lCT_WebSettings:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "frameset":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frameset"}:
 				m.Frameset = NewCT_Frameset()
 				if err := d.DecodeElement(m.Frameset, &el); err != nil {
 					return err
 				}
-			case "divs":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "divs"}:
 				m.Divs = NewCT_Divs()
 				if err := d.DecodeElement(m.Divs, &el); err != nil {
 					return err
 				}
-			case "encoding":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "encoding"}:
 				m.Encoding = NewCT_String()
 				if err := d.DecodeElement(m.Encoding, &el); err != nil {
 					return err
 				}
-			case "optimizeForBrowser":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "optimizeForBrowser"}:
 				m.OptimizeForBrowser = NewCT_OptimizeForBrowser()
 				if err := d.DecodeElement(m.OptimizeForBrowser, &el); err != nil {
 					return err
 				}
-			case "relyOnVML":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "relyOnVML"}:
 				m.RelyOnVML = NewCT_OnOff()
 				if err := d.DecodeElement(m.RelyOnVML, &el); err != nil {
 					return err
 				}
-			case "allowPNG":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "allowPNG"}:
 				m.AllowPNG = NewCT_OnOff()
 				if err := d.DecodeElement(m.AllowPNG, &el); err != nil {
 					return err
 				}
-			case "doNotRelyOnCSS":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotRelyOnCSS"}:
 				m.DoNotRelyOnCSS = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotRelyOnCSS, &el); err != nil {
 					return err
 				}
-			case "doNotSaveAsSingleFile":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSaveAsSingleFile"}:
 				m.DoNotSaveAsSingleFile = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotSaveAsSingleFile, &el); err != nil {
 					return err
 				}
-			case "doNotOrganizeInFolder":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotOrganizeInFolder"}:
 				m.DoNotOrganizeInFolder = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotOrganizeInFolder, &el); err != nil {
 					return err
 				}
-			case "doNotUseLongFileNames":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotUseLongFileNames"}:
 				m.DoNotUseLongFileNames = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotUseLongFileNames, &el); err != nil {
 					return err
 				}
-			case "pixelsPerInch":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pixelsPerInch"}:
 				m.PixelsPerInch = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.PixelsPerInch, &el); err != nil {
 					return err
 				}
-			case "targetScreenSz":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "targetScreenSz"}:
 				m.TargetScreenSz = NewCT_TargetScreenSz()
 				if err := d.DecodeElement(m.TargetScreenSz, &el); err != nil {
 					return err
 				}
-			case "saveSmartTagsAsXml":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "saveSmartTagsAsXml"}:
 				m.SaveSmartTagsAsXml = NewCT_OnOff()
 				if err := d.DecodeElement(m.SaveSmartTagsAsXml, &el); err != nil {
 					return err

@@ -28,8 +28,10 @@ func NewCT_SmartTagTypes() *CT_SmartTagTypes {
 func (m *CT_SmartTagTypes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.SmartTagType != nil {
-		sesmartTagType := xml.StartElement{Name: xml.Name{Local: "x:smartTagType"}}
-		e.EncodeElement(m.SmartTagType, sesmartTagType)
+		sesmartTagType := xml.StartElement{Name: xml.Name{Local: "ma:smartTagType"}}
+		for _, c := range m.SmartTagType {
+			e.EncodeElement(c, sesmartTagType)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_SmartTagTypes:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "smartTagType":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "smartTagType"}:
 				tmp := NewCT_SmartTagType()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

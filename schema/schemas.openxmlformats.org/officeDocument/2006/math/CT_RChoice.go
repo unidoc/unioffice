@@ -27,7 +27,9 @@ func NewCT_RChoice() *CT_RChoice {
 func (m *CT_RChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.T != nil {
 		set := xml.StartElement{Name: xml.Name{Local: "m:t"}}
-		e.EncodeElement(m.T, set)
+		for _, c := range m.T {
+			e.EncodeElement(c, set)
+		}
 	}
 	return nil
 }
@@ -42,8 +44,8 @@ lCT_RChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "t":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "t"}:
 				tmp := NewCT_Text()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

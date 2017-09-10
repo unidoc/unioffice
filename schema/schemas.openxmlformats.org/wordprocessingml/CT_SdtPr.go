@@ -108,118 +108,118 @@ lCT_SdtPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rPr"}:
 				m.RPr = NewCT_RPr()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err
 				}
-			case "alias":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "alias"}:
 				m.Alias = NewCT_String()
 				if err := d.DecodeElement(m.Alias, &el); err != nil {
 					return err
 				}
-			case "tag":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tag"}:
 				m.Tag = NewCT_String()
 				if err := d.DecodeElement(m.Tag, &el); err != nil {
 					return err
 				}
-			case "id":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "id"}:
 				m.Id = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.Id, &el); err != nil {
 					return err
 				}
-			case "lock":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lock"}:
 				m.Lock = NewCT_Lock()
 				if err := d.DecodeElement(m.Lock, &el); err != nil {
 					return err
 				}
-			case "placeholder":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "placeholder"}:
 				m.Placeholder = NewCT_Placeholder()
 				if err := d.DecodeElement(m.Placeholder, &el); err != nil {
 					return err
 				}
-			case "temporary":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "temporary"}:
 				m.Temporary = NewCT_OnOff()
 				if err := d.DecodeElement(m.Temporary, &el); err != nil {
 					return err
 				}
-			case "showingPlcHdr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "showingPlcHdr"}:
 				m.ShowingPlcHdr = NewCT_OnOff()
 				if err := d.DecodeElement(m.ShowingPlcHdr, &el); err != nil {
 					return err
 				}
-			case "dataBinding":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "dataBinding"}:
 				m.DataBinding = NewCT_DataBinding()
 				if err := d.DecodeElement(m.DataBinding, &el); err != nil {
 					return err
 				}
-			case "label":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "label"}:
 				m.Label = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.Label, &el); err != nil {
 					return err
 				}
-			case "tabIndex":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tabIndex"}:
 				m.TabIndex = NewCT_UnsignedDecimalNumber()
 				if err := d.DecodeElement(m.TabIndex, &el); err != nil {
 					return err
 				}
-			case "equation":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "equation"}:
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Equation, &el); err != nil {
 					return err
 				}
-			case "comboBox":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "comboBox"}:
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.ComboBox, &el); err != nil {
 					return err
 				}
-			case "date":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "date"}:
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Date, &el); err != nil {
 					return err
 				}
-			case "docPartObj":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docPartObj"}:
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.DocPartObj, &el); err != nil {
 					return err
 				}
-			case "docPartList":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docPartList"}:
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.DocPartList, &el); err != nil {
 					return err
 				}
-			case "dropDownList":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "dropDownList"}:
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.DropDownList, &el); err != nil {
 					return err
 				}
-			case "picture":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "picture"}:
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Picture, &el); err != nil {
 					return err
 				}
-			case "richText":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "richText"}:
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.RichText, &el); err != nil {
 					return err
 				}
-			case "text":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "text"}:
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Text, &el); err != nil {
 					return err
 				}
-			case "citation":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "citation"}:
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Citation, &el); err != nil {
 					return err
 				}
-			case "group":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "group"}:
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Group, &el); err != nil {
 					return err
 				}
-			case "bibliography":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bibliography"}:
 				m.Choice = NewCT_SdtPrChoice()
 				if err := d.DecodeElement(&m.Choice.Bibliography, &el); err != nil {
 					return err

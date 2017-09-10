@@ -51,18 +51,18 @@ lEG_TextRun:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "r":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "r"}:
 				m.R = NewCT_RegularTextRun()
 				if err := d.DecodeElement(m.R, &el); err != nil {
 					return err
 				}
-			case "br":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "br"}:
 				m.Br = NewCT_TextLineBreak()
 				if err := d.DecodeElement(m.Br, &el); err != nil {
 					return err
 				}
-			case "fld":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fld"}:
 				m.Fld = NewCT_TextField()
 				if err := d.DecodeElement(m.Fld, &el); err != nil {
 					return err

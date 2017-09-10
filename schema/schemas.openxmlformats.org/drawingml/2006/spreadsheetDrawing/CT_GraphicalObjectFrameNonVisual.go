@@ -50,12 +50,12 @@ lCT_GraphicalObjectFrameNonVisual:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cNvPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "cNvPr"}:
 				if err := d.DecodeElement(m.CNvPr, &el); err != nil {
 					return err
 				}
-			case "cNvGraphicFramePr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "cNvGraphicFramePr"}:
 				if err := d.DecodeElement(m.CNvGraphicFramePr, &el); err != nil {
 					return err
 				}

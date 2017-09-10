@@ -42,8 +42,8 @@ lRelationships:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "Relationship":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/relationships", Local: "Relationship"}:
 				tmp := NewRelationship()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

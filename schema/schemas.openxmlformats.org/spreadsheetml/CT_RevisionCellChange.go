@@ -116,21 +116,21 @@ func (m *CT_RevisionCellChange) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	e.EncodeToken(start)
 	if m.Oc != nil {
-		seoc := xml.StartElement{Name: xml.Name{Local: "x:oc"}}
+		seoc := xml.StartElement{Name: xml.Name{Local: "ma:oc"}}
 		e.EncodeElement(m.Oc, seoc)
 	}
-	senc := xml.StartElement{Name: xml.Name{Local: "x:nc"}}
+	senc := xml.StartElement{Name: xml.Name{Local: "ma:nc"}}
 	e.EncodeElement(m.Nc, senc)
 	if m.Odxf != nil {
-		seodxf := xml.StartElement{Name: xml.Name{Local: "x:odxf"}}
+		seodxf := xml.StartElement{Name: xml.Name{Local: "ma:odxf"}}
 		e.EncodeElement(m.Odxf, seodxf)
 	}
 	if m.Ndxf != nil {
-		sendxf := xml.StartElement{Name: xml.Name{Local: "x:ndxf"}}
+		sendxf := xml.StartElement{Name: xml.Name{Local: "ma:ndxf"}}
 		e.EncodeElement(m.Ndxf, sendxf)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -250,27 +250,27 @@ lCT_RevisionCellChange:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "oc":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oc"}:
 				m.Oc = NewCT_Cell()
 				if err := d.DecodeElement(m.Oc, &el); err != nil {
 					return err
 				}
-			case "nc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "nc"}:
 				if err := d.DecodeElement(m.Nc, &el); err != nil {
 					return err
 				}
-			case "odxf":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "odxf"}:
 				m.Odxf = NewCT_Dxf()
 				if err := d.DecodeElement(m.Odxf, &el); err != nil {
 					return err
 				}
-			case "ndxf":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ndxf"}:
 				m.Ndxf = NewCT_Dxf()
 				if err := d.DecodeElement(m.Ndxf, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

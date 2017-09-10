@@ -107,48 +107,48 @@ lCT_TableStyleTextStyle:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "font":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "font"}:
 				m.Font = NewCT_FontCollection()
 				if err := d.DecodeElement(m.Font, &el); err != nil {
 					return err
 				}
-			case "fontRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fontRef"}:
 				m.FontRef = NewCT_FontReference()
 				if err := d.DecodeElement(m.FontRef, &el); err != nil {
 					return err
 				}
-			case "scrgbClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "scrgbClr"}:
 				m.ScrgbClr = NewCT_ScRgbColor()
 				if err := d.DecodeElement(m.ScrgbClr, &el); err != nil {
 					return err
 				}
-			case "srgbClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "srgbClr"}:
 				m.SrgbClr = NewCT_SRgbColor()
 				if err := d.DecodeElement(m.SrgbClr, &el); err != nil {
 					return err
 				}
-			case "hslClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hslClr"}:
 				m.HslClr = NewCT_HslColor()
 				if err := d.DecodeElement(m.HslClr, &el); err != nil {
 					return err
 				}
-			case "sysClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sysClr"}:
 				m.SysClr = NewCT_SystemColor()
 				if err := d.DecodeElement(m.SysClr, &el); err != nil {
 					return err
 				}
-			case "schemeClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "schemeClr"}:
 				m.SchemeClr = NewCT_SchemeColor()
 				if err := d.DecodeElement(m.SchemeClr, &el); err != nil {
 					return err
 				}
-			case "prstClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "prstClr"}:
 				m.PrstClr = NewCT_PresetColor()
 				if err := d.DecodeElement(m.PrstClr, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -50,13 +50,13 @@ lCT_TransitionSoundAction:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "stSnd":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "stSnd"}:
 				m.StSnd = NewCT_TransitionStartSoundAction()
 				if err := d.DecodeElement(m.StSnd, &el); err != nil {
 					return err
 				}
-			case "endSnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "endSnd"}:
 				m.EndSnd = NewCT_Empty()
 				if err := d.DecodeElement(m.EndSnd, &el); err != nil {
 					return err

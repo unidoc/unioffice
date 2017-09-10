@@ -11,10 +11,14 @@ package diagram
 
 import (
 	"encoding/xml"
-	"fmt"
+	"log"
+
+	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
 type CT_TextProps struct {
+	Sp3d   *drawingml.CT_Shape3D
+	FlatTx *drawingml.CT_FlatText
 }
 
 func NewCT_TextProps() *CT_TextProps {
@@ -24,20 +28,48 @@ func NewCT_TextProps() *CT_TextProps {
 
 func (m *CT_TextProps) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
+	if m.Sp3d != nil {
+		sesp3d := xml.StartElement{Name: xml.Name{Local: "sp3d"}}
+		e.EncodeElement(m.Sp3d, sesp3d)
+	}
+	if m.FlatTx != nil {
+		seflatTx := xml.StartElement{Name: xml.Name{Local: "flatTx"}}
+		e.EncodeElement(m.FlatTx, seflatTx)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
 
 func (m *CT_TextProps) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	// skip any extensions we may find, but don't support
+lCT_TextProps:
 	for {
 		tok, err := d.Token()
 		if err != nil {
-			return fmt.Errorf("parsing CT_TextProps: %s", err)
+			return err
 		}
-		if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
-			break
+		switch el := tok.(type) {
+		case xml.StartElement:
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sp3d"}:
+				m.Sp3d = drawingml.NewCT_Shape3D()
+				if err := d.DecodeElement(m.Sp3d, &el); err != nil {
+					return err
+				}
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "flatTx"}:
+				m.FlatTx = drawingml.NewCT_FlatText()
+				if err := d.DecodeElement(m.FlatTx, &el); err != nil {
+					return err
+				}
+			default:
+				log.Printf("skipping unsupported element on CT_TextProps %v", el.Name)
+				if err := d.Skip(); err != nil {
+					return err
+				}
+			}
+		case xml.EndElement:
+			break lCT_TextProps
+		case xml.CharData:
 		}
 	}
 	return nil
@@ -50,5 +82,15 @@ func (m *CT_TextProps) Validate() error {
 
 // ValidateWithPath validates the CT_TextProps and its children, prefixing error messages with path
 func (m *CT_TextProps) ValidateWithPath(path string) error {
+	if m.Sp3d != nil {
+		if err := m.Sp3d.ValidateWithPath(path + "/Sp3d"); err != nil {
+			return err
+		}
+	}
+	if m.FlatTx != nil {
+		if err := m.FlatTx.ValidateWithPath(path + "/FlatTx"); err != nil {
+			return err
+		}
+	}
 	return nil
 }

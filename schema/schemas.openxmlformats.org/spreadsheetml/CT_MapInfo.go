@@ -33,10 +33,14 @@ func (m *CT_MapInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "SelectionNamespaces"},
 		Value: fmt.Sprintf("%v", m.SelectionNamespacesAttr)})
 	e.EncodeToken(start)
-	seSchema := xml.StartElement{Name: xml.Name{Local: "x:Schema"}}
-	e.EncodeElement(m.Schema, seSchema)
-	seMap := xml.StartElement{Name: xml.Name{Local: "x:Map"}}
-	e.EncodeElement(m.Map, seMap)
+	seSchema := xml.StartElement{Name: xml.Name{Local: "ma:Schema"}}
+	for _, c := range m.Schema {
+		e.EncodeElement(c, seSchema)
+	}
+	seMap := xml.StartElement{Name: xml.Name{Local: "ma:Map"}}
+	for _, c := range m.Map {
+		e.EncodeElement(c, seMap)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,14 +64,14 @@ lCT_MapInfo:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "Schema":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "Schema"}:
 				tmp := NewCT_Schema()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Schema = append(m.Schema, tmp)
-			case "Map":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "Map"}:
 				tmp := NewCT_Map()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

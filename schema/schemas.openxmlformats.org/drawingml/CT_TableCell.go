@@ -119,18 +119,18 @@ lCT_TableCell:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "txBody":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "txBody"}:
 				m.TxBody = NewCT_TextBody()
 				if err := d.DecodeElement(m.TxBody, &el); err != nil {
 					return err
 				}
-			case "tcPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tcPr"}:
 				m.TcPr = NewCT_TableCellProperties()
 				if err := d.DecodeElement(m.TcPr, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

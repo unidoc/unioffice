@@ -27,8 +27,10 @@ func NewCT_ProtectedRanges() *CT_ProtectedRanges {
 
 func (m *CT_ProtectedRanges) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	seprotectedRange := xml.StartElement{Name: xml.Name{Local: "x:protectedRange"}}
-	e.EncodeElement(m.ProtectedRange, seprotectedRange)
+	seprotectedRange := xml.StartElement{Name: xml.Name{Local: "ma:protectedRange"}}
+	for _, c := range m.ProtectedRange {
+		e.EncodeElement(c, seprotectedRange)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_ProtectedRanges:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "protectedRange":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "protectedRange"}:
 				tmp := NewCT_ProtectedRange()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

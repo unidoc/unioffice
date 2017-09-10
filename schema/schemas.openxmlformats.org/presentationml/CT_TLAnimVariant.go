@@ -70,28 +70,28 @@ lCT_TLAnimVariant:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "boolVal":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "boolVal"}:
 				m.BoolVal = NewCT_TLAnimVariantBooleanVal()
 				if err := d.DecodeElement(m.BoolVal, &el); err != nil {
 					return err
 				}
-			case "intVal":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "intVal"}:
 				m.IntVal = NewCT_TLAnimVariantIntegerVal()
 				if err := d.DecodeElement(m.IntVal, &el); err != nil {
 					return err
 				}
-			case "fltVal":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "fltVal"}:
 				m.FltVal = NewCT_TLAnimVariantFloatVal()
 				if err := d.DecodeElement(m.FltVal, &el); err != nil {
 					return err
 				}
-			case "strVal":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "strVal"}:
 				m.StrVal = NewCT_TLAnimVariantStringVal()
 				if err := d.DecodeElement(m.StrVal, &el); err != nil {
 					return err
 				}
-			case "clrVal":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "clrVal"}:
 				m.ClrVal = drawingml.NewCT_Color()
 				if err := d.DecodeElement(m.ClrVal, &el); err != nil {
 					return err

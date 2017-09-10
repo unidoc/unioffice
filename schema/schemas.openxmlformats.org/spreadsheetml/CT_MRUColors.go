@@ -27,8 +27,10 @@ func NewCT_MRUColors() *CT_MRUColors {
 
 func (m *CT_MRUColors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	secolor := xml.StartElement{Name: xml.Name{Local: "x:color"}}
-	e.EncodeElement(m.Color, secolor)
+	secolor := xml.StartElement{Name: xml.Name{Local: "ma:color"}}
+	for _, c := range m.Color {
+		e.EncodeElement(c, secolor)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_MRUColors:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "color":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "color"}:
 				tmp := NewCT_Color()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

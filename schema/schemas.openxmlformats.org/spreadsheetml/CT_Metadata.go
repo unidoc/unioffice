@@ -40,31 +40,33 @@ func NewCT_Metadata() *CT_Metadata {
 func (m *CT_Metadata) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.MetadataTypes != nil {
-		semetadataTypes := xml.StartElement{Name: xml.Name{Local: "x:metadataTypes"}}
+		semetadataTypes := xml.StartElement{Name: xml.Name{Local: "ma:metadataTypes"}}
 		e.EncodeElement(m.MetadataTypes, semetadataTypes)
 	}
 	if m.MetadataStrings != nil {
-		semetadataStrings := xml.StartElement{Name: xml.Name{Local: "x:metadataStrings"}}
+		semetadataStrings := xml.StartElement{Name: xml.Name{Local: "ma:metadataStrings"}}
 		e.EncodeElement(m.MetadataStrings, semetadataStrings)
 	}
 	if m.MdxMetadata != nil {
-		semdxMetadata := xml.StartElement{Name: xml.Name{Local: "x:mdxMetadata"}}
+		semdxMetadata := xml.StartElement{Name: xml.Name{Local: "ma:mdxMetadata"}}
 		e.EncodeElement(m.MdxMetadata, semdxMetadata)
 	}
 	if m.FutureMetadata != nil {
-		sefutureMetadata := xml.StartElement{Name: xml.Name{Local: "x:futureMetadata"}}
-		e.EncodeElement(m.FutureMetadata, sefutureMetadata)
+		sefutureMetadata := xml.StartElement{Name: xml.Name{Local: "ma:futureMetadata"}}
+		for _, c := range m.FutureMetadata {
+			e.EncodeElement(c, sefutureMetadata)
+		}
 	}
 	if m.CellMetadata != nil {
-		secellMetadata := xml.StartElement{Name: xml.Name{Local: "x:cellMetadata"}}
+		secellMetadata := xml.StartElement{Name: xml.Name{Local: "ma:cellMetadata"}}
 		e.EncodeElement(m.CellMetadata, secellMetadata)
 	}
 	if m.ValueMetadata != nil {
-		sevalueMetadata := xml.StartElement{Name: xml.Name{Local: "x:valueMetadata"}}
+		sevalueMetadata := xml.StartElement{Name: xml.Name{Local: "ma:valueMetadata"}}
 		e.EncodeElement(m.ValueMetadata, sevalueMetadata)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -81,39 +83,39 @@ lCT_Metadata:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "metadataTypes":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "metadataTypes"}:
 				m.MetadataTypes = NewCT_MetadataTypes()
 				if err := d.DecodeElement(m.MetadataTypes, &el); err != nil {
 					return err
 				}
-			case "metadataStrings":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "metadataStrings"}:
 				m.MetadataStrings = NewCT_MetadataStrings()
 				if err := d.DecodeElement(m.MetadataStrings, &el); err != nil {
 					return err
 				}
-			case "mdxMetadata":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mdxMetadata"}:
 				m.MdxMetadata = NewCT_MdxMetadata()
 				if err := d.DecodeElement(m.MdxMetadata, &el); err != nil {
 					return err
 				}
-			case "futureMetadata":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "futureMetadata"}:
 				tmp := NewCT_FutureMetadata()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.FutureMetadata = append(m.FutureMetadata, tmp)
-			case "cellMetadata":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cellMetadata"}:
 				m.CellMetadata = NewCT_MetadataBlocks()
 				if err := d.DecodeElement(m.CellMetadata, &el); err != nil {
 					return err
 				}
-			case "valueMetadata":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "valueMetadata"}:
 				m.ValueMetadata = NewCT_MetadataBlocks()
 				if err := d.DecodeElement(m.ValueMetadata, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

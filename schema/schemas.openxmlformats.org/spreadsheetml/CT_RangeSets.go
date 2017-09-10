@@ -34,8 +34,10 @@ func (m *CT_RangeSets) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	serangeSet := xml.StartElement{Name: xml.Name{Local: "x:rangeSet"}}
-	e.EncodeElement(m.RangeSet, serangeSet)
+	serangeSet := xml.StartElement{Name: xml.Name{Local: "ma:rangeSet"}}
+	for _, c := range m.RangeSet {
+		e.EncodeElement(c, serangeSet)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_RangeSets:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rangeSet":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rangeSet"}:
 				tmp := NewCT_RangeSet()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

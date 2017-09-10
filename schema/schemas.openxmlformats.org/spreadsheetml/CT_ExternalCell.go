@@ -52,7 +52,7 @@ func (m *CT_ExternalCell) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	e.EncodeToken(start)
 	if m.V != nil {
-		sev := xml.StartElement{Name: xml.Name{Local: "x:v"}}
+		sev := xml.StartElement{Name: xml.Name{Local: "ma:v"}}
 		gooxml.AddPreserveSpaceAttr(&sev, *m.V)
 		e.EncodeElement(m.V, sev)
 	}
@@ -90,8 +90,8 @@ lCT_ExternalCell:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "v":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "v"}:
 				m.V = new(string)
 				if err := d.DecodeElement(m.V, &el); err != nil {
 					return err

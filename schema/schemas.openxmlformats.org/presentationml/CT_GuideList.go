@@ -29,7 +29,9 @@ func (m *CT_GuideList) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(start)
 	if m.Guide != nil {
 		seguide := xml.StartElement{Name: xml.Name{Local: "p:guide"}}
-		e.EncodeElement(m.Guide, seguide)
+		for _, c := range m.Guide {
+			e.EncodeElement(c, seguide)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_GuideList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "guide":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "guide"}:
 				tmp := NewCT_Guide()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -28,7 +28,9 @@ func (m *CT_TableGrid) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(start)
 	if m.GridCol != nil {
 		segridCol := xml.StartElement{Name: xml.Name{Local: "a:gridCol"}}
-		e.EncodeElement(m.GridCol, segridCol)
+		for _, c := range m.GridCol {
+			e.EncodeElement(c, segridCol)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_TableGrid:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "gridCol":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gridCol"}:
 				tmp := NewCT_TableCol()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -28,7 +28,9 @@ func (m *CT_Path2DList) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(start)
 	if m.Path != nil {
 		sepath := xml.StartElement{Name: xml.Name{Local: "a:path"}}
-		e.EncodeElement(m.Path, sepath)
+		for _, c := range m.Path {
+			e.EncodeElement(c, sepath)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_Path2DList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "path":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "path"}:
 				tmp := NewCT_Path2D()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

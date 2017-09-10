@@ -29,7 +29,9 @@ func (m *CT_EmbeddedFontList) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(start)
 	if m.EmbeddedFont != nil {
 		seembeddedFont := xml.StartElement{Name: xml.Name{Local: "p:embeddedFont"}}
-		e.EncodeElement(m.EmbeddedFont, seembeddedFont)
+		for _, c := range m.EmbeddedFont {
+			e.EncodeElement(c, seembeddedFont)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_EmbeddedFontList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "embeddedFont":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "embeddedFont"}:
 				tmp := NewCT_EmbeddedFontListEntry()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

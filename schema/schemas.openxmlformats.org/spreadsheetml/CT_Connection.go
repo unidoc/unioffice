@@ -158,27 +158,27 @@ func (m *CT_Connection) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	e.EncodeToken(start)
 	if m.DbPr != nil {
-		sedbPr := xml.StartElement{Name: xml.Name{Local: "x:dbPr"}}
+		sedbPr := xml.StartElement{Name: xml.Name{Local: "ma:dbPr"}}
 		e.EncodeElement(m.DbPr, sedbPr)
 	}
 	if m.OlapPr != nil {
-		seolapPr := xml.StartElement{Name: xml.Name{Local: "x:olapPr"}}
+		seolapPr := xml.StartElement{Name: xml.Name{Local: "ma:olapPr"}}
 		e.EncodeElement(m.OlapPr, seolapPr)
 	}
 	if m.WebPr != nil {
-		sewebPr := xml.StartElement{Name: xml.Name{Local: "x:webPr"}}
+		sewebPr := xml.StartElement{Name: xml.Name{Local: "ma:webPr"}}
 		e.EncodeElement(m.WebPr, sewebPr)
 	}
 	if m.TextPr != nil {
-		setextPr := xml.StartElement{Name: xml.Name{Local: "x:textPr"}}
+		setextPr := xml.StartElement{Name: xml.Name{Local: "ma:textPr"}}
 		e.EncodeElement(m.TextPr, setextPr)
 	}
 	if m.Parameters != nil {
-		separameters := xml.StartElement{Name: xml.Name{Local: "x:parameters"}}
+		separameters := xml.StartElement{Name: xml.Name{Local: "ma:parameters"}}
 		e.EncodeElement(m.Parameters, separameters)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -337,33 +337,33 @@ lCT_Connection:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "dbPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dbPr"}:
 				m.DbPr = NewCT_DbPr()
 				if err := d.DecodeElement(m.DbPr, &el); err != nil {
 					return err
 				}
-			case "olapPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "olapPr"}:
 				m.OlapPr = NewCT_OlapPr()
 				if err := d.DecodeElement(m.OlapPr, &el); err != nil {
 					return err
 				}
-			case "webPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPr"}:
 				m.WebPr = NewCT_WebPr()
 				if err := d.DecodeElement(m.WebPr, &el); err != nil {
 					return err
 				}
-			case "textPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "textPr"}:
 				m.TextPr = NewCT_TextPr()
 				if err := d.DecodeElement(m.TextPr, &el); err != nil {
 					return err
 				}
-			case "parameters":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "parameters"}:
 				m.Parameters = NewCT_Parameters()
 				if err := d.DecodeElement(m.Parameters, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

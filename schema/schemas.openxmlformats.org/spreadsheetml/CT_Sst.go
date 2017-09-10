@@ -42,11 +42,13 @@ func (m *CT_Sst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.Si != nil {
-		sesi := xml.StartElement{Name: xml.Name{Local: "x:si"}}
-		e.EncodeElement(m.Si, sesi)
+		sesi := xml.StartElement{Name: xml.Name{Local: "ma:si"}}
+		for _, c := range m.Si {
+			e.EncodeElement(c, sesi)
+		}
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -81,14 +83,14 @@ lCT_Sst:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "si":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "si"}:
 				tmp := NewCT_Rst()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Si = append(m.Si, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

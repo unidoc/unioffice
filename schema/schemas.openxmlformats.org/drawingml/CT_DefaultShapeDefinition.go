@@ -63,25 +63,25 @@ lCT_DefaultShapeDefinition:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "spPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spPr"}:
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "bodyPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bodyPr"}:
 				if err := d.DecodeElement(m.BodyPr, &el); err != nil {
 					return err
 				}
-			case "lstStyle":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lstStyle"}:
 				if err := d.DecodeElement(m.LstStyle, &el); err != nil {
 					return err
 				}
-			case "style":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "style"}:
 				m.Style = NewCT_ShapeStyle()
 				if err := d.DecodeElement(m.Style, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

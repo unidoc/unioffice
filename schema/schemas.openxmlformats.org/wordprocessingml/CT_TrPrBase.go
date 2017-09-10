@@ -51,51 +51,75 @@ func (m *CT_TrPrBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.CnfStyle != nil {
 		secnfStyle := xml.StartElement{Name: xml.Name{Local: "w:cnfStyle"}}
-		e.EncodeElement(m.CnfStyle, secnfStyle)
+		for _, c := range m.CnfStyle {
+			e.EncodeElement(c, secnfStyle)
+		}
 	}
 	if m.DivId != nil {
 		sedivId := xml.StartElement{Name: xml.Name{Local: "w:divId"}}
-		e.EncodeElement(m.DivId, sedivId)
+		for _, c := range m.DivId {
+			e.EncodeElement(c, sedivId)
+		}
 	}
 	if m.GridBefore != nil {
 		segridBefore := xml.StartElement{Name: xml.Name{Local: "w:gridBefore"}}
-		e.EncodeElement(m.GridBefore, segridBefore)
+		for _, c := range m.GridBefore {
+			e.EncodeElement(c, segridBefore)
+		}
 	}
 	if m.GridAfter != nil {
 		segridAfter := xml.StartElement{Name: xml.Name{Local: "w:gridAfter"}}
-		e.EncodeElement(m.GridAfter, segridAfter)
+		for _, c := range m.GridAfter {
+			e.EncodeElement(c, segridAfter)
+		}
 	}
 	if m.WBefore != nil {
 		sewBefore := xml.StartElement{Name: xml.Name{Local: "w:wBefore"}}
-		e.EncodeElement(m.WBefore, sewBefore)
+		for _, c := range m.WBefore {
+			e.EncodeElement(c, sewBefore)
+		}
 	}
 	if m.WAfter != nil {
 		sewAfter := xml.StartElement{Name: xml.Name{Local: "w:wAfter"}}
-		e.EncodeElement(m.WAfter, sewAfter)
+		for _, c := range m.WAfter {
+			e.EncodeElement(c, sewAfter)
+		}
 	}
 	if m.CantSplit != nil {
 		secantSplit := xml.StartElement{Name: xml.Name{Local: "w:cantSplit"}}
-		e.EncodeElement(m.CantSplit, secantSplit)
+		for _, c := range m.CantSplit {
+			e.EncodeElement(c, secantSplit)
+		}
 	}
 	if m.TrHeight != nil {
 		setrHeight := xml.StartElement{Name: xml.Name{Local: "w:trHeight"}}
-		e.EncodeElement(m.TrHeight, setrHeight)
+		for _, c := range m.TrHeight {
+			e.EncodeElement(c, setrHeight)
+		}
 	}
 	if m.TblHeader != nil {
 		setblHeader := xml.StartElement{Name: xml.Name{Local: "w:tblHeader"}}
-		e.EncodeElement(m.TblHeader, setblHeader)
+		for _, c := range m.TblHeader {
+			e.EncodeElement(c, setblHeader)
+		}
 	}
 	if m.TblCellSpacing != nil {
 		setblCellSpacing := xml.StartElement{Name: xml.Name{Local: "w:tblCellSpacing"}}
-		e.EncodeElement(m.TblCellSpacing, setblCellSpacing)
+		for _, c := range m.TblCellSpacing {
+			e.EncodeElement(c, setblCellSpacing)
+		}
 	}
 	if m.Jc != nil {
 		sejc := xml.StartElement{Name: xml.Name{Local: "w:jc"}}
-		e.EncodeElement(m.Jc, sejc)
+		for _, c := range m.Jc {
+			e.EncodeElement(c, sejc)
+		}
 	}
 	if m.Hidden != nil {
 		sehidden := xml.StartElement{Name: xml.Name{Local: "w:hidden"}}
-		e.EncodeElement(m.Hidden, sehidden)
+		for _, c := range m.Hidden {
+			e.EncodeElement(c, sehidden)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -111,74 +135,74 @@ lCT_TrPrBase:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cnfStyle":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cnfStyle"}:
 				tmp := NewCT_Cnf()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CnfStyle = append(m.CnfStyle, tmp)
-			case "divId":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "divId"}:
 				tmp := NewCT_DecimalNumber()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.DivId = append(m.DivId, tmp)
-			case "gridBefore":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "gridBefore"}:
 				tmp := NewCT_DecimalNumber()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GridBefore = append(m.GridBefore, tmp)
-			case "gridAfter":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "gridAfter"}:
 				tmp := NewCT_DecimalNumber()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GridAfter = append(m.GridAfter, tmp)
-			case "wBefore":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wBefore"}:
 				tmp := NewCT_TblWidth()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.WBefore = append(m.WBefore, tmp)
-			case "wAfter":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wAfter"}:
 				tmp := NewCT_TblWidth()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.WAfter = append(m.WAfter, tmp)
-			case "cantSplit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cantSplit"}:
 				tmp := NewCT_OnOff()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CantSplit = append(m.CantSplit, tmp)
-			case "trHeight":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "trHeight"}:
 				tmp := NewCT_Height()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.TrHeight = append(m.TrHeight, tmp)
-			case "tblHeader":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblHeader"}:
 				tmp := NewCT_OnOff()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.TblHeader = append(m.TblHeader, tmp)
-			case "tblCellSpacing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblCellSpacing"}:
 				tmp := NewCT_TblWidth()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.TblCellSpacing = append(m.TblCellSpacing, tmp)
-			case "jc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "jc"}:
 				tmp := NewCT_JcTable()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Jc = append(m.Jc, tmp)
-			case "hidden":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "hidden"}:
 				tmp := NewCT_OnOff()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

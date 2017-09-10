@@ -43,43 +43,43 @@ lCT_BackgroundFillStyleList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "noFill":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noFill"}:
 				tmpfillproperties := NewEG_FillProperties()
 				tmpfillproperties.NoFill = NewCT_NoFillProperties()
 				if err := d.DecodeElement(tmpfillproperties.NoFill, &el); err != nil {
 					return err
 				}
 				m.EG_FillProperties = append(m.EG_FillProperties, tmpfillproperties)
-			case "solidFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "solidFill"}:
 				tmpfillproperties := NewEG_FillProperties()
 				tmpfillproperties.SolidFill = NewCT_SolidColorFillProperties()
 				if err := d.DecodeElement(tmpfillproperties.SolidFill, &el); err != nil {
 					return err
 				}
 				m.EG_FillProperties = append(m.EG_FillProperties, tmpfillproperties)
-			case "gradFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gradFill"}:
 				tmpfillproperties := NewEG_FillProperties()
 				tmpfillproperties.GradFill = NewCT_GradientFillProperties()
 				if err := d.DecodeElement(tmpfillproperties.GradFill, &el); err != nil {
 					return err
 				}
 				m.EG_FillProperties = append(m.EG_FillProperties, tmpfillproperties)
-			case "blipFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blipFill"}:
 				tmpfillproperties := NewEG_FillProperties()
 				tmpfillproperties.BlipFill = NewCT_BlipFillProperties()
 				if err := d.DecodeElement(tmpfillproperties.BlipFill, &el); err != nil {
 					return err
 				}
 				m.EG_FillProperties = append(m.EG_FillProperties, tmpfillproperties)
-			case "pattFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pattFill"}:
 				tmpfillproperties := NewEG_FillProperties()
 				tmpfillproperties.PattFill = NewCT_PatternFillProperties()
 				if err := d.DecodeElement(tmpfillproperties.PattFill, &el); err != nil {
 					return err
 				}
 				m.EG_FillProperties = append(m.EG_FillProperties, tmpfillproperties)
-			case "grpFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpFill"}:
 				tmpfillproperties := NewEG_FillProperties()
 				tmpfillproperties.GrpFill = NewCT_GroupFillProperties()
 				if err := d.DecodeElement(tmpfillproperties.GrpFill, &el); err != nil {

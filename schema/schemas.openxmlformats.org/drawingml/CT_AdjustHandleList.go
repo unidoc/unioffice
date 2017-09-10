@@ -29,11 +29,15 @@ func (m *CT_AdjustHandleList) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(start)
 	if m.AhXY != nil {
 		seahXY := xml.StartElement{Name: xml.Name{Local: "a:ahXY"}}
-		e.EncodeElement(m.AhXY, seahXY)
+		for _, c := range m.AhXY {
+			e.EncodeElement(c, seahXY)
+		}
 	}
 	if m.AhPolar != nil {
 		seahPolar := xml.StartElement{Name: xml.Name{Local: "a:ahPolar"}}
-		e.EncodeElement(m.AhPolar, seahPolar)
+		for _, c := range m.AhPolar {
+			e.EncodeElement(c, seahPolar)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -49,14 +53,14 @@ lCT_AdjustHandleList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ahXY":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ahXY"}:
 				tmp := NewCT_XYAdjustHandle()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AhXY = append(m.AhXY, tmp)
-			case "ahPolar":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ahPolar"}:
 				tmp := NewCT_PolarAdjustHandle()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

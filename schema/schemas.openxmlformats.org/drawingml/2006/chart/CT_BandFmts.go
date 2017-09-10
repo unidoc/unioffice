@@ -28,7 +28,9 @@ func (m *CT_BandFmts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.BandFmt != nil {
 		sebandFmt := xml.StartElement{Name: xml.Name{Local: "c:bandFmt"}}
-		e.EncodeElement(m.BandFmt, sebandFmt)
+		for _, c := range m.BandFmt {
+			e.EncodeElement(c, sebandFmt)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_BandFmts:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "bandFmt":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "bandFmt"}:
 				tmp := NewCT_BandFmt()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -46,13 +46,13 @@ lEG_TextBulletColor:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "buClrTx":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buClrTx"}:
 				m.BuClrTx = NewCT_TextBulletColorFollowText()
 				if err := d.DecodeElement(m.BuClrTx, &el); err != nil {
 					return err
 				}
-			case "buClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buClr"}:
 				m.BuClr = NewCT_Color()
 				if err := d.DecodeElement(m.BuClr, &el); err != nil {
 					return err

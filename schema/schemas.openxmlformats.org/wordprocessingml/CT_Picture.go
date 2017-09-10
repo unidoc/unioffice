@@ -50,13 +50,13 @@ lCT_Picture:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "movie":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "movie"}:
 				m.Movie = NewCT_Rel()
 				if err := d.DecodeElement(m.Movie, &el); err != nil {
 					return err
 				}
-			case "control":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "control"}:
 				m.Control = NewCT_Control()
 				if err := d.DecodeElement(m.Control, &el); err != nil {
 					return err

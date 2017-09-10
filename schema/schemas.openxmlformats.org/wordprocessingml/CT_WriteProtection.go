@@ -20,6 +20,10 @@ import (
 type CT_WriteProtection struct {
 	// Recommend Write Protection in User Interface
 	RecommendedAttr                *sharedTypes.ST_OnOff
+	AlgorithmNameAttr              *string
+	HashValueAttr                  *string
+	SaltValueAttr                  *string
+	SpinCountAttr                  *int64
 	CryptProviderTypeAttr          sharedTypes.ST_CryptProv
 	CryptAlgorithmClassAttr        sharedTypes.ST_AlgClass
 	CryptAlgorithmTypeAttr         sharedTypes.ST_AlgType
@@ -43,6 +47,22 @@ func (m *CT_WriteProtection) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	if m.RecommendedAttr != nil {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:recommended"},
 			Value: fmt.Sprintf("%v", *m.RecommendedAttr)})
+	}
+	if m.AlgorithmNameAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:algorithmName"},
+			Value: fmt.Sprintf("%v", *m.AlgorithmNameAttr)})
+	}
+	if m.HashValueAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:hashValue"},
+			Value: fmt.Sprintf("%v", *m.HashValueAttr)})
+	}
+	if m.SaltValueAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:saltValue"},
+			Value: fmt.Sprintf("%v", *m.SaltValueAttr)})
+	}
+	if m.SpinCountAttr != nil {
+		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:spinCount"},
+			Value: fmt.Sprintf("%v", *m.SpinCountAttr)})
 	}
 	if m.CryptProviderTypeAttr != sharedTypes.ST_CryptProvUnset {
 		attr, err := m.CryptProviderTypeAttr.MarshalXMLAttr(xml.Name{Local: "w:cryptProviderType"})
@@ -115,6 +135,34 @@ func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.RecommendedAttr = &parsed
+		}
+		if attr.Name.Local == "algorithmName" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.AlgorithmNameAttr = &parsed
+		}
+		if attr.Name.Local == "hashValue" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.HashValueAttr = &parsed
+		}
+		if attr.Name.Local == "saltValue" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.SaltValueAttr = &parsed
+		}
+		if attr.Name.Local == "spinCount" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
+			if err != nil {
+				return err
+			}
+			m.SpinCountAttr = &parsed
 		}
 		if attr.Name.Local == "cryptProviderType" {
 			m.CryptProviderTypeAttr.UnmarshalXMLAttr(attr)

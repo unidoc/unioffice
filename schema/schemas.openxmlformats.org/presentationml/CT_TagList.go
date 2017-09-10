@@ -29,7 +29,9 @@ func (m *CT_TagList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Tag != nil {
 		setag := xml.StartElement{Name: xml.Name{Local: "p:tag"}}
-		e.EncodeElement(m.Tag, setag)
+		for _, c := range m.Tag {
+			e.EncodeElement(c, setag)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_TagList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tag":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tag"}:
 				tmp := NewCT_StringTag()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

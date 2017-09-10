@@ -27,12 +27,12 @@ func NewPivotTableDefinition() *PivotTableDefinition {
 
 func (m *PivotTableDefinition) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns"}, Value: "http://schemas.openxmlformats.org/spreadsheetml/2006/main"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:ma"}, Value: "http://schemas.openxmlformats.org/spreadsheetml/2006/main"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:r"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/relationships"})
-	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:sh"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
-	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:x"}, Value: "http://schemas.openxmlformats.org/spreadsheetml/2006/main"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:s"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:xdr"}, Value: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:xml"}, Value: "http://www.w3.org/XML/1998/namespace"})
-	start.Name.Local = "x:pivotTableDefinition"
+	start.Name.Local = "ma:pivotTableDefinition"
 	return m.CT_pivotTableDefinition.MarshalXML(e, start)
 }
 
@@ -533,87 +533,87 @@ lPivotTableDefinition:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "location":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "location"}:
 				if err := d.DecodeElement(m.Location, &el); err != nil {
 					return err
 				}
-			case "pivotFields":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotFields"}:
 				m.PivotFields = NewCT_PivotFields()
 				if err := d.DecodeElement(m.PivotFields, &el); err != nil {
 					return err
 				}
-			case "rowFields":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rowFields"}:
 				m.RowFields = NewCT_RowFields()
 				if err := d.DecodeElement(m.RowFields, &el); err != nil {
 					return err
 				}
-			case "rowItems":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rowItems"}:
 				m.RowItems = NewCT_rowItems()
 				if err := d.DecodeElement(m.RowItems, &el); err != nil {
 					return err
 				}
-			case "colFields":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "colFields"}:
 				m.ColFields = NewCT_ColFields()
 				if err := d.DecodeElement(m.ColFields, &el); err != nil {
 					return err
 				}
-			case "colItems":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "colItems"}:
 				m.ColItems = NewCT_colItems()
 				if err := d.DecodeElement(m.ColItems, &el); err != nil {
 					return err
 				}
-			case "pageFields":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageFields"}:
 				m.PageFields = NewCT_PageFields()
 				if err := d.DecodeElement(m.PageFields, &el); err != nil {
 					return err
 				}
-			case "dataFields":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataFields"}:
 				m.DataFields = NewCT_DataFields()
 				if err := d.DecodeElement(m.DataFields, &el); err != nil {
 					return err
 				}
-			case "formats":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "formats"}:
 				m.Formats = NewCT_Formats()
 				if err := d.DecodeElement(m.Formats, &el); err != nil {
 					return err
 				}
-			case "conditionalFormats":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "conditionalFormats"}:
 				m.ConditionalFormats = NewCT_ConditionalFormats()
 				if err := d.DecodeElement(m.ConditionalFormats, &el); err != nil {
 					return err
 				}
-			case "chartFormats":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "chartFormats"}:
 				m.ChartFormats = NewCT_ChartFormats()
 				if err := d.DecodeElement(m.ChartFormats, &el); err != nil {
 					return err
 				}
-			case "pivotHierarchies":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotHierarchies"}:
 				m.PivotHierarchies = NewCT_PivotHierarchies()
 				if err := d.DecodeElement(m.PivotHierarchies, &el); err != nil {
 					return err
 				}
-			case "pivotTableStyleInfo":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotTableStyleInfo"}:
 				m.PivotTableStyleInfo = NewCT_PivotTableStyle()
 				if err := d.DecodeElement(m.PivotTableStyleInfo, &el); err != nil {
 					return err
 				}
-			case "filters":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "filters"}:
 				m.Filters = NewCT_PivotFilters()
 				if err := d.DecodeElement(m.Filters, &el); err != nil {
 					return err
 				}
-			case "rowHierarchiesUsage":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rowHierarchiesUsage"}:
 				m.RowHierarchiesUsage = NewCT_RowHierarchiesUsage()
 				if err := d.DecodeElement(m.RowHierarchiesUsage, &el); err != nil {
 					return err
 				}
-			case "colHierarchiesUsage":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "colHierarchiesUsage"}:
 				m.ColHierarchiesUsage = NewCT_ColHierarchiesUsage()
 				if err := d.DecodeElement(m.ColHierarchiesUsage, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

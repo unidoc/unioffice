@@ -70,7 +70,9 @@ func (m *CT_AbstractNum) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.Lvl != nil {
 		selvl := xml.StartElement{Name: xml.Name{Local: "w:lvl"}}
-		e.EncodeElement(m.Lvl, selvl)
+		for _, c := range m.Lvl {
+			e.EncodeElement(c, selvl)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -95,38 +97,38 @@ lCT_AbstractNum:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "nsid":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "nsid"}:
 				m.Nsid = NewCT_LongHexNumber()
 				if err := d.DecodeElement(m.Nsid, &el); err != nil {
 					return err
 				}
-			case "multiLevelType":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "multiLevelType"}:
 				m.MultiLevelType = NewCT_MultiLevelType()
 				if err := d.DecodeElement(m.MultiLevelType, &el); err != nil {
 					return err
 				}
-			case "tmpl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tmpl"}:
 				m.Tmpl = NewCT_LongHexNumber()
 				if err := d.DecodeElement(m.Tmpl, &el); err != nil {
 					return err
 				}
-			case "name":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "name"}:
 				m.Name = NewCT_String()
 				if err := d.DecodeElement(m.Name, &el); err != nil {
 					return err
 				}
-			case "styleLink":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "styleLink"}:
 				m.StyleLink = NewCT_String()
 				if err := d.DecodeElement(m.StyleLink, &el); err != nil {
 					return err
 				}
-			case "numStyleLink":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numStyleLink"}:
 				m.NumStyleLink = NewCT_String()
 				if err := d.DecodeElement(m.NumStyleLink, &el); err != nil {
 					return err
 				}
-			case "lvl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lvl"}:
 				tmp := NewCT_Lvl()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

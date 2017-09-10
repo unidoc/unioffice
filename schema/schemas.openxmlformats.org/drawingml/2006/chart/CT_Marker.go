@@ -60,23 +60,23 @@ lCT_Marker:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "symbol":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "symbol"}:
 				m.Symbol = NewCT_MarkerStyle()
 				if err := d.DecodeElement(m.Symbol, &el); err != nil {
 					return err
 				}
-			case "size":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "size"}:
 				m.Size = NewCT_MarkerSize()
 				if err := d.DecodeElement(m.Size, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"}:
 				m.SpPr = drawingml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

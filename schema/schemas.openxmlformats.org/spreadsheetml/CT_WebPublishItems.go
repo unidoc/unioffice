@@ -34,8 +34,10 @@ func (m *CT_WebPublishItems) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sewebPublishItem := xml.StartElement{Name: xml.Name{Local: "x:webPublishItem"}}
-	e.EncodeElement(m.WebPublishItem, sewebPublishItem)
+	sewebPublishItem := xml.StartElement{Name: xml.Name{Local: "ma:webPublishItem"}}
+	for _, c := range m.WebPublishItem {
+		e.EncodeElement(c, sewebPublishItem)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_WebPublishItems:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "webPublishItem":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPublishItem"}:
 				tmp := NewCT_WebPublishItem()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

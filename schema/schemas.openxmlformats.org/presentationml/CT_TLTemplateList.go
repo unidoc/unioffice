@@ -29,7 +29,9 @@ func (m *CT_TLTemplateList) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(start)
 	if m.Tmpl != nil {
 		setmpl := xml.StartElement{Name: xml.Name{Local: "p:tmpl"}}
-		e.EncodeElement(m.Tmpl, setmpl)
+		for _, c := range m.Tmpl {
+			e.EncodeElement(c, setmpl)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_TLTemplateList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tmpl":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tmpl"}:
 				tmp := NewCT_TLTemplate()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -35,8 +35,10 @@ func (m *CT_DataRefs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.DataRef != nil {
-		sedataRef := xml.StartElement{Name: xml.Name{Local: "x:dataRef"}}
-		e.EncodeElement(m.DataRef, sedataRef)
+		sedataRef := xml.StartElement{Name: xml.Name{Local: "ma:dataRef"}}
+		for _, c := range m.DataRef {
+			e.EncodeElement(c, sedataRef)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -62,8 +64,8 @@ lCT_DataRefs:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "dataRef":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataRef"}:
 				tmp := NewCT_DataRef()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

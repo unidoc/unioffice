@@ -39,7 +39,9 @@ func (m *CT_Num) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeElement(m.AbstractNumId, seabstractNumId)
 	if m.LvlOverride != nil {
 		selvlOverride := xml.StartElement{Name: xml.Name{Local: "w:lvlOverride"}}
-		e.EncodeElement(m.LvlOverride, selvlOverride)
+		for _, c := range m.LvlOverride {
+			e.EncodeElement(c, selvlOverride)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -65,12 +67,12 @@ lCT_Num:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "abstractNumId":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "abstractNumId"}:
 				if err := d.DecodeElement(m.AbstractNumId, &el); err != nil {
 					return err
 				}
-			case "lvlOverride":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lvlOverride"}:
 				tmp := NewCT_NumLvl()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

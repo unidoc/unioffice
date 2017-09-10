@@ -261,88 +261,88 @@ lCT_TextParagraphProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "lnSpc":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnSpc"}:
 				m.LnSpc = NewCT_TextSpacing()
 				if err := d.DecodeElement(m.LnSpc, &el); err != nil {
 					return err
 				}
-			case "spcBef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spcBef"}:
 				m.SpcBef = NewCT_TextSpacing()
 				if err := d.DecodeElement(m.SpcBef, &el); err != nil {
 					return err
 				}
-			case "spcAft":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spcAft"}:
 				m.SpcAft = NewCT_TextSpacing()
 				if err := d.DecodeElement(m.SpcAft, &el); err != nil {
 					return err
 				}
-			case "buClrTx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buClrTx"}:
 				m.BuClrTx = NewCT_TextBulletColorFollowText()
 				if err := d.DecodeElement(m.BuClrTx, &el); err != nil {
 					return err
 				}
-			case "buClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buClr"}:
 				m.BuClr = NewCT_Color()
 				if err := d.DecodeElement(m.BuClr, &el); err != nil {
 					return err
 				}
-			case "buSzTx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buSzTx"}:
 				m.BuSzTx = NewCT_TextBulletSizeFollowText()
 				if err := d.DecodeElement(m.BuSzTx, &el); err != nil {
 					return err
 				}
-			case "buSzPct":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buSzPct"}:
 				m.BuSzPct = NewCT_TextBulletSizePercent()
 				if err := d.DecodeElement(m.BuSzPct, &el); err != nil {
 					return err
 				}
-			case "buSzPts":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buSzPts"}:
 				m.BuSzPts = NewCT_TextBulletSizePoint()
 				if err := d.DecodeElement(m.BuSzPts, &el); err != nil {
 					return err
 				}
-			case "buFontTx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buFontTx"}:
 				m.BuFontTx = NewCT_TextBulletTypefaceFollowText()
 				if err := d.DecodeElement(m.BuFontTx, &el); err != nil {
 					return err
 				}
-			case "buFont":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buFont"}:
 				m.BuFont = NewCT_TextFont()
 				if err := d.DecodeElement(m.BuFont, &el); err != nil {
 					return err
 				}
-			case "buNone":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buNone"}:
 				m.BuNone = NewCT_TextNoBullet()
 				if err := d.DecodeElement(m.BuNone, &el); err != nil {
 					return err
 				}
-			case "buAutoNum":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buAutoNum"}:
 				m.BuAutoNum = NewCT_TextAutonumberBullet()
 				if err := d.DecodeElement(m.BuAutoNum, &el); err != nil {
 					return err
 				}
-			case "buChar":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buChar"}:
 				m.BuChar = NewCT_TextCharBullet()
 				if err := d.DecodeElement(m.BuChar, &el); err != nil {
 					return err
 				}
-			case "buBlip":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buBlip"}:
 				m.BuBlip = NewCT_TextBlipBullet()
 				if err := d.DecodeElement(m.BuBlip, &el); err != nil {
 					return err
 				}
-			case "tabLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tabLst"}:
 				m.TabLst = NewCT_TextTabStopList()
 				if err := d.DecodeElement(m.TabLst, &el); err != nil {
 					return err
 				}
-			case "defRPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "defRPr"}:
 				m.DefRPr = NewCT_TextCharacterProperties()
 				if err := d.DecodeElement(m.DefRPr, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -104,41 +104,41 @@ lCT_SlideMaster:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cSld":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cSld"}:
 				if err := d.DecodeElement(m.CSld, &el); err != nil {
 					return err
 				}
-			case "clrMap":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "clrMap"}:
 				if err := d.DecodeElement(m.ClrMap, &el); err != nil {
 					return err
 				}
-			case "sldLayoutIdLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldLayoutIdLst"}:
 				m.SldLayoutIdLst = NewCT_SlideLayoutIdList()
 				if err := d.DecodeElement(m.SldLayoutIdLst, &el); err != nil {
 					return err
 				}
-			case "transition":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "transition"}:
 				m.Transition = NewCT_SlideTransition()
 				if err := d.DecodeElement(m.Transition, &el); err != nil {
 					return err
 				}
-			case "timing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "timing"}:
 				m.Timing = NewCT_SlideTiming()
 				if err := d.DecodeElement(m.Timing, &el); err != nil {
 					return err
 				}
-			case "hf":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "hf"}:
 				m.Hf = NewCT_HeaderFooter()
 				if err := d.DecodeElement(m.Hf, &el); err != nil {
 					return err
 				}
-			case "txStyles":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "txStyles"}:
 				m.TxStyles = NewCT_SlideMasterTextStyles()
 				if err := d.DecodeElement(m.TxStyles, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionListModify()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

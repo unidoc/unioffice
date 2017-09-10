@@ -35,8 +35,10 @@ func (m *CT_PivotFilters) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	e.EncodeToken(start)
 	if m.Filter != nil {
-		sefilter := xml.StartElement{Name: xml.Name{Local: "x:filter"}}
-		e.EncodeElement(m.Filter, sefilter)
+		sefilter := xml.StartElement{Name: xml.Name{Local: "ma:filter"}}
+		for _, c := range m.Filter {
+			e.EncodeElement(c, sefilter)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -62,8 +64,8 @@ lCT_PivotFilters:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "filter":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "filter"}:
 				tmp := NewCT_PivotFilter()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

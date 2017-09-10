@@ -68,8 +68,8 @@ lCT_LightRig:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rot":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "rot"}:
 				m.Rot = NewCT_SphereCoords()
 				if err := d.DecodeElement(m.Rot, &el); err != nil {
 					return err

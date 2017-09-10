@@ -48,13 +48,13 @@ lCT_NonVisualGroupDrawingShapeProps:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "grpSpLocks":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpSpLocks"}:
 				m.GrpSpLocks = NewCT_GroupLocking()
 				if err := d.DecodeElement(m.GrpSpLocks, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

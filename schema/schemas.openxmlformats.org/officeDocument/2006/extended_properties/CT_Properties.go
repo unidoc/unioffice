@@ -209,138 +209,138 @@ lCT_Properties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "Template":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "Template"}:
 				m.Template = new(string)
 				if err := d.DecodeElement(m.Template, &el); err != nil {
 					return err
 				}
-			case "Manager":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "Manager"}:
 				m.Manager = new(string)
 				if err := d.DecodeElement(m.Manager, &el); err != nil {
 					return err
 				}
-			case "Company":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "Company"}:
 				m.Company = new(string)
 				if err := d.DecodeElement(m.Company, &el); err != nil {
 					return err
 				}
-			case "Pages":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "Pages"}:
 				m.Pages = new(int32)
 				if err := d.DecodeElement(m.Pages, &el); err != nil {
 					return err
 				}
-			case "Words":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "Words"}:
 				m.Words = new(int32)
 				if err := d.DecodeElement(m.Words, &el); err != nil {
 					return err
 				}
-			case "Characters":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "Characters"}:
 				m.Characters = new(int32)
 				if err := d.DecodeElement(m.Characters, &el); err != nil {
 					return err
 				}
-			case "PresentationFormat":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "PresentationFormat"}:
 				m.PresentationFormat = new(string)
 				if err := d.DecodeElement(m.PresentationFormat, &el); err != nil {
 					return err
 				}
-			case "Lines":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "Lines"}:
 				m.Lines = new(int32)
 				if err := d.DecodeElement(m.Lines, &el); err != nil {
 					return err
 				}
-			case "Paragraphs":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "Paragraphs"}:
 				m.Paragraphs = new(int32)
 				if err := d.DecodeElement(m.Paragraphs, &el); err != nil {
 					return err
 				}
-			case "Slides":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "Slides"}:
 				m.Slides = new(int32)
 				if err := d.DecodeElement(m.Slides, &el); err != nil {
 					return err
 				}
-			case "Notes":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "Notes"}:
 				m.Notes = new(int32)
 				if err := d.DecodeElement(m.Notes, &el); err != nil {
 					return err
 				}
-			case "TotalTime":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "TotalTime"}:
 				m.TotalTime = new(int32)
 				if err := d.DecodeElement(m.TotalTime, &el); err != nil {
 					return err
 				}
-			case "HiddenSlides":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "HiddenSlides"}:
 				m.HiddenSlides = new(int32)
 				if err := d.DecodeElement(m.HiddenSlides, &el); err != nil {
 					return err
 				}
-			case "MMClips":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "MMClips"}:
 				m.MMClips = new(int32)
 				if err := d.DecodeElement(m.MMClips, &el); err != nil {
 					return err
 				}
-			case "ScaleCrop":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "ScaleCrop"}:
 				m.ScaleCrop = new(bool)
 				if err := d.DecodeElement(m.ScaleCrop, &el); err != nil {
 					return err
 				}
-			case "HeadingPairs":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "HeadingPairs"}:
 				m.HeadingPairs = NewCT_VectorVariant()
 				if err := d.DecodeElement(m.HeadingPairs, &el); err != nil {
 					return err
 				}
-			case "TitlesOfParts":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "TitlesOfParts"}:
 				m.TitlesOfParts = NewCT_VectorLpstr()
 				if err := d.DecodeElement(m.TitlesOfParts, &el); err != nil {
 					return err
 				}
-			case "LinksUpToDate":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "LinksUpToDate"}:
 				m.LinksUpToDate = new(bool)
 				if err := d.DecodeElement(m.LinksUpToDate, &el); err != nil {
 					return err
 				}
-			case "CharactersWithSpaces":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "CharactersWithSpaces"}:
 				m.CharactersWithSpaces = new(int32)
 				if err := d.DecodeElement(m.CharactersWithSpaces, &el); err != nil {
 					return err
 				}
-			case "SharedDoc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "SharedDoc"}:
 				m.SharedDoc = new(bool)
 				if err := d.DecodeElement(m.SharedDoc, &el); err != nil {
 					return err
 				}
-			case "HyperlinkBase":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "HyperlinkBase"}:
 				m.HyperlinkBase = new(string)
 				if err := d.DecodeElement(m.HyperlinkBase, &el); err != nil {
 					return err
 				}
-			case "HLinks":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "HLinks"}:
 				m.HLinks = NewCT_VectorVariant()
 				if err := d.DecodeElement(m.HLinks, &el); err != nil {
 					return err
 				}
-			case "HyperlinksChanged":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "HyperlinksChanged"}:
 				m.HyperlinksChanged = new(bool)
 				if err := d.DecodeElement(m.HyperlinksChanged, &el); err != nil {
 					return err
 				}
-			case "DigSig":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "DigSig"}:
 				m.DigSig = NewCT_DigSigBlob()
 				if err := d.DecodeElement(m.DigSig, &el); err != nil {
 					return err
 				}
-			case "Application":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "Application"}:
 				m.Application = new(string)
 				if err := d.DecodeElement(m.Application, &el); err != nil {
 					return err
 				}
-			case "AppVersion":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "AppVersion"}:
 				m.AppVersion = new(string)
 				if err := d.DecodeElement(m.AppVersion, &el); err != nil {
 					return err
 				}
-			case "DocSecurity":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties", Local: "DocSecurity"}:
 				m.DocSecurity = new(int32)
 				if err := d.DecodeElement(m.DocSecurity, &el); err != nil {
 					return err

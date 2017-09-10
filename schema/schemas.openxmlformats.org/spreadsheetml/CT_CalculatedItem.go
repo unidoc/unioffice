@@ -43,10 +43,10 @@ func (m *CT_CalculatedItem) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.FormulaAttr)})
 	}
 	e.EncodeToken(start)
-	sepivotArea := xml.StartElement{Name: xml.Name{Local: "x:pivotArea"}}
+	sepivotArea := xml.StartElement{Name: xml.Name{Local: "ma:pivotArea"}}
 	e.EncodeElement(m.PivotArea, sepivotArea)
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -81,12 +81,12 @@ lCT_CalculatedItem:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pivotArea":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotArea"}:
 				if err := d.DecodeElement(m.PivotArea, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

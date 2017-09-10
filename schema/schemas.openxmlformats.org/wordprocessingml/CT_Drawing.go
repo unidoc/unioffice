@@ -13,13 +13,11 @@ import (
 	"encoding/xml"
 	"fmt"
 	"log"
-
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
 )
 
 type CT_Drawing struct {
-	Anchor []*wordprocessingDrawing.Anchor
-	Inline []*wordprocessingDrawing.Inline
+	Anchor []*WdAnchor
+	Inline []*WdInline
 }
 
 func NewCT_Drawing() *CT_Drawing {
@@ -31,11 +29,15 @@ func (m *CT_Drawing) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Anchor != nil {
 		seanchor := xml.StartElement{Name: xml.Name{Local: "wp:anchor"}}
-		e.EncodeElement(m.Anchor, seanchor)
+		for _, c := range m.Anchor {
+			e.EncodeElement(c, seanchor)
+		}
 	}
 	if m.Inline != nil {
 		seinline := xml.StartElement{Name: xml.Name{Local: "wp:inline"}}
-		e.EncodeElement(m.Inline, seinline)
+		for _, c := range m.Inline {
+			e.EncodeElement(c, seinline)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -51,15 +53,15 @@ lCT_Drawing:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "anchor":
-				tmp := wordprocessingDrawing.NewAnchor()
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "anchor"}:
+				tmp := NewWdAnchor()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Anchor = append(m.Anchor, tmp)
-			case "inline":
-				tmp := wordprocessingDrawing.NewInline()
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "inline"}:
+				tmp := NewWdInline()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}

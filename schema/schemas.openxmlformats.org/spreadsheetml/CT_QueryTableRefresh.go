@@ -77,18 +77,18 @@ func (m *CT_QueryTableRefresh) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.UnboundColumnsRightAttr)})
 	}
 	e.EncodeToken(start)
-	sequeryTableFields := xml.StartElement{Name: xml.Name{Local: "x:queryTableFields"}}
+	sequeryTableFields := xml.StartElement{Name: xml.Name{Local: "ma:queryTableFields"}}
 	e.EncodeElement(m.QueryTableFields, sequeryTableFields)
 	if m.QueryTableDeletedFields != nil {
-		sequeryTableDeletedFields := xml.StartElement{Name: xml.Name{Local: "x:queryTableDeletedFields"}}
+		sequeryTableDeletedFields := xml.StartElement{Name: xml.Name{Local: "ma:queryTableDeletedFields"}}
 		e.EncodeElement(m.QueryTableDeletedFields, sequeryTableDeletedFields)
 	}
 	if m.SortState != nil {
-		sesortState := xml.StartElement{Name: xml.Name{Local: "x:sortState"}}
+		sesortState := xml.StartElement{Name: xml.Name{Local: "ma:sortState"}}
 		e.EncodeElement(m.SortState, sesortState)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -161,22 +161,22 @@ lCT_QueryTableRefresh:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "queryTableFields":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "queryTableFields"}:
 				if err := d.DecodeElement(m.QueryTableFields, &el); err != nil {
 					return err
 				}
-			case "queryTableDeletedFields":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "queryTableDeletedFields"}:
 				m.QueryTableDeletedFields = NewCT_QueryTableDeletedFields()
 				if err := d.DecodeElement(m.QueryTableDeletedFields, &el); err != nil {
 					return err
 				}
-			case "sortState":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sortState"}:
 				m.SortState = NewCT_SortState()
 				if err := d.DecodeElement(m.SortState, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

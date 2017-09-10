@@ -61,43 +61,43 @@ lViewPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "normalViewPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "normalViewPr"}:
 				m.NormalViewPr = NewCT_NormalViewProperties()
 				if err := d.DecodeElement(m.NormalViewPr, &el); err != nil {
 					return err
 				}
-			case "slideViewPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "slideViewPr"}:
 				m.SlideViewPr = NewCT_SlideViewProperties()
 				if err := d.DecodeElement(m.SlideViewPr, &el); err != nil {
 					return err
 				}
-			case "outlineViewPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "outlineViewPr"}:
 				m.OutlineViewPr = NewCT_OutlineViewProperties()
 				if err := d.DecodeElement(m.OutlineViewPr, &el); err != nil {
 					return err
 				}
-			case "notesTextViewPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "notesTextViewPr"}:
 				m.NotesTextViewPr = NewCT_NotesTextViewProperties()
 				if err := d.DecodeElement(m.NotesTextViewPr, &el); err != nil {
 					return err
 				}
-			case "sorterViewPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sorterViewPr"}:
 				m.SorterViewPr = NewCT_SlideSorterViewProperties()
 				if err := d.DecodeElement(m.SorterViewPr, &el); err != nil {
 					return err
 				}
-			case "notesViewPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "notesViewPr"}:
 				m.NotesViewPr = NewCT_NotesViewProperties()
 				if err := d.DecodeElement(m.NotesViewPr, &el); err != nil {
 					return err
 				}
-			case "gridSpacing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "gridSpacing"}:
 				m.GridSpacing = drawingml.NewCT_PositiveSize2D()
 				if err := d.DecodeElement(m.GridSpacing, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

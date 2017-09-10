@@ -50,13 +50,13 @@ lGlossaryDocument:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "background":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "background"}:
 				m.Background = NewCT_Background()
 				if err := d.DecodeElement(m.Background, &el); err != nil {
 					return err
 				}
-			case "docParts":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docParts"}:
 				m.DocParts = NewCT_DocParts()
 				if err := d.DecodeElement(m.DocParts, &el); err != nil {
 					return err

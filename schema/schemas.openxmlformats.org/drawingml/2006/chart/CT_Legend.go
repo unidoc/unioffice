@@ -40,7 +40,9 @@ func (m *CT_Legend) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.LegendEntry != nil {
 		selegendEntry := xml.StartElement{Name: xml.Name{Local: "c:legendEntry"}}
-		e.EncodeElement(m.LegendEntry, selegendEntry)
+		for _, c := range m.LegendEntry {
+			e.EncodeElement(c, selegendEntry)
+		}
 	}
 	if m.Layout != nil {
 		selayout := xml.StartElement{Name: xml.Name{Local: "c:layout"}}
@@ -76,39 +78,39 @@ lCT_Legend:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "legendPos":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "legendPos"}:
 				m.LegendPos = NewCT_LegendPos()
 				if err := d.DecodeElement(m.LegendPos, &el); err != nil {
 					return err
 				}
-			case "legendEntry":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "legendEntry"}:
 				tmp := NewCT_LegendEntry()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.LegendEntry = append(m.LegendEntry, tmp)
-			case "layout":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "layout"}:
 				m.Layout = NewCT_Layout()
 				if err := d.DecodeElement(m.Layout, &el); err != nil {
 					return err
 				}
-			case "overlay":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "overlay"}:
 				m.Overlay = NewCT_Boolean()
 				if err := d.DecodeElement(m.Overlay, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"}:
 				m.SpPr = drawingml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "txPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "txPr"}:
 				m.TxPr = drawingml.NewCT_TextBody()
 				if err := d.DecodeElement(m.TxPr, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

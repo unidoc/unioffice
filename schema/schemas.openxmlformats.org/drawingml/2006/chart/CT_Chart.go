@@ -103,67 +103,67 @@ lCT_Chart:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "title":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "title"}:
 				m.Title = NewCT_Title()
 				if err := d.DecodeElement(m.Title, &el); err != nil {
 					return err
 				}
-			case "autoTitleDeleted":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "autoTitleDeleted"}:
 				m.AutoTitleDeleted = NewCT_Boolean()
 				if err := d.DecodeElement(m.AutoTitleDeleted, &el); err != nil {
 					return err
 				}
-			case "pivotFmts":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pivotFmts"}:
 				m.PivotFmts = NewCT_PivotFmts()
 				if err := d.DecodeElement(m.PivotFmts, &el); err != nil {
 					return err
 				}
-			case "view3D":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "view3D"}:
 				m.View3D = NewCT_View3D()
 				if err := d.DecodeElement(m.View3D, &el); err != nil {
 					return err
 				}
-			case "floor":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "floor"}:
 				m.Floor = NewCT_Surface()
 				if err := d.DecodeElement(m.Floor, &el); err != nil {
 					return err
 				}
-			case "sideWall":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "sideWall"}:
 				m.SideWall = NewCT_Surface()
 				if err := d.DecodeElement(m.SideWall, &el); err != nil {
 					return err
 				}
-			case "backWall":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "backWall"}:
 				m.BackWall = NewCT_Surface()
 				if err := d.DecodeElement(m.BackWall, &el); err != nil {
 					return err
 				}
-			case "plotArea":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "plotArea"}:
 				if err := d.DecodeElement(m.PlotArea, &el); err != nil {
 					return err
 				}
-			case "legend":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "legend"}:
 				m.Legend = NewCT_Legend()
 				if err := d.DecodeElement(m.Legend, &el); err != nil {
 					return err
 				}
-			case "plotVisOnly":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "plotVisOnly"}:
 				m.PlotVisOnly = NewCT_Boolean()
 				if err := d.DecodeElement(m.PlotVisOnly, &el); err != nil {
 					return err
 				}
-			case "dispBlanksAs":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dispBlanksAs"}:
 				m.DispBlanksAs = NewCT_DispBlanksAs()
 				if err := d.DecodeElement(m.DispBlanksAs, &el); err != nil {
 					return err
 				}
-			case "showDLblsOverMax":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "showDLblsOverMax"}:
 				m.ShowDLblsOverMax = NewCT_Boolean()
 				if err := d.DecodeElement(m.ShowDLblsOverMax, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

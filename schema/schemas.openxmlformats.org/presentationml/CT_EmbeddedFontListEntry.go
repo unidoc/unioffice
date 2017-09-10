@@ -70,27 +70,27 @@ lCT_EmbeddedFontListEntry:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "font":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "font"}:
 				if err := d.DecodeElement(m.Font, &el); err != nil {
 					return err
 				}
-			case "regular":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "regular"}:
 				m.Regular = NewCT_EmbeddedFontDataId()
 				if err := d.DecodeElement(m.Regular, &el); err != nil {
 					return err
 				}
-			case "bold":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bold"}:
 				m.Bold = NewCT_EmbeddedFontDataId()
 				if err := d.DecodeElement(m.Bold, &el); err != nil {
 					return err
 				}
-			case "italic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "italic"}:
 				m.Italic = NewCT_EmbeddedFontDataId()
 				if err := d.DecodeElement(m.Italic, &el); err != nil {
 					return err
 				}
-			case "boldItalic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "boldItalic"}:
 				m.BoldItalic = NewCT_EmbeddedFontDataId()
 				if err := d.DecodeElement(m.BoldItalic, &el); err != nil {
 					return err

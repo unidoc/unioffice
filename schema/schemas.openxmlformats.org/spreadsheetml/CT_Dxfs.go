@@ -35,8 +35,10 @@ func (m *CT_Dxfs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.Dxf != nil {
-		sedxf := xml.StartElement{Name: xml.Name{Local: "x:dxf"}}
-		e.EncodeElement(m.Dxf, sedxf)
+		sedxf := xml.StartElement{Name: xml.Name{Local: "ma:dxf"}}
+		for _, c := range m.Dxf {
+			e.EncodeElement(c, sedxf)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -62,8 +64,8 @@ lCT_Dxfs:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "dxf":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dxf"}:
 				tmp := NewCT_Dxf()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

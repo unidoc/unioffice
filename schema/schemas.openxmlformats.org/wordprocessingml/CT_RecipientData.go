@@ -56,17 +56,17 @@ lCT_RecipientData:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "active":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "active"}:
 				m.Active = NewCT_OnOff()
 				if err := d.DecodeElement(m.Active, &el); err != nil {
 					return err
 				}
-			case "column":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "column"}:
 				if err := d.DecodeElement(m.Column, &el); err != nil {
 					return err
 				}
-			case "uniqueTag":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "uniqueTag"}:
 				if err := d.DecodeElement(m.UniqueTag, &el); err != nil {
 					return err
 				}

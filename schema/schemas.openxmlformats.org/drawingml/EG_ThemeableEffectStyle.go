@@ -46,13 +46,13 @@ lEG_ThemeableEffectStyle:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "effect":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effect"}:
 				m.Effect = NewCT_EffectProperties()
 				if err := d.DecodeElement(m.Effect, &el); err != nil {
 					return err
 				}
-			case "effectRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectRef"}:
 				m.EffectRef = NewCT_StyleMatrixReference()
 				if err := d.DecodeElement(m.EffectRef, &el); err != nil {
 					return err

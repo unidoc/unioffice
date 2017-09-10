@@ -29,11 +29,11 @@ func NewCT_Colors() *CT_Colors {
 func (m *CT_Colors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.IndexedColors != nil {
-		seindexedColors := xml.StartElement{Name: xml.Name{Local: "x:indexedColors"}}
+		seindexedColors := xml.StartElement{Name: xml.Name{Local: "ma:indexedColors"}}
 		e.EncodeElement(m.IndexedColors, seindexedColors)
 	}
 	if m.MruColors != nil {
-		semruColors := xml.StartElement{Name: xml.Name{Local: "x:mruColors"}}
+		semruColors := xml.StartElement{Name: xml.Name{Local: "ma:mruColors"}}
 		e.EncodeElement(m.MruColors, semruColors)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -50,13 +50,13 @@ lCT_Colors:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "indexedColors":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "indexedColors"}:
 				m.IndexedColors = NewCT_IndexedColors()
 				if err := d.DecodeElement(m.IndexedColors, &el); err != nil {
 					return err
 				}
-			case "mruColors":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mruColors"}:
 				m.MruColors = NewCT_MRUColors()
 				if err := d.DecodeElement(m.MruColors, &el); err != nil {
 					return err

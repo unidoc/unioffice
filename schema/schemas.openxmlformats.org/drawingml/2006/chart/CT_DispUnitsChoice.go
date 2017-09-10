@@ -46,13 +46,13 @@ lCT_DispUnitsChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "custUnit":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "custUnit"}:
 				m.CustUnit = NewCT_Double()
 				if err := d.DecodeElement(m.CustUnit, &el); err != nil {
 					return err
 				}
-			case "builtInUnit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "builtInUnit"}:
 				m.BuiltInUnit = NewCT_BuiltInUnit()
 				if err := d.DecodeElement(m.BuiltInUnit, &el); err != nil {
 					return err

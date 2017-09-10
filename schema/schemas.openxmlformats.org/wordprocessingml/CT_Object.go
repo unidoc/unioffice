@@ -78,28 +78,28 @@ lCT_Object:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "drawing":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "drawing"}:
 				m.Drawing = NewCT_Drawing()
 				if err := d.DecodeElement(m.Drawing, &el); err != nil {
 					return err
 				}
-			case "control":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "control"}:
 				m.Choice = NewCT_ObjectChoice()
 				if err := d.DecodeElement(&m.Choice.Control, &el); err != nil {
 					return err
 				}
-			case "objectLink":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "objectLink"}:
 				m.Choice = NewCT_ObjectChoice()
 				if err := d.DecodeElement(&m.Choice.ObjectLink, &el); err != nil {
 					return err
 				}
-			case "objectEmbed":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "objectEmbed"}:
 				m.Choice = NewCT_ObjectChoice()
 				if err := d.DecodeElement(&m.Choice.ObjectEmbed, &el); err != nil {
 					return err
 				}
-			case "movie":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "movie"}:
 				m.Choice = NewCT_ObjectChoice()
 				if err := d.DecodeElement(&m.Choice.Movie, &el); err != nil {
 					return err

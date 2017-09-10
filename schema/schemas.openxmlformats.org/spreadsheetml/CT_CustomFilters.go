@@ -34,8 +34,10 @@ func (m *CT_CustomFilters) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 			Value: fmt.Sprintf("%d", b2i(*m.AndAttr))})
 	}
 	e.EncodeToken(start)
-	secustomFilter := xml.StartElement{Name: xml.Name{Local: "x:customFilter"}}
-	e.EncodeElement(m.CustomFilter, secustomFilter)
+	secustomFilter := xml.StartElement{Name: xml.Name{Local: "ma:customFilter"}}
+	for _, c := range m.CustomFilter {
+		e.EncodeElement(c, secustomFilter)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -59,8 +61,8 @@ lCT_CustomFilters:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "customFilter":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customFilter"}:
 				tmp := NewCT_CustomFilter()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

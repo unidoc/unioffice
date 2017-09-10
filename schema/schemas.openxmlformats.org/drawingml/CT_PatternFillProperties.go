@@ -61,13 +61,13 @@ lCT_PatternFillProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "fgClr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fgClr"}:
 				m.FgClr = NewCT_Color()
 				if err := d.DecodeElement(m.FgClr, &el); err != nil {
 					return err
 				}
-			case "bgClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bgClr"}:
 				m.BgClr = NewCT_Color()
 				if err := d.DecodeElement(m.BgClr, &el); err != nil {
 					return err

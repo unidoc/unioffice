@@ -52,22 +52,22 @@ lCT_GvmlTextShape:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "txBody":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "txBody"}:
 				if err := d.DecodeElement(m.TxBody, &el); err != nil {
 					return err
 				}
-			case "useSpRect":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "useSpRect"}:
 				m.Choice = NewCT_GvmlTextShapeChoice()
 				if err := d.DecodeElement(&m.Choice.UseSpRect, &el); err != nil {
 					return err
 				}
-			case "xfrm":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "xfrm"}:
 				m.Choice = NewCT_GvmlTextShapeChoice()
 				if err := d.DecodeElement(&m.Choice.Xfrm, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

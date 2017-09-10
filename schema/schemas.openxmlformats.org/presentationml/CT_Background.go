@@ -66,13 +66,13 @@ lCT_Background:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "bgPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bgPr"}:
 				m.BgPr = NewCT_BackgroundProperties()
 				if err := d.DecodeElement(m.BgPr, &el); err != nil {
 					return err
 				}
-			case "bgRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bgRef"}:
 				m.BgRef = drawingml.NewCT_StyleMatrixReference()
 				if err := d.DecodeElement(m.BgRef, &el); err != nil {
 					return err

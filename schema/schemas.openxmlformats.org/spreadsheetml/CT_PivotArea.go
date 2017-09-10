@@ -109,11 +109,11 @@ func (m *CT_PivotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	e.EncodeToken(start)
 	if m.References != nil {
-		sereferences := xml.StartElement{Name: xml.Name{Local: "x:references"}}
+		sereferences := xml.StartElement{Name: xml.Name{Local: "ma:references"}}
 		e.EncodeElement(m.References, sereferences)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -210,13 +210,13 @@ lCT_PivotArea:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "references":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "references"}:
 				m.References = NewCT_PivotAreaReferences()
 				if err := d.DecodeElement(m.References, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

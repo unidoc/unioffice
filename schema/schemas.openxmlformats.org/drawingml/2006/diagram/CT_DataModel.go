@@ -65,27 +65,27 @@ lCT_DataModel:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ptLst":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "ptLst"}:
 				if err := d.DecodeElement(m.PtLst, &el); err != nil {
 					return err
 				}
-			case "cxnLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "cxnLst"}:
 				m.CxnLst = NewCT_CxnList()
 				if err := d.DecodeElement(m.CxnLst, &el); err != nil {
 					return err
 				}
-			case "bg":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "bg"}:
 				m.Bg = drawingml.NewCT_BackgroundFormatting()
 				if err := d.DecodeElement(m.Bg, &el); err != nil {
 					return err
 				}
-			case "whole":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "whole"}:
 				m.Whole = drawingml.NewCT_WholeE2oFormatting()
 				if err := d.DecodeElement(m.Whole, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "extLst"}:
 				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

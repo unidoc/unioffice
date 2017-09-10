@@ -26,12 +26,12 @@ func NewWorkbook() *Workbook {
 
 func (m *Workbook) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns"}, Value: "http://schemas.openxmlformats.org/spreadsheetml/2006/main"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:ma"}, Value: "http://schemas.openxmlformats.org/spreadsheetml/2006/main"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:r"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/relationships"})
-	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:sh"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
-	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:x"}, Value: "http://schemas.openxmlformats.org/spreadsheetml/2006/main"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:s"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:xdr"}, Value: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:xml"}, Value: "http://www.w3.org/XML/1998/namespace"})
-	start.Name.Local = "x:workbook"
+	start.Name.Local = "ma:workbook"
 	return m.CT_Workbook.MarshalXML(e, start)
 }
 
@@ -51,98 +51,98 @@ lWorkbook:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "fileVersion":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fileVersion"}:
 				m.FileVersion = NewCT_FileVersion()
 				if err := d.DecodeElement(m.FileVersion, &el); err != nil {
 					return err
 				}
-			case "fileSharing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fileSharing"}:
 				m.FileSharing = NewCT_FileSharing()
 				if err := d.DecodeElement(m.FileSharing, &el); err != nil {
 					return err
 				}
-			case "workbookPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "workbookPr"}:
 				m.WorkbookPr = NewCT_WorkbookPr()
 				if err := d.DecodeElement(m.WorkbookPr, &el); err != nil {
 					return err
 				}
-			case "workbookProtection":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "workbookProtection"}:
 				m.WorkbookProtection = NewCT_WorkbookProtection()
 				if err := d.DecodeElement(m.WorkbookProtection, &el); err != nil {
 					return err
 				}
-			case "bookViews":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "bookViews"}:
 				m.BookViews = NewCT_BookViews()
 				if err := d.DecodeElement(m.BookViews, &el); err != nil {
 					return err
 				}
-			case "sheets":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheets"}:
 				if err := d.DecodeElement(m.Sheets, &el); err != nil {
 					return err
 				}
-			case "functionGroups":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "functionGroups"}:
 				m.FunctionGroups = NewCT_FunctionGroups()
 				if err := d.DecodeElement(m.FunctionGroups, &el); err != nil {
 					return err
 				}
-			case "externalReferences":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "externalReferences"}:
 				m.ExternalReferences = NewCT_ExternalReferences()
 				if err := d.DecodeElement(m.ExternalReferences, &el); err != nil {
 					return err
 				}
-			case "definedNames":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "definedNames"}:
 				m.DefinedNames = NewCT_DefinedNames()
 				if err := d.DecodeElement(m.DefinedNames, &el); err != nil {
 					return err
 				}
-			case "calcPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "calcPr"}:
 				m.CalcPr = NewCT_CalcPr()
 				if err := d.DecodeElement(m.CalcPr, &el); err != nil {
 					return err
 				}
-			case "oleSize":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleSize"}:
 				m.OleSize = NewCT_OleSize()
 				if err := d.DecodeElement(m.OleSize, &el); err != nil {
 					return err
 				}
-			case "customWorkbookViews":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customWorkbookViews"}:
 				m.CustomWorkbookViews = NewCT_CustomWorkbookViews()
 				if err := d.DecodeElement(m.CustomWorkbookViews, &el); err != nil {
 					return err
 				}
-			case "pivotCaches":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotCaches"}:
 				m.PivotCaches = NewCT_PivotCaches()
 				if err := d.DecodeElement(m.PivotCaches, &el); err != nil {
 					return err
 				}
-			case "smartTagPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "smartTagPr"}:
 				m.SmartTagPr = NewCT_SmartTagPr()
 				if err := d.DecodeElement(m.SmartTagPr, &el); err != nil {
 					return err
 				}
-			case "smartTagTypes":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "smartTagTypes"}:
 				m.SmartTagTypes = NewCT_SmartTagTypes()
 				if err := d.DecodeElement(m.SmartTagTypes, &el); err != nil {
 					return err
 				}
-			case "webPublishing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPublishing"}:
 				m.WebPublishing = NewCT_WebPublishing()
 				if err := d.DecodeElement(m.WebPublishing, &el); err != nil {
 					return err
 				}
-			case "fileRecoveryPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fileRecoveryPr"}:
 				tmp := NewCT_FileRecoveryPr()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.FileRecoveryPr = append(m.FileRecoveryPr, tmp)
-			case "webPublishObjects":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPublishObjects"}:
 				m.WebPublishObjects = NewCT_WebPublishObjects()
 				if err := d.DecodeElement(m.WebPublishObjects, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -48,13 +48,13 @@ lCT_Bar:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "barPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "barPr"}:
 				m.BarPr = NewCT_BarPr()
 				if err := d.DecodeElement(m.BarPr, &el); err != nil {
 					return err
 				}
-			case "e":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"}:
 				if err := d.DecodeElement(m.E, &el); err != nil {
 					return err
 				}

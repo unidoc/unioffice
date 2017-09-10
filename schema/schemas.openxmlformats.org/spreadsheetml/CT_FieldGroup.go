@@ -45,15 +45,15 @@ func (m *CT_FieldGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	e.EncodeToken(start)
 	if m.RangePr != nil {
-		serangePr := xml.StartElement{Name: xml.Name{Local: "x:rangePr"}}
+		serangePr := xml.StartElement{Name: xml.Name{Local: "ma:rangePr"}}
 		e.EncodeElement(m.RangePr, serangePr)
 	}
 	if m.DiscretePr != nil {
-		sediscretePr := xml.StartElement{Name: xml.Name{Local: "x:discretePr"}}
+		sediscretePr := xml.StartElement{Name: xml.Name{Local: "ma:discretePr"}}
 		e.EncodeElement(m.DiscretePr, sediscretePr)
 	}
 	if m.GroupItems != nil {
-		segroupItems := xml.StartElement{Name: xml.Name{Local: "x:groupItems"}}
+		segroupItems := xml.StartElement{Name: xml.Name{Local: "ma:groupItems"}}
 		e.EncodeElement(m.GroupItems, segroupItems)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -88,18 +88,18 @@ lCT_FieldGroup:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rangePr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rangePr"}:
 				m.RangePr = NewCT_RangePr()
 				if err := d.DecodeElement(m.RangePr, &el); err != nil {
 					return err
 				}
-			case "discretePr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "discretePr"}:
 				m.DiscretePr = NewCT_DiscretePr()
 				if err := d.DecodeElement(m.DiscretePr, &el); err != nil {
 					return err
 				}
-			case "groupItems":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "groupItems"}:
 				m.GroupItems = NewCT_GroupItems()
 				if err := d.DecodeElement(m.GroupItems, &el); err != nil {
 					return err

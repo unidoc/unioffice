@@ -35,8 +35,10 @@ func (m *CT_FieldsUsage) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	e.EncodeToken(start)
 	if m.FieldUsage != nil {
-		sefieldUsage := xml.StartElement{Name: xml.Name{Local: "x:fieldUsage"}}
-		e.EncodeElement(m.FieldUsage, sefieldUsage)
+		sefieldUsage := xml.StartElement{Name: xml.Name{Local: "ma:fieldUsage"}}
+		for _, c := range m.FieldUsage {
+			e.EncodeElement(c, sefieldUsage)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -62,8 +64,8 @@ lCT_FieldsUsage:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "fieldUsage":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fieldUsage"}:
 				tmp := NewCT_FieldUsage()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

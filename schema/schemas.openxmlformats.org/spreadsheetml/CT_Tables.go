@@ -39,16 +39,22 @@ func (m *CT_Tables) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.M != nil {
-		sem := xml.StartElement{Name: xml.Name{Local: "x:m"}}
-		e.EncodeElement(m.M, sem)
+		sem := xml.StartElement{Name: xml.Name{Local: "ma:m"}}
+		for _, c := range m.M {
+			e.EncodeElement(c, sem)
+		}
 	}
 	if m.S != nil {
-		ses := xml.StartElement{Name: xml.Name{Local: "x:s"}}
-		e.EncodeElement(m.S, ses)
+		ses := xml.StartElement{Name: xml.Name{Local: "ma:s"}}
+		for _, c := range m.S {
+			e.EncodeElement(c, ses)
+		}
 	}
 	if m.X != nil {
-		sex := xml.StartElement{Name: xml.Name{Local: "x:x"}}
-		e.EncodeElement(m.X, sex)
+		sex := xml.StartElement{Name: xml.Name{Local: "ma:x"}}
+		for _, c := range m.X {
+			e.EncodeElement(c, sex)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -74,20 +80,20 @@ lCT_Tables:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "m":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "m"}:
 				tmp := NewCT_TableMissing()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.M = append(m.M, tmp)
-			case "s":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "s"}:
 				tmp := NewCT_XStringElement()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.S = append(m.S, tmp)
-			case "x":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "x"}:
 				tmp := NewCT_Index()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

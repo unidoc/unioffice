@@ -48,13 +48,13 @@ lCT_TxChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "strRef":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "strRef"}:
 				m.StrRef = NewCT_StrRef()
 				if err := d.DecodeElement(m.StrRef, &el); err != nil {
 					return err
 				}
-			case "rich":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "rich"}:
 				m.Rich = drawingml.NewCT_TextBody()
 				if err := d.DecodeElement(m.Rich, &el); err != nil {
 					return err

@@ -121,78 +121,78 @@ lCT_CoreProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "category":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/metadata/core-properties", Local: "category"}:
 				m.Category = new(string)
 				if err := d.DecodeElement(m.Category, &el); err != nil {
 					return err
 				}
-			case "contentStatus":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/metadata/core-properties", Local: "contentStatus"}:
 				m.ContentStatus = new(string)
 				if err := d.DecodeElement(m.ContentStatus, &el); err != nil {
 					return err
 				}
-			case "created":
+			case xml.Name{Space: "http://purl.org/dc/terms/", Local: "created"}:
 				m.Created = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Created, &el); err != nil {
 					return err
 				}
-			case "creator":
+			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "creator"}:
 				m.Creator = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Creator, &el); err != nil {
 					return err
 				}
-			case "description":
+			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "description"}:
 				m.Description = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Description, &el); err != nil {
 					return err
 				}
-			case "identifier":
+			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "identifier"}:
 				m.Identifier = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Identifier, &el); err != nil {
 					return err
 				}
-			case "keywords":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/metadata/core-properties", Local: "keywords"}:
 				m.Keywords = NewCT_Keywords()
 				if err := d.DecodeElement(m.Keywords, &el); err != nil {
 					return err
 				}
-			case "language":
+			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "language"}:
 				m.Language = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Language, &el); err != nil {
 					return err
 				}
-			case "lastModifiedBy":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/metadata/core-properties", Local: "lastModifiedBy"}:
 				m.LastModifiedBy = new(string)
 				if err := d.DecodeElement(m.LastModifiedBy, &el); err != nil {
 					return err
 				}
-			case "lastPrinted":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/metadata/core-properties", Local: "lastPrinted"}:
 				m.LastPrinted = new(time.Time)
 				if err := d.DecodeElement(m.LastPrinted, &el); err != nil {
 					return err
 				}
-			case "modified":
+			case xml.Name{Space: "http://purl.org/dc/terms/", Local: "modified"}:
 				m.Modified = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Modified, &el); err != nil {
 					return err
 				}
-			case "revision":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/metadata/core-properties", Local: "revision"}:
 				m.Revision = new(string)
 				if err := d.DecodeElement(m.Revision, &el); err != nil {
 					return err
 				}
-			case "subject":
+			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "subject"}:
 				m.Subject = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Subject, &el); err != nil {
 					return err
 				}
-			case "title":
+			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "title"}:
 				m.Title = new(gooxml.XSDAny)
 				if err := d.DecodeElement(m.Title, &el); err != nil {
 					return err
 				}
-			case "version":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/metadata/core-properties", Local: "version"}:
 				m.Version = new(string)
 				if err := d.DecodeElement(m.Version, &el); err != nil {
 					return err

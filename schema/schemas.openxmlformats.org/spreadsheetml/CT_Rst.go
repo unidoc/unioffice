@@ -36,20 +36,24 @@ func NewCT_Rst() *CT_Rst {
 func (m *CT_Rst) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.T != nil {
-		set := xml.StartElement{Name: xml.Name{Local: "x:t"}}
+		set := xml.StartElement{Name: xml.Name{Local: "ma:t"}}
 		gooxml.AddPreserveSpaceAttr(&set, *m.T)
 		e.EncodeElement(m.T, set)
 	}
 	if m.R != nil {
-		ser := xml.StartElement{Name: xml.Name{Local: "x:r"}}
-		e.EncodeElement(m.R, ser)
+		ser := xml.StartElement{Name: xml.Name{Local: "ma:r"}}
+		for _, c := range m.R {
+			e.EncodeElement(c, ser)
+		}
 	}
 	if m.RPh != nil {
-		serPh := xml.StartElement{Name: xml.Name{Local: "x:rPh"}}
-		e.EncodeElement(m.RPh, serPh)
+		serPh := xml.StartElement{Name: xml.Name{Local: "ma:rPh"}}
+		for _, c := range m.RPh {
+			e.EncodeElement(c, serPh)
+		}
 	}
 	if m.PhoneticPr != nil {
-		sephoneticPr := xml.StartElement{Name: xml.Name{Local: "x:phoneticPr"}}
+		sephoneticPr := xml.StartElement{Name: xml.Name{Local: "ma:phoneticPr"}}
 		e.EncodeElement(m.PhoneticPr, sephoneticPr)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -66,25 +70,25 @@ lCT_Rst:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "t":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "t"}:
 				m.T = new(string)
 				if err := d.DecodeElement(m.T, &el); err != nil {
 					return err
 				}
-			case "r":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "r"}:
 				tmp := NewCT_RElt()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.R = append(m.R, tmp)
-			case "rPh":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rPh"}:
 				tmp := NewCT_PhoneticRun()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.RPh = append(m.RPh, tmp)
-			case "phoneticPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "phoneticPr"}:
 				m.PhoneticPr = NewCT_PhoneticPr()
 				if err := d.DecodeElement(m.PhoneticPr, &el); err != nil {
 					return err

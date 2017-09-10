@@ -49,12 +49,12 @@ lCT_Marker:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "x":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "x"}:
 				if err := d.DecodeElement(&m.X, &el); err != nil {
 					return err
 				}
-			case "y":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", Local: "y"}:
 				if err := d.DecodeElement(&m.Y, &el); err != nil {
 					return err
 				}

@@ -50,8 +50,8 @@ lEndnotes:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "endnote":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "endnote"}:
 				tmp := NewCT_FtnEdn()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

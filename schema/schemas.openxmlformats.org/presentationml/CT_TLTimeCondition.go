@@ -84,18 +84,18 @@ lCT_TLTimeCondition:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tgtEl":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tgtEl"}:
 				m.TgtEl = NewCT_TLTimeTargetElement()
 				if err := d.DecodeElement(m.TgtEl, &el); err != nil {
 					return err
 				}
-			case "tn":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tn"}:
 				m.Tn = NewCT_TLTriggerTimeNodeID()
 				if err := d.DecodeElement(m.Tn, &el); err != nil {
 					return err
 				}
-			case "rtn":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "rtn"}:
 				m.Rtn = NewCT_TLTriggerRuntimeNode()
 				if err := d.DecodeElement(m.Rtn, &el); err != nil {
 					return err

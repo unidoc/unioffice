@@ -106,19 +106,19 @@ func (m *CT_TableColumn) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	e.EncodeToken(start)
 	if m.CalculatedColumnFormula != nil {
-		secalculatedColumnFormula := xml.StartElement{Name: xml.Name{Local: "x:calculatedColumnFormula"}}
+		secalculatedColumnFormula := xml.StartElement{Name: xml.Name{Local: "ma:calculatedColumnFormula"}}
 		e.EncodeElement(m.CalculatedColumnFormula, secalculatedColumnFormula)
 	}
 	if m.TotalsRowFormula != nil {
-		setotalsRowFormula := xml.StartElement{Name: xml.Name{Local: "x:totalsRowFormula"}}
+		setotalsRowFormula := xml.StartElement{Name: xml.Name{Local: "ma:totalsRowFormula"}}
 		e.EncodeElement(m.TotalsRowFormula, setotalsRowFormula)
 	}
 	if m.XmlColumnPr != nil {
-		sexmlColumnPr := xml.StartElement{Name: xml.Name{Local: "x:xmlColumnPr"}}
+		sexmlColumnPr := xml.StartElement{Name: xml.Name{Local: "ma:xmlColumnPr"}}
 		e.EncodeElement(m.XmlColumnPr, sexmlColumnPr)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -221,23 +221,23 @@ lCT_TableColumn:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "calculatedColumnFormula":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "calculatedColumnFormula"}:
 				m.CalculatedColumnFormula = NewCT_TableFormula()
 				if err := d.DecodeElement(m.CalculatedColumnFormula, &el); err != nil {
 					return err
 				}
-			case "totalsRowFormula":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "totalsRowFormula"}:
 				m.TotalsRowFormula = NewCT_TableFormula()
 				if err := d.DecodeElement(m.TotalsRowFormula, &el); err != nil {
 					return err
 				}
-			case "xmlColumnPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "xmlColumnPr"}:
 				m.XmlColumnPr = NewCT_XmlColumnPr()
 				if err := d.DecodeElement(m.XmlColumnPr, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

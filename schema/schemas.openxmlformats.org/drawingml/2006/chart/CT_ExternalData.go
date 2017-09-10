@@ -56,8 +56,8 @@ lCT_ExternalData:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "autoUpdate":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "autoUpdate"}:
 				m.AutoUpdate = NewCT_Boolean()
 				if err := d.DecodeElement(m.AutoUpdate, &el); err != nil {
 					return err

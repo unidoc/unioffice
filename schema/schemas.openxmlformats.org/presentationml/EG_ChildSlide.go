@@ -44,8 +44,8 @@ lEG_ChildSlide:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "clrMapOvr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "clrMapOvr"}:
 				m.ClrMapOvr = drawingml.NewCT_ColorMappingOverride()
 				if err := d.DecodeElement(m.ClrMapOvr, &el); err != nil {
 					return err

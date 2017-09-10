@@ -48,13 +48,13 @@ lCT_TablePartStyle:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tcTxStyle":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tcTxStyle"}:
 				m.TcTxStyle = NewCT_TableStyleTextStyle()
 				if err := d.DecodeElement(m.TcTxStyle, &el); err != nil {
 					return err
 				}
-			case "tcStyle":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tcStyle"}:
 				m.TcStyle = NewCT_TableStyleCellStyle()
 				if err := d.DecodeElement(m.TcStyle, &el); err != nil {
 					return err

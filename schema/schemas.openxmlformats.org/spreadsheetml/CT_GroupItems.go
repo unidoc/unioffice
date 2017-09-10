@@ -45,28 +45,40 @@ func (m *CT_GroupItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	e.EncodeToken(start)
 	if m.M != nil {
-		sem := xml.StartElement{Name: xml.Name{Local: "x:m"}}
-		e.EncodeElement(m.M, sem)
+		sem := xml.StartElement{Name: xml.Name{Local: "ma:m"}}
+		for _, c := range m.M {
+			e.EncodeElement(c, sem)
+		}
 	}
 	if m.N != nil {
-		sen := xml.StartElement{Name: xml.Name{Local: "x:n"}}
-		e.EncodeElement(m.N, sen)
+		sen := xml.StartElement{Name: xml.Name{Local: "ma:n"}}
+		for _, c := range m.N {
+			e.EncodeElement(c, sen)
+		}
 	}
 	if m.B != nil {
-		seb := xml.StartElement{Name: xml.Name{Local: "x:b"}}
-		e.EncodeElement(m.B, seb)
+		seb := xml.StartElement{Name: xml.Name{Local: "ma:b"}}
+		for _, c := range m.B {
+			e.EncodeElement(c, seb)
+		}
 	}
 	if m.E != nil {
-		see := xml.StartElement{Name: xml.Name{Local: "x:e"}}
-		e.EncodeElement(m.E, see)
+		see := xml.StartElement{Name: xml.Name{Local: "ma:e"}}
+		for _, c := range m.E {
+			e.EncodeElement(c, see)
+		}
 	}
 	if m.S != nil {
-		ses := xml.StartElement{Name: xml.Name{Local: "x:s"}}
-		e.EncodeElement(m.S, ses)
+		ses := xml.StartElement{Name: xml.Name{Local: "ma:s"}}
+		for _, c := range m.S {
+			e.EncodeElement(c, ses)
+		}
 	}
 	if m.D != nil {
-		sed := xml.StartElement{Name: xml.Name{Local: "x:d"}}
-		e.EncodeElement(m.D, sed)
+		sed := xml.StartElement{Name: xml.Name{Local: "ma:d"}}
+		for _, c := range m.D {
+			e.EncodeElement(c, sed)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -92,38 +104,38 @@ lCT_GroupItems:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "m":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "m"}:
 				tmp := NewCT_Missing()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.M = append(m.M, tmp)
-			case "n":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "n"}:
 				tmp := NewCT_Number()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.N = append(m.N, tmp)
-			case "b":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "b"}:
 				tmp := NewCT_Boolean()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.B = append(m.B, tmp)
-			case "e":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "e"}:
 				tmp := NewCT_Error()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.E = append(m.E, tmp)
-			case "s":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "s"}:
 				tmp := NewCT_String()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.S = append(m.S, tmp)
-			case "d":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "d"}:
 				tmp := NewCT_DateTime()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

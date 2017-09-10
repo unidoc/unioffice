@@ -58,21 +58,21 @@ lEG_SerShared:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "idx":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "idx"}:
 				if err := d.DecodeElement(m.Idx, &el); err != nil {
 					return err
 				}
-			case "order":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "order"}:
 				if err := d.DecodeElement(m.Order, &el); err != nil {
 					return err
 				}
-			case "tx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "tx"}:
 				m.Tx = NewCT_SerTx()
 				if err := d.DecodeElement(m.Tx, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"}:
 				m.SpPr = drawingml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err

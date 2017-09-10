@@ -27,7 +27,9 @@ func NewCT_LineStyleList() *CT_LineStyleList {
 func (m *CT_LineStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	seln := xml.StartElement{Name: xml.Name{Local: "a:ln"}}
-	e.EncodeElement(m.Ln, seln)
+	for _, c := range m.Ln {
+		e.EncodeElement(c, seln)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -42,8 +44,8 @@ lCT_LineStyleList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ln":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ln"}:
 				tmp := NewCT_LineProperties()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

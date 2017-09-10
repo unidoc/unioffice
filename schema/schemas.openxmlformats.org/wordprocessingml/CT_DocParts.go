@@ -29,7 +29,9 @@ func (m *CT_DocParts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.DocPart != nil {
 		sedocPart := xml.StartElement{Name: xml.Name{Local: "w:docPart"}}
-		e.EncodeElement(m.DocPart, sedocPart)
+		for _, c := range m.DocPart {
+			e.EncodeElement(c, sedocPart)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_DocParts:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "docPart":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docPart"}:
 				tmp := NewCT_DocPart()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

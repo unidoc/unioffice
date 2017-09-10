@@ -41,7 +41,9 @@ func (m *CT_FontCollection) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeElement(m.Cs, secs)
 	if m.Font != nil {
 		sefont := xml.StartElement{Name: xml.Name{Local: "a:font"}}
-		e.EncodeElement(m.Font, sefont)
+		for _, c := range m.Font {
+			e.EncodeElement(c, sefont)
+		}
 	}
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "a:extLst"}}
@@ -64,26 +66,26 @@ lCT_FontCollection:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "latin":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "latin"}:
 				if err := d.DecodeElement(m.Latin, &el); err != nil {
 					return err
 				}
-			case "ea":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ea"}:
 				if err := d.DecodeElement(m.Ea, &el); err != nil {
 					return err
 				}
-			case "cs":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cs"}:
 				if err := d.DecodeElement(m.Cs, &el); err != nil {
 					return err
 				}
-			case "font":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "font"}:
 				tmp := NewCT_SupplementalFont()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Font = append(m.Font, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

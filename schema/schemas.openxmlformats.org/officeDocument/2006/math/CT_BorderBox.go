@@ -48,13 +48,13 @@ lCT_BorderBox:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "borderBoxPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "borderBoxPr"}:
 				m.BorderBoxPr = NewCT_BorderBoxPr()
 				if err := d.DecodeElement(m.BorderBoxPr, &el); err != nil {
 					return err
 				}
-			case "e":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"}:
 				if err := d.DecodeElement(m.E, &el); err != nil {
 					return err
 				}

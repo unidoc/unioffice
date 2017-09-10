@@ -35,15 +35,15 @@ func (m *CT_ExternalBook) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		Value: fmt.Sprintf("%v", m.IdAttr)})
 	e.EncodeToken(start)
 	if m.SheetNames != nil {
-		sesheetNames := xml.StartElement{Name: xml.Name{Local: "x:sheetNames"}}
+		sesheetNames := xml.StartElement{Name: xml.Name{Local: "ma:sheetNames"}}
 		e.EncodeElement(m.SheetNames, sesheetNames)
 	}
 	if m.DefinedNames != nil {
-		sedefinedNames := xml.StartElement{Name: xml.Name{Local: "x:definedNames"}}
+		sedefinedNames := xml.StartElement{Name: xml.Name{Local: "ma:definedNames"}}
 		e.EncodeElement(m.DefinedNames, sedefinedNames)
 	}
 	if m.SheetDataSet != nil {
-		sesheetDataSet := xml.StartElement{Name: xml.Name{Local: "x:sheetDataSet"}}
+		sesheetDataSet := xml.StartElement{Name: xml.Name{Local: "ma:sheetDataSet"}}
 		e.EncodeElement(m.SheetDataSet, sesheetDataSet)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -69,18 +69,18 @@ lCT_ExternalBook:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sheetNames":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetNames"}:
 				m.SheetNames = NewCT_ExternalSheetNames()
 				if err := d.DecodeElement(m.SheetNames, &el); err != nil {
 					return err
 				}
-			case "definedNames":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "definedNames"}:
 				m.DefinedNames = NewCT_ExternalDefinedNames()
 				if err := d.DecodeElement(m.DefinedNames, &el); err != nil {
 					return err
 				}
-			case "sheetDataSet":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetDataSet"}:
 				m.SheetDataSet = NewCT_ExternalSheetDataSet()
 				if err := d.DecodeElement(m.SheetDataSet, &el); err != nil {
 					return err

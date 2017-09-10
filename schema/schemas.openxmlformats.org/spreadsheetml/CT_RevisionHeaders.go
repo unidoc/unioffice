@@ -101,8 +101,10 @@ func (m *CT_RevisionHeaders) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.PreserveHistoryAttr)})
 	}
 	e.EncodeToken(start)
-	seheader := xml.StartElement{Name: xml.Name{Local: "x:header"}}
-	e.EncodeElement(m.Header, seheader)
+	seheader := xml.StartElement{Name: xml.Name{Local: "ma:header"}}
+	for _, c := range m.Header {
+		e.EncodeElement(c, seheader)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -207,8 +209,8 @@ lCT_RevisionHeaders:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "header":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "header"}:
 				tmp := NewCT_RevisionHeader()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

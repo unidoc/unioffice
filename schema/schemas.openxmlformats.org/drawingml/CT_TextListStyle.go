@@ -93,58 +93,58 @@ lCT_TextListStyle:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "defPPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "defPPr"}:
 				m.DefPPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.DefPPr, &el); err != nil {
 					return err
 				}
-			case "lvl1pPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl1pPr"}:
 				m.Lvl1pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl1pPr, &el); err != nil {
 					return err
 				}
-			case "lvl2pPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl2pPr"}:
 				m.Lvl2pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl2pPr, &el); err != nil {
 					return err
 				}
-			case "lvl3pPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl3pPr"}:
 				m.Lvl3pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl3pPr, &el); err != nil {
 					return err
 				}
-			case "lvl4pPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl4pPr"}:
 				m.Lvl4pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl4pPr, &el); err != nil {
 					return err
 				}
-			case "lvl5pPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl5pPr"}:
 				m.Lvl5pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl5pPr, &el); err != nil {
 					return err
 				}
-			case "lvl6pPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl6pPr"}:
 				m.Lvl6pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl6pPr, &el); err != nil {
 					return err
 				}
-			case "lvl7pPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl7pPr"}:
 				m.Lvl7pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl7pPr, &el); err != nil {
 					return err
 				}
-			case "lvl8pPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl8pPr"}:
 				m.Lvl8pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl8pPr, &el); err != nil {
 					return err
 				}
-			case "lvl9pPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl9pPr"}:
 				m.Lvl9pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl9pPr, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

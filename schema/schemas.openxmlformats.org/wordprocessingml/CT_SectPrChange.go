@@ -81,8 +81,8 @@ lCT_SectPrChange:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sectPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sectPr"}:
 				m.SectPr = NewCT_SectPrBase()
 				if err := d.DecodeElement(m.SectPr, &el); err != nil {
 					return err

@@ -67,11 +67,15 @@ func (m *CT_Odso) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.FieldMapData != nil {
 		sefieldMapData := xml.StartElement{Name: xml.Name{Local: "w:fieldMapData"}}
-		e.EncodeElement(m.FieldMapData, sefieldMapData)
+		for _, c := range m.FieldMapData {
+			e.EncodeElement(c, sefieldMapData)
+		}
 	}
 	if m.RecipientData != nil {
 		serecipientData := xml.StartElement{Name: xml.Name{Local: "w:recipientData"}}
-		e.EncodeElement(m.RecipientData, serecipientData)
+		for _, c := range m.RecipientData {
+			e.EncodeElement(c, serecipientData)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -87,44 +91,44 @@ lCT_Odso:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "udl":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "udl"}:
 				m.Udl = NewCT_String()
 				if err := d.DecodeElement(m.Udl, &el); err != nil {
 					return err
 				}
-			case "table":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "table"}:
 				m.Table = NewCT_String()
 				if err := d.DecodeElement(m.Table, &el); err != nil {
 					return err
 				}
-			case "src":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "src"}:
 				m.Src = NewCT_Rel()
 				if err := d.DecodeElement(m.Src, &el); err != nil {
 					return err
 				}
-			case "colDelim":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "colDelim"}:
 				m.ColDelim = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.ColDelim, &el); err != nil {
 					return err
 				}
-			case "type":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "type"}:
 				m.Type = NewCT_MailMergeSourceType()
 				if err := d.DecodeElement(m.Type, &el); err != nil {
 					return err
 				}
-			case "fHdr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "fHdr"}:
 				m.FHdr = NewCT_OnOff()
 				if err := d.DecodeElement(m.FHdr, &el); err != nil {
 					return err
 				}
-			case "fieldMapData":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "fieldMapData"}:
 				tmp := NewCT_OdsoFieldMapData()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.FieldMapData = append(m.FieldMapData, tmp)
-			case "recipientData":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "recipientData"}:
 				tmp := NewCT_Rel()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

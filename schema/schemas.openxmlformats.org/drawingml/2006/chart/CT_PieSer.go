@@ -57,7 +57,9 @@ func (m *CT_PieSer) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.DPt != nil {
 		sedPt := xml.StartElement{Name: xml.Name{Local: "c:dPt"}}
-		e.EncodeElement(m.DPt, sedPt)
+		for _, c := range m.DPt {
+			e.EncodeElement(c, sedPt)
+		}
 	}
 	if m.DLbls != nil {
 		sedLbls := xml.StartElement{Name: xml.Name{Local: "c:dLbls"}}
@@ -91,52 +93,52 @@ lCT_PieSer:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "idx":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "idx"}:
 				if err := d.DecodeElement(m.Idx, &el); err != nil {
 					return err
 				}
-			case "order":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "order"}:
 				if err := d.DecodeElement(m.Order, &el); err != nil {
 					return err
 				}
-			case "tx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "tx"}:
 				m.Tx = NewCT_SerTx()
 				if err := d.DecodeElement(m.Tx, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"}:
 				m.SpPr = drawingml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "explosion":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "explosion"}:
 				m.Explosion = NewCT_UnsignedInt()
 				if err := d.DecodeElement(m.Explosion, &el); err != nil {
 					return err
 				}
-			case "dPt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dPt"}:
 				tmp := NewCT_DPt()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.DPt = append(m.DPt, tmp)
-			case "dLbls":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dLbls"}:
 				m.DLbls = NewCT_DLbls()
 				if err := d.DecodeElement(m.DLbls, &el); err != nil {
 					return err
 				}
-			case "cat":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "cat"}:
 				m.Cat = NewCT_AxDataSource()
 				if err := d.DecodeElement(m.Cat, &el); err != nil {
 					return err
 				}
-			case "val":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "val"}:
 				m.Val = NewCT_NumDataSource()
 				if err := d.DecodeElement(m.Val, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

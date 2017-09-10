@@ -46,13 +46,13 @@ lEG_ShadeProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "lin":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lin"}:
 				m.Lin = NewCT_LinearShadeProperties()
 				if err := d.DecodeElement(m.Lin, &el); err != nil {
 					return err
 				}
-			case "path":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "path"}:
 				m.Path = NewCT_PathShadeProperties()
 				if err := d.DecodeElement(m.Path, &el); err != nil {
 					return err

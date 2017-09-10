@@ -29,7 +29,9 @@ func (m *CT_SlideLayoutIdList) MarshalXML(e *xml.Encoder, start xml.StartElement
 	e.EncodeToken(start)
 	if m.SldLayoutId != nil {
 		sesldLayoutId := xml.StartElement{Name: xml.Name{Local: "p:sldLayoutId"}}
-		e.EncodeElement(m.SldLayoutId, sesldLayoutId)
+		for _, c := range m.SldLayoutId {
+			e.EncodeElement(c, sesldLayoutId)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_SlideLayoutIdList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sldLayoutId":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldLayoutId"}:
 				tmp := NewCT_SlideLayoutIdListEntry()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

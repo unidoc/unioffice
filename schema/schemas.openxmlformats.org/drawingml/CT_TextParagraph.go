@@ -55,34 +55,34 @@ lCT_TextParagraph:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pPr"}:
 				m.PPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.PPr, &el); err != nil {
 					return err
 				}
-			case "r":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "r"}:
 				tmptextrun := NewEG_TextRun()
 				tmptextrun.R = NewCT_RegularTextRun()
 				if err := d.DecodeElement(tmptextrun.R, &el); err != nil {
 					return err
 				}
 				m.EG_TextRun = append(m.EG_TextRun, tmptextrun)
-			case "br":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "br"}:
 				tmptextrun := NewEG_TextRun()
 				tmptextrun.Br = NewCT_TextLineBreak()
 				if err := d.DecodeElement(tmptextrun.Br, &el); err != nil {
 					return err
 				}
 				m.EG_TextRun = append(m.EG_TextRun, tmptextrun)
-			case "fld":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fld"}:
 				tmptextrun := NewEG_TextRun()
 				tmptextrun.Fld = NewCT_TextField()
 				if err := d.DecodeElement(tmptextrun.Fld, &el); err != nil {
 					return err
 				}
 				m.EG_TextRun = append(m.EG_TextRun, tmptextrun)
-			case "endParaRPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "endParaRPr"}:
 				m.EndParaRPr = NewCT_TextCharacterProperties()
 				if err := d.DecodeElement(m.EndParaRPr, &el); err != nil {
 					return err

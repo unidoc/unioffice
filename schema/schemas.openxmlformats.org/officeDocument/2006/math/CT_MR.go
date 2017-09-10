@@ -27,7 +27,9 @@ func NewCT_MR() *CT_MR {
 func (m *CT_MR) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	see := xml.StartElement{Name: xml.Name{Local: "m:e"}}
-	e.EncodeElement(m.E, see)
+	for _, c := range m.E {
+		e.EncodeElement(c, see)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -42,8 +44,8 @@ lCT_MR:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "e":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"}:
 				tmp := NewCT_OMathArg()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

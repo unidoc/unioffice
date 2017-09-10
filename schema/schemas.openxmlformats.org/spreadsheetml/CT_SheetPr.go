@@ -87,15 +87,15 @@ func (m *CT_SheetPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.TabColor != nil {
-		setabColor := xml.StartElement{Name: xml.Name{Local: "x:tabColor"}}
+		setabColor := xml.StartElement{Name: xml.Name{Local: "ma:tabColor"}}
 		e.EncodeElement(m.TabColor, setabColor)
 	}
 	if m.OutlinePr != nil {
-		seoutlinePr := xml.StartElement{Name: xml.Name{Local: "x:outlinePr"}}
+		seoutlinePr := xml.StartElement{Name: xml.Name{Local: "ma:outlinePr"}}
 		e.EncodeElement(m.OutlinePr, seoutlinePr)
 	}
 	if m.PageSetUpPr != nil {
-		sepageSetUpPr := xml.StartElement{Name: xml.Name{Local: "x:pageSetUpPr"}}
+		sepageSetUpPr := xml.StartElement{Name: xml.Name{Local: "ma:pageSetUpPr"}}
 		e.EncodeElement(m.PageSetUpPr, sepageSetUpPr)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -177,18 +177,18 @@ lCT_SheetPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tabColor":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tabColor"}:
 				m.TabColor = NewCT_Color()
 				if err := d.DecodeElement(m.TabColor, &el); err != nil {
 					return err
 				}
-			case "outlinePr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "outlinePr"}:
 				m.OutlinePr = NewCT_OutlinePr()
 				if err := d.DecodeElement(m.OutlinePr, &el); err != nil {
 					return err
 				}
-			case "pageSetUpPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageSetUpPr"}:
 				m.PageSetUpPr = NewCT_PageSetUpPr()
 				if err := d.DecodeElement(m.PageSetUpPr, &el); err != nil {
 					return err

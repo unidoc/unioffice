@@ -27,8 +27,10 @@ func NewCT_IndexedColors() *CT_IndexedColors {
 
 func (m *CT_IndexedColors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	sergbColor := xml.StartElement{Name: xml.Name{Local: "x:rgbColor"}}
-	e.EncodeElement(m.RgbColor, sergbColor)
+	sergbColor := xml.StartElement{Name: xml.Name{Local: "ma:rgbColor"}}
+	for _, c := range m.RgbColor {
+		e.EncodeElement(c, sergbColor)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_IndexedColors:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rgbColor":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rgbColor"}:
 				tmp := NewCT_RgbColor()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

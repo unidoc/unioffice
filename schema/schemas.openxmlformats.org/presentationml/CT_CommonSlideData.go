@@ -83,27 +83,27 @@ lCT_CommonSlideData:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "bg":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bg"}:
 				m.Bg = NewCT_Background()
 				if err := d.DecodeElement(m.Bg, &el); err != nil {
 					return err
 				}
-			case "spTree":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "spTree"}:
 				if err := d.DecodeElement(m.SpTree, &el); err != nil {
 					return err
 				}
-			case "custDataLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custDataLst"}:
 				m.CustDataLst = NewCT_CustomerDataList()
 				if err := d.DecodeElement(m.CustDataLst, &el); err != nil {
 					return err
 				}
-			case "controls":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "controls"}:
 				m.Controls = NewCT_ControlList()
 				if err := d.DecodeElement(m.Controls, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

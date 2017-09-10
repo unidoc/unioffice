@@ -57,8 +57,8 @@ lCT_BlendEffect:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cont":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cont"}:
 				if err := d.DecodeElement(m.Cont, &el); err != nil {
 					return err
 				}

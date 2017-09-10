@@ -44,7 +44,6 @@ func (m *AG_Password) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "w:spinCount"},
 			Value: fmt.Sprintf("%v", *m.SpinCountAttr)})
 	}
-	start.Name.Local = "w:AG_Password"
 	return nil
 }
 

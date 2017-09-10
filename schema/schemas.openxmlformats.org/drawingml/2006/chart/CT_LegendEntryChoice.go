@@ -48,13 +48,13 @@ lCT_LegendEntryChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "delete":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "delete"}:
 				m.Delete = NewCT_Boolean()
 				if err := d.DecodeElement(m.Delete, &el); err != nil {
 					return err
 				}
-			case "txPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "txPr"}:
 				m.TxPr = drawingml.NewCT_TextBody()
 				if err := d.DecodeElement(m.TxPr, &el); err != nil {
 					return err

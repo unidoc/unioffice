@@ -35,8 +35,10 @@ func (m *CT_QueryTableFields) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	}
 	e.EncodeToken(start)
 	if m.QueryTableField != nil {
-		sequeryTableField := xml.StartElement{Name: xml.Name{Local: "x:queryTableField"}}
-		e.EncodeElement(m.QueryTableField, sequeryTableField)
+		sequeryTableField := xml.StartElement{Name: xml.Name{Local: "ma:queryTableField"}}
+		for _, c := range m.QueryTableField {
+			e.EncodeElement(c, sequeryTableField)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -62,8 +64,8 @@ lCT_QueryTableFields:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "queryTableField":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "queryTableField"}:
 				tmp := NewCT_QueryTableField()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

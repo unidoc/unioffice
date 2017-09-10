@@ -37,7 +37,9 @@ func (m *CT_Table) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeElement(m.TblGrid, setblGrid)
 	if m.Tr != nil {
 		setr := xml.StartElement{Name: xml.Name{Local: "a:tr"}}
-		e.EncodeElement(m.Tr, setr)
+		for _, c := range m.Tr {
+			e.EncodeElement(c, setr)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -54,17 +56,17 @@ lCT_Table:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tblPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tblPr"}:
 				m.TblPr = NewCT_TableProperties()
 				if err := d.DecodeElement(m.TblPr, &el); err != nil {
 					return err
 				}
-			case "tblGrid":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tblGrid"}:
 				if err := d.DecodeElement(m.TblGrid, &el); err != nil {
 					return err
 				}
-			case "tr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tr"}:
 				tmp := NewCT_TableRow()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -60,11 +60,13 @@ func (m *CT_Set) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.Tpls != nil {
-		setpls := xml.StartElement{Name: xml.Name{Local: "x:tpls"}}
-		e.EncodeElement(m.Tpls, setpls)
+		setpls := xml.StartElement{Name: xml.Name{Local: "ma:tpls"}}
+		for _, c := range m.Tpls {
+			e.EncodeElement(c, setpls)
+		}
 	}
 	if m.SortByTuple != nil {
-		sesortByTuple := xml.StartElement{Name: xml.Name{Local: "x:sortByTuple"}}
+		sesortByTuple := xml.StartElement{Name: xml.Name{Local: "ma:sortByTuple"}}
 		e.EncodeElement(m.SortByTuple, sesortByTuple)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -115,14 +117,14 @@ lCT_Set:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tpls":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tpls"}:
 				tmp := NewCT_Tuples()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Tpls = append(m.Tpls, tmp)
-			case "sortByTuple":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sortByTuple"}:
 				m.SortByTuple = NewCT_Tuples()
 				if err := d.DecodeElement(m.SortByTuple, &el); err != nil {
 					return err

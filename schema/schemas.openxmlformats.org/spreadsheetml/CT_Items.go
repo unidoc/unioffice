@@ -34,8 +34,10 @@ func (m *CT_Items) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	seitem := xml.StartElement{Name: xml.Name{Local: "x:item"}}
-	e.EncodeElement(m.Item, seitem)
+	seitem := xml.StartElement{Name: xml.Name{Local: "ma:item"}}
+	for _, c := range m.Item {
+		e.EncodeElement(c, seitem)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_Items:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "item":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "item"}:
 				tmp := NewCT_Item()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

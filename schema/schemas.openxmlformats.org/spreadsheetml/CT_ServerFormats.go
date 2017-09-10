@@ -35,8 +35,10 @@ func (m *CT_ServerFormats) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	}
 	e.EncodeToken(start)
 	if m.ServerFormat != nil {
-		seserverFormat := xml.StartElement{Name: xml.Name{Local: "x:serverFormat"}}
-		e.EncodeElement(m.ServerFormat, seserverFormat)
+		seserverFormat := xml.StartElement{Name: xml.Name{Local: "ma:serverFormat"}}
+		for _, c := range m.ServerFormat {
+			e.EncodeElement(c, seserverFormat)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -62,8 +64,8 @@ lCT_ServerFormats:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "serverFormat":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "serverFormat"}:
 				tmp := NewCT_ServerFormat()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

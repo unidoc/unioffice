@@ -29,7 +29,9 @@ func (m *CT_Footnotes) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(start)
 	if m.Footnote != nil {
 		sefootnote := xml.StartElement{Name: xml.Name{Local: "w:footnote"}}
-		e.EncodeElement(m.Footnote, sefootnote)
+		for _, c := range m.Footnote {
+			e.EncodeElement(c, sefootnote)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_Footnotes:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "footnote":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footnote"}:
 				tmp := NewCT_FtnEdn()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

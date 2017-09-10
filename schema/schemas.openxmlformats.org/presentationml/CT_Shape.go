@@ -85,26 +85,26 @@ lCT_Shape:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "nvSpPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "nvSpPr"}:
 				if err := d.DecodeElement(m.NvSpPr, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "spPr"}:
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "style":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "style"}:
 				m.Style = drawingml.NewCT_ShapeStyle()
 				if err := d.DecodeElement(m.Style, &el); err != nil {
 					return err
 				}
-			case "txBody":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "txBody"}:
 				m.TxBody = drawingml.NewCT_TextBody()
 				if err := d.DecodeElement(m.TxBody, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionListModify()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -28,7 +28,9 @@ func (m *CT_Constraints) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(start)
 	if m.Constr != nil {
 		seconstr := xml.StartElement{Name: xml.Name{Local: "constr"}}
-		e.EncodeElement(m.Constr, seconstr)
+		for _, c := range m.Constr {
+			e.EncodeElement(c, seconstr)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_Constraints:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "constr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "constr"}:
 				tmp := NewCT_Constraint()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

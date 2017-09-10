@@ -63,28 +63,28 @@ lCT_Scaling:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "logBase":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "logBase"}:
 				m.LogBase = NewCT_LogBase()
 				if err := d.DecodeElement(m.LogBase, &el); err != nil {
 					return err
 				}
-			case "orientation":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "orientation"}:
 				m.Orientation = NewCT_Orientation()
 				if err := d.DecodeElement(m.Orientation, &el); err != nil {
 					return err
 				}
-			case "max":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "max"}:
 				m.Max = NewCT_Double()
 				if err := d.DecodeElement(m.Max, &el); err != nil {
 					return err
 				}
-			case "min":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "min"}:
 				m.Min = NewCT_Double()
 				if err := d.DecodeElement(m.Min, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

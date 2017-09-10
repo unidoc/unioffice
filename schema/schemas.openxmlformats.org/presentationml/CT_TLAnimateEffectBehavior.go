@@ -90,12 +90,12 @@ lCT_TLAnimateEffectBehavior:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cBhvr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cBhvr"}:
 				if err := d.DecodeElement(m.CBhvr, &el); err != nil {
 					return err
 				}
-			case "progress":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "progress"}:
 				m.Progress = NewCT_TLAnimVariant()
 				if err := d.DecodeElement(m.Progress, &el); err != nil {
 					return err

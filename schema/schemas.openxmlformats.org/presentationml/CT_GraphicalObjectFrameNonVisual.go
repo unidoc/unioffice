@@ -58,16 +58,16 @@ lCT_GraphicalObjectFrameNonVisual:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cNvPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cNvPr"}:
 				if err := d.DecodeElement(m.CNvPr, &el); err != nil {
 					return err
 				}
-			case "cNvGraphicFramePr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cNvGraphicFramePr"}:
 				if err := d.DecodeElement(m.CNvGraphicFramePr, &el); err != nil {
 					return err
 				}
-			case "nvPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "nvPr"}:
 				if err := d.DecodeElement(m.NvPr, &el); err != nil {
 					return err
 				}

@@ -154,119 +154,119 @@ lCT_DateAx:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "axId":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "axId"}:
 				if err := d.DecodeElement(m.AxId, &el); err != nil {
 					return err
 				}
-			case "scaling":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "scaling"}:
 				if err := d.DecodeElement(m.Scaling, &el); err != nil {
 					return err
 				}
-			case "delete":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "delete"}:
 				m.Delete = NewCT_Boolean()
 				if err := d.DecodeElement(m.Delete, &el); err != nil {
 					return err
 				}
-			case "axPos":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "axPos"}:
 				if err := d.DecodeElement(m.AxPos, &el); err != nil {
 					return err
 				}
-			case "majorGridlines":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "majorGridlines"}:
 				m.MajorGridlines = NewCT_ChartLines()
 				if err := d.DecodeElement(m.MajorGridlines, &el); err != nil {
 					return err
 				}
-			case "minorGridlines":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "minorGridlines"}:
 				m.MinorGridlines = NewCT_ChartLines()
 				if err := d.DecodeElement(m.MinorGridlines, &el); err != nil {
 					return err
 				}
-			case "title":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "title"}:
 				m.Title = NewCT_Title()
 				if err := d.DecodeElement(m.Title, &el); err != nil {
 					return err
 				}
-			case "numFmt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "numFmt"}:
 				m.NumFmt = NewCT_NumFmt()
 				if err := d.DecodeElement(m.NumFmt, &el); err != nil {
 					return err
 				}
-			case "majorTickMark":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "majorTickMark"}:
 				m.MajorTickMark = NewCT_TickMark()
 				if err := d.DecodeElement(m.MajorTickMark, &el); err != nil {
 					return err
 				}
-			case "minorTickMark":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "minorTickMark"}:
 				m.MinorTickMark = NewCT_TickMark()
 				if err := d.DecodeElement(m.MinorTickMark, &el); err != nil {
 					return err
 				}
-			case "tickLblPos":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "tickLblPos"}:
 				m.TickLblPos = NewCT_TickLblPos()
 				if err := d.DecodeElement(m.TickLblPos, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"}:
 				m.SpPr = drawingml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "txPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "txPr"}:
 				m.TxPr = drawingml.NewCT_TextBody()
 				if err := d.DecodeElement(m.TxPr, &el); err != nil {
 					return err
 				}
-			case "crossAx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "crossAx"}:
 				if err := d.DecodeElement(m.CrossAx, &el); err != nil {
 					return err
 				}
-			case "crosses":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "crosses"}:
 				m.Choice = NewEG_AxSharedChoice()
 				if err := d.DecodeElement(&m.Choice.Crosses, &el); err != nil {
 					return err
 				}
-			case "crossesAt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "crossesAt"}:
 				m.Choice = NewEG_AxSharedChoice()
 				if err := d.DecodeElement(&m.Choice.CrossesAt, &el); err != nil {
 					return err
 				}
-			case "auto":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "auto"}:
 				m.Auto = NewCT_Boolean()
 				if err := d.DecodeElement(m.Auto, &el); err != nil {
 					return err
 				}
-			case "lblOffset":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "lblOffset"}:
 				m.LblOffset = NewCT_LblOffset()
 				if err := d.DecodeElement(m.LblOffset, &el); err != nil {
 					return err
 				}
-			case "baseTimeUnit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "baseTimeUnit"}:
 				m.BaseTimeUnit = NewCT_TimeUnit()
 				if err := d.DecodeElement(m.BaseTimeUnit, &el); err != nil {
 					return err
 				}
-			case "majorUnit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "majorUnit"}:
 				m.MajorUnit = NewCT_AxisUnit()
 				if err := d.DecodeElement(m.MajorUnit, &el); err != nil {
 					return err
 				}
-			case "majorTimeUnit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "majorTimeUnit"}:
 				m.MajorTimeUnit = NewCT_TimeUnit()
 				if err := d.DecodeElement(m.MajorTimeUnit, &el); err != nil {
 					return err
 				}
-			case "minorUnit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "minorUnit"}:
 				m.MinorUnit = NewCT_AxisUnit()
 				if err := d.DecodeElement(m.MinorUnit, &el); err != nil {
 					return err
 				}
-			case "minorTimeUnit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "minorTimeUnit"}:
 				m.MinorTimeUnit = NewCT_TimeUnit()
 				if err := d.DecodeElement(m.MinorTimeUnit, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

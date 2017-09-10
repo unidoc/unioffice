@@ -96,23 +96,23 @@ lCT_Pt:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "prSet":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "prSet"}:
 				m.PrSet = NewCT_ElemPropSet()
 				if err := d.DecodeElement(m.PrSet, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "spPr"}:
 				m.SpPr = drawingml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "t":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "t"}:
 				m.T = drawingml.NewCT_TextBody()
 				if err := d.DecodeElement(m.T, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "extLst"}:
 				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

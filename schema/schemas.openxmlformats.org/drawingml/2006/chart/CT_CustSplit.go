@@ -28,7 +28,9 @@ func (m *CT_CustSplit) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(start)
 	if m.SecondPiePt != nil {
 		sesecondPiePt := xml.StartElement{Name: xml.Name{Local: "c:secondPiePt"}}
-		e.EncodeElement(m.SecondPiePt, sesecondPiePt)
+		for _, c := range m.SecondPiePt {
+			e.EncodeElement(c, sesecondPiePt)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_CustSplit:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "secondPiePt":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "secondPiePt"}:
 				tmp := NewCT_UnsignedInt()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

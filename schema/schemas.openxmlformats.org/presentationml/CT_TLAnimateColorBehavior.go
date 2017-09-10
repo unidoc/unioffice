@@ -89,22 +89,22 @@ lCT_TLAnimateColorBehavior:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cBhvr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cBhvr"}:
 				if err := d.DecodeElement(m.CBhvr, &el); err != nil {
 					return err
 				}
-			case "by":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "by"}:
 				m.By = NewCT_TLByAnimateColorTransform()
 				if err := d.DecodeElement(m.By, &el); err != nil {
 					return err
 				}
-			case "from":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "from"}:
 				m.From = drawingml.NewCT_Color()
 				if err := d.DecodeElement(m.From, &el); err != nil {
 					return err
 				}
-			case "to":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "to"}:
 				m.To = drawingml.NewCT_Color()
 				if err := d.DecodeElement(m.To, &el); err != nil {
 					return err

@@ -32,7 +32,9 @@ func (m *CT_TableRow) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Tc != nil {
 		setc := xml.StartElement{Name: xml.Name{Local: "a:tc"}}
-		e.EncodeElement(m.Tc, setc)
+		for _, c := range m.Tc {
+			e.EncodeElement(c, setc)
+		}
 	}
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "a:extLst"}}
@@ -61,14 +63,14 @@ lCT_TableRow:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tc":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tc"}:
 				tmp := NewCT_TableCell()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Tc = append(m.Tc, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

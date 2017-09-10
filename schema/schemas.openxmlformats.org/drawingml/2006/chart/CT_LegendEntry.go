@@ -52,26 +52,26 @@ lCT_LegendEntry:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "idx":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "idx"}:
 				if err := d.DecodeElement(m.Idx, &el); err != nil {
 					return err
 				}
-			case "delete":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "delete"}:
 				if m.Choice == nil {
 					m.Choice = NewCT_LegendEntryChoice()
 				}
 				if err := d.DecodeElement(&m.Choice.Delete, &el); err != nil {
 					return err
 				}
-			case "txPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "txPr"}:
 				if m.Choice == nil {
 					m.Choice = NewCT_LegendEntryChoice()
 				}
 				if err := d.DecodeElement(&m.Choice.TxPr, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

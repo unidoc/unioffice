@@ -92,237 +92,237 @@ lCT_R:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rPr"}:
 				m.RPr = NewCT_RPr()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err
 				}
-			case "br":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "br"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.Br = NewCT_Br()
 				if err := d.DecodeElement(tmpruninnercontent.Br, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "t":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "t"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.T = NewCT_Text()
 				if err := d.DecodeElement(tmpruninnercontent.T, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "contentPart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "contentPart"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.ContentPart = NewCT_Rel()
 				if err := d.DecodeElement(tmpruninnercontent.ContentPart, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "delText":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "delText"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.DelText = NewCT_Text()
 				if err := d.DecodeElement(tmpruninnercontent.DelText, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "instrText":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "instrText"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.InstrText = NewCT_Text()
 				if err := d.DecodeElement(tmpruninnercontent.InstrText, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "delInstrText":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "delInstrText"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.DelInstrText = NewCT_Text()
 				if err := d.DecodeElement(tmpruninnercontent.DelInstrText, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "noBreakHyphen":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noBreakHyphen"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.NoBreakHyphen = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.NoBreakHyphen, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "softHyphen":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "softHyphen"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.SoftHyphen = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.SoftHyphen, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "dayShort":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "dayShort"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.DayShort = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.DayShort, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "monthShort":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "monthShort"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.MonthShort = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.MonthShort, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "yearShort":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "yearShort"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.YearShort = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.YearShort, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "dayLong":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "dayLong"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.DayLong = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.DayLong, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "monthLong":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "monthLong"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.MonthLong = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.MonthLong, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "yearLong":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "yearLong"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.YearLong = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.YearLong, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "annotationRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "annotationRef"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.AnnotationRef = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.AnnotationRef, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "footnoteRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footnoteRef"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.FootnoteRef = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.FootnoteRef, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "endnoteRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "endnoteRef"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.EndnoteRef = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.EndnoteRef, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "separator":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "separator"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.Separator = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.Separator, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "continuationSeparator":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "continuationSeparator"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.ContinuationSeparator = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.ContinuationSeparator, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "sym":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sym"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.Sym = NewCT_Sym()
 				if err := d.DecodeElement(tmpruninnercontent.Sym, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "pgNum":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pgNum"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.PgNum = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.PgNum, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "cr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cr"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.Cr = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.Cr, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "tab":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tab"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.Tab = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.Tab, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "object":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "object"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.Object = NewCT_Object()
 				if err := d.DecodeElement(tmpruninnercontent.Object, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "pict":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pict"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.Pict = NewCT_Picture()
 				if err := d.DecodeElement(tmpruninnercontent.Pict, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "fldChar":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "fldChar"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.FldChar = NewCT_FldChar()
 				if err := d.DecodeElement(tmpruninnercontent.FldChar, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "ruby":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ruby"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.Ruby = NewCT_Ruby()
 				if err := d.DecodeElement(tmpruninnercontent.Ruby, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "footnoteReference":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footnoteReference"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.FootnoteReference = NewCT_FtnEdnRef()
 				if err := d.DecodeElement(tmpruninnercontent.FootnoteReference, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "endnoteReference":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "endnoteReference"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.EndnoteReference = NewCT_FtnEdnRef()
 				if err := d.DecodeElement(tmpruninnercontent.EndnoteReference, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "commentReference":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentReference"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.CommentReference = NewCT_Markup()
 				if err := d.DecodeElement(tmpruninnercontent.CommentReference, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "drawing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "drawing"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.Drawing = NewCT_Drawing()
 				if err := d.DecodeElement(tmpruninnercontent.Drawing, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "ptab":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ptab"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.Ptab = NewCT_PTab()
 				if err := d.DecodeElement(tmpruninnercontent.Ptab, &el); err != nil {
 					return err
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
-			case "lastRenderedPageBreak":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lastRenderedPageBreak"}:
 				tmpruninnercontent := NewEG_RunInnerContent()
 				tmpruninnercontent.LastRenderedPageBreak = NewCT_Empty()
 				if err := d.DecodeElement(tmpruninnercontent.LastRenderedPageBreak, &el); err != nil {

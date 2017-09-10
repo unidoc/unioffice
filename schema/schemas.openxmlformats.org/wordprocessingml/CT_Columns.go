@@ -55,7 +55,9 @@ func (m *CT_Columns) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	secol := xml.StartElement{Name: xml.Name{Local: "w:col"}}
-	e.EncodeElement(m.Col, secol)
+	for _, c := range m.Col {
+		e.EncodeElement(c, secol)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -100,8 +102,8 @@ lCT_Columns:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "col":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "col"}:
 				tmp := NewCT_Column()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

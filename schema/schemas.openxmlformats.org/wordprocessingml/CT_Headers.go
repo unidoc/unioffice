@@ -28,7 +28,9 @@ func NewCT_Headers() *CT_Headers {
 func (m *CT_Headers) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	seheader := xml.StartElement{Name: xml.Name{Local: "w:header"}}
-	e.EncodeElement(m.Header, seheader)
+	for _, c := range m.Header {
+		e.EncodeElement(c, seheader)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_Headers:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "header":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "header"}:
 				tmp := NewCT_String()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

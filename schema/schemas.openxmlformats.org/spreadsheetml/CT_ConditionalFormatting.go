@@ -41,10 +41,12 @@ func (m *CT_ConditionalFormatting) MarshalXML(e *xml.Encoder, start xml.StartEle
 			Value: fmt.Sprintf("%v", *m.SqrefAttr)})
 	}
 	e.EncodeToken(start)
-	secfRule := xml.StartElement{Name: xml.Name{Local: "x:cfRule"}}
-	e.EncodeElement(m.CfRule, secfRule)
+	secfRule := xml.StartElement{Name: xml.Name{Local: "ma:cfRule"}}
+	for _, c := range m.CfRule {
+		e.EncodeElement(c, secfRule)
+	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -77,14 +79,14 @@ lCT_ConditionalFormatting:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cfRule":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cfRule"}:
 				tmp := NewCT_CfRule()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CfRule = append(m.CfRule, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -46,8 +46,8 @@ lElementOrRefinementContainer:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "any":
+			switch el.Name {
+			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "any"}:
 				tmp := NewElementsAndRefinementsGroupChoice()
 				if err := d.DecodeElement(&tmp.Any, &el); err != nil {
 					return err

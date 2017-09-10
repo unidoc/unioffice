@@ -62,8 +62,10 @@ func (m *CT_Scenario) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CommentAttr)})
 	}
 	e.EncodeToken(start)
-	seinputCells := xml.StartElement{Name: xml.Name{Local: "x:inputCells"}}
-	e.EncodeElement(m.InputCells, seinputCells)
+	seinputCells := xml.StartElement{Name: xml.Name{Local: "ma:inputCells"}}
+	for _, c := range m.InputCells {
+		e.EncodeElement(c, seinputCells)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -123,8 +125,8 @@ lCT_Scenario:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "inputCells":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "inputCells"}:
 				tmp := NewCT_InputCells()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

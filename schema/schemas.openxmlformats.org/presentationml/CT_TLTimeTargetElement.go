@@ -64,23 +64,23 @@ lCT_TLTimeTargetElement:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sldTgt":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldTgt"}:
 				m.SldTgt = NewCT_Empty()
 				if err := d.DecodeElement(m.SldTgt, &el); err != nil {
 					return err
 				}
-			case "sndTgt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sndTgt"}:
 				m.SndTgt = drawingml.NewCT_EmbeddedWAVAudioFile()
 				if err := d.DecodeElement(m.SndTgt, &el); err != nil {
 					return err
 				}
-			case "spTgt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "spTgt"}:
 				m.SpTgt = NewCT_TLShapeTargetElement()
 				if err := d.DecodeElement(m.SpTgt, &el); err != nil {
 					return err
 				}
-			case "inkTgt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "inkTgt"}:
 				m.InkTgt = NewCT_TLSubShapeId()
 				if err := d.DecodeElement(m.InkTgt, &el); err != nil {
 					return err

@@ -214,153 +214,153 @@ lCT_EffectContainer:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cont":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cont"}:
 				m.Cont = NewCT_EffectContainer()
 				if err := d.DecodeElement(m.Cont, &el); err != nil {
 					return err
 				}
-			case "effect":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effect"}:
 				m.Effect = NewCT_EffectReference()
 				if err := d.DecodeElement(m.Effect, &el); err != nil {
 					return err
 				}
-			case "alphaBiLevel":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaBiLevel"}:
 				m.AlphaBiLevel = NewCT_AlphaBiLevelEffect()
 				if err := d.DecodeElement(m.AlphaBiLevel, &el); err != nil {
 					return err
 				}
-			case "alphaCeiling":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaCeiling"}:
 				m.AlphaCeiling = NewCT_AlphaCeilingEffect()
 				if err := d.DecodeElement(m.AlphaCeiling, &el); err != nil {
 					return err
 				}
-			case "alphaFloor":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaFloor"}:
 				m.AlphaFloor = NewCT_AlphaFloorEffect()
 				if err := d.DecodeElement(m.AlphaFloor, &el); err != nil {
 					return err
 				}
-			case "alphaInv":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaInv"}:
 				m.AlphaInv = NewCT_AlphaInverseEffect()
 				if err := d.DecodeElement(m.AlphaInv, &el); err != nil {
 					return err
 				}
-			case "alphaMod":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaMod"}:
 				m.AlphaMod = NewCT_AlphaModulateEffect()
 				if err := d.DecodeElement(m.AlphaMod, &el); err != nil {
 					return err
 				}
-			case "alphaModFix":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaModFix"}:
 				m.AlphaModFix = NewCT_AlphaModulateFixedEffect()
 				if err := d.DecodeElement(m.AlphaModFix, &el); err != nil {
 					return err
 				}
-			case "alphaOutset":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaOutset"}:
 				m.AlphaOutset = NewCT_AlphaOutsetEffect()
 				if err := d.DecodeElement(m.AlphaOutset, &el); err != nil {
 					return err
 				}
-			case "alphaRepl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaRepl"}:
 				m.AlphaRepl = NewCT_AlphaReplaceEffect()
 				if err := d.DecodeElement(m.AlphaRepl, &el); err != nil {
 					return err
 				}
-			case "biLevel":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "biLevel"}:
 				m.BiLevel = NewCT_BiLevelEffect()
 				if err := d.DecodeElement(m.BiLevel, &el); err != nil {
 					return err
 				}
-			case "blend":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blend"}:
 				m.Blend = NewCT_BlendEffect()
 				if err := d.DecodeElement(m.Blend, &el); err != nil {
 					return err
 				}
-			case "blur":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blur"}:
 				m.Blur = NewCT_BlurEffect()
 				if err := d.DecodeElement(m.Blur, &el); err != nil {
 					return err
 				}
-			case "clrChange":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "clrChange"}:
 				m.ClrChange = NewCT_ColorChangeEffect()
 				if err := d.DecodeElement(m.ClrChange, &el); err != nil {
 					return err
 				}
-			case "clrRepl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "clrRepl"}:
 				m.ClrRepl = NewCT_ColorReplaceEffect()
 				if err := d.DecodeElement(m.ClrRepl, &el); err != nil {
 					return err
 				}
-			case "duotone":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "duotone"}:
 				m.Duotone = NewCT_DuotoneEffect()
 				if err := d.DecodeElement(m.Duotone, &el); err != nil {
 					return err
 				}
-			case "fill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fill"}:
 				m.Fill = NewCT_FillEffect()
 				if err := d.DecodeElement(m.Fill, &el); err != nil {
 					return err
 				}
-			case "fillOverlay":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillOverlay"}:
 				m.FillOverlay = NewCT_FillOverlayEffect()
 				if err := d.DecodeElement(m.FillOverlay, &el); err != nil {
 					return err
 				}
-			case "glow":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "glow"}:
 				m.Glow = NewCT_GlowEffect()
 				if err := d.DecodeElement(m.Glow, &el); err != nil {
 					return err
 				}
-			case "grayscl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grayscl"}:
 				m.Grayscl = NewCT_GrayscaleEffect()
 				if err := d.DecodeElement(m.Grayscl, &el); err != nil {
 					return err
 				}
-			case "hsl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hsl"}:
 				m.Hsl = NewCT_HSLEffect()
 				if err := d.DecodeElement(m.Hsl, &el); err != nil {
 					return err
 				}
-			case "innerShdw":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "innerShdw"}:
 				m.InnerShdw = NewCT_InnerShadowEffect()
 				if err := d.DecodeElement(m.InnerShdw, &el); err != nil {
 					return err
 				}
-			case "lum":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lum"}:
 				m.Lum = NewCT_LuminanceEffect()
 				if err := d.DecodeElement(m.Lum, &el); err != nil {
 					return err
 				}
-			case "outerShdw":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "outerShdw"}:
 				m.OuterShdw = NewCT_OuterShadowEffect()
 				if err := d.DecodeElement(m.OuterShdw, &el); err != nil {
 					return err
 				}
-			case "prstShdw":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "prstShdw"}:
 				m.PrstShdw = NewCT_PresetShadowEffect()
 				if err := d.DecodeElement(m.PrstShdw, &el); err != nil {
 					return err
 				}
-			case "reflection":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "reflection"}:
 				m.Reflection = NewCT_ReflectionEffect()
 				if err := d.DecodeElement(m.Reflection, &el); err != nil {
 					return err
 				}
-			case "relOff":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "relOff"}:
 				m.RelOff = NewCT_RelativeOffsetEffect()
 				if err := d.DecodeElement(m.RelOff, &el); err != nil {
 					return err
 				}
-			case "softEdge":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "softEdge"}:
 				m.SoftEdge = NewCT_SoftEdgesEffect()
 				if err := d.DecodeElement(m.SoftEdge, &el); err != nil {
 					return err
 				}
-			case "tint":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tint"}:
 				m.Tint = NewCT_TintEffect()
 				if err := d.DecodeElement(m.Tint, &el); err != nil {
 					return err
 				}
-			case "xfrm":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "xfrm"}:
 				m.Xfrm = NewCT_TransformEffect()
 				if err := d.DecodeElement(m.Xfrm, &el); err != nil {
 					return err

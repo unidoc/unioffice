@@ -140,78 +140,78 @@ lCT_TableStyle:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tblBg":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tblBg"}:
 				m.TblBg = NewCT_TableBackgroundStyle()
 				if err := d.DecodeElement(m.TblBg, &el); err != nil {
 					return err
 				}
-			case "wholeTbl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "wholeTbl"}:
 				m.WholeTbl = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.WholeTbl, &el); err != nil {
 					return err
 				}
-			case "band1H":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "band1H"}:
 				m.Band1H = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.Band1H, &el); err != nil {
 					return err
 				}
-			case "band2H":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "band2H"}:
 				m.Band2H = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.Band2H, &el); err != nil {
 					return err
 				}
-			case "band1V":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "band1V"}:
 				m.Band1V = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.Band1V, &el); err != nil {
 					return err
 				}
-			case "band2V":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "band2V"}:
 				m.Band2V = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.Band2V, &el); err != nil {
 					return err
 				}
-			case "lastCol":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lastCol"}:
 				m.LastCol = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.LastCol, &el); err != nil {
 					return err
 				}
-			case "firstCol":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "firstCol"}:
 				m.FirstCol = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.FirstCol, &el); err != nil {
 					return err
 				}
-			case "lastRow":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lastRow"}:
 				m.LastRow = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.LastRow, &el); err != nil {
 					return err
 				}
-			case "seCell":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "seCell"}:
 				m.SeCell = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.SeCell, &el); err != nil {
 					return err
 				}
-			case "swCell":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "swCell"}:
 				m.SwCell = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.SwCell, &el); err != nil {
 					return err
 				}
-			case "firstRow":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "firstRow"}:
 				m.FirstRow = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.FirstRow, &el); err != nil {
 					return err
 				}
-			case "neCell":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "neCell"}:
 				m.NeCell = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.NeCell, &el); err != nil {
 					return err
 				}
-			case "nwCell":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "nwCell"}:
 				m.NwCell = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.NwCell, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

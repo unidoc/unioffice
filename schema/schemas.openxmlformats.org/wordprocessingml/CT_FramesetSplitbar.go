@@ -62,23 +62,23 @@ lCT_FramesetSplitbar:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "w":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "w"}:
 				m.W = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.W, &el); err != nil {
 					return err
 				}
-			case "color":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "color"}:
 				m.Color = NewCT_Color()
 				if err := d.DecodeElement(m.Color, &el); err != nil {
 					return err
 				}
-			case "noBorder":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noBorder"}:
 				m.NoBorder = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoBorder, &el); err != nil {
 					return err
 				}
-			case "flatBorders":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "flatBorders"}:
 				m.FlatBorders = NewCT_OnOff()
 				if err := d.DecodeElement(m.FlatBorders, &el); err != nil {
 					return err

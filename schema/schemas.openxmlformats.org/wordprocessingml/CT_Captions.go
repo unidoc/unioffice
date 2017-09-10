@@ -30,7 +30,9 @@ func NewCT_Captions() *CT_Captions {
 func (m *CT_Captions) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	secaption := xml.StartElement{Name: xml.Name{Local: "w:caption"}}
-	e.EncodeElement(m.Caption, secaption)
+	for _, c := range m.Caption {
+		e.EncodeElement(c, secaption)
+	}
 	if m.AutoCaptions != nil {
 		seautoCaptions := xml.StartElement{Name: xml.Name{Local: "w:autoCaptions"}}
 		e.EncodeElement(m.AutoCaptions, seautoCaptions)
@@ -49,14 +51,14 @@ lCT_Captions:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "caption":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "caption"}:
 				tmp := NewCT_Caption()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Caption = append(m.Caption, tmp)
-			case "autoCaptions":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autoCaptions"}:
 				m.AutoCaptions = NewCT_AutoCaptions()
 				if err := d.DecodeElement(m.AutoCaptions, &el); err != nil {
 					return err

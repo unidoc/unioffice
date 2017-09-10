@@ -78,27 +78,27 @@ lCT_OfficeStyleSheet:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "themeElements":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "themeElements"}:
 				if err := d.DecodeElement(m.ThemeElements, &el); err != nil {
 					return err
 				}
-			case "objectDefaults":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "objectDefaults"}:
 				m.ObjectDefaults = NewCT_ObjectStyleDefaults()
 				if err := d.DecodeElement(m.ObjectDefaults, &el); err != nil {
 					return err
 				}
-			case "extraClrSchemeLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extraClrSchemeLst"}:
 				m.ExtraClrSchemeLst = NewCT_ColorSchemeList()
 				if err := d.DecodeElement(m.ExtraClrSchemeLst, &el); err != nil {
 					return err
 				}
-			case "custClrLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custClrLst"}:
 				m.CustClrLst = NewCT_CustomColorList()
 				if err := d.DecodeElement(m.CustClrLst, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -71,7 +71,7 @@ lCT_Colors:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
+			switch el.Name {
 			default:
 				log.Printf("skipping unsupported element on CT_Colors %v", el.Name)
 				if err := d.Skip(); err != nil {

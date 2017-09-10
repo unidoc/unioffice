@@ -28,7 +28,9 @@ func (m *CT_PivotFmts) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(start)
 	if m.PivotFmt != nil {
 		sepivotFmt := xml.StartElement{Name: xml.Name{Local: "c:pivotFmt"}}
-		e.EncodeElement(m.PivotFmt, sepivotFmt)
+		for _, c := range m.PivotFmt {
+			e.EncodeElement(c, sepivotFmt)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_PivotFmts:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pivotFmt":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pivotFmt"}:
 				tmp := NewCT_PivotFmt()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

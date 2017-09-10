@@ -62,7 +62,7 @@ func (m *CT_DataConsolidate) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	e.EncodeToken(start)
 	if m.DataRefs != nil {
-		sedataRefs := xml.StartElement{Name: xml.Name{Local: "x:dataRefs"}}
+		sedataRefs := xml.StartElement{Name: xml.Name{Local: "ma:dataRefs"}}
 		e.EncodeElement(m.DataRefs, sedataRefs)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -112,8 +112,8 @@ lCT_DataConsolidate:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "dataRefs":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataRefs"}:
 				m.DataRefs = NewCT_DataRefs()
 				if err := d.DecodeElement(m.DataRefs, &el); err != nil {
 					return err

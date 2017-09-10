@@ -51,18 +51,18 @@ lEG_Anchor:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "twoCellAnchor":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "twoCellAnchor"}:
 				m.TwoCellAnchor = NewCT_TwoCellAnchor()
 				if err := d.DecodeElement(m.TwoCellAnchor, &el); err != nil {
 					return err
 				}
-			case "oneCellAnchor":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "oneCellAnchor"}:
 				m.OneCellAnchor = NewCT_OneCellAnchor()
 				if err := d.DecodeElement(m.OneCellAnchor, &el); err != nil {
 					return err
 				}
-			case "absoluteAnchor":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "absoluteAnchor"}:
 				m.AbsoluteAnchor = NewCT_AbsoluteAnchor()
 				if err := d.DecodeElement(m.AbsoluteAnchor, &el); err != nil {
 					return err

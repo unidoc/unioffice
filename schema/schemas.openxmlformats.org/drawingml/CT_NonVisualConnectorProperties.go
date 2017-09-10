@@ -58,23 +58,23 @@ lCT_NonVisualConnectorProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cxnSpLocks":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cxnSpLocks"}:
 				m.CxnSpLocks = NewCT_ConnectorLocking()
 				if err := d.DecodeElement(m.CxnSpLocks, &el); err != nil {
 					return err
 				}
-			case "stCxn":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "stCxn"}:
 				m.StCxn = NewCT_Connection()
 				if err := d.DecodeElement(m.StCxn, &el); err != nil {
 					return err
 				}
-			case "endCxn":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "endCxn"}:
 				m.EndCxn = NewCT_Connection()
 				if err := d.DecodeElement(m.EndCxn, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

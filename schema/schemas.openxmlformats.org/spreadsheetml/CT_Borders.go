@@ -35,8 +35,10 @@ func (m *CT_Borders) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.Border != nil {
-		seborder := xml.StartElement{Name: xml.Name{Local: "x:border"}}
-		e.EncodeElement(m.Border, seborder)
+		seborder := xml.StartElement{Name: xml.Name{Local: "ma:border"}}
+		for _, c := range m.Border {
+			e.EncodeElement(c, seborder)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -62,8 +64,8 @@ lCT_Borders:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "border":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "border"}:
 				tmp := NewCT_Border()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

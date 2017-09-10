@@ -48,13 +48,13 @@ lEG_FtnEdnNumProps:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "numStart":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numStart"}:
 				m.NumStart = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.NumStart, &el); err != nil {
 					return err
 				}
-			case "numRestart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numRestart"}:
 				m.NumRestart = NewCT_NumRestart()
 				if err := d.DecodeElement(m.NumRestart, &el); err != nil {
 					return err

@@ -110,73 +110,73 @@ lCT_DLblChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "delete":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "delete"}:
 				m.Delete = NewCT_Boolean()
 				if err := d.DecodeElement(m.Delete, &el); err != nil {
 					return err
 				}
-			case "layout":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "layout"}:
 				m.Layout = NewCT_Layout()
 				if err := d.DecodeElement(m.Layout, &el); err != nil {
 					return err
 				}
-			case "tx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "tx"}:
 				m.Tx = NewCT_Tx()
 				if err := d.DecodeElement(m.Tx, &el); err != nil {
 					return err
 				}
-			case "numFmt":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "numFmt"}:
 				m.NumFmt = NewCT_NumFmt()
 				if err := d.DecodeElement(m.NumFmt, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"}:
 				m.SpPr = drawingml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "txPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "txPr"}:
 				m.TxPr = drawingml.NewCT_TextBody()
 				if err := d.DecodeElement(m.TxPr, &el); err != nil {
 					return err
 				}
-			case "dLblPos":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dLblPos"}:
 				m.DLblPos = NewCT_DLblPos()
 				if err := d.DecodeElement(m.DLblPos, &el); err != nil {
 					return err
 				}
-			case "showLegendKey":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "showLegendKey"}:
 				m.ShowLegendKey = NewCT_Boolean()
 				if err := d.DecodeElement(m.ShowLegendKey, &el); err != nil {
 					return err
 				}
-			case "showVal":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "showVal"}:
 				m.ShowVal = NewCT_Boolean()
 				if err := d.DecodeElement(m.ShowVal, &el); err != nil {
 					return err
 				}
-			case "showCatName":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "showCatName"}:
 				m.ShowCatName = NewCT_Boolean()
 				if err := d.DecodeElement(m.ShowCatName, &el); err != nil {
 					return err
 				}
-			case "showSerName":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "showSerName"}:
 				m.ShowSerName = NewCT_Boolean()
 				if err := d.DecodeElement(m.ShowSerName, &el); err != nil {
 					return err
 				}
-			case "showPercent":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "showPercent"}:
 				m.ShowPercent = NewCT_Boolean()
 				if err := d.DecodeElement(m.ShowPercent, &el); err != nil {
 					return err
 				}
-			case "showBubbleSize":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "showBubbleSize"}:
 				m.ShowBubbleSize = NewCT_Boolean()
 				if err := d.DecodeElement(m.ShowBubbleSize, &el); err != nil {
 					return err
 				}
-			case "separator":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "separator"}:
 				m.Separator = new(string)
 				if err := d.DecodeElement(m.Separator, &el); err != nil {
 					return err

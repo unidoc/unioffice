@@ -28,7 +28,9 @@ func NewCT_Divs() *CT_Divs {
 func (m *CT_Divs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	sediv := xml.StartElement{Name: xml.Name{Local: "w:div"}}
-	e.EncodeElement(m.Div, sediv)
+	for _, c := range m.Div {
+		e.EncodeElement(c, sediv)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_Divs:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "div":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "div"}:
 				tmp := NewCT_Div()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

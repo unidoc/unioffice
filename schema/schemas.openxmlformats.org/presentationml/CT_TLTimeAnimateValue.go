@@ -73,8 +73,8 @@ lCT_TLTimeAnimateValue:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "val":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "val"}:
 				m.Val = NewCT_TLAnimVariant()
 				if err := d.DecodeElement(m.Val, &el); err != nil {
 					return err

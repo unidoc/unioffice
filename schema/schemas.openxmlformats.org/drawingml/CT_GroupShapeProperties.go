@@ -106,58 +106,58 @@ lCT_GroupShapeProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "xfrm":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "xfrm"}:
 				m.Xfrm = NewCT_GroupTransform2D()
 				if err := d.DecodeElement(m.Xfrm, &el); err != nil {
 					return err
 				}
-			case "noFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noFill"}:
 				m.NoFill = NewCT_NoFillProperties()
 				if err := d.DecodeElement(m.NoFill, &el); err != nil {
 					return err
 				}
-			case "solidFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "solidFill"}:
 				m.SolidFill = NewCT_SolidColorFillProperties()
 				if err := d.DecodeElement(m.SolidFill, &el); err != nil {
 					return err
 				}
-			case "gradFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gradFill"}:
 				m.GradFill = NewCT_GradientFillProperties()
 				if err := d.DecodeElement(m.GradFill, &el); err != nil {
 					return err
 				}
-			case "blipFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blipFill"}:
 				m.BlipFill = NewCT_BlipFillProperties()
 				if err := d.DecodeElement(m.BlipFill, &el); err != nil {
 					return err
 				}
-			case "pattFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pattFill"}:
 				m.PattFill = NewCT_PatternFillProperties()
 				if err := d.DecodeElement(m.PattFill, &el); err != nil {
 					return err
 				}
-			case "grpFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpFill"}:
 				m.GrpFill = NewCT_GroupFillProperties()
 				if err := d.DecodeElement(m.GrpFill, &el); err != nil {
 					return err
 				}
-			case "effectLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectLst"}:
 				m.EffectLst = NewCT_EffectList()
 				if err := d.DecodeElement(m.EffectLst, &el); err != nil {
 					return err
 				}
-			case "effectDag":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectDag"}:
 				m.EffectDag = NewCT_EffectContainer()
 				if err := d.DecodeElement(m.EffectDag, &el); err != nil {
 					return err
 				}
-			case "scene3d":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "scene3d"}:
 				m.Scene3d = NewCT_Scene3D()
 				if err := d.DecodeElement(m.Scene3d, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

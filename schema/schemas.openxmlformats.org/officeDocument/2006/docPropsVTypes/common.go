@@ -158,6 +158,10 @@ func (m *ST_VectorBaseType) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	if err != nil {
 		return err
 	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
+	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)
 	} else {
@@ -394,6 +398,10 @@ func (m *ST_ArrayBaseType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	tok, err := d.Token()
 	if err != nil {
 		return err
+	}
+	if el, ok := tok.(xml.EndElement); ok && el.Name == start.Name {
+		*m = 1
+		return nil
 	}
 	if cd, ok := tok.(xml.CharData); !ok {
 		return fmt.Errorf("expected char data, got %T", tok)

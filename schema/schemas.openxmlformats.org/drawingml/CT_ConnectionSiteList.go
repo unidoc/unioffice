@@ -28,7 +28,9 @@ func (m *CT_ConnectionSiteList) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	e.EncodeToken(start)
 	if m.Cxn != nil {
 		secxn := xml.StartElement{Name: xml.Name{Local: "a:cxn"}}
-		e.EncodeElement(m.Cxn, secxn)
+		for _, c := range m.Cxn {
+			e.EncodeElement(c, secxn)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_ConnectionSiteList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cxn":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cxn"}:
 				tmp := NewCT_ConnectionSite()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

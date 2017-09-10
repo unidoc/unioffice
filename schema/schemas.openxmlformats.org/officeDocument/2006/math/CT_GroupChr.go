@@ -48,13 +48,13 @@ lCT_GroupChr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "groupChrPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "groupChrPr"}:
 				m.GroupChrPr = NewCT_GroupChrPr()
 				if err := d.DecodeElement(m.GroupChrPr, &el); err != nil {
 					return err
 				}
-			case "e":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"}:
 				if err := d.DecodeElement(m.E, &el); err != nil {
 					return err
 				}

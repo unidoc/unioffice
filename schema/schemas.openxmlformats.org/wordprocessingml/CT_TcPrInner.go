@@ -140,88 +140,88 @@ lCT_TcPrInner:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cnfStyle":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cnfStyle"}:
 				m.CnfStyle = NewCT_Cnf()
 				if err := d.DecodeElement(m.CnfStyle, &el); err != nil {
 					return err
 				}
-			case "tcW":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tcW"}:
 				m.TcW = NewCT_TblWidth()
 				if err := d.DecodeElement(m.TcW, &el); err != nil {
 					return err
 				}
-			case "gridSpan":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "gridSpan"}:
 				m.GridSpan = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.GridSpan, &el); err != nil {
 					return err
 				}
-			case "hMerge":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "hMerge"}:
 				m.HMerge = NewCT_HMerge()
 				if err := d.DecodeElement(m.HMerge, &el); err != nil {
 					return err
 				}
-			case "vMerge":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "vMerge"}:
 				m.VMerge = NewCT_VMerge()
 				if err := d.DecodeElement(m.VMerge, &el); err != nil {
 					return err
 				}
-			case "tcBorders":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tcBorders"}:
 				m.TcBorders = NewCT_TcBorders()
 				if err := d.DecodeElement(m.TcBorders, &el); err != nil {
 					return err
 				}
-			case "shd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "shd"}:
 				m.Shd = NewCT_Shd()
 				if err := d.DecodeElement(m.Shd, &el); err != nil {
 					return err
 				}
-			case "noWrap":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noWrap"}:
 				m.NoWrap = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoWrap, &el); err != nil {
 					return err
 				}
-			case "tcMar":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tcMar"}:
 				m.TcMar = NewCT_TcMar()
 				if err := d.DecodeElement(m.TcMar, &el); err != nil {
 					return err
 				}
-			case "textDirection":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "textDirection"}:
 				m.TextDirection = NewCT_TextDirection()
 				if err := d.DecodeElement(m.TextDirection, &el); err != nil {
 					return err
 				}
-			case "tcFitText":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tcFitText"}:
 				m.TcFitText = NewCT_OnOff()
 				if err := d.DecodeElement(m.TcFitText, &el); err != nil {
 					return err
 				}
-			case "vAlign":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "vAlign"}:
 				m.VAlign = NewCT_VerticalJc()
 				if err := d.DecodeElement(m.VAlign, &el); err != nil {
 					return err
 				}
-			case "hideMark":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "hideMark"}:
 				m.HideMark = NewCT_OnOff()
 				if err := d.DecodeElement(m.HideMark, &el); err != nil {
 					return err
 				}
-			case "headers":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "headers"}:
 				m.Headers = NewCT_Headers()
 				if err := d.DecodeElement(m.Headers, &el); err != nil {
 					return err
 				}
-			case "cellIns":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cellIns"}:
 				m.CellIns = NewCT_TrackChange()
 				if err := d.DecodeElement(m.CellIns, &el); err != nil {
 					return err
 				}
-			case "cellDel":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cellDel"}:
 				m.CellDel = NewCT_TrackChange()
 				if err := d.DecodeElement(m.CellDel, &el); err != nil {
 					return err
 				}
-			case "cellMerge":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cellMerge"}:
 				m.CellMerge = NewCT_CellMergeTrackChange()
 				if err := d.DecodeElement(m.CellMerge, &el); err != nil {
 					return err

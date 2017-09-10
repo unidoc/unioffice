@@ -59,8 +59,8 @@ lCT_SampleData:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "dataModel":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "dataModel"}:
 				m.DataModel = NewCT_DataModel()
 				if err := d.DecodeElement(m.DataModel, &el); err != nil {
 					return err

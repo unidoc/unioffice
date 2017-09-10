@@ -89,8 +89,8 @@ lCT_TLAnimateRotationBehavior:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cBhvr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cBhvr"}:
 				if err := d.DecodeElement(m.CBhvr, &el); err != nil {
 					return err
 				}

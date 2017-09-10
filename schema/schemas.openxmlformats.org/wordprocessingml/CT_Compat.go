@@ -419,7 +419,9 @@ func (m *CT_Compat) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.CompatSetting != nil {
 		secompatSetting := xml.StartElement{Name: xml.Name{Local: "w:compatSetting"}}
-		e.EncodeElement(m.CompatSetting, secompatSetting)
+		for _, c := range m.CompatSetting {
+			e.EncodeElement(c, secompatSetting)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -435,333 +437,333 @@ lCT_Compat:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "useSingleBorderforContiguousCells":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useSingleBorderforContiguousCells"}:
 				m.UseSingleBorderforContiguousCells = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseSingleBorderforContiguousCells, &el); err != nil {
 					return err
 				}
-			case "wpJustification":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wpJustification"}:
 				m.WpJustification = NewCT_OnOff()
 				if err := d.DecodeElement(m.WpJustification, &el); err != nil {
 					return err
 				}
-			case "noTabHangInd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noTabHangInd"}:
 				m.NoTabHangInd = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoTabHangInd, &el); err != nil {
 					return err
 				}
-			case "noLeading":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noLeading"}:
 				m.NoLeading = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoLeading, &el); err != nil {
 					return err
 				}
-			case "spaceForUL":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "spaceForUL"}:
 				m.SpaceForUL = NewCT_OnOff()
 				if err := d.DecodeElement(m.SpaceForUL, &el); err != nil {
 					return err
 				}
-			case "noColumnBalance":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noColumnBalance"}:
 				m.NoColumnBalance = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoColumnBalance, &el); err != nil {
 					return err
 				}
-			case "balanceSingleByteDoubleByteWidth":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "balanceSingleByteDoubleByteWidth"}:
 				m.BalanceSingleByteDoubleByteWidth = NewCT_OnOff()
 				if err := d.DecodeElement(m.BalanceSingleByteDoubleByteWidth, &el); err != nil {
 					return err
 				}
-			case "noExtraLineSpacing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noExtraLineSpacing"}:
 				m.NoExtraLineSpacing = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoExtraLineSpacing, &el); err != nil {
 					return err
 				}
-			case "doNotLeaveBackslashAlone":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotLeaveBackslashAlone"}:
 				m.DoNotLeaveBackslashAlone = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotLeaveBackslashAlone, &el); err != nil {
 					return err
 				}
-			case "ulTrailSpace":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ulTrailSpace"}:
 				m.UlTrailSpace = NewCT_OnOff()
 				if err := d.DecodeElement(m.UlTrailSpace, &el); err != nil {
 					return err
 				}
-			case "doNotExpandShiftReturn":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotExpandShiftReturn"}:
 				m.DoNotExpandShiftReturn = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotExpandShiftReturn, &el); err != nil {
 					return err
 				}
-			case "spacingInWholePoints":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "spacingInWholePoints"}:
 				m.SpacingInWholePoints = NewCT_OnOff()
 				if err := d.DecodeElement(m.SpacingInWholePoints, &el); err != nil {
 					return err
 				}
-			case "lineWrapLikeWord6":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lineWrapLikeWord6"}:
 				m.LineWrapLikeWord6 = NewCT_OnOff()
 				if err := d.DecodeElement(m.LineWrapLikeWord6, &el); err != nil {
 					return err
 				}
-			case "printBodyTextBeforeHeader":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "printBodyTextBeforeHeader"}:
 				m.PrintBodyTextBeforeHeader = NewCT_OnOff()
 				if err := d.DecodeElement(m.PrintBodyTextBeforeHeader, &el); err != nil {
 					return err
 				}
-			case "printColBlack":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "printColBlack"}:
 				m.PrintColBlack = NewCT_OnOff()
 				if err := d.DecodeElement(m.PrintColBlack, &el); err != nil {
 					return err
 				}
-			case "wpSpaceWidth":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wpSpaceWidth"}:
 				m.WpSpaceWidth = NewCT_OnOff()
 				if err := d.DecodeElement(m.WpSpaceWidth, &el); err != nil {
 					return err
 				}
-			case "showBreaksInFrames":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "showBreaksInFrames"}:
 				m.ShowBreaksInFrames = NewCT_OnOff()
 				if err := d.DecodeElement(m.ShowBreaksInFrames, &el); err != nil {
 					return err
 				}
-			case "subFontBySize":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "subFontBySize"}:
 				m.SubFontBySize = NewCT_OnOff()
 				if err := d.DecodeElement(m.SubFontBySize, &el); err != nil {
 					return err
 				}
-			case "suppressBottomSpacing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressBottomSpacing"}:
 				m.SuppressBottomSpacing = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressBottomSpacing, &el); err != nil {
 					return err
 				}
-			case "suppressTopSpacing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressTopSpacing"}:
 				m.SuppressTopSpacing = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressTopSpacing, &el); err != nil {
 					return err
 				}
-			case "suppressSpacingAtTopOfPage":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressSpacingAtTopOfPage"}:
 				m.SuppressSpacingAtTopOfPage = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressSpacingAtTopOfPage, &el); err != nil {
 					return err
 				}
-			case "suppressTopSpacingWP":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressTopSpacingWP"}:
 				m.SuppressTopSpacingWP = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressTopSpacingWP, &el); err != nil {
 					return err
 				}
-			case "suppressSpBfAfterPgBrk":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressSpBfAfterPgBrk"}:
 				m.SuppressSpBfAfterPgBrk = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressSpBfAfterPgBrk, &el); err != nil {
 					return err
 				}
-			case "swapBordersFacingPages":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "swapBordersFacingPages"}:
 				m.SwapBordersFacingPages = NewCT_OnOff()
 				if err := d.DecodeElement(m.SwapBordersFacingPages, &el); err != nil {
 					return err
 				}
-			case "convMailMergeEsc":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "convMailMergeEsc"}:
 				m.ConvMailMergeEsc = NewCT_OnOff()
 				if err := d.DecodeElement(m.ConvMailMergeEsc, &el); err != nil {
 					return err
 				}
-			case "truncateFontHeightsLikeWP6":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "truncateFontHeightsLikeWP6"}:
 				m.TruncateFontHeightsLikeWP6 = NewCT_OnOff()
 				if err := d.DecodeElement(m.TruncateFontHeightsLikeWP6, &el); err != nil {
 					return err
 				}
-			case "mwSmallCaps":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "mwSmallCaps"}:
 				m.MwSmallCaps = NewCT_OnOff()
 				if err := d.DecodeElement(m.MwSmallCaps, &el); err != nil {
 					return err
 				}
-			case "usePrinterMetrics":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "usePrinterMetrics"}:
 				m.UsePrinterMetrics = NewCT_OnOff()
 				if err := d.DecodeElement(m.UsePrinterMetrics, &el); err != nil {
 					return err
 				}
-			case "doNotSuppressParagraphBorders":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSuppressParagraphBorders"}:
 				m.DoNotSuppressParagraphBorders = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotSuppressParagraphBorders, &el); err != nil {
 					return err
 				}
-			case "wrapTrailSpaces":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wrapTrailSpaces"}:
 				m.WrapTrailSpaces = NewCT_OnOff()
 				if err := d.DecodeElement(m.WrapTrailSpaces, &el); err != nil {
 					return err
 				}
-			case "footnoteLayoutLikeWW8":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footnoteLayoutLikeWW8"}:
 				m.FootnoteLayoutLikeWW8 = NewCT_OnOff()
 				if err := d.DecodeElement(m.FootnoteLayoutLikeWW8, &el); err != nil {
 					return err
 				}
-			case "shapeLayoutLikeWW8":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "shapeLayoutLikeWW8"}:
 				m.ShapeLayoutLikeWW8 = NewCT_OnOff()
 				if err := d.DecodeElement(m.ShapeLayoutLikeWW8, &el); err != nil {
 					return err
 				}
-			case "alignTablesRowByRow":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "alignTablesRowByRow"}:
 				m.AlignTablesRowByRow = NewCT_OnOff()
 				if err := d.DecodeElement(m.AlignTablesRowByRow, &el); err != nil {
 					return err
 				}
-			case "forgetLastTabAlignment":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "forgetLastTabAlignment"}:
 				m.ForgetLastTabAlignment = NewCT_OnOff()
 				if err := d.DecodeElement(m.ForgetLastTabAlignment, &el); err != nil {
 					return err
 				}
-			case "adjustLineHeightInTable":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "adjustLineHeightInTable"}:
 				m.AdjustLineHeightInTable = NewCT_OnOff()
 				if err := d.DecodeElement(m.AdjustLineHeightInTable, &el); err != nil {
 					return err
 				}
-			case "autoSpaceLikeWord95":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autoSpaceLikeWord95"}:
 				m.AutoSpaceLikeWord95 = NewCT_OnOff()
 				if err := d.DecodeElement(m.AutoSpaceLikeWord95, &el); err != nil {
 					return err
 				}
-			case "noSpaceRaiseLower":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noSpaceRaiseLower"}:
 				m.NoSpaceRaiseLower = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoSpaceRaiseLower, &el); err != nil {
 					return err
 				}
-			case "doNotUseHTMLParagraphAutoSpacing":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotUseHTMLParagraphAutoSpacing"}:
 				m.DoNotUseHTMLParagraphAutoSpacing = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotUseHTMLParagraphAutoSpacing, &el); err != nil {
 					return err
 				}
-			case "layoutRawTableWidth":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "layoutRawTableWidth"}:
 				m.LayoutRawTableWidth = NewCT_OnOff()
 				if err := d.DecodeElement(m.LayoutRawTableWidth, &el); err != nil {
 					return err
 				}
-			case "layoutTableRowsApart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "layoutTableRowsApart"}:
 				m.LayoutTableRowsApart = NewCT_OnOff()
 				if err := d.DecodeElement(m.LayoutTableRowsApart, &el); err != nil {
 					return err
 				}
-			case "useWord97LineBreakRules":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useWord97LineBreakRules"}:
 				m.UseWord97LineBreakRules = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseWord97LineBreakRules, &el); err != nil {
 					return err
 				}
-			case "doNotBreakWrappedTables":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotBreakWrappedTables"}:
 				m.DoNotBreakWrappedTables = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotBreakWrappedTables, &el); err != nil {
 					return err
 				}
-			case "doNotSnapToGridInCell":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSnapToGridInCell"}:
 				m.DoNotSnapToGridInCell = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotSnapToGridInCell, &el); err != nil {
 					return err
 				}
-			case "selectFldWithFirstOrLastChar":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "selectFldWithFirstOrLastChar"}:
 				m.SelectFldWithFirstOrLastChar = NewCT_OnOff()
 				if err := d.DecodeElement(m.SelectFldWithFirstOrLastChar, &el); err != nil {
 					return err
 				}
-			case "applyBreakingRules":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "applyBreakingRules"}:
 				m.ApplyBreakingRules = NewCT_OnOff()
 				if err := d.DecodeElement(m.ApplyBreakingRules, &el); err != nil {
 					return err
 				}
-			case "doNotWrapTextWithPunct":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotWrapTextWithPunct"}:
 				m.DoNotWrapTextWithPunct = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotWrapTextWithPunct, &el); err != nil {
 					return err
 				}
-			case "doNotUseEastAsianBreakRules":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotUseEastAsianBreakRules"}:
 				m.DoNotUseEastAsianBreakRules = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotUseEastAsianBreakRules, &el); err != nil {
 					return err
 				}
-			case "useWord2002TableStyleRules":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useWord2002TableStyleRules"}:
 				m.UseWord2002TableStyleRules = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseWord2002TableStyleRules, &el); err != nil {
 					return err
 				}
-			case "growAutofit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "growAutofit"}:
 				m.GrowAutofit = NewCT_OnOff()
 				if err := d.DecodeElement(m.GrowAutofit, &el); err != nil {
 					return err
 				}
-			case "useFELayout":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useFELayout"}:
 				m.UseFELayout = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseFELayout, &el); err != nil {
 					return err
 				}
-			case "useNormalStyleForList":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useNormalStyleForList"}:
 				m.UseNormalStyleForList = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseNormalStyleForList, &el); err != nil {
 					return err
 				}
-			case "doNotUseIndentAsNumberingTabStop":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotUseIndentAsNumberingTabStop"}:
 				m.DoNotUseIndentAsNumberingTabStop = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotUseIndentAsNumberingTabStop, &el); err != nil {
 					return err
 				}
-			case "useAltKinsokuLineBreakRules":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useAltKinsokuLineBreakRules"}:
 				m.UseAltKinsokuLineBreakRules = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseAltKinsokuLineBreakRules, &el); err != nil {
 					return err
 				}
-			case "allowSpaceOfSameStyleInTable":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "allowSpaceOfSameStyleInTable"}:
 				m.AllowSpaceOfSameStyleInTable = NewCT_OnOff()
 				if err := d.DecodeElement(m.AllowSpaceOfSameStyleInTable, &el); err != nil {
 					return err
 				}
-			case "doNotSuppressIndentation":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSuppressIndentation"}:
 				m.DoNotSuppressIndentation = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotSuppressIndentation, &el); err != nil {
 					return err
 				}
-			case "doNotAutofitConstrainedTables":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotAutofitConstrainedTables"}:
 				m.DoNotAutofitConstrainedTables = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotAutofitConstrainedTables, &el); err != nil {
 					return err
 				}
-			case "autofitToFirstFixedWidthCell":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autofitToFirstFixedWidthCell"}:
 				m.AutofitToFirstFixedWidthCell = NewCT_OnOff()
 				if err := d.DecodeElement(m.AutofitToFirstFixedWidthCell, &el); err != nil {
 					return err
 				}
-			case "underlineTabInNumList":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "underlineTabInNumList"}:
 				m.UnderlineTabInNumList = NewCT_OnOff()
 				if err := d.DecodeElement(m.UnderlineTabInNumList, &el); err != nil {
 					return err
 				}
-			case "displayHangulFixedWidth":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "displayHangulFixedWidth"}:
 				m.DisplayHangulFixedWidth = NewCT_OnOff()
 				if err := d.DecodeElement(m.DisplayHangulFixedWidth, &el); err != nil {
 					return err
 				}
-			case "splitPgBreakAndParaMark":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "splitPgBreakAndParaMark"}:
 				m.SplitPgBreakAndParaMark = NewCT_OnOff()
 				if err := d.DecodeElement(m.SplitPgBreakAndParaMark, &el); err != nil {
 					return err
 				}
-			case "doNotVertAlignCellWithSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotVertAlignCellWithSp"}:
 				m.DoNotVertAlignCellWithSp = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotVertAlignCellWithSp, &el); err != nil {
 					return err
 				}
-			case "doNotBreakConstrainedForcedTable":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotBreakConstrainedForcedTable"}:
 				m.DoNotBreakConstrainedForcedTable = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotBreakConstrainedForcedTable, &el); err != nil {
 					return err
 				}
-			case "doNotVertAlignInTxbx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotVertAlignInTxbx"}:
 				m.DoNotVertAlignInTxbx = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotVertAlignInTxbx, &el); err != nil {
 					return err
 				}
-			case "useAnsiKerningPairs":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useAnsiKerningPairs"}:
 				m.UseAnsiKerningPairs = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseAnsiKerningPairs, &el); err != nil {
 					return err
 				}
-			case "cachedColBalance":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cachedColBalance"}:
 				m.CachedColBalance = NewCT_OnOff()
 				if err := d.DecodeElement(m.CachedColBalance, &el); err != nil {
 					return err
 				}
-			case "compatSetting":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "compatSetting"}:
 				tmp := NewCT_CompatSetting()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

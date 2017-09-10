@@ -32,27 +32,39 @@ func NewCT_GvmlGroupShapeChoice() *CT_GvmlGroupShapeChoice {
 func (m *CT_GvmlGroupShapeChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.TxSp != nil {
 		setxSp := xml.StartElement{Name: xml.Name{Local: "a:txSp"}}
-		e.EncodeElement(m.TxSp, setxSp)
+		for _, c := range m.TxSp {
+			e.EncodeElement(c, setxSp)
+		}
 	}
 	if m.Sp != nil {
 		sesp := xml.StartElement{Name: xml.Name{Local: "a:sp"}}
-		e.EncodeElement(m.Sp, sesp)
+		for _, c := range m.Sp {
+			e.EncodeElement(c, sesp)
+		}
 	}
 	if m.CxnSp != nil {
 		secxnSp := xml.StartElement{Name: xml.Name{Local: "a:cxnSp"}}
-		e.EncodeElement(m.CxnSp, secxnSp)
+		for _, c := range m.CxnSp {
+			e.EncodeElement(c, secxnSp)
+		}
 	}
 	if m.Pic != nil {
 		sepic := xml.StartElement{Name: xml.Name{Local: "a:pic"}}
-		e.EncodeElement(m.Pic, sepic)
+		for _, c := range m.Pic {
+			e.EncodeElement(c, sepic)
+		}
 	}
 	if m.GraphicFrame != nil {
 		segraphicFrame := xml.StartElement{Name: xml.Name{Local: "a:graphicFrame"}}
-		e.EncodeElement(m.GraphicFrame, segraphicFrame)
+		for _, c := range m.GraphicFrame {
+			e.EncodeElement(c, segraphicFrame)
+		}
 	}
 	if m.GrpSp != nil {
 		segrpSp := xml.StartElement{Name: xml.Name{Local: "a:grpSp"}}
-		e.EncodeElement(m.GrpSp, segrpSp)
+		for _, c := range m.GrpSp {
+			e.EncodeElement(c, segrpSp)
+		}
 	}
 	return nil
 }
@@ -67,38 +79,38 @@ lCT_GvmlGroupShapeChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "txSp":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "txSp"}:
 				tmp := NewCT_GvmlTextShape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.TxSp = append(m.TxSp, tmp)
-			case "sp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sp"}:
 				tmp := NewCT_GvmlShape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Sp = append(m.Sp, tmp)
-			case "cxnSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cxnSp"}:
 				tmp := NewCT_GvmlConnector()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CxnSp = append(m.CxnSp, tmp)
-			case "pic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pic"}:
 				tmp := NewCT_GvmlPicture()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Pic = append(m.Pic, tmp)
-			case "graphicFrame":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "graphicFrame"}:
 				tmp := NewCT_GvmlGraphicalObjectFrame()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GraphicFrame = append(m.GraphicFrame, tmp)
-			case "grpSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpSp"}:
 				tmp := NewCT_GvmlGroupShape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

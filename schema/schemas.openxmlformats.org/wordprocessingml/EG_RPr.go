@@ -42,8 +42,8 @@ lEG_RPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rPr"}:
 				m.RPr = NewCT_RPr()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err

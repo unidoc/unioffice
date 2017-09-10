@@ -29,7 +29,9 @@ func (m *CT_DocPartBehaviors) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	e.EncodeToken(start)
 	if m.Behavior != nil {
 		sebehavior := xml.StartElement{Name: xml.Name{Local: "w:behavior"}}
-		e.EncodeElement(m.Behavior, sebehavior)
+		for _, c := range m.Behavior {
+			e.EncodeElement(c, sebehavior)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_DocPartBehaviors:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "behavior":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "behavior"}:
 				tmp := NewCT_DocPartBehavior()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

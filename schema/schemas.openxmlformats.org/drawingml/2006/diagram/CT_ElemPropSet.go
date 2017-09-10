@@ -395,13 +395,13 @@ lCT_ElemPropSet:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "presLayoutVars":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "presLayoutVars"}:
 				m.PresLayoutVars = NewCT_LayoutVariablePropertySet()
 				if err := d.DecodeElement(m.PresLayoutVars, &el); err != nil {
 					return err
 				}
-			case "style":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "style"}:
 				m.Style = drawingml.NewCT_ShapeStyle()
 				if err := d.DecodeElement(m.Style, &el); err != nil {
 					return err

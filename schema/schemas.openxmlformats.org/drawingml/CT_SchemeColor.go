@@ -58,197 +58,197 @@ lCT_SchemeColor:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tint":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tint"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Tint = NewCT_PositiveFixedPercentage()
 				if err := d.DecodeElement(tmpcolortransform.Tint, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "shade":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "shade"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Shade = NewCT_PositiveFixedPercentage()
 				if err := d.DecodeElement(tmpcolortransform.Shade, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "comp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "comp"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Comp = NewCT_ComplementTransform()
 				if err := d.DecodeElement(tmpcolortransform.Comp, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "inv":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "inv"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Inv = NewCT_InverseTransform()
 				if err := d.DecodeElement(tmpcolortransform.Inv, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "gray":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gray"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Gray = NewCT_GrayscaleTransform()
 				if err := d.DecodeElement(tmpcolortransform.Gray, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "alpha":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alpha"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Alpha = NewCT_PositiveFixedPercentage()
 				if err := d.DecodeElement(tmpcolortransform.Alpha, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "alphaOff":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaOff"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.AlphaOff = NewCT_FixedPercentage()
 				if err := d.DecodeElement(tmpcolortransform.AlphaOff, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "alphaMod":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaMod"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.AlphaMod = NewCT_PositivePercentage()
 				if err := d.DecodeElement(tmpcolortransform.AlphaMod, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "hue":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hue"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Hue = NewCT_PositiveFixedAngle()
 				if err := d.DecodeElement(tmpcolortransform.Hue, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "hueOff":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hueOff"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.HueOff = NewCT_Angle()
 				if err := d.DecodeElement(tmpcolortransform.HueOff, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "hueMod":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hueMod"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.HueMod = NewCT_PositivePercentage()
 				if err := d.DecodeElement(tmpcolortransform.HueMod, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "sat":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sat"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Sat = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.Sat, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "satOff":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "satOff"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.SatOff = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.SatOff, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "satMod":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "satMod"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.SatMod = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.SatMod, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "lum":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lum"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Lum = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.Lum, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "lumOff":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lumOff"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.LumOff = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.LumOff, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "lumMod":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lumMod"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.LumMod = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.LumMod, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "red":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "red"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Red = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.Red, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "redOff":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "redOff"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.RedOff = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.RedOff, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "redMod":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "redMod"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.RedMod = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.RedMod, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "green":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "green"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Green = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.Green, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "greenOff":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "greenOff"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.GreenOff = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.GreenOff, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "greenMod":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "greenMod"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.GreenMod = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.GreenMod, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "blue":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blue"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Blue = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.Blue, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "blueOff":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blueOff"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.BlueOff = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.BlueOff, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "blueMod":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blueMod"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.BlueMod = NewCT_Percentage()
 				if err := d.DecodeElement(tmpcolortransform.BlueMod, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "gamma":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gamma"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.Gamma = NewCT_GammaTransform()
 				if err := d.DecodeElement(tmpcolortransform.Gamma, &el); err != nil {
 					return err
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
-			case "invGamma":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "invGamma"}:
 				tmpcolortransform := NewEG_ColorTransform()
 				tmpcolortransform.InvGamma = NewCT_InverseGammaTransform()
 				if err := d.DecodeElement(tmpcolortransform.InvGamma, &el); err != nil {

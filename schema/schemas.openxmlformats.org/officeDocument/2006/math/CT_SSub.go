@@ -53,17 +53,17 @@ lCT_SSub:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sSubPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sSubPr"}:
 				m.SSubPr = NewCT_SSubPr()
 				if err := d.DecodeElement(m.SSubPr, &el); err != nil {
 					return err
 				}
-			case "e":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"}:
 				if err := d.DecodeElement(m.E, &el); err != nil {
 					return err
 				}
-			case "sub":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sub"}:
 				if err := d.DecodeElement(m.Sub, &el); err != nil {
 					return err
 				}

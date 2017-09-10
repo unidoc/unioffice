@@ -52,10 +52,10 @@ func (m *CT_ConditionalFormat) MarshalXML(e *xml.Encoder, start xml.StartElement
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "priority"},
 		Value: fmt.Sprintf("%v", m.PriorityAttr)})
 	e.EncodeToken(start)
-	sepivotAreas := xml.StartElement{Name: xml.Name{Local: "x:pivotAreas"}}
+	sepivotAreas := xml.StartElement{Name: xml.Name{Local: "ma:pivotAreas"}}
 	e.EncodeElement(m.PivotAreas, sepivotAreas)
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -88,12 +88,12 @@ lCT_ConditionalFormat:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pivotAreas":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotAreas"}:
 				if err := d.DecodeElement(m.PivotAreas, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

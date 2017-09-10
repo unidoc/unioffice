@@ -43,8 +43,8 @@ lSchemaLibrary:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "schema":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/schemaLibrary/2006/main", Local: "schema"}:
 				tmp := NewCT_Schema()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

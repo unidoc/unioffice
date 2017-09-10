@@ -31,8 +31,10 @@ func (m *CT_VolMain) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "first"},
 		Value: fmt.Sprintf("%v", m.FirstAttr)})
 	e.EncodeToken(start)
-	setp := xml.StartElement{Name: xml.Name{Local: "x:tp"}}
-	e.EncodeElement(m.Tp, setp)
+	setp := xml.StartElement{Name: xml.Name{Local: "ma:tp"}}
+	for _, c := range m.Tp {
+		e.EncodeElement(c, setp)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -56,8 +58,8 @@ lCT_VolMain:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tp":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tp"}:
 				tmp := NewCT_VolTopic()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

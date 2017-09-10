@@ -45,8 +45,8 @@ lColorsDefHdrLst:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "colorsDefHdr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "colorsDefHdr"}:
 				tmp := NewCT_ColorTransformHeader()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

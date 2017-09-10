@@ -48,12 +48,12 @@ lCT_ColorSchemeAndMapping:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "clrScheme":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "clrScheme"}:
 				if err := d.DecodeElement(m.ClrScheme, &el); err != nil {
 					return err
 				}
-			case "clrMap":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "clrMap"}:
 				m.ClrMap = NewCT_ColorMapping()
 				if err := d.DecodeElement(m.ClrMap, &el); err != nil {
 					return err

@@ -34,7 +34,9 @@ func (m *CT_TableStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(start)
 	if m.TblStyle != nil {
 		setblStyle := xml.StartElement{Name: xml.Name{Local: "a:tblStyle"}}
-		e.EncodeElement(m.TblStyle, setblStyle)
+		for _, c := range m.TblStyle {
+			e.EncodeElement(c, setblStyle)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -60,8 +62,8 @@ lCT_TableStyleList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tblStyle":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tblStyle"}:
 				tmp := NewCT_TableStyle()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

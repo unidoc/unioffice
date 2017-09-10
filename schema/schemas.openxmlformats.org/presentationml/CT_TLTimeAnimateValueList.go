@@ -29,7 +29,9 @@ func (m *CT_TLTimeAnimateValueList) MarshalXML(e *xml.Encoder, start xml.StartEl
 	e.EncodeToken(start)
 	if m.Tav != nil {
 		setav := xml.StartElement{Name: xml.Name{Local: "p:tav"}}
-		e.EncodeElement(m.Tav, setav)
+		for _, c := range m.Tav {
+			e.EncodeElement(c, setav)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_TLTimeAnimateValueList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tav":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tav"}:
 				tmp := NewCT_TLTimeAnimateValue()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

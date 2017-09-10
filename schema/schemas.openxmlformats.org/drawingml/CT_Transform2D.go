@@ -89,13 +89,13 @@ lCT_Transform2D:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "off":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "off"}:
 				m.Off = NewCT_Point2D()
 				if err := d.DecodeElement(m.Off, &el); err != nil {
 					return err
 				}
-			case "ext":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ext"}:
 				m.Ext = NewCT_PositiveSize2D()
 				if err := d.DecodeElement(m.Ext, &el); err != nil {
 					return err

@@ -67,14 +67,14 @@ func (m *CT_RevisionHeader) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 			Value: fmt.Sprintf("%v", *m.MaxRIdAttr)})
 	}
 	e.EncodeToken(start)
-	sesheetIdMap := xml.StartElement{Name: xml.Name{Local: "x:sheetIdMap"}}
+	sesheetIdMap := xml.StartElement{Name: xml.Name{Local: "ma:sheetIdMap"}}
 	e.EncodeElement(m.SheetIdMap, sesheetIdMap)
 	if m.ReviewedList != nil {
-		sereviewedList := xml.StartElement{Name: xml.Name{Local: "x:reviewedList"}}
+		sereviewedList := xml.StartElement{Name: xml.Name{Local: "ma:reviewedList"}}
 		e.EncodeElement(m.ReviewedList, sereviewedList)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -146,17 +146,17 @@ lCT_RevisionHeader:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sheetIdMap":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetIdMap"}:
 				if err := d.DecodeElement(m.SheetIdMap, &el); err != nil {
 					return err
 				}
-			case "reviewedList":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "reviewedList"}:
 				m.ReviewedList = NewCT_ReviewedRevisions()
 				if err := d.DecodeElement(m.ReviewedList, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

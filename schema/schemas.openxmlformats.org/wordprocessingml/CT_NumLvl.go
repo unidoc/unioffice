@@ -65,13 +65,13 @@ lCT_NumLvl:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "startOverride":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "startOverride"}:
 				m.StartOverride = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.StartOverride, &el); err != nil {
 					return err
 				}
-			case "lvl":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lvl"}:
 				m.Lvl = NewCT_Lvl()
 				if err := d.DecodeElement(m.Lvl, &el); err != nil {
 					return err

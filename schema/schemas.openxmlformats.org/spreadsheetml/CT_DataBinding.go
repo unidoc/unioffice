@@ -111,7 +111,7 @@ lCT_DataBinding:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
+			switch el.Name {
 			default:
 				if anyEl, err := gooxml.CreateElement(el); err != nil {
 					return err

@@ -27,8 +27,10 @@ func NewCT_ExternalReferences() *CT_ExternalReferences {
 
 func (m *CT_ExternalReferences) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	seexternalReference := xml.StartElement{Name: xml.Name{Local: "x:externalReference"}}
-	e.EncodeElement(m.ExternalReference, seexternalReference)
+	seexternalReference := xml.StartElement{Name: xml.Name{Local: "ma:externalReference"}}
+	for _, c := range m.ExternalReference {
+		e.EncodeElement(c, seexternalReference)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_ExternalReferences:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "externalReference":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "externalReference"}:
 				tmp := NewCT_ExternalReference()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

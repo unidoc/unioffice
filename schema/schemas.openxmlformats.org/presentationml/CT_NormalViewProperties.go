@@ -122,16 +122,16 @@ lCT_NormalViewProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "restoredLeft":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "restoredLeft"}:
 				if err := d.DecodeElement(m.RestoredLeft, &el); err != nil {
 					return err
 				}
-			case "restoredTop":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "restoredTop"}:
 				if err := d.DecodeElement(m.RestoredTop, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

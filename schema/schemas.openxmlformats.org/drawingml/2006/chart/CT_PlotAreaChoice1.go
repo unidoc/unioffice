@@ -30,19 +30,27 @@ func NewCT_PlotAreaChoice1() *CT_PlotAreaChoice1 {
 func (m *CT_PlotAreaChoice1) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ValAx != nil {
 		sevalAx := xml.StartElement{Name: xml.Name{Local: "c:valAx"}}
-		e.EncodeElement(m.ValAx, sevalAx)
+		for _, c := range m.ValAx {
+			e.EncodeElement(c, sevalAx)
+		}
 	}
 	if m.CatAx != nil {
 		secatAx := xml.StartElement{Name: xml.Name{Local: "c:catAx"}}
-		e.EncodeElement(m.CatAx, secatAx)
+		for _, c := range m.CatAx {
+			e.EncodeElement(c, secatAx)
+		}
 	}
 	if m.DateAx != nil {
 		sedateAx := xml.StartElement{Name: xml.Name{Local: "c:dateAx"}}
-		e.EncodeElement(m.DateAx, sedateAx)
+		for _, c := range m.DateAx {
+			e.EncodeElement(c, sedateAx)
+		}
 	}
 	if m.SerAx != nil {
 		seserAx := xml.StartElement{Name: xml.Name{Local: "c:serAx"}}
-		e.EncodeElement(m.SerAx, seserAx)
+		for _, c := range m.SerAx {
+			e.EncodeElement(c, seserAx)
+		}
 	}
 	return nil
 }
@@ -57,26 +65,26 @@ lCT_PlotAreaChoice1:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "valAx":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "valAx"}:
 				tmp := NewCT_ValAx()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.ValAx = append(m.ValAx, tmp)
-			case "catAx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "catAx"}:
 				tmp := NewCT_CatAx()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CatAx = append(m.CatAx, tmp)
-			case "dateAx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dateAx"}:
 				tmp := NewCT_DateAx()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.DateAx = append(m.DateAx, tmp)
-			case "serAx":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "serAx"}:
 				tmp := NewCT_SerAx()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

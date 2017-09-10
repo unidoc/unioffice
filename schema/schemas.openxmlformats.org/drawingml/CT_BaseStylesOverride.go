@@ -53,18 +53,18 @@ lCT_BaseStylesOverride:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "clrScheme":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "clrScheme"}:
 				m.ClrScheme = NewCT_ColorScheme()
 				if err := d.DecodeElement(m.ClrScheme, &el); err != nil {
 					return err
 				}
-			case "fontScheme":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fontScheme"}:
 				m.FontScheme = NewCT_FontScheme()
 				if err := d.DecodeElement(m.FontScheme, &el); err != nil {
 					return err
 				}
-			case "fmtScheme":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fmtScheme"}:
 				m.FmtScheme = NewCT_StyleMatrix()
 				if err := d.DecodeElement(m.FmtScheme, &el); err != nil {
 					return err

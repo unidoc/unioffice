@@ -29,7 +29,9 @@ func NewElementsAndRefinementsGroupChoice() *ElementsAndRefinementsGroupChoice {
 func (m *ElementsAndRefinementsGroupChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.Any != nil {
 		seany := xml.StartElement{Name: xml.Name{Local: "dc:any"}}
-		e.EncodeElement(m.Any, seany)
+		for _, c := range m.Any {
+			e.EncodeElement(c, seany)
+		}
 	}
 	return nil
 }
@@ -44,8 +46,8 @@ lElementsAndRefinementsGroupChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "any":
+			switch el.Name {
+			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "any"}:
 				tmp := elements.NewAny()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

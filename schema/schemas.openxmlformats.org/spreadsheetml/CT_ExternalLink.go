@@ -30,7 +30,7 @@ func (m *CT_ExternalLink) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 		m.Choice.MarshalXML(e, xml.StartElement{})
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -47,23 +47,23 @@ lCT_ExternalLink:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "externalBook":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "externalBook"}:
 				m.Choice = NewCT_ExternalLinkChoice()
 				if err := d.DecodeElement(&m.Choice.ExternalBook, &el); err != nil {
 					return err
 				}
-			case "ddeLink":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ddeLink"}:
 				m.Choice = NewCT_ExternalLinkChoice()
 				if err := d.DecodeElement(&m.Choice.DdeLink, &el); err != nil {
 					return err
 				}
-			case "oleLink":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleLink"}:
 				m.Choice = NewCT_ExternalLinkChoice()
 				if err := d.DecodeElement(&m.Choice.OleLink, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

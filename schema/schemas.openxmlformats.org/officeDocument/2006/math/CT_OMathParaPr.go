@@ -43,8 +43,8 @@ lCT_OMathParaPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "jc":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "jc"}:
 				m.Jc = NewCT_OMathJc()
 				if err := d.DecodeElement(m.Jc, &el); err != nil {
 					return err

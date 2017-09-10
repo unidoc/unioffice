@@ -59,8 +59,8 @@ lCT_AltChunk:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "altChunkPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "altChunkPr"}:
 				m.AltChunkPr = NewCT_AltChunkPr()
 				if err := d.DecodeElement(m.AltChunkPr, &el); err != nil {
 					return err

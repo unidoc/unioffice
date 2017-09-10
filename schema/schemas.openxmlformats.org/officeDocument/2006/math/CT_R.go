@@ -50,13 +50,13 @@ lCT_R:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "rPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "rPr"}:
 				m.RPr = NewCT_RPR()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err
 				}
-			case "t":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "t"}:
 				tmp := NewCT_RChoice()
 				if err := d.DecodeElement(&tmp.T, &el); err != nil {
 					return err

@@ -34,8 +34,10 @@ func (m *CT_PageFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sepageField := xml.StartElement{Name: xml.Name{Local: "x:pageField"}}
-	e.EncodeElement(m.PageField, sepageField)
+	sepageField := xml.StartElement{Name: xml.Name{Local: "ma:pageField"}}
+	for _, c := range m.PageField {
+		e.EncodeElement(c, sepageField)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_PageFields:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pageField":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageField"}:
 				tmp := NewCT_PageField()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

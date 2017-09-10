@@ -63,28 +63,28 @@ lCT_PictureOptions:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "applyToFront":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "applyToFront"}:
 				m.ApplyToFront = NewCT_Boolean()
 				if err := d.DecodeElement(m.ApplyToFront, &el); err != nil {
 					return err
 				}
-			case "applyToSides":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "applyToSides"}:
 				m.ApplyToSides = NewCT_Boolean()
 				if err := d.DecodeElement(m.ApplyToSides, &el); err != nil {
 					return err
 				}
-			case "applyToEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "applyToEnd"}:
 				m.ApplyToEnd = NewCT_Boolean()
 				if err := d.DecodeElement(m.ApplyToEnd, &el); err != nil {
 					return err
 				}
-			case "pictureFormat":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pictureFormat"}:
 				m.PictureFormat = NewCT_PictureFormat()
 				if err := d.DecodeElement(m.PictureFormat, &el); err != nil {
 					return err
 				}
-			case "pictureStackUnit":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pictureStackUnit"}:
 				m.PictureStackUnit = NewCT_PictureStackUnit()
 				if err := d.DecodeElement(m.PictureStackUnit, &el); err != nil {
 					return err

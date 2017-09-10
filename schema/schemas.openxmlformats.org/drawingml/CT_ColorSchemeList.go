@@ -28,7 +28,9 @@ func (m *CT_ColorSchemeList) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	e.EncodeToken(start)
 	if m.ExtraClrScheme != nil {
 		seextraClrScheme := xml.StartElement{Name: xml.Name{Local: "a:extraClrScheme"}}
-		e.EncodeElement(m.ExtraClrScheme, seextraClrScheme)
+		for _, c := range m.ExtraClrScheme {
+			e.EncodeElement(c, seextraClrScheme)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_ColorSchemeList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "extraClrScheme":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extraClrScheme"}:
 				tmp := NewCT_ColorSchemeAndMapping()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

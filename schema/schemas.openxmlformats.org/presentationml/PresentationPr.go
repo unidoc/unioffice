@@ -48,33 +48,33 @@ lPresentationPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "htmlPubPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "htmlPubPr"}:
 				m.HtmlPubPr = NewCT_HtmlPublishProperties()
 				if err := d.DecodeElement(m.HtmlPubPr, &el); err != nil {
 					return err
 				}
-			case "webPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "webPr"}:
 				m.WebPr = NewCT_WebProperties()
 				if err := d.DecodeElement(m.WebPr, &el); err != nil {
 					return err
 				}
-			case "prnPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "prnPr"}:
 				m.PrnPr = NewCT_PrintProperties()
 				if err := d.DecodeElement(m.PrnPr, &el); err != nil {
 					return err
 				}
-			case "showPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "showPr"}:
 				m.ShowPr = NewCT_ShowProperties()
 				if err := d.DecodeElement(m.ShowPr, &el); err != nil {
 					return err
 				}
-			case "clrMru":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "clrMru"}:
 				m.ClrMru = drawingml.NewCT_ColorMRU()
 				if err := d.DecodeElement(m.ClrMru, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

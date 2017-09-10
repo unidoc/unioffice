@@ -27,7 +27,9 @@ func NewCT_Path2DCubicBezierTo() *CT_Path2DCubicBezierTo {
 func (m *CT_Path2DCubicBezierTo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	sept := xml.StartElement{Name: xml.Name{Local: "a:pt"}}
-	e.EncodeElement(m.Pt, sept)
+	for _, c := range m.Pt {
+		e.EncodeElement(c, sept)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -42,8 +44,8 @@ lCT_Path2DCubicBezierTo:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pt":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pt"}:
 				tmp := NewCT_AdjPoint2D()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

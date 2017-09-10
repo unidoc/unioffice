@@ -42,13 +42,13 @@ lCT_SerTx:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "strRef":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "strRef"}:
 				m.Choice = NewCT_SerTxChoice()
 				if err := d.DecodeElement(&m.Choice.StrRef, &el); err != nil {
 					return err
 				}
-			case "v":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "v"}:
 				m.Choice = NewCT_SerTxChoice()
 				if err := d.DecodeElement(&m.Choice.V, &el); err != nil {
 					return err

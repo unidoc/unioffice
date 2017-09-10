@@ -29,7 +29,9 @@ func (m *CT_SlideRelationshipList) MarshalXML(e *xml.Encoder, start xml.StartEle
 	e.EncodeToken(start)
 	if m.Sld != nil {
 		sesld := xml.StartElement{Name: xml.Name{Local: "p:sld"}}
-		e.EncodeElement(m.Sld, sesld)
+		for _, c := range m.Sld {
+			e.EncodeElement(c, sesld)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_SlideRelationshipList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "sld":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sld"}:
 				tmp := NewCT_SlideRelationshipListEntry()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

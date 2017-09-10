@@ -121,23 +121,25 @@ func (m *CT_CfRule) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.Formula != nil {
-		seformula := xml.StartElement{Name: xml.Name{Local: "x:formula"}}
-		e.EncodeElement(m.Formula, seformula)
+		seformula := xml.StartElement{Name: xml.Name{Local: "ma:formula"}}
+		for _, c := range m.Formula {
+			e.EncodeElement(c, seformula)
+		}
 	}
 	if m.ColorScale != nil {
-		secolorScale := xml.StartElement{Name: xml.Name{Local: "x:colorScale"}}
+		secolorScale := xml.StartElement{Name: xml.Name{Local: "ma:colorScale"}}
 		e.EncodeElement(m.ColorScale, secolorScale)
 	}
 	if m.DataBar != nil {
-		sedataBar := xml.StartElement{Name: xml.Name{Local: "x:dataBar"}}
+		sedataBar := xml.StartElement{Name: xml.Name{Local: "ma:dataBar"}}
 		e.EncodeElement(m.DataBar, sedataBar)
 	}
 	if m.IconSet != nil {
-		seiconSet := xml.StartElement{Name: xml.Name{Local: "x:iconSet"}}
+		seiconSet := xml.StartElement{Name: xml.Name{Local: "ma:iconSet"}}
 		e.EncodeElement(m.IconSet, seiconSet)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -238,29 +240,29 @@ lCT_CfRule:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "formula":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "formula"}:
 				var tmp string
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.Formula = append(m.Formula, tmp)
-			case "colorScale":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "colorScale"}:
 				m.ColorScale = NewCT_ColorScale()
 				if err := d.DecodeElement(m.ColorScale, &el); err != nil {
 					return err
 				}
-			case "dataBar":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataBar"}:
 				m.DataBar = NewCT_DataBar()
 				if err := d.DecodeElement(m.DataBar, &el); err != nil {
 					return err
 				}
-			case "iconSet":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "iconSet"}:
 				m.IconSet = NewCT_IconSet()
 				if err := d.DecodeElement(m.IconSet, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

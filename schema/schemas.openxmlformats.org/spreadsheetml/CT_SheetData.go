@@ -28,8 +28,10 @@ func NewCT_SheetData() *CT_SheetData {
 func (m *CT_SheetData) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Row != nil {
-		serow := xml.StartElement{Name: xml.Name{Local: "x:row"}}
-		e.EncodeElement(m.Row, serow)
+		serow := xml.StartElement{Name: xml.Name{Local: "ma:row"}}
+		for _, c := range m.Row {
+			e.EncodeElement(c, serow)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_SheetData:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "row":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "row"}:
 				tmp := NewCT_Row()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

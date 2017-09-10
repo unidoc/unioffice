@@ -31,7 +31,7 @@ func (m *ChartSpace) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:a"}, Value: "http://schemas.openxmlformats.org/drawingml/2006/main"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:c"}, Value: "http://schemas.openxmlformats.org/drawingml/2006/chart"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:r"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/relationships"})
-	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:sh"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:s"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:xml"}, Value: "http://www.w3.org/XML/1998/namespace"})
 	start.Name.Local = "c:chartSpace"
 	return m.CT_ChartSpace.MarshalXML(e, start)
@@ -48,72 +48,72 @@ lChartSpace:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "date1904":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "date1904"}:
 				m.Date1904 = NewCT_Boolean()
 				if err := d.DecodeElement(m.Date1904, &el); err != nil {
 					return err
 				}
-			case "lang":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "lang"}:
 				m.Lang = NewCT_TextLanguageID()
 				if err := d.DecodeElement(m.Lang, &el); err != nil {
 					return err
 				}
-			case "roundedCorners":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "roundedCorners"}:
 				m.RoundedCorners = NewCT_Boolean()
 				if err := d.DecodeElement(m.RoundedCorners, &el); err != nil {
 					return err
 				}
-			case "style":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "style"}:
 				m.Style = NewCT_Style()
 				if err := d.DecodeElement(m.Style, &el); err != nil {
 					return err
 				}
-			case "clrMapOvr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "clrMapOvr"}:
 				m.ClrMapOvr = drawingml.NewCT_ColorMapping()
 				if err := d.DecodeElement(m.ClrMapOvr, &el); err != nil {
 					return err
 				}
-			case "pivotSource":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pivotSource"}:
 				m.PivotSource = NewCT_PivotSource()
 				if err := d.DecodeElement(m.PivotSource, &el); err != nil {
 					return err
 				}
-			case "protection":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "protection"}:
 				m.Protection = NewCT_Protection()
 				if err := d.DecodeElement(m.Protection, &el); err != nil {
 					return err
 				}
-			case "chart":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "chart"}:
 				if err := d.DecodeElement(m.Chart, &el); err != nil {
 					return err
 				}
-			case "spPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"}:
 				m.SpPr = drawingml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case "txPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "txPr"}:
 				m.TxPr = drawingml.NewCT_TextBody()
 				if err := d.DecodeElement(m.TxPr, &el); err != nil {
 					return err
 				}
-			case "externalData":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "externalData"}:
 				m.ExternalData = NewCT_ExternalData()
 				if err := d.DecodeElement(m.ExternalData, &el); err != nil {
 					return err
 				}
-			case "printSettings":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "printSettings"}:
 				m.PrintSettings = NewCT_PrintSettings()
 				if err := d.DecodeElement(m.PrintSettings, &el); err != nil {
 					return err
 				}
-			case "userShapes":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "userShapes"}:
 				m.UserShapes = NewCT_RelId()
 				if err := d.DecodeElement(m.UserShapes, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

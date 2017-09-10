@@ -44,8 +44,8 @@ lCT_TLTimeNodeParallel:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cTn":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cTn"}:
 				if err := d.DecodeElement(m.CTn, &el); err != nil {
 					return err
 				}

@@ -27,8 +27,10 @@ func NewCT_CustomWorkbookViews() *CT_CustomWorkbookViews {
 
 func (m *CT_CustomWorkbookViews) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	secustomWorkbookView := xml.StartElement{Name: xml.Name{Local: "x:customWorkbookView"}}
-	e.EncodeElement(m.CustomWorkbookView, secustomWorkbookView)
+	secustomWorkbookView := xml.StartElement{Name: xml.Name{Local: "ma:customWorkbookView"}}
+	for _, c := range m.CustomWorkbookView {
+		e.EncodeElement(c, secustomWorkbookView)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_CustomWorkbookViews:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "customWorkbookView":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customWorkbookView"}:
 				tmp := NewCT_CustomWorkbookView()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

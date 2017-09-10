@@ -101,12 +101,14 @@ func (m *CT_Error) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.Tpls != nil {
-		setpls := xml.StartElement{Name: xml.Name{Local: "x:tpls"}}
+		setpls := xml.StartElement{Name: xml.Name{Local: "ma:tpls"}}
 		e.EncodeElement(m.Tpls, setpls)
 	}
 	if m.X != nil {
-		sex := xml.StartElement{Name: xml.Name{Local: "x:x"}}
-		e.EncodeElement(m.X, sex)
+		sex := xml.StartElement{Name: xml.Name{Local: "ma:x"}}
+		for _, c := range m.X {
+			e.EncodeElement(c, sex)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -210,13 +212,13 @@ lCT_Error:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tpls":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tpls"}:
 				m.Tpls = NewCT_Tuples()
 				if err := d.DecodeElement(m.Tpls, &el); err != nil {
 					return err
 				}
-			case "x":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "x"}:
 				tmp := NewCT_X()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

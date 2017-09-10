@@ -80,37 +80,37 @@ lCT_DocPartPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "name":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "name"}:
 				if err := d.DecodeElement(m.Name, &el); err != nil {
 					return err
 				}
-			case "style":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "style"}:
 				m.Style = NewCT_String()
 				if err := d.DecodeElement(m.Style, &el); err != nil {
 					return err
 				}
-			case "category":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "category"}:
 				m.Category = NewCT_DocPartCategory()
 				if err := d.DecodeElement(m.Category, &el); err != nil {
 					return err
 				}
-			case "types":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "types"}:
 				m.Types = NewCT_DocPartTypes()
 				if err := d.DecodeElement(m.Types, &el); err != nil {
 					return err
 				}
-			case "behaviors":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "behaviors"}:
 				m.Behaviors = NewCT_DocPartBehaviors()
 				if err := d.DecodeElement(m.Behaviors, &el); err != nil {
 					return err
 				}
-			case "description":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "description"}:
 				m.Description = NewCT_String()
 				if err := d.DecodeElement(m.Description, &el); err != nil {
 					return err
 				}
-			case "guid":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "guid"}:
 				m.Guid = NewCT_Guid()
 				if err := d.DecodeElement(m.Guid, &el); err != nil {
 					return err

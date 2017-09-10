@@ -14,6 +14,8 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+
+	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 )
 
 type CT_ApplicationNonVisualDrawingProps struct {
@@ -22,7 +24,12 @@ type CT_ApplicationNonVisualDrawingProps struct {
 	// Is User Drawn
 	UserDrawnAttr *bool
 	// Placeholder Shape
-	Ph *CT_Placeholder
+	Ph            *CT_Placeholder
+	AudioCd       *drawingml.CT_AudioCD
+	WavAudioFile  *drawingml.CT_EmbeddedWAVAudioFile
+	AudioFile     *drawingml.CT_AudioFile
+	VideoFile     *drawingml.CT_VideoFile
+	QuickTimeFile *drawingml.CT_QuickTimeFile
 	// Customer Data List
 	CustDataLst *CT_CustomerDataList
 	ExtLst      *CT_ExtensionList
@@ -46,6 +53,26 @@ func (m *CT_ApplicationNonVisualDrawingProps) MarshalXML(e *xml.Encoder, start x
 	if m.Ph != nil {
 		seph := xml.StartElement{Name: xml.Name{Local: "p:ph"}}
 		e.EncodeElement(m.Ph, seph)
+	}
+	if m.AudioCd != nil {
+		seaudioCd := xml.StartElement{Name: xml.Name{Local: "p:audioCd"}}
+		e.EncodeElement(m.AudioCd, seaudioCd)
+	}
+	if m.WavAudioFile != nil {
+		sewavAudioFile := xml.StartElement{Name: xml.Name{Local: "p:wavAudioFile"}}
+		e.EncodeElement(m.WavAudioFile, sewavAudioFile)
+	}
+	if m.AudioFile != nil {
+		seaudioFile := xml.StartElement{Name: xml.Name{Local: "p:audioFile"}}
+		e.EncodeElement(m.AudioFile, seaudioFile)
+	}
+	if m.VideoFile != nil {
+		sevideoFile := xml.StartElement{Name: xml.Name{Local: "p:videoFile"}}
+		e.EncodeElement(m.VideoFile, sevideoFile)
+	}
+	if m.QuickTimeFile != nil {
+		sequickTimeFile := xml.StartElement{Name: xml.Name{Local: "p:quickTimeFile"}}
+		e.EncodeElement(m.QuickTimeFile, sequickTimeFile)
 	}
 	if m.CustDataLst != nil {
 		secustDataLst := xml.StartElement{Name: xml.Name{Local: "p:custDataLst"}}
@@ -85,18 +112,43 @@ lCT_ApplicationNonVisualDrawingProps:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "ph":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "ph"}:
 				m.Ph = NewCT_Placeholder()
 				if err := d.DecodeElement(m.Ph, &el); err != nil {
 					return err
 				}
-			case "custDataLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "audioCd"}:
+				m.AudioCd = drawingml.NewCT_AudioCD()
+				if err := d.DecodeElement(m.AudioCd, &el); err != nil {
+					return err
+				}
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "wavAudioFile"}:
+				m.WavAudioFile = drawingml.NewCT_EmbeddedWAVAudioFile()
+				if err := d.DecodeElement(m.WavAudioFile, &el); err != nil {
+					return err
+				}
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "audioFile"}:
+				m.AudioFile = drawingml.NewCT_AudioFile()
+				if err := d.DecodeElement(m.AudioFile, &el); err != nil {
+					return err
+				}
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "videoFile"}:
+				m.VideoFile = drawingml.NewCT_VideoFile()
+				if err := d.DecodeElement(m.VideoFile, &el); err != nil {
+					return err
+				}
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "quickTimeFile"}:
+				m.QuickTimeFile = drawingml.NewCT_QuickTimeFile()
+				if err := d.DecodeElement(m.QuickTimeFile, &el); err != nil {
+					return err
+				}
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custDataLst"}:
 				m.CustDataLst = NewCT_CustomerDataList()
 				if err := d.DecodeElement(m.CustDataLst, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
@@ -124,6 +176,31 @@ func (m *CT_ApplicationNonVisualDrawingProps) Validate() error {
 func (m *CT_ApplicationNonVisualDrawingProps) ValidateWithPath(path string) error {
 	if m.Ph != nil {
 		if err := m.Ph.ValidateWithPath(path + "/Ph"); err != nil {
+			return err
+		}
+	}
+	if m.AudioCd != nil {
+		if err := m.AudioCd.ValidateWithPath(path + "/AudioCd"); err != nil {
+			return err
+		}
+	}
+	if m.WavAudioFile != nil {
+		if err := m.WavAudioFile.ValidateWithPath(path + "/WavAudioFile"); err != nil {
+			return err
+		}
+	}
+	if m.AudioFile != nil {
+		if err := m.AudioFile.ValidateWithPath(path + "/AudioFile"); err != nil {
+			return err
+		}
+	}
+	if m.VideoFile != nil {
+		if err := m.VideoFile.ValidateWithPath(path + "/VideoFile"); err != nil {
+			return err
+		}
+	}
+	if m.QuickTimeFile != nil {
+		if err := m.QuickTimeFile.ValidateWithPath(path + "/QuickTimeFile"); err != nil {
 			return err
 		}
 	}

@@ -28,7 +28,9 @@ func (m *CT_StyleDefinitionHeaderLst) MarshalXML(e *xml.Encoder, start xml.Start
 	e.EncodeToken(start)
 	if m.StyleDefHdr != nil {
 		sestyleDefHdr := xml.StartElement{Name: xml.Name{Local: "styleDefHdr"}}
-		e.EncodeElement(m.StyleDefHdr, sestyleDefHdr)
+		for _, c := range m.StyleDefHdr {
+			e.EncodeElement(c, sestyleDefHdr)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -44,8 +46,8 @@ lCT_StyleDefinitionHeaderLst:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "styleDefHdr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "styleDefHdr"}:
 				tmp := NewCT_StyleDefinitionHeader()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

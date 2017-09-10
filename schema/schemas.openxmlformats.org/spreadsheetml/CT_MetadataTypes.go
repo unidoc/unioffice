@@ -34,8 +34,10 @@ func (m *CT_MetadataTypes) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	semetadataType := xml.StartElement{Name: xml.Name{Local: "x:metadataType"}}
-	e.EncodeElement(m.MetadataType, semetadataType)
+	semetadataType := xml.StartElement{Name: xml.Name{Local: "ma:metadataType"}}
+	for _, c := range m.MetadataType {
+		e.EncodeElement(c, semetadataType)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_MetadataTypes:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "metadataType":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "metadataType"}:
 				tmp := NewCT_MetadataType()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

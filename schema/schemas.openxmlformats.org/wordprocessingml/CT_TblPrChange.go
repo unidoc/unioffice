@@ -81,8 +81,8 @@ lCT_TblPrChange:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "tblPr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblPr"}:
 				if err := d.DecodeElement(m.TblPr, &el); err != nil {
 					return err
 				}

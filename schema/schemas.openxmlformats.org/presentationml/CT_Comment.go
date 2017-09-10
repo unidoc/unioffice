@@ -97,16 +97,16 @@ lCT_Comment:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pos":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "pos"}:
 				if err := d.DecodeElement(m.Pos, &el); err != nil {
 					return err
 				}
-			case "text":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "text"}:
 				if err := d.DecodeElement(&m.Text, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionListModify()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

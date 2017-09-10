@@ -27,8 +27,10 @@ func NewCT_Hyperlinks() *CT_Hyperlinks {
 
 func (m *CT_Hyperlinks) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	sehyperlink := xml.StartElement{Name: xml.Name{Local: "x:hyperlink"}}
-	e.EncodeElement(m.Hyperlink, sehyperlink)
+	sehyperlink := xml.StartElement{Name: xml.Name{Local: "ma:hyperlink"}}
+	for _, c := range m.Hyperlink {
+		e.EncodeElement(c, sehyperlink)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -43,8 +45,8 @@ lCT_Hyperlinks:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "hyperlink":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "hyperlink"}:
 				tmp := NewCT_Hyperlink()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

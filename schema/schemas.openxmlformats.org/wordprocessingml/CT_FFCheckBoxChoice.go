@@ -46,13 +46,13 @@ lCT_FFCheckBoxChoice:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "size":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "size"}:
 				m.Size = NewCT_HpsMeasure()
 				if err := d.DecodeElement(m.Size, &el); err != nil {
 					return err
 				}
-			case "sizeAuto":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sizeAuto"}:
 				m.SizeAuto = NewCT_OnOff()
 				if err := d.DecodeElement(m.SizeAuto, &el); err != nil {
 					return err

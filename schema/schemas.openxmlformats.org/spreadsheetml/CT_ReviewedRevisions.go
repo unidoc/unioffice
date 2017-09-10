@@ -34,8 +34,10 @@ func (m *CT_ReviewedRevisions) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sereviewed := xml.StartElement{Name: xml.Name{Local: "x:reviewed"}}
-	e.EncodeElement(m.Reviewed, sereviewed)
+	sereviewed := xml.StartElement{Name: xml.Name{Local: "ma:reviewed"}}
+	for _, c := range m.Reviewed {
+		e.EncodeElement(c, sereviewed)
+	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
 }
@@ -60,8 +62,8 @@ lCT_ReviewedRevisions:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "reviewed":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "reviewed"}:
 				tmp := NewCT_Reviewed()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -29,7 +29,9 @@ func (m *CT_CommentList) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	e.EncodeToken(start)
 	if m.Cm != nil {
 		secm := xml.StartElement{Name: xml.Name{Local: "p:cm"}}
-		e.EncodeElement(m.Cm, secm)
+		for _, c := range m.Cm {
+			e.EncodeElement(c, secm)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_CommentList:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "cm":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cm"}:
 				tmp := NewCT_Comment()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

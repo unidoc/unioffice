@@ -148,63 +148,63 @@ lCT_LineProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "noFill":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noFill"}:
 				m.NoFill = NewCT_NoFillProperties()
 				if err := d.DecodeElement(m.NoFill, &el); err != nil {
 					return err
 				}
-			case "solidFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "solidFill"}:
 				m.SolidFill = NewCT_SolidColorFillProperties()
 				if err := d.DecodeElement(m.SolidFill, &el); err != nil {
 					return err
 				}
-			case "gradFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gradFill"}:
 				m.GradFill = NewCT_GradientFillProperties()
 				if err := d.DecodeElement(m.GradFill, &el); err != nil {
 					return err
 				}
-			case "pattFill":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pattFill"}:
 				m.PattFill = NewCT_PatternFillProperties()
 				if err := d.DecodeElement(m.PattFill, &el); err != nil {
 					return err
 				}
-			case "prstDash":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "prstDash"}:
 				m.PrstDash = NewCT_PresetLineDashProperties()
 				if err := d.DecodeElement(m.PrstDash, &el); err != nil {
 					return err
 				}
-			case "custDash":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custDash"}:
 				m.CustDash = NewCT_DashStopList()
 				if err := d.DecodeElement(m.CustDash, &el); err != nil {
 					return err
 				}
-			case "round":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "round"}:
 				m.Round = NewCT_LineJoinRound()
 				if err := d.DecodeElement(m.Round, &el); err != nil {
 					return err
 				}
-			case "bevel":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bevel"}:
 				m.Bevel = NewCT_LineJoinBevel()
 				if err := d.DecodeElement(m.Bevel, &el); err != nil {
 					return err
 				}
-			case "miter":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "miter"}:
 				m.Miter = NewCT_LineJoinMiterProperties()
 				if err := d.DecodeElement(m.Miter, &el); err != nil {
 					return err
 				}
-			case "headEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "headEnd"}:
 				m.HeadEnd = NewCT_LineEndProperties()
 				if err := d.DecodeElement(m.HeadEnd, &el); err != nil {
 					return err
 				}
-			case "tailEnd":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tailEnd"}:
 				m.TailEnd = NewCT_LineEndProperties()
 				if err := d.DecodeElement(m.TailEnd, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

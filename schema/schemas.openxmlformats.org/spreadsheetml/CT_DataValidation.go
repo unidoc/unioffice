@@ -121,12 +121,12 @@ func (m *CT_DataValidation) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 		Value: fmt.Sprintf("%v", m.SqrefAttr)})
 	e.EncodeToken(start)
 	if m.Formula1 != nil {
-		seformula1 := xml.StartElement{Name: xml.Name{Local: "x:formula1"}}
+		seformula1 := xml.StartElement{Name: xml.Name{Local: "ma:formula1"}}
 		gooxml.AddPreserveSpaceAttr(&seformula1, *m.Formula1)
 		e.EncodeElement(m.Formula1, seformula1)
 	}
 	if m.Formula2 != nil {
-		seformula2 := xml.StartElement{Name: xml.Name{Local: "x:formula2"}}
+		seformula2 := xml.StartElement{Name: xml.Name{Local: "ma:formula2"}}
 		gooxml.AddPreserveSpaceAttr(&seformula2, *m.Formula2)
 		e.EncodeElement(m.Formula2, seformula2)
 	}
@@ -221,13 +221,13 @@ lCT_DataValidation:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "formula1":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "formula1"}:
 				m.Formula1 = new(string)
 				if err := d.DecodeElement(m.Formula1, &el); err != nil {
 					return err
 				}
-			case "formula2":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "formula2"}:
 				m.Formula2 = new(string)
 				if err := d.DecodeElement(m.Formula2, &el); err != nil {
 					return err

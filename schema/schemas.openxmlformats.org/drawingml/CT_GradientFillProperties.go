@@ -85,23 +85,23 @@ lCT_GradientFillProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "gsLst":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gsLst"}:
 				m.GsLst = NewCT_GradientStopList()
 				if err := d.DecodeElement(m.GsLst, &el); err != nil {
 					return err
 				}
-			case "lin":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lin"}:
 				m.Lin = NewCT_LinearShadeProperties()
 				if err := d.DecodeElement(m.Lin, &el); err != nil {
 					return err
 				}
-			case "path":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "path"}:
 				m.Path = NewCT_PathShadeProperties()
 				if err := d.DecodeElement(m.Path, &el); err != nil {
 					return err
 				}
-			case "tileRect":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tileRect"}:
 				m.TileRect = NewCT_RelativeRect()
 				if err := d.DecodeElement(m.TileRect, &el); err != nil {
 					return err

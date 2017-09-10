@@ -29,7 +29,9 @@ func (m *CT_DocVars) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.DocVar != nil {
 		sedocVar := xml.StartElement{Name: xml.Name{Local: "w:docVar"}}
-		e.EncodeElement(m.DocVar, sedocVar)
+		for _, c := range m.DocVar {
+			e.EncodeElement(c, sedocVar)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -45,8 +47,8 @@ lCT_DocVars:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "docVar":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docVar"}:
 				tmp := NewCT_DocVar()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

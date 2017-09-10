@@ -33,7 +33,9 @@ func (m *CT_Keywords) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Value != nil {
 		sevalue := xml.StartElement{Name: xml.Name{Local: "cp:value"}}
-		e.EncodeElement(m.Value, sevalue)
+		for _, c := range m.Value {
+			e.EncodeElement(c, sevalue)
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -58,8 +60,8 @@ lCT_Keywords:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "value":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/package/2006/metadata/core-properties", Local: "value"}:
 				tmp := NewCT_Keyword()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

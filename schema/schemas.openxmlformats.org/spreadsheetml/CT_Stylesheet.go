@@ -47,47 +47,47 @@ func NewCT_Stylesheet() *CT_Stylesheet {
 func (m *CT_Stylesheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.NumFmts != nil {
-		senumFmts := xml.StartElement{Name: xml.Name{Local: "x:numFmts"}}
+		senumFmts := xml.StartElement{Name: xml.Name{Local: "ma:numFmts"}}
 		e.EncodeElement(m.NumFmts, senumFmts)
 	}
 	if m.Fonts != nil {
-		sefonts := xml.StartElement{Name: xml.Name{Local: "x:fonts"}}
+		sefonts := xml.StartElement{Name: xml.Name{Local: "ma:fonts"}}
 		e.EncodeElement(m.Fonts, sefonts)
 	}
 	if m.Fills != nil {
-		sefills := xml.StartElement{Name: xml.Name{Local: "x:fills"}}
+		sefills := xml.StartElement{Name: xml.Name{Local: "ma:fills"}}
 		e.EncodeElement(m.Fills, sefills)
 	}
 	if m.Borders != nil {
-		seborders := xml.StartElement{Name: xml.Name{Local: "x:borders"}}
+		seborders := xml.StartElement{Name: xml.Name{Local: "ma:borders"}}
 		e.EncodeElement(m.Borders, seborders)
 	}
 	if m.CellStyleXfs != nil {
-		secellStyleXfs := xml.StartElement{Name: xml.Name{Local: "x:cellStyleXfs"}}
+		secellStyleXfs := xml.StartElement{Name: xml.Name{Local: "ma:cellStyleXfs"}}
 		e.EncodeElement(m.CellStyleXfs, secellStyleXfs)
 	}
 	if m.CellXfs != nil {
-		secellXfs := xml.StartElement{Name: xml.Name{Local: "x:cellXfs"}}
+		secellXfs := xml.StartElement{Name: xml.Name{Local: "ma:cellXfs"}}
 		e.EncodeElement(m.CellXfs, secellXfs)
 	}
 	if m.CellStyles != nil {
-		secellStyles := xml.StartElement{Name: xml.Name{Local: "x:cellStyles"}}
+		secellStyles := xml.StartElement{Name: xml.Name{Local: "ma:cellStyles"}}
 		e.EncodeElement(m.CellStyles, secellStyles)
 	}
 	if m.Dxfs != nil {
-		sedxfs := xml.StartElement{Name: xml.Name{Local: "x:dxfs"}}
+		sedxfs := xml.StartElement{Name: xml.Name{Local: "ma:dxfs"}}
 		e.EncodeElement(m.Dxfs, sedxfs)
 	}
 	if m.TableStyles != nil {
-		setableStyles := xml.StartElement{Name: xml.Name{Local: "x:tableStyles"}}
+		setableStyles := xml.StartElement{Name: xml.Name{Local: "ma:tableStyles"}}
 		e.EncodeElement(m.TableStyles, setableStyles)
 	}
 	if m.Colors != nil {
-		secolors := xml.StartElement{Name: xml.Name{Local: "x:colors"}}
+		secolors := xml.StartElement{Name: xml.Name{Local: "ma:colors"}}
 		e.EncodeElement(m.Colors, secolors)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -104,58 +104,58 @@ lCT_Stylesheet:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "numFmts":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "numFmts"}:
 				m.NumFmts = NewCT_NumFmts()
 				if err := d.DecodeElement(m.NumFmts, &el); err != nil {
 					return err
 				}
-			case "fonts":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fonts"}:
 				m.Fonts = NewCT_Fonts()
 				if err := d.DecodeElement(m.Fonts, &el); err != nil {
 					return err
 				}
-			case "fills":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fills"}:
 				m.Fills = NewCT_Fills()
 				if err := d.DecodeElement(m.Fills, &el); err != nil {
 					return err
 				}
-			case "borders":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "borders"}:
 				m.Borders = NewCT_Borders()
 				if err := d.DecodeElement(m.Borders, &el); err != nil {
 					return err
 				}
-			case "cellStyleXfs":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cellStyleXfs"}:
 				m.CellStyleXfs = NewCT_CellStyleXfs()
 				if err := d.DecodeElement(m.CellStyleXfs, &el); err != nil {
 					return err
 				}
-			case "cellXfs":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cellXfs"}:
 				m.CellXfs = NewCT_CellXfs()
 				if err := d.DecodeElement(m.CellXfs, &el); err != nil {
 					return err
 				}
-			case "cellStyles":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cellStyles"}:
 				m.CellStyles = NewCT_CellStyles()
 				if err := d.DecodeElement(m.CellStyles, &el); err != nil {
 					return err
 				}
-			case "dxfs":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dxfs"}:
 				m.Dxfs = NewCT_Dxfs()
 				if err := d.DecodeElement(m.Dxfs, &el); err != nil {
 					return err
 				}
-			case "tableStyles":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tableStyles"}:
 				m.TableStyles = NewCT_TableStyles()
 				if err := d.DecodeElement(m.TableStyles, &el); err != nil {
 					return err
 				}
-			case "colors":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "colors"}:
 				m.Colors = NewCT_Colors()
 				if err := d.DecodeElement(m.Colors, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

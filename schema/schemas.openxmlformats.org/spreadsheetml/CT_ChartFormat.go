@@ -43,7 +43,7 @@ func (m *CT_ChartFormat) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 			Value: fmt.Sprintf("%d", b2i(*m.SeriesAttr))})
 	}
 	e.EncodeToken(start)
-	sepivotArea := xml.StartElement{Name: xml.Name{Local: "x:pivotArea"}}
+	sepivotArea := xml.StartElement{Name: xml.Name{Local: "ma:pivotArea"}}
 	e.EncodeElement(m.PivotArea, sepivotArea)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -83,8 +83,8 @@ lCT_ChartFormat:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "pivotArea":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotArea"}:
 				if err := d.DecodeElement(m.PivotArea, &el); err != nil {
 					return err
 				}

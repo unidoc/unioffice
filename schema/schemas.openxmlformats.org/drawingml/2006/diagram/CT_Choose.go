@@ -33,7 +33,9 @@ func (m *CT_Choose) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	seif := xml.StartElement{Name: xml.Name{Local: "if"}}
-	e.EncodeElement(m.If, seif)
+	for _, c := range m.If {
+		e.EncodeElement(c, seif)
+	}
 	if m.Else != nil {
 		seelse := xml.StartElement{Name: xml.Name{Local: "else"}}
 		e.EncodeElement(m.Else, seelse)
@@ -61,14 +63,14 @@ lCT_Choose:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "if":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "if"}:
 				tmp := NewCT_When()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.If = append(m.If, tmp)
-			case "else":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "else"}:
 				m.Else = NewCT_Otherwise()
 				if err := d.DecodeElement(m.Else, &el); err != nil {
 					return err

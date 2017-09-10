@@ -58,20 +58,20 @@ lCT_ShapeStyle:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "lnRef":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnRef"}:
 				if err := d.DecodeElement(m.LnRef, &el); err != nil {
 					return err
 				}
-			case "fillRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillRef"}:
 				if err := d.DecodeElement(m.FillRef, &el); err != nil {
 					return err
 				}
-			case "effectRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectRef"}:
 				if err := d.DecodeElement(m.EffectRef, &el); err != nil {
 					return err
 				}
-			case "fontRef":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fontRef"}:
 				if err := d.DecodeElement(m.FontRef, &el); err != nil {
 					return err
 				}

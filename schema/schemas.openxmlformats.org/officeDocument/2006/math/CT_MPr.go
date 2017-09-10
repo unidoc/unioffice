@@ -83,48 +83,48 @@ lCT_MPr:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "baseJc":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "baseJc"}:
 				m.BaseJc = NewCT_YAlign()
 				if err := d.DecodeElement(m.BaseJc, &el); err != nil {
 					return err
 				}
-			case "plcHide":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "plcHide"}:
 				m.PlcHide = NewCT_OnOff()
 				if err := d.DecodeElement(m.PlcHide, &el); err != nil {
 					return err
 				}
-			case "rSpRule":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "rSpRule"}:
 				m.RSpRule = NewCT_SpacingRule()
 				if err := d.DecodeElement(m.RSpRule, &el); err != nil {
 					return err
 				}
-			case "cGpRule":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "cGpRule"}:
 				m.CGpRule = NewCT_SpacingRule()
 				if err := d.DecodeElement(m.CGpRule, &el); err != nil {
 					return err
 				}
-			case "rSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "rSp"}:
 				m.RSp = NewCT_UnSignedInteger()
 				if err := d.DecodeElement(m.RSp, &el); err != nil {
 					return err
 				}
-			case "cSp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "cSp"}:
 				m.CSp = NewCT_UnSignedInteger()
 				if err := d.DecodeElement(m.CSp, &el); err != nil {
 					return err
 				}
-			case "cGp":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "cGp"}:
 				m.CGp = NewCT_UnSignedInteger()
 				if err := d.DecodeElement(m.CGp, &el); err != nil {
 					return err
 				}
-			case "mcs":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mcs"}:
 				m.Mcs = NewCT_MCS()
 				if err := d.DecodeElement(m.Mcs, &el); err != nil {
 					return err
 				}
-			case "ctrlPr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "ctrlPr"}:
 				m.CtrlPr = NewCT_CtrlPr()
 				if err := d.DecodeElement(m.CtrlPr, &el); err != nil {
 					return err

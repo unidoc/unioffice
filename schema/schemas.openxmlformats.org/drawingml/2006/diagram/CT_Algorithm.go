@@ -44,7 +44,9 @@ func (m *CT_Algorithm) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(start)
 	if m.Param != nil {
 		separam := xml.StartElement{Name: xml.Name{Local: "param"}}
-		e.EncodeElement(m.Param, separam)
+		for _, c := range m.Param {
+			e.EncodeElement(c, separam)
+		}
 	}
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "extLst"}}
@@ -78,14 +80,14 @@ lCT_Algorithm:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "param":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "param"}:
 				tmp := NewCT_Parameter()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Param = append(m.Param, tmp)
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/diagram", Local: "extLst"}:
 				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

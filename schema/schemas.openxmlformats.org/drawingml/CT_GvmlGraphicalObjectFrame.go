@@ -58,20 +58,20 @@ lCT_GvmlGraphicalObjectFrame:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "nvGraphicFramePr":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "nvGraphicFramePr"}:
 				if err := d.DecodeElement(m.NvGraphicFramePr, &el); err != nil {
 					return err
 				}
-			case "graphic":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "graphic"}:
 				if err := d.DecodeElement(m.Graphic, &el); err != nil {
 					return err
 				}
-			case "xfrm":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "xfrm"}:
 				if err := d.DecodeElement(m.Xfrm, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

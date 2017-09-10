@@ -143,43 +143,43 @@ lCT_ShowProperties:
 		}
 		switch el := tok.(type) {
 		case xml.StartElement:
-			switch el.Name.Local {
-			case "present":
+			switch el.Name {
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "present"}:
 				m.Present = NewCT_Empty()
 				if err := d.DecodeElement(m.Present, &el); err != nil {
 					return err
 				}
-			case "browse":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "browse"}:
 				m.Browse = NewCT_ShowInfoBrowse()
 				if err := d.DecodeElement(m.Browse, &el); err != nil {
 					return err
 				}
-			case "kiosk":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "kiosk"}:
 				m.Kiosk = NewCT_ShowInfoKiosk()
 				if err := d.DecodeElement(m.Kiosk, &el); err != nil {
 					return err
 				}
-			case "sldAll":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldAll"}:
 				m.SldAll = NewCT_Empty()
 				if err := d.DecodeElement(m.SldAll, &el); err != nil {
 					return err
 				}
-			case "sldRg":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldRg"}:
 				m.SldRg = NewCT_IndexRange()
 				if err := d.DecodeElement(m.SldRg, &el); err != nil {
 					return err
 				}
-			case "custShow":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custShow"}:
 				m.CustShow = NewCT_CustomShowId()
 				if err := d.DecodeElement(m.CustShow, &el); err != nil {
 					return err
 				}
-			case "penClr":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "penClr"}:
 				m.PenClr = drawingml.NewCT_Color()
 				if err := d.DecodeElement(m.PenClr, &el); err != nil {
 					return err
 				}
-			case "extLst":
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
