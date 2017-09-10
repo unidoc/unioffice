@@ -17,10 +17,10 @@ func main() {
 	hdrStyle := ss.StyleSheet.AddCellStyle()
 	hdrStyle.SetHorizontalAlignment(sml.ST_HorizontalAlignmentCenter)
 
-	fills := ss.StyleSheet.Fills()
-	lightGray := fills.AddPatternFill()
-	lightGray.SetFgColor(color.LightGray)
-	hdrStyle.SetFill(lightGray.Fill)
+	lightGray := ss.StyleSheet.Fills().AddFill()
+	lightGrayPattern := lightGray.SetPatternFill()
+	lightGrayPattern.SetFgColor(color.LightGray)
+	hdrStyle.SetFill(lightGray)
 
 	hdr := sheet.AddRow()
 	hdrCell := hdr.AddCell()

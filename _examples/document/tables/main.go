@@ -40,7 +40,7 @@ func main() {
 	row = table.AddRow()
 	cell := row.AddCell()
 	// column span
-	//cell.Properties().SetColumnSpan(2)
+	cell.Properties().SetColumnSpan(2)
 	run = cell.AddParagraph().AddRun()
 	run.AddText("Cells can span multiple columns")
 
