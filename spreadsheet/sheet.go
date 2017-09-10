@@ -401,3 +401,95 @@ func (s Sheet) Comments() Comments {
 	// should never occur
 	return Comments{}
 }
+
+// SetBorder is a helper function for creating borders across multiple cells. In
+// the OOXML spreadsheet format, a border applies to a single cell.  To draw a
+// 'boxed' border around multiple cells, you need to apply different styles to
+// the cells on the top,left,right,bottom and four corners.  This function
+// breaks apart a single border into its components and applies it to cells as
+// needed to give the effect of a border applying to multiple cells.
+func (s Sheet) SetBorder(cellRange string, border Border) {
+	sp := strings.Split(cellRange, ":")
+	if len(sp) != 2 {
+		log.Printf("expected range of the form 'A1:B5'")
+		return
+	}
+	tlCol, tlRowIdx, _ := ParseCellReference(sp[0])
+	brCol, brRowIdx, _ := ParseCellReference(sp[1])
+	tlColIdx := ColumnToIndex(tlCol)
+	brColIdx := ColumnToIndex(brCol)
+
+	topLeftStyle := s.w.StyleSheet.AddCellStyle()
+	topLeftBorder := s.w.StyleSheet.AddBorder()
+	topLeftStyle.SetBorder(topLeftBorder)
+	topLeftBorder.x.Top = border.x.Top
+	topLeftBorder.x.Left = border.x.Left
+
+	topRightStyle := s.w.StyleSheet.AddCellStyle()
+	topRightBorder := s.w.StyleSheet.AddBorder()
+	topRightStyle.SetBorder(topRightBorder)
+	topRightBorder.x.Top = border.x.Top
+	topRightBorder.x.Right = border.x.Right
+
+	topStyle := s.w.StyleSheet.AddCellStyle()
+	topBorder := s.w.StyleSheet.AddBorder()
+	topStyle.SetBorder(topBorder)
+	topBorder.x.Top = border.x.Top
+
+	leftStyle := s.w.StyleSheet.AddCellStyle()
+	leftBorder := s.w.StyleSheet.AddBorder()
+	leftStyle.SetBorder(leftBorder)
+	leftBorder.x.Left = border.x.Left
+
+	rightStyle := s.w.StyleSheet.AddCellStyle()
+	rightBorder := s.w.StyleSheet.AddBorder()
+	rightStyle.SetBorder(rightBorder)
+	rightBorder.x.Right = border.x.Right
+
+	bottomStyle := s.w.StyleSheet.AddCellStyle()
+	bottomBorder := s.w.StyleSheet.AddBorder()
+	bottomStyle.SetBorder(bottomBorder)
+	bottomBorder.x.Bottom = border.x.Bottom
+
+	bottomLeftStyle := s.w.StyleSheet.AddCellStyle()
+	bottomLeftBorder := s.w.StyleSheet.AddBorder()
+	bottomLeftStyle.SetBorder(bottomLeftBorder)
+	bottomLeftBorder.x.Bottom = border.x.Bottom
+	bottomLeftBorder.x.Left = border.x.Left
+
+	bottomRightStyle := s.w.StyleSheet.AddCellStyle()
+	bottomRightBorder := s.w.StyleSheet.AddBorder()
+	bottomRightStyle.SetBorder(bottomRightBorder)
+	bottomRightBorder.x.Bottom = border.x.Bottom
+	bottomRightBorder.x.Right = border.x.Right
+
+	for row := tlRowIdx; row <= brRowIdx; row++ {
+		for col := tlColIdx; col <= brColIdx; col++ {
+			ref := fmt.Sprintf("%s%d", IndexToColumn(col), row)
+			switch {
+			// top corners
+			case row == tlRowIdx && col == tlColIdx:
+				s.Cell(ref).SetStyle(topLeftStyle)
+			case row == tlRowIdx && col == brColIdx:
+				s.Cell(ref).SetStyle(topRightStyle)
+
+			// bottom corners
+			case row == brRowIdx && col == tlColIdx:
+				s.Cell(ref).SetStyle(bottomLeftStyle)
+			case row == brRowIdx && col == brColIdx:
+				s.Cell(ref).SetStyle(bottomRightStyle)
+
+			// four sides that aren't the corners
+			case row == tlRowIdx:
+				s.Cell(ref).SetStyle(topStyle)
+			case row == brRowIdx:
+				s.Cell(ref).SetStyle(bottomStyle)
+			case col == tlColIdx:
+				s.Cell(ref).SetStyle(leftStyle)
+			case col == brColIdx:
+				s.Cell(ref).SetStyle(rightStyle)
+			}
+		}
+	}
+
+}
