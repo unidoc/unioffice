@@ -15,12 +15,16 @@ import (
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
+
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	c "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
 	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
 	sd "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"
 )
 
+// Drawing is a drawing overlay on a sheet.  Only a single drawing is allowed
+// per sheet, so to display multiple charts and images on a single sheet, they
+// must be added to the same drawing.
 type Drawing struct {
 	wb *Workbook
 	x  *sd.WsDr
@@ -31,10 +35,8 @@ func (d Drawing) X() *sd.WsDr {
 	return d.x
 }
 
-func (d Drawing) InitializeDefaults() {
-
-}
-
+// AddChart adds an chart to a drawing, returning the chart and an anchor that
+// can be used to position the chart within the sheet.
 func (d Drawing) AddChart() (chart.Chart, Anchor) {
 	chartSpace := crt.NewChartSpace()
 	d.wb.charts = append(d.wb.charts, chartSpace)
@@ -53,22 +55,8 @@ func (d Drawing) AddChart() (chart.Chart, Anchor) {
 		}
 	}
 
-	tca := sd.NewCT_TwoCellAnchor()
-
+	tca := defaultTwoCellAnchor()
 	d.x.EG_Anchor = append(d.x.EG_Anchor, &sd.EG_Anchor{TwoCellAnchor: tca})
-	tca.EditAsAttr = sd.ST_EditAsOneCell
-
-	// provide a default size so its visible, if from/to are both 0,0 then the
-	// chart won't show up.
-	tca.From.Col = 5
-	tca.From.Row = 0
-	// Mac Excel requires the offsets be present
-	tca.From.ColOff.ST_CoordinateUnqualified = gooxml.Int64(0)
-	tca.From.RowOff.ST_CoordinateUnqualified = gooxml.Int64(0)
-	tca.To.Col = 10
-	tca.To.Row = 20
-	tca.To.ColOff.ST_CoordinateUnqualified = gooxml.Int64(0)
-	tca.To.RowOff.ST_CoordinateUnqualified = gooxml.Int64(0)
 
 	tca.Choice = &sd.EG_ObjectChoicesChoice{}
 	tca.Choice.GraphicFrame = sd.NewCT_GraphicalObjectFrame()
@@ -96,7 +84,6 @@ func (d Drawing) AddChart() (chart.Chart, Anchor) {
 // AddImage adds an image with a paricular anchor type, returning an anchor to
 // allow adusting the image size/position.
 func (d Drawing) AddImage(img common.ImageRef, at AnchorType) Anchor {
-
 	imgIdx := 0
 	for i, ig := range d.wb.Images {
 		if ig == img {
@@ -164,6 +151,7 @@ func (d Drawing) AddImage(img common.ImageRef, at AnchorType) Anchor {
 
 func defaultAbsoluteAnchor() *sd.CT_AbsoluteAnchor {
 	aa := sd.NewCT_AbsoluteAnchor()
+
 	return aa
 }
 
@@ -171,9 +159,11 @@ func defaultOneCelAnchor() *sd.CT_OneCellAnchor {
 	oca := sd.NewCT_OneCellAnchor()
 	return oca
 }
+
 func defaultTwoCellAnchor() *sd.CT_TwoCellAnchor {
 	tca := sd.NewCT_TwoCellAnchor()
-	tca.EditAsAttr = sd.ST_EditAsAbsolute
+	tca.EditAsAttr = sd.ST_EditAsOneCell
+
 	// provide a default size so its visible, if from/to are both 0,0 then the
 	// chart won't show up.
 	tca.From.Col = 5

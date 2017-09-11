@@ -11,6 +11,8 @@ import (
 	"fmt"
 	"image"
 	"os"
+
+	"baliance.com/gooxml/measurement"
 	// Add image format support
 	_ "image/gif"
 	_ "image/jpeg"
@@ -65,6 +67,22 @@ func (i ImageRef) Path() string {
 // Path returns the path to an image file
 func (i ImageRef) Size() image.Point {
 	return i.img.Size
+}
+
+// RelativeHeight returns the relative height of an image given a fixed width.
+// This is used when setting image to a fixed width to calculate the height
+// required to keep the same image aspect ratio.
+func (i ImageRef) RelativeHeight(w measurement.Distance) measurement.Distance {
+	hScale := float64(i.Size().Y) / float64(i.Size().X)
+	return w * measurement.Distance(hScale)
+}
+
+// RelativeWidth returns the relative width of an image given a fixed height.
+// This is used when setting image to a fixed height to calculate the width
+// required to keep the same image aspect ratio.
+func (i ImageRef) RelativeWidth(h measurement.Distance) measurement.Distance {
+	wScale := float64(i.Size().X) / float64(i.Size().Y)
+	return h * measurement.Distance(wScale)
 }
 
 // ImageFromFile reads an image from a file on disk. It doesn't keep the image

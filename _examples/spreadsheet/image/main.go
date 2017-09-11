@@ -2,7 +2,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"math"
 
@@ -36,7 +35,7 @@ func main() {
 		y := 2 + +2*math.Sin(ang)
 		anc.SetColOffset(measurement.Distance(x) * measurement.Inch)
 		anc.SetRowOffset(measurement.Distance(y) * measurement.Inch)
-		fmt.Println(x, y)
+
 		// set the image to 1x1 inches
 		var w measurement.Distance = 1 * measurement.Inch
 		anc.SetWidth(w)

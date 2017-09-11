@@ -14,6 +14,7 @@ import (
 	"image"
 	"image/jpeg"
 	"io"
+	"log"
 	"os"
 	"time"
 
@@ -187,6 +188,17 @@ func (wb *Workbook) Save(w io.Writer) error {
 		// never seen relationships for a VML drawing yet
 	}
 
+	for i, img := range wb.Images {
+		fn := fmt.Sprintf("xl/media/image%d.%s", i+1, img.Format())
+		if img.Path() != "" {
+			if err := zippkg.AddFileFromDisk(z, fn, img.Path()); err != nil {
+				return err
+			}
+		} else {
+			log.Printf("unsupported image source: %+v", img)
+		}
+	}
+
 	if err := zippkg.MarshalXML(z, gooxml.ContentTypesFilename, wb.ContentTypes.X()); err != nil {
 		return err
 	}
@@ -328,6 +340,26 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 			}
 		}
 
+	case gooxml.ImageType:
+		for i, f := range files {
+			if f == nil {
+				continue
+			}
+			if f.Name == target {
+				path, err := zippkg.ExtractToDiskTmp(f, wb.TmpPath)
+				if err != nil {
+					return err
+				}
+				img, err := common.ImageFromFile(path)
+				if err != nil {
+					return err
+				}
+				iref := common.MakeImageRef(img, &wb.DocBase, wb.wbRels)
+				wb.Images = append(wb.Images, iref)
+				files[i] = nil
+			}
+		}
+
 	case gooxml.DrawingType:
 		drawing := sd.NewWsDr()
 		idx := uint32(len(wb.drawings))
@@ -363,15 +395,15 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 	return nil
 }
 
+// AddDrawing adds a drawing to a workbook.  However the drawing is not actually
+// displayed or used until it's set on a sheet.
 func (wb *Workbook) AddDrawing() Drawing {
 	drawing := sd.NewWsDr()
 	wb.drawings = append(wb.drawings, drawing)
 	fn := gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.DrawingType, len(wb.drawings))
 	wb.ContentTypes.AddOverride(fn, gooxml.DrawingContentType)
 	wb.drawingRels = append(wb.drawingRels, common.NewRelationships())
-	d := Drawing{wb, drawing}
-	d.InitializeDefaults()
-	return d
+	return Drawing{wb, drawing}
 }
 
 // AddDefinedName adds a name for a cell or range reference that can be used in
@@ -423,4 +455,25 @@ func (wb *Workbook) ClearCachedFormulaResults() {
 	for _, s := range wb.Sheets() {
 		s.ClearCachedFormulaResults()
 	}
+}
+
+// AddImage adds an image to the workbook package, returning a reference that
+// can be used to add the image to a drawing.
+func (wb *Workbook) AddImage(i common.Image) (common.ImageRef, error) {
+	r := common.MakeImageRef(i, &wb.DocBase, wb.wbRels)
+	if i.Path == "" {
+		return r, errors.New("image must have a path")
+	}
+
+	if i.Format == "" {
+		return r, errors.New("image must have a valid format")
+	}
+	if i.Size.X == 0 || i.Size.Y == 0 {
+		return r, errors.New("image must have a valid size")
+	}
+
+	wb.Images = append(wb.Images, r)
+	fn := fmt.Sprintf("media/image%d.%s", len(wb.Images), i.Format)
+	wb.wbRels.AddRelationship(fn, gooxml.ImageType)
+	return r, nil
 }
