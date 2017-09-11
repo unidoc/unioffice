@@ -24,8 +24,10 @@ type DocBase struct {
 	CoreProperties CoreProperties
 	Thumbnail      image.Image // thumbnail preview of the document
 
+	Images     []ImageRef
 	ExtraFiles []ExtraFile
 	TmpPath    string // path where temporary files are stored when opening documents
+
 }
 
 // AddExtraFileFromZip is used when reading an unsupported file from an OOXML

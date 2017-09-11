@@ -9,6 +9,7 @@ package document
 
 import (
 	"baliance.com/gooxml"
+	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
 	pic "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/picture"
 	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
@@ -26,7 +27,7 @@ func (a AnchoredDrawing) X() *wml.WdAnchor {
 }
 
 // GetImage returns the ImageRef associated with an AnchoredDrawing.
-func (a AnchoredDrawing) GetImage() (ImageRef, bool) {
+func (a AnchoredDrawing) GetImage() (common.ImageRef, bool) {
 	any := a.x.Graphic.GraphicData.Any
 	if len(any) > 0 {
 		p, ok := any[0].(*pic.Pic)
@@ -36,7 +37,7 @@ func (a AnchoredDrawing) GetImage() (ImageRef, bool) {
 			}
 		}
 	}
-	return ImageRef{}, false
+	return common.ImageRef{}, false
 }
 
 // SetName sets the name of the image, visible in the properties of the image

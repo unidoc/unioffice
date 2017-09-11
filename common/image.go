@@ -5,7 +5,7 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package document
+package common
 
 import (
 	"fmt"
@@ -19,29 +19,33 @@ import (
 	"baliance.com/gooxml"
 )
 
-// Image is a container for image information.
+// Image is a container for image information. It's used as we need format and
+// and size information to use images.
 type Image struct {
 	Size   image.Point
 	Format string
 	Path   string
 }
 
-type iref struct {
-	path string
+// ImageRef is a reference to an image within a document.
+type ImageRef struct {
+	d    *DocBase
+	rels Relationships
+	img  Image
 }
 
-// ImageRef is a reference to an image in a document.
-type ImageRef struct {
-	d   *Document
-	ref *iref
-	img Image
+// MakeImageRef constructs an image reference which is a reference to a
+// particular image file inside a document.  The same image can be used multiple
+// times in a document by re-useng the ImageRef.
+func MakeImageRef(img Image, d *DocBase, rels Relationships) ImageRef {
+	return ImageRef{img: img, d: d, rels: rels}
 }
 
 // RelID returns the relationship ID.
 func (i ImageRef) RelID() string {
-	for imgIdx, ir := range i.d.images {
-		if ir == i.ref {
-			imgID := i.d.docRels.FindRIDForN(imgIdx, gooxml.ImageType)
+	for imgIdx, ir := range i.d.Images {
+		if ir.img == i.img {
+			imgID := i.rels.FindRIDForN(imgIdx, gooxml.ImageType)
 			return imgID
 		}
 	}
@@ -56,6 +60,11 @@ func (i ImageRef) Format() string {
 // Path returns the path to an image file
 func (i ImageRef) Path() string {
 	return i.img.Path
+}
+
+// Path returns the path to an image file
+func (i ImageRef) Size() image.Point {
+	return i.img.Size
 }
 
 // ImageFromFile reads an image from a file on disk. It doesn't keep the image

@@ -4,6 +4,7 @@ package main
 import (
 	"log"
 
+	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/document"
 	"baliance.com/gooxml/measurement"
 
@@ -15,7 +16,7 @@ var lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lobo
 func main() {
 	doc := document.New()
 
-	img, err := document.ImageFromFile("gophercolor.png")
+	img, err := common.ImageFromFile("gophercolor.png")
 	if err != nil {
 		log.Fatalf("unable to create image: %s", err)
 	}

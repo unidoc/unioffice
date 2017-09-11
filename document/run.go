@@ -14,6 +14,7 @@ import (
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/color"
+	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	pic "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/picture"
@@ -310,7 +311,7 @@ func (r Run) DrawingAnchored() []AnchoredDrawing {
 }
 
 // AddDrawingAnchored adds an anchored (floating) drawing from an ImageRef.
-func (r Run) AddDrawingAnchored(img ImageRef) (AnchoredDrawing, error) {
+func (r Run) AddDrawingAnchored(img common.ImageRef) (AnchoredDrawing, error) {
 	ic := r.newIC()
 	ic.Drawing = wml.NewCT_Drawing()
 	anchor := wml.NewWdAnchor()
@@ -337,8 +338,8 @@ func (r Run) AddDrawingAnchored(img ImageRef) (AnchoredDrawing, error) {
 	anchor.PositionV.Choice = &wml.WdCT_PosVChoice{}
 	anchor.PositionV.Choice.PosOffset = gooxml.Int32(0)
 
-	anchor.Extent.CxAttr = int64(float64(img.img.Size.X*measurement.Pixel72) / measurement.EMU)
-	anchor.Extent.CyAttr = int64(float64(img.img.Size.Y*measurement.Pixel72) / measurement.EMU)
+	anchor.Extent.CxAttr = int64(float64(img.Size().X*measurement.Pixel72) / measurement.EMU)
+	anchor.Extent.CyAttr = int64(float64(img.Size().Y*measurement.Pixel72) / measurement.EMU)
 	anchor.Choice = &wml.WdEG_WrapTypeChoice{}
 	anchor.Choice.WrapSquare = wml.NewWdCT_WrapSquare()
 	anchor.Choice.WrapSquare.WrapTextAttr = wml.WdST_WrapTextBothSides
@@ -352,16 +353,7 @@ func (r Run) AddDrawingAnchored(img ImageRef) (AnchoredDrawing, error) {
 
 	// find the reference to the actual image file in the document relationships
 	// so we can embed via the relationship ID
-	imgIdx := -1
-	for i, ir := range r.d.images {
-		if img.ref == ir {
-			imgIdx = i
-		}
-	}
-	if imgIdx == -1 {
-		return ad, errors.New("couldn't find reference to image within document")
-	}
-	imgID := r.d.docRels.FindRIDForN(imgIdx, gooxml.ImageType)
+	imgID := img.RelID()
 	if imgID == "" {
 		return ad, errors.New("couldn't find reference to image within document relations")
 	}
@@ -380,8 +372,8 @@ func (r Run) AddDrawingAnchored(img ImageRef) (AnchoredDrawing, error) {
 	p.SpPr.Xfrm.Off.XAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
 	p.SpPr.Xfrm.Off.YAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
 	p.SpPr.Xfrm.Ext = dml.NewCT_PositiveSize2D()
-	p.SpPr.Xfrm.Ext.CxAttr = int64(img.img.Size.X * measurement.Point)
-	p.SpPr.Xfrm.Ext.CyAttr = int64(img.img.Size.Y * measurement.Point)
+	p.SpPr.Xfrm.Ext.CxAttr = int64(img.Size().X * measurement.Point)
+	p.SpPr.Xfrm.Ext.CyAttr = int64(img.Size().Y * measurement.Point)
 	// required by Word on OSX for the image to display
 	p.SpPr.PrstGeom = dml.NewCT_PresetGeometry2D()
 	p.SpPr.PrstGeom.PrstAttr = dml.ST_ShapeTypeRect

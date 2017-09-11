@@ -42,7 +42,6 @@ type Document struct {
 	headers     []*wml.Hdr
 	footers     []*wml.Ftr
 	docRels     common.Relationships
-	images      []*iref
 	themes      []*dml.Theme
 	webSettings *wml.WebSettings
 	fontTable   *wml.Fonts
@@ -208,11 +207,10 @@ func (d *Document) Save(w io.Writer) error {
 		}
 	}
 
-	// TODO: use computer filenames for images
-	for i, img := range d.images {
+	for i, img := range d.Images {
 		fn := fmt.Sprintf("word/media/image%d.png", i+1)
-		if img.path != "" {
-			if err := zippkg.AddFileFromDisk(z, fn, img.path); err != nil {
+		if img.Path() != "" {
+			if err := zippkg.AddFileFromDisk(z, fn, img.Path()); err != nil {
 				return err
 			}
 		} else {
@@ -362,14 +360,12 @@ func (d *Document) Validate() error {
 
 // AddImage adds an image to the document package, returning a reference that
 // can be used to add the image to a run and place it in the document contents.
-func (d *Document) AddImage(i Image) (ImageRef, error) {
-	r := ImageRef{img: i, d: d}
-	if i.Path != "" {
-		r.ref = &iref{path: i.Path}
-		d.images = append(d.images, r.ref)
-	} else {
+func (d *Document) AddImage(i common.Image) (common.ImageRef, error) {
+	r := common.MakeImageRef(i, &d.DocBase, d.docRels)
+	if i.Path == "" {
 		return r, errors.New("image must have a path")
 	}
+
 	if i.Format == "" {
 		return r, errors.New("image must have a valid format")
 	}
@@ -377,45 +373,21 @@ func (d *Document) AddImage(i Image) (ImageRef, error) {
 		return r, errors.New("image must have a valid size")
 	}
 
-	fn := fmt.Sprintf("media/image%d.%s", len(d.images), i.Format)
+	d.Images = append(d.Images, r)
+	fn := fmt.Sprintf("media/image%d.%s", len(d.Images), i.Format)
 	d.docRels.AddRelationship(fn, gooxml.ImageType)
 	return r, nil
 }
 
 // GetImageByRelID returns an ImageRef with the associated relation ID in the
 // document.
-func (d *Document) GetImageByRelID(relID string) (ImageRef, bool) {
-	for _, img := range d.Images() {
+func (d *Document) GetImageByRelID(relID string) (common.ImageRef, bool) {
+	for _, img := range d.Images {
 		if img.RelID() == relID {
 			return img, true
 		}
 	}
-	return ImageRef{}, false
-}
-
-// Images returns all images mentioned in the document relationships.
-func (d *Document) Images() []ImageRef {
-	ret := []ImageRef{}
-	t := Image{}
-	_ = t
-	imgIdx := 0
-	for _, rel := range d.docRels.Relationships() {
-		if rel.Type() != gooxml.ImageType {
-			continue
-		}
-		if imgIdx < len(d.images) {
-			iref := d.images[imgIdx]
-			img, err := ImageFromFile(iref.path)
-			if err != nil {
-				// TODO: report this error?
-			} else {
-				rimg := ImageRef{ref: iref, img: img, d: d}
-				ret = append(ret, rimg)
-			}
-		}
-		imgIdx++
-	}
-	return ret
+	return common.ImageRef{}, false
 }
 
 // FormFields extracts all of the fields from a document.  They can then be
@@ -570,13 +542,12 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 				if err != nil {
 					return err
 				}
-				img, err := ImageFromFile(path)
+				img, err := common.ImageFromFile(path)
 				if err != nil {
 					return err
 				}
-				_ = img
-				ref := &iref{path: img.Path}
-				doc.images = append(doc.images, ref)
+				iref := common.MakeImageRef(img, &doc.DocBase, doc.docRels)
+				doc.Images = append(doc.Images, iref)
 				files[i] = nil
 			}
 		}
