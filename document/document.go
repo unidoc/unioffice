@@ -551,7 +551,7 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 				files[i] = nil
 			}
 		}
-		// TODO: fix filename here?
+
 	default:
 		log.Printf("unsupported relationship type: %s tgt: %s", typ, target)
 	}
