@@ -8,9 +8,13 @@
 package spreadsheet
 
 import (
+	"fmt"
+
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/chart"
 	"baliance.com/gooxml/color"
+	"baliance.com/gooxml/common"
+	"baliance.com/gooxml/measurement"
 	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
 	c "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
 	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
@@ -87,4 +91,100 @@ func (d Drawing) AddChart() (chart.Chart, Anchor) {
 	chrt.Properties().SetSolidFill(color.White)
 	chrt.SetDisplayBlanksAs(crt.ST_DispBlanksAsGap)
 	return chrt, TwoCellAnchor{tca}
+}
+
+// AddImage adds an image with a paricular anchor type, returning an anchor to
+// allow adusting the image size/position.
+func (d Drawing) AddImage(img common.ImageRef, at AnchorType) Anchor {
+
+	imgIdx := 0
+	for i, ig := range d.wb.Images {
+		if ig == img {
+			imgIdx = i + 1
+			break
+		}
+	}
+
+	var imgID string
+	for i, dr := range d.wb.drawings {
+		if dr == d.x {
+			fn := fmt.Sprintf("../media/image%d.%s", imgIdx, img.Format())
+			rel := d.wb.drawingRels[i].AddRelationship(fn, gooxml.ImageType)
+			imgID = rel.ID()
+			break
+		}
+	}
+
+	var anc Anchor
+	var pic *sd.CT_Picture
+	switch at {
+	case AnchorTypeAbsolute:
+		aa := defaultAbsoluteAnchor()
+		d.x.EG_Anchor = append(d.x.EG_Anchor, &sd.EG_Anchor{AbsoluteAnchor: aa})
+		aa.Choice = &sd.EG_ObjectChoicesChoice{}
+		aa.Choice.Pic = sd.NewCT_Picture()
+		pic = aa.Choice.Pic
+		anc = AbsoluteAnchor{aa}
+	case AnchorTypeOneCell:
+		oca := defaultOneCelAnchor()
+		d.x.EG_Anchor = append(d.x.EG_Anchor, &sd.EG_Anchor{OneCellAnchor: oca})
+		oca.Choice = &sd.EG_ObjectChoicesChoice{}
+		oca.Choice.Pic = sd.NewCT_Picture()
+		pic = oca.Choice.Pic
+		anc = OneCellAnchor{oca}
+	case AnchorTypeTwoCell:
+		tca := defaultTwoCellAnchor()
+		d.x.EG_Anchor = append(d.x.EG_Anchor, &sd.EG_Anchor{TwoCellAnchor: tca})
+		tca.Choice = &sd.EG_ObjectChoicesChoice{}
+		tca.Choice.Pic = sd.NewCT_Picture()
+		pic = tca.Choice.Pic
+		anc = TwoCellAnchor{tca}
+	}
+
+	pic.NvPicPr.CNvPr.IdAttr = 0
+	pic.NvPicPr.CNvPr.NameAttr = "Image"
+	pic.BlipFill.Blip = dml.NewCT_Blip()
+	pic.BlipFill.Blip.EmbedAttr = gooxml.String(imgID)
+	pic.BlipFill.Stretch = dml.NewCT_StretchInfoProperties()
+	pic.SpPr = dml.NewCT_ShapeProperties()
+	pic.SpPr.Xfrm = dml.NewCT_Transform2D()
+	pic.SpPr.Xfrm.Off = dml.NewCT_Point2D()
+	pic.SpPr.Xfrm.Off.XAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
+	pic.SpPr.Xfrm.Off.YAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
+	pic.SpPr.Xfrm.Ext = dml.NewCT_PositiveSize2D()
+	pic.SpPr.Xfrm.Ext.CxAttr = int64(float64(img.Size().X*measurement.Pixel72) / measurement.EMU)
+	pic.SpPr.Xfrm.Ext.CyAttr = int64(float64(img.Size().Y*measurement.Pixel72) / measurement.EMU)
+	pic.SpPr.PrstGeom = dml.NewCT_PresetGeometry2D()
+	pic.SpPr.PrstGeom.PrstAttr = dml.ST_ShapeTypeRect
+	pic.SpPr.Ln = dml.NewCT_LineProperties()
+	pic.SpPr.Ln.NoFill = dml.NewCT_NoFillProperties()
+
+	return anc
+}
+
+func defaultAbsoluteAnchor() *sd.CT_AbsoluteAnchor {
+	aa := sd.NewCT_AbsoluteAnchor()
+	return aa
+}
+
+func defaultOneCelAnchor() *sd.CT_OneCellAnchor {
+	oca := sd.NewCT_OneCellAnchor()
+	return oca
+}
+func defaultTwoCellAnchor() *sd.CT_TwoCellAnchor {
+	tca := sd.NewCT_TwoCellAnchor()
+	tca.EditAsAttr = sd.ST_EditAsAbsolute
+	// provide a default size so its visible, if from/to are both 0,0 then the
+	// chart won't show up.
+	tca.From.Col = 5
+	tca.From.Row = 0
+	// Mac Excel requires the offsets be present
+	tca.From.ColOff.ST_CoordinateUnqualified = gooxml.Int64(0)
+	tca.From.RowOff.ST_CoordinateUnqualified = gooxml.Int64(0)
+	tca.To.Col = 10
+	tca.To.Row = 20
+	tca.To.ColOff.ST_CoordinateUnqualified = gooxml.Int64(0)
+	tca.To.RowOff.ST_CoordinateUnqualified = gooxml.Int64(0)
+
+	return tca
 }
