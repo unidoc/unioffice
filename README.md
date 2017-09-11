@@ -46,6 +46,7 @@ and .pptx).
 - [Complex](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/complex) Multiple charts, auto filtering and conditional formatting
 - [Borders](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/borders) Individual cell borders and rectangular borders around a range of cells.
 - [Validation](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/validation) Data validation including combo box dropdowns.
+- [Frozen Rows/Cols](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/freeze-rows-cols) A sheet with a frozen header column and row
 
 ## Raw Types ##
 
