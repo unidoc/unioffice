@@ -29,8 +29,8 @@ func main() {
 
 	// Charts need to reside in a drawing
 	dwng := ss.AddDrawing()
-	chrt1, anc1 := dwng.AddChart()
-	chrt2, anc2 := dwng.AddChart()
+	chrt1, anc1 := dwng.AddChart(spreadsheet.AnchorTypeTwoCell)
+	chrt2, anc2 := dwng.AddChart(spreadsheet.AnchorTypeTwoCell)
 	addBarChart(chrt1)
 	addLineChart(chrt2)
 	anc1.SetWidth(9)

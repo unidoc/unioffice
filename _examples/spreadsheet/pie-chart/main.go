@@ -28,9 +28,8 @@ func main() {
 
 	// Charts need to reside in a drawing
 	dwng := ss.AddDrawing()
-	chart, anc := dwng.AddChart()
-	// make it a bit wider than the default
-	anc.BottomRight().SetCol(15)
+	chart, anc := dwng.AddChart(spreadsheet.AnchorTypeTwoCell)
+	anc.SetWidthCells(10)
 
 	lc := chart.AddPieChart()
 	priceSeries := lc.AddSeries()

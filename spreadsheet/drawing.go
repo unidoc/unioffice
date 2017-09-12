@@ -37,7 +37,7 @@ func (d Drawing) X() *sd.WsDr {
 
 // AddChart adds an chart to a drawing, returning the chart and an anchor that
 // can be used to position the chart within the sheet.
-func (d Drawing) AddChart() (chart.Chart, Anchor) {
+func (d Drawing) AddChart(at AnchorType) (chart.Chart, Anchor) {
 	chartSpace := crt.NewChartSpace()
 	d.wb.charts = append(d.wb.charts, chartSpace)
 
@@ -55,22 +55,42 @@ func (d Drawing) AddChart() (chart.Chart, Anchor) {
 		}
 	}
 
-	tca := defaultTwoCellAnchor()
-	d.x.EG_Anchor = append(d.x.EG_Anchor, &sd.EG_Anchor{TwoCellAnchor: tca})
-
-	tca.Choice = &sd.EG_ObjectChoicesChoice{}
-	tca.Choice.GraphicFrame = sd.NewCT_GraphicalObjectFrame()
+	var anc Anchor
+	var gf *sd.CT_GraphicalObjectFrame
+	switch at {
+	case AnchorTypeAbsolute:
+		aa := defaultAbsoluteAnchor()
+		d.x.EG_Anchor = append(d.x.EG_Anchor, &sd.EG_Anchor{AbsoluteAnchor: aa})
+		aa.Choice = &sd.EG_ObjectChoicesChoice{}
+		aa.Choice.GraphicFrame = sd.NewCT_GraphicalObjectFrame()
+		gf = aa.Choice.GraphicFrame
+		anc = AbsoluteAnchor{aa}
+	case AnchorTypeOneCell:
+		oca := defaultOneCelAnchor()
+		d.x.EG_Anchor = append(d.x.EG_Anchor, &sd.EG_Anchor{OneCellAnchor: oca})
+		oca.Choice = &sd.EG_ObjectChoicesChoice{}
+		oca.Choice.GraphicFrame = sd.NewCT_GraphicalObjectFrame()
+		gf = oca.Choice.GraphicFrame
+		anc = OneCellAnchor{oca}
+	case AnchorTypeTwoCell:
+		tca := defaultTwoCellAnchor()
+		d.x.EG_Anchor = append(d.x.EG_Anchor, &sd.EG_Anchor{TwoCellAnchor: tca})
+		tca.Choice = &sd.EG_ObjectChoicesChoice{}
+		tca.Choice.GraphicFrame = sd.NewCT_GraphicalObjectFrame()
+		gf = tca.Choice.GraphicFrame
+		anc = TwoCellAnchor{tca}
+	}
 
 	// required by Mac Excel
-	tca.Choice.GraphicFrame.NvGraphicFramePr = sd.NewCT_GraphicalObjectFrameNonVisual()
-	tca.Choice.GraphicFrame.NvGraphicFramePr.CNvPr.IdAttr = 2
-	tca.Choice.GraphicFrame.NvGraphicFramePr.CNvPr.NameAttr = "Chart"
+	gf.NvGraphicFramePr = sd.NewCT_GraphicalObjectFrameNonVisual()
+	gf.NvGraphicFramePr.CNvPr.IdAttr = 2
+	gf.NvGraphicFramePr.CNvPr.NameAttr = "Chart"
 
-	tca.Choice.GraphicFrame.Graphic = dml.NewGraphic()
-	tca.Choice.GraphicFrame.Graphic.GraphicData.UriAttr = "http://schemas.openxmlformats.org/drawingml/2006/chart"
+	gf.Graphic = dml.NewGraphic()
+	gf.Graphic.GraphicData.UriAttr = "http://schemas.openxmlformats.org/drawingml/2006/chart"
 	c := c.NewChart()
 	c.IdAttr = chartID
-	tca.Choice.GraphicFrame.Graphic.GraphicData.Any = []gooxml.Any{c}
+	gf.Graphic.GraphicData.Any = []gooxml.Any{c}
 
 	//chart.Chart.PlotVisOnly = crt.NewCT_Boolean()
 	//chart.Chart.PlotVisOnly.ValAttr = gooxml.Bool(true)
@@ -78,7 +98,7 @@ func (d Drawing) AddChart() (chart.Chart, Anchor) {
 	chrt := chart.MakeChart(chartSpace)
 	chrt.Properties().SetSolidFill(color.White)
 	chrt.SetDisplayBlanksAs(crt.ST_DispBlanksAsGap)
-	return chrt, TwoCellAnchor{tca}
+	return chrt, anc
 }
 
 // AddImage adds an image with a paricular anchor type, returning an anchor to
