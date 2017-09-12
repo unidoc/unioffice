@@ -477,3 +477,26 @@ func (wb *Workbook) AddImage(i common.Image) (common.ImageRef, error) {
 	wb.wbRels.AddRelationship(fn, gooxml.ImageType)
 	return r, nil
 }
+
+// SetActiveSheet sets the active sheet which will be the tab displayed when the
+// spreadsheet is initially opened.
+func (wb *Workbook) SetActiveSheet(s Sheet) {
+	for i, st := range wb.xws {
+		if s.x == st {
+			wb.SetActiveSheetIndex(uint32(i))
+		}
+	}
+}
+
+// SetActiveSheetIndex sets the index of the active sheet (0-n) which will be
+// the tab displayed when the spreadsheet is initially opened.
+func (wb *Workbook) SetActiveSheetIndex(idx uint32) {
+	if wb.x.BookViews == nil {
+		wb.x.BookViews = sml.NewCT_BookViews()
+	}
+	if len(wb.x.BookViews.WorkbookView) == 0 {
+		wb.x.BookViews.WorkbookView = append(wb.x.BookViews.WorkbookView, sml.NewCT_BookView())
+	}
+
+	wb.x.BookViews.WorkbookView[0].ActiveTabAttr = gooxml.Uint32(idx)
+}
