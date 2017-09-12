@@ -12,7 +12,7 @@ func main() {
 	sheet := ss.AddSheet()
 
 	dwng := ss.AddDrawing()
-	chart, anc := dwng.AddChart()
+	chart, anc := dwng.AddChart(spreadsheet.AnchorTypeTwoCell)
 	anc.MoveTo(0, 0)
 	anc.SetWidth(10)
 

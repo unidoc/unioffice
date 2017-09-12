@@ -28,9 +28,9 @@ func main() {
 
 	// Charts need to reside in a drawing
 	dwng := ss.AddDrawing()
-	chart, anc := dwng.AddChart()
+	chart, anc := dwng.AddChart(spreadsheet.AnchorTypeTwoCell)
 	// make it a bit wider than the default
-	anc.BottomRight().SetCol(15)
+	anc.SetWidthCells(10)
 
 	lc := chart.AddLineChart()
 	priceSeries := lc.AddSeries()
