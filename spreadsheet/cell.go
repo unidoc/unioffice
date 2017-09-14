@@ -326,6 +326,37 @@ func (c Cell) AddHyperlink(url string) {
 	}
 }
 
+// IsNumber returns true if the cell is a number type cell.
+func (c Cell) IsNumber() bool {
+	return c.x.TAttr == sml.ST_CellTypeN
+}
+
+// IsBool returns true if the cell is a boolean type cell.
+func (c Cell) IsBool() bool {
+	return c.x.TAttr == sml.ST_CellTypeB
+}
+
+// HasFormula returns true if the cell has an asoociated formula.
+func (c Cell) HasFormula() bool {
+	return c.x.F != nil
+}
+
+// GetFormula returns the formula for a cell.
+func (c Cell) GetFormula() string {
+	if c.x.F != nil {
+		return c.x.F.Content
+	}
+	return ""
+}
+
+// GetCachedFormulaResult returns the cached formula result if it exists.
+func (c Cell) GetCachedFormulaResult() string {
+	if c.x.F != nil && c.x.V != nil {
+		return *c.x.V
+	}
+	return ""
+}
+
 func b2i(v bool) int {
 	if v {
 		return 1

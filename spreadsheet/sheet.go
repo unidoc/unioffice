@@ -13,6 +13,8 @@ import (
 	"sort"
 	"strings"
 
+	"baliance.com/gooxml/spreadsheet/formula"
+
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -578,4 +580,8 @@ func (s *Sheet) SetFrozen(firstRow, firstCol bool) {
 		v.SetTopLeft("B1")
 	}
 
+}
+
+func (s *Sheet) FormulaContext() formula.Context {
+	return newEvalContext(s)
 }
