@@ -53,6 +53,7 @@ func (c Cell) clearValue() {
 	c.x.F = nil
 	c.x.Is = nil
 	c.x.V = nil
+	c.x.TAttr = sml.ST_CellTypeUnset
 }
 
 // SetInlineString adds a string inline instead of in the shared strings table.
@@ -113,7 +114,8 @@ func (c Cell) GetValueAsNumber() (float64, error) {
 		return math.NaN(), errors.New("cell is not of number type")
 	}
 	if c.x.V == nil {
-		return math.NaN(), errors.New("cell has no value")
+		// empty cells have an implicit zero value
+		return 0, nil
 	}
 	return strconv.ParseFloat(*c.x.V, 64)
 }
