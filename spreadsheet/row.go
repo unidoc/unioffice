@@ -62,6 +62,8 @@ func (r Row) SetHidden(hidden bool) {
 // AddCell adds a cell to a spreadsheet.
 func (r Row) AddCell() Cell {
 	c := spreadsheetml.NewCT_Cell()
+	c.TAttr = spreadsheetml.ST_CellTypeN
+
 	r.x.C = append(r.x.C, c)
 	nextIdx := uint32(0)
 	for _, c := range r.x.C {
@@ -92,6 +94,8 @@ func (r Row) Cells() []Cell {
 // invaild spreadsheet.
 func (r Row) AddNamedCell(col string) Cell {
 	c := spreadsheetml.NewCT_Cell()
+	c.TAttr = spreadsheetml.ST_CellTypeN
+
 	r.x.C = append(r.x.C, c)
 	c.RAttr = gooxml.Stringf("%s%d", col, r.RowNumber())
 	return Cell{r.w, r.s, r.x, c}
