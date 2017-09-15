@@ -20,7 +20,7 @@ type plex struct {
 }
 
 func (f *plex) Lex(lval *yySymType) int {
-	//	yyDebug = 3
+	//yyDebug = 3
 	n := <-f.nodes
 	if n != nil {
 		lval.node = n
@@ -40,5 +40,8 @@ func Parse(r io.Reader) Expression {
 }
 
 func ParseString(s string) Expression {
+	if s == "" {
+		return NewEmptyExpr()
+	}
 	return Parse(strings.NewReader(s))
 }

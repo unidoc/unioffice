@@ -34,6 +34,8 @@ func Sum(args []Result) Result {
 			// treated as zero by Excel
 		case ResultTypeError:
 			return a
+		case ResultTypeEmpty:
+			// skip
 		default:
 			return MakeErrorResult(fmt.Sprintf("unhandled SUM() argument type %s", a.Type))
 		}
@@ -64,6 +66,8 @@ func Min(args []Result) Result {
 			if 0 < res.ValueNumber {
 				res.ValueNumber = 0
 			}
+		case ResultTypeEmpty:
+		// skip
 		case ResultTypeError:
 			return a
 		default:
@@ -91,6 +95,8 @@ func Max(args []Result) Result {
 			if subMax.ValueNumber > res.ValueNumber {
 				res.ValueNumber = subMax.ValueNumber
 			}
+		case ResultTypeEmpty:
+			// skip
 		case ResultTypeString:
 			// treated as zero by Excel
 			if 0 > res.ValueNumber {

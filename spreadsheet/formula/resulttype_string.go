@@ -4,9 +4,9 @@ package formula
 
 import "fmt"
 
-const _ResultType_name = "ResultTypeUnknownResultTypeNumberResultTypeStringResultTypeListResultTypeError"
+const _ResultType_name = "ResultTypeUnknownResultTypeNumberResultTypeStringResultTypeListResultTypeErrorResultTypeEmpty"
 
-var _ResultType_index = [...]uint8{0, 17, 33, 49, 63, 78}
+var _ResultType_index = [...]uint8{0, 17, 33, 49, 63, 78, 93}
 
 func (i ResultType) String() string {
 	if i >= ResultType(len(_ResultType_index)-1) {

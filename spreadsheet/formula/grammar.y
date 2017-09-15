@@ -17,7 +17,7 @@ package formula
 }
 
 %type <expr> formula formula1 initial reference referenceItem refFunctionCall
-%type <expr> start constant functionCall argument
+%type <expr> start constant functionCall argument argument1
 %type <expr> binOp
 %type <args> arguments 
 
@@ -96,10 +96,14 @@ functionCall:
 	| tokenFunctionBultin arguments tokenRParen { $$ = NewFunction($1.val,$2)} ;
 
 arguments: 
-	  argument { $$ = append($$, $1)  }
+	  argument1{ $$ = append($$, $1)  }
 	| arguments tokenComma argument { $$ = append($1,$3) }
 	;
 
-argument: formula;
+argument1: formula ;
+
+argument: 
+	  formula 
+	| /*empty*/ { $$ = NewEmptyExpr() } ;
 
 %%
