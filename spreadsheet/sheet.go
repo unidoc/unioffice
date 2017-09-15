@@ -80,11 +80,27 @@ func (s Sheet) AddNumberedRow(rowNum uint32) Row {
 	return Row{s.w, s.x, r}
 }
 
+// addNumberedRowFast is a fast path that can be used when adding consecutive
+// rows and not skipping any.
+func (s Sheet) addNumberedRowFast(rowNum uint32) Row {
+	r := sml.NewCT_Row()
+	r.RAttr = gooxml.Uint32(rowNum)
+	s.x.SheetData.Row = append(s.x.SheetData.Row, r)
+	return Row{s.w, s.x, r}
+}
+
 // AddRow adds a new row to a sheet.  You can mix this with numbered rows,
 // however it will get confusing. You should prefer to use either automatically
 // numbered rows with AddRow or manually numbered rows with Row/AddNumberedRow
 func (s Sheet) AddRow() Row {
 	maxRowID := uint32(0)
+
+	numRows := uint32(len(s.x.SheetData.Row))
+	// fast path, adding consecutive rows
+	if numRows > 0 && s.x.SheetData.Row[numRows-1].RAttr != nil && *s.x.SheetData.Row[numRows-1].RAttr == numRows {
+		return s.addNumberedRowFast(numRows + 1)
+	}
+
 	// find the max row number
 	for _, r := range s.x.SheetData.Row {
 		if r.RAttr != nil && *r.RAttr > maxRowID {

@@ -61,20 +61,34 @@ func (r Row) SetHidden(hidden bool) {
 
 // AddCell adds a cell to a spreadsheet.
 func (r Row) AddCell() Cell {
-	c := spreadsheetml.NewCT_Cell()
-	c.TAttr = spreadsheetml.ST_CellTypeN
-
-	r.x.C = append(r.x.C, c)
-	nextIdx := uint32(0)
-	for _, c := range r.x.C {
-		if c.RAttr != nil {
-			col, _, _ := ParseCellReference(*c.RAttr)
-			if col := ColumnToIndex(col); col >= nextIdx {
-				nextIdx = col + 1
-			}
+	numCells := uint32(len(r.x.C))
+	var nextCellID *string
+	if numCells > 0 {
+		prevCellName := gooxml.Stringf("%s%d", IndexToColumn(numCells-1), r.RowNumber())
+		// previous cell has an expected name
+		if r.x.C[numCells-1].RAttr != nil && *r.x.C[numCells-1].RAttr == *prevCellName {
+			nextCellID = gooxml.Stringf("%s%d", IndexToColumn(numCells), r.RowNumber())
 		}
 	}
-	c.RAttr = gooxml.Stringf("%s%d", IndexToColumn(nextIdx), r.RowNumber())
+
+	c := spreadsheetml.NewCT_Cell()
+	c.TAttr = spreadsheetml.ST_CellTypeN
+	r.x.C = append(r.x.C, c)
+
+	// fast path failed, so find the last cell and add another
+	if nextCellID == nil {
+		nextIdx := uint32(0)
+		for _, c := range r.x.C {
+			if c.RAttr != nil {
+				col, _, _ := ParseCellReference(*c.RAttr)
+				if col := ColumnToIndex(col); col >= nextIdx {
+					nextIdx = col + 1
+				}
+			}
+		}
+		nextCellID = gooxml.Stringf("%s%d", IndexToColumn(nextIdx), r.RowNumber())
+	}
+	c.RAttr = nextCellID
 	return Cell{r.w, r.s, r.x, c}
 }
 
