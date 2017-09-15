@@ -7,7 +7,10 @@
 
 package formula
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 // ResultType is the type of the result
 //go:generate stringer -type=ResultType
@@ -20,6 +23,7 @@ const (
 	ResultTypeString
 	ResultTypeList
 	ResultTypeError
+	ResultTypeEmpty
 )
 
 // Result is the result of a formula or cell evaluation .
@@ -42,6 +46,29 @@ func (r Result) Value() string {
 		return r.ValueString
 	default:
 		return "unhandled result value"
+	}
+}
+
+// AsNumber attempts to intepret a string cell value as a number. Upon success,
+// it returns a new number result, upon  failure it returns the original result.
+// This is used as functions return strings that can then act like number (e.g.
+// LEFT(1.2345,3) + LEFT(1.2345,3) = 2.4)
+func (r Result) AsNumber() Result {
+	if r.Type == ResultTypeString {
+		f, err := strconv.ParseFloat(r.ValueString, 64)
+		if err == nil {
+			return MakeNumberResult(f)
+		}
+	}
+	return r
+}
+
+func (r Result) AsString() Result {
+	switch r.Type {
+	case ResultTypeNumber:
+		return MakeStringResult(r.Value())
+	default:
+		return r
 	}
 }
 
@@ -105,4 +132,9 @@ func MakeErrorResultType(t ErrorType, msg string) Result {
 // MakeStringResult constructs a string result.
 func MakeStringResult(s string) Result {
 	return Result{Type: ResultTypeString, ValueString: s}
+}
+
+// MakeEmptyResult is ued when parsing an empty argument.
+func MakeEmptyResult() Result {
+	return Result{Type: ResultTypeEmpty}
 }

@@ -34,8 +34,8 @@ import (
   horizontalRange = '$'? [0-9]+ ':' '$'? [0-9]+;
 
   # there is a function list at https://msdn.microsoft.com/en-us/library/dd906358(v=office.12).aspx
-  builtinFunction = [A-Z]+ '(';
-  excelFn = '_xlfn.' [A-Z_]+ '(';  
+  builtinFunction = [A-Z] [A-Z0-9]+  '(';
+  excelFn = '_xlfn.' [A-Z_] [A-Z0-9.]+ '(';  
 
   sheetChar = ^['%\[\]\\:/?();{}#"=<>&+\-*/^%,_];
   enclosedSheetChar = ^['*\[\]\\:\/?];

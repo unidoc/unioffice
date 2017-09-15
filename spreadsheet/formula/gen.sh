@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "lexer"
-ragel -G2 -Z lexer.rl
+ragel -G0 -Z lexer.rl
 goimports -w lexer.go
 
 echo "parser"
