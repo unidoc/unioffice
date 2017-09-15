@@ -1,5 +1,7 @@
 **gooxml** is a library for creation of Office Open XML documents (.docx, .xlsx
-and .pptx).  
+and .pptx).  It's goal is to be the most compatible and highest performance Go
+library for creation and editing of docx/xlsx/pptx files.
+
 
 [![Build Status](https://travis-ci.org/baliance/gooxml.svg?branch=master)](https://travis-ci.org/baliance/gooxml)
 [![GitHub (pre-)release](https://img.shields.io/github/release/baliance/gooxml/all.svg)](https://github.com/baliance/gooxml/releases)
@@ -16,6 +18,22 @@ and .pptx).
 - PowerPoint (pptx) is unsupported at the moment, the XML types exist and some
   prototype code is checked in but it will be reworked once docx/xlsx are
   'finished'.
+
+## Performance ##
+
+There has been a greate deal of interest in performance numbers for spreadsheet
+creation/reading lately, so here are gooxml numbers for this
+[benchmark](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/lots-of-rows)
+which creates a sheet with 30k rows, each with 100 columns.
+
+    creating 30000 rows * 100 cells took 3.92506863s
+    saving took 89ns
+    reading took 9.522383048s
+
+Creation is fairly fast, saving is very quick due to no reflection usage, and
+reading is a bit slower. The downside is that the binary is large (33MB) as it
+contains generated structs, serialization and deserialization code for all of
+DOCX/XLSX/PPTX.
 
 ## Current Work
 
