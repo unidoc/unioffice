@@ -17,6 +17,24 @@ and .pptx).
   prototype code is checked in but it will be reworked once docx/xlsx are
   'finished'.
 
+## Current Work
+
+The current work being performed is the implementation of a spreadsheet formula
+parser and evaluator.  Some initial progress has been made, but there is a long
+way to go. 
+
+The intent is to get the vast majority of formulas working. The data in "A
+Grammar for Spreadsheet Formulas Evaluated on Two Large Datasets - Efthimia
+Aivaloglou, et al.", suggests that:
+
+> (1) most Excel formulas are simple, however formulas with more than 50 functions or operations exist
+> (2) almost all formulas use data from other cells, which is often not local, and 
+> (3) a surprising number of referring mechanisms are used by less than 1% of the formulas.
+
+From this, it appears that we can quickly approach a point of diminishing
+returns by implementing the most common formula features, saving others for
+when/if users request it.
+
 ## Installation ##
     
     go get baliance.com/gooxml/
