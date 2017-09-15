@@ -7,7 +7,6 @@ library for creation and editing of docx/xlsx/pptx files.
 [![GitHub (pre-)release](https://img.shields.io/github/release/baliance/gooxml/all.svg)](https://github.com/baliance/gooxml/releases)
 [![License: AGPL v3](https://img.shields.io/badge/License-Dual%20AGPL%20v3/Commercial-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![GoDoc](https://godoc.org/baliance.com/gooxml?status.svg)](https://godoc.org/baliance.com/gooxml)
-[![Go Report Card](https://goreportcard.com/badge/baliance.com/gooxml)](https://goreportcard.com/report/baliance.com/gooxml)
 
 ![https://baliance.com/gooxml/](./_examples/preview.png "gooxml")
 
