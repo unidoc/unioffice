@@ -57,6 +57,8 @@ func TestColumnToIndex(t *testing.T) {
 		{"AA", 26},
 		{"AB", 27},
 		{"AC", 28},
+		{"BZ", 77},
+		{"CA", 78},
 		{"GOOXML", 90304485},
 	}
 	for _, tc := range td {
@@ -66,6 +68,16 @@ func TestColumnToIndex(t *testing.T) {
 		}
 		if got := spreadsheet.IndexToColumn(tc.ExpIndex); got != tc.Inp {
 			t.Errorf("expected %d = %s, got %s", tc.ExpIndex, tc.Inp, got)
+		}
+	}
+}
+
+func TestColumnToIndexRoundTrip(t *testing.T) {
+	for i := 0; i < 10000; i++ {
+		s := spreadsheet.IndexToColumn(uint32(i))
+		got := spreadsheet.ColumnToIndex(s)
+		if got != uint32(i) {
+			t.Errorf("failed on %d %s", i, s)
 		}
 	}
 }

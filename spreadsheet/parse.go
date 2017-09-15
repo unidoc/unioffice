@@ -51,16 +51,18 @@ func ColumnToIndex(col string) uint32 {
 
 // IndexToColumn maps a column number to a coumn name (e.g. 0 = A, 1 = B, 26 = AA)
 func IndexToColumn(col uint32) string {
-	col++
-	res := []byte{}
-	for col > 26 {
-		res = append(res, byte('A'+(col-1)%26))
-		col /= 26
+	var a [64 + 1]byte
+	i := len(a)
+	u := col
+	const b = 26
+	for u >= b {
+		i--
+		q := u / b
+		a[i] = byte('A' + uint(u-q*b))
+		u = q - 1
 	}
-	res = append(res, byte('A'+(col-1)%26))
-	// reverse it
-	for i := 0; i < len(res)/2; i++ {
-		res[i], res[len(res)-i-1] = res[len(res)-i-1], res[i]
-	}
-	return string(res)
+	i--
+	a[i] = byte('A' + uint(u))
+
+	return string(a[i:])
 }
