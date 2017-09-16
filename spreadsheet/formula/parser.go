@@ -21,6 +21,7 @@ type plex struct {
 
 func (f *plex) Lex(lval *yySymType) int {
 	//yyDebug = 3
+	yyErrorVerbose = true
 	n := <-f.nodes
 	if n != nil {
 		lval.node = n
