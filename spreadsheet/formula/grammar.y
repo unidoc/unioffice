@@ -18,12 +18,12 @@ package formula
 
 %type <expr> formula formula1 initial reference referenceItem refFunctionCall
 %type <expr> start constant functionCall argument argument1
-%type <expr> binOp
-%type <args> arguments 
+%type <expr> binOp prefix
+%type <args> arguments  
 
-%token <expr> tokenHorizontalRange tokenReservedName tokenDDECall 
+%token <expr> tokenHorizontalRange tokenReservedName tokenDDECall  
 %token <node> tokenBool tokenNumber tokenString tokenError tokenErrorRef  tokenSheet tokenCell
-%token <node> tokenFunctionBultin
+%token <node> tokenFunctionBultin 
 
 %token tokenLBrace tokenRBrace tokenLParen tokenRParen
 %token tokenPlus tokenMinus tokenMult tokenDiv tokenExp tokenEQ tokenLT tokenGT tokenLEQ tokenGEQ  tokenNE 
@@ -65,11 +65,12 @@ formula1:
 
 reference: 
 	  referenceItem
+    | prefix referenceItem { $$ = NewPrefixExpr($1,$2)}
 	| refFunctionCall;
 
-referenceItem: 
-	  tokenCell { $$ = NewCellRef($1.val)}
-	;
+prefix: tokenSheet { $$ = NewSheetPrefixExpr($1.val) };
+
+referenceItem: 	  tokenCell { $$ = NewCellRef($1.val)}	;
 
 refFunctionCall:
 	  referenceItem tokenColon referenceItem { $$ = NewRange($1,$3) };

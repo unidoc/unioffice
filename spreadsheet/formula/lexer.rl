@@ -37,11 +37,12 @@ import (
   builtinFunction = [A-Z] [A-Z0-9.]+  '(';
   excelFn = '_xlfn.' [A-Z_] [A-Z0-9.]+ '(';  
 
-  sheetChar = ^['%\[\]\\:/?();{}#"=<>&+\-*/^%,_];
+  sheetChar = ^['%\[\]\\:/?();{}#"=<>&+\-*/^%,_!];
   enclosedSheetChar = ^['*\[\]\\:\/?];
 
   number = [0-9]+ '.'? [0-9]* ('e' [0-9]+)?;
-  sheet = (sheetChar+ | squote (enclosedSheetChar  | dquote)+ squote '!');
+  sheet = sheetChar+ '!';
+  quotedSheet = (sheetChar+ | squote (enclosedSheetChar  | dquote)+ squote) '!';
 
   namedRange = [A-Z_\\][A-Z0-9\\_.];
 
@@ -58,7 +59,8 @@ import (
   errorLiteral => {l.emit(tokenError, data[ts:te])}; 
   errorRef => {l.emit(tokenErrorRef, data[ts:te])}; 
   horizontalRange => {l.emit(tokenHorizontalRange, data[ts:te])}; 
-  sheet  =>  {l.emit(tokenSheet, data[ts:te])}; 
+  sheet  =>  {l.emit(tokenSheet, data[ts:te-1])};  # chop '!'
+  quotedSheet  =>  {l.emit(tokenSheet, data[ts+1:te-2])};  # chop leading quote and trailing quote & !
   reservedName => {l.emit(tokenReservedName, data[ts:te])};
 
   
