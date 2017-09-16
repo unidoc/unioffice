@@ -28,21 +28,13 @@ func Sum(args []Result) Result {
 		switch a.Type {
 		case ResultTypeNumber:
 			res.ValueNumber += a.ValueNumber
-		case ResultTypeList:
-			subSum := Sum(a.ValueList)
+		case ResultTypeList, ResultTypeArray:
+			subSum := Sum(a.ListValues())
 			// error as sum returns only numbers and errors
 			if subSum.Type != ResultTypeNumber {
 				return subSum
 			}
 			res.ValueNumber += subSum.ValueNumber
-		case ResultTypeArray:
-			for _, row := range a.ValueArray {
-				subSum := Sum(row)
-				if subSum.Type != ResultTypeNumber {
-					return subSum
-				}
-				res.ValueNumber += subSum.ValueNumber
-			}
 		case ResultTypeString:
 			// treated as zero by Excel
 		case ResultTypeError:

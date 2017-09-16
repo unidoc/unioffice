@@ -38,13 +38,20 @@ func (r Range) Eval(ctx Context, ev Evaluator) Result {
 		}
 		bc := ColumnToIndex(fc)
 		ec := ColumnToIndex(tc)
-		args := []Result{}
-		for c := bc; c <= ec; c++ {
-			for r := fr; r <= tr; r++ {
+		arr := [][]Result{}
+		for r := fr; r <= tr; r++ {
+			args := []Result{}
+			for c := bc; c <= ec; c++ {
 				args = append(args, ctx.Cell(fmt.Sprintf("%s%d", IndexToColumn(c), r), ev))
 			}
+			arr = append(arr, args)
 		}
-		return Result{Type: ResultTypeList, ValueList: args}
+		// for a single row, just return a list
+		if len(arr) == 1 {
+			return MakeListResult(arr[0])
+		}
+
+		return MakeArrayResult(arr)
 	}
 	return MakeErrorResult("invalid range " + from.Value + " to " + to.Value)
 }
