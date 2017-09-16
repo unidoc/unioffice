@@ -596,8 +596,8 @@ func (l *Lexer) lex(r io.Reader) {
 				switch data[p] {
 				case 36:
 					goto tr61
-				case 47:
-					goto tr55
+				case 46:
+					goto tr72
 				case 123:
 					goto tr55
 				case 125:
@@ -606,9 +606,9 @@ func (l *Lexer) lex(r io.Reader) {
 				switch {
 				case data[p] < 58:
 					switch {
-					case data[p] > 45:
+					case data[p] > 47:
 						if 48 <= data[p] && data[p] <= 57 {
-							goto tr72
+							goto tr73
 						}
 					case data[p] >= 34:
 						goto tr55
@@ -620,7 +620,7 @@ func (l *Lexer) lex(r io.Reader) {
 							goto tr55
 						}
 					case data[p] >= 65:
-						goto tr73
+						goto tr74
 					}
 				default:
 					goto tr55
@@ -630,46 +630,8 @@ func (l *Lexer) lex(r io.Reader) {
 				switch data[p] {
 				case 40:
 					goto tr75
-				case 47:
-					goto tr74
-				case 123:
-					goto tr74
-				case 125:
-					goto tr74
-				}
-				switch {
-				case data[p] < 48:
-					switch {
-					case data[p] > 35:
-						if 37 <= data[p] && data[p] <= 45 {
-							goto tr74
-						}
-					case data[p] >= 34:
-						goto tr74
-					}
-				case data[p] > 57:
-					switch {
-					case data[p] < 65:
-						if 58 <= data[p] && data[p] <= 63 {
-							goto tr74
-						}
-					case data[p] > 90:
-						if 91 <= data[p] && data[p] <= 95 {
-							goto tr74
-						}
-					default:
-						goto tr76
-					}
-				default:
+				case 46:
 					goto tr72
-				}
-				goto tr31
-			case 42:
-				switch data[p] {
-				case 40:
-					goto tr75
-				case 47:
-					goto tr55
 				case 123:
 					goto tr55
 				case 125:
@@ -679,7 +641,7 @@ func (l *Lexer) lex(r io.Reader) {
 				case data[p] < 48:
 					switch {
 					case data[p] > 35:
-						if 37 <= data[p] && data[p] <= 45 {
+						if 37 <= data[p] && data[p] <= 47 {
 							goto tr55
 						}
 					case data[p] >= 34:
@@ -696,10 +658,48 @@ func (l *Lexer) lex(r io.Reader) {
 							goto tr55
 						}
 					default:
-						goto tr76
+						goto tr72
 					}
 				default:
+					goto tr72
+				}
+				goto tr31
+			case 42:
+				switch data[p] {
+				case 40:
+					goto tr75
+				case 46:
+					goto tr72
+				case 123:
 					goto tr76
+				case 125:
+					goto tr76
+				}
+				switch {
+				case data[p] < 48:
+					switch {
+					case data[p] > 35:
+						if 37 <= data[p] && data[p] <= 47 {
+							goto tr76
+						}
+					case data[p] >= 34:
+						goto tr76
+					}
+				case data[p] > 57:
+					switch {
+					case data[p] < 65:
+						if 58 <= data[p] && data[p] <= 63 {
+							goto tr76
+						}
+					case data[p] > 90:
+						if 91 <= data[p] && data[p] <= 95 {
+							goto tr76
+						}
+					default:
+						goto tr72
+					}
+				default:
+					goto tr73
 				}
 				goto tr31
 			case 43:
@@ -708,8 +708,8 @@ func (l *Lexer) lex(r io.Reader) {
 					goto tr61
 				case 40:
 					goto tr75
-				case 47:
-					goto tr0
+				case 46:
+					goto tr72
 				case 123:
 					goto tr0
 				case 125:
@@ -718,9 +718,9 @@ func (l *Lexer) lex(r io.Reader) {
 				switch {
 				case data[p] < 58:
 					switch {
-					case data[p] > 45:
+					case data[p] > 47:
 						if 48 <= data[p] && data[p] <= 57 {
-							goto tr72
+							goto tr73
 						}
 					case data[p] >= 34:
 						goto tr0
@@ -732,7 +732,7 @@ func (l *Lexer) lex(r io.Reader) {
 							goto tr0
 						}
 					case data[p] >= 65:
-						goto tr73
+						goto tr74
 					}
 				default:
 					goto tr0
@@ -742,8 +742,8 @@ func (l *Lexer) lex(r io.Reader) {
 				switch data[p] {
 				case 36:
 					goto tr61
-				case 47:
-					goto tr55
+				case 46:
+					goto tr72
 				case 65:
 					goto tr77
 				case 123:
@@ -754,9 +754,9 @@ func (l *Lexer) lex(r io.Reader) {
 				switch {
 				case data[p] < 58:
 					switch {
-					case data[p] > 45:
+					case data[p] > 47:
 						if 48 <= data[p] && data[p] <= 57 {
-							goto tr72
+							goto tr73
 						}
 					case data[p] >= 34:
 						goto tr55
@@ -768,7 +768,7 @@ func (l *Lexer) lex(r io.Reader) {
 							goto tr55
 						}
 					case data[p] >= 66:
-						goto tr73
+						goto tr74
 					}
 				default:
 					goto tr55
@@ -780,8 +780,8 @@ func (l *Lexer) lex(r io.Reader) {
 					goto tr61
 				case 40:
 					goto tr75
-				case 47:
-					goto tr55
+				case 46:
+					goto tr72
 				case 76:
 					goto tr78
 				case 123:
@@ -792,9 +792,9 @@ func (l *Lexer) lex(r io.Reader) {
 				switch {
 				case data[p] < 58:
 					switch {
-					case data[p] > 45:
+					case data[p] > 47:
 						if 48 <= data[p] && data[p] <= 57 {
-							goto tr72
+							goto tr73
 						}
 					case data[p] >= 34:
 						goto tr55
@@ -806,7 +806,7 @@ func (l *Lexer) lex(r io.Reader) {
 							goto tr55
 						}
 					case data[p] >= 65:
-						goto tr73
+						goto tr74
 					}
 				default:
 					goto tr55
@@ -818,8 +818,8 @@ func (l *Lexer) lex(r io.Reader) {
 					goto tr61
 				case 40:
 					goto tr75
-				case 47:
-					goto tr55
+				case 46:
+					goto tr72
 				case 83:
 					goto tr79
 				case 123:
@@ -830,9 +830,9 @@ func (l *Lexer) lex(r io.Reader) {
 				switch {
 				case data[p] < 58:
 					switch {
-					case data[p] > 45:
+					case data[p] > 47:
 						if 48 <= data[p] && data[p] <= 57 {
-							goto tr72
+							goto tr73
 						}
 					case data[p] >= 34:
 						goto tr55
@@ -844,7 +844,7 @@ func (l *Lexer) lex(r io.Reader) {
 							goto tr55
 						}
 					case data[p] >= 65:
-						goto tr73
+						goto tr74
 					}
 				default:
 					goto tr55
@@ -856,8 +856,8 @@ func (l *Lexer) lex(r io.Reader) {
 					goto tr61
 				case 40:
 					goto tr75
-				case 47:
-					goto tr55
+				case 46:
+					goto tr72
 				case 69:
 					goto tr80
 				case 123:
@@ -868,9 +868,9 @@ func (l *Lexer) lex(r io.Reader) {
 				switch {
 				case data[p] < 58:
 					switch {
-					case data[p] > 45:
+					case data[p] > 47:
 						if 48 <= data[p] && data[p] <= 57 {
-							goto tr72
+							goto tr73
 						}
 					case data[p] >= 34:
 						goto tr55
@@ -882,7 +882,7 @@ func (l *Lexer) lex(r io.Reader) {
 							goto tr55
 						}
 					case data[p] >= 65:
-						goto tr73
+						goto tr74
 					}
 				default:
 					goto tr55
@@ -892,8 +892,8 @@ func (l *Lexer) lex(r io.Reader) {
 				switch data[p] {
 				case 36:
 					goto tr61
-				case 47:
-					goto tr55
+				case 46:
+					goto tr72
 				case 79:
 					goto tr81
 				case 82:
@@ -906,9 +906,9 @@ func (l *Lexer) lex(r io.Reader) {
 				switch {
 				case data[p] < 58:
 					switch {
-					case data[p] > 45:
+					case data[p] > 47:
 						if 48 <= data[p] && data[p] <= 57 {
-							goto tr72
+							goto tr73
 						}
 					case data[p] >= 34:
 						goto tr55
@@ -920,7 +920,7 @@ func (l *Lexer) lex(r io.Reader) {
 							goto tr55
 						}
 					case data[p] >= 65:
-						goto tr73
+						goto tr74
 					}
 				default:
 					goto tr55
@@ -932,8 +932,8 @@ func (l *Lexer) lex(r io.Reader) {
 					goto tr61
 				case 40:
 					goto tr75
-				case 47:
-					goto tr55
+				case 46:
+					goto tr72
 				case 68:
 					goto tr83
 				case 123:
@@ -944,9 +944,9 @@ func (l *Lexer) lex(r io.Reader) {
 				switch {
 				case data[p] < 58:
 					switch {
-					case data[p] > 45:
+					case data[p] > 47:
 						if 48 <= data[p] && data[p] <= 57 {
-							goto tr72
+							goto tr73
 						}
 					case data[p] >= 34:
 						goto tr55
@@ -958,7 +958,7 @@ func (l *Lexer) lex(r io.Reader) {
 							goto tr55
 						}
 					case data[p] >= 65:
-						goto tr73
+						goto tr74
 					}
 				default:
 					goto tr55
@@ -970,8 +970,8 @@ func (l *Lexer) lex(r io.Reader) {
 					goto tr61
 				case 40:
 					goto tr75
-				case 47:
-					goto tr55
+				case 46:
+					goto tr72
 				case 79:
 					goto tr84
 				case 123:
@@ -982,9 +982,9 @@ func (l *Lexer) lex(r io.Reader) {
 				switch {
 				case data[p] < 58:
 					switch {
-					case data[p] > 45:
+					case data[p] > 47:
 						if 48 <= data[p] && data[p] <= 57 {
-							goto tr72
+							goto tr73
 						}
 					case data[p] >= 34:
 						goto tr55
@@ -996,7 +996,7 @@ func (l *Lexer) lex(r io.Reader) {
 							goto tr55
 						}
 					case data[p] >= 65:
-						goto tr73
+						goto tr74
 					}
 				default:
 					goto tr55
@@ -1008,8 +1008,8 @@ func (l *Lexer) lex(r io.Reader) {
 					goto tr61
 				case 40:
 					goto tr75
-				case 47:
-					goto tr55
+				case 46:
+					goto tr72
 				case 85:
 					goto tr79
 				case 123:
@@ -1020,9 +1020,9 @@ func (l *Lexer) lex(r io.Reader) {
 				switch {
 				case data[p] < 58:
 					switch {
-					case data[p] > 45:
+					case data[p] > 47:
 						if 48 <= data[p] && data[p] <= 57 {
-							goto tr72
+							goto tr73
 						}
 					case data[p] >= 34:
 						goto tr55
@@ -1034,7 +1034,7 @@ func (l *Lexer) lex(r io.Reader) {
 							goto tr55
 						}
 					case data[p] >= 65:
-						goto tr73
+						goto tr74
 					}
 				default:
 					goto tr55
@@ -1295,10 +1295,10 @@ func (l *Lexer) lex(r io.Reader) {
 		tr71:
 			cs = 27
 			goto f32
-		tr74:
+		tr75:
 			cs = 27
 			goto f33
-		tr75:
+		tr76:
 			cs = 27
 			goto f34
 		tr85:
@@ -1352,10 +1352,10 @@ func (l *Lexer) lex(r io.Reader) {
 		tr72:
 			cs = 41
 			goto _again
-		tr76:
+		tr73:
 			cs = 42
 			goto _again
-		tr73:
+		tr74:
 			cs = 43
 			goto f24
 		tr80:
@@ -1401,7 +1401,7 @@ func (l *Lexer) lex(r io.Reader) {
 		f4:
 			_acts = 7
 			goto execFuncs
-		f34:
+		f33:
 			_acts = 9
 			goto execFuncs
 		f5:
@@ -1458,7 +1458,7 @@ func (l *Lexer) lex(r io.Reader) {
 		f27:
 			_acts = 45
 			goto execFuncs
-		f33:
+		f34:
 			_acts = 47
 			goto execFuncs
 		f25:
@@ -1858,9 +1858,9 @@ func (l *Lexer) lex(r io.Reader) {
 				case 40:
 					goto tr55
 				case 41:
-					goto tr74
-				case 42:
 					goto tr55
+				case 42:
+					goto tr76
 				case 43:
 					goto tr0
 				case 44:
