@@ -41,6 +41,20 @@ func init() {
 	//RegisterFunction("CSCH"
 	RegisterFunction("_xlfn.DECIMAL", Decimal)
 	RegisterFunction("DEGREES", Degrees)
+	RegisterFunction("EVEN", Even)
+	RegisterFunction("EXP", makeMathWrapper("EXP", math.Exp))
+	RegisterFunction("FACT", Fact)
+	RegisterFunction("FACTDOUBLE", FactDouble)
+	//RegisterFunction("FLOOR", )
+	RegisterFunction("_xlfn.FLOOR.MATH", FloorMath)
+	RegisterFunction("_xlfn.FLOOR.PRECISE", FloorPrecise)
+	RegisterFunction("GCD", GCD)
+	RegisterFunction("INT", Int)
+	RegisterFunction("ISO.CEILING", CeilingPrecise) // appears to be the same from what I can tell
+	RegisterFunction("LCM", LCM)
+	RegisterFunction("LN", makeMathWrapper("LN", math.Log))
+	RegisterFunction("LOG", Log)
+	RegisterFunction("LOG10", makeMathWrapper("LOG10", math.Log10))
 	RegisterFunction("PI", Pi)
 }
 
@@ -56,8 +70,11 @@ func makeMathWrapper(name string, fn func(x float64) float64) Function {
 		switch arg.Type {
 		case ResultTypeNumber:
 			v := fn(arg.ValueNumber)
-			if v != v {
+			if math.IsNaN(v) {
 				return MakeErrorResult(name + " returned NaN")
+			}
+			if math.IsInf(v, 0) {
+				return MakeErrorResult(name + " returned infinity")
 			}
 			return MakeNumberResult(v)
 		case ResultTypeList, ResultTypeString:
@@ -169,7 +186,7 @@ func CeilingMath(args []Result) Result {
 	// number to round
 	number := args[0].AsNumber()
 	if number.Type != ResultTypeNumber {
-		return MakeErrorResult("first arugment to CEILING.MATH() must be a number")
+		return MakeErrorResult("first argument to CEILING.MATH() must be a number")
 	}
 
 	// significance
@@ -180,7 +197,7 @@ func CeilingMath(args []Result) Result {
 	if len(args) > 1 {
 		sigArg := args[1].AsNumber()
 		if sigArg.Type != ResultTypeNumber {
-			return MakeErrorResult("second arugment to CEILING.MATH() must be a number")
+			return MakeErrorResult("second argument to CEILING.MATH() must be a number")
 		}
 		significance = sigArg.ValueNumber
 	}
@@ -190,7 +207,7 @@ func CeilingMath(args []Result) Result {
 	if len(args) > 2 {
 		dirArg := args[2].AsNumber()
 		if dirArg.Type != ResultTypeNumber {
-			return MakeErrorResult("third arugment to CEILING.MATH() must be a number")
+			return MakeErrorResult("third argument to CEILING.MATH() must be a number")
 		}
 		direction = dirArg.ValueNumber
 	}
@@ -211,6 +228,8 @@ func CeilingMath(args []Result) Result {
 	return MakeNumberResult(v * significance)
 }
 
+// CeilingPrecise is an implementation of the CEILING.PRECISE function which
+// returns the ceiling of a number.
 func CeilingPrecise(args []Result) Result {
 	if len(args) == 0 {
 		return MakeErrorResult("CEILING.PRECISE() requires at least one argument")
@@ -221,7 +240,7 @@ func CeilingPrecise(args []Result) Result {
 	// number to round
 	number := args[0].AsNumber()
 	if number.Type != ResultTypeNumber {
-		return MakeErrorResult("first arugment to CEILING.PRECISE() must be a number")
+		return MakeErrorResult("first argument to CEILING.PRECISE() must be a number")
 	}
 
 	// significance
@@ -232,7 +251,7 @@ func CeilingPrecise(args []Result) Result {
 	if len(args) > 1 {
 		sigArg := args[1].AsNumber()
 		if sigArg.Type != ResultTypeNumber {
-			return MakeErrorResult("second arugment to CEILING.MATH() must be a number")
+			return MakeErrorResult("second argument to CEILING.MATH() must be a number")
 		}
 		// don't care about sign of significance
 		significance = math.Abs(sigArg.ValueNumber)
@@ -265,12 +284,12 @@ func Base(args []Result) Result {
 	// number to convert
 	number := args[0].AsNumber()
 	if number.Type != ResultTypeNumber {
-		return MakeErrorResult("first arugment to BASE() must be a number")
+		return MakeErrorResult("first argument to BASE() must be a number")
 	}
 
 	radixArg := args[1].AsNumber()
 	if radixArg.Type != ResultTypeNumber {
-		return MakeErrorResult("second arugment to BASE() must be a number")
+		return MakeErrorResult("second argument to BASE() must be a number")
 	}
 	radix := int(radixArg.ValueNumber)
 	if radix < 0 || radix > 36 {
@@ -282,7 +301,7 @@ func Base(args []Result) Result {
 	if len(args) > 2 {
 		lenArg := args[2].AsNumber()
 		if lenArg.Type != ResultTypeNumber {
-			return MakeErrorResult("third arugment to BASE() must be a number")
+			return MakeErrorResult("third argument to BASE() must be a number")
 		}
 		minLength = int(lenArg.ValueNumber)
 	}
@@ -346,14 +365,6 @@ func Combina(args []Result) Result {
 	return Combin(args)
 }
 
-func fact(f float64) float64 {
-	res := float64(1)
-	for i := float64(2); i <= f; i++ {
-		res *= i
-	}
-	return res
-}
-
 // Decimal is an implementation of the Excel function DECIMAL() that parses a string
 // in a given base and returns the numeric result.
 func Decimal(args []Result) Result {
@@ -392,6 +403,337 @@ func Degrees(args []Result) Result {
 	}
 
 	return MakeNumberResult(180.0 / math.Pi * vArg.ValueNumber)
+}
+
+// Even is an implementation of the Excel EVEN() that rounds a number to the
+// nearest even integer.
+func Even(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("EVEN() requires one argument")
+	}
+	vArg := args[0].AsNumber()
+	if vArg.Type != ResultTypeNumber {
+		return MakeErrorResult("EVEN() requires number argument")
+	}
+
+	sign := math.Signbit(vArg.ValueNumber)
+	m, r := math.Modf(vArg.ValueNumber / 2)
+	v := m * 2
+	if r != 0 {
+		if !sign {
+			v += 2
+		} else {
+			v -= 2
+		}
+	}
+	return MakeNumberResult(v)
+}
+
+func fact(f float64) float64 {
+	res := float64(1)
+	for i := float64(2); i <= f; i++ {
+		res *= i
+	}
+	return res
+}
+
+// Fact is an implementation of the excel FACT function which returns the
+// factorial of a positive numeric input.
+func Fact(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("FACT() accepts a single numeric argument")
+	}
+	vArg := args[0].AsNumber()
+	if vArg.Type != ResultTypeNumber {
+		return MakeErrorResult("FACT() accepts a single numeric argument")
+	}
+	if vArg.ValueNumber < 0 {
+		return MakeErrorResult("FACT() accepts only positive arguments")
+	}
+	return MakeNumberResult(fact(vArg.ValueNumber))
+}
+
+// FactDouble is an implementation of the excel FACTDOUBLE function which
+// returns the double factorial of a positive numeric input.
+func FactDouble(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("FACTDOUBLE() accepts a single numeric argument")
+	}
+	vArg := args[0].AsNumber()
+	if vArg.Type != ResultTypeNumber {
+		return MakeErrorResult("FACTDOUBLE() accepts a single numeric argument")
+	}
+	if vArg.ValueNumber < 0 {
+		return MakeErrorResult("FACTDOUBLE() accepts only positive arguments")
+	}
+
+	res := float64(1)
+	v := math.Trunc(vArg.ValueNumber)
+	for i := v; i > 1; i -= 2 {
+		res *= i
+	}
+	return MakeNumberResult(res)
+}
+
+// FloorMath implements _xlfn.FLOOR.MATH which rounds numbers down to the
+// nearest multiple of the second argument, toward or away from zero as
+// specified by the third argument.
+func FloorMath(args []Result) Result {
+	if len(args) == 0 {
+		return MakeErrorResult("FLOOR.MATH() requires at least one argument")
+	}
+	if len(args) > 3 {
+		return MakeErrorResult("FLOOR.MATH() allows at most three arguments")
+	}
+	// number to round
+	number := args[0].AsNumber()
+	if number.Type != ResultTypeNumber {
+		return MakeErrorResult("first argument to FLOOR.MATH() must be a number")
+	}
+
+	// significance
+	significance := float64(1)
+	if number.ValueNumber < 0 {
+		significance = -1
+	}
+	if len(args) > 1 {
+		sigArg := args[1].AsNumber()
+		if sigArg.Type != ResultTypeNumber {
+			return MakeErrorResult("second argument to FLOOR.MATH() must be a number")
+		}
+		significance = sigArg.ValueNumber
+	}
+
+	// round direction
+	direction := float64(1)
+	if len(args) > 2 {
+		dirArg := args[2].AsNumber()
+		if dirArg.Type != ResultTypeNumber {
+			return MakeErrorResult("third argument to FLOOR.MATH() must be a number")
+		}
+		direction = dirArg.ValueNumber
+	}
+
+	if len(args) == 1 {
+		return MakeNumberResult(math.Floor(number.ValueNumber))
+	}
+
+	v := number.ValueNumber
+	v, res := math.Modf(v / significance)
+	if res != 0 && number.ValueNumber < 0 && direction > 0 {
+		v++
+	}
+	return MakeNumberResult(v * significance)
+}
+
+// FloorPrecise is an implementation of the FlOOR.PRECISE function.
+func FloorPrecise(args []Result) Result {
+	if len(args) == 0 {
+		return MakeErrorResult("FLOOR.PRECISE() requires at least one argument")
+	}
+	if len(args) > 2 {
+		return MakeErrorResult("FLOOR.PRECISE() allows at most two arguments")
+	}
+	// number to round
+	number := args[0].AsNumber()
+	if number.Type != ResultTypeNumber {
+		return MakeErrorResult("first argument to FLOOR.PRECISE() must be a number")
+	}
+
+	// significance
+	significance := float64(1)
+	if number.ValueNumber < 0 {
+		significance = -1
+	}
+	if len(args) > 1 {
+		sigArg := args[1].AsNumber()
+		if sigArg.Type != ResultTypeNumber {
+			return MakeErrorResult("second argument to FLOOR.MATH() must be a number")
+		}
+		// don't care about sign of significance
+		significance = math.Abs(sigArg.ValueNumber)
+	}
+
+	if len(args) == 1 {
+		return MakeNumberResult(math.Floor(number.ValueNumber))
+	}
+
+	v := number.ValueNumber
+	v, res := math.Modf(v / significance)
+	if res != 0 {
+		if number.ValueNumber < 0 {
+			v--
+		}
+	}
+	return MakeNumberResult(v * significance)
+}
+
+func gcd(a, b float64) float64 {
+	a = math.Trunc(a)
+	b = math.Trunc(b)
+	if a == 0 {
+		return b
+	}
+	if b == 0 {
+		return a
+	}
+	for a != b {
+		if a > b {
+			a = a - b
+		} else {
+			b = b - a
+		}
+	}
+	return a
+}
+
+// GCD implements the Excel GCD() function which returns the greatest common
+// divisor of a range of numbers.
+func GCD(args []Result) Result {
+	if len(args) == 0 {
+		return MakeErrorResult("GCD() requires at least one argument")
+	}
+
+	numbers := []float64{}
+	for _, arg := range args {
+		switch arg.Type {
+		case ResultTypeString:
+			na := arg.AsNumber()
+			if na.Type != ResultTypeNumber {
+				return MakeErrorResult("GCD() only accepts numeric arguments")
+			}
+			numbers = append(numbers, na.ValueNumber)
+		case ResultTypeList:
+			res := GCD(arg.ValueList)
+			if res.Type != ResultTypeNumber {
+				return res
+			}
+			numbers = append(numbers, res.ValueNumber)
+		case ResultTypeNumber:
+			numbers = append(numbers, arg.ValueNumber)
+		case ResultTypeError:
+			return arg
+		}
+	}
+	if numbers[0] < 0 {
+		return MakeErrorResult("GCD() only accepts positive arguments")
+	}
+
+	if len(numbers) == 1 {
+		return MakeNumberResult(numbers[0])
+	}
+	res := numbers[0]
+	for i := 1; i < len(numbers); i++ {
+		if numbers[i] < 0 {
+			return MakeErrorResult("GCD() only accepts positive arguments")
+		}
+		res = gcd(res, numbers[i])
+	}
+	return MakeNumberResult(res)
+}
+
+func lcm(a, b float64) float64 {
+	a = math.Trunc(a)
+	b = math.Trunc(b)
+	if a == 0 && b == 0 {
+		return 0
+	}
+	return a * b / gcd(a, b)
+}
+
+// LCM implements the Excel LCM() function which returns the least common
+// multiple of a range of numbers.
+func LCM(args []Result) Result {
+	if len(args) == 0 {
+		return MakeErrorResult("LCM() requires at least one argument")
+	}
+
+	numbers := []float64{}
+	for _, arg := range args {
+		switch arg.Type {
+		case ResultTypeString:
+			na := arg.AsNumber()
+			if na.Type != ResultTypeNumber {
+				return MakeErrorResult("LCM() only accepts numeric arguments")
+			}
+			numbers = append(numbers, na.ValueNumber)
+		case ResultTypeList:
+			res := LCM(arg.ValueList)
+			if res.Type != ResultTypeNumber {
+				return res
+			}
+			numbers = append(numbers, res.ValueNumber)
+		case ResultTypeNumber:
+			numbers = append(numbers, arg.ValueNumber)
+		case ResultTypeError:
+			return arg
+		}
+	}
+	if numbers[0] < 0 {
+		return MakeErrorResult("LCM() only accepts positive arguments")
+	}
+
+	if len(numbers) == 1 {
+		return MakeNumberResult(numbers[0])
+	}
+	res := numbers[0]
+	for i := 1; i < len(numbers); i++ {
+		if numbers[i] < 0 {
+			return MakeErrorResult("LCM() only accepts positive arguments")
+		}
+		res = lcm(res, numbers[i])
+	}
+	return MakeNumberResult(res)
+}
+
+// Int is an implementation of the Excel INT() function that rounds a number
+// down to an integer.
+func Int(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("INT() requires a single numeric argument")
+	}
+	nArg := args[0].AsNumber()
+	if nArg.Type != ResultTypeNumber {
+		return MakeErrorResult("INT() requires a single numeric argument")
+	}
+	trunc, rem := math.Modf(nArg.ValueNumber)
+	if rem < 0 {
+		trunc--
+	}
+	return MakeNumberResult(trunc)
+}
+
+// Log implements the Excel LOG function which returns the log of a number. By
+// default the result is base 10, however the second argument to the function
+// can specify a different base.
+func Log(args []Result) Result {
+	if len(args) == 0 {
+		return MakeErrorResult("LOG() requires at least one numeric argument")
+	}
+	if len(args) > 2 {
+		return MakeErrorResult("LOG() accepts a maximum of two arguments")
+	}
+	nArg := args[0].AsNumber()
+	if nArg.Type != ResultTypeNumber {
+		return MakeErrorResult("LOG() requires at least one numeric argument")
+	}
+	base := 10.0
+	if len(args) > 1 {
+		bArg := args[1].AsNumber()
+		if bArg.Type != ResultTypeNumber {
+			return MakeErrorResult("LOG() requires second argument to be numeric")
+		}
+		base = args[1].ValueNumber
+	}
+	if nArg.ValueNumber == 0 {
+		return MakeErrorResult("LOG() requires first argument to be non-zero")
+	}
+	if base == 0 {
+		return MakeErrorResult("LOG() requires second argument to be non-zero")
+	}
+
+	return MakeNumberResult(math.Log(nArg.ValueNumber) / math.Log(base))
+
 }
 
 // Pi is an implementation of the Excel Pi() function that just returns the Pi
