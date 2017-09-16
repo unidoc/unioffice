@@ -7,7 +7,9 @@
 
 package spreadsheet
 
-import "baliance.com/gooxml/spreadsheet/formula"
+import (
+	"baliance.com/gooxml/spreadsheet/formula"
+)
 
 func newEvalContext(s *Sheet) *evalContext {
 	return &evalContext{s, make(map[string]struct{})}
@@ -45,4 +47,13 @@ func (e *evalContext) Cell(ref string, ev formula.Evaluator) formula.Result {
 	}
 	// TODO: handle this properly
 	// return formula.MakeErrorResult()
+}
+
+func (e *evalContext) Sheet(name string) formula.Context {
+	for _, sheet := range e.s.w.Sheets() {
+		if sheet.Name() == name {
+			return sheet.FormulaContext()
+		}
+	}
+	return formula.InvalidReferenceContext
 }

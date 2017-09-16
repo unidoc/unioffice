@@ -15,6 +15,7 @@ const (
 	ReferenceTypeUnknown ReferenceType = iota
 	ReferenceTypeInvalid
 	ReferenceTypeCell
+	ReferenceTypeSheet
 )
 
 type Reference struct {

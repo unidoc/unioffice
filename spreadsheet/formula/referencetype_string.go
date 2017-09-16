@@ -4,9 +4,9 @@ package formula
 
 import "fmt"
 
-const _ReferenceType_name = "ReferenceTypeUnknownReferenceTypeInvalidReferenceTypeCell"
+const _ReferenceType_name = "ReferenceTypeUnknownReferenceTypeInvalidReferenceTypeCellReferenceTypeSheet"
 
-var _ReferenceType_index = [...]uint8{0, 20, 40, 57}
+var _ReferenceType_index = [...]uint8{0, 20, 40, 57, 75}
 
 func (i ReferenceType) String() string {
 	if i >= ReferenceType(len(_ReferenceType_index)-1) {
