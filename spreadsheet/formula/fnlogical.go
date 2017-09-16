@@ -29,9 +29,10 @@ func And(args []Result) Result {
 	}
 	result := true
 	for _, a := range args {
+		a = a.AsNumber()
 		switch a.Type {
-		case ResultTypeList:
-			res := And(a.ValueList)
+		case ResultTypeList, ResultTypeArray:
+			res := And(a.ListValues())
 			if res.Type == ResultTypeError {
 				return res
 			}
@@ -73,9 +74,10 @@ func If(args []Result) Result {
 	}
 	cond := args[0]
 	switch cond.Type {
+	case ResultTypeNumber:
 	case ResultTypeError:
 		return cond
-	case ResultTypeString, ResultTypeList:
+	default:
 		return MakeErrorResult("IF initial argument must be numeric")
 	}
 
@@ -149,8 +151,8 @@ func Or(args []Result) Result {
 	result := false
 	for _, a := range args {
 		switch a.Type {
-		case ResultTypeList:
-			res := Or(a.ValueList)
+		case ResultTypeList, ResultTypeArray:
+			res := Or(a.ListValues())
 			if res.Type == ResultTypeError {
 				return res
 			}
@@ -193,8 +195,8 @@ func Xor(args []Result) Result {
 	hasNum := false
 	for _, arg := range args {
 		switch arg.Type {
-		case ResultTypeList:
-			res := Xor(arg.ValueList)
+		case ResultTypeList, ResultTypeArray:
+			res := Xor(arg.ListValues())
 			if res.Type == ResultTypeError {
 				return res
 			}

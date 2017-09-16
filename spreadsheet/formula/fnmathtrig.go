@@ -603,8 +603,8 @@ func GCD(args []Result) Result {
 				return MakeErrorResult("GCD() only accepts numeric arguments")
 			}
 			numbers = append(numbers, na.ValueNumber)
-		case ResultTypeList:
-			res := GCD(arg.ValueList)
+		case ResultTypeList, ResultTypeArray:
+			res := GCD(arg.ListValues())
 			if res.Type != ResultTypeNumber {
 				return res
 			}
@@ -613,6 +613,8 @@ func GCD(args []Result) Result {
 			numbers = append(numbers, arg.ValueNumber)
 		case ResultTypeError:
 			return arg
+		default:
+			return MakeErrorResult(fmt.Sprintf("GCD() unsupported argument type %s", arg.Type))
 		}
 	}
 	if numbers[0] < 0 {

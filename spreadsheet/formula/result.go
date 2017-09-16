@@ -51,6 +51,11 @@ func (r Result) Value() string {
 			return ""
 		}
 		return r.ValueList[0].Value()
+	case ResultTypeArray:
+		if len(r.ValueArray) == 0 || len(r.ValueArray[0]) == 0 {
+			return ""
+		}
+		return r.ValueArray[0][0].Value()
 	default:
 		return "unhandled result value"
 	}
@@ -70,6 +75,24 @@ func (r Result) AsNumber() Result {
 	return r
 }
 
+// ListValues converts an array to a list or returns a lists values. This is used
+// for functions that can accept an array, but don't care about ordering to
+// reuse the list function logic.
+func (r Result) ListValues() []Result {
+	if r.Type == ResultTypeArray {
+		res := []Result{}
+		for _, row := range r.ValueArray {
+			for _, col := range row {
+				res = append(res, col)
+			}
+		}
+		return res
+	}
+	if r.Type == ResultTypeList {
+		return r.ValueList
+	}
+	return nil
+}
 func (r Result) AsString() Result {
 	switch r.Type {
 	case ResultTypeNumber:
