@@ -24,12 +24,25 @@ func Sum(args []Result) Result {
 	// Sum returns zero with no arguments
 	res := MakeNumberResult(0)
 	for _, a := range args {
+		a = a.AsNumber()
 		switch a.Type {
 		case ResultTypeNumber:
 			res.ValueNumber += a.ValueNumber
 		case ResultTypeList:
 			subSum := Sum(a.ValueList)
+			// error as sum returns only numbers and errors
+			if subSum.Type != ResultTypeNumber {
+				return subSum
+			}
 			res.ValueNumber += subSum.ValueNumber
+		case ResultTypeArray:
+			for _, row := range a.ValueArray {
+				subSum := Sum(row)
+				if subSum.Type != ResultTypeNumber {
+					return subSum
+				}
+				res.ValueNumber += subSum.ValueNumber
+			}
 		case ResultTypeString:
 			// treated as zero by Excel
 		case ResultTypeError:

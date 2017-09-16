@@ -8,7 +8,6 @@
 package spreadsheet
 
 import (
-	"fmt"
 	"strings"
 
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
@@ -42,7 +41,6 @@ func (s MergedCell) Cell() Cell {
 		ref = ref[0:idx]
 		return Sheet{w: s.wb, x: s.ws}.Cell(ref)
 	}
-	fmt.Println("DIE")
 	// couldn't find it, log an error?
 	return Cell{}
 }

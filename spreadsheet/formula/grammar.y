@@ -14,12 +14,14 @@ package formula
 	node *node
 	expr Expression
 	args []Expression
+	rows [][]Expression
 }
 
 %type <expr> formula formula1 initial reference referenceItem refFunctionCall
 %type <expr> start constant functionCall argument argument1
-%type <expr> binOp prefix
-%type <args> arguments  
+%type <expr> binOp prefix constArray
+%type <rows> constArrayRows
+%type <args> arguments  constArrayCols
 
 %token <expr> tokenHorizontalRange tokenReservedName tokenDDECall  
 %token <node> tokenBool tokenNumber tokenString tokenError tokenErrorRef  tokenSheet tokenCell
@@ -27,7 +29,7 @@ package formula
 
 %token tokenLBrace tokenRBrace tokenLParen tokenRParen
 %token tokenPlus tokenMinus tokenMult tokenDiv tokenExp tokenEQ tokenLT tokenGT tokenLEQ tokenGEQ  tokenNE 
-%token tokenColon tokenComma tokenAmpersand
+%token tokenColon tokenComma tokenAmpersand tokenSemi
 
 %left tokenEQ tokenLT tokenGT tokenLEQ tokenGEQ  tokenNE
 %left tokenPlus tokenMinus
@@ -61,7 +63,18 @@ formula1:
     | reference
 	| functionCall 
 	| tokenLParen formula tokenRParen { $$ = $2 }
+	| constArray
 	;
+
+constArray: tokenLBrace constArrayRows tokenRBrace { $$ = NewConstArrayExpr($2)} ;
+constArrayRows: 
+	  constArrayCols { $$ = append($$, $1) }
+	| constArrayRows tokenSemi constArrayCols { $$ = append($1, $3)};
+
+constArrayCols: 
+	  constant { $$ = append($$,$1) }
+	| constArrayCols tokenComma constant { $$ = append($1,$3)}
+
 
 reference: 
 	  referenceItem
@@ -70,7 +83,7 @@ reference:
 
 prefix: tokenSheet { $$ = NewSheetPrefixExpr($1.val) };
 
-referenceItem: 	  tokenCell { $$ = NewCellRef($1.val)}	;
+referenceItem: tokenCell { $$ = NewCellRef($1.val)}	;
 
 refFunctionCall:
 	  referenceItem tokenColon referenceItem { $$ = NewRange($1,$3) };
