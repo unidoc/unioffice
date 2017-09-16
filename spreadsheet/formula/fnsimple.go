@@ -8,44 +8,13 @@
 package formula
 
 import (
-	"fmt"
 	"log"
 	"math"
 )
 
 func init() {
-	RegisterFunction("SUM", Sum)
 	RegisterFunction("MAX", Max)
 	RegisterFunction("MIN", Min)
-}
-
-// Sum is an implementation of the Excel SUM() function.
-func Sum(args []Result) Result {
-	// Sum returns zero with no arguments
-	res := MakeNumberResult(0)
-	for _, a := range args {
-		a = a.AsNumber()
-		switch a.Type {
-		case ResultTypeNumber:
-			res.ValueNumber += a.ValueNumber
-		case ResultTypeList, ResultTypeArray:
-			subSum := Sum(a.ListValues())
-			// error as sum returns only numbers and errors
-			if subSum.Type != ResultTypeNumber {
-				return subSum
-			}
-			res.ValueNumber += subSum.ValueNumber
-		case ResultTypeString:
-			// treated as zero by Excel
-		case ResultTypeError:
-			return a
-		case ResultTypeEmpty:
-			// skip
-		default:
-			return MakeErrorResult(fmt.Sprintf("unhandled SUM() argument type %s", a.Type))
-		}
-	}
-	return res
 }
 
 // Min is an implementation of the Excel MIN() function.
