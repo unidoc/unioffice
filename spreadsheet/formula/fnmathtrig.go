@@ -83,6 +83,24 @@ func init() {
 	// RegisterFunction("SEC"
 	// RegisterFunction("SECH"
 	RegisterFunction("SERIESSUM", SeriesSum)
+	RegisterFunction("SIGN", Sign)
+	RegisterFunction("SIN", makeMathWrapper("SIN", math.Sin))
+	RegisterFunction("SINH", makeMathWrapper("SINH", math.Sinh))
+	RegisterFunction("SQRT", makeMathWrapper("SQRT", math.Sqrt))
+	RegisterFunction("SQRTPI", makeMathWrapper("SQRTPI", func(v float64) float64 { return math.Sqrt(v * math.Pi) }))
+	// RegisterFunction("SUBTOTAL"
+	RegisterFunction("SUM", Sum)
+	// RegisterFunction("SUMIF",
+	// RegisterFunction("SUMIFS",
+	// RegisterFunction("SUMIFS",
+	RegisterFunction("SUMPRODUCT", SumProduct)
+	RegisterFunction("SUMSQ", SumSquares)
+	//RegisterFunction("SUMX2MY2"
+	//RegisterFunction("SUMX2PY2"
+	//RegisterFunction("SUMXMY2"
+	RegisterFunction("TAN", makeMathWrapper("TAN", math.Tan))
+	RegisterFunction("TANH", makeMathWrapper("TANH", math.Tanh))
+	RegisterFunction("TRUNC", Trunc)
 }
 
 // makeMathWrapper is used to wrap single argument math functions from the Go
@@ -1343,4 +1361,161 @@ func SeriesSum(args []Result) Result {
 		res += c.ValueNumber * math.Pow(x.ValueNumber, n.ValueNumber+float64(i)*m.ValueNumber)
 	}
 	return MakeNumberResult(res)
+}
+
+func Sign(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("SIGN() requires one argument")
+	}
+	vArg := args[0].AsNumber()
+	if vArg.Type != ResultTypeNumber {
+		return MakeErrorResult("SIGN() requires a numeric argument")
+	}
+	if vArg.ValueNumber < 0 {
+		return MakeNumberResult(-1)
+	} else if vArg.ValueNumber > 0 {
+		return MakeNumberResult(1)
+	}
+	return MakeNumberResult(0)
+}
+
+// Sum is an implementation of the Excel SUM() function.
+func Sum(args []Result) Result {
+	// Sum returns zero with no arguments
+	res := MakeNumberResult(0)
+	for _, a := range args {
+		a = a.AsNumber()
+		switch a.Type {
+		case ResultTypeNumber:
+			res.ValueNumber += a.ValueNumber
+		case ResultTypeList, ResultTypeArray:
+			subSum := Sum(a.ListValues())
+			// error as sum returns only numbers and errors
+			if subSum.Type != ResultTypeNumber {
+				return subSum
+			}
+			res.ValueNumber += subSum.ValueNumber
+		case ResultTypeString:
+			// treated as zero by Excel
+		case ResultTypeError:
+			return a
+		case ResultTypeEmpty:
+			// skip
+		default:
+			return MakeErrorResult(fmt.Sprintf("unhandled SUM() argument type %s", a.Type))
+		}
+	}
+	return res
+}
+
+// SumProduct is an implementation of the Excel SUMPRODUCT() function.
+func SumProduct(args []Result) Result {
+	if len(args) == 0 {
+		return MakeErrorResult("SUMPRODUCT() requires at least one argument")
+	}
+	t := args[0].Type
+	for _, a := range args {
+		if a.Type != t {
+			return MakeErrorResult("SUMPRODUCT() requires all arguments of the same type")
+		}
+	}
+	switch t {
+	case ResultTypeNumber:
+		return Product(args)
+	case ResultTypeList, ResultTypeArray:
+		n := len(args[0].ListValues())
+		res := make([]float64, n)
+		for i := range res {
+			res[i] = 1.0
+		}
+		for _, a := range args {
+			if len(a.ListValues()) != n {
+				return MakeErrorResult("SUMPRODUCT() requires all arguments to have the same dimension")
+			}
+			for i, v := range a.ListValues() {
+				v = v.AsNumber()
+				if v.Type != ResultTypeNumber {
+					return MakeErrorResult("SUMPRODUCT() requires all arguments to be numeric")
+				}
+				res[i] = res[i] * v.ValueNumber
+			}
+		}
+		v := 0.0
+		for _, r := range res {
+			v += r
+		}
+		return MakeNumberResult(v)
+
+	}
+	return MakeNumberResult(1.0)
+}
+
+// SumSquares is an implementation of the Excel SUMSQ() function.
+func SumSquares(args []Result) Result {
+	// Sum returns zero with no arguments
+	res := MakeNumberResult(0)
+	for _, a := range args {
+		a = a.AsNumber()
+		switch a.Type {
+		case ResultTypeNumber:
+			res.ValueNumber += a.ValueNumber * a.ValueNumber
+		case ResultTypeList, ResultTypeArray:
+			subSum := SumSquares(a.ListValues())
+			// error as sum returns only numbers and errors
+			if subSum.Type != ResultTypeNumber {
+				return subSum
+			}
+			res.ValueNumber += subSum.ValueNumber
+		case ResultTypeString:
+			// treated as zero by Excel
+		case ResultTypeError:
+			return a
+		case ResultTypeEmpty:
+			// skip
+		default:
+			return MakeErrorResult(fmt.Sprintf("unhandled SUMSQUARES() argument type %s", a.Type))
+		}
+	}
+	return res
+}
+
+func Trunc(args []Result) Result {
+	if len(args) == 0 {
+		return MakeErrorResult("TRUNC() requires at least one numeric arguments")
+	}
+	// number to truncate
+	number := args[0].AsNumber()
+	if number.Type != ResultTypeNumber {
+		return MakeErrorResult("first argument to TRUNC() must be a number")
+	}
+
+	digits := float64(0)
+	if len(args) > 1 {
+		digitArg := args[1].AsNumber()
+		if digitArg.Type != ResultTypeNumber {
+			return MakeErrorResult("second argument to TRUNC() must be a number")
+		}
+		digits = digitArg.ValueNumber
+	}
+
+	v := number.ValueNumber
+
+	significance := 1.0
+	if digits >= 0 {
+		significance = math.Pow(1/10.0, digits)
+	} else {
+		// Excel returns zero for this case
+		return MakeNumberResult(0)
+	}
+
+	v, res := math.Modf(v / significance)
+
+	eps := 0.99999
+	if res > eps {
+		v++
+	} else if res < -eps {
+		v--
+	}
+	_ = res
+	return MakeNumberResult(v * significance)
 }
