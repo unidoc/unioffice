@@ -7,7 +7,10 @@
 
 package formula
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 // BinOpType is the binary operation operator type
 //go:generate stringer -type=BinOpType
@@ -45,6 +48,22 @@ func NewBinaryExpr(lhs Expression, op BinOpType, rhs Expression) Expression {
 func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 	lhs := b.lhs.Eval(ctx, ev)
 	rhs := b.rhs.Eval(ctx, ev)
+
+	// peel off array/list ops first
+	if lhs.Type == rhs.Type {
+		if lhs.Type == ResultTypeArray {
+			if !sameDim(lhs.ValueArray, rhs.ValueArray) {
+				return MakeErrorResult("lhs/rhs should have same dimensions")
+			}
+			return arrayOp(b.op, lhs.ValueArray, rhs.ValueArray)
+		} else if lhs.Type == ResultTypeList {
+			if len(lhs.ValueList) != len(rhs.ValueList) {
+				return MakeErrorResult("lhs/rhs should have same dimensions")
+			}
+			return listOp(b.op, lhs.ValueList, rhs.ValueList)
+		}
+
+	}
 
 	// TODO: check for and add support for binary operators on boolean values
 	switch b.op {
@@ -127,4 +146,74 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 
 func (b BinaryExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
+}
+
+// sameDim returns true if the arrays have the same dimensions.
+func sameDim(lhs, rhs [][]Result) bool {
+	if len(lhs) != len(rhs) {
+		return false
+	}
+	for i := range lhs {
+		if len(lhs[i]) != len(rhs[i]) {
+			return false
+		}
+	}
+	return true
+}
+
+func arrayOp(op BinOpType, lhs, rhs [][]Result) Result {
+	// we can assume the arrays are the same size here
+	res := [][]Result{}
+	for i := range lhs {
+		lst := listOp(op, lhs[i], rhs[i])
+		if lst.Type == ResultTypeError {
+			return lst
+		}
+		res = append(res, lst.ValueList)
+	}
+	return MakeArrayResult(res)
+}
+
+func listOp(op BinOpType, lhs, rhs []Result) Result {
+	res := []Result{}
+	// we can assume the arrays are the same size here
+	for i := range lhs {
+		l := lhs[i].AsNumber()
+		r := rhs[i].AsNumber()
+		if l.Type != ResultTypeNumber || r.Type != ResultTypeNumber {
+			return MakeErrorResult("non-nunmeric value in binary operation")
+		}
+		switch op {
+		case BinOpTypePlus:
+			res = append(res, MakeNumberResult(l.ValueNumber+r.ValueNumber))
+		case BinOpTypeMinus:
+			res = append(res, MakeNumberResult(l.ValueNumber-r.ValueNumber))
+		case BinOpTypeMult:
+			res = append(res, MakeNumberResult(l.ValueNumber*r.ValueNumber))
+		case BinOpTypeDiv:
+			if r.ValueNumber == 0 {
+				return MakeErrorResultType(ErrorTypeDivideByZero, "")
+			}
+			res = append(res, MakeNumberResult(l.ValueNumber/r.ValueNumber))
+		case BinOpTypeExp:
+			res = append(res, MakeNumberResult(math.Pow(l.ValueNumber, r.ValueNumber)))
+		case BinOpTypeLT:
+			res = append(res, MakeBoolResult(l.ValueNumber < r.ValueNumber))
+		case BinOpTypeGT:
+			res = append(res, MakeBoolResult(l.ValueNumber > r.ValueNumber))
+		case BinOpTypeEQ:
+			res = append(res, MakeBoolResult(l.ValueNumber == r.ValueNumber))
+		case BinOpTypeLEQ:
+			res = append(res, MakeBoolResult(l.ValueNumber <= r.ValueNumber))
+		case BinOpTypeGEQ:
+			res = append(res, MakeBoolResult(l.ValueNumber >= r.ValueNumber))
+		case BinOpTypeNE:
+			res = append(res, MakeBoolResult(l.ValueNumber != r.ValueNumber))
+		// TODO: support concat here
+		// case BinOpTypeConcat:
+		default:
+			return MakeErrorResult(fmt.Sprintf("unsupported list binary op %s", op))
+		}
+	}
+	return MakeListResult(res)
 }

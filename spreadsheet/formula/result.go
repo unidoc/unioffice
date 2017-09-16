@@ -22,6 +22,7 @@ const (
 	ResultTypeNumber
 	ResultTypeString
 	ResultTypeList
+	ResultTypeArray
 	ResultTypeError
 	ResultTypeEmpty
 )
@@ -31,11 +32,12 @@ type Result struct {
 	ValueNumber  float64
 	ValueString  string
 	ValueList    []Result
+	ValueArray   [][]Result
 	ErrorMessage string
 	Type         ResultType
 }
 
-// Value returns a string version of the formula.
+// Value returns a string version of the result.
 func (r Result) Value() string {
 	switch r.Type {
 	case ResultTypeNumber:
@@ -44,6 +46,11 @@ func (r Result) Value() string {
 		return r.ValueString
 	case ResultTypeString:
 		return r.ValueString
+	case ResultTypeList:
+		if len(r.ValueList) == 0 {
+			return ""
+		}
+		return r.ValueList[0].Value()
 	default:
 		return "unhandled result value"
 	}
@@ -137,4 +144,14 @@ func MakeStringResult(s string) Result {
 // MakeEmptyResult is ued when parsing an empty argument.
 func MakeEmptyResult() Result {
 	return Result{Type: ResultTypeEmpty}
+}
+
+// MakeArrayResult constructs an array result (matrix).
+func MakeArrayResult(arr [][]Result) Result {
+	return Result{Type: ResultTypeArray, ValueArray: arr}
+}
+
+// MakeListResult constructs a list result.
+func MakeListResult(list []Result) Result {
+	return Result{Type: ResultTypeList, ValueList: list}
 }

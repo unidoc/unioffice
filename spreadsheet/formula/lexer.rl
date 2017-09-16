@@ -89,6 +89,7 @@ import (
   '<>' { l.emit(tokenNE,data[ts:te]) };
   
   ':' { l.emit(tokenColon,data[ts:te]) };
+  ';' { l.emit(tokenSemi,data[ts:te]) };
   ',' { l.emit(tokenComma,data[ts:te]) };
   
 *|;

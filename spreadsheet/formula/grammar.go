@@ -14,6 +14,7 @@ type yySymType struct {
 	node *node
 	expr Expression
 	args []Expression
+	rows [][]Expression
 }
 
 const tokenHorizontalRange = 57346
@@ -45,6 +46,7 @@ const tokenNE = 57371
 const tokenColon = 57372
 const tokenComma = 57373
 const tokenAmpersand = 57374
+const tokenSemi = 57375
 
 var yyToknames = [...]string{
 	"$end",
@@ -79,6 +81,7 @@ var yyToknames = [...]string{
 	"tokenColon",
 	"tokenComma",
 	"tokenAmpersand",
+	"tokenSemi",
 }
 var yyStatenames = [...]string{}
 
@@ -94,76 +97,82 @@ var yyExca = [...]int{
 
 const yyPrivate = 57344
 
-const yyLast = 149
+const yyLast = 175
 
 var yyAct = [...]int{
 
-	3, 26, 27, 28, 62, 36, 28, 38, 39, 41,
-	22, 37, 35, 40, 28, 35, 44, 63, 18, 20,
-	17, 45, 46, 65, 11, 47, 48, 49, 50, 51,
-	52, 53, 54, 55, 56, 57, 58, 64, 59, 42,
-	24, 25, 26, 27, 28, 33, 29, 30, 31, 32,
-	34, 9, 1, 35, 19, 10, 2, 8, 0, 0,
-	0, 0, 61, 0, 66, 60, 24, 25, 26, 27,
-	28, 33, 29, 30, 31, 32, 34, 0, 0, 35,
-	24, 25, 26, 27, 28, 33, 29, 30, 31, 32,
-	34, 0, 0, 35, 24, 25, 26, 27, 28, 0,
-	0, 0, 0, 13, 14, 15, 16, 35, 23, 22,
-	21, 5, 0, 12, 0, 6, 7, 0, 0, 0,
-	4, 13, 14, 15, 16, 0, 23, 22, 21, 0,
-	0, 12, 43, 6, 7, 13, 14, 15, 16, 0,
-	23, 22, 21, 0, 0, 12, 0, 6, 7,
+	3, 41, 18, 9, 70, 37, 29, 43, 44, 42,
+	27, 28, 29, 45, 46, 36, 67, 71, 29, 23,
+	49, 36, 47, 51, 65, 40, 52, 53, 54, 55,
+	56, 57, 58, 59, 60, 61, 62, 63, 13, 19,
+	64, 66, 42, 14, 15, 16, 17, 72, 21, 69,
+	25, 26, 27, 28, 29, 34, 30, 31, 32, 33,
+	35, 50, 75, 36, 11, 1, 20, 10, 73, 2,
+	42, 74, 76, 68, 25, 26, 27, 28, 29, 34,
+	30, 31, 32, 33, 35, 8, 0, 36, 25, 26,
+	27, 28, 29, 34, 30, 31, 32, 33, 35, 0,
+	0, 36, 25, 26, 27, 28, 29, 0, 0, 0,
+	0, 14, 15, 16, 17, 36, 24, 23, 22, 5,
+	0, 12, 0, 6, 7, 0, 0, 0, 4, 14,
+	15, 16, 17, 0, 24, 23, 22, 38, 0, 12,
+	48, 6, 7, 14, 15, 16, 17, 0, 24, 23,
+	22, 38, 0, 12, 0, 6, 7, 14, 15, 16,
+	17, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 39,
 }
 var yyPact = [...]int{
 
-	96, -1000, -1000, 61, 128, -13, 128, 128, -1000, -1000,
-	-1000, -1000, 128, -1000, -1000, -1000, -1000, -21, -3, -1000,
-	-1000, 114, -1000, -1000, 128, 128, 128, 128, 128, 128,
-	128, 128, 128, 128, 128, 128, 61, 128, -20, -20,
-	47, -3, -1000, -1000, -14, -1000, 61, -20, -20, -17,
-	-17, -1000, 75, 75, 75, 75, 75, 75, -9, 21,
-	-1000, -1000, -1000, 128, -1000, -1000, 61,
+	104, -1000, -1000, 69, 136, 150, 136, 136, -1000, -1000,
+	-1000, -1000, 136, -1000, -1000, -1000, -1000, -1000, -16, 6,
+	-1000, -1000, 122, -1000, -1000, 136, 136, 136, 136, 136,
+	136, 136, 136, 136, 136, 136, 136, 69, 36, 136,
+	8, -15, -1000, -11, -11, 55, 6, -1000, -1000, -14,
+	-1000, 69, -11, -11, -17, -17, -1000, 83, 83, 83,
+	83, 83, 83, -5, 31, -1000, 36, 36, -1000, -1000,
+	-1000, 136, -1000, -15, -1000, -1000, 69,
 }
 var yyPgo = [...]int{
 
-	0, 0, 57, 56, 55, 20, 54, 52, 51, 24,
-	23, 21, 19, 18, 16,
+	0, 0, 85, 69, 67, 2, 66, 65, 3, 64,
+	62, 61, 48, 39, 38, 25, 20, 1,
 }
 var yyR1 = [...]int{
 
 	0, 7, 3, 3, 3, 8, 8, 8, 8, 1,
-	1, 1, 2, 2, 2, 2, 4, 4, 4, 13,
-	5, 6, 12, 12, 12, 12, 12, 12, 12, 12,
-	12, 12, 12, 12, 9, 9, 9, 14, 14, 11,
-	10, 10,
+	1, 1, 2, 2, 2, 2, 2, 14, 15, 15,
+	17, 17, 4, 4, 4, 13, 5, 6, 12, 12,
+	12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
+	9, 9, 9, 16, 16, 11, 10, 10,
 }
 var yyR2 = [...]int{
 
 	0, 1, 1, 2, 4, 1, 1, 1, 1, 2,
-	2, 1, 1, 1, 1, 3, 1, 2, 1, 1,
-	1, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-	3, 3, 3, 3, 1, 2, 3, 1, 3, 1,
-	1, 0,
+	2, 1, 1, 1, 1, 3, 1, 3, 1, 3,
+	1, 3, 1, 2, 1, 1, 1, 3, 3, 3,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+	1, 2, 3, 1, 3, 1, 1, 0,
 }
 var yyChk = [...]int{
 
 	-1000, -7, -3, -1, 24, 15, 19, 20, -2, -8,
-	-4, -9, 17, 7, 8, 9, 10, -5, -13, -6,
-	-12, 14, 13, 12, 19, 20, 21, 22, 23, 25,
-	26, 27, 28, 24, 29, 32, -1, 24, -1, -1,
-	-1, 30, -5, 18, -14, -11, -1, -1, -1, -1,
-	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-	18, -5, 18, 31, 16, -10, -1,
+	-4, -9, 17, -14, 7, 8, 9, 10, -5, -13,
+	-6, -12, 14, 13, 12, 19, 20, 21, 22, 23,
+	25, 26, 27, 28, 24, 29, 32, -1, 15, 24,
+	-15, -17, -8, -1, -1, -1, 30, -5, 18, -16,
+	-11, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+	-1, -1, -1, -1, -1, 16, 33, 31, 18, -5,
+	18, 31, 16, -17, -8, -10, -1,
 }
 var yyDef = [...]int{
 
 	0, -2, 1, 2, 0, 0, 0, 0, 11, 12,
-	13, 14, 0, 5, 6, 7, 8, 16, 0, 18,
-	34, 0, 20, 19, 0, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 0, 0, 3, 0, 9, 10,
-	0, 0, 17, 35, 0, 37, 39, 22, 23, 24,
-	25, 26, 27, 28, 29, 30, 31, 32, 33, 0,
-	15, 21, 36, 41, 4, 38, 40,
+	13, 14, 0, 16, 5, 6, 7, 8, 22, 0,
+	24, 40, 0, 26, 25, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 3, 0, 0,
+	0, 18, 20, 9, 10, 0, 0, 23, 41, 0,
+	43, 45, 28, 29, 30, 31, 32, 33, 34, 35,
+	36, 37, 38, 39, 0, 17, 0, 0, 15, 27,
+	42, 47, 4, 19, 21, 44, 46,
 }
 var yyTok1 = [...]int{
 
@@ -174,7 +183,7 @@ var yyTok2 = [...]int{
 	2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
 	12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
 	22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
-	32,
+	32, 33,
 }
 var yyTok3 = [...]int{
 	0,
@@ -565,106 +574,131 @@ yydefault:
 			yyVAL.expr = yyDollar[2].expr
 		}
 	case 17:
-		yyDollar = yyS[yypt-2 : yypt+1]
+		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.expr = NewPrefixExpr(yyDollar[1].expr, yyDollar[2].expr)
+			yyVAL.expr = NewConstArrayExpr(yyDollar[2].rows)
 		}
-	case 19:
+	case 18:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		{
-			yyVAL.expr = NewSheetPrefixExpr(yyDollar[1].node.val)
+			yyVAL.rows = append(yyVAL.rows, yyDollar[1].args)
+		}
+	case 19:
+		yyDollar = yyS[yypt-3 : yypt+1]
+		{
+			yyVAL.rows = append(yyDollar[1].rows, yyDollar[3].args)
 		}
 	case 20:
 		yyDollar = yyS[yypt-1 : yypt+1]
 		{
-			yyVAL.expr = NewCellRef(yyDollar[1].node.val)
+			yyVAL.args = append(yyVAL.args, yyDollar[1].expr)
 		}
 	case 21:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.expr = NewRange(yyDollar[1].expr, yyDollar[3].expr)
-		}
-	case 22:
-		yyDollar = yyS[yypt-3 : yypt+1]
-		{
-			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypePlus, yyDollar[3].expr)
+			yyVAL.args = append(yyDollar[1].args, yyDollar[3].expr)
 		}
 	case 23:
-		yyDollar = yyS[yypt-3 : yypt+1]
+		yyDollar = yyS[yypt-2 : yypt+1]
 		{
-			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeMinus, yyDollar[3].expr)
-		}
-	case 24:
-		yyDollar = yyS[yypt-3 : yypt+1]
-		{
-			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeMult, yyDollar[3].expr)
+			yyVAL.expr = NewPrefixExpr(yyDollar[1].expr, yyDollar[2].expr)
 		}
 	case 25:
-		yyDollar = yyS[yypt-3 : yypt+1]
+		yyDollar = yyS[yypt-1 : yypt+1]
 		{
-			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeDiv, yyDollar[3].expr)
+			yyVAL.expr = NewSheetPrefixExpr(yyDollar[1].node.val)
 		}
 	case 26:
-		yyDollar = yyS[yypt-3 : yypt+1]
+		yyDollar = yyS[yypt-1 : yypt+1]
 		{
-			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeExp, yyDollar[3].expr)
+			yyVAL.expr = NewCellRef(yyDollar[1].node.val)
 		}
 	case 27:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeLT, yyDollar[3].expr)
+			yyVAL.expr = NewRange(yyDollar[1].expr, yyDollar[3].expr)
 		}
 	case 28:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeGT, yyDollar[3].expr)
+			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypePlus, yyDollar[3].expr)
 		}
 	case 29:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeLEQ, yyDollar[3].expr)
+			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeMinus, yyDollar[3].expr)
 		}
 	case 30:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeGEQ, yyDollar[3].expr)
+			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeMult, yyDollar[3].expr)
 		}
 	case 31:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeEQ, yyDollar[3].expr)
+			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeDiv, yyDollar[3].expr)
 		}
 	case 32:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeNE, yyDollar[3].expr)
+			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeExp, yyDollar[3].expr)
 		}
 	case 33:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeConcat, yyDollar[3].expr)
+			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeLT, yyDollar[3].expr)
+		}
+	case 34:
+		yyDollar = yyS[yypt-3 : yypt+1]
+		{
+			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeGT, yyDollar[3].expr)
 		}
 	case 35:
-		yyDollar = yyS[yypt-2 : yypt+1]
+		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.expr = NewFunction(yyDollar[1].node.val, nil)
+			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeLEQ, yyDollar[3].expr)
 		}
 	case 36:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.expr = NewFunction(yyDollar[1].node.val, yyDollar[2].args)
+			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeGEQ, yyDollar[3].expr)
 		}
 	case 37:
-		yyDollar = yyS[yypt-1 : yypt+1]
+		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.args = append(yyVAL.args, yyDollar[1].expr)
+			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeEQ, yyDollar[3].expr)
 		}
 	case 38:
 		yyDollar = yyS[yypt-3 : yypt+1]
 		{
-			yyVAL.args = append(yyDollar[1].args, yyDollar[3].expr)
+			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeNE, yyDollar[3].expr)
+		}
+	case 39:
+		yyDollar = yyS[yypt-3 : yypt+1]
+		{
+			yyVAL.expr = NewBinaryExpr(yyDollar[1].expr, BinOpTypeConcat, yyDollar[3].expr)
 		}
 	case 41:
+		yyDollar = yyS[yypt-2 : yypt+1]
+		{
+			yyVAL.expr = NewFunction(yyDollar[1].node.val, nil)
+		}
+	case 42:
+		yyDollar = yyS[yypt-3 : yypt+1]
+		{
+			yyVAL.expr = NewFunction(yyDollar[1].node.val, yyDollar[2].args)
+		}
+	case 43:
+		yyDollar = yyS[yypt-1 : yypt+1]
+		{
+			yyVAL.args = append(yyVAL.args, yyDollar[1].expr)
+		}
+	case 44:
+		yyDollar = yyS[yypt-3 : yypt+1]
+		{
+			yyVAL.args = append(yyDollar[1].args, yyDollar[3].expr)
+		}
+	case 47:
 		yyDollar = yyS[yypt-0 : yypt+1]
 		{
 			yyVAL.expr = NewEmptyExpr()
