@@ -72,8 +72,8 @@ constArrayRows:
 	| constArrayRows tokenSemi constArrayCols { $$ = append($1, $3)};
 
 constArrayCols: 
-	  constant { $$ = append($$,$1) }
-	| constArrayCols tokenComma constant { $$ = append($1,$3)}
+	  formula { $$ = append($$,$1) }
+	| constArrayCols tokenComma formula { $$ = append($1,$3)}
 
 
 reference: 

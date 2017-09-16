@@ -390,7 +390,7 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.charts))
 
 	default:
-		log.Printf("unsupported relationship", target, typ)
+		log.Printf("unsupported relationship %s %s", target, typ)
 	}
 	return nil
 }

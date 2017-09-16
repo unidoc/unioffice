@@ -8,13 +8,19 @@
 package formula
 
 import (
+	"bytes"
 	"fmt"
 	"math"
+	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 )
 
+var rnd *rand.Rand
+
 func init() {
+	rnd = rand.New(rand.NewSource(time.Now().UnixNano()))
 	RegisterFunction("ABS", makeMathWrapper("ASIN", math.Abs))
 	RegisterFunction("ACOS", makeMathWrapper("ASIN", math.Acos))
 	RegisterFunction("ACOSH", makeMathWrapper("ASIN", math.Acosh))
@@ -55,7 +61,28 @@ func init() {
 	RegisterFunction("LN", makeMathWrapper("LN", math.Log))
 	RegisterFunction("LOG", Log)
 	RegisterFunction("LOG10", makeMathWrapper("LOG10", math.Log10))
+	RegisterFunction("MDETERM", MDeterm)
+	// RegisterFunction("MINVERSE", MInverse) // TODO: skipping the other matrix functins, not sure how common they are
+	// RegisterFunction("MMULT"
+	RegisterFunction("MOD", Mod)
+	RegisterFunction("MROUND", Mround)
+	RegisterFunction("MULTINOMIAL", Multinomial)
+	RegisterFunction("_xlfn.MUNIT", Munit)
+	RegisterFunction("ODD", Odd)
 	RegisterFunction("PI", Pi)
+	RegisterFunction("POWER", Power)
+	RegisterFunction("PRODUCT", Product)
+	RegisterFunction("QUOTIENT", Quotient)
+	RegisterFunction("RADIANS", Radians)
+	RegisterFunction("RAND", Rand)
+	RegisterFunction("RANDBETWEEN", RandBetween)
+	RegisterFunction("ROMAN", Roman)
+	RegisterFunction("ROUND", Round)
+	RegisterFunction("ROUNDDOWN", RoundDown)
+	RegisterFunction("ROUNDUP", RoundUp)
+	// RegisterFunction("SEC"
+	// RegisterFunction("SECH"
+	RegisterFunction("SERIESSUM", SeriesSum)
 }
 
 // makeMathWrapper is used to wrap single argument math functions from the Go
@@ -738,6 +765,211 @@ func Log(args []Result) Result {
 
 }
 
+func minor(sqMtx [][]Result, idx int) [][]Result {
+	ret := [][]Result{}
+	for i := range sqMtx {
+		if i == 0 {
+			continue
+		}
+		row := []Result{}
+		for j := range sqMtx {
+			if j == idx {
+				continue
+			}
+			row = append(row, sqMtx[i][j])
+		}
+		ret = append(ret, row)
+	}
+	return ret
+}
+func det(sqMtx [][]Result) float64 {
+	// two by two
+	if len(sqMtx) == 2 {
+		m00 := sqMtx[0][0].AsNumber()
+		m01 := sqMtx[0][1].AsNumber()
+		m10 := sqMtx[1][0].AsNumber()
+		m11 := sqMtx[1][1].AsNumber()
+		if m00.Type != ResultTypeNumber || m01.Type != ResultTypeNumber ||
+			m10.Type != ResultTypeNumber || m11.Type != ResultTypeNumber {
+			return math.NaN()
+		}
+		return m00.ValueNumber*m11.ValueNumber -
+			m10.ValueNumber*m01.ValueNumber
+	}
+
+	res := float64(0)
+	sgn := float64(1)
+	for j := range sqMtx {
+		res += sgn * sqMtx[0][j].ValueNumber * det(minor(sqMtx, j))
+		sgn *= -1
+	}
+	return res
+}
+
+// MDeterm is an implementation of the Excel MDETERM which finds the determinant
+// of a matrix.
+func MDeterm(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("MDETERM() requires a single array argument")
+	}
+
+	mtx := args[0]
+	if mtx.Type != ResultTypeArray {
+		return MakeErrorResult("MDETERM() requires a single array argument")
+	}
+
+	numRows := len(mtx.ValueArray)
+	for _, row := range mtx.ValueArray {
+		if len(row) != numRows {
+			return MakeErrorResult("MDETERM() requires a square matrix")
+		}
+	}
+	return MakeNumberResult(det(mtx.ValueArray))
+}
+
+// Mod is an implementation of the Excel MOD function which returns the
+// remainder after division. It requires two numeric argumnts.
+func Mod(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("MOD() requires two numeric arguments")
+	}
+	n := args[0].AsNumber()
+	d := args[1].AsNumber()
+	if n.Type != ResultTypeNumber || d.Type != ResultTypeNumber {
+		return MakeErrorResult("MOD() requires two numeric arguments")
+	}
+	if d.ValueNumber == 0 {
+		return MakeErrorResultType(ErrorTypeDivideByZero, "MOD() divide by zero")
+	}
+
+	// Per MS page, MOD(n, d) = n - d*INT(n/d)
+	// where INT is trunc in:
+	trunc, rem := math.Modf(n.ValueNumber / d.ValueNumber)
+	if rem < 0 {
+		trunc--
+	}
+	return MakeNumberResult(n.ValueNumber - d.ValueNumber*trunc)
+}
+
+// Mround is an implementation of the Excel MROUND function.  It is not a
+// generic rounding function and has some oddities to match Excel's behavior.
+func Mround(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("MROUND() requires two numeric arguments")
+	}
+	// number to round
+	number := args[0].AsNumber()
+	if number.Type != ResultTypeNumber {
+		return MakeErrorResult("first argument to MROUND() must be a number")
+	}
+
+	// significance
+	significance := float64(1)
+	sigArg := args[1].AsNumber()
+	if sigArg.Type != ResultTypeNumber {
+		return MakeErrorResult("second argument to MROUND() must be a number")
+	}
+	significance = sigArg.ValueNumber
+
+	if significance < 0 && number.ValueNumber > 0 ||
+		significance > 0 && number.ValueNumber < 0 {
+		return MakeErrorResult("MROUND() argument signs must match")
+	}
+
+	v := number.ValueNumber
+	v, res := math.Modf(v / significance)
+	if math.Trunc(res+0.5) > 0 {
+		v++
+	}
+	return MakeNumberResult(v * significance)
+}
+
+func multinomial(args []Result) (float64, float64, Result) {
+	num := 0.0
+	denom := 1.0
+	for _, arg := range args {
+		switch arg.Type {
+		case ResultTypeNumber:
+			num += arg.ValueNumber
+			denom *= fact(arg.ValueNumber)
+		case ResultTypeList, ResultTypeArray:
+			n, d, e := multinomial(arg.ListValues())
+			num += n
+			denom *= fact(d)
+			if e.Type == ResultTypeError {
+				return 0, 0, e
+			}
+		case ResultTypeString:
+			return 0, 0, MakeErrorResult("MULTINOMIAL() requires numeric arguments")
+		case ResultTypeError:
+			return 0, 0, arg
+		}
+	}
+	return num, denom, MakeEmptyResult()
+}
+
+// Multinomial implements the excel MULTINOMIAL function.
+func Multinomial(args []Result) Result {
+	if len(args) < 1 {
+		return MakeErrorResult("MULTINOMIAL() requires at least one numeric input")
+	}
+	num, denom, err := multinomial(args)
+	if err.Type == ResultTypeError {
+		return err
+	}
+	return MakeNumberResult(fact(num) / denom)
+}
+
+// Munit is an implementation of the Excel MUNIT function that returns an
+// identity matrix.
+func Munit(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("MUNIT() requires one numeric input")
+	}
+	dim := args[0].AsNumber()
+	if dim.Type != ResultTypeNumber {
+		return MakeErrorResult("MUNIT() requires one numeric input")
+	}
+	dimInt := int(dim.ValueNumber)
+	mtx := make([][]Result, 0, dimInt)
+	for i := 0; i < dimInt; i++ {
+		row := make([]Result, dimInt)
+		for j := 0; j < dimInt; j++ {
+			if i == j {
+				row[j] = MakeNumberResult(1.0)
+			} else {
+				row[j] = MakeNumberResult(0.0)
+			}
+		}
+		mtx = append(mtx, row)
+	}
+	return MakeArrayResult(mtx)
+}
+
+// Odd is an implementation of the Excel ODD() that rounds a number to the
+// nearest odd integer.
+func Odd(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("ODD() requires one argument")
+	}
+	vArg := args[0].AsNumber()
+	if vArg.Type != ResultTypeNumber {
+		return MakeErrorResult("ODD() requires number argument")
+	}
+
+	sign := math.Signbit(vArg.ValueNumber)
+	m, r := math.Modf((vArg.ValueNumber - 1) / 2)
+	v := m*2 + 1
+	if r != 0 {
+		if !sign {
+			v += 2
+		} else {
+			v -= 2
+		}
+	}
+	return MakeNumberResult(v)
+}
+
 // Pi is an implementation of the Excel Pi() function that just returns the Pi
 // constant.
 func Pi(args []Result) Result {
@@ -745,4 +977,370 @@ func Pi(args []Result) Result {
 		return MakeErrorResult("PI() accepts no arguments")
 	}
 	return MakeNumberResult(math.Pi)
+}
+
+// Power is an implementation of the Excel POWER function that raises a number
+// to a power. It requires two numeric arguments.
+func Power(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("POWER() requires two numeric arguments")
+	}
+
+	number := args[0].AsNumber()
+	if number.Type != ResultTypeNumber {
+		return MakeErrorResult("first argument to POWER() must be a number")
+	}
+
+	exp := args[1].AsNumber()
+	if exp.Type != ResultTypeNumber {
+		return MakeErrorResult("second argument to POWER() must be a number")
+	}
+
+	return MakeNumberResult(math.Pow(number.ValueNumber, exp.ValueNumber))
+}
+
+// Product is an implementation of the Excel PRODUCT() function.
+func Product(args []Result) Result {
+	res := 1.0
+	for _, a := range args {
+		a = a.AsNumber()
+		switch a.Type {
+		case ResultTypeNumber:
+			res *= a.ValueNumber
+		case ResultTypeList, ResultTypeArray:
+			subSum := Product(a.ListValues())
+			if subSum.Type != ResultTypeNumber {
+				return subSum
+			}
+			res *= subSum.ValueNumber
+		case ResultTypeString:
+			// treated as zero by Excel
+		case ResultTypeError:
+			return a
+		case ResultTypeEmpty:
+			// skip
+		default:
+			return MakeErrorResult(fmt.Sprintf("unhandled PRODUCT() argument type %s", a.Type))
+		}
+	}
+	return MakeNumberResult(res)
+}
+
+// Quotient is an implementation of the Excel QUOTIENT function that returns the
+// integer portion of division.
+func Quotient(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("QUOTIENT() requires two numeric arguments")
+	}
+	arg1 := args[0].AsNumber()
+	arg2 := args[1].AsNumber()
+	if arg1.Type != ResultTypeNumber || arg2.Type != ResultTypeNumber {
+		return MakeErrorResult("QUOTIENT() requires two numeric arguments")
+	}
+	if arg2.ValueNumber == 0 {
+		return MakeErrorResultType(ErrorTypeDivideByZero, "QUOTIENT() divide by zero")
+	}
+
+	return MakeNumberResult(math.Trunc(arg1.ValueNumber / arg2.ValueNumber))
+}
+
+// Radians is an implementation of the Excel function RADIANS() that converts
+// degrees to radians.
+func Radians(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("RADIANS() requires one argument")
+	}
+	vArg := args[0].AsNumber()
+	if vArg.Type != ResultTypeNumber {
+		return MakeErrorResult("RADIANS() requires number argument")
+	}
+
+	return MakeNumberResult(math.Pi / 180.0 * vArg.ValueNumber)
+}
+
+// Rand is an implementation of the Excel RAND() function that returns random
+// numbers in the range [0,1).
+func Rand(args []Result) Result {
+	if len(args) != 0 {
+		return MakeErrorResult("RAND() accepts no arguments")
+	}
+	return MakeNumberResult(rnd.Float64())
+}
+
+// RandBetween is an implementation of the Excel RANDBETWEEN() function that returns a random
+// integer in the range specified.
+func RandBetween(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("RANDBETWEEN() requires two numeric arguments")
+	}
+	arg1 := args[0].AsNumber()
+	arg2 := args[1].AsNumber()
+	if arg1.Type != ResultTypeNumber || arg2.Type != ResultTypeNumber {
+		return MakeErrorResult("RANDBETWEEN() requires two numeric arguments")
+	}
+	if arg2.ValueNumber < arg1.ValueNumber {
+		return MakeErrorResult("RANDBETWEEN() requires second argument to be larger")
+	}
+	bottom := int64(arg1.ValueNumber)
+	top := int64(arg2.ValueNumber)
+	return MakeNumberResult(float64(rnd.Int63n(top-bottom+1) + bottom))
+}
+
+type ri struct {
+	n float64
+	s string
+}
+
+var r1tables = []ri{
+	{1000, "M"},
+	{900, "CM"},
+	{500, "D"},
+	{400, "CD"},
+	{100, "C"},
+	{90, "XC"},
+	{50, "L"},
+	{40, "XL"},
+	{10, "X"},
+	{9, "IX"},
+	{5, "V"},
+	{4, "IV"},
+	{1, "I"},
+}
+
+var r2tables = []ri{
+	{1000, "M"},
+	{950, "LM"},
+	{900, "CM"},
+	{500, "D"},
+	{450, "LD"},
+	{400, "CD"},
+	{100, "C"},
+	{95, "VC"},
+	{90, "XC"},
+	{50, "L"},
+	{45, "VL"},
+	{40, "XL"},
+	{10, "X"},
+	{9, "IX"},
+	{5, "V"},
+	{4, "IV"},
+	{1, "I"},
+}
+
+var r3tables = []ri{
+	{1000, "M"},
+	{990, "XM"},
+	{950, "LM"},
+	{900, "CM"},
+	{500, "D"},
+	{490, "XD"},
+	{450, "LD"},
+	{400, "CD"},
+	{100, "C"},
+	{99, "IC"},
+	{90, "XC"},
+	{50, "L"},
+	{45, "VL"},
+	{40, "XL"},
+	{10, "X"},
+	{9, "IX"},
+	{5, "V"},
+	{4, "IV"},
+	{1, "I"},
+}
+
+var r4tables = []ri{
+	{1000, "M"},
+	{995, "VM"},
+	{990, "XM"},
+	{950, "LM"},
+	{900, "CM"},
+	{500, "D"},
+	{495, "VD"},
+	{490, "XD"},
+	{450, "LD"},
+	{400, "CD"},
+	{100, "C"},
+	{99, "IC"},
+	{90, "XC"},
+	{50, "L"},
+	{45, "VL"},
+	{40, "XL"},
+	{10, "X"},
+	{9, "IX"},
+	{5, "V"},
+	{4, "IV"},
+	{1, "I"},
+}
+
+var r5tables = []ri{
+	{1000, "M"},
+	{999, "IM"},
+	{995, "VM"},
+	{990, "XM"},
+	{950, "LM"},
+	{900, "CM"},
+	{500, "D"},
+	{499, "ID"},
+	{495, "VD"},
+	{490, "XD"},
+	{450, "LD"},
+	{400, "CD"},
+	{100, "C"},
+	{99, "IC"},
+	{90, "XC"},
+	{50, "L"},
+	{45, "VL"},
+	{40, "XL"},
+	{10, "X"},
+	{9, "IX"},
+	{5, "V"},
+	{4, "IV"},
+	{1, "I"},
+}
+
+// Roman is an implementation of the Excel ROMAN function that convers numbers
+// to roman numerals in one of 5 formats.
+func Roman(args []Result) Result {
+	if len(args) == 0 {
+		return MakeErrorResult("ROMAN() requires at least one numeric argument")
+	}
+	if len(args) > 2 {
+		return MakeErrorResult("ROMAN() requires at most two numeric arguments")
+	}
+
+	nArg := args[0].AsNumber()
+	if nArg.Type != ResultTypeNumber {
+		return MakeErrorResult("ROMAN() requires at least one numeric argument")
+	}
+	format := 0
+	if len(args) > 1 {
+		fmtArg := args[1]
+		if fmtArg.Type != ResultTypeNumber {
+			return MakeErrorResult("ROMAN() requires second argument to be numeric")
+		}
+		format = int(fmtArg.ValueNumber)
+		if format < 0 {
+			format = 0
+		} else if format > 4 {
+			format = 4
+		}
+	}
+	dt := r1tables
+	switch format {
+	case 1:
+		dt = r2tables
+	case 2:
+		dt = r3tables
+	case 3:
+		dt = r4tables
+	case 4:
+		dt = r5tables
+	}
+	v := math.Trunc(nArg.ValueNumber)
+	buf := bytes.Buffer{}
+	for _, r := range dt {
+		for v >= r.n {
+			buf.WriteString(r.s)
+			v -= r.n
+		}
+	}
+	return MakeStringResult(buf.String())
+}
+
+type rmode byte
+
+const (
+	closest rmode = iota
+	down
+	up
+)
+
+// Round is an implementation of the Excel ROUND function that rounds a number
+// to a specified number of digits.
+func round(args []Result, mode rmode) Result {
+	if len(args) == 0 {
+		return MakeErrorResult("ROUND() requires at least one numeric arguments")
+	}
+	// number to round
+	number := args[0].AsNumber()
+	if number.Type != ResultTypeNumber {
+		return MakeErrorResult("first argument to ROUND() must be a number")
+	}
+
+	digits := float64(0)
+	if len(args) > 1 {
+		digitArg := args[1].AsNumber()
+		if digitArg.Type != ResultTypeNumber {
+			return MakeErrorResult("second argument to ROUND() must be a number")
+		}
+		digits = digitArg.ValueNumber
+	}
+
+	v := number.ValueNumber
+
+	significance := 1.0
+	if digits > 0 {
+		significance = math.Pow(1/10.0, digits)
+	} else {
+		significance = math.Pow(10.0, -digits)
+	}
+
+	v, res := math.Modf(v / significance)
+	switch mode {
+	case closest:
+		const eps = 0.499999999
+		if res >= eps {
+			v++
+		} else if res <= -eps {
+			v--
+		}
+	case down:
+		// do nothing, truncates
+	case up:
+		if res > 0 {
+			v++
+		} else if res < 0 {
+			v--
+		}
+	}
+
+	return MakeNumberResult(v * significance)
+}
+
+// Round is an implementation of the Excel ROUND function that rounds a number
+// to a specified number of digits.
+func Round(args []Result) Result {
+	return round(args, closest)
+}
+
+// RoundDown is an implementation of the Excel ROUNDDOWN function that rounds a number
+// down to a specified number of digits.
+func RoundDown(args []Result) Result {
+	return round(args, down)
+}
+
+// RoundUp is an implementation of the Excel ROUNDUP function that rounds a number
+// up to a specified number of digits.
+func RoundUp(args []Result) Result {
+	return round(args, up)
+}
+
+// SeriesSum implements the Excel SERIESSUM function.
+func SeriesSum(args []Result) Result {
+	if len(args) != 4 {
+		return MakeErrorResult("SERIESSUM() requires 4 arguments")
+	}
+	x := args[0].AsNumber()
+	n := args[1].AsNumber()
+	m := args[2].AsNumber()
+	coeffs := args[3].ListValues()
+	if x.Type != ResultTypeNumber || n.Type != ResultTypeNumber || m.Type != ResultTypeNumber {
+		return MakeErrorResult("SERIESSUM() requires first three arguments to be numeric")
+	}
+	res := float64(0)
+	for i, c := range coeffs {
+		res += c.ValueNumber * math.Pow(x.ValueNumber, n.ValueNumber+float64(i)*m.ValueNumber)
+	}
+	return MakeNumberResult(res)
 }

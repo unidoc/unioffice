@@ -8,7 +8,6 @@
 package formula
 
 import (
-	"fmt"
 	"strconv"
 )
 
@@ -37,11 +36,25 @@ type Result struct {
 	Type         ResultType
 }
 
+func (r Result) String() string {
+	return r.Value()
+}
+
 // Value returns a string version of the result.
 func (r Result) Value() string {
 	switch r.Type {
 	case ResultTypeNumber:
-		return fmt.Sprintf("%g", r.ValueNumber)
+		n := strconv.FormatFloat(r.ValueNumber, 'f', -1, 64)
+		// HACK: currently only used for testing, need to write a better general
+		// number format function
+		if len(n) > 12 {
+			end := 12
+			for i := end; i > 0 && n[i] == '0'; i-- {
+				end--
+			}
+			n = n[0 : end+1]
+		}
+		return n
 	case ResultTypeError:
 		return r.ValueString
 	case ResultTypeString:
