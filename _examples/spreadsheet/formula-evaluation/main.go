@@ -9,6 +9,8 @@ import (
 )
 
 func main() {
+	fmt.Println("Currently support", len(formula.SupportedFunctions()), "functions")
+	fmt.Println(formula.SupportedFunctions())
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 	sheet.Cell("A1").SetNumber(1.2)

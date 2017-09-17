@@ -9,8 +9,22 @@ package formula
 
 import (
 	"log"
+	"sort"
 	"sync"
 )
+
+// SupportedFunctions returns a list of supported functions.
+func SupportedFunctions() []string {
+	ret := []string{}
+	for k := range registered {
+		ret = append(ret, k)
+	}
+	for k := range registeredComplex {
+		ret = append(ret, k)
+	}
+	sort.Strings(ret)
+	return ret
+}
 
 // Function is a standard function whose result only depends on its arguments.
 type Function func(args []Result) Result
