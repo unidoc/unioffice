@@ -12,8 +12,7 @@ package formula
 type ReferenceType byte
 
 const (
-	ReferenceTypeUnknown ReferenceType = iota
-	ReferenceTypeInvalid
+	ReferenceTypeInvalid ReferenceType = iota
 	ReferenceTypeCell
 	ReferenceTypeNamedRange
 	ReferenceTypeRange

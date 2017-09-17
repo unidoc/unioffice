@@ -18,15 +18,25 @@ func NewFunction(name string, args []Expression) Expression {
 
 func (f FunctionCall) Eval(ctx Context, ev Evaluator) Result {
 	fn := LookupFunction(f.name)
-	if fn == nil {
-		return MakeErrorResult("unknown function " + f.name)
+	if fn != nil {
+		args := make([]Result, len(f.args))
+		for i, a := range f.args {
+			args[i] = a.Eval(ctx, ev)
+			args[i].Ref = a.Reference(ctx, ev)
+		}
+		return fn(args)
+	}
+	fnx := LookupFunctionComplex(f.name)
+	if fnx != nil {
+		args := make([]Result, len(f.args))
+		for i, a := range f.args {
+			args[i] = a.Eval(ctx, ev)
+			args[i].Ref = a.Reference(ctx, ev)
+		}
+		return fnx(ctx, ev, args)
 	}
 
-	args := make([]Result, len(f.args))
-	for i, a := range f.args {
-		args[i] = a.Eval(ctx, ev)
-	}
-	return fn(args)
+	return MakeErrorResult("unknown function " + f.name)
 }
 
 func (f FunctionCall) Reference(ctx Context, ev Evaluator) Reference {
