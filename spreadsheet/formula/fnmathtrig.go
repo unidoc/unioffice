@@ -24,8 +24,8 @@ func init() {
 	RegisterFunction("ABS", makeMathWrapper("ASIN", math.Abs))
 	RegisterFunction("ACOS", makeMathWrapper("ASIN", math.Acos))
 	RegisterFunction("ACOSH", makeMathWrapper("ASIN", math.Acosh))
-	// TODO: RegisterFunction("ACOT", Acot) /// Excel 2013+
-	// TODO: RegisterFunction("ACOTH", Acoth) /// Excel 2013+
+	RegisterFunction("_xlfn.ACOT", makeMathWrapper("ACOT", func(v float64) float64 { return math.Pi/2 - math.Atan(v) }))
+	RegisterFunction("_xlfn.ACOTH", makeMathWrapper("ACOTH", func(v float64) float64 { return math.Atanh(1 / v) }))
 	// TODO: RegisterFunction("_xlfn.AGGREGATE", Aggregate) // lots of dependencies
 	RegisterFunction("_xlfn.ARABIC", Arabic)
 	RegisterFunction("ASIN", makeMathWrapper("ASIN", math.Asin))
@@ -34,24 +34,24 @@ func init() {
 	RegisterFunction("ATANH", makeMathWrapper("ATANH", math.Atanh))
 	RegisterFunction("ATAN2", Atan2)
 	RegisterFunction("_xlfn.BASE", Base)
-	// RegisterFunction("CEILING", ) // TODO: figure out how this acts, Libre doesn't use it
+	RegisterFunction("CEILING", Ceiling)
 	RegisterFunction("_xlfn.CEILING.MATH", CeilingMath)
 	RegisterFunction("_xlfn.CEILING.PRECISE", CeilingPrecise)
 	RegisterFunction("COMBIN", Combin)
 	RegisterFunction("_xlfn.COMBINA", Combina)
 	RegisterFunction("COS", makeMathWrapper("COS", math.Cos))
 	RegisterFunction("COSH", makeMathWrapper("COSH", math.Cosh))
-	//RegisterFunction("COT",
-	//RegisterFunction("COTH"
-	//RegisterFunction("CSC"
-	//RegisterFunction("CSCH"
+	RegisterFunction("_xlfn.COT", makeMathWrapperInv("COT", math.Tan))
+	RegisterFunction("_xlfn.COTH", makeMathWrapperInv("COTH", math.Tanh))
+	RegisterFunction("_xlfn.CSC", makeMathWrapperInv("CSC", math.Sin))
+	RegisterFunction("_xlfn.CSCH", makeMathWrapperInv("CSC", math.Sinh))
 	RegisterFunction("_xlfn.DECIMAL", Decimal)
 	RegisterFunction("DEGREES", Degrees)
 	RegisterFunction("EVEN", Even)
 	RegisterFunction("EXP", makeMathWrapper("EXP", math.Exp))
 	RegisterFunction("FACT", Fact)
 	RegisterFunction("FACTDOUBLE", FactDouble)
-	//RegisterFunction("FLOOR", )
+	RegisterFunction("FLOOR", Floor)
 	RegisterFunction("_xlfn.FLOOR.MATH", FloorMath)
 	RegisterFunction("_xlfn.FLOOR.PRECISE", FloorPrecise)
 	RegisterFunction("GCD", GCD)
@@ -80,8 +80,8 @@ func init() {
 	RegisterFunction("ROUND", Round)
 	RegisterFunction("ROUNDDOWN", RoundDown)
 	RegisterFunction("ROUNDUP", RoundUp)
-	// RegisterFunction("SEC"
-	// RegisterFunction("SECH"
+	RegisterFunction("_xlfn.SEC", makeMathWrapperInv("SEC", math.Cos))
+	RegisterFunction("_xlfn.SECH", makeMathWrapperInv("SECH", math.Cosh))
 	RegisterFunction("SERIESSUM", SeriesSum)
 	RegisterFunction("SIGN", Sign)
 	RegisterFunction("SIN", makeMathWrapper("SIN", math.Sin))
@@ -122,6 +122,36 @@ func makeMathWrapper(name string, fn func(x float64) float64) Function {
 				return MakeErrorResult(name + " returned infinity")
 			}
 			return MakeNumberResult(v)
+		case ResultTypeList, ResultTypeString:
+			return MakeErrorResult(name + " requires a numeric argument")
+		case ResultTypeError:
+			return arg
+		default:
+			return MakeErrorResult(fmt.Sprintf("unhandled %s() argument type %s", name, arg.Type))
+		}
+	}
+}
+
+func makeMathWrapperInv(name string, fn func(x float64) float64) Function {
+	return func(args []Result) Result {
+		if len(args) != 1 {
+			return MakeErrorResult(name + " requires one argument")
+		}
+
+		arg := args[0].AsNumber()
+		switch arg.Type {
+		case ResultTypeNumber:
+			v := fn(arg.ValueNumber)
+			if math.IsNaN(v) {
+				return MakeErrorResult(name + " returned NaN")
+			}
+			if math.IsInf(v, 0) {
+				return MakeErrorResult(name + " returned infinity")
+			}
+			if v == 0 {
+				return MakeErrorResultType(ErrorTypeDivideByZero, name+" divide by zero")
+			}
+			return MakeNumberResult(1 / v)
 		case ResultTypeList, ResultTypeString:
 			return MakeErrorResult(name + " requires a numeric argument")
 		case ResultTypeError:
@@ -273,6 +303,50 @@ func CeilingMath(args []Result) Result {
 	return MakeNumberResult(v * significance)
 }
 
+// Ceiling is an implementation of the CEILING function which
+// returns the ceiling of a number.
+func Ceiling(args []Result) Result {
+	if len(args) == 0 {
+		return MakeErrorResult("CEILING() requires at least one argument")
+	}
+	if len(args) > 2 {
+		return MakeErrorResult("CEILING() allows at most two arguments")
+	}
+	// number to round
+	number := args[0].AsNumber()
+	if number.Type != ResultTypeNumber {
+		return MakeErrorResult("first argument to CEILING() must be a number")
+	}
+
+	// significance
+	significance := float64(1)
+	if number.ValueNumber < 0 {
+		significance = -1
+	}
+	if len(args) > 1 {
+		sigArg := args[1].AsNumber()
+		if sigArg.Type != ResultTypeNumber {
+			return MakeErrorResult("second argument to CEILING() must be a number")
+		}
+		significance = sigArg.ValueNumber
+	}
+
+	if significance < 0 && number.ValueNumber > 0 {
+		return MakeErrorResultType(ErrorTypeNum, "negative sig to CEILING() invalid")
+	}
+
+	if len(args) == 1 {
+		return MakeNumberResult(math.Ceil(number.ValueNumber))
+	}
+
+	v := number.ValueNumber
+	v, res := math.Modf(v / significance)
+	if res > 0 {
+		v++
+	}
+	return MakeNumberResult(v * significance)
+}
+
 // CeilingPrecise is an implementation of the CEILING.PRECISE function which
 // returns the ceiling of a number.
 func CeilingPrecise(args []Result) Result {
@@ -296,7 +370,7 @@ func CeilingPrecise(args []Result) Result {
 	if len(args) > 1 {
 		sigArg := args[1].AsNumber()
 		if sigArg.Type != ResultTypeNumber {
-			return MakeErrorResult("second argument to CEILING.MATH() must be a number")
+			return MakeErrorResult("second argument to CEILING.PRECISE() must be a number")
 		}
 		// don't care about sign of significance
 		significance = math.Abs(sigArg.ValueNumber)
@@ -571,6 +645,39 @@ func FloorMath(args []Result) Result {
 	return MakeNumberResult(v * significance)
 }
 
+// Floor is an implementation of the FlOOR function.
+func Floor(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("FLOOR() requires two arguments")
+	}
+	// number to round
+	number := args[0].AsNumber()
+	if number.Type != ResultTypeNumber {
+		return MakeErrorResult("first argument to FLOOR() must be a number")
+	}
+
+	// significance
+	var significance float64
+	sigArg := args[1].AsNumber()
+	if sigArg.Type != ResultTypeNumber {
+		return MakeErrorResult("second argument to FLOOR() must be a number")
+	}
+
+	significance = sigArg.ValueNumber
+	if significance < 0 && number.ValueNumber >= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "invalid arguments to FLOOR")
+	}
+
+	v := number.ValueNumber
+	v, res := math.Modf(v / significance)
+	if res != 0 {
+		if number.ValueNumber < 0 && res < 0 {
+			v--
+		}
+	}
+	return MakeNumberResult(v * significance)
+}
+
 // FloorPrecise is an implementation of the FlOOR.PRECISE function.
 func FloorPrecise(args []Result) Result {
 	if len(args) == 0 {
@@ -593,7 +700,7 @@ func FloorPrecise(args []Result) Result {
 	if len(args) > 1 {
 		sigArg := args[1].AsNumber()
 		if sigArg.Type != ResultTypeNumber {
-			return MakeErrorResult("second argument to FLOOR.MATH() must be a number")
+			return MakeErrorResult("second argument to FLOOR.PRECISE() must be a number")
 		}
 		// don't care about sign of significance
 		significance = math.Abs(sigArg.ValueNumber)

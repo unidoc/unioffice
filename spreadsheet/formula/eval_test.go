@@ -9,6 +9,8 @@ package formula_test
 
 import (
 	"fmt"
+	"math"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -74,7 +76,16 @@ func TestEval(t *testing.T) {
 }
 
 func TestReferenceSheet(t *testing.T) {
-	wb, err := spreadsheet.Open("testdata/formulareference.xlsx")
+	testSheet("formulareference.xlsx", t)
+}
+func TestMacExcelSheet(t *testing.T) {
+	testSheet("MacExcel365.xlsx", t)
+}
+
+func testSheet(fn string, t *testing.T) {
+	// TODO: uncomment once we quit building on 1.8
+	//t.Helper()
+	wb, err := spreadsheet.Open("testdata/" + fn)
 	if err != nil {
 		t.Fatalf("error opening reference sheet: %s", err)
 	}
@@ -96,7 +107,7 @@ func TestReferenceSheet(t *testing.T) {
 					// so evaluating the formula in the context of the sheet,
 					// should return the same results that Excel computed
 					result := cellFormula.Eval(sheet.FormulaContext(), formula.NewEvaluator())
-					if got := result.Value(); got != cachedValue {
+					if got := result.Value(); !cmpValue(got, cachedValue) {
 						t.Errorf("expected '%s', got '%s' for %s cell %s (%s) %s", cachedValue, got, sheet.Name(), cell.Reference(), cell.GetFormula(), result.ErrorMessage)
 					} else {
 						formulaCount++
@@ -106,5 +117,19 @@ func TestReferenceSheet(t *testing.T) {
 			}
 		}
 	}
-	t.Logf("evaluated %d formulas from reference sheet", formulaCount)
+	t.Logf("evaluated %d formulas from %s sheet", formulaCount, fn)
+}
+
+func cmpValue(l, r string) bool {
+	if l == r {
+		return true
+	}
+	lf, el := strconv.ParseFloat(l, 64)
+	rf, er := strconv.ParseFloat(l, 64)
+	if el == nil && er == nil {
+		if math.Abs(lf-rf) < 1e-7 {
+			return true
+		}
+	}
+	return false
 }
