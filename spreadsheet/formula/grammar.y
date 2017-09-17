@@ -23,9 +23,9 @@ package formula
 %type <rows> constArrayRows
 %type <args> arguments  constArrayCols
 
-%token <expr> tokenHorizontalRange tokenReservedName tokenDDECall  
+%token <node> tokenHorizontalRange tokenReservedName tokenDDECall  tokenLexError tokenNamedRange
 %token <node> tokenBool tokenNumber tokenString tokenError tokenErrorRef  tokenSheet tokenCell
-%token <node> tokenFunctionBultin 
+%token <node> tokenFunctionBuiltin 
 
 %token tokenLBrace tokenRBrace tokenLParen tokenRParen
 %token tokenPlus tokenMinus tokenMult tokenDiv tokenExp tokenEQ tokenLT tokenGT tokenLEQ tokenGEQ  tokenNE 
@@ -83,7 +83,10 @@ reference:
 
 prefix: tokenSheet { $$ = NewSheetPrefixExpr($1.val) };
 
-referenceItem: tokenCell { $$ = NewCellRef($1.val)}	;
+referenceItem: 
+	  tokenCell { $$ = NewCellRef($1.val)}
+	| tokenNamedRange { $$ = NewNamedRangeRef($1.val)}
+	;
 
 refFunctionCall:
 	  referenceItem tokenColon referenceItem { $$ = NewRange($1,$3) };
@@ -106,8 +109,8 @@ binOp:
 
 functionCall:  
 	  binOp;
-	| tokenFunctionBultin tokenRParen { $$ = NewFunction($1.val,nil)} ;
-	| tokenFunctionBultin arguments tokenRParen { $$ = NewFunction($1.val,$2)} ;
+	| tokenFunctionBuiltin tokenRParen { $$ = NewFunction($1.val,nil)} ;
+	| tokenFunctionBuiltin arguments tokenRParen { $$ = NewFunction($1.val,$2)} ;
 
 arguments: 
 	  argument1{ $$ = append($$, $1)  }
