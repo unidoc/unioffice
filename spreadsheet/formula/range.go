@@ -34,6 +34,11 @@ func (r Range) Eval(ctx Context, ev Evaluator) Result {
 }
 
 func (r Range) Reference(ctx Context, ev Evaluator) Reference {
+	from := r.from.Reference(ctx, ev)
+	to := r.to.Reference(ctx, ev)
+	if from.Type == ReferenceTypeCell && to.Type == ReferenceTypeCell {
+		return MakeRangeReference(from.Value + ":" + to.Value)
+	}
 	return ReferenceInvalid
 }
 
@@ -109,6 +114,10 @@ func resultFromCellRange(ctx Context, ev Evaluator, from, to string) Result {
 	}
 	// for a single row, just return a list
 	if len(arr) == 1 {
+		// single cell result
+		if len(arr[0]) == 1 {
+			return arr[0][0]
+		}
 		return MakeListResult(arr[0])
 	}
 

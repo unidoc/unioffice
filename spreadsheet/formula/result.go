@@ -35,6 +35,8 @@ type Result struct {
 	ValueArray   [][]Result
 	ErrorMessage string
 	Type         ResultType
+
+	Ref Reference
 }
 
 func (r Result) String() string {
