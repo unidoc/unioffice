@@ -469,6 +469,17 @@ func (wb *Workbook) ClearCachedFormulaResults() {
 	}
 }
 
+// RecalculateFormulas re-computes any computed formula values that are stored
+// in the sheet. As gooxml formula support is still new and not all functins are
+// supported,  if formula execution fails either due to a parse error or missing
+// function, or erorr in the result (even if expected) the cached value will be
+// left empty allowing Excel to recompute it on load.
+func (wb *Workbook) RecalculateFormulas() {
+	for _, s := range wb.Sheets() {
+		s.RecalculateFormulas()
+	}
+}
+
 // AddImage adds an image to the workbook package, returning a reference that
 // can be used to add the image to a drawing.
 func (wb *Workbook) AddImage(i common.Image) (common.ImageRef, error) {
