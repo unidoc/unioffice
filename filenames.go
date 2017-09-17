@@ -53,6 +53,9 @@ func RelativeFilename(dt DocType, typ string, index int) string {
 	case VMLDrawingType, VMLDrawingContentType:
 		return fmt.Sprintf("../drawings/vmlDrawing%d.vml", index)
 
+	case TableType, TableContentType:
+		return fmt.Sprintf("../tables/table%d.xml", index)
+
 	case ThemeType, ThemeContentType:
 		return fmt.Sprintf("theme/theme%d.xml", index)
 	case OfficeDocumentType:
@@ -144,6 +147,8 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		default:
 			log.Printf("unsupported type %s pair and %v", typ, dt)
 		}
+	case TableType, TableContentType:
+		return fmt.Sprintf("xl/tables/table%d.xml", index)
 
 	case DrawingType, DrawingContentType:
 		switch dt {

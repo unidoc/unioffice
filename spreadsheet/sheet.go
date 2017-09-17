@@ -598,6 +598,8 @@ func (s *Sheet) SetFrozen(firstRow, firstCol bool) {
 
 }
 
+// FormulaContext returns a formula evaluation context that can be used to
+// evaluate formaulas.
 func (s *Sheet) FormulaContext() formula.Context {
 	return newEvalContext(s)
 }
