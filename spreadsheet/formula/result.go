@@ -8,6 +8,7 @@
 package formula
 
 import (
+	"math"
 	"strconv"
 )
 
@@ -117,6 +118,10 @@ func (r Result) AsString() Result {
 
 // MakeNumberResult constructs a number result.
 func MakeNumberResult(v float64) Result {
+	// Excel doesn't use negative zero
+	if v == math.Copysign(0, -1) {
+		v = 0
+	}
 	return Result{Type: ResultTypeNumber, ValueNumber: v}
 }
 
