@@ -47,6 +47,7 @@ type Workbook struct {
 	drawingRels []common.Relationships
 	vmlDrawings []*vmldrawing.Container
 	charts      []*crt.ChartSpace
+	tables      []*sml.Table
 }
 
 // X returns the inner wrapped XML type.
@@ -175,6 +176,10 @@ func (wb *Workbook) Save(w io.Writer) error {
 	for i, chart := range wb.charts {
 		fn := gooxml.AbsoluteFilename(dt, gooxml.ChartType, i+1)
 		zippkg.MarshalXML(z, fn, chart)
+	}
+	for i, tbl := range wb.tables {
+		fn := gooxml.AbsoluteFilename(dt, gooxml.TableType, i+1)
+		zippkg.MarshalXML(z, fn, tbl)
 	}
 	for i, drawing := range wb.drawings {
 		fn := gooxml.AbsoluteFilename(dt, gooxml.DrawingType, i+1)
@@ -389,6 +394,13 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		wb.charts = append(wb.charts, chart)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.charts))
 
+	case gooxml.TableType:
+		tbl := sml.NewTable()
+		idx := uint32(len(wb.tables))
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: tbl, Index: idx})
+		wb.tables = append(wb.tables, tbl)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.charts))
+
 	default:
 		log.Printf("unsupported relationship %s %s", target, typ)
 	}
@@ -499,4 +511,16 @@ func (wb *Workbook) SetActiveSheetIndex(idx uint32) {
 	}
 
 	wb.x.BookViews.WorkbookView[0].ActiveTabAttr = gooxml.Uint32(idx)
+}
+
+// Tables returns a slice of all defined tables in the workbook.
+func (w *Workbook) Tables() []Table {
+	if w.tables == nil {
+		return nil
+	}
+	ret := []Table{}
+	for _, t := range w.tables {
+		ret = append(ret, Table{t})
+	}
+	return ret
 }

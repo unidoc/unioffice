@@ -33,6 +33,8 @@ const (
 	SharedStingsType         = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings"
 	SharedStringsContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"
 	SMLStyleSheetContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"
+	TableType                = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table"
+	TableContentType         = "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"
 
 	// WML
 	HeaderType      = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header"
