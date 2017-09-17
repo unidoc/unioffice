@@ -70,6 +70,8 @@ func (r Result) Value() string {
 			return ""
 		}
 		return r.ValueArray[0][0].Value()
+	case ResultTypeEmpty:
+		return ""
 	default:
 		return "unhandled result value"
 	}
