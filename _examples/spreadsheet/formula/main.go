@@ -45,6 +45,7 @@ func main() {
 	totalCell = totalRow.AddCell()
 	totalCell.SetFormulaRaw("SUM(B2:B11)")
 
+	ss.RecalculateFormulas()
 	if err := ss.Validate(); err != nil {
 		log.Fatalf("error validating: %s", err)
 	}

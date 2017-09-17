@@ -538,6 +538,35 @@ func (s *Sheet) ClearCachedFormulaResults() {
 	}
 }
 
+// RecalculateFormulas re-computes any computed formula values that are stored
+// in the sheet. As gooxml formula support is still new and not all functins are
+// supported,  if formula execution fails either due to a parse error or missing
+// function, or erorr in the result (even if expected) the cached value will be
+// left empty allowing Excel to recompute it on load.
+func (s *Sheet) RecalculateFormulas() {
+	ev := formula.NewEvaluator()
+	ctx := s.FormulaContext()
+	for _, r := range s.Rows() {
+		for _, c := range r.Cells() {
+			if c.X().F != nil {
+				formStr := c.X().F.Content
+				res := ev.Eval(ctx, formStr).AsString()
+				if res.Type == formula.ResultTypeError {
+					log.Printf("error evaulating formula %s: %s", formStr, res.ErrorMessage)
+					c.X().V = nil
+				} else {
+					if res.Type == formula.ResultTypeNumber {
+						c.X().TAttr = sml.ST_CellTypeN
+					} else {
+						c.X().TAttr = sml.ST_CellTypeInlineStr
+					}
+					c.X().V = gooxml.String(res.Value())
+				}
+			}
+		}
+	}
+}
+
 // SheetViews returns the sheet views defined.  This is where splits and frozen
 // rows/cols are configured.  Multiple sheet views are allowed, but I'm not
 // aware of there being a use for more than a single sheet view.
