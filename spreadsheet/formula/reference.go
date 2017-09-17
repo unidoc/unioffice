@@ -15,6 +15,8 @@ const (
 	ReferenceTypeUnknown ReferenceType = iota
 	ReferenceTypeInvalid
 	ReferenceTypeCell
+	ReferenceTypeNamedRange
+	ReferenceTypeRange
 	ReferenceTypeSheet
 )
 
@@ -24,3 +26,7 @@ type Reference struct {
 }
 
 var ReferenceInvalid = Reference{Type: ReferenceTypeInvalid}
+
+func MakeRangeReference(ref string) Reference {
+	return Reference{Type: ReferenceTypeRange, Value: ref}
+}

@@ -16,4 +16,7 @@ type Context interface {
 	// Sheet returns an evaluation context for a given sheet name.  This is used
 	// when evaluating cells that pull data from other sheets (e.g. ='Sheet 2'!A1)
 	Sheet(name string) Context
+
+	// NamedRange returns a named range.
+	NamedRange(name string) Reference
 }

@@ -57,3 +57,17 @@ func (e *evalContext) Sheet(name string) formula.Context {
 	}
 	return formula.InvalidReferenceContext
 }
+
+func (e *evalContext) NamedRange(ref string) formula.Reference {
+	for _, dn := range e.s.w.DefinedNames() {
+		if dn.Name() == ref {
+			return formula.MakeRangeReference(dn.Content())
+		}
+	}
+	for _, tbl := range e.s.w.Tables() {
+		if tbl.Name() == ref {
+			return formula.MakeRangeReference(tbl.Reference())
+		}
+	}
+	return formula.ReferenceInvalid
+}

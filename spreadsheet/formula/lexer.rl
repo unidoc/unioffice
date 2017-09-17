@@ -44,7 +44,7 @@ import (
   sheet = sheetChar+ '!';
   quotedSheet = (sheetChar+ | squote (enclosedSheetChar  | dquote)+ squote) '!';
 
-  namedRange = [A-Z_\\][A-Z0-9\\_.];
+  namedRange = [A-Z_\\][A-Za-z0-9\\_.]+;
 
   reservedName = '_xlnm.' [A-Z_]+;
   
@@ -64,9 +64,10 @@ import (
   reservedName => {l.emit(tokenReservedName, data[ts:te])};
 
   
-  builtinFunction => {l.emit(tokenFunctionBultin, data[ts:te-1])}; # chop off the final '(' so we only pass the name
-  excelFn => {l.emit(tokenFunctionBultin, data[ts:te-1])}; # chop off the final '(' so we only pass the name
+  builtinFunction => {l.emit(tokenFunctionBuiltin, data[ts:te-1])}; # chop off the final '(' so we only pass the name
+  excelFn => {l.emit(tokenFunctionBuiltin, data[ts:te-1])}; # chop off the final '(' so we only pass the name
   
+  namedRange  => {l.emit(tokenNamedRange, data[ts:te])};
 
   dquote ( not_dquote | dquote dquote)* dquote => { l.emit(tokenString, data[ts+1:te-1])}; # chop off delimiters
 
@@ -150,7 +151,7 @@ for !done {
   
   _ = eof
   if cs == formula_error {
-     log.Fatal("parse error")
+     l.emit(tokenLexError,nil)
   }
   close(l.nodes)
 }

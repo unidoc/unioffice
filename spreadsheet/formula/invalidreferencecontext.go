@@ -19,10 +19,10 @@ func (i *ivr) Cell(ref string, ev Evaluator) Result {
 	return MakeErrorResult("invalid reference")
 }
 
-func (i *ivr) Sheet(name string) Context {
-	return i
+func (i *ivr) NamedRange(ref string) Reference {
+	return ReferenceInvalid
 }
 
-func (i *ivr) Reference(ref string, ev Evaluator) Reference {
-	return ReferenceInvalid
+func (i *ivr) Sheet(name string) Context {
+	return i
 }

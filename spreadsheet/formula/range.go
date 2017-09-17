@@ -28,30 +28,7 @@ func (r Range) Eval(ctx Context, ev Evaluator) Result {
 	from := r.from.Reference(ctx, ev)
 	to := r.to.Reference(ctx, ev)
 	if from.Type == ReferenceTypeCell && to.Type == ReferenceTypeCell {
-		fc, fr, fe := ParseCellReference(from.Value)
-		tc, tr, te := ParseCellReference(to.Value)
-		if fe != nil {
-			return MakeErrorResult("unable to parse range " + from.Value)
-		}
-		if te != nil {
-			return MakeErrorResult("unable to parse range " + to.Value)
-		}
-		bc := ColumnToIndex(fc)
-		ec := ColumnToIndex(tc)
-		arr := [][]Result{}
-		for r := fr; r <= tr; r++ {
-			args := []Result{}
-			for c := bc; c <= ec; c++ {
-				args = append(args, ctx.Cell(fmt.Sprintf("%s%d", IndexToColumn(c), r), ev))
-			}
-			arr = append(arr, args)
-		}
-		// for a single row, just return a list
-		if len(arr) == 1 {
-			return MakeListResult(arr[0])
-		}
-
-		return MakeArrayResult(arr)
+		return resultFromCellRange(ctx, ev, from.Value, to.Value)
 	}
 	return MakeErrorResult("invalid range " + from.Value + " to " + to.Value)
 }
@@ -109,4 +86,31 @@ func IndexToColumn(col uint32) string {
 		res[i], res[len(res)-i-1] = res[len(res)-i-1], res[i]
 	}
 	return string(res)
+}
+
+func resultFromCellRange(ctx Context, ev Evaluator, from, to string) Result {
+	fc, fr, fe := ParseCellReference(from)
+	tc, tr, te := ParseCellReference(to)
+	if fe != nil {
+		return MakeErrorResult("unable to parse range " + from)
+	}
+	if te != nil {
+		return MakeErrorResult("unable to parse range " + to)
+	}
+	bc := ColumnToIndex(fc)
+	ec := ColumnToIndex(tc)
+	arr := [][]Result{}
+	for r := fr; r <= tr; r++ {
+		args := []Result{}
+		for c := bc; c <= ec; c++ {
+			args = append(args, ctx.Cell(fmt.Sprintf("%s%d", IndexToColumn(c), r), ev))
+		}
+		arr = append(arr, args)
+	}
+	// for a single row, just return a list
+	if len(arr) == 1 {
+		return MakeListResult(arr[0])
+	}
+
+	return MakeArrayResult(arr)
 }
