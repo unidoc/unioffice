@@ -17,6 +17,7 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
 	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	"baliance.com/gooxml/spreadsheet/format"
 )
 
 const iso8601Format = "2006-01-02T15:04:05Z07:00"
@@ -108,14 +109,70 @@ func (c Cell) SetNumber(v float64) {
 	c.x.TAttr = sml.ST_CellTypeN
 }
 
+func (c Cell) getFormat() string {
+	if c.x.SAttr == nil {
+		return "General"
+	}
+	sid := *c.x.SAttr
+	f := c.w.StyleSheet.GetCellStyle(sid)
+	nf := c.w.StyleSheet.GetNumberFormat(f.NumberFormat())
+	return nf.GetFormat()
+}
+
+// GetFormattedValue returns the formatted cell value as it would appear in
+// Excel. This involves determining the format string to apply, parsing it, and
+// then formatting the value according to the format string.  This should only
+// be used if you care about replicating what Excel would show, otherwise
+// GetValueAsNumber()/GetValueAsDate
+func (c Cell) GetFormattedValue() string {
+	f := c.getFormat()
+	switch c.x.TAttr {
+	// boolean
+	case sml.ST_CellTypeB:
+		b, _ := c.GetValueAsBool()
+		if b {
+			return "TRUE"
+		}
+		return "FALSE"
+	// number
+	case sml.ST_CellTypeN:
+		v, _ := c.GetValueAsNumber()
+		return format.Number(v, f)
+	// error
+	case sml.ST_CellTypeE:
+		if c.x.V != nil {
+			return *c.x.V
+		}
+		return ""
+	// string / inline string
+	case sml.ST_CellTypeS, sml.ST_CellTypeInlineStr:
+		return format.String(c.GetString(), f)
+	// formula string, Excel doesn't appear to use this
+	case sml.ST_CellTypeStr:
+		if c.x.V != nil {
+			return *c.x.V
+		}
+		return ""
+	case sml.ST_CellTypeUnset:
+		fallthrough
+	default:
+		v, err := c.GetValueAsNumber()
+		if err == nil {
+			return format.Number(v, f)
+		}
+		s, _ := c.GetValue()
+		return format.String(s, f)
+	}
+}
+
 // GetValueAsNumber retrieves the cell's value as a number
 func (c Cell) GetValueAsNumber() (float64, error) {
-	if c.x.TAttr != sml.ST_CellTypeN {
-		return math.NaN(), errors.New("cell is not of number type")
-	}
-	if c.x.V == nil {
+	if c.x.V == nil && c.x.Is == nil {
 		// empty cells have an implicit zero value
 		return 0, nil
+	}
+	if c.x.TAttr == sml.ST_CellTypeS || !format.IsNumber(*c.x.V) {
+		return math.NaN(), errors.New("cell is not of number type")
 	}
 	return strconv.ParseFloat(*c.x.V, 64)
 }
@@ -248,7 +305,7 @@ func (c Cell) SetStyleIndex(idx uint32) {
 }
 
 // GetString returns the string in a cell if it's an inline or string table
-// string.  Otherwise it returns an empty string.
+// string. Otherwise it returns an empty string.
 func (c Cell) GetString() string {
 	switch c.x.TAttr {
 	case sml.ST_CellTypeInlineStr:
@@ -328,7 +385,18 @@ func (c Cell) AddHyperlink(url string) {
 
 // IsNumber returns true if the cell is a number type cell.
 func (c Cell) IsNumber() bool {
-	return c.x.TAttr == sml.ST_CellTypeN
+	switch c.x.TAttr {
+	case sml.ST_CellTypeN:
+		return true
+	case sml.ST_CellTypeS, sml.ST_CellTypeB:
+		return false
+	}
+	return c.x.V != nil && format.IsNumber(*c.x.V)
+}
+
+// IsEmpty returns true if the cell is empty.
+func (c Cell) IsEmpty() bool {
+	return c.x.TAttr == sml.ST_CellTypeUnset && c.x.V == nil && c.x.F == nil
 }
 
 // IsBool returns true if the cell is a boolean type cell.

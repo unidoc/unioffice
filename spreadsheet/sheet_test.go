@@ -198,5 +198,34 @@ func TestSheetClearCachedFormula(t *testing.T) {
 	if cell.X().V != nil {
 		t.Errorf("cached result not cleared")
 	}
+}
 
+func TestFormattedCell(t *testing.T) {
+	wb, err := spreadsheet.Open("testdata/fmt.xlsx")
+	if err != nil {
+		t.Fatalf("error reading fmt.xlsx: %s", err)
+	}
+	// these cells all have the same value with different formatting applied
+	td := []struct {
+		Cell string
+		Exp  string
+	}{
+		{"A1", "9/18/17"},
+		{"A2", "Monday, September 18, 2017"},
+		{"A3", "4:47:28 PM"},
+		{"A4", "42996.69963"},
+		{"A5", "42996.70"},
+		{"A6", "4.30E+04"},
+		{"A7", "9/18"},
+		{"A8", "18-Sep-17"},
+	}
+
+	sheet := wb.Sheets()[0]
+	for _, tc := range td {
+		got := sheet.Cell(tc.Cell).GetFormattedValue()
+		if got != tc.Exp {
+			t.Errorf("expected %s in cell %s, got %s", tc.Exp, tc.Cell, got)
+		}
+	}
+	_ = wb
 }

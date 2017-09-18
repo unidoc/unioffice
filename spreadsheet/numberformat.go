@@ -21,9 +21,14 @@ func (n NumberFormat) X() *sml.CT_NumFmt {
 	return n.x
 }
 
-// SetCode sets the number format code.
-func (n NumberFormat) SetCode(f string) {
+// SetFormat sets the number format code.
+func (n NumberFormat) SetFormat(f string) {
 	n.x.FormatCodeAttr = f
+}
+
+// GetFormat sets the number format code.
+func (n NumberFormat) GetFormat() string {
+	return n.x.FormatCodeAttr
 }
 
 // ID returns the number format ID.  This is not an index as there are some

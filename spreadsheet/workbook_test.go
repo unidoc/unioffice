@@ -180,7 +180,7 @@ func TestPreserveSpace(t *testing.T) {
 		t.Errorf("expected 4 cells, got %d", len(cells))
 	}
 	for i, c := range cells {
-		got, err := c.GetValue()
+		got, err := c.GetRawValue()
 		if err != nil {
 			t.Errorf("error retrieving cell value: %s", err)
 		}
