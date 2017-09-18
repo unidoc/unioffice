@@ -35,16 +35,20 @@ func (e *evalContext) Cell(ref string, ev formula.Evaluator) formula.Result {
 		return res
 	}
 
-	if c.IsNumber() {
+	// Evaluating an empty cell returns a zero in Excel
+	if c.IsEmpty() {
+		return formula.MakeNumberResult(0)
+	} else if c.IsNumber() {
 		v, _ := c.GetValueAsNumber()
 		return formula.MakeNumberResult(v)
 	} else if c.IsBool() {
 		v, _ := c.GetValueAsBool()
 		return formula.MakeBoolResult(v)
-	} else {
-		v, _ := c.GetValue()
-		return formula.MakeStringResult(v)
 	}
+
+	v, _ := c.GetRawValue()
+	return formula.MakeStringResult(v)
+
 	// TODO: handle this properly
 	// return formula.MakeErrorResult()
 }

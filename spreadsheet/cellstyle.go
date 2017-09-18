@@ -49,10 +49,8 @@ func (cs CellStyle) SetNumberFormatStandard(s StandardFormat) {
 }
 
 func (cs CellStyle) SetNumberFormat(s string) {
-
-	//SetNumberFormat
 	nf := cs.wb.StyleSheet.AddNumberFormat()
-	nf.SetCode(s)
+	nf.SetFormat(s)
 	cs.xf.ApplyNumberFormatAttr = gooxml.Bool(true)
 	cs.xf.NumFmtIdAttr = gooxml.Uint32(nf.ID())
 }

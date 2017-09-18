@@ -7,6 +7,8 @@
 
 package spreadsheet
 
+import sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+
 // StandardFormat is a standard ECMA 376 number format.
 type StandardFormat uint32
 
@@ -24,8 +26,8 @@ const (
 	StandardFormat11       StandardFormat = 11 // 0.00E+00
 	StandardFormat12       StandardFormat = 12 // # ?/?
 	StandardFormat13       StandardFormat = 13 // # ??/??
-	StandardFormatDate     StandardFormat = 14 // mm-dd-yy
-	StandardFormat14       StandardFormat = 14 // mm-dd-yy
+	StandardFormatDate     StandardFormat = 14 // m/d/yy
+	StandardFormat14       StandardFormat = 14 // m/d/yy
 	StandardFormat15       StandardFormat = 15 // d-mmm-yy
 	StandardFormat16       StandardFormat = 16 // d-mmm
 	StandardFormat17       StandardFormat = 17 // mmm-yy
@@ -46,3 +48,69 @@ const (
 	StandardFormat48       StandardFormat = 48 // ##0.0E+0
 	StandardFormat49       StandardFormat = 49 // @
 )
+
+func CreateDefaultNumberFormat(id StandardFormat) NumberFormat {
+	nf := NumberFormat{x: sml.NewCT_NumFmt()}
+	nf.x.NumFmtIdAttr = uint32(id)
+	nf.x.FormatCodeAttr = "General"
+	switch id {
+	case StandardFormat0:
+		nf.x.FormatCodeAttr = "General"
+	case StandardFormat1:
+		nf.x.FormatCodeAttr = "0"
+	case StandardFormat2:
+		nf.x.FormatCodeAttr = "0.00"
+	case StandardFormat3:
+		nf.x.FormatCodeAttr = "#,##0"
+	case StandardFormat4:
+		nf.x.FormatCodeAttr = "#,##0.00"
+	case StandardFormat9:
+		nf.x.FormatCodeAttr = "0%"
+	case StandardFormat10:
+		nf.x.FormatCodeAttr = "0.00%"
+	case StandardFormat11:
+		nf.x.FormatCodeAttr = "0.00E+00"
+	case StandardFormat12:
+		nf.x.FormatCodeAttr = "# ?/?"
+	case StandardFormat13:
+		nf.x.FormatCodeAttr = "# ??/??"
+	case StandardFormat14:
+		nf.x.FormatCodeAttr = "m/d/yy"
+	case StandardFormat15:
+		nf.x.FormatCodeAttr = "d-mmm-yy"
+	case StandardFormat16:
+		nf.x.FormatCodeAttr = "d-mmm"
+	case StandardFormat17:
+		nf.x.FormatCodeAttr = "mmm-yy"
+	case StandardFormat18:
+		nf.x.FormatCodeAttr = "h:mm AM/PM"
+	case StandardFormat19:
+		nf.x.FormatCodeAttr = "h:mm:ss AM/PM"
+	case StandardFormat20:
+		nf.x.FormatCodeAttr = "h:mm"
+	case StandardFormat21:
+		nf.x.FormatCodeAttr = "h:mm:ss"
+	case StandardFormat22:
+		nf.x.FormatCodeAttr = "m/d/yy h:mm"
+	case StandardFormat37:
+		nf.x.FormatCodeAttr = "#,##0 ;(#,##0)"
+	case StandardFormat38:
+		nf.x.FormatCodeAttr = "#,##0 ;[Red](#,##0)"
+	case StandardFormat39:
+		nf.x.FormatCodeAttr = "#,##0.00;(#,##0.00)"
+	case StandardFormat40:
+		nf.x.FormatCodeAttr = "#,##0.00;[Red](#,##0.00)"
+	case StandardFormat45:
+		nf.x.FormatCodeAttr = "mm:ss"
+	case StandardFormat46:
+		nf.x.FormatCodeAttr = "[h]:mm:ss"
+	case StandardFormat47:
+		nf.x.FormatCodeAttr = "mmss.0"
+	case StandardFormat48:
+		nf.x.FormatCodeAttr = "##0.0E+0"
+	case StandardFormat49:
+		nf.x.FormatCodeAttr = "@"
+
+	}
+	return nf
+}

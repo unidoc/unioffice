@@ -177,3 +177,24 @@ func (s StyleSheet) AddNumberFormat() NumberFormat {
 func (s StyleSheet) Fills() Fills {
 	return Fills{s.x.Fills}
 }
+
+func (s StyleSheet) GetCellStyle(id uint32) CellStyle {
+	for i, f := range s.x.CellXfs.Xf {
+		if uint32(i) == id {
+			return CellStyle{s.wb, f, s.x.CellXfs}
+		}
+	}
+	return CellStyle{}
+}
+
+func (s StyleSheet) GetNumberFormat(id uint32) NumberFormat {
+	if id >= 0 && id < 50 {
+		return CreateDefaultNumberFormat(StandardFormat(id))
+	}
+	for _, nf := range s.x.NumFmts.NumFmt {
+		if nf.NumFmtIdAttr == id {
+			return NumberFormat{s.wb, nf}
+		}
+	}
+	return NumberFormat{}
+}
