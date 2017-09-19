@@ -89,7 +89,7 @@ func (f *Format) AddPlaceholder(t FmtType, l []byte) {
 	case FmtTypeDigitOptThousands:
 		f.hasThousands = true
 	default:
-		log.Printf("unsupported ph type in parse %s", t)
+		log.Printf("unsupported ph type in parse %v", t)
 	}
 }
 
@@ -217,7 +217,7 @@ func number(vOrig float64, f Format, isNeg bool) string {
 			case FmtTypeTime:
 				op = append(op, reverse(dTime(t, vOrig, ph.DateTime))...)
 			default:
-				log.Fatalf("unsupported type in whole %v", ph)
+				log.Printf("unsupported type in whole %v", ph)
 			}
 		}
 		buf = append(buf, reverse(op)...)
@@ -288,7 +288,7 @@ func number(vOrig float64, f Format, isNeg bool) string {
 			case FmtTypeLiteral:
 				op = append(op, ph.Literal)
 			default:
-				log.Fatalf("unsupported type in fractional %v", ph)
+				log.Printf("unsupported type in fractional %v", ph)
 			}
 		}
 		// remaining digits are truncated
@@ -496,7 +496,7 @@ func dDate(t time.Time, f string) []byte {
 		case "dddd":
 			ret = t.AppendFormat(ret, "Monday")
 		default:
-			log.Fatalf("unsupported date format %s", s)
+			log.Printf("unsupported date format %s", s)
 		}
 		if f[i] == '/' {
 			ret = append(ret, '/')
@@ -556,7 +556,7 @@ func dTime(t time.Time, v float64, f string) []byte {
 			ret = strconv.AppendInt(ret, int64(v*24*60*60), 10)
 		case "":
 		default:
-			log.Fatalf("unsupported time format %s", s)
+			log.Printf("unsupported time format %s", s)
 		}
 		if f[i] == ':' {
 			ret = append(ret, ':')
