@@ -156,7 +156,7 @@ func (c Cell) GetFormattedValue() string {
 	case sml.ST_CellTypeUnset:
 		fallthrough
 	default:
-		s, _ := c.GetValue()
+		s, _ := c.GetRawValue()
 		// avoid returning zero for an empty cell
 		if len(s) == 0 {
 			return ""
@@ -334,7 +334,7 @@ func (c Cell) GetString() string {
 	return ""
 }
 
-func (c Cell) GetValue() (string, error) {
+func (c Cell) GetRawValue() (string, error) {
 	switch c.x.TAttr {
 	case sml.ST_CellTypeInlineStr:
 		if c.x.Is == nil || c.x.Is.T == nil {
@@ -354,13 +354,11 @@ func (c Cell) GetValue() (string, error) {
 		if c.x.F != nil {
 			return c.x.F.Content, nil
 		}
-	default:
-		if c.x.V == nil {
-			return "", nil
-		}
-		return *c.x.V, nil
 	}
-	return "", errors.New("unsupported cell type")
+	if c.x.V == nil {
+		return "", nil
+	}
+	return *c.x.V, nil
 }
 
 // SetHyperlink sets a hyperlink on a cell.
