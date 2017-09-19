@@ -8,6 +8,7 @@
 package format
 
 import (
+	"bytes"
 	"log"
 	"math"
 	"strconv"
@@ -23,10 +24,11 @@ type Format struct {
 	Exponent      []PlaceHolder
 	IsExponential bool
 
-	isPercent   bool
-	isGeneral   bool
-	skipNext    bool
-	seenDecimal bool
+	isPercent    bool
+	isGeneral    bool
+	hasThousands bool
+	skipNext     bool
+	seenDecimal  bool
 }
 
 //go:generate stringer -type=FmtType
@@ -40,6 +42,7 @@ const (
 	FmtTypeDecimal
 	FmtTypePercent
 	FmtTypeDollar
+	FmtTypeDigitOptThousands
 	FmtTypeUnderscore
 	FmtTypeDate
 	FmtTypeTime
@@ -68,7 +71,9 @@ func (f *Format) AddPlaceholder(t FmtType, l []byte) {
 		t = FmtTypeLiteral
 		l = []byte{'%'}
 		fallthrough
-	case FmtTypeLiteral, FmtTypeDigit, FmtTypeDigitOpt, FmtTypeDollar, FmtTypeComma:
+	case FmtTypeDigitOpt:
+		fallthrough
+	case FmtTypeLiteral, FmtTypeDigit, FmtTypeDollar, FmtTypeComma:
 		if l == nil {
 			l = []byte{0}
 		}
@@ -81,6 +86,8 @@ func (f *Format) AddPlaceholder(t FmtType, l []byte) {
 				f.Fractional = append(f.Fractional, PlaceHolder{Type: t, Literal: c})
 			}
 		}
+	case FmtTypeDigitOptThousands:
+		f.hasThousands = true
 	default:
 		log.Printf("unsupported ph type in parse %s", t)
 	}
@@ -180,6 +187,7 @@ func number(vOrig float64, f Format, isNeg bool) string {
 				if bidx >= 0 {
 					op = append(op, raw[bidx])
 					consumed++
+					lastIdx = i
 				} else {
 					// we don't skip everything, just #/,/?. This is used so
 					// that formats like (#,###) with '1' turn into '(1)' and
@@ -199,7 +207,9 @@ func number(vOrig float64, f Format, isNeg bool) string {
 				}
 				op = append(op, '$')
 			case FmtTypeComma:
-				op = append(op, ',')
+				if !f.hasThousands {
+					op = append(op, ',')
+				}
 			case FmtTypeLiteral:
 				op = append(op, ph.Literal)
 			case FmtTypeDate:
@@ -222,7 +232,26 @@ func number(vOrig float64, f Format, isNeg bool) string {
 			copy(o[lastIdx+rem:], buf[lastIdx:])
 			buf = o
 		}
+		if f.hasThousands {
+			b := bytes.Buffer{}
+			nonTerm := 0
+			for i := len(buf) - 1; i >= 0; i-- {
+				if !(buf[i] >= '0' && buf[i] <= '9') {
+					nonTerm++
+				} else {
+					break
+				}
+			}
+			for i := 0; i < len(buf); i++ {
+				idx := (len(buf) - i - nonTerm)
+				if idx%3 == 0 && idx != 0 && i != 0 {
+					b.WriteByte(',')
+				}
+				b.WriteByte(buf[i])
 
+			}
+			buf = b.Bytes()
+		}
 	}
 
 	if len(f.Fractional) != 0 {

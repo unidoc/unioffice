@@ -156,11 +156,16 @@ func (c Cell) GetFormattedValue() string {
 	case sml.ST_CellTypeUnset:
 		fallthrough
 	default:
+		s, _ := c.GetValue()
+		// avoid returning zero for an empty cell
+		if len(s) == 0 {
+			return ""
+		}
+
 		v, err := c.GetValueAsNumber()
 		if err == nil {
 			return format.Number(v, f)
 		}
-		s, _ := c.GetValue()
 		return format.String(s, f)
 	}
 }
