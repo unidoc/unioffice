@@ -113,6 +113,7 @@ func TestCellFormattingNumber(t *testing.T) {
 		{42996.6996269676, "[$-409]h:mm:ss AM/PM", "4:47:28 PM"},
 		{42996.6996269676, " mm:ss ", " 47:28 "},
 		{42996.6996269676, "mmmmm", "S"}, // first letter of month
+		{1.2345, `[h]:mm:ss"s"`, "29:37:41s"},
 
 		// absolute times
 		{4, "[h]", "96"},
