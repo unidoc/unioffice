@@ -320,9 +320,7 @@ func (s Sheet) RemoveMergedCell(mc MergedCell) {
 
 }
 
-// Extents returns the sheet extents in the form "A1:B15". This requires
-// scanning the entire sheet.
-func (s Sheet) Extents() string {
+func (s Sheet) ExtentsIndex() (string, uint32, string, uint32) {
 	var minRow, maxRow, minCol, maxCol uint32 = 1, 1, 0, 0
 	for _, r := range s.Rows() {
 		if r.RowNumber() < minRow {
@@ -344,10 +342,14 @@ func (s Sheet) Extents() string {
 			}
 		}
 	}
+	return IndexToColumn(minCol), minRow, IndexToColumn(maxCol), maxRow
+}
 
-	return fmt.Sprintf("%s%d:%s%d",
-		IndexToColumn(minCol), minRow,
-		IndexToColumn(maxCol), maxRow)
+// Extents returns the sheet extents in the form "A1:B15". This requires
+// scanning the entire sheet.
+func (s Sheet) Extents() string {
+	sc, sr, ec, er := s.ExtentsIndex()
+	return fmt.Sprintf("%s%d:%s%d", sc, sr, ec, er)
 }
 
 // AddConditionalFormatting adds conditional formatting to the sheet.

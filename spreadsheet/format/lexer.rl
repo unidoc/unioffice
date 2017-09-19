@@ -68,6 +68,7 @@ import (
   NFTime = (NFTimeToken | ':')+;
   cond = '[' any+ ']';
 main := |*
+  '#,#' => { l.fmt.AddPlaceholder(FmtTypeDigitOptThousands,nil) };
   '0' => { l.fmt.AddPlaceholder(FmtTypeDigit,nil) };
   '#' => { l.fmt.AddPlaceholder(FmtTypeDigitOpt,nil) };
   '?' => { }; # ignore for now
@@ -137,10 +138,8 @@ for !done {
       copy(data[0:],data[ts:])
     } 
   }
-  
   _ = eof
   if cs == format_error {
-     //l.emit(tokenLexError,nil)
-     log.Panic("ERROR LEXING")
+     log.Printf("format parse error")
   }
 }

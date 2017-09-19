@@ -72,7 +72,6 @@ func (r Row) AddCell() Cell {
 	}
 
 	c := spreadsheetml.NewCT_Cell()
-	c.TAttr = spreadsheetml.ST_CellTypeN
 	r.x.C = append(r.x.C, c)
 
 	// fast path failed, so find the last cell and add another
@@ -108,7 +107,6 @@ func (r Row) Cells() []Cell {
 // invaild spreadsheet.
 func (r Row) AddNamedCell(col string) Cell {
 	c := spreadsheetml.NewCT_Cell()
-	c.TAttr = spreadsheetml.ST_CellTypeN
 
 	r.x.C = append(r.x.C, c)
 	c.RAttr = gooxml.Stringf("%s%d", col, r.RowNumber())
