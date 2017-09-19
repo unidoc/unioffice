@@ -68,28 +68,28 @@ import (
   NFTime = (NFTimeToken | ':')+;
   cond = '[' any+ ']';
 main := |*
-  '#,#' => { l.fmt.AddPlaceholder(FmtTypeDigitOptThousands,nil) };
-  '0' => { l.fmt.AddPlaceholder(FmtTypeDigit,nil) };
-  '#' => { l.fmt.AddPlaceholder(FmtTypeDigitOpt,nil) };
+  '#,#' => { l.fmt.AddToken(FmtTypeDigitOptThousands,nil) };
+  '0' => { l.fmt.AddToken(FmtTypeDigit,nil) };
+  '#' => { l.fmt.AddToken(FmtTypeDigitOpt,nil) };
   '?' => { }; # ignore for now
-  '.' => { l.fmt.AddPlaceholder(FmtTypeDecimal,nil) };
-  ',' => { l.fmt.AddPlaceholder(FmtTypeComma,nil) };
-  '%' => { l.fmt.AddPlaceholder(FmtTypePercent,nil) };
-  '$' => { l.fmt.AddPlaceholder(FmtTypeDollar,nil) };
-  '_' => { l.fmt.AddPlaceholder(FmtTypeUnderscore,nil) };
+  '.' => { l.fmt.AddToken(FmtTypeDecimal,nil) };
+  ',' => { l.fmt.AddToken(FmtTypeComma,nil) };
+  '%' => { l.fmt.AddToken(FmtTypePercent,nil) };
+  '$' => { l.fmt.AddToken(FmtTypeDollar,nil) };
+  '_' => { l.fmt.AddToken(FmtTypeUnderscore,nil) };
   ';' => { l.nextFmt() };
   NFGeneral => { l.fmt.isGeneral = true };
-  #NFFraction => {fmt.Println("FRACTION",string(data[ts:te]))}; 
+  NFFraction => { l.fmt.AddToken(FmtTypeFraction,data[ts:te]) }; 
   # we have to keep date/time separate as 'mm' is both minutes and month
-  NFDate => { l.fmt.AddPlaceholder(FmtTypeDate,data[ts:te]) };
-  NFTime => { l.fmt.AddPlaceholder(FmtTypeTime,data[ts:te]) };
-  NFAbsTimeToken => { l.fmt.AddPlaceholder(FmtTypeTime,data[ts:te]) };
+  NFDate => { l.fmt.AddToken(FmtTypeDate,data[ts:te]) };
+  NFTime => { l.fmt.AddToken(FmtTypeTime,data[ts:te]) };
+  NFAbsTimeToken => { l.fmt.AddToken(FmtTypeTime,data[ts:te]) };
   NFPartExponential => { l.fmt.IsExponential = true };
   cond => {}; # ignoring 
   # escaped
-  '\\' any => { l.fmt.AddPlaceholder(FmtTypeLiteral,data[ts+1:te]) };
-  any => { l.fmt.AddPlaceholder(FmtTypeLiteral,data[ts:te]) };
-  dquote ( not_dquote | dquote dquote)* dquote => { l.fmt.AddPlaceholder(FmtTypeLiteral,data[ts+1:te-1])};
+  '\\' any => { l.fmt.AddToken(FmtTypeLiteral,data[ts+1:te]) };
+  any => { l.fmt.AddToken(FmtTypeLiteral,data[ts:te]) };
+  dquote ( not_dquote | dquote dquote)* dquote => { l.fmt.AddToken(FmtTypeLiteral,data[ts+1:te-1])};
 
 *|;
 
