@@ -171,7 +171,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/drawings/vmlDrawing%d.vml", index)
 		default:
-			log.Fatalf("unsupported type %s pair and %v", typ, dt)
+			log.Printf("unsupported type %s pair and %v", typ, dt)
 		}
 
 	// SML
