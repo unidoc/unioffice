@@ -20,18 +20,19 @@ import (
   float   = sign? [0-9]+ '.' [0-9]+ ('E' sign [0-9]+)?;
 
   main := |*
-  integer => { return te == len(data); };
-  float => { return te == len(data); };
-  any* => { return false; };
+  integer => { isNumber = te == len(data); };
+  float => { isNumber = te == len(data); };
+  any* => { isNumber = false; };
   *|;
 }%%
-func IsNumber(data string) bool {
+func IsNumber(data string) (isNumber bool) {
   cs, p, pe := 0, 0, len(data)
   eof := len(data)
   ts, te,act := 0,0,0
   _ = te
   _ = act
   _ = ts
+  
   
   %%{
     write init;
@@ -40,5 +41,5 @@ func IsNumber(data string) bool {
    if cs == format_error {
      return false
    }
-   return false
+   return
 }

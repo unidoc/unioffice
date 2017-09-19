@@ -17,7 +17,7 @@ const isnumber_error int = -1
 const isnumber_en_main int = 0
 
 //line isnumber.rl:27
-func IsNumber(data string) bool {
+func IsNumber(data string) (isNumber bool) {
 	cs, p, pe := 0, 0, len(data)
 	eof := len(data)
 	ts, te, act := 0, 0, 0
@@ -25,7 +25,7 @@ func IsNumber(data string) bool {
 	_ = act
 	_ = ts
 
-//line isnumber.go:37
+//line isnumber.go:38
 	{
 		cs = isnumber_start
 		ts = 0
@@ -33,7 +33,7 @@ func IsNumber(data string) bool {
 		act = 0
 	}
 
-//line isnumber.go:45
+//line isnumber.go:46
 	{
 		if p == pe {
 			goto _test_eof
@@ -62,7 +62,7 @@ func IsNumber(data string) bool {
 		te = p
 		p--
 		{
-			return false
+			isNumber = false
 		}
 		goto st0
 	tr4:
@@ -70,7 +70,7 @@ func IsNumber(data string) bool {
 		te = p
 		p--
 		{
-			return te == len(data)
+			isNumber = te == len(data)
 		}
 		goto st0
 	tr7:
@@ -78,7 +78,7 @@ func IsNumber(data string) bool {
 		te = p
 		p--
 		{
-			return te == len(data)
+			isNumber = te == len(data)
 		}
 		goto st0
 	tr10:
@@ -87,12 +87,12 @@ func IsNumber(data string) bool {
 		case 2:
 			{
 				p = (te) - 1
-				return te == len(data)
+				isNumber = te == len(data)
 			}
 		case 3:
 			{
 				p = (te) - 1
-				return false
+				isNumber = false
 			}
 		}
 
@@ -108,7 +108,7 @@ func IsNumber(data string) bool {
 //line NONE:1
 		ts = p
 
-//line isnumber.go:110
+//line isnumber.go:111
 		switch data[p] {
 		case 43:
 			goto st2
@@ -198,7 +198,7 @@ func IsNumber(data string) bool {
 			goto _test_eof7
 		}
 	st_case_7:
-//line isnumber.go:200
+//line isnumber.go:201
 		if 48 <= data[p] && data[p] <= 57 {
 			goto tr11
 		}
@@ -253,9 +253,9 @@ func IsNumber(data string) bool {
 
 	}
 
-//line isnumber.rl:39
+//line isnumber.rl:40
 	if cs == format_error {
 		return false
 	}
-	return false
+	return
 }
