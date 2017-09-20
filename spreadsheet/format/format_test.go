@@ -160,3 +160,22 @@ func TestCellFormattingNumber(t *testing.T) {
 		}
 	}
 }
+
+func TestCellFormattingValue(t *testing.T) {
+	td := []struct {
+		Inp string
+		Fmt string
+		Exp string
+	}{
+		{"0.0", "General", "0"},
+		{"1.0", "General", "1"},
+		{"1.23", "General", "1.23"},
+		{"foo", `"bar"@"baz"`, "barfoobaz"},
+	}
+	for _, tc := range td {
+		got := format.Value(tc.Inp, tc.Fmt)
+		if got != tc.Exp {
+			t.Errorf("expected %s, got '%s' for '%s'/%s", tc.Exp, got, tc.Inp, tc.Fmt)
+		}
+	}
+}

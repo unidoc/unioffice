@@ -57,6 +57,7 @@ const (
 	FmtTypeDate
 	FmtTypeTime
 	FmtTypeFraction
+	FmtTypeText
 )
 
 // Token is a format token in the Excel format string.
@@ -77,6 +78,8 @@ func (f *Format) AddToken(t FmtType, l []byte) {
 		f.seenDecimal = true
 	case FmtTypeUnderscore:
 		f.skipNext = true
+	case FmtTypeText:
+		f.Whole = append(f.Whole, Token{Type: t})
 	case FmtTypeDate, FmtTypeTime:
 		f.Whole = append(f.Whole, Token{Type: t, DateTime: string(l)})
 	case FmtTypePercent:
@@ -139,10 +142,47 @@ func Number(v float64, f string) string {
 	return number(v, fmts[0], false)
 }
 
+// Value formats a value as a number or string depending on  if it appears to be
+// a number or string.
+func Value(v string, f string) string {
+	if IsNumber(v) {
+		v, _ := strconv.ParseFloat(v, 64)
+		return Number(v, f)
+	}
+	return String(v, f)
+}
+
 // String returns the string formatted according to the type.
 // TODO: implement if anyone needs this.
 func String(v string, f string) string {
-	return v
+	fmts := Parse(f)
+	var fm Format
+	if len(fmts) == 1 {
+		fm = fmts[0]
+	} else if len(fmts) == 4 {
+		fm = fmts[3]
+	}
+	fmtHasText := false
+	for _, w := range fm.Whole {
+		if w.Type == FmtTypeText {
+			fmtHasText = true
+		}
+	}
+	// no text placeholder in the format (@), so just return the original string
+	if !fmtHasText {
+		return v
+	}
+	b := bytes.Buffer{}
+	for _, w := range fm.Whole {
+		// these appear to be the only formats that matter for string
+		switch w.Type {
+		case FmtTypeLiteral:
+			b.WriteByte(w.Literal)
+		case FmtTypeText:
+			b.WriteString(v)
+		}
+	}
+	return b.String()
 }
 
 func reverse(b []byte) []byte {

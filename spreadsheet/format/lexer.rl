@@ -71,6 +71,7 @@ main := |*
   '#,#' => { l.fmt.AddToken(FmtTypeDigitOptThousands,nil) };
   '0' => { l.fmt.AddToken(FmtTypeDigit,nil) };
   '#' => { l.fmt.AddToken(FmtTypeDigitOpt,nil) };
+  '@' => { l.fmt.AddToken(FmtTypeText,nil) };
   '?' => { }; # ignore for now
   '.' => { l.fmt.AddToken(FmtTypeDecimal,nil) };
   ',' => { l.fmt.AddToken(FmtTypeComma,nil) };
