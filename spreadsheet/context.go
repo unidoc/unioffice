@@ -35,9 +35,8 @@ func (e *evalContext) Cell(ref string, ev formula.Evaluator) formula.Result {
 		return res
 	}
 
-	// Evaluating an empty cell returns a zero in Excel
 	if c.IsEmpty() {
-		return formula.MakeNumberResult(0)
+		return formula.MakeEmptyResult()
 	} else if c.IsNumber() {
 		v, _ := c.GetValueAsNumber()
 		return formula.MakeNumberResult(v)
