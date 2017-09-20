@@ -12,11 +12,21 @@ library for creation and editing of docx/xlsx/pptx files.
 
 ## Status ##
 
-- Documents (docx) work well, and there are no known issues.
-- Spreadsheets (xlsx) support is new and the API may change.  
-- PowerPoint (pptx) is unsupported at the moment, the XML types exist and some
-  prototype code is checked in but it will be reworked once docx/xlsx are
-  'finished'.
+- Documents (docx) [Word]
+	- Read/Write/Edit
+	- Formatting
+	- Images
+	- Tables
+- Spreadsheets (xlsx) [Excel]
+ 	- Read/Write/Edit
+ 	- Cell Formatting
+    - Retrieving cell value as formatted by Excel (required parsing Excel format patterns)
+ 	- Formula Evaluation (100+ functions supported currently, more will be added as required)
+ 	- Images
+ 	- All chart types
+- PowerPoint (pptx) [PowerPoint]
+	- Currently unsupprted, work still start soon.
+
 
 ## Performance ##
 
