@@ -46,7 +46,7 @@ const (
 	StandardFormat40          StandardFormat = 40 // #,##0.00;[Red](#,##0.00)
 	StandardFormat45          StandardFormat = 45 // mm:ss
 	StandardFormat46          StandardFormat = 46 // [h]:mm:ss
-	StandardFormat47          StandardFormat = 47 // mmss.0
+	StandardFormat47          StandardFormat = 47 // mm:ss.0
 	StandardFormat48          StandardFormat = 48 // ##0.0E+0
 	StandardFormat49          StandardFormat = 49 // @
 )
@@ -107,7 +107,7 @@ func CreateDefaultNumberFormat(id StandardFormat) NumberFormat {
 	case StandardFormat46:
 		nf.x.FormatCodeAttr = "[h]:mm:ss"
 	case StandardFormat47:
-		nf.x.FormatCodeAttr = "mmss.0"
+		nf.x.FormatCodeAttr = "mm:ss.0"
 	case StandardFormat48:
 		nf.x.FormatCodeAttr = "##0.0E+0"
 	case StandardFormat49:
