@@ -525,13 +525,26 @@ func (wb *Workbook) SetActiveSheetIndex(idx uint32) {
 }
 
 // Tables returns a slice of all defined tables in the workbook.
-func (w *Workbook) Tables() []Table {
-	if w.tables == nil {
+func (wb *Workbook) Tables() []Table {
+	if wb.tables == nil {
 		return nil
 	}
 	ret := []Table{}
-	for _, t := range w.tables {
+	for _, t := range wb.tables {
 		ret = append(ret, Table{t})
 	}
 	return ret
+}
+
+// ClearProtection clears all workbook protections.
+func (wb *Workbook) ClearProtection() {
+	wb.x.WorkbookProtection = nil
+}
+
+// Protection allows control over the workbook protections.
+func (wb *Workbook) Protection() WorkbookProtection {
+	if wb.x.WorkbookProtection == nil {
+		wb.x.WorkbookProtection = sml.NewCT_WorkbookProtection()
+	}
+	return WorkbookProtection{wb.x.WorkbookProtection}
 }
