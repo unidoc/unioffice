@@ -35,7 +35,8 @@ type Format struct {
 	skipNext     bool
 	seenDecimal  bool
 
-	denom int64
+	denom       int64
+	denomDigits int
 }
 
 // FmtType is the type of a format token.
@@ -105,6 +106,14 @@ func (f *Format) AddToken(t FmtType, l []byte) {
 		if len(sp) == 2 {
 			f.isFraction = true
 			f.denom, _ = strconv.ParseInt(sp[1], 10, 64)
+
+			// also count the placeholder digits in the denominator for things
+			// like ?/? and ?/??
+			for _, c := range sp[1] {
+				if c == '?' || c == '0' {
+					f.denomDigits++
+				}
+			}
 			// TODO: if anyone cares, parse and use the numerator format.
 		}
 	default:
@@ -116,7 +125,7 @@ func (f *Format) AddToken(t FmtType, l []byte) {
 // string is empty, then General number formatting is used which attempts to mimic
 // Excel's general formatting.
 func Number(v float64, f string) string {
-	if f == "" {
+	if f == "" || f == "General" {
 		return NumberGeneric(v)
 	}
 	fmts := Parse(f)
@@ -167,9 +176,53 @@ func number(vOrig float64, f Format, isNeg bool) string {
 		// percent symbol implies multiplying the value by 100
 		v *= 100
 	} else if f.isFraction {
+		// if a denominator is not specified, we calculate it based on the number
+		// of digits we are allowed
+		if f.denom == 0 {
+			maxDenom := math.Pow(10, float64(f.denomDigits))
+			bestDenom, bestDenomError := 1.0, 1.0
+			_ = bestDenom
+			for i := 1.0; i < maxDenom; i++ {
+				_, rem := math.Modf(v * float64(i))
+				if rem < bestDenomError {
+					bestDenomError = rem
+					bestDenom = i
+					if rem == 0 {
+						break
+					}
+				}
+			}
+			f.denom = int64(bestDenom)
+		}
+
 		fractNum = int64(v*float64(f.denom) + 0.5)
-		if len(f.Whole) > 0 {
-			fractNum = fractNum % f.denom
+		if len(f.Whole) > 0 && fractNum > f.denom {
+			fractNum = int64(v*float64(f.denom)) % f.denom
+			// subtract the portion we're displaying as a fraction
+			v -= float64(fractNum) / float64(f.denom)
+		} else {
+			v -= float64(fractNum) / float64(f.denom)
+			// This handles cases of '# ?/?' where we don't have a whole number
+			// portion. The logic would print a '0' for the whole number portion
+			// below, so we just clear f.Whole here to prevent anything from
+			// being printed.
+			if math.Abs(v) < 1 {
+				isOnlyOpt := true
+				for _, v := range f.Whole {
+					// don't care about '#'
+					if v.Type == FmtTypeDigitOpt {
+						continue
+					}
+					// or spaces
+					if v.Type == FmtTypeLiteral && v.Literal == ' ' {
+						continue
+					}
+					isOnlyOpt = false
+				}
+				if isOnlyOpt {
+					f.Whole = nil
+				}
+			}
 		}
 	}
 
@@ -418,7 +471,7 @@ lexfor:
 // NumberGeneric formats the number with the generic format which attemps to
 // mimic Excel's general formatting.
 func NumberGeneric(v float64) string {
-	if math.Abs(v) >= maxGeneric || math.Abs(v) <= minGeneric {
+	if math.Abs(v) >= maxGeneric || math.Abs(v) <= minGeneric && v != 0 {
 		return formatExpNumberGeneric(v)
 	}
 
