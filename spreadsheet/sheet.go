@@ -634,3 +634,16 @@ func (s *Sheet) SetFrozen(firstRow, firstCol bool) {
 func (s *Sheet) FormulaContext() formula.Context {
 	return newEvalContext(s)
 }
+
+// ClearProtection removes any protections applied to teh sheet.
+func (s *Sheet) ClearProtection() {
+	s.x.SheetProtection = nil
+}
+
+// Protection controls the protection on an individual sheet.
+func (s *Sheet) Protection() SheetProtection {
+	if s.x.SheetProtection == nil {
+		s.x.SheetProtection = sml.NewCT_SheetProtection()
+	}
+	return SheetProtection{s.x.SheetProtection}
+}
