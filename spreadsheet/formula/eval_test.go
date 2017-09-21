@@ -125,7 +125,7 @@ func cmpValue(l, r string) bool {
 		return true
 	}
 	lf, el := strconv.ParseFloat(l, 64)
-	rf, er := strconv.ParseFloat(l, 64)
+	rf, er := strconv.ParseFloat(r, 64)
 	if el == nil && er == nil {
 		if math.Abs(lf-rf) < 1e-7 {
 			return true
