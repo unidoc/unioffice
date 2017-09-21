@@ -106,6 +106,10 @@ func IfError(args []Result) Result {
 	}
 
 	if args[0].Type != ResultTypeError {
+		// empty cell returns a zero
+		if args[0].Type == ResultTypeEmpty {
+			return MakeNumberResult(0)
+		}
 		return args[0]
 	}
 

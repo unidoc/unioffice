@@ -50,7 +50,7 @@ func init() {
 	//RegisterFunction("TEXTJOIN")
 	RegisterFunction("TRIM", Trim)
 	RegisterFunction("_xlfn.UNICHAR", Char) // for now
-	RegisterFunction("_xlfn.UNICODE", Code) // for now
+	RegisterFunction("_xlfn.UNICODE", Unicode)
 	RegisterFunction("UPPER", Upper)
 	//RegisterFunction("VALUE", )
 }
@@ -104,6 +104,22 @@ func Code(args []Result) Result {
 	// Zero length string returns a zero
 	if len(s.ValueString) == 0 {
 		return MakeNumberResult(0)
+	}
+
+	return MakeNumberResult(float64(s.ValueString[0]))
+}
+
+func Unicode(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("UNICODE requires a single string argument")
+	}
+	s := args[0].AsString()
+	if s.Type != ResultTypeString {
+		return MakeErrorResult("UNICODE requires a single string argument")
+	}
+	// Zero length string returns an error
+	if len(s.ValueString) == 0 {
+		return MakeErrorResult("UNICODE requires a non-zero length argument")
 	}
 
 	return MakeNumberResult(float64(s.ValueString[0]))
