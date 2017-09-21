@@ -7,7 +7,10 @@
 
 package formula
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func init() {
 	RegisterFunction("INDEX", Index)
@@ -51,7 +54,12 @@ func Index(args []Result) Result {
 		return MakeErrorResult("INDEX has col out of range")
 	}
 
-	return rowVal[col]
+	rv := rowVal[col]
+	// empty cell returns a zero
+	if rv.Type == ResultTypeEmpty {
+		return MakeNumberResult(0)
+	}
+	return rv
 }
 
 // Indirect is an implementation of the Excel INDIRECT function that returns the
@@ -72,12 +80,20 @@ func Offset(ctx Context, ev Evaluator, args []Result) Result {
 		return MakeErrorResult("OFFSET requires one or two arguments")
 	}
 	ref := args[0].Ref
-	origin := "A1"
+	// resolve a named range
+	for ref.Type == ReferenceTypeNamedRange {
+		ref = ctx.NamedRange(ref.Value)
+	}
+
+	origin := ""
 	switch ref.Type {
 	case ReferenceTypeCell:
 		origin = ref.Value
 	case ReferenceTypeRange:
-	case ReferenceTypeNamedRange:
+		sp := strings.Split(ref.Value, ":")
+		if len(sp) == 2 {
+			origin = sp[0]
+		}
 	default:
 		return MakeErrorResult(fmt.Sprintf("Invalid range in OFFSET(): %s", ref.Type))
 	}
@@ -91,27 +107,26 @@ func Offset(ctx Context, ev Evaluator, args []Result) Result {
 	if rOff.Type != ResultTypeNumber {
 		return MakeErrorResult("OFFSET requires numeric row offset")
 	}
-	cOff := args[1].AsNumber()
+	cOff := args[2].AsNumber()
 	if cOff.Type != ResultTypeNumber {
 		return MakeErrorResult("OFFSET requires numeric col offset")
 	}
 
-	height := args[1].AsNumber()
+	height := args[3].AsNumber()
 	if height.Type != ResultTypeNumber {
 		return MakeErrorResult("OFFSET requires numeric height")
 	}
-	width := args[1].AsNumber()
+	width := args[4].AsNumber()
 	if width.Type != ResultTypeNumber {
 		return MakeErrorResult("OFFSET requires numeric width")
 	}
 	colIdx := ColumnToIndex(col)
 	origRow := rowIdx + uint32(rOff.ValueNumber)
 	origCol := colIdx + uint32(cOff.ValueNumber)
-	endRow := origRow + uint32(height.ValueNumber)
-	endCol := origCol + uint32(width.ValueNumber)
+	endRow := origRow + uint32(height.ValueNumber) - 1
+	endCol := origCol + uint32(width.ValueNumber) - 1
 
 	beg := fmt.Sprintf("%s%d", IndexToColumn(origCol), origRow)
 	end := fmt.Sprintf("%s%d", IndexToColumn(endCol), endRow)
 	return resultFromCellRange(ctx, ev, beg, end)
-
 }

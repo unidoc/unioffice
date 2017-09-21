@@ -44,6 +44,7 @@ func (r Range) Reference(ctx Context, ev Evaluator) Reference {
 
 // TODO: move these somewhere to remove duplication
 func ParseCellReference(s string) (col string, row uint32, err error) {
+	s = strings.Replace(s, "$", "", -1)
 	split := -1
 lfor:
 	for i := 0; i < len(s); i++ {
@@ -108,7 +109,8 @@ func resultFromCellRange(ctx Context, ev Evaluator, from, to string) Result {
 	for r := fr; r <= tr; r++ {
 		args := []Result{}
 		for c := bc; c <= ec; c++ {
-			args = append(args, ctx.Cell(fmt.Sprintf("%s%d", IndexToColumn(c), r), ev))
+			res := ctx.Cell(fmt.Sprintf("%s%d", IndexToColumn(c), r), ev)
+			args = append(args, res)
 		}
 		arr = append(arr, args)
 	}

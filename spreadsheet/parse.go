@@ -16,6 +16,7 @@ import (
 // ParseCellReference parses a cell reference of the form 'A10' and splits it
 // into column/row segments.
 func ParseCellReference(s string) (col string, row uint32, err error) {
+	s = strings.Replace(s, "$", "", -1)
 	split := -1
 lfor:
 	for i := 0; i < len(s); i++ {
