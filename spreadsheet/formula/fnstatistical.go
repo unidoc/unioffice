@@ -196,14 +196,15 @@ func Max(args []Result) Result {
 func extractNumbers(args []Result) []float64 {
 	values := make([]float64, 0)
 	for _, a := range args {
+		if a.Type == ResultTypeEmpty {
+			continue
+		}
 		a = a.AsNumber()
 		switch a.Type {
 		case ResultTypeNumber:
 			values = append(values, a.ValueNumber)
 		case ResultTypeList, ResultTypeArray:
 			values = append(values, extractNumbers(a.ListValues())...)
-		case ResultTypeEmpty:
-			// skip
 		case ResultTypeString:
 			// treated as zero by Excel
 		default:

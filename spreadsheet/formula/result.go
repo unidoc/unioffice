@@ -90,6 +90,9 @@ func (r Result) AsNumber() Result {
 			return MakeNumberResult(f)
 		}
 	}
+	if r.Type == ResultTypeEmpty {
+		return MakeNumberResult(0)
+	}
 	return r
 }
 
