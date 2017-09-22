@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"baliance.com/gooxml"
-	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 )
 
 // DataValidationList is just a view on a DataValidation configured as a list.

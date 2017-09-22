@@ -7,7 +7,7 @@
 
 package spreadsheet
 
-import sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+import sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 
 // Comment is a single comment within a sheet.
 type Comment struct {

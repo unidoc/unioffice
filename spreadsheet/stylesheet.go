@@ -11,7 +11,7 @@ import (
 	"errors"
 
 	"baliance.com/gooxml"
-	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 )
 
 // StyleSheet is a document style sheet.

@@ -12,7 +12,7 @@ import (
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/measurement"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	"baliance.com/gooxml/schema/soo/spreadsheetml"
 )
 
 // Row is a row within a spreadsheet.

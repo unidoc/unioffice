@@ -7,7 +7,7 @@
 
 package document
 
-import wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+import wml "baliance.com/gooxml/schema/soo/wordprocessingml"
 
 // Cell is a table cell within a document (not a spreadsheet)
 type Cell struct {

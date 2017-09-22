@@ -7,7 +7,7 @@
 
 package spreadsheet
 
-import sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+import sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 import "baliance.com/gooxml"
 
 // DefinedName is a named range, formula, etc.

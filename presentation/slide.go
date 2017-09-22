@@ -7,7 +7,7 @@
 
 package presentation
 
-import pml "baliance.com/gooxml/schema/schemas.openxmlformats.org/presentationml"
+import pml "baliance.com/gooxml/schema/soo/presentationml"
 
 type Slide struct {
 	sid *pml.CT_SlideIdListEntry

@@ -16,10 +16,10 @@ import (
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
 
-	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
-	c "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
-	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
-	sd "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"
+	dml "baliance.com/gooxml/schema/soo/drawingml"
+	c "baliance.com/gooxml/schema/soo/drawingml/chart"
+	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
+	sd "baliance.com/gooxml/schema/soo/drawingml/spreadsheetDrawing"
 )
 
 // Drawing is a drawing overlay on a sheet.  Only a single drawing is allowed

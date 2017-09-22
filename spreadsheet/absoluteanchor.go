@@ -10,7 +10,7 @@ package spreadsheet
 import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/measurement"
-	sd "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"
+	sd "baliance.com/gooxml/schema/soo/drawingml/spreadsheetDrawing"
 )
 
 // AbsoluteAnchor has a fixed top-left corner in distance units as well as a

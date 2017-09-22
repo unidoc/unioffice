@@ -14,8 +14,8 @@ import (
 	"fmt"
 
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
+	"baliance.com/gooxml/schema/soo/wordprocessingml"
 )
 
 type CT_Textbox struct {

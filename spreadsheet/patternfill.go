@@ -10,7 +10,7 @@ package spreadsheet
 import (
 	"baliance.com/gooxml/color"
 
-	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 )
 
 type PatternFill struct {

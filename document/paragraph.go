@@ -8,7 +8,7 @@
 package document
 
 import (
-	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
 )
 
 // Paragraph is a paragraph within a document.

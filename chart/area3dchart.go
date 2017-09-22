@@ -7,7 +7,7 @@
 
 package chart
 
-import crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
+import crt "baliance.com/gooxml/schema/soo/drawingml/chart"
 
 // Area3DChart is an area chart that has a shaded area underneath a curve.
 type Area3DChart struct {

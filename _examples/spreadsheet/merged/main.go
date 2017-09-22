@@ -7,7 +7,7 @@ import (
 
 	"baliance.com/gooxml/spreadsheet"
 
-	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 )
 
 func main() {

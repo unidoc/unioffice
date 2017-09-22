@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/package/2006/metadata/core_properties"
+	"baliance.com/gooxml/schema/soo/package/metadata/core_properties"
 )
 
 // CoreProperties contains document specific properties.

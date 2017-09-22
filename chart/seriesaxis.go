@@ -7,7 +7,7 @@
 
 package chart
 
-import crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
+import crt "baliance.com/gooxml/schema/soo/drawingml/chart"
 
 type SeriesAxis struct {
 	x *crt.CT_SerAx

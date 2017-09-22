@@ -4,7 +4,7 @@ package main
 import (
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/document"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wordprocessingml"
 )
 
 func main() {

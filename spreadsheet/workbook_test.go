@@ -14,7 +14,7 @@ import (
 	"os"
 	"testing"
 
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	"baliance.com/gooxml/schema/soo/spreadsheetml"
 
 	"baliance.com/gooxml/spreadsheet"
 	"baliance.com/gooxml/testhelper"
