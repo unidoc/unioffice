@@ -115,9 +115,16 @@ func (c Cell) SetStringByID(id int) {
 // SetNumber sets the cell type to number, and the value to the given number
 func (c Cell) SetNumber(v float64) {
 	c.clearValue()
-	c.x.V = gooxml.String(strconv.FormatFloat(v, 'g', -1, 64))
+	// NaN / Infinity
+	if math.IsNaN(v) || math.IsInf(v, 0) {
+		c.x.TAttr = sml.ST_CellTypeE
+		c.x.V = gooxml.String("#NUM!")
+		return
+	}
+
 	// cell type number
 	c.x.TAttr = sml.ST_CellTypeN
+	c.x.V = gooxml.String(strconv.FormatFloat(v, 'g', -1, 64))
 }
 
 func (c Cell) getFormat() string {
