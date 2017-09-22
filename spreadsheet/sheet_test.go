@@ -252,3 +252,14 @@ func TestInfNan(t *testing.T) {
 		t.Error("expected error for NaN")
 	}
 }
+
+func TestMergedCellValidation(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	sheet.AddMergedCells("A1", "B5")
+	sheet.AddMergedCells("A3", "B9")
+	if err := sheet.Validate(); err == nil {
+		t.Errorf("expected validation error due to overlapping merged cells")
+	}
+
+}

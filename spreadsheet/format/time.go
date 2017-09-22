@@ -14,14 +14,3 @@ func asLocal(d time.Time) time.Time {
 	return time.Date(d.Year(), d.Month(), d.Day(), d.Hour(),
 		d.Minute(), d.Second(), d.Nanosecond(), time.Local)
 }
-func asUTC(d time.Time) time.Time {
-	// Excel appears to interpret and serial dates in the local timezone, so
-	// first ensure the time is converted internally.
-	d = d.Local()
-
-	// Then to avoid any daylight savings differences showing up between our
-	// epoch and the current time, we 'cast' the time to UTC and later subtract
-	// from the epoch in UTC.
-	return time.Date(d.Year(), d.Month(), d.Day(), d.Hour(),
-		d.Minute(), d.Second(), d.Nanosecond(), time.UTC)
-}
