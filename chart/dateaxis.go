@@ -9,8 +9,8 @@ package chart
 
 import (
 	"baliance.com/gooxml/drawing"
-	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
-	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
+	dml "baliance.com/gooxml/schema/soo/drawingml"
+	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
 )
 
 type DateAxis struct {

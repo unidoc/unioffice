@@ -23,11 +23,11 @@ import (
 	"baliance.com/gooxml/vmldrawing"
 	"baliance.com/gooxml/zippkg"
 
-	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
-	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
-	sd "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/package/2006/relationships"
-	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	dml "baliance.com/gooxml/schema/soo/drawingml"
+	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
+	sd "baliance.com/gooxml/schema/soo/drawingml/spreadsheetDrawing"
+	"baliance.com/gooxml/schema/soo/package/relationships"
+	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 )
 
 // Workbook is the top level container item for a set of spreadsheets.

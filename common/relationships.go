@@ -13,7 +13,7 @@ import (
 	"strings"
 
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/package/2006/relationships"
+	"baliance.com/gooxml/schema/soo/package/relationships"
 )
 
 // Relationships represents a .rels file.

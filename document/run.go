@@ -16,10 +16,10 @@ import (
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
-	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
-	pic "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/picture"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
-	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+	dml "baliance.com/gooxml/schema/soo/drawingml"
+	pic "baliance.com/gooxml/schema/soo/drawingml/picture"
+	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
+	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
 )
 
 // Run is a run of text within a paragraph that shares the same formatting.

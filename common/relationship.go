@@ -10,7 +10,7 @@ package common
 import (
 	"fmt"
 
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/package/2006/relationships"
+	"baliance.com/gooxml/schema/soo/package/relationships"
 )
 
 // Relationship is a relationship within a .rels file.

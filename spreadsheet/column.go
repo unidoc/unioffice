@@ -10,7 +10,7 @@ package spreadsheet
 import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/measurement"
-	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 )
 
 // Column represents a column within a sheet. It's only used for formatting

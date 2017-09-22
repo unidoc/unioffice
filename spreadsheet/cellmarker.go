@@ -10,7 +10,7 @@ package spreadsheet
 import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/measurement"
-	sd "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"
+	sd "baliance.com/gooxml/schema/soo/drawingml/spreadsheetDrawing"
 )
 
 // CellMarker represents a cell position

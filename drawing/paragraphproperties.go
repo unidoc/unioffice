@@ -7,7 +7,7 @@
 
 package drawing
 
-import dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
+import dml "baliance.com/gooxml/schema/soo/drawingml"
 
 type ParagraphProperties struct {
 	x *dml.CT_TextParagraphProperties

@@ -22,10 +22,10 @@ import (
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/zippkg"
 
-	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
-	st "baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/package/2006/relationships"
-	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+	dml "baliance.com/gooxml/schema/soo/drawingml"
+	st "baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
+	"baliance.com/gooxml/schema/soo/package/relationships"
+	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
 )
 
 // Document is a text document that can be written out in the OOXML .docx

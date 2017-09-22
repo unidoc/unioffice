@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
+	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
 )
 
 type CT_Fill struct {

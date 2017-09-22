@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wordprocessingml"
 )
 
 type Textbox struct {

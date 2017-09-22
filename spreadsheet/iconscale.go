@@ -9,7 +9,7 @@ package spreadsheet
 
 import (
 	"baliance.com/gooxml"
-	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 )
 
 // IconScale maps values to icons.

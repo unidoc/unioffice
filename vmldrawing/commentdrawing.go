@@ -13,7 +13,7 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/urn/schemas_microsoft_com/office/excel"
 
-	st "baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
+	st "baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
 	vml "baliance.com/gooxml/schema/urn/schemas_microsoft_com/vml"
 )
 

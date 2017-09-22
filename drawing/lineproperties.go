@@ -11,7 +11,7 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/measurement"
-	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
+	dml "baliance.com/gooxml/schema/soo/drawingml"
 )
 
 type LineProperties struct {

@@ -15,7 +15,7 @@ import (
 	"log"
 
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
+	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
 )
 
 type OfcCT_OLEObject struct {

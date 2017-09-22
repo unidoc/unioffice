@@ -8,7 +8,7 @@ import (
 	"baliance.com/gooxml/document"
 	"baliance.com/gooxml/measurement"
 
-	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
 )
 
 var lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lobortis, lectus dictum feugiat tempus, sem neque finibus enim, sed eleifend sem nunc ac diam. Vestibulum tempus sagittis elementum`

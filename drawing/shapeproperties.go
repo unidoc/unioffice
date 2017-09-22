@@ -10,7 +10,7 @@ package drawing
 import (
 	"baliance.com/gooxml/color"
 
-	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
+	dml "baliance.com/gooxml/schema/soo/drawingml"
 )
 
 type ShapeProperties struct {

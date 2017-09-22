@@ -5,7 +5,7 @@ package main
 import (
 	"baliance.com/gooxml/document"
 	"baliance.com/gooxml/measurement"
-	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
 )
 
 func main() {

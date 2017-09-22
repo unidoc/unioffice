@@ -9,7 +9,7 @@ package spreadsheet
 
 import (
 	"baliance.com/gooxml/color"
-	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 )
 
 // Font allows editing fonts within a spreadsheet stylesheet.

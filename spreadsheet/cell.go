@@ -16,7 +16,7 @@ import (
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
-	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 	"baliance.com/gooxml/spreadsheet/format"
 )
 

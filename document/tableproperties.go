@@ -10,7 +10,7 @@ package document
 import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/measurement"
-	wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
 )
 
 // TableProperties are the properties for a table within a document

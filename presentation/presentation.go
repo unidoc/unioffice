@@ -15,12 +15,12 @@ import (
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/measurement"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
+	"baliance.com/gooxml/schema/soo/drawingml"
 
 	"baliance.com/gooxml/common"
-	dml "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml"
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
-	pml "baliance.com/gooxml/schema/schemas.openxmlformats.org/presentationml"
+	dml "baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
+	pml "baliance.com/gooxml/schema/soo/presentationml"
 	"baliance.com/gooxml/zippkg"
 )
 

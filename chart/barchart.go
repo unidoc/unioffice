@@ -8,7 +8,7 @@
 package chart
 
 import (
-	crt "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/chart"
+	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
 )
 
 // BarChart is a 2D bar chart.

@@ -9,7 +9,7 @@ package spreadsheet
 
 import (
 	"baliance.com/gooxml"
-	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 )
 
 // SheetView is a view of a sheet. There is typically one per sheet, though more

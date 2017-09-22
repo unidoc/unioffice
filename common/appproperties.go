@@ -8,7 +8,7 @@
 package common
 
 import (
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/extended_properties"
+	"baliance.com/gooxml/schema/soo/officeDocument/extended_properties"
 )
 
 // AppProperties contains properties specific to the document and the

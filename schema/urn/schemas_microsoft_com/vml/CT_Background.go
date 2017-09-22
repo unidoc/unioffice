@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"log"
 
-	"baliance.com/gooxml/schema/schemas.openxmlformats.org/officeDocument/2006/sharedTypes"
+	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
 )
 
 type CT_Background struct {

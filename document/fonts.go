@@ -7,7 +7,7 @@
 
 package document
 
-import wml "baliance.com/gooxml/schema/schemas.openxmlformats.org/wordprocessingml"
+import wml "baliance.com/gooxml/schema/soo/wordprocessingml"
 
 // Fonts allows manipulating a style or run's fonts.
 type Fonts struct {

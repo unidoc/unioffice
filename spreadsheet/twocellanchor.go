@@ -9,7 +9,7 @@ package spreadsheet
 
 import (
 	"baliance.com/gooxml/measurement"
-	sd "baliance.com/gooxml/schema/schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing"
+	sd "baliance.com/gooxml/schema/soo/drawingml/spreadsheetDrawing"
 )
 
 // TwoCellAnchor is an anchor that is attached to a top-left cell with a fixed

@@ -11,7 +11,7 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/measurement"
-	sml "baliance.com/gooxml/schema/schemas.openxmlformats.org/spreadsheetml"
+	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
 )
 
 // RichTextRun is a segment of text within a cell that is directly formatted.
