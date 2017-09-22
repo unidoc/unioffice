@@ -479,14 +479,19 @@ func (s Sheet) Comments() Comments {
 // the cells on the top,left,right,bottom and four corners.  This function
 // breaks apart a single border into its components and applies it to cells as
 // needed to give the effect of a border applying to multiple cells.
-func (s Sheet) SetBorder(cellRange string, border Border) {
-	sp := strings.Split(cellRange, ":")
-	if len(sp) != 2 {
-		log.Printf("expected range of the form 'A1:B5'")
-		return
+func (s Sheet) SetBorder(cellRange string, border Border) error {
+	from, to, err := ParseRangeReference(cellRange)
+	if err != nil {
+		return err
 	}
-	tlCol, tlRowIdx, _ := ParseCellReference(sp[0])
-	brCol, brRowIdx, _ := ParseCellReference(sp[1])
+	tlCol, tlRowIdx, err := ParseCellReference(from)
+	if err != nil {
+		return err
+	}
+	brCol, brRowIdx, err := ParseCellReference(to)
+	if err != nil {
+		return err
+	}
 	tlColIdx := ColumnToIndex(tlCol)
 	brColIdx := ColumnToIndex(brCol)
 
@@ -562,7 +567,7 @@ func (s Sheet) SetBorder(cellRange string, border Border) {
 			}
 		}
 	}
-
+	return nil
 }
 
 // AddDataValidation adds a data validation rule to a sheet.
