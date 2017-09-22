@@ -8,6 +8,7 @@
 package spreadsheet_test
 
 import (
+	"math"
 	"math/rand"
 	"testing"
 
@@ -227,5 +228,27 @@ func TestFormattedCell(t *testing.T) {
 			t.Errorf("expected %s in cell %s, got %s", tc.Exp, tc.Cell, got)
 		}
 	}
-	_ = wb
+}
+
+func TestInfNan(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	sheet.Cell("A1").SetNumber(math.NaN())
+
+	rv, err := sheet.Cell("A1").GetRawValue()
+	if err != nil {
+		t.Errorf("got error: %s", err)
+	}
+	if rv != "#NUM!" {
+		t.Error("expected error for NaN")
+	}
+
+	sheet.Cell("A1").SetNumber(math.Inf(1))
+	rv, err = sheet.Cell("A1").GetRawValue()
+	if err != nil {
+		t.Errorf("got error: %s", err)
+	}
+	if rv != "#NUM!" {
+		t.Error("expected error for NaN")
+	}
 }
