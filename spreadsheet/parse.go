@@ -13,6 +13,16 @@ import (
 	"strings"
 )
 
+// ParseRangeReference splits a range reference of the form "A1:B5" into its
+// components.
+func ParseRangeReference(s string) (from, to string, err error) {
+	sp := strings.Split(s, ":")
+	if len(sp) == 2 {
+		return sp[0], sp[1], nil
+	}
+	return "", "", fmt.Errorf("invaid range reference: %s", s)
+}
+
 // ParseCellReference parses a cell reference of the form 'A10' and splits it
 // into column/row segments.
 func ParseCellReference(s string) (col string, row uint32, err error) {

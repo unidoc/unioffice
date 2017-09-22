@@ -123,7 +123,33 @@ func (s Sheet) SetName(name string) {
 
 // Validate validates the sheet, returning an error if it is found to be invalid.
 func (s Sheet) Validate() error {
+	validators := []func() error{
+		s.validateRowCellNumbers,
+		s.validateMergedCells,
+		s.validateSheetNames,
+	}
+	for _, v := range validators {
+		if err := v(); err != nil {
+			return err
+		}
+	}
+	if err := s.cts.Validate(); err != nil {
+		return err
+	}
+	return s.x.Validate()
+}
 
+// validateSheetNames returns an error if any sheet names are too long
+func (s Sheet) validateSheetNames() error {
+	if len(s.Name()) > 31 {
+		return fmt.Errorf("sheet name '%s' has %d characters, max length is 31", s.Name(), len(s.Name()))
+	}
+	return nil
+}
+
+// validateRowCellNumbers returns an error if any row numbers or cell numbers
+// within a row are reused
+func (s Sheet) validateRowCellNumbers() error {
 	// check for re-used row numbers
 	usedRows := map[uint32]struct{}{}
 	for _, r := range s.x.SheetData.Row {
@@ -146,14 +172,39 @@ func (s Sheet) Validate() error {
 			usedCells[*c.RAttr] = struct{}{}
 		}
 	}
+	return nil
+}
 
-	if len(s.Name()) > 31 {
-		return fmt.Errorf("sheet name '%s' has %d characters, max length is 31", s.Name(), len(s.Name()))
+// validateMergedCells returns an error if merged cells overlap
+func (s Sheet) validateMergedCells() error {
+	mergedCells := map[uint64]struct{}{}
+	for _, mc := range s.MergedCells() {
+		from, to, err := ParseRangeReference(mc.Reference())
+		if err != nil {
+			return fmt.Errorf("sheet name '%s' has invalid merged cell reference %s", s.Name(), mc.Reference())
+		}
+		fc, frIdx, err := ParseCellReference(from)
+		if err != nil {
+			return fmt.Errorf("sheet name '%s' has invalid merged cell reference %s", s.Name(), mc.Reference())
+		}
+		tc, trIdx, err := ParseCellReference(to)
+		if err != nil {
+			return fmt.Errorf("sheet name '%s' has invalid merged cell reference %s", s.Name(), mc.Reference())
+		}
+		fcIdx := ColumnToIndex(fc)
+		tcIdx := ColumnToIndex(tc)
+		for r := frIdx; r <= trIdx; r++ {
+			for c := fcIdx; c <= tcIdx; c++ {
+				idx := uint64(r)<<32 | uint64(c)
+				if _, ok := mergedCells[idx]; ok {
+					return fmt.Errorf("sheet name '%s' has overlapping merged cell range", s.Name())
+				}
+				mergedCells[idx] = struct{}{}
+			}
+		}
+
 	}
-	if err := s.cts.Validate(); err != nil {
-		return err
-	}
-	return s.x.Validate()
+	return nil
 }
 
 // ValidateWithPath validates the sheet passing path informaton for a better
