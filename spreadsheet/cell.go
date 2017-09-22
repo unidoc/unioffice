@@ -82,6 +82,17 @@ func (c Cell) SetFormulaRaw(s string) {
 	c.x.F.Content = s
 }
 
+// SetFormulaArray sets the cell type to formula array, and the raw formula to
+// the given string. This is equivlent to entering a formula and pressing
+// Ctrl+Shift+Enter in Excel.
+func (c Cell) SetFormulaArray(s string) {
+	c.clearValue()
+	c.x.TAttr = sml.ST_CellTypeStr
+	c.x.F = sml.NewCT_CellFormula()
+	c.x.F.TAttr = sml.ST_CellFormulaTypeArray
+	c.x.F.Content = s
+}
+
 // SetString sets the cell type to string, and the value to the given string,
 // returning an ID from the shared strings table. To reuse a string, call
 // SetStringByID with the ID returned.
@@ -147,12 +158,13 @@ func (c Cell) GetFormattedValue() string {
 	// string / inline string
 	case sml.ST_CellTypeS, sml.ST_CellTypeInlineStr:
 		return format.String(c.GetString(), f)
-	// formula string, Excel doesn't appear to use this
 	case sml.ST_CellTypeStr:
-		if c.x.V != nil {
-			return *c.x.V
+		s := c.GetString()
+		if format.IsNumber(s) {
+			v, _ := strconv.ParseFloat(s, 64)
+			return format.Number(v, f)
 		}
-		return ""
+		return format.String(s, f)
 	case sml.ST_CellTypeUnset:
 		fallthrough
 	default:
@@ -314,8 +326,11 @@ func (c Cell) SetStyleIndex(idx uint32) {
 func (c Cell) GetString() string {
 	switch c.x.TAttr {
 	case sml.ST_CellTypeInlineStr:
-		if c.x.Is == nil || c.x.Is.T == nil {
-			return ""
+		if c.x.Is != nil && c.x.Is.T != nil {
+			return *c.x.Is.T
+		}
+		if c.x.V != nil {
+			return *c.x.V
 		}
 	case sml.ST_CellTypeS:
 		if c.x.V == nil {
@@ -420,12 +435,20 @@ func (c Cell) GetFormula() string {
 	return ""
 }
 
-// GetCachedFormulaResult returns the cached formula result if it exists.
+// GetCachedFormulaResult returns the cached formula result if it exists. If the
+// cell type is not a formula cell, the result will be the cell value if it's a
+// string/number/bool cell.
 func (c Cell) GetCachedFormulaResult() string {
-	if c.x.F != nil && c.x.V != nil {
+	if c.x.V != nil {
 		return *c.x.V
 	}
 	return ""
+}
+
+// SetCachedFormulaResult sets the cached result of a formula. This is normally
+// not needed but is used internally when expanding an array formula.
+func (c Cell) SetCachedFormulaResult(s string) {
+	c.x.V = &s
 }
 
 func b2i(v bool) int {

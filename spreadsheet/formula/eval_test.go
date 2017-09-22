@@ -133,3 +133,49 @@ func cmpValue(l, r string) bool {
 	}
 	return false
 }
+
+func TestArrayFormula(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	_ = sheet
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("A2").SetNumber(2)
+	sheet.Cell("A3").SetNumber(3)
+	sheet.Cell("A4").SetNumber(4)
+
+	sheet.Cell("B1").SetNumber(5)
+	sheet.Cell("B2").SetNumber(6)
+	sheet.Cell("B3").SetNumber(7)
+	sheet.Cell("B4").SetNumber(8)
+
+	// this tests the expansion of array results into surrounding cells
+	sheet.Cell("C1").SetFormulaArray("TRANSPOSE(A1:B4)")
+	sheet.RecalculateFormulas()
+
+	if got := sheet.Cell("C1").GetFormattedValue(); got != "1" {
+		t.Errorf("expected 1 in C1, got %s", got)
+	}
+	if got := sheet.Cell("D1").GetFormattedValue(); got != "2" {
+		t.Errorf("expected 2 in D1, got %s", got)
+	}
+	if got := sheet.Cell("E1").GetFormattedValue(); got != "3" {
+		t.Errorf("expected 3 in E1, got %s", got)
+	}
+	if got := sheet.Cell("F1").GetFormattedValue(); got != "4" {
+		t.Errorf("expected 4 in F1, got %s", got)
+	}
+
+	if got := sheet.Cell("C2").GetFormattedValue(); got != "5" {
+		t.Errorf("expected 5 in C2, got %s", got)
+	}
+	if got := sheet.Cell("D2").GetFormattedValue(); got != "6" {
+		t.Errorf("expected 6 in D2, got %s", got)
+	}
+	if got := sheet.Cell("E2").GetFormattedValue(); got != "7" {
+		t.Errorf("expected 7 in E2, got %s", got)
+	}
+	if got := sheet.Cell("F2").GetFormattedValue(); got != "8" {
+		t.Errorf("expected 8 in F2, got %s", got)
+	}
+
+}

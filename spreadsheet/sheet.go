@@ -563,8 +563,29 @@ func (s *Sheet) RecalculateFormulas() {
 						c.X().TAttr = sml.ST_CellTypeInlineStr
 					}
 					c.X().V = gooxml.String(res.Value())
+
+					// the formula is of type array, so if the result is also an
+					// array we need to expand the array out into cells
+					if c.X().F.TAttr == sml.ST_CellFormulaTypeArray && res.Type == formula.ResultTypeArray {
+						s.setArray(c.Reference(), res)
+					}
 				}
 			}
+		}
+	}
+}
+
+// setArray expands an array into cached values starting at the origin which
+// should be a cell reference of the type "A1". This is used when evaluating
+// array type formulas.
+func (s *Sheet) setArray(origin string, arr formula.Result) {
+	colStr, rowIdx, _ := ParseCellReference(origin)
+	colIdx := ColumnToIndex(colStr)
+	for ir, row := range arr.ValueArray {
+		sr := s.Row(rowIdx + uint32(ir))
+		for ic, val := range row {
+			cell := sr.Cell(IndexToColumn(colIdx + uint32(ic)))
+			cell.SetCachedFormulaResult(val.String())
 		}
 	}
 }
