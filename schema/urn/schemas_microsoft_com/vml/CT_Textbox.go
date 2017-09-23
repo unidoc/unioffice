@@ -15,14 +15,14 @@ import (
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
-	"baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 )
 
 type CT_Textbox struct {
 	InsetAttr       *string
 	SingleclickAttr sharedTypes.ST_TrueFalse
 	InsetmodeAttr   OfcST_InsetMode
-	TxbxContent     *wordprocessingml.TxbxContent
+	TxbxContent     *wml.TxbxContent
 	Any             gooxml.Any
 	IdAttr          *string
 	StyleAttr       *string
@@ -113,7 +113,7 @@ lCT_Textbox:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "txbxContent"}:
-				m.TxbxContent = wordprocessingml.NewTxbxContent()
+				m.TxbxContent = wml.NewTxbxContent()
 				if err := d.DecodeElement(m.TxbxContent, &el); err != nil {
 					return err
 				}

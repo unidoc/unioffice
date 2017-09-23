@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 )
 
 type Textbox struct {
@@ -72,7 +72,7 @@ lTextbox:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "txbxContent"}:
-				m.TxbxContent = wordprocessingml.NewTxbxContent()
+				m.TxbxContent = wml.NewTxbxContent()
 				if err := d.DecodeElement(m.TxbxContent, &el); err != nil {
 					return err
 				}

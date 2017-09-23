@@ -13,7 +13,7 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
-	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 )
 
 // Styles is the document wide styles contained in styles.xml.

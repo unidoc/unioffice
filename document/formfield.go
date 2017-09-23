@@ -8,7 +8,7 @@
 package document
 
 import (
-	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 )
 
 // FormFieldType is the type of the form field.

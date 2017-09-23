@@ -11,7 +11,7 @@ import (
 	"log"
 
 	"baliance.com/gooxml"
-	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 )
 
 // Section is the beginning of a new section.

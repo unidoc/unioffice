@@ -7,7 +7,7 @@
 
 package document
 
-import wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+import "baliance.com/gooxml/schema/soo/wml"
 
 // Header is a header for a document section.
 type Header struct {

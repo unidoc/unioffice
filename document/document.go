@@ -25,7 +25,7 @@ import (
 	dml "baliance.com/gooxml/schema/soo/drawingml"
 	st "baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
 	"baliance.com/gooxml/schema/soo/package/relationships"
-	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 )
 
 // Document is a text document that can be written out in the OOXML .docx

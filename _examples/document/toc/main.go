@@ -2,7 +2,7 @@
 package main
 
 import "baliance.com/gooxml/document"
-import wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+import "baliance.com/gooxml/schema/soo/wml"
 
 var lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lobortis, lectus dictum feugiat tempus, sem neque finibus enim, sed eleifend sem nunc ac diam. Vestibulum tempus sagittis elementum`
 
