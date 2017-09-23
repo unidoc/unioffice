@@ -12,7 +12,7 @@ import (
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
-	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 )
 
 // Numbering is the document wide numbering styles contained in numbering.xml.

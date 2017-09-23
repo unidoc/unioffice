@@ -7,7 +7,7 @@ import (
 	"os"
 	"testing"
 
-	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 	"baliance.com/gooxml/testhelper"
 	"baliance.com/gooxml/zippkg"
 )

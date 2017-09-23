@@ -11,7 +11,7 @@ import (
 	"fmt"
 
 	"baliance.com/gooxml/color"
-	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 )
 
 // Color controls the run or styles color.

@@ -19,7 +19,7 @@ import (
 	dml "baliance.com/gooxml/schema/soo/drawingml"
 	pic "baliance.com/gooxml/schema/soo/drawingml/picture"
 	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
-	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 )
 
 // Run is a run of text within a paragraph that shares the same formatting.

@@ -11,7 +11,7 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/measurement"
-	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 )
 
 // TableBorders allows manipulation of borders on a table.

@@ -10,7 +10,7 @@ package document
 import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/measurement"
-	wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 )
 
 // RunStyleProperties controls run styling properties

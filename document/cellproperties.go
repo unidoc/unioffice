@@ -7,7 +7,7 @@
 
 package document
 
-import wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+import "baliance.com/gooxml/schema/soo/wml"
 
 // CellProperties are a table cells properties within a document.
 type CellProperties struct {

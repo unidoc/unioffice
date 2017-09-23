@@ -7,7 +7,7 @@
 
 package document
 
-import wml "baliance.com/gooxml/schema/soo/wordprocessingml"
+import "baliance.com/gooxml/schema/soo/wml"
 
 // Footer is a footer for a document section.
 type Footer struct {
