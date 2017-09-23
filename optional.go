@@ -75,7 +75,8 @@ func String(v string) *string {
 	return &x
 }
 
-// String returns a copy of v as a pointer.
+// Stringf formats according to a format specifier and returns a pointer to the
+// resulting string.
 func Stringf(f string, args ...interface{}) *string {
 	x := fmt.Sprintf(f, args...)
 	return &x
