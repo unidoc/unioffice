@@ -78,10 +78,16 @@ func RelativeFilename(dt DocType, typ string, index int) string {
 			log.Printf("unsupported type %s pair and %v", typ, dt)
 		}
 
-		// SML
+	// SML
 	case WorksheetType, WorksheetContentType:
 		return fmt.Sprintf("worksheets/sheet%d.xml", index)
 
+	case PivotTableType:
+		return fmt.Sprintf("../pivotTables/pivotTable%d.xml", index)
+	case PivotCacheDefinitionType:
+		return fmt.Sprintf("../pivotCache/pivotCacheDefinition%d.xml", index)
+	case PivotCacheRecordsType:
+		return fmt.Sprintf("../pivotCache/pivotCacheRecords%d.xml", index)
 	case SharedStingsType, SharedStringsContentType:
 		return "sharedStrings.xml"
 
@@ -189,8 +195,14 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		return fmt.Sprintf("xl/worksheets/sheet%d.xml", index)
 	case SharedStingsType, SharedStringsContentType:
 		return "xl/sharedStrings.xml"
+	case PivotTableType:
+		return fmt.Sprintf("xl/pivotTables/pivotTable%d.xml", index)
+	case PivotCacheDefinitionType:
+		return fmt.Sprintf("xl/pivotCache/pivotCacheDefinition%d.xml", index)
+	case PivotCacheRecordsType:
+		return fmt.Sprintf("xl/pivotCache/pivotCacheRecords%d.xml", index)
 
-		// WML
+	// WML
 	case FontTableType:
 		return "word/fontTable.xml"
 	case EndNotesType:

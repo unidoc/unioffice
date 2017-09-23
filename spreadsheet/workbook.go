@@ -48,6 +48,13 @@ type Workbook struct {
 	vmlDrawings []*vmldrawing.Container
 	charts      []*crt.ChartSpace
 	tables      []*sml.Table
+
+	pivotTables     []*sml.PivotTableDefinition
+	pivotTableRels  []common.Relationships
+	pivotCache      []*sml.PivotCacheDefinition
+	pivotCacheRels  []common.Relationships
+	pivotRecords    []*sml.PivotCacheRecords
+	pivotRecordRels []common.Relationships
 }
 
 // X returns the inner wrapped XML type.
@@ -183,6 +190,27 @@ func (wb *Workbook) Save(w io.Writer) error {
 	for i, tbl := range wb.tables {
 		fn := gooxml.AbsoluteFilename(dt, gooxml.TableType, i+1)
 		zippkg.MarshalXML(z, fn, tbl)
+	}
+	for i, tbl := range wb.pivotTables {
+		fn := gooxml.AbsoluteFilename(dt, gooxml.PivotTableType, i+1)
+		zippkg.MarshalXML(z, fn, tbl)
+		if !wb.pivotTableRels[i].IsEmpty() {
+			zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.pivotTableRels[i].X())
+		}
+	}
+	for i, tbl := range wb.pivotCache {
+		fn := gooxml.AbsoluteFilename(dt, gooxml.PivotCacheDefinitionType, i+1)
+		zippkg.MarshalXML(z, fn, tbl)
+		if !wb.pivotCacheRels[i].IsEmpty() {
+			zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.pivotCacheRels[i].X())
+		}
+	}
+	for i, tbl := range wb.pivotRecords {
+		fn := gooxml.AbsoluteFilename(dt, gooxml.PivotCacheRecordsType, i+1)
+		zippkg.MarshalXML(z, fn, tbl)
+		if !wb.pivotRecordRels[i].IsEmpty() {
+			zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.pivotRecordRels[i].X())
+		}
 	}
 	for i, drawing := range wb.drawings {
 		fn := gooxml.AbsoluteFilename(dt, gooxml.DrawingType, i+1)
@@ -402,7 +430,43 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		idx := uint32(len(wb.tables))
 		decMap.AddTarget(zippkg.Target{Path: target, Ifc: tbl, Index: idx})
 		wb.tables = append(wb.tables, tbl)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.charts))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.tables))
+
+	case gooxml.PivotTableType:
+		tbl := sml.NewPivotTableDefinition()
+		idx := uint32(len(wb.pivotTables))
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: tbl, Index: idx})
+		wb.pivotTables = append(wb.pivotTables, tbl)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.pivotTables))
+
+		fn := gooxml.AbsoluteFilename(dt, typ, len(wb.pivotTables))
+		tblRel := common.NewRelationships()
+		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(fn), Ifc: tblRel.X(), Index: idx})
+		wb.pivotTableRels = append(wb.pivotTableRels, tblRel)
+
+	case gooxml.PivotCacheDefinitionType:
+		cd := sml.NewPivotCacheDefinition()
+		idx := uint32(len(wb.pivotCache))
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: cd, Index: idx})
+		wb.pivotCache = append(wb.pivotCache, cd)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.pivotCache))
+
+		fn := gooxml.AbsoluteFilename(dt, typ, len(wb.pivotCache))
+		cdRel := common.NewRelationships()
+		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(fn), Ifc: cdRel.X(), Index: idx})
+		wb.pivotCacheRels = append(wb.pivotCacheRels, cdRel)
+
+	case gooxml.PivotCacheRecordsType:
+		cd := sml.NewPivotCacheRecords()
+		idx := uint32(len(wb.pivotRecords))
+		decMap.AddTarget(zippkg.Target{Path: target, Ifc: cd, Index: idx})
+		wb.pivotRecords = append(wb.pivotRecords, cd)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.pivotRecords))
+
+		fn := gooxml.AbsoluteFilename(dt, typ, len(wb.pivotRecords))
+		cdRel := common.NewRelationships()
+		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(fn), Ifc: cdRel.X(), Index: idx})
+		wb.pivotRecordRels = append(wb.pivotRecordRels, cdRel)
 
 	default:
 		log.Printf("unsupported relationship %s %s", target, typ)

@@ -35,6 +35,9 @@ const (
 	SMLStyleSheetContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"
 	TableType                = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table"
 	TableContentType         = "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"
+	PivotTableType           = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotTable"
+	PivotCacheDefinitionType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheDefinition"
+	PivotCacheRecordsType    = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheRecords"
 
 	// WML
 	HeaderType      = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header"

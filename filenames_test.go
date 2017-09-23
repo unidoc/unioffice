@@ -66,6 +66,9 @@ func TestSMLFilenames(t *testing.T) {
 		{2, gooxml.VMLDrawingType, "../drawings/vmlDrawing2.vml", "xl/drawings/vmlDrawing2.vml"},
 		{0, gooxml.SharedStingsType, "sharedStrings.xml", "xl/sharedStrings.xml"},
 		{1, gooxml.ThemeType, "theme/theme1.xml", "xl/theme/theme1.xml"},
+		{2, gooxml.PivotTableType, "../pivotTables/pivotTable2.xml", "xl/pivotTables/pivotTable2.xml"},
+		{3, gooxml.PivotCacheDefinitionType, "../pivotCache/pivotCacheDefinition3.xml", "xl/pivotCache/pivotCacheDefinition3.xml"},
+		{4, gooxml.PivotCacheRecordsType, "../pivotCache/pivotCacheRecords4.xml", "xl/pivotCache/pivotCacheRecords4.xml"},
 	}
 	for _, tc := range td {
 		rel := gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, tc.Type, tc.Idx)
