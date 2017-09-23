@@ -14,14 +14,14 @@ import (
 	"fmt"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdCT_WordprocessingCanvas struct {
-	Bg     *drawingml.CT_BackgroundFormatting
-	Whole  *drawingml.CT_WholeE2oFormatting
+	Bg     *dml.CT_BackgroundFormatting
+	Whole  *dml.CT_WholeE2oFormatting
 	Choice []*WdCT_WordprocessingCanvasChoice
-	ExtLst *drawingml.CT_OfficeArtExtensionList
+	ExtLst *dml.CT_OfficeArtExtensionList
 }
 
 func NewWdCT_WordprocessingCanvas() *WdCT_WordprocessingCanvas {
@@ -64,12 +64,12 @@ lWdCT_WordprocessingCanvas:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "bg"}:
-				m.Bg = drawingml.NewCT_BackgroundFormatting()
+				m.Bg = dml.NewCT_BackgroundFormatting()
 				if err := d.DecodeElement(m.Bg, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "whole"}:
-				m.Whole = drawingml.NewCT_WholeE2oFormatting()
+				m.Whole = dml.NewCT_WholeE2oFormatting()
 				if err := d.DecodeElement(m.Whole, &el); err != nil {
 					return err
 				}
@@ -104,7 +104,7 @@ lWdCT_WordprocessingCanvas:
 				}
 				m.Choice = append(m.Choice, tmp)
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "extLst"}:
-				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
+				m.ExtLst = dml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
 				}

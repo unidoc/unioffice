@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdWgp struct {
@@ -43,7 +43,7 @@ lWdWgp:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "cNvPr"}:
-				m.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
+				m.CNvPr = dml.NewCT_NonVisualDrawingProps()
 				if err := d.DecodeElement(m.CNvPr, &el); err != nil {
 					return err
 				}
@@ -86,7 +86,7 @@ lWdWgp:
 				}
 				m.Choice = append(m.Choice, tmp)
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "extLst"}:
-				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
+				m.ExtLst = dml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
 				}

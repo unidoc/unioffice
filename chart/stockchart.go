@@ -9,7 +9,7 @@ package chart
 
 import (
 	"baliance.com/gooxml"
-	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
+	crt "baliance.com/gooxml/schema/soo/dml/chart"
 )
 
 // StockChart is a 2D Stock chart.

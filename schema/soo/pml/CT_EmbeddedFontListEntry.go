@@ -13,12 +13,12 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_EmbeddedFontListEntry struct {
 	// Embedded Font Name
-	Font *drawingml.CT_TextFont
+	Font *dml.CT_TextFont
 	// Regular Embedded Font
 	Regular *CT_EmbeddedFontDataId
 	// Bold Embedded Font
@@ -31,7 +31,7 @@ type CT_EmbeddedFontListEntry struct {
 
 func NewCT_EmbeddedFontListEntry() *CT_EmbeddedFontListEntry {
 	ret := &CT_EmbeddedFontListEntry{}
-	ret.Font = drawingml.NewCT_TextFont()
+	ret.Font = dml.NewCT_TextFont()
 	return ret
 }
 
@@ -61,7 +61,7 @@ func (m *CT_EmbeddedFontListEntry) MarshalXML(e *xml.Encoder, start xml.StartEle
 
 func (m *CT_EmbeddedFontListEntry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.Font = drawingml.NewCT_TextFont()
+	m.Font = dml.NewCT_TextFont()
 lCT_EmbeddedFontListEntry:
 	for {
 		tok, err := d.Token()

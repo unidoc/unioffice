@@ -14,8 +14,8 @@ import (
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/drawing"
 
-	dml "baliance.com/gooxml/schema/soo/drawingml"
-	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
+	"baliance.com/gooxml/schema/soo/dml"
+	crt "baliance.com/gooxml/schema/soo/dml/chart"
 )
 
 // Chart is a generic chart.

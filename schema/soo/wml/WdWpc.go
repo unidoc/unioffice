@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdWpc struct {
@@ -51,12 +51,12 @@ lWdWpc:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "bg"}:
-				m.Bg = drawingml.NewCT_BackgroundFormatting()
+				m.Bg = dml.NewCT_BackgroundFormatting()
 				if err := d.DecodeElement(m.Bg, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "whole"}:
-				m.Whole = drawingml.NewCT_WholeE2oFormatting()
+				m.Whole = dml.NewCT_WholeE2oFormatting()
 				if err := d.DecodeElement(m.Whole, &el); err != nil {
 					return err
 				}
@@ -91,7 +91,7 @@ lWdWpc:
 				}
 				m.Choice = append(m.Choice, tmp)
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "extLst"}:
-				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
+				m.ExtLst = dml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
 				}

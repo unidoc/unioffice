@@ -22,7 +22,7 @@ import (
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/zippkg"
 
-	dml "baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 	st "baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
 	"baliance.com/gooxml/schema/soo/pkg/relationships"
 	"baliance.com/gooxml/schema/soo/wml"

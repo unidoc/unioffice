@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_ViewProperties struct {
@@ -36,7 +36,7 @@ type CT_ViewProperties struct {
 	// Notes View Properties
 	NotesViewPr *CT_NotesViewProperties
 	// Grid Spacing
-	GridSpacing *drawingml.CT_PositiveSize2D
+	GridSpacing *dml.CT_PositiveSize2D
 	ExtLst      *CT_ExtensionList
 }
 
@@ -148,7 +148,7 @@ lCT_ViewProperties:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "gridSpacing"}:
-				m.GridSpacing = drawingml.NewCT_PositiveSize2D()
+				m.GridSpacing = dml.NewCT_PositiveSize2D()
 				if err := d.DecodeElement(m.GridSpacing, &el); err != nil {
 					return err
 				}

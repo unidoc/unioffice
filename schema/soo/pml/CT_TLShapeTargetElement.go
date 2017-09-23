@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_TLShapeTargetElement struct {
@@ -30,7 +30,7 @@ type CT_TLShapeTargetElement struct {
 	// Text Element
 	TxEl *CT_TLTextTargetElement
 	// Graphic Element
-	GraphicEl *drawingml.CT_AnimationElementChoice
+	GraphicEl *dml.CT_AnimationElementChoice
 }
 
 func NewCT_TLShapeTargetElement() *CT_TLShapeTargetElement {
@@ -107,7 +107,7 @@ lCT_TLShapeTargetElement:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "graphicEl"}:
-				m.GraphicEl = drawingml.NewCT_AnimationElementChoice()
+				m.GraphicEl = dml.NewCT_AnimationElementChoice()
 				if err := d.DecodeElement(m.GraphicEl, &el); err != nil {
 					return err
 				}

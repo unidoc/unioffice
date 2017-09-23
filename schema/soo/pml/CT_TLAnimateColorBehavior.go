@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_TLAnimateColorBehavior struct {
@@ -25,9 +25,9 @@ type CT_TLAnimateColorBehavior struct {
 	// By
 	By *CT_TLByAnimateColorTransform
 	// From
-	From *drawingml.CT_Color
+	From *dml.CT_Color
 	// To
-	To *drawingml.CT_Color
+	To *dml.CT_Color
 }
 
 func NewCT_TLAnimateColorBehavior() *CT_TLAnimateColorBehavior {
@@ -100,12 +100,12 @@ lCT_TLAnimateColorBehavior:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "from"}:
-				m.From = drawingml.NewCT_Color()
+				m.From = dml.NewCT_Color()
 				if err := d.DecodeElement(m.From, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "to"}:
-				m.To = drawingml.NewCT_Color()
+				m.To = dml.NewCT_Color()
 				if err := d.DecodeElement(m.To, &el); err != nil {
 					return err
 				}

@@ -14,7 +14,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdWsp struct {
@@ -53,7 +53,7 @@ lWdWsp:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "cNvPr"}:
-				m.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
+				m.CNvPr = dml.NewCT_NonVisualDrawingProps()
 				if err := d.DecodeElement(m.CNvPr, &el); err != nil {
 					return err
 				}
@@ -72,12 +72,12 @@ lWdWsp:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "style"}:
-				m.Style = drawingml.NewCT_ShapeStyle()
+				m.Style = dml.NewCT_ShapeStyle()
 				if err := d.DecodeElement(m.Style, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "extLst"}:
-				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
+				m.ExtLst = dml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
 				}

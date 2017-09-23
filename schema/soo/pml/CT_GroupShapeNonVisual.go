@@ -13,22 +13,22 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_GroupShapeNonVisual struct {
 	// Non-visual Drawing Properties
-	CNvPr *drawingml.CT_NonVisualDrawingProps
+	CNvPr *dml.CT_NonVisualDrawingProps
 	// Non-Visual Group Shape Drawing Properties
-	CNvGrpSpPr *drawingml.CT_NonVisualGroupDrawingShapeProps
+	CNvGrpSpPr *dml.CT_NonVisualGroupDrawingShapeProps
 	// Non-Visual Properties
 	NvPr *CT_ApplicationNonVisualDrawingProps
 }
 
 func NewCT_GroupShapeNonVisual() *CT_GroupShapeNonVisual {
 	ret := &CT_GroupShapeNonVisual{}
-	ret.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
-	ret.CNvGrpSpPr = drawingml.NewCT_NonVisualGroupDrawingShapeProps()
+	ret.CNvPr = dml.NewCT_NonVisualDrawingProps()
+	ret.CNvGrpSpPr = dml.NewCT_NonVisualGroupDrawingShapeProps()
 	ret.NvPr = NewCT_ApplicationNonVisualDrawingProps()
 	return ret
 }
@@ -47,8 +47,8 @@ func (m *CT_GroupShapeNonVisual) MarshalXML(e *xml.Encoder, start xml.StartEleme
 
 func (m *CT_GroupShapeNonVisual) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
-	m.CNvGrpSpPr = drawingml.NewCT_NonVisualGroupDrawingShapeProps()
+	m.CNvPr = dml.NewCT_NonVisualDrawingProps()
+	m.CNvGrpSpPr = dml.NewCT_NonVisualGroupDrawingShapeProps()
 	m.NvPr = NewCT_ApplicationNonVisualDrawingProps()
 lCT_GroupShapeNonVisual:
 	for {

@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdCT_Anchor struct {
@@ -30,25 +30,25 @@ type WdCT_Anchor struct {
 	LayoutInCellAttr   bool
 	HiddenAttr         *bool
 	AllowOverlapAttr   bool
-	SimplePos          *drawingml.CT_Point2D
+	SimplePos          *dml.CT_Point2D
 	PositionH          *WdCT_PosH
 	PositionV          *WdCT_PosV
-	Extent             *drawingml.CT_PositiveSize2D
+	Extent             *dml.CT_PositiveSize2D
 	EffectExtent       *WdCT_EffectExtent
 	Choice             *WdEG_WrapTypeChoice
-	DocPr              *drawingml.CT_NonVisualDrawingProps
-	CNvGraphicFramePr  *drawingml.CT_NonVisualGraphicFrameProperties
-	Graphic            *drawingml.Graphic
+	DocPr              *dml.CT_NonVisualDrawingProps
+	CNvGraphicFramePr  *dml.CT_NonVisualGraphicFrameProperties
+	Graphic            *dml.Graphic
 }
 
 func NewWdCT_Anchor() *WdCT_Anchor {
 	ret := &WdCT_Anchor{}
-	ret.SimplePos = drawingml.NewCT_Point2D()
+	ret.SimplePos = dml.NewCT_Point2D()
 	ret.PositionH = NewWdCT_PosH()
 	ret.PositionV = NewWdCT_PosV()
-	ret.Extent = drawingml.NewCT_PositiveSize2D()
-	ret.DocPr = drawingml.NewCT_NonVisualDrawingProps()
-	ret.Graphic = drawingml.NewGraphic()
+	ret.Extent = dml.NewCT_PositiveSize2D()
+	ret.DocPr = dml.NewCT_NonVisualDrawingProps()
+	ret.Graphic = dml.NewGraphic()
 	return ret
 }
 
@@ -117,12 +117,12 @@ func (m *WdCT_Anchor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *WdCT_Anchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.SimplePos = drawingml.NewCT_Point2D()
+	m.SimplePos = dml.NewCT_Point2D()
 	m.PositionH = NewWdCT_PosH()
 	m.PositionV = NewWdCT_PosV()
-	m.Extent = drawingml.NewCT_PositiveSize2D()
-	m.DocPr = drawingml.NewCT_NonVisualDrawingProps()
-	m.Graphic = drawingml.NewGraphic()
+	m.Extent = dml.NewCT_PositiveSize2D()
+	m.DocPr = dml.NewCT_NonVisualDrawingProps()
+	m.Graphic = dml.NewGraphic()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "distT" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -266,7 +266,7 @@ lWdCT_Anchor:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "cNvGraphicFramePr"}:
-				m.CNvGraphicFramePr = drawingml.NewCT_NonVisualGraphicFrameProperties()
+				m.CNvGraphicFramePr = dml.NewCT_NonVisualGraphicFrameProperties()
 				if err := d.DecodeElement(m.CNvGraphicFramePr, &el); err != nil {
 					return err
 				}

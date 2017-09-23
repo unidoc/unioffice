@@ -17,7 +17,7 @@ import (
 	"time"
 
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_Comment struct {
@@ -28,7 +28,7 @@ type CT_Comment struct {
 	// Comment Index
 	IdxAttr uint32
 	// Comment Position
-	Pos *drawingml.CT_Point2D
+	Pos *dml.CT_Point2D
 	// Comment's Text Content
 	Text   string
 	ExtLst *CT_ExtensionListModify
@@ -36,7 +36,7 @@ type CT_Comment struct {
 
 func NewCT_Comment() *CT_Comment {
 	ret := &CT_Comment{}
-	ret.Pos = drawingml.NewCT_Point2D()
+	ret.Pos = dml.NewCT_Point2D()
 	return ret
 }
 
@@ -65,7 +65,7 @@ func (m *CT_Comment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *CT_Comment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.Pos = drawingml.NewCT_Point2D()
+	m.Pos = dml.NewCT_Point2D()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "authorId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)

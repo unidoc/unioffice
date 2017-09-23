@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdCT_Inline struct {
@@ -23,18 +23,18 @@ type WdCT_Inline struct {
 	DistBAttr         *uint32
 	DistLAttr         *uint32
 	DistRAttr         *uint32
-	Extent            *drawingml.CT_PositiveSize2D
+	Extent            *dml.CT_PositiveSize2D
 	EffectExtent      *WdCT_EffectExtent
-	DocPr             *drawingml.CT_NonVisualDrawingProps
-	CNvGraphicFramePr *drawingml.CT_NonVisualGraphicFrameProperties
-	Graphic           *drawingml.Graphic
+	DocPr             *dml.CT_NonVisualDrawingProps
+	CNvGraphicFramePr *dml.CT_NonVisualGraphicFrameProperties
+	Graphic           *dml.Graphic
 }
 
 func NewWdCT_Inline() *WdCT_Inline {
 	ret := &WdCT_Inline{}
-	ret.Extent = drawingml.NewCT_PositiveSize2D()
-	ret.DocPr = drawingml.NewCT_NonVisualDrawingProps()
-	ret.Graphic = drawingml.NewGraphic()
+	ret.Extent = dml.NewCT_PositiveSize2D()
+	ret.DocPr = dml.NewCT_NonVisualDrawingProps()
+	ret.Graphic = dml.NewGraphic()
 	return ret
 }
 
@@ -76,9 +76,9 @@ func (m *WdCT_Inline) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 func (m *WdCT_Inline) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.Extent = drawingml.NewCT_PositiveSize2D()
-	m.DocPr = drawingml.NewCT_NonVisualDrawingProps()
-	m.Graphic = drawingml.NewGraphic()
+	m.Extent = dml.NewCT_PositiveSize2D()
+	m.DocPr = dml.NewCT_NonVisualDrawingProps()
+	m.Graphic = dml.NewGraphic()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "distT" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -136,7 +136,7 @@ lWdCT_Inline:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "cNvGraphicFramePr"}:
-				m.CNvGraphicFramePr = drawingml.NewCT_NonVisualGraphicFrameProperties()
+				m.CNvGraphicFramePr = dml.NewCT_NonVisualGraphicFrameProperties()
 				if err := d.DecodeElement(m.CNvGraphicFramePr, &el); err != nil {
 					return err
 				}

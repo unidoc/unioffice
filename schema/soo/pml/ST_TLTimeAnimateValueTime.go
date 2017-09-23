@@ -13,12 +13,12 @@ import (
 	"encoding/xml"
 	"fmt"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 // ST_TLTimeAnimateValueTime is a union type
 type ST_TLTimeAnimateValueTime struct {
-	ST_PositiveFixedPercentage *drawingml.ST_PositiveFixedPercentage
+	ST_PositiveFixedPercentage *dml.ST_PositiveFixedPercentage
 	ST_TLTimeIndefinite        ST_TLTimeIndefinite
 }
 

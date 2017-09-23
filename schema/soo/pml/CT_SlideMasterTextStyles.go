@@ -13,16 +13,16 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_SlideMasterTextStyles struct {
 	// Slide Master Title Text Style
-	TitleStyle *drawingml.CT_TextListStyle
+	TitleStyle *dml.CT_TextListStyle
 	// Slide Master Body Text Style
-	BodyStyle *drawingml.CT_TextListStyle
+	BodyStyle *dml.CT_TextListStyle
 	// Slide Master Other Text Style
-	OtherStyle *drawingml.CT_TextListStyle
+	OtherStyle *dml.CT_TextListStyle
 	ExtLst     *CT_ExtensionList
 }
 
@@ -65,17 +65,17 @@ lCT_SlideMasterTextStyles:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "titleStyle"}:
-				m.TitleStyle = drawingml.NewCT_TextListStyle()
+				m.TitleStyle = dml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.TitleStyle, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bodyStyle"}:
-				m.BodyStyle = drawingml.NewCT_TextListStyle()
+				m.BodyStyle = dml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.BodyStyle, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "otherStyle"}:
-				m.OtherStyle = drawingml.NewCT_TextListStyle()
+				m.OtherStyle = dml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.OtherStyle, &el); err != nil {
 					return err
 				}

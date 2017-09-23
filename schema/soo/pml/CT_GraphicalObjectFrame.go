@@ -13,16 +13,16 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_GraphicalObjectFrame struct {
-	BwModeAttr drawingml.ST_BlackWhiteMode
+	BwModeAttr dml.ST_BlackWhiteMode
 	// Non-Visual Properties for a Graphic Frame
 	NvGraphicFramePr *CT_GraphicalObjectFrameNonVisual
 	// 2D Transform for Graphic Frame
-	Xfrm    *drawingml.CT_Transform2D
-	Graphic *drawingml.Graphic
+	Xfrm    *dml.CT_Transform2D
+	Graphic *dml.Graphic
 	// Extension List with Modification Flag
 	ExtLst *CT_ExtensionListModify
 }
@@ -30,13 +30,13 @@ type CT_GraphicalObjectFrame struct {
 func NewCT_GraphicalObjectFrame() *CT_GraphicalObjectFrame {
 	ret := &CT_GraphicalObjectFrame{}
 	ret.NvGraphicFramePr = NewCT_GraphicalObjectFrameNonVisual()
-	ret.Xfrm = drawingml.NewCT_Transform2D()
-	ret.Graphic = drawingml.NewGraphic()
+	ret.Xfrm = dml.NewCT_Transform2D()
+	ret.Graphic = dml.NewGraphic()
 	return ret
 }
 
 func (m *CT_GraphicalObjectFrame) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m.BwModeAttr != drawingml.ST_BlackWhiteModeUnset {
+	if m.BwModeAttr != dml.ST_BlackWhiteModeUnset {
 		attr, err := m.BwModeAttr.MarshalXMLAttr(xml.Name{Local: "bwMode"})
 		if err != nil {
 			return err
@@ -61,8 +61,8 @@ func (m *CT_GraphicalObjectFrame) MarshalXML(e *xml.Encoder, start xml.StartElem
 func (m *CT_GraphicalObjectFrame) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.NvGraphicFramePr = NewCT_GraphicalObjectFrameNonVisual()
-	m.Xfrm = drawingml.NewCT_Transform2D()
-	m.Graphic = drawingml.NewGraphic()
+	m.Xfrm = dml.NewCT_Transform2D()
+	m.Graphic = dml.NewGraphic()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bwMode" {
 			m.BwModeAttr.UnmarshalXMLAttr(attr)

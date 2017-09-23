@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_ShowProperties struct {
@@ -40,7 +40,7 @@ type CT_ShowProperties struct {
 	// Custom Show
 	CustShow *CT_CustomShowId
 	// Pen Color for Slide Show
-	PenClr *drawingml.CT_Color
+	PenClr *dml.CT_Color
 	ExtLst *CT_ExtensionList
 }
 
@@ -175,7 +175,7 @@ lCT_ShowProperties:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "penClr"}:
-				m.PenClr = drawingml.NewCT_Color()
+				m.PenClr = dml.NewCT_Color()
 				if err := d.DecodeElement(m.PenClr, &el); err != nil {
 					return err
 				}

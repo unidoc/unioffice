@@ -13,12 +13,12 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type EG_ChildSlide struct {
 	// Color Scheme Map Override
-	ClrMapOvr *drawingml.CT_ColorMappingOverride
+	ClrMapOvr *dml.CT_ColorMappingOverride
 }
 
 func NewEG_ChildSlide() *EG_ChildSlide {
@@ -46,7 +46,7 @@ lEG_ChildSlide:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "clrMapOvr"}:
-				m.ClrMapOvr = drawingml.NewCT_ColorMappingOverride()
+				m.ClrMapOvr = dml.NewCT_ColorMappingOverride()
 				if err := d.DecodeElement(m.ClrMapOvr, &el); err != nil {
 					return err
 				}

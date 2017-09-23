@@ -13,14 +13,14 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_TLTimeTargetElement struct {
 	// Slide Target
 	SldTgt *CT_Empty
 	// Sound Target
-	SndTgt *drawingml.CT_EmbeddedWAVAudioFile
+	SndTgt *dml.CT_EmbeddedWAVAudioFile
 	// Shape Target
 	SpTgt *CT_TLShapeTargetElement
 	// Ink Target
@@ -71,7 +71,7 @@ lCT_TLTimeTargetElement:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sndTgt"}:
-				m.SndTgt = drawingml.NewCT_EmbeddedWAVAudioFile()
+				m.SndTgt = dml.NewCT_EmbeddedWAVAudioFile()
 				if err := d.DecodeElement(m.SndTgt, &el); err != nil {
 					return err
 				}

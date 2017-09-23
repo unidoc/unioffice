@@ -14,16 +14,16 @@ import (
 	"fmt"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_TLByHslColorTransform struct {
 	// Hue
 	HAttr int32
 	// Saturation
-	SAttr drawingml.ST_FixedPercentage
+	SAttr dml.ST_FixedPercentage
 	// Lightness
-	LAttr drawingml.ST_FixedPercentage
+	LAttr dml.ST_FixedPercentage
 }
 
 func NewCT_TLByHslColorTransform() *CT_TLByHslColorTransform {

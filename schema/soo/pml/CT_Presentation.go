@@ -15,13 +15,13 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
 )
 
 type CT_Presentation struct {
 	// Server Zoom
-	ServerZoomAttr *drawingml.ST_Percentage
+	ServerZoomAttr *dml.ST_Percentage
 	// First Slide Number
 	FirstSlideNumAttr *int32
 	// Show Header and Footer Placeholders on Titles
@@ -55,7 +55,7 @@ type CT_Presentation struct {
 	// Presentation Slide Size
 	SldSz *CT_SlideSize
 	// Notes Slide Size
-	NotesSz *drawingml.CT_PositiveSize2D
+	NotesSz *dml.CT_PositiveSize2D
 	// Smart Tags
 	SmartTags *CT_SmartTags
 	// Embedded Font List
@@ -69,7 +69,7 @@ type CT_Presentation struct {
 	// Kinsoku Settings
 	Kinsoku *CT_Kinsoku
 	// Presentation Default Text Style
-	DefaultTextStyle *drawingml.CT_TextListStyle
+	DefaultTextStyle *dml.CT_TextListStyle
 	// Modification Verifier
 	ModifyVerifier *CT_ModifyVerifier
 	// Extension List
@@ -78,7 +78,7 @@ type CT_Presentation struct {
 
 func NewCT_Presentation() *CT_Presentation {
 	ret := &CT_Presentation{}
-	ret.NotesSz = drawingml.NewCT_PositiveSize2D()
+	ret.NotesSz = dml.NewCT_PositiveSize2D()
 	return ret
 }
 
@@ -199,7 +199,7 @@ func (m *CT_Presentation) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 
 func (m *CT_Presentation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.NotesSz = drawingml.NewCT_PositiveSize2D()
+	m.NotesSz = dml.NewCT_PositiveSize2D()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "serverZoom" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -353,7 +353,7 @@ lCT_Presentation:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "defaultTextStyle"}:
-				m.DefaultTextStyle = drawingml.NewCT_TextListStyle()
+				m.DefaultTextStyle = dml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.DefaultTextStyle, &el); err != nil {
 					return err
 				}

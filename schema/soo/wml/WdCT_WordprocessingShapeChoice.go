@@ -13,12 +13,12 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdCT_WordprocessingShapeChoice struct {
-	CNvSpPr *drawingml.CT_NonVisualDrawingShapeProps
-	CNvCnPr *drawingml.CT_NonVisualConnectorProperties
+	CNvSpPr *dml.CT_NonVisualDrawingShapeProps
+	CNvCnPr *dml.CT_NonVisualConnectorProperties
 }
 
 func NewWdCT_WordprocessingShapeChoice() *WdCT_WordprocessingShapeChoice {
@@ -50,12 +50,12 @@ lWdCT_WordprocessingShapeChoice:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "cNvSpPr"}:
-				m.CNvSpPr = drawingml.NewCT_NonVisualDrawingShapeProps()
+				m.CNvSpPr = dml.NewCT_NonVisualDrawingShapeProps()
 				if err := d.DecodeElement(m.CNvSpPr, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "cNvCnPr"}:
-				m.CNvCnPr = drawingml.NewCT_NonVisualConnectorProperties()
+				m.CNvCnPr = dml.NewCT_NonVisualConnectorProperties()
 				if err := d.DecodeElement(m.CNvCnPr, &el); err != nil {
 					return err
 				}

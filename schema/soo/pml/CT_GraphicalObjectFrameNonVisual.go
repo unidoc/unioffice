@@ -13,22 +13,22 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_GraphicalObjectFrameNonVisual struct {
 	// Non-Visual Drawing Properties
-	CNvPr *drawingml.CT_NonVisualDrawingProps
+	CNvPr *dml.CT_NonVisualDrawingProps
 	// Non-Visual Graphic Frame Drawing Properties
-	CNvGraphicFramePr *drawingml.CT_NonVisualGraphicFrameProperties
+	CNvGraphicFramePr *dml.CT_NonVisualGraphicFrameProperties
 	// Application Non-Visual Drawing Properties
 	NvPr *CT_ApplicationNonVisualDrawingProps
 }
 
 func NewCT_GraphicalObjectFrameNonVisual() *CT_GraphicalObjectFrameNonVisual {
 	ret := &CT_GraphicalObjectFrameNonVisual{}
-	ret.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
-	ret.CNvGraphicFramePr = drawingml.NewCT_NonVisualGraphicFrameProperties()
+	ret.CNvPr = dml.NewCT_NonVisualDrawingProps()
+	ret.CNvGraphicFramePr = dml.NewCT_NonVisualGraphicFrameProperties()
 	ret.NvPr = NewCT_ApplicationNonVisualDrawingProps()
 	return ret
 }
@@ -47,8 +47,8 @@ func (m *CT_GraphicalObjectFrameNonVisual) MarshalXML(e *xml.Encoder, start xml.
 
 func (m *CT_GraphicalObjectFrameNonVisual) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
-	m.CNvGraphicFramePr = drawingml.NewCT_NonVisualGraphicFrameProperties()
+	m.CNvPr = dml.NewCT_NonVisualDrawingProps()
+	m.CNvGraphicFramePr = dml.NewCT_NonVisualGraphicFrameProperties()
 	m.NvPr = NewCT_ApplicationNonVisualDrawingProps()
 lCT_GraphicalObjectFrameNonVisual:
 	for {

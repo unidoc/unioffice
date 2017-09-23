@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml/picture"
+	"baliance.com/gooxml/schema/soo/dml/picture"
 )
 
 type WdCT_WordprocessingCanvasChoice struct {

@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type NotesMaster struct {
@@ -63,7 +63,7 @@ lNotesMaster:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "notesStyle"}:
-				m.NotesStyle = drawingml.NewCT_TextListStyle()
+				m.NotesStyle = dml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.NotesStyle, &el); err != nil {
 					return err
 				}

@@ -7,7 +7,7 @@
 
 package chart
 
-import crt "baliance.com/gooxml/schema/soo/drawingml/chart"
+import crt "baliance.com/gooxml/schema/soo/dml/chart"
 import "baliance.com/gooxml"
 
 // PieChart is a Pie chart.

@@ -13,17 +13,17 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type EG_TopLevelSlide struct {
 	// Color Scheme Map
-	ClrMap *drawingml.CT_ColorMapping
+	ClrMap *dml.CT_ColorMapping
 }
 
 func NewEG_TopLevelSlide() *EG_TopLevelSlide {
 	ret := &EG_TopLevelSlide{}
-	ret.ClrMap = drawingml.NewCT_ColorMapping()
+	ret.ClrMap = dml.NewCT_ColorMapping()
 	return ret
 }
 
@@ -35,7 +35,7 @@ func (m *EG_TopLevelSlide) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 
 func (m *EG_TopLevelSlide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.ClrMap = drawingml.NewCT_ColorMapping()
+	m.ClrMap = dml.NewCT_ColorMapping()
 lEG_TopLevelSlide:
 	for {
 		tok, err := d.Token()

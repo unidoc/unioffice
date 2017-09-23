@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_PresentationProperties struct {
@@ -26,7 +26,7 @@ type CT_PresentationProperties struct {
 	// Presentation-wide Show Properties
 	ShowPr *CT_ShowProperties
 	// Color MRU
-	ClrMru *drawingml.CT_ColorMRU
+	ClrMru *dml.CT_ColorMRU
 	ExtLst *CT_ExtensionList
 }
 
@@ -97,7 +97,7 @@ lCT_PresentationProperties:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "clrMru"}:
-				m.ClrMru = drawingml.NewCT_ColorMRU()
+				m.ClrMru = dml.NewCT_ColorMRU()
 				if err := d.DecodeElement(m.ClrMru, &el); err != nil {
 					return err
 				}

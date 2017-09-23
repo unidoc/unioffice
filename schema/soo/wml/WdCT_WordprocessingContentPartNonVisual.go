@@ -13,12 +13,12 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdCT_WordprocessingContentPartNonVisual struct {
-	CNvPr            *drawingml.CT_NonVisualDrawingProps
-	CNvContentPartPr *drawingml.CT_NonVisualContentPartProperties
+	CNvPr            *dml.CT_NonVisualDrawingProps
+	CNvContentPartPr *dml.CT_NonVisualContentPartProperties
 }
 
 func NewWdCT_WordprocessingContentPartNonVisual() *WdCT_WordprocessingContentPartNonVisual {
@@ -52,12 +52,12 @@ lWdCT_WordprocessingContentPartNonVisual:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "cNvPr"}:
-				m.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
+				m.CNvPr = dml.NewCT_NonVisualDrawingProps()
 				if err := d.DecodeElement(m.CNvPr, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "cNvContentPartPr"}:
-				m.CNvContentPartPr = drawingml.NewCT_NonVisualContentPartProperties()
+				m.CNvContentPartPr = dml.NewCT_NonVisualContentPartProperties()
 				if err := d.DecodeElement(m.CNvContentPartPr, &el); err != nil {
 					return err
 				}

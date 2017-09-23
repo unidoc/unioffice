@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_ApplicationNonVisualDrawingProps struct {
@@ -25,11 +25,11 @@ type CT_ApplicationNonVisualDrawingProps struct {
 	UserDrawnAttr *bool
 	// Placeholder Shape
 	Ph            *CT_Placeholder
-	AudioCd       *drawingml.CT_AudioCD
-	WavAudioFile  *drawingml.CT_EmbeddedWAVAudioFile
-	AudioFile     *drawingml.CT_AudioFile
-	VideoFile     *drawingml.CT_VideoFile
-	QuickTimeFile *drawingml.CT_QuickTimeFile
+	AudioCd       *dml.CT_AudioCD
+	WavAudioFile  *dml.CT_EmbeddedWAVAudioFile
+	AudioFile     *dml.CT_AudioFile
+	VideoFile     *dml.CT_VideoFile
+	QuickTimeFile *dml.CT_QuickTimeFile
 	// Customer Data List
 	CustDataLst *CT_CustomerDataList
 	ExtLst      *CT_ExtensionList
@@ -119,27 +119,27 @@ lCT_ApplicationNonVisualDrawingProps:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "audioCd"}:
-				m.AudioCd = drawingml.NewCT_AudioCD()
+				m.AudioCd = dml.NewCT_AudioCD()
 				if err := d.DecodeElement(m.AudioCd, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "wavAudioFile"}:
-				m.WavAudioFile = drawingml.NewCT_EmbeddedWAVAudioFile()
+				m.WavAudioFile = dml.NewCT_EmbeddedWAVAudioFile()
 				if err := d.DecodeElement(m.WavAudioFile, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "audioFile"}:
-				m.AudioFile = drawingml.NewCT_AudioFile()
+				m.AudioFile = dml.NewCT_AudioFile()
 				if err := d.DecodeElement(m.AudioFile, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "videoFile"}:
-				m.VideoFile = drawingml.NewCT_VideoFile()
+				m.VideoFile = dml.NewCT_VideoFile()
 				if err := d.DecodeElement(m.VideoFile, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "quickTimeFile"}:
-				m.QuickTimeFile = drawingml.NewCT_QuickTimeFile()
+				m.QuickTimeFile = dml.NewCT_QuickTimeFile()
 				if err := d.DecodeElement(m.QuickTimeFile, &el); err != nil {
 					return err
 				}

@@ -13,14 +13,14 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type EG_Background struct {
 	// Background Properties
 	BgPr *CT_BackgroundProperties
 	// Background Style Reference
-	BgRef *drawingml.CT_StyleMatrixReference
+	BgRef *dml.CT_StyleMatrixReference
 }
 
 func NewEG_Background() *EG_Background {
@@ -57,7 +57,7 @@ lEG_Background:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bgRef"}:
-				m.BgRef = drawingml.NewCT_StyleMatrixReference()
+				m.BgRef = dml.NewCT_StyleMatrixReference()
 				if err := d.DecodeElement(m.BgRef, &el); err != nil {
 					return err
 				}

@@ -13,16 +13,16 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_Background struct {
 	// Black and White Mode
-	BwModeAttr drawingml.ST_BlackWhiteMode
+	BwModeAttr dml.ST_BlackWhiteMode
 	// Background Properties
 	BgPr *CT_BackgroundProperties
 	// Background Style Reference
-	BgRef *drawingml.CT_StyleMatrixReference
+	BgRef *dml.CT_StyleMatrixReference
 }
 
 func NewCT_Background() *CT_Background {
@@ -31,7 +31,7 @@ func NewCT_Background() *CT_Background {
 }
 
 func (m *CT_Background) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m.BwModeAttr != drawingml.ST_BlackWhiteModeUnset {
+	if m.BwModeAttr != dml.ST_BlackWhiteModeUnset {
 		attr, err := m.BwModeAttr.MarshalXMLAttr(xml.Name{Local: "bwMode"})
 		if err != nil {
 			return err
@@ -73,7 +73,7 @@ lCT_Background:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bgRef"}:
-				m.BgRef = drawingml.NewCT_StyleMatrixReference()
+				m.BgRef = dml.NewCT_StyleMatrixReference()
 				if err := d.DecodeElement(m.BgRef, &el); err != nil {
 					return err
 				}

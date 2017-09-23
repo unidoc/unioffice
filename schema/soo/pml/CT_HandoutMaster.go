@@ -13,14 +13,14 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_HandoutMaster struct {
 	// Common slide data for handout master
 	CSld *CT_CommonSlideData
 	// Color Scheme Map
-	ClrMap *drawingml.CT_ColorMapping
+	ClrMap *dml.CT_ColorMapping
 	// Header/Footer information for a handout master
 	Hf     *CT_HeaderFooter
 	ExtLst *CT_ExtensionListModify
@@ -29,7 +29,7 @@ type CT_HandoutMaster struct {
 func NewCT_HandoutMaster() *CT_HandoutMaster {
 	ret := &CT_HandoutMaster{}
 	ret.CSld = NewCT_CommonSlideData()
-	ret.ClrMap = drawingml.NewCT_ColorMapping()
+	ret.ClrMap = dml.NewCT_ColorMapping()
 	return ret
 }
 
@@ -54,7 +54,7 @@ func (m *CT_HandoutMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 func (m *CT_HandoutMaster) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CSld = NewCT_CommonSlideData()
-	m.ClrMap = drawingml.NewCT_ColorMapping()
+	m.ClrMap = dml.NewCT_ColorMapping()
 lCT_HandoutMaster:
 	for {
 		tok, err := d.Token()
