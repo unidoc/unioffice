@@ -11,7 +11,7 @@ import (
 	"archive/zip"
 	"path/filepath"
 
-	"baliance.com/gooxml/schema/soo/package/relationships"
+	"baliance.com/gooxml/schema/soo/pkg/relationships"
 )
 
 // OnNewRelationshipFunc is called when a new relationship has been discovered.

@@ -7,28 +7,28 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package relationships_test
+package core_properties_test
 
 import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/package/relationships"
+	"baliance.com/gooxml/schema/soo/pkg/metadata/core_properties"
 )
 
-func TestRelationshipConstructor(t *testing.T) {
-	v := relationships.NewRelationship()
+func TestCT_CorePropertiesConstructor(t *testing.T) {
+	v := core_properties.NewCT_CoreProperties()
 	if v == nil {
-		t.Errorf("relationships.NewRelationship must return a non-nil value")
+		t.Errorf("core_properties.NewCT_CoreProperties must return a non-nil value")
 	}
 	if err := v.Validate(); err != nil {
-		t.Errorf("newly constructed relationships.Relationship should validate: %s", err)
+		t.Errorf("newly constructed core_properties.CT_CoreProperties should validate: %s", err)
 	}
 }
 
-func TestRelationshipMarshalUnmarshal(t *testing.T) {
-	v := relationships.NewRelationship()
+func TestCT_CorePropertiesMarshalUnmarshal(t *testing.T) {
+	v := core_properties.NewCT_CoreProperties()
 	buf, _ := xml.Marshal(v)
-	v2 := relationships.NewRelationship()
+	v2 := core_properties.NewCT_CoreProperties()
 	xml.Unmarshal(buf, v2)
 }

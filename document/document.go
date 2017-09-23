@@ -24,7 +24,7 @@ import (
 
 	dml "baliance.com/gooxml/schema/soo/drawingml"
 	st "baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
-	"baliance.com/gooxml/schema/soo/package/relationships"
+	"baliance.com/gooxml/schema/soo/pkg/relationships"
 	"baliance.com/gooxml/schema/soo/wml"
 )
 

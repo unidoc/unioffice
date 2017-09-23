@@ -11,7 +11,7 @@ import (
 	"log"
 	"strings"
 
-	"baliance.com/gooxml/schema/soo/package/content_types"
+	"baliance.com/gooxml/schema/soo/pkg/content_types"
 )
 
 // ContentTypes is the top level "[Content_Types].xml" in a zip package.
