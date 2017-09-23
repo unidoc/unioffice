@@ -17,6 +17,5 @@ for pkg in $ALLPKGS; do
         rm coverprofile
     fi
 done
-rm coverage.out
-sed -ie "s#$PKG#github.com/baliance/gooxml#" coverage.txt
+rm coverage.out coverage.txte
 bash <(curl -s https://codecov.io/bash)
