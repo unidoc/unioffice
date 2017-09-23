@@ -14,13 +14,12 @@ import (
 	"os"
 
 	"baliance.com/gooxml"
+	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/soo/drawingml"
-
-	"baliance.com/gooxml/common"
 	dml "baliance.com/gooxml/schema/soo/drawingml"
 	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
-	pml "baliance.com/gooxml/schema/soo/presentationml"
+	"baliance.com/gooxml/schema/soo/pml"
 	"baliance.com/gooxml/zippkg"
 )
 
