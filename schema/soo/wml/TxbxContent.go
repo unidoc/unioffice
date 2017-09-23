@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/officeDocument/math"
+	"baliance.com/gooxml/schema/soo/ofc/math"
 )
 
 type TxbxContent struct {

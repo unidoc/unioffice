@@ -18,7 +18,7 @@ import (
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/soo/dml"
 	pic "baliance.com/gooxml/schema/soo/dml/picture"
-	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
+	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 	"baliance.com/gooxml/schema/soo/wml"
 )
 

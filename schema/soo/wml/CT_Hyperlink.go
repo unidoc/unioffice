@@ -14,8 +14,8 @@ import (
 	"fmt"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/officeDocument/math"
-	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
+	"baliance.com/gooxml/schema/soo/ofc/math"
+	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
 type CT_Hyperlink struct {
