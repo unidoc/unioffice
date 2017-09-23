@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_SlideLayout struct {
@@ -30,7 +30,7 @@ type CT_SlideLayout struct {
 	// Common slide data for slide layouts
 	CSld *CT_CommonSlideData
 	// Color Scheme Map Override
-	ClrMapOvr *drawingml.CT_ColorMappingOverride
+	ClrMapOvr *dml.CT_ColorMappingOverride
 	// Slide Transition for a Slide Layout
 	Transition *CT_SlideTransition
 	// Slide Timing Information for a Slide Layout
@@ -160,7 +160,7 @@ lCT_SlideLayout:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "clrMapOvr"}:
-				m.ClrMapOvr = drawingml.NewCT_ColorMappingOverride()
+				m.ClrMapOvr = dml.NewCT_ColorMappingOverride()
 				if err := d.DecodeElement(m.ClrMapOvr, &el); err != nil {
 					return err
 				}

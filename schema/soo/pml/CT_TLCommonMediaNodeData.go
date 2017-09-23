@@ -15,12 +15,12 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_TLCommonMediaNodeData struct {
 	// Volume
-	VolAttr *drawingml.ST_PositiveFixedPercentage
+	VolAttr *dml.ST_PositiveFixedPercentage
 	// Mute
 	MuteAttr *bool
 	// Number of Slides

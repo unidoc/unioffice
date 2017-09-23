@@ -23,9 +23,9 @@ import (
 	"baliance.com/gooxml/vmldrawing"
 	"baliance.com/gooxml/zippkg"
 
-	dml "baliance.com/gooxml/schema/soo/drawingml"
-	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
-	sd "baliance.com/gooxml/schema/soo/drawingml/spreadsheetDrawing"
+	"baliance.com/gooxml/schema/soo/dml"
+	crt "baliance.com/gooxml/schema/soo/dml/chart"
+	sd "baliance.com/gooxml/schema/soo/dml/spreadsheetDrawing"
 	"baliance.com/gooxml/schema/soo/pkg/relationships"
 	"baliance.com/gooxml/schema/soo/sml"
 )

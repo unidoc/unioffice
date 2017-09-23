@@ -15,14 +15,14 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_TLGraphicalObjectBuild struct {
 	// Build As One
 	BldAsOne *CT_Empty
 	// Build Sub Elements
-	BldSub       *drawingml.CT_AnimationGraphicalObjectBuildProperties
+	BldSub       *dml.CT_AnimationGraphicalObjectBuildProperties
 	SpidAttr     *uint32
 	GrpIdAttr    *uint32
 	UiExpandAttr *bool
@@ -101,7 +101,7 @@ lCT_TLGraphicalObjectBuild:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldSub"}:
-				m.BldSub = drawingml.NewCT_AnimationGraphicalObjectBuildProperties()
+				m.BldSub = dml.NewCT_AnimationGraphicalObjectBuildProperties()
 				if err := d.DecodeElement(m.BldSub, &el); err != nil {
 					return err
 				}

@@ -17,7 +17,7 @@ import (
 	"time"
 
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
 )
 
@@ -151,8 +151,8 @@ func ParseUnionST_TextScale(s string) (ST_TextScale, error) {
 	return r, nil
 }
 
-func ParseUnionST_Coordinate(s string) (drawingml.ST_Coordinate, error) {
-	return drawingml.ParseUnionST_Coordinate(s)
+func ParseUnionST_Coordinate(s string) (dml.ST_Coordinate, error) {
+	return dml.ParseUnionST_Coordinate(s)
 }
 
 func b2i(b bool) uint8 {

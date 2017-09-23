@@ -13,12 +13,12 @@ import (
 	"encoding/xml"
 	"fmt"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_TLIterateIntervalPercentage struct {
 	// Value
-	ValAttr drawingml.ST_PositivePercentage
+	ValAttr dml.ST_PositivePercentage
 }
 
 func NewCT_TLIterateIntervalPercentage() *CT_TLIterateIntervalPercentage {

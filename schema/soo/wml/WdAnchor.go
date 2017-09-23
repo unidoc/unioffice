@@ -14,7 +14,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdAnchor struct {
@@ -185,7 +185,7 @@ lWdAnchor:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "cNvGraphicFramePr"}:
-				m.CNvGraphicFramePr = drawingml.NewCT_NonVisualGraphicFrameProperties()
+				m.CNvGraphicFramePr = dml.NewCT_NonVisualGraphicFrameProperties()
 				if err := d.DecodeElement(m.CNvGraphicFramePr, &el); err != nil {
 					return err
 				}

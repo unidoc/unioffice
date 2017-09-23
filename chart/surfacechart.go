@@ -10,8 +10,8 @@ package chart
 import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/drawing"
-	dml "baliance.com/gooxml/schema/soo/drawingml"
-	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
+	"baliance.com/gooxml/schema/soo/dml"
+	crt "baliance.com/gooxml/schema/soo/dml/chart"
 )
 
 // SurfaceChart is a 3D surface chart, viewed from the top-down.

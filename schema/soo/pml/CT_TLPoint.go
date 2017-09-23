@@ -13,14 +13,14 @@ import (
 	"encoding/xml"
 	"fmt"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_TLPoint struct {
 	// X coordinate
-	XAttr drawingml.ST_Percentage
+	XAttr dml.ST_Percentage
 	// Y coordinate
-	YAttr drawingml.ST_Percentage
+	YAttr dml.ST_Percentage
 }
 
 func NewCT_TLPoint() *CT_TLPoint {

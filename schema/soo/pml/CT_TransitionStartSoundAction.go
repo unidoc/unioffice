@@ -15,19 +15,19 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_TransitionStartSoundAction struct {
 	// Loop Sound
 	LoopAttr *bool
 	// Sound
-	Snd *drawingml.CT_EmbeddedWAVAudioFile
+	Snd *dml.CT_EmbeddedWAVAudioFile
 }
 
 func NewCT_TransitionStartSoundAction() *CT_TransitionStartSoundAction {
 	ret := &CT_TransitionStartSoundAction{}
-	ret.Snd = drawingml.NewCT_EmbeddedWAVAudioFile()
+	ret.Snd = dml.NewCT_EmbeddedWAVAudioFile()
 	return ret
 }
 
@@ -45,7 +45,7 @@ func (m *CT_TransitionStartSoundAction) MarshalXML(e *xml.Encoder, start xml.Sta
 
 func (m *CT_TransitionStartSoundAction) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.Snd = drawingml.NewCT_EmbeddedWAVAudioFile()
+	m.Snd = dml.NewCT_EmbeddedWAVAudioFile()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "loop" {
 			parsed, err := strconv.ParseBool(attr.Value)

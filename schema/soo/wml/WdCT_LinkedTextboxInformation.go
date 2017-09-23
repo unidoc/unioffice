@@ -15,13 +15,13 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdCT_LinkedTextboxInformation struct {
 	IdAttr  uint16
 	SeqAttr uint16
-	ExtLst  *drawingml.CT_OfficeArtExtensionList
+	ExtLst  *dml.CT_OfficeArtExtensionList
 }
 
 func NewWdCT_LinkedTextboxInformation() *WdCT_LinkedTextboxInformation {
@@ -71,7 +71,7 @@ lWdCT_LinkedTextboxInformation:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "extLst"}:
-				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
+				m.ExtLst = dml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
 				}

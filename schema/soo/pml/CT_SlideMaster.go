@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_SlideMaster struct {
@@ -24,7 +24,7 @@ type CT_SlideMaster struct {
 	// Common slide data for slide masters
 	CSld *CT_CommonSlideData
 	// Color Scheme Map
-	ClrMap *drawingml.CT_ColorMapping
+	ClrMap *dml.CT_ColorMapping
 	// List of Slide Layouts
 	SldLayoutIdLst *CT_SlideLayoutIdList
 	// Slide Transition for a Slide Master
@@ -41,7 +41,7 @@ type CT_SlideMaster struct {
 func NewCT_SlideMaster() *CT_SlideMaster {
 	ret := &CT_SlideMaster{}
 	ret.CSld = NewCT_CommonSlideData()
-	ret.ClrMap = drawingml.NewCT_ColorMapping()
+	ret.ClrMap = dml.NewCT_ColorMapping()
 	return ret
 }
 
@@ -86,7 +86,7 @@ func (m *CT_SlideMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 func (m *CT_SlideMaster) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CSld = NewCT_CommonSlideData()
-	m.ClrMap = drawingml.NewCT_ColorMapping()
+	m.ClrMap = dml.NewCT_ColorMapping()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "preserve" {
 			parsed, err := strconv.ParseBool(attr.Value)

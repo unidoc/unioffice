@@ -15,33 +15,33 @@ import (
 	"time"
 
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 func ParseUnionST_TLTime(s string) (ST_TLTime, error) {
 	return ST_TLTime{}, nil
 }
 
-func ParseUnionST_FixedPercentage(s string) (drawingml.ST_FixedPercentage, error) {
-	return drawingml.ParseUnionST_FixedPercentage(s)
+func ParseUnionST_FixedPercentage(s string) (dml.ST_FixedPercentage, error) {
+	return dml.ParseUnionST_FixedPercentage(s)
 }
 func ParseStdlibTime(s string) (time.Time, error) {
-	return drawingml.ParseStdlibTime(s)
+	return dml.ParseStdlibTime(s)
 }
-func ParseUnionST_Percentage(s string) (drawingml.ST_Percentage, error) {
-	return drawingml.ParseUnionST_Percentage(s)
+func ParseUnionST_Percentage(s string) (dml.ST_Percentage, error) {
+	return dml.ParseUnionST_Percentage(s)
 }
-func ParseUnionST_Coordinate32(s string) (drawingml.ST_Coordinate32, error) {
-	return drawingml.ParseUnionST_Coordinate32(s)
+func ParseUnionST_Coordinate32(s string) (dml.ST_Coordinate32, error) {
+	return dml.ParseUnionST_Coordinate32(s)
 }
-func ParseUnionST_PositiveFixedPercentage(s string) (drawingml.ST_PositiveFixedPercentage, error) {
-	return drawingml.ParseUnionST_PositiveFixedPercentage(s)
+func ParseUnionST_PositiveFixedPercentage(s string) (dml.ST_PositiveFixedPercentage, error) {
+	return dml.ParseUnionST_PositiveFixedPercentage(s)
 }
 func ParseUnionST_TLTimeAnimateValueTime(s string) (ST_TLTimeAnimateValueTime, error) {
 	return ST_TLTimeAnimateValueTime{}, nil
 }
-func ParseUnionST_PositivePercentage(s string) (drawingml.ST_PositivePercentage, error) {
-	return drawingml.ParseUnionST_PositivePercentage(s)
+func ParseUnionST_PositivePercentage(s string) (dml.ST_PositivePercentage, error) {
+	return dml.ParseUnionST_PositivePercentage(s)
 }
 func ParseUnionST_TransitionEightDirectionType(s string) (ST_TransitionEightDirectionType, error) {
 	return ST_TransitionEightDirectionType{}, nil

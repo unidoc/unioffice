@@ -16,8 +16,8 @@ import (
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
-	dml "baliance.com/gooxml/schema/soo/drawingml"
-	pic "baliance.com/gooxml/schema/soo/drawingml/picture"
+	"baliance.com/gooxml/schema/soo/dml"
+	pic "baliance.com/gooxml/schema/soo/dml/picture"
 	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
 	"baliance.com/gooxml/schema/soo/wml"
 )

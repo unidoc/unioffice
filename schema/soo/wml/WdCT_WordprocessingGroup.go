@@ -14,21 +14,21 @@ import (
 	"fmt"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdCT_WordprocessingGroup struct {
-	CNvPr      *drawingml.CT_NonVisualDrawingProps
-	CNvGrpSpPr *drawingml.CT_NonVisualGroupDrawingShapeProps
-	GrpSpPr    *drawingml.CT_GroupShapeProperties
+	CNvPr      *dml.CT_NonVisualDrawingProps
+	CNvGrpSpPr *dml.CT_NonVisualGroupDrawingShapeProps
+	GrpSpPr    *dml.CT_GroupShapeProperties
 	Choice     []*WdCT_WordprocessingGroupChoice
-	ExtLst     *drawingml.CT_OfficeArtExtensionList
+	ExtLst     *dml.CT_OfficeArtExtensionList
 }
 
 func NewWdCT_WordprocessingGroup() *WdCT_WordprocessingGroup {
 	ret := &WdCT_WordprocessingGroup{}
-	ret.CNvGrpSpPr = drawingml.NewCT_NonVisualGroupDrawingShapeProps()
-	ret.GrpSpPr = drawingml.NewCT_GroupShapeProperties()
+	ret.CNvGrpSpPr = dml.NewCT_NonVisualGroupDrawingShapeProps()
+	ret.GrpSpPr = dml.NewCT_GroupShapeProperties()
 	return ret
 }
 
@@ -57,8 +57,8 @@ func (m *WdCT_WordprocessingGroup) MarshalXML(e *xml.Encoder, start xml.StartEle
 
 func (m *WdCT_WordprocessingGroup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CNvGrpSpPr = drawingml.NewCT_NonVisualGroupDrawingShapeProps()
-	m.GrpSpPr = drawingml.NewCT_GroupShapeProperties()
+	m.CNvGrpSpPr = dml.NewCT_NonVisualGroupDrawingShapeProps()
+	m.GrpSpPr = dml.NewCT_GroupShapeProperties()
 lWdCT_WordprocessingGroup:
 	for {
 		tok, err := d.Token()
@@ -69,7 +69,7 @@ lWdCT_WordprocessingGroup:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "cNvPr"}:
-				m.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
+				m.CNvPr = dml.NewCT_NonVisualDrawingProps()
 				if err := d.DecodeElement(m.CNvPr, &el); err != nil {
 					return err
 				}
@@ -112,7 +112,7 @@ lWdCT_WordprocessingGroup:
 				}
 				m.Choice = append(m.Choice, tmp)
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "extLst"}:
-				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
+				m.ExtLst = dml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
 				}

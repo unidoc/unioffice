@@ -8,7 +8,7 @@
 package chart
 
 import (
-	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
+	crt "baliance.com/gooxml/schema/soo/dml/chart"
 )
 
 // CategoryAxisDataSource specifies the data for an axis.  It's commonly used with

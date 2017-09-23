@@ -15,18 +15,18 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdCT_WrapPath struct {
 	EditedAttr *bool
-	Start      *drawingml.CT_Point2D
-	LineTo     []*drawingml.CT_Point2D
+	Start      *dml.CT_Point2D
+	LineTo     []*dml.CT_Point2D
 }
 
 func NewWdCT_WrapPath() *WdCT_WrapPath {
 	ret := &WdCT_WrapPath{}
-	ret.Start = drawingml.NewCT_Point2D()
+	ret.Start = dml.NewCT_Point2D()
 	return ret
 }
 
@@ -48,7 +48,7 @@ func (m *WdCT_WrapPath) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 
 func (m *WdCT_WrapPath) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.Start = drawingml.NewCT_Point2D()
+	m.Start = dml.NewCT_Point2D()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "edited" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -72,7 +72,7 @@ lWdCT_WrapPath:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "lineTo"}:
-				tmp := drawingml.NewCT_Point2D()
+				tmp := dml.NewCT_Point2D()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}

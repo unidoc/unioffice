@@ -16,8 +16,7 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
-	"baliance.com/gooxml/schema/soo/drawingml"
-	dml "baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
 	"baliance.com/gooxml/schema/soo/pml"
 	"baliance.com/gooxml/zippkg"
@@ -59,18 +58,18 @@ func New() *Presentation {
 
 	p.x.SldMasterIdLst = pml.NewCT_SlideMasterIdList()
 	m := pml.NewSldMaster()
-	m.ClrMap.Bg1Attr = drawingml.ST_ColorSchemeIndexLt1
-	m.ClrMap.Bg2Attr = drawingml.ST_ColorSchemeIndexLt2
-	m.ClrMap.Tx1Attr = drawingml.ST_ColorSchemeIndexDk1
-	m.ClrMap.Tx2Attr = drawingml.ST_ColorSchemeIndexDk2
-	m.ClrMap.Accent1Attr = drawingml.ST_ColorSchemeIndexAccent1
-	m.ClrMap.Accent2Attr = drawingml.ST_ColorSchemeIndexAccent2
-	m.ClrMap.Accent3Attr = drawingml.ST_ColorSchemeIndexAccent3
-	m.ClrMap.Accent4Attr = drawingml.ST_ColorSchemeIndexAccent4
-	m.ClrMap.Accent5Attr = drawingml.ST_ColorSchemeIndexAccent5
-	m.ClrMap.Accent6Attr = drawingml.ST_ColorSchemeIndexAccent6
-	m.ClrMap.HlinkAttr = drawingml.ST_ColorSchemeIndexHlink
-	m.ClrMap.FolHlinkAttr = drawingml.ST_ColorSchemeIndexFolHlink
+	m.ClrMap.Bg1Attr = dml.ST_ColorSchemeIndexLt1
+	m.ClrMap.Bg2Attr = dml.ST_ColorSchemeIndexLt2
+	m.ClrMap.Tx1Attr = dml.ST_ColorSchemeIndexDk1
+	m.ClrMap.Tx2Attr = dml.ST_ColorSchemeIndexDk2
+	m.ClrMap.Accent1Attr = dml.ST_ColorSchemeIndexAccent1
+	m.ClrMap.Accent2Attr = dml.ST_ColorSchemeIndexAccent2
+	m.ClrMap.Accent3Attr = dml.ST_ColorSchemeIndexAccent3
+	m.ClrMap.Accent4Attr = dml.ST_ColorSchemeIndexAccent4
+	m.ClrMap.Accent5Attr = dml.ST_ColorSchemeIndexAccent5
+	m.ClrMap.Accent6Attr = dml.ST_ColorSchemeIndexAccent6
+	m.ClrMap.HlinkAttr = dml.ST_ColorSchemeIndexHlink
+	m.ClrMap.FolHlinkAttr = dml.ST_ColorSchemeIndexFolHlink
 
 	p.masters = append(p.masters, m)
 
@@ -240,13 +239,13 @@ func (p *Presentation) AddSlide() Slide {
 	sp.NvSpPr.NvPr.Ph = pml.NewCT_Placeholder()
 	sp.NvSpPr.NvPr.Ph.TypeAttr = pml.ST_PlaceholderTypeCtrTitle
 
-	sp.TxBody = drawingml.NewCT_TextBody()
-	para := drawingml.NewCT_TextParagraph()
+	sp.TxBody = dml.NewCT_TextBody()
+	para := dml.NewCT_TextParagraph()
 	sp.TxBody.P = append(sp.TxBody.P, para)
 
-	run := drawingml.NewEG_TextRun()
+	run := dml.NewEG_TextRun()
 	para.EG_TextRun = append(para.EG_TextRun, run)
-	run.R = drawingml.NewCT_RegularTextRun()
+	run.R = dml.NewCT_RegularTextRun()
 	run.R.T = "testing 123"
 
 	p.slides = append(p.slides, slide)

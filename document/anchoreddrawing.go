@@ -11,7 +11,7 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
-	pic "baliance.com/gooxml/schema/soo/drawingml/picture"
+	pic "baliance.com/gooxml/schema/soo/dml/picture"
 	"baliance.com/gooxml/schema/soo/wml"
 )
 

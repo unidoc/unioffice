@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_Shape struct {
@@ -23,18 +23,18 @@ type CT_Shape struct {
 	UseBgFillAttr *bool
 	// Non-Visual Properties for a Shape
 	NvSpPr *CT_ShapeNonVisual
-	SpPr   *drawingml.CT_ShapeProperties
+	SpPr   *dml.CT_ShapeProperties
 	// Shape Style
-	Style *drawingml.CT_ShapeStyle
+	Style *dml.CT_ShapeStyle
 	// Shape Text Body
-	TxBody *drawingml.CT_TextBody
+	TxBody *dml.CT_TextBody
 	ExtLst *CT_ExtensionListModify
 }
 
 func NewCT_Shape() *CT_Shape {
 	ret := &CT_Shape{}
 	ret.NvSpPr = NewCT_ShapeNonVisual()
-	ret.SpPr = drawingml.NewCT_ShapeProperties()
+	ret.SpPr = dml.NewCT_ShapeProperties()
 	return ret
 }
 
@@ -67,7 +67,7 @@ func (m *CT_Shape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.NvSpPr = NewCT_ShapeNonVisual()
-	m.SpPr = drawingml.NewCT_ShapeProperties()
+	m.SpPr = dml.NewCT_ShapeProperties()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "useBgFill" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -95,12 +95,12 @@ lCT_Shape:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "style"}:
-				m.Style = drawingml.NewCT_ShapeStyle()
+				m.Style = dml.NewCT_ShapeStyle()
 				if err := d.DecodeElement(m.Style, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "txBody"}:
-				m.TxBody = drawingml.NewCT_TextBody()
+				m.TxBody = dml.NewCT_TextBody()
 				if err := d.DecodeElement(m.TxBody, &el); err != nil {
 					return err
 				}

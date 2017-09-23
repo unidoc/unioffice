@@ -13,14 +13,14 @@ import (
 	"encoding/xml"
 	"fmt"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdCT_EffectExtent struct {
-	LAttr drawingml.ST_Coordinate
-	TAttr drawingml.ST_Coordinate
-	RAttr drawingml.ST_Coordinate
-	BAttr drawingml.ST_Coordinate
+	LAttr dml.ST_Coordinate
+	TAttr dml.ST_Coordinate
+	RAttr dml.ST_Coordinate
+	BAttr dml.ST_Coordinate
 }
 
 func NewWdCT_EffectExtent() *WdCT_EffectExtent {

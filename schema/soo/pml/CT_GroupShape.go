@@ -14,14 +14,14 @@ import (
 	"fmt"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_GroupShape struct {
 	// Non-Visual Properties for a Group Shape
 	NvGrpSpPr *CT_GroupShapeNonVisual
 	// Group Shape Properties
-	GrpSpPr *drawingml.CT_GroupShapeProperties
+	GrpSpPr *dml.CT_GroupShapeProperties
 	Choice  []*CT_GroupShapeChoice
 	ExtLst  *CT_ExtensionListModify
 }
@@ -29,7 +29,7 @@ type CT_GroupShape struct {
 func NewCT_GroupShape() *CT_GroupShape {
 	ret := &CT_GroupShape{}
 	ret.NvGrpSpPr = NewCT_GroupShapeNonVisual()
-	ret.GrpSpPr = drawingml.NewCT_GroupShapeProperties()
+	ret.GrpSpPr = dml.NewCT_GroupShapeProperties()
 	return ret
 }
 
@@ -55,7 +55,7 @@ func (m *CT_GroupShape) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 func (m *CT_GroupShape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.NvGrpSpPr = NewCT_GroupShapeNonVisual()
-	m.GrpSpPr = drawingml.NewCT_GroupShapeProperties()
+	m.GrpSpPr = dml.NewCT_GroupShapeProperties()
 lCT_GroupShape:
 	for {
 		tok, err := d.Token()

@@ -14,12 +14,12 @@ import (
 	"fmt"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_NormalViewPortion struct {
 	// Normal View Dimension Size
-	SzAttr drawingml.ST_PositiveFixedPercentage
+	SzAttr dml.ST_PositiveFixedPercentage
 	// Auto Adjust Normal View
 	AutoAdjustAttr *bool
 }

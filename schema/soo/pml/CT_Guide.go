@@ -13,14 +13,14 @@ import (
 	"encoding/xml"
 	"fmt"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_Guide struct {
 	// Guide Orientation
 	OrientAttr ST_Direction
 	// Guide Position
-	PosAttr *drawingml.ST_Coordinate32
+	PosAttr *dml.ST_Coordinate32
 }
 
 func NewCT_Guide() *CT_Guide {

@@ -15,22 +15,22 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_CommonViewProperties struct {
 	// Variable Scale
 	VarScaleAttr *bool
 	// View Scale
-	Scale *drawingml.CT_Scale2D
+	Scale *dml.CT_Scale2D
 	// View Origin
-	Origin *drawingml.CT_Point2D
+	Origin *dml.CT_Point2D
 }
 
 func NewCT_CommonViewProperties() *CT_CommonViewProperties {
 	ret := &CT_CommonViewProperties{}
-	ret.Scale = drawingml.NewCT_Scale2D()
-	ret.Origin = drawingml.NewCT_Point2D()
+	ret.Scale = dml.NewCT_Scale2D()
+	ret.Origin = dml.NewCT_Point2D()
 	return ret
 }
 
@@ -50,8 +50,8 @@ func (m *CT_CommonViewProperties) MarshalXML(e *xml.Encoder, start xml.StartElem
 
 func (m *CT_CommonViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.Scale = drawingml.NewCT_Scale2D()
-	m.Origin = drawingml.NewCT_Point2D()
+	m.Scale = dml.NewCT_Scale2D()
+	m.Origin = dml.NewCT_Point2D()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "varScale" {
 			parsed, err := strconv.ParseBool(attr.Value)

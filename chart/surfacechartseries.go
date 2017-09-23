@@ -11,8 +11,8 @@ import (
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/drawing"
 	"baliance.com/gooxml/measurement"
-	dml "baliance.com/gooxml/schema/soo/drawingml"
-	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
+	"baliance.com/gooxml/schema/soo/dml"
+	crt "baliance.com/gooxml/schema/soo/dml/chart"
 )
 
 type SurfaceChartSeries struct {

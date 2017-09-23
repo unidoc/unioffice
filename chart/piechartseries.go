@@ -9,8 +9,8 @@ package chart
 
 import (
 	"baliance.com/gooxml/drawing"
-	dml "baliance.com/gooxml/schema/soo/drawingml"
-	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
+	"baliance.com/gooxml/schema/soo/dml"
+	crt "baliance.com/gooxml/schema/soo/dml/chart"
 )
 
 // PieChartSeries is a series to be used on an Pie chart.

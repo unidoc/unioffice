@@ -15,20 +15,20 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_BackgroundProperties struct {
 	// Shade to Title
 	ShadeToTitleAttr *bool
-	NoFill           *drawingml.CT_NoFillProperties
-	SolidFill        *drawingml.CT_SolidColorFillProperties
-	GradFill         *drawingml.CT_GradientFillProperties
-	BlipFill         *drawingml.CT_BlipFillProperties
-	PattFill         *drawingml.CT_PatternFillProperties
-	GrpFill          *drawingml.CT_GroupFillProperties
-	EffectLst        *drawingml.CT_EffectList
-	EffectDag        *drawingml.CT_EffectContainer
+	NoFill           *dml.CT_NoFillProperties
+	SolidFill        *dml.CT_SolidColorFillProperties
+	GradFill         *dml.CT_GradientFillProperties
+	BlipFill         *dml.CT_BlipFillProperties
+	PattFill         *dml.CT_PatternFillProperties
+	GrpFill          *dml.CT_GroupFillProperties
+	EffectLst        *dml.CT_EffectList
+	EffectDag        *dml.CT_EffectContainer
 	ExtLst           *CT_ExtensionList
 }
 
@@ -104,42 +104,42 @@ lCT_BackgroundProperties:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noFill"}:
-				m.NoFill = drawingml.NewCT_NoFillProperties()
+				m.NoFill = dml.NewCT_NoFillProperties()
 				if err := d.DecodeElement(m.NoFill, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "solidFill"}:
-				m.SolidFill = drawingml.NewCT_SolidColorFillProperties()
+				m.SolidFill = dml.NewCT_SolidColorFillProperties()
 				if err := d.DecodeElement(m.SolidFill, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gradFill"}:
-				m.GradFill = drawingml.NewCT_GradientFillProperties()
+				m.GradFill = dml.NewCT_GradientFillProperties()
 				if err := d.DecodeElement(m.GradFill, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blipFill"}:
-				m.BlipFill = drawingml.NewCT_BlipFillProperties()
+				m.BlipFill = dml.NewCT_BlipFillProperties()
 				if err := d.DecodeElement(m.BlipFill, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pattFill"}:
-				m.PattFill = drawingml.NewCT_PatternFillProperties()
+				m.PattFill = dml.NewCT_PatternFillProperties()
 				if err := d.DecodeElement(m.PattFill, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpFill"}:
-				m.GrpFill = drawingml.NewCT_GroupFillProperties()
+				m.GrpFill = dml.NewCT_GroupFillProperties()
 				if err := d.DecodeElement(m.GrpFill, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectLst"}:
-				m.EffectLst = drawingml.NewCT_EffectList()
+				m.EffectLst = dml.NewCT_EffectList()
 				if err := d.DecodeElement(m.EffectLst, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectDag"}:
-				m.EffectDag = drawingml.NewCT_EffectContainer()
+				m.EffectDag = dml.NewCT_EffectContainer()
 				if err := d.DecodeElement(m.EffectDag, &el); err != nil {
 					return err
 				}

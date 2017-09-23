@@ -13,25 +13,25 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_NotesMaster struct {
 	// Common Slide Data
 	CSld *CT_CommonSlideData
 	// Color Scheme Map
-	ClrMap *drawingml.CT_ColorMapping
+	ClrMap *dml.CT_ColorMapping
 	// Header/Footer Information for a Notes Master
 	Hf *CT_HeaderFooter
 	// Notes Text Style
-	NotesStyle *drawingml.CT_TextListStyle
+	NotesStyle *dml.CT_TextListStyle
 	ExtLst     *CT_ExtensionListModify
 }
 
 func NewCT_NotesMaster() *CT_NotesMaster {
 	ret := &CT_NotesMaster{}
 	ret.CSld = NewCT_CommonSlideData()
-	ret.ClrMap = drawingml.NewCT_ColorMapping()
+	ret.ClrMap = dml.NewCT_ColorMapping()
 	return ret
 }
 
@@ -60,7 +60,7 @@ func (m *CT_NotesMaster) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 func (m *CT_NotesMaster) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CSld = NewCT_CommonSlideData()
-	m.ClrMap = drawingml.NewCT_ColorMapping()
+	m.ClrMap = dml.NewCT_ColorMapping()
 lCT_NotesMaster:
 	for {
 		tok, err := d.Token()
@@ -84,7 +84,7 @@ lCT_NotesMaster:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "notesStyle"}:
-				m.NotesStyle = drawingml.NewCT_TextListStyle()
+				m.NotesStyle = dml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.NotesStyle, &el); err != nil {
 					return err
 				}

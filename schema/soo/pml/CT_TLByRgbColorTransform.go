@@ -13,16 +13,16 @@ import (
 	"encoding/xml"
 	"fmt"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_TLByRgbColorTransform struct {
 	// Red
-	RAttr drawingml.ST_FixedPercentage
+	RAttr dml.ST_FixedPercentage
 	// Green
-	GAttr drawingml.ST_FixedPercentage
+	GAttr dml.ST_FixedPercentage
 	// Blue
-	BAttr drawingml.ST_FixedPercentage
+	BAttr dml.ST_FixedPercentage
 }
 
 func NewCT_TLByRgbColorTransform() *CT_TLByRgbColorTransform {

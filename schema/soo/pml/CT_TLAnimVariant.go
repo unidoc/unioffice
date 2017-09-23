@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_TLAnimVariant struct {
@@ -26,7 +26,7 @@ type CT_TLAnimVariant struct {
 	// String Value
 	StrVal *CT_TLAnimVariantStringVal
 	// Color Value
-	ClrVal *drawingml.CT_Color
+	ClrVal *dml.CT_Color
 }
 
 func NewCT_TLAnimVariant() *CT_TLAnimVariant {
@@ -92,7 +92,7 @@ lCT_TLAnimVariant:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "clrVal"}:
-				m.ClrVal = drawingml.NewCT_Color()
+				m.ClrVal = dml.NewCT_Color()
 				if err := d.DecodeElement(m.ClrVal, &el); err != nil {
 					return err
 				}

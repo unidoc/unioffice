@@ -14,15 +14,15 @@ import (
 	"fmt"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdCT_WordprocessingContentPart struct {
-	BwModeAttr      drawingml.ST_BlackWhiteMode
+	BwModeAttr      dml.ST_BlackWhiteMode
 	IdAttr          string
 	NvContentPartPr *WdCT_WordprocessingContentPartNonVisual
-	Xfrm            *drawingml.CT_Transform2D
-	ExtLst          *drawingml.CT_OfficeArtExtensionList
+	Xfrm            *dml.CT_Transform2D
+	ExtLst          *dml.CT_OfficeArtExtensionList
 }
 
 func NewWdCT_WordprocessingContentPart() *WdCT_WordprocessingContentPart {
@@ -31,7 +31,7 @@ func NewWdCT_WordprocessingContentPart() *WdCT_WordprocessingContentPart {
 }
 
 func (m *WdCT_WordprocessingContentPart) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	if m.BwModeAttr != drawingml.ST_BlackWhiteModeUnset {
+	if m.BwModeAttr != dml.ST_BlackWhiteModeUnset {
 		attr, err := m.BwModeAttr.MarshalXMLAttr(xml.Name{Local: "bwMode"})
 		if err != nil {
 			return err
@@ -86,12 +86,12 @@ lWdCT_WordprocessingContentPart:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "xfrm"}:
-				m.Xfrm = drawingml.NewCT_Transform2D()
+				m.Xfrm = dml.NewCT_Transform2D()
 				if err := d.DecodeElement(m.Xfrm, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "extLst"}:
-				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
+				m.ExtLst = dml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
 				}

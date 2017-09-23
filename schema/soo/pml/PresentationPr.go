@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type PresentationPr struct {
@@ -70,7 +70,7 @@ lPresentationPr:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "clrMru"}:
-				m.ClrMru = drawingml.NewCT_ColorMRU()
+				m.ClrMru = dml.NewCT_ColorMRU()
 				if err := d.DecodeElement(m.ClrMru, &el); err != nil {
 					return err
 				}

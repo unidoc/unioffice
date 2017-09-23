@@ -13,22 +13,22 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_ConnectorNonVisual struct {
 	// Non-Visual Drawing Properties
-	CNvPr *drawingml.CT_NonVisualDrawingProps
+	CNvPr *dml.CT_NonVisualDrawingProps
 	// Non-Visual Connector Shape Drawing Properties
-	CNvCxnSpPr *drawingml.CT_NonVisualConnectorProperties
+	CNvCxnSpPr *dml.CT_NonVisualConnectorProperties
 	// Application Non-Visual Drawing Properties
 	NvPr *CT_ApplicationNonVisualDrawingProps
 }
 
 func NewCT_ConnectorNonVisual() *CT_ConnectorNonVisual {
 	ret := &CT_ConnectorNonVisual{}
-	ret.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
-	ret.CNvCxnSpPr = drawingml.NewCT_NonVisualConnectorProperties()
+	ret.CNvPr = dml.NewCT_NonVisualDrawingProps()
+	ret.CNvCxnSpPr = dml.NewCT_NonVisualConnectorProperties()
 	ret.NvPr = NewCT_ApplicationNonVisualDrawingProps()
 	return ret
 }
@@ -47,8 +47,8 @@ func (m *CT_ConnectorNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElemen
 
 func (m *CT_ConnectorNonVisual) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
-	m.CNvCxnSpPr = drawingml.NewCT_NonVisualConnectorProperties()
+	m.CNvPr = dml.NewCT_NonVisualDrawingProps()
+	m.CNvCxnSpPr = dml.NewCT_NonVisualConnectorProperties()
 	m.NvPr = NewCT_ApplicationNonVisualDrawingProps()
 lCT_ConnectorNonVisual:
 	for {

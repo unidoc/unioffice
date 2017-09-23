@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_TLCommonTimeNodeData struct {
@@ -34,11 +34,11 @@ type CT_TLCommonTimeNodeData struct {
 	// Repeat Duration
 	RepeatDurAttr *ST_TLTime
 	// Speed
-	SpdAttr *drawingml.ST_Percentage
+	SpdAttr *dml.ST_Percentage
 	// Acceleration
-	AccelAttr *drawingml.ST_PositiveFixedPercentage
+	AccelAttr *dml.ST_PositiveFixedPercentage
 	// Deceleration
-	DecelAttr *drawingml.ST_PositiveFixedPercentage
+	DecelAttr *dml.ST_PositiveFixedPercentage
 	// Auto Reverse
 	AutoRevAttr *bool
 	// Restart

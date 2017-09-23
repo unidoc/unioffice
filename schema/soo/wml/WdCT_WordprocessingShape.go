@@ -15,25 +15,25 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdCT_WordprocessingShape struct {
 	NormalEastAsianFlowAttr *bool
-	CNvPr                   *drawingml.CT_NonVisualDrawingProps
+	CNvPr                   *dml.CT_NonVisualDrawingProps
 	Choice                  *WdCT_WordprocessingShapeChoice
-	SpPr                    *drawingml.CT_ShapeProperties
-	Style                   *drawingml.CT_ShapeStyle
-	ExtLst                  *drawingml.CT_OfficeArtExtensionList
+	SpPr                    *dml.CT_ShapeProperties
+	Style                   *dml.CT_ShapeStyle
+	ExtLst                  *dml.CT_OfficeArtExtensionList
 	WChoice                 *WdCT_WordprocessingShapeChoice1
-	BodyPr                  *drawingml.CT_TextBodyProperties
+	BodyPr                  *dml.CT_TextBodyProperties
 }
 
 func NewWdCT_WordprocessingShape() *WdCT_WordprocessingShape {
 	ret := &WdCT_WordprocessingShape{}
 	ret.Choice = NewWdCT_WordprocessingShapeChoice()
-	ret.SpPr = drawingml.NewCT_ShapeProperties()
-	ret.BodyPr = drawingml.NewCT_TextBodyProperties()
+	ret.SpPr = dml.NewCT_ShapeProperties()
+	ret.BodyPr = dml.NewCT_TextBodyProperties()
 	return ret
 }
 
@@ -70,8 +70,8 @@ func (m *WdCT_WordprocessingShape) MarshalXML(e *xml.Encoder, start xml.StartEle
 func (m *WdCT_WordprocessingShape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.Choice = NewWdCT_WordprocessingShapeChoice()
-	m.SpPr = drawingml.NewCT_ShapeProperties()
-	m.BodyPr = drawingml.NewCT_TextBodyProperties()
+	m.SpPr = dml.NewCT_ShapeProperties()
+	m.BodyPr = dml.NewCT_TextBodyProperties()
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "normalEastAsianFlow" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -91,7 +91,7 @@ lWdCT_WordprocessingShape:
 		case xml.StartElement:
 			switch el.Name {
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "cNvPr"}:
-				m.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
+				m.CNvPr = dml.NewCT_NonVisualDrawingProps()
 				if err := d.DecodeElement(m.CNvPr, &el); err != nil {
 					return err
 				}
@@ -110,12 +110,12 @@ lWdCT_WordprocessingShape:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "style"}:
-				m.Style = drawingml.NewCT_ShapeStyle()
+				m.Style = dml.NewCT_ShapeStyle()
 				if err := d.DecodeElement(m.Style, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "extLst"}:
-				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
+				m.ExtLst = dml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
 				}

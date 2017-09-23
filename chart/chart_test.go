@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"baliance.com/gooxml/chart"
-	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
+	crt "baliance.com/gooxml/schema/soo/dml/chart"
 )
 
 func TestTitle(t *testing.T) {

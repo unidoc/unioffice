@@ -14,7 +14,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type Presentation struct {
@@ -194,7 +194,7 @@ lPresentation:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "defaultTextStyle"}:
-				m.DefaultTextStyle = drawingml.NewCT_TextListStyle()
+				m.DefaultTextStyle = dml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.DefaultTextStyle, &el); err != nil {
 					return err
 				}

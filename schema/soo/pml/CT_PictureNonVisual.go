@@ -13,20 +13,20 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_PictureNonVisual struct {
-	CNvPr *drawingml.CT_NonVisualDrawingProps
+	CNvPr *dml.CT_NonVisualDrawingProps
 	// Non-Visual Picture Drawing Properties
-	CNvPicPr *drawingml.CT_NonVisualPictureProperties
+	CNvPicPr *dml.CT_NonVisualPictureProperties
 	NvPr     *CT_ApplicationNonVisualDrawingProps
 }
 
 func NewCT_PictureNonVisual() *CT_PictureNonVisual {
 	ret := &CT_PictureNonVisual{}
-	ret.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
-	ret.CNvPicPr = drawingml.NewCT_NonVisualPictureProperties()
+	ret.CNvPr = dml.NewCT_NonVisualDrawingProps()
+	ret.CNvPicPr = dml.NewCT_NonVisualPictureProperties()
 	ret.NvPr = NewCT_ApplicationNonVisualDrawingProps()
 	return ret
 }
@@ -45,8 +45,8 @@ func (m *CT_PictureNonVisual) MarshalXML(e *xml.Encoder, start xml.StartElement)
 
 func (m *CT_PictureNonVisual) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
-	m.CNvPicPr = drawingml.NewCT_NonVisualPictureProperties()
+	m.CNvPr = dml.NewCT_NonVisualDrawingProps()
+	m.CNvPicPr = dml.NewCT_NonVisualPictureProperties()
 	m.NvPr = NewCT_ApplicationNonVisualDrawingProps()
 lCT_PictureNonVisual:
 	for {

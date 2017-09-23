@@ -13,23 +13,23 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_Connector struct {
 	// Non-Visual Properties for a Connection Shape
 	NvCxnSpPr *CT_ConnectorNonVisual
 	// Shape Properties
-	SpPr *drawingml.CT_ShapeProperties
+	SpPr *dml.CT_ShapeProperties
 	// Connector Shape Style
-	Style  *drawingml.CT_ShapeStyle
+	Style  *dml.CT_ShapeStyle
 	ExtLst *CT_ExtensionListModify
 }
 
 func NewCT_Connector() *CT_Connector {
 	ret := &CT_Connector{}
 	ret.NvCxnSpPr = NewCT_ConnectorNonVisual()
-	ret.SpPr = drawingml.NewCT_ShapeProperties()
+	ret.SpPr = dml.NewCT_ShapeProperties()
 	return ret
 }
 
@@ -54,7 +54,7 @@ func (m *CT_Connector) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 func (m *CT_Connector) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.NvCxnSpPr = NewCT_ConnectorNonVisual()
-	m.SpPr = drawingml.NewCT_ShapeProperties()
+	m.SpPr = dml.NewCT_ShapeProperties()
 lCT_Connector:
 	for {
 		tok, err := d.Token()
@@ -73,7 +73,7 @@ lCT_Connector:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "style"}:
-				m.Style = drawingml.NewCT_ShapeStyle()
+				m.Style = dml.NewCT_ShapeStyle()
 				if err := d.DecodeElement(m.Style, &el); err != nil {
 					return err
 				}

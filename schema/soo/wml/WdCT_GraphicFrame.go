@@ -13,23 +13,23 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type WdCT_GraphicFrame struct {
-	CNvPr   *drawingml.CT_NonVisualDrawingProps
-	CNvFrPr *drawingml.CT_NonVisualGraphicFrameProperties
-	Xfrm    *drawingml.CT_Transform2D
-	Graphic *drawingml.Graphic
-	ExtLst  *drawingml.CT_OfficeArtExtensionList
+	CNvPr   *dml.CT_NonVisualDrawingProps
+	CNvFrPr *dml.CT_NonVisualGraphicFrameProperties
+	Xfrm    *dml.CT_Transform2D
+	Graphic *dml.Graphic
+	ExtLst  *dml.CT_OfficeArtExtensionList
 }
 
 func NewWdCT_GraphicFrame() *WdCT_GraphicFrame {
 	ret := &WdCT_GraphicFrame{}
-	ret.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
-	ret.CNvFrPr = drawingml.NewCT_NonVisualGraphicFrameProperties()
-	ret.Xfrm = drawingml.NewCT_Transform2D()
-	ret.Graphic = drawingml.NewGraphic()
+	ret.CNvPr = dml.NewCT_NonVisualDrawingProps()
+	ret.CNvFrPr = dml.NewCT_NonVisualGraphicFrameProperties()
+	ret.Xfrm = dml.NewCT_Transform2D()
+	ret.Graphic = dml.NewGraphic()
 	return ret
 }
 
@@ -53,10 +53,10 @@ func (m *WdCT_GraphicFrame) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 
 func (m *WdCT_GraphicFrame) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
-	m.CNvPr = drawingml.NewCT_NonVisualDrawingProps()
-	m.CNvFrPr = drawingml.NewCT_NonVisualGraphicFrameProperties()
-	m.Xfrm = drawingml.NewCT_Transform2D()
-	m.Graphic = drawingml.NewGraphic()
+	m.CNvPr = dml.NewCT_NonVisualDrawingProps()
+	m.CNvFrPr = dml.NewCT_NonVisualGraphicFrameProperties()
+	m.Xfrm = dml.NewCT_Transform2D()
+	m.Graphic = dml.NewGraphic()
 lWdCT_GraphicFrame:
 	for {
 		tok, err := d.Token()
@@ -83,7 +83,7 @@ lWdCT_GraphicFrame:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "extLst"}:
-				m.ExtLst = drawingml.NewCT_OfficeArtExtensionList()
+				m.ExtLst = dml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
 				}

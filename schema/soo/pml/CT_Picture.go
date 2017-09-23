@@ -13,24 +13,24 @@ import (
 	"encoding/xml"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/drawingml"
+	"baliance.com/gooxml/schema/soo/dml"
 )
 
 type CT_Picture struct {
 	// Non-Visual Properties for a Picture
 	NvPicPr *CT_PictureNonVisual
 	// Picture Fill
-	BlipFill *drawingml.CT_BlipFillProperties
-	SpPr     *drawingml.CT_ShapeProperties
-	Style    *drawingml.CT_ShapeStyle
+	BlipFill *dml.CT_BlipFillProperties
+	SpPr     *dml.CT_ShapeProperties
+	Style    *dml.CT_ShapeStyle
 	ExtLst   *CT_ExtensionListModify
 }
 
 func NewCT_Picture() *CT_Picture {
 	ret := &CT_Picture{}
 	ret.NvPicPr = NewCT_PictureNonVisual()
-	ret.BlipFill = drawingml.NewCT_BlipFillProperties()
-	ret.SpPr = drawingml.NewCT_ShapeProperties()
+	ret.BlipFill = dml.NewCT_BlipFillProperties()
+	ret.SpPr = dml.NewCT_ShapeProperties()
 	return ret
 }
 
@@ -57,8 +57,8 @@ func (m *CT_Picture) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Picture) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.NvPicPr = NewCT_PictureNonVisual()
-	m.BlipFill = drawingml.NewCT_BlipFillProperties()
-	m.SpPr = drawingml.NewCT_ShapeProperties()
+	m.BlipFill = dml.NewCT_BlipFillProperties()
+	m.SpPr = dml.NewCT_ShapeProperties()
 lCT_Picture:
 	for {
 		tok, err := d.Token()
@@ -81,7 +81,7 @@ lCT_Picture:
 					return err
 				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "style"}:
-				m.Style = drawingml.NewCT_ShapeStyle()
+				m.Style = dml.NewCT_ShapeStyle()
 				if err := d.DecodeElement(m.Style, &el); err != nil {
 					return err
 				}
