@@ -10,7 +10,7 @@ package spreadsheet
 import (
 	"strings"
 
-	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
+	"baliance.com/gooxml/schema/soo/sml"
 )
 
 type MergedCell struct {

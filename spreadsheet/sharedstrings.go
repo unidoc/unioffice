@@ -10,7 +10,7 @@ import (
 	"fmt"
 
 	"baliance.com/gooxml"
-	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
+	"baliance.com/gooxml/schema/soo/sml"
 )
 
 // SharedStrings is a shared strings table, where string data can be placed

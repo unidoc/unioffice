@@ -11,7 +11,7 @@ import (
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/spreadsheet"
 
-	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
+	"baliance.com/gooxml/schema/soo/sml"
 )
 
 func main() {

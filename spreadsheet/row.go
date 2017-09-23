@@ -12,18 +12,18 @@ import (
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/measurement"
-	"baliance.com/gooxml/schema/soo/spreadsheetml"
+	"baliance.com/gooxml/schema/soo/sml"
 )
 
 // Row is a row within a spreadsheet.
 type Row struct {
 	w *Workbook
-	s *spreadsheetml.Worksheet
-	x *spreadsheetml.CT_Row
+	s *sml.Worksheet
+	x *sml.CT_Row
 }
 
 // X returns the inner wrapped XML type.
-func (r Row) X() *spreadsheetml.CT_Row {
+func (r Row) X() *sml.CT_Row {
 	return r.x
 }
 
@@ -71,7 +71,7 @@ func (r Row) AddCell() Cell {
 		}
 	}
 
-	c := spreadsheetml.NewCT_Cell()
+	c := sml.NewCT_Cell()
 	r.x.C = append(r.x.C, c)
 
 	// fast path failed, so find the last cell and add another
@@ -106,7 +106,7 @@ func (r Row) Cells() []Cell {
 // already exists, while AddNamedCell will duplicate the cell creating an
 // invaild spreadsheet.
 func (r Row) AddNamedCell(col string) Cell {
-	c := spreadsheetml.NewCT_Cell()
+	c := sml.NewCT_Cell()
 
 	r.x.C = append(r.x.C, c)
 	c.RAttr = gooxml.Stringf("%s%d", col, r.RowNumber())

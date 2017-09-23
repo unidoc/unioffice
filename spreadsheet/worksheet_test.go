@@ -14,7 +14,7 @@ import (
 	"os"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/spreadsheetml"
+	"baliance.com/gooxml/schema/soo/sml"
 	"baliance.com/gooxml/testhelper"
 	"baliance.com/gooxml/zippkg"
 )
@@ -25,7 +25,7 @@ func TestWorksheetUnmarshal(t *testing.T) {
 		t.Fatalf("error reading content types file")
 	}
 	dec := xml.NewDecoder(f)
-	r := spreadsheetml.NewWorksheet()
+	r := sml.NewWorksheet()
 	if err := dec.Decode(r); err != nil {
 		t.Errorf("error decoding content types: %s", err)
 	}

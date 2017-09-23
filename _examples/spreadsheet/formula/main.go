@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"baliance.com/gooxml/color"
-	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
+	"baliance.com/gooxml/schema/soo/sml"
 	"baliance.com/gooxml/spreadsheet"
 )
 
