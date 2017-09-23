@@ -7,7 +7,7 @@
 
 package spreadsheet
 
-import sml "baliance.com/gooxml/schema/soo/spreadsheetml"
+import "baliance.com/gooxml/schema/soo/sml"
 
 // NumberFormat is a number formatting string that can be applied to a cell
 // style.

@@ -7,7 +7,7 @@
 
 package spreadsheet
 
-import sml "baliance.com/gooxml/schema/soo/spreadsheetml"
+import "baliance.com/gooxml/schema/soo/sml"
 
 // RichText is a container for the rich text within a cell. It's similar to a
 // paragaraph for a document, except a cell can only contain one rich text item.

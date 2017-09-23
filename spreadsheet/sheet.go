@@ -17,7 +17,7 @@ import (
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
-	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
+	"baliance.com/gooxml/schema/soo/sml"
 	"baliance.com/gooxml/vmldrawing"
 )
 

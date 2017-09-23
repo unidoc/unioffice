@@ -9,7 +9,7 @@ package spreadsheet
 
 import (
 	"baliance.com/gooxml"
-	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
+	"baliance.com/gooxml/schema/soo/sml"
 )
 
 // CellStyle is a formatting style for a cell.  CellStyles are spreadsheet global

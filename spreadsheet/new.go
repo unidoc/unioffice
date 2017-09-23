@@ -10,7 +10,7 @@ package spreadsheet
 import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
-	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
+	"baliance.com/gooxml/schema/soo/sml"
 )
 
 // New constructs a new workbook.

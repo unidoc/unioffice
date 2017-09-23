@@ -7,7 +7,7 @@
 
 package spreadsheet
 
-import sml "baliance.com/gooxml/schema/soo/spreadsheetml"
+import "baliance.com/gooxml/schema/soo/sml"
 
 type DifferentialStyle struct {
 	x   *sml.CT_Dxf

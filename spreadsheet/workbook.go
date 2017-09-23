@@ -27,7 +27,7 @@ import (
 	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
 	sd "baliance.com/gooxml/schema/soo/drawingml/spreadsheetDrawing"
 	"baliance.com/gooxml/schema/soo/package/relationships"
-	sml "baliance.com/gooxml/schema/soo/spreadsheetml"
+	"baliance.com/gooxml/schema/soo/sml"
 )
 
 // Workbook is the top level container item for a set of spreadsheets.
