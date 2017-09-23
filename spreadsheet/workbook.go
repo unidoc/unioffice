@@ -26,7 +26,7 @@ import (
 	dml "baliance.com/gooxml/schema/soo/drawingml"
 	crt "baliance.com/gooxml/schema/soo/drawingml/chart"
 	sd "baliance.com/gooxml/schema/soo/drawingml/spreadsheetDrawing"
-	"baliance.com/gooxml/schema/soo/package/relationships"
+	"baliance.com/gooxml/schema/soo/pkg/relationships"
 	"baliance.com/gooxml/schema/soo/sml"
 )
 

@@ -7,28 +7,28 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package core_properties_test
+package content_types_test
 
 import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/package/metadata/core_properties"
+	"baliance.com/gooxml/schema/soo/pkg/content_types"
 )
 
-func TestCorePropertiesConstructor(t *testing.T) {
-	v := core_properties.NewCoreProperties()
+func TestOverrideConstructor(t *testing.T) {
+	v := content_types.NewOverride()
 	if v == nil {
-		t.Errorf("core_properties.NewCoreProperties must return a non-nil value")
+		t.Errorf("content_types.NewOverride must return a non-nil value")
 	}
 	if err := v.Validate(); err != nil {
-		t.Errorf("newly constructed core_properties.CoreProperties should validate: %s", err)
+		t.Errorf("newly constructed content_types.Override should validate: %s", err)
 	}
 }
 
-func TestCorePropertiesMarshalUnmarshal(t *testing.T) {
-	v := core_properties.NewCoreProperties()
+func TestOverrideMarshalUnmarshal(t *testing.T) {
+	v := content_types.NewOverride()
 	buf, _ := xml.Marshal(v)
-	v2 := core_properties.NewCoreProperties()
+	v2 := content_types.NewOverride()
 	xml.Unmarshal(buf, v2)
 }

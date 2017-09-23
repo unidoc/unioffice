@@ -7,28 +7,28 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package content_types_test
+package core_properties_test
 
 import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/package/content_types"
+	"baliance.com/gooxml/schema/soo/pkg/metadata/core_properties"
 )
 
-func TestCT_DefaultConstructor(t *testing.T) {
-	v := content_types.NewCT_Default()
+func TestCorePropertiesConstructor(t *testing.T) {
+	v := core_properties.NewCoreProperties()
 	if v == nil {
-		t.Errorf("content_types.NewCT_Default must return a non-nil value")
+		t.Errorf("core_properties.NewCoreProperties must return a non-nil value")
 	}
 	if err := v.Validate(); err != nil {
-		t.Errorf("newly constructed content_types.CT_Default should validate: %s", err)
+		t.Errorf("newly constructed core_properties.CoreProperties should validate: %s", err)
 	}
 }
 
-func TestCT_DefaultMarshalUnmarshal(t *testing.T) {
-	v := content_types.NewCT_Default()
+func TestCorePropertiesMarshalUnmarshal(t *testing.T) {
+	v := core_properties.NewCoreProperties()
 	buf, _ := xml.Marshal(v)
-	v2 := content_types.NewCT_Default()
+	v2 := core_properties.NewCoreProperties()
 	xml.Unmarshal(buf, v2)
 }

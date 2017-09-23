@@ -7,28 +7,28 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package content_types_test
+package relationships_test
 
 import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/package/content_types"
+	"baliance.com/gooxml/schema/soo/pkg/relationships"
 )
 
-func TestTypesConstructor(t *testing.T) {
-	v := content_types.NewTypes()
+func TestRelationshipsConstructor(t *testing.T) {
+	v := relationships.NewRelationships()
 	if v == nil {
-		t.Errorf("content_types.NewTypes must return a non-nil value")
+		t.Errorf("relationships.NewRelationships must return a non-nil value")
 	}
 	if err := v.Validate(); err != nil {
-		t.Errorf("newly constructed content_types.Types should validate: %s", err)
+		t.Errorf("newly constructed relationships.Relationships should validate: %s", err)
 	}
 }
 
-func TestTypesMarshalUnmarshal(t *testing.T) {
-	v := content_types.NewTypes()
+func TestRelationshipsMarshalUnmarshal(t *testing.T) {
+	v := relationships.NewRelationships()
 	buf, _ := xml.Marshal(v)
-	v2 := content_types.NewTypes()
+	v2 := relationships.NewRelationships()
 	xml.Unmarshal(buf, v2)
 }

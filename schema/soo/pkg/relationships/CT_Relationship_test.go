@@ -13,22 +13,22 @@ import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/package/relationships"
+	"baliance.com/gooxml/schema/soo/pkg/relationships"
 )
 
-func TestCT_RelationshipsConstructor(t *testing.T) {
-	v := relationships.NewCT_Relationships()
+func TestCT_RelationshipConstructor(t *testing.T) {
+	v := relationships.NewCT_Relationship()
 	if v == nil {
-		t.Errorf("relationships.NewCT_Relationships must return a non-nil value")
+		t.Errorf("relationships.NewCT_Relationship must return a non-nil value")
 	}
 	if err := v.Validate(); err != nil {
-		t.Errorf("newly constructed relationships.CT_Relationships should validate: %s", err)
+		t.Errorf("newly constructed relationships.CT_Relationship should validate: %s", err)
 	}
 }
 
-func TestCT_RelationshipsMarshalUnmarshal(t *testing.T) {
-	v := relationships.NewCT_Relationships()
+func TestCT_RelationshipMarshalUnmarshal(t *testing.T) {
+	v := relationships.NewCT_Relationship()
 	buf, _ := xml.Marshal(v)
-	v2 := relationships.NewCT_Relationships()
+	v2 := relationships.NewCT_Relationship()
 	xml.Unmarshal(buf, v2)
 }
