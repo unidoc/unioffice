@@ -23,7 +23,7 @@ import (
 	"baliance.com/gooxml/zippkg"
 
 	"baliance.com/gooxml/schema/soo/dml"
-	st "baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
+	st "baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 	"baliance.com/gooxml/schema/soo/pkg/relationships"
 	"baliance.com/gooxml/schema/soo/wml"
 )

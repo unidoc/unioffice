@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/officeDocument/math"
+	"baliance.com/gooxml/schema/soo/ofc/math"
 )
 
 type CT_FtnEdn struct {

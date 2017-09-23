@@ -14,7 +14,7 @@ import (
 	"fmt"
 
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/soo/officeDocument/math"
+	"baliance.com/gooxml/schema/soo/ofc/math"
 	"baliance.com/gooxml/schema/soo/schemaLibrary"
 )
 

@@ -17,7 +17,7 @@ import (
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/soo/dml"
-	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
+	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 	"baliance.com/gooxml/schema/soo/pml"
 	"baliance.com/gooxml/zippkg"
 )

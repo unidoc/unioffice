@@ -15,7 +15,7 @@ import (
 	"log"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
+	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
 type OfcCT_Diagram struct {

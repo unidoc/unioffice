@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"log"
 
-	"baliance.com/gooxml/schema/soo/officeDocument/math"
+	"baliance.com/gooxml/schema/soo/ofc/math"
 )
 
 type EG_ContentCellContent struct {

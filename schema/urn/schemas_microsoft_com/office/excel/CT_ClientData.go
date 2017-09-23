@@ -15,7 +15,7 @@ import (
 	"log"
 
 	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/soo/officeDocument/sharedTypes"
+	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
 type CT_ClientData struct {
