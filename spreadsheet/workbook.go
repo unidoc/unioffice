@@ -654,6 +654,14 @@ func (wb *Workbook) AddPivotTable() PivotTable {
 	pvd.Location.FirstHeaderRowAttr = 1
 	pvd.Location.FirstDataRowAttr = 2
 	pvd.Location.FirstDataColAttr = 1
+
+	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.PivotTableType, len(wb.pivotTables)),
+		gooxml.PivotTableContentType)
+	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.PivotCacheDefinitionType, len(wb.pivotCache)),
+		gooxml.PivotCacheDefinitionContentType)
+	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.PivotCacheRecordsType, len(wb.pivotRecords)),
+		gooxml.PivotCacheRecordsContentType)
+
 	return PivotTable{pvd, pcache, precs, wb}
 }
 
