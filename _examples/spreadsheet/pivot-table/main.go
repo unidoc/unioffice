@@ -52,9 +52,10 @@ func main() {
 	pivot.SetLocation("H5:M20")
 	pivot.AddPivotField()
 	pivot.AddPivotField()
-	pivot.AddPivotField()
-	pivot.AddPivotField()
-	pivot.AddPivotField()
+	pf := pivot.AddPivotField()
+	pf.SetAxis(sml.ST_AxisAxisRow)
+	pivot.AddPivotField().SetDataField(true)
+	pivot.AddPivotField().SetDataField(true)
 
 	pivot.AddRowField().SetX(2)
 	pivot.AddColumnFIeld().SetX(-2)

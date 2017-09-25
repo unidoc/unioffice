@@ -11,6 +11,10 @@ import (
 	"fmt"
 	"log"
 	"sort"
+	"strconv"
+	"strings"
+
+	"baliance.com/gooxml/spreadsheet/formula"
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/algo"
@@ -46,6 +50,7 @@ func (p PivotTable) AddPivotField() PivotField {
 		p.x.PivotFields = sml.NewCT_PivotFields()
 	}
 	pf := sml.NewCT_PivotField()
+	pf.ShowAllAttr = gooxml.Bool(false)
 	p.x.PivotFields.PivotField = append(p.x.PivotFields.PivotField, pf)
 	p.x.PivotFields.CountAttr = gooxml.Uint32(uint32(len(p.x.PivotFields.PivotField)))
 	return PivotField{pf}
@@ -152,17 +157,29 @@ func (p PivotTable) Recalculate() {
 		shared = append(shared, fld.SharedItems)
 	}
 
+	var fev = formula.NewEvaluator()
 	// then determine the type of each column of data, either numbers or strings
 	allNumbers := make([]bool, fcIdx+numCols)
+	allIntegers := make([]bool, fcIdx+numCols)
 	for c := fcIdx; c <= tcIdx; c++ {
 		allNumbers[c] = true
+		allIntegers[c] = true
 		for r := frIdx; r <= trIdx; r++ {
 			if hasHeaderRow && r == frIdx {
 				continue
 			}
 			ref := fmt.Sprintf("%s%d", IndexToColumn(c), r)
-			value, _ := sheet.Cell(ref).GetRawValue()
+			cell := sheet.Cell(ref)
+			value, _ := cell.GetRawValue()
+			if cell.HasFormula() {
+				res := fev.Eval(sheet.FormulaContext(), value)
+				value = res.Value()
+			}
 			allNumbers[c] = allNumbers[c] && format.IsNumber(value)
+			allIntegers[c] = allIntegers[c] && allNumbers[c]
+			if strings.IndexByte(value, '.') != -1 {
+				allIntegers[c] = false
+			}
 		}
 	}
 
@@ -178,7 +195,6 @@ func (p PivotTable) Recalculate() {
 			indices[i].strings = make(map[string]int)
 		}
 	}
-	_ = indices
 
 	// construct the sorted/uniq'd column data
 	for c := fcIdx; c <= tcIdx; c++ {
@@ -187,13 +203,20 @@ func (p PivotTable) Recalculate() {
 				continue
 			}
 			ref := fmt.Sprintf("%s%d", IndexToColumn(c), r)
+			cell := sheet.Cell(ref)
+			value, _ := cell.GetRawValue()
+			if cell.HasFormula() {
+				res := fev.Eval(sheet.FormulaContext(), value)
+				value = res.Value()
+			}
+
 			if allNumbers[c] {
 				num := sml.NewCT_Number()
-				num.VAttr, _ = sheet.Cell(ref).GetValueAsNumber()
+				num.VAttr, _ = strconv.ParseFloat(value, 64)
 				shared[c].N = append(shared[c].N, num)
 			} else {
 				str := sml.NewCT_String()
-				str.VAttr, _ = sheet.Cell(ref).GetRawValue()
+				str.VAttr = cell.GetFormattedValue()
 				shared[c].S = append(shared[c].S, str)
 			}
 		}
@@ -242,6 +265,9 @@ func (p PivotTable) Recalculate() {
 			ref := fmt.Sprintf("%s%d", IndexToColumn(c), r)
 			if allNumbers[c] {
 				shared[c].ContainsNumberAttr = gooxml.Bool(true)
+				shared[c].ContainsSemiMixedTypesAttr = gooxml.Bool(false)
+				shared[c].ContainsStringAttr = gooxml.Bool(false)
+				shared[c].ContainsIntegerAttr = gooxml.Bool(allIntegers[c])
 				v, _ := sheet.Cell(ref).GetValueAsNumber()
 				idx := indices[c].numbers[v]
 				x := sml.NewCT_Index()
