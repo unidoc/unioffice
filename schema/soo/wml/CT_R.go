@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_R struct {
@@ -25,6 +26,7 @@ type CT_R struct {
 	// Run Properties
 	RPr                *CT_RPr
 	EG_RunInnerContent []*EG_RunInnerContent
+	Extra              []gooxml.Any
 }
 
 func NewCT_R() *CT_R {
@@ -53,6 +55,11 @@ func (m *CT_R) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.EG_RunInnerContent != nil {
 		for _, c := range m.EG_RunInnerContent {
 			c.MarshalXML(e, xml.StartElement{})
+		}
+	}
+	for _, any := range m.Extra {
+		if err := any.MarshalXML(e, xml.StartElement{}); err != nil {
+			return err
 		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -330,10 +337,11 @@ lCT_R:
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
 			default:
-				log.Printf("skipping unsupported element on CT_R %v", el.Name)
-				if err := d.Skip(); err != nil {
+				any := &gooxml.XSDAny{}
+				if err := d.DecodeElement(any, &el); err != nil {
 					return err
 				}
+				m.Extra = append(m.Extra, any)
 			}
 		case xml.EndElement:
 			break lCT_R
