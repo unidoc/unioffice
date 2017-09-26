@@ -249,6 +249,49 @@ func (d *Document) AddParagraph() Paragraph {
 	return Paragraph{d, p}
 }
 
+func (d *Document) removeParagraph(rp *wml.CT_P) {
+	if d.x.Body == nil {
+		return
+	}
+
+	for _, ble := range d.x.Body.EG_BlockLevelElts {
+		for _, c := range ble.EG_ContentBlockContent {
+			for i, p := range c.P {
+				// do we need to remove this paragraph
+				if p == rp {
+					copy(c.P[i:], c.P[i+1:])
+					c.P = c.P[0 : len(c.P)-1]
+					return
+				}
+			}
+
+			if c.Sdt != nil && c.Sdt.SdtContent != nil && c.Sdt.SdtContent.P != nil {
+				for i, p := range c.Sdt.SdtContent.P {
+					if p == rp {
+						copy(c.P[i:], c.P[i+1:])
+						c.P = c.P[0 : len(c.P)-1]
+						return
+					}
+				}
+			}
+		}
+	}
+}
+
+// StructuredDocumentTags returns the structured document tags in the document
+// which are commonly used in document templates.
+func (d *Document) StructuredDocumentTags() []StructuredDocumentTag {
+	ret := []StructuredDocumentTag{}
+	for _, ble := range d.x.Body.EG_BlockLevelElts {
+		for _, c := range ble.EG_ContentBlockContent {
+			if c.Sdt != nil {
+				ret = append(ret, StructuredDocumentTag{d, c.Sdt})
+			}
+		}
+	}
+	return ret
+}
+
 // Paragraphs returns all of the paragraphs in the document body.
 func (d *Document) Paragraphs() []Paragraph {
 	ret := []Paragraph{}
