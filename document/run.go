@@ -25,6 +25,7 @@ import (
 // Run is a run of text within a paragraph that shares the same formatting.
 type Run struct {
 	d *Document
+	p *wml.CT_P
 	x *wml.CT_R
 }
 
@@ -48,6 +49,18 @@ func (r Run) Text() string {
 		}
 	}
 	return buf.String()
+}
+
+// Remove removes the run from its parent paragraph. This effectively deletes it
+// from a document.
+func (r Run) Remove() {
+	p := Paragraph{r.d, r.p}
+	p.removeChildRun(r.x)
+}
+
+// ClearContent clears any content in the run (text, tabs, breaks, etc.)
+func (r Run) ClearContent() {
+	r.x.EG_RunInnerContent = nil
 }
 
 // AddText adds tet to a run.
