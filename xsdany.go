@@ -22,11 +22,23 @@ type XSDAny struct {
 }
 
 var wellKnownSchemas = map[string]string{
-	"xsi":     "http://www.w3.org/2001/XMLSchema-instance",
-	"dcterms": "http://purl.org/dc/terms/",
+	"a":       "http://schemas.openxmlformats.org/drawingml/2006/main",
 	"dc":      "http://purl.org/dc/elements/1.1/",
+	"dcterms": "http://purl.org/dc/terms/",
+	"mc":      "http://schemas.openxmlformats.org/markup-compatibility/2006",
+	"mo":      "http://schemas.microsoft.com/office/mac/office/2008/main",
+	"w":       "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+	"w10":     "urn:schemas-microsoft-com:office:word",
 	"w14":     "http://schemas.microsoft.com/office/word/2010/wordml",
 	"w15":     "http://schemas.microsoft.com/office/word/2012/wordml",
+	"wne":     "http://schemas.microsoft.com/office/word/2006/wordml",
+	"wp":      "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing",
+	"wp14":    "http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing",
+	"wpc":     "http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas",
+	"wpg":     "http://schemas.microsoft.com/office/word/2010/wordprocessingGroup",
+	"wpi":     "http://schemas.microsoft.com/office/word/2010/wordprocessingInk",
+	"wps":     "http://schemas.microsoft.com/office/word/2010/wordprocessingShape",
+	"xsi":     "http://www.w3.org/2001/XMLSchema-instance",
 }
 
 var wellKnownSchemasInv = func() map[string]string {
@@ -40,8 +52,14 @@ var wellKnownSchemasInv = func() map[string]string {
 type any struct {
 	XMLName xml.Name
 	Attrs   []xml.Attr `xml:",any,attr"`
-	Data    []byte     `xml:",chardata"`
 	Nodes   []*any     `xml:",any"`
+	Data    []byte     `xml:",chardata"`
+}
+
+func dd(a *any) {
+	for _, n := range a.Nodes {
+		dd(n)
+	}
 }
 
 // UnmarshalXML implements the xml.Unmarshaler interface.
@@ -50,6 +68,7 @@ func (x *XSDAny) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err := d.DecodeElement(&a, &start); err != nil {
 		return err
 	}
+	dd(&a)
 	x.XMLName = a.XMLName
 	x.Attrs = a.Attrs
 	x.Data = a.Data
@@ -159,6 +178,7 @@ func convertToXNodes(an []*any) []*XSDAny {
 		x := &XSDAny{}
 		x.XMLName = a.XMLName
 		x.Attrs = a.Attrs
+		x.Data = a.Data
 		x.Nodes = convertToXNodes(a.Nodes)
 		ret = append(ret, x)
 	}
@@ -170,6 +190,7 @@ func convertToNodes(xn []*XSDAny) []*any {
 		a := &any{}
 		a.XMLName = x.XMLName
 		a.Attrs = x.Attrs
+		a.Data = x.Data
 		a.Nodes = convertToNodes(x.Nodes)
 		ret = append(ret, a)
 	}

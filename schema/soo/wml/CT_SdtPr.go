@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SdtPr struct {
@@ -38,6 +39,7 @@ type CT_SdtPr struct {
 	// Structured Document Tag Navigation Order Index
 	TabIndex *CT_UnsignedDecimalNumber
 	Choice   *CT_SdtPrChoice
+	Extra    []gooxml.Any
 }
 
 func NewCT_SdtPr() *CT_SdtPr {
@@ -93,6 +95,11 @@ func (m *CT_SdtPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.Choice != nil {
 		m.Choice.MarshalXML(e, xml.StartElement{})
+	}
+	for _, any := range m.Extra {
+		if err := any.MarshalXML(e, xml.StartElement{}); err != nil {
+			return err
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -225,10 +232,11 @@ lCT_SdtPr:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_SdtPr %v", el.Name)
-				if err := d.Skip(); err != nil {
+				any := &gooxml.XSDAny{}
+				if err := d.DecodeElement(any, &el); err != nil {
 					return err
 				}
+				m.Extra = append(m.Extra, any)
 			}
 		case xml.EndElement:
 			break lCT_SdtPr
