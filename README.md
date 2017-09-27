@@ -62,6 +62,7 @@ DOCX/XLSX/PPTX.
 - [Inline Tables](https://github.com/baliance/gooxml/tree/master/_examples/document/tables) Adding an table with and without borders.
 - [Using Existing Word Document as a Template](https://github.com/baliance/gooxml/tree/master/_examples/document/use-template) Opening a document as a template to re-use the styles created in the document.
 - [Filling out Form Fields](https://github.com/baliance/gooxml/tree/master/_examples/document/fill-out-form) Opening a document with embedded form fields, filling out the fields and saving the result as  a new filled form.
+- [Editing an existing document](https://github.com/baliance/gooxml/tree/master/_examples/document/edit-document) Open an existing document and replace/remove text without modifying formatting.
 
 ## Spreadsheet Examples ##
 - [Simple](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/simple) A simple sheet with a few cells
