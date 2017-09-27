@@ -155,6 +155,9 @@ func (wb *Workbook) Save(w io.Writer) error {
 		}
 	}
 	for i, sheet := range wb.xws {
+		// recalculate sheet dimensions
+		sheet.Dimension.RefAttr = Sheet{wb, nil, sheet}.Extents()
+
 		fn := gooxml.AbsoluteFilename(dt, gooxml.WorksheetType, i+1)
 		zippkg.MarshalXML(z, fn, sheet)
 		zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.xwsRels[i].X())
