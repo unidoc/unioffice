@@ -5,14 +5,14 @@ package spreadsheet
 import "fmt"
 
 const (
-	_StandardFormat_name_0 = "StandardFormatGeneralStandardFormat1StandardFormat2StandardFormat3StandardFormat4"
+	_StandardFormat_name_0 = "StandardFormatGeneralStandardFormatWholeNumberStandardFormat2StandardFormat3StandardFormat4"
 	_StandardFormat_name_1 = "StandardFormatPercentStandardFormat10StandardFormat11StandardFormat12StandardFormat13StandardFormatDateStandardFormat15StandardFormat16StandardFormat17StandardFormat18StandardFormatTimeStandardFormat20StandardFormat21StandardFormatDateTime"
 	_StandardFormat_name_2 = "StandardFormat37StandardFormat38StandardFormat39StandardFormat40"
 	_StandardFormat_name_3 = "StandardFormat45StandardFormat46StandardFormat47StandardFormat48StandardFormat49"
 )
 
 var (
-	_StandardFormat_index_0 = [...]uint8{0, 21, 36, 51, 66, 81}
+	_StandardFormat_index_0 = [...]uint8{0, 21, 46, 61, 76, 91}
 	_StandardFormat_index_1 = [...]uint8{0, 21, 37, 53, 69, 85, 103, 119, 135, 151, 167, 185, 201, 217, 239}
 	_StandardFormat_index_2 = [...]uint8{0, 16, 32, 48, 64}
 	_StandardFormat_index_3 = [...]uint8{0, 16, 32, 48, 64, 80}

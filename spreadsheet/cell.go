@@ -452,6 +452,15 @@ func (c Cell) GetCachedFormulaResult() string {
 	return ""
 }
 
+func (c Cell) getRawSortValue() (string, bool) {
+	if c.HasFormula() {
+		v := c.GetCachedFormulaResult()
+		return v, format.IsNumber(v)
+	}
+	v, _ := c.GetRawValue()
+	return v, format.IsNumber(v)
+}
+
 // SetCachedFormulaResult sets the cached result of a formula. This is normally
 // not needed but is used internally when expanding an array formula.
 func (c Cell) SetCachedFormulaResult(s string) {

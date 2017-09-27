@@ -27,6 +27,9 @@ func main() {
 
 	}
 
+	// sort column C, starting a row 2 to skip the header row
+	sheet.Sort("C", 2, spreadsheet.SortOrderDescending)
+
 	if err := ss.Validate(); err != nil {
 		log.Fatalf("error validating sheet: %s", err)
 	}

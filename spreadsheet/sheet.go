@@ -724,3 +724,40 @@ func (s *Sheet) Protection() SheetProtection {
 	}
 	return SheetProtection{s.x.SheetProtection}
 }
+
+// Sort sorts all of the rows within a sheet by the contents of a column. As the
+// file format doesn't suppot indicating that a column should be sorted by the
+// viewing/editing program, we actually need to reorder rows and change cell
+// references during a sort. If the sheet contains formulas, you should call
+// RecalculateFormulas() prior to sorting.  The column is in the form "C" and
+// specifies the column to sort by. The firstRow is a 1-based index and
+// specifies the firstRow to include in the sort, allowing skipping over a
+// header row.
+func (s *Sheet) Sort(column string, firstRow uint32, order SortOrder) {
+	sheetData := s.x.SheetData.Row
+	rows := s.Rows()
+	// figure out which row to start the sort at
+	for i, r := range rows {
+		if r.RowNumber() == firstRow {
+			sheetData = s.x.SheetData.Row[i:]
+			break
+		}
+	}
+
+	// perform the sort
+	cmp := Comparer{Order: order}
+	sort.Slice(sheetData, func(i, j int) bool {
+		return cmp.LessRows(column,
+			Row{s.w, s.x, sheetData[i]},
+			Row{s.w, s.x, sheetData[j]})
+	})
+
+	// since we probably moved some rows, we need to go and fix up their row
+	// number and cell references
+	for i, r := range s.Rows() {
+		correctRowNumber := uint32(i + 1)
+		if r.RowNumber() != correctRowNumber {
+			r.renumberAs(correctRowNumber)
+		}
+	}
+}

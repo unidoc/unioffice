@@ -8,6 +8,7 @@
 package spreadsheet_test
 
 import (
+	"fmt"
 	"math"
 	"math/rand"
 	"testing"
@@ -261,5 +262,25 @@ func TestMergedCellValidation(t *testing.T) {
 	if err := sheet.Validate(); err == nil {
 		t.Errorf("expected validation error due to overlapping merged cells")
 	}
+}
 
+func TestSortNumbers(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	sheet.Cell("C1").SetNumber(5)
+	sheet.Cell("C2").SetNumber(4)
+	sheet.Cell("C3").SetNumber(3)
+	sheet.Cell("C4").SetNumber(2)
+	sheet.Cell("C5").SetNumber(1)
+
+	sheet.Sort("C", 1, spreadsheet.SortOrderAscending)
+
+	for i := 1; i <= 5; i++ {
+		ref := fmt.Sprintf("C%d", i)
+		exp := float64(i)
+		got, _ := sheet.Cell(ref).GetValueAsNumber()
+		if got != exp {
+			t.Errorf("expected %f in %s, got %f", exp, ref, got)
+		}
+	}
 }
