@@ -123,3 +123,17 @@ func (r Row) Cell(col string) Cell {
 	}
 	return r.AddNamedCell(col)
 }
+
+// renumberAs assigns a new row number and fixes any cell references within the
+// row so they refer to the new row number. This is used when sorting to fix up
+// moved rows.
+func (r Row) renumberAs(rowNumber uint32) {
+	r.x.RAttr = gooxml.Uint32(rowNumber)
+	for _, c := range r.Cells() {
+		col, _, err := ParseCellReference(c.Reference())
+		if err == nil {
+			newRef := fmt.Sprintf("%s%d", col, rowNumber)
+			c.x.RAttr = gooxml.String(newRef)
+		}
+	}
+}
