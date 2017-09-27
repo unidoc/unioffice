@@ -68,6 +68,11 @@ func NewStyleSheet(wb *Workbook) StyleSheet {
 
 	ss.CellXfs.Xf = append(ss.CellXfs.Xf, xf2)
 	ss.CellXfs.CountAttr = gooxml.Uint32(uint32(len(ss.CellXfs.Xf)))
+
+	ss.TableStyles = sml.NewCT_TableStyles()
+	ss.TableStyles.DefaultPivotStyleAttr = gooxml.String("PivotStyleMedium7")
+	ss.TableStyles.DefaultTableStyleAttr = gooxml.String("TableStyleMedium9")
+
 	return s
 }
 

@@ -630,7 +630,8 @@ func (wb *Workbook) AddPivotTable() PivotTable {
 	wb.pivotCache = append(wb.pivotCache, pcache)
 	crel := common.NewRelationships()
 	wb.pivotCacheRels = append(wb.pivotCacheRels, crel)
-	crel.AddAutoRelationship(gooxml.DocTypeSpreadsheet, gooxml.PivotCacheDefinitionType, len(wb.pivotCache), gooxml.PivotCacheRecordsType)
+	recID := crel.AddAutoRelationship(gooxml.DocTypeSpreadsheet, gooxml.PivotCacheDefinitionType, len(wb.pivotCache), gooxml.PivotCacheRecordsType)
+	pcache.IdAttr = gooxml.String(recID.ID())
 
 	precs := sml.NewPivotCacheRecords()
 	wb.pivotRecords = append(wb.pivotRecords, precs)
@@ -649,8 +650,6 @@ func (wb *Workbook) AddPivotTable() PivotTable {
 
 	pvd.CacheIdAttr = uint32(pc.CacheIdAttr)
 
-	// TODO: make configurable
-	pcache.IdAttr = gooxml.String("rId1")
 	pvd.Location.FirstHeaderRowAttr = 1
 	pvd.Location.FirstDataRowAttr = 2
 	pvd.Location.FirstDataColAttr = 1
