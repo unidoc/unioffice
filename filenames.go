@@ -68,6 +68,16 @@ func RelativeFilename(dt DocType, typ string, index int) string {
 			log.Printf("unsupported type %s pair and %v", typ, dt)
 		}
 
+	case ImageType:
+		switch dt {
+		case DocTypeSpreadsheet:
+			return fmt.Sprintf("media/image%d.png", index)
+		case DocTypeDocument:
+			return fmt.Sprintf("media/image%d.png", index)
+		default:
+			log.Printf("unsupported type %s pair and %v", typ, dt)
+		}
+
 		// SML
 	case WorksheetType, WorksheetContentType:
 		return fmt.Sprintf("worksheets/sheet%d.xml", index)
