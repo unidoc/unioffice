@@ -383,7 +383,10 @@ func (c Cell) GetString() string {
 		}
 		return s
 	}
-	return ""
+	if c.x.V == nil {
+		return ""
+	}
+	return *c.x.V
 }
 
 func (c Cell) GetRawValue() (string, error) {
