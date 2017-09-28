@@ -594,7 +594,7 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 				files[i] = nil
 			}
 		}
-
+		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(doc.Images))
 	default:
 		log.Printf("unsupported relationship type: %s tgt: %s", typ, target)
 	}
