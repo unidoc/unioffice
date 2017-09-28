@@ -284,3 +284,53 @@ func TestSortNumbers(t *testing.T) {
 		}
 	}
 }
+
+func TestSortNumbersAndStrings(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	sheet.Cell("C1").SetNumber(1)
+	sheet.Cell("C2").SetNumber(4)
+	sheet.Cell("C3").SetString("foo")
+	sheet.Cell("C4").SetNumber(3)
+	sheet.Cell("C5").SetNumber(2)
+
+	sheet.Sort("C", 1, spreadsheet.SortOrderAscending)
+
+	for i := 1; i <= 5; i++ {
+		ref := fmt.Sprintf("C%d", i)
+		if i == 5 {
+			exp := "foo"
+			got := sheet.Cell(ref).GetString()
+			if got != exp {
+				t.Errorf("expected %s in %s, got %s", exp, ref, got)
+			}
+		} else {
+			exp := float64(i)
+			got, _ := sheet.Cell(ref).GetValueAsNumber()
+			if got != exp {
+				t.Errorf("expected %f in %s, got %f", exp, ref, got)
+			}
+		}
+	}
+}
+
+func TestSortStrings(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	sheet.Cell("C1").SetString("e")
+	sheet.Cell("C2").SetString("d")
+	sheet.Cell("C3").SetString("c")
+	sheet.Cell("C4").SetString("b")
+	sheet.Cell("C5").SetString("a")
+
+	sheet.Sort("C", 1, spreadsheet.SortOrderAscending)
+	expVals := []string{"a", "b", "c", "d", "e"}
+	for i := 1; i <= 5; i++ {
+		ref := fmt.Sprintf("C%d", i)
+		exp := expVals[i-1]
+		got := sheet.Cell(ref).GetString()
+		if got != exp {
+			t.Errorf("expected %s in %s, got %s", exp, ref, got)
+		}
+	}
+}

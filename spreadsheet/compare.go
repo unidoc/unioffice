@@ -87,6 +87,6 @@ func (c Comparer) LessCells(lhs, rhs Cell) bool {
 	}
 
 	lhsValue = lhs.GetFormattedValue()
-	rhsValue = lhs.GetFormattedValue()
+	rhsValue = rhs.GetFormattedValue()
 	return lhsValue < rhsValue
 }
