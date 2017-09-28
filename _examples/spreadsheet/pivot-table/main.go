@@ -2,18 +2,21 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"math/rand"
 	"time"
+
+	"baliance.com/gooxml/schema/soo/sml"
 
 	"baliance.com/gooxml/spreadsheet"
 )
 
 func main() {
-	ss := spreadsheet.New()
-	sheet := ss.AddSheet()
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
 
-	dateStyle := ss.StyleSheet.AddCellStyle()
+	dateStyle := wb.StyleSheet.AddCellStyle()
 	dateStyle.SetNumberFormatStandard(spreadsheet.StandardFormatDate)
 	hdr := sheet.AddRow()
 	hdr.AddCell().SetString("Date")
@@ -38,18 +41,40 @@ func main() {
 			case 2:
 				cell.SetString(cities[rand.Intn(len(cities))])
 			case 3:
-				cell.SetNumber(float64(rand.Intn(1000) + 50))
+				cell.SetFormulaRaw(fmt.Sprintf("%d*%d", rand.Intn(25)+1, rand.Intn(25)+1))
 			case 4:
 				cell.SetNumber(float64(rand.Intn(1000) + 50))
 			}
 		}
 	}
 
-	if err := ss.Validate(); err != nil {
+	pivot := wb.AddPivotTable()
+	pivot.SetLocation("H5:M20")
+	pivot.AddPivotField()
+	pivot.AddPivotField()
+	pivot.AddPivotField()
+	pivot.AddPivotField()
+	pivot.AddPivotField()
+
+	pivot.AddRowField().SetX(2)
+	pivot.AddColumnFIeld().SetX(-2)
+
+	d1 := pivot.AddDataField()
+	d1.SetField(3)
+	d1.SetSubtotal(sml.ST_DataConsolidateFunctionAverage)
+
+	d2 := pivot.AddDataField()
+	d2.SetField(4)
+	d2.SetSubtotal(sml.ST_DataConsolidateFunctionAverage)
+
+	sheet.AddPivotTable(pivot)
+	pivot.SetSource(sheet, "A1:E26")
+	pivot.Recalculate()
+	if err := wb.Validate(); err != nil {
 		log.Fatalf("error validating sheet: %s", err)
 	}
 
-	ss.SaveToFile("pivot-table.xlsx")
+	wb.SaveToFile("pivot-table.xlsx")
 }
 
 func randomDate() time.Time {

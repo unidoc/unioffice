@@ -617,6 +617,46 @@ func (wb *Workbook) Protection() WorkbookProtection {
 	return WorkbookProtection{wb.x.WorkbookProtection}
 }
 
+func (wb *Workbook) AddPivotTable() PivotTable {
+	pvd := sml.NewPivotTableDefinition()
+	wb.pivotTables = append(wb.pivotTables, pvd)
+	prel := common.NewRelationships()
+	wb.pivotTableRels = append(wb.pivotTableRels, prel)
+	prel.AddAutoRelationship(gooxml.DocTypeSpreadsheet, gooxml.PivotTableType, len(wb.pivotTables), gooxml.PivotCacheDefinitionType)
+	pvd.NameAttr = "Pivot Table"
+	pvd.DataCaptionAttr = "Values"
+
+	pcache := sml.NewPivotCacheDefinition()
+	wb.pivotCache = append(wb.pivotCache, pcache)
+	crel := common.NewRelationships()
+	wb.pivotCacheRels = append(wb.pivotCacheRels, crel)
+	crel.AddAutoRelationship(gooxml.DocTypeSpreadsheet, gooxml.PivotCacheDefinitionType, len(wb.pivotCache), gooxml.PivotCacheRecordsType)
+
+	precs := sml.NewPivotCacheRecords()
+	wb.pivotRecords = append(wb.pivotRecords, precs)
+	wb.pivotRecordRels = append(wb.pivotRecordRels, common.NewRelationships())
+
+	if wb.x.PivotCaches == nil {
+		wb.x.PivotCaches = sml.NewCT_PivotCaches()
+	}
+	pc := sml.NewCT_PivotCache()
+	wb.x.PivotCaches.PivotCache = append(wb.x.PivotCaches.PivotCache, pc)
+	pc.CacheIdAttr = uint32(len(wb.x.PivotCaches.PivotCache))
+
+	pcRel := wb.wbRels.AddAutoRelationship(gooxml.DocTypeSpreadsheet, gooxml.OfficeDocumentType,
+		len(wb.x.PivotCaches.PivotCache), gooxml.PivotCacheDefinitionType)
+	pc.IdAttr = pcRel.ID()
+
+	pvd.CacheIdAttr = uint32(pc.CacheIdAttr)
+
+	// TODO: make configurable
+	pcache.IdAttr = gooxml.String("rId1")
+	pvd.Location.FirstHeaderRowAttr = 1
+	pvd.Location.FirstDataRowAttr = 2
+	pvd.Location.FirstDataColAttr = 1
+	return PivotTable{pvd, pcache, precs, wb}
+}
+
 func (wb *Workbook) GetSheet(name string) Sheet {
 	for _, s := range wb.Sheets() {
 		if s.Name() == name {

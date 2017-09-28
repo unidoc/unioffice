@@ -766,3 +766,19 @@ func (s *Sheet) Sort(column string, firstRow uint32, order SortOrder) {
 		}
 	}
 }
+
+func (s *Sheet) AddPivotTable(pivot PivotTable) {
+	var rel common.Relationships
+	for i, wks := range s.w.xws {
+		if wks == s.x {
+			rel = s.w.xwsRels[i]
+			break
+		}
+	}
+
+	for i := 0; i < len(s.w.pivotTables); i++ {
+		if s.w.pivotTables[i] == pivot.X() {
+			rel.AddAutoRelationship(gooxml.DocTypeSpreadsheet, gooxml.WorksheetType, i+1, gooxml.PivotTableType)
+		}
+	}
+}
