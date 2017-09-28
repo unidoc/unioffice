@@ -28,6 +28,10 @@ type Sheet struct {
 	x   *sml.Worksheet
 }
 
+func (s Sheet) IsValid() bool {
+	return s.x != nil
+}
+
 // X returns the inner wrapped XML type.
 func (s Sheet) X() *sml.Worksheet {
 	return s.x
@@ -232,11 +236,12 @@ func (s Sheet) SetDrawing(d Drawing) {
 			break
 		}
 	}
+
 	// add relationship from drawing to the sheet
 	var drawingID string
 	for i, dr := range d.wb.drawings {
 		if dr == d.x {
-			rel := rel.AddAutoRelationship(gooxml.DocTypeSpreadsheet, i+1, gooxml.DrawingType)
+			rel := rel.AddAutoRelationship(gooxml.DocTypeSpreadsheet, gooxml.WorksheetType, i+1, gooxml.DrawingType)
 			drawingID = rel.ID()
 			break
 		}
@@ -453,12 +458,12 @@ func (s Sheet) Comments() Comments {
 		if wks == s.x {
 			if s.w.comments[i] == nil {
 				s.w.comments[i] = sml.NewComments()
-				s.w.xwsRels[i].AddAutoRelationship(gooxml.DocTypeSpreadsheet, i+1, gooxml.CommentsType)
+				s.w.xwsRels[i].AddAutoRelationship(gooxml.DocTypeSpreadsheet, gooxml.WorksheetType, i+1, gooxml.CommentsType)
 				s.w.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.CommentsType, i+1), gooxml.CommentsContentType)
 			}
 			if len(s.w.vmlDrawings) == 0 {
 				s.w.vmlDrawings = append(s.w.vmlDrawings, vmldrawing.NewCommentDrawing())
-				vmlID := s.w.xwsRels[i].AddAutoRelationship(gooxml.DocTypeSpreadsheet, 1, gooxml.VMLDrawingType)
+				vmlID := s.w.xwsRels[i].AddAutoRelationship(gooxml.DocTypeSpreadsheet, gooxml.WorksheetType, 1, gooxml.VMLDrawingType)
 				if s.x.LegacyDrawing == nil {
 					s.x.LegacyDrawing = sml.NewCT_LegacyDrawing()
 				}

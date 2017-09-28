@@ -90,8 +90,9 @@ func (wb *Workbook) AddSheet() Sheet {
 	wb.comments = append(wb.comments, nil)
 
 	dt := gooxml.DocTypeSpreadsheet
+
 	// update the references
-	rid := wb.wbRels.AddAutoRelationship(dt, len(wb.x.Sheets.Sheet), gooxml.WorksheetType)
+	rid := wb.wbRels.AddAutoRelationship(dt, gooxml.OfficeDocumentType, len(wb.x.Sheets.Sheet), gooxml.WorksheetType)
 	rs.IdAttr = rid.ID()
 
 	// add the content type
@@ -308,28 +309,28 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 	switch typ {
 	case gooxml.OfficeDocumentType:
 		wb.x = sml.NewWorkbook()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: wb.x})
+		decMap.AddTarget(target, wb.x, typ, 0)
 		// look for the workbook relationships file as well
 		wb.wbRels = common.NewRelationships()
-		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(target), Ifc: wb.wbRels.X()})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(zippkg.RelationsPathFor(target), wb.wbRels.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.CorePropertiesType:
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: wb.CoreProperties.X()})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, wb.CoreProperties.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.ExtendedPropertiesType:
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: wb.AppProperties.X()})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, wb.AppProperties.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.WorksheetType:
 		ws := sml.NewWorksheet()
 		idx := uint32(len(wb.xws))
 		wb.xws = append(wb.xws, ws)
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: ws, Index: idx})
+		decMap.AddTarget(target, ws, typ, idx)
 		// look for worksheet rels
 		wksRel := common.NewRelationships()
-		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(target), Ifc: wksRel.X(), Index: idx})
+		decMap.AddTarget(zippkg.RelationsPathFor(target), wksRel.X(), typ, 0)
 		wb.xwsRels = append(wb.xwsRels, wksRel)
 
 		// add a comments placeholder that will be replaced if we see a comments
@@ -338,23 +339,23 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 
 		// fix the relationship target so it points to where we'll save
 		// the worksheet
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.xws))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.xws))
 
 	case gooxml.StylesType:
 		wb.StyleSheet = NewStyleSheet(wb)
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: wb.StyleSheet.X()})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, wb.StyleSheet.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.ThemeType:
 		thm := dml.NewTheme()
 		wb.themes = append(wb.themes, thm)
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: thm})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.themes))
+		decMap.AddTarget(target, thm, typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.themes))
 
 	case gooxml.SharedStingsType:
 		wb.SharedStrings = NewSharedStrings()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: wb.SharedStrings.X()})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, wb.SharedStrings.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.ThumbnailType:
 		// read our thumbnail
@@ -399,73 +400,73 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 	case gooxml.DrawingType:
 		drawing := sd.NewWsDr()
 		idx := uint32(len(wb.drawings))
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: drawing, Index: idx})
+		decMap.AddTarget(target, drawing, typ, idx)
 		wb.drawings = append(wb.drawings, drawing)
 
 		drel := common.NewRelationships()
-		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(target), Ifc: drel.X(), Index: idx})
+		decMap.AddTarget(zippkg.RelationsPathFor(target), drel.X(), typ, idx)
 		wb.drawingRels = append(wb.drawingRels, drel)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.drawings))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.drawings))
 
 	case gooxml.VMLDrawingType:
 		vd := vmldrawing.NewContainer()
 		idx := uint32(len(wb.vmlDrawings))
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: vd, Index: idx})
+		decMap.AddTarget(target, vd, typ, idx)
 		wb.vmlDrawings = append(wb.vmlDrawings, vd)
 
 	case gooxml.CommentsType:
 		wb.comments[src.Index] = sml.NewComments()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: wb.comments[src.Index], Index: src.Index})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.comments))
+		decMap.AddTarget(target, wb.comments[src.Index], typ, src.Index)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.comments))
 
 	case gooxml.ChartType:
 		chart := crt.NewChartSpace()
 		idx := uint32(len(wb.charts))
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: chart, Index: idx})
+		decMap.AddTarget(target, chart, typ, idx)
 		wb.charts = append(wb.charts, chart)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.charts))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.charts))
 
 	case gooxml.TableType:
 		tbl := sml.NewTable()
 		idx := uint32(len(wb.tables))
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: tbl, Index: idx})
+		decMap.AddTarget(target, tbl, typ, idx)
 		wb.tables = append(wb.tables, tbl)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.tables))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.tables))
 
 	case gooxml.PivotTableType:
 		tbl := sml.NewPivotTableDefinition()
 		idx := uint32(len(wb.pivotTables))
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: tbl, Index: idx})
+		decMap.AddTarget(target, tbl, typ, idx)
 		wb.pivotTables = append(wb.pivotTables, tbl)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.pivotTables))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.pivotTables))
 
 		fn := gooxml.AbsoluteFilename(dt, typ, len(wb.pivotTables))
 		tblRel := common.NewRelationships()
-		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(fn), Ifc: tblRel.X(), Index: idx})
+		decMap.AddTarget(zippkg.RelationsPathFor(fn), tblRel.X(), typ, idx)
 		wb.pivotTableRels = append(wb.pivotTableRels, tblRel)
 
 	case gooxml.PivotCacheDefinitionType:
 		cd := sml.NewPivotCacheDefinition()
 		idx := uint32(len(wb.pivotCache))
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: cd, Index: idx})
+		decMap.AddTarget(target, cd, typ, idx)
 		wb.pivotCache = append(wb.pivotCache, cd)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.pivotCache))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.pivotCache))
 
 		fn := gooxml.AbsoluteFilename(dt, typ, len(wb.pivotCache))
 		cdRel := common.NewRelationships()
-		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(fn), Ifc: cdRel.X(), Index: idx})
+		decMap.AddTarget(zippkg.RelationsPathFor(fn), cdRel.X(), typ, idx)
 		wb.pivotCacheRels = append(wb.pivotCacheRels, cdRel)
 
 	case gooxml.PivotCacheRecordsType:
 		cd := sml.NewPivotCacheRecords()
 		idx := uint32(len(wb.pivotRecords))
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: cd, Index: idx})
+		decMap.AddTarget(target, cd, typ, idx)
 		wb.pivotRecords = append(wb.pivotRecords, cd)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(wb.pivotRecords))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.pivotRecords))
 
 		fn := gooxml.AbsoluteFilename(dt, typ, len(wb.pivotRecords))
 		cdRel := common.NewRelationships()
-		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(fn), Ifc: cdRel.X(), Index: idx})
+		decMap.AddTarget(zippkg.RelationsPathFor(fn), cdRel.X(), typ, idx)
 		wb.pivotRecordRels = append(wb.pivotRecordRels, cdRel)
 
 	default:
@@ -614,4 +615,13 @@ func (wb *Workbook) Protection() WorkbookProtection {
 		wb.x.WorkbookProtection = sml.NewCT_WorkbookProtection()
 	}
 	return WorkbookProtection{wb.x.WorkbookProtection}
+}
+
+func (wb *Workbook) GetSheet(name string) Sheet {
+	for _, s := range wb.Sheets() {
+		if s.Name() == name {
+			return s
+		}
+	}
+	return Sheet{}
 }

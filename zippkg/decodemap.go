@@ -45,19 +45,22 @@ func (d *DecodeMap) SetOnNewRelationshipFunc(fn OnNewRelationshipFunc) {
 
 type Target struct {
 	Path  string
+	Typ   string
 	Ifc   interface{}
 	Index uint32
 }
 
 // AddTarget allows documents to register decode targets. Path is a path that
 // will be found in the zip file and ifc is an XML element that the file will be
-// unmarshaled to.
-func (d *DecodeMap) AddTarget(tgt Target) {
+// unmarshaled to.  filePath is the absolute path to the target, ifc is the
+// object to decode into, sourceFileType is the type of file that the reference
+// was discovered in, and index is the index of the source file type.
+func (d *DecodeMap) AddTarget(filePath string, ifc interface{}, sourceFileType string, idx uint32) {
 	if d.pathsToIfcs == nil {
 		d.pathsToIfcs = make(map[string]Target)
 		d.basePaths = make(map[*relationships.Relationships]string)
 	}
-	d.pathsToIfcs[filepath.Clean(tgt.Path)] = tgt
+	d.pathsToIfcs[filepath.Clean(filePath)] = Target{Path: filePath, Typ: sourceFileType, Ifc: ifc, Index: idx}
 }
 
 // Decode loops decoding targets registered with AddTarget and calling th

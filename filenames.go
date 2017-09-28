@@ -10,6 +10,9 @@ package gooxml
 import (
 	"fmt"
 	"log"
+	"strings"
+
+	"baliance.com/gooxml/algo"
 )
 
 // Common filenames used in zip packages.
@@ -29,89 +32,36 @@ const (
 	DocTypePresentation
 )
 
-// RelativeFilename returns a filename relative to where it is normally
-// referenced from a relationships file. Index is used in some cases for files
-// which there may be more than one of (e.g. worksheets/drawings/charts)
-func RelativeFilename(dt DocType, typ string, index int) string {
-	switch typ {
-	case CorePropertiesType:
-		return "docProps/core.xml"
-	case ExtendedPropertiesType:
-		return "docProps/app.xml"
-	case ThumbnailType:
-		return "docProps/thumbnail.jpeg"
-
-	case StylesType:
-		return "styles.xml"
-	case ChartType, ChartContentType:
-		return fmt.Sprintf("../charts/chart%d.xml", index)
-	case DrawingType, DrawingContentType:
-		return fmt.Sprintf("../drawings/drawing%d.xml", index)
-	case CommentsType, CommentsContentType:
-		return fmt.Sprintf("../comments%d.xml", index)
-
-	case VMLDrawingType, VMLDrawingContentType:
-		return fmt.Sprintf("../drawings/vmlDrawing%d.vml", index)
-
-	case TableType, TableContentType:
-		return fmt.Sprintf("../tables/table%d.xml", index)
-
-	case ThemeType, ThemeContentType:
-		return fmt.Sprintf("theme/theme%d.xml", index)
-	case OfficeDocumentType:
-		switch dt {
-		case DocTypeSpreadsheet:
-			return "xl/workbook.xml"
-		case DocTypeDocument:
-			return "word/document.xml"
-		default:
-			log.Printf("unsupported type %s pair and %v", typ, dt)
-		}
-
-	case ImageType:
-		switch dt {
-		case DocTypeSpreadsheet:
-			return fmt.Sprintf("media/image%d.png", index)
-		case DocTypeDocument:
-			return fmt.Sprintf("media/image%d.png", index)
-		default:
-			log.Printf("unsupported type %s pair and %v", typ, dt)
-		}
-
-	// SML
-	case WorksheetType, WorksheetContentType:
-		return fmt.Sprintf("worksheets/sheet%d.xml", index)
-
-	case PivotTableType:
-		return fmt.Sprintf("../pivotTables/pivotTable%d.xml", index)
-	case PivotCacheDefinitionType:
-		return fmt.Sprintf("../pivotCache/pivotCacheDefinition%d.xml", index)
-	case PivotCacheRecordsType:
-		return fmt.Sprintf("../pivotCache/pivotCacheRecords%d.xml", index)
-	case SharedStingsType, SharedStringsContentType:
-		return "sharedStrings.xml"
-
-		// WML
-	case FontTableType:
-		return "fontTable.xml"
-	case EndNotesType:
-		return "endnotes.xml"
-	case FootNotesType:
-		return "footnotes.xml"
-	case NumberingType:
-		return "numbering.xml"
-	case WebSettingsType:
-		return "webSettings.xml"
-	case SettingsType:
-		return "settings.xml"
-	case HeaderType:
-		return fmt.Sprintf("header%d.xml", index)
-	case FooterType:
-		return fmt.Sprintf("footer%d.xml", index)
-	default:
-		log.Printf("unsupported type %s", typ)
+// RelativeFilename returns a filename relative to the source file referenced
+// from a relationships file. Index is used in some cases for files which there
+// may be more than one of (e.g. worksheets/drawings/charts)
+func RelativeFilename(dt DocType, relToTyp, typ string, index int) string {
+	orig := AbsoluteFilename(dt, typ, index)
+	if relToTyp == "" {
+		return orig
 	}
-	return ""
+
+	relTo := AbsoluteFilename(dt, relToTyp, index)
+	relToSp := strings.Split(relTo, "/")
+	origSp := strings.Split(orig, "/")
+
+	// determine how many segments match
+	matching := 0
+	for i := 0; i < len(relToSp); i++ {
+		if relToSp[i] == origSp[i] {
+			matching++
+		}
+		if i+1 == len(origSp) {
+			break
+		}
+	}
+	relToSp = relToSp[matching:]
+	origSp = origSp[matching:]
+	nm := len(relToSp) - 1
+	if nm > 0 {
+		return algo.RepeatString("../", nm) + strings.Join(origSp, "/")
+	}
+	return strings.Join(origSp, "/")
 }
 
 // AbsoluteFilename returns the full path to a file from the root of the zip
