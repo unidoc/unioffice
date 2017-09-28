@@ -37,8 +37,8 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(wb.onNewRelationship)
 	// we should discover all contents by starting with these two files
-	decMap.AddTarget(zippkg.Target{Path: gooxml.ContentTypesFilename, Ifc: wb.ContentTypes.X()})
-	decMap.AddTarget(zippkg.Target{Path: gooxml.BaseRelsFilename, Ifc: wb.Rels.X()})
+	decMap.AddTarget(gooxml.ContentTypesFilename, wb.ContentTypes.X(), "", 0)
+	decMap.AddTarget(gooxml.BaseRelsFilename, wb.Rels.X(), "", 0)
 	if err := decMap.Decode(files); err != nil {
 		return nil, err
 	}

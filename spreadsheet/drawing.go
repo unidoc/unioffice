@@ -45,10 +45,11 @@ func (d Drawing) AddChart(at AnchorType) (chart.Chart, Anchor) {
 	d.wb.ContentTypes.AddOverride(fn, gooxml.ChartContentType)
 
 	var chartID string
+
 	// add relationship from drawing to the chart
 	for i, dr := range d.wb.drawings {
 		if dr == d.x {
-			fn := gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.ChartType, len(d.wb.charts))
+			fn := gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.DrawingType, gooxml.ChartType, len(d.wb.charts))
 			rel := d.wb.drawingRels[i].AddRelationship(fn, gooxml.ChartType)
 			chartID = rel.ID()
 			break

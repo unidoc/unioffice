@@ -57,8 +57,8 @@ func (r Relationships) FindRIDForN(i int, t string) string {
 // AddAutoRelationship adds a relationship with an automatically generated
 // filename based off of the type. It should be preferred over AddRelationship
 // to ensure consistent filenames are maintained.
-func (r Relationships) AddAutoRelationship(dt gooxml.DocType, idx int, ctype string) Relationship {
-	return r.AddRelationship(gooxml.RelativeFilename(dt, ctype, idx), ctype)
+func (r Relationships) AddAutoRelationship(dt gooxml.DocType, src string, idx int, ctype string) Relationship {
+	return r.AddRelationship(gooxml.RelativeFilename(dt, src, ctype, idx), ctype)
 }
 
 // AddRelationship adds a relationship.

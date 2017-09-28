@@ -24,10 +24,11 @@ func New() *Workbook {
 
 	wb.Rels = common.NewRelationships()
 	wb.wbRels = common.NewRelationships()
-	wb.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.ExtendedPropertiesType, 0), gooxml.ExtendedPropertiesType)
-	wb.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.CorePropertiesType, 0), gooxml.CorePropertiesType)
-	wb.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.OfficeDocumentType, 0), gooxml.OfficeDocumentType)
-	wb.wbRels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.StylesType, 0), gooxml.StylesType)
+
+	wb.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, "", gooxml.ExtendedPropertiesType, 0), gooxml.ExtendedPropertiesType)
+	wb.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, "", gooxml.CorePropertiesType, 0), gooxml.CorePropertiesType)
+	wb.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, "", gooxml.OfficeDocumentType, 0), gooxml.OfficeDocumentType)
+	wb.wbRels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.OfficeDocumentType, gooxml.StylesType, 0), gooxml.StylesType)
 
 	wb.ContentTypes = common.NewContentTypes()
 	wb.ContentTypes.AddDefault("vml", gooxml.VMLDrawingContentType)
@@ -36,7 +37,7 @@ func New() *Workbook {
 
 	wb.SharedStrings = NewSharedStrings()
 	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.SharedStingsType, 0), gooxml.SharedStringsContentType)
-	wb.wbRels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.SharedStingsType, 0), gooxml.SharedStingsType)
+	wb.wbRels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.OfficeDocumentType, gooxml.SharedStingsType, 0), gooxml.SharedStingsType)
 
 	return wb
 }

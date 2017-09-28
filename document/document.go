@@ -67,7 +67,7 @@ func New() *Document {
 	d.ContentTypes.AddOverride("/word/settings.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml")
 
 	d.Rels = common.NewRelationships()
-	d.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeDocument, gooxml.CorePropertiesType, 0), gooxml.CorePropertiesType)
+	d.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeDocument, "", gooxml.CorePropertiesType, 0), gooxml.CorePropertiesType)
 	d.Rels.AddRelationship("docProps/app.xml", gooxml.ExtendedPropertiesType)
 	d.Rels.AddRelationship("word/document.xml", gooxml.OfficeDocumentType)
 
@@ -370,8 +370,8 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(doc.onNewRelationship)
 	// we should discover all contents by starting with these two files
-	decMap.AddTarget(zippkg.Target{Path: gooxml.ContentTypesFilename, Ifc: doc.ContentTypes.X()})
-	decMap.AddTarget(zippkg.Target{Path: gooxml.BaseRelsFilename, Ifc: doc.Rels.X()})
+	decMap.AddTarget(gooxml.ContentTypesFilename, doc.ContentTypes.X(), "", 0)
+	decMap.AddTarget(gooxml.BaseRelsFilename, doc.Rels.X(), "", 0)
 	if err := decMap.Decode(files); err != nil {
 		return nil, err
 	}
@@ -490,18 +490,18 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 	switch typ {
 	case gooxml.OfficeDocumentType:
 		doc.x = wml.NewDocument()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.x})
+		decMap.AddTarget(target, doc.x, typ, 0)
 		// look for the document relationships file as well
-		decMap.AddTarget(zippkg.Target{Path: zippkg.RelationsPathFor(target), Ifc: doc.docRels.X()})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(zippkg.RelationsPathFor(target), doc.docRels.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.CorePropertiesType:
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.CoreProperties.X()})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, doc.CoreProperties.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.ExtendedPropertiesType:
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.AppProperties.X()})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, doc.AppProperties.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.ThumbnailType:
 		// read our thumbnail
@@ -524,56 +524,56 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 		}
 
 	case gooxml.SettingsType:
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.Settings.X()})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, doc.Settings.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.NumberingType:
 		doc.Numbering = NewNumbering()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.Numbering.X()})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, doc.Numbering.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.StylesType:
 		doc.Styles.Clear()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.Styles.X()})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, doc.Styles.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.HeaderType:
 		hdr := wml.NewHdr()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: hdr, Index: uint32(len(doc.headers))})
+		decMap.AddTarget(target, hdr, typ, uint32(len(doc.headers)))
 		doc.headers = append(doc.headers, hdr)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(doc.headers))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(doc.headers))
 
 	case gooxml.FooterType:
 		ftr := wml.NewFtr()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: ftr, Index: uint32(len(doc.footers))})
+		decMap.AddTarget(target, ftr, typ, uint32(len(doc.footers)))
 		doc.footers = append(doc.footers, ftr)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(doc.footers))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(doc.footers))
 
 	case gooxml.ThemeType:
 		thm := dml.NewTheme()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: thm, Index: uint32(len(doc.themes))})
+		decMap.AddTarget(target, thm, typ, uint32(len(doc.themes)))
 		doc.themes = append(doc.themes, thm)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(doc.themes))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(doc.themes))
 
 	case gooxml.WebSettingsType:
 		doc.webSettings = wml.NewWebSettings()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.webSettings})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, doc.webSettings, typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.FontTableType:
 		doc.fontTable = wml.NewFonts()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.fontTable})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, doc.fontTable, typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.EndNotesType:
 		doc.endNotes = wml.NewEndnotes()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.endNotes})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, doc.endNotes, typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.FootNotesType:
 		doc.footNotes = wml.NewFootnotes()
-		decMap.AddTarget(zippkg.Target{Path: target, Ifc: doc.footNotes})
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, 0)
+		decMap.AddTarget(target, doc.footNotes, typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.ImageType:
 		for i, f := range files {
@@ -594,7 +594,7 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 				files[i] = nil
 			}
 		}
-		rel.TargetAttr = gooxml.RelativeFilename(dt, typ, len(doc.Images))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(doc.Images))
 	default:
 		log.Printf("unsupported relationship type: %s tgt: %s", typ, target)
 	}
