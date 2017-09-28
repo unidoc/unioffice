@@ -11,6 +11,7 @@ import (
 	"errors"
 	"log"
 	"math"
+	"math/big"
 	"strconv"
 	"time"
 
@@ -141,7 +142,7 @@ func (c Cell) getFormat() string {
 // Excel. This involves determining the format string to apply, parsing it, and
 // then formatting the value according to the format string.  This should only
 // be used if you care about replicating what Excel would show, otherwise
-// GetValueAsNumber()/GetValueAsDate
+// GetValueAsNumber()/GetValueAsTime
 func (c Cell) GetFormattedValue() string {
 	f := c.getFormat()
 	switch c.x.TAttr {
@@ -257,8 +258,20 @@ func (c Cell) SetTime(d time.Time) {
 		log.Printf("times before 1900 are not supported")
 		return
 	}
+
 	delta := d.Sub(epoch)
-	c.x.V = gooxml.Stringf("%G", delta.Hours()/24)
+
+	result := new(big.Float)
+
+	deltaNs := new(big.Float)
+	deltaNs.SetPrec(128)
+	deltaNs.SetUint64(uint64(delta))
+
+	nsPerDay := new(big.Float)
+	nsPerDay.SetUint64(24 * 60 * 60 * 1e9)
+	result.Quo(deltaNs, nsPerDay)
+
+	c.x.V = gooxml.String(result.Text('g', 20))
 }
 
 // SetDate sets the cell value to a date. It's stored as the number of days past
@@ -277,7 +290,20 @@ func (c Cell) SetDate(d time.Time) {
 		return
 	}
 	delta := d.Sub(epoch)
-	c.x.V = gooxml.Stringf("%d", int(delta.Hours()/24))
+
+	result := new(big.Float)
+
+	deltaNs := new(big.Float)
+	deltaNs.SetPrec(128)
+	deltaNs.SetUint64(uint64(delta))
+
+	nsPerDay := new(big.Float)
+	nsPerDay.SetUint64(24 * 60 * 60 * 1e9)
+	result.Quo(deltaNs, nsPerDay)
+
+	hrs, _ := result.Uint64()
+
+	c.x.V = gooxml.Stringf("%d", hrs)
 }
 
 // GetValueAsTime retrieves the cell's value as a time.  There is no difference
@@ -291,12 +317,16 @@ func (c Cell) GetValueAsTime() (time.Time, error) {
 	if c.x.V == nil {
 		return time.Time{}, errors.New("cell has no value")
 	}
-	f, err := strconv.ParseFloat(*c.x.V, 64)
+	f, _, err := big.ParseFloat(*c.x.V, 10, 128, big.ToNearestEven)
 	if err != nil {
 		return time.Time{}, err
 	}
 
-	t := c.w.Epoch().Add(time.Duration(f * float64(24*time.Hour)))
+	day := new(big.Float)
+	day.SetUint64(uint64(24 * time.Hour))
+	f.Mul(f, day)
+	ns, _ := f.Uint64()
+	t := c.w.Epoch().Add(time.Duration(ns))
 	return asLocal(t), nil
 }
 

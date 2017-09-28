@@ -210,3 +210,39 @@ func TestCellReference(t *testing.T) {
 		}
 	}
 }
+
+func TestCellTimeFormat(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	exp := time.Date(2100, 5, 4, 3, 2, 1, 123456789, time.Local)
+	sheet.Cell("A1").SetTime(exp)
+
+	got, err := sheet.Cell("A1").GetValueAsTime()
+	if err != nil {
+		t.Errorf("error retrieving cell value: %s", err)
+	}
+	if got != exp {
+		fmt.Println(got, exp)
+		delta := exp.Sub(got)
+		t.Errorf("precision error in date: %s", delta)
+	}
+	wb.SaveToFile("/tmp/future.xlsx")
+}
+
+func TestCellDateFormat(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	exp := time.Date(2100, 5, 4, 0, 0, 0, 0, time.Local)
+	sheet.Cell("A1").SetDate(exp)
+
+	got, err := sheet.Cell("A1").GetValueAsTime()
+	if err != nil {
+		t.Errorf("error retrieving cell value: %s", err)
+	}
+	if got != exp {
+		fmt.Println(got, exp)
+		delta := exp.Sub(got)
+		t.Errorf("precision error in date: %s", delta)
+	}
+	wb.SaveToFile("/tmp/future.xlsx")
+}
