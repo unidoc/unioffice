@@ -484,23 +484,23 @@ func (d *Document) FormFields() []FormField {
 	return ret
 }
 
-func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship, src zippkg.Target) error {
+func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship, src zippkg.Target) error {
 	dt := gooxml.DocTypeDocument
 
 	switch typ {
 	case gooxml.OfficeDocumentType:
-		doc.x = wml.NewDocument()
-		decMap.AddTarget(target, doc.x, typ, 0)
+		d.x = wml.NewDocument()
+		decMap.AddTarget(target, d.x, typ, 0)
 		// look for the document relationships file as well
-		decMap.AddTarget(zippkg.RelationsPathFor(target), doc.docRels.X(), typ, 0)
+		decMap.AddTarget(zippkg.RelationsPathFor(target), d.docRels.X(), typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.CorePropertiesType:
-		decMap.AddTarget(target, doc.CoreProperties.X(), typ, 0)
+		decMap.AddTarget(target, d.CoreProperties.X(), typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.ExtendedPropertiesType:
-		decMap.AddTarget(target, doc.AppProperties.X(), typ, 0)
+		decMap.AddTarget(target, d.AppProperties.X(), typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.ThumbnailType:
@@ -514,7 +514,7 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 				if err != nil {
 					return fmt.Errorf("error reading thumbnail: %s", err)
 				}
-				doc.Thumbnail, _, err = image.Decode(rc)
+				d.Thumbnail, _, err = image.Decode(rc)
 				rc.Close()
 				if err != nil {
 					return fmt.Errorf("error decoding thumbnail: %s", err)
@@ -524,55 +524,55 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 		}
 
 	case gooxml.SettingsType:
-		decMap.AddTarget(target, doc.Settings.X(), typ, 0)
+		decMap.AddTarget(target, d.Settings.X(), typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.NumberingType:
-		doc.Numbering = NewNumbering()
-		decMap.AddTarget(target, doc.Numbering.X(), typ, 0)
+		d.Numbering = NewNumbering()
+		decMap.AddTarget(target, d.Numbering.X(), typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.StylesType:
-		doc.Styles.Clear()
-		decMap.AddTarget(target, doc.Styles.X(), typ, 0)
+		d.Styles.Clear()
+		decMap.AddTarget(target, d.Styles.X(), typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.HeaderType:
 		hdr := wml.NewHdr()
-		decMap.AddTarget(target, hdr, typ, uint32(len(doc.headers)))
-		doc.headers = append(doc.headers, hdr)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(doc.headers))
+		decMap.AddTarget(target, hdr, typ, uint32(len(d.headers)))
+		d.headers = append(d.headers, hdr)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.headers))
 
 	case gooxml.FooterType:
 		ftr := wml.NewFtr()
-		decMap.AddTarget(target, ftr, typ, uint32(len(doc.footers)))
-		doc.footers = append(doc.footers, ftr)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(doc.footers))
+		decMap.AddTarget(target, ftr, typ, uint32(len(d.footers)))
+		d.footers = append(d.footers, ftr)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.footers))
 
 	case gooxml.ThemeType:
 		thm := dml.NewTheme()
-		decMap.AddTarget(target, thm, typ, uint32(len(doc.themes)))
-		doc.themes = append(doc.themes, thm)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(doc.themes))
+		decMap.AddTarget(target, thm, typ, uint32(len(d.themes)))
+		d.themes = append(d.themes, thm)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.themes))
 
 	case gooxml.WebSettingsType:
-		doc.webSettings = wml.NewWebSettings()
-		decMap.AddTarget(target, doc.webSettings, typ, 0)
+		d.webSettings = wml.NewWebSettings()
+		decMap.AddTarget(target, d.webSettings, typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.FontTableType:
-		doc.fontTable = wml.NewFonts()
-		decMap.AddTarget(target, doc.fontTable, typ, 0)
+		d.fontTable = wml.NewFonts()
+		decMap.AddTarget(target, d.fontTable, typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.EndNotesType:
-		doc.endNotes = wml.NewEndnotes()
-		decMap.AddTarget(target, doc.endNotes, typ, 0)
+		d.endNotes = wml.NewEndnotes()
+		decMap.AddTarget(target, d.endNotes, typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.FootNotesType:
-		doc.footNotes = wml.NewFootnotes()
-		decMap.AddTarget(target, doc.footNotes, typ, 0)
+		d.footNotes = wml.NewFootnotes()
+		decMap.AddTarget(target, d.footNotes, typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.ImageType:
@@ -581,7 +581,7 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 				continue
 			}
 			if f.Name == target {
-				path, err := zippkg.ExtractToDiskTmp(f, doc.TmpPath)
+				path, err := zippkg.ExtractToDiskTmp(f, d.TmpPath)
 				if err != nil {
 					return err
 				}
@@ -589,14 +589,72 @@ func (doc *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ str
 				if err != nil {
 					return err
 				}
-				iref := common.MakeImageRef(img, &doc.DocBase, doc.docRels)
-				doc.Images = append(doc.Images, iref)
+				iref := common.MakeImageRef(img, &d.DocBase, d.docRels)
+				d.Images = append(d.Images, iref)
 				files[i] = nil
 			}
 		}
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(doc.Images))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.Images))
 	default:
 		log.Printf("unsupported relationship type: %s tgt: %s", typ, target)
 	}
 	return nil
+}
+
+// InsertParagraphAfter adds a new empty paragraph after the relativeTo
+// paragraph.
+func (d *Document) InsertParagraphAfter(relativeTo Paragraph) Paragraph {
+	return d.insertParagraph(relativeTo, false)
+}
+
+// InsertParagraphBefore adds a new empty paragraph before the relativeTo
+// paragraph.
+func (d *Document) InsertParagraphBefore(relativeTo Paragraph) Paragraph {
+	return d.insertParagraph(relativeTo, true)
+}
+
+func (d *Document) insertParagraph(relativeTo Paragraph, before bool) Paragraph {
+	if d.x.Body == nil {
+		return d.AddParagraph()
+	}
+
+	for _, ble := range d.x.Body.EG_BlockLevelElts {
+		for _, c := range ble.EG_ContentBlockContent {
+			for i, p := range c.P {
+				// foudn the paragraph
+				if p == relativeTo.X() {
+					p := wml.NewCT_P()
+					if before {
+						c.P = append(c.P, nil)
+						copy(c.P[i+1:], c.P[i:])
+						c.P[i] = p
+					} else {
+						c.P = append(c.P, nil)
+						copy(c.P[i+2:], c.P[i+1:])
+						c.P[i+1] = p
+					}
+					return Paragraph{d, p}
+				}
+			}
+
+			if c.Sdt != nil && c.Sdt.SdtContent != nil && c.Sdt.SdtContent.P != nil {
+				for i, p := range c.Sdt.SdtContent.P {
+					if p == relativeTo.X() {
+						p := wml.NewCT_P()
+						if before {
+							c.Sdt.SdtContent.P = append(c.Sdt.SdtContent.P, nil)
+							copy(c.Sdt.SdtContent.P[i+1:], c.Sdt.SdtContent.P[i:])
+							c.Sdt.SdtContent.P[i] = p
+						} else {
+							c.Sdt.SdtContent.P = append(c.Sdt.SdtContent.P, nil)
+							copy(c.Sdt.SdtContent.P[i+2:], c.Sdt.SdtContent.P[i+1:])
+							c.Sdt.SdtContent.P[i+1] = p
+						}
+						return Paragraph{d, p}
+					}
+				}
+			}
+		}
+	}
+	return d.AddParagraph()
 }

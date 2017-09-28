@@ -82,3 +82,22 @@ func TestOpenWord2016(t *testing.T) {
 	}
 	testhelper.CompareGoldenZipFilesOnly(t, "../../testdata/Office2016/Word-Windows.docx", got.Bytes())
 }
+
+func TestInsertParagraph(t *testing.T) {
+	doc := document.New()
+	if len(doc.Paragraphs()) != 0 {
+		t.Errorf("expected 0 paragraphs, got %d", len(doc.Paragraphs()))
+	}
+	p := doc.AddParagraph()
+	before := doc.InsertParagraphBefore(p)
+	after := doc.InsertParagraphAfter(p)
+	if len(doc.Paragraphs()) != 3 {
+		t.Errorf("expected 3 paragraphs, got %d", len(doc.Paragraphs()))
+	}
+	if doc.Paragraphs()[0].X() != before.X() {
+		t.Error("InsertParagraphBefore failed")
+	}
+	if doc.Paragraphs()[2].X() != after.X() {
+		t.Error("InsertParagraphAfter failed")
+	}
+}

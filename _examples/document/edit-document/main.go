@@ -39,6 +39,15 @@ func main() {
 				r.ClearContent()
 				r.AddText("John ")
 				r.AddBreak()
+
+				para := doc.InsertParagraphBefore(p)
+				para.AddRun().AddText("Mr.")
+				para.SetStyle("Name") // Name is a default style in this template file
+
+				para = doc.InsertParagraphAfter(p)
+				para.AddRun().AddText("III")
+				para.SetStyle("Name")
+
 			case "LAST NAME":
 				r.ClearContent()
 				r.AddText("Smith")
