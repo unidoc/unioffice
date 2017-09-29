@@ -624,12 +624,11 @@ func (d *Document) insertParagraph(relativeTo Paragraph, before bool) Paragraph 
 				// foudn the paragraph
 				if p == relativeTo.X() {
 					p := wml.NewCT_P()
+					c.P = append(c.P, nil)
 					if before {
-						c.P = append(c.P, nil)
 						copy(c.P[i+1:], c.P[i:])
 						c.P[i] = p
 					} else {
-						c.P = append(c.P, nil)
 						copy(c.P[i+2:], c.P[i+1:])
 						c.P[i+1] = p
 					}
@@ -641,12 +640,11 @@ func (d *Document) insertParagraph(relativeTo Paragraph, before bool) Paragraph 
 				for i, p := range c.Sdt.SdtContent.P {
 					if p == relativeTo.X() {
 						p := wml.NewCT_P()
+						c.Sdt.SdtContent.P = append(c.Sdt.SdtContent.P, nil)
 						if before {
-							c.Sdt.SdtContent.P = append(c.Sdt.SdtContent.P, nil)
 							copy(c.Sdt.SdtContent.P[i+1:], c.Sdt.SdtContent.P[i:])
 							c.Sdt.SdtContent.P[i] = p
 						} else {
-							c.Sdt.SdtContent.P = append(c.Sdt.SdtContent.P, nil)
 							copy(c.Sdt.SdtContent.P[i+2:], c.Sdt.SdtContent.P[i+1:])
 							c.Sdt.SdtContent.P[i+1] = p
 						}

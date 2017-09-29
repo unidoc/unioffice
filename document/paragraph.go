@@ -117,3 +117,54 @@ func (p Paragraph) Runs() []Run {
 	}
 	return ret
 }
+
+// InsertRunAfter inserts a run in the paragraph after the relative run.
+func (p Paragraph) InsertRunAfter(relativeTo Run) Run {
+	return p.insertRun(relativeTo, false)
+}
+
+// InsertRunBefore inserts a run in the paragraph before the relative run.
+func (p Paragraph) InsertRunBefore(relativeTo Run) Run {
+	return p.insertRun(relativeTo, true)
+}
+
+func (p Paragraph) insertRun(relativeTo Run, before bool) Run {
+	for _, c := range p.x.EG_PContent {
+		for i, rc := range c.EG_ContentRunContent {
+			if rc.R == relativeTo.X() {
+				r := wml.NewCT_R()
+				c.EG_ContentRunContent = append(c.EG_ContentRunContent, nil)
+				if before {
+					copy(c.EG_ContentRunContent[i+1:], c.EG_ContentRunContent[i:])
+					c.EG_ContentRunContent[i] = wml.NewEG_ContentRunContent()
+					c.EG_ContentRunContent[i].R = r
+				} else {
+					copy(c.EG_ContentRunContent[i+2:], c.EG_ContentRunContent[i+1:])
+					c.EG_ContentRunContent[i+1] = wml.NewEG_ContentRunContent()
+					c.EG_ContentRunContent[i+1].R = r
+				}
+				return Run{p.d, p.X(), r}
+
+			}
+			if rc.Sdt != nil && rc.Sdt.SdtContent != nil {
+				for _, rc2 := range rc.Sdt.SdtContent.EG_ContentRunContent {
+					if rc2.R == relativeTo.X() {
+						r := wml.NewCT_R()
+						rc.Sdt.SdtContent.EG_ContentRunContent = append(rc.Sdt.SdtContent.EG_ContentRunContent, nil)
+						if before {
+							copy(rc.Sdt.SdtContent.EG_ContentRunContent[i+1:], rc.Sdt.SdtContent.EG_ContentRunContent[i:])
+							rc.Sdt.SdtContent.EG_ContentRunContent[i] = wml.NewEG_ContentRunContent()
+							rc.Sdt.SdtContent.EG_ContentRunContent[i].R = r
+						} else {
+							copy(rc.Sdt.SdtContent.EG_ContentRunContent[i+2:], rc.Sdt.SdtContent.EG_ContentRunContent[i+1:])
+							rc.Sdt.SdtContent.EG_ContentRunContent[i+1] = wml.NewEG_ContentRunContent()
+							rc.Sdt.SdtContent.EG_ContentRunContent[i+1].R = r
+						}
+						return Run{p.d, p.X(), r}
+					}
+				}
+			}
+		}
+	}
+	return p.AddRun()
+}

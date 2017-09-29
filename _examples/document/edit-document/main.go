@@ -84,6 +84,13 @@ func main() {
 				r.ClearContent()
 				r.AddText("John Smith")
 				r.AddBreak()
+
+				run := p.InsertRunBefore(r)
+				run.AddText("---Before----")
+				run.AddBreak()
+				run = p.InsertRunAfter(r)
+				run.AddText("---After----")
+
 			default:
 				fmt.Println("not modifying", r.Text())
 			}
