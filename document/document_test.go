@@ -101,3 +101,42 @@ func TestInsertParagraph(t *testing.T) {
 		t.Error("InsertParagraphAfter failed")
 	}
 }
+
+func TestInsertRun(t *testing.T) {
+	doc := document.New()
+	if len(doc.Paragraphs()) != 0 {
+		t.Errorf("expected 0 paragraphs, got %d", len(doc.Paragraphs()))
+	}
+	p := doc.AddParagraph()
+	middle := p.AddRun()
+	before := p.InsertRunBefore(middle)
+	after := p.InsertRunAfter(middle)
+	middle.AddText("middle")
+	before.AddText("before")
+	after.AddText("after")
+	if len(p.Runs()) != 3 {
+		t.Errorf("expected 3 runs, got %d", len(p.Runs()))
+	}
+	if p.Runs()[0].X() != before.X() {
+		t.Error("InsertParagraphBefore failed")
+	}
+	if p.Runs()[2].X() != after.X() {
+		t.Error("InsertParagraphAfter failed")
+	}
+
+	after.Remove()
+	if len(p.Runs()) != 2 {
+		t.Errorf("expected 2 runs, got %d", len(p.Runs()))
+	}
+	if p.Runs()[0].X() != before.X() {
+		t.Error("InsertParagraphBefore failed")
+	}
+	before.Remove()
+	if len(p.Runs()) != 1 {
+		t.Errorf("expected 1 runs, got %d", len(p.Runs()))
+	}
+
+	if p.Runs()[0].X() != middle.X() {
+		t.Errorf("remove failed")
+	}
+}
