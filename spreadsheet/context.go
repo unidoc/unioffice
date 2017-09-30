@@ -47,9 +47,6 @@ func (e *evalContext) Cell(ref string, ev formula.Evaluator) formula.Result {
 
 	v, _ := c.GetRawValue()
 	return formula.MakeStringResult(v)
-
-	// TODO: handle this properly
-	// return formula.MakeErrorResult()
 }
 
 func (e *evalContext) Sheet(name string) formula.Context {

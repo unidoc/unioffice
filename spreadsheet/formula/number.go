@@ -7,7 +7,11 @@
 
 package formula
 
-import "strconv"
+import (
+	"strconv"
+
+	"baliance.com/gooxml"
+)
 
 type Number struct {
 	v float64
@@ -16,7 +20,7 @@ type Number struct {
 func NewNumber(v string) Expression {
 	f, err := strconv.ParseFloat(v, 64)
 	if err != nil {
-		// TODO: report error
+		gooxml.Log("error parsing formula number %s: %s", v, err)
 	}
 	return Number{f}
 }

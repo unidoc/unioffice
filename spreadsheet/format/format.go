@@ -153,8 +153,8 @@ func Value(v string, f string) string {
 	return String(v, f)
 }
 
-// String returns the string formatted according to the type.
-// TODO: implement if anyone needs this.
+// String returns the string formatted according to the type.  In format strings
+// this is the fourth item, where '@' is used as a placeholder for text.
 func String(v string, f string) string {
 	fmts := Parse(f)
 	var fm Format

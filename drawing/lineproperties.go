@@ -26,8 +26,6 @@ func (l LineProperties) X() *dml.CT_LineProperties {
 // SetWidth sets the line width, MS products treat zero as the minimum width
 // that can be displayed.
 func (l LineProperties) SetWidth(w measurement.Distance) {
-	// TODO:  check these units, can't find documentation on them but this seems
-	// to be the right range
 	l.x.WAttr = gooxml.Int32(int32(w / measurement.EMU))
 }
 

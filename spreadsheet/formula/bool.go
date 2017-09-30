@@ -9,6 +9,8 @@ package formula
 
 import (
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type Bool struct {
@@ -18,7 +20,7 @@ type Bool struct {
 func NewBool(v string) Expression {
 	b, err := strconv.ParseBool(v)
 	if err != nil {
-		// TODO: report erro
+		gooxml.Log("error parsing formula bool %s: %s", v, err)
 	}
 	return Bool{b}
 }
