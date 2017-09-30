@@ -12,7 +12,8 @@ package diagram
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Categories struct {
@@ -54,7 +55,7 @@ lCT_Categories:
 				}
 				m.Cat = append(m.Cat, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Categories %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Categories %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

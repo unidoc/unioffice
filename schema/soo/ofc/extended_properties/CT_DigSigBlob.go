@@ -11,7 +11,6 @@ package extended_properties
 
 import (
 	"encoding/xml"
-	"log"
 
 	"baliance.com/gooxml"
 )
@@ -50,7 +49,7 @@ lCT_DigSigBlob:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_DigSigBlob %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_DigSigBlob %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,7 +11,8 @@ package spreadsheetDrawing
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type WsDr struct {
@@ -68,7 +69,7 @@ lWsDr:
 				}
 				m.EG_Anchor = append(m.EG_Anchor, tmpanchor)
 			default:
-				log.Printf("skipping unsupported element on WsDr %v", el.Name)
+				gooxml.Log("skipping unsupported element on WsDr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

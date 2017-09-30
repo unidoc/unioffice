@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_GvmlConnector struct {
@@ -78,7 +79,7 @@ lCT_GvmlConnector:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_GvmlConnector %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_GvmlConnector %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

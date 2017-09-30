@@ -11,8 +11,9 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type OleObj struct {
@@ -117,7 +118,7 @@ lOleObj:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on OleObj %v", el.Name)
+				gooxml.Log("skipping unsupported element on OleObj %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

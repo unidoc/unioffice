@@ -15,7 +15,6 @@ import (
 	"image/jpeg"
 	"io"
 	"io/ioutil"
-	"log"
 	"os"
 
 	"baliance.com/gooxml"
@@ -126,7 +125,7 @@ func (d *Document) BodySection() Section {
 // Save writes the document to an io.Writer in the Zip package format.
 func (d *Document) Save(w io.Writer) error {
 	if err := d.x.Validate(); err != nil {
-		log.Printf("validation error in document: %s", err)
+		gooxml.Log("validation error in document: %s", err)
 	}
 	dt := gooxml.DocTypeDocument
 
@@ -214,7 +213,7 @@ func (d *Document) Save(w io.Writer) error {
 				return err
 			}
 		} else {
-			log.Printf("unsupported image source: %+v", img)
+			gooxml.Log("unsupported image source: %+v", img)
 		}
 	}
 
@@ -596,7 +595,7 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 		}
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.Images))
 	default:
-		log.Printf("unsupported relationship type: %s tgt: %s", typ, target)
+		gooxml.Log("unsupported relationship type: %s tgt: %s", typ, target)
 	}
 	return nil
 }

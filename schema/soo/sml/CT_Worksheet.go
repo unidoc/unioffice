@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Worksheet struct {
@@ -473,7 +474,7 @@ lCT_Worksheet:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Worksheet %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Worksheet %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

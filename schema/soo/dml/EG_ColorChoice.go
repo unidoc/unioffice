@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_ColorChoice struct {
@@ -98,7 +99,7 @@ lEG_ColorChoice:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_ColorChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_ColorChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,8 +12,9 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Path2D struct {
@@ -181,7 +182,7 @@ lCT_Path2D:
 				}
 				m.CubicBezTo = append(m.CubicBezTo, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Path2D %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Path2D %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

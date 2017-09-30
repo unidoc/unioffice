@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PolarAdjustHandle struct {
@@ -124,7 +125,7 @@ lCT_PolarAdjustHandle:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_PolarAdjustHandle %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_PolarAdjustHandle %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

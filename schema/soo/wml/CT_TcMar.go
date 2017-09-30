@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TcMar struct {
@@ -106,7 +107,7 @@ lCT_TcMar:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TcMar %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TcMar %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

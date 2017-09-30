@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Controls struct {
@@ -53,7 +54,7 @@ lCT_Controls:
 				}
 				m.Control = append(m.Control, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Controls %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Controls %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

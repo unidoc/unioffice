@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_FFDDList struct {
@@ -77,7 +78,7 @@ lCT_FFDDList:
 				}
 				m.ListEntry = append(m.ListEntry, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_FFDDList %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_FFDDList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

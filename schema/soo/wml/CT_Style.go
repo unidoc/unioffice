@@ -12,8 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
@@ -341,7 +341,7 @@ lCT_Style:
 				}
 				m.TblStylePr = append(m.TblStylePr, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Style %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Style %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

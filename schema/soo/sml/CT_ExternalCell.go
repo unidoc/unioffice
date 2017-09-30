@@ -12,7 +12,6 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 
 	"baliance.com/gooxml"
@@ -97,7 +96,7 @@ lCT_ExternalCell:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_ExternalCell %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ExternalCell %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

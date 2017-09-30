@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TextLineBreak struct {
@@ -50,7 +51,7 @@ lCT_TextLineBreak:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TextLineBreak %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TextLineBreak %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

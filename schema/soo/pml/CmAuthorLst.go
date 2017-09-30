@@ -11,7 +11,8 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CmAuthorLst struct {
@@ -54,7 +55,7 @@ lCmAuthorLst:
 				}
 				m.CmAuthor = append(m.CmAuthor, tmp)
 			default:
-				log.Printf("skipping unsupported element on CmAuthorLst %v", el.Name)
+				gooxml.Log("skipping unsupported element on CmAuthorLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

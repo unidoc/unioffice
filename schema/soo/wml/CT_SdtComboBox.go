@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SdtComboBox struct {
@@ -70,7 +71,7 @@ lCT_SdtComboBox:
 				}
 				m.ListItem = append(m.ListItem, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_SdtComboBox %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SdtComboBox %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

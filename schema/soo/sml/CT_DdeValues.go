@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_DdeValues struct {
@@ -84,7 +85,7 @@ lCT_DdeValues:
 				}
 				m.Value = append(m.Value, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_DdeValues %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_DdeValues %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

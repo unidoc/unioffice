@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type WdCT_TxbxContent struct {
@@ -61,7 +62,7 @@ lWdCT_TxbxContent:
 				}
 				m.AltChunk = append(m.AltChunk, tmp)
 			default:
-				log.Printf("skipping unsupported element on WdCT_TxbxContent %v", el.Name)
+				gooxml.Log("skipping unsupported element on WdCT_TxbxContent %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,7 +12,8 @@ package vml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Handles struct {
@@ -54,7 +55,7 @@ lCT_Handles:
 				}
 				m.H = append(m.H, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Handles %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Handles %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

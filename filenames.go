@@ -9,7 +9,6 @@ package gooxml
 
 import (
 	"fmt"
-	"log"
 	"strings"
 
 	"baliance.com/gooxml/algo"
@@ -83,7 +82,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		case DocTypeDocument:
 			return "word/document.xml"
 		default:
-			log.Printf("unsupported type %s pair and %v", typ, dt)
+			Log("unsupported type %s pair and %v", typ, dt)
 		}
 
 	case ThemeType, ThemeContentType:
@@ -93,7 +92,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		case DocTypeDocument:
 			return fmt.Sprintf("word/theme/theme%d.xml", index)
 		default:
-			log.Printf("unsupported type %s pair and %v", typ, dt)
+			Log("unsupported type %s pair and %v", typ, dt)
 		}
 
 	case StylesType:
@@ -103,7 +102,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		case DocTypeDocument:
 			return "word/styles.xml"
 		default:
-			log.Printf("unsupported type %s pair and %v", typ, dt)
+			Log("unsupported type %s pair and %v", typ, dt)
 		}
 
 	case ChartType, ChartContentType:
@@ -111,7 +110,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/charts/chart%d.xml", index)
 		default:
-			log.Printf("unsupported type %s pair and %v", typ, dt)
+			Log("unsupported type %s pair and %v", typ, dt)
 		}
 	case TableType, TableContentType:
 		return fmt.Sprintf("xl/tables/table%d.xml", index)
@@ -121,7 +120,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/drawings/drawing%d.xml", index)
 		default:
-			log.Printf("unsupported type %s pair and %v", typ, dt)
+			Log("unsupported type %s pair and %v", typ, dt)
 		}
 
 	case CommentsType, CommentsContentType:
@@ -129,7 +128,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/comments%d.xml", index)
 		default:
-			log.Printf("unsupported type %s pair and %v", typ, dt)
+			Log("unsupported type %s pair and %v", typ, dt)
 		}
 
 	case VMLDrawingType, VMLDrawingContentType:
@@ -137,7 +136,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/drawings/vmlDrawing%d.vml", index)
 		default:
-			log.Printf("unsupported type %s pair and %v", typ, dt)
+			Log("unsupported type %s pair and %v", typ, dt)
 		}
 
 	case ImageType:
@@ -147,7 +146,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/media/image%d.png", index)
 		default:
-			log.Printf("unsupported type %s pair and %v", typ, dt)
+			Log("unsupported type %s pair and %v", typ, dt)
 		}
 	// SML
 	case WorksheetType, WorksheetContentType:
@@ -174,7 +173,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		return fmt.Sprintf("word/footer%d.xml", index)
 
 	default:
-		log.Printf("unsupported type %s", typ)
+		Log("unsupported type %s", typ)
 	}
 	return ""
 }

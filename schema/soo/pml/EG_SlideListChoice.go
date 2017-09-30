@@ -11,7 +11,8 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_SlideListChoice struct {
@@ -71,7 +72,7 @@ lEG_SlideListChoice:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_SlideListChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_SlideListChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

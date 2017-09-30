@@ -12,8 +12,8 @@ package diagram
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -73,7 +73,7 @@ lCT_Colors:
 		case xml.StartElement:
 			switch el.Name {
 			default:
-				log.Printf("skipping unsupported element on CT_Colors %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Colors %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

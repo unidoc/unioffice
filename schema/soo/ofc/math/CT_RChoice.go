@@ -12,7 +12,8 @@ package math
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_RChoice struct {
@@ -52,7 +53,7 @@ lCT_RChoice:
 				}
 				m.T = append(m.T, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_RChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_RChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

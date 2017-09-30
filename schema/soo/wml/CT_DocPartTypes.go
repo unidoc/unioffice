@@ -12,8 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
@@ -72,7 +72,7 @@ lCT_DocPartTypes:
 				}
 				m.Type = append(m.Type, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_DocPartTypes %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_DocPartTypes %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

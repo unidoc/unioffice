@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_AltChunkPr struct {
@@ -51,7 +52,7 @@ lCT_AltChunkPr:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_AltChunkPr %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_AltChunkPr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

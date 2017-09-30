@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_RevisionRowColumn struct {
@@ -183,7 +184,7 @@ lCT_RevisionRowColumn:
 				}
 				m.Rfmt = append(m.Rfmt, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_RevisionRowColumn %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_RevisionRowColumn %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

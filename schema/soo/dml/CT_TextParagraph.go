@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TextParagraph struct {
@@ -88,7 +89,7 @@ lCT_TextParagraph:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TextParagraph %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TextParagraph %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

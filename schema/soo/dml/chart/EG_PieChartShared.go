@@ -12,7 +12,8 @@ package chart
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_PieChartShared struct {
@@ -72,7 +73,7 @@ lEG_PieChartShared:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_PieChartShared %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_PieChartShared %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type WdCT_PosVChoice struct {
@@ -58,7 +59,7 @@ lWdCT_PosVChoice:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on WdCT_PosVChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on WdCT_PosVChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,9 +11,10 @@ package docPropsVTypes
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
 	"time"
+
+	"baliance.com/gooxml"
 )
 
 type Array struct {
@@ -164,7 +165,7 @@ lArray:
 				}
 				m.Cy = append(m.Cy, tmp)
 			default:
-				log.Printf("skipping unsupported element on Array %v", el.Name)
+				gooxml.Log("skipping unsupported element on Array %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

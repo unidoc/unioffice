@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type WdEG_WrapType struct {
@@ -67,7 +68,7 @@ lWdEG_WrapType:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on WdEG_WrapType %v", el.Name)
+				gooxml.Log("skipping unsupported element on WdEG_WrapType %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CacheHierarchies struct {
@@ -72,7 +73,7 @@ lCT_CacheHierarchies:
 				}
 				m.CacheHierarchy = append(m.CacheHierarchy, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_CacheHierarchies %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_CacheHierarchies %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

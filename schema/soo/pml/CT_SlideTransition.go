@@ -12,8 +12,9 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SlideTransition struct {
@@ -213,7 +214,7 @@ lCT_SlideTransition:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_SlideTransition %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SlideTransition %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

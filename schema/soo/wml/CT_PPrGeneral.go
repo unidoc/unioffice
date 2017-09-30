@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PPrGeneral struct {
@@ -413,7 +414,7 @@ lCT_PPrGeneral:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_PPrGeneral %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_PPrGeneral %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

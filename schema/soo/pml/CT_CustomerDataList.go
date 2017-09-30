@@ -12,7 +12,8 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CustomerDataList struct {
@@ -66,7 +67,7 @@ lCT_CustomerDataList:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_CustomerDataList %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_CustomerDataList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

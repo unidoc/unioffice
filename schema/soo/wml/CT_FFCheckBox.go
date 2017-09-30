@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_FFCheckBox struct {
@@ -76,7 +77,7 @@ lCT_FFCheckBox:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_FFCheckBox %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_FFCheckBox %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

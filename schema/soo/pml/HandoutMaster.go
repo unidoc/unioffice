@@ -11,7 +11,8 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type HandoutMaster struct {
@@ -66,7 +67,7 @@ lHandoutMaster:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on HandoutMaster %v", el.Name)
+				gooxml.Log("skipping unsupported element on HandoutMaster %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

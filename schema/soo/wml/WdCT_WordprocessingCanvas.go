@@ -12,8 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -109,7 +109,7 @@ lWdCT_WordprocessingCanvas:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on WdCT_WordprocessingCanvas %v", el.Name)
+				gooxml.Log("skipping unsupported element on WdCT_WordprocessingCanvas %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

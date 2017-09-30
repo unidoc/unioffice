@@ -12,8 +12,9 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Camera struct {
@@ -90,7 +91,7 @@ lCT_Camera:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Camera %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Camera %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

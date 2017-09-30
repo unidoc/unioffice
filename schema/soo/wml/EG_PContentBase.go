@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_PContentBase struct {
@@ -72,7 +73,7 @@ lEG_PContentBase:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_PContentBase %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_PContentBase %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

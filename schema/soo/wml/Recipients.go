@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type Recipients struct {
@@ -58,7 +59,7 @@ lRecipients:
 				}
 				m.RecipientData = append(m.RecipientData, tmp)
 			default:
-				log.Printf("skipping unsupported element on Recipients %v", el.Name)
+				gooxml.Log("skipping unsupported element on Recipients %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

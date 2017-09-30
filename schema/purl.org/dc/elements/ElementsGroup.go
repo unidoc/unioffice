@@ -12,7 +12,8 @@ package elements
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type ElementsGroup struct {
@@ -51,7 +52,7 @@ lElementsGroup:
 				}
 				m.Choice = append(m.Choice, tmp)
 			default:
-				log.Printf("skipping unsupported element on ElementsGroup %v", el.Name)
+				gooxml.Log("skipping unsupported element on ElementsGroup %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

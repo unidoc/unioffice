@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TextUnderlineFillGroupWrapper struct {
@@ -100,7 +101,7 @@ lCT_TextUnderlineFillGroupWrapper:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TextUnderlineFillGroupWrapper %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TextUnderlineFillGroupWrapper %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

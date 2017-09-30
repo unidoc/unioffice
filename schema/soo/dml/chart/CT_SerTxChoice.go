@@ -11,7 +11,6 @@ package chart
 
 import (
 	"encoding/xml"
-	"log"
 
 	"baliance.com/gooxml"
 )
@@ -61,7 +60,7 @@ lCT_SerTxChoice:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_SerTxChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SerTxChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

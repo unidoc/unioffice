@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Blip struct {
@@ -196,7 +197,7 @@ lCT_Blip:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Blip %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Blip %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

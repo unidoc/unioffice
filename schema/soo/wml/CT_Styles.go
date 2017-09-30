@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Styles struct {
@@ -77,7 +78,7 @@ lCT_Styles:
 				}
 				m.Style = append(m.Style, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Styles %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Styles %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,7 +11,8 @@ package format
 
 import (
 	"io"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 //line lexer.go:20
@@ -1934,6 +1935,6 @@ func (l *Lexer) Lex(r io.Reader) {
 	}
 	_ = eof
 	if cs == format_error {
-		log.Printf("format parse error")
+		gooxml.Log("format parse error")
 	}
 }

@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_DocumentBase struct {
@@ -51,7 +52,7 @@ lCT_DocumentBase:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_DocumentBase %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_DocumentBase %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

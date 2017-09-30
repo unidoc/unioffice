@@ -8,9 +8,10 @@
 package formula
 
 import (
-	"log"
 	"math"
 	"sort"
+
+	"baliance.com/gooxml"
 )
 
 func init() {
@@ -149,7 +150,7 @@ func Min(args []Result) Result {
 		case ResultTypeError:
 			return a
 		default:
-			log.Printf("unhandled MIN() argument type %s", a.Type)
+			gooxml.Log("unhandled MIN() argument type %s", a.Type)
 		}
 	}
 	if v == math.MaxFloat64 {
@@ -184,7 +185,7 @@ func Max(args []Result) Result {
 				v = 0
 			}
 		default:
-			log.Printf("unhandled MAX() argument type %s", a.Type)
+			gooxml.Log("unhandled MAX() argument type %s", a.Type)
 		}
 	}
 	if v == -math.MaxFloat64 {
@@ -208,7 +209,7 @@ func extractNumbers(args []Result) []float64 {
 		case ResultTypeString:
 			// treated as zero by Excel
 		default:
-			log.Printf("unhandled extractNumbers argument type %s", a.Type)
+			gooxml.Log("unhandled extractNumbers argument type %s", a.Type)
 		}
 	}
 	return values

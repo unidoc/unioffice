@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TblGrid struct {
@@ -65,7 +66,7 @@ lCT_TblGrid:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TblGrid %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TblGrid %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

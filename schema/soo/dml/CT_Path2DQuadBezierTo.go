@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Path2DQuadBezierTo struct {
@@ -52,7 +53,7 @@ lCT_Path2DQuadBezierTo:
 				}
 				m.Pt = append(m.Pt, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Path2DQuadBezierTo %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Path2DQuadBezierTo %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

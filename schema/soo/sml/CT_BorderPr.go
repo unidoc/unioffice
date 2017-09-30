@@ -11,7 +11,8 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_BorderPr struct {
@@ -65,7 +66,7 @@ lCT_BorderPr:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_BorderPr %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_BorderPr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

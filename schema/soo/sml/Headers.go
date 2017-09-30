@@ -11,8 +11,9 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type Headers struct {
@@ -144,7 +145,7 @@ lHeaders:
 				}
 				m.Header = append(m.Header, tmp)
 			default:
-				log.Printf("skipping unsupported element on Headers %v", el.Name)
+				gooxml.Log("skipping unsupported element on Headers %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

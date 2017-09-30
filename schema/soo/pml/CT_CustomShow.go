@@ -12,8 +12,9 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CustomShow struct {
@@ -86,7 +87,7 @@ lCT_CustomShow:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_CustomShow %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_CustomShow %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

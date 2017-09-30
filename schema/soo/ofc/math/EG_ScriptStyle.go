@@ -11,7 +11,8 @@ package math
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_ScriptStyle struct {
@@ -59,7 +60,7 @@ lEG_ScriptStyle:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_ScriptStyle %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_ScriptStyle %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

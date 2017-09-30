@@ -12,9 +12,9 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -76,7 +76,7 @@ lWdCT_LinkedTextboxInformation:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on WdCT_LinkedTextboxInformation %v", el.Name)
+				gooxml.Log("skipping unsupported element on WdCT_LinkedTextboxInformation %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

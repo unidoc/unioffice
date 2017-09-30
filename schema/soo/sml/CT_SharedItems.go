@@ -12,9 +12,10 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 	"time"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SharedItems struct {
@@ -312,7 +313,7 @@ lCT_SharedItems:
 				}
 				m.D = append(m.D, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_SharedItems %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SharedItems %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

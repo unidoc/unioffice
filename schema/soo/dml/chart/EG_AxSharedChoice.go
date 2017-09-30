@@ -11,7 +11,8 @@ package chart
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_AxSharedChoice struct {
@@ -58,7 +59,7 @@ lEG_AxSharedChoice:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_AxSharedChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_AxSharedChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

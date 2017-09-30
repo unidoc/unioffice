@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_FontScheme struct {
@@ -81,7 +82,7 @@ lCT_FontScheme:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_FontScheme %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_FontScheme %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

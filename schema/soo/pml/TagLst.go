@@ -11,7 +11,8 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type TagLst struct {
@@ -54,7 +55,7 @@ lTagLst:
 				}
 				m.Tag = append(m.Tag, tmp)
 			default:
-				log.Printf("skipping unsupported element on TagLst %v", el.Name)
+				gooxml.Log("skipping unsupported element on TagLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

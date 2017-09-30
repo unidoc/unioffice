@@ -11,7 +11,6 @@ package chart
 
 import (
 	"encoding/xml"
-	"log"
 
 	"baliance.com/gooxml"
 )
@@ -70,7 +69,7 @@ lCT_NumRef:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_NumRef %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_NumRef %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

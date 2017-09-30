@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_AutoFilter struct {
@@ -91,7 +92,7 @@ lCT_AutoFilter:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_AutoFilter %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_AutoFilter %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

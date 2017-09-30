@@ -12,8 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/math"
 )
 
@@ -256,7 +256,7 @@ lEG_RunLevelElts:
 				}
 				m.EG_MathContent = append(m.EG_MathContent, tmpmathcontent)
 			default:
-				log.Printf("skipping unsupported element on EG_RunLevelElts %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_RunLevelElts %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

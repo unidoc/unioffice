@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PresetGeometry2D struct {
@@ -64,7 +65,7 @@ lCT_PresetGeometry2D:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_PresetGeometry2D %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_PresetGeometry2D %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TableStyle struct {
@@ -109,7 +110,7 @@ lCT_TableStyle:
 				}
 				m.TableStyleElement = append(m.TableStyleElement, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_TableStyle %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TableStyle %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

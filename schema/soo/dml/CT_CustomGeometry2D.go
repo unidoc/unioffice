@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CustomGeometry2D struct {
@@ -99,7 +100,7 @@ lCT_CustomGeometry2D:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_CustomGeometry2D %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_CustomGeometry2D %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

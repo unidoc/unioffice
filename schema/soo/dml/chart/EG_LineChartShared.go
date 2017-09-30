@@ -12,7 +12,8 @@ package chart
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_LineChartShared struct {
@@ -91,7 +92,7 @@ lEG_LineChartShared:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_LineChartShared %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_LineChartShared %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

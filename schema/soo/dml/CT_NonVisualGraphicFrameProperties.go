@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_NonVisualGraphicFrameProperties struct {
@@ -60,7 +61,7 @@ lCT_NonVisualGraphicFrameProperties:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_NonVisualGraphicFrameProperties %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_NonVisualGraphicFrameProperties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

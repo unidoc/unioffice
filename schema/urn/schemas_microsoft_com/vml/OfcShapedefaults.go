@@ -11,8 +11,9 @@ package vml
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type OfcShapedefaults struct {
@@ -141,7 +142,7 @@ lOfcShapedefaults:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on OfcShapedefaults %v", el.Name)
+				gooxml.Log("skipping unsupported element on OfcShapedefaults %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

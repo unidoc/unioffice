@@ -12,8 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/math"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
@@ -487,7 +487,7 @@ lCT_SimpleField:
 				tmpcontentruncontent.EG_RunLevelElts = append(tmpcontentruncontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_MathContent = append(tmprunlevelelts.EG_MathContent, tmpmathcontent)
 			default:
-				log.Printf("skipping unsupported element on CT_SimpleField %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SimpleField %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

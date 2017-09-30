@@ -11,9 +11,9 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -194,7 +194,7 @@ lWdAnchor:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on WdAnchor %v", el.Name)
+				gooxml.Log("skipping unsupported element on WdAnchor %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

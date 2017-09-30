@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_TextBulletTypeface struct {
@@ -58,7 +59,7 @@ lEG_TextBulletTypeface:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_TextBulletTypeface %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_TextBulletTypeface %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

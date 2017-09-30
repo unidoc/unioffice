@@ -12,8 +12,8 @@ package diagram
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -125,7 +125,7 @@ lCT_CTStyleLabel:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_CTStyleLabel %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_CTStyleLabel %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

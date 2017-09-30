@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TblCellMar struct {
@@ -106,7 +107,7 @@ lCT_TblCellMar:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TblCellMar %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TblCellMar %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

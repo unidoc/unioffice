@@ -12,7 +12,6 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
 	"baliance.com/gooxml"
 )
@@ -92,7 +91,7 @@ lCT_VolTopic:
 				}
 				m.Tr = append(m.Tr, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_VolTopic %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_VolTopic %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

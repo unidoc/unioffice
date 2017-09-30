@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type TblStyleLst struct {
@@ -62,7 +63,7 @@ lTblStyleLst:
 				}
 				m.TblStyle = append(m.TblStyle, tmp)
 			default:
-				log.Printf("skipping unsupported element on TblStyleLst %v", el.Name)
+				gooxml.Log("skipping unsupported element on TblStyleLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

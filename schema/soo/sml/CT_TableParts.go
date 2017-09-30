@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TableParts struct {
@@ -72,7 +73,7 @@ lCT_TableParts:
 				}
 				m.TablePart = append(m.TablePart, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_TableParts %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TableParts %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

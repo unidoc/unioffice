@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SheetData struct {
@@ -55,7 +56,7 @@ lCT_SheetData:
 				}
 				m.Row = append(m.Row, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_SheetData %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SheetData %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

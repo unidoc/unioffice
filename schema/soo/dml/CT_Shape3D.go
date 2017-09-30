@@ -12,8 +12,9 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Shape3D struct {
@@ -141,7 +142,7 @@ lCT_Shape3D:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Shape3D %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Shape3D %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

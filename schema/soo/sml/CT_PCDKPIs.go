@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PCDKPIs struct {
@@ -72,7 +73,7 @@ lCT_PCDKPIs:
 				}
 				m.Kpi = append(m.Kpi, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_PCDKPIs %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_PCDKPIs %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

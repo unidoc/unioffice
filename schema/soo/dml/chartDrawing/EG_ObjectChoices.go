@@ -11,7 +11,8 @@ package chartDrawing
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_ObjectChoices struct {
@@ -67,7 +68,7 @@ lEG_ObjectChoices:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_ObjectChoices %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_ObjectChoices %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

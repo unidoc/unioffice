@@ -11,7 +11,8 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_NotesViewProperties struct {
@@ -60,7 +61,7 @@ lCT_NotesViewProperties:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_NotesViewProperties %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_NotesViewProperties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

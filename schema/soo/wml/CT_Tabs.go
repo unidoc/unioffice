@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Tabs struct {
@@ -53,7 +54,7 @@ lCT_Tabs:
 				}
 				m.Tab = append(m.Tab, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Tabs %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Tabs %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

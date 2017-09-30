@@ -12,9 +12,10 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 	"time"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TblPrExChange struct {
@@ -87,7 +88,7 @@ lCT_TblPrExChange:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TblPrExChange %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TblPrExChange %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

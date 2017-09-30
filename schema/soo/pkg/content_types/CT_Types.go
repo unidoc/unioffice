@@ -12,7 +12,8 @@ package content_types
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Types struct {
@@ -67,7 +68,7 @@ lCT_Types:
 				}
 				m.Override = append(m.Override, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Types %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Types %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

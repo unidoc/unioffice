@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_BaseStyles struct {
@@ -77,7 +78,7 @@ lCT_BaseStyles:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_BaseStyles %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_BaseStyles %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

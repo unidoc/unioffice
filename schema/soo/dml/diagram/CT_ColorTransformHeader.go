@@ -12,9 +12,9 @@ package diagram
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -123,7 +123,7 @@ lCT_ColorTransformHeader:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_ColorTransformHeader %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ColorTransformHeader %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

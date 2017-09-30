@@ -11,7 +11,8 @@ package math
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_RPR struct {
@@ -79,7 +80,7 @@ lCT_RPR:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_RPR %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_RPR %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

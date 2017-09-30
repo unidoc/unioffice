@@ -12,9 +12,9 @@ package spreadsheetDrawing
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -107,7 +107,7 @@ lCT_Picture:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Picture %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Picture %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

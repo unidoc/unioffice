@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Compat struct {
@@ -770,7 +771,7 @@ lCT_Compat:
 				}
 				m.CompatSetting = append(m.CompatSetting, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Compat %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Compat %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

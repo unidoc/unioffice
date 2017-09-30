@@ -9,7 +9,6 @@ package spreadsheet
 
 import (
 	"fmt"
-	"log"
 	"sort"
 	"strings"
 
@@ -54,7 +53,7 @@ func (s Sheet) Row(rowNum uint32) Row {
 func (s Sheet) Cell(cellRef string) Cell {
 	col, row, err := ParseCellReference(cellRef)
 	if err != nil {
-		log.Printf("error parsing cell reference: %s", err)
+		gooxml.Log("error parsing cell reference: %s", err)
 		return s.AddRow().AddCell()
 	}
 	return s.Row(row).Cell(col)
@@ -473,7 +472,7 @@ func (s Sheet) Comments() Comments {
 		}
 	}
 
-	log.Printf("attempted to access comments for non-existent sheet")
+	gooxml.Log("attempted to access comments for non-existent sheet")
 	// should never occur
 	return Comments{}
 }
@@ -615,7 +614,7 @@ func (s *Sheet) RecalculateFormulas() {
 				formStr := c.X().F.Content
 				res := ev.Eval(ctx, formStr).AsString()
 				if res.Type == formula.ResultTypeError {
-					log.Printf("error evaulating formula %s: %s", formStr, res.ErrorMessage)
+					gooxml.Log("error evaulating formula %s: %s", formStr, res.ErrorMessage)
 					c.X().V = nil
 				} else {
 					if res.Type == formula.ResultTypeNumber {

@@ -11,9 +11,9 @@ package vml
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/urn/schemas_microsoft_com/office/excel"
 	"baliance.com/gooxml/schema/urn/schemas_microsoft_com/office/powerpoint"
 	"baliance.com/gooxml/schema/urn/schemas_microsoft_com/office/word"
@@ -479,7 +479,7 @@ lPolyline:
 				}
 				m.EG_ShapeElements = append(m.EG_ShapeElements, tmpshapeelements)
 			default:
-				log.Printf("skipping unsupported element on Polyline %v", el.Name)
+				gooxml.Log("skipping unsupported element on Polyline %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,9 +12,9 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
@@ -368,7 +368,7 @@ lCT_Presentation:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Presentation %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Presentation %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

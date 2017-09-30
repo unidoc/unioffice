@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SdtPrChoice struct {
@@ -158,7 +159,7 @@ lCT_SdtPrChoice:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_SdtPrChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SdtPrChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

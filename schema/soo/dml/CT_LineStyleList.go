@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_LineStyleList struct {
@@ -52,7 +53,7 @@ lCT_LineStyleList:
 				}
 				m.Ln = append(m.Ln, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_LineStyleList %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_LineStyleList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

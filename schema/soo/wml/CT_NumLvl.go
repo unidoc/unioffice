@@ -12,8 +12,9 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_NumLvl struct {
@@ -77,7 +78,7 @@ lCT_NumLvl:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_NumLvl %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_NumLvl %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

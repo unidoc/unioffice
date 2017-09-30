@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_MdxMetadata struct {
@@ -70,7 +71,7 @@ lCT_MdxMetadata:
 				}
 				m.Mdx = append(m.Mdx, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_MdxMetadata %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_MdxMetadata %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

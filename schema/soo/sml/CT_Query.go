@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Query struct {
@@ -65,7 +66,7 @@ lCT_Query:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Query %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Query %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

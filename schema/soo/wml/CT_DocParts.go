@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_DocParts struct {
@@ -55,7 +56,7 @@ lCT_DocParts:
 				}
 				m.DocPart = append(m.DocPart, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_DocParts %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_DocParts %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

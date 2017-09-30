@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ChartsheetViews struct {
@@ -63,7 +64,7 @@ lCT_ChartsheetViews:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_ChartsheetViews %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ChartsheetViews %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

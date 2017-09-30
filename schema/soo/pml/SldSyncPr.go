@@ -11,7 +11,8 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type SldSyncPr struct {
@@ -76,7 +77,7 @@ lSldSyncPr:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on SldSyncPr %v", el.Name)
+				gooxml.Log("skipping unsupported element on SldSyncPr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

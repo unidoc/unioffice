@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TrPrBase struct {
@@ -209,7 +210,7 @@ lCT_TrPrBase:
 				}
 				m.Hidden = append(m.Hidden, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_TrPrBase %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TrPrBase %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

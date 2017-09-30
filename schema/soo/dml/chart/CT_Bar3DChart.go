@@ -12,7 +12,8 @@ package chart
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Bar3DChart struct {
@@ -144,7 +145,7 @@ lCT_Bar3DChart:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Bar3DChart %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Bar3DChart %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

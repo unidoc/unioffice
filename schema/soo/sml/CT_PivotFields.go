@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PivotFields struct {
@@ -70,7 +71,7 @@ lCT_PivotFields:
 				}
 				m.PivotField = append(m.PivotField, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_PivotFields %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_PivotFields %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

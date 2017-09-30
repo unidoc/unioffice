@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Scenario struct {
@@ -133,7 +134,7 @@ lCT_Scenario:
 				}
 				m.InputCells = append(m.InputCells, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Scenario %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Scenario %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

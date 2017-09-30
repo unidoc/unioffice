@@ -12,7 +12,8 @@ package diagram
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_DiagramDefinitionHeaderLst struct {
@@ -54,7 +55,7 @@ lCT_DiagramDefinitionHeaderLst:
 				}
 				m.LayoutDefHdr = append(m.LayoutDefHdr, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_DiagramDefinitionHeaderLst %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_DiagramDefinitionHeaderLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

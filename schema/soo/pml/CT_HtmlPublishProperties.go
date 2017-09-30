@@ -12,8 +12,9 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_HtmlPublishProperties struct {
@@ -136,7 +137,7 @@ lCT_HtmlPublishProperties:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_HtmlPublishProperties %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_HtmlPublishProperties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

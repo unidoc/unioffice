@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Path2DLineTo struct {
@@ -49,7 +50,7 @@ lCT_Path2DLineTo:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Path2DLineTo %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Path2DLineTo %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

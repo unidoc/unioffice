@@ -12,7 +12,8 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TLAnimateEffectBehavior struct {
@@ -101,7 +102,7 @@ lCT_TLAnimateEffectBehavior:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TLAnimateEffectBehavior %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TLAnimateEffectBehavior %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

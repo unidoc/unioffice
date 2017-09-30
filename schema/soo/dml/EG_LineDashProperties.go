@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_LineDashProperties struct {
@@ -58,7 +59,7 @@ lEG_LineDashProperties:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_LineDashProperties %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_LineDashProperties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

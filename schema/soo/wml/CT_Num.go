@@ -12,8 +12,9 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Num struct {
@@ -79,7 +80,7 @@ lCT_Num:
 				}
 				m.LvlOverride = append(m.LvlOverride, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Num %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Num %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

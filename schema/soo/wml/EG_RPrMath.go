@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_RPrMath struct {
@@ -72,7 +73,7 @@ lEG_RPrMath:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_RPrMath %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_RPrMath %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

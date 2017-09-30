@@ -12,8 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
@@ -70,7 +70,7 @@ lCT_TableStyleList:
 				}
 				m.TblStyle = append(m.TblStyle, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_TableStyleList %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TableStyleList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

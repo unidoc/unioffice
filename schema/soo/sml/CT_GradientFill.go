@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_GradientFill struct {
@@ -135,7 +136,7 @@ lCT_GradientFill:
 				}
 				m.Stop = append(m.Stop, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_GradientFill %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_GradientFill %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

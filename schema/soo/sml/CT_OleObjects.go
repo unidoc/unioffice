@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_OleObjects struct {
@@ -53,7 +54,7 @@ lCT_OleObjects:
 				}
 				m.OleObject = append(m.OleObject, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_OleObjects %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_OleObjects %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

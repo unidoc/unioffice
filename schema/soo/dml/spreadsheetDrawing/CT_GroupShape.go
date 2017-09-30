@@ -12,8 +12,8 @@ package spreadsheetDrawing
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -97,7 +97,7 @@ lCT_GroupShape:
 				}
 				m.Choice = append(m.Choice, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_GroupShape %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_GroupShape %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

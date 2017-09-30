@@ -12,8 +12,9 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"time"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SdtDate struct {
@@ -101,7 +102,7 @@ lCT_SdtDate:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_SdtDate %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SdtDate %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SheetViews struct {
@@ -64,7 +65,7 @@ lCT_SheetViews:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_SheetViews %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SheetViews %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

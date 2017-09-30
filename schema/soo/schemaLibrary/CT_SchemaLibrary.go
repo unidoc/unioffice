@@ -12,7 +12,8 @@ package schemaLibrary
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SchemaLibrary struct {
@@ -54,7 +55,7 @@ lCT_SchemaLibrary:
 				}
 				m.Schema = append(m.Schema, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_SchemaLibrary %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SchemaLibrary %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

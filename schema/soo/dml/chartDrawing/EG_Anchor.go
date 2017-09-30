@@ -11,7 +11,8 @@ package chartDrawing
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_Anchor struct {
@@ -58,7 +59,7 @@ lEG_Anchor:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_Anchor %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_Anchor %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

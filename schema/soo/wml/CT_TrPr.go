@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TrPr struct {
@@ -239,7 +240,7 @@ lCT_TrPr:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TrPr %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TrPr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

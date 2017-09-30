@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_NonVisualConnectorProperties struct {
@@ -80,7 +81,7 @@ lCT_NonVisualConnectorProperties:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_NonVisualConnectorProperties %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_NonVisualConnectorProperties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

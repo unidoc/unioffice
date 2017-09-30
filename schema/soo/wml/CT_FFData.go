@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_FFData struct {
@@ -197,7 +198,7 @@ lCT_FFData:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_FFData %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_FFData %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

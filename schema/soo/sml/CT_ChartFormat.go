@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ChartFormat struct {
@@ -89,7 +90,7 @@ lCT_ChartFormat:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_ChartFormat %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ChartFormat %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

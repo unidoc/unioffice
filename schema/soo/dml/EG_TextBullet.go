@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_TextBullet struct {
@@ -78,7 +79,7 @@ lEG_TextBullet:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_TextBullet %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_TextBullet %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

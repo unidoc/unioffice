@@ -11,7 +11,8 @@ package chart
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SerTx struct {
@@ -54,7 +55,7 @@ lCT_SerTx:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_SerTx %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SerTx %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

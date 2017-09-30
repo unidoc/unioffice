@@ -12,7 +12,8 @@ package chart
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_BandFmts struct {
@@ -54,7 +55,7 @@ lCT_BandFmts:
 				}
 				m.BandFmt = append(m.BandFmt, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_BandFmts %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_BandFmts %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

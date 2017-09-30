@@ -11,7 +11,8 @@ package spreadsheetDrawing
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type To struct {
@@ -63,7 +64,7 @@ lTo:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on To %v", el.Name)
+				gooxml.Log("skipping unsupported element on To %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

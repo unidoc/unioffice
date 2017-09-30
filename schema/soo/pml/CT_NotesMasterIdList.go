@@ -11,7 +11,8 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_NotesMasterIdList struct {
@@ -51,7 +52,7 @@ lCT_NotesMasterIdList:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_NotesMasterIdList %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_NotesMasterIdList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

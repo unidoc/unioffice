@@ -11,7 +11,8 @@ package math
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_BorderBox struct {
@@ -59,7 +60,7 @@ lCT_BorderBox:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_BorderBox %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_BorderBox %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

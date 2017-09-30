@@ -12,10 +12,10 @@ package docPropsVTypes
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 	"time"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
@@ -328,7 +328,7 @@ lCT_Vector:
 				}
 				m.Clsid = append(m.Clsid, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Vector %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Vector %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

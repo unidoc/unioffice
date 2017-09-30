@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_EdnDocProps struct {
@@ -98,7 +99,7 @@ lCT_EdnDocProps:
 				}
 				m.Endnote = append(m.Endnote, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_EdnDocProps %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_EdnDocProps %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

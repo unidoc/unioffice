@@ -12,7 +12,8 @@ package chart
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_BarChartShared struct {
@@ -91,7 +92,7 @@ lEG_BarChartShared:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_BarChartShared %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_BarChartShared %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

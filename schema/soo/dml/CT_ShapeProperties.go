@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ShapeProperties struct {
@@ -203,7 +204,7 @@ lCT_ShapeProperties:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_ShapeProperties %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ShapeProperties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

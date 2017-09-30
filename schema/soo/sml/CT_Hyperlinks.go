@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Hyperlinks struct {
@@ -53,7 +54,7 @@ lCT_Hyperlinks:
 				}
 				m.Hyperlink = append(m.Hyperlink, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Hyperlinks %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Hyperlinks %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

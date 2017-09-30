@@ -11,7 +11,8 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type SingleXmlCells struct {
@@ -54,7 +55,7 @@ lSingleXmlCells:
 				}
 				m.SingleXmlCell = append(m.SingleXmlCell, tmp)
 			default:
-				log.Printf("skipping unsupported element on SingleXmlCells %v", el.Name)
+				gooxml.Log("skipping unsupported element on SingleXmlCells %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -9,7 +9,6 @@ package spreadsheet
 
 import (
 	"errors"
-	"log"
 	"math"
 	"math/big"
 	"strconv"
@@ -255,7 +254,7 @@ func (c Cell) SetTime(d time.Time) {
 	if d.Before(epoch) {
 		// the ECMA 376 standard says these works, but Excel doesn't appear to
 		// support negative serial dates
-		log.Printf("times before 1900 are not supported")
+		gooxml.Log("times before 1900 are not supported")
 		return
 	}
 
@@ -286,7 +285,7 @@ func (c Cell) SetDate(d time.Time) {
 	if d.Before(epoch) {
 		// the ECMA 376 standard says these works, but Excel doesn't appear to
 		// support negative serial dates
-		log.Printf("dates before 1900 are not supported")
+		gooxml.Log("dates before 1900 are not supported")
 		return
 	}
 	delta := d.Sub(epoch)

@@ -11,7 +11,8 @@ package math
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PhantPr struct {
@@ -100,7 +101,7 @@ lCT_PhantPr:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_PhantPr %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_PhantPr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}
