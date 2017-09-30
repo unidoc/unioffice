@@ -97,7 +97,6 @@ func parseTime(x *gooxml.XSDAny) time.Time {
 	// to write to handle any other format anyway.  If you see another format
 	// in the wild, please let me know.
 
-	// TODO: report this error?
 	t, err := time.Parse(cpTimeFormatW3CDTF, string(x.Data))
 	if err != nil {
 		gooxml.Log("error parsing time from %s: %s", string(x.Data), err)

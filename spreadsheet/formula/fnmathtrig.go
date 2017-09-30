@@ -62,7 +62,7 @@ func init() {
 	RegisterFunction("LOG", Log)
 	RegisterFunction("LOG10", makeMathWrapper("LOG10", math.Log10))
 	RegisterFunction("MDETERM", MDeterm)
-	// RegisterFunction("MINVERSE", MInverse) // TODO: skipping the other matrix functins, not sure how common they are
+	// RegisterFunction("MINVERSE", MInverse) // TODO: skipping the other matrix functinos, not sure how common they are
 	// RegisterFunction("MMULT"
 	RegisterFunction("MOD", Mod)
 	RegisterFunction("MROUND", Mround)
