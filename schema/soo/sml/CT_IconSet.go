@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_IconSet struct {
@@ -107,7 +108,7 @@ lCT_IconSet:
 				}
 				m.Cfvo = append(m.Cfvo, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_IconSet %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_IconSet %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

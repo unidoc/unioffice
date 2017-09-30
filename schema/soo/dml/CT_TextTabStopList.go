@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TextTabStopList struct {
@@ -54,7 +55,7 @@ lCT_TextTabStopList:
 				}
 				m.Tab = append(m.Tab, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_TextTabStopList %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TextTabStopList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,8 +12,9 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Transform2D struct {
@@ -101,7 +102,7 @@ lCT_Transform2D:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Transform2D %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Transform2D %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

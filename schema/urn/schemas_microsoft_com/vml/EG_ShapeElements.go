@@ -11,8 +11,8 @@ package vml
 
 import (
 	"encoding/xml"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/urn/schemas_microsoft_com/office/excel"
 	"baliance.com/gooxml/schema/urn/schemas_microsoft_com/office/powerpoint"
 	"baliance.com/gooxml/schema/urn/schemas_microsoft_com/office/word"
@@ -272,7 +272,7 @@ lEG_ShapeElements:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_ShapeElements %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_ShapeElements %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

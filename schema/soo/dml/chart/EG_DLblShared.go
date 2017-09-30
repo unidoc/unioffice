@@ -11,7 +11,6 @@ package chart
 
 import (
 	"encoding/xml"
-	"log"
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
@@ -152,7 +151,7 @@ lEG_DLblShared:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_DLblShared %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_DLblShared %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

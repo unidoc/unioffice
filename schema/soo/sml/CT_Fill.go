@@ -11,7 +11,8 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Fill struct {
@@ -62,7 +63,7 @@ lCT_Fill:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Fill %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Fill %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

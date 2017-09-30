@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_VolMain struct {
@@ -66,7 +67,7 @@ lCT_VolMain:
 				}
 				m.Tp = append(m.Tp, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_VolMain %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_VolMain %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

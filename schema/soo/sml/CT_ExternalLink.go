@@ -11,7 +11,8 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ExternalLink struct {
@@ -69,7 +70,7 @@ lCT_ExternalLink:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_ExternalLink %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ExternalLink %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

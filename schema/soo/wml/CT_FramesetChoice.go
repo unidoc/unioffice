@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_FramesetChoice struct {
@@ -65,7 +66,7 @@ lCT_FramesetChoice:
 				}
 				m.Frame = append(m.Frame, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_FramesetChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_FramesetChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

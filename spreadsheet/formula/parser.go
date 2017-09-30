@@ -9,8 +9,9 @@ package formula
 
 import (
 	"io"
-	"log"
 	"strings"
+
+	"baliance.com/gooxml"
 )
 
 //go:generate goyacc -l -o grammar.go  grammar.y
@@ -31,7 +32,7 @@ func (f *plex) Lex(lval *yySymType) int {
 }
 
 func (f *plex) Error(s string) {
-	log.Printf("parse error: %s", s)
+	gooxml.Log("parse error: %s", s)
 }
 
 func Parse(r io.Reader) Expression {

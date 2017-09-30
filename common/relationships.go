@@ -9,7 +9,6 @@ package common
 
 import (
 	"fmt"
-	"log"
 	"strings"
 
 	"baliance.com/gooxml"
@@ -64,7 +63,7 @@ func (r Relationships) AddAutoRelationship(dt gooxml.DocType, src string, idx in
 // AddRelationship adds a relationship.
 func (r Relationships) AddRelationship(target, ctype string) Relationship {
 	if !strings.HasPrefix(ctype, "http://") {
-		log.Printf("relationship type %s should start with 'http://'", ctype)
+		gooxml.Log("relationship type %s should start with 'http://'", ctype)
 	}
 	rel := relationships.NewRelationship()
 	rel.IdAttr = fmt.Sprintf("rId%d", len(r.x.Relationship)+1)

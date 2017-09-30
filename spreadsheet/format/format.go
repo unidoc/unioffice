@@ -9,11 +9,12 @@ package format
 
 import (
 	"bytes"
-	"log"
 	"math"
 	"strconv"
 	"strings"
 	"time"
+
+	"baliance.com/gooxml"
 )
 
 // constants used when formatting generic values to determine when to start
@@ -120,7 +121,7 @@ func (f *Format) AddToken(t FmtType, l []byte) {
 			// TODO: if anyone cares, parse and use the numerator format.
 		}
 	default:
-		log.Printf("unsupported ph type in parse %v", t)
+		gooxml.Log("unsupported ph type in parse %v", t)
 	}
 }
 
@@ -359,7 +360,7 @@ lfor:
 		case FmtTypeTime:
 			op = append(op, reverse(dTime(t, vOrig, ph.DateTime))...)
 		default:
-			log.Printf("unsupported type in whole %v", ph)
+			gooxml.Log("unsupported type in whole %v", ph)
 		}
 	}
 
@@ -436,7 +437,7 @@ lforPost:
 		case FmtTypeLiteral:
 			op = append(op, ph.Literal)
 		default:
-			log.Printf("unsupported type in fractional %v", ph)
+			gooxml.Log("unsupported type in fractional %v", ph)
 		}
 	}
 	// remaining digits are truncated
@@ -496,7 +497,7 @@ lexfor:
 		case FmtTypeLiteral:
 			op = append(op, ph.Literal)
 		default:
-			log.Printf("unsupported type in exp %v", ph)
+			gooxml.Log("unsupported type in exp %v", ph)
 		}
 	}
 	// remaining non-consumed digits in the exponent
@@ -648,7 +649,7 @@ func dDate(t time.Time, f string) []byte {
 		case "dddd":
 			ret = t.AppendFormat(ret, "Monday")
 		default:
-			log.Printf("unsupported date format %s", s)
+			gooxml.Log("unsupported date format %s", s)
 		}
 		if f[i] == '/' {
 			ret = append(ret, '/')
@@ -709,7 +710,7 @@ func dTime(t time.Time, v float64, f string) []byte {
 			ret = strconv.AppendInt(ret, int64(v*24*60*60), 10)
 		case "":
 		default:
-			log.Printf("unsupported time format %s", s)
+			gooxml.Log("unsupported time format %s", s)
 		}
 		if f[i] == ':' {
 			ret = append(ret, ':')

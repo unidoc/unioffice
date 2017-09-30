@@ -8,9 +8,9 @@
 package common
 
 import (
-	"log"
 	"strings"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/pkg/content_types"
 )
 
@@ -55,7 +55,7 @@ func (c ContentTypes) AddOverride(path, contentType string) {
 		path = "/" + path
 	}
 	if strings.HasPrefix(contentType, "http") {
-		log.Printf("content type '%s' is incorrect, must not start with http", contentType)
+		gooxml.Log("content type '%s' is incorrect, must not start with http", contentType)
 	}
 	or := content_types.NewOverride()
 	or.PartNameAttr = path
@@ -72,7 +72,7 @@ func (c ContentTypes) EnsureOverride(path, contentType string) {
 				path = "/" + path
 			}
 			if strings.HasPrefix(contentType, "http") {
-				log.Printf("content type '%s' is incorrect, must not start with http", contentType)
+				gooxml.Log("content type '%s' is incorrect, must not start with http", contentType)
 			}
 			ovr.ContentTypeAttr = contentType
 			return

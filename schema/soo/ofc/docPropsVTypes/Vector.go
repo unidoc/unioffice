@@ -11,9 +11,10 @@ package docPropsVTypes
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
 	"time"
+
+	"baliance.com/gooxml"
 )
 
 type Vector struct {
@@ -175,7 +176,7 @@ lVector:
 				}
 				m.Clsid = append(m.Clsid, tmp)
 			default:
-				log.Printf("skipping unsupported element on Vector %v", el.Name)
+				gooxml.Log("skipping unsupported element on Vector %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

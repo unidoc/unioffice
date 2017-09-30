@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Numbering struct {
@@ -94,7 +95,7 @@ lCT_Numbering:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Numbering %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Numbering %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

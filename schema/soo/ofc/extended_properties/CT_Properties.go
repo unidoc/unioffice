@@ -11,7 +11,6 @@ package extended_properties
 
 import (
 	"encoding/xml"
-	"log"
 
 	"baliance.com/gooxml"
 )
@@ -346,7 +345,7 @@ lCT_Properties:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Properties %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Properties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

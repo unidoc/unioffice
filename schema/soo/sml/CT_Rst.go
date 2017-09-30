@@ -12,7 +12,6 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
 	"baliance.com/gooxml"
 )
@@ -94,7 +93,7 @@ lCT_Rst:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Rst %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Rst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

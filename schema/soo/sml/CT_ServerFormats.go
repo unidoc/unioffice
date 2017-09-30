@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ServerFormats struct {
@@ -72,7 +73,7 @@ lCT_ServerFormats:
 				}
 				m.ServerFormat = append(m.ServerFormat, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_ServerFormats %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ServerFormats %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

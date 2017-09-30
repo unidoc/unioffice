@@ -12,7 +12,6 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
@@ -101,7 +100,7 @@ lCT_TextField:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TextField %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TextField %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

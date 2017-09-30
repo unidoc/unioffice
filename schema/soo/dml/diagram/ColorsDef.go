@@ -11,8 +11,8 @@ package diagram
 
 import (
 	"encoding/xml"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -93,7 +93,7 @@ lColorsDef:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on ColorsDef %v", el.Name)
+				gooxml.Log("skipping unsupported element on ColorsDef %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

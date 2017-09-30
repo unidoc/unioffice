@@ -12,7 +12,8 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TimeNodeList struct {
@@ -223,7 +224,7 @@ lCT_TimeNodeList:
 				}
 				m.Video = append(m.Video, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_TimeNodeList %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TimeNodeList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

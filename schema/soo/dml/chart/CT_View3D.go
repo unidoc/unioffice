@@ -11,7 +11,8 @@ package chart
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_View3D struct {
@@ -110,7 +111,7 @@ lCT_View3D:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_View3D %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_View3D %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

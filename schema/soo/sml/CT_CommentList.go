@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CommentList struct {
@@ -55,7 +56,7 @@ lCT_CommentList:
 				}
 				m.Comment = append(m.Comment, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_CommentList %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_CommentList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

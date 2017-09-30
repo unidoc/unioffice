@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_QueryCache struct {
@@ -70,7 +71,7 @@ lCT_QueryCache:
 				}
 				m.Query = append(m.Query, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_QueryCache %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_QueryCache %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,7 +12,8 @@ package diagram
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_AdjLst struct {
@@ -54,7 +55,7 @@ lCT_AdjLst:
 				}
 				m.Adj = append(m.Adj, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_AdjLst %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_AdjLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

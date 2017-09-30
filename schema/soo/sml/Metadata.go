@@ -11,7 +11,8 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type Metadata struct {
@@ -84,7 +85,7 @@ lMetadata:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on Metadata %v", el.Name)
+				gooxml.Log("skipping unsupported element on Metadata %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

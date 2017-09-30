@@ -11,8 +11,9 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type Users struct {
@@ -65,7 +66,7 @@ lUsers:
 				}
 				m.UserInfo = append(m.UserInfo, tmp)
 			default:
-				log.Printf("skipping unsupported element on Users %v", el.Name)
+				gooxml.Log("skipping unsupported element on Users %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

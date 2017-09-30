@@ -12,7 +12,8 @@ package chart
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PieChart struct {
@@ -94,7 +95,7 @@ lCT_PieChart:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_PieChart %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_PieChart %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

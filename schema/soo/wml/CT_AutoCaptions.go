@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_AutoCaptions struct {
@@ -53,7 +54,7 @@ lCT_AutoCaptions:
 				}
 				m.AutoCaption = append(m.AutoCaption, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_AutoCaptions %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_AutoCaptions %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

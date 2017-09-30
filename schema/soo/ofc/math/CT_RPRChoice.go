@@ -11,7 +11,8 @@ package math
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_RPRChoice struct {
@@ -48,7 +49,7 @@ lCT_RPRChoice:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_RPRChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_RPRChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

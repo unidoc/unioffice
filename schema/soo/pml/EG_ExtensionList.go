@@ -12,7 +12,8 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_ExtensionList struct {
@@ -53,7 +54,7 @@ lEG_ExtensionList:
 				}
 				m.Ext = append(m.Ext, tmp)
 			default:
-				log.Printf("skipping unsupported element on EG_ExtensionList %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_ExtensionList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

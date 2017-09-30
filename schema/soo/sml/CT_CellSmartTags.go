@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CellSmartTags struct {
@@ -66,7 +67,7 @@ lCT_CellSmartTags:
 				}
 				m.CellSmartTag = append(m.CellSmartTag, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_CellSmartTags %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_CellSmartTags %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

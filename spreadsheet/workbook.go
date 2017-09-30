@@ -14,7 +14,6 @@ import (
 	"image"
 	"image/jpeg"
 	"io"
-	"log"
 	"os"
 	"time"
 
@@ -204,7 +203,7 @@ func (wb *Workbook) Save(w io.Writer) error {
 				return err
 			}
 		} else {
-			log.Printf("unsupported image source: %+v", img)
+			gooxml.Log("unsupported image source: %+v", img)
 		}
 	}
 
@@ -406,7 +405,7 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		wb.tables = append(wb.tables, tbl)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.tables))
 	default:
-		log.Printf("unsupported relationship %s %s", target, typ)
+		gooxml.Log("unsupported relationship %s %s", target, typ)
 	}
 	return nil
 }

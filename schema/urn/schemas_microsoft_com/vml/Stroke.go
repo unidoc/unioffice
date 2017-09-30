@@ -11,8 +11,9 @@ package vml
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type Stroke struct {
@@ -212,7 +213,7 @@ lStroke:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on Stroke %v", el.Name)
+				gooxml.Log("skipping unsupported element on Stroke %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,9 +12,9 @@ package vml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 	"baliance.com/gooxml/schema/urn/schemas_microsoft_com/office/excel"
 	"baliance.com/gooxml/schema/urn/schemas_microsoft_com/office/powerpoint"
@@ -871,7 +871,7 @@ lCT_Shapetype:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Shapetype %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Shapetype %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

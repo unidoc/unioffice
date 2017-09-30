@@ -12,7 +12,8 @@ package math
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_OMathElements struct {
@@ -185,7 +186,7 @@ lEG_OMathElements:
 				}
 				m.EG_OMathMathElements = append(m.EG_OMathMathElements, tmpomathmathelements)
 			default:
-				log.Printf("skipping unsupported element on EG_OMathElements %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_OMathElements %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

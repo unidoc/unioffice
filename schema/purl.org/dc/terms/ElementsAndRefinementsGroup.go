@@ -12,7 +12,8 @@ package terms
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type ElementsAndRefinementsGroup struct {
@@ -51,7 +52,7 @@ lElementsAndRefinementsGroup:
 				}
 				m.Choice = append(m.Choice, tmp)
 			default:
-				log.Printf("skipping unsupported element on ElementsAndRefinementsGroup %v", el.Name)
+				gooxml.Log("skipping unsupported element on ElementsAndRefinementsGroup %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

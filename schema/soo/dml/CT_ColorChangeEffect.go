@@ -12,8 +12,9 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ColorChangeEffect struct {
@@ -74,7 +75,7 @@ lCT_ColorChangeEffect:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_ColorChangeEffect %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ColorChangeEffect %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

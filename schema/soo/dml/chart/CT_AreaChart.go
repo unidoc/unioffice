@@ -12,7 +12,8 @@ package chart
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_AreaChart struct {
@@ -115,7 +116,7 @@ lCT_AreaChart:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_AreaChart %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_AreaChart %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

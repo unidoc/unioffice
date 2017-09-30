@@ -11,8 +11,9 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type SldMaster struct {
@@ -96,7 +97,7 @@ lSldMaster:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on SldMaster %v", el.Name)
+				gooxml.Log("skipping unsupported element on SldMaster %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

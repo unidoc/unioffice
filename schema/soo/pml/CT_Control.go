@@ -12,8 +12,9 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Control struct {
@@ -138,7 +139,7 @@ lCT_Control:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Control %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Control %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

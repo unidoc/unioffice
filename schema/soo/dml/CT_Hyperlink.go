@@ -12,8 +12,9 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Hyperlink struct {
@@ -160,7 +161,7 @@ lCT_Hyperlink:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Hyperlink %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Hyperlink %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

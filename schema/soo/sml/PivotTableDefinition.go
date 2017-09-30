@@ -11,8 +11,9 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type PivotTableDefinition struct {
@@ -619,7 +620,7 @@ lPivotTableDefinition:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on PivotTableDefinition %v", el.Name)
+				gooxml.Log("skipping unsupported element on PivotTableDefinition %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

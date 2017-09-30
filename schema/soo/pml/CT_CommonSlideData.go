@@ -12,7 +12,8 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CommonSlideData struct {
@@ -109,7 +110,7 @@ lCT_CommonSlideData:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_CommonSlideData %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_CommonSlideData %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

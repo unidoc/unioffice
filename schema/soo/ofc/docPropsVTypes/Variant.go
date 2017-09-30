@@ -11,8 +11,9 @@ package docPropsVTypes
 
 import (
 	"encoding/xml"
-	"log"
 	"time"
+
+	"baliance.com/gooxml"
 )
 
 type Variant struct {
@@ -212,7 +213,7 @@ lVariant:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on Variant %v", el.Name)
+				gooxml.Log("skipping unsupported element on Variant %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

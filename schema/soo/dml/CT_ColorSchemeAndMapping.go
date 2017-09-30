@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ColorSchemeAndMapping struct {
@@ -59,7 +60,7 @@ lCT_ColorSchemeAndMapping:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_ColorSchemeAndMapping %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ColorSchemeAndMapping %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

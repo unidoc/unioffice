@@ -12,7 +12,8 @@ package vml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type OfcCT_RegroupTable struct {
@@ -67,7 +68,7 @@ lOfcCT_RegroupTable:
 				}
 				m.Entry = append(m.Entry, tmp)
 			default:
-				log.Printf("skipping unsupported element on OfcCT_RegroupTable %v", el.Name)
+				gooxml.Log("skipping unsupported element on OfcCT_RegroupTable %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_VideoFile struct {
@@ -75,7 +76,7 @@ lCT_VideoFile:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_VideoFile %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_VideoFile %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

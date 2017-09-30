@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_StyleMatrix struct {
@@ -91,7 +92,7 @@ lCT_StyleMatrix:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_StyleMatrix %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_StyleMatrix %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,8 +11,9 @@ package vml
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type OfcDiagram struct {
@@ -110,7 +111,7 @@ lOfcDiagram:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on OfcDiagram %v", el.Name)
+				gooxml.Log("skipping unsupported element on OfcDiagram %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,7 +11,8 @@ package spreadsheetDrawing
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_ObjectChoicesChoice struct {
@@ -98,7 +99,7 @@ lEG_ObjectChoicesChoice:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_ObjectChoicesChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_ObjectChoicesChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Ruby struct {
@@ -70,7 +71,7 @@ lCT_Ruby:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Ruby %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Ruby %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,7 +11,8 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Authors struct {
@@ -54,7 +55,7 @@ lCT_Authors:
 				}
 				m.Author = append(m.Author, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Authors %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Authors %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

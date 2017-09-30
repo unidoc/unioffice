@@ -11,7 +11,8 @@ package vml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type OfcCT_ShapeLayout struct {
@@ -83,7 +84,7 @@ lOfcCT_ShapeLayout:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on OfcCT_ShapeLayout %v", el.Name)
+				gooxml.Log("skipping unsupported element on OfcCT_ShapeLayout %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,7 +12,8 @@ package math
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_D struct {
@@ -62,7 +63,7 @@ lCT_D:
 				}
 				m.E = append(m.E, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_D %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_D %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

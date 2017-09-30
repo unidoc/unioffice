@@ -11,7 +11,6 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
 
 	"baliance.com/gooxml"
 )
@@ -62,7 +61,7 @@ lCT_RElt:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_RElt %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_RElt %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

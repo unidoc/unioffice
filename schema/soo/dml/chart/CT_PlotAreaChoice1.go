@@ -12,7 +12,8 @@ package chart
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PlotAreaChoice1 struct {
@@ -91,7 +92,7 @@ lCT_PlotAreaChoice1:
 				}
 				m.SerAx = append(m.SerAx, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_PlotAreaChoice1 %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_PlotAreaChoice1 %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

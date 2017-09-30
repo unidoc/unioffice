@@ -11,8 +11,8 @@ package chart
 
 import (
 	"encoding/xml"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -60,7 +60,7 @@ lCT_LegendEntryChoice:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_LegendEntryChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_LegendEntryChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

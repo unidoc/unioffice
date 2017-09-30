@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Record struct {
@@ -139,7 +140,7 @@ lCT_Record:
 				}
 				m.X = append(m.X, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Record %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Record %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

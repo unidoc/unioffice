@@ -12,7 +12,8 @@ package vml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Formulas struct {
@@ -54,7 +55,7 @@ lCT_Formulas:
 				}
 				m.F = append(m.F, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Formulas %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Formulas %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

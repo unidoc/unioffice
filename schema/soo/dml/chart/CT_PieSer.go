@@ -12,8 +12,8 @@ package chart
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -144,7 +144,7 @@ lCT_PieSer:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_PieSer %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_PieSer %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

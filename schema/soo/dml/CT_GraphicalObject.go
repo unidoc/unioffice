@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_GraphicalObject struct {
@@ -49,7 +50,7 @@ lCT_GraphicalObject:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_GraphicalObject %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_GraphicalObject %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

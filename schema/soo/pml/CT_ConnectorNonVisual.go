@@ -11,8 +11,8 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -72,7 +72,7 @@ lCT_ConnectorNonVisual:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_ConnectorNonVisual %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ConnectorNonVisual %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

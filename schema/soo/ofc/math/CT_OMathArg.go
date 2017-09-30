@@ -12,7 +12,8 @@ package math
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_OMathArg struct {
@@ -207,7 +208,7 @@ lCT_OMathArg:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_OMathArg %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_OMathArg %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

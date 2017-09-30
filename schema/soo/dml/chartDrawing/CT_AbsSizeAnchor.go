@@ -11,8 +11,8 @@ package chartDrawing
 
 import (
 	"encoding/xml"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -89,7 +89,7 @@ lCT_AbsSizeAnchor:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_AbsSizeAnchor %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_AbsSizeAnchor %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

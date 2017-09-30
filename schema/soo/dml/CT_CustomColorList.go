@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_CustomColorList struct {
@@ -54,7 +55,7 @@ lCT_CustomColorList:
 				}
 				m.CustClr = append(m.CustClr, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_CustomColorList %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_CustomColorList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

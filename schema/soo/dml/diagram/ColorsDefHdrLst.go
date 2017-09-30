@@ -11,7 +11,8 @@ package diagram
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type ColorsDefHdrLst struct {
@@ -53,7 +54,7 @@ lColorsDefHdrLst:
 				}
 				m.ColorsDefHdr = append(m.ColorsDefHdr, tmp)
 			default:
-				log.Printf("skipping unsupported element on ColorsDefHdrLst %v", el.Name)
+				gooxml.Log("skipping unsupported element on ColorsDefHdrLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

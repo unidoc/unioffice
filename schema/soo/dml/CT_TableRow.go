@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TableRow struct {
@@ -76,7 +77,7 @@ lCT_TableRow:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TableRow %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TableRow %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,9 +11,9 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -98,7 +98,7 @@ lSld:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on Sld %v", el.Name)
+				gooxml.Log("skipping unsupported element on Sld %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

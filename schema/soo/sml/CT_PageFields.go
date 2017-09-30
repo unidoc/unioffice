@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PageFields struct {
@@ -70,7 +71,7 @@ lCT_PageFields:
 				}
 				m.PageField = append(m.PageField, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_PageFields %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_PageFields %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

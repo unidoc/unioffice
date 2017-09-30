@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ObjectPr struct {
@@ -208,7 +209,7 @@ lCT_ObjectPr:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_ObjectPr %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ObjectPr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

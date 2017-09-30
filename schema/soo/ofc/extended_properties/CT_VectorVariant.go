@@ -11,8 +11,8 @@ package extended_properties
 
 import (
 	"encoding/xml"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/docPropsVTypes"
 )
 
@@ -51,7 +51,7 @@ lCT_VectorVariant:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_VectorVariant %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_VectorVariant %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

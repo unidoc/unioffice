@@ -11,7 +11,8 @@ package extended_properties
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type Properties struct {
@@ -180,7 +181,7 @@ lProperties:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on Properties %v", el.Name)
+				gooxml.Log("skipping unsupported element on Properties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

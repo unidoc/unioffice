@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Macrosheet struct {
@@ -343,7 +344,7 @@ lCT_Macrosheet:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Macrosheet %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Macrosheet %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

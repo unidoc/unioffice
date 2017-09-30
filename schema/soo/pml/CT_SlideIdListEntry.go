@@ -12,8 +12,9 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SlideIdListEntry struct {
@@ -77,7 +78,7 @@ lCT_SlideIdListEntry:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_SlideIdListEntry %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SlideIdListEntry %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

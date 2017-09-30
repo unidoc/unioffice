@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Drawing struct {
@@ -67,7 +68,7 @@ lCT_Drawing:
 				}
 				m.Inline = append(m.Inline, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Drawing %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Drawing %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

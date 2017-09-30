@@ -11,7 +11,8 @@ package chart
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_DispUnits struct {
@@ -74,7 +75,7 @@ lCT_DispUnits:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_DispUnits %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_DispUnits %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

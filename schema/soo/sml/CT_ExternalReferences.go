@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ExternalReferences struct {
@@ -53,7 +54,7 @@ lCT_ExternalReferences:
 				}
 				m.ExternalReference = append(m.ExternalReference, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_ExternalReferences %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ExternalReferences %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

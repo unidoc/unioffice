@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type Document struct {
@@ -67,7 +68,7 @@ lDocument:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on Document %v", el.Name)
+				gooxml.Log("skipping unsupported element on Document %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

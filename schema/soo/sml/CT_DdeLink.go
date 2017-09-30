@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_DdeLink struct {
@@ -76,7 +77,7 @@ lCT_DdeLink:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_DdeLink %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_DdeLink %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

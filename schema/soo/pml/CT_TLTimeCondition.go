@@ -12,7 +12,8 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TLTimeCondition struct {
@@ -101,7 +102,7 @@ lCT_TLTimeCondition:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TLTimeCondition %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TLTimeCondition %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

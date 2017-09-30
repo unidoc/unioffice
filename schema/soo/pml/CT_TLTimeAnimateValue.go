@@ -12,7 +12,8 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TLTimeAnimateValue struct {
@@ -80,7 +81,7 @@ lCT_TLTimeAnimateValue:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TLTimeAnimateValue %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TLTimeAnimateValue %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

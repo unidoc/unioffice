@@ -11,9 +11,9 @@ package diagram
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml"
 )
 
@@ -96,7 +96,7 @@ lStyleDefHdr:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on StyleDefHdr %v", el.Name)
+				gooxml.Log("skipping unsupported element on StyleDefHdr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

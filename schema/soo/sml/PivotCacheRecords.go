@@ -11,8 +11,9 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type PivotCacheRecords struct {
@@ -70,7 +71,7 @@ lPivotCacheRecords:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on PivotCacheRecords %v", el.Name)
+				gooxml.Log("skipping unsupported element on PivotCacheRecords %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,9 +12,9 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
@@ -110,7 +110,7 @@ lCT_Columns:
 				}
 				m.Col = append(m.Col, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Columns %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Columns %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,7 +11,8 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TLTimeNodeParallel struct {
@@ -50,7 +51,7 @@ lCT_TLTimeNodeParallel:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TLTimeNodeParallel %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TLTimeNodeParallel %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

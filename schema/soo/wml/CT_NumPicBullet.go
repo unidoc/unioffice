@@ -12,8 +12,9 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_NumPicBullet struct {
@@ -76,7 +77,7 @@ lCT_NumPicBullet:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_NumPicBullet %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_NumPicBullet %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

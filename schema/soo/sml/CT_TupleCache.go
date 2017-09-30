@@ -11,7 +11,8 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TupleCache struct {
@@ -95,7 +96,7 @@ lCT_TupleCache:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TupleCache %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TupleCache %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

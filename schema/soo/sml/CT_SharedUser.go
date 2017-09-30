@@ -12,10 +12,10 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 	"time"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
@@ -103,7 +103,7 @@ lCT_SharedUser:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_SharedUser %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SharedUser %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

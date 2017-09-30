@@ -12,7 +12,8 @@ package chart
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SurfaceChart struct {
@@ -95,7 +96,7 @@ lCT_SurfaceChart:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_SurfaceChart %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SurfaceChart %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

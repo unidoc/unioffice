@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_FillModeProperties struct {
@@ -58,7 +59,7 @@ lEG_FillModeProperties:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_FillModeProperties %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_FillModeProperties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

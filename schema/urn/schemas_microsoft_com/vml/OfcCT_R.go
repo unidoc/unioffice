@@ -12,7 +12,8 @@ package vml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type OfcCT_R struct {
@@ -100,7 +101,7 @@ lOfcCT_R:
 				}
 				m.Proxy = append(m.Proxy, tmp)
 			default:
-				log.Printf("skipping unsupported element on OfcCT_R %v", el.Name)
+				gooxml.Log("skipping unsupported element on OfcCT_R %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

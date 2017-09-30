@@ -12,7 +12,8 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_IndexedColors struct {
@@ -53,7 +54,7 @@ lCT_IndexedColors:
 				}
 				m.RgbColor = append(m.RgbColor, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_IndexedColors %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_IndexedColors %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

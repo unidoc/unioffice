@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_ParaRPrTrackChanges struct {
@@ -82,7 +83,7 @@ lEG_ParaRPrTrackChanges:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_ParaRPrTrackChanges %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_ParaRPrTrackChanges %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

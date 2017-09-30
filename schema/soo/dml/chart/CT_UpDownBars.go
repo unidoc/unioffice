@@ -11,7 +11,8 @@ package chart
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_UpDownBars struct {
@@ -80,7 +81,7 @@ lCT_UpDownBars:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_UpDownBars %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_UpDownBars %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

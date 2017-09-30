@@ -12,9 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
@@ -217,7 +217,7 @@ lCT_RevisionHeaders:
 				}
 				m.Header = append(m.Header, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_RevisionHeaders %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_RevisionHeaders %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

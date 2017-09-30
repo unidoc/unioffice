@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type WebSettings struct {
@@ -117,7 +118,7 @@ lWebSettings:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on WebSettings %v", el.Name)
+				gooxml.Log("skipping unsupported element on WebSettings %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

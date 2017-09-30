@@ -12,8 +12,8 @@ package terms
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/purl.org/dc/elements"
 )
 
@@ -54,7 +54,7 @@ lElementsAndRefinementsGroupChoice:
 				}
 				m.Any = append(m.Any, tmp)
 			default:
-				log.Printf("skipping unsupported element on ElementsAndRefinementsGroupChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on ElementsAndRefinementsGroupChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_FillOverlayEffect struct {
@@ -114,7 +115,7 @@ lCT_FillOverlayEffect:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_FillOverlayEffect %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_FillOverlayEffect %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

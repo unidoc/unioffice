@@ -11,7 +11,8 @@ package dml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_TextAutofit struct {
@@ -68,7 +69,7 @@ lEG_TextAutofit:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_TextAutofit %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_TextAutofit %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

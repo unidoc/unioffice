@@ -12,9 +12,9 @@ package vml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
@@ -238,7 +238,7 @@ lOfcCT_ShapeDefaults:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on OfcCT_ShapeDefaults %v", el.Name)
+				gooxml.Log("skipping unsupported element on OfcCT_ShapeDefaults %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

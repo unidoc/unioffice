@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_DocRsids struct {
@@ -66,7 +67,7 @@ lCT_DocRsids:
 				}
 				m.Rsid = append(m.Rsid, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_DocRsids %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_DocRsids %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

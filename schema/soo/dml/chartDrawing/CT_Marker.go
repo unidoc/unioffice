@@ -12,7 +12,8 @@ package chartDrawing
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Marker struct {
@@ -59,7 +60,7 @@ lCT_Marker:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Marker %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Marker %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_RunInnerContent struct {
@@ -401,7 +402,7 @@ lEG_RunInnerContent:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_RunInnerContent %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_RunInnerContent %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

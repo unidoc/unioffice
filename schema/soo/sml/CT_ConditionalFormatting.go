@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ConditionalFormatting struct {
@@ -92,7 +93,7 @@ lCT_ConditionalFormatting:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_ConditionalFormatting %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ConditionalFormatting %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

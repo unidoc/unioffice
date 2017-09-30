@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_QueryTableDeletedFields struct {
@@ -70,7 +71,7 @@ lCT_QueryTableDeletedFields:
 				}
 				m.DeletedField = append(m.DeletedField, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_QueryTableDeletedFields %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_QueryTableDeletedFields %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

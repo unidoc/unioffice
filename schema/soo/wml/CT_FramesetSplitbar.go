@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_FramesetSplitbar struct {
@@ -84,7 +85,7 @@ lCT_FramesetSplitbar:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_FramesetSplitbar %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_FramesetSplitbar %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,7 +11,8 @@ package picture
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type Pic struct {
@@ -57,7 +58,7 @@ lPic:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on Pic %v", el.Name)
+				gooxml.Log("skipping unsupported element on Pic %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

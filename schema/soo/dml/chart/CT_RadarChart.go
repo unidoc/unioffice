@@ -12,7 +12,8 @@ package chart
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_RadarChart struct {
@@ -104,7 +105,7 @@ lCT_RadarChart:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_RadarChart %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_RadarChart %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_QuickTimeFile struct {
@@ -63,7 +64,7 @@ lCT_QuickTimeFile:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_QuickTimeFile %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_QuickTimeFile %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

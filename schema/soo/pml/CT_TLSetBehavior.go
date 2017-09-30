@@ -11,7 +11,8 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TLSetBehavior struct {
@@ -61,7 +62,7 @@ lCT_TLSetBehavior:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TLSetBehavior %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TLSetBehavior %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

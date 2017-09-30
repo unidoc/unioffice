@@ -12,7 +12,8 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_GuideList struct {
@@ -55,7 +56,7 @@ lCT_GuideList:
 				}
 				m.Guide = append(m.Guide, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_GuideList %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_GuideList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

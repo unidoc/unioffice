@@ -12,7 +12,8 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_EmbeddedFontList struct {
@@ -55,7 +56,7 @@ lCT_EmbeddedFontList:
 				}
 				m.EmbeddedFont = append(m.EmbeddedFont, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_EmbeddedFontList %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_EmbeddedFontList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

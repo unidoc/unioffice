@@ -12,8 +12,9 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_NonVisualDrawingProps struct {
@@ -130,7 +131,7 @@ lCT_NonVisualDrawingProps:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_NonVisualDrawingProps %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_NonVisualDrawingProps %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

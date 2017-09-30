@@ -11,7 +11,8 @@ package wml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type EG_HdrFtrReferences struct {
@@ -60,7 +61,7 @@ lEG_HdrFtrReferences:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on EG_HdrFtrReferences %v", el.Name)
+				gooxml.Log("skipping unsupported element on EG_HdrFtrReferences %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

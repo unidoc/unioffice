@@ -11,7 +11,8 @@ package sml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type Chartsheet struct {
@@ -116,7 +117,7 @@ lChartsheet:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on Chartsheet %v", el.Name)
+				gooxml.Log("skipping unsupported element on Chartsheet %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

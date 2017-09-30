@@ -12,7 +12,8 @@ package chart
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_PivotFmts struct {
@@ -54,7 +55,7 @@ lCT_PivotFmts:
 				}
 				m.PivotFmt = append(m.PivotFmt, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_PivotFmts %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_PivotFmts %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

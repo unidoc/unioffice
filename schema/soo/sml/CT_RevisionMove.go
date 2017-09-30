@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_RevisionMove struct {
@@ -170,7 +171,7 @@ lCT_RevisionMove:
 				}
 				m.Rfmt = append(m.Rfmt, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_RevisionMove %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_RevisionMove %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

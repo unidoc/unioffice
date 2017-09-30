@@ -12,8 +12,9 @@ package sml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_FieldsUsage struct {
@@ -72,7 +73,7 @@ lCT_FieldsUsage:
 				}
 				m.FieldUsage = append(m.FieldUsage, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_FieldsUsage %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_FieldsUsage %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

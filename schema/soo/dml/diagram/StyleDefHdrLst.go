@@ -11,7 +11,8 @@ package diagram
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type StyleDefHdrLst struct {
@@ -53,7 +54,7 @@ lStyleDefHdrLst:
 				}
 				m.StyleDefHdr = append(m.StyleDefHdr, tmp)
 			default:
-				log.Printf("skipping unsupported element on StyleDefHdrLst %v", el.Name)
+				gooxml.Log("skipping unsupported element on StyleDefHdrLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

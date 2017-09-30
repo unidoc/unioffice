@@ -12,8 +12,9 @@ package pml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TLMediaNodeAudio struct {
@@ -67,7 +68,7 @@ lCT_TLMediaNodeAudio:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_TLMediaNodeAudio %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TLMediaNodeAudio %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

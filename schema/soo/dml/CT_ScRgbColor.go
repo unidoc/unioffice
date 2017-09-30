@@ -12,7 +12,8 @@ package dml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_ScRgbColor struct {
@@ -275,7 +276,7 @@ lCT_ScRgbColor:
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
 			default:
-				log.Printf("skipping unsupported element on CT_ScRgbColor %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_ScRgbColor %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

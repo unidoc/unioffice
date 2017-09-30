@@ -11,7 +11,8 @@ package pml
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_TLBehaviorAttributeNameList struct {
@@ -52,7 +53,7 @@ lCT_TLBehaviorAttributeNameList:
 				}
 				m.AttrName = append(m.AttrName, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_TLBehaviorAttributeNameList %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_TLBehaviorAttributeNameList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,8 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/dml/picture"
 )
 
@@ -106,7 +106,7 @@ lWdCT_WordprocessingCanvasChoice:
 				}
 				m.GraphicFrame = append(m.GraphicFrame, tmp)
 			default:
-				log.Printf("skipping unsupported element on WdCT_WordprocessingCanvasChoice %v", el.Name)
+				gooxml.Log("skipping unsupported element on WdCT_WordprocessingCanvasChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

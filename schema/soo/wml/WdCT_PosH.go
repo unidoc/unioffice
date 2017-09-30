@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type WdCT_PosH struct {
@@ -68,7 +69,7 @@ lWdCT_PosH:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on WdCT_PosH %v", el.Name)
+				gooxml.Log("skipping unsupported element on WdCT_PosH %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -12,9 +12,9 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
 	"strconv"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
@@ -138,7 +138,7 @@ lCT_LatentStyles:
 				}
 				m.LsdException = append(m.LsdException, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_LatentStyles %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_LatentStyles %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

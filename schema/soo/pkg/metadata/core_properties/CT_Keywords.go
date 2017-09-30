@@ -12,7 +12,8 @@ package core_properties
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Keywords struct {
@@ -68,7 +69,7 @@ lCT_Keywords:
 				}
 				m.Value = append(m.Value, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_Keywords %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Keywords %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

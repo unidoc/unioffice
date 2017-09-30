@@ -11,8 +11,8 @@ package excel
 
 import (
 	"encoding/xml"
-	"log"
 
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 )
 
@@ -388,7 +388,7 @@ lClientData:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on ClientData %v", el.Name)
+				gooxml.Log("skipping unsupported element on ClientData %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

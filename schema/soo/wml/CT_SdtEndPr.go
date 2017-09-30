@@ -12,7 +12,8 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_SdtEndPr struct {
@@ -55,7 +56,7 @@ lCT_SdtEndPr:
 				}
 				m.RPr = append(m.RPr, tmp)
 			default:
-				log.Printf("skipping unsupported element on CT_SdtEndPr %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_SdtEndPr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -11,7 +11,8 @@ package math
 
 import (
 	"encoding/xml"
-	"log"
+
+	"baliance.com/gooxml"
 )
 
 type CT_Rad struct {
@@ -68,7 +69,7 @@ lCT_Rad:
 					return err
 				}
 			default:
-				log.Printf("skipping unsupported element on CT_Rad %v", el.Name)
+				gooxml.Log("skipping unsupported element on CT_Rad %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}
