@@ -9,6 +9,7 @@ import (
 	"os"
 
 	"baliance.com/gooxml/spreadsheet"
+	"baliance.com/gooxml/spreadsheet/reference"
 )
 
 func main() {
@@ -29,12 +30,12 @@ func main() {
 		}
 		cw := csv.NewWriter(f)
 		sc, _, ec, _ := sheet.ExtentsIndex()
-		scIdx := spreadsheet.ColumnToIndex(sc)
-		ecIdx := spreadsheet.ColumnToIndex(ec)
+		scIdx := reference.ColumnToIndex(sc)
+		ecIdx := reference.ColumnToIndex(ec)
 		for _, r := range sheet.Rows() {
 			record := []string{}
 			for c := scIdx; c <= ecIdx; c++ {
-				cell := r.Cell(spreadsheet.IndexToColumn(c))
+				cell := r.Cell(reference.IndexToColumn(c))
 				if !*raw {
 					record = append(record, cell.GetFormattedValue())
 				} else {

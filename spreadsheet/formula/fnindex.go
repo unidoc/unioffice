@@ -10,6 +10,8 @@ package formula
 import (
 	"fmt"
 	"strings"
+
+	"baliance.com/gooxml/spreadsheet/reference"
 )
 
 func init() {
@@ -124,14 +126,14 @@ func Offset(ctx Context, ev Evaluator, args []Result) Result {
 	if width.Type != ResultTypeNumber {
 		return MakeErrorResult("OFFSET requires numeric width")
 	}
-	colIdx := ColumnToIndex(col)
+	colIdx := reference.ColumnToIndex(col)
 	origRow := rowIdx + uint32(rOff.ValueNumber)
 	origCol := colIdx + uint32(cOff.ValueNumber)
 	endRow := origRow + uint32(height.ValueNumber) - 1
 	endCol := origCol + uint32(width.ValueNumber) - 1
 
-	beg := fmt.Sprintf("%s%d", IndexToColumn(origCol), origRow)
-	end := fmt.Sprintf("%s%d", IndexToColumn(endCol), endRow)
+	beg := fmt.Sprintf("%s%d", reference.IndexToColumn(origCol), origRow)
+	end := fmt.Sprintf("%s%d", reference.IndexToColumn(endCol), endRow)
 	return resultFromCellRange(ctx, ev, beg, end)
 }
 
