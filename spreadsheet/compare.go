@@ -9,6 +9,8 @@ package spreadsheet
 
 import (
 	"strconv"
+
+	"baliance.com/gooxml/spreadsheet/reference"
 )
 
 // SortOrder is a column sort order.
@@ -32,16 +34,16 @@ type Comparer struct {
 func (c Comparer) LessRows(column string, lhs, rhs Row) bool {
 	var lhsCell, rhsCell Cell
 	for _, c := range lhs.Cells() {
-		cellCol, _, _ := ParseCellReference(c.Reference())
-		if cellCol == column {
+		cref, _ := reference.ParseCellReference(c.Reference())
+		if cref.Column == column {
 			lhsCell = c
 			break
 		}
 	}
 
 	for _, c := range rhs.Cells() {
-		cellCol, _, _ := ParseCellReference(c.Reference())
-		if cellCol == column {
+		cref, _ := reference.ParseCellReference(c.Reference())
+		if cref.Column == column {
 			rhsCell = c
 			break
 		}

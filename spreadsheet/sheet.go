@@ -52,12 +52,12 @@ func (s Sheet) Row(rowNum uint32) Row {
 
 // Cell creates or returns a cell given a cell reference of the form 'A10'
 func (s Sheet) Cell(cellRef string) Cell {
-	col, row, err := ParseCellReference(cellRef)
+	cref, err := reference.ParseCellReference(cellRef)
 	if err != nil {
 		gooxml.Log("error parsing cell reference: %s", err)
 		return s.AddRow().AddCell()
 	}
-	return s.Row(row).Cell(col)
+	return s.Row(cref.RowIdx).Cell(cref.Column)
 }
 
 // AddNumberedRow adds a row with a given row number.  If you reuse a row number
@@ -183,22 +183,12 @@ func (s Sheet) validateRowCellNumbers() error {
 func (s Sheet) validateMergedCells() error {
 	mergedCells := map[uint64]struct{}{}
 	for _, mc := range s.MergedCells() {
-		from, to, err := ParseRangeReference(mc.Reference())
+		from, to, err := reference.ParseRangeReference(mc.Reference())
 		if err != nil {
 			return fmt.Errorf("sheet name '%s' has invalid merged cell reference %s", s.Name(), mc.Reference())
 		}
-		fc, frIdx, err := ParseCellReference(from)
-		if err != nil {
-			return fmt.Errorf("sheet name '%s' has invalid merged cell reference %s", s.Name(), mc.Reference())
-		}
-		tc, trIdx, err := ParseCellReference(to)
-		if err != nil {
-			return fmt.Errorf("sheet name '%s' has invalid merged cell reference %s", s.Name(), mc.Reference())
-		}
-		fcIdx := reference.ColumnToIndex(fc)
-		tcIdx := reference.ColumnToIndex(tc)
-		for r := frIdx; r <= trIdx; r++ {
-			for c := fcIdx; c <= tcIdx; c++ {
+		for r := from.RowIdx; r <= to.RowIdx; r++ {
+			for c := from.ColumnIdx; c <= to.ColumnIdx; c++ {
 				idx := uint64(r)<<32 | uint64(c)
 				if _, ok := mergedCells[idx]; ok {
 					return fmt.Errorf("sheet name '%s' has overlapping merged cell range", s.Name())
@@ -270,13 +260,13 @@ func (s Sheet) AddHyperlink(url string) common.Hyperlink {
 // invalidate the reference.
 func (s Sheet) RangeReference(n string) string {
 	sp := strings.Split(n, ":")
-	fc, fr, _ := ParseCellReference(sp[0])
-	from := fmt.Sprintf("$%s$%d", fc, fr)
+	cref, _ := reference.ParseCellReference(sp[0])
+	from := fmt.Sprintf("$%s$%d", cref.Column, cref.RowIdx)
 	if len(sp) == 1 {
 		return fmt.Sprintf(`'%s'!%s`, s.Name(), from)
 	}
-	tc, tr, _ := ParseCellReference(sp[1])
-	to := fmt.Sprintf("$%s$%d", tc, tr)
+	tref, _ := reference.ParseCellReference(sp[1])
+	to := fmt.Sprintf("$%s$%d", tref.Column, tref.RowIdx)
 	return fmt.Sprintf(`'%s'!%s:%s`, s.Name(), from, to)
 }
 
@@ -386,14 +376,13 @@ func (s Sheet) ExtentsIndex() (string, uint32, string, uint32) {
 		}
 
 		for _, c := range r.Cells() {
-			col, _, err := ParseCellReference(c.Reference())
+			cref, err := reference.ParseCellReference(c.Reference())
 			if err == nil {
 				// column index is zero based here
-				colIdx := reference.ColumnToIndex(col)
-				if colIdx < minCol {
-					minCol = colIdx
-				} else if colIdx > maxCol {
-					maxCol = colIdx
+				if cref.ColumnIdx < minCol {
+					minCol = cref.ColumnIdx
+				} else if cref.ColumnIdx > maxCol {
+					maxCol = cref.ColumnIdx
 				}
 			}
 		}
@@ -485,20 +474,10 @@ func (s Sheet) Comments() Comments {
 // breaks apart a single border into its components and applies it to cells as
 // needed to give the effect of a border applying to multiple cells.
 func (s Sheet) SetBorder(cellRange string, border Border) error {
-	from, to, err := ParseRangeReference(cellRange)
+	from, to, err := reference.ParseRangeReference(cellRange)
 	if err != nil {
 		return err
 	}
-	tlCol, tlRowIdx, err := ParseCellReference(from)
-	if err != nil {
-		return err
-	}
-	brCol, brRowIdx, err := ParseCellReference(to)
-	if err != nil {
-		return err
-	}
-	tlColIdx := reference.ColumnToIndex(tlCol)
-	brColIdx := reference.ColumnToIndex(brCol)
 
 	topLeftStyle := s.w.StyleSheet.AddCellStyle()
 	topLeftBorder := s.w.StyleSheet.AddBorder()
@@ -543,6 +522,11 @@ func (s Sheet) SetBorder(cellRange string, border Border) error {
 	bottomRightStyle.SetBorder(bottomRightBorder)
 	bottomRightBorder.x.Bottom = border.x.Bottom
 	bottomRightBorder.x.Right = border.x.Right
+
+	tlRowIdx := from.RowIdx
+	tlColIdx := from.ColumnIdx
+	brRowIdx := to.RowIdx
+	brColIdx := to.ColumnIdx
 
 	for row := tlRowIdx; row <= brRowIdx; row++ {
 		for col := tlColIdx; col <= brColIdx; col++ {
@@ -642,16 +626,19 @@ func (s *Sheet) RecalculateFormulas() {
 // setArray expands an array into cached values starting at the origin which
 // should be a cell reference of the type "A1". This is used when evaluating
 // array type formulas.
-func (s *Sheet) setArray(origin string, arr formula.Result) {
-	colStr, rowIdx, _ := ParseCellReference(origin)
-	colIdx := reference.ColumnToIndex(colStr)
+func (s *Sheet) setArray(origin string, arr formula.Result) error {
+	cref, err := reference.ParseCellReference(origin)
+	if err != nil {
+		return err
+	}
 	for ir, row := range arr.ValueArray {
-		sr := s.Row(rowIdx + uint32(ir))
+		sr := s.Row(cref.RowIdx + uint32(ir))
 		for ic, val := range row {
-			cell := sr.Cell(reference.IndexToColumn(colIdx + uint32(ic)))
+			cell := sr.Cell(reference.IndexToColumn(cref.ColumnIdx + uint32(ic)))
 			cell.SetCachedFormulaResult(val.String())
 		}
 	}
+	return nil
 }
 
 // SheetViews returns the sheet views defined.  This is where splits and frozen
