@@ -10,6 +10,7 @@ package spreadsheet
 import (
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/schema/soo/sml"
+	"baliance.com/gooxml/spreadsheet/reference"
 	"baliance.com/gooxml/vmldrawing"
 )
 
@@ -80,6 +81,6 @@ func (c Comments) AddCommentWithStyle(cellRef string, author string, comment str
 	run.SetText("\r\n" + comment + "\r\n")
 
 	col, rowIdx, _ := ParseCellReference(cellRef)
-	colIdx := ColumnToIndex(col)
+	colIdx := reference.ColumnToIndex(col)
 	c.w.vmlDrawings[0].Shape = append(c.w.vmlDrawings[0].Shape, vmldrawing.NewCommentShape(int64(colIdx), int64(rowIdx-1)))
 }

@@ -13,6 +13,7 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/soo/sml"
+	"baliance.com/gooxml/spreadsheet/reference"
 )
 
 // Row is a row within a spreadsheet.
@@ -64,10 +65,10 @@ func (r Row) AddCell() Cell {
 	numCells := uint32(len(r.x.C))
 	var nextCellID *string
 	if numCells > 0 {
-		prevCellName := gooxml.Stringf("%s%d", IndexToColumn(numCells-1), r.RowNumber())
+		prevCellName := gooxml.Stringf("%s%d", reference.IndexToColumn(numCells-1), r.RowNumber())
 		// previous cell has an expected name
 		if r.x.C[numCells-1].RAttr != nil && *r.x.C[numCells-1].RAttr == *prevCellName {
-			nextCellID = gooxml.Stringf("%s%d", IndexToColumn(numCells), r.RowNumber())
+			nextCellID = gooxml.Stringf("%s%d", reference.IndexToColumn(numCells), r.RowNumber())
 		}
 	}
 
@@ -80,12 +81,12 @@ func (r Row) AddCell() Cell {
 		for _, c := range r.x.C {
 			if c.RAttr != nil {
 				col, _, _ := ParseCellReference(*c.RAttr)
-				if col := ColumnToIndex(col); col >= nextIdx {
+				if col := reference.ColumnToIndex(col); col >= nextIdx {
 					nextIdx = col + 1
 				}
 			}
 		}
-		nextCellID = gooxml.Stringf("%s%d", IndexToColumn(nextIdx), r.RowNumber())
+		nextCellID = gooxml.Stringf("%s%d", reference.IndexToColumn(nextIdx), r.RowNumber())
 	}
 	c.RAttr = nextCellID
 	return Cell{r.w, r.s, r.x, c}

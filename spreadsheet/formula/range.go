@@ -11,6 +11,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"baliance.com/gooxml/spreadsheet/reference"
 )
 
 // Range is a range expression that when evaluated returns a list of Results.
@@ -67,33 +69,6 @@ lfor:
 	return col, row, err
 }
 
-// ColumnToIndex maps a column to a zero based index (e.g. A = 0, B = 1, AA = 26)
-func ColumnToIndex(col string) uint32 {
-	col = strings.ToUpper(col)
-	res := uint32(0)
-	for _, c := range col {
-		res *= 26
-		res += uint32(c - 'A' + 1)
-	}
-	return res - 1
-}
-
-// IndexToColumn maps a column number to a coumn name (e.g. 0 = A, 1 = B, 26 = AA)
-func IndexToColumn(col uint32) string {
-	col++
-	res := []byte{}
-	for col > 26 {
-		res = append(res, byte('A'+(col-1)%26))
-		col /= 26
-	}
-	res = append(res, byte('A'+(col-1)%26))
-	// reverse it
-	for i := 0; i < len(res)/2; i++ {
-		res[i], res[len(res)-i-1] = res[len(res)-i-1], res[i]
-	}
-	return string(res)
-}
-
 func resultFromCellRange(ctx Context, ev Evaluator, from, to string) Result {
 	fc, fr, fe := ParseCellReference(from)
 	tc, tr, te := ParseCellReference(to)
@@ -103,13 +78,13 @@ func resultFromCellRange(ctx Context, ev Evaluator, from, to string) Result {
 	if te != nil {
 		return MakeErrorResult("unable to parse range " + to)
 	}
-	bc := ColumnToIndex(fc)
-	ec := ColumnToIndex(tc)
+	bc := reference.ColumnToIndex(fc)
+	ec := reference.ColumnToIndex(tc)
 	arr := [][]Result{}
 	for r := fr; r <= tr; r++ {
 		args := []Result{}
 		for c := bc; c <= ec; c++ {
-			res := ctx.Cell(fmt.Sprintf("%s%d", IndexToColumn(c), r), ev)
+			res := ctx.Cell(fmt.Sprintf("%s%d", reference.IndexToColumn(c), r), ev)
 			args = append(args, res)
 		}
 		arr = append(arr, args)

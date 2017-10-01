@@ -19,6 +19,7 @@ import (
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/schema/soo/sml"
 	"baliance.com/gooxml/spreadsheet/format"
+	"baliance.com/gooxml/spreadsheet/reference"
 )
 
 const iso8601Format = "2006-01-02T15:04:05Z07:00"
@@ -107,7 +108,7 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 	if err != nil {
 		return err
 	}
-	colIdx := ColumnToIndex(col)
+	colIdx := reference.ColumnToIndex(col)
 
 	sid := uint32(0)
 	for _, r := range c.s.SheetData.Row {
@@ -118,8 +119,7 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 		}
 	}
 
-	ref := fmt.Sprintf("%s%d:%s%d", col, rowIdx, IndexToColumn(colIdx+cols), rowIdx+rows)
-	fmt.Println("REF IS", ref)
+	ref := fmt.Sprintf("%s%d:%s%d", col, rowIdx, reference.IndexToColumn(colIdx+cols), rowIdx+rows)
 	c.x.F.RefAttr = gooxml.String(ref)
 	c.x.F.SiAttr = gooxml.Uint32(sid)
 	sheet := Sheet{c.w, nil, c.s}
@@ -128,7 +128,7 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 			if row == rowIdx && col == colIdx {
 				continue
 			}
-			ref := fmt.Sprintf("%s%d", IndexToColumn(col), row)
+			ref := fmt.Sprintf("%s%d", reference.IndexToColumn(col), row)
 			sheet.Cell(ref).Clear()
 			sheet.Cell(ref).X().F = sml.NewCT_CellFormula()
 			sheet.Cell(ref).X().F.TAttr = sml.ST_CellFormulaTypeShared

@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"baliance.com/gooxml/spreadsheet/formula"
+	"baliance.com/gooxml/spreadsheet/reference"
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
@@ -194,8 +195,8 @@ func (s Sheet) validateMergedCells() error {
 		if err != nil {
 			return fmt.Errorf("sheet name '%s' has invalid merged cell reference %s", s.Name(), mc.Reference())
 		}
-		fcIdx := ColumnToIndex(fc)
-		tcIdx := ColumnToIndex(tc)
+		fcIdx := reference.ColumnToIndex(fc)
+		tcIdx := reference.ColumnToIndex(tc)
 		for r := frIdx; r <= trIdx; r++ {
 			for c := fcIdx; c <= tcIdx; c++ {
 				idx := uint64(r)<<32 | uint64(c)
@@ -388,7 +389,7 @@ func (s Sheet) ExtentsIndex() (string, uint32, string, uint32) {
 			col, _, err := ParseCellReference(c.Reference())
 			if err == nil {
 				// column index is zero based here
-				colIdx := ColumnToIndex(col)
+				colIdx := reference.ColumnToIndex(col)
 				if colIdx < minCol {
 					minCol = colIdx
 				} else if colIdx > maxCol {
@@ -397,7 +398,7 @@ func (s Sheet) ExtentsIndex() (string, uint32, string, uint32) {
 			}
 		}
 	}
-	return IndexToColumn(minCol), minRow, IndexToColumn(maxCol), maxRow
+	return reference.IndexToColumn(minCol), minRow, reference.IndexToColumn(maxCol), maxRow
 }
 
 // Extents returns the sheet extents in the form "A1:B15". This requires
@@ -496,8 +497,8 @@ func (s Sheet) SetBorder(cellRange string, border Border) error {
 	if err != nil {
 		return err
 	}
-	tlColIdx := ColumnToIndex(tlCol)
-	brColIdx := ColumnToIndex(brCol)
+	tlColIdx := reference.ColumnToIndex(tlCol)
+	brColIdx := reference.ColumnToIndex(brCol)
 
 	topLeftStyle := s.w.StyleSheet.AddCellStyle()
 	topLeftBorder := s.w.StyleSheet.AddBorder()
@@ -545,7 +546,7 @@ func (s Sheet) SetBorder(cellRange string, border Border) error {
 
 	for row := tlRowIdx; row <= brRowIdx; row++ {
 		for col := tlColIdx; col <= brColIdx; col++ {
-			ref := fmt.Sprintf("%s%d", IndexToColumn(col), row)
+			ref := fmt.Sprintf("%s%d", reference.IndexToColumn(col), row)
 			switch {
 			// top corners
 			case row == tlRowIdx && col == tlColIdx:
@@ -643,11 +644,11 @@ func (s *Sheet) RecalculateFormulas() {
 // array type formulas.
 func (s *Sheet) setArray(origin string, arr formula.Result) {
 	colStr, rowIdx, _ := ParseCellReference(origin)
-	colIdx := ColumnToIndex(colStr)
+	colIdx := reference.ColumnToIndex(colStr)
 	for ir, row := range arr.ValueArray {
 		sr := s.Row(rowIdx + uint32(ir))
 		for ic, val := range row {
-			cell := sr.Cell(IndexToColumn(colIdx + uint32(ic)))
+			cell := sr.Cell(reference.IndexToColumn(colIdx + uint32(ic)))
 			cell.SetCachedFormulaResult(val.String())
 		}
 	}
