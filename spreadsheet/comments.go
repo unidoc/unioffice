@@ -65,7 +65,7 @@ func (c Comments) AddComment(cellRef string, author string) RichText {
 }
 
 // AddCommentWithStyle adds a new comment styled in a default way
-func (c Comments) AddCommentWithStyle(cellRef string, author string, comment string) {
+func (c Comments) AddCommentWithStyle(cellRef string, author string, comment string) error {
 	rt := c.AddComment(cellRef, author)
 	run := rt.AddRun()
 	run.SetBold(true)
@@ -80,7 +80,10 @@ func (c Comments) AddCommentWithStyle(cellRef string, author string, comment str
 	run.SetColor(color.Black)
 	run.SetText("\r\n" + comment + "\r\n")
 
-	col, rowIdx, _ := ParseCellReference(cellRef)
-	colIdx := reference.ColumnToIndex(col)
-	c.w.vmlDrawings[0].Shape = append(c.w.vmlDrawings[0].Shape, vmldrawing.NewCommentShape(int64(colIdx), int64(rowIdx-1)))
+	cref, err := reference.ParseCellReference(cellRef)
+	if err != nil {
+		return err
+	}
+	c.w.vmlDrawings[0].Shape = append(c.w.vmlDrawings[0].Shape, vmldrawing.NewCommentShape(int64(cref.ColumnIdx), int64(cref.RowIdx-1)))
+	return nil
 }

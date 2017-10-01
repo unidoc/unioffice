@@ -80,9 +80,9 @@ func (r Row) AddCell() Cell {
 		nextIdx := uint32(0)
 		for _, c := range r.x.C {
 			if c.RAttr != nil {
-				col, _, _ := ParseCellReference(*c.RAttr)
-				if col := reference.ColumnToIndex(col); col >= nextIdx {
-					nextIdx = col + 1
+				cref, _ := reference.ParseCellReference(*c.RAttr)
+				if cref.ColumnIdx >= nextIdx {
+					nextIdx = cref.ColumnIdx + 1
 				}
 			}
 		}
@@ -131,9 +131,9 @@ func (r Row) Cell(col string) Cell {
 func (r Row) renumberAs(rowNumber uint32) {
 	r.x.RAttr = gooxml.Uint32(rowNumber)
 	for _, c := range r.Cells() {
-		col, _, err := ParseCellReference(c.Reference())
+		cref, err := reference.ParseCellReference(c.Reference())
 		if err == nil {
-			newRef := fmt.Sprintf("%s%d", col, rowNumber)
+			newRef := fmt.Sprintf("%s%d", cref.Column, rowNumber)
 			c.x.RAttr = gooxml.String(newRef)
 		}
 	}

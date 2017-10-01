@@ -104,11 +104,10 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 	c.x.F = sml.NewCT_CellFormula()
 	c.x.F.TAttr = sml.ST_CellFormulaTypeShared
 	c.x.F.Content = formula
-	col, rowIdx, err := ParseCellReference(c.Reference())
+	cref, err := reference.ParseCellReference(c.Reference())
 	if err != nil {
 		return err
 	}
-	colIdx := reference.ColumnToIndex(col)
 
 	sid := uint32(0)
 	for _, r := range c.s.SheetData.Row {
@@ -119,13 +118,13 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 		}
 	}
 
-	ref := fmt.Sprintf("%s%d:%s%d", col, rowIdx, reference.IndexToColumn(colIdx+cols), rowIdx+rows)
+	ref := fmt.Sprintf("%s%d:%s%d", cref.Column, cref.RowIdx, reference.IndexToColumn(cref.ColumnIdx+cols), cref.RowIdx+rows)
 	c.x.F.RefAttr = gooxml.String(ref)
 	c.x.F.SiAttr = gooxml.Uint32(sid)
 	sheet := Sheet{c.w, nil, c.s}
-	for row := rowIdx; row <= rowIdx+rows; row++ {
-		for col := colIdx; col <= colIdx+cols; col++ {
-			if row == rowIdx && col == colIdx {
+	for row := cref.RowIdx; row <= cref.RowIdx+rows; row++ {
+		for col := cref.ColumnIdx; col <= cref.ColumnIdx+cols; col++ {
+			if row == cref.RowIdx && col == cref.ColumnIdx {
 				continue
 			}
 			ref := fmt.Sprintf("%s%d", reference.IndexToColumn(col), row)
