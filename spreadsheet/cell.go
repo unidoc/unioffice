@@ -9,6 +9,7 @@ package spreadsheet
 
 import (
 	"errors"
+	"fmt"
 	"math"
 	"math/big"
 	"strconv"
@@ -91,6 +92,50 @@ func (c Cell) SetFormulaArray(s string) {
 	c.x.F = sml.NewCT_CellFormula()
 	c.x.F.TAttr = sml.ST_CellFormulaTypeArray
 	c.x.F.Content = s
+}
+
+// SetFormulaShared sets the cell type to formula shared, and the raw formula to
+// the given string. The range is the range of cells that the formula applies
+// to, and is used to conserve disk space.
+func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
+	c.clearValue()
+	c.x.TAttr = sml.ST_CellTypeStr
+	c.x.F = sml.NewCT_CellFormula()
+	c.x.F.TAttr = sml.ST_CellFormulaTypeShared
+	c.x.F.Content = formula
+	col, rowIdx, err := ParseCellReference(c.Reference())
+	if err != nil {
+		return err
+	}
+	colIdx := ColumnToIndex(col)
+
+	sid := uint32(0)
+	for _, r := range c.s.SheetData.Row {
+		for _, c := range r.C {
+			if c.F != nil && c.F.SiAttr != nil && *c.F.SiAttr >= sid {
+				sid = *c.F.SiAttr
+			}
+		}
+	}
+
+	ref := fmt.Sprintf("%s%d:%s%d", col, rowIdx, IndexToColumn(colIdx+cols), rowIdx+rows)
+	fmt.Println("REF IS", ref)
+	c.x.F.RefAttr = gooxml.String(ref)
+	c.x.F.SiAttr = gooxml.Uint32(sid)
+	sheet := Sheet{c.w, nil, c.s}
+	for row := rowIdx; row <= rowIdx+rows; row++ {
+		for col := colIdx; col <= colIdx+cols; col++ {
+			if row == rowIdx && col == colIdx {
+				continue
+			}
+			ref := fmt.Sprintf("%s%d", IndexToColumn(col), row)
+			sheet.Cell(ref).Clear()
+			sheet.Cell(ref).X().F = sml.NewCT_CellFormula()
+			sheet.Cell(ref).X().F.TAttr = sml.ST_CellFormulaTypeShared
+			sheet.Cell(ref).X().F.SiAttr = gooxml.Uint32(sid)
+		}
+	}
+	return nil
 }
 
 // SetString sets the cell type to string, and the value to the given string,

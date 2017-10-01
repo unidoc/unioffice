@@ -628,6 +628,9 @@ func (s *Sheet) RecalculateFormulas() {
 					// array we need to expand the array out into cells
 					if c.X().F.TAttr == sml.ST_CellFormulaTypeArray && res.Type == formula.ResultTypeArray {
 						s.setArray(c.Reference(), res)
+					} else if c.X().F.TAttr == sml.ST_CellFormulaTypeShared {
+						// shared formula
+						//						s.setShared(c.X().F.RefAttr)
 					}
 				}
 			}
