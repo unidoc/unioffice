@@ -8,6 +8,7 @@
 package common
 
 import (
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/extended_properties"
 )
 
@@ -20,8 +21,9 @@ type AppProperties struct {
 // NewAppProperties constructs a new AppProperties.
 func NewAppProperties() AppProperties {
 	p := AppProperties{x: extended_properties.NewProperties()}
+	p.SetCompany("Baliance LLC")
 	p.SetApplication("baliance.com/gooxml")
-	p.SetApplicationVersion("0.1")
+	p.SetApplicationVersion(gooxml.ReleaseVersion)
 	return p
 }
 
