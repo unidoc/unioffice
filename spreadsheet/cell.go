@@ -117,6 +117,7 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 			}
 		}
 	}
+	sid++
 
 	ref := fmt.Sprintf("%s%d:%s%d", cref.Column, cref.RowIdx, reference.IndexToColumn(cref.ColumnIdx+cols), cref.RowIdx+rows)
 	c.x.F.RefAttr = gooxml.String(ref)

@@ -19,4 +19,9 @@ type Context interface {
 
 	// NamedRange returns a named range.
 	NamedRange(name string) Reference
+
+	// SetOffset is used so that the Context can evaluate cell references
+	// differently when they are not absolute (e.g. not like '$A$5').  See the
+	// shared formula support in Cell for usage.
+	SetOffset(col, row uint32)
 }

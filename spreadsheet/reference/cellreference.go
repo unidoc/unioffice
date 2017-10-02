@@ -24,6 +24,19 @@ type CellReference struct {
 	AbsoluteRow    bool
 }
 
+func (c CellReference) String() string {
+	buf := make([]byte, 0, 4)
+	if c.AbsoluteColumn {
+		buf = append(buf, '$')
+	}
+	buf = append(buf, c.Column...)
+	if c.AbsoluteRow {
+		buf = append(buf, '$')
+	}
+	buf = strconv.AppendInt(buf, int64(c.RowIdx), 10)
+	return string(buf)
+}
+
 // ParseCellReference parses a cell reference of the form 'A10' and splits it
 // into column/row segments.
 func ParseCellReference(s string) (CellReference, error) {
