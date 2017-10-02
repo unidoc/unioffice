@@ -8,6 +8,8 @@
 package spreadsheet
 
 import (
+	"runtime"
+
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/schema/soo/sml"
@@ -17,6 +19,8 @@ import (
 func New() *Workbook {
 	wb := &Workbook{}
 	wb.x = sml.NewWorkbook()
+
+	runtime.SetFinalizer(wb, workbookFinalizer)
 
 	wb.AppProperties = common.NewAppProperties()
 	wb.CoreProperties = common.NewCoreProperties()
