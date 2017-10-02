@@ -58,6 +58,7 @@ type CT_Workbook struct {
 	WebPublishObjects *CT_WebPublishObjects
 	// Future Feature Data Storage Area
 	ExtLst *CT_ExtensionList
+	Extra  []gooxml.Any
 }
 
 func NewCT_Workbook() *CT_Workbook {
@@ -150,6 +151,11 @@ func (m *CT_Workbook) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
+	}
+	for _, any := range m.Extra {
+		if err := any.MarshalXML(e, xml.StartElement{}); err != nil {
+			return err
+		}
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -268,10 +274,11 @@ lCT_Workbook:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_Workbook %v", el.Name)
-				if err := d.Skip(); err != nil {
+				any := &gooxml.XSDAny{}
+				if err := d.DecodeElement(any, &el); err != nil {
 					return err
 				}
+				m.Extra = append(m.Extra, any)
 			}
 		case xml.EndElement:
 			break lCT_Workbook
