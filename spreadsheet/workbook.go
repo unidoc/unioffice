@@ -15,6 +15,7 @@ import (
 	"image/jpeg"
 	"io"
 	"os"
+	"strings"
 	"time"
 
 	"baliance.com/gooxml"
@@ -28,6 +29,9 @@ import (
 	"baliance.com/gooxml/schema/soo/pkg/relationships"
 	"baliance.com/gooxml/schema/soo/sml"
 )
+
+// ErrorNotFound is returned when something is not found
+var ErrorNotFound = errors.New("not found")
 
 // Workbook is the top level container item for a set of spreadsheets.
 type Workbook struct {
@@ -552,11 +556,26 @@ func (wb *Workbook) Protection() WorkbookProtection {
 	return WorkbookProtection{wb.x.WorkbookProtection}
 }
 
-func (wb *Workbook) GetSheet(name string) Sheet {
+// GetSheet returns a sheet by name, or an error if a sheet by the given name
+// was not found.
+func (wb *Workbook) GetSheet(name string) (Sheet, error) {
 	for _, s := range wb.Sheets() {
 		if s.Name() == name {
-			return s
+			return s, nil
 		}
 	}
-	return Sheet{}
+	return Sheet{}, ErrorNotFound
+}
+
+func workbookFinalizer(wb *Workbook) {
+	wb.Close()
+}
+
+// Close closes the workbook, removing any temporary files that might have been
+// created when opening a document.
+func (wb *Workbook) Close() error {
+	if wb.TmpPath != "" && strings.HasPrefix(wb.TmpPath, os.TempDir()) {
+		return os.RemoveAll(wb.TmpPath)
+	}
+	return nil
 }
