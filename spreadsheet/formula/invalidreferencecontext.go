@@ -26,3 +26,7 @@ func (i *ivr) NamedRange(ref string) Reference {
 func (i *ivr) Sheet(name string) Context {
 	return i
 }
+
+func (i *ivr) SetOffset(col, row uint32) {
+
+}

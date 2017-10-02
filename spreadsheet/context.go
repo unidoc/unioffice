@@ -8,20 +8,39 @@
 package spreadsheet
 
 import (
+	"fmt"
+
 	"baliance.com/gooxml/spreadsheet/formula"
+	"baliance.com/gooxml/spreadsheet/reference"
 )
 
 func newEvalContext(s *Sheet) *evalContext {
-	return &evalContext{s, make(map[string]struct{})}
+	return &evalContext{s: s, evaluating: make(map[string]struct{})}
 }
 
 type evalContext struct {
-	s          *Sheet
-	evaluating map[string]struct{}
+	s              *Sheet
+	colOff, rowOff uint32
+	evaluating     map[string]struct{}
 }
 
 func (e *evalContext) Cell(ref string, ev formula.Evaluator) formula.Result {
-	c := e.s.Cell(ref)
+	cr, err := reference.ParseCellReference(ref)
+	if err != nil {
+		return formula.MakeErrorResult(fmt.Sprintf("error parsing %s: %s", ref, err))
+	}
+
+	// offsets are used in shared formulas so that references like 'A1', '$A1',
+	// 'A$1', '$A$1' will behave differently according to the offset
+	if e.colOff != 0 && !cr.AbsoluteColumn {
+		cr.ColumnIdx += e.colOff
+		cr.Column = reference.IndexToColumn(cr.ColumnIdx)
+	}
+	if e.rowOff != 0 && !cr.AbsoluteRow {
+		cr.RowIdx += e.rowOff
+	}
+
+	c := e.s.Cell(cr.String())
 
 	// if we have a formula, evaluate it
 	if c.HasFormula() {
@@ -70,4 +89,9 @@ func (e *evalContext) NamedRange(ref string) formula.Reference {
 		}
 	}
 	return formula.ReferenceInvalid
+}
+
+func (e *evalContext) SetOffset(col, row uint32) {
+	e.colOff = col
+	e.rowOff = row
 }

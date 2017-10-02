@@ -24,9 +24,9 @@ func main() {
 	sheet.Cell("C3").SetNumber(11)
 	sheet.Cell("D3").SetNumber(12)
 
-	sheet.Cell("A5").SetFormulaShared("=A1+1", 2, 3)
-	sheet.Cell("A9").SetFormulaShared("=$A1+1", 2, 3)
-	sheet.Cell("A13").SetFormulaShared("=$A$1+1", 2, 3)
+	sheet.Cell("A5").SetFormulaShared("A1+1", 2, 3)
+	sheet.Cell("A9").SetFormulaShared("$A1+1", 2, 3)
+	sheet.Cell("A13").SetFormulaShared("$A$1+1", 2, 3)
 
 	ss.RecalculateFormulas()
 	if err := ss.Validate(); err != nil {

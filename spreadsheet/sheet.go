@@ -9,6 +9,7 @@ package spreadsheet
 
 import (
 	"fmt"
+	"log"
 	"sort"
 	"strings"
 
@@ -597,6 +598,15 @@ func (s *Sheet) RecalculateFormulas() {
 		for _, c := range r.Cells() {
 			if c.X().F != nil {
 				formStr := c.X().F.Content
+
+				// if the formula is shared, but the content is empty, then it's
+				// a cell that a shared formula is applied to so we can ignreo
+				// for now.  The value will be calculated later and applied with
+				// setShared
+				if c.X().F.TAttr == sml.ST_CellFormulaTypeShared && len(formStr) == 0 {
+					continue
+				}
+
 				res := ev.Eval(ctx, formStr).AsString()
 				if res.Type == formula.ResultTypeError {
 					gooxml.Log("error evaulating formula %s: %s", formStr, res.ErrorMessage)
@@ -613,14 +623,46 @@ func (s *Sheet) RecalculateFormulas() {
 					// array we need to expand the array out into cells
 					if c.X().F.TAttr == sml.ST_CellFormulaTypeArray && res.Type == formula.ResultTypeArray {
 						s.setArray(c.Reference(), res)
-					} else if c.X().F.TAttr == sml.ST_CellFormulaTypeShared {
-						// shared formula
-						//						s.setShared(c.X().F.RefAttr)
+					} else if c.X().F.TAttr == sml.ST_CellFormulaTypeShared && c.X().F.RefAttr != nil {
+						from, to, err := reference.ParseRangeReference(*c.X().F.RefAttr)
+						if err != nil {
+							log.Printf("error in shared formula reference: %s", err)
+							continue
+						}
+						s.setShared(c.Reference(), from, to, formStr)
 					}
 				}
 			}
 		}
 	}
+}
+
+func (s *Sheet) setShared(origin string, from, to reference.CellReference, formulaStr string) {
+	ctx := s.FormulaContext()
+	ev := formula.NewEvaluator()
+
+	for r := from.RowIdx; r <= to.RowIdx; r++ {
+		for c := from.ColumnIdx; c <= to.ColumnIdx; c++ {
+			rowOffset := r - from.RowIdx
+			colOffset := c - from.ColumnIdx
+
+			// add an offset on the contex so that cell references will be
+			// offset during formula evaluation
+			ctx.SetOffset(colOffset, rowOffset)
+			res := ev.Eval(ctx, formulaStr)
+
+			cr := fmt.Sprintf("%s%d", reference.IndexToColumn(c), r)
+			c := s.Cell(cr)
+			if res.Type == formula.ResultTypeNumber {
+				c.X().TAttr = sml.ST_CellTypeN
+			} else {
+				c.X().TAttr = sml.ST_CellTypeInlineStr
+			}
+			c.X().V = gooxml.String(res.Value())
+		}
+	}
+	_ = ev
+	_ = ctx
 }
 
 // setArray expands an array into cached values starting at the origin which
