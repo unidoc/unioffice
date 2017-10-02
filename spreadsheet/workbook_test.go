@@ -23,6 +23,7 @@ import (
 
 func TestSimpleWorkbook(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	sheet.Cell("A1").SetString("Hello World!")
 
@@ -36,6 +37,7 @@ func TestSimpleWorkbook(t *testing.T) {
 
 func TestConstructor(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	if wb == nil {
 		t.Errorf("expected a non-nil workbook")
 	}
@@ -80,6 +82,7 @@ func TestWorkbookUnmarshal(t *testing.T) {
 
 func TestSimpleSheet(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()
@@ -96,6 +99,7 @@ func TestOpen(t *testing.T) {
 	if err != nil {
 		t.Errorf("error opening workbook: %s", err)
 	}
+	defer wb.Close()
 
 	got := bytes.Buffer{}
 	if err := wb.Validate(); err != nil {
@@ -110,6 +114,7 @@ func TestOpenExcel2016(t *testing.T) {
 	if err != nil {
 		t.Fatalf("error opening workbook: %s", err)
 	}
+	defer wb.Close()
 
 	got := bytes.Buffer{}
 	if err := wb.Validate(); err != nil {
@@ -124,6 +129,7 @@ func TestSheetCount(t *testing.T) {
 	if err := wb.Validate(); err != nil {
 		t.Errorf("created an invalid spreadsheet: %s", err)
 	}
+	defer wb.Close()
 	if wb.SheetCount() != 0 {
 		t.Errorf("expected 0 sheets, got %d", wb.SheetCount())
 	}
@@ -192,6 +198,7 @@ func TestPreserveSpace(t *testing.T) {
 
 func TestAddDefinedName(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	if len(wb.DefinedNames()) != 0 {
 		t.Errorf("expeced no defined names on new wb")
 	}
@@ -211,6 +218,7 @@ func TestAddDefinedName(t *testing.T) {
 
 func ExampleWorkbook_AddDefinedName() {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	productNames := wb.AddDefinedName("ProductNames", sheet.RangeReference("A2:A6"))
 	// now 'ProductNames' can be used in formulas, charts, etc.
@@ -220,6 +228,7 @@ func ExampleWorkbook_AddDefinedName() {
 
 func TestOpenComments(t *testing.T) {
 	wb, err := spreadsheet.Open("./testdata/comments.xlsx")
+	defer wb.Close()
 	if err != nil {
 		t.Fatalf("error opening workbook: %s", err)
 	}
@@ -231,5 +240,32 @@ func TestOpenComments(t *testing.T) {
 	cmt := sheet.Comments().Comments()[0]
 	if cmt.Author() != "John Doe" {
 		t.Errorf("error reading comment author")
+	}
+}
+func TestWorkbookProtection(t *testing.T) {
+	wb := spreadsheet.New()
+	defer wb.Close()
+	if wb.X().WorkbookProtection != nil {
+		t.Errorf("expected no protection for new workbook")
+	}
+	wb.Protection()
+	if wb.X().WorkbookProtection == nil {
+		t.Errorf("expected protection")
+	}
+	wb.ClearProtection()
+	if wb.X().WorkbookProtection != nil {
+		t.Errorf("expected no protection after clear")
+	}
+}
+
+func TestSheetGetName(t *testing.T) {
+	wb := spreadsheet.New()
+	defer wb.Close()
+	s := wb.AddSheet()
+	if _, err := wb.GetSheet("foo"); err == nil {
+		t.Errorf("expected an error")
+	}
+	if _, err := wb.GetSheet(s.Name()); err != nil {
+		t.Errorf("expected no error")
 	}
 }
