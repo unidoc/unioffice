@@ -8,6 +8,7 @@
 package common_test
 
 import (
+	"strings"
 	"testing"
 
 	"baliance.com/gooxml"
@@ -29,7 +30,7 @@ func TestNewAppDefaultProperties(t *testing.T) {
 		t.Errorf("unexpected application: %s", got)
 	}
 
-	if got := ap.ApplicationVersion(); got != gooxml.ReleaseVersion {
+	if got := ap.ApplicationVersion(); got != strings.Replace(gooxml.ReleaseVersion, "v", "", -1) {
 		t.Errorf("unexpected application version: %s", got)
 	}
 	ap.X().AppVersion = nil

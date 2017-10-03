@@ -8,6 +8,8 @@
 package common
 
 import (
+	"strings"
+
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/ofc/extended_properties"
 )
@@ -23,7 +25,7 @@ func NewAppProperties() AppProperties {
 	p := AppProperties{x: extended_properties.NewProperties()}
 	p.SetCompany("Baliance LLC")
 	p.SetApplication("baliance.com/gooxml")
-	p.SetApplicationVersion(gooxml.ReleaseVersion)
+	p.SetApplicationVersion(strings.Replace(gooxml.ReleaseVersion, "v", "", -1))
 	return p
 }
 
