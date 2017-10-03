@@ -7,7 +7,10 @@
 
 package document
 
-import "baliance.com/gooxml/schema/soo/wml"
+import (
+	"baliance.com/gooxml/color"
+	"baliance.com/gooxml/schema/soo/wml"
+)
 
 // CellProperties are a table cells properties within a document.
 type CellProperties struct {
@@ -26,5 +29,27 @@ func (c CellProperties) SetColumnSpan(cols int) {
 	} else {
 		c.x.GridSpan = wml.NewCT_DecimalNumber()
 		c.x.GridSpan.ValAttr = int64(cols)
+	}
+}
+
+// SetShading controls the cell shading.
+func (c CellProperties) SetShading(shd wml.ST_Shd, foreground, fill color.Color) {
+	if shd == wml.ST_ShdUnset {
+		c.x.Shd = nil
+	} else {
+		c.x.Shd = wml.NewCT_Shd()
+		c.x.Shd.ValAttr = shd
+		c.x.Shd.ColorAttr = &wml.ST_HexColor{}
+		if foreground.IsAuto() {
+			c.x.Shd.ColorAttr.ST_HexColorAuto = wml.ST_HexColorAutoAuto
+		} else {
+			c.x.Shd.ColorAttr.ST_HexColorRGB = foreground.AsRGBString()
+		}
+		c.x.Shd.FillAttr = &wml.ST_HexColor{}
+		if fill.IsAuto() {
+			c.x.Shd.FillAttr.ST_HexColorAuto = wml.ST_HexColorAutoAuto
+		} else {
+			c.x.Shd.FillAttr.ST_HexColorRGB = fill.AsRGBString()
+		}
 	}
 }
