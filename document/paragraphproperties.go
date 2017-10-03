@@ -36,6 +36,16 @@ func (p ParagraphProperties) SetSpacing(before, after measurement.Distance) {
 	p.x.Spacing.AfterAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(after / measurement.Twips))
 }
 
+// SetAlignment controls the paragraph alignment
+func (p ParagraphProperties) SetAlignment(align wml.ST_Jc) {
+	if align == wml.ST_JcUnset {
+		p.x.Jc = nil
+	} else {
+		p.x.Jc = wml.NewCT_Jc()
+		p.x.Jc.ValAttr = align
+	}
+}
+
 // Style returns the style for a paragraph, or an empty string if it is unset.
 func (p ParagraphProperties) Style() string {
 	if p.x.PStyle != nil {
