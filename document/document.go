@@ -394,8 +394,49 @@ func (d *Document) Validate() error {
 		return errors.New("document not initialized correctly, nil base")
 	}
 
+	for _, v := range []func() error{d.validateTableCells} {
+		if err := v(); err != nil {
+			return err
+		}
+	}
 	if err := d.x.Validate(); err != nil {
 		return err
+	}
+	return nil
+}
+
+func (d *Document) validateTableCells() error {
+	for _, elt := range d.x.Body.EG_BlockLevelElts {
+		for _, c := range elt.EG_ContentBlockContent {
+			for _, t := range c.Tbl {
+				for _, rc := range t.EG_ContentRowContent {
+					for _, row := range rc.Tr {
+						hasCell := false
+						for _, ecc := range row.EG_ContentCellContent {
+							cellHasPara := false
+							for _, cell := range ecc.Tc {
+								hasCell = true
+								for _, cellElt := range cell.EG_BlockLevelElts {
+									for _, cellCont := range cellElt.EG_ContentBlockContent {
+										if len(cellCont.P) > 0 {
+											cellHasPara = true
+											break
+										}
+									}
+								}
+							}
+							if !cellHasPara {
+								return errors.New("table cell must contain a paragraph")
+							}
+						}
+						// OSX Word requires this and won't open the file otherwise
+						if !hasCell {
+							return errors.New("table row must contain a cell")
+						}
+					}
+				}
+			}
+		}
 	}
 	return nil
 }
