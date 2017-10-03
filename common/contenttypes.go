@@ -79,3 +79,16 @@ func (c ContentTypes) EnsureOverride(path, contentType string) {
 	// Didn't find a matching override for the target path, so add one
 	c.AddOverride(path, contentType)
 }
+
+// RemoveOverride removes an override given a path.
+func (c ContentTypes) RemoveOverride(path string) {
+	if !strings.HasPrefix(path, "/") {
+		path = "/" + path
+	}
+	for i, ovr := range c.x.Override {
+		if ovr.PartNameAttr == path {
+			copy(c.x.Override[i:], c.x.Override[i+1:])
+			c.x.Override = c.x.Override[0 : len(c.x.Override)-1]
+		}
+	}
+}

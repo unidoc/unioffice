@@ -35,6 +35,8 @@ const (
 	SMLStyleSheetContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"
 	TableType                = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table"
 	TableContentType         = "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"
+	ViewPropertiesType       = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/viewProps"
+	TableStylesType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableStyles"
 
 	// WML
 	HeaderType      = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header"
@@ -46,12 +48,13 @@ const (
 	EndNotesType    = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes"
 
 	// PML
-	SlideType                   = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide"
-	SlideContentType            = "application/vnd.openxmlformats-officedocument.presentationml.slide+xml"
-	SlideMasterRelationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster"
-	SlideMasterContentType      = "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
-	SlideLayoutType             = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
-	SlideLayoutContentType      = "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml"
+	SlideType                  = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide"
+	SlideContentType           = "application/vnd.openxmlformats-officedocument.presentationml.slide+xml"
+	SlideMasterType            = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideMaster"
+	SlideMasterContentType     = "application/vnd.openxmlformats-officedocument.presentationml.slideMaster+xml"
+	SlideLayoutType            = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
+	SlideLayoutContentType     = "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml"
+	PresentationPropertiesType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/presProps"
 
 	// VML
 	VMLDrawingType        = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing"

@@ -69,3 +69,28 @@ func TestSMLFilenames(t *testing.T) {
 		}
 	}
 }
+
+func TestPMLFilenames(t *testing.T) {
+	td := []struct {
+		Idx    int
+		Type   string
+		ExpAbs string
+	}{
+		{0, gooxml.CorePropertiesType, "docProps/core.xml"},
+		{0, gooxml.ExtendedPropertiesType, "docProps/app.xml"},
+		{0, gooxml.ThumbnailType, "docProps/thumbnail.jpeg"},
+		{0, gooxml.StylesType, "ppt/styles.xml"},
+
+		{0, gooxml.OfficeDocumentType, "ppt/presentation.xml"},
+		{4, gooxml.SlideType, "ppt/slides/slide4.xml"},
+		{5, gooxml.SlideLayoutType, "ppt/slideLayouts/slideLayout5.xml"},
+		{6, gooxml.SlideMasterType, "ppt/slideMasters/slideMaster6.xml"},
+		{7, gooxml.ThemeType, "ppt/theme/theme7.xml"},
+	}
+	for _, tc := range td {
+		abs := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, tc.Type, tc.Idx)
+		if abs != tc.ExpAbs {
+			t.Errorf("expected absolute filename of %s for document %s/%d, got %s", tc.ExpAbs, tc.Type, tc.Idx, abs)
+		}
+	}
+}

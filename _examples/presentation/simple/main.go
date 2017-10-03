@@ -7,7 +7,8 @@ import (
 
 func main() {
 	ppt := presentation.New()
-	ppt.AddSlide()
+	slide := ppt.AddSlide()
+	_ = slide
 
 	ppt.SaveToFile("simple.pptx")
 }
