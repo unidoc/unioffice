@@ -2,6 +2,8 @@
 package main
 
 import (
+	"log"
+
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/document"
 	"baliance.com/gooxml/measurement"
@@ -12,42 +14,93 @@ import (
 func main() {
 	doc := document.New()
 
-	table := doc.AddTable()
-	// width of the page
-	table.Properties().SetWidthPercent(100)
-	// with thick borers
-	borders := table.Properties().Borders()
-	borders.SetAll(wml.ST_BorderSingle, color.Auto, 2*measurement.Point)
+	// First Table
+	{
+		table := doc.AddTable()
+		// width of the page
+		table.Properties().SetWidthPercent(100)
+		// with thick borers
+		borders := table.Properties().Borders()
+		borders.SetAll(wml.ST_BorderSingle, color.Auto, 2*measurement.Point)
 
-	row := table.AddRow()
-	run := row.AddCell().AddParagraph().AddRun()
-	run.AddText("Name")
-	run.SetHighlight(wml.ST_HighlightColorYellow)
-	row.AddCell().AddParagraph().AddRun().AddText("John Smith")
-	row = table.AddRow()
-	row.AddCell().AddParagraph().AddRun().AddText("Street Address")
-	row.AddCell().AddParagraph().AddRun().AddText("111 Country Road")
+		row := table.AddRow()
+		run := row.AddCell().AddParagraph().AddRun()
+		run.AddText("Name")
+		run.SetHighlight(wml.ST_HighlightColorYellow)
+		row.AddCell().AddParagraph().AddRun().AddText("John Smith")
+		row = table.AddRow()
+		row.AddCell().AddParagraph().AddRun().AddText("Street Address")
+		row.AddCell().AddParagraph().AddRun().AddText("111 Country Road")
+	}
+
+	doc.AddParagraph() // break up the consecutive tables
+
+	// Second Table
+	{
+		table := doc.AddTable()
+		// 4 inches wide
+		table.Properties().SetWidth(4 * measurement.Inch)
+		borders := table.Properties().Borders()
+		// thin borders
+		borders.SetAll(wml.ST_BorderSingle, color.Auto, measurement.Zero)
+
+		row := table.AddRow()
+		cell := row.AddCell()
+		// column span
+		cell.Properties().SetColumnSpan(2)
+		run := cell.AddParagraph().AddRun()
+		run.AddText("Cells can span multiple columns")
+
+		row = table.AddRow()
+		row.AddCell().AddParagraph().AddRun().AddText("Street Address")
+		row.AddCell().AddParagraph().AddRun().AddText("111 Country Road")
+	}
 
 	doc.AddParagraph()
 
-	table = doc.AddTable()
-	// 4 inches wide
-	table.Properties().SetWidth(4 * measurement.Inch)
-	borders = table.Properties().Borders()
-	// thin borders
-	borders.SetAll(wml.ST_BorderSingle, color.Auto, measurement.Zero)
+	// Third Table
+	{
+		table := doc.AddTable()
+		table.Properties().SetWidthPercent(100)
+		borders := table.Properties().Borders()
+		borders.SetAll(wml.ST_BorderSingle, color.Auto, 1*measurement.Point)
 
-	row = table.AddRow()
-	cell := row.AddCell()
-	// column span
-	cell.Properties().SetColumnSpan(2)
-	run = cell.AddParagraph().AddRun()
-	run.AddText("Cells can span multiple columns")
+		hdrRow := table.AddRow()
 
-	row = table.AddRow()
-	row.AddCell().AddParagraph().AddRun().AddText("Street Address")
-	row.AddCell().AddParagraph().AddRun().AddText("111 Country Road")
+		cell := hdrRow.AddCell()
+		cell.Properties().SetShading(wml.ST_ShdSolid, color.LightGray, color.Auto)
+		cellPara := cell.AddParagraph()
+		cellPara.Properties().SetAlignment(wml.ST_JcLeft)
+		cellPara.AddRun().AddText("Left Align")
 
+		cell = hdrRow.AddCell()
+		cell.Properties().SetShading(wml.ST_ShdThinDiagStripe, color.Red, color.LightGray)
+		cellPara = cell.AddParagraph()
+		cellPara.Properties().SetAlignment(wml.ST_JcCenter)
+		cellPara.AddRun().AddText("Center Align")
+
+		cell = hdrRow.AddCell()
+		cell.Properties().SetShading(wml.ST_ShdPct20, color.Red, color.LightGray)
+		cellPara = cell.AddParagraph()
+		cellPara.Properties().SetAlignment(wml.ST_JcRight)
+		cellPara.AddRun().AddText("Right Align")
+
+		veryLightGray := color.RGB(240, 240, 240)
+		for i := 0; i < 5; i++ {
+			row := table.AddRow()
+			for j := 0; j < 3; j++ {
+				cell := row.AddCell()
+				// shade every other row
+				if i%2 == 0 {
+					cell.Properties().SetShading(wml.ST_ShdSolid, veryLightGray, color.Auto)
+				}
+				cell.AddParagraph().AddRun()
+			}
+		}
+	}
+	if err := doc.Validate(); err != nil {
+		log.Fatalf("error during validation: %s", err)
+	}
 	doc.SaveToFile("tables.docx")
 
 }
