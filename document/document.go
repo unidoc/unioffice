@@ -158,7 +158,6 @@ func (d *Document) Save(w io.Writer) error {
 	if err := zippkg.MarshalXMLByType(z, dt, gooxml.CorePropertiesType, d.CoreProperties.X()); err != nil {
 		return err
 	}
-
 	if d.Thumbnail != nil {
 		tn, err := z.Create("docProps/thumbnail.jpeg")
 		if err != nil {

@@ -81,6 +81,8 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			return "xl/workbook.xml"
 		case DocTypeDocument:
 			return "word/document.xml"
+		case DocTypePresentation:
+			return "ppt/presentation.xml"
 		default:
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
@@ -91,6 +93,8 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			return fmt.Sprintf("xl/theme/theme%d.xml", index)
 		case DocTypeDocument:
 			return fmt.Sprintf("word/theme/theme%d.xml", index)
+		case DocTypePresentation:
+			return fmt.Sprintf("ppt/theme/theme%d.xml", index)
 		default:
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
@@ -101,6 +105,8 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			return "xl/styles.xml"
 		case DocTypeDocument:
 			return "word/styles.xml"
+		case DocTypePresentation:
+			return "ppt/styles.xml"
 		default:
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
@@ -145,6 +151,8 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			return fmt.Sprintf("word/media/image%d.png", index)
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/media/image%d.png", index)
+		case DocTypePresentation:
+			return fmt.Sprintf("ppt/media/image%d.png", index)
 		default:
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
@@ -154,7 +162,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 	case SharedStingsType, SharedStringsContentType:
 		return "xl/sharedStrings.xml"
 
-		// WML
+	// WML
 	case FontTableType:
 		return "word/fontTable.xml"
 	case EndNotesType:
@@ -171,6 +179,14 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		return fmt.Sprintf("word/header%d.xml", index)
 	case FooterType:
 		return fmt.Sprintf("word/footer%d.xml", index)
+
+	// PML
+	case SlideType:
+		return fmt.Sprintf("ppt/slides/slide%d.xml", index)
+	case SlideLayoutType:
+		return fmt.Sprintf("ppt/slideLayouts/slideLayout%d.xml", index)
+	case SlideMasterType:
+		return fmt.Sprintf("ppt/slideMasters/slideMaster%d.xml", index)
 
 	default:
 		Log("unsupported type %s", typ)

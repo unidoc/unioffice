@@ -9,15 +9,23 @@ package presentation
 
 import (
 	"archive/zip"
+	"bytes"
+	"encoding/xml"
+	"errors"
 	"fmt"
+	"image"
+	"image/jpeg"
 	"io"
+	"log"
 	"os"
+	"path/filepath"
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/soo/dml"
 	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
+	"baliance.com/gooxml/schema/soo/pkg/relationships"
 	"baliance.com/gooxml/schema/soo/pml"
 	"baliance.com/gooxml/zippkg"
 )
@@ -34,6 +42,7 @@ type Presentation struct {
 	layouts    []*pml.SldLayout
 	layoutRels []common.Relationships
 	themes     []*dml.Theme
+	themeRels  []common.Relationships
 }
 
 // New initializes and reurns a new presentation
@@ -73,8 +82,11 @@ func New() *Presentation {
 
 	p.masters = append(p.masters, m)
 
-	p.ContentTypes.AddOverride("/ppt/slideMasters/slideMaster1.xml", gooxml.SlideMasterContentType)
-	mrelID := p.prels.AddRelationship("slideMasters/slideMaster1.xml", gooxml.SlideMasterRelationshipType)
+	smFn := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, gooxml.SlideMasterType, 1)
+	p.ContentTypes.AddOverride(smFn, gooxml.SlideMasterContentType)
+
+	mrelID := p.prels.AddAutoRelationship(gooxml.DocTypePresentation, gooxml.OfficeDocumentType,
+		1, gooxml.SlideMasterType)
 	smid := pml.NewCT_SlideMasterIdListEntry()
 	smid.IdAttr = gooxml.Uint32(2147483648)
 	smid.RIdAttr = mrelID.ID()
@@ -83,9 +95,10 @@ func New() *Presentation {
 	p.masterRels = append(p.masterRels, mrel)
 
 	ls := pml.NewSldLayout()
-	lrid := mrel.AddRelationship("../slideLayouts/slideLayout1.xml", gooxml.SlideLayoutType)
-	p.ContentTypes.AddOverride("/ppt/slideLayouts/slideLayout1.xml", gooxml.SlideLayoutContentType)
-	mrel.AddRelationship("../theme/theme1.xml", gooxml.ThemeType)
+	lrid := mrel.AddAutoRelationship(gooxml.DocTypePresentation, gooxml.SlideMasterType, 1, gooxml.SlideLayoutType)
+	slfn := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, gooxml.SlideLayoutType, 1)
+	p.ContentTypes.AddOverride(slfn, gooxml.SlideLayoutContentType)
+	mrel.AddAutoRelationship(gooxml.DocTypePresentation, gooxml.SlideMasterType, 1, gooxml.ThemeType)
 	p.layouts = append(p.layouts, ls)
 
 	m.SldLayoutIdLst = pml.NewCT_SlideLayoutIdList()
@@ -96,7 +109,7 @@ func New() *Presentation {
 
 	lrel := common.NewRelationships()
 	p.layoutRels = append(p.layoutRels, lrel)
-	lrel.AddRelationship("../slideMasters/slideMaster1.xml", gooxml.SlideMasterRelationshipType)
+	lrel.AddAutoRelationship(gooxml.DocTypePresentation, gooxml.SlideType, 1, gooxml.SlideMasterType)
 	p.x.NotesSz.CxAttr = 6858000
 	p.x.NotesSz.CyAttr = 9144000
 
@@ -204,8 +217,13 @@ func New() *Presentation {
 		fp)
 
 	p.themes = append(p.themes, thm)
-	p.ContentTypes.AddOverride("/ppt/theme/theme1.xml", gooxml.ThemeContentType)
-	p.prels.AddRelationship("theme/theme1.xml", gooxml.ThemeType)
+	themeFn := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, gooxml.ThemeType, 1)
+	p.ContentTypes.AddOverride(themeFn, gooxml.ThemeContentType)
+	p.prels.AddAutoRelationship(gooxml.DocTypePresentation, gooxml.OfficeDocumentType, 1, gooxml.ThemeType)
+
+	thmRel := common.NewRelationships()
+	p.themeRels = append(p.themeRels, thmRel)
+
 	return p
 }
 
@@ -214,6 +232,7 @@ func (p *Presentation) X() *pml.Presentation {
 	return p.x
 }
 
+// AddSlide adds a new slide to the presentation.
 func (p *Presentation) AddSlide() Slide {
 	sd := pml.NewCT_SlideIdListEntry()
 	sd.IdAttr = 256
@@ -231,82 +250,217 @@ func (p *Presentation) AddSlide() Slide {
 	slide.CSld.SpTree.GrpSpPr.Xfrm.ChOff = slide.CSld.SpTree.GrpSpPr.Xfrm.Off
 	slide.CSld.SpTree.GrpSpPr.Xfrm.ChExt = slide.CSld.SpTree.GrpSpPr.Xfrm.Ext
 
-	c := pml.NewCT_GroupShapeChoice()
-	slide.CSld.SpTree.Choice = append(slide.CSld.SpTree.Choice, c)
-	sp := pml.NewCT_Shape()
-	c.Sp = append(c.Sp, sp)
+	/*
+		c := pml.NewCT_GroupShapeChoice()
+		slide.CSld.SpTree.Choice = append(slide.CSld.SpTree.Choice, c)
+		sp := pml.NewCT_Shape()
+		c.Sp = append(c.Sp, sp)
 
-	sp.NvSpPr.NvPr.Ph = pml.NewCT_Placeholder()
-	sp.NvSpPr.NvPr.Ph.TypeAttr = pml.ST_PlaceholderTypeCtrTitle
+		sp.NvSpPr.NvPr.Ph = pml.NewCT_Placeholder()
+		sp.NvSpPr.NvPr.Ph.TypeAttr = pml.ST_PlaceholderTypeCtrTitle
 
-	sp.TxBody = dml.NewCT_TextBody()
-	para := dml.NewCT_TextParagraph()
-	sp.TxBody.P = append(sp.TxBody.P, para)
+		sp.TxBody = dml.NewCT_TextBody()
+		para := dml.NewCT_TextParagraph()
+		sp.TxBody.P = append(sp.TxBody.P, para)
 
-	run := dml.NewEG_TextRun()
-	para.EG_TextRun = append(para.EG_TextRun, run)
-	run.R = dml.NewCT_RegularTextRun()
-	run.R.T = "testing 123"
-
+		run := dml.NewEG_TextRun()
+		para.EG_TextRun = append(para.EG_TextRun, run)
+		run.R = dml.NewCT_RegularTextRun()
+		run.R.T = "testing 123"
+	*/
 	p.slides = append(p.slides, slide)
-	fn := fmt.Sprintf("slides/slide%d.xml", len(p.slides))
-	srelID := p.prels.AddRelationship(fn, gooxml.SlideType)
+	srelID := p.prels.AddAutoRelationship(gooxml.DocTypePresentation, gooxml.OfficeDocumentType,
+		len(p.slides), gooxml.SlideType)
 	sd.RIdAttr = srelID.ID()
 
-	p.ContentTypes.AddOverride(fmt.Sprintf("/ppt/slides/slide%d.xml", len(p.slides)), gooxml.SlideContentType)
+	slidefn := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, gooxml.SlideType, len(p.slides))
+	p.ContentTypes.AddOverride(slidefn, gooxml.SlideContentType)
 
 	srel := common.NewRelationships()
 	p.slideRels = append(p.slideRels, srel)
-	srel.AddRelationship("../slideLayouts/slideLayout1.xml", gooxml.SlideLayoutType)
+	// TODO: make the slide layout configurable
+	srel.AddAutoRelationship(gooxml.DocTypePresentation, gooxml.SlideType,
+		len(p.layouts), gooxml.SlideLayoutType)
 
 	return Slide{sd, slide}
 }
 
+// AddSlideWithLayout adds a new slide with content copied from a layout.  Normally you should
+// use AddDefaultSlideWithLayout as it will do some post processing similar to PowerPoint to
+// clear place holder text, etc.
+func (p *Presentation) AddSlideWithLayout(l SlideLayout) (Slide, error) {
+	sd := pml.NewCT_SlideIdListEntry()
+	sd.IdAttr = 256
+	for _, id := range p.x.SldIdLst.SldId {
+		if id.IdAttr >= sd.IdAttr {
+			sd.IdAttr = id.IdAttr + 1
+		}
+	}
+	p.x.SldIdLst.SldId = append(p.x.SldIdLst.SldId, sd)
+
+	slide := pml.NewSld()
+
+	buf := bytes.Buffer{}
+	enc := xml.NewEncoder(&buf)
+	start := xml.StartElement{Name: xml.Name{Local: "slide"}}
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns"}, Value: "http://schemas.openxmlformats.org/presentationml/2006/main"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:a"}, Value: "http://schemas.openxmlformats.org/drawingml/2006/main"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:p"}, Value: "http://schemas.openxmlformats.org/presentationml/2006/main"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:r"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/relationships"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:sh"}, Value: "http://schemas.openxmlformats.org/officeDocument/2006/sharedTypes"})
+	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "xmlns:xml"}, Value: "http://www.w3.org/XML/1998/namespace"})
+
+	if err := l.x.CSld.MarshalXML(enc, start); err != nil {
+		return Slide{}, err
+	}
+	enc.Flush()
+
+	dec := xml.NewDecoder(&buf)
+	slide.CSld = pml.NewCT_CommonSlideData()
+	if err := dec.Decode(slide.CSld); err != nil {
+		return Slide{}, err
+	}
+
+	// clear layout name on the slide
+	slide.CSld.NameAttr = nil
+	//, chc := range slide.CSld.SpTree.Choice {
+	for i := 0; i < len(slide.CSld.SpTree.Choice); i++ {
+		chc := slide.CSld.SpTree.Choice[i]
+		for len(chc.Pic) > 0 {
+			copy(slide.CSld.SpTree.Choice[i:], slide.CSld.SpTree.Choice[i+1:])
+			slide.CSld.SpTree.Choice = slide.CSld.SpTree.Choice[0 : len(slide.CSld.SpTree.Choice)-1]
+			chc = slide.CSld.SpTree.Choice[i]
+		}
+	}
+
+	p.slides = append(p.slides, slide)
+
+	srelID := p.prels.AddAutoRelationship(gooxml.DocTypePresentation, gooxml.OfficeDocumentType,
+		len(p.slides), gooxml.SlideType)
+	sd.RIdAttr = srelID.ID()
+
+	slidefn := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, gooxml.SlideType, len(p.slides))
+	p.ContentTypes.AddOverride(slidefn, gooxml.SlideContentType)
+
+	srel := common.NewRelationships()
+	p.slideRels = append(p.slideRels, srel)
+	for i, lout := range p.layouts {
+		if lout == l.X() {
+			srel.AddAutoRelationship(gooxml.DocTypePresentation, gooxml.SlideType,
+				i+1, gooxml.SlideLayoutType)
+		}
+	}
+	csld := Slide{sd, slide}
+
+	return csld, nil
+}
+
+// AddDefaultSlideWithLayout tries to replicate what PowerPoint does when
+// inserting a slide with a new style by clearing placeholder content and removing
+// some placeholders.  Use AddSlideWithLayout if you need more control.
+func (p *Presentation) AddDefaultSlideWithLayout(l SlideLayout) (Slide, error) {
+	sld, err := p.AddSlideWithLayout(l)
+
+	for _, ph := range sld.PlaceHolders() {
+		// clear all placeholder content
+		ph.Clear()
+		// and drop some of the placeholders (footer, slide date/time, slide number)
+		switch ph.Type() {
+		case pml.ST_PlaceholderTypeFtr, pml.ST_PlaceholderTypeDt, pml.ST_PlaceholderTypeSldNum:
+			ph.Remove()
+		}
+	}
+
+	return sld, err
+}
+
 // Save writes the presentation out to a writer in the Zip package format
 func (p *Presentation) Save(w io.Writer) error {
+	if err := p.x.Validate(); err != nil {
+		log.Printf("validation error in document: %s", err)
+	}
+
+	dt := gooxml.DocTypePresentation
+
 	z := zip.NewWriter(w)
 	defer z.Close()
+	if err := zippkg.MarshalXML(z, gooxml.BaseRelsFilename, p.Rels.X()); err != nil {
+		return err
+	}
+	if err := zippkg.MarshalXMLByType(z, dt, gooxml.ExtendedPropertiesType, p.AppProperties.X()); err != nil {
+		return err
+	}
+	if err := zippkg.MarshalXMLByType(z, dt, gooxml.CorePropertiesType, p.CoreProperties.X()); err != nil {
+		return err
+	}
+	if p.Thumbnail != nil {
+		tn, err := z.Create("docProps/thumbnail.jpeg")
+		if err != nil {
+			return err
+		}
+		if err := jpeg.Encode(tn, p.Thumbnail, nil); err != nil {
+			return err
+		}
+	}
+
+	documentFn := gooxml.AbsoluteFilename(dt, gooxml.OfficeDocumentType, 0)
+	if err := zippkg.MarshalXML(z, documentFn, p.x); err != nil {
+		return err
+	}
+	if err := zippkg.MarshalXML(z, zippkg.RelationsPathFor(documentFn), p.prels.X()); err != nil {
+		return err
+	}
+
+	for i, slide := range p.slides {
+		spath := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, gooxml.SlideType, i+1)
+		zippkg.MarshalXML(z, spath, slide)
+		if !p.slideRels[i].IsEmpty() {
+			rpath := zippkg.RelationsPathFor(spath)
+			zippkg.MarshalXML(z, rpath, p.slideRels[i].X())
+		}
+	}
+	for i, m := range p.masters {
+		mpath := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, gooxml.SlideMasterType, i+1)
+		zippkg.MarshalXML(z, mpath, m)
+		if !p.masterRels[i].IsEmpty() {
+			rpath := zippkg.RelationsPathFor(mpath)
+			zippkg.MarshalXML(z, rpath, p.masterRels[i].X())
+		}
+	}
+	for i, l := range p.layouts {
+		mpath := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, gooxml.SlideLayoutType, i+1)
+		zippkg.MarshalXML(z, mpath, l)
+		if !p.layoutRels[i].IsEmpty() {
+			rpath := zippkg.RelationsPathFor(mpath)
+			zippkg.MarshalXML(z, rpath, p.layoutRels[i].X())
+		}
+	}
+	for i, l := range p.themes {
+		mpath := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, gooxml.ThemeType, i+1)
+		zippkg.MarshalXML(z, mpath, l)
+		if !p.themeRels[i].IsEmpty() {
+			rpath := zippkg.RelationsPathFor(mpath)
+			zippkg.MarshalXML(z, rpath, p.themeRels[i].X())
+		}
+	}
+
+	for i, img := range p.Images {
+		fn := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, gooxml.ImageType, i+1)
+		if img.Path() != "" {
+			if err := zippkg.AddFileFromDisk(z, fn, img.Path()); err != nil {
+				return err
+			}
+		} else {
+			gooxml.Log("unsupported image source: %+v", img)
+		}
+	}
+
 	if err := zippkg.MarshalXML(z, gooxml.ContentTypesFilename, p.ContentTypes.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, "_rels/.rels", p.Rels.X()); err != nil {
+	if err := p.WriteExtraFiles(z); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXML(z, "docProps/app.xml", p.AppProperties.X()); err != nil {
-		return err
-	}
-	if err := zippkg.MarshalXML(z, "docProps/core.xml", p.CoreProperties.X()); err != nil {
-		return err
-	}
-	if err := zippkg.MarshalXML(z, "ppt/presentation.xml", p.x); err != nil {
-		return err
-	}
-	if err := zippkg.MarshalXML(z, "ppt/_rels/presentation.xml.rels", p.prels.X()); err != nil {
-		return err
-	}
-	for i, slide := range p.slides {
-		spath := fmt.Sprintf("ppt/slides/slide%d.xml", i+1)
-		zippkg.MarshalXML(z, spath, slide)
-		rpath := zippkg.RelationsPathFor(spath)
-		zippkg.MarshalXML(z, rpath, p.slideRels[i].X())
-	}
-	for i, m := range p.masters {
-		mpath := fmt.Sprintf("ppt/slideMasters/slideMaster%d.xml", i+1)
-		zippkg.MarshalXML(z, mpath, m)
-		rpath := zippkg.RelationsPathFor(mpath)
-		zippkg.MarshalXML(z, rpath, p.masterRels[i].X())
-	}
-	for i, l := range p.layouts {
-		mpath := fmt.Sprintf("ppt/slideLayouts/slideLayout%d.xml", i+1)
-		zippkg.MarshalXML(z, mpath, l)
-		rpath := zippkg.RelationsPathFor(mpath)
-		zippkg.MarshalXML(z, rpath, p.layoutRels[i].X())
-	}
-	for i, l := range p.themes {
-		tpath := fmt.Sprintf("ppt/theme/theme%d.xml", i+1)
-		zippkg.MarshalXML(z, tpath, l)
-	}
-	p.WriteExtraFiles(z)
 	return nil
 }
 
@@ -340,4 +494,193 @@ func (p *Presentation) Validate() error {
 		}
 	}
 	return nil
+}
+
+// SlideMasters returns the slide masters defined in the presentation.
+func (p *Presentation) SlideMasters() []SlideMaster {
+	ret := []SlideMaster{}
+	for i, m := range p.masters {
+
+		ret = append(ret, SlideMaster{p, p.masterRels[i], m})
+	}
+	return ret
+}
+
+// SlideLayouts returns the slide layouts defined in the presentation.
+func (p *Presentation) SlideLayouts() []SlideLayout {
+	ret := []SlideLayout{}
+	for _, l := range p.layouts {
+		ret = append(ret, SlideLayout{l})
+	}
+	return ret
+}
+
+func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship, src zippkg.Target) error {
+	dt := gooxml.DocTypePresentation
+
+	switch typ {
+	case gooxml.OfficeDocumentType:
+		p.x = pml.NewPresentation()
+		decMap.AddTarget(target, p.x, typ, 0)
+		decMap.AddTarget(zippkg.RelationsPathFor(target), p.prels.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+
+	case gooxml.CorePropertiesType:
+		decMap.AddTarget(target, p.CoreProperties.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+
+	case gooxml.ExtendedPropertiesType:
+		decMap.AddTarget(target, p.AppProperties.X(), typ, 0)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+
+	case gooxml.SlideType:
+		sld := pml.NewSld()
+		p.slides = append(p.slides, sld)
+		decMap.AddTarget(target, sld, typ, uint32(len(p.slides)))
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(p.slides))
+
+		slRel := common.NewRelationships()
+		decMap.AddTarget(zippkg.RelationsPathFor(target), slRel.X(), typ, 0)
+		p.slideRels = append(p.slideRels, slRel)
+
+	case gooxml.SlideMasterType:
+		sm := pml.NewSldMaster()
+		if !decMap.AddTarget(target, sm, typ, uint32(len(p.masters)+1)) {
+			return nil
+		}
+		p.masters = append(p.masters, sm)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(p.masters))
+
+		// look for master rels
+		smRel := common.NewRelationships()
+		decMap.AddTarget(zippkg.RelationsPathFor(target), smRel.X(), typ, 0)
+		p.masterRels = append(p.masterRels, smRel)
+
+	case gooxml.SlideLayoutType:
+		sl := pml.NewSldLayout()
+		if !decMap.AddTarget(target, sl, typ, uint32(len(p.layouts)+1)) {
+			return nil
+		}
+		p.layouts = append(p.layouts, sl)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(p.layouts))
+
+		// look for layout rels
+		slRel := common.NewRelationships()
+		decMap.AddTarget(zippkg.RelationsPathFor(target), slRel.X(), typ, 0)
+		p.layoutRels = append(p.layoutRels, slRel)
+
+	case gooxml.ThumbnailType:
+		// read our thumbnail
+		for i, f := range files {
+			if f == nil {
+				continue
+			}
+			if f.Name == target {
+				rc, err := f.Open()
+				if err != nil {
+					return fmt.Errorf("error reading thumbnail: %s", err)
+				}
+				p.Thumbnail, _, err = image.Decode(rc)
+				rc.Close()
+				if err != nil {
+					return fmt.Errorf("error decoding thumbnail: %s", err)
+				}
+				files[i] = nil
+			}
+		}
+
+	case gooxml.ThemeType:
+		thm := dml.NewTheme()
+		if !decMap.AddTarget(target, thm, typ, uint32(len(p.themes)+1)) {
+			return nil
+		}
+		p.themes = append(p.themes, thm)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(p.themes))
+
+		// look for theme rels
+		thmRel := common.NewRelationships()
+		decMap.AddTarget(zippkg.RelationsPathFor(target), thmRel.X(), typ, 0)
+		p.themeRels = append(p.themeRels, thmRel)
+
+	case gooxml.ImageType:
+		target = filepath.Clean(target)
+		for i, f := range files {
+			if f == nil {
+				continue
+			}
+			if f.Name == target {
+				path, err := zippkg.ExtractToDiskTmp(f, p.TmpPath)
+				if err != nil {
+					return err
+				}
+				img, err := common.ImageFromFile(path)
+				if err != nil {
+					return err
+				}
+				iref := common.MakeImageRef(img, &p.DocBase, p.prels)
+				p.Images = append(p.Images, iref)
+				files[i] = nil
+				decMap.RecordIndex(target, len(p.Images))
+				break
+			}
+		}
+		idx := decMap.IndexFor(target)
+		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, idx)
+
+	default:
+		gooxml.Log("unsupported relationship type: %s tgt: %s", typ, target)
+	}
+	return nil
+}
+
+// Slides returns the slides in the presentation.
+func (p *Presentation) Slides() []Slide {
+	ret := []Slide{}
+	for i, v := range p.slides {
+		ret = append(ret, Slide{p.x.SldIdLst.SldId[i], v})
+	}
+	return ret
+}
+
+// RemoveSlide removes a slide from a presentation.
+func (p *Presentation) RemoveSlide(s Slide) error {
+	removed := false
+	slideIdx := 0
+	for i, v := range p.slides {
+		if v == s.x {
+			if p.x.SldIdLst.SldId[i] != s.sid {
+				return errors.New("inconsistency in slides and ID list")
+			}
+			copy(p.slides[i:], p.slides[i+1:])
+			p.slides = p.slides[0 : len(p.slides)-1]
+
+			copy(p.slideRels[i:], p.slideRels[i+1:])
+			p.slideRels = p.slideRels[0 : len(p.slideRels)-1]
+
+			copy(p.x.SldIdLst.SldId[i:], p.x.SldIdLst.SldId[i+1:])
+			p.x.SldIdLst.SldId = p.x.SldIdLst.SldId[0 : len(p.x.SldIdLst.SldId)-1]
+
+			removed = true
+			slideIdx = i
+		}
+	}
+
+	if !removed {
+		return errors.New("unable to find slide")
+	}
+
+	// remove it from content types
+	fn := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, gooxml.SlideType, slideIdx+1)
+	p.ContentTypes.RemoveOverride(fn)
+	return nil
+}
+
+// GetLayoutByName retrieves a slide layout given a layout name.
+func (p *Presentation) GetLayoutByName(name string) (SlideLayout, error) {
+	for _, l := range p.layouts {
+		if l.CSld.NameAttr != nil && name == *l.CSld.NameAttr {
+			return SlideLayout{l}, nil
+		}
+	}
+	return SlideLayout{}, errors.New("unable to find layout with that name")
 }

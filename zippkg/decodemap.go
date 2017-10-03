@@ -35,6 +35,8 @@ type DecodeMap struct {
 	basePaths   map[*relationships.Relationships]string
 	rels        []Target
 	decodeFunc  OnNewRelationshipFunc
+	decoded     map[string]struct{}
+	indices     map[string]int
 }
 
 // SetOnNewRelationshipFunc sets the function to be called when a new
@@ -55,12 +57,27 @@ type Target struct {
 // unmarshaled to.  filePath is the absolute path to the target, ifc is the
 // object to decode into, sourceFileType is the type of file that the reference
 // was discovered in, and index is the index of the source file type.
-func (d *DecodeMap) AddTarget(filePath string, ifc interface{}, sourceFileType string, idx uint32) {
+func (d *DecodeMap) AddTarget(filePath string, ifc interface{}, sourceFileType string, idx uint32) bool {
 	if d.pathsToIfcs == nil {
 		d.pathsToIfcs = make(map[string]Target)
 		d.basePaths = make(map[*relationships.Relationships]string)
+		d.decoded = make(map[string]struct{})
+		d.indices = make(map[string]int)
 	}
-	d.pathsToIfcs[filepath.Clean(filePath)] = Target{Path: filePath, Typ: sourceFileType, Ifc: ifc, Index: idx}
+	fn := filepath.Clean(filePath)
+	if _, ok := d.decoded[fn]; ok {
+		// already decoded this file
+		return false
+	}
+	d.decoded[fn] = struct{}{}
+	d.pathsToIfcs[fn] = Target{Path: filePath, Typ: sourceFileType, Ifc: ifc, Index: idx}
+	return true
+}
+func (d *DecodeMap) RecordIndex(path string, idx int) {
+	d.indices[path] = idx
+}
+func (d *DecodeMap) IndexFor(path string) int {
+	return d.indices[path]
 }
 
 // Decode loops decoding targets registered with AddTarget and calling th
