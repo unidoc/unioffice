@@ -72,6 +72,7 @@ func (m *CT_GroupLevel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.UniqueNameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "caption" {
 			parsed, err := attr.Value, error(nil)
@@ -79,6 +80,7 @@ func (m *CT_GroupLevel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.CaptionAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "user" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -86,6 +88,7 @@ func (m *CT_GroupLevel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.UserAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "customRollUp" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -93,6 +96,7 @@ func (m *CT_GroupLevel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.CustomRollUpAttr = &parsed
+			continue
 		}
 	}
 lCT_GroupLevel:

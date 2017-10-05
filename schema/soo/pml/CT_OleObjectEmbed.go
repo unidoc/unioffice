@@ -48,6 +48,7 @@ func (m *CT_OleObjectEmbed) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "followColorScheme" {
 			m.FollowColorSchemeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_OleObjectEmbed:

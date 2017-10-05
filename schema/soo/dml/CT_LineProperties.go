@@ -130,15 +130,19 @@ func (m *CT_LineProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := int32(parsed)
 			m.WAttr = &pt
-		}
-		if attr.Name.Local == "cap" {
-			m.CapAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "cmpd" {
 			m.CmpdAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "cap" {
+			m.CapAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "algn" {
 			m.AlgnAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_LineProperties:

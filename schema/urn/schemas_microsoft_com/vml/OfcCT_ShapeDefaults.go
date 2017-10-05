@@ -143,26 +143,11 @@ func (m *OfcCT_ShapeDefaults) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.SpidmaxAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "style" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.StyleAttr = &parsed
-		}
-		if attr.Name.Local == "fill" {
-			m.FillAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "fillcolor" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.FillcolorAttr = &parsed
-		}
-		if attr.Name.Local == "stroke" {
-			m.StrokeAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "allowincell" {
+			m.AllowincellAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "strokecolor" {
 			parsed, err := attr.Value, error(nil)
@@ -170,12 +155,35 @@ func (m *OfcCT_ShapeDefaults) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.StrokecolorAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "allowincell" {
-			m.AllowincellAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "stroke" {
+			m.StrokeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "fillcolor" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.FillcolorAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "fill" {
+			m.FillAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "style" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.StyleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ext" {
 			m.ExtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lOfcCT_ShapeDefaults:

@@ -64,6 +64,7 @@ func (m *CT_InputCells) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.RAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "deleted" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -71,6 +72,7 @@ func (m *CT_InputCells) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.DeletedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "undone" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -78,6 +80,7 @@ func (m *CT_InputCells) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.UndoneAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "val" {
 			parsed, err := attr.Value, error(nil)
@@ -85,6 +88,7 @@ func (m *CT_InputCells) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ValAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "numFmtId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -93,6 +97,7 @@ func (m *CT_InputCells) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.NumFmtIdAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

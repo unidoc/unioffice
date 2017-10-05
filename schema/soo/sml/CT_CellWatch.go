@@ -41,6 +41,7 @@ func (m *CT_CellWatch) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.RAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

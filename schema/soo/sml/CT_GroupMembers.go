@@ -53,6 +53,7 @@ func (m *CT_GroupMembers) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_GroupMembers:

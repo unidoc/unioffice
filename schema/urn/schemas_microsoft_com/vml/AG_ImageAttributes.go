@@ -93,6 +93,7 @@ func (m *AG_ImageAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.SrcAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cropleft" {
 			parsed, err := attr.Value, error(nil)
@@ -100,6 +101,7 @@ func (m *AG_ImageAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.CropleftAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "croptop" {
 			parsed, err := attr.Value, error(nil)
@@ -107,6 +109,7 @@ func (m *AG_ImageAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.CroptopAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cropright" {
 			parsed, err := attr.Value, error(nil)
@@ -114,6 +117,7 @@ func (m *AG_ImageAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.CroprightAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cropbottom" {
 			parsed, err := attr.Value, error(nil)
@@ -121,6 +125,7 @@ func (m *AG_ImageAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.CropbottomAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "gain" {
 			parsed, err := attr.Value, error(nil)
@@ -128,6 +133,7 @@ func (m *AG_ImageAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.GainAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "blacklevel" {
 			parsed, err := attr.Value, error(nil)
@@ -135,6 +141,7 @@ func (m *AG_ImageAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.BlacklevelAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "gamma" {
 			parsed, err := attr.Value, error(nil)
@@ -142,12 +149,15 @@ func (m *AG_ImageAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.GammaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "grayscale" {
 			m.GrayscaleAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "bilevel" {
 			m.BilevelAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

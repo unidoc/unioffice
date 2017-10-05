@@ -61,6 +61,7 @@ func (m *CT_TwoCellAnchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "editAs" {
 			m.EditAsAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_TwoCellAnchor:

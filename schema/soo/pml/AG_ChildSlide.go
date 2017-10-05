@@ -46,6 +46,7 @@ func (m *AG_ChildSlide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ShowMasterSpAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showMasterPhAnim" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -53,6 +54,7 @@ func (m *AG_ChildSlide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ShowMasterPhAnimAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -55,6 +55,7 @@ func (m *CT_NumFmts) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_NumFmts:

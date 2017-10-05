@@ -105,19 +105,22 @@ func (m *CT_ReflectionEffect) MarshalXML(e *xml.Encoder, start xml.StartElement)
 func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Local == "fadeDir" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := int32(parsed)
+			m.FadeDirAttr = &pt
+			continue
+		}
 		if attr.Name.Local == "blurRad" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
 			m.BlurRadAttr = &parsed
-		}
-		if attr.Name.Local == "stA" {
-			parsed, err := ParseUnionST_PositiveFixedPercentage(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.StAAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "stPos" {
 			parsed, err := ParseUnionST_PositiveFixedPercentage(attr.Value)
@@ -125,6 +128,7 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.StPosAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "endA" {
 			parsed, err := ParseUnionST_PositiveFixedPercentage(attr.Value)
@@ -132,6 +136,7 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.EndAAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "endPos" {
 			parsed, err := ParseUnionST_PositiveFixedPercentage(attr.Value)
@@ -139,6 +144,7 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.EndPosAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dist" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -146,6 +152,7 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.DistAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dir" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -154,14 +161,15 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			}
 			pt := int32(parsed)
 			m.DirAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "fadeDir" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+		if attr.Name.Local == "stA" {
+			parsed, err := ParseUnionST_PositiveFixedPercentage(attr.Value)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.FadeDirAttr = &pt
+			m.StAAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sx" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -169,6 +177,7 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.SxAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sy" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -176,6 +185,7 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.SyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "kx" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -184,6 +194,7 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			}
 			pt := int32(parsed)
 			m.KxAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "ky" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -192,9 +203,11 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			}
 			pt := int32(parsed)
 			m.KyAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "algn" {
 			m.AlgnAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "rotWithShape" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -202,6 +215,7 @@ func (m *CT_ReflectionEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.RotWithShapeAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -81,6 +81,7 @@ func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.YearAttr = uint16(parsed)
+			continue
 		}
 		if attr.Name.Local == "month" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 16)
@@ -89,6 +90,7 @@ func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint16(parsed)
 			m.MonthAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "day" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 16)
@@ -97,6 +99,7 @@ func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint16(parsed)
 			m.DayAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "hour" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 16)
@@ -105,6 +108,7 @@ func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint16(parsed)
 			m.HourAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "minute" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 16)
@@ -113,6 +117,7 @@ func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint16(parsed)
 			m.MinuteAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "second" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 16)
@@ -121,9 +126,11 @@ func (m *CT_DateGroupItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint16(parsed)
 			m.SecondAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "dateTimeGrouping" {
 			m.DateTimeGroupingAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

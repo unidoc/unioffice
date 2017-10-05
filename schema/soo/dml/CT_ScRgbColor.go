@@ -54,6 +54,7 @@ func (m *CT_ScRgbColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.RAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "g" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -61,6 +62,7 @@ func (m *CT_ScRgbColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.GAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "b" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -68,6 +70,7 @@ func (m *CT_ScRgbColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.BAttr = parsed
+			continue
 		}
 	}
 lCT_ScRgbColor:

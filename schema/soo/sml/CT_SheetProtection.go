@@ -158,12 +158,21 @@ func (m *CT_SheetProtection) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "password" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "formatRows" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.PasswordAttr = &parsed
+			m.FormatRowsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "insertColumns" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.InsertColumnsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "algorithmName" {
 			parsed, err := attr.Value, error(nil)
@@ -171,13 +180,15 @@ func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.AlgorithmNameAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "hashValue" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "insertRows" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.HashValueAttr = &parsed
+			m.InsertRowsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "saltValue" {
 			parsed, err := attr.Value, error(nil)
@@ -185,6 +196,63 @@ func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.SaltValueAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "insertHyperlinks" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.InsertHyperlinksAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "sheet" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SheetAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "deleteColumns" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DeleteColumnsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "scenarios" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ScenariosAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "formatColumns" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.FormatColumnsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "password" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.PasswordAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "hashValue" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.HashValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "spinCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -193,13 +261,7 @@ func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.SpinCountAttr = &pt
-		}
-		if attr.Name.Local == "sheet" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SheetAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "objects" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -207,13 +269,7 @@ func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ObjectsAttr = &parsed
-		}
-		if attr.Name.Local == "scenarios" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ScenariosAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "formatCells" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -221,48 +277,7 @@ func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.FormatCellsAttr = &parsed
-		}
-		if attr.Name.Local == "formatColumns" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.FormatColumnsAttr = &parsed
-		}
-		if attr.Name.Local == "formatRows" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.FormatRowsAttr = &parsed
-		}
-		if attr.Name.Local == "insertColumns" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.InsertColumnsAttr = &parsed
-		}
-		if attr.Name.Local == "insertRows" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.InsertRowsAttr = &parsed
-		}
-		if attr.Name.Local == "insertHyperlinks" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.InsertHyperlinksAttr = &parsed
-		}
-		if attr.Name.Local == "deleteColumns" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DeleteColumnsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "deleteRows" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -270,6 +285,7 @@ func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.DeleteRowsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "selectLockedCells" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -277,6 +293,7 @@ func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.SelectLockedCellsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sort" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -284,6 +301,7 @@ func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.SortAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoFilter" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -291,6 +309,7 @@ func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.AutoFilterAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "pivotTables" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -298,6 +317,7 @@ func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.PivotTablesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "selectUnlockedCells" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -305,6 +325,7 @@ func (m *CT_SheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.SelectUnlockedCellsAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

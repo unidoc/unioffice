@@ -159,6 +159,14 @@ func (m *CT_PageSetup) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = &parsed
+			continue
+		}
 		if attr.Name.Local == "paperSize" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
@@ -166,20 +174,23 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.PaperSizeAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "paperHeight" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "blackAndWhite" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.PaperHeightAttr = &parsed
+			m.BlackAndWhiteAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "paperWidth" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "draft" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.PaperWidthAttr = &parsed
+			m.DraftAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "scale" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -188,14 +199,11 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.ScaleAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "firstPageNumber" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.FirstPageNumberAttr = &pt
+		if attr.Name.Local == "cellComments" {
+			m.CellCommentsAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "fitToWidth" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -204,6 +212,40 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.FitToWidthAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "pageOrder" {
+			m.PageOrderAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "orientation" {
+			m.OrientationAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "paperHeight" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.PaperHeightAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "paperWidth" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.PaperWidthAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "firstPageNumber" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.FirstPageNumberAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "fitToHeight" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -212,36 +254,7 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.FitToHeightAttr = &pt
-		}
-		if attr.Name.Local == "pageOrder" {
-			m.PageOrderAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "orientation" {
-			m.OrientationAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "usePrinterDefaults" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.UsePrinterDefaultsAttr = &parsed
-		}
-		if attr.Name.Local == "blackAndWhite" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.BlackAndWhiteAttr = &parsed
-		}
-		if attr.Name.Local == "draft" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DraftAttr = &parsed
-		}
-		if attr.Name.Local == "cellComments" {
-			m.CellCommentsAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "useFirstPageNumber" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -249,9 +262,11 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.UseFirstPageNumberAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "errors" {
 			m.ErrorsAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "horizontalDpi" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -260,6 +275,7 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.HorizontalDpiAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "verticalDpi" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -268,6 +284,7 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.VerticalDpiAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "copies" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -276,13 +293,15 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.CopiesAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "usePrinterDefaults" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = &parsed
+			m.UsePrinterDefaultsAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

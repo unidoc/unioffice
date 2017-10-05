@@ -45,6 +45,7 @@ func (m *CT_CellSmartTagPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.KeyAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "val" {
 			parsed, err := attr.Value, error(nil)
@@ -52,6 +53,7 @@ func (m *CT_CellSmartTagPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ValAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

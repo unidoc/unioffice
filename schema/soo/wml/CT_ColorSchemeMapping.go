@@ -141,39 +141,51 @@ func (m *CT_ColorSchemeMapping) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bg1" {
 			m.Bg1Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "t1" {
 			m.T1Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "bg2" {
 			m.Bg2Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "t2" {
 			m.T2Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "accent1" {
 			m.Accent1Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "accent2" {
 			m.Accent2Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "accent3" {
 			m.Accent3Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "accent4" {
 			m.Accent4Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "accent5" {
 			m.Accent5Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "accent6" {
 			m.Accent6Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "hyperlink" {
 			m.HyperlinkAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "followedHyperlink" {
 			m.FollowedHyperlinkAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

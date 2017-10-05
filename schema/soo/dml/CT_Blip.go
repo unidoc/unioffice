@@ -62,22 +62,25 @@ func (m *CT_Blip) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Blip) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "cstate" {
-			m.CstateAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "embed" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "embed" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.EmbedAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "link" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "link" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.LinkAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "cstate" {
+			m.CstateAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_Blip:

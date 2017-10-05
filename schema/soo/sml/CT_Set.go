@@ -84,6 +84,7 @@ func (m *CT_Set) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "maxRank" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -91,6 +92,7 @@ func (m *CT_Set) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.MaxRankAttr = int32(parsed)
+			continue
 		}
 		if attr.Name.Local == "setDefinition" {
 			parsed, err := attr.Value, error(nil)
@@ -98,9 +100,11 @@ func (m *CT_Set) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SetDefinitionAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "sortType" {
 			m.SortTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "queryFailed" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -108,6 +112,7 @@ func (m *CT_Set) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.QueryFailedAttr = &parsed
+			continue
 		}
 	}
 lCT_Set:

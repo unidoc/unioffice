@@ -50,6 +50,7 @@ func (m *CT_SampleData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.UseDefAttr = &parsed
+			continue
 		}
 	}
 lCT_SampleData:

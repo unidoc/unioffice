@@ -74,6 +74,7 @@ func (m *CT_CommonSlideData) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 	}
 lCT_CommonSlideData:

@@ -99,6 +99,7 @@ func (m *CT_ViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "lastView" {
 			m.LastViewAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "showComments" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -106,6 +107,7 @@ func (m *CT_ViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ShowCommentsAttr = &parsed
+			continue
 		}
 	}
 lCT_ViewProperties:

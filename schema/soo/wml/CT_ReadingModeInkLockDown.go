@@ -56,6 +56,7 @@ func (m *CT_ReadingModeInkLockDown) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.ActualPgAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "w" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 64)
@@ -63,6 +64,7 @@ func (m *CT_ReadingModeInkLockDown) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.WAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "h" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 64)
@@ -70,6 +72,7 @@ func (m *CT_ReadingModeInkLockDown) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.HAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "fontSz" {
 			parsed, err := ParseUnionST_DecimalNumberOrPercent(attr.Value)
@@ -77,6 +80,7 @@ func (m *CT_ReadingModeInkLockDown) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.FontSzAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

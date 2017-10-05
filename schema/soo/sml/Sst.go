@@ -48,6 +48,7 @@ func (m *Sst) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "uniqueCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -56,6 +57,7 @@ func (m *Sst) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.UniqueCountAttr = &pt
+			continue
 		}
 	}
 lSst:

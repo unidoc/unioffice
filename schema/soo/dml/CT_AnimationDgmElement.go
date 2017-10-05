@@ -52,9 +52,11 @@ func (m *CT_AnimationDgmElement) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "bldStep" {
 			m.BldStepAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

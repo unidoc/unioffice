@@ -42,6 +42,7 @@ func (m *CT_OrientationTransition) UnmarshalXML(d *xml.Decoder, start xml.StartE
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "dir" {
 			m.DirAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

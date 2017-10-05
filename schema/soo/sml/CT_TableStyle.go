@@ -70,6 +70,7 @@ func (m *CT_TableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "pivot" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -77,6 +78,7 @@ func (m *CT_TableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.PivotAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "table" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -84,6 +86,7 @@ func (m *CT_TableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.TableAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -92,6 +95,7 @@ func (m *CT_TableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_TableStyle:

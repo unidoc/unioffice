@@ -68,6 +68,7 @@ func (m *CT_TableStyleInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showFirstColumn" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -75,6 +76,7 @@ func (m *CT_TableStyleInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ShowFirstColumnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showLastColumn" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -82,6 +84,7 @@ func (m *CT_TableStyleInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ShowLastColumnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showRowStripes" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -89,6 +92,7 @@ func (m *CT_TableStyleInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ShowRowStripesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showColumnStripes" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -96,6 +100,7 @@ func (m *CT_TableStyleInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ShowColumnStripesAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -53,6 +53,7 @@ func (m *CT_TransitionStartSoundAction) UnmarshalXML(d *xml.Decoder, start xml.S
 				return err
 			}
 			m.LoopAttr = &parsed
+			continue
 		}
 	}
 lCT_TransitionStartSoundAction:

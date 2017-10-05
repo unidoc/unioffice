@@ -53,6 +53,7 @@ func (m *CT_SheetIdMap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_SheetIdMap:

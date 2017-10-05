@@ -161,6 +161,7 @@ func (m *CT_Workbook) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "conformance" {
 			m.ConformanceAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_Workbook:

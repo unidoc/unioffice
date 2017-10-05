@@ -56,6 +56,7 @@ func (m *WdCT_WrapTopBottom) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.DistTAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "distB" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -64,6 +65,7 @@ func (m *WdCT_WrapTopBottom) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.DistBAttr = &pt
+			continue
 		}
 	}
 lWdCT_WrapTopBottom:

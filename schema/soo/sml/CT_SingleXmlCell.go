@@ -64,6 +64,7 @@ func (m *CT_SingleXmlCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.IdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "r" {
 			parsed, err := attr.Value, error(nil)
@@ -71,6 +72,7 @@ func (m *CT_SingleXmlCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.RAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "connectionId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -78,6 +80,7 @@ func (m *CT_SingleXmlCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.ConnectionIdAttr = uint32(parsed)
+			continue
 		}
 	}
 lCT_SingleXmlCell:

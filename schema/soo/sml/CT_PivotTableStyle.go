@@ -74,6 +74,7 @@ func (m *CT_PivotTableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showRowHeaders" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -81,6 +82,7 @@ func (m *CT_PivotTableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ShowRowHeadersAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showColHeaders" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -88,6 +90,7 @@ func (m *CT_PivotTableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ShowColHeadersAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showRowStripes" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -95,6 +98,7 @@ func (m *CT_PivotTableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ShowRowStripesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showColStripes" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -102,6 +106,7 @@ func (m *CT_PivotTableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ShowColStripesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showLastColumn" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -109,6 +114,7 @@ func (m *CT_PivotTableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ShowLastColumnAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

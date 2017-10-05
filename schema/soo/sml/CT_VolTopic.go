@@ -63,6 +63,7 @@ func (m *CT_VolTopic) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "t" {
 			m.TAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_VolTopic:

@@ -53,6 +53,7 @@ func (m *CT_Tuples) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.CAttr = &pt
+			continue
 		}
 	}
 lCT_Tuples:

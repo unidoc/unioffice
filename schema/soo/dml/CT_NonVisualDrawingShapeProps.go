@@ -55,6 +55,7 @@ func (m *CT_NonVisualDrawingShapeProps) UnmarshalXML(d *xml.Decoder, start xml.S
 				return err
 			}
 			m.TxBoxAttr = &parsed
+			continue
 		}
 	}
 lCT_NonVisualDrawingShapeProps:

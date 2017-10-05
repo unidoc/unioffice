@@ -122,61 +122,13 @@ func (m *CT_WorkbookProtection) MarshalXML(e *xml.Encoder, start xml.StartElemen
 func (m *CT_WorkbookProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "workbookPassword" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.WorkbookPasswordAttr = &parsed
-		}
-		if attr.Name.Local == "workbookPasswordCharacterSet" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.WorkbookPasswordCharacterSetAttr = &parsed
-		}
-		if attr.Name.Local == "revisionsPassword" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.RevisionsPasswordAttr = &parsed
-		}
-		if attr.Name.Local == "revisionsPasswordCharacterSet" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.RevisionsPasswordCharacterSetAttr = &parsed
-		}
-		if attr.Name.Local == "lockStructure" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.LockStructureAttr = &parsed
-		}
-		if attr.Name.Local == "lockWindows" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.LockWindowsAttr = &parsed
-		}
-		if attr.Name.Local == "lockRevision" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.LockRevisionAttr = &parsed
-		}
 		if attr.Name.Local == "revisionsAlgorithmName" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.RevisionsAlgorithmNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "revisionsHashValue" {
 			parsed, err := attr.Value, error(nil)
@@ -184,6 +136,63 @@ func (m *CT_WorkbookProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.RevisionsHashValueAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "workbookPasswordCharacterSet" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.WorkbookPasswordCharacterSetAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "revisionsPasswordCharacterSet" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.RevisionsPasswordCharacterSetAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "lockStructure" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.LockStructureAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "lockWindows" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.LockWindowsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "lockRevision" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.LockRevisionAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "workbookPassword" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.WorkbookPasswordAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "revisionsPassword" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.RevisionsPasswordAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "revisionsSaltValue" {
 			parsed, err := attr.Value, error(nil)
@@ -191,6 +200,7 @@ func (m *CT_WorkbookProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.RevisionsSaltValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "revisionsSpinCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -199,6 +209,7 @@ func (m *CT_WorkbookProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := uint32(parsed)
 			m.RevisionsSpinCountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "workbookAlgorithmName" {
 			parsed, err := attr.Value, error(nil)
@@ -206,6 +217,7 @@ func (m *CT_WorkbookProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.WorkbookAlgorithmNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "workbookHashValue" {
 			parsed, err := attr.Value, error(nil)
@@ -213,6 +225,7 @@ func (m *CT_WorkbookProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.WorkbookHashValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "workbookSaltValue" {
 			parsed, err := attr.Value, error(nil)
@@ -220,6 +233,7 @@ func (m *CT_WorkbookProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.WorkbookSaltValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "workbookSpinCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -228,6 +242,7 @@ func (m *CT_WorkbookProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := uint32(parsed)
 			m.WorkbookSpinCountAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

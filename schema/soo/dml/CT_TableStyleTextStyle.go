@@ -95,9 +95,11 @@ func (m *CT_TableStyleTextStyle) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "b" {
 			m.BAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "i" {
 			m.IAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_TableStyleTextStyle:

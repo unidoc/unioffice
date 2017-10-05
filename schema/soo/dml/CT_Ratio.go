@@ -44,6 +44,7 @@ func (m *CT_Ratio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.NAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "d" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -51,6 +52,7 @@ func (m *CT_Ratio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.DAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

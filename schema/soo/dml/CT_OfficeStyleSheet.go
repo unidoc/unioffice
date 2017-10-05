@@ -69,6 +69,7 @@ func (m *CT_OfficeStyleSheet) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 	}
 lCT_OfficeStyleSheet:

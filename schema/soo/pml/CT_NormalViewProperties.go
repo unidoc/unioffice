@@ -93,6 +93,7 @@ func (m *CT_NormalViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.ShowOutlineIconsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "snapVertSplitter" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -100,12 +101,15 @@ func (m *CT_NormalViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.SnapVertSplitterAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "vertBarState" {
 			m.VertBarStateAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "horzBarState" {
 			m.HorzBarStateAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "preferSingleView" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -113,6 +117,7 @@ func (m *CT_NormalViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.PreferSingleViewAttr = &parsed
+			continue
 		}
 	}
 lCT_NormalViewProperties:

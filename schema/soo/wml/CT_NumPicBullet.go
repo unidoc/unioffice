@@ -55,6 +55,7 @@ func (m *CT_NumPicBullet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NumPicBulletIdAttr = parsed
+			continue
 		}
 	}
 lCT_NumPicBullet:

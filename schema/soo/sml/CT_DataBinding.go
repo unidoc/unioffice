@@ -72,6 +72,7 @@ func (m *CT_DataBinding) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.DataBindingNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "FileBinding" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -79,6 +80,7 @@ func (m *CT_DataBinding) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.FileBindingAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ConnectionID" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -87,6 +89,7 @@ func (m *CT_DataBinding) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.ConnectionIDAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "FileBindingName" {
 			parsed, err := attr.Value, error(nil)
@@ -94,6 +97,7 @@ func (m *CT_DataBinding) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.FileBindingNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "DataBindingLoadMode" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -101,6 +105,7 @@ func (m *CT_DataBinding) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.DataBindingLoadModeAttr = uint32(parsed)
+			continue
 		}
 	}
 lCT_DataBinding:

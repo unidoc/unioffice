@@ -42,6 +42,7 @@ func (m *CT_LineJoinMiterProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.LimAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

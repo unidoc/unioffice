@@ -91,6 +91,7 @@ func (m *CT_HeaderFooter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.AlignWithMarginsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "differentOddEven" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -98,6 +99,7 @@ func (m *CT_HeaderFooter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DifferentOddEvenAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "differentFirst" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -105,6 +107,7 @@ func (m *CT_HeaderFooter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DifferentFirstAttr = &parsed
+			continue
 		}
 	}
 lCT_HeaderFooter:

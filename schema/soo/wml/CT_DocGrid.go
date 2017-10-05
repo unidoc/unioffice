@@ -55,6 +55,7 @@ func (m *CT_DocGrid) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "linePitch" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -62,6 +63,7 @@ func (m *CT_DocGrid) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.LinePitchAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "charSpace" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -69,6 +71,7 @@ func (m *CT_DocGrid) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.CharSpaceAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

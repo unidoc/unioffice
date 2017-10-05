@@ -97,6 +97,7 @@ func (m *CT_GroupShapeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bwMode" {
 			m.BwModeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_GroupShapeProperties:

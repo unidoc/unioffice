@@ -55,6 +55,7 @@ func (m *CT_SmartTagType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NamespaceUriAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -62,6 +63,7 @@ func (m *CT_SmartTagType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "url" {
 			parsed, err := attr.Value, error(nil)
@@ -69,6 +71,7 @@ func (m *CT_SmartTagType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.UrlAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -50,9 +50,11 @@ func (m *OfcCT_IdMap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.DataAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ext" {
 			m.ExtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

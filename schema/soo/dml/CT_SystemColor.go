@@ -54,6 +54,7 @@ func (m *CT_SystemColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "lastClr" {
 			parsed, err := attr.Value, error(nil)
@@ -61,6 +62,7 @@ func (m *CT_SystemColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.LastClrAttr = &parsed
+			continue
 		}
 	}
 lCT_SystemColor:

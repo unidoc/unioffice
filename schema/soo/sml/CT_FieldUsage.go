@@ -42,6 +42,7 @@ func (m *CT_FieldUsage) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.XAttr = int32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

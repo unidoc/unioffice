@@ -73,6 +73,7 @@ func (m *CT_Comment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.RefAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "authorId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -80,6 +81,7 @@ func (m *CT_Comment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.AuthorIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "guid" {
 			parsed, err := attr.Value, error(nil)
@@ -87,6 +89,7 @@ func (m *CT_Comment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.GuidAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "shapeId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -95,6 +98,7 @@ func (m *CT_Comment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			}
 			pt := uint32(parsed)
 			m.ShapeIdAttr = &pt
+			continue
 		}
 	}
 lCT_Comment:

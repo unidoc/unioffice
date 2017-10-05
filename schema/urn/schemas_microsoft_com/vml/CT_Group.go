@@ -377,43 +377,150 @@ func (m *CT_Group) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Group) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "editas" {
-			m.EditasAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "allowincell" {
+			m.AllowincellAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "tableproperties" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.TablepropertiesAttr = &parsed
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bullet" {
+			m.BulletAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "tablelimits" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "hr" {
+			m.HrAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "oned" {
+			m.OnedAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "hralign" {
+			m.HralignAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "tablelimits" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.TablelimitsAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "href" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "regroupid" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
+			if err != nil {
+				return err
+			}
+			m.RegroupidAttr = &parsed
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bordertopcolor" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.HrefAttr = &parsed
+			m.BordertopcolorAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "target" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "spid" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.TargetAttr = &parsed
+			m.SpidAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "class" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "hrpct" {
+			parsed, err := strconv.ParseFloat(attr.Value, 64)
+			if err != nil {
+				return err
+			}
+			pt := float32(parsed)
+			m.HrpctAttr = &pt
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "borderrightcolor" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.ClassAttr = &parsed
+			m.BorderrightcolorAttr = &parsed
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "button" {
+			m.ButtonAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "hrstd" {
+			m.HrstdAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "dgmlayout" {
+			m.DgmlayoutAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "userdrawn" {
+			m.UserdrawnAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "doubleclicknotify" {
+			m.DoubleclicknotifyAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "userhidden" {
+			m.UserhiddenAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "borderleftcolor" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.BorderleftcolorAttr = &parsed
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "insetmode" {
+			m.InsetmodeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "allowoverlap" {
+			m.AllowoverlapAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "tableproperties" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.TablepropertiesAttr = &parsed
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "hrnoshade" {
+			m.HrnoshadeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "dgmlayoutmru" {
+			m.DgmlayoutmruAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "dgmnodekind" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
+			if err != nil {
+				return err
+			}
+			m.DgmnodekindAttr = &parsed
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "borderbottomcolor" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.BorderbottomcolorAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "print" {
+			m.PrintAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "title" {
 			parsed, err := attr.Value, error(nil)
@@ -421,20 +528,7 @@ func (m *CT_Group) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TitleAttr = &parsed
-		}
-		if attr.Name.Local == "alt" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.AltAttr = &parsed
-		}
-		if attr.Name.Local == "coordsize" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.CoordsizeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "coordorigin" {
 			parsed, err := attr.Value, error(nil)
@@ -442,6 +536,7 @@ func (m *CT_Group) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CoordoriginAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "wrapcoords" {
 			parsed, err := attr.Value, error(nil)
@@ -449,16 +544,15 @@ func (m *CT_Group) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.WrapcoordsAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "print" {
-			m.PrintAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "id" {
+		if attr.Name.Local == "coordsize" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = &parsed
+			m.CoordsizeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "style" {
 			parsed, err := attr.Value, error(nil)
@@ -466,111 +560,15 @@ func (m *CT_Group) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.StyleAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "spid" {
+		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.SpidAttr = &parsed
-		}
-		if attr.Name.Local == "oned" {
-			m.OnedAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "regroupid" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
-			if err != nil {
-				return err
-			}
-			m.RegroupidAttr = &parsed
-		}
-		if attr.Name.Local == "doubleclicknotify" {
-			m.DoubleclicknotifyAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "button" {
-			m.ButtonAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "userhidden" {
-			m.UserhiddenAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "bullet" {
-			m.BulletAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "hr" {
-			m.HrAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "hrstd" {
-			m.HrstdAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "hrnoshade" {
-			m.HrnoshadeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "hrpct" {
-			parsed, err := strconv.ParseFloat(attr.Value, 64)
-			if err != nil {
-				return err
-			}
-			pt := float32(parsed)
-			m.HrpctAttr = &pt
-		}
-		if attr.Name.Local == "hralign" {
-			m.HralignAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "allowincell" {
-			m.AllowincellAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "allowoverlap" {
-			m.AllowoverlapAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "userdrawn" {
-			m.UserdrawnAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "bordertopcolor" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.BordertopcolorAttr = &parsed
-		}
-		if attr.Name.Local == "borderleftcolor" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.BorderleftcolorAttr = &parsed
-		}
-		if attr.Name.Local == "borderbottomcolor" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.BorderbottomcolorAttr = &parsed
-		}
-		if attr.Name.Local == "borderrightcolor" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.BorderrightcolorAttr = &parsed
-		}
-		if attr.Name.Local == "dgmlayout" {
-			m.DgmlayoutAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "dgmnodekind" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
-			if err != nil {
-				return err
-			}
-			m.DgmnodekindAttr = &parsed
-		}
-		if attr.Name.Local == "dgmlayoutmru" {
-			m.DgmlayoutmruAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "insetmode" {
-			m.InsetmodeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "filled" {
-			m.FilledAttr.UnmarshalXMLAttr(attr)
+			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fillcolor" {
 			parsed, err := attr.Value, error(nil)
@@ -578,6 +576,47 @@ func (m *CT_Group) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FillcolorAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "class" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.ClassAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "target" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.TargetAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "href" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.HrefAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "editas" {
+			m.EditasAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "filled" {
+			m.FilledAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "alt" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.AltAttr = &parsed
+			continue
 		}
 	}
 lCT_Group:

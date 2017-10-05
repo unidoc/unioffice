@@ -41,6 +41,7 @@ func (m *CT_DeletedField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

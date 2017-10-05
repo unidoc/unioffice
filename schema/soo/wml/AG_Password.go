@@ -56,6 +56,7 @@ func (m *AG_Password) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.AlgorithmNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hashValue" {
 			parsed, err := attr.Value, error(nil)
@@ -63,6 +64,7 @@ func (m *AG_Password) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.HashValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "saltValue" {
 			parsed, err := attr.Value, error(nil)
@@ -70,6 +72,7 @@ func (m *AG_Password) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.SaltValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "spinCount" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -77,6 +80,7 @@ func (m *AG_Password) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.SpinCountAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

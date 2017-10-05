@@ -74,6 +74,7 @@ func (m *CT_Pane) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.XSplitAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ySplit" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -81,6 +82,7 @@ func (m *CT_Pane) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.YSplitAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "topLeftCell" {
 			parsed, err := attr.Value, error(nil)
@@ -88,12 +90,15 @@ func (m *CT_Pane) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TopLeftCellAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "activePane" {
 			m.ActivePaneAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "state" {
 			m.StateAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

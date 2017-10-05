@@ -117,19 +117,21 @@ func (m *CT_TableStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	// initialize to default
 	m.StyleIdAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "styleId" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.StyleIdAttr = parsed
-		}
 		if attr.Name.Local == "styleName" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.StyleNameAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "styleId" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.StyleIdAttr = parsed
+			continue
 		}
 	}
 lCT_TableStyle:

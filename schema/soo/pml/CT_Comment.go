@@ -72,6 +72,7 @@ func (m *CT_Comment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.AuthorIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "dt" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -79,6 +80,7 @@ func (m *CT_Comment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.DtAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "idx" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -86,6 +88,7 @@ func (m *CT_Comment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.IdxAttr = uint32(parsed)
+			continue
 		}
 	}
 lCT_Comment:

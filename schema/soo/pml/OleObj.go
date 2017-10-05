@@ -41,12 +41,13 @@ func (m *OleObj) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_OleObject = *NewCT_OleObject()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "progId" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.ProgIdAttr = &parsed
+			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "spid" {
 			parsed, err := attr.Value, error(nil)
@@ -54,6 +55,7 @@ func (m *OleObj) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SpidAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -61,6 +63,7 @@ func (m *OleObj) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showAsIcon" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -68,13 +71,15 @@ func (m *OleObj) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ShowAsIconAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "id" {
+		if attr.Name.Local == "progId" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = &parsed
+			m.ProgIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "imgW" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -83,6 +88,7 @@ func (m *OleObj) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := int32(parsed)
 			m.ImgWAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "imgH" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -91,6 +97,7 @@ func (m *OleObj) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := int32(parsed)
 			m.ImgHAttr = &pt
+			continue
 		}
 	}
 lOleObj:

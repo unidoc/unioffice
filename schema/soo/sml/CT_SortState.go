@@ -78,6 +78,7 @@ func (m *CT_SortState) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ColumnSortAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "caseSensitive" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -85,9 +86,11 @@ func (m *CT_SortState) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.CaseSensitiveAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sortMethod" {
 			m.SortMethodAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "ref" {
 			parsed, err := attr.Value, error(nil)
@@ -95,6 +98,7 @@ func (m *CT_SortState) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.RefAttr = parsed
+			continue
 		}
 	}
 lCT_SortState:

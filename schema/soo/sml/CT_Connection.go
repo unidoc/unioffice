@@ -189,19 +189,29 @@ func (m *CT_Connection) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Local == "deleted" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DeletedAttr = &parsed
+			continue
+		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
 			m.IdAttr = uint32(parsed)
+			continue
 		}
-		if attr.Name.Local == "sourceFile" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "onlyUseConnectionFile" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.SourceFileAttr = &parsed
+			m.OnlyUseConnectionFileAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "odcFile" {
 			parsed, err := attr.Value, error(nil)
@@ -209,13 +219,15 @@ func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.OdcFileAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "keepAlive" {
+		if attr.Name.Local == "background" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.KeepAliveAttr = &parsed
+			m.BackgroundAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "interval" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -224,13 +236,15 @@ func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.IntervalAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "name" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "refreshOnLoad" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.NameAttr = &parsed
+			m.RefreshOnLoadAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "description" {
 			parsed, err := attr.Value, error(nil)
@@ -238,14 +252,15 @@ func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.DescriptionAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "type" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+		if attr.Name.Local == "saveData" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			pt := uint32(parsed)
-			m.TypeAttr = &pt
+			m.SaveDataAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "reconnectionMethod" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -254,6 +269,51 @@ func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.ReconnectionMethodAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "credentials" {
+			m.CredentialsAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "keepAlive" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.KeepAliveAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "sourceFile" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.SourceFileAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "singleSignOnId" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.SingleSignOnIdAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "savePassword" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SavePasswordAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "name" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "refreshedVersion" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
@@ -261,6 +321,7 @@ func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.RefreshedVersionAttr = uint8(parsed)
+			continue
 		}
 		if attr.Name.Local == "minRefreshableVersion" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
@@ -269,13 +330,7 @@ func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint8(parsed)
 			m.MinRefreshableVersionAttr = &pt
-		}
-		if attr.Name.Local == "savePassword" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SavePasswordAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "new" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -283,51 +338,16 @@ func (m *CT_Connection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.NewAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "deleted" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "type" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
-			m.DeletedAttr = &parsed
-		}
-		if attr.Name.Local == "onlyUseConnectionFile" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.OnlyUseConnectionFileAttr = &parsed
-		}
-		if attr.Name.Local == "background" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.BackgroundAttr = &parsed
-		}
-		if attr.Name.Local == "refreshOnLoad" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RefreshOnLoadAttr = &parsed
-		}
-		if attr.Name.Local == "saveData" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SaveDataAttr = &parsed
-		}
-		if attr.Name.Local == "credentials" {
-			m.CredentialsAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "singleSignOnId" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.SingleSignOnIdAttr = &parsed
+			pt := uint32(parsed)
+			m.TypeAttr = &pt
+			continue
 		}
 	}
 lCT_Connection:

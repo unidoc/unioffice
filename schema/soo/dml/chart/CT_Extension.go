@@ -48,6 +48,7 @@ func (m *CT_Extension) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.UriAttr = &parsed
+			continue
 		}
 	}
 lCT_Extension:

@@ -53,6 +53,7 @@ func (m *CT_PivotHierarchies) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_PivotHierarchies:

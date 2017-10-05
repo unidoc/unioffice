@@ -98,6 +98,7 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "t" {
 			m.TAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "aca" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -105,6 +106,7 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.AcaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ref" {
 			parsed, err := attr.Value, error(nil)
@@ -112,6 +114,7 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.RefAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dt2D" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -119,6 +122,7 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.Dt2DAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dtr" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -126,6 +130,7 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.DtrAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "del1" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -133,6 +138,7 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.Del1Attr = &parsed
+			continue
 		}
 		if attr.Name.Local == "del2" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -140,6 +146,7 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.Del2Attr = &parsed
+			continue
 		}
 		if attr.Name.Local == "r1" {
 			parsed, err := attr.Value, error(nil)
@@ -147,6 +154,7 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.R1Attr = &parsed
+			continue
 		}
 		if attr.Name.Local == "r2" {
 			parsed, err := attr.Value, error(nil)
@@ -154,6 +162,7 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.R2Attr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ca" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -161,6 +170,7 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.CaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "si" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -169,6 +179,7 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.SiAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "bx" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -176,6 +187,7 @@ func (m *CT_CellFormula) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.BxAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

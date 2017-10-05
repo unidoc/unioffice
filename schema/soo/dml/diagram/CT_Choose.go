@@ -54,6 +54,7 @@ func (m *CT_Choose) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 	}
 lCT_Choose:

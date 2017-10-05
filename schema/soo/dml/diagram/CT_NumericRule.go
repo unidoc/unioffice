@@ -90,6 +90,7 @@ func (m *CT_NumericRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fact" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -97,6 +98,7 @@ func (m *CT_NumericRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.FactAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "max" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -104,12 +106,15 @@ func (m *CT_NumericRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.MaxAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "for" {
 			m.ForAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "forName" {
 			parsed, err := attr.Value, error(nil)
@@ -117,9 +122,11 @@ func (m *CT_NumericRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ForNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ptType" {
 			m.PtTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_NumericRule:

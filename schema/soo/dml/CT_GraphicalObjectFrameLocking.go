@@ -75,6 +75,7 @@ func (m *CT_GraphicalObjectFrameLocking) UnmarshalXML(d *xml.Decoder, start xml.
 				return err
 			}
 			m.NoGrpAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noDrilldown" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -82,6 +83,7 @@ func (m *CT_GraphicalObjectFrameLocking) UnmarshalXML(d *xml.Decoder, start xml.
 				return err
 			}
 			m.NoDrilldownAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noSelect" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -89,6 +91,7 @@ func (m *CT_GraphicalObjectFrameLocking) UnmarshalXML(d *xml.Decoder, start xml.
 				return err
 			}
 			m.NoSelectAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noChangeAspect" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -96,6 +99,7 @@ func (m *CT_GraphicalObjectFrameLocking) UnmarshalXML(d *xml.Decoder, start xml.
 				return err
 			}
 			m.NoChangeAspectAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noMove" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -103,6 +107,7 @@ func (m *CT_GraphicalObjectFrameLocking) UnmarshalXML(d *xml.Decoder, start xml.
 				return err
 			}
 			m.NoMoveAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noResize" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -110,6 +115,7 @@ func (m *CT_GraphicalObjectFrameLocking) UnmarshalXML(d *xml.Decoder, start xml.
 				return err
 			}
 			m.NoResizeAttr = &parsed
+			continue
 		}
 	}
 lCT_GraphicalObjectFrameLocking:

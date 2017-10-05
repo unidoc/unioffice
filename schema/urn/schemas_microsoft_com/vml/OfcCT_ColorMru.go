@@ -50,9 +50,11 @@ func (m *OfcCT_ColorMru) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ColorsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ext" {
 			m.ExtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

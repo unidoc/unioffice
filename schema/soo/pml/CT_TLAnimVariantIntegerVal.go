@@ -42,6 +42,7 @@ func (m *CT_TLAnimVariantIntegerVal) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.ValAttr = int32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

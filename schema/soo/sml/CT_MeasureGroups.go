@@ -55,6 +55,7 @@ func (m *CT_MeasureGroups) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_MeasureGroups:

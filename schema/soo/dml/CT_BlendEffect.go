@@ -48,6 +48,7 @@ func (m *CT_BlendEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "blend" {
 			m.BlendAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_BlendEffect:

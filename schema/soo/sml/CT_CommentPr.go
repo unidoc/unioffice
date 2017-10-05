@@ -117,12 +117,13 @@ func (m *CT_CommentPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	// initialize to default
 	m.Anchor = NewCT_ObjectAnchor()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "locked" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "altText" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.LockedAttr = &parsed
+			m.AltTextAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "defaultSize" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -130,6 +131,7 @@ func (m *CT_CommentPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.DefaultSizeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "print" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -137,6 +139,7 @@ func (m *CT_CommentPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.PrintAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "disabled" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -144,6 +147,7 @@ func (m *CT_CommentPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.DisabledAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoFill" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -151,6 +155,7 @@ func (m *CT_CommentPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.AutoFillAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoLine" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -158,19 +163,23 @@ func (m *CT_CommentPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.AutoLineAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "altText" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "locked" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.AltTextAttr = &parsed
+			m.LockedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "textHAlign" {
 			m.TextHAlignAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "textVAlign" {
 			m.TextVAlignAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "lockText" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -178,6 +187,7 @@ func (m *CT_CommentPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.LockTextAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "justLastX" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -185,6 +195,7 @@ func (m *CT_CommentPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.JustLastXAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoScale" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -192,6 +203,7 @@ func (m *CT_CommentPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.AutoScaleAttr = &parsed
+			continue
 		}
 	}
 lCT_CommentPr:

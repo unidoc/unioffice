@@ -197,13 +197,7 @@ func (m *CT_Style) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "styleId" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.StyleIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "default" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -211,6 +205,7 @@ func (m *CT_Style) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.DefaultAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "customStyle" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -218,6 +213,15 @@ func (m *CT_Style) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CustomStyleAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "styleId" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.StyleIdAttr = &parsed
+			continue
 		}
 	}
 lCT_Style:

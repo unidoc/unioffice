@@ -79,6 +79,7 @@ func (m *WdCT_WordprocessingShape) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.NormalEastAsianFlowAttr = &parsed
+			continue
 		}
 	}
 lWdCT_WordprocessingShape:

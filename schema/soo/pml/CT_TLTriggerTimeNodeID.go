@@ -42,6 +42,7 @@ func (m *CT_TLTriggerTimeNodeID) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.ValAttr = uint32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

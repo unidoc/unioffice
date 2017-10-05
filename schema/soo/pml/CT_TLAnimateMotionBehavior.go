@@ -99,6 +99,7 @@ func (m *CT_TLAnimateMotionBehavior) UnmarshalXML(d *xml.Decoder, start xml.Star
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "origin" {
 			m.OriginAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "path" {
 			parsed, err := attr.Value, error(nil)
@@ -106,9 +107,11 @@ func (m *CT_TLAnimateMotionBehavior) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.PathAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "pathEditMode" {
 			m.PathEditModeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "rAng" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -117,6 +120,7 @@ func (m *CT_TLAnimateMotionBehavior) UnmarshalXML(d *xml.Decoder, start xml.Star
 			}
 			pt := int32(parsed)
 			m.RAngAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "ptsTypes" {
 			parsed, err := attr.Value, error(nil)
@@ -124,6 +128,7 @@ func (m *CT_TLAnimateMotionBehavior) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.PtsTypesAttr = &parsed
+			continue
 		}
 	}
 lCT_TLAnimateMotionBehavior:

@@ -34,18 +34,21 @@ func (m *Textbox) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_Textbox = *NewCT_Textbox()
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "singleclick" {
+			m.SingleclickAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "insetmode" {
+			m.InsetmodeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
 		if attr.Name.Local == "inset" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.InsetAttr = &parsed
-		}
-		if attr.Name.Local == "singleclick" {
-			m.SingleclickAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "insetmode" {
-			m.InsetmodeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
@@ -53,6 +56,7 @@ func (m *Textbox) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "style" {
 			parsed, err := attr.Value, error(nil)
@@ -60,6 +64,7 @@ func (m *Textbox) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.StyleAttr = &parsed
+			continue
 		}
 	}
 lTextbox:

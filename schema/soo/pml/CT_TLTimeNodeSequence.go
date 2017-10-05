@@ -82,12 +82,15 @@ func (m *CT_TLTimeNodeSequence) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.ConcurrentAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "prevAc" {
 			m.PrevAcAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "nextAc" {
 			m.NextAcAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_TLTimeNodeSequence:

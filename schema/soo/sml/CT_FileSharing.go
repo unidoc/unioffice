@@ -80,6 +80,7 @@ func (m *CT_FileSharing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ReadOnlyRecommendedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "userName" {
 			parsed, err := attr.Value, error(nil)
@@ -87,6 +88,7 @@ func (m *CT_FileSharing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.UserNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "reservationPassword" {
 			parsed, err := attr.Value, error(nil)
@@ -94,6 +96,7 @@ func (m *CT_FileSharing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ReservationPasswordAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "algorithmName" {
 			parsed, err := attr.Value, error(nil)
@@ -101,6 +104,7 @@ func (m *CT_FileSharing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.AlgorithmNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hashValue" {
 			parsed, err := attr.Value, error(nil)
@@ -108,6 +112,7 @@ func (m *CT_FileSharing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.HashValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "saltValue" {
 			parsed, err := attr.Value, error(nil)
@@ -115,6 +120,7 @@ func (m *CT_FileSharing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.SaltValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "spinCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -123,6 +129,7 @@ func (m *CT_FileSharing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.SpinCountAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

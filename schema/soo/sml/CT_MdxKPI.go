@@ -55,6 +55,7 @@ func (m *CT_MdxKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.NAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "np" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -62,9 +63,11 @@ func (m *CT_MdxKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.NpAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "p" {
 			m.PAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

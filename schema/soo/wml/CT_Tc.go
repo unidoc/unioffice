@@ -56,6 +56,7 @@ func (m *CT_Tc) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 	}
 lCT_Tc:

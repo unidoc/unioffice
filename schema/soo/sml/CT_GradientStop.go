@@ -50,6 +50,7 @@ func (m *CT_GradientStop) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.PositionAttr = parsed
+			continue
 		}
 	}
 lCT_GradientStop:

@@ -65,6 +65,7 @@ func (m *AG_IteratorAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.AxisAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ptType" {
 			parsed, err := ParseSliceST_ElementTypes(attr.Value)
@@ -72,6 +73,7 @@ func (m *AG_IteratorAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.PtTypeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hideLastTrans" {
 			parsed, err := ParseSliceST_Booleans(attr.Value)
@@ -79,6 +81,7 @@ func (m *AG_IteratorAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.HideLastTransAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "st" {
 			parsed, err := ParseSliceST_Ints(attr.Value)
@@ -86,6 +89,7 @@ func (m *AG_IteratorAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.StAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cnt" {
 			parsed, err := ParseSliceST_UnsignedInts(attr.Value)
@@ -93,6 +97,7 @@ func (m *AG_IteratorAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.CntAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "step" {
 			parsed, err := ParseSliceST_Ints(attr.Value)
@@ -100,6 +105,7 @@ func (m *AG_IteratorAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.StepAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

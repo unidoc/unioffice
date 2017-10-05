@@ -168,22 +168,25 @@ func (m *CT_Array) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.BaseTypeAttr = ST_ArrayBaseType(1)
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "lBounds" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			m.LBoundsAttr = int32(parsed)
-		}
 		if attr.Name.Local == "uBounds" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
 			m.UBoundsAttr = int32(parsed)
+			continue
 		}
 		if attr.Name.Local == "baseType" {
 			m.BaseTypeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "lBounds" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			m.LBoundsAttr = int32(parsed)
+			continue
 		}
 	}
 lCT_Array:

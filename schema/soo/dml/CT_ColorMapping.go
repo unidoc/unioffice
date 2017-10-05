@@ -134,41 +134,53 @@ func (m *CT_ColorMapping) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	m.HlinkAttr = ST_ColorSchemeIndex(1)
 	m.FolHlinkAttr = ST_ColorSchemeIndex(1)
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "bg1" {
-			m.Bg1Attr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "accent3" {
+			m.Accent3Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "tx1" {
 			m.Tx1Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "bg2" {
 			m.Bg2Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "tx2" {
 			m.Tx2Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "accent1" {
 			m.Accent1Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "accent2" {
 			m.Accent2Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "accent3" {
-			m.Accent3Attr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "bg1" {
+			m.Bg1Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "accent4" {
 			m.Accent4Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "accent5" {
 			m.Accent5Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "accent6" {
 			m.Accent6Attr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "hlink" {
 			m.HlinkAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "folHlink" {
 			m.FolHlinkAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_ColorMapping:

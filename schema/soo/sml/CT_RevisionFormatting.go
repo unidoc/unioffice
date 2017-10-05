@@ -83,6 +83,7 @@ func (m *CT_RevisionFormatting) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.SheetIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "xfDxf" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -90,6 +91,7 @@ func (m *CT_RevisionFormatting) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.XfDxfAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "s" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -97,6 +99,7 @@ func (m *CT_RevisionFormatting) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.SAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sqref" {
 			parsed, err := ParseSliceST_Sqref(attr.Value)
@@ -104,6 +107,7 @@ func (m *CT_RevisionFormatting) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.SqrefAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "start" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -112,6 +116,7 @@ func (m *CT_RevisionFormatting) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := uint32(parsed)
 			m.StartAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "length" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -120,6 +125,7 @@ func (m *CT_RevisionFormatting) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := uint32(parsed)
 			m.LengthAttr = &pt
+			continue
 		}
 	}
 lCT_RevisionFormatting:

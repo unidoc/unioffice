@@ -50,6 +50,7 @@ func (m *CT_FitText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ValAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -57,6 +58,7 @@ func (m *CT_FitText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

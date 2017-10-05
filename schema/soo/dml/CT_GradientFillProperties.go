@@ -69,6 +69,7 @@ func (m *CT_GradientFillProperties) UnmarshalXML(d *xml.Decoder, start xml.Start
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "flip" {
 			m.FlipAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "rotWithShape" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -76,6 +77,7 @@ func (m *CT_GradientFillProperties) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.RotWithShapeAttr = &parsed
+			continue
 		}
 	}
 lCT_GradientFillProperties:

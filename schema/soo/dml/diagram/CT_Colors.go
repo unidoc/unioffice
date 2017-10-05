@@ -58,9 +58,11 @@ func (m *CT_Colors) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "meth" {
 			m.MethAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "hueDir" {
 			m.HueDirAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_Colors:

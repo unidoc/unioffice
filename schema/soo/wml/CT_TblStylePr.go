@@ -74,6 +74,7 @@ func (m *CT_TblStylePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_TblStylePr:

@@ -117,43 +117,54 @@ func (m *AG_OfficeShapeAttributes) MarshalXML(e *xml.Encoder, start xml.StartEle
 func (m *AG_OfficeShapeAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "spt" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "spt" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
 			if err != nil {
 				return err
 			}
 			pt := float32(parsed)
 			m.SptAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "connectortype" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "connectortype" {
 			m.ConnectortypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "bwmode" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bwmode" {
 			m.BwmodeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "bwpure" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bwpure" {
 			m.BwpureAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "bwnormal" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bwnormal" {
 			m.BwnormalAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "forcedash" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "forcedash" {
 			m.ForcedashAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "oleicon" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "oleicon" {
 			m.OleiconAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "ole" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "ole" {
 			m.OleAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "preferrelative" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "preferrelative" {
 			m.PreferrelativeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "cliptowrap" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "cliptowrap" {
 			m.CliptowrapAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "clip" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "clip" {
 			m.ClipAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

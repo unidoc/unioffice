@@ -68,6 +68,7 @@ func (m *CT_StyleLabel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 	}
 lCT_StyleLabel:

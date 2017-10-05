@@ -49,6 +49,7 @@ func (m *CT_IconFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "iconSet" {
 			m.IconSetAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "iconId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -57,6 +58,7 @@ func (m *CT_IconFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.IconIdAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

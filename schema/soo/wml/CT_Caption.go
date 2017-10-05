@@ -89,9 +89,11 @@ func (m *CT_Caption) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "pos" {
 			m.PosAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "chapNum" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -99,6 +101,7 @@ func (m *CT_Caption) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ChapNumAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "heading" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -106,6 +109,7 @@ func (m *CT_Caption) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.HeadingAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noLabel" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -113,12 +117,15 @@ func (m *CT_Caption) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.NoLabelAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "numFmt" {
 			m.NumFmtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "sep" {
 			m.SepAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

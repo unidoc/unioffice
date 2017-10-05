@@ -82,6 +82,7 @@ func (m *CT_Map) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IDAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "Name" {
 			parsed, err := attr.Value, error(nil)
@@ -89,6 +90,7 @@ func (m *CT_Map) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "RootElement" {
 			parsed, err := attr.Value, error(nil)
@@ -96,6 +98,7 @@ func (m *CT_Map) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RootElementAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "SchemaID" {
 			parsed, err := attr.Value, error(nil)
@@ -103,6 +106,7 @@ func (m *CT_Map) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SchemaIDAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "ShowImportExportValidationErrors" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -110,6 +114,7 @@ func (m *CT_Map) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ShowImportExportValidationErrorsAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "AutoFit" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -117,6 +122,7 @@ func (m *CT_Map) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.AutoFitAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "Append" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -124,6 +130,7 @@ func (m *CT_Map) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.AppendAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "PreserveSortAFLayout" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -131,6 +138,7 @@ func (m *CT_Map) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PreserveSortAFLayoutAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "PreserveFormat" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -138,6 +146,7 @@ func (m *CT_Map) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PreserveFormatAttr = parsed
+			continue
 		}
 	}
 lCT_Map:

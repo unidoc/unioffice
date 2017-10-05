@@ -51,6 +51,7 @@ func (m *WdCT_EffectExtent) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.LAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "t" {
 			parsed, err := ParseUnionST_Coordinate(attr.Value)
@@ -58,6 +59,7 @@ func (m *WdCT_EffectExtent) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.TAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "r" {
 			parsed, err := ParseUnionST_Coordinate(attr.Value)
@@ -65,6 +67,7 @@ func (m *WdCT_EffectExtent) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.RAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "b" {
 			parsed, err := ParseUnionST_Coordinate(attr.Value)
@@ -72,6 +75,7 @@ func (m *WdCT_EffectExtent) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.BAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

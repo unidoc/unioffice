@@ -81,6 +81,7 @@ func (m *CT_ColorTransform) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.UniqueIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "minVer" {
 			parsed, err := attr.Value, error(nil)
@@ -88,6 +89,7 @@ func (m *CT_ColorTransform) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.MinVerAttr = &parsed
+			continue
 		}
 	}
 lCT_ColorTransform:

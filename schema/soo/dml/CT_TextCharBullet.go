@@ -40,6 +40,7 @@ func (m *CT_TextCharBullet) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.CharAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

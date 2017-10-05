@@ -76,9 +76,11 @@ func (m *CT_TLAnimateColorBehavior) UnmarshalXML(d *xml.Decoder, start xml.Start
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "clrSpc" {
 			m.ClrSpcAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "dir" {
 			m.DirAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_TLAnimateColorBehavior:

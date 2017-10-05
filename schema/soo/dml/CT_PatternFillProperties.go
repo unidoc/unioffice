@@ -52,6 +52,7 @@ func (m *CT_PatternFillProperties) UnmarshalXML(d *xml.Decoder, start xml.StartE
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prst" {
 			m.PrstAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_PatternFillProperties:

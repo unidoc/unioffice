@@ -57,6 +57,7 @@ func (m *CT_AnimationChartElement) UnmarshalXML(d *xml.Decoder, start xml.StartE
 			}
 			pt := int32(parsed)
 			m.SeriesIdxAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "categoryIdx" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -65,9 +66,11 @@ func (m *CT_AnimationChartElement) UnmarshalXML(d *xml.Decoder, start xml.StartE
 			}
 			pt := int32(parsed)
 			m.CategoryIdxAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "bldStep" {
 			m.BldStepAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

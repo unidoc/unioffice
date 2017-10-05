@@ -63,6 +63,7 @@ func (m *CT_ConditionalFormatting) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.PivotAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sqref" {
 			parsed, err := ParseSliceST_Sqref(attr.Value)
@@ -70,6 +71,7 @@ func (m *CT_ConditionalFormatting) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.SqrefAttr = &parsed
+			continue
 		}
 	}
 lCT_ConditionalFormatting:

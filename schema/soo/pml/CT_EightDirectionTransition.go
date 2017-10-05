@@ -43,6 +43,7 @@ func (m *CT_EightDirectionTransition) UnmarshalXML(d *xml.Decoder, start xml.Sta
 				return err
 			}
 			m.DirAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

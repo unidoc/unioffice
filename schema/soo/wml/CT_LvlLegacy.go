@@ -57,6 +57,7 @@ func (m *CT_LvlLegacy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.LegacyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "legacySpace" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -64,6 +65,7 @@ func (m *CT_LvlLegacy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.LegacySpaceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "legacyIndent" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -71,6 +73,7 @@ func (m *CT_LvlLegacy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.LegacyIndentAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

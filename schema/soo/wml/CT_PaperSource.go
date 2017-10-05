@@ -50,6 +50,7 @@ func (m *CT_PaperSource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.FirstAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "other" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -57,6 +58,7 @@ func (m *CT_PaperSource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.OtherAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

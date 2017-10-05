@@ -53,6 +53,7 @@ func (m *CT_SdtDropDownList) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.LastValueAttr = &parsed
+			continue
 		}
 	}
 lCT_SdtDropDownList:

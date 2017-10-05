@@ -67,6 +67,7 @@ func (m *CT_TableStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "defaultTableStyle" {
 			parsed, err := attr.Value, error(nil)
@@ -74,6 +75,7 @@ func (m *CT_TableStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.DefaultTableStyleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "defaultPivotStyle" {
 			parsed, err := attr.Value, error(nil)
@@ -81,6 +83,7 @@ func (m *CT_TableStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.DefaultPivotStyleAttr = &parsed
+			continue
 		}
 	}
 lCT_TableStyles:

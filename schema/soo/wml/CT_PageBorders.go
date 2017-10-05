@@ -85,12 +85,15 @@ func (m *CT_PageBorders) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "zOrder" {
 			m.ZOrderAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "display" {
 			m.DisplayAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "offsetFrom" {
 			m.OffsetFromAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_PageBorders:

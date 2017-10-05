@@ -91,6 +91,7 @@ func (m *CT_Spacing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.BeforeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "beforeLines" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -98,6 +99,7 @@ func (m *CT_Spacing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.BeforeLinesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "beforeAutospacing" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -105,6 +107,7 @@ func (m *CT_Spacing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.BeforeAutospacingAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "after" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -112,6 +115,7 @@ func (m *CT_Spacing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.AfterAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "afterLines" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -119,6 +123,7 @@ func (m *CT_Spacing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.AfterLinesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "afterAutospacing" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -126,6 +131,7 @@ func (m *CT_Spacing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.AfterAutospacingAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "line" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -133,9 +139,11 @@ func (m *CT_Spacing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.LineAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lineRule" {
 			m.LineRuleAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

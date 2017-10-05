@@ -40,6 +40,7 @@ func (m *AG_Type) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TypeAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

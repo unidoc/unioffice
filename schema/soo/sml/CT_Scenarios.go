@@ -65,6 +65,7 @@ func (m *CT_Scenarios) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.CurrentAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "show" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -73,6 +74,7 @@ func (m *CT_Scenarios) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.ShowAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "sqref" {
 			parsed, err := ParseSliceST_Sqref(attr.Value)
@@ -80,6 +82,7 @@ func (m *CT_Scenarios) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.SqrefAttr = &parsed
+			continue
 		}
 	}
 lCT_Scenarios:

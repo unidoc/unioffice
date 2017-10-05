@@ -42,6 +42,7 @@ func (m *CT_CustomShowId) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.IdAttr = uint32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

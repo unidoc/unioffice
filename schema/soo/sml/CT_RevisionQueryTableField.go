@@ -50,6 +50,7 @@ func (m *CT_RevisionQueryTableField) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.SheetIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "ref" {
 			parsed, err := attr.Value, error(nil)
@@ -57,6 +58,7 @@ func (m *CT_RevisionQueryTableField) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.RefAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "fieldId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -64,6 +66,7 @@ func (m *CT_RevisionQueryTableField) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.FieldIdAttr = uint32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -49,6 +49,7 @@ func (m *CT_Path2DArcTo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.WRAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "hR" {
 			parsed, err := ParseUnionST_AdjCoordinate(attr.Value)
@@ -56,6 +57,7 @@ func (m *CT_Path2DArcTo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.HRAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "stAng" {
 			parsed, err := ParseUnionST_AdjAngle(attr.Value)
@@ -63,6 +65,7 @@ func (m *CT_Path2DArcTo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.StAngAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "swAng" {
 			parsed, err := ParseUnionST_AdjAngle(attr.Value)
@@ -70,6 +73,7 @@ func (m *CT_Path2DArcTo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.SwAngAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -50,6 +50,7 @@ func (m *CT_CellProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.LockedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hidden" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -57,6 +58,7 @@ func (m *CT_CellProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.HiddenAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -50,6 +50,7 @@ func (m *CT_Guide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "orient" {
 			m.OrientAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "pos" {
 			parsed, err := ParseUnionST_Coordinate32(attr.Value)
@@ -57,6 +58,7 @@ func (m *CT_Guide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PosAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

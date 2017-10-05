@@ -145,8 +145,13 @@ func (m *CT_FramePr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_FramePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "dropCap" {
-			m.DropCapAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "hAnchor" {
+			m.HAnchorAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "vAnchor" {
+			m.VAnchorAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "lines" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -154,13 +159,7 @@ func (m *CT_FramePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.LinesAttr = &parsed
-		}
-		if attr.Name.Local == "w" {
-			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.WAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "h" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -168,6 +167,7 @@ func (m *CT_FramePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.HAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "vSpace" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -175,6 +175,7 @@ func (m *CT_FramePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.VSpaceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hSpace" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -182,15 +183,23 @@ func (m *CT_FramePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.HSpaceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "wrap" {
 			m.WrapAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "hAnchor" {
-			m.HAnchorAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "dropCap" {
+			m.DropCapAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "vAnchor" {
-			m.VAnchorAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "w" {
+			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.WAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "x" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -198,9 +207,11 @@ func (m *CT_FramePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.XAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "xAlign" {
 			m.XAlignAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "y" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -208,12 +219,15 @@ func (m *CT_FramePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.YAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "yAlign" {
 			m.YAlignAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "hRule" {
 			m.HRuleAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "anchorLock" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -221,6 +235,7 @@ func (m *CT_FramePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.AnchorLockAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

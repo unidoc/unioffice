@@ -67,6 +67,7 @@ func (m *CT_LineNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.CountByAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "start" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -74,6 +75,7 @@ func (m *CT_LineNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.StartAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "distance" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -81,9 +83,11 @@ func (m *CT_LineNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.DistanceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "restart" {
 			m.RestartAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

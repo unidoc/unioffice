@@ -129,56 +129,13 @@ func (m *CT_WriteProtection) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "recommended" {
-			parsed, err := ParseUnionST_OnOff(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RecommendedAttr = &parsed
-		}
-		if attr.Name.Local == "algorithmName" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.AlgorithmNameAttr = &parsed
-		}
-		if attr.Name.Local == "hashValue" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.HashValueAttr = &parsed
-		}
-		if attr.Name.Local == "saltValue" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.SaltValueAttr = &parsed
-		}
-		if attr.Name.Local == "spinCount" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
-			if err != nil {
-				return err
-			}
-			m.SpinCountAttr = &parsed
-		}
-		if attr.Name.Local == "cryptProviderType" {
-			m.CryptProviderTypeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "cryptAlgorithmClass" {
-			m.CryptAlgorithmClassAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "cryptAlgorithmType" {
-			m.CryptAlgorithmTypeAttr.UnmarshalXMLAttr(attr)
-		}
 		if attr.Name.Local == "cryptAlgorithmSid" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
 			m.CryptAlgorithmSidAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cryptSpinCount" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -186,6 +143,15 @@ func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.CryptSpinCountAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "algorithmName" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.AlgorithmNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cryptProvider" {
 			parsed, err := attr.Value, error(nil)
@@ -193,6 +159,51 @@ func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.CryptProviderAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "saltValue" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.SaltValueAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "cryptProviderType" {
+			m.CryptProviderTypeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "cryptAlgorithmClass" {
+			m.CryptAlgorithmClassAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "cryptAlgorithmType" {
+			m.CryptAlgorithmTypeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "recommended" {
+			parsed, err := ParseUnionST_OnOff(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RecommendedAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "hashValue" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.HashValueAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "spinCount" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
+			if err != nil {
+				return err
+			}
+			m.SpinCountAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "algIdExt" {
 			parsed, err := attr.Value, error(nil)
@@ -200,6 +211,7 @@ func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.AlgIdExtAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "algIdExtSource" {
 			parsed, err := attr.Value, error(nil)
@@ -207,6 +219,7 @@ func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.AlgIdExtSourceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cryptProviderTypeExt" {
 			parsed, err := attr.Value, error(nil)
@@ -214,6 +227,7 @@ func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.CryptProviderTypeExtAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cryptProviderTypeExtSource" {
 			parsed, err := attr.Value, error(nil)
@@ -221,6 +235,7 @@ func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.CryptProviderTypeExtSourceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hash" {
 			parsed, err := attr.Value, error(nil)
@@ -228,6 +243,7 @@ func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.HashAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "salt" {
 			parsed, err := attr.Value, error(nil)
@@ -235,6 +251,7 @@ func (m *CT_WriteProtection) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.SaltAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

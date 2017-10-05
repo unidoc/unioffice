@@ -99,6 +99,7 @@ func (m *CT_PCDKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.UniqueNameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "caption" {
 			parsed, err := attr.Value, error(nil)
@@ -106,6 +107,7 @@ func (m *CT_PCDKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CaptionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "displayFolder" {
 			parsed, err := attr.Value, error(nil)
@@ -113,6 +115,7 @@ func (m *CT_PCDKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.DisplayFolderAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "measureGroup" {
 			parsed, err := attr.Value, error(nil)
@@ -120,6 +123,7 @@ func (m *CT_PCDKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.MeasureGroupAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "parent" {
 			parsed, err := attr.Value, error(nil)
@@ -127,6 +131,7 @@ func (m *CT_PCDKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ParentAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "value" {
 			parsed, err := attr.Value, error(nil)
@@ -134,6 +139,7 @@ func (m *CT_PCDKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ValueAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "goal" {
 			parsed, err := attr.Value, error(nil)
@@ -141,6 +147,7 @@ func (m *CT_PCDKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.GoalAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "status" {
 			parsed, err := attr.Value, error(nil)
@@ -148,6 +155,7 @@ func (m *CT_PCDKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.StatusAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "trend" {
 			parsed, err := attr.Value, error(nil)
@@ -155,6 +163,7 @@ func (m *CT_PCDKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TrendAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "weight" {
 			parsed, err := attr.Value, error(nil)
@@ -162,6 +171,7 @@ func (m *CT_PCDKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.WeightAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "time" {
 			parsed, err := attr.Value, error(nil)
@@ -169,6 +179,7 @@ func (m *CT_PCDKPI) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TimeAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

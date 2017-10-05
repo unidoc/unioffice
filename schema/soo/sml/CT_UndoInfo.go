@@ -103,9 +103,11 @@ func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.IndexAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "exp" {
 			m.ExpAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "ref3D" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -113,6 +115,7 @@ func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.Ref3DAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "array" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -120,6 +123,7 @@ func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.ArrayAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "v" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -127,6 +131,7 @@ func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.VAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "nf" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -134,6 +139,7 @@ func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.NfAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cs" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -141,6 +147,7 @@ func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.CsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dr" {
 			parsed, err := attr.Value, error(nil)
@@ -148,6 +155,7 @@ func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.DrAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "dn" {
 			parsed, err := attr.Value, error(nil)
@@ -155,6 +163,7 @@ func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.DnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "r" {
 			parsed, err := attr.Value, error(nil)
@@ -162,6 +171,7 @@ func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.RAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -170,6 +180,7 @@ func (m *CT_UndoInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.SIdAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

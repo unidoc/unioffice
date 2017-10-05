@@ -70,6 +70,7 @@ func (m *CT_SdtDate) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.FullDateAttr = &parsed
+			continue
 		}
 	}
 lCT_SdtDate:

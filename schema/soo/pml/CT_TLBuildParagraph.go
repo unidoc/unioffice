@@ -96,6 +96,7 @@ func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "build" {
 			m.BuildAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "bldLvl" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -104,6 +105,7 @@ func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			}
 			pt := uint32(parsed)
 			m.BldLvlAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "animBg" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -111,6 +113,7 @@ func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.AnimBgAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoUpdateAnimBg" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -118,6 +121,7 @@ func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.AutoUpdateAnimBgAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rev" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -125,6 +129,7 @@ func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.RevAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "advAuto" {
 			parsed, err := ParseUnionST_TLTime(attr.Value)
@@ -132,6 +137,7 @@ func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.AdvAutoAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "spid" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -140,6 +146,7 @@ func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			}
 			pt := uint32(parsed)
 			m.SpidAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "grpId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -148,6 +155,7 @@ func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			}
 			pt := uint32(parsed)
 			m.GrpIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "uiExpand" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -155,6 +163,7 @@ func (m *CT_TLBuildParagraph) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.UiExpandAttr = &parsed
+			continue
 		}
 	}
 lCT_TLBuildParagraph:

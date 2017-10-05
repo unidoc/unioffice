@@ -57,6 +57,7 @@ func (m *CT_TLTimeAnimateValue) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.TmAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fmla" {
 			parsed, err := attr.Value, error(nil)
@@ -64,6 +65,7 @@ func (m *CT_TLTimeAnimateValue) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.FmlaAttr = &parsed
+			continue
 		}
 	}
 lCT_TLTimeAnimateValue:

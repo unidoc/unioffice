@@ -111,12 +111,13 @@ func (m *CT_Cnf) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Cnf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "val" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "evenVBand" {
+			parsed, err := ParseUnionST_OnOff(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.ValAttr = &parsed
+			m.EvenVBandAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "firstRow" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -124,6 +125,7 @@ func (m *CT_Cnf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FirstRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lastRow" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -131,6 +133,7 @@ func (m *CT_Cnf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.LastRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "firstColumn" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -138,6 +141,7 @@ func (m *CT_Cnf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FirstColumnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lastColumn" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -145,6 +149,7 @@ func (m *CT_Cnf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.LastColumnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "oddVBand" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -152,13 +157,15 @@ func (m *CT_Cnf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.OddVBandAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "evenVBand" {
-			parsed, err := ParseUnionST_OnOff(attr.Value)
+		if attr.Name.Local == "val" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.EvenVBandAttr = &parsed
+			m.ValAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "oddHBand" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -166,6 +173,7 @@ func (m *CT_Cnf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.OddHBandAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "evenHBand" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -173,6 +181,7 @@ func (m *CT_Cnf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.EvenHBandAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "firstRowFirstColumn" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -180,6 +189,7 @@ func (m *CT_Cnf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FirstRowFirstColumnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "firstRowLastColumn" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -187,6 +197,7 @@ func (m *CT_Cnf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FirstRowLastColumnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lastRowFirstColumn" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -194,6 +205,7 @@ func (m *CT_Cnf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.LastRowFirstColumnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lastRowLastColumn" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -201,6 +213,7 @@ func (m *CT_Cnf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.LastRowLastColumnAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

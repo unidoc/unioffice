@@ -43,6 +43,7 @@ func (m *CT_TLIterateIntervalPercentage) UnmarshalXML(d *xml.Decoder, start xml.
 				return err
 			}
 			m.ValAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

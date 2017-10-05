@@ -58,19 +58,21 @@ func (m *CT_Hyperlink) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = &parsed
+			continue
+		}
 		if attr.Name.Local == "ref" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.RefAttr = parsed
-		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "location" {
 			parsed, err := attr.Value, error(nil)
@@ -78,6 +80,7 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.LocationAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "tooltip" {
 			parsed, err := attr.Value, error(nil)
@@ -85,6 +88,7 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.TooltipAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "display" {
 			parsed, err := attr.Value, error(nil)
@@ -92,6 +96,7 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.DisplayAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

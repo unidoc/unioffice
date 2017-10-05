@@ -60,6 +60,7 @@ func (m *CT_ChartFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ChartAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "format" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -67,6 +68,7 @@ func (m *CT_ChartFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.FormatAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "series" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -74,6 +76,7 @@ func (m *CT_ChartFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.SeriesAttr = &parsed
+			continue
 		}
 	}
 lCT_ChartFormat:

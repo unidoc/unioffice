@@ -66,6 +66,7 @@ func (m *CT_Location) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.RefAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "firstHeaderRow" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -73,6 +74,7 @@ func (m *CT_Location) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.FirstHeaderRowAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "firstDataRow" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -80,6 +82,7 @@ func (m *CT_Location) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.FirstDataRowAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "firstDataCol" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -87,6 +90,7 @@ func (m *CT_Location) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.FirstDataColAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "rowPageCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -95,6 +99,7 @@ func (m *CT_Location) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.RowPageCountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "colPageCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -103,6 +108,7 @@ func (m *CT_Location) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.ColPageCountAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

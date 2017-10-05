@@ -49,6 +49,7 @@ func (m *CT_Query) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.MdxAttr = parsed
+			continue
 		}
 	}
 lCT_Query:

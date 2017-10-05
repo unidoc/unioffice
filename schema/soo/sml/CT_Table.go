@@ -193,96 +193,6 @@ func (m *CT_Table) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.TableColumns = NewCT_TableColumns()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			m.IdAttr = uint32(parsed)
-		}
-		if attr.Name.Local == "name" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.NameAttr = &parsed
-		}
-		if attr.Name.Local == "displayName" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.DisplayNameAttr = parsed
-		}
-		if attr.Name.Local == "comment" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.CommentAttr = &parsed
-		}
-		if attr.Name.Local == "ref" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.RefAttr = parsed
-		}
-		if attr.Name.Local == "tableType" {
-			m.TableTypeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "headerRowCount" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.HeaderRowCountAttr = &pt
-		}
-		if attr.Name.Local == "insertRow" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.InsertRowAttr = &parsed
-		}
-		if attr.Name.Local == "insertRowShift" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.InsertRowShiftAttr = &parsed
-		}
-		if attr.Name.Local == "totalsRowCount" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.TotalsRowCountAttr = &pt
-		}
-		if attr.Name.Local == "totalsRowShown" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.TotalsRowShownAttr = &parsed
-		}
-		if attr.Name.Local == "published" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PublishedAttr = &parsed
-		}
-		if attr.Name.Local == "headerRowDxfId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.HeaderRowDxfIdAttr = &pt
-		}
 		if attr.Name.Local == "dataDxfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
@@ -290,6 +200,7 @@ func (m *CT_Table) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.DataDxfIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "totalsRowDxfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -298,6 +209,15 @@ func (m *CT_Table) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.TotalsRowDxfIdAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "name" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "headerRowBorderDxfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -306,6 +226,15 @@ func (m *CT_Table) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.HeaderRowBorderDxfIdAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "comment" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.CommentAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "tableBorderDxfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -314,6 +243,11 @@ func (m *CT_Table) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.TableBorderDxfIdAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "tableType" {
+			m.TableTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "totalsRowBorderDxfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -322,6 +256,15 @@ func (m *CT_Table) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.TotalsRowBorderDxfIdAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "insertRow" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.InsertRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "headerRowCellStyle" {
 			parsed, err := attr.Value, error(nil)
@@ -329,13 +272,16 @@ func (m *CT_Table) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HeaderRowCellStyleAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "dataCellStyle" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "totalsRowCount" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
-			m.DataCellStyleAttr = &parsed
+			pt := uint32(parsed)
+			m.TotalsRowCountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "totalsRowCellStyle" {
 			parsed, err := attr.Value, error(nil)
@@ -343,6 +289,39 @@ func (m *CT_Table) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TotalsRowCellStyleAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "displayName" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.DisplayNameAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "id" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = uint32(parsed)
+			continue
+		}
+		if attr.Name.Local == "dataCellStyle" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.DataCellStyleAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "published" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PublishedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "connectionId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -351,6 +330,49 @@ func (m *CT_Table) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.ConnectionIdAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "ref" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.RefAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "insertRowShift" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.InsertRowShiftAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "totalsRowShown" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.TotalsRowShownAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "headerRowDxfId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.HeaderRowDxfIdAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "headerRowCount" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.HeaderRowCountAttr = &pt
+			continue
 		}
 	}
 lCT_Table:

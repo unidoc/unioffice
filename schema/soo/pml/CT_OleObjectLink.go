@@ -51,6 +51,7 @@ func (m *CT_OleObjectLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.UpdateAutomaticAttr = &parsed
+			continue
 		}
 	}
 lCT_OleObjectLink:

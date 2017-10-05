@@ -192,13 +192,21 @@ func (m *CT_RevisionDefinedName) MarshalXML(e *xml.Encoder, start xml.StartEleme
 func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "localSheetId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+		if attr.Name.Local == "description" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			pt := uint32(parsed)
-			m.LocalSheetIdAttr = &pt
+			m.DescriptionAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "oldDescription" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.OldDescriptionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "customView" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -206,13 +214,15 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.CustomViewAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "name" {
+		if attr.Name.Local == "help" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.NameAttr = parsed
+			m.HelpAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "function" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -220,13 +230,15 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.FunctionAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "oldFunction" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "oldHelp" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.OldFunctionAttr = &parsed
+			m.OldHelpAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "functionGroupId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
@@ -235,14 +247,15 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			}
 			pt := uint8(parsed)
 			m.FunctionGroupIdAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "oldFunctionGroupId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
+		if attr.Name.Local == "statusBar" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			pt := uint8(parsed)
-			m.OldFunctionGroupIdAttr = &pt
+			m.StatusBarAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "shortcutKey" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
@@ -251,6 +264,88 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			}
 			pt := uint8(parsed)
 			m.ShortcutKeyAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "oldStatusBar" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.OldStatusBarAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "hidden" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.HiddenAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "oldComment" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.OldCommentAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "name" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.NameAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "ra" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RaAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "localSheetId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.LocalSheetIdAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "comment" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.CommentAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "customMenu" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.CustomMenuAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "oldFunction" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.OldFunctionAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "ua" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.UaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "oldShortcutKey" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
@@ -259,13 +354,7 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			}
 			pt := uint8(parsed)
 			m.OldShortcutKeyAttr = &pt
-		}
-		if attr.Name.Local == "hidden" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.HiddenAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "oldHidden" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -273,13 +362,7 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.OldHiddenAttr = &parsed
-		}
-		if attr.Name.Local == "customMenu" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.CustomMenuAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "oldCustomMenu" {
 			parsed, err := attr.Value, error(nil)
@@ -287,62 +370,16 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.OldCustomMenuAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "description" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "oldFunctionGroupId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
 			if err != nil {
 				return err
 			}
-			m.DescriptionAttr = &parsed
-		}
-		if attr.Name.Local == "oldDescription" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.OldDescriptionAttr = &parsed
-		}
-		if attr.Name.Local == "help" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.HelpAttr = &parsed
-		}
-		if attr.Name.Local == "oldHelp" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.OldHelpAttr = &parsed
-		}
-		if attr.Name.Local == "statusBar" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.StatusBarAttr = &parsed
-		}
-		if attr.Name.Local == "oldStatusBar" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.OldStatusBarAttr = &parsed
-		}
-		if attr.Name.Local == "comment" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.CommentAttr = &parsed
-		}
-		if attr.Name.Local == "oldComment" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.OldCommentAttr = &parsed
+			pt := uint8(parsed)
+			m.OldFunctionGroupIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "rId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -351,20 +388,7 @@ func (m *CT_RevisionDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			}
 			pt := uint32(parsed)
 			m.RIdAttr = &pt
-		}
-		if attr.Name.Local == "ua" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.UaAttr = &parsed
-		}
-		if attr.Name.Local == "ra" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RaAttr = &parsed
+			continue
 		}
 	}
 lCT_RevisionDefinedName:

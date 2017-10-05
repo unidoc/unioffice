@@ -48,6 +48,14 @@ func (m *CT_SlideMasterIdListEntry) MarshalXML(e *xml.Encoder, start xml.StartEl
 func (m *CT_SlideMasterIdListEntry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.RIdAttr = parsed
+			continue
+		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
@@ -55,13 +63,7 @@ func (m *CT_SlideMasterIdListEntry) UnmarshalXML(d *xml.Decoder, start xml.Start
 			}
 			pt := uint32(parsed)
 			m.IdAttr = &pt
-		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.RIdAttr = parsed
+			continue
 		}
 	}
 lCT_SlideMasterIdListEntry:

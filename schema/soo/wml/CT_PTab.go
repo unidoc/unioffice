@@ -60,12 +60,15 @@ func (m *CT_PTab) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "alignment" {
 			m.AlignmentAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "relativeTo" {
 			m.RelativeToAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "leader" {
 			m.LeaderAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

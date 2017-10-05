@@ -38,33 +38,37 @@ func (m *RelIds) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_RelIds = *NewCT_RelIds()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "dm" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "dm" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.DmAttr = parsed
+			continue
 		}
-		if attr.Name.Local == "lo" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "lo" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.LoAttr = parsed
+			continue
 		}
-		if attr.Name.Local == "qs" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "qs" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.QsAttr = parsed
+			continue
 		}
-		if attr.Name.Local == "cs" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "cs" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.CsAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

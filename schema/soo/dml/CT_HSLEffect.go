@@ -54,6 +54,7 @@ func (m *CT_HSLEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := int32(parsed)
 			m.HueAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "sat" {
 			parsed, err := ParseUnionST_FixedPercentage(attr.Value)
@@ -61,6 +62,7 @@ func (m *CT_HSLEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.SatAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lum" {
 			parsed, err := ParseUnionST_FixedPercentage(attr.Value)
@@ -68,6 +70,7 @@ func (m *CT_HSLEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.LumAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

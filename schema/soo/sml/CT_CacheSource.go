@@ -69,6 +69,7 @@ func (m *CT_CacheSource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "connectionId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -77,6 +78,7 @@ func (m *CT_CacheSource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.ConnectionIdAttr = &pt
+			continue
 		}
 	}
 lCT_CacheSource:

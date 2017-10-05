@@ -199,53 +199,65 @@ func (m *CT_Fill) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Fill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "type" {
-			m.TypeAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "detectmouseclick" {
+			m.DetectmouseclickAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "on" {
-			m.OnAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "color" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "relid" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.ColorAttr = &parsed
+			m.RelidAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "opacity" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.OpacityAttr = &parsed
+			m.IdAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "color2" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "opacity2" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.Color2Attr = &parsed
+			m.Opacity2Attr = &parsed
+			continue
 		}
-		if attr.Name.Local == "src" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "title" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.SrcAttr = &parsed
+			m.TitleAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "href" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "href" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.HrefAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "althref" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "althref" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.AlthrefAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "alignshape" {
+			m.AlignshapeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "method" {
+			m.MethodAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "size" {
 			parsed, err := attr.Value, error(nil)
@@ -253,13 +265,7 @@ func (m *CT_Fill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SizeAttr = &parsed
-		}
-		if attr.Name.Local == "origin" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.OriginAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "position" {
 			parsed, err := attr.Value, error(nil)
@@ -267,9 +273,15 @@ func (m *CT_Fill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PositionAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "aspect" {
-			m.AspectAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "src" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.SrcAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "colors" {
 			parsed, err := attr.Value, error(nil)
@@ -277,23 +289,19 @@ func (m *CT_Fill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ColorsAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "angle" {
-			parsed, err := strconv.ParseFloat(attr.Value, 64)
-			if err != nil {
-				return err
-			}
-			m.AngleAttr = &parsed
-		}
-		if attr.Name.Local == "alignshape" {
-			m.AlignshapeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "focus" {
+		if attr.Name.Local == "color2" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.FocusAttr = &parsed
+			m.Color2Attr = &parsed
+			continue
+		}
+		if attr.Name.Local == "type" {
+			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "focussize" {
 			parsed, err := attr.Value, error(nil)
@@ -301,6 +309,7 @@ func (m *CT_Fill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FocussizeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "focusposition" {
 			parsed, err := attr.Value, error(nil)
@@ -308,46 +317,63 @@ func (m *CT_Fill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FocuspositionAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "method" {
-			m.MethodAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "detectmouseclick" {
-			m.DetectmouseclickAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "title" {
+		if attr.Name.Local == "origin" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.TitleAttr = &parsed
+			m.OriginAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "opacity2" {
+		if attr.Name.Local == "aspect" {
+			m.AspectAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "angle" {
+			parsed, err := strconv.ParseFloat(attr.Value, 64)
+			if err != nil {
+				return err
+			}
+			m.AngleAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "focus" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.Opacity2Attr = &parsed
+			m.FocusAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "recolor" {
 			m.RecolorAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "rotate" {
 			m.RotateAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "id" {
+		if attr.Name.Local == "opacity" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = &parsed
+			m.OpacityAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "relid" {
+		if attr.Name.Local == "color" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.RelidAttr = &parsed
+			m.ColorAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "on" {
+			m.OnAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
@@ -355,6 +381,7 @@ func (m *CT_Fill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SIdAttr = &parsed
+			continue
 		}
 	}
 lCT_Fill:

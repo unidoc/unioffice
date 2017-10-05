@@ -41,6 +41,7 @@ func (m *CT_TLSubShapeId) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.SpidAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

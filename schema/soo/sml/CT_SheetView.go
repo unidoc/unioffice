@@ -177,85 +177,9 @@ func (m *CT_SheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "windowProtection" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.WindowProtectionAttr = &parsed
-		}
-		if attr.Name.Local == "showFormulas" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowFormulasAttr = &parsed
-		}
-		if attr.Name.Local == "showGridLines" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowGridLinesAttr = &parsed
-		}
-		if attr.Name.Local == "showRowColHeaders" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowRowColHeadersAttr = &parsed
-		}
-		if attr.Name.Local == "showZeros" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowZerosAttr = &parsed
-		}
-		if attr.Name.Local == "rightToLeft" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RightToLeftAttr = &parsed
-		}
-		if attr.Name.Local == "tabSelected" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.TabSelectedAttr = &parsed
-		}
-		if attr.Name.Local == "showRuler" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowRulerAttr = &parsed
-		}
-		if attr.Name.Local == "showOutlineSymbols" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowOutlineSymbolsAttr = &parsed
-		}
-		if attr.Name.Local == "defaultGridColor" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DefaultGridColorAttr = &parsed
-		}
-		if attr.Name.Local == "showWhiteSpace" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowWhiteSpaceAttr = &parsed
-		}
 		if attr.Name.Local == "view" {
 			m.ViewAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "topLeftCell" {
 			parsed, err := attr.Value, error(nil)
@@ -263,6 +187,15 @@ func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.TopLeftCellAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showFormulas" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowFormulasAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "colorId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -271,6 +204,15 @@ func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.ColorIdAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "showRowColHeaders" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowRowColHeadersAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "zoomScale" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -279,6 +221,15 @@ func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.ZoomScaleAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "rightToLeft" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RightToLeftAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "zoomScaleNormal" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -287,6 +238,15 @@ func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.ZoomScaleNormalAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "showRuler" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowRulerAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "zoomScaleSheetLayoutView" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -295,6 +255,23 @@ func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.ZoomScaleSheetLayoutViewAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "workbookViewId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			m.WorkbookViewIdAttr = uint32(parsed)
+			continue
+		}
+		if attr.Name.Local == "tabSelected" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.TabSelectedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "zoomScalePageLayoutView" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -303,13 +280,55 @@ func (m *CT_SheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.ZoomScalePageLayoutViewAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "workbookViewId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+		if attr.Name.Local == "showZeros" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.WorkbookViewIdAttr = uint32(parsed)
+			m.ShowZerosAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "windowProtection" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.WindowProtectionAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showOutlineSymbols" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowOutlineSymbolsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showWhiteSpace" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowWhiteSpaceAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showGridLines" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowGridLinesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "defaultGridColor" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DefaultGridColorAttr = &parsed
+			continue
 		}
 	}
 lCT_SheetView:

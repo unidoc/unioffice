@@ -49,6 +49,7 @@ func (m *CT_TblGridChange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 	}
 lCT_TblGridChange:

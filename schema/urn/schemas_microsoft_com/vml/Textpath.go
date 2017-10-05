@@ -34,18 +34,23 @@ func (m *Textpath) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "on" {
 			m.OnAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "fitshape" {
 			m.FitshapeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "fitpath" {
 			m.FitpathAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "trim" {
 			m.TrimAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "xscale" {
 			m.XscaleAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "string" {
 			parsed, err := attr.Value, error(nil)
@@ -53,6 +58,7 @@ func (m *Textpath) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.StringAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
@@ -60,6 +66,7 @@ func (m *Textpath) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "style" {
 			parsed, err := attr.Value, error(nil)
@@ -67,6 +74,7 @@ func (m *Textpath) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.StyleAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

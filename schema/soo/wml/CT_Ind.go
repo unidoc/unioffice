@@ -112,6 +112,7 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.StartAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "startChars" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -119,6 +120,7 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.StartCharsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "end" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -126,6 +128,7 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.EndAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "endChars" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -133,6 +136,7 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.EndCharsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "left" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -140,6 +144,7 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.LeftAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "leftChars" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -147,6 +152,7 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.LeftCharsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "right" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -154,6 +160,7 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RightAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rightChars" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -161,6 +168,7 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RightCharsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hanging" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -168,6 +176,7 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HangingAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hangingChars" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -175,6 +184,7 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HangingCharsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "firstLine" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -182,6 +192,7 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FirstLineAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "firstLineChars" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -189,6 +200,7 @@ func (m *CT_Ind) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FirstLineCharsAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -61,6 +61,7 @@ func (m *CT_Object) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.DxaOrigAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dyaOrig" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -68,6 +69,7 @@ func (m *CT_Object) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.DyaOrigAttr = &parsed
+			continue
 		}
 	}
 lCT_Object:

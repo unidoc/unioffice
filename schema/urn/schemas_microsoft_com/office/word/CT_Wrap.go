@@ -65,15 +65,19 @@ func (m *CT_Wrap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "side" {
 			m.SideAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "anchorx" {
 			m.AnchorxAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "anchory" {
 			m.AnchoryAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

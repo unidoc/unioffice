@@ -107,9 +107,11 @@ func (m *CT_Item) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.NAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "t" {
 			m.TAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "h" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -117,6 +119,7 @@ func (m *CT_Item) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "s" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -124,6 +127,7 @@ func (m *CT_Item) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sd" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -131,6 +135,7 @@ func (m *CT_Item) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "f" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -138,6 +143,7 @@ func (m *CT_Item) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "m" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -145,6 +151,7 @@ func (m *CT_Item) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.MAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "c" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -152,6 +159,7 @@ func (m *CT_Item) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "x" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -160,6 +168,7 @@ func (m *CT_Item) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.XAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "d" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -167,6 +176,7 @@ func (m *CT_Item) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.DAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "e" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -174,6 +184,7 @@ func (m *CT_Item) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.EAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -41,12 +41,13 @@ func (m *CT_OutlineViewSlideEntry) MarshalXML(e *xml.Encoder, start xml.StartEle
 func (m *CT_OutlineViewSlideEntry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "collapse" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -54,6 +55,7 @@ func (m *CT_OutlineViewSlideEntry) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.CollapseAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

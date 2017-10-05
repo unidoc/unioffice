@@ -103,12 +103,15 @@ func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "cryptProviderType" {
 			m.CryptProviderTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "cryptAlgorithmClass" {
 			m.CryptAlgorithmClassAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "cryptAlgorithmType" {
 			m.CryptAlgorithmTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "cryptAlgorithmSid" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -116,6 +119,7 @@ func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.CryptAlgorithmSidAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cryptSpinCount" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -123,6 +127,7 @@ func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.CryptSpinCountAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cryptProvider" {
 			parsed, err := attr.Value, error(nil)
@@ -130,6 +135,7 @@ func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.CryptProviderAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "algIdExt" {
 			parsed, err := attr.Value, error(nil)
@@ -137,6 +143,7 @@ func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.AlgIdExtAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "algIdExtSource" {
 			parsed, err := attr.Value, error(nil)
@@ -144,6 +151,7 @@ func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.AlgIdExtSourceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cryptProviderTypeExt" {
 			parsed, err := attr.Value, error(nil)
@@ -151,6 +159,7 @@ func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.CryptProviderTypeExtAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cryptProviderTypeExtSource" {
 			parsed, err := attr.Value, error(nil)
@@ -158,6 +167,7 @@ func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.CryptProviderTypeExtSourceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hash" {
 			parsed, err := attr.Value, error(nil)
@@ -165,6 +175,7 @@ func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.HashAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "salt" {
 			parsed, err := attr.Value, error(nil)
@@ -172,6 +183,7 @@ func (m *AG_TransitionalPassword) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.SaltAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

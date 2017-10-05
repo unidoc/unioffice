@@ -94,6 +94,7 @@ func (m *CT_SlideMaster) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.PreserveAttr = &parsed
+			continue
 		}
 	}
 lCT_SlideMaster:

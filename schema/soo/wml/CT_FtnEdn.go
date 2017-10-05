@@ -54,6 +54,7 @@ func (m *CT_FtnEdn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -61,6 +62,7 @@ func (m *CT_FtnEdn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 	}
 lCT_FtnEdn:

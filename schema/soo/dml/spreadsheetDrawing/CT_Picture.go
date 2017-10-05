@@ -71,6 +71,7 @@ func (m *CT_Picture) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.MacroAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fPublished" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -78,6 +79,7 @@ func (m *CT_Picture) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.FPublishedAttr = &parsed
+			continue
 		}
 	}
 lCT_Picture:

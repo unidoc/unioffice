@@ -68,6 +68,7 @@ func (m *CT_TLAnimateScaleBehavior) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.ZoomContentsAttr = &parsed
+			continue
 		}
 	}
 lCT_TLAnimateScaleBehavior:

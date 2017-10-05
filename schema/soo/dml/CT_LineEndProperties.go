@@ -57,12 +57,15 @@ func (m *CT_LineEndProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "w" {
 			m.WAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "len" {
 			m.LenAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

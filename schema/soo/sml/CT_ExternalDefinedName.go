@@ -54,6 +54,7 @@ func (m *CT_ExternalDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "refersTo" {
 			parsed, err := attr.Value, error(nil)
@@ -61,6 +62,7 @@ func (m *CT_ExternalDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.RefersToAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sheetId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -69,6 +71,7 @@ func (m *CT_ExternalDefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			}
 			pt := uint32(parsed)
 			m.SheetIdAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -184,13 +184,17 @@ func (m *CT_TextBodyProperties) MarshalXML(e *xml.Encoder, start xml.StartElemen
 func (m *CT_TextBodyProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "rot" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+		if attr.Name.Local == "fromWordArt" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			pt := int32(parsed)
-			m.RotAttr = &pt
+			m.FromWordArtAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "anchor" {
+			m.AnchorAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "spcFirstLastPara" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -198,25 +202,39 @@ func (m *CT_TextBodyProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.SpcFirstLastParaAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "vertOverflow" {
-			m.VertOverflowAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "horzOverflow" {
-			m.HorzOverflowAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "vert" {
-			m.VertAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "wrap" {
-			m.WrapAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "lIns" {
-			parsed, err := ParseUnionST_Coordinate32(attr.Value)
+		if attr.Name.Local == "anchorCtr" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.LInsAttr = &parsed
+			m.AnchorCtrAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "horzOverflow" {
+			m.HorzOverflowAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "forceAA" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ForceAAAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "wrap" {
+			m.WrapAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "upright" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.UprightAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "tIns" {
 			parsed, err := ParseUnionST_Coordinate32(attr.Value)
@@ -224,13 +242,15 @@ func (m *CT_TextBodyProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.TInsAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "rIns" {
-			parsed, err := ParseUnionST_Coordinate32(attr.Value)
+		if attr.Name.Local == "compatLnSpc" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.RInsAttr = &parsed
+			m.CompatLnSpcAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "bIns" {
 			parsed, err := ParseUnionST_Coordinate32(attr.Value)
@@ -238,14 +258,20 @@ func (m *CT_TextBodyProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.BInsAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "numCol" {
+		if attr.Name.Local == "vertOverflow" {
+			m.VertOverflowAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "rot" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
 			pt := int32(parsed)
-			m.NumColAttr = &pt
+			m.RotAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "spcCol" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -254,6 +280,28 @@ func (m *CT_TextBodyProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := int32(parsed)
 			m.SpcColAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "vert" {
+			m.VertAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "rIns" {
+			parsed, err := ParseUnionST_Coordinate32(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RInsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "numCol" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := int32(parsed)
+			m.NumColAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "rtlCol" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -261,44 +309,15 @@ func (m *CT_TextBodyProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.RtlColAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "fromWordArt" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "lIns" {
+			parsed, err := ParseUnionST_Coordinate32(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.FromWordArtAttr = &parsed
-		}
-		if attr.Name.Local == "anchor" {
-			m.AnchorAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "anchorCtr" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AnchorCtrAttr = &parsed
-		}
-		if attr.Name.Local == "forceAA" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ForceAAAttr = &parsed
-		}
-		if attr.Name.Local == "upright" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.UprightAttr = &parsed
-		}
-		if attr.Name.Local == "compatLnSpc" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CompatLnSpcAttr = &parsed
+			m.LInsAttr = &parsed
+			continue
 		}
 	}
 lCT_TextBodyProperties:

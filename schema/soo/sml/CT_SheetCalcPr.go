@@ -44,6 +44,7 @@ func (m *CT_SheetCalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.FullCalcOnLoadAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

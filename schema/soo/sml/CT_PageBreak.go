@@ -61,6 +61,7 @@ func (m *CT_PageBreak) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "manualBreakCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -69,6 +70,7 @@ func (m *CT_PageBreak) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.ManualBreakCountAttr = &pt
+			continue
 		}
 	}
 lCT_PageBreak:

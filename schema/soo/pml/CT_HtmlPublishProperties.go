@@ -78,12 +78,21 @@ func (m *CT_HtmlPublishProperties) MarshalXML(e *xml.Encoder, start xml.StartEle
 func (m *CT_HtmlPublishProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = parsed
+			continue
+		}
 		if attr.Name.Local == "showSpeakerNotes" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.ShowSpeakerNotesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "target" {
 			parsed, err := attr.Value, error(nil)
@@ -91,6 +100,7 @@ func (m *CT_HtmlPublishProperties) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.TargetAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "title" {
 			parsed, err := attr.Value, error(nil)
@@ -98,13 +108,7 @@ func (m *CT_HtmlPublishProperties) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.TitleAttr = &parsed
-		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.IdAttr = parsed
+			continue
 		}
 	}
 lCT_HtmlPublishProperties:

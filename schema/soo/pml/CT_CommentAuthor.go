@@ -65,6 +65,7 @@ func (m *CT_CommentAuthor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.IdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -72,6 +73,7 @@ func (m *CT_CommentAuthor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "initials" {
 			parsed, err := attr.Value, error(nil)
@@ -79,6 +81,7 @@ func (m *CT_CommentAuthor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.InitialsAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "lastIdx" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -86,6 +89,7 @@ func (m *CT_CommentAuthor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.LastIdxAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "clrIdx" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -93,6 +97,7 @@ func (m *CT_CommentAuthor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.ClrIdxAttr = uint32(parsed)
+			continue
 		}
 	}
 lCT_CommentAuthor:

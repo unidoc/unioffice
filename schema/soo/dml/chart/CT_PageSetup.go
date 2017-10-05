@@ -99,6 +99,7 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.PaperSizeAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "paperHeight" {
 			parsed, err := attr.Value, error(nil)
@@ -106,6 +107,7 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.PaperHeightAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "paperWidth" {
 			parsed, err := attr.Value, error(nil)
@@ -113,6 +115,7 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.PaperWidthAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "firstPageNumber" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -121,9 +124,11 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.FirstPageNumberAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "orientation" {
 			m.OrientationAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "blackAndWhite" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -131,6 +136,7 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.BlackAndWhiteAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "draft" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -138,6 +144,7 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.DraftAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "useFirstPageNumber" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -145,6 +152,7 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.UseFirstPageNumberAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "horizontalDpi" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -153,6 +161,7 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := int32(parsed)
 			m.HorizontalDpiAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "verticalDpi" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -161,6 +170,7 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := int32(parsed)
 			m.VerticalDpiAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "copies" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -169,6 +179,7 @@ func (m *CT_PageSetup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.CopiesAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -49,6 +49,7 @@ func (m *CT_ServerFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.CultureAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "format" {
 			parsed, err := attr.Value, error(nil)
@@ -56,6 +57,7 @@ func (m *CT_ServerFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.FormatAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

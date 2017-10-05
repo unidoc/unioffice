@@ -72,6 +72,7 @@ func (m *AG_AutoFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.AutoFormatIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "applyNumberFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -79,6 +80,7 @@ func (m *AG_AutoFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ApplyNumberFormatsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyBorderFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -86,6 +88,7 @@ func (m *AG_AutoFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ApplyBorderFormatsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyFontFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -93,6 +96,7 @@ func (m *AG_AutoFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ApplyFontFormatsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyPatternFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -100,6 +104,7 @@ func (m *AG_AutoFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ApplyPatternFormatsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyAlignmentFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -107,6 +112,7 @@ func (m *AG_AutoFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ApplyAlignmentFormatsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyWidthHeightFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -114,6 +120,7 @@ func (m *AG_AutoFormat) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ApplyWidthHeightFormatsAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -80,12 +80,15 @@ func (m *CT_Placeholder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "orient" {
 			m.OrientAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "sz" {
 			m.SzAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "idx" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -94,6 +97,7 @@ func (m *CT_Placeholder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.IdxAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "hasCustomPrompt" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -101,6 +105,7 @@ func (m *CT_Placeholder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.HasCustomPromptAttr = &parsed
+			continue
 		}
 	}
 lCT_Placeholder:

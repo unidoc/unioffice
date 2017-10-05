@@ -47,6 +47,7 @@ func (m *CT_TLPoint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.XAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "y" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -54,6 +55,7 @@ func (m *CT_TLPoint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.YAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

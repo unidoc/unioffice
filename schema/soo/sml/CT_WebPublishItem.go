@@ -83,6 +83,7 @@ func (m *CT_WebPublishItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.IdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "divId" {
 			parsed, err := attr.Value, error(nil)
@@ -90,9 +91,11 @@ func (m *CT_WebPublishItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.DivIdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "sourceType" {
 			m.SourceTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "sourceRef" {
 			parsed, err := attr.Value, error(nil)
@@ -100,6 +103,7 @@ func (m *CT_WebPublishItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.SourceRefAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sourceObject" {
 			parsed, err := attr.Value, error(nil)
@@ -107,6 +111,7 @@ func (m *CT_WebPublishItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.SourceObjectAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "destinationFile" {
 			parsed, err := attr.Value, error(nil)
@@ -114,6 +119,7 @@ func (m *CT_WebPublishItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.DestinationFileAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "title" {
 			parsed, err := attr.Value, error(nil)
@@ -121,6 +127,7 @@ func (m *CT_WebPublishItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.TitleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoRepublish" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -128,6 +135,7 @@ func (m *CT_WebPublishItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.AutoRepublishAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

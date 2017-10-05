@@ -43,6 +43,7 @@ func (m *CT_SupplementalFont) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.ScriptAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "typeface" {
 			parsed, err := attr.Value, error(nil)
@@ -50,6 +51,7 @@ func (m *CT_SupplementalFont) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.TypefaceAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

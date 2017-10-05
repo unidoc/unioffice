@@ -137,19 +137,21 @@ func (m *CT_ForEach) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_ForEach) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "name" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.NameAttr = &parsed
-		}
 		if attr.Name.Local == "ref" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.RefAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "name" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "axis" {
 			parsed, err := ParseSliceST_AxisTypes(attr.Value)
@@ -157,6 +159,7 @@ func (m *CT_ForEach) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.AxisAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ptType" {
 			parsed, err := ParseSliceST_ElementTypes(attr.Value)
@@ -164,6 +167,7 @@ func (m *CT_ForEach) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.PtTypeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hideLastTrans" {
 			parsed, err := ParseSliceST_Booleans(attr.Value)
@@ -171,6 +175,7 @@ func (m *CT_ForEach) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.HideLastTransAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "st" {
 			parsed, err := ParseSliceST_Ints(attr.Value)
@@ -178,6 +183,7 @@ func (m *CT_ForEach) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.StAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cnt" {
 			parsed, err := ParseSliceST_UnsignedInts(attr.Value)
@@ -185,6 +191,7 @@ func (m *CT_ForEach) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.CntAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "step" {
 			parsed, err := ParseSliceST_Ints(attr.Value)
@@ -192,6 +199,7 @@ func (m *CT_ForEach) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.StepAttr = &parsed
+			continue
 		}
 	}
 lCT_ForEach:

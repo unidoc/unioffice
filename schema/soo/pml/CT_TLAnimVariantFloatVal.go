@@ -42,6 +42,7 @@ func (m *CT_TLAnimVariantFloatVal) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.ValAttr = float32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -58,6 +58,7 @@ func (m *CT_ExternalSheetData) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.SheetIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "refreshError" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -65,6 +66,7 @@ func (m *CT_ExternalSheetData) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.RefreshErrorAttr = &parsed
+			continue
 		}
 	}
 lCT_ExternalSheetData:

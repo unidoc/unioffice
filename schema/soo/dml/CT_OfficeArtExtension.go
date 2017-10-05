@@ -48,6 +48,7 @@ func (m *CT_OfficeArtExtension) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.UriAttr = parsed
+			continue
 		}
 	}
 lCT_OfficeArtExtension:

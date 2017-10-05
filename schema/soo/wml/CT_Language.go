@@ -55,6 +55,7 @@ func (m *CT_Language) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "eastAsia" {
 			parsed, err := attr.Value, error(nil)
@@ -62,6 +63,7 @@ func (m *CT_Language) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.EastAsiaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "bidi" {
 			parsed, err := attr.Value, error(nil)
@@ -69,6 +71,7 @@ func (m *CT_Language) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.BidiAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

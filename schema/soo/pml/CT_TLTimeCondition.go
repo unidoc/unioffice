@@ -68,6 +68,7 @@ func (m *CT_TLTimeCondition) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "evt" {
 			m.EvtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "delay" {
 			parsed, err := ParseUnionST_TLTime(attr.Value)
@@ -75,6 +76,7 @@ func (m *CT_TLTimeCondition) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.DelayAttr = &parsed
+			continue
 		}
 	}
 lCT_TLTimeCondition:

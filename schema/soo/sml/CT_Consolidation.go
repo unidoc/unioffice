@@ -58,6 +58,7 @@ func (m *CT_Consolidation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.AutoPageAttr = &parsed
+			continue
 		}
 	}
 lCT_Consolidation:

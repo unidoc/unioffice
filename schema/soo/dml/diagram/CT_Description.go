@@ -45,6 +45,7 @@ func (m *CT_Description) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.LangAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "val" {
 			parsed, err := attr.Value, error(nil)
@@ -52,6 +53,7 @@ func (m *CT_Description) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ValAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -48,6 +48,7 @@ func (m *OfcCT_EquationXml) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ContentTypeAttr = &parsed
+			continue
 		}
 	}
 lOfcCT_EquationXml:

@@ -50,6 +50,7 @@ func (m *WdInline) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.DistTAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "distB" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -58,14 +59,7 @@ func (m *WdInline) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.DistBAttr = &pt
-		}
-		if attr.Name.Local == "distL" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.DistLAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "distR" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -74,6 +68,16 @@ func (m *WdInline) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.DistRAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "distL" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.DistLAttr = &pt
+			continue
 		}
 	}
 lWdInline:

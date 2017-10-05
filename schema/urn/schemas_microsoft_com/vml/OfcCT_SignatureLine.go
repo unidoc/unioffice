@@ -113,8 +113,13 @@ func (m *OfcCT_SignatureLine) MarshalXML(e *xml.Encoder, start xml.StartElement)
 func (m *OfcCT_SignatureLine) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "issignatureline" {
-			m.IssignaturelineAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "suggestedsigner" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.SuggestedsignerAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
@@ -122,6 +127,7 @@ func (m *OfcCT_SignatureLine) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "provid" {
 			parsed, err := attr.Value, error(nil)
@@ -129,22 +135,23 @@ func (m *OfcCT_SignatureLine) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.ProvidAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "signinginstructionsset" {
 			m.SigninginstructionssetAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "allowcomments" {
 			m.AllowcommentsAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "showsigndate" {
 			m.ShowsigndateAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "suggestedsigner" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.SuggestedsignerAttr = &parsed
+		if attr.Name.Local == "issignatureline" {
+			m.IssignaturelineAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "suggestedsigner2" {
 			parsed, err := attr.Value, error(nil)
@@ -152,6 +159,7 @@ func (m *OfcCT_SignatureLine) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.Suggestedsigner2Attr = &parsed
+			continue
 		}
 		if attr.Name.Local == "suggestedsigneremail" {
 			parsed, err := attr.Value, error(nil)
@@ -159,6 +167,7 @@ func (m *OfcCT_SignatureLine) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.SuggestedsigneremailAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "signinginstructions" {
 			parsed, err := attr.Value, error(nil)
@@ -166,6 +175,7 @@ func (m *OfcCT_SignatureLine) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.SigninginstructionsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "addlxml" {
 			parsed, err := attr.Value, error(nil)
@@ -173,6 +183,7 @@ func (m *OfcCT_SignatureLine) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.AddlxmlAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sigprovurl" {
 			parsed, err := attr.Value, error(nil)
@@ -180,9 +191,11 @@ func (m *OfcCT_SignatureLine) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.SigprovurlAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ext" {
 			m.ExtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

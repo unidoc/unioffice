@@ -101,6 +101,7 @@ func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sqlType" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -109,9 +110,11 @@ func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := int32(parsed)
 			m.SqlTypeAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "parameterType" {
 			m.ParameterTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "refreshOnChange" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -119,6 +122,7 @@ func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.RefreshOnChangeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "prompt" {
 			parsed, err := attr.Value, error(nil)
@@ -126,6 +130,7 @@ func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.PromptAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "boolean" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -133,6 +138,7 @@ func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.BooleanAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "double" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -140,6 +146,7 @@ func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.DoubleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "integer" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -148,6 +155,7 @@ func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := int32(parsed)
 			m.IntegerAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "string" {
 			parsed, err := attr.Value, error(nil)
@@ -155,6 +163,7 @@ func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.StringAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cell" {
 			parsed, err := attr.Value, error(nil)
@@ -162,6 +171,7 @@ func (m *CT_Parameter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.CellAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

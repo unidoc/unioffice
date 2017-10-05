@@ -40,6 +40,7 @@ func (m *AG_Path) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PathAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

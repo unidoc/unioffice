@@ -68,6 +68,7 @@ func (m *CT_DynamicFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -75,6 +76,7 @@ func (m *CT_DynamicFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "valIso" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -82,6 +84,7 @@ func (m *CT_DynamicFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.ValIsoAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "maxVal" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -89,6 +92,7 @@ func (m *CT_DynamicFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.MaxValAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "maxValIso" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -96,6 +100,7 @@ func (m *CT_DynamicFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.MaxValIsoAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

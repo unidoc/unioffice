@@ -59,6 +59,7 @@ func (m *CT_DdeValues) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.RowsAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "cols" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -67,6 +68,7 @@ func (m *CT_DdeValues) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.ColsAttr = &pt
+			continue
 		}
 	}
 lCT_DdeValues:

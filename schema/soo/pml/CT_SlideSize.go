@@ -59,6 +59,7 @@ func (m *CT_SlideSize) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.CxAttr = int32(parsed)
+			continue
 		}
 		if attr.Name.Local == "cy" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -66,9 +67,11 @@ func (m *CT_SlideSize) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.CyAttr = int32(parsed)
+			continue
 		}
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

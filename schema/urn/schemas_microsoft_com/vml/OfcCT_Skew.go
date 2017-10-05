@@ -75,9 +75,11 @@ func (m *OfcCT_Skew) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "on" {
 			m.OnAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "offset" {
 			parsed, err := attr.Value, error(nil)
@@ -85,6 +87,7 @@ func (m *OfcCT_Skew) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.OffsetAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "origin" {
 			parsed, err := attr.Value, error(nil)
@@ -92,6 +95,7 @@ func (m *OfcCT_Skew) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.OriginAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "matrix" {
 			parsed, err := attr.Value, error(nil)
@@ -99,9 +103,11 @@ func (m *OfcCT_Skew) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.MatrixAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ext" {
 			m.ExtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

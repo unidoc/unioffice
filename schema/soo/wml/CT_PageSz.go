@@ -67,6 +67,7 @@ func (m *CT_PageSz) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.WAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "h" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -74,9 +75,11 @@ func (m *CT_PageSz) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "orient" {
 			m.OrientAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "code" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -84,6 +87,7 @@ func (m *CT_PageSz) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CodeAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

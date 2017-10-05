@@ -49,6 +49,7 @@ func (m *CT_BorderPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "style" {
 			m.StyleAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_BorderPr:

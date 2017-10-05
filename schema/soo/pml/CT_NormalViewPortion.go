@@ -50,6 +50,7 @@ func (m *CT_NormalViewPortion) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.SzAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "autoAdjust" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -57,6 +58,7 @@ func (m *CT_NormalViewPortion) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.AutoAdjustAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

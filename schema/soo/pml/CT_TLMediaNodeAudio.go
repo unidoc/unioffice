@@ -52,6 +52,7 @@ func (m *CT_TLMediaNodeAudio) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.IsNarrationAttr = &parsed
+			continue
 		}
 	}
 lCT_TLMediaNodeAudio:

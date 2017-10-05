@@ -70,6 +70,7 @@ func (m *CT_LevelGroup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "uniqueName" {
 			parsed, err := attr.Value, error(nil)
@@ -77,6 +78,7 @@ func (m *CT_LevelGroup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.UniqueNameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "caption" {
 			parsed, err := attr.Value, error(nil)
@@ -84,6 +86,7 @@ func (m *CT_LevelGroup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.CaptionAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "uniqueParent" {
 			parsed, err := attr.Value, error(nil)
@@ -91,6 +94,7 @@ func (m *CT_LevelGroup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.UniqueParentAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -99,6 +103,7 @@ func (m *CT_LevelGroup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := int32(parsed)
 			m.IdAttr = &pt
+			continue
 		}
 	}
 lCT_LevelGroup:

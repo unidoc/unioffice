@@ -33,87 +33,83 @@ func (m *Imagedata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_ImageData = *NewCT_ImageData()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "embosscolor" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "pict" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.EmbosscolorAttr = &parsed
+			m.PictAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "recolortarget" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "href" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.RecolortargetAttr = &parsed
+			m.RHrefAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "href" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "href" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.HrefAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "althref" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "althref" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.AlthrefAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "title" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "title" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.TitleAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "oleid" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "oleid" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
 			if err != nil {
 				return err
 			}
 			pt := float32(parsed)
 			m.OleidAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "detectmouseclick" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "detectmouseclick" {
 			m.DetectmouseclickAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "movie" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "movie" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
 			if err != nil {
 				return err
 			}
 			pt := float32(parsed)
 			m.MovieAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "relid" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "relid" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.RelidAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.IdAttr = &parsed
-		}
-		if attr.Name.Local == "pict" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.PictAttr = &parsed
-		}
-		if attr.Name.Local == "href" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.RHrefAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
@@ -121,34 +117,7 @@ func (m *Imagedata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SIdAttr = &parsed
-		}
-		if attr.Name.Local == "src" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.SrcAttr = &parsed
-		}
-		if attr.Name.Local == "cropleft" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.CropleftAttr = &parsed
-		}
-		if attr.Name.Local == "croptop" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.CroptopAttr = &parsed
-		}
-		if attr.Name.Local == "cropright" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.CroprightAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cropbottom" {
 			parsed, err := attr.Value, error(nil)
@@ -156,6 +125,55 @@ func (m *Imagedata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CropbottomAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "embosscolor" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.EmbosscolorAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "src" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.SrcAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "cropleft" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.CropleftAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "croptop" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.CroptopAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "cropright" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.CroprightAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "recolortarget" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.RecolortargetAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "gain" {
 			parsed, err := attr.Value, error(nil)
@@ -163,6 +181,7 @@ func (m *Imagedata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.GainAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "blacklevel" {
 			parsed, err := attr.Value, error(nil)
@@ -170,6 +189,7 @@ func (m *Imagedata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.BlacklevelAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "gamma" {
 			parsed, err := attr.Value, error(nil)
@@ -177,12 +197,15 @@ func (m *Imagedata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.GammaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "grayscale" {
 			m.GrayscaleAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "bilevel" {
 			m.BilevelAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "chromakey" {
 			parsed, err := attr.Value, error(nil)
@@ -190,6 +213,7 @@ func (m *Imagedata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ChromakeyAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

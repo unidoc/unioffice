@@ -90,6 +90,7 @@ func (m *CT_RangePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.AutoStartAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoEnd" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -97,9 +98,11 @@ func (m *CT_RangePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.AutoEndAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "groupBy" {
 			m.GroupByAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "startNum" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -107,6 +110,7 @@ func (m *CT_RangePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.StartNumAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "endNum" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -114,6 +118,7 @@ func (m *CT_RangePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.EndNumAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "startDate" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -121,6 +126,7 @@ func (m *CT_RangePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.StartDateAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "endDate" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -128,6 +134,7 @@ func (m *CT_RangePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.EndDateAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "groupInterval" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -135,6 +142,7 @@ func (m *CT_RangePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.GroupIntervalAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

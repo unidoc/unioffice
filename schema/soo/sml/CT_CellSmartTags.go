@@ -49,6 +49,7 @@ func (m *CT_CellSmartTags) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.RAttr = parsed
+			continue
 		}
 	}
 lCT_CellSmartTags:

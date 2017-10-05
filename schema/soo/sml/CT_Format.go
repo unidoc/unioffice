@@ -63,6 +63,7 @@ func (m *CT_Format) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "action" {
 			m.ActionAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "dxfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -71,6 +72,7 @@ func (m *CT_Format) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.DxfIdAttr = &pt
+			continue
 		}
 	}
 lCT_Format:

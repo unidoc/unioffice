@@ -54,6 +54,7 @@ func (m *CT_ExtensionListModify) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.ModAttr = &parsed
+			continue
 		}
 	}
 lCT_ExtensionListModify:

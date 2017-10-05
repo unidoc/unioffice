@@ -84,9 +84,11 @@ func (m *CT_Cxn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ModelIdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "srcId" {
 			parsed, err := ParseUnionST_ModelId(attr.Value)
@@ -94,6 +96,7 @@ func (m *CT_Cxn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SrcIdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "destId" {
 			parsed, err := ParseUnionST_ModelId(attr.Value)
@@ -101,6 +104,7 @@ func (m *CT_Cxn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.DestIdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "srcOrd" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -108,6 +112,7 @@ func (m *CT_Cxn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SrcOrdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "destOrd" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -115,6 +120,7 @@ func (m *CT_Cxn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.DestOrdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "parTransId" {
 			parsed, err := ParseUnionST_ModelId(attr.Value)
@@ -122,6 +128,7 @@ func (m *CT_Cxn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ParTransIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sibTransId" {
 			parsed, err := ParseUnionST_ModelId(attr.Value)
@@ -129,6 +136,7 @@ func (m *CT_Cxn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SibTransIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "presId" {
 			parsed, err := attr.Value, error(nil)
@@ -136,6 +144,7 @@ func (m *CT_Cxn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PresIdAttr = &parsed
+			continue
 		}
 	}
 lCT_Cxn:

@@ -64,6 +64,7 @@ func (m *CT_TLAnimateRotationBehavior) UnmarshalXML(d *xml.Decoder, start xml.St
 			}
 			pt := int32(parsed)
 			m.ByAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "from" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -72,6 +73,7 @@ func (m *CT_TLAnimateRotationBehavior) UnmarshalXML(d *xml.Decoder, start xml.St
 			}
 			pt := int32(parsed)
 			m.FromAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "to" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -80,6 +82,7 @@ func (m *CT_TLAnimateRotationBehavior) UnmarshalXML(d *xml.Decoder, start xml.St
 			}
 			pt := int32(parsed)
 			m.ToAttr = &pt
+			continue
 		}
 	}
 lCT_TLAnimateRotationBehavior:

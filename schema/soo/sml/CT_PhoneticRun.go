@@ -53,6 +53,7 @@ func (m *CT_PhoneticRun) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.SbAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "eb" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -60,6 +61,7 @@ func (m *CT_PhoneticRun) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.EbAttr = uint32(parsed)
+			continue
 		}
 	}
 lCT_PhoneticRun:

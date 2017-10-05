@@ -103,6 +103,7 @@ func (m *CT_RevisionComment) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.SheetIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "cell" {
 			parsed, err := attr.Value, error(nil)
@@ -110,6 +111,7 @@ func (m *CT_RevisionComment) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.CellAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "guid" {
 			parsed, err := attr.Value, error(nil)
@@ -117,9 +119,11 @@ func (m *CT_RevisionComment) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.GuidAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "action" {
 			m.ActionAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "alwaysShow" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -127,6 +131,7 @@ func (m *CT_RevisionComment) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.AlwaysShowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "old" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -134,6 +139,7 @@ func (m *CT_RevisionComment) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.OldAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hiddenRow" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -141,6 +147,7 @@ func (m *CT_RevisionComment) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.HiddenRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hiddenColumn" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -148,6 +155,7 @@ func (m *CT_RevisionComment) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.HiddenColumnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "author" {
 			parsed, err := attr.Value, error(nil)
@@ -155,6 +163,7 @@ func (m *CT_RevisionComment) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.AuthorAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "oldLength" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -163,6 +172,7 @@ func (m *CT_RevisionComment) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.OldLengthAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "newLength" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -171,6 +181,7 @@ func (m *CT_RevisionComment) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.NewLengthAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

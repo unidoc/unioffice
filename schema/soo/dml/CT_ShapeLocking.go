@@ -100,6 +100,7 @@ func (m *CT_ShapeLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoTextEditAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noGrp" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -107,6 +108,7 @@ func (m *CT_ShapeLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoGrpAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noSelect" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -114,6 +116,7 @@ func (m *CT_ShapeLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoSelectAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noRot" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -121,6 +124,7 @@ func (m *CT_ShapeLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoRotAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noChangeAspect" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -128,6 +132,7 @@ func (m *CT_ShapeLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoChangeAspectAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noMove" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -135,6 +140,7 @@ func (m *CT_ShapeLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoMoveAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noResize" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -142,6 +148,7 @@ func (m *CT_ShapeLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoResizeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noEditPoints" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -149,6 +156,7 @@ func (m *CT_ShapeLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoEditPointsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noAdjustHandles" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -156,6 +164,7 @@ func (m *CT_ShapeLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoAdjustHandlesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noChangeArrowheads" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -163,6 +172,7 @@ func (m *CT_ShapeLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoChangeArrowheadsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noChangeShapeType" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -170,6 +180,7 @@ func (m *CT_ShapeLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoChangeShapeTypeAttr = &parsed
+			continue
 		}
 	}
 lCT_ShapeLocking:

@@ -59,6 +59,7 @@ func (m *CT_TextFont) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.TypefaceAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "panose" {
 			parsed, err := attr.Value, error(nil)
@@ -66,9 +67,11 @@ func (m *CT_TextFont) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.PanoseAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "pitchFamily" {
 			m.PitchFamilyAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "charset" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 8)
@@ -77,6 +80,7 @@ func (m *CT_TextFont) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := int8(parsed)
 			m.CharsetAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -52,6 +52,7 @@ func (m *CT_TLMediaNodeVideo) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.FullScrnAttr = &parsed
+			continue
 		}
 	}
 lCT_TLMediaNodeVideo:

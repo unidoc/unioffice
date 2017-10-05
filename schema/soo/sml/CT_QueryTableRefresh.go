@@ -106,6 +106,7 @@ func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.PreserveSortFilterLayoutAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fieldIdWrapped" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -113,6 +114,7 @@ func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.FieldIdWrappedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "headersInLastRefresh" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -120,6 +122,7 @@ func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.HeadersInLastRefreshAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "minimumVersion" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
@@ -128,6 +131,7 @@ func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint8(parsed)
 			m.MinimumVersionAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "nextId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -136,6 +140,7 @@ func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint32(parsed)
 			m.NextIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "unboundColumnsLeft" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -144,6 +149,7 @@ func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint32(parsed)
 			m.UnboundColumnsLeftAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "unboundColumnsRight" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -152,6 +158,7 @@ func (m *CT_QueryTableRefresh) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint32(parsed)
 			m.UnboundColumnsRightAttr = &pt
+			continue
 		}
 	}
 lCT_QueryTableRefresh:

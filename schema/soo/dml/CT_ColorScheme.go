@@ -107,6 +107,7 @@ func (m *CT_ColorScheme) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 	}
 lCT_ColorScheme:

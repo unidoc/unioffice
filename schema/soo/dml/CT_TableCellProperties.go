@@ -158,26 +158,13 @@ func (m *CT_TableCellProperties) MarshalXML(e *xml.Encoder, start xml.StartEleme
 func (m *CT_TableCellProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "marL" {
-			parsed, err := ParseUnionST_Coordinate32(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MarLAttr = &parsed
-		}
 		if attr.Name.Local == "marR" {
 			parsed, err := ParseUnionST_Coordinate32(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.MarRAttr = &parsed
-		}
-		if attr.Name.Local == "marT" {
-			parsed, err := ParseUnionST_Coordinate32(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MarTAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "marB" {
 			parsed, err := ParseUnionST_Coordinate32(attr.Value)
@@ -185,12 +172,15 @@ func (m *CT_TableCellProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.MarBAttr = &parsed
-		}
-		if attr.Name.Local == "vert" {
-			m.VertAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "anchor" {
 			m.AnchorAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "horzOverflow" {
+			m.HorzOverflowAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "anchorCtr" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -198,9 +188,27 @@ func (m *CT_TableCellProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.AnchorCtrAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "horzOverflow" {
-			m.HorzOverflowAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "vert" {
+			m.VertAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "marL" {
+			parsed, err := ParseUnionST_Coordinate32(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.MarLAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "marT" {
+			parsed, err := ParseUnionST_Coordinate32(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.MarTAttr = &parsed
+			continue
 		}
 	}
 lCT_TableCellProperties:

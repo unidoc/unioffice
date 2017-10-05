@@ -44,6 +44,7 @@ func (m *CT_SDCategory) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.TypeAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "pri" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -51,6 +52,7 @@ func (m *CT_SDCategory) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.PriAttr = uint32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

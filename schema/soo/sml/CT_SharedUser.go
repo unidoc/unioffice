@@ -65,6 +65,7 @@ func (m *CT_SharedUser) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.GuidAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -72,6 +73,7 @@ func (m *CT_SharedUser) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -79,6 +81,7 @@ func (m *CT_SharedUser) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.IdAttr = int32(parsed)
+			continue
 		}
 		if attr.Name.Local == "dateTime" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -86,6 +89,7 @@ func (m *CT_SharedUser) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.DateTimeAttr = parsed
+			continue
 		}
 	}
 lCT_SharedUser:

@@ -42,6 +42,7 @@ func (m *CT_MailMergeDocType) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

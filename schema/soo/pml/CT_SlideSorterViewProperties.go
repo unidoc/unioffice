@@ -57,6 +57,7 @@ func (m *CT_SlideSorterViewProperties) UnmarshalXML(d *xml.Decoder, start xml.St
 				return err
 			}
 			m.ShowFormattingAttr = &parsed
+			continue
 		}
 	}
 lCT_SlideSorterViewProperties:

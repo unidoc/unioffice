@@ -41,12 +41,13 @@ func (m *CT_QuickTimeFile) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 func (m *CT_QuickTimeFile) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "link" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "link" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.LinkAttr = parsed
+			continue
 		}
 	}
 lCT_QuickTimeFile:

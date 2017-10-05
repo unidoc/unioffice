@@ -70,6 +70,7 @@ func (m *CT_PermStart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "edGrp" {
 			m.EdGrpAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "ed" {
 			parsed, err := attr.Value, error(nil)
@@ -77,6 +78,7 @@ func (m *CT_PermStart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.EdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "colFirst" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -84,6 +86,7 @@ func (m *CT_PermStart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ColFirstAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "colLast" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -91,6 +94,7 @@ func (m *CT_PermStart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ColLastAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
@@ -98,9 +102,11 @@ func (m *CT_PermStart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "displacedByCustomXml" {
 			m.DisplacedByCustomXmlAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

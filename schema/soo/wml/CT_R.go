@@ -75,6 +75,7 @@ func (m *CT_R) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RsidRPrAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rsidDel" {
 			parsed, err := attr.Value, error(nil)
@@ -82,6 +83,7 @@ func (m *CT_R) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RsidDelAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rsidR" {
 			parsed, err := attr.Value, error(nil)
@@ -89,6 +91,7 @@ func (m *CT_R) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RsidRAttr = &parsed
+			continue
 		}
 	}
 lCT_R:

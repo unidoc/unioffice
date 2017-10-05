@@ -85,6 +85,7 @@ func (m *CT_InnerShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.BlurRadAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dist" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -92,6 +93,7 @@ func (m *CT_InnerShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.DistAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dir" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -100,6 +102,7 @@ func (m *CT_InnerShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := int32(parsed)
 			m.DirAttr = &pt
+			continue
 		}
 	}
 lCT_InnerShadowEffect:

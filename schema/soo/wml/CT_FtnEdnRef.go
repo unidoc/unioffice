@@ -50,6 +50,7 @@ func (m *CT_FtnEdnRef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.CustomMarkFollowsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -57,6 +58,7 @@ func (m *CT_FtnEdnRef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

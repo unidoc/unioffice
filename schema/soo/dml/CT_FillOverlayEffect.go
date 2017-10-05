@@ -73,6 +73,7 @@ func (m *CT_FillOverlayEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "blend" {
 			m.BlendAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_FillOverlayEffect:

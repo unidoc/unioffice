@@ -57,6 +57,7 @@ func (m *CT_SlideSyncProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.ServerSldIdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "serverSldModifiedTime" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -64,6 +65,7 @@ func (m *CT_SlideSyncProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.ServerSldModifiedTimeAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "clientInsertedTime" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -71,6 +73,7 @@ func (m *CT_SlideSyncProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.ClientInsertedTimeAttr = parsed
+			continue
 		}
 	}
 lCT_SlideSyncProperties:

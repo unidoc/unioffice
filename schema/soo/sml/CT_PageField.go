@@ -74,6 +74,7 @@ func (m *CT_PageField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.FldAttr = int32(parsed)
+			continue
 		}
 		if attr.Name.Local == "item" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -82,6 +83,7 @@ func (m *CT_PageField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.ItemAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "hier" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -90,6 +92,7 @@ func (m *CT_PageField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := int32(parsed)
 			m.HierAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -97,6 +100,7 @@ func (m *CT_PageField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cap" {
 			parsed, err := attr.Value, error(nil)
@@ -104,6 +108,7 @@ func (m *CT_PageField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.CapAttr = &parsed
+			continue
 		}
 	}
 lCT_PageField:

@@ -96,12 +96,21 @@ func (m *CT_Hyperlink) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = &parsed
+			continue
+		}
 		if attr.Name.Local == "tgtFrame" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.TgtFrameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "tooltip" {
 			parsed, err := attr.Value, error(nil)
@@ -109,6 +118,7 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.TooltipAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "docLocation" {
 			parsed, err := attr.Value, error(nil)
@@ -116,13 +126,7 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.DocLocationAttr = &parsed
-		}
-		if attr.Name.Local == "history" {
-			parsed, err := ParseUnionST_OnOff(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.HistoryAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "anchor" {
 			parsed, err := attr.Value, error(nil)
@@ -130,13 +134,15 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.AnchorAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "history" {
+			parsed, err := ParseUnionST_OnOff(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = &parsed
+			m.HistoryAttr = &parsed
+			continue
 		}
 	}
 lCT_Hyperlink:

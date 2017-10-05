@@ -42,6 +42,7 @@ func (m *CT_AlphaModulateFixedEffect) UnmarshalXML(d *xml.Decoder, start xml.Sta
 				return err
 			}
 			m.AmtAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

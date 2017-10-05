@@ -91,6 +91,7 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint32(parsed)
 			m.BaseColWidthAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "defaultColWidth" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -98,6 +99,7 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.DefaultColWidthAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "defaultRowHeight" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -105,6 +107,7 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.DefaultRowHeightAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "customHeight" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -112,6 +115,7 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.CustomHeightAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "zeroHeight" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -119,6 +123,7 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.ZeroHeightAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "thickTop" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -126,6 +131,7 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.ThickTopAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "thickBottom" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -133,6 +139,7 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.ThickBottomAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "outlineLevelRow" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
@@ -141,6 +148,7 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint8(parsed)
 			m.OutlineLevelRowAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "outlineLevelCol" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
@@ -149,6 +157,7 @@ func (m *CT_SheetFormatPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint8(parsed)
 			m.OutlineLevelColAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

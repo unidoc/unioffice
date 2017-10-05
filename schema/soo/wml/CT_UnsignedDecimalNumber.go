@@ -42,6 +42,7 @@ func (m *CT_UnsignedDecimalNumber) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.ValAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -112,6 +112,7 @@ func (m *CT_Border) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.DiagonalUpAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "diagonalDown" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -119,6 +120,7 @@ func (m *CT_Border) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.DiagonalDownAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "outline" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -126,6 +128,7 @@ func (m *CT_Border) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.OutlineAttr = &parsed
+			continue
 		}
 	}
 lCT_Border:

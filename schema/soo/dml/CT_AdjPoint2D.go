@@ -43,6 +43,7 @@ func (m *CT_AdjPoint2D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.XAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "y" {
 			parsed, err := ParseUnionST_AdjCoordinate(attr.Value)
@@ -50,6 +51,7 @@ func (m *CT_AdjPoint2D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.YAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

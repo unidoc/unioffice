@@ -41,6 +41,7 @@ func (m *CT_SignedHpsMeasure) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.ValAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

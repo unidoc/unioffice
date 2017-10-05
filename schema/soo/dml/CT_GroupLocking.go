@@ -80,6 +80,7 @@ func (m *CT_GroupLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoGrpAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noUngrp" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -87,6 +88,7 @@ func (m *CT_GroupLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoUngrpAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noSelect" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -94,6 +96,7 @@ func (m *CT_GroupLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoSelectAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noRot" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -101,6 +104,7 @@ func (m *CT_GroupLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoRotAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noChangeAspect" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -108,6 +112,7 @@ func (m *CT_GroupLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoChangeAspectAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noMove" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -115,6 +120,7 @@ func (m *CT_GroupLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoMoveAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noResize" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -122,6 +128,7 @@ func (m *CT_GroupLocking) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NoResizeAttr = &parsed
+			continue
 		}
 	}
 lCT_GroupLocking:

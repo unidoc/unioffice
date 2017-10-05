@@ -71,6 +71,7 @@ func (m *CT_FieldGroup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.ParAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "base" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -79,6 +80,7 @@ func (m *CT_FieldGroup) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.BaseAttr = &pt
+			continue
 		}
 	}
 lCT_FieldGroup:

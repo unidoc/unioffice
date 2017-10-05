@@ -48,6 +48,7 @@ func (m *CT_BlurEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.RadAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "grow" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -55,6 +56,7 @@ func (m *CT_BlurEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.GrowAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

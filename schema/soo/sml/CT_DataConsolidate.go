@@ -75,6 +75,7 @@ func (m *CT_DataConsolidate) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "function" {
 			m.FunctionAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "startLabels" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -82,6 +83,7 @@ func (m *CT_DataConsolidate) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.StartLabelsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "leftLabels" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -89,6 +91,7 @@ func (m *CT_DataConsolidate) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.LeftLabelsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "topLabels" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -96,6 +99,7 @@ func (m *CT_DataConsolidate) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.TopLabelsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "link" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -103,6 +107,7 @@ func (m *CT_DataConsolidate) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.LinkAttr = &parsed
+			continue
 		}
 	}
 lCT_DataConsolidate:

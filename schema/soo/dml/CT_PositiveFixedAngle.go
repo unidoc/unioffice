@@ -43,6 +43,7 @@ func (m *CT_PositiveFixedAngle) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.ValAttr = int32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -45,9 +45,11 @@ func (m *OfcInk) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "annotation" {
 			m.AnnotationAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "contentType" {
 			parsed, err := attr.Value, error(nil)
@@ -55,6 +57,7 @@ func (m *OfcInk) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ContentTypeAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

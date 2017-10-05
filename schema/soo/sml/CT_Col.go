@@ -94,6 +94,7 @@ func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.MinAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "max" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -101,6 +102,7 @@ func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.MaxAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "width" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -108,6 +110,7 @@ func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.WidthAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "style" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -116,6 +119,7 @@ func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.StyleAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "hidden" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -123,6 +127,7 @@ func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HiddenAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "bestFit" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -130,6 +135,7 @@ func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.BestFitAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "customWidth" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -137,6 +143,7 @@ func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CustomWidthAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "phonetic" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -144,6 +151,7 @@ func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PhoneticAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "outlineLevel" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
@@ -152,6 +160,7 @@ func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint8(parsed)
 			m.OutlineLevelAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "collapsed" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -159,6 +168,7 @@ func (m *CT_Col) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CollapsedAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

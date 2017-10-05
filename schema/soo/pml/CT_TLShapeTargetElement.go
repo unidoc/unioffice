@@ -75,6 +75,7 @@ func (m *CT_TLShapeTargetElement) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.SpidAttr = uint32(parsed)
+			continue
 		}
 	}
 lCT_TLShapeTargetElement:

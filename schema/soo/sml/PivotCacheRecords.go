@@ -48,6 +48,7 @@ func (m *PivotCacheRecords) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lPivotCacheRecords:

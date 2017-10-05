@@ -60,9 +60,11 @@ func (m *AG_ConstraintRefAttributes) UnmarshalXML(d *xml.Decoder, start xml.Star
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "refType" {
 			m.RefTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "refFor" {
 			m.RefForAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "refForName" {
 			parsed, err := attr.Value, error(nil)
@@ -70,9 +72,11 @@ func (m *AG_ConstraintRefAttributes) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.RefForNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "refPtType" {
 			m.RefPtTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

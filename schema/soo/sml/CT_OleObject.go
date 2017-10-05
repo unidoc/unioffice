@@ -85,15 +85,17 @@ func (m *CT_OleObject) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 func (m *CT_OleObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "progId" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.ProgIdAttr = &parsed
+			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dvAspect" {
 			m.DvAspectAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "link" {
 			parsed, err := attr.Value, error(nil)
@@ -101,9 +103,11 @@ func (m *CT_OleObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.LinkAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "oleUpdate" {
 			m.OleUpdateAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "autoLoad" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -111,6 +115,7 @@ func (m *CT_OleObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.AutoLoadAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "shapeId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -118,13 +123,15 @@ func (m *CT_OleObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ShapeIdAttr = uint32(parsed)
+			continue
 		}
-		if attr.Name.Local == "id" {
+		if attr.Name.Local == "progId" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = &parsed
+			m.ProgIdAttr = &parsed
+			continue
 		}
 	}
 lCT_OleObject:

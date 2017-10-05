@@ -80,6 +80,7 @@ func (m *CT_CellStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "xfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -87,6 +88,7 @@ func (m *CT_CellStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.XfIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "builtinId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -95,6 +97,7 @@ func (m *CT_CellStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.BuiltinIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "iLevel" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -103,6 +106,7 @@ func (m *CT_CellStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.ILevelAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "hidden" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -110,6 +114,7 @@ func (m *CT_CellStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.HiddenAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "customBuiltin" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -117,6 +122,7 @@ func (m *CT_CellStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.CustomBuiltinAttr = &parsed
+			continue
 		}
 	}
 lCT_CellStyle:

@@ -52,9 +52,11 @@ func (m *CT_TblWidth) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.WAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

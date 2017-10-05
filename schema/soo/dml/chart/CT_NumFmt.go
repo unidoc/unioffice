@@ -46,6 +46,7 @@ func (m *CT_NumFmt) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FormatCodeAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "sourceLinked" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -53,6 +54,7 @@ func (m *CT_NumFmt) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SourceLinkedAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

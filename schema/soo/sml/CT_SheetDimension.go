@@ -41,6 +41,7 @@ func (m *CT_SheetDimension) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.RefAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

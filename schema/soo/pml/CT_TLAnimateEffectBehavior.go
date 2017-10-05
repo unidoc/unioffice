@@ -67,6 +67,7 @@ func (m *CT_TLAnimateEffectBehavior) UnmarshalXML(d *xml.Decoder, start xml.Star
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "transition" {
 			m.TransitionAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "filter" {
 			parsed, err := attr.Value, error(nil)
@@ -74,6 +75,7 @@ func (m *CT_TLAnimateEffectBehavior) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.FilterAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "prLst" {
 			parsed, err := attr.Value, error(nil)
@@ -81,6 +83,7 @@ func (m *CT_TLAnimateEffectBehavior) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.PrLstAttr = &parsed
+			continue
 		}
 	}
 lCT_TLAnimateEffectBehavior:

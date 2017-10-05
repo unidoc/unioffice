@@ -47,6 +47,7 @@ func (m *CT_PathShadeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "path" {
 			m.PathAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_PathShadeProperties:

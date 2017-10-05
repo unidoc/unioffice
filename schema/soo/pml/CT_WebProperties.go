@@ -105,6 +105,7 @@ func (m *CT_WebProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.ShowAnimationAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "resizeGraphics" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -112,6 +113,7 @@ func (m *CT_WebProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.ResizeGraphicsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "allowPng" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -119,6 +121,7 @@ func (m *CT_WebProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.AllowPngAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "relyOnVml" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -126,6 +129,7 @@ func (m *CT_WebProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.RelyOnVmlAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "organizeInFolders" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -133,6 +137,7 @@ func (m *CT_WebProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.OrganizeInFoldersAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "useLongFilenames" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -140,9 +145,11 @@ func (m *CT_WebProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.UseLongFilenamesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "imgSz" {
 			m.ImgSzAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "encoding" {
 			parsed, err := attr.Value, error(nil)
@@ -150,9 +157,11 @@ func (m *CT_WebProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.EncodingAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "clr" {
 			m.ClrAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_WebProperties:

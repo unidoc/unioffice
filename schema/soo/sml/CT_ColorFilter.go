@@ -51,6 +51,7 @@ func (m *CT_ColorFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.DxfIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "cellColor" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -58,6 +59,7 @@ func (m *CT_ColorFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.CellColorAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

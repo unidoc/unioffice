@@ -81,6 +81,7 @@ func (m *CT_TableCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := int32(parsed)
 			m.RowSpanAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "gridSpan" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -89,6 +90,7 @@ func (m *CT_TableCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := int32(parsed)
 			m.GridSpanAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "hMerge" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -96,6 +98,7 @@ func (m *CT_TableCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.HMergeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "vMerge" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -103,6 +106,7 @@ func (m *CT_TableCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.VMergeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
@@ -110,6 +114,7 @@ func (m *CT_TableCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 	}
 lCT_TableCell:

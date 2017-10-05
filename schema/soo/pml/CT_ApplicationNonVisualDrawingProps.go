@@ -95,6 +95,7 @@ func (m *CT_ApplicationNonVisualDrawingProps) UnmarshalXML(d *xml.Decoder, start
 				return err
 			}
 			m.IsPhotoAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "userDrawn" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -102,6 +103,7 @@ func (m *CT_ApplicationNonVisualDrawingProps) UnmarshalXML(d *xml.Decoder, start
 				return err
 			}
 			m.UserDrawnAttr = &parsed
+			continue
 		}
 	}
 lCT_ApplicationNonVisualDrawingProps:

@@ -41,6 +41,7 @@ func (m *CT_UnSignedInteger) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ValAttr = uint32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

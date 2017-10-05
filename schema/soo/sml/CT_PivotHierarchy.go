@@ -120,19 +120,21 @@ func (m *CT_PivotHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 func (m *CT_PivotHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Local == "dragToData" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DragToDataAttr = &parsed
+			continue
+		}
 		if attr.Name.Local == "outline" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.OutlineAttr = &parsed
-		}
-		if attr.Name.Local == "multipleItemSelectionAllowed" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MultipleItemSelectionAllowedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "subtotalTop" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -140,6 +142,7 @@ func (m *CT_PivotHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.SubtotalTopAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showInFieldList" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -147,6 +150,7 @@ func (m *CT_PivotHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ShowInFieldListAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dragToRow" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -154,6 +158,7 @@ func (m *CT_PivotHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.DragToRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dragToCol" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -161,6 +166,7 @@ func (m *CT_PivotHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.DragToColAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dragToPage" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -168,13 +174,15 @@ func (m *CT_PivotHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.DragToPageAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "dragToData" {
+		if attr.Name.Local == "multipleItemSelectionAllowed" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.DragToDataAttr = &parsed
+			m.MultipleItemSelectionAllowedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dragOff" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -182,6 +190,7 @@ func (m *CT_PivotHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.DragOffAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "includeNewItemsInFilter" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -189,6 +198,7 @@ func (m *CT_PivotHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.IncludeNewItemsInFilterAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "caption" {
 			parsed, err := attr.Value, error(nil)
@@ -196,6 +206,7 @@ func (m *CT_PivotHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.CaptionAttr = &parsed
+			continue
 		}
 	}
 lCT_PivotHierarchy:

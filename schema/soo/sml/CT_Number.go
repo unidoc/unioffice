@@ -120,19 +120,21 @@ func (m *CT_Number) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Number) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Local == "fc" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.FcAttr = &parsed
+			continue
+		}
 		if attr.Name.Local == "v" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
 			if err != nil {
 				return err
 			}
 			m.VAttr = parsed
-		}
-		if attr.Name.Local == "u" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.UAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "f" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -140,6 +142,7 @@ func (m *CT_Number) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "c" {
 			parsed, err := attr.Value, error(nil)
@@ -147,6 +150,7 @@ func (m *CT_Number) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cp" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -155,6 +159,7 @@ func (m *CT_Number) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.CpAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "in" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -163,6 +168,7 @@ func (m *CT_Number) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.InAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "bc" {
 			parsed, err := attr.Value, error(nil)
@@ -170,13 +176,15 @@ func (m *CT_Number) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.BcAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "fc" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "u" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.FcAttr = &parsed
+			m.UAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "i" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -184,6 +192,7 @@ func (m *CT_Number) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "un" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -191,6 +200,7 @@ func (m *CT_Number) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.UnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "st" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -198,6 +208,7 @@ func (m *CT_Number) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.StAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "b" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -205,6 +216,7 @@ func (m *CT_Number) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.BAttr = &parsed
+			continue
 		}
 	}
 lCT_Number:

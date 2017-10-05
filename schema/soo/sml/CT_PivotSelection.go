@@ -147,63 +147,13 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	// initialize to default
 	m.PivotArea = NewCT_PivotArea()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "pane" {
-			m.PaneAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "showHeader" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.ShowHeaderAttr = &parsed
-		}
-		if attr.Name.Local == "label" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.LabelAttr = &parsed
-		}
-		if attr.Name.Local == "data" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DataAttr = &parsed
-		}
-		if attr.Name.Local == "extendable" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ExtendableAttr = &parsed
-		}
-		if attr.Name.Local == "count" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.CountAttr = &pt
-		}
-		if attr.Name.Local == "axis" {
-			m.AxisAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "dimension" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.DimensionAttr = &pt
-		}
-		if attr.Name.Local == "start" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.StartAttr = &pt
+			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "min" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -212,6 +162,7 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.MinAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "max" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -220,6 +171,15 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.MaxAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "label" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.LabelAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "activeRow" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -228,6 +188,58 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.ActiveRowAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "extendable" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ExtendableAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "axis" {
+			m.AxisAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "dimension" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.DimensionAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "start" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.StartAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "pane" {
+			m.PaneAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "data" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DataAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "count" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.CountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "activeCol" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -236,6 +248,7 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.ActiveColAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "previousRow" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -244,6 +257,7 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.PreviousRowAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "previousCol" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -252,6 +266,7 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.PreviousColAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "click" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -260,13 +275,15 @@ func (m *CT_PivotSelection) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.ClickAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "showHeader" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = &parsed
+			m.ShowHeaderAttr = &parsed
+			continue
 		}
 	}
 lCT_PivotSelection:

@@ -64,6 +64,7 @@ func (m *CT_AutoFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.RefAttr = &parsed
+			continue
 		}
 	}
 lCT_AutoFilter:

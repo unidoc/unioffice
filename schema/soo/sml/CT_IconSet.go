@@ -69,6 +69,7 @@ func (m *CT_IconSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "iconSet" {
 			m.IconSetAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "showValue" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -76,6 +77,7 @@ func (m *CT_IconSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ShowValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "percent" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -83,6 +85,7 @@ func (m *CT_IconSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.PercentAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "reverse" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -90,6 +93,7 @@ func (m *CT_IconSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ReverseAttr = &parsed
+			continue
 		}
 	}
 lCT_IconSet:

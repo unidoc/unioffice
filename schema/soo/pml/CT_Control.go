@@ -74,12 +74,21 @@ func (m *CT_Control) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Control) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = &parsed
+			continue
+		}
 		if attr.Name.Local == "spid" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.SpidAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -87,6 +96,7 @@ func (m *CT_Control) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showAsIcon" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -94,13 +104,7 @@ func (m *CT_Control) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ShowAsIconAttr = &parsed
-		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "imgW" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -109,6 +113,7 @@ func (m *CT_Control) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			}
 			pt := int32(parsed)
 			m.ImgWAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "imgH" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -117,6 +122,7 @@ func (m *CT_Control) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			}
 			pt := int32(parsed)
 			m.ImgHAttr = &pt
+			continue
 		}
 	}
 lCT_Control:

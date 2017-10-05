@@ -48,6 +48,7 @@ func (m *CT_GroupMember) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.UniqueNameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "group" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -55,6 +56,7 @@ func (m *CT_GroupMember) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.GroupAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

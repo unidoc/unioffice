@@ -48,6 +48,7 @@ func (m *Sld) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ShowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showMasterSp" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -55,6 +56,7 @@ func (m *Sld) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ShowMasterSpAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showMasterPhAnim" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -62,6 +64,7 @@ func (m *Sld) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ShowMasterPhAnimAttr = &parsed
+			continue
 		}
 	}
 lSld:

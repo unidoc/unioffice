@@ -76,6 +76,7 @@ func (m *CT_GroupTransform2D) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			}
 			pt := int32(parsed)
 			m.RotAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "flipH" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -83,6 +84,7 @@ func (m *CT_GroupTransform2D) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.FlipHAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "flipV" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -90,6 +92,7 @@ func (m *CT_GroupTransform2D) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.FlipVAttr = &parsed
+			continue
 		}
 	}
 lCT_GroupTransform2D:

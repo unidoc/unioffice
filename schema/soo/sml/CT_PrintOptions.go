@@ -68,6 +68,7 @@ func (m *CT_PrintOptions) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.HorizontalCenteredAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "verticalCentered" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -75,6 +76,7 @@ func (m *CT_PrintOptions) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.VerticalCenteredAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "headings" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -82,6 +84,7 @@ func (m *CT_PrintOptions) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.HeadingsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "gridLines" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -89,6 +92,7 @@ func (m *CT_PrintOptions) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.GridLinesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "gridLinesSet" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -96,6 +100,7 @@ func (m *CT_PrintOptions) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.GridLinesSetAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

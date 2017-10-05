@@ -59,6 +59,7 @@ func (m *CT_CustomShow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -66,6 +67,7 @@ func (m *CT_CustomShow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.IdAttr = uint32(parsed)
+			continue
 		}
 	}
 lCT_CustomShow:

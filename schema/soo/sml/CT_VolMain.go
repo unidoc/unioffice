@@ -49,6 +49,7 @@ func (m *CT_VolMain) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.FirstAttr = parsed
+			continue
 		}
 	}
 lCT_VolMain:

@@ -54,9 +54,11 @@ func (m *CT_RevisionCustomView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.GuidAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "action" {
 			m.ActionAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

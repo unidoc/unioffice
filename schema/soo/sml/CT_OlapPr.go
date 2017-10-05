@@ -92,6 +92,7 @@ func (m *CT_OlapPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.LocalAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "localConnection" {
 			parsed, err := attr.Value, error(nil)
@@ -99,6 +100,7 @@ func (m *CT_OlapPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.LocalConnectionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "localRefresh" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -106,6 +108,7 @@ func (m *CT_OlapPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.LocalRefreshAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sendLocale" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -113,6 +116,7 @@ func (m *CT_OlapPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SendLocaleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rowDrillCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -121,6 +125,7 @@ func (m *CT_OlapPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.RowDrillCountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "serverFill" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -128,6 +133,7 @@ func (m *CT_OlapPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ServerFillAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "serverNumberFormat" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -135,6 +141,7 @@ func (m *CT_OlapPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ServerNumberFormatAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "serverFont" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -142,6 +149,7 @@ func (m *CT_OlapPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ServerFontAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "serverFontColor" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -149,6 +157,7 @@ func (m *CT_OlapPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ServerFontColorAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

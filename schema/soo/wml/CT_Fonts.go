@@ -102,6 +102,7 @@ func (m *CT_Fonts) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "hint" {
 			m.HintAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "ascii" {
 			parsed, err := attr.Value, error(nil)
@@ -109,6 +110,7 @@ func (m *CT_Fonts) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.AsciiAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hAnsi" {
 			parsed, err := attr.Value, error(nil)
@@ -116,6 +118,7 @@ func (m *CT_Fonts) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HAnsiAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "eastAsia" {
 			parsed, err := attr.Value, error(nil)
@@ -123,6 +126,7 @@ func (m *CT_Fonts) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.EastAsiaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cs" {
 			parsed, err := attr.Value, error(nil)
@@ -130,18 +134,23 @@ func (m *CT_Fonts) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "asciiTheme" {
 			m.AsciiThemeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "hAnsiTheme" {
 			m.HAnsiThemeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "eastAsiaTheme" {
 			m.EastAsiaThemeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "cstheme" {
 			m.CsthemeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

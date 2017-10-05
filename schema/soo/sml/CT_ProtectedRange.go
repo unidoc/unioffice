@@ -92,6 +92,7 @@ func (m *CT_ProtectedRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.PasswordAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sqref" {
 			parsed, err := ParseSliceST_Sqref(attr.Value)
@@ -99,6 +100,7 @@ func (m *CT_ProtectedRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.SqrefAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -106,6 +108,7 @@ func (m *CT_ProtectedRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "securityDescriptor" {
 			parsed, err := attr.Value, error(nil)
@@ -113,6 +116,7 @@ func (m *CT_ProtectedRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.SecurityDescriptorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "algorithmName" {
 			parsed, err := attr.Value, error(nil)
@@ -120,6 +124,7 @@ func (m *CT_ProtectedRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.AlgorithmNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hashValue" {
 			parsed, err := attr.Value, error(nil)
@@ -127,6 +132,7 @@ func (m *CT_ProtectedRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.HashValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "saltValue" {
 			parsed, err := attr.Value, error(nil)
@@ -134,6 +140,7 @@ func (m *CT_ProtectedRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.SaltValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "spinCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -142,6 +149,7 @@ func (m *CT_ProtectedRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.SpinCountAttr = &pt
+			continue
 		}
 	}
 lCT_ProtectedRange:

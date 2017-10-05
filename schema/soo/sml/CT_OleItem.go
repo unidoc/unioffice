@@ -60,6 +60,7 @@ func (m *CT_OleItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "icon" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -67,6 +68,7 @@ func (m *CT_OleItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.IconAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "advise" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -74,6 +76,7 @@ func (m *CT_OleItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.AdviseAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "preferPic" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -81,6 +84,7 @@ func (m *CT_OleItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.PreferPicAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

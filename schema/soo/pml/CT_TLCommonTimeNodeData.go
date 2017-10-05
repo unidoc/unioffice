@@ -227,13 +227,21 @@ func (m *CT_TLCommonTimeNodeData) MarshalXML(e *xml.Encoder, start xml.StartElem
 func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "id" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+		if attr.Name.Local == "tmFilter" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			pt := uint32(parsed)
-			m.IdAttr = &pt
+			m.TmFilterAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "evtFilter" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.EvtFilterAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "presetID" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -242,9 +250,15 @@ func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			}
 			pt := int32(parsed)
 			m.PresetIDAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "presetClass" {
-			m.PresetClassAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "display" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DisplayAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "presetSubtype" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -253,13 +267,11 @@ func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			}
 			pt := int32(parsed)
 			m.PresetSubtypeAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "dur" {
-			parsed, err := ParseUnionST_TLTime(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DurAttr = &parsed
+		if attr.Name.Local == "masterRel" {
+			m.MasterRelAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "repeatCount" {
 			parsed, err := ParseUnionST_TLTime(attr.Value)
@@ -267,74 +279,7 @@ func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.RepeatCountAttr = &parsed
-		}
-		if attr.Name.Local == "repeatDur" {
-			parsed, err := ParseUnionST_TLTime(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RepeatDurAttr = &parsed
-		}
-		if attr.Name.Local == "spd" {
-			parsed, err := ParseUnionST_Percentage(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SpdAttr = &parsed
-		}
-		if attr.Name.Local == "accel" {
-			parsed, err := ParseUnionST_PositiveFixedPercentage(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AccelAttr = &parsed
-		}
-		if attr.Name.Local == "decel" {
-			parsed, err := ParseUnionST_PositiveFixedPercentage(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DecelAttr = &parsed
-		}
-		if attr.Name.Local == "autoRev" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AutoRevAttr = &parsed
-		}
-		if attr.Name.Local == "restart" {
-			m.RestartAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "fill" {
-			m.FillAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "syncBehavior" {
-			m.SyncBehaviorAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "tmFilter" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.TmFilterAttr = &parsed
-		}
-		if attr.Name.Local == "evtFilter" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.EvtFilterAttr = &parsed
-		}
-		if attr.Name.Local == "display" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DisplayAttr = &parsed
-		}
-		if attr.Name.Local == "masterRel" {
-			m.MasterRelAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "bldLvl" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -343,6 +288,15 @@ func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			}
 			pt := int32(parsed)
 			m.BldLvlAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "spd" {
+			parsed, err := ParseUnionST_Percentage(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SpdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "grpId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -351,6 +305,7 @@ func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			}
 			pt := uint32(parsed)
 			m.GrpIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "afterEffect" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -358,9 +313,16 @@ func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.AfterEffectAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "nodeType" {
-			m.NodeTypeAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "id" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.IdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "nodePh" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -368,6 +330,67 @@ func (m *CT_TLCommonTimeNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.NodePhAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "accel" {
+			parsed, err := ParseUnionST_PositiveFixedPercentage(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AccelAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "decel" {
+			parsed, err := ParseUnionST_PositiveFixedPercentage(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DecelAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "restart" {
+			m.RestartAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "nodeType" {
+			m.NodeTypeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "presetClass" {
+			m.PresetClassAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "repeatDur" {
+			parsed, err := ParseUnionST_TLTime(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RepeatDurAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "syncBehavior" {
+			m.SyncBehaviorAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "autoRev" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AutoRevAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "fill" {
+			m.FillAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "dur" {
+			parsed, err := ParseUnionST_TLTime(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DurAttr = &parsed
+			continue
 		}
 	}
 lCT_TLCommonTimeNodeData:

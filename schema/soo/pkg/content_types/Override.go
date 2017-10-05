@@ -38,6 +38,7 @@ func (m *Override) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ContentTypeAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "PartName" {
 			parsed, err := attr.Value, error(nil)
@@ -45,6 +46,7 @@ func (m *Override) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PartNameAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

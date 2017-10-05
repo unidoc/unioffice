@@ -40,6 +40,7 @@ func (m *ClientData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "ObjectType" {
 			m.ObjectTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lClientData:

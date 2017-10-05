@@ -84,9 +84,11 @@ func (m *CT_SortCondition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.DescendingAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sortBy" {
 			m.SortByAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "ref" {
 			parsed, err := attr.Value, error(nil)
@@ -94,6 +96,7 @@ func (m *CT_SortCondition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.RefAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "customList" {
 			parsed, err := attr.Value, error(nil)
@@ -101,6 +104,7 @@ func (m *CT_SortCondition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.CustomListAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dxfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -109,9 +113,11 @@ func (m *CT_SortCondition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint32(parsed)
 			m.DxfIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "iconSet" {
 			m.IconSetAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "iconId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -120,6 +126,7 @@ func (m *CT_SortCondition) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint32(parsed)
 			m.IconIdAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

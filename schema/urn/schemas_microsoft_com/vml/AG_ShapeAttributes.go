@@ -86,9 +86,11 @@ func (m *AG_ShapeAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.OpacityAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "stroked" {
 			m.StrokedAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "strokecolor" {
 			parsed, err := attr.Value, error(nil)
@@ -96,6 +98,7 @@ func (m *AG_ShapeAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.StrokecolorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "strokeweight" {
 			parsed, err := attr.Value, error(nil)
@@ -103,9 +106,11 @@ func (m *AG_ShapeAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.StrokeweightAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "insetpen" {
 			m.InsetpenAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "chromakey" {
 			parsed, err := attr.Value, error(nil)
@@ -113,9 +118,11 @@ func (m *AG_ShapeAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ChromakeyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "filled" {
 			m.FilledAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "fillcolor" {
 			parsed, err := attr.Value, error(nil)
@@ -123,6 +130,7 @@ func (m *AG_ShapeAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.FillcolorAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -68,9 +68,11 @@ func (m *CT_ExternalCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.RAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "t" {
 			m.TAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "vm" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -79,6 +81,7 @@ func (m *CT_ExternalCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			}
 			pt := uint32(parsed)
 			m.VmAttr = &pt
+			continue
 		}
 	}
 lCT_ExternalCell:

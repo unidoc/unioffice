@@ -62,6 +62,7 @@ func (m *CT_XmlCellPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.IdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "uniqueName" {
 			parsed, err := attr.Value, error(nil)
@@ -69,6 +70,7 @@ func (m *CT_XmlCellPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.UniqueNameAttr = &parsed
+			continue
 		}
 	}
 lCT_XmlCellPr:

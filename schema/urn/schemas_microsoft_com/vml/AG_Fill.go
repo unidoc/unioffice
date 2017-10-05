@@ -46,6 +46,7 @@ func (m *AG_Fill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "filled" {
 			m.FilledAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "fillcolor" {
 			parsed, err := attr.Value, error(nil)
@@ -53,6 +54,7 @@ func (m *AG_Fill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FillcolorAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

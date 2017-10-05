@@ -65,6 +65,7 @@ func (m *CT_CalculatedItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.FieldAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "formula" {
 			parsed, err := attr.Value, error(nil)
@@ -72,6 +73,7 @@ func (m *CT_CalculatedItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.FormulaAttr = &parsed
+			continue
 		}
 	}
 lCT_CalculatedItem:

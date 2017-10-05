@@ -46,6 +46,7 @@ func (m *CT_MarkupRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "displacedByCustomXml" {
 			m.DisplacedByCustomXmlAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -53,6 +54,7 @@ func (m *CT_MarkupRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

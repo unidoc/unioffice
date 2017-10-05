@@ -70,6 +70,7 @@ func (m *CT_CommonSlideViewProperties) UnmarshalXML(d *xml.Decoder, start xml.St
 				return err
 			}
 			m.SnapToGridAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "snapToObjects" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -77,6 +78,7 @@ func (m *CT_CommonSlideViewProperties) UnmarshalXML(d *xml.Decoder, start xml.St
 				return err
 			}
 			m.SnapToObjectsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showGuides" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -84,6 +86,7 @@ func (m *CT_CommonSlideViewProperties) UnmarshalXML(d *xml.Decoder, start xml.St
 				return err
 			}
 			m.ShowGuidesAttr = &parsed
+			continue
 		}
 	}
 lCT_CommonSlideViewProperties:

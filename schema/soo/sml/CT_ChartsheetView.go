@@ -67,6 +67,7 @@ func (m *CT_ChartsheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.TabSelectedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "zoomScale" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -75,6 +76,7 @@ func (m *CT_ChartsheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.ZoomScaleAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "workbookViewId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -82,6 +84,7 @@ func (m *CT_ChartsheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.WorkbookViewIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "zoomToFit" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -89,6 +92,7 @@ func (m *CT_ChartsheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ZoomToFitAttr = &parsed
+			continue
 		}
 	}
 lCT_ChartsheetView:

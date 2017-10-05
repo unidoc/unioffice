@@ -75,6 +75,7 @@ func (m *CT_PhotoAlbum) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.BwAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showCaptions" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -82,12 +83,15 @@ func (m *CT_PhotoAlbum) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ShowCaptionsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "layout" {
 			m.LayoutAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "frame" {
 			m.FrameAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_PhotoAlbum:

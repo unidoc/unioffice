@@ -52,12 +52,21 @@ func (m *CT_Sheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Sheet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = parsed
+			continue
+		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "sheetId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -65,16 +74,11 @@ func (m *CT_Sheet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SheetIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "state" {
 			m.StateAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.IdAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

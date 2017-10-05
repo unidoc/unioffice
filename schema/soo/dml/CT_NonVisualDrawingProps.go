@@ -76,6 +76,7 @@ func (m *CT_NonVisualDrawingProps) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.IdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -83,6 +84,7 @@ func (m *CT_NonVisualDrawingProps) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "descr" {
 			parsed, err := attr.Value, error(nil)
@@ -90,6 +92,7 @@ func (m *CT_NonVisualDrawingProps) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.DescrAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hidden" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -97,6 +100,7 @@ func (m *CT_NonVisualDrawingProps) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.HiddenAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "title" {
 			parsed, err := attr.Value, error(nil)
@@ -104,6 +108,7 @@ func (m *CT_NonVisualDrawingProps) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.TitleAttr = &parsed
+			continue
 		}
 	}
 lCT_NonVisualDrawingProps:

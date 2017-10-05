@@ -55,6 +55,7 @@ func (m *CT_TLCommandBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "cmd" {
 			parsed, err := attr.Value, error(nil)
@@ -62,6 +63,7 @@ func (m *CT_TLCommandBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.CmdAttr = &parsed
+			continue
 		}
 	}
 lCT_TLCommandBehavior:

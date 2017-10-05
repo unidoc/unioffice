@@ -64,6 +64,7 @@ func (m *CT_TLOleBuildChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bld" {
 			m.BldAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "animBg" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -71,6 +72,7 @@ func (m *CT_TLOleBuildChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.AnimBgAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "spid" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -79,6 +81,7 @@ func (m *CT_TLOleBuildChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.SpidAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "grpId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -87,6 +90,7 @@ func (m *CT_TLOleBuildChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.GrpIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "uiExpand" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -94,6 +98,7 @@ func (m *CT_TLOleBuildChart) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.UiExpandAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

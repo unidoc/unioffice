@@ -52,6 +52,7 @@ func (m *CT_TableStyleList) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.DefAttr = parsed
+			continue
 		}
 	}
 lCT_TableStyleList:

@@ -57,6 +57,7 @@ func (m *CT_Schema) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.UriAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "manifestLocation" {
 			parsed, err := attr.Value, error(nil)
@@ -64,6 +65,7 @@ func (m *CT_Schema) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ManifestLocationAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "schemaLocation" {
 			parsed, err := attr.Value, error(nil)
@@ -71,6 +73,7 @@ func (m *CT_Schema) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SchemaLocationAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "schemaLanguage" {
 			parsed, err := attr.Value, error(nil)
@@ -78,6 +81,7 @@ func (m *CT_Schema) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SchemaLanguageAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

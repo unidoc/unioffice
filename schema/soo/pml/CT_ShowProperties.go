@@ -112,6 +112,7 @@ func (m *CT_ShowProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.LoopAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showNarration" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -119,6 +120,7 @@ func (m *CT_ShowProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ShowNarrationAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showAnimation" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -126,6 +128,7 @@ func (m *CT_ShowProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ShowAnimationAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "useTimings" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -133,6 +136,7 @@ func (m *CT_ShowProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.UseTimingsAttr = &parsed
+			continue
 		}
 	}
 lCT_ShowProperties:

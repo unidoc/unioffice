@@ -52,6 +52,7 @@ func (m *WdCT_LinkedTextboxInformation) UnmarshalXML(d *xml.Decoder, start xml.S
 				return err
 			}
 			m.IdAttr = uint16(parsed)
+			continue
 		}
 		if attr.Name.Local == "seq" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 16)
@@ -59,6 +60,7 @@ func (m *WdCT_LinkedTextboxInformation) UnmarshalXML(d *xml.Decoder, start xml.S
 				return err
 			}
 			m.SeqAttr = uint16(parsed)
+			continue
 		}
 	}
 lWdCT_LinkedTextboxInformation:

@@ -41,304 +41,6 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	// initialize to default
 	m.CT_pivotTableDefinition = *NewCT_pivotTableDefinition()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "name" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.NameAttr = parsed
-		}
-		if attr.Name.Local == "cacheId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			m.CacheIdAttr = uint32(parsed)
-		}
-		if attr.Name.Local == "dataOnRows" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DataOnRowsAttr = &parsed
-		}
-		if attr.Name.Local == "dataPosition" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.DataPositionAttr = &pt
-		}
-		if attr.Name.Local == "dataCaption" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.DataCaptionAttr = parsed
-		}
-		if attr.Name.Local == "grandTotalCaption" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.GrandTotalCaptionAttr = &parsed
-		}
-		if attr.Name.Local == "errorCaption" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.ErrorCaptionAttr = &parsed
-		}
-		if attr.Name.Local == "showError" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowErrorAttr = &parsed
-		}
-		if attr.Name.Local == "missingCaption" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.MissingCaptionAttr = &parsed
-		}
-		if attr.Name.Local == "showMissing" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowMissingAttr = &parsed
-		}
-		if attr.Name.Local == "pageStyle" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.PageStyleAttr = &parsed
-		}
-		if attr.Name.Local == "pivotTableStyle" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.PivotTableStyleAttr = &parsed
-		}
-		if attr.Name.Local == "vacatedStyle" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.VacatedStyleAttr = &parsed
-		}
-		if attr.Name.Local == "tag" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.TagAttr = &parsed
-		}
-		if attr.Name.Local == "updatedVersion" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
-			if err != nil {
-				return err
-			}
-			pt := uint8(parsed)
-			m.UpdatedVersionAttr = &pt
-		}
-		if attr.Name.Local == "minRefreshableVersion" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
-			if err != nil {
-				return err
-			}
-			pt := uint8(parsed)
-			m.MinRefreshableVersionAttr = &pt
-		}
-		if attr.Name.Local == "asteriskTotals" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AsteriskTotalsAttr = &parsed
-		}
-		if attr.Name.Local == "showItems" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowItemsAttr = &parsed
-		}
-		if attr.Name.Local == "editData" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.EditDataAttr = &parsed
-		}
-		if attr.Name.Local == "disableFieldList" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DisableFieldListAttr = &parsed
-		}
-		if attr.Name.Local == "showCalcMbrs" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowCalcMbrsAttr = &parsed
-		}
-		if attr.Name.Local == "visualTotals" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.VisualTotalsAttr = &parsed
-		}
-		if attr.Name.Local == "showMultipleLabel" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowMultipleLabelAttr = &parsed
-		}
-		if attr.Name.Local == "showDataDropDown" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowDataDropDownAttr = &parsed
-		}
-		if attr.Name.Local == "showDrill" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowDrillAttr = &parsed
-		}
-		if attr.Name.Local == "printDrill" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PrintDrillAttr = &parsed
-		}
-		if attr.Name.Local == "showMemberPropertyTips" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowMemberPropertyTipsAttr = &parsed
-		}
-		if attr.Name.Local == "showDataTips" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowDataTipsAttr = &parsed
-		}
-		if attr.Name.Local == "enableWizard" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.EnableWizardAttr = &parsed
-		}
-		if attr.Name.Local == "enableDrill" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.EnableDrillAttr = &parsed
-		}
-		if attr.Name.Local == "enableFieldProperties" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.EnableFieldPropertiesAttr = &parsed
-		}
-		if attr.Name.Local == "preserveFormatting" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PreserveFormattingAttr = &parsed
-		}
-		if attr.Name.Local == "useAutoFormatting" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.UseAutoFormattingAttr = &parsed
-		}
-		if attr.Name.Local == "pageWrap" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.PageWrapAttr = &pt
-		}
-		if attr.Name.Local == "pageOverThenDown" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PageOverThenDownAttr = &parsed
-		}
-		if attr.Name.Local == "subtotalHiddenItems" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SubtotalHiddenItemsAttr = &parsed
-		}
-		if attr.Name.Local == "rowGrandTotals" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RowGrandTotalsAttr = &parsed
-		}
-		if attr.Name.Local == "colGrandTotals" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ColGrandTotalsAttr = &parsed
-		}
-		if attr.Name.Local == "fieldPrintTitles" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.FieldPrintTitlesAttr = &parsed
-		}
-		if attr.Name.Local == "itemPrintTitles" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ItemPrintTitlesAttr = &parsed
-		}
-		if attr.Name.Local == "mergeItem" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MergeItemAttr = &parsed
-		}
-		if attr.Name.Local == "showDropZones" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowDropZonesAttr = &parsed
-		}
 		if attr.Name.Local == "createdVersion" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
 			if err != nil {
@@ -346,6 +48,7 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint8(parsed)
 			m.CreatedVersionAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "indent" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -354,6 +57,15 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint32(parsed)
 			m.IndentAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "pivotTableStyle" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.PivotTableStyleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showEmptyRow" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -361,6 +73,15 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.ShowEmptyRowAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "tag" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.TagAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showEmptyCol" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -368,6 +89,16 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.ShowEmptyColAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "minRefreshableVersion" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
+			if err != nil {
+				return err
+			}
+			pt := uint8(parsed)
+			m.MinRefreshableVersionAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "showHeaders" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -375,6 +106,15 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.ShowHeadersAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "asteriskTotals" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AsteriskTotalsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "compact" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -382,6 +122,15 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.CompactAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "editData" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.EditDataAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "outline" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -389,6 +138,15 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.OutlineAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showCalcMbrs" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowCalcMbrsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "outlineData" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -396,20 +154,7 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.OutlineDataAttr = &parsed
-		}
-		if attr.Name.Local == "compactData" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CompactDataAttr = &parsed
-		}
-		if attr.Name.Local == "published" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PublishedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "gridDropZones" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -417,56 +162,7 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.GridDropZonesAttr = &parsed
-		}
-		if attr.Name.Local == "immersive" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ImmersiveAttr = &parsed
-		}
-		if attr.Name.Local == "multipleFieldFilters" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MultipleFieldFiltersAttr = &parsed
-		}
-		if attr.Name.Local == "chartFormat" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.ChartFormatAttr = &pt
-		}
-		if attr.Name.Local == "rowHeaderCaption" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.RowHeaderCaptionAttr = &parsed
-		}
-		if attr.Name.Local == "colHeaderCaption" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.ColHeaderCaptionAttr = &parsed
-		}
-		if attr.Name.Local == "fieldListSortAscending" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.FieldListSortAscendingAttr = &parsed
-		}
-		if attr.Name.Local == "mdxSubqueries" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MdxSubqueriesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "customListSort" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -474,6 +170,144 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.CustomListSortAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "rowGrandTotals" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RowGrandTotalsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "applyWidthHeightFormats" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ApplyWidthHeightFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "useAutoFormatting" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.UseAutoFormattingAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "rowHeaderCaption" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.RowHeaderCaptionAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showDrill" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowDrillAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "mergeItem" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.MergeItemAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "applyBorderFormats" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ApplyBorderFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "visualTotals" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.VisualTotalsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "compactData" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.CompactDataAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "dataPosition" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.DataPositionAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "multipleFieldFilters" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.MultipleFieldFiltersAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "pageOverThenDown" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PageOverThenDownAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "fieldListSortAscending" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.FieldListSortAscendingAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showMissing" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowMissingAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "fieldPrintTitles" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.FieldPrintTitlesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showMemberPropertyTips" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowMemberPropertyTipsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "pageStyle" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.PageStyleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoFormatId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -482,27 +316,15 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint32(parsed)
 			m.AutoFormatIdAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "applyNumberFormats" {
+		if attr.Name.Local == "showItems" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.ApplyNumberFormatsAttr = &parsed
-		}
-		if attr.Name.Local == "applyBorderFormats" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ApplyBorderFormatsAttr = &parsed
-		}
-		if attr.Name.Local == "applyFontFormats" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ApplyFontFormatsAttr = &parsed
+			m.ShowItemsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyPatternFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -510,6 +332,209 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.ApplyPatternFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "enableFieldProperties" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.EnableFieldPropertiesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showMultipleLabel" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowMultipleLabelAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "preserveFormatting" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PreserveFormattingAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "published" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PublishedAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "missingCaption" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.MissingCaptionAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "immersive" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ImmersiveAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "pageWrap" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.PageWrapAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "chartFormat" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.ChartFormatAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "showDataDropDown" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowDataDropDownAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "colHeaderCaption" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.ColHeaderCaptionAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "subtotalHiddenItems" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SubtotalHiddenItemsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "mdxSubqueries" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.MdxSubqueriesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "errorCaption" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.ErrorCaptionAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "colGrandTotals" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ColGrandTotalsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "printDrill" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PrintDrillAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "itemPrintTitles" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ItemPrintTitlesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "name" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.NameAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "showDropZones" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowDropZonesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showDataTips" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowDataTipsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "vacatedStyle" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.VacatedStyleAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "grandTotalCaption" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.GrandTotalCaptionAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "applyNumberFormats" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ApplyNumberFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "enableDrill" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.EnableDrillAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "applyFontFormats" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ApplyFontFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "disableFieldList" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DisableFieldListAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyAlignmentFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -517,13 +542,56 @@ func (m *PivotTableDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.ApplyAlignmentFormatsAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "applyWidthHeightFormats" {
+		if attr.Name.Local == "dataOnRows" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.ApplyWidthHeightFormatsAttr = &parsed
+			m.DataOnRowsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "dataCaption" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.DataCaptionAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "showError" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowErrorAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "cacheId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			m.CacheIdAttr = uint32(parsed)
+			continue
+		}
+		if attr.Name.Local == "enableWizard" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.EnableWizardAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "updatedVersion" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
+			if err != nil {
+				return err
+			}
+			pt := uint8(parsed)
+			m.UpdatedVersionAttr = &pt
+			continue
 		}
 	}
 lPivotTableDefinition:

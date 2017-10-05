@@ -47,15 +47,19 @@ func (m *OfcDiagram) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.DgmstyleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoformat" {
 			m.AutoformatAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "reverse" {
 			m.ReverseAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "autolayout" {
 			m.AutolayoutAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "dgmscalex" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -63,6 +67,7 @@ func (m *OfcDiagram) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.DgmscalexAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dgmscaley" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -70,6 +75,7 @@ func (m *OfcDiagram) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.DgmscaleyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dgmfontsize" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -77,6 +83,7 @@ func (m *OfcDiagram) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.DgmfontsizeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "constrainbounds" {
 			parsed, err := attr.Value, error(nil)
@@ -84,6 +91,7 @@ func (m *OfcDiagram) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ConstrainboundsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dgmbasetextscale" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -91,9 +99,11 @@ func (m *OfcDiagram) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.DgmbasetextscaleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ext" {
 			m.ExtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lOfcDiagram:

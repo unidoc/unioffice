@@ -46,6 +46,7 @@ func (m *SldSyncPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ServerSldIdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "serverSldModifiedTime" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -53,6 +54,7 @@ func (m *SldSyncPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ServerSldModifiedTimeAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "clientInsertedTime" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -60,6 +62,7 @@ func (m *SldSyncPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ClientInsertedTimeAttr = parsed
+			continue
 		}
 	}
 lSldSyncPr:

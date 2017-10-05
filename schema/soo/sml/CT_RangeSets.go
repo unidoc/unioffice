@@ -53,6 +53,7 @@ func (m *CT_RangeSets) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_RangeSets:

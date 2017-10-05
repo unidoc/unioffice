@@ -48,6 +48,7 @@ func (m *CT_AnimationChartBuildProperties) UnmarshalXML(d *xml.Decoder, start xm
 				return err
 			}
 			m.BldAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "animBg" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -55,6 +56,7 @@ func (m *CT_AnimationChartBuildProperties) UnmarshalXML(d *xml.Decoder, start xm
 				return err
 			}
 			m.AnimBgAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

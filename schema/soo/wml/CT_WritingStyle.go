@@ -65,6 +65,7 @@ func (m *CT_WritingStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.LangAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "vendorID" {
 			parsed, err := attr.Value, error(nil)
@@ -72,6 +73,7 @@ func (m *CT_WritingStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.VendorIDAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "dllVersion" {
 			parsed, err := attr.Value, error(nil)
@@ -79,6 +81,7 @@ func (m *CT_WritingStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DllVersionAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "nlCheck" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -86,6 +89,7 @@ func (m *CT_WritingStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NlCheckAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "checkStyle" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -93,6 +97,7 @@ func (m *CT_WritingStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.CheckStyleAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "appName" {
 			parsed, err := attr.Value, error(nil)
@@ -100,6 +105,7 @@ func (m *CT_WritingStyle) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.AppNameAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

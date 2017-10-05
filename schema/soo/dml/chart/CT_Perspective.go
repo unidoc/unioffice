@@ -44,6 +44,7 @@ func (m *CT_Perspective) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint8(parsed)
 			m.ValAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -57,6 +57,7 @@ func (m *CT_Cell3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prstMaterial" {
 			m.PrstMaterialAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_Cell3D:
