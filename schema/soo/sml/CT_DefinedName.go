@@ -106,12 +106,21 @@ func (m *CT_DefinedName) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "name" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "hidden" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.NameAttr = parsed
+			m.HiddenAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "function" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.FunctionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "comment" {
 			parsed, err := attr.Value, error(nil)
@@ -119,13 +128,7 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.CommentAttr = &parsed
-		}
-		if attr.Name.Local == "customMenu" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.CustomMenuAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "description" {
 			parsed, err := attr.Value, error(nil)
@@ -133,6 +136,7 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.DescriptionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "help" {
 			parsed, err := attr.Value, error(nil)
@@ -140,6 +144,7 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.HelpAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "statusBar" {
 			parsed, err := attr.Value, error(nil)
@@ -147,6 +152,7 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.StatusBarAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "localSheetId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -155,20 +161,23 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.LocalSheetIdAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "hidden" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "name" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.HiddenAttr = &parsed
+			m.NameAttr = parsed
+			continue
 		}
-		if attr.Name.Local == "function" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "customMenu" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.FunctionAttr = &parsed
+			m.CustomMenuAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "vbProcedure" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -176,6 +185,7 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.VbProcedureAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "xlm" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -183,6 +193,7 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.XlmAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "functionGroupId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -191,6 +202,7 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.FunctionGroupIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "shortcutKey" {
 			parsed, err := attr.Value, error(nil)
@@ -198,6 +210,7 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ShortcutKeyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "publishToServer" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -205,6 +218,7 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.PublishToServerAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "workbookParameter" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -212,6 +226,7 @@ func (m *CT_DefinedName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.WorkbookParameterAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

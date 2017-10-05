@@ -55,6 +55,7 @@ func (m *CT_ColorChangeEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.UseAAttr = &parsed
+			continue
 		}
 	}
 lCT_ColorChangeEffect:

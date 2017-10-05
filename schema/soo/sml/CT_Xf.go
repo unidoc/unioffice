@@ -130,6 +130,14 @@ func (m *CT_Xf) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Local == "applyFont" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ApplyFontAttr = &parsed
+			continue
+		}
 		if attr.Name.Local == "numFmtId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
@@ -137,14 +145,15 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.NumFmtIdAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "fontId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+		if attr.Name.Local == "applyFill" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			pt := uint32(parsed)
-			m.FontIdAttr = &pt
+			m.ApplyFillAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fillId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -153,14 +162,7 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.FillIdAttr = &pt
-		}
-		if attr.Name.Local == "borderId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.BorderIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "xfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -169,6 +171,7 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.XfIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "quotePrefix" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -176,6 +179,7 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.QuotePrefixAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "pivotButton" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -183,6 +187,7 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PivotButtonAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyNumberFormat" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -190,20 +195,25 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ApplyNumberFormatAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "applyFont" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "fontId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
-			m.ApplyFontAttr = &parsed
+			pt := uint32(parsed)
+			m.FontIdAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "applyFill" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "borderId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
-			m.ApplyFillAttr = &parsed
+			pt := uint32(parsed)
+			m.BorderIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "applyBorder" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -211,6 +221,7 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ApplyBorderAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyAlignment" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -218,6 +229,7 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ApplyAlignmentAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyProtection" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -225,6 +237,7 @@ func (m *CT_Xf) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ApplyProtectionAttr = &parsed
+			continue
 		}
 	}
 lCT_Xf:

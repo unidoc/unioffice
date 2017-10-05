@@ -58,6 +58,7 @@ func (m *CT_TcPrChange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.AuthorAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "date" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -65,6 +66,7 @@ func (m *CT_TcPrChange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.DateAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -72,6 +74,7 @@ func (m *CT_TcPrChange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 	}
 lCT_TcPrChange:

@@ -83,6 +83,7 @@ func (m *CT_GradientFill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "degree" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -90,6 +91,7 @@ func (m *CT_GradientFill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DegreeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "left" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -97,6 +99,7 @@ func (m *CT_GradientFill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.LeftAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "right" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -104,6 +107,7 @@ func (m *CT_GradientFill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.RightAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "top" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -111,6 +115,7 @@ func (m *CT_GradientFill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.TopAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "bottom" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -118,6 +123,7 @@ func (m *CT_GradientFill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.BottomAttr = &parsed
+			continue
 		}
 	}
 lCT_GradientFill:

@@ -37,12 +37,13 @@ func (m *CT_Keyword) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Keyword) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "lang" {
+		if attr.Name.Space == "http://www.w3.org/XML/1998/namespace" && attr.Name.Local == "lang" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.LangAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -346,184 +346,13 @@ func (m *CT_PivotField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "name" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.NameAttr = &parsed
-		}
-		if attr.Name.Local == "axis" {
-			m.AxisAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "dataField" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DataFieldAttr = &parsed
-		}
-		if attr.Name.Local == "subtotalCaption" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.SubtotalCaptionAttr = &parsed
-		}
-		if attr.Name.Local == "showDropDowns" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowDropDownsAttr = &parsed
-		}
-		if attr.Name.Local == "hiddenLevel" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.HiddenLevelAttr = &parsed
-		}
-		if attr.Name.Local == "uniqueMemberProperty" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.UniqueMemberPropertyAttr = &parsed
-		}
-		if attr.Name.Local == "compact" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CompactAttr = &parsed
-		}
-		if attr.Name.Local == "allDrilled" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AllDrilledAttr = &parsed
-		}
-		if attr.Name.Local == "numFmtId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.NumFmtIdAttr = &pt
-		}
-		if attr.Name.Local == "outline" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.OutlineAttr = &parsed
-		}
-		if attr.Name.Local == "subtotalTop" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SubtotalTopAttr = &parsed
-		}
-		if attr.Name.Local == "dragToRow" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DragToRowAttr = &parsed
-		}
-		if attr.Name.Local == "dragToCol" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DragToColAttr = &parsed
-		}
-		if attr.Name.Local == "multipleItemSelectionAllowed" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MultipleItemSelectionAllowedAttr = &parsed
-		}
-		if attr.Name.Local == "dragToPage" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DragToPageAttr = &parsed
-		}
-		if attr.Name.Local == "dragToData" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DragToDataAttr = &parsed
-		}
-		if attr.Name.Local == "dragOff" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DragOffAttr = &parsed
-		}
-		if attr.Name.Local == "showAll" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowAllAttr = &parsed
-		}
-		if attr.Name.Local == "insertBlankRow" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.InsertBlankRowAttr = &parsed
-		}
-		if attr.Name.Local == "serverField" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ServerFieldAttr = &parsed
-		}
-		if attr.Name.Local == "insertPageBreak" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.InsertPageBreakAttr = &parsed
-		}
-		if attr.Name.Local == "autoShow" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AutoShowAttr = &parsed
-		}
-		if attr.Name.Local == "topAutoShow" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.TopAutoShowAttr = &parsed
-		}
-		if attr.Name.Local == "hideNewItems" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.HideNewItemsAttr = &parsed
-		}
 		if attr.Name.Local == "measureFilter" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.MeasureFilterAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "includeNewItemsInFilter" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -531,6 +360,15 @@ func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.IncludeNewItemsInFilterAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "compact" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.CompactAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "itemPageCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -539,9 +377,28 @@ func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.ItemPageCountAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "numFmtId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.NumFmtIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "sortType" {
 			m.SortTypeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "outline" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.OutlineAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dataSourceSort" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -549,6 +406,15 @@ func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.DataSourceSortAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "dragToRow" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DragToRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "nonAutoSortDefault" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -556,6 +422,15 @@ func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.NonAutoSortDefaultAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "multipleItemSelectionAllowed" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.MultipleItemSelectionAllowedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rankBy" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -564,62 +439,7 @@ func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.RankByAttr = &pt
-		}
-		if attr.Name.Local == "defaultSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DefaultSubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "sumSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SumSubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "countASubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CountASubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "avgSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AvgSubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "maxSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MaxSubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "minSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MinSubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "productSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ProductSubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "countSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CountSubtotalAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "stdDevSubtotal" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -627,41 +447,23 @@ func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.StdDevSubtotalAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "stdDevPSubtotal" {
+		if attr.Name.Local == "countASubtotal" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.StdDevPSubtotalAttr = &parsed
+			m.CountASubtotalAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "varSubtotal" {
+		if attr.Name.Local == "autoShow" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.VarSubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "varPSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.VarPSubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "showPropCell" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowPropCellAttr = &parsed
-		}
-		if attr.Name.Local == "showPropTip" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowPropTipAttr = &parsed
+			m.AutoShowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showPropAsCaption" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -669,6 +471,199 @@ func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ShowPropAsCaptionAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "productSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ProductSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "dragToPage" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DragToPageAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "defaultSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DefaultSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "dragToData" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DragToDataAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "maxSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.MaxSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "hideNewItems" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.HideNewItemsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showPropCell" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowPropCellAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "subtotalTop" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SubtotalTopAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "serverField" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ServerFieldAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "name" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.NameAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "insertPageBreak" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.InsertPageBreakAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "sumSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SumSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "dataField" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DataFieldAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "avgSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AvgSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "topAutoShow" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.TopAutoShowAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "minSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.MinSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "dragOff" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DragOffAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "countSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.CountSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "uniqueMemberProperty" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.UniqueMemberPropertyAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "varPSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.VarPSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "stdDevPSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.StdDevPSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "subtotalCaption" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.SubtotalCaptionAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showPropTip" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowPropTipAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "insertBlankRow" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.InsertBlankRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "defaultAttributeDrillState" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -676,6 +671,59 @@ func (m *CT_PivotField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.DefaultAttributeDrillStateAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "dragToCol" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DragToColAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "hiddenLevel" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.HiddenLevelAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "axis" {
+			m.AxisAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "showDropDowns" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowDropDownsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showAll" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowAllAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "allDrilled" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AllDrilledAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "varSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.VarSubtotalAttr = &parsed
+			continue
 		}
 	}
 lCT_PivotField:

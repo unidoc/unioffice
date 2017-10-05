@@ -97,6 +97,7 @@ func (m *CT_FilterColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.ColIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "hiddenButton" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -104,6 +105,7 @@ func (m *CT_FilterColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.HiddenButtonAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showButton" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -111,6 +113,7 @@ func (m *CT_FilterColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.ShowButtonAttr = &parsed
+			continue
 		}
 	}
 lCT_FilterColumn:

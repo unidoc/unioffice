@@ -69,6 +69,7 @@ func (m *CT_TrackChangesView) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.MarkupAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "comments" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -76,6 +77,7 @@ func (m *CT_TrackChangesView) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.CommentsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "insDel" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -83,6 +85,7 @@ func (m *CT_TrackChangesView) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.InsDelAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "formatting" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -90,6 +93,7 @@ func (m *CT_TrackChangesView) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.FormattingAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "inkAnnotations" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -97,6 +101,7 @@ func (m *CT_TrackChangesView) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.InkAnnotationsAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

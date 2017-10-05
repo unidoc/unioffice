@@ -69,6 +69,7 @@ func (m *CT_FileVersion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.AppNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lastEdited" {
 			parsed, err := attr.Value, error(nil)
@@ -76,6 +77,7 @@ func (m *CT_FileVersion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.LastEditedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lowestEdited" {
 			parsed, err := attr.Value, error(nil)
@@ -83,6 +85,7 @@ func (m *CT_FileVersion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.LowestEditedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rupBuild" {
 			parsed, err := attr.Value, error(nil)
@@ -90,6 +93,7 @@ func (m *CT_FileVersion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.RupBuildAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "codeName" {
 			parsed, err := attr.Value, error(nil)
@@ -97,6 +101,7 @@ func (m *CT_FileVersion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.CodeNameAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -39,12 +39,13 @@ func (m *VideoFile) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_VideoFile = *NewCT_VideoFile()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "link" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "link" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.LinkAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "contentType" {
 			parsed, err := attr.Value, error(nil)
@@ -52,6 +53,7 @@ func (m *VideoFile) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ContentTypeAttr = &parsed
+			continue
 		}
 	}
 lVideoFile:

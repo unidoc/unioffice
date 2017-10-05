@@ -51,6 +51,7 @@ func (m *CT_TLByRgbColorTransform) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.RAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "g" {
 			parsed, err := ParseUnionST_FixedPercentage(attr.Value)
@@ -58,6 +59,7 @@ func (m *CT_TLByRgbColorTransform) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.GAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "b" {
 			parsed, err := ParseUnionST_FixedPercentage(attr.Value)
@@ -65,6 +67,7 @@ func (m *CT_TLByRgbColorTransform) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.BAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

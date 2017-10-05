@@ -59,6 +59,7 @@ func (m *CT_CommonViewProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.VarScaleAttr = &parsed
+			continue
 		}
 	}
 lCT_CommonViewProperties:

@@ -49,6 +49,7 @@ func (m *CT_SchemeColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_SchemeColor:

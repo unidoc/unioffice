@@ -55,6 +55,7 @@ func (m *CT_PivotAreas) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_PivotAreas:

@@ -49,6 +49,7 @@ func (m *CT_LinearShadeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartE
 			}
 			pt := int32(parsed)
 			m.AngAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "scaled" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -56,6 +57,7 @@ func (m *CT_LinearShadeProperties) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.ScaledAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

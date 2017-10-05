@@ -51,6 +51,7 @@ func (m *CT_DataBinding) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.PrefixMappingsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "xpath" {
 			parsed, err := attr.Value, error(nil)
@@ -58,6 +59,7 @@ func (m *CT_DataBinding) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.XpathAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "storeItemID" {
 			parsed, err := attr.Value, error(nil)
@@ -65,6 +67,7 @@ func (m *CT_DataBinding) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.StoreItemIDAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

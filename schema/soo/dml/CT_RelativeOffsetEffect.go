@@ -47,6 +47,7 @@ func (m *CT_RelativeOffsetEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.TxAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ty" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -54,6 +55,7 @@ func (m *CT_RelativeOffsetEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.TyAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

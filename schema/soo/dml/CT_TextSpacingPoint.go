@@ -43,6 +43,7 @@ func (m *CT_TextSpacingPoint) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.ValAttr = int32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

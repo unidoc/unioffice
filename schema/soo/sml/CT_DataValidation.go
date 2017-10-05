@@ -136,45 +136,13 @@ func (m *CT_DataValidation) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 func (m *CT_DataValidation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "type" {
-			m.TypeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "errorStyle" {
-			m.ErrorStyleAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "imeMode" {
-			m.ImeModeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "operator" {
-			m.OperatorAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "allowBlank" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AllowBlankAttr = &parsed
-		}
-		if attr.Name.Local == "showDropDown" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowDropDownAttr = &parsed
-		}
-		if attr.Name.Local == "showInputMessage" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowInputMessageAttr = &parsed
-		}
 		if attr.Name.Local == "showErrorMessage" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.ShowErrorMessageAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "errorTitle" {
 			parsed, err := attr.Value, error(nil)
@@ -182,6 +150,47 @@ func (m *CT_DataValidation) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ErrorTitleAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "errorStyle" {
+			m.ErrorStyleAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "operator" {
+			m.OperatorAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "allowBlank" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AllowBlankAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showDropDown" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowDropDownAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showInputMessage" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowInputMessageAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "type" {
+			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "imeMode" {
+			m.ImeModeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "error" {
 			parsed, err := attr.Value, error(nil)
@@ -189,6 +198,7 @@ func (m *CT_DataValidation) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ErrorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "promptTitle" {
 			parsed, err := attr.Value, error(nil)
@@ -196,6 +206,7 @@ func (m *CT_DataValidation) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.PromptTitleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "prompt" {
 			parsed, err := attr.Value, error(nil)
@@ -203,6 +214,7 @@ func (m *CT_DataValidation) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.PromptAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sqref" {
 			parsed, err := ParseSliceST_Sqref(attr.Value)
@@ -210,6 +222,7 @@ func (m *CT_DataValidation) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.SqrefAttr = parsed
+			continue
 		}
 	}
 lCT_DataValidation:

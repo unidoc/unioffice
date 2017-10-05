@@ -59,6 +59,7 @@ func (m *CT_Camera) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prst" {
 			m.PrstAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "fov" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -67,6 +68,7 @@ func (m *CT_Camera) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := int32(parsed)
 			m.FovAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "zoom" {
 			parsed, err := ParseUnionST_PositivePercentage(attr.Value)
@@ -74,6 +76,7 @@ func (m *CT_Camera) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ZoomAttr = &parsed
+			continue
 		}
 	}
 lCT_Camera:

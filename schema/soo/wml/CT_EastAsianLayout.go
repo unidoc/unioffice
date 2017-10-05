@@ -73,6 +73,7 @@ func (m *CT_EastAsianLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "combine" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -80,9 +81,11 @@ func (m *CT_EastAsianLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.CombineAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "combineBrackets" {
 			m.CombineBracketsAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "vert" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -90,6 +93,7 @@ func (m *CT_EastAsianLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.VertAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "vertCompress" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -97,6 +101,7 @@ func (m *CT_EastAsianLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.VertCompressAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

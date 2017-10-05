@@ -51,9 +51,11 @@ func (m *CT_Proof) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "spelling" {
 			m.SpellingAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "grammar" {
 			m.GrammarAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -55,6 +55,7 @@ func (m *CT_MeasureDimensionMaps) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_MeasureDimensionMaps:

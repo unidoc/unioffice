@@ -131,14 +131,7 @@ func (m *WdCT_Anchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.DistTAttr = &pt
-		}
-		if attr.Name.Local == "distB" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.DistBAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "distL" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -147,6 +140,48 @@ func (m *WdCT_Anchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.DistLAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "simplePos" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SimplePosAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "behindDoc" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.BehindDocAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "layoutInCell" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.LayoutInCellAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "hidden" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.HiddenAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "distB" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.DistBAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "distR" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -155,13 +190,7 @@ func (m *WdCT_Anchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.DistRAttr = &pt
-		}
-		if attr.Name.Local == "simplePos" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SimplePosAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "relativeHeight" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -169,13 +198,7 @@ func (m *WdCT_Anchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.RelativeHeightAttr = uint32(parsed)
-		}
-		if attr.Name.Local == "behindDoc" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.BehindDocAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "locked" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -183,20 +206,7 @@ func (m *WdCT_Anchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.LockedAttr = parsed
-		}
-		if attr.Name.Local == "layoutInCell" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.LayoutInCellAttr = parsed
-		}
-		if attr.Name.Local == "hidden" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.HiddenAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "allowOverlap" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -204,6 +214,7 @@ func (m *WdCT_Anchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.AllowOverlapAttr = parsed
+			continue
 		}
 	}
 lWdCT_Anchor:

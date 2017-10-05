@@ -71,9 +71,11 @@ func (m *CT_Background) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ColorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "themeColor" {
 			m.ThemeColorAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "themeTint" {
 			parsed, err := attr.Value, error(nil)
@@ -81,6 +83,7 @@ func (m *CT_Background) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ThemeTintAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "themeShade" {
 			parsed, err := attr.Value, error(nil)
@@ -88,6 +91,7 @@ func (m *CT_Background) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ThemeShadeAttr = &parsed
+			continue
 		}
 	}
 lCT_Background:

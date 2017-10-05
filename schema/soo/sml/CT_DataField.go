@@ -92,6 +92,7 @@ func (m *CT_DataField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fld" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -99,12 +100,15 @@ func (m *CT_DataField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.FldAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "subtotal" {
 			m.SubtotalAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "showDataAs" {
 			m.ShowDataAsAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "baseField" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -113,6 +117,7 @@ func (m *CT_DataField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := int32(parsed)
 			m.BaseFieldAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "baseItem" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -121,6 +126,7 @@ func (m *CT_DataField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.BaseItemAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "numFmtId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -129,6 +135,7 @@ func (m *CT_DataField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.NumFmtIdAttr = &pt
+			continue
 		}
 	}
 lCT_DataField:

@@ -124,6 +124,14 @@ func (m *CT_PivotArea) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Local == "outline" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.OutlineAttr = &parsed
+			continue
+		}
 		if attr.Name.Local == "field" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
 			if err != nil {
@@ -131,9 +139,7 @@ func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := int32(parsed)
 			m.FieldAttr = &pt
-		}
-		if attr.Name.Local == "type" {
-			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "dataOnly" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -141,6 +147,7 @@ func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.DataOnlyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "labelOnly" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -148,6 +155,7 @@ func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.LabelOnlyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "grandRow" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -155,6 +163,7 @@ func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.GrandRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "grandCol" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -162,6 +171,7 @@ func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.GrandColAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cacheIndex" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -169,13 +179,11 @@ func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.CacheIndexAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "outline" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.OutlineAttr = &parsed
+		if attr.Name.Local == "type" {
+			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "offset" {
 			parsed, err := attr.Value, error(nil)
@@ -183,6 +191,7 @@ func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.OffsetAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "collapsedLevelsAreSubtotals" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -190,9 +199,11 @@ func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.CollapsedLevelsAreSubtotalsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "axis" {
 			m.AxisAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "fieldPosition" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -201,6 +212,7 @@ func (m *CT_PivotArea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.FieldPositionAttr = &pt
+			continue
 		}
 	}
 lCT_PivotArea:

@@ -46,6 +46,7 @@ func (m *CT_VolTopicRef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.RAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "s" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -53,6 +54,7 @@ func (m *CT_VolTopicRef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.SAttr = uint32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

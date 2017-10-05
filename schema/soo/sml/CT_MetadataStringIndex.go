@@ -48,6 +48,7 @@ func (m *CT_MetadataStringIndex) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.XAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "s" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -55,6 +56,7 @@ func (m *CT_MetadataStringIndex) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.SAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

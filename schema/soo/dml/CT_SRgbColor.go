@@ -48,6 +48,7 @@ func (m *CT_SRgbColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ValAttr = parsed
+			continue
 		}
 	}
 lCT_SRgbColor:

@@ -71,6 +71,7 @@ func (m *CT_BlipFillProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := uint32(parsed)
 			m.DpiAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "rotWithShape" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -78,6 +79,7 @@ func (m *CT_BlipFillProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.RotWithShapeAttr = &parsed
+			continue
 		}
 	}
 lCT_BlipFillProperties:

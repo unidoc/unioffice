@@ -49,6 +49,7 @@ func (m *CT_TintEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := int32(parsed)
 			m.HueAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "amt" {
 			parsed, err := ParseUnionST_FixedPercentage(attr.Value)
@@ -56,6 +57,7 @@ func (m *CT_TintEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.AmtAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

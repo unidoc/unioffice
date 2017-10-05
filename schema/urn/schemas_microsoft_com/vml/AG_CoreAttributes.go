@@ -95,6 +95,7 @@ func (m *AG_CoreAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.HrefAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "target" {
 			parsed, err := attr.Value, error(nil)
@@ -102,6 +103,7 @@ func (m *AG_CoreAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.TargetAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "class" {
 			parsed, err := attr.Value, error(nil)
@@ -109,6 +111,7 @@ func (m *AG_CoreAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ClassAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "title" {
 			parsed, err := attr.Value, error(nil)
@@ -116,6 +119,7 @@ func (m *AG_CoreAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.TitleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "alt" {
 			parsed, err := attr.Value, error(nil)
@@ -123,6 +127,7 @@ func (m *AG_CoreAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.AltAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "coordsize" {
 			parsed, err := attr.Value, error(nil)
@@ -130,6 +135,7 @@ func (m *AG_CoreAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.CoordsizeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "coordorigin" {
 			parsed, err := attr.Value, error(nil)
@@ -137,6 +143,7 @@ func (m *AG_CoreAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.CoordoriginAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "wrapcoords" {
 			parsed, err := attr.Value, error(nil)
@@ -144,9 +151,11 @@ func (m *AG_CoreAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.WrapcoordsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "print" {
 			m.PrintAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
@@ -154,6 +163,7 @@ func (m *AG_CoreAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "style" {
 			parsed, err := attr.Value, error(nil)
@@ -161,6 +171,7 @@ func (m *AG_CoreAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.StyleAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

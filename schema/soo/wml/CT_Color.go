@@ -62,9 +62,11 @@ func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ValAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "themeColor" {
 			m.ThemeColorAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "themeTint" {
 			parsed, err := attr.Value, error(nil)
@@ -72,6 +74,7 @@ func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ThemeTintAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "themeShade" {
 			parsed, err := attr.Value, error(nil)
@@ -79,6 +82,7 @@ func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ThemeShadeAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

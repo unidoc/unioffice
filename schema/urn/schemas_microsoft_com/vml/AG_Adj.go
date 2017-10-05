@@ -40,6 +40,7 @@ func (m *AG_Adj) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.AdjAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

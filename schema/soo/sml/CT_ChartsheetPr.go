@@ -57,6 +57,7 @@ func (m *CT_ChartsheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.PublishedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "codeName" {
 			parsed, err := attr.Value, error(nil)
@@ -64,6 +65,7 @@ func (m *CT_ChartsheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.CodeNameAttr = &parsed
+			continue
 		}
 	}
 lCT_ChartsheetPr:

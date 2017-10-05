@@ -248,26 +248,13 @@ func (m *CT_TextCharacterProperties) MarshalXML(e *xml.Encoder, start xml.StartE
 func (m *CT_TextCharacterProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "kumimoji" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.KumimojiAttr = &parsed
-		}
 		if attr.Name.Local == "lang" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.LangAttr = &parsed
-		}
-		if attr.Name.Local == "altLang" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.AltLangAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sz" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -276,6 +263,23 @@ func (m *CT_TextCharacterProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			}
 			pt := int32(parsed)
 			m.SzAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "kumimoji" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.KumimojiAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "strike" {
+			m.StrikeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "cap" {
+			m.CapAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "b" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -283,6 +287,7 @@ func (m *CT_TextCharacterProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.BAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "i" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -290,12 +295,15 @@ func (m *CT_TextCharacterProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.IAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "u" {
-			m.UAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "strike" {
-			m.StrikeAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "smtClean" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SmtCleanAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "kern" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -304,44 +312,7 @@ func (m *CT_TextCharacterProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			}
 			pt := int32(parsed)
 			m.KernAttr = &pt
-		}
-		if attr.Name.Local == "cap" {
-			m.CapAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "spc" {
-			parsed, err := ParseUnionST_TextPoint(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SpcAttr = &parsed
-		}
-		if attr.Name.Local == "normalizeH" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.NormalizeHAttr = &parsed
-		}
-		if attr.Name.Local == "baseline" {
-			parsed, err := ParseUnionST_Percentage(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.BaselineAttr = &parsed
-		}
-		if attr.Name.Local == "noProof" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.NoProofAttr = &parsed
-		}
-		if attr.Name.Local == "dirty" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DirtyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "err" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -349,13 +320,27 @@ func (m *CT_TextCharacterProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.ErrAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "smtClean" {
+		if attr.Name.Local == "altLang" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.AltLangAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "noProof" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.SmtCleanAttr = &parsed
+			m.NoProofAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "u" {
+			m.UAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "smtId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -364,6 +349,31 @@ func (m *CT_TextCharacterProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			}
 			pt := uint32(parsed)
 			m.SmtIdAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "spc" {
+			parsed, err := ParseUnionST_TextPoint(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SpcAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "baseline" {
+			parsed, err := ParseUnionST_Percentage(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.BaselineAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "dirty" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DirtyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "bmk" {
 			parsed, err := attr.Value, error(nil)
@@ -371,6 +381,15 @@ func (m *CT_TextCharacterProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.BmkAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "normalizeH" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.NormalizeHAttr = &parsed
+			continue
 		}
 	}
 lCT_TextCharacterProperties:

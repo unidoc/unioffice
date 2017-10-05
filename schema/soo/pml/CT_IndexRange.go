@@ -46,6 +46,7 @@ func (m *CT_IndexRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.StAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "end" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -53,6 +54,7 @@ func (m *CT_IndexRange) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.EndAttr = uint32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

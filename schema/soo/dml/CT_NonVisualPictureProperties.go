@@ -55,6 +55,7 @@ func (m *CT_NonVisualPictureProperties) UnmarshalXML(d *xml.Decoder, start xml.S
 				return err
 			}
 			m.PreferRelativeResizeAttr = &parsed
+			continue
 		}
 	}
 lCT_NonVisualPictureProperties:

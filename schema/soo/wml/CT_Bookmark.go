@@ -63,6 +63,7 @@ func (m *CT_Bookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "colFirst" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -70,6 +71,7 @@ func (m *CT_Bookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.ColFirstAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "colLast" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -77,9 +79,11 @@ func (m *CT_Bookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.ColLastAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "displacedByCustomXml" {
 			m.DisplacedByCustomXmlAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -87,6 +91,7 @@ func (m *CT_Bookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

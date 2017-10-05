@@ -53,9 +53,11 @@ func (m *CT_SmartTagPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.EmbedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "show" {
 			m.ShowAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

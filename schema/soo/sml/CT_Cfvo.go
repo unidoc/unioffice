@@ -62,6 +62,7 @@ func (m *CT_Cfvo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "val" {
 			parsed, err := attr.Value, error(nil)
@@ -69,6 +70,7 @@ func (m *CT_Cfvo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "gte" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -76,6 +78,7 @@ func (m *CT_Cfvo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.GteAttr = &parsed
+			continue
 		}
 	}
 lCT_Cfvo:

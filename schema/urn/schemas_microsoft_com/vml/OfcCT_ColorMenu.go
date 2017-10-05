@@ -65,6 +65,7 @@ func (m *OfcCT_ColorMenu) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.StrokecolorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fillcolor" {
 			parsed, err := attr.Value, error(nil)
@@ -72,6 +73,7 @@ func (m *OfcCT_ColorMenu) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.FillcolorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "shadowcolor" {
 			parsed, err := attr.Value, error(nil)
@@ -79,6 +81,7 @@ func (m *OfcCT_ColorMenu) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.ShadowcolorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "extrusioncolor" {
 			parsed, err := attr.Value, error(nil)
@@ -86,9 +89,11 @@ func (m *OfcCT_ColorMenu) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.ExtrusioncolorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ext" {
 			m.ExtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

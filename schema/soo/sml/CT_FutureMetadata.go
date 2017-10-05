@@ -64,6 +64,7 @@ func (m *CT_FutureMetadata) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -72,6 +73,7 @@ func (m *CT_FutureMetadata) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_FutureMetadata:

@@ -56,6 +56,7 @@ func (m *CT_Bevel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.WAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "h" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -63,9 +64,11 @@ func (m *CT_Bevel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "prst" {
 			m.PrstAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

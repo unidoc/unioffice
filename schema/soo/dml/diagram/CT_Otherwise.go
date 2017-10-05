@@ -108,6 +108,7 @@ func (m *CT_Otherwise) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 	}
 lCT_Otherwise:

@@ -96,6 +96,7 @@ func (m *CT_Shd) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "color" {
 			parsed, err := ParseUnionST_HexColor(attr.Value)
@@ -103,9 +104,11 @@ func (m *CT_Shd) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ColorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "themeColor" {
 			m.ThemeColorAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "themeTint" {
 			parsed, err := attr.Value, error(nil)
@@ -113,6 +116,7 @@ func (m *CT_Shd) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ThemeTintAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "themeShade" {
 			parsed, err := attr.Value, error(nil)
@@ -120,6 +124,7 @@ func (m *CT_Shd) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ThemeShadeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fill" {
 			parsed, err := ParseUnionST_HexColor(attr.Value)
@@ -127,9 +132,11 @@ func (m *CT_Shd) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FillAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "themeFill" {
 			m.ThemeFillAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "themeFillTint" {
 			parsed, err := attr.Value, error(nil)
@@ -137,6 +144,7 @@ func (m *CT_Shd) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ThemeFillTintAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "themeFillShade" {
 			parsed, err := attr.Value, error(nil)
@@ -144,6 +152,7 @@ func (m *CT_Shd) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ThemeFillShadeAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

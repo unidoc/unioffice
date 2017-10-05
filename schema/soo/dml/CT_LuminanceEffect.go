@@ -47,6 +47,7 @@ func (m *CT_LuminanceEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.BrightAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "contrast" {
 			parsed, err := ParseUnionST_FixedPercentage(attr.Value)
@@ -54,6 +55,7 @@ func (m *CT_LuminanceEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ContrastAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

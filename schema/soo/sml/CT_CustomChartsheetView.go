@@ -84,6 +84,7 @@ func (m *CT_CustomChartsheetView) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.GuidAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "scale" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -92,9 +93,11 @@ func (m *CT_CustomChartsheetView) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			}
 			pt := uint32(parsed)
 			m.ScaleAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "state" {
 			m.StateAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "zoomToFit" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -102,6 +105,7 @@ func (m *CT_CustomChartsheetView) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.ZoomToFitAttr = &parsed
+			continue
 		}
 	}
 lCT_CustomChartsheetView:

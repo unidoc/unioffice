@@ -452,12 +452,183 @@ func (m *CT_Image) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Image) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "href" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "dgmnodekind" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
+			if err != nil {
+				return err
+			}
+			m.DgmnodekindAttr = &parsed
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bullet" {
+			m.BulletAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "hr" {
+			m.HrAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "oleicon" {
+			m.OleiconAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "hrstd" {
+			m.HrstdAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "clip" {
+			m.ClipAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "hrnoshade" {
+			m.HrnoshadeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "preferrelative" {
+			m.PreferrelativeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "hrpct" {
+			parsed, err := strconv.ParseFloat(attr.Value, 64)
+			if err != nil {
+				return err
+			}
+			pt := float32(parsed)
+			m.HrpctAttr = &pt
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "ole" {
+			m.OleAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "hralign" {
+			m.HralignAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bwpure" {
+			m.BwpureAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "dgmlayout" {
+			m.DgmlayoutAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "insetmode" {
+			m.InsetmodeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "spid" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.HrefAttr = &parsed
+			m.SpidAttr = &parsed
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "borderbottomcolor" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.BorderbottomcolorAttr = &parsed
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "allowoverlap" {
+			m.AllowoverlapAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "doubleclicknotify" {
+			m.DoubleclicknotifyAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "dgmlayoutmru" {
+			m.DgmlayoutmruAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "userhidden" {
+			m.UserhiddenAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "allowincell" {
+			m.AllowincellAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "spt" {
+			parsed, err := strconv.ParseFloat(attr.Value, 64)
+			if err != nil {
+				return err
+			}
+			pt := float32(parsed)
+			m.SptAttr = &pt
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "borderleftcolor" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.BorderleftcolorAttr = &parsed
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "userdrawn" {
+			m.UserdrawnAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "cliptowrap" {
+			m.CliptowrapAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "borderrightcolor" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.BorderrightcolorAttr = &parsed
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "connectortype" {
+			m.ConnectortypeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "button" {
+			m.ButtonAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "forcedash" {
+			m.ForcedashAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "regroupid" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
+			if err != nil {
+				return err
+			}
+			m.RegroupidAttr = &parsed
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "oned" {
+			m.OnedAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bwmode" {
+			m.BwmodeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bwnormal" {
+			m.BwnormalAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bordertopcolor" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.BordertopcolorAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "print" {
+			m.PrintAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "target" {
 			parsed, err := attr.Value, error(nil)
@@ -465,34 +636,11 @@ func (m *CT_Image) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TargetAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "class" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.ClassAttr = &parsed
-		}
-		if attr.Name.Local == "title" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.TitleAttr = &parsed
-		}
-		if attr.Name.Local == "alt" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.AltAttr = &parsed
-		}
-		if attr.Name.Local == "coordsize" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.CoordsizeAttr = &parsed
+		if attr.Name.Local == "stroked" {
+			m.StrokedAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "coordorigin" {
 			parsed, err := attr.Value, error(nil)
@@ -500,149 +648,7 @@ func (m *CT_Image) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CoordoriginAttr = &parsed
-		}
-		if attr.Name.Local == "wrapcoords" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.WrapcoordsAttr = &parsed
-		}
-		if attr.Name.Local == "print" {
-			m.PrintAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.IdAttr = &parsed
-		}
-		if attr.Name.Local == "style" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.StyleAttr = &parsed
-		}
-		if attr.Name.Local == "spid" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.SpidAttr = &parsed
-		}
-		if attr.Name.Local == "oned" {
-			m.OnedAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "regroupid" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
-			if err != nil {
-				return err
-			}
-			m.RegroupidAttr = &parsed
-		}
-		if attr.Name.Local == "doubleclicknotify" {
-			m.DoubleclicknotifyAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "button" {
-			m.ButtonAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "userhidden" {
-			m.UserhiddenAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "bullet" {
-			m.BulletAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "hr" {
-			m.HrAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "hrstd" {
-			m.HrstdAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "hrnoshade" {
-			m.HrnoshadeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "hrpct" {
-			parsed, err := strconv.ParseFloat(attr.Value, 64)
-			if err != nil {
-				return err
-			}
-			pt := float32(parsed)
-			m.HrpctAttr = &pt
-		}
-		if attr.Name.Local == "hralign" {
-			m.HralignAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "allowincell" {
-			m.AllowincellAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "allowoverlap" {
-			m.AllowoverlapAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "userdrawn" {
-			m.UserdrawnAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "bordertopcolor" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.BordertopcolorAttr = &parsed
-		}
-		if attr.Name.Local == "borderleftcolor" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.BorderleftcolorAttr = &parsed
-		}
-		if attr.Name.Local == "borderbottomcolor" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.BorderbottomcolorAttr = &parsed
-		}
-		if attr.Name.Local == "borderrightcolor" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.BorderrightcolorAttr = &parsed
-		}
-		if attr.Name.Local == "dgmlayout" {
-			m.DgmlayoutAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "dgmnodekind" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
-			if err != nil {
-				return err
-			}
-			m.DgmnodekindAttr = &parsed
-		}
-		if attr.Name.Local == "dgmlayoutmru" {
-			m.DgmlayoutmruAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "insetmode" {
-			m.InsetmodeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "opacity" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.OpacityAttr = &parsed
-		}
-		if attr.Name.Local == "stroked" {
-			m.StrokedAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "strokecolor" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.StrokecolorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "strokeweight" {
 			parsed, err := attr.Value, error(nil)
@@ -650,9 +656,15 @@ func (m *CT_Image) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.StrokeweightAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "insetpen" {
-			m.InsetpenAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "coordsize" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.CoordsizeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "chromakey" {
 			parsed, err := attr.Value, error(nil)
@@ -660,9 +672,15 @@ func (m *CT_Image) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ChromakeyAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "filled" {
-			m.FilledAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "alt" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.AltAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fillcolor" {
 			parsed, err := attr.Value, error(nil)
@@ -670,44 +688,7 @@ func (m *CT_Image) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FillcolorAttr = &parsed
-		}
-		if attr.Name.Local == "spt" {
-			parsed, err := strconv.ParseFloat(attr.Value, 64)
-			if err != nil {
-				return err
-			}
-			pt := float32(parsed)
-			m.SptAttr = &pt
-		}
-		if attr.Name.Local == "connectortype" {
-			m.ConnectortypeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "bwmode" {
-			m.BwmodeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "bwpure" {
-			m.BwpureAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "bwnormal" {
-			m.BwnormalAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "forcedash" {
-			m.ForcedashAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "oleicon" {
-			m.OleiconAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "ole" {
-			m.OleAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "preferrelative" {
-			m.PreferrelativeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "cliptowrap" {
-			m.CliptowrapAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "clip" {
-			m.ClipAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "src" {
 			parsed, err := attr.Value, error(nil)
@@ -715,20 +696,31 @@ func (m *CT_Image) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SrcAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "cropleft" {
+		if attr.Name.Local == "wrapcoords" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.CropleftAttr = &parsed
+			m.WrapcoordsAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "croptop" {
+		if attr.Name.Local == "title" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.CroptopAttr = &parsed
+			m.TitleAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "style" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.StyleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cropright" {
 			parsed, err := attr.Value, error(nil)
@@ -736,13 +728,19 @@ func (m *CT_Image) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CroprightAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "cropbottom" {
+		if attr.Name.Local == "insetpen" {
+			m.InsetpenAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "cropleft" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.CropbottomAttr = &parsed
+			m.CropleftAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "gain" {
 			parsed, err := attr.Value, error(nil)
@@ -750,6 +748,47 @@ func (m *CT_Image) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.GainAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "strokecolor" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.StrokecolorAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "class" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.ClassAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "cropbottom" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.CropbottomAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "filled" {
+			m.FilledAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "grayscale" {
+			m.GrayscaleAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "blacklevel" {
 			parsed, err := attr.Value, error(nil)
@@ -757,6 +796,35 @@ func (m *CT_Image) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.BlacklevelAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "href" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.HrefAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "bilevel" {
+			m.BilevelAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "croptop" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.CroptopAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "opacity" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.OpacityAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "gamma" {
 			parsed, err := attr.Value, error(nil)
@@ -764,12 +832,7 @@ func (m *CT_Image) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.GammaAttr = &parsed
-		}
-		if attr.Name.Local == "grayscale" {
-			m.GrayscaleAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "bilevel" {
-			m.BilevelAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_Image:

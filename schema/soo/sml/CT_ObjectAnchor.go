@@ -63,6 +63,7 @@ func (m *CT_ObjectAnchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.MoveWithCellsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sizeWithCells" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -70,6 +71,7 @@ func (m *CT_ObjectAnchor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.SizeWithCellsAttr = &parsed
+			continue
 		}
 	}
 lCT_ObjectAnchor:

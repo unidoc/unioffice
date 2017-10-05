@@ -55,6 +55,7 @@ func (m *CT_TableStyleElement) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "size" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -63,6 +64,7 @@ func (m *CT_TableStyleElement) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint32(parsed)
 			m.SizeAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "dxfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -71,6 +73,7 @@ func (m *CT_TableStyleElement) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint32(parsed)
 			m.DxfIdAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

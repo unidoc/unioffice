@@ -150,64 +150,13 @@ func (m *CT_CfRule) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_CfRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "type" {
-			m.TypeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "dxfId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.DxfIdAttr = &pt
-		}
-		if attr.Name.Local == "priority" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			m.PriorityAttr = int32(parsed)
-		}
-		if attr.Name.Local == "stopIfTrue" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.StopIfTrueAttr = &parsed
-		}
-		if attr.Name.Local == "aboveAverage" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AboveAverageAttr = &parsed
-		}
-		if attr.Name.Local == "percent" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PercentAttr = &parsed
-		}
-		if attr.Name.Local == "bottom" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.BottomAttr = &parsed
-		}
-		if attr.Name.Local == "operator" {
-			m.OperatorAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "text" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.TextAttr = &parsed
-		}
 		if attr.Name.Local == "timePeriod" {
 			m.TimePeriodAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "type" {
+			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "rank" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -216,6 +165,15 @@ func (m *CT_CfRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.RankAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "priority" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			m.PriorityAttr = int32(parsed)
+			continue
 		}
 		if attr.Name.Local == "stdDev" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -224,6 +182,60 @@ func (m *CT_CfRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := int32(parsed)
 			m.StdDevAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "aboveAverage" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AboveAverageAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "bottom" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.BottomAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "operator" {
+			m.OperatorAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "text" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.TextAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "dxfId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.DxfIdAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "stopIfTrue" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.StopIfTrueAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "percent" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PercentAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "equalAverage" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -231,6 +243,7 @@ func (m *CT_CfRule) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.EqualAverageAttr = &parsed
+			continue
 		}
 	}
 lCT_CfRule:

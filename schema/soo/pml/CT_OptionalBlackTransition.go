@@ -44,6 +44,7 @@ func (m *CT_OptionalBlackTransition) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.ThruBlkAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

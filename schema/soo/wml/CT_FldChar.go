@@ -75,6 +75,7 @@ func (m *CT_FldChar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "fldCharType" {
 			m.FldCharTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "fldLock" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -82,6 +83,7 @@ func (m *CT_FldChar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.FldLockAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dirty" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -89,6 +91,7 @@ func (m *CT_FldChar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.DirtyAttr = &parsed
+			continue
 		}
 	}
 lCT_FldChar:

@@ -110,6 +110,7 @@ func (m *CT_Path2D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.WAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "h" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -117,9 +118,11 @@ func (m *CT_Path2D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fill" {
 			m.FillAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "stroke" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -127,6 +130,7 @@ func (m *CT_Path2D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.StrokeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "extrusionOk" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -134,6 +138,7 @@ func (m *CT_Path2D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ExtrusionOkAttr = &parsed
+			continue
 		}
 	}
 lCT_Path2D:

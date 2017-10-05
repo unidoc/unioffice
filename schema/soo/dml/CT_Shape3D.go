@@ -88,6 +88,7 @@ func (m *CT_Shape3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ZAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "extrusionH" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -95,6 +96,7 @@ func (m *CT_Shape3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ExtrusionHAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "contourW" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -102,9 +104,11 @@ func (m *CT_Shape3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ContourWAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "prstMaterial" {
 			m.PrstMaterialAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_Shape3D:

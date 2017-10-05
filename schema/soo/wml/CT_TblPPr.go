@@ -111,6 +111,7 @@ func (m *CT_TblPPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.LeftFromTextAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rightFromText" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -118,6 +119,7 @@ func (m *CT_TblPPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RightFromTextAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "topFromText" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -125,6 +127,7 @@ func (m *CT_TblPPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TopFromTextAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "bottomFromText" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -132,15 +135,19 @@ func (m *CT_TblPPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.BottomFromTextAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "vertAnchor" {
 			m.VertAnchorAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "horzAnchor" {
 			m.HorzAnchorAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "tblpXSpec" {
 			m.TblpXSpecAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "tblpX" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -148,9 +155,11 @@ func (m *CT_TblPPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TblpXAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "tblpYSpec" {
 			m.TblpYSpecAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "tblpY" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -158,6 +167,7 @@ func (m *CT_TblPPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TblpYAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

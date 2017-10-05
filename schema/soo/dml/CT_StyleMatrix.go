@@ -64,6 +64,7 @@ func (m *CT_StyleMatrix) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 	}
 lCT_StyleMatrix:

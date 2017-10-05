@@ -48,6 +48,7 @@ func (m *CT_AnimationDgmBuildProperties) UnmarshalXML(d *xml.Decoder, start xml.
 				return err
 			}
 			m.BldAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rev" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -55,6 +56,7 @@ func (m *CT_AnimationDgmBuildProperties) UnmarshalXML(d *xml.Decoder, start xml.
 				return err
 			}
 			m.RevAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

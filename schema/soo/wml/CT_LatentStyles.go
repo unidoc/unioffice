@@ -85,6 +85,7 @@ func (m *CT_LatentStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DefLockedStateAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "defUIPriority" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -92,6 +93,7 @@ func (m *CT_LatentStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DefUIPriorityAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "defSemiHidden" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -99,6 +101,7 @@ func (m *CT_LatentStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DefSemiHiddenAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "defUnhideWhenUsed" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -106,6 +109,7 @@ func (m *CT_LatentStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DefUnhideWhenUsedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "defQFormat" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -113,6 +117,7 @@ func (m *CT_LatentStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DefQFormatAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -120,6 +125,7 @@ func (m *CT_LatentStyles) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.CountAttr = &parsed
+			continue
 		}
 	}
 lCT_LatentStyles:

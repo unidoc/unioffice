@@ -42,6 +42,7 @@ func (m *CT_BubbleScale) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

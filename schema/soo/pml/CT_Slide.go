@@ -86,6 +86,7 @@ func (m *CT_Slide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ShowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showMasterSp" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -93,6 +94,7 @@ func (m *CT_Slide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ShowMasterSpAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showMasterPhAnim" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -100,6 +102,7 @@ func (m *CT_Slide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ShowMasterPhAnimAttr = &parsed
+			continue
 		}
 	}
 lCT_Slide:

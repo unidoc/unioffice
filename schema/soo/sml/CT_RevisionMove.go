@@ -97,6 +97,7 @@ func (m *CT_RevisionMove) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.SheetIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "source" {
 			parsed, err := attr.Value, error(nil)
@@ -104,6 +105,7 @@ func (m *CT_RevisionMove) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.SourceAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "destination" {
 			parsed, err := attr.Value, error(nil)
@@ -111,6 +113,7 @@ func (m *CT_RevisionMove) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DestinationAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "sourceSheetId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -119,6 +122,7 @@ func (m *CT_RevisionMove) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			}
 			pt := uint32(parsed)
 			m.SourceSheetIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "rId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -127,6 +131,7 @@ func (m *CT_RevisionMove) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			}
 			pt := uint32(parsed)
 			m.RIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "ua" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -134,6 +139,7 @@ func (m *CT_RevisionMove) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.UaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ra" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -141,6 +147,7 @@ func (m *CT_RevisionMove) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.RaAttr = &parsed
+			continue
 		}
 	}
 lCT_RevisionMove:

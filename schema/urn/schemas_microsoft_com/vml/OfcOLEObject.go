@@ -41,8 +41,17 @@ func (m *OfcOLEObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	// initialize to default
 	m.OfcCT_OLEObject = *NewOfcCT_OLEObject()
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = &parsed
+			continue
+		}
 		if attr.Name.Local == "Type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "ProgID" {
 			parsed, err := attr.Value, error(nil)
@@ -50,6 +59,7 @@ func (m *OfcOLEObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ProgIDAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ShapeID" {
 			parsed, err := attr.Value, error(nil)
@@ -57,9 +67,11 @@ func (m *OfcOLEObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ShapeIDAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "DrawAspect" {
 			m.DrawAspectAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "ObjectID" {
 			parsed, err := attr.Value, error(nil)
@@ -67,16 +79,11 @@ func (m *OfcOLEObject) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ObjectIDAttr = &parsed
-		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "UpdateMode" {
 			m.UpdateModeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lOfcOLEObject:

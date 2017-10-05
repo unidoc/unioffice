@@ -71,6 +71,7 @@ func (m *CT_Columns) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.EqualWidthAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "space" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -78,6 +79,7 @@ func (m *CT_Columns) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.SpaceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "num" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -85,6 +87,7 @@ func (m *CT_Columns) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.NumAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sep" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -92,6 +95,7 @@ func (m *CT_Columns) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.SepAttr = &parsed
+			continue
 		}
 	}
 lCT_Columns:

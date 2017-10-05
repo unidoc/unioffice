@@ -42,6 +42,7 @@ func (m *CT_FtnEdnSepRef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

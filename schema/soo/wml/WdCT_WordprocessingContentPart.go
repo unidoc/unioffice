@@ -60,15 +60,17 @@ func (m *WdCT_WordprocessingContentPart) MarshalXML(e *xml.Encoder, start xml.St
 func (m *WdCT_WordprocessingContentPart) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "bwMode" {
-			m.BwModeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.IdAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "bwMode" {
+			m.BwModeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lWdCT_WordprocessingContentPart:

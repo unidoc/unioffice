@@ -34,12 +34,15 @@ func (m *Shadow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "on" {
 			m.OnAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "obscured" {
 			m.ObscuredAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "color" {
 			parsed, err := attr.Value, error(nil)
@@ -47,6 +50,7 @@ func (m *Shadow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ColorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "opacity" {
 			parsed, err := attr.Value, error(nil)
@@ -54,6 +58,7 @@ func (m *Shadow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.OpacityAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "offset" {
 			parsed, err := attr.Value, error(nil)
@@ -61,6 +66,7 @@ func (m *Shadow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.OffsetAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "color2" {
 			parsed, err := attr.Value, error(nil)
@@ -68,6 +74,7 @@ func (m *Shadow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.Color2Attr = &parsed
+			continue
 		}
 		if attr.Name.Local == "offset2" {
 			parsed, err := attr.Value, error(nil)
@@ -75,6 +82,7 @@ func (m *Shadow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.Offset2Attr = &parsed
+			continue
 		}
 		if attr.Name.Local == "origin" {
 			parsed, err := attr.Value, error(nil)
@@ -82,6 +90,7 @@ func (m *Shadow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.OriginAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "matrix" {
 			parsed, err := attr.Value, error(nil)
@@ -89,6 +98,7 @@ func (m *Shadow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.MatrixAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
@@ -96,6 +106,7 @@ func (m *Shadow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -76,6 +76,7 @@ func (m *CT_TLCommonMediaNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.VolAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "mute" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -83,6 +84,7 @@ func (m *CT_TLCommonMediaNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.MuteAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "numSld" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -91,6 +93,7 @@ func (m *CT_TLCommonMediaNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartE
 			}
 			pt := uint32(parsed)
 			m.NumSldAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "showWhenStopped" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -98,6 +101,7 @@ func (m *CT_TLCommonMediaNodeData) UnmarshalXML(d *xml.Decoder, start xml.StartE
 				return err
 			}
 			m.ShowWhenStoppedAttr = &parsed
+			continue
 		}
 	}
 lCT_TLCommonMediaNodeData:

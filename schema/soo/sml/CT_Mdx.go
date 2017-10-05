@@ -77,9 +77,11 @@ func (m *CT_Mdx) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.NAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "f" {
 			m.FAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_Mdx:

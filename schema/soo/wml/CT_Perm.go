@@ -50,9 +50,11 @@ func (m *CT_Perm) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "displacedByCustomXml" {
 			m.DisplacedByCustomXmlAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

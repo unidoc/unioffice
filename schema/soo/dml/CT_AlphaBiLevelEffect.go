@@ -40,6 +40,7 @@ func (m *CT_AlphaBiLevelEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.ThreshAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

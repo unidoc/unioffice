@@ -46,6 +46,7 @@ func (m *CT_AudioCDTime) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.TrackAttr = uint8(parsed)
+			continue
 		}
 		if attr.Name.Local == "time" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -54,6 +55,7 @@ func (m *CT_AudioCDTime) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.TimeAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

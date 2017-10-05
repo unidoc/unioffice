@@ -57,6 +57,7 @@ func (m *WdCT_TextboxInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint16(parsed)
 			m.IdAttr = &pt
+			continue
 		}
 	}
 lWdCT_TextboxInfo:

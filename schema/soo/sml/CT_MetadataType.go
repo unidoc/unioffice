@@ -196,110 +196,21 @@ func (m *CT_MetadataType) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 func (m *CT_MetadataType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "name" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.NameAttr = parsed
-		}
-		if attr.Name.Local == "minSupportedVersion" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			m.MinSupportedVersionAttr = uint32(parsed)
-		}
-		if attr.Name.Local == "ghostRow" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.GhostRowAttr = &parsed
-		}
-		if attr.Name.Local == "ghostCol" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.GhostColAttr = &parsed
-		}
-		if attr.Name.Local == "edit" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.EditAttr = &parsed
-		}
-		if attr.Name.Local == "delete" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DeleteAttr = &parsed
-		}
-		if attr.Name.Local == "copy" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CopyAttr = &parsed
-		}
-		if attr.Name.Local == "pasteAll" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PasteAllAttr = &parsed
-		}
-		if attr.Name.Local == "pasteFormulas" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PasteFormulasAttr = &parsed
-		}
-		if attr.Name.Local == "pasteValues" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PasteValuesAttr = &parsed
-		}
-		if attr.Name.Local == "pasteFormats" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PasteFormatsAttr = &parsed
-		}
-		if attr.Name.Local == "pasteComments" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PasteCommentsAttr = &parsed
-		}
-		if attr.Name.Local == "pasteDataValidation" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PasteDataValidationAttr = &parsed
-		}
-		if attr.Name.Local == "pasteBorders" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PasteBordersAttr = &parsed
-		}
 		if attr.Name.Local == "pasteColWidths" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.PasteColWidthsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "name" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "pasteNumberFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -307,6 +218,15 @@ func (m *CT_MetadataType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.PasteNumberFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "ghostRow" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.GhostRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "merge" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -314,6 +234,15 @@ func (m *CT_MetadataType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.MergeAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "edit" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.EditAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "splitFirst" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -321,6 +250,15 @@ func (m *CT_MetadataType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.SplitFirstAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "copy" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.CopyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "splitAll" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -328,62 +266,15 @@ func (m *CT_MetadataType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.SplitAllAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "rowColShift" {
+		if attr.Name.Local == "pasteFormulas" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.RowColShiftAttr = &parsed
-		}
-		if attr.Name.Local == "clearAll" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ClearAllAttr = &parsed
-		}
-		if attr.Name.Local == "clearFormats" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ClearFormatsAttr = &parsed
-		}
-		if attr.Name.Local == "clearContents" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ClearContentsAttr = &parsed
-		}
-		if attr.Name.Local == "clearComments" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ClearCommentsAttr = &parsed
-		}
-		if attr.Name.Local == "assign" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AssignAttr = &parsed
-		}
-		if attr.Name.Local == "coerce" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CoerceAttr = &parsed
-		}
-		if attr.Name.Local == "adjust" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AdjustAttr = &parsed
+			m.PasteFormulasAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cellMeta" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -391,6 +282,143 @@ func (m *CT_MetadataType) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.CellMetaAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "clearAll" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ClearAllAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "minSupportedVersion" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			m.MinSupportedVersionAttr = uint32(parsed)
+			continue
+		}
+		if attr.Name.Local == "adjust" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AdjustAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "clearContents" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ClearContentsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "pasteValues" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PasteValuesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "rowColShift" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RowColShiftAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "pasteComments" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PasteCommentsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "clearFormats" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ClearFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "ghostCol" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.GhostColAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "coerce" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.CoerceAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "clearComments" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ClearCommentsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "pasteAll" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PasteAllAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "pasteBorders" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PasteBordersAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "pasteFormats" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PasteFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "pasteDataValidation" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PasteDataValidationAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "delete" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DeleteAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "assign" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AssignAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

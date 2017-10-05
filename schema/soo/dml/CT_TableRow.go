@@ -54,6 +54,7 @@ func (m *CT_TableRow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.HAttr = parsed
+			continue
 		}
 	}
 lCT_TableRow:

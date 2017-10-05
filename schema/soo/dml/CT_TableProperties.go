@@ -118,26 +118,13 @@ func (m *CT_TableProperties) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 func (m *CT_TableProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "rtl" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RtlAttr = &parsed
-		}
 		if attr.Name.Local == "firstRow" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.FirstRowAttr = &parsed
-		}
-		if attr.Name.Local == "firstCol" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.FirstColAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lastRow" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -145,13 +132,7 @@ func (m *CT_TableProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.LastRowAttr = &parsed
-		}
-		if attr.Name.Local == "lastCol" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.LastColAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "bandRow" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -159,6 +140,7 @@ func (m *CT_TableProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.BandRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "bandCol" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -166,6 +148,31 @@ func (m *CT_TableProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.BandColAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "rtl" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RtlAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "firstCol" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.FirstColAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "lastCol" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.LastColAttr = &parsed
+			continue
 		}
 	}
 lCT_TableProperties:

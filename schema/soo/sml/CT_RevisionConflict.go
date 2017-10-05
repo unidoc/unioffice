@@ -60,6 +60,7 @@ func (m *CT_RevisionConflict) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			}
 			pt := uint32(parsed)
 			m.SheetIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "rId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -68,6 +69,7 @@ func (m *CT_RevisionConflict) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			}
 			pt := uint32(parsed)
 			m.RIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "ua" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -75,6 +77,7 @@ func (m *CT_RevisionConflict) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.UaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ra" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -82,6 +85,7 @@ func (m *CT_RevisionConflict) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.RaAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

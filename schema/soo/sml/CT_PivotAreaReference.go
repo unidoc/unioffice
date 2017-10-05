@@ -149,13 +149,21 @@ func (m *CT_PivotAreaReference) MarshalXML(e *xml.Encoder, start xml.StartElemen
 func (m *CT_PivotAreaReference) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "field" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+		if attr.Name.Local == "maxSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			pt := uint32(parsed)
-			m.FieldAttr = &pt
+			m.MaxSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "minSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.MinSubtotalAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -164,69 +172,7 @@ func (m *CT_PivotAreaReference) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
-		}
-		if attr.Name.Local == "selected" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SelectedAttr = &parsed
-		}
-		if attr.Name.Local == "byPosition" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ByPositionAttr = &parsed
-		}
-		if attr.Name.Local == "relative" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RelativeAttr = &parsed
-		}
-		if attr.Name.Local == "defaultSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DefaultSubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "sumSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SumSubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "countASubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CountASubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "avgSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AvgSubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "maxSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MaxSubtotalAttr = &parsed
-		}
-		if attr.Name.Local == "minSubtotal" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MinSubtotalAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "productSubtotal" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -234,6 +180,15 @@ func (m *CT_PivotAreaReference) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.ProductSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "byPosition" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ByPositionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "countSubtotal" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -241,6 +196,64 @@ func (m *CT_PivotAreaReference) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.CountSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "defaultSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DefaultSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "countASubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.CountASubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "avgSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AvgSubtotalAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "field" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.FieldAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "selected" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SelectedAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "relative" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RelativeAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "sumSubtotal" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SumSubtotalAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "stdDevSubtotal" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -248,6 +261,7 @@ func (m *CT_PivotAreaReference) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.StdDevSubtotalAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "stdDevPSubtotal" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -255,6 +269,7 @@ func (m *CT_PivotAreaReference) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.StdDevPSubtotalAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "varSubtotal" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -262,6 +277,7 @@ func (m *CT_PivotAreaReference) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.VarSubtotalAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "varPSubtotal" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -269,6 +285,7 @@ func (m *CT_PivotAreaReference) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.VarPSubtotalAttr = &parsed
+			continue
 		}
 	}
 lCT_PivotAreaReference:

@@ -55,6 +55,7 @@ func (m *CT_PatternFill) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "patternType" {
 			m.PatternTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_PatternFill:

@@ -80,6 +80,7 @@ func (m *CT_Scenario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "locked" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -87,6 +88,7 @@ func (m *CT_Scenario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.LockedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hidden" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -94,6 +96,7 @@ func (m *CT_Scenario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.HiddenAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -102,6 +105,7 @@ func (m *CT_Scenario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "user" {
 			parsed, err := attr.Value, error(nil)
@@ -109,6 +113,7 @@ func (m *CT_Scenario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.UserAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "comment" {
 			parsed, err := attr.Value, error(nil)
@@ -116,6 +121,7 @@ func (m *CT_Scenario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.CommentAttr = &parsed
+			continue
 		}
 	}
 lCT_Scenario:

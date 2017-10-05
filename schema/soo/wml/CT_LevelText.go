@@ -51,6 +51,7 @@ func (m *CT_LevelText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "null" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -58,6 +59,7 @@ func (m *CT_LevelText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.NullAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

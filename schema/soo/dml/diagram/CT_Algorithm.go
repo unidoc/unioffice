@@ -62,6 +62,7 @@ func (m *CT_Algorithm) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "rev" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -70,6 +71,7 @@ func (m *CT_Algorithm) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.RevAttr = &pt
+			continue
 		}
 	}
 lCT_Algorithm:

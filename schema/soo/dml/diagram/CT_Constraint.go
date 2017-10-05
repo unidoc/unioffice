@@ -118,6 +118,7 @@ func (m *CT_Constraint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "op" {
 			m.OpAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -125,6 +126,7 @@ func (m *CT_Constraint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fact" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -132,12 +134,15 @@ func (m *CT_Constraint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.FactAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "for" {
 			m.ForAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "forName" {
 			parsed, err := attr.Value, error(nil)
@@ -145,15 +150,19 @@ func (m *CT_Constraint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ForNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ptType" {
 			m.PtTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "refType" {
 			m.RefTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "refFor" {
 			m.RefForAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "refForName" {
 			parsed, err := attr.Value, error(nil)
@@ -161,9 +170,11 @@ func (m *CT_Constraint) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.RefForNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "refPtType" {
 			m.RefPtTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_Constraint:

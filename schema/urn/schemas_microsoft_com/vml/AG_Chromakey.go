@@ -40,6 +40,7 @@ func (m *AG_Chromakey) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ChromakeyAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

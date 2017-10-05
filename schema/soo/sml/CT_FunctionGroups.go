@@ -55,6 +55,7 @@ func (m *CT_FunctionGroups) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.BuiltInGroupCountAttr = &pt
+			continue
 		}
 	}
 lCT_FunctionGroups:

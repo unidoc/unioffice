@@ -55,6 +55,7 @@ func (m *CT_Tuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.FldAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "hier" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -63,6 +64,7 @@ func (m *CT_Tuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.HierAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "item" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -70,6 +72,7 @@ func (m *CT_Tuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ItemAttr = uint32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

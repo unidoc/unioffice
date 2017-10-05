@@ -45,6 +45,7 @@ func (m *OfcClippath) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.VAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

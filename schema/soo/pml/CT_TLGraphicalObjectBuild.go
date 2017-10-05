@@ -69,6 +69,7 @@ func (m *CT_TLGraphicalObjectBuild) UnmarshalXML(d *xml.Decoder, start xml.Start
 			}
 			pt := uint32(parsed)
 			m.SpidAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "grpId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -77,6 +78,7 @@ func (m *CT_TLGraphicalObjectBuild) UnmarshalXML(d *xml.Decoder, start xml.Start
 			}
 			pt := uint32(parsed)
 			m.GrpIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "uiExpand" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -84,6 +86,7 @@ func (m *CT_TLGraphicalObjectBuild) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.UiExpandAttr = &parsed
+			continue
 		}
 	}
 lCT_TLGraphicalObjectBuild:

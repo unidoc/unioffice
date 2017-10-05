@@ -112,12 +112,15 @@ func (m *CT_TLCommonBehaviorData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "additive" {
 			m.AdditiveAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "accumulate" {
 			m.AccumulateAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "xfrmType" {
 			m.XfrmTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "from" {
 			parsed, err := attr.Value, error(nil)
@@ -125,6 +128,7 @@ func (m *CT_TLCommonBehaviorData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.FromAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "to" {
 			parsed, err := attr.Value, error(nil)
@@ -132,6 +136,7 @@ func (m *CT_TLCommonBehaviorData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.ToAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "by" {
 			parsed, err := attr.Value, error(nil)
@@ -139,6 +144,7 @@ func (m *CT_TLCommonBehaviorData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.ByAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rctx" {
 			parsed, err := attr.Value, error(nil)
@@ -146,9 +152,11 @@ func (m *CT_TLCommonBehaviorData) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.RctxAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "override" {
 			m.OverrideAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_TLCommonBehaviorData:

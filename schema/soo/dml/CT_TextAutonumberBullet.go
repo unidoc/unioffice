@@ -47,6 +47,7 @@ func (m *CT_TextAutonumberBullet) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "startAt" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -55,6 +56,7 @@ func (m *CT_TextAutonumberBullet) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			}
 			pt := int32(parsed)
 			m.StartAtAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

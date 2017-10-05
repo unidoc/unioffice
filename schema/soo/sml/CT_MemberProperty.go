@@ -90,6 +90,7 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showCell" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -97,6 +98,7 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ShowCellAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showTip" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -104,6 +106,7 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ShowTipAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showAsCaption" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -111,6 +114,7 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ShowAsCaptionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "nameLen" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -119,6 +123,7 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.NameLenAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "pPos" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -127,6 +132,7 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.PPosAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "pLen" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -135,6 +141,7 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.PLenAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "level" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -143,6 +150,7 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.LevelAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "field" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -150,6 +158,7 @@ func (m *CT_MemberProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.FieldAttr = uint32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

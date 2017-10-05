@@ -45,6 +45,7 @@ func (m *CT_X) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := int32(parsed)
 			m.VAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

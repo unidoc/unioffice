@@ -61,15 +61,17 @@ func (m *CT_ObjectEmbed) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 func (m *CT_ObjectEmbed) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "drawAspect" {
-			m.DrawAspectAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.IdAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "drawAspect" {
+			m.DrawAspectAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "progId" {
 			parsed, err := attr.Value, error(nil)
@@ -77,6 +79,7 @@ func (m *CT_ObjectEmbed) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ProgIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "shapeId" {
 			parsed, err := attr.Value, error(nil)
@@ -84,6 +87,7 @@ func (m *CT_ObjectEmbed) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ShapeIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fieldCodes" {
 			parsed, err := attr.Value, error(nil)
@@ -91,6 +95,7 @@ func (m *CT_ObjectEmbed) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.FieldCodesAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

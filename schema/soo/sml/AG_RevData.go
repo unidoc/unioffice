@@ -52,6 +52,7 @@ func (m *AG_RevData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			}
 			pt := uint32(parsed)
 			m.RIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "ua" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -59,6 +60,7 @@ func (m *AG_RevData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.UaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ra" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -66,6 +68,7 @@ func (m *AG_RevData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.RaAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

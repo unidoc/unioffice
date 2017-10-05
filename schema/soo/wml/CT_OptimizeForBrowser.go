@@ -50,6 +50,7 @@ func (m *CT_OptimizeForBrowser) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.TargetAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "val" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -57,6 +58,7 @@ func (m *CT_OptimizeForBrowser) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

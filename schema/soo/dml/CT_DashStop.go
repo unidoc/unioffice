@@ -43,6 +43,7 @@ func (m *CT_DashStop) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.DAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "sp" {
 			parsed, err := ParseUnionST_PositivePercentage(attr.Value)
@@ -50,6 +51,7 @@ func (m *CT_DashStop) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.SpAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

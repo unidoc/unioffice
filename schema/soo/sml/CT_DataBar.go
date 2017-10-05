@@ -71,6 +71,7 @@ func (m *CT_DataBar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			}
 			pt := uint32(parsed)
 			m.MinLengthAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "maxLength" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -79,6 +80,7 @@ func (m *CT_DataBar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			}
 			pt := uint32(parsed)
 			m.MaxLengthAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "showValue" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -86,6 +88,7 @@ func (m *CT_DataBar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ShowValueAttr = &parsed
+			continue
 		}
 	}
 lCT_DataBar:

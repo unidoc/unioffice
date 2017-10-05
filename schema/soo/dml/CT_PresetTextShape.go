@@ -48,6 +48,7 @@ func (m *CT_PresetTextShape) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prst" {
 			m.PrstAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_PresetTextShape:

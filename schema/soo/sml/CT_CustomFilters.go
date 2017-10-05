@@ -52,6 +52,7 @@ func (m *CT_CustomFilters) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.AndAttr = &parsed
+			continue
 		}
 	}
 lCT_CustomFilters:

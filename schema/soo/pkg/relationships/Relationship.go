@@ -34,6 +34,7 @@ func (m *Relationship) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "TargetMode" {
 			m.TargetModeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "Target" {
 			parsed, err := attr.Value, error(nil)
@@ -41,6 +42,7 @@ func (m *Relationship) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.TargetAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "Type" {
 			parsed, err := attr.Value, error(nil)
@@ -48,6 +50,7 @@ func (m *Relationship) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.TypeAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "Id" {
 			parsed, err := attr.Value, error(nil)
@@ -55,6 +58,7 @@ func (m *Relationship) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

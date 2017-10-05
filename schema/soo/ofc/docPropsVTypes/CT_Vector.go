@@ -187,15 +187,17 @@ func (m *CT_Vector) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.BaseTypeAttr = ST_VectorBaseType(1)
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "baseType" {
-			m.BaseTypeAttr.UnmarshalXMLAttr(attr)
-		}
 		if attr.Name.Local == "size" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
 			m.SizeAttr = uint32(parsed)
+			continue
+		}
+		if attr.Name.Local == "baseType" {
+			m.BaseTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_Vector:

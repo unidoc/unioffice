@@ -60,9 +60,11 @@ func (m *AG_ConstraintAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "for" {
 			m.ForAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "forName" {
 			parsed, err := attr.Value, error(nil)
@@ -70,9 +72,11 @@ func (m *AG_ConstraintAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.ForNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ptType" {
 			m.PtTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

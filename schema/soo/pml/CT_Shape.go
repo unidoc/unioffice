@@ -75,6 +75,7 @@ func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.UseBgFillAttr = &parsed
+			continue
 		}
 	}
 lCT_Shape:

@@ -62,6 +62,7 @@ func (m *CT_OutlinePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ApplyStylesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "summaryBelow" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -69,6 +70,7 @@ func (m *CT_OutlinePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.SummaryBelowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "summaryRight" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -76,6 +78,7 @@ func (m *CT_OutlinePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.SummaryRightAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showOutlineSymbols" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -83,6 +86,7 @@ func (m *CT_OutlinePr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ShowOutlineSymbolsAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

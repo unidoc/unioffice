@@ -48,6 +48,7 @@ func (m *CT_PresetGeometry2D) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prst" {
 			m.PrstAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_PresetGeometry2D:

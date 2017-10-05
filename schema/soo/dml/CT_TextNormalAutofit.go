@@ -47,6 +47,7 @@ func (m *CT_TextNormalAutofit) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.FontScaleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lnSpcReduction" {
 			parsed, err := ParseUnionST_TextSpacingPercentOrPercentString(attr.Value)
@@ -54,6 +55,7 @@ func (m *CT_TextNormalAutofit) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.LnSpcReductionAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

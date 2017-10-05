@@ -142,12 +142,21 @@ func (m *CT_RevisionCellChange) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 	// initialize to default
 	m.Nc = NewCT_Cell()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "sId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+		if attr.Name.Local == "oldPh" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.SIdAttr = uint32(parsed)
+			m.OldPhAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "endOfListFormulaUpdate" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.EndOfListFormulaUpdateAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "odxf" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -155,13 +164,7 @@ func (m *CT_RevisionCellChange) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.OdxfAttr = &parsed
-		}
-		if attr.Name.Local == "xfDxf" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.XfDxfAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "s" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -169,13 +172,7 @@ func (m *CT_RevisionCellChange) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.SAttr = &parsed
-		}
-		if attr.Name.Local == "dxf" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DxfAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "numFmtId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -184,13 +181,7 @@ func (m *CT_RevisionCellChange) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := uint32(parsed)
 			m.NumFmtIdAttr = &pt
-		}
-		if attr.Name.Local == "quotePrefix" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.QuotePrefixAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "oldQuotePrefix" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -198,6 +189,7 @@ func (m *CT_RevisionCellChange) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.OldQuotePrefixAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ph" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -205,20 +197,39 @@ func (m *CT_RevisionCellChange) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.PhAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "oldPh" {
+		if attr.Name.Local == "sId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			m.SIdAttr = uint32(parsed)
+			continue
+		}
+		if attr.Name.Local == "xfDxf" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.OldPhAttr = &parsed
+			m.XfDxfAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "endOfListFormulaUpdate" {
+		if attr.Name.Local == "dxf" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.EndOfListFormulaUpdateAttr = &parsed
+			m.DxfAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "quotePrefix" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.QuotePrefixAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -227,6 +238,7 @@ func (m *CT_RevisionCellChange) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := uint32(parsed)
 			m.RIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "ua" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -234,6 +246,7 @@ func (m *CT_RevisionCellChange) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.UaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ra" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -241,6 +254,7 @@ func (m *CT_RevisionCellChange) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.RaAttr = &parsed
+			continue
 		}
 	}
 lCT_RevisionCellChange:

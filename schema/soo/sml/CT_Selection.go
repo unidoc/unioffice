@@ -61,6 +61,7 @@ func (m *CT_Selection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "pane" {
 			m.PaneAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "activeCell" {
 			parsed, err := attr.Value, error(nil)
@@ -68,6 +69,7 @@ func (m *CT_Selection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ActiveCellAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "activeCellId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -76,6 +78,7 @@ func (m *CT_Selection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.ActiveCellIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "sqref" {
 			parsed, err := ParseSliceST_Sqref(attr.Value)
@@ -83,6 +86,7 @@ func (m *CT_Selection) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.SqrefAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

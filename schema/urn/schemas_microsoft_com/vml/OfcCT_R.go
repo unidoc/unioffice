@@ -70,12 +70,15 @@ func (m *OfcCT_R) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "how" {
 			m.HowAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "idref" {
 			parsed, err := attr.Value, error(nil)
@@ -83,6 +86,7 @@ func (m *OfcCT_R) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IdrefAttr = &parsed
+			continue
 		}
 	}
 lOfcCT_R:

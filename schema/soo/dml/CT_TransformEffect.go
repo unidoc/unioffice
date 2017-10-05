@@ -68,6 +68,7 @@ func (m *CT_TransformEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.SxAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sy" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -75,6 +76,7 @@ func (m *CT_TransformEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.SyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "kx" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -83,6 +85,7 @@ func (m *CT_TransformEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := int32(parsed)
 			m.KxAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "ky" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -91,6 +94,7 @@ func (m *CT_TransformEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := int32(parsed)
 			m.KyAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "tx" {
 			parsed, err := ParseUnionST_Coordinate(attr.Value)
@@ -98,6 +102,7 @@ func (m *CT_TransformEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.TxAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ty" {
 			parsed, err := ParseUnionST_Coordinate(attr.Value)
@@ -105,6 +110,7 @@ func (m *CT_TransformEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.TyAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -65,6 +65,7 @@ func (m *CT_Schema) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IDAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "SchemaRef" {
 			parsed, err := attr.Value, error(nil)
@@ -72,6 +73,7 @@ func (m *CT_Schema) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SchemaRefAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "Namespace" {
 			parsed, err := attr.Value, error(nil)
@@ -79,6 +81,7 @@ func (m *CT_Schema) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.NamespaceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "SchemaLanguage" {
 			parsed, err := attr.Value, error(nil)
@@ -86,6 +89,7 @@ func (m *CT_Schema) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SchemaLanguageAttr = &parsed
+			continue
 		}
 	}
 lCT_Schema:

@@ -74,6 +74,7 @@ func (m *CT_XYAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.GdRefXAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "minX" {
 			parsed, err := ParseUnionST_AdjCoordinate(attr.Value)
@@ -81,6 +82,7 @@ func (m *CT_XYAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.MinXAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "maxX" {
 			parsed, err := ParseUnionST_AdjCoordinate(attr.Value)
@@ -88,6 +90,7 @@ func (m *CT_XYAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.MaxXAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "gdRefY" {
 			parsed, err := attr.Value, error(nil)
@@ -95,6 +98,7 @@ func (m *CT_XYAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.GdRefYAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "minY" {
 			parsed, err := ParseUnionST_AdjCoordinate(attr.Value)
@@ -102,6 +106,7 @@ func (m *CT_XYAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.MinYAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "maxY" {
 			parsed, err := ParseUnionST_AdjCoordinate(attr.Value)
@@ -109,6 +114,7 @@ func (m *CT_XYAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.MaxYAttr = &parsed
+			continue
 		}
 	}
 lCT_XYAdjustHandle:

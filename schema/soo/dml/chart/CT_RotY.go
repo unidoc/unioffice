@@ -44,6 +44,7 @@ func (m *CT_RotY) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint16(parsed)
 			m.ValAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

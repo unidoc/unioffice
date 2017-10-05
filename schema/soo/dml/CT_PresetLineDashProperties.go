@@ -41,6 +41,7 @@ func (m *CT_PresetLineDashProperties) UnmarshalXML(d *xml.Decoder, start xml.Sta
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

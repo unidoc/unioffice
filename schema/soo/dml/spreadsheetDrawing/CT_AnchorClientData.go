@@ -48,6 +48,7 @@ func (m *CT_AnchorClientData) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.FLocksWithSheetAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fPrintsWithSheet" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -55,6 +56,7 @@ func (m *CT_AnchorClientData) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.FPrintsWithSheetAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

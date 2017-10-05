@@ -110,12 +110,14 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 	m.TypeAttr = ST_PivotFilterType(1)
 	m.AutoFilter = NewCT_AutoFilter()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "fld" {
+		if attr.Name.Local == "iMeasureFld" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
-			m.FldAttr = uint32(parsed)
+			pt := uint32(parsed)
+			m.IMeasureFldAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "mpFld" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -124,9 +126,11 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.MpFldAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "evalOrder" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -135,6 +139,7 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := int32(parsed)
 			m.EvalOrderAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -142,6 +147,7 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.IdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "iMeasureHier" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -150,14 +156,15 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.IMeasureHierAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "iMeasureFld" {
+		if attr.Name.Local == "fld" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
-			pt := uint32(parsed)
-			m.IMeasureFldAttr = &pt
+			m.FldAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -165,6 +172,7 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "description" {
 			parsed, err := attr.Value, error(nil)
@@ -172,6 +180,7 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.DescriptionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "stringValue1" {
 			parsed, err := attr.Value, error(nil)
@@ -179,6 +188,7 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.StringValue1Attr = &parsed
+			continue
 		}
 		if attr.Name.Local == "stringValue2" {
 			parsed, err := attr.Value, error(nil)
@@ -186,6 +196,7 @@ func (m *CT_PivotFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.StringValue2Attr = &parsed
+			continue
 		}
 	}
 lCT_PivotFilter:

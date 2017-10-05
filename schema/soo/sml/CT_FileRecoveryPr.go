@@ -62,6 +62,7 @@ func (m *CT_FileRecoveryPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.AutoRecoverAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "crashSave" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -69,6 +70,7 @@ func (m *CT_FileRecoveryPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.CrashSaveAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dataExtractLoad" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -76,6 +78,7 @@ func (m *CT_FileRecoveryPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.DataExtractLoadAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "repairLoad" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -83,6 +86,7 @@ func (m *CT_FileRecoveryPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.RepairLoadAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

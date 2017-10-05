@@ -46,6 +46,7 @@ func (m *CT_MdxMemeberProp) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.NAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "np" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -53,6 +54,7 @@ func (m *CT_MdxMemeberProp) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.NpAttr = uint32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

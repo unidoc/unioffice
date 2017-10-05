@@ -43,6 +43,7 @@ func (m *CT_GeomGuide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "fmla" {
 			parsed, err := attr.Value, error(nil)
@@ -50,6 +51,7 @@ func (m *CT_GeomGuide) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.FmlaAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

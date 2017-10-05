@@ -120,15 +120,18 @@ func (m *CT_BookView) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "visibility" {
-			m.VisibilityAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "minimized" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "windowWidth" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
-			m.MinimizedAttr = &parsed
+			pt := uint32(parsed)
+			m.WindowWidthAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "visibility" {
+			m.VisibilityAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "showHorizontalScroll" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -136,6 +139,7 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.ShowHorizontalScrollAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showVerticalScroll" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -143,6 +147,7 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.ShowVerticalScrollAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showSheetTabs" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -150,6 +155,7 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.ShowSheetTabsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "xWindow" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -158,6 +164,7 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := int32(parsed)
 			m.XWindowAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "yWindow" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -166,14 +173,15 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := int32(parsed)
 			m.YWindowAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "windowWidth" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+		if attr.Name.Local == "minimized" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			pt := uint32(parsed)
-			m.WindowWidthAttr = &pt
+			m.MinimizedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "windowHeight" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -182,6 +190,7 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.WindowHeightAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "tabRatio" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -190,6 +199,7 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.TabRatioAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "firstSheet" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -198,6 +208,7 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.FirstSheetAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "activeTab" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -206,6 +217,7 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.ActiveTabAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "autoFilterDateGrouping" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -213,6 +225,7 @@ func (m *CT_BookView) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.AutoFilterDateGroupingAttr = &parsed
+			continue
 		}
 	}
 lCT_BookView:

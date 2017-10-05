@@ -121,19 +121,21 @@ func (m *CT_WebPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_WebPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Local == "xl2000" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.Xl2000Attr = &parsed
+			continue
+		}
 		if attr.Name.Local == "xml" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.XmlAttr = &parsed
-		}
-		if attr.Name.Local == "sourceData" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SourceDataAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "parsePre" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -141,6 +143,7 @@ func (m *CT_WebPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ParsePreAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "consecutive" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -148,6 +151,7 @@ func (m *CT_WebPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ConsecutiveAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "firstRow" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -155,6 +159,7 @@ func (m *CT_WebPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FirstRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "xl97" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -162,6 +167,7 @@ func (m *CT_WebPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.Xl97Attr = &parsed
+			continue
 		}
 		if attr.Name.Local == "textDates" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -169,13 +175,15 @@ func (m *CT_WebPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TextDatesAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "xl2000" {
+		if attr.Name.Local == "sourceData" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.Xl2000Attr = &parsed
+			m.SourceDataAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "url" {
 			parsed, err := attr.Value, error(nil)
@@ -183,6 +191,7 @@ func (m *CT_WebPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.UrlAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "post" {
 			parsed, err := attr.Value, error(nil)
@@ -190,6 +199,7 @@ func (m *CT_WebPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PostAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "htmlTables" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -197,9 +207,11 @@ func (m *CT_WebPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HtmlTablesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "htmlFormat" {
 			m.HtmlFormatAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "editPage" {
 			parsed, err := attr.Value, error(nil)
@@ -207,6 +219,7 @@ func (m *CT_WebPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.EditPageAttr = &parsed
+			continue
 		}
 	}
 lCT_WebPr:

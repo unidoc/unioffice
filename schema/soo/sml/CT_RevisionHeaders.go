@@ -113,12 +113,13 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	// initialize to default
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "guid" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "exclusive" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.GuidAttr = parsed
+			m.ExclusiveAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lastGuid" {
 			parsed, err := attr.Value, error(nil)
@@ -126,6 +127,7 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.LastGuidAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "shared" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -133,6 +135,7 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.SharedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "diskRevisions" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -140,6 +143,7 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.DiskRevisionsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "history" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -147,6 +151,7 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.HistoryAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "trackRevisions" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -154,13 +159,15 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.TrackRevisionsAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "exclusive" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "guid" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.ExclusiveAttr = &parsed
+			m.GuidAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "revisionId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -169,6 +176,7 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.RevisionIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "version" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -177,6 +185,7 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := int32(parsed)
 			m.VersionAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "keepChangeHistory" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -184,6 +193,7 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.KeepChangeHistoryAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "protected" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -191,6 +201,7 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ProtectedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "preserveHistory" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -199,6 +210,7 @@ func (m *CT_RevisionHeaders) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.PreserveHistoryAttr = &pt
+			continue
 		}
 	}
 lCT_RevisionHeaders:

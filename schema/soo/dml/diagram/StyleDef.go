@@ -46,6 +46,7 @@ func (m *StyleDef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.UniqueIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "minVer" {
 			parsed, err := attr.Value, error(nil)
@@ -53,6 +54,7 @@ func (m *StyleDef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.MinVerAttr = &parsed
+			continue
 		}
 	}
 lStyleDef:

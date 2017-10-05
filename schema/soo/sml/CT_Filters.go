@@ -72,9 +72,11 @@ func (m *CT_Filters) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.BlankAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "calendarType" {
 			m.CalendarTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_Filters:

@@ -86,6 +86,7 @@ func (m *CT_QueryTableField) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.IdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -93,6 +94,7 @@ func (m *CT_QueryTableField) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dataBound" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -100,6 +102,7 @@ func (m *CT_QueryTableField) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.DataBoundAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rowNumbers" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -107,6 +110,7 @@ func (m *CT_QueryTableField) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.RowNumbersAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fillFormulas" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -114,6 +118,7 @@ func (m *CT_QueryTableField) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.FillFormulasAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "clipped" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -121,6 +126,7 @@ func (m *CT_QueryTableField) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ClippedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "tableColumnId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -129,6 +135,7 @@ func (m *CT_QueryTableField) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.TableColumnIdAttr = &pt
+			continue
 		}
 	}
 lCT_QueryTableField:

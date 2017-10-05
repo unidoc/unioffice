@@ -73,6 +73,7 @@ func (m *CT_TileInfoProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.TxAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ty" {
 			parsed, err := ParseUnionST_Coordinate(attr.Value)
@@ -80,6 +81,7 @@ func (m *CT_TileInfoProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.TyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sx" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -87,6 +89,7 @@ func (m *CT_TileInfoProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.SxAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sy" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -94,12 +97,15 @@ func (m *CT_TileInfoProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.SyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "flip" {
 			m.FlipAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "algn" {
 			m.AlgnAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -70,6 +70,7 @@ func (m *CT_MoveBookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.AuthorAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "date" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -77,6 +78,7 @@ func (m *CT_MoveBookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DateAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -84,6 +86,7 @@ func (m *CT_MoveBookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "colFirst" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -91,6 +94,7 @@ func (m *CT_MoveBookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.ColFirstAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "colLast" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -98,9 +102,11 @@ func (m *CT_MoveBookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.ColLastAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "displacedByCustomXml" {
 			m.DisplacedByCustomXmlAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -108,6 +114,7 @@ func (m *CT_MoveBookmark) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

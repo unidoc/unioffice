@@ -198,6 +198,7 @@ func (m *CT_EffectContainer) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -205,6 +206,7 @@ func (m *CT_EffectContainer) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 	}
 lCT_EffectContainer:

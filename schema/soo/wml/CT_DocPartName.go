@@ -49,6 +49,7 @@ func (m *CT_DocPartName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ValAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "decorated" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -56,6 +57,7 @@ func (m *CT_DocPartName) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.DecoratedAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

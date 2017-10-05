@@ -65,6 +65,7 @@ func (m *CT_RevisionInsertSheet) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.SheetIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -72,6 +73,7 @@ func (m *CT_RevisionInsertSheet) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "sheetPosition" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -79,6 +81,7 @@ func (m *CT_RevisionInsertSheet) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.SheetPositionAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "rId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -87,6 +90,7 @@ func (m *CT_RevisionInsertSheet) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			}
 			pt := uint32(parsed)
 			m.RIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "ua" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -94,6 +98,7 @@ func (m *CT_RevisionInsertSheet) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.UaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ra" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -101,6 +106,7 @@ func (m *CT_RevisionInsertSheet) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.RaAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

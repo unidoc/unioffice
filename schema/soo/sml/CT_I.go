@@ -65,6 +65,7 @@ func (m *CT_I) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "t" {
 			m.TAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "r" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -73,6 +74,7 @@ func (m *CT_I) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.RAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "i" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -81,6 +83,7 @@ func (m *CT_I) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.IAttr = &pt
+			continue
 		}
 	}
 lCT_I:

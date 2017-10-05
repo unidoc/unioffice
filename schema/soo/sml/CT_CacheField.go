@@ -136,64 +136,6 @@ func (m *CT_CacheField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "name" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.NameAttr = parsed
-		}
-		if attr.Name.Local == "caption" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.CaptionAttr = &parsed
-		}
-		if attr.Name.Local == "propertyName" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.PropertyNameAttr = &parsed
-		}
-		if attr.Name.Local == "serverField" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ServerFieldAttr = &parsed
-		}
-		if attr.Name.Local == "uniqueList" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.UniqueListAttr = &parsed
-		}
-		if attr.Name.Local == "numFmtId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.NumFmtIdAttr = &pt
-		}
-		if attr.Name.Local == "formula" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.FormulaAttr = &parsed
-		}
-		if attr.Name.Local == "sqlType" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := int32(parsed)
-			m.SqlTypeAttr = &pt
-		}
 		if attr.Name.Local == "hierarchy" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
 			if err != nil {
@@ -201,6 +143,7 @@ func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := int32(parsed)
 			m.HierarchyAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "level" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -209,6 +152,15 @@ func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.LevelAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "caption" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.CaptionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "databaseField" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -216,6 +168,65 @@ func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.DatabaseFieldAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "serverField" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ServerFieldAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "numFmtId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.NumFmtIdAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "formula" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.FormulaAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "sqlType" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := int32(parsed)
+			m.SqlTypeAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "name" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.NameAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "propertyName" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.PropertyNameAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "uniqueList" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.UniqueListAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "mappingCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -224,6 +235,7 @@ func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.MappingCountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "memberPropertyField" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -231,6 +243,7 @@ func (m *CT_CacheField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.MemberPropertyFieldAttr = &parsed
+			continue
 		}
 	}
 lCT_CacheField:

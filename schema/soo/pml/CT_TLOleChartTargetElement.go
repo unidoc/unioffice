@@ -49,6 +49,7 @@ func (m *CT_TLOleChartTargetElement) UnmarshalXML(d *xml.Decoder, start xml.Star
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "lvl" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -57,6 +58,7 @@ func (m *CT_TLOleChartTargetElement) UnmarshalXML(d *xml.Decoder, start xml.Star
 			}
 			pt := uint32(parsed)
 			m.LvlAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

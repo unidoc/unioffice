@@ -61,6 +61,7 @@ func (m *CT_FontSig) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.Usb0Attr = parsed
+			continue
 		}
 		if attr.Name.Local == "usb1" {
 			parsed, err := attr.Value, error(nil)
@@ -68,6 +69,7 @@ func (m *CT_FontSig) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.Usb1Attr = parsed
+			continue
 		}
 		if attr.Name.Local == "usb2" {
 			parsed, err := attr.Value, error(nil)
@@ -75,6 +77,7 @@ func (m *CT_FontSig) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.Usb2Attr = parsed
+			continue
 		}
 		if attr.Name.Local == "usb3" {
 			parsed, err := attr.Value, error(nil)
@@ -82,6 +85,7 @@ func (m *CT_FontSig) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.Usb3Attr = parsed
+			continue
 		}
 		if attr.Name.Local == "csb0" {
 			parsed, err := attr.Value, error(nil)
@@ -89,6 +93,7 @@ func (m *CT_FontSig) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.Csb0Attr = parsed
+			continue
 		}
 		if attr.Name.Local == "csb1" {
 			parsed, err := attr.Value, error(nil)
@@ -96,6 +101,7 @@ func (m *CT_FontSig) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.Csb1Attr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

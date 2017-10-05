@@ -81,6 +81,7 @@ func (m *CT_RevisionAutoFormatting) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.SheetIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "ref" {
 			parsed, err := attr.Value, error(nil)
@@ -88,6 +89,7 @@ func (m *CT_RevisionAutoFormatting) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.RefAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "autoFormatId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -96,6 +98,7 @@ func (m *CT_RevisionAutoFormatting) UnmarshalXML(d *xml.Decoder, start xml.Start
 			}
 			pt := uint32(parsed)
 			m.AutoFormatIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "applyNumberFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -103,6 +106,7 @@ func (m *CT_RevisionAutoFormatting) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.ApplyNumberFormatsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyBorderFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -110,6 +114,7 @@ func (m *CT_RevisionAutoFormatting) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.ApplyBorderFormatsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyFontFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -117,6 +122,7 @@ func (m *CT_RevisionAutoFormatting) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.ApplyFontFormatsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyPatternFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -124,6 +130,7 @@ func (m *CT_RevisionAutoFormatting) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.ApplyPatternFormatsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyAlignmentFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -131,6 +138,7 @@ func (m *CT_RevisionAutoFormatting) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.ApplyAlignmentFormatsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyWidthHeightFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -138,6 +146,7 @@ func (m *CT_RevisionAutoFormatting) UnmarshalXML(d *xml.Decoder, start xml.Start
 				return err
 			}
 			m.ApplyWidthHeightFormatsAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -38,6 +38,7 @@ func (m *Default) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ExtensionAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "ContentType" {
 			parsed, err := attr.Value, error(nil)
@@ -45,6 +46,7 @@ func (m *Default) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ContentTypeAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -167,82 +167,21 @@ func (m *CT_SharedItems) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 func (m *CT_SharedItems) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "containsSemiMixedTypes" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ContainsSemiMixedTypesAttr = &parsed
-		}
-		if attr.Name.Local == "containsNonDate" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ContainsNonDateAttr = &parsed
-		}
-		if attr.Name.Local == "containsDate" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ContainsDateAttr = &parsed
-		}
-		if attr.Name.Local == "containsString" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ContainsStringAttr = &parsed
-		}
-		if attr.Name.Local == "containsBlank" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ContainsBlankAttr = &parsed
-		}
-		if attr.Name.Local == "containsMixedTypes" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ContainsMixedTypesAttr = &parsed
-		}
-		if attr.Name.Local == "containsNumber" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ContainsNumberAttr = &parsed
-		}
-		if attr.Name.Local == "containsInteger" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ContainsIntegerAttr = &parsed
-		}
-		if attr.Name.Local == "minValue" {
-			parsed, err := strconv.ParseFloat(attr.Value, 64)
-			if err != nil {
-				return err
-			}
-			m.MinValueAttr = &parsed
-		}
-		if attr.Name.Local == "maxValue" {
-			parsed, err := strconv.ParseFloat(attr.Value, 64)
-			if err != nil {
-				return err
-			}
-			m.MaxValueAttr = &parsed
-		}
 		if attr.Name.Local == "minDate" {
 			parsed, err := ParseStdlibTime(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.MinDateAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "containsSemiMixedTypes" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ContainsSemiMixedTypesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "maxDate" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -250,6 +189,15 @@ func (m *CT_SharedItems) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.MaxDateAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "containsDate" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ContainsDateAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -258,6 +206,15 @@ func (m *CT_SharedItems) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "containsBlank" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ContainsBlankAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "longText" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -265,6 +222,63 @@ func (m *CT_SharedItems) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.LongTextAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "containsNumber" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ContainsNumberAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "minValue" {
+			parsed, err := strconv.ParseFloat(attr.Value, 64)
+			if err != nil {
+				return err
+			}
+			m.MinValueAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "maxValue" {
+			parsed, err := strconv.ParseFloat(attr.Value, 64)
+			if err != nil {
+				return err
+			}
+			m.MaxValueAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "containsNonDate" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ContainsNonDateAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "containsString" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ContainsStringAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "containsMixedTypes" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ContainsMixedTypesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "containsInteger" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ContainsIntegerAttr = &parsed
+			continue
 		}
 	}
 lCT_SharedItems:

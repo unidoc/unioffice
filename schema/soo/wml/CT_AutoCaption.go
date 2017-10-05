@@ -45,6 +45,7 @@ func (m *CT_AutoCaption) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "caption" {
 			parsed, err := attr.Value, error(nil)
@@ -52,6 +53,7 @@ func (m *CT_AutoCaption) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.CaptionAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

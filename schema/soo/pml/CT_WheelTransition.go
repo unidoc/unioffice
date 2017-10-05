@@ -45,6 +45,7 @@ func (m *CT_WheelTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.SpokesAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

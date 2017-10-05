@@ -56,6 +56,7 @@ func (m *CT_Background) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "bwMode" {
 			m.BwModeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_Background:

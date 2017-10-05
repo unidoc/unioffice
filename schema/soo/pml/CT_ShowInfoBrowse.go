@@ -44,6 +44,7 @@ func (m *CT_ShowInfoBrowse) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ShowScrollbarAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -44,6 +44,7 @@ func (m *CT_ChildMax) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := int32(parsed)
 			m.ValAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

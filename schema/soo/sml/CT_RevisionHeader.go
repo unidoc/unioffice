@@ -86,12 +86,21 @@ func (m *CT_RevisionHeader) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	m.SheetIdMap = NewCT_SheetIdMap()
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = parsed
+			continue
+		}
 		if attr.Name.Local == "guid" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.GuidAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "dateTime" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -99,6 +108,7 @@ func (m *CT_RevisionHeader) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.DateTimeAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "maxSheetId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -106,6 +116,7 @@ func (m *CT_RevisionHeader) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.MaxSheetIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "userName" {
 			parsed, err := attr.Value, error(nil)
@@ -113,13 +124,7 @@ func (m *CT_RevisionHeader) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.UserNameAttr = parsed
-		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.IdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "minRId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -128,6 +133,7 @@ func (m *CT_RevisionHeader) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.MinRIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "maxRId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -136,6 +142,7 @@ func (m *CT_RevisionHeader) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.MaxRIdAttr = &pt
+			continue
 		}
 	}
 lCT_RevisionHeader:

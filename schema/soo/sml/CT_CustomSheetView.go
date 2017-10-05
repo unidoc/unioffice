@@ -220,20 +220,25 @@ func (m *CT_CustomSheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	// initialize to default
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
+		if attr.Name.Local == "state" {
+			m.StateAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
 		if attr.Name.Local == "guid" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.GuidAttr = parsed
+			continue
 		}
-		if attr.Name.Local == "scale" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+		if attr.Name.Local == "filterUnique" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			pt := uint32(parsed)
-			m.ScaleAttr = &pt
+			m.FilterUniqueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "colorId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -242,13 +247,11 @@ func (m *CT_CustomSheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.ColorIdAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "showPageBreaks" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowPageBreaksAttr = &parsed
+		if attr.Name.Local == "view" {
+			m.ViewAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "showFormulas" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -256,89 +259,7 @@ func (m *CT_CustomSheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ShowFormulasAttr = &parsed
-		}
-		if attr.Name.Local == "showGridLines" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowGridLinesAttr = &parsed
-		}
-		if attr.Name.Local == "showRowCol" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowRowColAttr = &parsed
-		}
-		if attr.Name.Local == "outlineSymbols" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.OutlineSymbolsAttr = &parsed
-		}
-		if attr.Name.Local == "zeroValues" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ZeroValuesAttr = &parsed
-		}
-		if attr.Name.Local == "fitToPage" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.FitToPageAttr = &parsed
-		}
-		if attr.Name.Local == "printArea" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PrintAreaAttr = &parsed
-		}
-		if attr.Name.Local == "filter" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.FilterAttr = &parsed
-		}
-		if attr.Name.Local == "showAutoFilter" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowAutoFilterAttr = &parsed
-		}
-		if attr.Name.Local == "hiddenRows" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.HiddenRowsAttr = &parsed
-		}
-		if attr.Name.Local == "hiddenColumns" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.HiddenColumnsAttr = &parsed
-		}
-		if attr.Name.Local == "state" {
-			m.StateAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "filterUnique" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.FilterUniqueAttr = &parsed
-		}
-		if attr.Name.Local == "view" {
-			m.ViewAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "showRuler" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -346,6 +267,15 @@ func (m *CT_CustomSheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ShowRulerAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showRowCol" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowRowColAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "topLeftCell" {
 			parsed, err := attr.Value, error(nil)
@@ -353,6 +283,96 @@ func (m *CT_CustomSheetView) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.TopLeftCellAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "zeroValues" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ZeroValuesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "hiddenColumns" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.HiddenColumnsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "outlineSymbols" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.OutlineSymbolsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "filter" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.FilterAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "scale" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.ScaleAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "showGridLines" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowGridLinesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "hiddenRows" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.HiddenRowsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "fitToPage" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.FitToPageAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "printArea" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PrintAreaAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showAutoFilter" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowAutoFilterAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showPageBreaks" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowPageBreaksAttr = &parsed
+			continue
 		}
 	}
 lCT_CustomSheetView:

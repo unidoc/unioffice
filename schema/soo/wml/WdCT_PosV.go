@@ -47,6 +47,7 @@ func (m *WdCT_PosV) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "relativeFrom" {
 			m.RelativeFromAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lWdCT_PosV:

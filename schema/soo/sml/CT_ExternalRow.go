@@ -52,6 +52,7 @@ func (m *CT_ExternalRow) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.RAttr = uint32(parsed)
+			continue
 		}
 	}
 lCT_ExternalRow:

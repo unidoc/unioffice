@@ -48,6 +48,7 @@ func (m *CT_GraphicalObjectData) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 				return err
 			}
 			m.UriAttr = parsed
+			continue
 		}
 	}
 lCT_GraphicalObjectData:

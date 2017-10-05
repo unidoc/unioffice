@@ -56,6 +56,7 @@ func (m *CT_TrackChangeNumbering) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.OriginalAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "author" {
 			parsed, err := attr.Value, error(nil)
@@ -63,6 +64,7 @@ func (m *CT_TrackChangeNumbering) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.AuthorAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "date" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -70,6 +72,7 @@ func (m *CT_TrackChangeNumbering) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.DateAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -77,6 +80,7 @@ func (m *CT_TrackChangeNumbering) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

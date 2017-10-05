@@ -53,6 +53,7 @@ func (m *CT_ChartFormats) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_ChartFormats:

@@ -53,19 +53,21 @@ func (m *CT_Control) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Control) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = parsed
+			continue
+		}
 		if attr.Name.Local == "shapeId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
 			m.ShapeIdAttr = uint32(parsed)
-		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.IdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -73,6 +75,7 @@ func (m *CT_Control) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 	}
 lCT_Control:

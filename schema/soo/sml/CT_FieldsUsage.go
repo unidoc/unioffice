@@ -55,6 +55,7 @@ func (m *CT_FieldsUsage) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_FieldsUsage:

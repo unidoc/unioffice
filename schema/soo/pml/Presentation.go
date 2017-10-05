@@ -42,13 +42,6 @@ func (m *Presentation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	// initialize to default
 	m.CT_Presentation = *NewCT_Presentation()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "serverZoom" {
-			parsed, err := ParseUnionST_Percentage(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ServerZoomAttr = &parsed
-		}
 		if attr.Name.Local == "firstSlideNum" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
 			if err != nil {
@@ -56,13 +49,7 @@ func (m *Presentation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := int32(parsed)
 			m.FirstSlideNumAttr = &pt
-		}
-		if attr.Name.Local == "showSpecialPlsOnTitleSld" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowSpecialPlsOnTitleSldAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rtl" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -70,13 +57,7 @@ func (m *Presentation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.RtlAttr = &parsed
-		}
-		if attr.Name.Local == "removePersonalInfoOnSave" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RemovePersonalInfoOnSaveAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "compatMode" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -84,13 +65,7 @@ func (m *Presentation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.CompatModeAttr = &parsed
-		}
-		if attr.Name.Local == "strictFirstAndLastChars" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.StrictFirstAndLastCharsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "embedTrueTypeFonts" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -98,13 +73,7 @@ func (m *Presentation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.EmbedTrueTypeFontsAttr = &parsed
-		}
-		if attr.Name.Local == "saveSubsetFonts" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SaveSubsetFontsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoCompressPictures" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -112,6 +81,43 @@ func (m *Presentation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.AutoCompressPicturesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showSpecialPlsOnTitleSld" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowSpecialPlsOnTitleSldAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "serverZoom" {
+			parsed, err := ParseUnionST_Percentage(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ServerZoomAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "conformance" {
+			m.ConformanceAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "removePersonalInfoOnSave" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RemovePersonalInfoOnSaveAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "saveSubsetFonts" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SaveSubsetFontsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "bookmarkIdSeed" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -120,9 +126,15 @@ func (m *Presentation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.BookmarkIdSeedAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "conformance" {
-			m.ConformanceAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "strictFirstAndLastChars" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.StrictFirstAndLastCharsAttr = &parsed
+			continue
 		}
 	}
 lPresentation:

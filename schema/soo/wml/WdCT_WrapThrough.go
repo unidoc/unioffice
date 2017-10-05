@@ -59,6 +59,7 @@ func (m *WdCT_WrapThrough) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "wrapText" {
 			m.WrapTextAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "distL" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -67,6 +68,7 @@ func (m *WdCT_WrapThrough) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint32(parsed)
 			m.DistLAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "distR" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -75,6 +77,7 @@ func (m *WdCT_WrapThrough) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint32(parsed)
 			m.DistRAttr = &pt
+			continue
 		}
 	}
 lWdCT_WrapThrough:

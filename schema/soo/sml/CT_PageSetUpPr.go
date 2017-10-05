@@ -50,6 +50,7 @@ func (m *CT_PageSetUpPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.AutoPageBreaksAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fitToPage" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -57,6 +58,7 @@ func (m *CT_PageSetUpPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.FitToPageAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

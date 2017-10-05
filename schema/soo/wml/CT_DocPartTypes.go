@@ -54,6 +54,7 @@ func (m *CT_DocPartTypes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.AllAttr = &parsed
+			continue
 		}
 	}
 lCT_DocPartTypes:

@@ -42,6 +42,7 @@ func (m *CT_Reviewed) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.RIdAttr = uint32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

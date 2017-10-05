@@ -62,6 +62,7 @@ func (m *CT_CustomXmlBlock) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.UriAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "element" {
 			parsed, err := attr.Value, error(nil)
@@ -69,6 +70,7 @@ func (m *CT_CustomXmlBlock) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.ElementAttr = parsed
+			continue
 		}
 	}
 lCT_CustomXmlBlock:

@@ -104,6 +104,7 @@ func (m *CT_Cell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "s" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -112,9 +113,11 @@ func (m *CT_Cell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.SAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "t" {
 			m.TAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "cm" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -123,6 +126,7 @@ func (m *CT_Cell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.CmAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "vm" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -131,6 +135,7 @@ func (m *CT_Cell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.VmAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "ph" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -138,6 +143,7 @@ func (m *CT_Cell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PhAttr = &parsed
+			continue
 		}
 	}
 lCT_Cell:

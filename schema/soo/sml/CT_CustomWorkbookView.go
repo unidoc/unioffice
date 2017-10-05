@@ -182,97 +182,13 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 	// initialize to default
 	m.GuidAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "name" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.NameAttr = parsed
-		}
-		if attr.Name.Local == "guid" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.GuidAttr = parsed
-		}
-		if attr.Name.Local == "autoUpdate" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AutoUpdateAttr = &parsed
-		}
-		if attr.Name.Local == "mergeInterval" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.MergeIntervalAttr = &pt
-		}
-		if attr.Name.Local == "changesSavedWin" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ChangesSavedWinAttr = &parsed
-		}
-		if attr.Name.Local == "onlySync" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.OnlySyncAttr = &parsed
-		}
-		if attr.Name.Local == "personalView" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PersonalViewAttr = &parsed
-		}
-		if attr.Name.Local == "includePrintSettings" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.IncludePrintSettingsAttr = &parsed
-		}
-		if attr.Name.Local == "includeHiddenRowCol" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.IncludeHiddenRowColAttr = &parsed
-		}
-		if attr.Name.Local == "maximized" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MaximizedAttr = &parsed
-		}
-		if attr.Name.Local == "minimized" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MinimizedAttr = &parsed
-		}
-		if attr.Name.Local == "showHorizontalScroll" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowHorizontalScrollAttr = &parsed
-		}
 		if attr.Name.Local == "showVerticalScroll" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.ShowVerticalScrollAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showSheetTabs" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -280,6 +196,15 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.ShowSheetTabsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "guid" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.GuidAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "xWindow" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -288,6 +213,16 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := int32(parsed)
 			m.XWindowAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "mergeInterval" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.MergeIntervalAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "yWindow" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -296,6 +231,15 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := int32(parsed)
 			m.YWindowAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "onlySync" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.OnlySyncAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "windowWidth" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -303,6 +247,15 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.WindowWidthAttr = uint32(parsed)
+			continue
+		}
+		if attr.Name.Local == "includePrintSettings" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.IncludePrintSettingsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "windowHeight" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -310,6 +263,7 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.WindowHeightAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "tabRatio" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -318,13 +272,7 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := uint32(parsed)
 			m.TabRatioAttr = &pt
-		}
-		if attr.Name.Local == "activeSheetId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			m.ActiveSheetIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "showFormulaBar" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -332,6 +280,51 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.ShowFormulaBarAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "changesSavedWin" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ChangesSavedWinAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "maximized" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.MaximizedAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showComments" {
+			m.ShowCommentsAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "autoUpdate" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AutoUpdateAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "activeSheetId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			m.ActiveSheetIdAttr = uint32(parsed)
+			continue
+		}
+		if attr.Name.Local == "showHorizontalScroll" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowHorizontalScrollAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showStatusbar" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -339,12 +332,43 @@ func (m *CT_CustomWorkbookView) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.ShowStatusbarAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "showComments" {
-			m.ShowCommentsAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "personalView" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PersonalViewAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "minimized" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.MinimizedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showObjects" {
 			m.ShowObjectsAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "name" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.NameAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "includeHiddenRowCol" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.IncludeHiddenRowColAttr = &parsed
+			continue
 		}
 	}
 lCT_CustomWorkbookView:

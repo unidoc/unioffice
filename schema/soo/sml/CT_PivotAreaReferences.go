@@ -53,6 +53,7 @@ func (m *CT_PivotAreaReferences) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_PivotAreaReferences:

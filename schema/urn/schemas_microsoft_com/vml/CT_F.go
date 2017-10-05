@@ -42,6 +42,7 @@ func (m *CT_F) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.EqnAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

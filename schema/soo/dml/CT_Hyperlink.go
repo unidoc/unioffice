@@ -84,12 +84,13 @@ func (m *CT_Hyperlink) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "invalidUrl" {
 			parsed, err := attr.Value, error(nil)
@@ -97,6 +98,7 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.InvalidUrlAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "action" {
 			parsed, err := attr.Value, error(nil)
@@ -104,6 +106,7 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ActionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "tgtFrame" {
 			parsed, err := attr.Value, error(nil)
@@ -111,6 +114,7 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.TgtFrameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "tooltip" {
 			parsed, err := attr.Value, error(nil)
@@ -118,6 +122,7 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.TooltipAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "history" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -125,6 +130,7 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.HistoryAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "highlightClick" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -132,6 +138,7 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.HighlightClickAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "endSnd" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -139,6 +146,7 @@ func (m *CT_Hyperlink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.EndSndAttr = &parsed
+			continue
 		}
 	}
 lCT_Hyperlink:

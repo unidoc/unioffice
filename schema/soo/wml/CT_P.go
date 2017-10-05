@@ -76,19 +76,13 @@ func (m *CT_P) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_P) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "rsidRPr" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.RsidRPrAttr = &parsed
-		}
 		if attr.Name.Local == "rsidR" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.RsidRAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rsidDel" {
 			parsed, err := attr.Value, error(nil)
@@ -96,6 +90,7 @@ func (m *CT_P) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RsidDelAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rsidP" {
 			parsed, err := attr.Value, error(nil)
@@ -103,6 +98,7 @@ func (m *CT_P) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RsidPAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rsidRDefault" {
 			parsed, err := attr.Value, error(nil)
@@ -110,6 +106,15 @@ func (m *CT_P) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RsidRDefaultAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "rsidRPr" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.RsidRPrAttr = &parsed
+			continue
 		}
 	}
 lCT_P:

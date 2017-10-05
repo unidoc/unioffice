@@ -112,6 +112,7 @@ func (m *CT_SheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.SyncHorizontalAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "syncVertical" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -119,6 +120,7 @@ func (m *CT_SheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.SyncVerticalAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "syncRef" {
 			parsed, err := attr.Value, error(nil)
@@ -126,6 +128,7 @@ func (m *CT_SheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.SyncRefAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "transitionEvaluation" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -133,6 +136,7 @@ func (m *CT_SheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.TransitionEvaluationAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "transitionEntry" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -140,6 +144,7 @@ func (m *CT_SheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.TransitionEntryAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "published" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -147,6 +152,7 @@ func (m *CT_SheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.PublishedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "codeName" {
 			parsed, err := attr.Value, error(nil)
@@ -154,6 +160,7 @@ func (m *CT_SheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.CodeNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "filterMode" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -161,6 +168,7 @@ func (m *CT_SheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.FilterModeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "enableFormatConditionsCalculation" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -168,6 +176,7 @@ func (m *CT_SheetPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.EnableFormatConditionsCalculationAttr = &parsed
+			continue
 		}
 	}
 lCT_SheetPr:

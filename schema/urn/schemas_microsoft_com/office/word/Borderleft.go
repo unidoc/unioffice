@@ -38,6 +38,7 @@ func (m *Borderleft) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "width" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -46,9 +47,11 @@ func (m *Borderleft) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			}
 			pt := uint32(parsed)
 			m.WidthAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "shadow" {
 			m.ShadowAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

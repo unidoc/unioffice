@@ -139,19 +139,30 @@ func (m *CT_ModifyVerifier) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Local == "spinCount" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.SpinCountAttr = &pt
+			continue
+		}
 		if attr.Name.Local == "algorithmName" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.AlgorithmNameAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "hashValue" {
+		if attr.Name.Local == "saltData" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.HashValueAttr = &parsed
+			m.SaltDataAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "saltValue" {
 			parsed, err := attr.Value, error(nil)
@@ -159,23 +170,19 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.SaltValueAttr = &parsed
-		}
-		if attr.Name.Local == "spinValue" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.SpinValueAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "cryptProviderType" {
 			m.CryptProviderTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "cryptAlgorithmClass" {
 			m.CryptAlgorithmClassAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "cryptAlgorithmType" {
 			m.CryptAlgorithmTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "cryptAlgorithmSid" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -184,21 +191,24 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.CryptAlgorithmSidAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "spinCount" {
+		if attr.Name.Local == "hashValue" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.HashValueAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "spinValue" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
 			pt := uint32(parsed)
-			m.SpinCountAttr = &pt
-		}
-		if attr.Name.Local == "saltData" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.SaltDataAttr = &parsed
+			m.SpinValueAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "hashData" {
 			parsed, err := attr.Value, error(nil)
@@ -206,6 +216,7 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.HashDataAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cryptProvider" {
 			parsed, err := attr.Value, error(nil)
@@ -213,6 +224,7 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.CryptProviderAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "algIdExt" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -221,6 +233,7 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.AlgIdExtAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "algIdExtSource" {
 			parsed, err := attr.Value, error(nil)
@@ -228,6 +241,7 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.AlgIdExtSourceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cryptProviderTypeExt" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -236,6 +250,7 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.CryptProviderTypeExtAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "cryptProviderTypeExtSource" {
 			parsed, err := attr.Value, error(nil)
@@ -243,6 +258,7 @@ func (m *CT_ModifyVerifier) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.CryptProviderTypeExtSourceAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

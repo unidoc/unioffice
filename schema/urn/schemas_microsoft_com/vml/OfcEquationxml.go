@@ -46,6 +46,7 @@ func (m *OfcEquationxml) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ContentTypeAttr = &parsed
+			continue
 		}
 	}
 lOfcEquationxml:

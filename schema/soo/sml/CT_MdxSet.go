@@ -67,6 +67,7 @@ func (m *CT_MdxSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.NsAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "c" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -75,9 +76,11 @@ func (m *CT_MdxSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.CAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "o" {
 			m.OAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_MdxSet:

@@ -46,6 +46,7 @@ func (m *CT_NumFmt) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.NumFmtIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "formatCode" {
 			parsed, err := attr.Value, error(nil)
@@ -53,6 +54,7 @@ func (m *CT_NumFmt) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FormatCodeAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

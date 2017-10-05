@@ -79,6 +79,7 @@ func (m *CT_CalcCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.RAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ref" {
 			parsed, err := attr.Value, error(nil)
@@ -86,6 +87,7 @@ func (m *CT_CalcCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.RefAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "i" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -94,6 +96,7 @@ func (m *CT_CalcCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := int32(parsed)
 			m.IAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "s" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -101,6 +104,7 @@ func (m *CT_CalcCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.SAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "l" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -108,6 +112,7 @@ func (m *CT_CalcCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.LAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "t" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -115,6 +120,7 @@ func (m *CT_CalcCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.TAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "a" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -122,6 +128,7 @@ func (m *CT_CalcCell) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.AAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

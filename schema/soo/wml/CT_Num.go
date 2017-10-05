@@ -58,6 +58,7 @@ func (m *CT_Num) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.NumIdAttr = parsed
+			continue
 		}
 	}
 lCT_Num:

@@ -62,6 +62,7 @@ func (m *CT_PageMargins) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.LeftAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "right" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -69,6 +70,7 @@ func (m *CT_PageMargins) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.RightAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "top" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -76,6 +78,7 @@ func (m *CT_PageMargins) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.TopAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "bottom" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -83,6 +86,7 @@ func (m *CT_PageMargins) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.BottomAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "header" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -90,6 +94,7 @@ func (m *CT_PageMargins) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.HeaderAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "footer" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -97,6 +102,7 @@ func (m *CT_PageMargins) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.FooterAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

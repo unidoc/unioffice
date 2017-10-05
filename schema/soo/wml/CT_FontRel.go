@@ -44,12 +44,21 @@ func (m *CT_FontRel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	// initialize to default
 	m.FontKeyAttr = "{00000000-0000-0000-0000-000000000000}"
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = parsed
+			continue
+		}
 		if attr.Name.Local == "fontKey" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.FontKeyAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "subsetted" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -57,13 +66,7 @@ func (m *CT_FontRel) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.SubsettedAttr = parsed
-		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.IdAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

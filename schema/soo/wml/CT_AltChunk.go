@@ -44,12 +44,13 @@ func (m *CT_AltChunk) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_AltChunk) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 	}
 lCT_AltChunk:

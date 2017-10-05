@@ -86,6 +86,7 @@ func (m *CT_TLAnimateBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.ByAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "from" {
 			parsed, err := attr.Value, error(nil)
@@ -93,6 +94,7 @@ func (m *CT_TLAnimateBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.FromAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "to" {
 			parsed, err := attr.Value, error(nil)
@@ -100,12 +102,15 @@ func (m *CT_TLAnimateBehavior) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.ToAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "calcmode" {
 			m.CalcmodeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "valueType" {
 			m.ValueTypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_TLAnimateBehavior:

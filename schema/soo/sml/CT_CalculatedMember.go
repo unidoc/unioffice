@@ -84,6 +84,7 @@ func (m *CT_CalculatedMember) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "mdx" {
 			parsed, err := attr.Value, error(nil)
@@ -91,6 +92,7 @@ func (m *CT_CalculatedMember) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.MdxAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "memberName" {
 			parsed, err := attr.Value, error(nil)
@@ -98,6 +100,7 @@ func (m *CT_CalculatedMember) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.MemberNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hierarchy" {
 			parsed, err := attr.Value, error(nil)
@@ -105,6 +108,7 @@ func (m *CT_CalculatedMember) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.HierarchyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "parent" {
 			parsed, err := attr.Value, error(nil)
@@ -112,6 +116,7 @@ func (m *CT_CalculatedMember) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.ParentAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "solveOrder" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -120,6 +125,7 @@ func (m *CT_CalculatedMember) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 			}
 			pt := int32(parsed)
 			m.SolveOrderAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "set" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -127,6 +133,7 @@ func (m *CT_CalculatedMember) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.SetAttr = &parsed
+			continue
 		}
 	}
 lCT_CalculatedMember:

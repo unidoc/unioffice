@@ -129,61 +129,13 @@ func (m *CT_ControlPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	// initialize to default
 	m.Anchor = NewCT_ObjectAnchor()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "locked" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.LockedAttr = &parsed
-		}
-		if attr.Name.Local == "defaultSize" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DefaultSizeAttr = &parsed
-		}
-		if attr.Name.Local == "print" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PrintAttr = &parsed
-		}
-		if attr.Name.Local == "disabled" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DisabledAttr = &parsed
-		}
-		if attr.Name.Local == "recalcAlways" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RecalcAlwaysAttr = &parsed
-		}
-		if attr.Name.Local == "uiObject" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.UiObjectAttr = &parsed
-		}
-		if attr.Name.Local == "autoFill" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AutoFillAttr = &parsed
-		}
-		if attr.Name.Local == "autoLine" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AutoLineAttr = &parsed
+			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoPict" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -191,6 +143,7 @@ func (m *CT_ControlPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.AutoPictAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "macro" {
 			parsed, err := attr.Value, error(nil)
@@ -198,6 +151,63 @@ func (m *CT_ControlPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.MacroAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "print" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PrintAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "recalcAlways" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RecalcAlwaysAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "uiObject" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.UiObjectAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "autoFill" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AutoFillAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "autoLine" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AutoLineAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "locked" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.LockedAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "disabled" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DisabledAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "altText" {
 			parsed, err := attr.Value, error(nil)
@@ -205,6 +215,7 @@ func (m *CT_ControlPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.AltTextAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "linkedCell" {
 			parsed, err := attr.Value, error(nil)
@@ -212,6 +223,7 @@ func (m *CT_ControlPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.LinkedCellAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "listFillRange" {
 			parsed, err := attr.Value, error(nil)
@@ -219,6 +231,7 @@ func (m *CT_ControlPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.ListFillRangeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "cf" {
 			parsed, err := attr.Value, error(nil)
@@ -226,13 +239,15 @@ func (m *CT_ControlPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 				return err
 			}
 			m.CfAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Local == "defaultSize" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.IdAttr = &parsed
+			m.DefaultSizeAttr = &parsed
+			continue
 		}
 	}
 lCT_ControlPr:

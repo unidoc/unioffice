@@ -133,16 +133,11 @@ func (m *CT_LayoutNode) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.NameAttr = &parsed
-		}
-		if attr.Name.Local == "styleLbl" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.StyleLblAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "chOrder" {
 			m.ChOrderAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "moveWith" {
 			parsed, err := attr.Value, error(nil)
@@ -150,6 +145,15 @@ func (m *CT_LayoutNode) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.MoveWithAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "styleLbl" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.StyleLblAttr = &parsed
+			continue
 		}
 	}
 lCT_LayoutNode:

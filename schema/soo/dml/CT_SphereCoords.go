@@ -53,6 +53,7 @@ func (m *CT_SphereCoords) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.LatAttr = int32(parsed)
+			continue
 		}
 		if attr.Name.Local == "lon" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -60,6 +61,7 @@ func (m *CT_SphereCoords) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.LonAttr = int32(parsed)
+			continue
 		}
 		if attr.Name.Local == "rev" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -67,6 +69,7 @@ func (m *CT_SphereCoords) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.RevAttr = int32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

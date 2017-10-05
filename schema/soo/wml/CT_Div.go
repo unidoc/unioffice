@@ -94,6 +94,7 @@ func (m *CT_Div) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IdAttr = parsed
+			continue
 		}
 	}
 lCT_Div:

@@ -131,39 +131,51 @@ func (m *OfcCT_Lock) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "position" {
 			m.PositionAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "selection" {
 			m.SelectionAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "grouping" {
 			m.GroupingAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "ungrouping" {
 			m.UngroupingAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "rotation" {
 			m.RotationAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "cropping" {
 			m.CroppingAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "verticies" {
 			m.VerticiesAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "adjusthandles" {
 			m.AdjusthandlesAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "text" {
 			m.TextAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "aspectratio" {
 			m.AspectratioAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "shapetype" {
 			m.ShapetypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "ext" {
 			m.ExtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

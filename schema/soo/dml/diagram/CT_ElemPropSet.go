@@ -185,120 +185,21 @@ func (m *CT_ElemPropSet) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "presAssocID" {
-			parsed, err := ParseUnionST_ModelId(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PresAssocIDAttr = &parsed
-		}
-		if attr.Name.Local == "presName" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.PresNameAttr = &parsed
-		}
-		if attr.Name.Local == "presStyleLbl" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.PresStyleLblAttr = &parsed
-		}
-		if attr.Name.Local == "presStyleIdx" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := int32(parsed)
-			m.PresStyleIdxAttr = &pt
-		}
-		if attr.Name.Local == "presStyleCnt" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := int32(parsed)
-			m.PresStyleCntAttr = &pt
-		}
-		if attr.Name.Local == "loTypeId" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.LoTypeIdAttr = &parsed
-		}
-		if attr.Name.Local == "loCatId" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.LoCatIdAttr = &parsed
-		}
-		if attr.Name.Local == "qsTypeId" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.QsTypeIdAttr = &parsed
-		}
-		if attr.Name.Local == "qsCatId" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.QsCatIdAttr = &parsed
-		}
-		if attr.Name.Local == "csTypeId" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.CsTypeIdAttr = &parsed
-		}
-		if attr.Name.Local == "csCatId" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.CsCatIdAttr = &parsed
-		}
-		if attr.Name.Local == "coherent3DOff" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.Coherent3DOffAttr = &parsed
-		}
-		if attr.Name.Local == "phldrT" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.PhldrTAttr = &parsed
-		}
-		if attr.Name.Local == "phldr" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PhldrAttr = &parsed
-		}
-		if attr.Name.Local == "custAng" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := int32(parsed)
-			m.CustAngAttr = &pt
-		}
 		if attr.Name.Local == "custFlipVert" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.CustFlipVertAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "presAssocID" {
+			parsed, err := ParseUnionST_ModelId(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PresAssocIDAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "custFlipHor" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -306,6 +207,15 @@ func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.CustFlipHorAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "presStyleLbl" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.PresStyleLblAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "custSzX" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -314,6 +224,16 @@ func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := int32(parsed)
 			m.CustSzXAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "presStyleCnt" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := int32(parsed)
+			m.PresStyleCntAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "custSzY" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -322,6 +242,15 @@ func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := int32(parsed)
 			m.CustSzYAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "loCatId" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.LoCatIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "custScaleX" {
 			parsed, err := ParseUnionST_PrSetCustVal(attr.Value)
@@ -329,6 +258,15 @@ func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.CustScaleXAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "qsCatId" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.QsCatIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "custScaleY" {
 			parsed, err := ParseUnionST_PrSetCustVal(attr.Value)
@@ -336,41 +274,16 @@ func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.CustScaleYAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "custT" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "custAng" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
-			m.CustTAttr = &parsed
-		}
-		if attr.Name.Local == "custLinFactX" {
-			parsed, err := ParseUnionST_PrSetCustVal(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CustLinFactXAttr = &parsed
-		}
-		if attr.Name.Local == "custLinFactY" {
-			parsed, err := ParseUnionST_PrSetCustVal(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CustLinFactYAttr = &parsed
-		}
-		if attr.Name.Local == "custLinFactNeighborX" {
-			parsed, err := ParseUnionST_PrSetCustVal(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CustLinFactNeighborXAttr = &parsed
-		}
-		if attr.Name.Local == "custLinFactNeighborY" {
-			parsed, err := ParseUnionST_PrSetCustVal(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CustLinFactNeighborYAttr = &parsed
+			pt := int32(parsed)
+			m.CustAngAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "custRadScaleRad" {
 			parsed, err := ParseUnionST_PrSetCustVal(attr.Value)
@@ -378,6 +291,71 @@ func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.CustRadScaleRadAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "custLinFactX" {
+			parsed, err := ParseUnionST_PrSetCustVal(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.CustLinFactXAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "qsTypeId" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.QsTypeIdAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "coherent3DOff" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.Coherent3DOffAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "custT" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.CustTAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "presName" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.PresNameAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "custLinFactNeighborY" {
+			parsed, err := ParseUnionST_PrSetCustVal(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.CustLinFactNeighborYAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "custLinFactY" {
+			parsed, err := ParseUnionST_PrSetCustVal(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.CustLinFactYAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "loTypeId" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.LoTypeIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "custRadScaleInc" {
 			parsed, err := ParseUnionST_PrSetCustVal(attr.Value)
@@ -385,6 +363,56 @@ func (m *CT_ElemPropSet) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.CustRadScaleIncAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "phldr" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PhldrAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "csTypeId" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.CsTypeIdAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "csCatId" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.CsCatIdAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "phldrT" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.PhldrTAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "presStyleIdx" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := int32(parsed)
+			m.PresStyleIdxAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "custLinFactNeighborX" {
+			parsed, err := ParseUnionST_PrSetCustVal(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.CustLinFactNeighborXAttr = &parsed
+			continue
 		}
 	}
 lCT_ElemPropSet:

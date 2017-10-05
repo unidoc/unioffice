@@ -80,12 +80,21 @@ func (m *CT_Shape) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "blip" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.BlipAttr = &parsed
+			continue
+		}
 		if attr.Name.Local == "rot" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
 			if err != nil {
 				return err
 			}
 			m.RotAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "type" {
 			parsed, err := ParseUnionST_LayoutShapeType(attr.Value)
@@ -93,13 +102,7 @@ func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TypeAttr = &parsed
-		}
-		if attr.Name.Local == "blip" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.BlipAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "zOrderOff" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -108,6 +111,7 @@ func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := int32(parsed)
 			m.ZOrderOffAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "hideGeom" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -115,6 +119,7 @@ func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HideGeomAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lkTxEntry" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -122,6 +127,7 @@ func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.LkTxEntryAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "blipPhldr" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -129,6 +135,7 @@ func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.BlipPhldrAttr = &parsed
+			continue
 		}
 	}
 lCT_Shape:

@@ -60,6 +60,7 @@ func (m *CT_Top10) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TopAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "percent" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -67,6 +68,7 @@ func (m *CT_Top10) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PercentAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "val" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -74,6 +76,7 @@ func (m *CT_Top10) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ValAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "filterVal" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -81,6 +84,7 @@ func (m *CT_Top10) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FilterValAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -166,42 +166,58 @@ func (m *AG_AllShapeAttributes) MarshalXML(e *xml.Encoder, start xml.StartElemen
 func (m *AG_AllShapeAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "opacity" {
-			parsed, err := attr.Value, error(nil)
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "connectortype" {
+			m.ConnectortypeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bwpure" {
+			m.BwpureAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "cliptowrap" {
+			m.CliptowrapAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "preferrelative" {
+			m.PreferrelativeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "ole" {
+			m.OleAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "oleicon" {
+			m.OleiconAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "forcedash" {
+			m.ForcedashAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bwnormal" {
+			m.BwnormalAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "spt" {
+			parsed, err := strconv.ParseFloat(attr.Value, 64)
 			if err != nil {
 				return err
 			}
-			m.OpacityAttr = &parsed
+			pt := float32(parsed)
+			m.SptAttr = &pt
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "clip" {
+			m.ClipAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bwmode" {
+			m.BwmodeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "stroked" {
 			m.StrokedAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "strokecolor" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.StrokecolorAttr = &parsed
-		}
-		if attr.Name.Local == "strokeweight" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.StrokeweightAttr = &parsed
-		}
-		if attr.Name.Local == "insetpen" {
-			m.InsetpenAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "chromakey" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.ChromakeyAttr = &parsed
-		}
-		if attr.Name.Local == "filled" {
-			m.FilledAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "fillcolor" {
 			parsed, err := attr.Value, error(nil)
@@ -209,44 +225,47 @@ func (m *AG_AllShapeAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.FillcolorAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "spt" {
-			parsed, err := strconv.ParseFloat(attr.Value, 64)
+		if attr.Name.Local == "filled" {
+			m.FilledAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "chromakey" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			pt := float32(parsed)
-			m.SptAttr = &pt
+			m.ChromakeyAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "connectortype" {
-			m.ConnectortypeAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "insetpen" {
+			m.InsetpenAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "bwmode" {
-			m.BwmodeAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "strokeweight" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.StrokeweightAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "bwpure" {
-			m.BwpureAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "strokecolor" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.StrokecolorAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "bwnormal" {
-			m.BwnormalAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "forcedash" {
-			m.ForcedashAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "oleicon" {
-			m.OleiconAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "ole" {
-			m.OleAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "preferrelative" {
-			m.PreferrelativeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "cliptowrap" {
-			m.CliptowrapAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "clip" {
-			m.ClipAttr.UnmarshalXMLAttr(attr)
+		if attr.Name.Local == "opacity" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.OpacityAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

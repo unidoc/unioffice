@@ -53,6 +53,7 @@ func (m *CT_SdtComboBox) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.LastValueAttr = &parsed
+			continue
 		}
 	}
 lCT_SdtComboBox:

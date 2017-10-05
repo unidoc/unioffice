@@ -94,9 +94,11 @@ func (m *CT_CellAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "horizontal" {
 			m.HorizontalAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "vertical" {
 			m.VerticalAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "textRotation" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
@@ -105,6 +107,7 @@ func (m *CT_CellAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint8(parsed)
 			m.TextRotationAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "wrapText" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -112,6 +115,7 @@ func (m *CT_CellAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.WrapTextAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "indent" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -120,6 +124,7 @@ func (m *CT_CellAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint32(parsed)
 			m.IndentAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "relativeIndent" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -128,6 +133,7 @@ func (m *CT_CellAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := int32(parsed)
 			m.RelativeIndentAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "justifyLastLine" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -135,6 +141,7 @@ func (m *CT_CellAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.JustifyLastLineAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "shrinkToFit" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -142,6 +149,7 @@ func (m *CT_CellAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.ShrinkToFitAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "readingOrder" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -150,6 +158,7 @@ func (m *CT_CellAlignment) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint32(parsed)
 			m.ReadingOrderAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

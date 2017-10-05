@@ -42,6 +42,7 @@ func (m *CT_AlphaOutsetEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.RadAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

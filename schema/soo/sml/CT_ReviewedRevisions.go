@@ -53,6 +53,7 @@ func (m *CT_ReviewedRevisions) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_ReviewedRevisions:

@@ -45,6 +45,7 @@ func (m *TblStyleLst) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.DefAttr = parsed
+			continue
 		}
 	}
 lTblStyleLst:

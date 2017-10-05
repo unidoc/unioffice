@@ -64,6 +64,7 @@ func (m *CT_PageNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "fmt" {
 			m.FmtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "start" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -71,6 +72,7 @@ func (m *CT_PageNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.StartAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "chapStyle" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -78,9 +80,11 @@ func (m *CT_PageNumber) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ChapStyleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "chapSep" {
 			m.ChapSepAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

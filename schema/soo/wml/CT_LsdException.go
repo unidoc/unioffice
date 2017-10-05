@@ -74,6 +74,7 @@ func (m *CT_LsdException) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "locked" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -81,6 +82,7 @@ func (m *CT_LsdException) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.LockedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "uiPriority" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -88,6 +90,7 @@ func (m *CT_LsdException) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.UiPriorityAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "semiHidden" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -95,6 +98,7 @@ func (m *CT_LsdException) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.SemiHiddenAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "unhideWhenUsed" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -102,6 +106,7 @@ func (m *CT_LsdException) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.UnhideWhenUsedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "qFormat" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -109,6 +114,7 @@ func (m *CT_LsdException) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.QFormatAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -53,6 +53,7 @@ func (m *CT_QueryTableDeletedFields) UnmarshalXML(d *xml.Decoder, start xml.Star
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_QueryTableDeletedFields:

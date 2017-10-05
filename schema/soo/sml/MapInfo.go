@@ -46,6 +46,7 @@ func (m *MapInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SelectionNamespacesAttr = parsed
+			continue
 		}
 	}
 lMapInfo:

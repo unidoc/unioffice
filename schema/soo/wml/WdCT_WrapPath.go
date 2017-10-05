@@ -56,6 +56,7 @@ func (m *WdCT_WrapPath) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.EditedAttr = &parsed
+			continue
 		}
 	}
 lWdCT_WrapPath:

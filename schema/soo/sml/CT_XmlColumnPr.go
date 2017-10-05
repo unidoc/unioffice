@@ -64,6 +64,7 @@ func (m *CT_XmlColumnPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.MapIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "xpath" {
 			parsed, err := attr.Value, error(nil)
@@ -71,6 +72,7 @@ func (m *CT_XmlColumnPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.XpathAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "denormalized" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -78,6 +80,7 @@ func (m *CT_XmlColumnPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.DenormalizedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "xmlDataType" {
 			parsed, err := attr.Value, error(nil)
@@ -85,6 +88,7 @@ func (m *CT_XmlColumnPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.XmlDataTypeAttr = parsed
+			continue
 		}
 	}
 lCT_XmlColumnPr:

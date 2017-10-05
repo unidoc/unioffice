@@ -76,8 +76,17 @@ func (m *CT_ObjectLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	// initialize to default
 	m.UpdateModeAttr = ST_ObjectUpdateMode(1)
 	for _, attr := range start.Attr {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.IdAttr = parsed
+			continue
+		}
 		if attr.Name.Local == "updateMode" {
 			m.UpdateModeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "lockedField" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -85,16 +94,11 @@ func (m *CT_ObjectLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.LockedFieldAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "drawAspect" {
 			m.DrawAspectAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "id" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.IdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "progId" {
 			parsed, err := attr.Value, error(nil)
@@ -102,6 +106,7 @@ func (m *CT_ObjectLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ProgIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "shapeId" {
 			parsed, err := attr.Value, error(nil)
@@ -109,6 +114,7 @@ func (m *CT_ObjectLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ShapeIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fieldCodes" {
 			parsed, err := attr.Value, error(nil)
@@ -116,6 +122,7 @@ func (m *CT_ObjectLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.FieldCodesAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

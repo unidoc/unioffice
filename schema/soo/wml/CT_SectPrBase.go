@@ -167,26 +167,13 @@ func (m *CT_SectPrBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 func (m *CT_SectPrBase) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "rsidRPr" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.RsidRPrAttr = &parsed
-		}
 		if attr.Name.Local == "rsidDel" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.RsidDelAttr = &parsed
-		}
-		if attr.Name.Local == "rsidR" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.RsidRAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rsidSect" {
 			parsed, err := attr.Value, error(nil)
@@ -194,6 +181,23 @@ func (m *CT_SectPrBase) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.RsidSectAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "rsidRPr" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.RsidRPrAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "rsidR" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.RsidRAttr = &parsed
+			continue
 		}
 	}
 lCT_SectPrBase:

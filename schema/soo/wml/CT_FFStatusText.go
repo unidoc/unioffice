@@ -48,6 +48,7 @@ func (m *CT_FFStatusText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "val" {
 			parsed, err := attr.Value, error(nil)
@@ -55,6 +56,7 @@ func (m *CT_FFStatusText) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

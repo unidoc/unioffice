@@ -45,6 +45,7 @@ func (m *CT_ShowInfoKiosk) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint32(parsed)
 			m.RestartAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

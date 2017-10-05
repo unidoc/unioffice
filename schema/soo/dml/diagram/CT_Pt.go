@@ -76,9 +76,11 @@ func (m *CT_Pt) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ModelIdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "cxnId" {
 			parsed, err := ParseUnionST_ModelId(attr.Value)
@@ -86,6 +88,7 @@ func (m *CT_Pt) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CxnIdAttr = &parsed
+			continue
 		}
 	}
 lCT_Pt:

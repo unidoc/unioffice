@@ -42,6 +42,7 @@ func (m *CT_IntProperty) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ValAttr = int32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

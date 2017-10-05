@@ -51,6 +51,7 @@ func (m *CT_Kinsoku) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.LangAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "invalStChars" {
 			parsed, err := attr.Value, error(nil)
@@ -58,6 +59,7 @@ func (m *CT_Kinsoku) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.InvalStCharsAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "invalEndChars" {
 			parsed, err := attr.Value, error(nil)
@@ -65,6 +67,7 @@ func (m *CT_Kinsoku) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.InvalEndCharsAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

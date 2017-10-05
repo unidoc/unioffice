@@ -49,6 +49,7 @@ func (m *CT_Charset) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "characterSet" {
 			parsed, err := attr.Value, error(nil)
@@ -56,6 +57,7 @@ func (m *CT_Charset) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.CharacterSetAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

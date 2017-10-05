@@ -39,12 +39,13 @@ func (m *CT_EmbeddedWAVAudioFile) MarshalXML(e *xml.Encoder, start xml.StartElem
 func (m *CT_EmbeddedWAVAudioFile) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "embed" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "embed" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.EmbedAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -52,6 +53,7 @@ func (m *CT_EmbeddedWAVAudioFile) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

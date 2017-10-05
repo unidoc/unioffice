@@ -53,6 +53,7 @@ func (m *CT_TLTemplate) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.LvlAttr = &pt
+			continue
 		}
 	}
 lCT_TLTemplate:

@@ -108,6 +108,7 @@ func (m *CT_RevisionRowColumn) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.SIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "eol" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -115,6 +116,7 @@ func (m *CT_RevisionRowColumn) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.EolAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ref" {
 			parsed, err := attr.Value, error(nil)
@@ -122,9 +124,11 @@ func (m *CT_RevisionRowColumn) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.RefAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "action" {
 			m.ActionAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "edge" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -132,6 +136,7 @@ func (m *CT_RevisionRowColumn) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.EdgeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -140,6 +145,7 @@ func (m *CT_RevisionRowColumn) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint32(parsed)
 			m.RIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "ua" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -147,6 +153,7 @@ func (m *CT_RevisionRowColumn) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.UaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ra" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -154,6 +161,7 @@ func (m *CT_RevisionRowColumn) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.RaAttr = &parsed
+			continue
 		}
 	}
 lCT_RevisionRowColumn:

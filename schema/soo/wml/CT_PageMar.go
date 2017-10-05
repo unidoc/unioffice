@@ -67,6 +67,7 @@ func (m *CT_PageMar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.TopAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "right" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -74,6 +75,7 @@ func (m *CT_PageMar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.RightAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "bottom" {
 			parsed, err := ParseUnionST_SignedTwipsMeasure(attr.Value)
@@ -81,6 +83,7 @@ func (m *CT_PageMar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.BottomAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "left" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -88,6 +91,7 @@ func (m *CT_PageMar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.LeftAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "header" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -95,6 +99,7 @@ func (m *CT_PageMar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.HeaderAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "footer" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -102,6 +107,7 @@ func (m *CT_PageMar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.FooterAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "gutter" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -109,6 +115,7 @@ func (m *CT_PageMar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.GutterAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

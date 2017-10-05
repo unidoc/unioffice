@@ -44,6 +44,7 @@ func (m *CT_FirstSliceAng) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint16(parsed)
 			m.ValAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

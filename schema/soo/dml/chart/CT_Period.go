@@ -44,6 +44,7 @@ func (m *CT_Period) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.ValAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

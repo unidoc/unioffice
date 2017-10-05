@@ -46,6 +46,7 @@ func (m *CT_Vector3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.DxAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "dy" {
 			parsed, err := ParseUnionST_Coordinate(attr.Value)
@@ -53,6 +54,7 @@ func (m *CT_Vector3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.DyAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "dz" {
 			parsed, err := ParseUnionST_Coordinate(attr.Value)
@@ -60,6 +62,7 @@ func (m *CT_Vector3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.DzAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

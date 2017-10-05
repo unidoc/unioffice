@@ -49,6 +49,7 @@ func (m *CT_SdtListItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.DisplayTextAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "value" {
 			parsed, err := attr.Value, error(nil)
@@ -56,6 +57,7 @@ func (m *CT_SdtListItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.ValueAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

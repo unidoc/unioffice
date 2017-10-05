@@ -70,6 +70,7 @@ func (m *CT_DataValidations) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.DisablePromptsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "xWindow" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -78,6 +79,7 @@ func (m *CT_DataValidations) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.XWindowAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "yWindow" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -86,6 +88,7 @@ func (m *CT_DataValidations) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.YWindowAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -94,6 +97,7 @@ func (m *CT_DataValidations) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_DataValidations:

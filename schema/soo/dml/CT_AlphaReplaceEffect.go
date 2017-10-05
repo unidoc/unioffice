@@ -40,6 +40,7 @@ func (m *CT_AlphaReplaceEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.AAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

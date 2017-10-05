@@ -69,6 +69,7 @@ func (m *CT_HeaderFooter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.SldNumAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hdr" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -76,6 +77,7 @@ func (m *CT_HeaderFooter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.HdrAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ftr" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -83,6 +85,7 @@ func (m *CT_HeaderFooter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.FtrAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dt" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -90,6 +93,7 @@ func (m *CT_HeaderFooter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DtAttr = &parsed
+			continue
 		}
 	}
 lCT_HeaderFooter:

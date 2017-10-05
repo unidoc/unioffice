@@ -69,9 +69,11 @@ func (m *CT_ConditionalFormat) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "scope" {
 			m.ScopeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "priority" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -79,6 +81,7 @@ func (m *CT_ConditionalFormat) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.PriorityAttr = uint32(parsed)
+			continue
 		}
 	}
 lCT_ConditionalFormat:

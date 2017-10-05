@@ -49,6 +49,7 @@ func (m *OfcCT_Entry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := int32(parsed)
 			m.NewAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "old" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -57,6 +58,7 @@ func (m *OfcCT_Entry) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := int32(parsed)
 			m.OldAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

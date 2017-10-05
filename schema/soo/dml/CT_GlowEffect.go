@@ -75,6 +75,7 @@ func (m *CT_GlowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.RadAttr = &parsed
+			continue
 		}
 	}
 lCT_GlowEffect:

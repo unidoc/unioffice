@@ -93,6 +93,7 @@ func (m *CT_H) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PositionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "polar" {
 			parsed, err := attr.Value, error(nil)
@@ -100,6 +101,7 @@ func (m *CT_H) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PolarAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "map" {
 			parsed, err := attr.Value, error(nil)
@@ -107,15 +109,19 @@ func (m *CT_H) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.MapAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "invx" {
 			m.InvxAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "invy" {
 			m.InvyAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "switch" {
 			m.SwitchAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "xrange" {
 			parsed, err := attr.Value, error(nil)
@@ -123,6 +129,7 @@ func (m *CT_H) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.XrangeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "yrange" {
 			parsed, err := attr.Value, error(nil)
@@ -130,6 +137,7 @@ func (m *CT_H) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.YrangeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "radiusrange" {
 			parsed, err := attr.Value, error(nil)
@@ -137,6 +145,7 @@ func (m *CT_H) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RadiusrangeAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

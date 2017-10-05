@@ -74,6 +74,7 @@ func (m *CT_PolarAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.GdRefRAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "minR" {
 			parsed, err := ParseUnionST_AdjCoordinate(attr.Value)
@@ -81,6 +82,7 @@ func (m *CT_PolarAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.MinRAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "maxR" {
 			parsed, err := ParseUnionST_AdjCoordinate(attr.Value)
@@ -88,6 +90,7 @@ func (m *CT_PolarAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.MaxRAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "gdRefAng" {
 			parsed, err := attr.Value, error(nil)
@@ -95,6 +98,7 @@ func (m *CT_PolarAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.GdRefAngAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "minAng" {
 			parsed, err := ParseUnionST_AdjAngle(attr.Value)
@@ -102,6 +106,7 @@ func (m *CT_PolarAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.MinAngAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "maxAng" {
 			parsed, err := ParseUnionST_AdjAngle(attr.Value)
@@ -109,6 +114,7 @@ func (m *CT_PolarAdjustHandle) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.MaxAngAttr = &parsed
+			continue
 		}
 	}
 lCT_PolarAdjustHandle:

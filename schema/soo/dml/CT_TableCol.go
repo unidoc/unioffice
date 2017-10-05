@@ -47,6 +47,7 @@ func (m *CT_TableCol) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.WAttr = parsed
+			continue
 		}
 	}
 lCT_TableCol:

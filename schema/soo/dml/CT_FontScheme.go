@@ -57,6 +57,7 @@ func (m *CT_FontScheme) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 	}
 lCT_FontScheme:

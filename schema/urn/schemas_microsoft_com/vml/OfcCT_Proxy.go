@@ -62,9 +62,11 @@ func (m *OfcCT_Proxy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "start" {
 			m.StartAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "end" {
 			m.EndAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "idref" {
 			parsed, err := attr.Value, error(nil)
@@ -72,6 +74,7 @@ func (m *OfcCT_Proxy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.IdrefAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "connectloc" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -80,6 +83,7 @@ func (m *OfcCT_Proxy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := int32(parsed)
 			m.ConnectlocAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

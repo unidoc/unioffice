@@ -56,6 +56,7 @@ func (m *CT_PivotDimension) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.MeasureAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -63,6 +64,7 @@ func (m *CT_PivotDimension) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "uniqueName" {
 			parsed, err := attr.Value, error(nil)
@@ -70,6 +72,7 @@ func (m *CT_PivotDimension) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.UniqueNameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "caption" {
 			parsed, err := attr.Value, error(nil)
@@ -77,6 +80,7 @@ func (m *CT_PivotDimension) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.CaptionAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

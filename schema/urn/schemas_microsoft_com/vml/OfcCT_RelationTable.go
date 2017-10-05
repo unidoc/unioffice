@@ -50,6 +50,7 @@ func (m *OfcCT_RelationTable) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "ext" {
 			m.ExtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lOfcCT_RelationTable:

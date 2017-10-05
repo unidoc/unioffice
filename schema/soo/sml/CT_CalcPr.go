@@ -116,16 +116,17 @@ func (m *CT_CalcPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "calcId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+		if attr.Name.Local == "iterateDelta" {
+			parsed, err := strconv.ParseFloat(attr.Value, 64)
 			if err != nil {
 				return err
 			}
-			pt := uint32(parsed)
-			m.CalcIdAttr = &pt
+			m.IterateDeltaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "calcMode" {
 			m.CalcModeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "fullCalcOnLoad" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -133,9 +134,11 @@ func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FullCalcOnLoadAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "refMode" {
 			m.RefModeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "iterate" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -143,6 +146,7 @@ func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.IterateAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "iterateCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -151,13 +155,16 @@ func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.IterateCountAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "iterateDelta" {
-			parsed, err := strconv.ParseFloat(attr.Value, 64)
+		if attr.Name.Local == "calcId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
-			m.IterateDeltaAttr = &parsed
+			pt := uint32(parsed)
+			m.CalcIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "fullPrecision" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -165,6 +172,7 @@ func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FullPrecisionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "calcCompleted" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -172,6 +180,7 @@ func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CalcCompletedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "calcOnSave" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -179,6 +188,7 @@ func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CalcOnSaveAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "concurrentCalc" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -186,6 +196,7 @@ func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ConcurrentCalcAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "concurrentManualCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -194,6 +205,7 @@ func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.ConcurrentManualCountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "forceFullCalc" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -201,6 +213,7 @@ func (m *CT_CalcPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ForceFullCalcAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -81,6 +81,7 @@ func (m *CT_TblLook) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.FirstRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lastRow" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -88,6 +89,7 @@ func (m *CT_TblLook) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.LastRowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "firstColumn" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -95,6 +97,7 @@ func (m *CT_TblLook) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.FirstColumnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "lastColumn" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -102,6 +105,7 @@ func (m *CT_TblLook) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.LastColumnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noHBand" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -109,6 +113,7 @@ func (m *CT_TblLook) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.NoHBandAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "noVBand" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -116,6 +121,7 @@ func (m *CT_TblLook) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.NoVBandAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "val" {
 			parsed, err := attr.Value, error(nil)
@@ -123,6 +129,7 @@ func (m *CT_TblLook) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

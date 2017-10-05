@@ -49,6 +49,7 @@ func (m *CT_Sym) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FontAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "char" {
 			parsed, err := attr.Value, error(nil)
@@ -56,6 +57,7 @@ func (m *CT_Sym) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CharAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -57,6 +57,7 @@ func (m *CT_HslColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.HueAttr = int32(parsed)
+			continue
 		}
 		if attr.Name.Local == "sat" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -64,6 +65,7 @@ func (m *CT_HslColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.SatAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "lum" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -71,6 +73,7 @@ func (m *CT_HslColor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.LumAttr = parsed
+			continue
 		}
 	}
 lCT_HslColor:

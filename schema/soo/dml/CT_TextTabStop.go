@@ -50,9 +50,11 @@ func (m *CT_TextTabStop) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.PosAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "algn" {
 			m.AlgnAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

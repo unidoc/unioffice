@@ -69,6 +69,7 @@ func (m *WdCT_WrapSquare) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "wrapText" {
 			m.WrapTextAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "distT" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -77,6 +78,7 @@ func (m *WdCT_WrapSquare) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			}
 			pt := uint32(parsed)
 			m.DistTAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "distB" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -85,6 +87,7 @@ func (m *WdCT_WrapSquare) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			}
 			pt := uint32(parsed)
 			m.DistBAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "distL" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -93,6 +96,7 @@ func (m *WdCT_WrapSquare) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			}
 			pt := uint32(parsed)
 			m.DistLAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "distR" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -101,6 +105,7 @@ func (m *WdCT_WrapSquare) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 			}
 			pt := uint32(parsed)
 			m.DistRAttr = &pt
+			continue
 		}
 	}
 lWdCT_WrapSquare:

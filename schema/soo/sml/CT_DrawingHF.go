@@ -143,76 +143,13 @@ func (m *CT_DrawingHF) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.IdAttr = parsed
-		}
-		if attr.Name.Local == "lho" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.LhoAttr = &pt
-		}
-		if attr.Name.Local == "lhe" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.LheAttr = &pt
-		}
-		if attr.Name.Local == "lhf" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.LhfAttr = &pt
-		}
-		if attr.Name.Local == "cho" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.ChoAttr = &pt
-		}
-		if attr.Name.Local == "che" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.CheAttr = &pt
-		}
-		if attr.Name.Local == "chf" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.ChfAttr = &pt
-		}
-		if attr.Name.Local == "rho" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.RhoAttr = &pt
-		}
-		if attr.Name.Local == "rhe" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.RheAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "rhf" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -221,6 +158,7 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.RhfAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "lfo" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -229,6 +167,7 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.LfoAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "lfe" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -237,6 +176,16 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.LfeAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "lhf" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.LhfAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "lff" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -245,6 +194,70 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.LffAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "che" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.CheAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "rho" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.RhoAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "rhe" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.RheAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "lho" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.LhoAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "lhe" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.LheAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "cho" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.ChoAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "chf" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.ChfAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "cfo" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -253,6 +266,7 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.CfoAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "cfe" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -261,6 +275,7 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.CfeAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "cff" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -269,6 +284,7 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.CffAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "rfo" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -277,6 +293,7 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.RfoAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "rfe" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -285,6 +302,7 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.RfeAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "rff" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -293,6 +311,7 @@ func (m *CT_DrawingHF) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 			}
 			pt := uint32(parsed)
 			m.RffAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

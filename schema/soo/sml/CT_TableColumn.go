@@ -129,19 +129,30 @@ func (m *CT_TableColumn) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Local == "totalsRowDxfId" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.TotalsRowDxfIdAttr = &pt
+			continue
+		}
 		if attr.Name.Local == "id" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
 				return err
 			}
 			m.IdAttr = uint32(parsed)
+			continue
 		}
-		if attr.Name.Local == "uniqueName" {
+		if attr.Name.Local == "headerRowCellStyle" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.UniqueNameAttr = &parsed
+			m.HeaderRowCellStyleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "name" {
 			parsed, err := attr.Value, error(nil)
@@ -149,9 +160,7 @@ func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.NameAttr = parsed
-		}
-		if attr.Name.Local == "totalsRowFunction" {
-			m.TotalsRowFunctionAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "totalsRowLabel" {
 			parsed, err := attr.Value, error(nil)
@@ -159,6 +168,7 @@ func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.TotalsRowLabelAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "queryTableFieldId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -167,6 +177,7 @@ func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.QueryTableFieldIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "headerRowDxfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -175,6 +186,7 @@ func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.HeaderRowDxfIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "dataDxfId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -183,21 +195,19 @@ func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 			}
 			pt := uint32(parsed)
 			m.DataDxfIdAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "totalsRowDxfId" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := uint32(parsed)
-			m.TotalsRowDxfIdAttr = &pt
-		}
-		if attr.Name.Local == "headerRowCellStyle" {
+		if attr.Name.Local == "uniqueName" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.HeaderRowCellStyleAttr = &parsed
+			m.UniqueNameAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "totalsRowFunction" {
+			m.TotalsRowFunctionAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "dataCellStyle" {
 			parsed, err := attr.Value, error(nil)
@@ -205,6 +215,7 @@ func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.DataCellStyleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "totalsRowCellStyle" {
 			parsed, err := attr.Value, error(nil)
@@ -212,6 +223,7 @@ func (m *CT_TableColumn) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.TotalsRowCellStyleAttr = &parsed
+			continue
 		}
 	}
 lCT_TableColumn:

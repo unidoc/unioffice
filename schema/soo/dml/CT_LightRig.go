@@ -56,9 +56,11 @@ func (m *CT_LightRig) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "rig" {
 			m.RigAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "dir" {
 			m.DirAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_LightRig:

@@ -52,6 +52,7 @@ func (m *AG_TLBuild) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			}
 			pt := uint32(parsed)
 			m.SpidAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "grpId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -60,6 +61,7 @@ func (m *AG_TLBuild) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 			}
 			pt := uint32(parsed)
 			m.GrpIdAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "uiExpand" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -67,6 +69,7 @@ func (m *AG_TLBuild) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.UiExpandAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

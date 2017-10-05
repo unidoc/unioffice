@@ -129,68 +129,21 @@ func (m *CT_StylePaneFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 func (m *CT_StylePaneFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "allStyles" {
-			parsed, err := ParseUnionST_OnOff(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AllStylesAttr = &parsed
-		}
-		if attr.Name.Local == "customStyles" {
-			parsed, err := ParseUnionST_OnOff(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.CustomStylesAttr = &parsed
-		}
-		if attr.Name.Local == "latentStyles" {
-			parsed, err := ParseUnionST_OnOff(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.LatentStylesAttr = &parsed
-		}
-		if attr.Name.Local == "stylesInUse" {
-			parsed, err := ParseUnionST_OnOff(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.StylesInUseAttr = &parsed
-		}
-		if attr.Name.Local == "headingStyles" {
-			parsed, err := ParseUnionST_OnOff(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.HeadingStylesAttr = &parsed
-		}
-		if attr.Name.Local == "numberingStyles" {
-			parsed, err := ParseUnionST_OnOff(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.NumberingStylesAttr = &parsed
-		}
-		if attr.Name.Local == "tableStyles" {
-			parsed, err := ParseUnionST_OnOff(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.TableStylesAttr = &parsed
-		}
-		if attr.Name.Local == "directFormattingOnRuns" {
-			parsed, err := ParseUnionST_OnOff(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DirectFormattingOnRunsAttr = &parsed
-		}
 		if attr.Name.Local == "directFormattingOnParagraphs" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.DirectFormattingOnParagraphsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "allStyles" {
+			parsed, err := ParseUnionST_OnOff(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AllStylesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "directFormattingOnNumbering" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -198,6 +151,63 @@ func (m *CT_StylePaneFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.DirectFormattingOnNumberingAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "latentStyles" {
+			parsed, err := ParseUnionST_OnOff(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.LatentStylesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "headingStyles" {
+			parsed, err := ParseUnionST_OnOff(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.HeadingStylesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "numberingStyles" {
+			parsed, err := ParseUnionST_OnOff(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.NumberingStylesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "tableStyles" {
+			parsed, err := ParseUnionST_OnOff(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.TableStylesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "directFormattingOnRuns" {
+			parsed, err := ParseUnionST_OnOff(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DirectFormattingOnRunsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "customStyles" {
+			parsed, err := ParseUnionST_OnOff(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.CustomStylesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "stylesInUse" {
+			parsed, err := ParseUnionST_OnOff(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.StylesInUseAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "directFormattingOnTables" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -205,6 +215,7 @@ func (m *CT_StylePaneFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.DirectFormattingOnTablesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "clearFormatting" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -212,6 +223,7 @@ func (m *CT_StylePaneFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ClearFormattingAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "top3HeadingStyles" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -219,6 +231,7 @@ func (m *CT_StylePaneFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.Top3HeadingStylesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "visibleStyles" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -226,6 +239,7 @@ func (m *CT_StylePaneFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.VisibleStylesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "alternateStyleNames" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -233,6 +247,7 @@ func (m *CT_StylePaneFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.AlternateStyleNamesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "val" {
 			parsed, err := attr.Value, error(nil)
@@ -240,6 +255,7 @@ func (m *CT_StylePaneFilter) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

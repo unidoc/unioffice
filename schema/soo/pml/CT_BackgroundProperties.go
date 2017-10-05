@@ -92,6 +92,7 @@ func (m *CT_BackgroundProperties) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.ShadeToTitleAttr = &parsed
+			continue
 		}
 	}
 lCT_BackgroundProperties:

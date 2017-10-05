@@ -112,12 +112,17 @@ func (m *CT_OuterShadowEffect) MarshalXML(e *xml.Encoder, start xml.StartElement
 func (m *CT_OuterShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "blurRad" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
+		if attr.Name.Local == "algn" {
+			m.AlgnAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "rotWithShape" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.BlurRadAttr = &parsed
+			m.RotWithShapeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dist" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -125,14 +130,7 @@ func (m *CT_OuterShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.DistAttr = &parsed
-		}
-		if attr.Name.Local == "dir" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := int32(parsed)
-			m.DirAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "sx" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -140,6 +138,7 @@ func (m *CT_OuterShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.SxAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sy" {
 			parsed, err := ParseUnionST_Percentage(attr.Value)
@@ -147,6 +146,7 @@ func (m *CT_OuterShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.SyAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "kx" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -155,6 +155,7 @@ func (m *CT_OuterShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := int32(parsed)
 			m.KxAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "ky" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -163,16 +164,24 @@ func (m *CT_OuterShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := int32(parsed)
 			m.KyAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "algn" {
-			m.AlgnAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "rotWithShape" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "blurRad" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
 			if err != nil {
 				return err
 			}
-			m.RotWithShapeAttr = &parsed
+			m.BlurRadAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "dir" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := int32(parsed)
+			m.DirAttr = &pt
+			continue
 		}
 	}
 lCT_OuterShadowEffect:

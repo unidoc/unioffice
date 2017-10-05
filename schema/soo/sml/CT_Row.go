@@ -120,6 +120,15 @@ func (m *CT_Row) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
+		if attr.Name.Local == "outlineLevel" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
+			if err != nil {
+				return err
+			}
+			pt := uint8(parsed)
+			m.OutlineLevelAttr = &pt
+			continue
+		}
 		if attr.Name.Local == "r" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
 			if err != nil {
@@ -127,13 +136,7 @@ func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.RAttr = &pt
-		}
-		if attr.Name.Local == "spans" {
-			parsed, err := ParseSliceST_CellSpans(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SpansAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "s" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -142,6 +145,7 @@ func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.SAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "customFormat" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -149,6 +153,7 @@ func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CustomFormatAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ht" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -156,6 +161,7 @@ func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HtAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hidden" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -163,6 +169,7 @@ func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.HiddenAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "customHeight" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -170,14 +177,15 @@ func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CustomHeightAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "outlineLevel" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
+		if attr.Name.Local == "spans" {
+			parsed, err := ParseSliceST_CellSpans(attr.Value)
 			if err != nil {
 				return err
 			}
-			pt := uint8(parsed)
-			m.OutlineLevelAttr = &pt
+			m.SpansAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "collapsed" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -185,6 +193,7 @@ func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CollapsedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "thickTop" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -192,6 +201,7 @@ func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ThickTopAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "thickBot" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -199,6 +209,7 @@ func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ThickBotAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ph" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -206,6 +217,7 @@ func (m *CT_Row) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PhAttr = &parsed
+			continue
 		}
 	}
 lCT_Row:

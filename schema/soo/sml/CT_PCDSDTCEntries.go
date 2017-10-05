@@ -79,6 +79,7 @@ func (m *CT_PCDSDTCEntries) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_PCDSDTCEntries:

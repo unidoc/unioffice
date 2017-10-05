@@ -109,6 +109,7 @@ func (m *CT_MdxTuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.CAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "ct" {
 			parsed, err := attr.Value, error(nil)
@@ -116,6 +117,7 @@ func (m *CT_MdxTuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.CtAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "si" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -124,6 +126,7 @@ func (m *CT_MdxTuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.SiAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "fi" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -132,6 +135,7 @@ func (m *CT_MdxTuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := uint32(parsed)
 			m.FiAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "bc" {
 			parsed, err := attr.Value, error(nil)
@@ -139,6 +143,7 @@ func (m *CT_MdxTuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.BcAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fc" {
 			parsed, err := attr.Value, error(nil)
@@ -146,6 +151,7 @@ func (m *CT_MdxTuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.FcAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "i" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -153,6 +159,7 @@ func (m *CT_MdxTuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.IAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "u" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -160,6 +167,7 @@ func (m *CT_MdxTuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.UAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "st" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -167,6 +175,7 @@ func (m *CT_MdxTuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.StAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "b" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -174,6 +183,7 @@ func (m *CT_MdxTuple) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.BAttr = &parsed
+			continue
 		}
 	}
 lCT_MdxTuple:

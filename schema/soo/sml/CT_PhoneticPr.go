@@ -60,12 +60,15 @@ func (m *CT_PhoneticPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.FontIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "alignment" {
 			m.AlignmentAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

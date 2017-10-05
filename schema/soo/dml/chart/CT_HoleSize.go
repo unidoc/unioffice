@@ -42,6 +42,7 @@ func (m *CT_HoleSize) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.ValAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

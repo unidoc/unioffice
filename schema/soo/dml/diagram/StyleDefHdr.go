@@ -47,6 +47,7 @@ func (m *StyleDefHdr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.UniqueIdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "minVer" {
 			parsed, err := attr.Value, error(nil)
@@ -54,6 +55,7 @@ func (m *StyleDefHdr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 				return err
 			}
 			m.MinVerAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "resId" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -62,6 +64,7 @@ func (m *StyleDefHdr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			}
 			pt := int32(parsed)
 			m.ResIdAttr = &pt
+			continue
 		}
 	}
 lStyleDefHdr:

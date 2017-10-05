@@ -69,6 +69,7 @@ func (m *CT_SimpleField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.InstrAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "fldLock" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -76,6 +77,7 @@ func (m *CT_SimpleField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.FldLockAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dirty" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -83,6 +85,7 @@ func (m *CT_SimpleField) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.DirtyAttr = &parsed
+			continue
 		}
 	}
 lCT_SimpleField:

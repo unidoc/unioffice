@@ -41,19 +41,29 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	// initialize to default
 	m.CT_PivotCacheDefinition = *NewCT_PivotCacheDefinition()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "invalid" {
+		if attr.Name.Local == "upgradeOnRefresh" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.InvalidAttr = &parsed
+			m.UpgradeOnRefreshAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "tupleCache" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.TupleCacheAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "saveData" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -61,13 +71,15 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.SaveDataAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "refreshOnLoad" {
+		if attr.Name.Local == "supportSubquery" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.RefreshOnLoadAttr = &parsed
+			m.SupportSubqueryAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "optimizeMemory" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -75,13 +87,15 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.OptimizeMemoryAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "enableRefresh" {
+		if attr.Name.Local == "supportAdvancedDrill" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.EnableRefreshAttr = &parsed
+			m.SupportAdvancedDrillAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "refreshedBy" {
 			parsed, err := attr.Value, error(nil)
@@ -89,13 +103,7 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.RefreshedByAttr = &parsed
-		}
-		if attr.Name.Local == "refreshedDate" {
-			parsed, err := strconv.ParseFloat(attr.Value, 64)
-			if err != nil {
-				return err
-			}
-			m.RefreshedDateAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "refreshedDateIso" {
 			parsed, err := ParseStdlibTime(attr.Value)
@@ -103,6 +111,15 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.RefreshedDateIsoAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "invalid" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.InvalidAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "backgroundQuery" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -110,6 +127,7 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.BackgroundQueryAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "missingItemsLimit" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -118,14 +136,7 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint32(parsed)
 			m.MissingItemsLimitAttr = &pt
-		}
-		if attr.Name.Local == "createdVersion" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
-			if err != nil {
-				return err
-			}
-			pt := uint8(parsed)
-			m.CreatedVersionAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "refreshedVersion" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
@@ -134,14 +145,23 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint8(parsed)
 			m.RefreshedVersionAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "minRefreshableVersion" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
+		if attr.Name.Local == "refreshOnLoad" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			pt := uint8(parsed)
-			m.MinRefreshableVersionAttr = &pt
+			m.RefreshOnLoadAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "refreshedDate" {
+			parsed, err := strconv.ParseFloat(attr.Value, 64)
+			if err != nil {
+				return err
+			}
+			m.RefreshedDateAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "recordCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -150,34 +170,33 @@ func (m *PivotCacheDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 			}
 			pt := uint32(parsed)
 			m.RecordCountAttr = &pt
+			continue
 		}
-		if attr.Name.Local == "upgradeOnRefresh" {
+		if attr.Name.Local == "createdVersion" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
+			if err != nil {
+				return err
+			}
+			pt := uint8(parsed)
+			m.CreatedVersionAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "minRefreshableVersion" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 8)
+			if err != nil {
+				return err
+			}
+			pt := uint8(parsed)
+			m.MinRefreshableVersionAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "enableRefresh" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			m.UpgradeOnRefreshAttr = &parsed
-		}
-		if attr.Name.Local == "tupleCache" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.TupleCacheAttr = &parsed
-		}
-		if attr.Name.Local == "supportSubquery" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SupportSubqueryAttr = &parsed
-		}
-		if attr.Name.Local == "supportAdvancedDrill" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SupportAdvancedDrillAttr = &parsed
+			m.EnableRefreshAttr = &parsed
+			continue
 		}
 	}
 lPivotCacheDefinition:

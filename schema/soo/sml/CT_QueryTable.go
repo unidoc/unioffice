@@ -170,92 +170,21 @@ func (m *CT_QueryTable) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 func (m *CT_QueryTable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "name" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.NameAttr = parsed
-		}
-		if attr.Name.Local == "headers" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.HeadersAttr = &parsed
-		}
-		if attr.Name.Local == "rowNumbers" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RowNumbersAttr = &parsed
-		}
-		if attr.Name.Local == "disableRefresh" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DisableRefreshAttr = &parsed
-		}
-		if attr.Name.Local == "backgroundRefresh" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.BackgroundRefreshAttr = &parsed
-		}
-		if attr.Name.Local == "firstBackgroundRefresh" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.FirstBackgroundRefreshAttr = &parsed
-		}
-		if attr.Name.Local == "refreshOnLoad" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RefreshOnLoadAttr = &parsed
-		}
-		if attr.Name.Local == "growShrinkType" {
-			m.GrowShrinkTypeAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "fillFormulas" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.FillFormulasAttr = &parsed
-		}
-		if attr.Name.Local == "removeDataOnSave" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RemoveDataOnSaveAttr = &parsed
-		}
-		if attr.Name.Local == "disableEdit" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DisableEditAttr = &parsed
-		}
-		if attr.Name.Local == "preserveFormatting" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PreserveFormattingAttr = &parsed
-		}
 		if attr.Name.Local == "adjustColumnWidth" {
 			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
 			m.AdjustColumnWidthAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "name" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.NameAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "intermediate" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -263,6 +192,15 @@ func (m *CT_QueryTable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.IntermediateAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "rowNumbers" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RowNumbersAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "connectionId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -270,6 +208,55 @@ func (m *CT_QueryTable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ConnectionIdAttr = uint32(parsed)
+			continue
+		}
+		if attr.Name.Local == "backgroundRefresh" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.BackgroundRefreshAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "refreshOnLoad" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RefreshOnLoadAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "fillFormulas" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.FillFormulasAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "applyNumberFormats" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ApplyNumberFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "applyFontFormats" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ApplyFontFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "firstBackgroundRefresh" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.FirstBackgroundRefreshAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoFormatId" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -278,34 +265,7 @@ func (m *CT_QueryTable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.AutoFormatIdAttr = &pt
-		}
-		if attr.Name.Local == "applyNumberFormats" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ApplyNumberFormatsAttr = &parsed
-		}
-		if attr.Name.Local == "applyBorderFormats" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ApplyBorderFormatsAttr = &parsed
-		}
-		if attr.Name.Local == "applyFontFormats" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ApplyFontFormatsAttr = &parsed
-		}
-		if attr.Name.Local == "applyPatternFormats" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ApplyPatternFormatsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyAlignmentFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -313,6 +273,67 @@ func (m *CT_QueryTable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ApplyAlignmentFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "disableRefresh" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DisableRefreshAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "applyBorderFormats" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ApplyBorderFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "preserveFormatting" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PreserveFormattingAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "applyPatternFormats" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ApplyPatternFormatsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "growShrinkType" {
+			m.GrowShrinkTypeAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "disableEdit" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DisableEditAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "headers" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.HeadersAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "removeDataOnSave" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RemoveDataOnSaveAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "applyWidthHeightFormats" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -320,6 +341,7 @@ func (m *CT_QueryTable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ApplyWidthHeightFormatsAttr = &parsed
+			continue
 		}
 	}
 lCT_QueryTable:

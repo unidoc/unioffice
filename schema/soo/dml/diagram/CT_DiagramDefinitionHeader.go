@@ -79,6 +79,7 @@ func (m *CT_DiagramDefinitionHeader) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.UniqueIdAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "minVer" {
 			parsed, err := attr.Value, error(nil)
@@ -86,6 +87,7 @@ func (m *CT_DiagramDefinitionHeader) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.MinVerAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "defStyle" {
 			parsed, err := attr.Value, error(nil)
@@ -93,6 +95,7 @@ func (m *CT_DiagramDefinitionHeader) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.DefStyleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "resId" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -101,6 +104,7 @@ func (m *CT_DiagramDefinitionHeader) UnmarshalXML(d *xml.Decoder, start xml.Star
 			}
 			pt := int32(parsed)
 			m.ResIdAttr = &pt
+			continue
 		}
 	}
 lCT_DiagramDefinitionHeader:

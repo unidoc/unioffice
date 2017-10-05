@@ -46,6 +46,7 @@ func (m *CT_Point3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.XAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "y" {
 			parsed, err := ParseUnionST_Coordinate(attr.Value)
@@ -53,6 +54,7 @@ func (m *CT_Point3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.YAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "z" {
 			parsed, err := ParseUnionST_Coordinate(attr.Value)
@@ -60,6 +62,7 @@ func (m *CT_Point3D) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.ZAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -46,6 +46,7 @@ func (m *CT_Zoom) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "percent" {
 			parsed, err := ParseUnionST_DecimalNumberOrPercent(attr.Value)
@@ -53,6 +54,7 @@ func (m *CT_Zoom) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PercentAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

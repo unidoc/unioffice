@@ -68,6 +68,7 @@ func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.AutoAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "indexed" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -76,6 +77,7 @@ func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.IndexedAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "rgb" {
 			parsed, err := attr.Value, error(nil)
@@ -83,6 +85,7 @@ func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.RgbAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "theme" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -91,6 +94,7 @@ func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.ThemeAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "tint" {
 			parsed, err := strconv.ParseFloat(attr.Value, 64)
@@ -98,6 +102,7 @@ func (m *CT_Color) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TintAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

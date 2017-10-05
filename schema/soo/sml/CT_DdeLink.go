@@ -53,6 +53,7 @@ func (m *CT_DdeLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.DdeServiceAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "ddeTopic" {
 			parsed, err := attr.Value, error(nil)
@@ -60,6 +61,7 @@ func (m *CT_DdeLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.DdeTopicAttr = parsed
+			continue
 		}
 	}
 lCT_DdeLink:

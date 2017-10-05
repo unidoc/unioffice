@@ -95,6 +95,7 @@ func (m *CT_WebPublishing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.CssAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "thicket" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -102,6 +103,7 @@ func (m *CT_WebPublishing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.ThicketAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "longFileNames" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -109,6 +111,7 @@ func (m *CT_WebPublishing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.LongFileNamesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "vml" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -116,6 +119,7 @@ func (m *CT_WebPublishing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.VmlAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "allowPng" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -123,9 +127,11 @@ func (m *CT_WebPublishing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.AllowPngAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "targetScreenSize" {
 			m.TargetScreenSizeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "dpi" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -134,6 +140,7 @@ func (m *CT_WebPublishing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint32(parsed)
 			m.DpiAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "codePage" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -142,6 +149,7 @@ func (m *CT_WebPublishing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			}
 			pt := uint32(parsed)
 			m.CodePageAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "characterSet" {
 			parsed, err := attr.Value, error(nil)
@@ -149,6 +157,7 @@ func (m *CT_WebPublishing) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.CharacterSetAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -56,6 +56,7 @@ func (m *CT_NonVisualContentPartProperties) UnmarshalXML(d *xml.Decoder, start x
 				return err
 			}
 			m.IsCommentAttr = &parsed
+			continue
 		}
 	}
 lCT_NonVisualContentPartProperties:

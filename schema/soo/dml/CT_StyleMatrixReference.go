@@ -73,6 +73,7 @@ func (m *CT_StyleMatrixReference) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.IdxAttr = uint32(parsed)
+			continue
 		}
 	}
 lCT_StyleMatrixReference:

@@ -99,6 +99,7 @@ func (m *CT_DiagramDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.UniqueIdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "minVer" {
 			parsed, err := attr.Value, error(nil)
@@ -106,6 +107,7 @@ func (m *CT_DiagramDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.MinVerAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "defStyle" {
 			parsed, err := attr.Value, error(nil)
@@ -113,6 +115,7 @@ func (m *CT_DiagramDefinition) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 				return err
 			}
 			m.DefStyleAttr = &parsed
+			continue
 		}
 	}
 lCT_DiagramDefinition:

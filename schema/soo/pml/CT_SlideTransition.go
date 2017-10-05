@@ -72,6 +72,7 @@ func (m *CT_SlideTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "spd" {
 			m.SpdAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "advClick" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -79,6 +80,7 @@ func (m *CT_SlideTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.AdvClickAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "advTm" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -87,6 +89,7 @@ func (m *CT_SlideTransition) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 			}
 			pt := uint32(parsed)
 			m.AdvTmAttr = &pt
+			continue
 		}
 	}
 lCT_SlideTransition:

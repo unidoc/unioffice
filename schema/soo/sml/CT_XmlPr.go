@@ -58,6 +58,7 @@ func (m *CT_XmlPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.MapIdAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "xpath" {
 			parsed, err := attr.Value, error(nil)
@@ -65,6 +66,7 @@ func (m *CT_XmlPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.XpathAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "xmlDataType" {
 			parsed, err := attr.Value, error(nil)
@@ -72,6 +74,7 @@ func (m *CT_XmlPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.XmlDataTypeAttr = parsed
+			continue
 		}
 	}
 lCT_XmlPr:

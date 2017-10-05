@@ -47,6 +47,7 @@ func (m *CT_ConnectionSite) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.AngAttr = parsed
+			continue
 		}
 	}
 lCT_ConnectionSite:

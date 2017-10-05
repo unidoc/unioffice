@@ -80,6 +80,7 @@ func (m *CT_ChartsheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.PasswordAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "algorithmName" {
 			parsed, err := attr.Value, error(nil)
@@ -87,6 +88,7 @@ func (m *CT_ChartsheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.AlgorithmNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hashValue" {
 			parsed, err := attr.Value, error(nil)
@@ -94,6 +96,7 @@ func (m *CT_ChartsheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.HashValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "saltValue" {
 			parsed, err := attr.Value, error(nil)
@@ -101,6 +104,7 @@ func (m *CT_ChartsheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.SaltValueAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "spinCount" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -109,6 +113,7 @@ func (m *CT_ChartsheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 			}
 			pt := uint32(parsed)
 			m.SpinCountAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "content" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -116,6 +121,7 @@ func (m *CT_ChartsheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.ContentAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "objects" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -123,6 +129,7 @@ func (m *CT_ChartsheetProtection) UnmarshalXML(d *xml.Decoder, start xml.StartEl
 				return err
 			}
 			m.ObjectsAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

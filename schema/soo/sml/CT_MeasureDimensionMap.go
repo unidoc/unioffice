@@ -51,6 +51,7 @@ func (m *CT_MeasureDimensionMap) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			}
 			pt := uint32(parsed)
 			m.MeasureGroupAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "dimension" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -59,6 +60,7 @@ func (m *CT_MeasureDimensionMap) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			}
 			pt := uint32(parsed)
 			m.DimensionAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

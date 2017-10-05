@@ -84,6 +84,7 @@ func (m *CT_PresetShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prst" {
 			m.PrstAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "dist" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
@@ -91,6 +92,7 @@ func (m *CT_PresetShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.DistAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "dir" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -99,6 +101,7 @@ func (m *CT_PresetShadowEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 			}
 			pt := int32(parsed)
 			m.DirAttr = &pt
+			continue
 		}
 	}
 lCT_PresetShadowEffect:

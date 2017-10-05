@@ -187,14 +187,7 @@ func (m *CT_TextParagraphProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			}
 			pt := int32(parsed)
 			m.MarLAttr = &pt
-		}
-		if attr.Name.Local == "marR" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
-			if err != nil {
-				return err
-			}
-			pt := int32(parsed)
-			m.MarRAttr = &pt
+			continue
 		}
 		if attr.Name.Local == "lvl" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -203,6 +196,40 @@ func (m *CT_TextParagraphProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			}
 			pt := int32(parsed)
 			m.LvlAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "algn" {
+			m.AlgnAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "rtl" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.RtlAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "fontAlgn" {
+			m.FontAlgnAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "marR" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := int32(parsed)
+			m.MarRAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "latinLnBrk" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.LatinLnBrkAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "indent" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -211,23 +238,7 @@ func (m *CT_TextParagraphProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 			}
 			pt := int32(parsed)
 			m.IndentAttr = &pt
-		}
-		if attr.Name.Local == "algn" {
-			m.AlgnAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "defTabSz" {
-			parsed, err := ParseUnionST_Coordinate32(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.DefTabSzAttr = &parsed
-		}
-		if attr.Name.Local == "rtl" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.RtlAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "eaLnBrk" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -235,16 +246,7 @@ func (m *CT_TextParagraphProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.EaLnBrkAttr = &parsed
-		}
-		if attr.Name.Local == "fontAlgn" {
-			m.FontAlgnAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "latinLnBrk" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.LatinLnBrkAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hangingPunct" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -252,6 +254,15 @@ func (m *CT_TextParagraphProperties) UnmarshalXML(d *xml.Decoder, start xml.Star
 				return err
 			}
 			m.HangingPunctAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "defTabSz" {
+			parsed, err := ParseUnionST_Coordinate32(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.DefTabSzAttr = &parsed
+			continue
 		}
 	}
 lCT_TextParagraphProperties:

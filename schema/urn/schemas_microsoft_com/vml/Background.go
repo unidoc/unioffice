@@ -44,17 +44,21 @@ func (m *Background) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 	// initialize to default
 	m.CT_Background = *NewCT_Background()
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "bwmode" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bwmode" {
 			m.BwmodeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "bwpure" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bwpure" {
 			m.BwpureAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "bwnormal" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "bwnormal" {
 			m.BwnormalAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
-		if attr.Name.Local == "targetscreensize" {
+		if attr.Name.Space == "urn:schemas-microsoft-com:office:office" && attr.Name.Local == "targetscreensize" {
 			m.TargetscreensizeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
@@ -62,9 +66,11 @@ func (m *Background) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "filled" {
 			m.FilledAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "fillcolor" {
 			parsed, err := attr.Value, error(nil)
@@ -72,6 +78,7 @@ func (m *Background) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.FillcolorAttr = &parsed
+			continue
 		}
 	}
 lBackground:

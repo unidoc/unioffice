@@ -60,6 +60,7 @@ func (m *OfcCT_Relation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.IdsrcAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "iddest" {
 			parsed, err := attr.Value, error(nil)
@@ -67,6 +68,7 @@ func (m *OfcCT_Relation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.IddestAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "idcntr" {
 			parsed, err := attr.Value, error(nil)
@@ -74,9 +76,11 @@ func (m *OfcCT_Relation) UnmarshalXML(d *xml.Decoder, start xml.StartElement) er
 				return err
 			}
 			m.IdcntrAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ext" {
 			m.ExtAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

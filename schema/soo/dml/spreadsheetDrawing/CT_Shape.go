@@ -81,6 +81,7 @@ func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.MacroAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "textlink" {
 			parsed, err := attr.Value, error(nil)
@@ -88,6 +89,7 @@ func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TextlinkAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fLocksText" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -95,6 +97,7 @@ func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FLocksTextAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "fPublished" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -102,6 +105,7 @@ func (m *CT_Shape) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.FPublishedAttr = &parsed
+			continue
 		}
 	}
 lCT_Shape:

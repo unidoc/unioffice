@@ -60,6 +60,7 @@ func (m *CT_DbPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ConnectionAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "command" {
 			parsed, err := attr.Value, error(nil)
@@ -67,6 +68,7 @@ func (m *CT_DbPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.CommandAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "serverCommand" {
 			parsed, err := attr.Value, error(nil)
@@ -74,6 +76,7 @@ func (m *CT_DbPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ServerCommandAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "commandType" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -82,6 +85,7 @@ func (m *CT_DbPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			}
 			pt := uint32(parsed)
 			m.CommandTypeAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

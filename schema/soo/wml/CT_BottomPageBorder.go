@@ -109,29 +109,33 @@ func (m *CT_BottomPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 	// initialize to default
 	m.ValAttr = ST_Border(1)
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "bottomLeft" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "bottomLeft" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.BottomLeftAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "bottomRight" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "bottomRight" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.BottomRightAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.IdAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "color" {
 			parsed, err := ParseUnionST_HexColor(attr.Value)
@@ -139,9 +143,11 @@ func (m *CT_BottomPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.ColorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "themeColor" {
 			m.ThemeColorAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "themeTint" {
 			parsed, err := attr.Value, error(nil)
@@ -149,6 +155,7 @@ func (m *CT_BottomPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.ThemeTintAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "themeShade" {
 			parsed, err := attr.Value, error(nil)
@@ -156,6 +163,7 @@ func (m *CT_BottomPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.ThemeShadeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "sz" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 64)
@@ -163,6 +171,7 @@ func (m *CT_BottomPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.SzAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "space" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 64)
@@ -170,6 +179,7 @@ func (m *CT_BottomPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.SpaceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "shadow" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -177,6 +187,7 @@ func (m *CT_BottomPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.ShadowAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "frame" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -184,6 +195,7 @@ func (m *CT_BottomPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.FrameAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -51,6 +51,7 @@ func (m *CT_Column) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.WAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "space" {
 			parsed, err := ParseUnionST_TwipsMeasure(attr.Value)
@@ -58,6 +59,7 @@ func (m *CT_Column) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.SpaceAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

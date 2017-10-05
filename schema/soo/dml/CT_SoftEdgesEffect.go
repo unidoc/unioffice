@@ -43,6 +43,7 @@ func (m *CT_SoftEdgesEffect) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.RadAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

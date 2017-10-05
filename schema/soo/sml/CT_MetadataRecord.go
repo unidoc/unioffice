@@ -46,6 +46,7 @@ func (m *CT_MetadataRecord) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.TAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "v" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -53,6 +54,7 @@ func (m *CT_MetadataRecord) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.VAttr = uint32(parsed)
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

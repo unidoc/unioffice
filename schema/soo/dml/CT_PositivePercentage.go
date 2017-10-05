@@ -40,6 +40,7 @@ func (m *CT_PositivePercentage) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 				return err
 			}
 			m.ValAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

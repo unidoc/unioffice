@@ -55,6 +55,7 @@ func (m *AG_SectPrAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.RsidRPrAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rsidDel" {
 			parsed, err := attr.Value, error(nil)
@@ -62,6 +63,7 @@ func (m *AG_SectPrAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.RsidDelAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rsidR" {
 			parsed, err := attr.Value, error(nil)
@@ -69,6 +71,7 @@ func (m *AG_SectPrAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.RsidRAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "rsidSect" {
 			parsed, err := attr.Value, error(nil)
@@ -76,6 +79,7 @@ func (m *AG_SectPrAttributes) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 				return err
 			}
 			m.RsidSectAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

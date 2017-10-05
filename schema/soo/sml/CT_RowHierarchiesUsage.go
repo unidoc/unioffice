@@ -53,6 +53,7 @@ func (m *CT_RowHierarchiesUsage) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 			}
 			pt := uint32(parsed)
 			m.CountAttr = &pt
+			continue
 		}
 	}
 lCT_RowHierarchiesUsage:

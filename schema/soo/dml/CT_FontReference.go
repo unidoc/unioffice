@@ -73,6 +73,7 @@ func (m *CT_FontReference) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "idx" {
 			m.IdxAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_FontReference:

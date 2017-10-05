@@ -123,19 +123,21 @@ func (m *CT_Lvl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_Lvl) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "ilvl" {
-			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
-			if err != nil {
-				return err
-			}
-			m.IlvlAttr = parsed
-		}
 		if attr.Name.Local == "tplc" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.TplcAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "ilvl" {
+			parsed, err := strconv.ParseInt(attr.Value, 10, 64)
+			if err != nil {
+				return err
+			}
+			m.IlvlAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "tentative" {
 			parsed, err := ParseUnionST_OnOff(attr.Value)
@@ -143,6 +145,7 @@ func (m *CT_Lvl) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.TentativeAttr = &parsed
+			continue
 		}
 	}
 lCT_Lvl:

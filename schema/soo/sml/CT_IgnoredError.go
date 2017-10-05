@@ -96,6 +96,7 @@ func (m *CT_IgnoredError) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.SqrefAttr = parsed
+			continue
 		}
 		if attr.Name.Local == "evalError" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -103,6 +104,7 @@ func (m *CT_IgnoredError) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.EvalErrorAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "twoDigitTextYear" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -110,6 +112,7 @@ func (m *CT_IgnoredError) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.TwoDigitTextYearAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "numberStoredAsText" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -117,6 +120,7 @@ func (m *CT_IgnoredError) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.NumberStoredAsTextAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "formula" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -124,6 +128,7 @@ func (m *CT_IgnoredError) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.FormulaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "formulaRange" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -131,6 +136,7 @@ func (m *CT_IgnoredError) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.FormulaRangeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "unlockedFormula" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -138,6 +144,7 @@ func (m *CT_IgnoredError) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.UnlockedFormulaAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "emptyCellReference" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -145,6 +152,7 @@ func (m *CT_IgnoredError) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.EmptyCellReferenceAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "listDataValidation" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -152,6 +160,7 @@ func (m *CT_IgnoredError) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.ListDataValidationAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "calculatedColumn" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -159,6 +168,7 @@ func (m *CT_IgnoredError) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.CalculatedColumnAttr = &parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

@@ -77,9 +77,11 @@ func (m *CT_PrintProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "prnWhat" {
 			m.PrnWhatAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "clrMode" {
 			m.ClrModeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "hiddenSlides" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -87,6 +89,7 @@ func (m *CT_PrintProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.HiddenSlidesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "scaleToFitPaper" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -94,6 +97,7 @@ func (m *CT_PrintProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.ScaleToFitPaperAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "frameSlides" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -101,6 +105,7 @@ func (m *CT_PrintProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement
 				return err
 			}
 			m.FrameSlidesAttr = &parsed
+			continue
 		}
 	}
 lCT_PrintProperties:

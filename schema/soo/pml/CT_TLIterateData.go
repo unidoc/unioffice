@@ -63,6 +63,7 @@ func (m *CT_TLIterateData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "backwards" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -70,6 +71,7 @@ func (m *CT_TLIterateData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 				return err
 			}
 			m.BackwardsAttr = &parsed
+			continue
 		}
 	}
 lCT_TLIterateData:

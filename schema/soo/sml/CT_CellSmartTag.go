@@ -64,6 +64,7 @@ func (m *CT_CellSmartTag) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.TypeAttr = uint32(parsed)
+			continue
 		}
 		if attr.Name.Local == "deleted" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -71,6 +72,7 @@ func (m *CT_CellSmartTag) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.DeletedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "xmlBased" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -78,6 +80,7 @@ func (m *CT_CellSmartTag) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 				return err
 			}
 			m.XmlBasedAttr = &parsed
+			continue
 		}
 	}
 lCT_CellSmartTag:

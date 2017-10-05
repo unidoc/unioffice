@@ -71,6 +71,7 @@ func (m *CT_DirContentRun) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	for _, attr := range start.Attr {
 		if attr.Name.Local == "val" {
 			m.ValAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 	}
 lCT_DirContentRun:

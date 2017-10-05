@@ -70,6 +70,7 @@ func (m *CT_DdeItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.NameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "ole" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -77,6 +78,7 @@ func (m *CT_DdeItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.OleAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "advise" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -84,6 +86,7 @@ func (m *CT_DdeItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.AdviseAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "preferPic" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -91,6 +94,7 @@ func (m *CT_DdeItem) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.PreferPicAttr = &parsed
+			continue
 		}
 	}
 lCT_DdeItem:

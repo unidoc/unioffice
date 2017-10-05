@@ -48,9 +48,11 @@ func (m *SldLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.MatchingNameAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "type" {
 			m.TypeAttr.UnmarshalXMLAttr(attr)
+			continue
 		}
 		if attr.Name.Local == "preserve" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -58,6 +60,7 @@ func (m *SldLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.PreserveAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "userDrawn" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -65,6 +68,7 @@ func (m *SldLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.UserDrawnAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showMasterSp" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -72,6 +76,7 @@ func (m *SldLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ShowMasterSpAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showMasterPhAnim" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -79,6 +84,7 @@ func (m *SldLayout) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 				return err
 			}
 			m.ShowMasterPhAnimAttr = &parsed
+			continue
 		}
 	}
 lSldLayout:

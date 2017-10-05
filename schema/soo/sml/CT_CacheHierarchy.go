@@ -180,12 +180,21 @@ func (m *CT_CacheHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "uniqueName" {
+		if attr.Name.Local == "dimensionUniqueName" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.UniqueNameAttr = parsed
+			m.DimensionUniqueNameAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "displayFolder" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.DisplayFolderAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "caption" {
 			parsed, err := attr.Value, error(nil)
@@ -193,13 +202,15 @@ func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.CaptionAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "measure" {
-			parsed, err := strconv.ParseBool(attr.Value)
+		if attr.Name.Local == "measureGroup" {
+			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
-			m.MeasureAttr = &parsed
+			m.MeasureGroupAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "set" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -207,14 +218,15 @@ func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.SetAttr = &parsed
+			continue
 		}
-		if attr.Name.Local == "parentSet" {
-			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+		if attr.Name.Local == "measures" {
+			parsed, err := strconv.ParseBool(attr.Value)
 			if err != nil {
 				return err
 			}
-			pt := uint32(parsed)
-			m.ParentSetAttr = &pt
+			m.MeasuresAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "iconSet" {
 			parsed, err := strconv.ParseInt(attr.Value, 10, 32)
@@ -223,76 +235,7 @@ func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := int32(parsed)
 			m.IconSetAttr = &pt
-		}
-		if attr.Name.Local == "attribute" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.AttributeAttr = &parsed
-		}
-		if attr.Name.Local == "time" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.TimeAttr = &parsed
-		}
-		if attr.Name.Local == "keyAttribute" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.KeyAttributeAttr = &parsed
-		}
-		if attr.Name.Local == "defaultMemberUniqueName" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.DefaultMemberUniqueNameAttr = &parsed
-		}
-		if attr.Name.Local == "allUniqueName" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.AllUniqueNameAttr = &parsed
-		}
-		if attr.Name.Local == "allCaption" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.AllCaptionAttr = &parsed
-		}
-		if attr.Name.Local == "dimensionUniqueName" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.DimensionUniqueNameAttr = &parsed
-		}
-		if attr.Name.Local == "displayFolder" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.DisplayFolderAttr = &parsed
-		}
-		if attr.Name.Local == "measureGroup" {
-			parsed, err := attr.Value, error(nil)
-			if err != nil {
-				return err
-			}
-			m.MeasureGroupAttr = &parsed
-		}
-		if attr.Name.Local == "measures" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.MeasuresAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "count" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -300,6 +243,15 @@ func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.CountAttr = uint32(parsed)
+			continue
+		}
+		if attr.Name.Local == "time" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.TimeAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "oneField" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -307,6 +259,7 @@ func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.OneFieldAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "memberValueDatatype" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 16)
@@ -315,13 +268,7 @@ func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 			}
 			pt := uint16(parsed)
 			m.MemberValueDatatypeAttr = &pt
-		}
-		if attr.Name.Local == "unbalanced" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.UnbalancedAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "unbalancedGroup" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -329,6 +276,48 @@ func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.UnbalancedGroupAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "parentSet" {
+			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
+			if err != nil {
+				return err
+			}
+			pt := uint32(parsed)
+			m.ParentSetAttr = &pt
+			continue
+		}
+		if attr.Name.Local == "defaultMemberUniqueName" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.DefaultMemberUniqueNameAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "measure" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.MeasureAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "unbalanced" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.UnbalancedAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "allCaption" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.AllCaptionAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hidden" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -336,6 +325,39 @@ func (m *CT_CacheHierarchy) UnmarshalXML(d *xml.Decoder, start xml.StartElement)
 				return err
 			}
 			m.HiddenAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "attribute" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.AttributeAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "allUniqueName" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.AllUniqueNameAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "uniqueName" {
+			parsed, err := attr.Value, error(nil)
+			if err != nil {
+				return err
+			}
+			m.UniqueNameAttr = parsed
+			continue
+		}
+		if attr.Name.Local == "keyAttribute" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.KeyAttributeAttr = &parsed
+			continue
 		}
 	}
 lCT_CacheHierarchy:

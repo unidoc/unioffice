@@ -146,67 +146,21 @@ func (m *CT_WorkbookPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 func (m *CT_WorkbookPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Local == "date1904" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.Date1904Attr = &parsed
-		}
-		if attr.Name.Local == "showObjects" {
-			m.ShowObjectsAttr.UnmarshalXMLAttr(attr)
-		}
-		if attr.Name.Local == "showBorderUnselectedTables" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowBorderUnselectedTablesAttr = &parsed
-		}
-		if attr.Name.Local == "filterPrivacy" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.FilterPrivacyAttr = &parsed
-		}
-		if attr.Name.Local == "promptedSolutions" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.PromptedSolutionsAttr = &parsed
-		}
-		if attr.Name.Local == "showInkAnnotation" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.ShowInkAnnotationAttr = &parsed
-		}
-		if attr.Name.Local == "backupFile" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.BackupFileAttr = &parsed
-		}
-		if attr.Name.Local == "saveExternalLinkValues" {
-			parsed, err := strconv.ParseBool(attr.Value)
-			if err != nil {
-				return err
-			}
-			m.SaveExternalLinkValuesAttr = &parsed
-		}
-		if attr.Name.Local == "updateLinks" {
-			m.UpdateLinksAttr.UnmarshalXMLAttr(attr)
-		}
 		if attr.Name.Local == "codeName" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
 			}
 			m.CodeNameAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "date1904" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.Date1904Attr = &parsed
+			continue
 		}
 		if attr.Name.Local == "hidePivotFieldList" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -214,6 +168,15 @@ func (m *CT_WorkbookPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.HidePivotFieldListAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showBorderUnselectedTables" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowBorderUnselectedTablesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "showPivotChartFilter" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -221,6 +184,55 @@ func (m *CT_WorkbookPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.ShowPivotChartFilterAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "promptedSolutions" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.PromptedSolutionsAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "backupFile" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.BackupFileAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "saveExternalLinkValues" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.SaveExternalLinkValuesAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "updateLinks" {
+			m.UpdateLinksAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "showObjects" {
+			m.ShowObjectsAttr.UnmarshalXMLAttr(attr)
+			continue
+		}
+		if attr.Name.Local == "filterPrivacy" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.FilterPrivacyAttr = &parsed
+			continue
+		}
+		if attr.Name.Local == "showInkAnnotation" {
+			parsed, err := strconv.ParseBool(attr.Value)
+			if err != nil {
+				return err
+			}
+			m.ShowInkAnnotationAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "allowRefreshQuery" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -228,6 +240,7 @@ func (m *CT_WorkbookPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.AllowRefreshQueryAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "publishItems" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -235,6 +248,7 @@ func (m *CT_WorkbookPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.PublishItemsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "checkCompatibility" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -242,6 +256,7 @@ func (m *CT_WorkbookPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.CheckCompatibilityAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "autoCompressPictures" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -249,6 +264,7 @@ func (m *CT_WorkbookPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.AutoCompressPicturesAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "refreshAllConnections" {
 			parsed, err := strconv.ParseBool(attr.Value)
@@ -256,6 +272,7 @@ func (m *CT_WorkbookPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 				return err
 			}
 			m.RefreshAllConnectionsAttr = &parsed
+			continue
 		}
 		if attr.Name.Local == "defaultThemeVersion" {
 			parsed, err := strconv.ParseUint(attr.Value, 10, 32)
@@ -264,6 +281,7 @@ func (m *CT_WorkbookPr) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 			}
 			pt := uint32(parsed)
 			m.DefaultThemeVersionAttr = &pt
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support

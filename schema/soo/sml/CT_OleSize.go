@@ -41,6 +41,7 @@ func (m *CT_OleSize) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 				return err
 			}
 			m.RefAttr = parsed
+			continue
 		}
 	}
 	// skip any extensions we may find, but don't support
