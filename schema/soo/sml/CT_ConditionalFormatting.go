@@ -20,7 +20,7 @@ import (
 type CT_ConditionalFormatting struct {
 	// PivotTable Conditional Formatting
 	PivotAttr *bool
-	// Sequence of Refernces
+	// Sequence of References
 	SqrefAttr *ST_Sqref
 	// Conditional Formatting Rule
 	CfRule []*CT_CfRule
