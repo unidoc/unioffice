@@ -149,11 +149,10 @@ lWorkbook:
 					return err
 				}
 			default:
-				any := &gooxml.XSDAny{}
-				if err := d.DecodeElement(any, &el); err != nil {
+				gooxml.Log("skipping unsupported element on Workbook %v", el.Name)
+				if err := d.Skip(); err != nil {
 					return err
 				}
-				m.Extra = append(m.Extra, any)
 			}
 		case xml.EndElement:
 			break lWorkbook
