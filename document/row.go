@@ -30,3 +30,11 @@ func (r Row) AddCell() Cell {
 	cc.Tc = append(cc.Tc, tc)
 	return Cell{r.d, tc}
 }
+
+// Properties returns the row properties.
+func (r Row) Properties() RowProperties {
+	if r.x.TrPr == nil {
+		r.x.TrPr = wml.NewCT_TrPr()
+	}
+	return RowProperties{r.x.TrPr}
+}
