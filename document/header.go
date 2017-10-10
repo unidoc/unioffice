@@ -40,3 +40,33 @@ func (h Header) Index() int {
 	}
 	return -1
 }
+
+// Paragraphs returns the paragraphs defined in a header.
+func (h Header) Paragraphs() []Paragraph {
+	ret := []Paragraph{}
+	for _, ec := range h.x.EG_ContentBlockContent {
+		for _, p := range ec.P {
+			ret = append(ret, Paragraph{h.d, p})
+		}
+	}
+	return ret
+}
+
+// RemoveParagraph removes a paragraph from a footer.
+func (h Header) RemoveParagraph(p Paragraph) {
+	for _, ec := range h.x.EG_ContentBlockContent {
+		for i, pa := range ec.P {
+			// do we need to remove this paragraph
+			if pa == p.x {
+				copy(ec.P[i:], ec.P[i+1:])
+				ec.P = ec.P[0 : len(ec.P)-1]
+				return
+			}
+		}
+	}
+}
+
+// Clear clears all content within a header
+func (h Header) Clear() {
+	h.x.EG_ContentBlockContent = nil
+}

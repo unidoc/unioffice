@@ -63,7 +63,7 @@ func main() {
 				r.AddBreak()
 			case "Title":
 				// we remove the title content entirely
-				r.Remove()
+				p.RemoveRun(r)
 			case "Company":
 				r.ClearContent()
 				r.AddText("Smith Enterprises")

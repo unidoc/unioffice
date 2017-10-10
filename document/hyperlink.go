@@ -51,5 +51,5 @@ func (h HyperLink) AddRun() Run {
 	h.x.EG_ContentRunContent = append(h.x.EG_ContentRunContent, rc)
 	r := wml.NewCT_R()
 	rc.R = r
-	return Run{h.d, nil, r}
+	return Run{h.d, r}
 }

@@ -16,27 +16,57 @@ type Footer struct {
 }
 
 // X returns the inner wrapped XML type.
-func (h Footer) X() *wml.Ftr {
-	return h.x
+func (f Footer) X() *wml.Ftr {
+	return f.x
 }
 
 // AddParagraph adds a paragraph to the footer.
-func (h Footer) AddParagraph() Paragraph {
+func (f Footer) AddParagraph() Paragraph {
 	bc := wml.NewEG_ContentBlockContent()
-	h.x.EG_ContentBlockContent = append(h.x.EG_ContentBlockContent, bc)
+	f.x.EG_ContentBlockContent = append(f.x.EG_ContentBlockContent, bc)
 	p := wml.NewCT_P()
 	bc.P = append(bc.P, p)
-	return Paragraph{h.d, p}
+	return Paragraph{f.d, p}
 }
 
 // Index returns the index of the footer within the document.  This is used to
 // form its zip packaged filename as well as to match it with its relationship
 // ID.
-func (h Footer) Index() int {
-	for i, hdr := range h.d.footers {
-		if hdr == h.x {
+func (f Footer) Index() int {
+	for i, hdr := range f.d.footers {
+		if hdr == f.x {
 			return i
 		}
 	}
 	return -1
+}
+
+// Paragraphs returns the paragraphs defined in a footer.
+func (f Footer) Paragraphs() []Paragraph {
+	ret := []Paragraph{}
+	for _, ec := range f.x.EG_ContentBlockContent {
+		for _, p := range ec.P {
+			ret = append(ret, Paragraph{f.d, p})
+		}
+	}
+	return ret
+}
+
+// RemoveParagraph removes a paragraph from a footer.
+func (f Footer) RemoveParagraph(p Paragraph) {
+	for _, ec := range f.x.EG_ContentBlockContent {
+		for i, pa := range ec.P {
+			// do we need to remove this paragraph
+			if pa == p.x {
+				copy(ec.P[i:], ec.P[i+1:])
+				ec.P = ec.P[0 : len(ec.P)-1]
+				return
+			}
+		}
+	}
+}
+
+// Clear clears all content within a footer
+func (f Footer) Clear() {
+	f.x.EG_ContentBlockContent = nil
 }
