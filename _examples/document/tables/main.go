@@ -26,7 +26,7 @@ func main() {
 		row := table.AddRow()
 		run := row.AddCell().AddParagraph().AddRun()
 		run.AddText("Name")
-		run.SetHighlight(wml.ST_HighlightColorYellow)
+		run.Properties().SetHighlight(wml.ST_HighlightColorYellow)
 		row.AddCell().AddParagraph().AddRun().AddText("John Smith")
 		row = table.AddRow()
 		row.AddCell().AddParagraph().AddRun().AddText("Street Address")

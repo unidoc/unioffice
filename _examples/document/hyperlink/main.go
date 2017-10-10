@@ -26,7 +26,7 @@ func main() {
 	hl.SetTarget("http://www.google.com")
 
 	run = hl.AddRun()
-	run.SetStyle("Hyperlink")
+	run.Properties().SetStyle("Hyperlink")
 	run.AddText("Click Here to open google.com")
 	hl.SetToolTip("hover to see this")
 

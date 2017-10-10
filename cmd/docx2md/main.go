@@ -40,9 +40,9 @@ func main() {
 			// print paragraph text
 			if s := run.Text(); s != "" {
 				switch {
-				case run.IsBold():
+				case run.Properties().IsBold():
 					fmt.Printf("**%s**", s)
-				case run.IsItalic():
+				case run.Properties().IsItalic():
 					fmt.Printf("*%s*", s)
 				default:
 					fmt.Print(s)
