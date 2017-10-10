@@ -4,7 +4,7 @@ package main
 import (
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/document"
-	"baliance.com/gooxml/schema/soo/wordprocessingml"
+	"baliance.com/gooxml/schema/soo/wml"
 )
 
 func main() {
@@ -70,13 +70,13 @@ func main() {
 	run.SetImprint(true)
 
 	run = createParaRun(doc, "highlighting")
-	run.SetHighlight(wordprocessingml.ST_HighlightColorYellow)
+	run.SetHighlight(wml.ST_HighlightColorYellow)
 
 	run = createParaRun(doc, "underline")
-	run.SetUnderline(wordprocessingml.ST_UnderlineWavyDouble, color.Red)
+	run.SetUnderline(wml.ST_UnderlineWavyDouble, color.Red)
 
 	run = createParaRun(doc, "text effects")
-	run.SetEffect(wordprocessingml.ST_TextEffectAntsRed)
+	run.SetEffect(wml.ST_TextEffectAntsRed)
 
 	doc.SaveToFile("simple.docx")
 }
