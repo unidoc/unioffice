@@ -72,6 +72,11 @@ func (r Run) newIC() *wml.EG_RunInnerContent {
 	return ic
 }
 
+// Clear removes all of the content from within a run.
+func (r Run) Clear() {
+	r.x.EG_RunInnerContent = nil
+}
+
 // AddTab adds tab to a run and can be used with the the Paragraph's tab stops.
 func (r Run) AddTab() {
 	ic := r.newIC()
