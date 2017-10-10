@@ -35,10 +35,10 @@ func main() {
 	run.AddText("A run is a string of characters with the same formatting. ")
 
 	run = para.AddRun()
-	run.SetBold(true)
-	run.SetFontFamily("Courier")
-	run.SetFontSize(15)
-	run.SetColor(color.Red)
+	run.Properties().SetBold(true)
+	run.Properties().SetFontFamily("Courier")
+	run.Properties().SetSize(15)
+	run.Properties().SetColor(color.Red)
 	run.AddText("Multiple runs with different formatting can exist in the same paragraph. ")
 
 	run = para.AddRun()
@@ -49,34 +49,34 @@ func main() {
 	run = createParaRun(doc, "Runs support styling options:")
 
 	run = createParaRun(doc, "small caps")
-	run.SetSmallCaps(true)
+	run.Properties().SetSmallCaps(true)
 
 	run = createParaRun(doc, "strike")
-	run.SetStrikeThrough(true)
+	run.Properties().SetStrikeThrough(true)
 
 	run = createParaRun(doc, "double strike")
-	run.SetDoubleStrikeThrough(true)
+	run.Properties().SetDoubleStrikeThrough(true)
 
 	run = createParaRun(doc, "outline")
-	run.SetOutline(true)
+	run.Properties().SetOutline(true)
 
 	run = createParaRun(doc, "emboss")
-	run.SetEmboss(true)
+	run.Properties().SetEmboss(true)
 
 	run = createParaRun(doc, "shadow")
-	run.SetShadow(true)
+	run.Properties().SetShadow(true)
 
 	run = createParaRun(doc, "imprint")
-	run.SetImprint(true)
+	run.Properties().SetImprint(true)
 
 	run = createParaRun(doc, "highlighting")
-	run.SetHighlight(wml.ST_HighlightColorYellow)
+	run.Properties().SetHighlight(wml.ST_HighlightColorYellow)
 
 	run = createParaRun(doc, "underline")
-	run.SetUnderline(wml.ST_UnderlineWavyDouble, color.Red)
+	run.Properties().SetUnderline(wml.ST_UnderlineWavyDouble, color.Red)
 
 	run = createParaRun(doc, "text effects")
-	run.SetEffect(wml.ST_TextEffectAntsRed)
+	run.Properties().SetEffect(wml.ST_TextEffectAntsRed)
 
 	doc.SaveToFile("simple.docx")
 }

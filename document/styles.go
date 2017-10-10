@@ -166,7 +166,7 @@ func (s Styles) initializeDocDefaults() {
 	s.x.DocDefaults.RPrDefault = wml.NewCT_RPrDefault()
 	s.x.DocDefaults.RPrDefault.RPr = wml.NewCT_RPr()
 
-	rpr := RunStyleProperties{s.x.DocDefaults.RPrDefault.RPr}
+	rpr := RunProperties{s.x.DocDefaults.RPrDefault.RPr}
 	rpr.SetSize(12 * measurement.Point)
 	rpr.Fonts().SetASCIITheme(wml.ST_ThemeMajorAscii)
 	rpr.Fonts().SetEastAsiaTheme(wml.ST_ThemeMajorEastAsia)

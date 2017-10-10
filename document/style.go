@@ -120,9 +120,9 @@ func (s Style) ParagraphProperties() ParagraphStyleProperties {
 }
 
 // RunProperties returns the run style.
-func (s Style) RunProperties() RunStyleProperties {
+func (s Style) RunProperties() RunProperties {
 	if s.x.RPr == nil {
 		s.x.RPr = wml.NewCT_RPr()
 	}
-	return RunStyleProperties{s.x.RPr}
+	return RunProperties{s.x.RPr}
 }
