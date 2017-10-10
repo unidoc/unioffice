@@ -53,3 +53,13 @@ func (c CellProperties) SetShading(shd wml.ST_Shd, foreground, fill color.Color)
 		}
 	}
 }
+
+// SetVerticalAlignment sets the vertical alignment of content within a table cell.
+func (c CellProperties) SetVerticalAlignment(align wml.ST_VerticalJc) {
+	if align == wml.ST_VerticalJcUnset {
+		c.x.VAlign = nil
+	} else {
+		c.x.VAlign = wml.NewCT_VerticalJc()
+		c.x.VAlign.ValAttr = align
+	}
+}

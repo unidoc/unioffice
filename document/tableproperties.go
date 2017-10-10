@@ -63,6 +63,16 @@ func (t TableProperties) SetWidthPercent(pct float64) {
 	t.x.TblW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(pct * 50))
 }
 
+// SetAlignment sets the alignment of a table within the page.
+func (t TableProperties) SetAlignment(align wml.ST_JcTable) {
+	if align == wml.ST_JcTableUnset {
+		t.x.Jc = nil
+	} else {
+		t.x.Jc = wml.NewCT_JcTable()
+		t.x.Jc.ValAttr = align
+	}
+}
+
 // SetWidth sets the table with to a specified width.
 func (t TableProperties) SetWidth(d measurement.Distance) {
 	t.x.TblW = wml.NewCT_TblWidth()

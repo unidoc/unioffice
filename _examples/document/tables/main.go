@@ -98,6 +98,28 @@ func main() {
 			}
 		}
 	}
+
+	doc.AddParagraph()
+	// Fourth Table
+	{
+		table := doc.AddTable()
+		table.Properties().SetWidthPercent(50)
+		table.Properties().SetAlignment(wml.ST_JcTableCenter)
+		borders := table.Properties().Borders()
+		borders.SetAll(wml.ST_BorderSingle, color.Auto, 1*measurement.Point)
+
+		row := table.AddRow()
+		row.Properties().SetHeight(2*measurement.Inch, wml.ST_HeightRuleExact)
+
+		cell := row.AddCell()
+		cell.Properties().SetVerticalAlignment(wml.ST_VerticalJcCenter)
+
+		para := cell.AddParagraph()
+		para.Properties().SetAlignment(wml.ST_JcCenter)
+		run := para.AddRun()
+		run.AddText("hello world")
+
+	}
 	if err := doc.Validate(); err != nil {
 		log.Fatalf("error during validation: %s", err)
 	}
