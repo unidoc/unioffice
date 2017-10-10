@@ -82,14 +82,8 @@ func (p Paragraph) SetStyle(s string) {
 
 // AddRun adds a run to a paragraph.
 func (p Paragraph) AddRun() Run {
-	var pc *wml.EG_PContent
-	// no need to add a new EG_PContent if we already have one
-	if len(p.x.EG_PContent) > 0 {
-		pc = p.x.EG_PContent[len(p.x.EG_PContent)-1]
-	} else {
-		pc = wml.NewEG_PContent()
-		p.x.EG_PContent = append(p.x.EG_PContent, pc)
-	}
+	pc := wml.NewEG_PContent()
+	p.x.EG_PContent = append(p.x.EG_PContent, pc)
 
 	rc := wml.NewEG_ContentRunContent()
 	pc.EG_ContentRunContent = append(pc.EG_ContentRunContent, rc)
@@ -167,4 +161,12 @@ func (p Paragraph) insertRun(relativeTo Run, before bool) Run {
 		}
 	}
 	return p.AddRun()
+}
+
+func (p Paragraph) AddHyperLink() HyperLink {
+	pc := wml.NewEG_PContent()
+	p.x.EG_PContent = append(p.x.EG_PContent, pc)
+
+	pc.Hyperlink = wml.NewCT_Hyperlink()
+	return HyperLink{p.d, pc.Hyperlink}
 }
