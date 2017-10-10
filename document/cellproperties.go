@@ -8,7 +8,9 @@
 package document
 
 import (
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/color"
+	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/soo/wml"
 )
 
@@ -30,6 +32,31 @@ func (c CellProperties) SetColumnSpan(cols int) {
 		c.x.GridSpan = wml.NewCT_DecimalNumber()
 		c.x.GridSpan.ValAttr = int64(cols)
 	}
+}
+
+// SetWidthAuto sets the the cell width to automatic.
+func (c CellProperties) SetWidthAuto() {
+	c.x.TcW = wml.NewCT_TblWidth()
+	c.x.TcW.TypeAttr = wml.ST_TblWidthAuto
+}
+
+// SetWidthPercent sets the cell to a width percentage.
+func (c CellProperties) SetWidthPercent(pct float64) {
+	c.x.TcW = wml.NewCT_TblWidth()
+	c.x.TcW.TypeAttr = wml.ST_TblWidthPct
+	c.x.TcW.WAttr = &wml.ST_MeasurementOrPercent{}
+	c.x.TcW.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
+	// percent value is measured in 1/50'th of a percent
+	c.x.TcW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(pct * 50))
+}
+
+// SetWidth sets the cell width to a specified width.
+func (c CellProperties) SetWidth(d measurement.Distance) {
+	c.x.TcW = wml.NewCT_TblWidth()
+	c.x.TcW.TypeAttr = wml.ST_TblWidthDxa
+	c.x.TcW.WAttr = &wml.ST_MeasurementOrPercent{}
+	c.x.TcW.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
+	c.x.TcW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(d / measurement.Twips))
 }
 
 // SetShading controls the cell shading.
