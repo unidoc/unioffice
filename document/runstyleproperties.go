@@ -9,6 +9,7 @@ package document
 
 import (
 	"baliance.com/gooxml"
+	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/soo/wml"
 )
@@ -57,4 +58,16 @@ func (r RunStyleProperties) Color() Color {
 		r.x.Color = wml.NewCT_Color()
 	}
 	return Color{r.x.Color}
+}
+
+// SetUnderline controls underline for a run style.
+func (r RunStyleProperties) SetUnderline(style wml.ST_Underline, c color.Color) {
+	if style == wml.ST_UnderlineUnset {
+		r.x.U = nil
+	} else {
+		r.x.U = wml.NewCT_Underline()
+		r.x.U.ColorAttr = &wml.ST_HexColor{}
+		r.x.U.ColorAttr.ST_HexColorRGB = c.AsRGBString()
+		r.x.U.ValAttr = style
+	}
 }

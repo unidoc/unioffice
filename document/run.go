@@ -130,8 +130,20 @@ func (r Run) SetFontFamily(family string) {
 	r.x.RPr.RFonts.HAnsiAttr = gooxml.String(family)
 }
 
+// SetStyle sets the font size.
+func (r Run) SetStyle(style string) {
+	r.ensureRPR()
+	if style == "" {
+		r.x.RPr.RStyle = nil
+	} else {
+		r.x.RPr.RStyle = wml.NewCT_String()
+		r.x.RPr.RStyle.ValAttr = style
+	}
+}
+
 // SetFontSize sets the font size.
 func (r Run) SetFontSize(sz measurement.Distance) {
+	r.ensureRPR()
 	r.x.RPr.Sz = wml.NewCT_HpsMeasure()
 	// size is measured in half points
 	r.x.RPr.Sz.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(sz / measurement.HalfPoint))
@@ -141,6 +153,7 @@ func (r Run) SetFontSize(sz measurement.Distance) {
 
 // IsBold returns true if the run has been set to bold.
 func (r Run) IsBold() bool {
+	r.ensureRPR()
 	if r.x.RPr == nil {
 		return false
 	}

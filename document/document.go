@@ -696,3 +696,10 @@ func (d *Document) insertParagraph(relativeTo Paragraph, before bool) Paragraph 
 	}
 	return d.AddParagraph()
 }
+
+// AddHyperlink adds a hyperlink to a document. Adding the hyperlink to a document
+// and setting it on a cell is more efficient than setting hyperlinks directly
+// on a cell.
+func (d Document) AddHyperlink(url string) common.Hyperlink {
+	return d.docRels.AddHyperlink(url)
+}
