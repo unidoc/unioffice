@@ -124,14 +124,16 @@ func TestInsertRun(t *testing.T) {
 		t.Error("InsertParagraphAfter failed")
 	}
 
-	after.Remove()
+	p.RemoveRun(after)
+
 	if len(p.Runs()) != 2 {
 		t.Errorf("expected 2 runs, got %d", len(p.Runs()))
 	}
 	if p.Runs()[0].X() != before.X() {
 		t.Error("InsertParagraphBefore failed")
 	}
-	before.Remove()
+	p.RemoveRun(before)
+
 	if len(p.Runs()) != 1 {
 		t.Errorf("expected 1 runs, got %d", len(p.Runs()))
 	}

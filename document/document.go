@@ -101,6 +101,24 @@ func (d *Document) AddHeader() Header {
 	return Header{d, hdr}
 }
 
+// Headers returns the headers defined in the document.
+func (d *Document) Headers() []Header {
+	ret := []Header{}
+	for _, h := range d.headers {
+		ret = append(ret, Header{d, h})
+	}
+	return ret
+}
+
+// Footers returns the footers defined in the document.
+func (d *Document) Footers() []Footer {
+	ret := []Footer{}
+	for _, f := range d.footers {
+		ret = append(ret, Footer{d, f})
+	}
+	return ret
+}
+
 // AddFooter creates a Footer associated with the document, but doesn't add it
 // to the document for display.
 func (d *Document) AddFooter() Footer {
@@ -248,16 +266,17 @@ func (d *Document) AddParagraph() Paragraph {
 	return Paragraph{d, p}
 }
 
-func (d *Document) removeParagraph(rp *wml.CT_P) {
+// RemoveParagraph removes a paragraph from a document.
+func (d *Document) RemoveParagraph(p Paragraph) {
 	if d.x.Body == nil {
 		return
 	}
 
 	for _, ble := range d.x.Body.EG_BlockLevelElts {
 		for _, c := range ble.EG_ContentBlockContent {
-			for i, p := range c.P {
+			for i, pa := range c.P {
 				// do we need to remove this paragraph
-				if p == rp {
+				if pa == p.x {
 					copy(c.P[i:], c.P[i+1:])
 					c.P = c.P[0 : len(c.P)-1]
 					return
@@ -265,8 +284,8 @@ func (d *Document) removeParagraph(rp *wml.CT_P) {
 			}
 
 			if c.Sdt != nil && c.Sdt.SdtContent != nil && c.Sdt.SdtContent.P != nil {
-				for i, p := range c.Sdt.SdtContent.P {
-					if p == rp {
+				for i, pa := range c.Sdt.SdtContent.P {
+					if pa == p.x {
 						copy(c.P[i:], c.P[i+1:])
 						c.P = c.P[0 : len(c.P)-1]
 						return

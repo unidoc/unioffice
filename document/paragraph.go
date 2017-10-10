@@ -28,23 +28,17 @@ func (p Paragraph) ensurePPr() {
 	}
 }
 
-// Remove removes the paragraph from its parent element, effectively deleting it
-// from a document.
-func (p Paragraph) Remove() {
-	p.d.removeParagraph(p.x)
-}
-
-// removeChildRun removes a child run from a paragraph.
-func (p Paragraph) removeChildRun(rr *wml.CT_R) {
+// RemoveRun removes a child run from a paragraph.
+func (p Paragraph) RemoveRun(r Run) {
 	for _, c := range p.x.EG_PContent {
 		for i, rc := range c.EG_ContentRunContent {
-			if rc.R == rr {
+			if rc.R == r.x {
 				copy(c.EG_ContentRunContent[i:], c.EG_ContentRunContent[i+1:])
 				c.EG_ContentRunContent = c.EG_ContentRunContent[0 : len(c.EG_ContentRunContent)-1]
 			}
 			if rc.Sdt != nil && rc.Sdt.SdtContent != nil {
 				for i, rc2 := range rc.Sdt.SdtContent.EG_ContentRunContent {
-					if rc2.R == rr {
+					if rc2.R == r.x {
 						copy(rc.Sdt.SdtContent.EG_ContentRunContent[i:], rc.Sdt.SdtContent.EG_ContentRunContent[i+1:])
 						rc.Sdt.SdtContent.EG_ContentRunContent = rc.Sdt.SdtContent.EG_ContentRunContent[0 : len(rc.Sdt.SdtContent.EG_ContentRunContent)-1]
 					}
@@ -89,7 +83,7 @@ func (p Paragraph) AddRun() Run {
 	pc.EG_ContentRunContent = append(pc.EG_ContentRunContent, rc)
 	r := wml.NewCT_R()
 	rc.R = r
-	return Run{p.d, p.x, r}
+	return Run{p.d, r}
 }
 
 // Runs returns all of the runs in a paragraph.
@@ -98,12 +92,12 @@ func (p Paragraph) Runs() []Run {
 	for _, c := range p.x.EG_PContent {
 		for _, rc := range c.EG_ContentRunContent {
 			if rc.R != nil {
-				ret = append(ret, Run{p.d, p.x, rc.R})
+				ret = append(ret, Run{p.d, rc.R})
 			}
 			if rc.Sdt != nil && rc.Sdt.SdtContent != nil {
 				for _, rc2 := range rc.Sdt.SdtContent.EG_ContentRunContent {
 					if rc2.R != nil {
-						ret = append(ret, Run{p.d, p.x, rc2.R})
+						ret = append(ret, Run{p.d, rc2.R})
 					}
 				}
 			}
@@ -137,7 +131,7 @@ func (p Paragraph) insertRun(relativeTo Run, before bool) Run {
 					c.EG_ContentRunContent[i+1] = wml.NewEG_ContentRunContent()
 					c.EG_ContentRunContent[i+1].R = r
 				}
-				return Run{p.d, p.X(), r}
+				return Run{p.d, r}
 
 			}
 			if rc.Sdt != nil && rc.Sdt.SdtContent != nil {
@@ -154,7 +148,7 @@ func (p Paragraph) insertRun(relativeTo Run, before bool) Run {
 							rc.Sdt.SdtContent.EG_ContentRunContent[i+1] = wml.NewEG_ContentRunContent()
 							rc.Sdt.SdtContent.EG_ContentRunContent[i+1].R = r
 						}
-						return Run{p.d, p.X(), r}
+						return Run{p.d, r}
 					}
 				}
 			}
