@@ -120,6 +120,53 @@ func main() {
 		run.AddText("hello world")
 
 	}
+
+	doc.AddParagraph()
+	// Fifth Table
+	{
+		table := doc.AddTable()
+		table.Properties().SetWidthPercent(90)
+		table.Properties().SetAlignment(wml.ST_JcTableCenter)
+		borders := table.Properties().Borders()
+		borders.SetAll(wml.ST_BorderSingle, color.Auto, 1*measurement.Point)
+
+		row := table.AddRow()
+
+		cell := row.AddCell()
+		cell.Properties().SetWidthPercent(25)
+		para := cell.AddParagraph()
+		run := para.AddRun()
+		run.AddText("hello")
+
+		cell = row.AddCell()
+		cell.Properties().SetWidthPercent(75)
+		para = cell.AddParagraph()
+		run = para.AddRun()
+		run.AddText("world")
+
+		// start a new table
+		doc.AddParagraph()
+		table = doc.AddTable()
+		table.Properties().SetWidthPercent(90)
+		table.Properties().SetAlignment(wml.ST_JcTableCenter)
+		borders = table.Properties().Borders()
+		borders.SetAll(wml.ST_BorderSingle, color.Auto, 1*measurement.Point)
+
+		row = table.AddRow()
+
+		cell = row.AddCell()
+		cell.Properties().SetWidth(0.25 * measurement.Inch)
+		para = cell.AddParagraph()
+		run = para.AddRun()
+		run.AddText("hello")
+
+		cell = row.AddCell()
+		cell.Properties().SetWidth(2.5 * measurement.Inch)
+		para = cell.AddParagraph()
+		run = para.AddRun()
+		run.AddText("world")
+
+	}
 	if err := doc.Validate(); err != nil {
 		log.Fatalf("error during validation: %s", err)
 	}
