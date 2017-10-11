@@ -68,9 +68,6 @@ func (c ContentTypes) EnsureOverride(path, contentType string) {
 	for _, ovr := range c.x.Override {
 		// found one, so just ensure the content type matches and bail
 		if ovr.PartNameAttr == path {
-			if !strings.HasPrefix(path, "/") {
-				path = "/" + path
-			}
 			if strings.HasPrefix(contentType, "http") {
 				gooxml.Log("content type '%s' is incorrect, must not start with http", contentType)
 			}

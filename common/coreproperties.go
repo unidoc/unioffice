@@ -30,7 +30,7 @@ func (c CoreProperties) X() *core_properties.CoreProperties {
 	return c.x
 }
 
-// ContentStatus returns the category of the document
+// Category returns the category of the document
 func (c CoreProperties) Category() string {
 	if c.x.Category != nil {
 		return *c.x.Category
@@ -51,7 +51,7 @@ func (c CoreProperties) ContentStatus() string {
 	return ""
 }
 
-// SetCategory records the category of the document.
+// SetContentStatus records the content status of the document.
 func (c CoreProperties) SetContentStatus(s string) {
 	c.x.ContentStatus = &s
 }
