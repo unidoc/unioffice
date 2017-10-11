@@ -64,7 +64,7 @@ func (i ImageRef) Path() string {
 	return i.img.Path
 }
 
-// Path returns the path to an image file
+// Size returns the size of an image
 func (i ImageRef) Size() image.Point {
 	return i.img.Size
 }
