@@ -118,7 +118,3 @@ There are no differences in functionality between the open source and commercial
 versions. You are encouraged to use the open source version to evaluate the library
 before purchasing a commercial license.
 
-### Consulting ###
-
-Baliance also offers consulting services related to enhancing the gooxml library
-on a case by case basis. Please contact consulting@baliance.com if interested.
