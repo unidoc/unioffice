@@ -28,7 +28,8 @@ Requires **go1.8+**, builds are tested with 1.8, 1.9 and tip.
  	- Embedded Images
  	- All chart types
 - PowerPoint (pptx) [PowerPoint]
-	- Currently unsupprted, work still start soon.
+	- Creation from templates
+	- Textboxes/shapes
 
 
 ## Performance ##
@@ -78,6 +79,11 @@ DOCX/XLSX/PPTX.
 - [Borders](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/borders) Individual cell borders and rectangular borders around a range of cells.
 - [Validation](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/validation) Data validation including combo box dropdowns.
 - [Frozen Rows/Cols](https://github.com/baliance/gooxml/tree/master/_examples/spreadsheet/freeze-rows-cols) A sheet with a frozen header column and row
+
+## Presentation Examples ##
+
+- [Simple Text Boxes](https://github.com/baliance/gooxml/tree/master/_examples/presentation/simple) Simple text boxes and shapes
+- [Template](https://github.com/baliance/gooxml/tree/master/_examples/use-template/simple) Creating a presentation from a template
 
 ## Raw Types ##
 
