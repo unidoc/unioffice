@@ -8,7 +8,9 @@
 package drawing
 
 import (
+	"baliance.com/gooxml"
 	"baliance.com/gooxml/color"
+	"baliance.com/gooxml/measurement"
 
 	"baliance.com/gooxml/schema/soo/dml"
 )
@@ -52,4 +54,51 @@ func (s ShapeProperties) LineProperties() LineProperties {
 		s.x.Ln = dml.NewCT_LineProperties()
 	}
 	return LineProperties{s.x.Ln}
+}
+
+func (s ShapeProperties) ensureXfrm() {
+	if s.x.Xfrm == nil {
+		s.x.Xfrm = dml.NewCT_Transform2D()
+	}
+}
+
+// SetWidth sets the width of the shape.
+func (s ShapeProperties) SetWidth(w measurement.Distance) {
+	s.ensureXfrm()
+	if s.x.Xfrm.Ext == nil {
+		s.x.Xfrm.Ext = dml.NewCT_PositiveSize2D()
+	}
+	s.x.Xfrm.Ext.CxAttr = int64(w / measurement.EMU)
+}
+
+// SetHeight sets the height of the shape.
+func (s ShapeProperties) SetHeight(h measurement.Distance) {
+	s.ensureXfrm()
+	if s.x.Xfrm.Ext == nil {
+		s.x.Xfrm.Ext = dml.NewCT_PositiveSize2D()
+	}
+	s.x.Xfrm.Ext.CyAttr = int64(h / measurement.EMU)
+}
+
+// SetSize sets the width and height of the shape.
+func (s ShapeProperties) SetSize(w, h measurement.Distance) {
+	s.SetWidth(w)
+	s.SetHeight(h)
+}
+
+// SetPosition sets the position of the shape.
+func (s ShapeProperties) SetPosition(x, y measurement.Distance) {
+	if s.x.Xfrm.Off == nil {
+		s.x.Xfrm.Off = dml.NewCT_Point2D()
+	}
+	s.x.Xfrm.Off.XAttr.ST_CoordinateUnqualified = gooxml.Int64(int64(x / measurement.EMU))
+	s.x.Xfrm.Off.YAttr.ST_CoordinateUnqualified = gooxml.Int64(int64(y / measurement.EMU))
+}
+
+// SetGeometry sets the shape type of the shape
+func (s ShapeProperties) SetGeometry(g dml.ST_ShapeType) {
+	if s.x.PrstGeom == nil {
+		s.x.PrstGeom = dml.NewCT_PresetGeometry2D()
+	}
+	s.x.PrstGeom.PrstAttr = g
 }
