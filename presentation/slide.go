@@ -10,6 +10,9 @@ package presentation
 import (
 	"errors"
 
+	"baliance.com/gooxml/measurement"
+	"baliance.com/gooxml/schema/soo/dml"
+
 	"baliance.com/gooxml/schema/soo/pml"
 )
 
@@ -67,4 +70,48 @@ func (s Slide) GetPlaceholderByIndex(idx uint32) (PlaceHolder, error) {
 		}
 	}
 	return PlaceHolder{}, errors.New("unable to find placeholder")
+}
+
+// ValidateWithPath validates the slide passing path informaton for a better
+// error message
+func (s Slide) ValidateWithPath(path string) error {
+	// schema checks
+	if err := s.x.ValidateWithPath(path); err != nil {
+		return err
+	}
+
+	// stuff we've figured out
+	for _, c := range s.x.CSld.SpTree.Choice {
+		for _, sp := range c.Sp {
+			if sp.TxBody != nil {
+				if len(sp.TxBody.P) == 0 {
+					return errors.New(path + " : slide shape with a txbody must contain paragraphs")
+				}
+			}
+		}
+	}
+	return nil
+}
+
+// AddTextBox adds an empty textbox to a slide.
+func (s Slide) AddTextBox() TextBox {
+	c := pml.NewCT_GroupShapeChoice()
+	s.x.CSld.SpTree.Choice = append(s.x.CSld.SpTree.Choice, c)
+
+	sp := pml.NewCT_Shape()
+	c.Sp = append(c.Sp, sp)
+	sp.SpPr = dml.NewCT_ShapeProperties()
+	sp.SpPr.Xfrm = dml.NewCT_Transform2D()
+	sp.SpPr.PrstGeom = dml.NewCT_PresetGeometry2D()
+	sp.SpPr.PrstGeom.PrstAttr = dml.ST_ShapeTypeRect
+	sp.TxBody = dml.NewCT_TextBody()
+	sp.TxBody.BodyPr = dml.NewCT_TextBodyProperties()
+	sp.TxBody.BodyPr.WrapAttr = dml.ST_TextWrappingTypeSquare
+	sp.TxBody.BodyPr.SpAutoFit = dml.NewCT_TextShapeAutofit()
+
+	tb := TextBox{sp}
+	tb.Properties().SetWidth(3 * measurement.Inch)
+	tb.Properties().SetHeight(1 * measurement.Inch)
+	tb.Properties().SetPosition(0, 0)
+	return tb
 }

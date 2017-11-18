@@ -232,10 +232,20 @@ func (p *Presentation) X() *pml.Presentation {
 	return p.x
 }
 
+func (p *Presentation) nextSlideID() uint32 {
+	id := uint32(256)
+	for _, s := range p.x.SldIdLst.SldId {
+		if s.IdAttr >= id {
+			id = s.IdAttr + 1
+		}
+	}
+	return id
+}
+
 // AddSlide adds a new slide to the presentation.
 func (p *Presentation) AddSlide() Slide {
 	sd := pml.NewCT_SlideIdListEntry()
-	sd.IdAttr = 256
+	sd.IdAttr = p.nextSlideID()
 	p.x.SldIdLst.SldId = append(p.x.SldIdLst.SldId, sd)
 
 	slide := pml.NewSld()
@@ -250,24 +260,6 @@ func (p *Presentation) AddSlide() Slide {
 	slide.CSld.SpTree.GrpSpPr.Xfrm.ChOff = slide.CSld.SpTree.GrpSpPr.Xfrm.Off
 	slide.CSld.SpTree.GrpSpPr.Xfrm.ChExt = slide.CSld.SpTree.GrpSpPr.Xfrm.Ext
 
-	/*
-		c := pml.NewCT_GroupShapeChoice()
-		slide.CSld.SpTree.Choice = append(slide.CSld.SpTree.Choice, c)
-		sp := pml.NewCT_Shape()
-		c.Sp = append(c.Sp, sp)
-
-		sp.NvSpPr.NvPr.Ph = pml.NewCT_Placeholder()
-		sp.NvSpPr.NvPr.Ph.TypeAttr = pml.ST_PlaceholderTypeCtrTitle
-
-		sp.TxBody = dml.NewCT_TextBody()
-		para := dml.NewCT_TextParagraph()
-		sp.TxBody.P = append(sp.TxBody.P, para)
-
-		run := dml.NewEG_TextRun()
-		para.EG_TextRun = append(para.EG_TextRun, run)
-		run.R = dml.NewCT_RegularTextRun()
-		run.R.T = "testing 123"
-	*/
 	p.slides = append(p.slides, slide)
 	srelID := p.prels.AddAutoRelationship(gooxml.DocTypePresentation, gooxml.OfficeDocumentType,
 		len(p.slides), gooxml.SlideType)
@@ -478,11 +470,12 @@ func (p *Presentation) Validate() error {
 	if err := p.x.Validate(); err != nil {
 		return err
 	}
-	for i, s := range p.slides {
+	for i, s := range p.Slides() {
 		if err := s.ValidateWithPath(fmt.Sprintf("Slide[%d]", i)); err != nil {
 			return err
 		}
 	}
+
 	for i, sm := range p.masters {
 		if err := sm.ValidateWithPath(fmt.Sprintf("SlideMaster[%d]", i)); err != nil {
 			return err

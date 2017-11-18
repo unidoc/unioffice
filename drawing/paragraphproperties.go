@@ -36,3 +36,8 @@ func (p ParagraphProperties) SetNumbered(scheme dml.ST_TextAutonumberScheme) {
 		p.x.BuAutoNum.TypeAttr = scheme
 	}
 }
+
+// SetAlign controls the paragraph alignment
+func (p ParagraphProperties) SetAlign(a dml.ST_TextAlignType) {
+	p.x.AlgnAttr = a
+}
