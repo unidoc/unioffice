@@ -28,7 +28,9 @@ func (r Run) X() *dml.EG_TextRun {
 func (r Run) SetText(s string) {
 	r.x.Br = nil
 	r.x.Fld = nil
-	r.x.R = dml.NewCT_RegularTextRun()
+	if r.x.R == nil {
+		r.x.R = dml.NewCT_RegularTextRun()
+	}
 	r.x.R.T = s
 }
 
