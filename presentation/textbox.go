@@ -32,3 +32,9 @@ func (t TextBox) Properties() drawing.ShapeProperties {
 	}
 	return drawing.MakeShapeProperties(t.x.SpPr)
 }
+
+// SetTextAnchor controls the text anchoring
+func (t TextBox) SetTextAnchor(a dml.ST_TextAnchoringType) {
+	t.x.TxBody.BodyPr = dml.NewCT_TextBodyProperties()
+	t.x.TxBody.BodyPr.AnchorAttr = a
+}
