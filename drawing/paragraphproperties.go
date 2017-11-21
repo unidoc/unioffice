@@ -22,6 +22,31 @@ func MakeParagraphProperties(x *dml.CT_TextParagraphProperties) ParagraphPropert
 	return ParagraphProperties{x}
 }
 
+// X returns the inner wrapped XML type.
+func (p ParagraphProperties) X() *dml.CT_TextParagraphProperties {
+	return p.x
+}
+
+// SetBulletFont controls the font for the bullet character.
+func (p ParagraphProperties) SetBulletFont(f string) {
+	if f == "" {
+		p.x.BuFont = nil
+	} else {
+		p.x.BuFont = dml.NewCT_TextFont()
+		p.x.BuFont.TypefaceAttr = f
+	}
+}
+
+// SetBulletChar sets the bullet character for the paragraph.
+func (p ParagraphProperties) SetBulletChar(c string) {
+	if c == "" {
+		p.x.BuChar = nil
+	} else {
+		p.x.BuChar = dml.NewCT_TextCharBullet()
+		p.x.BuChar.CharAttr = c
+	}
+}
+
 // SetLevel sets the level of indentation of a paragraph.
 func (p ParagraphProperties) SetLevel(idx int32) {
 	p.x.LvlAttr = gooxml.Int32(idx)
