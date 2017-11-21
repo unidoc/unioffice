@@ -9,7 +9,11 @@ package presentation
 
 import (
 	"errors"
+	"fmt"
 
+	"baliance.com/gooxml"
+
+	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/soo/dml"
 
@@ -19,6 +23,7 @@ import (
 type Slide struct {
 	sid *pml.CT_SlideIdListEntry
 	x   *pml.Sld
+	p   *Presentation
 }
 
 // X returns the inner wrapped XML type.
@@ -114,4 +119,53 @@ func (s Slide) AddTextBox() TextBox {
 	tb.Properties().SetHeight(1 * measurement.Inch)
 	tb.Properties().SetPosition(0, 0)
 	return tb
+}
+
+// AddImage adds an image textbox to a slide.
+func (s Slide) AddImage(img common.ImageRef) Image {
+	c := pml.NewCT_GroupShapeChoice()
+	s.x.CSld.SpTree.Choice = append(s.x.CSld.SpTree.Choice, c)
+
+	pic := pml.NewCT_Picture()
+	c.Pic = append(c.Pic, pic)
+
+	pic.NvPicPr.CNvPicPr = dml.NewCT_NonVisualPictureProperties()
+	pic.NvPicPr.CNvPicPr.PicLocks = dml.NewCT_PictureLocking()
+	pic.NvPicPr.CNvPicPr.PicLocks.NoChangeAspectAttr = gooxml.Bool(true)
+
+	pic.BlipFill = dml.NewCT_BlipFillProperties()
+
+	pic.BlipFill.Blip = dml.NewCT_Blip()
+
+	imgIdx := 0
+	for i, ig := range s.p.Images {
+		if ig == img {
+			imgIdx = i + 1
+			break
+		}
+	}
+
+	var imgID string
+	for i, os := range s.p.Slides() {
+		if os.x == s.x {
+			fn := fmt.Sprintf("../media/image%d.%s", imgIdx, img.Format())
+			rel := s.p.slideRels[i].AddRelationship(fn, gooxml.ImageType)
+			imgID = rel.ID()
+		}
+	}
+	pic.BlipFill.Blip.EmbedAttr = gooxml.String(imgID)
+
+	pic.BlipFill.Stretch = dml.NewCT_StretchInfoProperties()
+	pic.BlipFill.Stretch.FillRect = dml.NewCT_RelativeRect()
+
+	pic.SpPr = dml.NewCT_ShapeProperties()
+	pic.SpPr.PrstGeom = dml.NewCT_PresetGeometry2D()
+	pic.SpPr.PrstGeom.PrstAttr = dml.ST_ShapeTypeRect
+
+	ir := Image{pic}
+	sz := img.Size()
+	ir.Properties().SetWidth(measurement.Distance(sz.X) * measurement.Pixel72)
+	ir.Properties().SetHeight(measurement.Distance(sz.Y) * measurement.Pixel72)
+	ir.Properties().SetPosition(0, 0)
+	return ir
 }
