@@ -88,6 +88,7 @@ func (s ShapeProperties) SetSize(w, h measurement.Distance) {
 
 // SetPosition sets the position of the shape.
 func (s ShapeProperties) SetPosition(x, y measurement.Distance) {
+	s.ensureXfrm()
 	if s.x.Xfrm.Off == nil {
 		s.x.Xfrm.Off = dml.NewCT_Point2D()
 	}
@@ -101,4 +102,24 @@ func (s ShapeProperties) SetGeometry(g dml.ST_ShapeType) {
 		s.x.PrstGeom = dml.NewCT_PresetGeometry2D()
 	}
 	s.x.PrstGeom.PrstAttr = g
+}
+
+// SetFlipHorizontal controls if the shape is flipped horizontally.
+func (s ShapeProperties) SetFlipHorizontal(b bool) {
+	s.ensureXfrm()
+	if !b {
+		s.x.Xfrm.FlipHAttr = nil
+	} else {
+		s.x.Xfrm.FlipHAttr = gooxml.Bool(true)
+	}
+}
+
+// SetFlipVertical controls if the shape is flipped vertically.
+func (s ShapeProperties) SetFlipVertical(b bool) {
+	s.ensureXfrm()
+	if !b {
+		s.x.Xfrm.FlipVAttr = nil
+	} else {
+		s.x.Xfrm.FlipVAttr = gooxml.Bool(true)
+	}
 }
