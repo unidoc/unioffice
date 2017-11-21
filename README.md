@@ -83,7 +83,8 @@ DOCX/XLSX/PPTX.
 ## Presentation Examples ##
 
 - [Simple Text Boxes](https://github.com/baliance/gooxml/tree/master/_examples/presentation/simple) Simple text boxes and shapes
-- [Template](https://github.com/baliance/gooxml/tree/master/_examples/use-template/simple) Creating a presentation from a template
+- [Images](https://github.com/baliance/gooxml/tree/master/_examples/presentation/image) Simple image insertion
+- [Template](https://github.com/baliance/gooxml/tree/master/_examples/presentation/use-template/simple) Creating a presentation from a template
 
 ## Raw Types ##
 

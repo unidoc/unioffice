@@ -274,7 +274,7 @@ func (p *Presentation) AddSlide() Slide {
 	srel.AddAutoRelationship(gooxml.DocTypePresentation, gooxml.SlideType,
 		len(p.layouts), gooxml.SlideLayoutType)
 
-	return Slide{sd, slide}
+	return Slide{sd, slide, p}
 }
 
 // AddSlideWithLayout adds a new slide with content copied from a layout.  Normally you should
@@ -342,7 +342,7 @@ func (p *Presentation) AddSlideWithLayout(l SlideLayout) (Slide, error) {
 				i+1, gooxml.SlideLayoutType)
 		}
 	}
-	csld := Slide{sd, slide}
+	csld := Slide{sd, slide, p}
 
 	return csld, nil
 }
@@ -630,7 +630,7 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 func (p *Presentation) Slides() []Slide {
 	ret := []Slide{}
 	for i, v := range p.slides {
-		ret = append(ret, Slide{p.x.SldIdLst.SldId[i], v})
+		ret = append(ret, Slide{p.x.SldIdLst.SldId[i], v, p})
 	}
 	return ret
 }
@@ -676,4 +676,36 @@ func (p *Presentation) GetLayoutByName(name string) (SlideLayout, error) {
 		}
 	}
 	return SlideLayout{}, errors.New("unable to find layout with that name")
+}
+
+// AddImage adds an image to the document package, returning a reference that
+// can be used to add the image to a run and place it in the document contents.
+func (p *Presentation) AddImage(i common.Image) (common.ImageRef, error) {
+	r := common.MakeImageRef(i, &p.DocBase, p.prels)
+	if i.Path == "" {
+		return r, errors.New("image must have a path")
+	}
+
+	if i.Format == "" {
+		return r, errors.New("image must have a valid format")
+	}
+	if i.Size.X == 0 || i.Size.Y == 0 {
+		return r, errors.New("image must have a valid size")
+	}
+
+	p.Images = append(p.Images, r)
+	fn := fmt.Sprintf("media/image%d.%s", len(p.Images), i.Format)
+	p.prels.AddRelationship(fn, gooxml.ImageType)
+	return r, nil
+}
+
+// GetImageByRelID returns an ImageRef with the associated relation ID in the
+// document.
+func (p *Presentation) GetImageByRelID(relID string) (common.ImageRef, bool) {
+	for _, img := range p.Images {
+		if img.RelID() == relID {
+			return img, true
+		}
+	}
+	return common.ImageRef{}, false
 }
