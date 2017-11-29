@@ -138,3 +138,55 @@ func (p ParagraphProperties) SetWindowControl(b bool) {
 		p.x.WidowControl = wml.NewCT_OnOff()
 	}
 }
+
+// SetFirstLineIndent controls the indentation of the first line in a paragraph.
+func (p ParagraphProperties) SetFirstLineIndent(m measurement.Distance) {
+	if p.x.Ind == nil {
+		p.x.Ind = wml.NewCT_Ind()
+	}
+	if m == measurement.Zero {
+		p.x.Ind.FirstLineAttr = nil
+	} else {
+		p.x.Ind.FirstLineAttr = &sharedTypes.ST_TwipsMeasure{}
+		p.x.Ind.FirstLineAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(m / measurement.Twips))
+	}
+}
+
+// SetStartIndent controls the start indentation.
+func (p ParagraphProperties) SetStartIndent(m measurement.Distance) {
+	if p.x.Ind == nil {
+		p.x.Ind = wml.NewCT_Ind()
+	}
+	if m == measurement.Zero {
+		p.x.Ind.StartAttr = nil
+	} else {
+		p.x.Ind.StartAttr = &wml.ST_SignedTwipsMeasure{}
+		p.x.Ind.StartAttr.Int64 = gooxml.Int64(int64(m / measurement.Twips))
+	}
+}
+
+// SetEndIdent controls the end indentation.
+func (p ParagraphProperties) SetEndIndent(m measurement.Distance) {
+	if p.x.Ind == nil {
+		p.x.Ind = wml.NewCT_Ind()
+	}
+	if m == measurement.Zero {
+		p.x.Ind.EndAttr = nil
+	} else {
+		p.x.Ind.EndAttr = &wml.ST_SignedTwipsMeasure{}
+		p.x.Ind.EndAttr.Int64 = gooxml.Int64(int64(m / measurement.Twips))
+	}
+}
+
+// SetHangingIndent controls the indentation of the non-first lines in a paragraph.
+func (p ParagraphProperties) SetHangingIndent(m measurement.Distance) {
+	if p.x.Ind == nil {
+		p.x.Ind = wml.NewCT_Ind()
+	}
+	if m == measurement.Zero {
+		p.x.Ind.HangingAttr = nil
+	} else {
+		p.x.Ind.HangingAttr = &sharedTypes.ST_TwipsMeasure{}
+		p.x.Ind.HangingAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(m / measurement.Twips))
+	}
+}
