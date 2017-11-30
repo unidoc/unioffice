@@ -4,6 +4,7 @@ package main
 import (
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/document"
+	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/soo/wml"
 )
 
@@ -31,6 +32,8 @@ func main() {
 	run.AddText("Some Heading Text")
 
 	para = doc.AddParagraph()
+	para.Properties().SetFirstLineIndent(0.5 * measurement.Inch)
+
 	run = para.AddRun()
 	run.AddText("A run is a string of characters with the same formatting. ")
 
