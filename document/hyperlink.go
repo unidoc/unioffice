@@ -28,12 +28,20 @@ func (h HyperLink) X() *wml.CT_Hyperlink {
 // destination will be used many times.
 func (h HyperLink) SetTargetByRef(link common.Hyperlink) {
 	h.x.IdAttr = gooxml.String(common.Relationship(link).ID())
+	h.x.AnchorAttr = nil
 }
 
 // SetTarget sets the URL target of the hyperlink.
 func (h HyperLink) SetTarget(url string) {
 	rel := h.d.AddHyperlink(url)
 	h.x.IdAttr = gooxml.String(common.Relationship(rel).ID())
+	h.x.AnchorAttr = nil
+}
+
+// SetTargetBookmark sets the bookmark target of the hyperlink.
+func (h HyperLink) SetTargetBookmark(bm Bookmark) {
+	h.x.AnchorAttr = gooxml.String(bm.Name())
+	h.x.IdAttr = nil
 }
 
 // SetToolTip sets the tooltip text for a hyperlink.

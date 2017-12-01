@@ -157,10 +157,38 @@ func (p Paragraph) insertRun(relativeTo Run, before bool) Run {
 	return p.AddRun()
 }
 
+// AddHyperLink adds a new hyperlink to a parapgraph.
 func (p Paragraph) AddHyperLink() HyperLink {
 	pc := wml.NewEG_PContent()
 	p.x.EG_PContent = append(p.x.EG_PContent, pc)
 
 	pc.Hyperlink = wml.NewCT_Hyperlink()
 	return HyperLink{p.d, pc.Hyperlink}
+}
+
+// AddBookmark adds a bookmark to a document that can then be used from a hyperlink. Name is a document
+// unique name that identifies the bookmark so it can be referenced from hyperlinks.
+func (p Paragraph) AddBookmark(name string) Bookmark {
+	pc := wml.NewEG_PContent()
+	rc := wml.NewEG_ContentRunContent()
+	pc.EG_ContentRunContent = append(pc.EG_ContentRunContent, rc)
+
+	relt := wml.NewEG_RunLevelElts()
+	rc.EG_RunLevelElts = append(rc.EG_RunLevelElts, relt)
+
+	markEl := wml.NewEG_RangeMarkupElements()
+	bmStart := wml.NewCT_Bookmark()
+	markEl.BookmarkStart = bmStart
+	relt.EG_RangeMarkupElements = append(relt.EG_RangeMarkupElements, markEl)
+
+	markEl = wml.NewEG_RangeMarkupElements()
+	markEl.BookmarkEnd = wml.NewCT_MarkupRange()
+
+	relt.EG_RangeMarkupElements = append(relt.EG_RangeMarkupElements, markEl)
+
+	p.x.EG_PContent = append(p.x.EG_PContent, pc)
+
+	bm := Bookmark{bmStart}
+	bm.SetName(name)
+	return bm
 }
