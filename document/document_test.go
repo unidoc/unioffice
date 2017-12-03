@@ -142,3 +142,37 @@ func TestInsertRun(t *testing.T) {
 		t.Errorf("remove failed")
 	}
 }
+
+func TestInsertBookmarks(t *testing.T) {
+	doc := document.New()
+	if len(doc.Bookmarks()) != 0 {
+		t.Errorf("expected 0 bookmarks, got %d", len(doc.Bookmarks()))
+	}
+
+	p := doc.AddParagraph()
+	p.AddBookmark("bookmark1")
+	p.AddBookmark("bookmark2")
+
+	if len(doc.Bookmarks()) != 2 {
+		t.Errorf("expected 2 bookmarks, got %d", len(doc.Bookmarks()))
+	}
+}
+
+func TestDuplicateBookmarks(t *testing.T) {
+	doc := document.New()
+	if len(doc.Bookmarks()) != 0 {
+		t.Errorf("expected 0 bookmarks, got %d", len(doc.Bookmarks()))
+	}
+
+	p := doc.AddParagraph()
+	p.AddBookmark("bookmark1")
+	p.AddBookmark("bookmark1")
+
+	if len(doc.Bookmarks()) != 2 {
+		t.Errorf("expected 2 bookmarks, got %d", len(doc.Bookmarks()))
+	}
+
+	if err := doc.Validate(); err == nil {
+		t.Errorf("expected error due to duplicate bookmark names")
+	}
+}

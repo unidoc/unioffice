@@ -412,7 +412,7 @@ func (d *Document) Validate() error {
 		return errors.New("document not initialized correctly, nil base")
 	}
 
-	for _, v := range []func() error{d.validateTableCells} {
+	for _, v := range []func() error{d.validateTableCells, d.validateBookmarks} {
 		if err := v(); err != nil {
 			return err
 		}
@@ -423,6 +423,16 @@ func (d *Document) Validate() error {
 	return nil
 }
 
+func (d *Document) validateBookmarks() error {
+	bmnames := make(map[string]struct{})
+	for _, bm := range d.Bookmarks() {
+		if _, ok := bmnames[bm.Name()]; ok {
+			return fmt.Errorf("duplicate bookmark %s found", bm.Name())
+		}
+		bmnames[bm.Name()] = struct{}{}
+	}
+	return nil
+}
 func (d *Document) validateTableCells() error {
 	for _, elt := range d.x.Body.EG_BlockLevelElts {
 		for _, c := range elt.EG_ContentBlockContent {
@@ -720,4 +730,38 @@ func (d *Document) insertParagraph(relativeTo Paragraph, before bool) Paragraph 
 // on a cell.
 func (d Document) AddHyperlink(url string) common.Hyperlink {
 	return d.docRels.AddHyperlink(url)
+}
+
+// Bookmarks returns all of the bookmarks defined in the document.
+func (d Document) Bookmarks() []Bookmark {
+	if d.x.Body == nil {
+		return nil
+	}
+	ret := []Bookmark{}
+	for _, ble := range d.x.Body.EG_BlockLevelElts {
+		for _, bc := range ble.EG_ContentBlockContent {
+			// bookmarks within paragraphs
+			for _, p := range bc.P {
+				for _, ec := range p.EG_PContent {
+					for _, ecr := range ec.EG_ContentRunContent {
+						for _, re := range ecr.EG_RunLevelElts {
+							for _, rm := range re.EG_RangeMarkupElements {
+								if rm.BookmarkStart != nil {
+									ret = append(ret, Bookmark{rm.BookmarkStart})
+								}
+							}
+						}
+					}
+				}
+			}
+			for _, re := range bc.EG_RunLevelElts {
+				for _, rm := range re.EG_RangeMarkupElements {
+					if rm.BookmarkStart != nil {
+						ret = append(ret, Bookmark{rm.BookmarkStart})
+					}
+				}
+			}
+		}
+	}
+	return ret
 }
