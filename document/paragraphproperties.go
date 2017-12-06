@@ -165,7 +165,7 @@ func (p ParagraphProperties) SetStartIndent(m measurement.Distance) {
 	}
 }
 
-// SetEndIdent controls the end indentation.
+// SetEndIndent controls the end indentation.
 func (p ParagraphProperties) SetEndIndent(m measurement.Distance) {
 	if p.x.Ind == nil {
 		p.x.Ind = wml.NewCT_Ind()

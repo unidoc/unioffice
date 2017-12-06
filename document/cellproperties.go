@@ -24,7 +24,8 @@ func (c CellProperties) X() *wml.CT_TcPr {
 	return c.x
 }
 
-// SetColumnSpan sets the number of Grid Columns Spanned by the Cell
+// SetColumnSpan sets the number of Grid Columns Spanned by the Cell.  This is used
+// to give the appearance of merged cells.
 func (c CellProperties) SetColumnSpan(cols int) {
 	if cols == 0 {
 		c.x.GridSpan = nil
