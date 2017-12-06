@@ -28,6 +28,7 @@ func (t TableConditionalFormatting) CellProperties() CellProperties {
 	return CellProperties{t.x.TcPr}
 }
 
+// RunProperties returns the run properties controlling text formatting within the table.
 func (t TableConditionalFormatting) RunProperties() RunProperties {
 	if t.x.RPr == nil {
 		t.x.RPr = wml.NewCT_RPr()
@@ -35,6 +36,7 @@ func (t TableConditionalFormatting) RunProperties() RunProperties {
 	return RunProperties{t.x.RPr}
 }
 
+// ParagraphProperties returns the paragraph properties controlling text formatting within the table.
 func (t TableConditionalFormatting) ParagraphProperties() ParagraphStyleProperties {
 	if t.x.PPr == nil {
 		t.x.PPr = wml.NewCT_PPrGeneral()
