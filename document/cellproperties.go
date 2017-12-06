@@ -91,3 +91,11 @@ func (c CellProperties) SetVerticalAlignment(align wml.ST_VerticalJc) {
 		c.x.VAlign.ValAttr = align
 	}
 }
+
+// Borders allows controlling individual cell borders.
+func (c CellProperties) Borders() CellBorders {
+	if c.x.TcBorders == nil {
+		c.x.TcBorders = wml.NewCT_TcBorders()
+	}
+	return CellBorders{c.x.TcBorders}
+}

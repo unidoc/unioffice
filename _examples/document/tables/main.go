@@ -2,6 +2,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"baliance.com/gooxml/color"
@@ -46,7 +47,7 @@ func main() {
 
 		row := table.AddRow()
 		cell := row.AddCell()
-		// column span
+		// column span / merged cells
 		cell.Properties().SetColumnSpan(2)
 		run := cell.AddParagraph().AddRun()
 		run.AddText("Cells can span multiple columns")
@@ -118,7 +119,6 @@ func main() {
 		para.Properties().SetAlignment(wml.ST_JcCenter)
 		run := para.AddRun()
 		run.AddText("hello world")
-
 	}
 
 	doc.AddParagraph()
@@ -166,6 +166,48 @@ func main() {
 		run = para.AddRun()
 		run.AddText("world")
 
+	}
+	doc.AddParagraph()
+	// Sixth Table - Styled
+	{
+		// construct a table style
+		ts := doc.Styles.AddStyle("MyTableStyle", wml.ST_StyleTypeTable, false)
+		tp := ts.TableProperties()
+		tp.SetRowBandSize(1)
+		tp.SetColumnBandSize(1)
+		tp.SetTableIndent(measurement.Zero)
+
+		// horizomntal banding
+		s := ts.TableConditionalFormatting(wml.ST_TblStyleOverrideTypeBand1Horz)
+		s.CellProperties().SetShading(wml.ST_ShdSolid, color.LightBlue, color.Red)
+
+		// first row bold
+		s = ts.TableConditionalFormatting(wml.ST_TblStyleOverrideTypeFirstRow)
+		s.RunProperties().SetBold(true)
+
+		// last row bold
+		s = ts.TableConditionalFormatting(wml.ST_TblStyleOverrideTypeLastRow)
+		s.RunProperties().SetBold(true)
+		cb := s.CellProperties().Borders()
+		cb.SetTop(wml.ST_BorderDouble, color.Black, 0.5*measurement.Point)
+
+		tp.Borders().SetAll(wml.ST_BorderSingle, color.Blue, 0.5*measurement.Point)
+
+		table := doc.AddTable()
+		table.Properties().SetWidthPercent(90)
+		table.Properties().SetStyle("MyTableStyle")
+		look := table.Properties().TableLook()
+		look.SetFirstColumn(true)
+		look.SetFirstRow(true)
+		look.SetHorizontalBanding(true)
+
+		for r := 0; r < 5; r++ {
+			row := table.AddRow()
+			for c := 0; c < 5; c++ {
+				cell := row.AddCell()
+				cell.AddParagraph().AddRun().AddText(fmt.Sprintf("row %d col %d", r+1, c+1))
+			}
+		}
 	}
 	if err := doc.Validate(); err != nil {
 		log.Fatalf("error during validation: %s", err)

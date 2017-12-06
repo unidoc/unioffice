@@ -135,6 +135,8 @@ func (s Style) TableProperties() TableStyleProperties {
 	return TableStyleProperties{s.x.TblPr}
 }
 
+// TableConditionalFormatting returns a conditional formatting object of a given
+// type.  Calling this method repeatedly will return the same object.
 func (s Style) TableConditionalFormatting(typ wml.ST_TblStyleOverrideType) TableConditionalFormatting {
 	for _, pr := range s.x.TblStylePr {
 		if pr.TypeAttr == typ {
@@ -143,5 +145,6 @@ func (s Style) TableConditionalFormatting(typ wml.ST_TblStyleOverrideType) Table
 	}
 	pr := wml.NewCT_TblStylePr()
 	pr.TypeAttr = typ
+	s.x.TblStylePr = append(s.x.TblStylePr, pr)
 	return TableConditionalFormatting{pr}
 }
