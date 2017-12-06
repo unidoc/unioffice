@@ -82,6 +82,24 @@ func (t TableProperties) SetWidth(d measurement.Distance) {
 	t.x.TblW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(d / measurement.Twips))
 }
 
+// SetStyle sets the table style name.
+func (t TableProperties) SetStyle(name string) {
+	if name == "" {
+		t.x.TblStyle = nil
+	} else {
+		t.x.TblStyle = wml.NewCT_String()
+		t.x.TblStyle.ValAttr = name
+	}
+}
+
+// TableLook returns the table look, or conditional formatting applied to a table style.
+func (t TableProperties) TableLook() TableLook {
+	if t.x.TblLook == nil {
+		t.x.TblLook = wml.NewCT_TblLook()
+	}
+	return TableLook{t.x.TblLook}
+}
+
 // Borders allows manipulation of the table borders.
 func (t TableProperties) Borders() TableBorders {
 	if t.x.TblBorders == nil {

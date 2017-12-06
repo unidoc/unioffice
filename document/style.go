@@ -119,10 +119,29 @@ func (s Style) ParagraphProperties() ParagraphStyleProperties {
 	return ParagraphStyleProperties{s.x.PPr}
 }
 
-// RunProperties returns the run style.
+// RunProperties returns the run style properties.
 func (s Style) RunProperties() RunProperties {
 	if s.x.RPr == nil {
 		s.x.RPr = wml.NewCT_RPr()
 	}
 	return RunProperties{s.x.RPr}
+}
+
+// TableProperties returns the table style properties.
+func (s Style) TableProperties() TableStyleProperties {
+	if s.x.TblPr == nil {
+		s.x.TblPr = wml.NewCT_TblPrBase()
+	}
+	return TableStyleProperties{s.x.TblPr}
+}
+
+func (s Style) TableConditionalFormatting(typ wml.ST_TblStyleOverrideType) TableConditionalFormatting {
+	for _, pr := range s.x.TblStylePr {
+		if pr.TypeAttr == typ {
+			return TableConditionalFormatting{pr}
+		}
+	}
+	pr := wml.NewCT_TblStylePr()
+	pr.TypeAttr = typ
+	return TableConditionalFormatting{pr}
 }
