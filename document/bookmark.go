@@ -9,6 +9,8 @@ package document
 
 import "baliance.com/gooxml/schema/soo/wml"
 
+// Bookmark is a bookmarked location within a document that can be referenced
+// with a hyperlink.
 type Bookmark struct {
 	x *wml.CT_Bookmark
 }
