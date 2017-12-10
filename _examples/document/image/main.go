@@ -41,6 +41,15 @@ func main() {
 	run := para.AddRun()
 	for i := 0; i < 16; i++ {
 		run.AddText(lorem)
+
+		// drop an inline image in
+		if i == 13 {
+			inl, err := run.AddDrawingInline(iref)
+			if err != nil {
+				log.Fatalf("unable to add inline image: %s", err)
+			}
+			inl.SetSize(1*measurement.Inch, 1*measurement.Inch)
+		}
 	}
 	doc.SaveToFile("image.docx")
 }
