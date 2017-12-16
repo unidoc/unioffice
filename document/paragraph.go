@@ -192,3 +192,40 @@ func (p Paragraph) AddBookmark(name string) Bookmark {
 	bm.SetName(name)
 	return bm
 }
+
+// SetNumberingLevel sets the numbering level of a paragraph.  If used, then the
+// NumberingDefinition must also be set via SetNumberingDefinition or
+// SetNumberingDefinitionByID.
+func (p Paragraph) SetNumberingLevel(listLevel int) {
+	p.ensurePPr()
+	if p.x.PPr.NumPr == nil {
+		p.x.PPr.NumPr = wml.NewCT_NumPr()
+	}
+	lvl := wml.NewCT_DecimalNumber()
+	lvl.ValAttr = int64(listLevel)
+	p.x.PPr.NumPr.Ilvl = lvl
+}
+
+// SetNumberingDefinition sets the numbering definition ID via a NumberingDefinition
+// defined in numbering.xml
+func (p Paragraph) SetNumberingDefinition(nd NumberingDefinition) {
+	p.ensurePPr()
+	if p.x.PPr.NumPr == nil {
+		p.x.PPr.NumPr = wml.NewCT_NumPr()
+	}
+	lvl := wml.NewCT_DecimalNumber()
+	lvl.ValAttr = int64(nd.AbstractNumberID())
+	p.x.PPr.NumPr.NumId = lvl
+}
+
+// SetNumberingDefinitionByID sets the numbering definition ID directly, which must
+// match an ID defined in numbering.xml
+func (p Paragraph) SetNumberingDefinitionByID(abstractNumberID int64) {
+	p.ensurePPr()
+	if p.x.PPr.NumPr == nil {
+		p.x.PPr.NumPr = wml.NewCT_NumPr()
+	}
+	lvl := wml.NewCT_DecimalNumber()
+	lvl.ValAttr = int64(abstractNumberID)
+	p.x.PPr.NumPr.NumId = lvl
+}

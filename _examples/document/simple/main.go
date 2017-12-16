@@ -2,6 +2,8 @@
 package main
 
 import (
+	"fmt"
+
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/document"
 	"baliance.com/gooxml/measurement"
@@ -81,6 +83,15 @@ func main() {
 	run = createParaRun(doc, "text effects")
 	run.Properties().SetEffect(wml.ST_TextEffectAntsRed)
 
+	nd := doc.Numbering.Definitions()[0]
+
+	for i := 1; i < 5; i++ {
+		p := doc.AddParagraph()
+		p.SetNumberingLevel(i - 1)
+		p.SetNumberingDefinition(nd)
+		run := p.AddRun()
+		run.AddText(fmt.Sprintf("Level %d", i))
+	}
 	doc.SaveToFile("simple.docx")
 }
 
