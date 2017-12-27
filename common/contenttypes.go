@@ -63,6 +63,22 @@ func (c ContentTypes) AddOverride(path, contentType string) {
 	c.x.Override = append(c.x.Override, or)
 }
 
+// EnsureDefault esnures that an extension and default content type exist,
+// adding it if necessary.
+func (c ContentTypes) EnsureDefault(ext, contentType string) {
+	for _, def := range c.x.Default {
+		if def.ExtensionAttr == ext {
+			def.ContentTypeAttr = contentType
+			return
+		}
+	}
+
+	def := &content_types.Default{}
+	def.ContentTypeAttr = contentType
+	def.ExtensionAttr = ext
+	c.x.Default = append(c.x.Default, def)
+}
+
 // EnsureOverride ensures that an override for the given path exists, adding it if necessary
 func (c ContentTypes) EnsureOverride(path, contentType string) {
 	for _, ovr := range c.x.Override {
