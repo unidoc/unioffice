@@ -63,6 +63,19 @@ func (t TableProperties) SetWidthPercent(pct float64) {
 	t.x.TblW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(pct * 50))
 }
 
+// SetLayout controls the table layout. wml.ST_TblLayoutTypeAutofit corresponds
+// to "Automatically resize to fit contents" being checked, while
+// wml.ST_TblLayoutTypeFixed corresponds to it being unchecked.
+func (t TableProperties) SetLayout(l wml.ST_TblLayoutType) {
+	// ST_TblLayoutTypeAutofit is the default
+	if l == wml.ST_TblLayoutTypeUnset || l == wml.ST_TblLayoutTypeAutofit {
+		t.x.TblLayout = nil
+	} else {
+		t.x.TblLayout = wml.NewCT_TblLayoutType()
+		t.x.TblLayout.TypeAttr = l
+	}
+}
+
 // SetAlignment sets the alignment of a table within the page.
 func (t TableProperties) SetAlignment(align wml.ST_JcTable) {
 	if align == wml.ST_JcTableUnset {

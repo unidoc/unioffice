@@ -194,6 +194,8 @@ func main() {
 		tp.Borders().SetAll(wml.ST_BorderSingle, color.Blue, 0.5*measurement.Point)
 
 		table := doc.AddTable()
+
+		table.Properties().SetLayout(wml.ST_TblLayoutTypeFixed)
 		table.Properties().SetWidthPercent(90)
 		table.Properties().SetStyle("MyTableStyle")
 		look := table.Properties().TableLook()
