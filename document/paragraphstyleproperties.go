@@ -91,3 +91,16 @@ func (p ParagraphStyleProperties) SetContextualSpacing(b bool) {
 		p.x.ContextualSpacing = wml.NewCT_OnOff()
 	}
 }
+
+// SetLeftIndent controls the left indent of the paragraph.
+func (p ParagraphStyleProperties) SetLeftIndent(m measurement.Distance) {
+	if p.x.Ind == nil {
+		p.x.Ind = wml.NewCT_Ind()
+	}
+	if m == measurement.Zero {
+		p.x.Ind.LeftAttr = nil
+	} else {
+		p.x.Ind.LeftAttr = &wml.ST_SignedTwipsMeasure{}
+		p.x.Ind.LeftAttr.Int64 = gooxml.Int64(int64(m / measurement.Twips))
+	}
+}

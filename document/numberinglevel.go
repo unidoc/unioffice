@@ -7,28 +7,62 @@
 
 package document
 
-import "baliance.com/gooxml/schema/soo/wml"
+import (
+	"baliance.com/gooxml"
+	"baliance.com/gooxml/schema/soo/wml"
+)
 
 // NumberingLevel is the definition for numbering for a particular level within
 // a NumberingDefinition.
 type NumberingLevel struct {
-	x *wml.CT_NumLvl
+	x *wml.CT_Lvl
 }
 
 // X returns the inner wrapped XML type.
-func (n NumberingLevel) X() *wml.CT_NumLvl {
+func (n NumberingLevel) X() *wml.CT_Lvl {
 	return n.x
 }
 
-func (n NumberingLevel) ensureLevel() {
-	if n.x.Lvl == nil {
-		n.x.Lvl = wml.NewCT_Lvl()
+// SetFormat sets the numbering format.
+func (n NumberingLevel) SetFormat(f wml.ST_NumberFormat) {
+	if n.x.NumFmt == nil {
+		n.x.NumFmt = wml.NewCT_NumFmt()
+	}
+	n.x.NumFmt.ValAttr = f
+}
+
+// SetText sets the text to be used in bullet mode.
+func (n NumberingLevel) SetText(t string) {
+	if t == "" {
+		n.x.LvlText = nil
+	} else {
+		n.x.LvlText = wml.NewCT_LevelText()
+		n.x.LvlText.ValAttr = gooxml.String(t)
 	}
 }
 
-// SetStartOverride sets the Numbering Level Starting Value Override.
-func (n NumberingLevel) SetStartOverride(v int64) {
-	n.ensureLevel()
-	n.x.StartOverride = wml.NewCT_DecimalNumber()
-	n.x.StartOverride.ValAttr = v
+// Properties returns the numbering level paragraph properties.
+func (n NumberingLevel) Properties() ParagraphStyleProperties {
+	if n.x.PPr == nil {
+		n.x.PPr = wml.NewCT_PPrGeneral()
+	}
+	return ParagraphStyleProperties{n.x.PPr}
+}
+
+// SetAlignment sets the paragraph alignment
+func (n NumberingLevel) SetAlignment(j wml.ST_Jc) {
+	if j == wml.ST_JcUnset {
+		n.x.LvlJc = nil
+	} else {
+		n.x.LvlJc = wml.NewCT_Jc()
+		n.x.LvlJc.ValAttr = j
+	}
+}
+
+// RunProperties returns the RunProperties controlling numbering level font, etc.
+func (n NumberingLevel) RunProperties() RunProperties {
+	if n.x.RPr == nil {
+		n.x.RPr = wml.NewCT_RPr()
+	}
+	return RunProperties{n.x.RPr}
 }
