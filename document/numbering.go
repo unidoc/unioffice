@@ -93,7 +93,7 @@ func (n Numbering) InitializeDefault() {
 // Definitions returns the defined numbering definitions.
 func (n Numbering) Definitions() []NumberingDefinition {
 	ret := []NumberingDefinition{}
-	for _, n := range n.x.Num {
+	for _, n := range n.x.AbstractNum {
 		ret = append(ret, NumberingDefinition{n})
 	}
 	return ret
@@ -109,9 +109,14 @@ func (n Numbering) AddDefinition() NumberingDefinition {
 			nextID = nd.AbstractNumberID() + 1
 		}
 	}
+	nx.NumIdAttr = nextID
 	nx.AbstractNumId = wml.NewCT_DecimalNumber()
 	nx.AbstractNumId.ValAttr = nextID
 
+	an := wml.NewCT_AbstractNum()
+	an.AbstractNumIdAttr = nextID
+
+	n.x.AbstractNum = append(n.x.AbstractNum, an)
 	n.x.Num = append(n.x.Num, nx)
-	return NumberingDefinition{nx}
+	return NumberingDefinition{an}
 }
