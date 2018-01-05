@@ -97,8 +97,6 @@ func (p ParagraphProperties) SetHeadingLevel(idx int) {
 	}
 	p.x.NumPr.Ilvl = wml.NewCT_DecimalNumber()
 	p.x.NumPr.Ilvl.ValAttr = int64(idx)
-	p.x.NumPr.NumId = wml.NewCT_DecimalNumber()
-	p.x.NumPr.NumId.ValAttr = int64(1)
 }
 
 // SetKeepWithNext controls if this paragraph should be kept with the next.
