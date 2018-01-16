@@ -18,7 +18,7 @@ import (
 	"io"
 	"log"
 	"os"
-	"path/filepath"
+	"path"
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
@@ -596,7 +596,9 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 		p.themeRels = append(p.themeRels, thmRel)
 
 	case gooxml.ImageType:
-		target = filepath.Clean(target)
+		// we use path.Clean instead of filepath.Clean to ensure we
+		// end up with forward separators
+		target = path.Clean(target)
 		for i, f := range files {
 			if f == nil {
 				continue
