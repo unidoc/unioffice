@@ -9,7 +9,7 @@ package zippkg
 
 import (
 	"archive/zip"
-	"path/filepath"
+	"path"
 
 	"baliance.com/gooxml/schema/soo/pkg/relationships"
 )
@@ -64,7 +64,10 @@ func (d *DecodeMap) AddTarget(filePath string, ifc interface{}, sourceFileType s
 		d.decoded = make(map[string]struct{})
 		d.indices = make(map[string]int)
 	}
-	fn := filepath.Clean(filePath)
+
+	// we use path.Clean instead of filepath.Clean to ensure we
+	// end up with forward separators
+	fn := path.Clean(filePath)
 	if _, ok := d.decoded[fn]; ok {
 		// already decoded this file
 		return false
@@ -117,7 +120,10 @@ func (d *DecodeMap) Decode(files []*zip.File) error {
 					d.rels = append(d.rels, dest)
 					// find the path that any files mentioned in the
 					// relationships file are relative to
-					basePath, _ := filepath.Split(filepath.Clean(f.Name + "/../"))
+
+					// we use path.Clean instead of filepath.Clean to ensure we
+					// end up with forward separators
+					basePath, _ := path.Split(path.Clean(f.Name + "/../"))
 					d.basePaths[drel] = basePath
 					// ensure we make another decode pass
 					pass++
