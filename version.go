@@ -9,8 +9,9 @@ package gooxml
 
 import "time"
 
-// Release is the last release version of the software.
-var ReleaseVersion = "v0.4.0"
+// ReleaseVersion is the last release version of the software and must be in the
+// format x.y
+var ReleaseVersion = "v0.5000"
 
 // ReleaseDate is the release date of the source code for licensing purposes.
 var ReleaseDate = time.Date(2018, 1, 4, 0, 0, 0, 0, time.UTC)

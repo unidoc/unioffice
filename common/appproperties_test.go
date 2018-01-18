@@ -8,6 +8,8 @@
 package common_test
 
 import (
+	"fmt"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -30,7 +32,8 @@ func TestNewAppDefaultProperties(t *testing.T) {
 		t.Errorf("unexpected application: %s", got)
 	}
 
-	if got := ap.ApplicationVersion(); got != strings.Replace(gooxml.ReleaseVersion, "v", "", -1) {
+	fv, _ := strconv.ParseFloat(strings.Replace(gooxml.ReleaseVersion, "v", "", -1), 64)
+	if got := ap.ApplicationVersion(); got != fmt.Sprintf("%07.4f", fv) {
 		t.Errorf("unexpected application version: %s", got)
 	}
 	ap.X().AppVersion = nil
