@@ -8,6 +8,8 @@
 package common
 
 import (
+	"fmt"
+	"strconv"
 	"strings"
 
 	"baliance.com/gooxml"
@@ -27,7 +29,10 @@ func NewAppProperties() AppProperties {
 	p.SetApplication("baliance.com/gooxml")
 	p.SetDocSecurity(0)
 	p.SetLinksUpToDate(false)
-	p.SetApplicationVersion(strings.Replace(gooxml.ReleaseVersion, "v", "", -1))
+	// trim the 'v'
+	ver := strings.Replace(gooxml.ReleaseVersion, "v", "", -1)
+	f, _ := strconv.ParseFloat(ver, 64)
+	p.SetApplicationVersion(fmt.Sprintf("%07.4f", f))
 	return p
 }
 
@@ -64,7 +69,8 @@ func (a AppProperties) ApplicationVersion() string {
 	return ""
 }
 
-// SetApplicationVersion sets the version of the application that created the document.
+// SetApplicationVersion sets the version of the application that created the
+// document.  Per MS, the verison string mut be in the form 'XX.YYYY'.
 func (a AppProperties) SetApplicationVersion(s string) {
 	a.x.AppVersion = &s
 }
