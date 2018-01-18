@@ -85,6 +85,12 @@ func (c CoreProperties) SetLastModifiedBy(s string) {
 	c.x.LastModifiedBy = &s
 }
 
+// SetLanguage records the language of the document.
+func (c CoreProperties) SetLanguage(s string) {
+	c.x.Language = &gooxml.XSDAny{XMLName: xml.Name{Local: "dc:language"}}
+	c.x.Language.Data = []byte(s)
+}
+
 const cpTimeFormatW3CDTF = "2006-01-02T15:04:05Z"
 
 func parseTime(x *gooxml.XSDAny) time.Time {

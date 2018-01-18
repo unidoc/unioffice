@@ -25,6 +25,8 @@ func NewAppProperties() AppProperties {
 	p := AppProperties{x: extended_properties.NewProperties()}
 	p.SetCompany("Baliance LLC")
 	p.SetApplication("baliance.com/gooxml")
+	p.SetDocSecurity(0)
+	p.SetLinksUpToDate(false)
 	p.SetApplicationVersion(strings.Replace(gooxml.ReleaseVersion, "v", "", -1))
 	return p
 }
@@ -36,6 +38,16 @@ func (a AppProperties) Application() string {
 		return *a.x.Application
 	}
 	return ""
+}
+
+// SetLinksUpToDate sets the links up to date flag.
+func (a AppProperties) SetLinksUpToDate(v bool) {
+	a.x.LinksUpToDate = gooxml.Bool(v)
+}
+
+// SetDocSecurity sets the document security flag.
+func (a AppProperties) SetDocSecurity(v int32) {
+	a.x.DocSecurity = gooxml.Int32(v)
 }
 
 // SetApplication sets the name of the application that created the document.
