@@ -11,6 +11,7 @@ import (
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/color"
 	"baliance.com/gooxml/measurement"
+	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 	"baliance.com/gooxml/schema/soo/wml"
 )
 
@@ -222,5 +223,16 @@ func (r RunProperties) SetEffect(e wml.ST_TextEffect) {
 	} else {
 		r.x.Effect = wml.NewCT_TextEffect()
 		r.x.Effect.ValAttr = wml.ST_TextEffectShimmer
+	}
+}
+
+// SetVerticalAlignment controls the vertical alignment of the run, this is used
+// to control if text is superscript/subscript.
+func (r RunProperties) SetVerticalAlignment(v sharedTypes.ST_VerticalAlignRun) {
+	if v == sharedTypes.ST_VerticalAlignRunUnset {
+		r.x.VertAlign = nil
+	} else {
+		r.x.VertAlign = wml.NewCT_VerticalAlignRun()
+		r.x.VertAlign.ValAttr = v
 	}
 }
