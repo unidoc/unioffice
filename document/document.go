@@ -38,8 +38,11 @@ type Document struct {
 	Numbering Numbering // numbering styles within the doucment
 	Styles    Styles    // styles that are use and can be used within the document
 
-	headers     []*wml.Hdr
-	footers     []*wml.Ftr
+	headers []*wml.Hdr
+	hdrRels []common.Relationships
+
+	footers []*wml.Ftr
+
 	docRels     common.Relationships
 	themes      []*dml.Theme
 	webSettings *wml.WebSettings
@@ -98,6 +101,8 @@ func (d *Document) AddHeader() Header {
 	d.docRels.AddRelationship(path, gooxml.HeaderType)
 
 	d.ContentTypes.AddOverride("/word/"+path, "application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml")
+	d.hdrRels = append(d.hdrRels, common.NewRelationships())
+
 	return Header{d, hdr}
 }
 
@@ -213,8 +218,12 @@ func (d *Document) Save(w io.Writer) error {
 		}
 	}
 	for i, hdr := range d.headers {
-		if err := zippkg.MarshalXMLByTypeIndex(z, dt, gooxml.HeaderType, i+1, hdr); err != nil {
+		fn := gooxml.AbsoluteFilename(dt, gooxml.HeaderType, i+1)
+		if err := zippkg.MarshalXML(z, fn, hdr); err != nil {
 			return err
+		}
+		if !d.hdrRels[i].IsEmpty() {
+			zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), d.hdrRels[i].X())
 		}
 	}
 	for i, ftr := range d.footers {
@@ -615,6 +624,11 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 		decMap.AddTarget(target, hdr, typ, uint32(len(d.headers)))
 		d.headers = append(d.headers, hdr)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.headers))
+
+		// look for header rels
+		hdrRel := common.NewRelationships()
+		decMap.AddTarget(zippkg.RelationsPathFor(target), hdrRel.X(), typ, 0)
+		d.hdrRels = append(d.hdrRels, hdrRel)
 
 	case gooxml.FooterType:
 		ftr := wml.NewFtr()

@@ -7,7 +7,14 @@
 
 package document
 
-import "baliance.com/gooxml/schema/soo/wml"
+import (
+	"errors"
+	"fmt"
+
+	"baliance.com/gooxml"
+	"baliance.com/gooxml/common"
+	"baliance.com/gooxml/schema/soo/wml"
+)
 
 // Header is a header for a document section.
 type Header struct {
@@ -69,4 +76,32 @@ func (h Header) RemoveParagraph(p Paragraph) {
 // Clear clears all content within a header
 func (h Header) Clear() {
 	h.x.EG_ContentBlockContent = nil
+}
+
+// AddImage adds an image to the document package, returning a reference that
+// can be used to add the image to a run and place it in the document contents.
+func (h Header) AddImage(i common.Image) (common.ImageRef, error) {
+	var hdrRels common.Relationships
+	for i, hdr := range h.d.headers {
+		if hdr == h.x {
+			hdrRels = h.d.hdrRels[i]
+		}
+	}
+
+	r := common.MakeImageRef(i, &h.d.DocBase, hdrRels)
+	if i.Path == "" {
+		return r, errors.New("image must have a path")
+	}
+
+	if i.Format == "" {
+		return r, errors.New("image must have a valid format")
+	}
+	if i.Size.X == 0 || i.Size.Y == 0 {
+		return r, errors.New("image must have a valid size")
+	}
+
+	h.d.Images = append(h.d.Images, r)
+	fn := fmt.Sprintf("media/image%d.%s", len(h.d.Images), i.Format)
+	hdrRels.AddRelationship(fn, gooxml.ImageType)
+	return r, nil
 }
