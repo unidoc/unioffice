@@ -3,6 +3,9 @@
 package main
 
 import (
+	"log"
+
+	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/document"
 	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/soo/wml"
@@ -11,12 +14,27 @@ import (
 func main() {
 	doc := document.New()
 
+	img, err := common.ImageFromFile("gophercolor.png")
+	if err != nil {
+		log.Fatalf("unable to create image: %s", err)
+	}
+
 	hdr := doc.AddHeader()
+	// We need to add a reference of the image to the header instead of to the
+	// document
+	iref, err := hdr.AddImage(img)
+	if err != nil {
+		log.Fatalf("unable to to add image to document: %s", err)
+	}
+
 	para := hdr.AddParagraph()
 	para.Properties().AddTabStop(2.5*measurement.Inch, wml.ST_TabJcCenter, wml.ST_TabTlcNone)
 	run := para.AddRun()
 	run.AddTab()
 	run.AddText("My Document Title")
+
+	imgInl, _ := para.AddRun().AddDrawingInline(iref)
+	imgInl.SetSize(1*measurement.Inch, 1*measurement.Inch)
 
 	// Headers and footers are not immediately associated with a document as a
 	// document can have multiple headers and footers for different sections.

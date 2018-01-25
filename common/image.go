@@ -38,7 +38,7 @@ type ImageRef struct {
 
 // MakeImageRef constructs an image reference which is a reference to a
 // particular image file inside a document.  The same image can be used multiple
-// times in a document by re-useng the ImageRef.
+// times in a document by re-use the ImageRef.
 func MakeImageRef(img Image, d *DocBase, rels Relationships) ImageRef {
 	return ImageRef{img: img, d: d, rels: rels}
 }

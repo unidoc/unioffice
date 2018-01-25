@@ -11,6 +11,7 @@ import (
 	"bytes"
 	"testing"
 
+	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/document"
 	"baliance.com/gooxml/testhelper"
 )
@@ -175,4 +176,42 @@ func TestDuplicateBookmarks(t *testing.T) {
 	if err := doc.Validate(); err == nil {
 		t.Errorf("expected error due to duplicate bookmark names")
 	}
+}
+
+func TestHeaderImages(t *testing.T) {
+	doc := document.New()
+	img1, err := common.ImageFromFile("testdata/gopher.png")
+	if err != nil {
+		t.Fatalf("unable to create image: %s", err)
+	}
+	img2, err := common.ImageFromFile("testdata/gophercolor.png")
+	if err != nil {
+		t.Fatalf("unable to create image: %s", err)
+	}
+	dir1, err := doc.AddImage(img1)
+	if err != nil {
+		t.Fatalf("unable to add image to doc: %s", err)
+	}
+	dir2, err := doc.AddImage(img2)
+	if err != nil {
+		t.Fatalf("unable to add image to doc: %s", err)
+	}
+
+	if dir1.RelID() != "rId4" {
+		t.Errorf("expected rId4")
+	}
+	if dir2.RelID() != "rId5" {
+		t.Errorf("expected rId5")
+	}
+
+	hdr := doc.AddHeader()
+	hir1, err := hdr.AddImage(img1)
+	hir2, err := hdr.AddImage(img2)
+	if hir1.RelID() != "rId1" {
+		t.Errorf("expected rId1")
+	}
+	if hir2.RelID() != "rId2" {
+		t.Errorf("expected rId1")
+	}
+
 }
