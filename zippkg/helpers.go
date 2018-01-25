@@ -14,7 +14,11 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"sort"
 	"strings"
+
+	"baliance.com/gooxml/algo"
+	"baliance.com/gooxml/schema/soo/pkg/relationships"
 )
 
 // RelationsPathFor returns the relations path for a given filename.
@@ -37,6 +41,16 @@ func Decode(f *zip.File, dest interface{}) error {
 	dec := xml.NewDecoder(rc)
 	if err := dec.Decode(dest); err != nil {
 		return fmt.Errorf("error decoding %s: %s", f.Name, err)
+	}
+
+	// this ensures that relationship ID is increasing, which we apparently rely
+	// on....
+	if ds, ok := dest.(*relationships.Relationships); ok {
+		sort.Slice(ds.Relationship, func(i, j int) bool {
+			lhs := ds.Relationship[i]
+			rhs := ds.Relationship[j]
+			return algo.NaturalLess(lhs.IdAttr, rhs.IdAttr)
+		})
 	}
 	return nil
 }

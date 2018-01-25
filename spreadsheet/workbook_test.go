@@ -269,3 +269,24 @@ func TestSheetGetName(t *testing.T) {
 		t.Errorf("expected no error")
 	}
 }
+
+// TestOpenOrderedSheets test for issue #154 where sheet title didn't match sheet content.
+func TestOpenOrderedSheets(t *testing.T) {
+	wb, err := spreadsheet.Open("./testdata/ordered-sheets.xlsx")
+	defer wb.Close()
+	if err != nil {
+		t.Fatalf("error opening workbook: %s", err)
+	}
+
+	for i, sheet := range wb.Sheets() {
+		expContent := fmt.Sprintf("%d", i+1)
+		if sheet.Name() != expContent {
+			t.Errorf("expected sheet %d name = %s, got %s", i, expContent, sheet.Name())
+		}
+		got := sheet.Cell("A1").GetFormattedValue()
+		if got != expContent {
+			t.Errorf("expected sheet %d cell A1 = %s, got %s", i, expContent, got)
+		}
+	}
+
+}
