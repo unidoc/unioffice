@@ -172,6 +172,15 @@ func (c Cell) SetNumber(v float64) {
 	c.x.V = gooxml.String(strconv.FormatFloat(v, 'g', -1, 64))
 }
 
+// Column returns the cell column
+func (c Cell) Column() (string, error) {
+	cref, err := reference.ParseCellReference(c.Reference())
+	if err != nil {
+		return "", err
+	}
+	return cref.Column, nil
+}
+
 func (c Cell) getFormat() string {
 	if c.x.SAttr == nil {
 		return "General"
