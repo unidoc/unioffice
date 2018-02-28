@@ -214,7 +214,22 @@ func (p Paragraph) SetNumberingDefinition(nd NumberingDefinition) {
 		p.x.PPr.NumPr = wml.NewCT_NumPr()
 	}
 	lvl := wml.NewCT_DecimalNumber()
-	lvl.ValAttr = int64(nd.AbstractNumberID())
+
+	numID := int64(-1)
+	for _, n := range p.d.Numbering.x.Num {
+		if n.AbstractNumId != nil && n.AbstractNumId.ValAttr == nd.AbstractNumberID() {
+			numID = n.NumIdAttr
+		}
+	}
+	if numID == -1 {
+		num := wml.NewCT_Num()
+		p.d.Numbering.x.Num = append(p.d.Numbering.x.Num, num)
+		num.NumIdAttr = int64(len(p.d.Numbering.x.Num))
+		num.AbstractNumId = wml.NewCT_DecimalNumber()
+		num.AbstractNumId.ValAttr = nd.AbstractNumberID()
+	}
+
+	lvl.ValAttr = numID
 	p.x.PPr.NumPr.NumId = lvl
 }
 
