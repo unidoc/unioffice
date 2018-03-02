@@ -11,6 +11,7 @@ import (
 	"log"
 
 	"baliance.com/gooxml"
+	"baliance.com/gooxml/measurement"
 	"baliance.com/gooxml/schema/soo/wml"
 )
 
@@ -49,4 +50,19 @@ func (s Section) SetFooter(f Footer, t wml.ST_HdrFtr) {
 		log.Print("unable to determine footer ID")
 	}
 	ftrRef.FooterReference.IdAttr = hdrID
+}
+
+// SetPageMargins sets the page margins for a section
+func (s Section) SetPageMargins(top, right, bottom, left, header, footer, gutter measurement.Distance) {
+
+	margins := wml.NewCT_PageMar()
+	margins.TopAttr.Int64 = gooxml.Int64(int64(top / measurement.Twips))
+	margins.BottomAttr.Int64 = gooxml.Int64(int64(bottom / measurement.Twips))
+	margins.RightAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(right / measurement.Twips))
+	margins.LeftAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(left / measurement.Twips))
+	margins.HeaderAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(header / measurement.Twips))
+	margins.FooterAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(footer / measurement.Twips))
+	margins.GutterAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(gutter / measurement.Twips))
+
+	s.x.PgMar = margins
 }
