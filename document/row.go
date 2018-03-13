@@ -38,3 +38,14 @@ func (r Row) Properties() RowProperties {
 	}
 	return RowProperties{r.x.TrPr}
 }
+
+// Cells returns the cells defined in the table.
+func (r Row) Cells() []Cell {
+	ret := []Cell{}
+	for _, cc := range r.x.EG_ContentCellContent {
+		for _, ctCell := range cc.Tc {
+			ret = append(ret, Cell{r.d, ctCell})
+		}
+	}
+	return ret
+}

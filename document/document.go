@@ -263,6 +263,22 @@ func (d *Document) AddTable() Table {
 	return Table{d, tbl}
 }
 
+// Tables returns the tables defined in the document.
+func (d *Document) Tables() []Table {
+	ret := []Table{}
+	if d.x.Body == nil {
+		return nil
+	}
+	for _, ble := range d.x.Body.EG_BlockLevelElts {
+		for _, c := range ble.EG_ContentBlockContent {
+			for _, t := range c.Tbl {
+				ret = append(ret, Table{d, t})
+			}
+		}
+	}
+	return ret
+}
+
 // AddParagraph adds a new paragraph to the document body.
 func (d *Document) AddParagraph() Paragraph {
 	elts := wml.NewEG_BlockLevelElts()
