@@ -38,3 +38,14 @@ func (t Table) AddRow() Row {
 	c.Tr = append(c.Tr, tr)
 	return Row{t.d, tr}
 }
+
+// Rows returns the rows defined in the table.
+func (t Table) Rows() []Row {
+	ret := []Row{}
+	for _, rc := range t.x.EG_ContentRowContent {
+		for _, ctRow := range rc.Tr {
+			ret = append(ret, Row{t.d, ctRow})
+		}
+	}
+	return ret
+}

@@ -39,3 +39,16 @@ func (c Cell) Properties() CellProperties {
 	}
 	return CellProperties{c.x.TcPr}
 }
+
+// Paragraphs returns the paragraphs defined in the cell.
+func (c Cell) Paragraphs() []Paragraph {
+	ret := []Paragraph{}
+	for _, ble := range c.x.EG_BlockLevelElts {
+		for _, cbc := range ble.EG_ContentBlockContent {
+			for _, p := range cbc.P {
+				ret = append(ret, Paragraph{c.d, p})
+			}
+		}
+	}
+	return ret
+}
