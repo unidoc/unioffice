@@ -45,25 +45,27 @@ type Presentation struct {
 	themeRels  []common.Relationships
 }
 
-// New initializes and reurns a new presentation
-func New() *Presentation {
+func newEmpty() *Presentation {
 	p := &Presentation{x: pml.NewPresentation()}
-
 	p.x.SldIdLst = pml.NewCT_SlideIdList()
 	p.x.ConformanceAttr = sharedTypes.ST_ConformanceClassTransitional
 	p.AppProperties = common.NewAppProperties()
 	p.CoreProperties = common.NewCoreProperties()
 	p.ContentTypes = common.NewContentTypes()
+	p.Rels = common.NewRelationships()
+	p.prels = common.NewRelationships()
+	return p
+}
+
+// New initializes and reurns a new presentation
+func New() *Presentation {
+	p := newEmpty()
 
 	p.ContentTypes.AddOverride("/ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml")
-
-	p.Rels = common.NewRelationships()
 
 	p.Rels.AddRelationship("docProps/core.xml", "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties")
 	p.Rels.AddRelationship("docProps/app.xml", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties")
 	p.Rels.AddRelationship("ppt/presentation.xml", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument")
-
-	p.prels = common.NewRelationships()
 
 	p.x.SldMasterIdLst = pml.NewCT_SlideMasterIdList()
 	m := pml.NewSldMaster()
