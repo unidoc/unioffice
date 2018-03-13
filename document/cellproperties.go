@@ -35,6 +35,16 @@ func (c CellProperties) SetColumnSpan(cols int) {
 	}
 }
 
+// SetVerticalMerge controls the vertical merging of cells.
+func (c CellProperties) SetVerticalMerge(mergeVal wml.ST_Merge) {
+	if mergeVal == wml.ST_MergeUnset {
+		c.x.VMerge = nil
+	} else {
+		c.x.VMerge = wml.NewCT_VMerge()
+		c.x.VMerge.ValAttr = mergeVal
+	}
+}
+
 // SetWidthAuto sets the the cell width to automatic.
 func (c CellProperties) SetWidthAuto() {
 	c.x.TcW = wml.NewCT_TblWidth()
