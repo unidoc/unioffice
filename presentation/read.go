@@ -19,7 +19,7 @@ import (
 
 // Read reads a document from an io.Reader.
 func Read(r io.ReaderAt, size int64) (*Presentation, error) {
-	doc := New()
+	doc := newEmpty()
 
 	td, err := ioutil.TempDir("", "gooxml-pptx")
 	if err != nil {

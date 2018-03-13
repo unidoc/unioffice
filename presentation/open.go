@@ -20,7 +20,7 @@ func OpenTemplate(fn string) (*Presentation, error) {
 	return p, nil
 }
 
-// Open opens and reads a document from a file (.docx).
+// Open opens and reads a document from a file (.pptx).
 func Open(filename string) (*Presentation, error) {
 	f, err := os.Open(filename)
 	if err != nil {
