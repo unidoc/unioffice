@@ -49,8 +49,21 @@ func main() {
 		cell := row.AddCell()
 		// column span / merged cells
 		cell.Properties().SetColumnSpan(2)
+
 		run := cell.AddParagraph().AddRun()
 		run.AddText("Cells can span multiple columns")
+
+		row = table.AddRow()
+		cell = row.AddCell()
+		cell.Properties().SetVerticalMerge(wml.ST_MergeRestart)
+		cell.AddParagraph().AddRun().AddText("Vertical Merge")
+		row.AddCell().AddParagraph().AddRun().AddText("")
+
+		row = table.AddRow()
+		cell = row.AddCell()
+		cell.Properties().SetVerticalMerge(wml.ST_MergeContinue)
+		cell.AddParagraph().AddRun().AddText("Vertical Merge 2")
+		row.AddCell().AddParagraph().AddRun().AddText("")
 
 		row = table.AddRow()
 		row.AddCell().AddParagraph().AddRun().AddText("Street Address")
