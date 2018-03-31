@@ -85,12 +85,14 @@ func (r Run) AddTab() {
 
 // AddFieldWithFormatting adds a field (automatically computed text) to the
 // document with field specifc formatting.
-func (r Run) AddFieldWithFormatting(code string, fmt string) {
+func (r Run) AddFieldWithFormatting(code string, fmt string, isDirty bool) {
 	ic := r.newIC()
 	ic.FldChar = wml.NewCT_FldChar()
 	ic.FldChar.FldCharTypeAttr = wml.ST_FldCharTypeBegin
-	ic.FldChar.DirtyAttr = &sharedTypes.ST_OnOff{}
-	ic.FldChar.DirtyAttr.Bool = gooxml.Bool(true)
+	if isDirty {
+		ic.FldChar.DirtyAttr = &sharedTypes.ST_OnOff{}
+		ic.FldChar.DirtyAttr.Bool = gooxml.Bool(true)
+	}
 
 	ic = r.newIC()
 	ic.InstrText = wml.NewCT_Text()
@@ -107,7 +109,7 @@ func (r Run) AddFieldWithFormatting(code string, fmt string) {
 
 // AddField adds a field (automatically computed text) to the document.
 func (r Run) AddField(code string) {
-	r.AddFieldWithFormatting(code, "")
+	r.AddFieldWithFormatting(code, "", true)
 }
 
 // Properties returns the run properties.
