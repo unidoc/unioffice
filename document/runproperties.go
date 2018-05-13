@@ -42,6 +42,7 @@ func (r RunProperties) SetFontFamily(family string) {
 	}
 	r.x.RFonts.AsciiAttr = gooxml.String(family)
 	r.x.RFonts.HAnsiAttr = gooxml.String(family)
+	r.x.RFonts.EastAsiaAttr = gooxml.String(family)
 }
 
 // SetSize sets the font size for a run.
