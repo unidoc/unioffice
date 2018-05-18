@@ -13,4 +13,4 @@ import "time"
 var ReleaseVersion = "v0.5000"
 
 // ReleaseDate is the release date of the source code for licensing purposes.
-var ReleaseDate = time.Date(2018, 3, 30, 0, 0, 0, 0, time.UTC)
+var ReleaseDate = time.Date(2018, 5, 18, 0, 0, 0, 0, time.UTC)
