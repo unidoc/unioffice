@@ -21,6 +21,7 @@ import (
 	"errors"
 	"io"
 	"log"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -142,8 +143,8 @@ func (l License) Encoded() string {
 // InstallLicense installs a license, returning an error if the license is
 // invalid or expired. Expiration checks the ReleaseDate variable in version.go.
 func InstallLicense(s string) error {
-	s = strings.Replace(s, "\r", "", -1)
-	s = strings.Replace(s, "\n", "", -1)
+	re := regexp.MustCompile("\\s")
+	s = re.ReplaceAllString(s, "")
 
 	var r io.Reader
 	r = strings.NewReader(s)
