@@ -277,21 +277,41 @@ func (d *Document) insertTable(relativeTo Paragraph, before bool) Table {
 	}
 	for i, ble := range d.x.Body.EG_BlockLevelElts {
 		for _, c := range ble.EG_ContentBlockContent {
-			for _, p := range c.P {
+			for j, p := range c.P {
 				// found the paragraph
 				if p == relativeTo.X() {
+					tbl := wml.NewCT_Tbl()
 					elts := wml.NewEG_BlockLevelElts()
 					cbc := wml.NewEG_ContentBlockContent()
 					elts.EG_ContentBlockContent = append(elts.EG_ContentBlockContent, cbc)
-					tbl := wml.NewCT_Tbl()
 					cbc.Tbl = append(cbc.Tbl, tbl)
 					d.x.Body.EG_BlockLevelElts = append(d.x.Body.EG_BlockLevelElts, nil)
 					if before {
 						copy(d.x.Body.EG_BlockLevelElts[i+1:], d.x.Body.EG_BlockLevelElts[i:])
 						d.x.Body.EG_BlockLevelElts[i] = elts
+						if j != 0 {
+							elts := wml.NewEG_BlockLevelElts()
+							cbc := wml.NewEG_ContentBlockContent()
+							elts.EG_ContentBlockContent = append(elts.EG_ContentBlockContent, cbc)
+							cbc.P = c.P[:j]
+							d.x.Body.EG_BlockLevelElts = append(d.x.Body.EG_BlockLevelElts, nil)
+							copy(d.x.Body.EG_BlockLevelElts[i+1:], d.x.Body.EG_BlockLevelElts[i:])
+							d.x.Body.EG_BlockLevelElts[i] = elts
+						}
+						c.P = c.P[j:]
 					} else {
 						copy(d.x.Body.EG_BlockLevelElts[i+2:], d.x.Body.EG_BlockLevelElts[i+1:])
 						d.x.Body.EG_BlockLevelElts[i+1] = elts
+						if j != len(c.P)-1 {
+							elts := wml.NewEG_BlockLevelElts()
+							cbc := wml.NewEG_ContentBlockContent()
+							elts.EG_ContentBlockContent = append(elts.EG_ContentBlockContent, cbc)
+							cbc.P = c.P[j+1:]
+							d.x.Body.EG_BlockLevelElts = append(d.x.Body.EG_BlockLevelElts, nil)
+							copy(d.x.Body.EG_BlockLevelElts[i+3:], d.x.Body.EG_BlockLevelElts[i+2:])
+							d.x.Body.EG_BlockLevelElts[i+2] = elts
+						}
+						c.P = c.P[:j+1]
 					}
 					return Table{d, tbl}
 				}
