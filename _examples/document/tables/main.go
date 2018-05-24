@@ -225,9 +225,10 @@ func main() {
 		}
 	}
 
-	// Seventh Table - Insert
+	// Sixth Table - Insert
 	{
-		table := doc.InsertTableAfter(doc.Paragraphs()[5])
+		doc.InsertParagraphBefore(doc.Paragraphs()[5])
+		table := doc.InsertTableBefore(doc.Paragraphs()[5])
 		table.Properties().SetWidthPercent(90)
 		table.Properties().SetAlignment(wml.ST_JcTableCenter)
 		borders := table.Properties().Borders()

@@ -108,17 +108,26 @@ func TestInsertTable(t *testing.T) {
 	if len(doc.Paragraphs()) != 0 {
 		t.Errorf("expected 0 paragraphs, got %d", len(doc.Paragraphs()))
 	}
-	p := doc.AddParagraph()
-	before := doc.InsertTableBefore(p)
-	after := doc.InsertTableAfter(p)
-	if len(doc.Tables()) != 2 {
-		t.Errorf("expected 2 tables, got %d", len(doc.Tables()))
+	p1 := doc.AddParagraph()
+	p2 := doc.AddParagraph()
+	beforeP1 := doc.InsertTableBefore(p1)
+	afterP1 := doc.InsertTableAfter(p1)
+	beforeP2 := doc.InsertTableBefore(p2)
+	afterP2 := doc.InsertTableAfter(p2)
+	if len(doc.Tables()) != 4 {
+		t.Errorf("expected 4 tables, got %d", len(doc.Tables()))
 	}
-	if doc.Tables()[0].X() != before.X() {
-		t.Error("InsertTableBefore failed")
+	if doc.Tables()[0].X() != beforeP1.X() {
+		t.Error("InsertTableBefore 1st paragraph failed")
 	}
-	if doc.Tables()[1].X() != after.X() {
-		t.Error("InsertTableAfter failed")
+	if doc.Tables()[1].X() != afterP1.X() {
+		t.Error("InsertTableAfter 1st paragraph failed")
+	}
+	if doc.Tables()[2].X() != beforeP2.X() {
+		t.Error("InsertTableBefore 2nd paragraph failed")
+	}
+	if doc.Tables()[3].X() != afterP2.X() {
+		t.Error("InsertTableAfter 2nd paragraph failed")
 	}
 }
 
