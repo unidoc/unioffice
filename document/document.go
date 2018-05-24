@@ -263,6 +263,44 @@ func (d *Document) AddTable() Table {
 	return Table{d, tbl}
 }
 
+func (d *Document) InsertTableAfter(relativeTo Paragraph) Table {
+	return d.insertTable(relativeTo, false)
+}
+
+func (d *Document) InsertTableBefore(relativeTo Paragraph) Table {
+	return d.insertTable(relativeTo, true)
+}
+
+func (d *Document) insertTable(relativeTo Paragraph, before bool) Table {
+	if d.x.Body == nil {
+		return d.AddTable()
+	}
+	for i, ble := range d.x.Body.EG_BlockLevelElts {
+		for _, c := range ble.EG_ContentBlockContent {
+			for _, p := range c.P {
+				// found the paragraph
+				if p == relativeTo.X() {
+					elts := wml.NewEG_BlockLevelElts()
+					cbc := wml.NewEG_ContentBlockContent()
+					elts.EG_ContentBlockContent = append(elts.EG_ContentBlockContent, cbc)
+					tbl := wml.NewCT_Tbl()
+					cbc.Tbl = append(cbc.Tbl, tbl)
+					d.x.Body.EG_BlockLevelElts = append(d.x.Body.EG_BlockLevelElts, nil)
+					if before {
+						copy(d.x.Body.EG_BlockLevelElts[i+1:], d.x.Body.EG_BlockLevelElts[i:])
+						d.x.Body.EG_BlockLevelElts[i] = elts
+					} else {
+						copy(d.x.Body.EG_BlockLevelElts[i+2:], d.x.Body.EG_BlockLevelElts[i+1:])
+						d.x.Body.EG_BlockLevelElts[i+1] = elts
+					}
+					return Table{d, tbl}
+				}
+			}
+		}
+	}
+	return d.AddTable()
+}
+
 // Tables returns the tables defined in the document.
 func (d *Document) Tables() []Table {
 	ret := []Table{}

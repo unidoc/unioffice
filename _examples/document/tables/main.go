@@ -181,7 +181,7 @@ func main() {
 
 	}
 	doc.AddParagraph()
-	// Sixth Table - Styled
+	// Seventh Table - Styled
 	{
 		// construct a table style
 		ts := doc.Styles.AddStyle("MyTableStyle", wml.ST_StyleTypeTable, false)
@@ -223,6 +223,33 @@ func main() {
 				cell.AddParagraph().AddRun().AddText(fmt.Sprintf("row %d col %d", r+1, c+1))
 			}
 		}
+	}
+
+	// Seventh Table - Insert
+	{
+		table := doc.InsertTableAfter(doc.Paragraphs()[5])
+		table.Properties().SetWidthPercent(90)
+		table.Properties().SetAlignment(wml.ST_JcTableCenter)
+		borders := table.Properties().Borders()
+		borders.SetAll(wml.ST_BorderSingle, color.Auto, 1*measurement.Point)
+
+		row := table.AddRow()
+
+		cell := row.AddCell()
+		cell.Properties().SetWidth(0.25 * measurement.Inch)
+		para := cell.AddParagraph()
+		run := para.AddRun()
+		run.AddText("Insert")
+		cell = row.AddCell()
+		cell.Properties().SetWidth(0.25 * measurement.Inch)
+		para = cell.AddParagraph()
+		run = para.AddRun()
+		run.AddText("new")
+		cell = row.AddCell()
+		cell.Properties().SetWidth(2.75 * measurement.Inch)
+		para = cell.AddParagraph()
+		run = para.AddRun()
+		run.AddText("table")
 	}
 	if err := doc.Validate(); err != nil {
 		log.Fatalf("error during validation: %s", err)
