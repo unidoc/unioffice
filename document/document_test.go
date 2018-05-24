@@ -103,6 +103,25 @@ func TestInsertParagraph(t *testing.T) {
 	}
 }
 
+func TestInsertTable(t *testing.T) {
+	doc := document.New()
+	if len(doc.Paragraphs()) != 0 {
+		t.Errorf("expected 0 paragraphs, got %d", len(doc.Paragraphs()))
+	}
+	p := doc.AddParagraph()
+	before := doc.InsertTableBefore(p)
+	after := doc.InsertTableAfter(p)
+	if len(doc.Tables()) != 2 {
+		t.Errorf("expected 2 tables, got %d", len(doc.Tables()))
+	}
+	if doc.Tables()[0].X() != before.X() {
+		t.Error("InsertTableBefore failed")
+	}
+	if doc.Tables()[1].X() != after.X() {
+		t.Error("InsertTableAfter failed")
+	}
+}
+
 func TestInsertRun(t *testing.T) {
 	doc := document.New()
 	if len(doc.Paragraphs()) != 0 {
