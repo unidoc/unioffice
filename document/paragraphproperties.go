@@ -28,12 +28,23 @@ func (p ParagraphProperties) X() *wml.CT_PPr {
 }
 
 // SetSpacing sets the spacing that comes before and after the paragraph.
+// Deprecated: See Spacing() instead which allows finer control.
 func (p ParagraphProperties) SetSpacing(before, after measurement.Distance) {
-	p.x.Spacing = wml.NewCT_Spacing()
+	if p.x.Spacing == nil {
+		p.x.Spacing = wml.NewCT_Spacing()
+	}
 	p.x.Spacing.BeforeAttr = &sharedTypes.ST_TwipsMeasure{}
 	p.x.Spacing.BeforeAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(before / measurement.Twips))
 	p.x.Spacing.AfterAttr = &sharedTypes.ST_TwipsMeasure{}
 	p.x.Spacing.AfterAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(after / measurement.Twips))
+}
+
+// Spacing returns the paragraph spacing settings.
+func (p ParagraphProperties) Spacing() ParagraphSpacing {
+	if p.x.Spacing == nil {
+		p.x.Spacing = wml.NewCT_Spacing()
+	}
+	return ParagraphSpacing{p.x.Spacing}
 }
 
 // SetAlignment controls the paragraph alignment
