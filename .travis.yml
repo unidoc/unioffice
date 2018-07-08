@@ -2,6 +2,8 @@ language: go
 go:
         - 1.8.x
         - 1.9.x
+        - 1.10.x
+        - tip
 
 install:
         - mkdir -p $HOME/gopath/src/baliance.com/
@@ -12,7 +14,6 @@ script:
         - ./build-examples.sh
         - go vet ./...
         - go test ./...
-        - GOFMT=$(gofmt -d -s .) && echo $GOFMT && test -z "$GOFMT"
 
 after_success:
         - ./test-coverage.sh
