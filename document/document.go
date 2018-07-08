@@ -16,6 +16,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"strings"
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
@@ -233,7 +234,7 @@ func (d *Document) Save(w io.Writer) error {
 	}
 
 	for i, img := range d.Images {
-		fn := fmt.Sprintf("word/media/image%d.png", i+1)
+		fn := fmt.Sprintf("word/media/image%d.%s", i+1, strings.ToLower(img.Format()))
 		if img.Path() != "" {
 			if err := zippkg.AddFileFromDisk(z, fn, img.Path()); err != nil {
 				return err

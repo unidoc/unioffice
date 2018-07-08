@@ -19,6 +19,7 @@ import (
 	"log"
 	"os"
 	"path"
+	"strings"
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/common"
@@ -440,6 +441,7 @@ func (p *Presentation) Save(w io.Writer) error {
 
 	for i, img := range p.Images {
 		fn := gooxml.AbsoluteFilename(gooxml.DocTypePresentation, gooxml.ImageType, i+1)
+		fn = fn[0:len(fn)-3] + strings.ToLower(img.Format())
 		if img.Path() != "" {
 			if err := zippkg.AddFileFromDisk(z, fn, img.Path()); err != nil {
 				return err
