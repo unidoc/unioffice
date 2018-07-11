@@ -45,3 +45,8 @@ func (s Settings) SetUpdateFieldsOnOpen(b bool) {
 		s.x.UpdateFields = wml.NewCT_OnOff()
 	}
 }
+
+// RemoveMailMerge removes any mail merge settings
+func (s Settings) RemoveMailMerge() {
+	s.x.MailMerge = nil
+}
