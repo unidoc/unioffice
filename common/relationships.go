@@ -44,7 +44,7 @@ func (r Relationships) Clear() {
 func (r Relationships) FindRIDForN(i int, t string) string {
 	for _, rel := range r.x.CT_Relationships.Relationship {
 		if rel.TypeAttr == t {
-			if i >= 0 {
+			if i == 0 {
 				return rel.IdAttr
 			}
 			i--
