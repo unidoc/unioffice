@@ -578,12 +578,13 @@ func (d *Document) AddImage(i common.Image) (common.ImageRef, error) {
 
 	d.Images = append(d.Images, r)
 	fn := fmt.Sprintf("media/image%d.%s", len(d.Images), i.Format)
-	d.docRels.AddRelationship(fn, gooxml.ImageType)
+	rel := d.docRels.AddRelationship(fn, gooxml.ImageType)
 	d.ContentTypes.EnsureDefault("png", "image/png")
 	d.ContentTypes.EnsureDefault("jpeg", "image/jpeg")
 	d.ContentTypes.EnsureDefault("jpg", "image/jpeg")
 	d.ContentTypes.EnsureDefault("wmf", "image/x-wmf")
 	d.ContentTypes.EnsureDefault(i.Format, "image/"+i.Format)
+	r.SetRelID(rel.X().IdAttr)
 	return r, nil
 }
 

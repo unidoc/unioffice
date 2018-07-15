@@ -102,6 +102,7 @@ func (f Footer) AddImage(i common.Image) (common.ImageRef, error) {
 
 	f.d.Images = append(f.d.Images, r)
 	fn := fmt.Sprintf("media/image%d.%s", len(f.d.Images), i.Format)
-	ftrRels.AddRelationship(fn, gooxml.ImageType)
+	rel := ftrRels.AddRelationship(fn, gooxml.ImageType)
+	r.SetRelID(rel.X().IdAttr)
 	return r, nil
 }

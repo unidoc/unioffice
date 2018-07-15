@@ -17,8 +17,6 @@ import (
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
-
-	"baliance.com/gooxml"
 )
 
 // Image is a container for image information. It's used as we need format and
@@ -31,9 +29,10 @@ type Image struct {
 
 // ImageRef is a reference to an image within a document.
 type ImageRef struct {
-	d    *DocBase
-	rels Relationships
-	img  Image
+	d     *DocBase
+	rels  Relationships
+	img   Image
+	relID string
 }
 
 // MakeImageRef constructs an image reference which is a reference to a
@@ -43,15 +42,13 @@ func MakeImageRef(img Image, d *DocBase, rels Relationships) ImageRef {
 	return ImageRef{img: img, d: d, rels: rels}
 }
 
+func (i *ImageRef) SetRelID(id string) {
+	i.relID = id
+}
+
 // RelID returns the relationship ID.
 func (i ImageRef) RelID() string {
-	for imgIdx, ir := range i.d.Images {
-		if ir.img == i.img {
-			imgID := i.rels.FindRIDForN(imgIdx, gooxml.ImageType)
-			return imgID
-		}
-	}
-	return ""
+	return i.relID
 }
 
 // Format returns the format of the underlying image
