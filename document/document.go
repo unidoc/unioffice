@@ -43,6 +43,7 @@ type Document struct {
 	hdrRels []common.Relationships
 
 	footers []*wml.Ftr
+	ftrRels []common.Relationships
 
 	docRels     common.Relationships
 	themes      []*dml.Theme
@@ -132,7 +133,10 @@ func (d *Document) AddFooter() Footer {
 	d.footers = append(d.footers, ftr)
 	path := fmt.Sprintf("footer%d.xml", len(d.footers))
 	d.docRels.AddRelationship(path, gooxml.FooterType)
+
 	d.ContentTypes.AddOverride("/word/"+path, "application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml")
+	d.ftrRels = append(d.ftrRels, common.NewRelationships())
+
 	return Footer{d, ftr}
 }
 
@@ -228,8 +232,12 @@ func (d *Document) Save(w io.Writer) error {
 		}
 	}
 	for i, ftr := range d.footers {
+		fn := gooxml.AbsoluteFilename(dt, gooxml.FooterType, i+1)
 		if err := zippkg.MarshalXMLByTypeIndex(z, dt, gooxml.FooterType, i+1, ftr); err != nil {
 			return err
+		}
+		if !d.ftrRels[i].IsEmpty() {
+			zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), d.ftrRels[i].X())
 		}
 	}
 
@@ -710,6 +718,11 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 		decMap.AddTarget(target, ftr, typ, uint32(len(d.footers)))
 		d.footers = append(d.footers, ftr)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.footers))
+
+		// look for footer rels
+		ftrRel := common.NewRelationships()
+		decMap.AddTarget(zippkg.RelationsPathFor(target), ftrRel.X(), typ, 0)
+		d.ftrRels = append(d.ftrRels, ftrRel)
 
 	case gooxml.ThemeType:
 		thm := dml.NewTheme()
