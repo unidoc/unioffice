@@ -7,7 +7,14 @@
 
 package document
 
-import "baliance.com/gooxml/schema/soo/wml"
+import (
+	"errors"
+	"fmt"
+
+	"baliance.com/gooxml"
+	"baliance.com/gooxml/common"
+	"baliance.com/gooxml/schema/soo/wml"
+)
 
 // Footer is a footer for a document section.
 type Footer struct {
@@ -69,4 +76,33 @@ func (f Footer) RemoveParagraph(p Paragraph) {
 // Clear clears all content within a footer
 func (f Footer) Clear() {
 	f.x.EG_ContentBlockContent = nil
+}
+
+// AddImage adds an image to the document package, returning a reference that
+// can be used to add the image to a run and place it in the document contents.
+func (f Footer) AddImage(i common.Image) (common.ImageRef, error) {
+	var ftrRels common.Relationships
+	for i, ftr := range f.d.footers {
+		if ftr == f.x {
+			ftrRels = f.d.ftrRels[i]
+		}
+	}
+
+	r := common.MakeImageRef(i, &f.d.DocBase, ftrRels)
+	if i.Path == "" {
+		return r, errors.New("image must have a path")
+	}
+
+	if i.Format == "" {
+		return r, errors.New("image must have a valid format")
+	}
+	if i.Size.X == 0 || i.Size.Y == 0 {
+		return r, errors.New("image must have a valid size")
+	}
+
+	f.d.Images = append(f.d.Images, r)
+	fn := fmt.Sprintf("media/image%d.%s", len(f.d.Images), i.Format)
+	rel := ftrRels.AddRelationship(fn, gooxml.ImageType)
+	r.SetRelID(rel.X().IdAttr)
+	return r, nil
 }

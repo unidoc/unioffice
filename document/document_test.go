@@ -206,7 +206,7 @@ func TestDuplicateBookmarks(t *testing.T) {
 	}
 }
 
-func TestHeaderImages(t *testing.T) {
+func TestHeaderAndFooterImages(t *testing.T) {
 	doc := document.New()
 	img1, err := common.ImageFromFile("testdata/gopher.png")
 	if err != nil {
@@ -226,20 +226,28 @@ func TestHeaderImages(t *testing.T) {
 	}
 
 	if dir1.RelID() != "rId4" {
-		t.Errorf("expected rId4")
+		t.Errorf("expected rId4 != %s", dir1.RelID())
 	}
 	if dir2.RelID() != "rId5" {
-		t.Errorf("expected rId5")
+		t.Errorf("expected rId5 != %s", dir2.RelID())
 	}
 
 	hdr := doc.AddHeader()
+	ftr := doc.AddFooter()
 	hir1, err := hdr.AddImage(img1)
+	fir1, err := ftr.AddImage(img1)
 	hir2, err := hdr.AddImage(img2)
+	fir2, err := ftr.AddImage(img2)
 	if hir1.RelID() != "rId1" {
-		t.Errorf("expected rId1")
+		t.Errorf("expected rId1 != %s", hir1.RelID())
 	}
 	if hir2.RelID() != "rId2" {
-		t.Errorf("expected rId1")
+		t.Errorf("expected rId2 != %s", hir2.RelID())
 	}
-
+	if fir1.RelID() != "rId1" {
+		t.Errorf("expected rId1 != %s", hir1.RelID())
+	}
+	if fir2.RelID() != "rId2" {
+		t.Errorf("expected rId2 != %s", hir2.RelID())
+	}
 }
