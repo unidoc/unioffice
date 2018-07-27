@@ -39,6 +39,41 @@ func (t Table) AddRow() Row {
 	return Row{t.d, tr}
 }
 
+// InsertRowAfter inserts a row after another row
+func (t Table) InsertRowAfter(r Row) Row {
+	for i, rc := range t.x.EG_ContentRowContent {
+		if len(rc.Tr) > 0 && r.X() == rc.Tr[0] {
+			c := wml.NewEG_ContentRowContent()
+			if len(t.x.EG_ContentRowContent) <= i+2 {
+				return t.AddRow()
+			}
+			t.x.EG_ContentRowContent = append(t.x.EG_ContentRowContent, nil)
+			copy(t.x.EG_ContentRowContent[i+2:], t.x.EG_ContentRowContent[i+1:])
+			t.x.EG_ContentRowContent[i+1] = c
+			tr := wml.NewCT_Row()
+			c.Tr = append(c.Tr, tr)
+			return Row{t.d, tr}
+		}
+	}
+	return t.AddRow()
+}
+
+// InsertRowBefore inserts a row before another row
+func (t Table) InsertRowBefore(r Row) Row {
+	for i, rc := range t.x.EG_ContentRowContent {
+		if len(rc.Tr) > 0 && r.X() == rc.Tr[0] {
+			c := wml.NewEG_ContentRowContent()
+			t.x.EG_ContentRowContent = append(t.x.EG_ContentRowContent, nil)
+			copy(t.x.EG_ContentRowContent[i+1:], t.x.EG_ContentRowContent[i:])
+			t.x.EG_ContentRowContent[i] = c
+			tr := wml.NewCT_Row()
+			c.Tr = append(c.Tr, tr)
+			return Row{t.d, tr}
+		}
+	}
+	return t.AddRow()
+}
+
 // Rows returns the rows defined in the table.
 func (t Table) Rows() []Row {
 	ret := []Row{}
