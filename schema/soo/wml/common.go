@@ -34,11 +34,11 @@ func ParseUnionST_SignedTwipsMeasure(s string) (ST_SignedTwipsMeasure, error) {
 	if sharedTypes.ST_UniversalMeasurePatternRe.MatchString(s) {
 		r.ST_UniversalMeasure = &s
 	} else {
-		v, err := strconv.ParseInt(s, 10, 32)
+		v, err := strconv.ParseFloat(s, 64)
 		if err != nil {
 			return r, fmt.Errorf("parsing %s as int: %s", s, err)
 		}
-		r.Int64 = &v
+		r.Int64 = gooxml.Int64(int64(v))
 	}
 	return r, nil
 }
@@ -48,11 +48,11 @@ func ParseUnionST_TwipsMeasure(s string) (sharedTypes.ST_TwipsMeasure, error) {
 	if sharedTypes.ST_PositiveUniversalMeasurePatternRe.MatchString(s) {
 		ret.ST_PositiveUniversalMeasure = &s
 	} else {
-		v, err := strconv.ParseUint(s, 10, 64)
+		v, err := strconv.ParseFloat(s, 64)
 		if err != nil {
 			return ret, fmt.Errorf("parsing %s as uint: %s", s, err)
 		}
-		ret.ST_UnsignedDecimalNumber = &v
+		ret.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(v))
 	}
 	return ret, nil
 }
@@ -80,11 +80,11 @@ func ParseUnionST_DecimalNumberOrPercent(s string) (ST_DecimalNumberOrPercent, e
 	if sharedTypes.ST_PercentagePatternRe.MatchString(s) {
 		ret.ST_Percentage = &s
 	} else {
-		v, err := strconv.ParseInt(s, 10, 32)
+		v, err := strconv.ParseFloat(s, 64)
 		if err != nil {
 			return ret, fmt.Errorf("parsing %s as int: %s", s, err)
 		}
-		ret.ST_UnqualifiedPercentage = &v
+		ret.ST_UnqualifiedPercentage = gooxml.Int64(int64(v))
 	}
 	return ret, nil
 }
@@ -98,11 +98,11 @@ func ParseUnionST_MeasurementOrPercent(s string) (ST_MeasurementOrPercent, error
 		if sharedTypes.ST_PercentagePatternRe.MatchString(s) {
 			r.ST_DecimalNumberOrPercent.ST_Percentage = &s
 		} else {
-			v, err := strconv.ParseInt(s, 10, 32)
+			v, err := strconv.ParseFloat(s, 64)
 			if err != nil {
 				return r, fmt.Errorf("parsing %s as int: %s", s, err)
 			}
-			r.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = &v
+			r.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(v))
 		}
 	}
 	return r, nil
@@ -114,11 +114,11 @@ func ParseUnionST_HpsMeasure(s string) (ST_HpsMeasure, error) {
 	if sharedTypes.ST_PositiveUniversalMeasurePatternRe.MatchString(s) {
 		r.ST_PositiveUniversalMeasure = &s
 	} else {
-		v, err := strconv.ParseUint(s, 10, 64)
+		v, err := strconv.ParseFloat(s, 64)
 		if err != nil {
 			return r, fmt.Errorf("parsing %s as uint: %s", s, err)
 		}
-		r.ST_UnsignedDecimalNumber = &v
+		r.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(v))
 	}
 	return r, nil
 }
@@ -128,11 +128,11 @@ func ParseUnionST_SignedHpsMeasure(s string) (ST_SignedHpsMeasure, error) {
 	if sharedTypes.ST_UniversalMeasurePatternRe.MatchString(s) {
 		r.ST_UniversalMeasure = &s
 	} else {
-		v, err := strconv.ParseInt(s, 10, 32)
+		v, err := strconv.ParseFloat(s, 64)
 		if err != nil {
 			return r, fmt.Errorf("parsing %s as int: %s", s, err)
 		}
-		r.Int64 = &v
+		r.Int64 = gooxml.Int64(int64(v))
 	}
 	return r, nil
 }
@@ -142,11 +142,11 @@ func ParseUnionST_TextScale(s string) (ST_TextScale, error) {
 	if ST_TextScalePercentPatternRe.MatchString(s) {
 		r.ST_TextScalePercent = &s
 	} else {
-		v, err := strconv.ParseInt(s, 10, 32)
+		v, err := strconv.ParseFloat(s, 64)
 		if err != nil {
 			return r, fmt.Errorf("parsing %s as int: %s", s, err)
 		}
-		r.ST_TextScaleDecimal = &v
+		r.ST_TextScaleDecimal = gooxml.Int64(int64(v))
 	}
 	return r, nil
 }
