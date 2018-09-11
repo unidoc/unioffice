@@ -26,11 +26,11 @@ func ParseUnionST_TwipsMeasure(s string) (sharedTypes.ST_TwipsMeasure, error) {
 	if sharedTypes.ST_PositiveUniversalMeasurePatternRe.MatchString(s) {
 		ret.ST_PositiveUniversalMeasure = &s
 	} else {
-		v, err := strconv.ParseUint(s, 10, 64)
+		v, err := strconv.ParseFloat(s, 64)
 		if err != nil {
 			return ret, fmt.Errorf("parsing %s as uint: %s", s, err)
 		}
-		ret.ST_UnsignedDecimalNumber = &v
+		ret.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(v))
 	}
 	return ret, nil
 }
