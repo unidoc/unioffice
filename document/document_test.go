@@ -251,3 +251,17 @@ func TestHeaderAndFooterImages(t *testing.T) {
 		t.Errorf("expected rId2 != %s", hir2.RelID())
 	}
 }
+
+func TestIssue198(t *testing.T) {
+	// this tests the image fixes performed as part of issue 198
+	// where we were breaking jpg images
+	fn := "issue198.docx"
+	doc, err := document.Open("testdata/" + fn)
+	if err != nil {
+		t.Errorf("error reading %s: %s", fn, err)
+		return
+	}
+	got := bytes.Buffer{}
+	doc.Save(&got)
+	testhelper.CompareGoldenZip(t, fn+".golden", got.Bytes())
+}

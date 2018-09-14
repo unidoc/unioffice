@@ -16,6 +16,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"baliance.com/gooxml"
@@ -752,6 +753,7 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case gooxml.ImageType:
+		var iref common.ImageRef
 		for i, f := range files {
 			if f == nil {
 				continue
@@ -765,12 +767,19 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 				if err != nil {
 					return err
 				}
-				iref := common.MakeImageRef(img, &d.DocBase, d.docRels)
+				iref = common.MakeImageRef(img, &d.DocBase, d.docRels)
 				d.Images = append(d.Images, iref)
 				files[i] = nil
 			}
 		}
+
+		ext := "." + strings.ToLower(iref.Format())
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.Images))
+		// ensure we don't change image formats
+		if newExt := filepath.Ext(rel.TargetAttr); newExt != ext {
+			rel.TargetAttr = rel.TargetAttr[0:len(rel.TargetAttr)-len(newExt)] + ext
+		}
+
 	default:
 		gooxml.Log("unsupported relationship type: %s tgt: %s", typ, target)
 	}
