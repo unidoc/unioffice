@@ -36,3 +36,32 @@ func TestRelationshipsUnmarshal(t *testing.T) {
 
 	testhelper.CompareGoldenXML(t, "rels.xml", got.Bytes())
 }
+
+func TestRelationshipsCreation(t *testing.T) {
+	f, err := os.Open("testdata/rels.xml")
+	if err != nil {
+		t.Fatalf("error reading content types file")
+	}
+	dec := xml.NewDecoder(f)
+	r := common.NewRelationships()
+	if err := dec.Decode(r.X()); err != nil {
+		t.Errorf("error decoding content types: %s", err)
+	}
+
+	rel := r.AddRelationship("foo", "http://bar")
+
+	// testdata/rels.xml contains rels with IDs 2,3,4.  We used to
+	// just use the len, but issue #198 pointed out a problem with
+	// that.  Now it should check and see that rId4 is in use, and
+	// go to the next free ID.
+	exp := "rId5"
+	if rel.ID() != exp {
+		t.Errorf("expected %s, got %s", exp, rel.ID())
+	}
+	// 6 is unused, so we should get it next
+	rel = r.AddRelationship("foo", "http://bar")
+	exp = "rId6"
+	if rel.ID() != exp {
+		t.Errorf("expected %s, got %s", exp, rel.ID())
+	}
+}

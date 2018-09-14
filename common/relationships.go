@@ -66,7 +66,13 @@ func (r Relationships) AddRelationship(target, ctype string) Relationship {
 		gooxml.Log("relationship type %s should start with 'http://'", ctype)
 	}
 	rel := relationships.NewRelationship()
-	rel.IdAttr = fmt.Sprintf("rId%d", len(r.x.Relationship)+1)
+	nextID := len(r.x.Relationship) + 1
+	for _, exRel := range r.x.Relationship {
+		if exRel.IdAttr == fmt.Sprintf("rId%d", nextID) {
+			nextID++
+		}
+	}
+	rel.IdAttr = fmt.Sprintf("rId%d", nextID)
 	rel.TargetAttr = target
 	rel.TypeAttr = ctype
 	r.x.Relationship = append(r.x.Relationship, rel)
