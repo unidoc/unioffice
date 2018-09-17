@@ -67,10 +67,16 @@ func (r Relationships) AddRelationship(target, ctype string) Relationship {
 	}
 	rel := relationships.NewRelationship()
 	nextID := len(r.x.Relationship) + 1
+	used := map[string]struct{}{}
+
+	// identify IDs in  use
 	for _, exRel := range r.x.Relationship {
-		if exRel.IdAttr == fmt.Sprintf("rId%d", nextID) {
-			nextID++
-		}
+		used[exRel.IdAttr] = struct{}{}
+	}
+	// find the next ID that is unused
+	for _, ok := used[fmt.Sprintf("rId%d", nextID)]; ok; _, ok = used[fmt.Sprintf("rId%d", nextID)] {
+		nextID++
+
 	}
 	rel.IdAttr = fmt.Sprintf("rId%d", nextID)
 	rel.TargetAttr = target

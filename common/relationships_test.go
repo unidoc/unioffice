@@ -65,3 +65,27 @@ func TestRelationshipsCreation(t *testing.T) {
 		t.Errorf("expected %s, got %s", exp, rel.ID())
 	}
 }
+
+func TestRelationshipsCreationUnordered(t *testing.T) {
+	r := common.NewRelationships()
+	r.AddRelationship("foo", "http://bar").X().IdAttr = "rId1"
+	r.AddRelationship("foo", "http://bar").X().IdAttr = "rId3"
+	r.AddRelationship("foo", "http://bar").X().IdAttr = "rId5"
+	r.AddRelationship("foo", "http://bar").X().IdAttr = "rId7"
+
+	// len is 4, but id 5 is used, so we should get 6 next
+	rel := r.AddRelationship("foo", "http://bar")
+
+	exp := "rId6"
+	if rel.ID() != exp {
+		t.Errorf("expected %s, got %s", exp, rel.ID())
+	}
+
+	// would get 7, but it's in use so we get 8 now
+	rel = r.AddRelationship("foo", "http://bar")
+	exp = "rId8"
+	if rel.ID() != exp {
+		t.Errorf("expected %s, got %s", exp, rel.ID())
+	}
+
+}
