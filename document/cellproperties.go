@@ -109,3 +109,11 @@ func (c CellProperties) Borders() CellBorders {
 	}
 	return CellBorders{c.x.TcBorders}
 }
+
+// Margins allows controlling individual cell margins.
+func (c CellProperties) Margins() CellMargins {
+	if c.x.TcMar == nil {
+		c.x.TcMar = wml.NewCT_TcMar()
+	}
+	return CellMargins{c.x.TcMar}
+}
