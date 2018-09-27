@@ -116,6 +116,30 @@ func (s Sheet) AddRow() Row {
 	return s.AddNumberedRow(maxRowID + 1)
 }
 
+// InsertRow inserts a new row into a spreadsheet at a particular row number.  This
+// row will now be the row number specified, and any rows after it will be renumbed.
+func (s Sheet) InsertRow(rowNum int) Row {
+	rIdx := uint32(rowNum)
+
+	// Renumber every row after the row we're inserting
+	for _, r := range s.Rows() {
+		if r.x.RAttr != nil && *r.x.RAttr >= rIdx {
+			*r.x.RAttr++
+			// and we also need to recompute cell references
+			for _, c := range r.Cells() {
+				cref, err := reference.ParseCellReference(c.Reference())
+				if err != nil {
+					continue
+				}
+				cref.RowIdx++
+				c.x.RAttr = gooxml.String(cref.String())
+			}
+		}
+	}
+	// finally AddNumberedRow will add and re-sort rows
+	return s.AddNumberedRow(rIdx)
+}
+
 // Name returns the sheet name
 func (s Sheet) Name() string {
 	return s.cts.NameAttr
