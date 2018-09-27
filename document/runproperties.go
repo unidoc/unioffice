@@ -93,9 +93,14 @@ func (r RunProperties) SetUnderline(style wml.ST_Underline, c color.Color) {
 	}
 }
 
+// BoldValue returns the precise nature of the bold setting (unset, off or on).
+func (r RunProperties) BoldValue() OnOffValue {
+	return convertOnOff(r.x.B)
+}
+
 // IsBold returns true if the run has been set to bold.
 func (r RunProperties) IsBold() bool {
-	return r.x.B != nil
+	return r.BoldValue() == OnOffValueOn
 }
 
 // SetBold sets the run to bold.
@@ -109,12 +114,14 @@ func (r RunProperties) SetBold(b bool) {
 	}
 }
 
-// IsItalic returns true if the run was set to bold.
+// ItalicValue returns the precise nature of the italic setting (unset, off or on).
+func (r RunProperties) ItalicValue() OnOffValue {
+	return convertOnOff(r.x.I)
+}
+
+// IsItalic returns true if the run has been set to italics.
 func (r RunProperties) IsItalic() bool {
-	if r.x == nil {
-		return false
-	}
-	return r.x.I != nil
+	return r.ItalicValue() == OnOffValueOn
 }
 
 // SetItalic sets the run to italic.
