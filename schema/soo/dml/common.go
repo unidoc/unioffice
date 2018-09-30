@@ -125,6 +125,7 @@ func ParseUnionST_AdjCoordinate(s string) (ST_AdjCoordinate, error) {
 			// geom guide name can be anything
 			r.ST_GeomGuideName = &s
 		} else {
+			r.ST_Coordinate = &ST_Coordinate{}
 			r.ST_Coordinate.ST_CoordinateUnqualified = &v
 		}
 	}
