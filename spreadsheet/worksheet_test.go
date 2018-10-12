@@ -15,6 +15,7 @@ import (
 	"testing"
 
 	"baliance.com/gooxml/schema/soo/sml"
+	"baliance.com/gooxml/spreadsheet"
 	"baliance.com/gooxml/testhelper"
 	"baliance.com/gooxml/zippkg"
 )
@@ -37,4 +38,29 @@ func TestWorksheetUnmarshal(t *testing.T) {
 	}
 
 	testhelper.CompareGoldenXML(t, "worksheet.xml", got.Bytes())
+}
+
+// Issue #212
+func TestInsertMergedCells(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	sheet.AddMergedCells("A1", "C1")
+	sheet.AddMergedCells("A2", "C2")
+	sheet.AddMergedCells("A3", "C3")
+	sheet.AddMergedCells("D1", "E3")
+	sheet.InsertRow(2)
+
+	// should go down a line
+	for i, exp := range []string{
+		"A1:C1", // before inserted row, no change
+		"A3:C3", // after inserted row, moved down
+		"A4:C4", // after inserted row, moved down
+		"D1:E4", // covers inserted row, expanded
+	} {
+		got := sheet.MergedCells()[i].Reference()
+
+		if got != exp {
+			t.Errorf("expected %s, got %s", exp, got)
+		}
+	}
 }

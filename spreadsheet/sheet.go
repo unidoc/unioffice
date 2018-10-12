@@ -136,6 +136,24 @@ func (s Sheet) InsertRow(rowNum int) Row {
 			}
 		}
 	}
+
+	// check for merged cells, and try to intelligently adjust them
+	// issue #212
+	for _, mc := range s.MergedCells() {
+		from, to, err := reference.ParseRangeReference(mc.Reference())
+		if err != nil {
+			continue
+		}
+		if int(from.RowIdx) >= rowNum {
+			from.RowIdx++
+		}
+		if int(to.RowIdx) >= rowNum {
+			to.RowIdx++
+		}
+		ref := fmt.Sprintf("%s:%s", from, to)
+		mc.SetReference(ref)
+	}
+
 	// finally AddNumberedRow will add and re-sort rows
 	return s.AddNumberedRow(rIdx)
 }
