@@ -89,3 +89,38 @@ func TestRelationshipsCreationUnordered(t *testing.T) {
 	}
 
 }
+
+func TestRelationshipsRemoval(t *testing.T) {
+	r := common.NewRelationships()
+	r.AddRelationship("foo1", "http://bar")
+	r.AddRelationship("foo2", "http://bar")
+	r.AddRelationship("foo3", "http://bar")
+
+	if len(r.Relationships()) != 3 {
+		t.Errorf("expected 3, got %d", len(r.Relationships()))
+	}
+	r.Remove(r.Relationships()[0])
+
+	if len(r.Relationships()) != 2 {
+		t.Errorf("expected 2, got %d", len(r.Relationships()))
+	}
+	if got := r.Relationships()[0].Target(); got != "foo2" {
+		t.Errorf("expected foo2, got %s", got)
+	}
+	if got := r.Relationships()[1].Target(); got != "foo3" {
+		t.Errorf("expected foo3, got %s", got)
+	}
+	r.Remove(r.Relationships()[1])
+
+	if len(r.Relationships()) != 1 {
+		t.Errorf("expected 1, got %d", len(r.Relationships()))
+	}
+	if got := r.Relationships()[0].Target(); got != "foo2" {
+		t.Errorf("expected foo2, got %s", got)
+	}
+
+	r.Remove(r.Relationships()[0])
+	if len(r.Relationships()) != 0 {
+		t.Errorf("expected 0, got %d", len(r.Relationships()))
+	}
+}

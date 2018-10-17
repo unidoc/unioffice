@@ -579,3 +579,28 @@ func (wb *Workbook) Close() error {
 	}
 	return nil
 }
+
+// RemoveCalcChain removes the cached caculation chain. This is sometimes needed
+// as we don't update it when rows are added/removed.
+func (wb *Workbook) RemoveCalcChain() {
+	var calcFile string
+	for _, r := range wb.wbRels.Relationships() {
+		if r.Type() == "http://schemas.openxmlformats.org/officeDocument/2006/relationships/calcChain" {
+			calcFile = "xl/" + r.Target()
+			wb.wbRels.Remove(r)
+			break
+		}
+	}
+
+	if calcFile == "" {
+		return
+	}
+	wb.ContentTypes.RemoveOverride(calcFile)
+	for i, x := range wb.ExtraFiles {
+		if x.ZipPath == calcFile {
+			wb.ExtraFiles[i] = wb.ExtraFiles[len(wb.ExtraFiles)-1]
+			wb.ExtraFiles = wb.ExtraFiles[:len(wb.ExtraFiles)-1]
+			return
+		}
+	}
+}

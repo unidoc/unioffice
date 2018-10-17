@@ -85,6 +85,18 @@ func (r Relationships) AddRelationship(target, ctype string) Relationship {
 	return Relationship{rel}
 }
 
+// Remove removes an existing relationship.
+func (r Relationships) Remove(rel Relationship) bool {
+	for i, ir := range r.x.Relationship {
+		if ir == rel.x {
+			copy(r.x.Relationship[i:], r.x.Relationship[i+1:])
+			r.x.Relationship = r.x.Relationship[0 : len(r.x.Relationship)-1]
+			return true
+		}
+	}
+	return false
+}
+
 // Hyperlink is just an appropriately configured relationship.
 type Hyperlink Relationship
 
