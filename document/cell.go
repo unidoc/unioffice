@@ -32,6 +32,18 @@ func (c Cell) AddParagraph() Paragraph {
 	return Paragraph{c.d, p}
 }
 
+// AddTable adds a table to the table cell.
+func (c Cell) AddTable() Table {
+	ble := wml.NewEG_BlockLevelElts()
+	c.x.EG_BlockLevelElts = append(c.x.EG_BlockLevelElts, ble)
+	bc := wml.NewEG_ContentBlockContent()
+	ble.EG_ContentBlockContent = append(ble.EG_ContentBlockContent, bc)
+	tbl := wml.NewCT_Tbl()
+	bc.Tbl = append(bc.Tbl, tbl)
+
+	return Table{c.d, tbl}
+}
+
 // Properties returns the cell properties.
 func (c Cell) Properties() CellProperties {
 	if c.x.TcPr == nil {
