@@ -37,7 +37,27 @@ func (n NumberingDefinition) Levels() []NumberingLevel {
 // AddLevel adds a new numbering level to a NumberingDefinition.
 func (n NumberingDefinition) AddLevel() NumberingLevel {
 	nl := wml.NewCT_Lvl()
+	nl.Start = &wml.CT_DecimalNumber{ValAttr: 1}
 	nl.IlvlAttr = int64(len(n.x.Lvl))
 	n.x.Lvl = append(n.x.Lvl, nl)
 	return NumberingLevel{nl}
+}
+
+// MultiLevelType returns the multilevel type, or ST_MultiLevelTypeUnset if not set.
+func (n NumberingDefinition) MultiLevelType() wml.ST_MultiLevelType {
+	if n.x.MultiLevelType != nil {
+		return n.x.MultiLevelType.ValAttr
+	} else {
+		return wml.ST_MultiLevelTypeUnset
+	}
+}
+
+// SetMultiLevelType sets the multilevel type.
+func (n NumberingDefinition) SetMultiLevelType(t wml.ST_MultiLevelType) {
+	if t == wml.ST_MultiLevelTypeUnset {
+		n.x.MultiLevelType = nil
+	} else {
+		n.x.MultiLevelType = wml.NewCT_MultiLevelType()
+		n.x.MultiLevelType.ValAttr = t
+	}
 }
