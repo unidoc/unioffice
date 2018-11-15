@@ -24,6 +24,16 @@ func (p ParagraphStyleProperties) X() *wml.CT_PPrGeneral {
 	return p.x
 }
 
+// SetAlignment controls the paragraph alignment
+func (p ParagraphStyleProperties) SetAlignment(align wml.ST_Jc) {
+	if align == wml.ST_JcUnset {
+		p.x.Jc = nil
+	} else {
+		p.x.Jc = wml.NewCT_Jc()
+		p.x.Jc.ValAttr = align
+	}
+}
+
 // AddTabStop adds a tab stop to the paragraph.
 func (p ParagraphStyleProperties) AddTabStop(position measurement.Distance, justificaton wml.ST_TabJc, leader wml.ST_TabTlc) {
 	if p.x.Tabs == nil {
@@ -102,5 +112,30 @@ func (p ParagraphStyleProperties) SetLeftIndent(m measurement.Distance) {
 	} else {
 		p.x.Ind.LeftAttr = &wml.ST_SignedTwipsMeasure{}
 		p.x.Ind.LeftAttr.Int64 = gooxml.Int64(int64(m / measurement.Twips))
+	}
+}
+
+// SetStartIndent controls the start indent of the paragraph.
+func (p ParagraphStyleProperties) SetStartIndent(m measurement.Distance) {
+	if p.x.Ind == nil {
+		p.x.Ind = wml.NewCT_Ind()
+	}
+	if m == measurement.Zero {
+		p.x.Ind.StartAttr = nil
+	} else {
+		p.x.Ind.StartAttr = &wml.ST_SignedTwipsMeasure{}
+		p.x.Ind.StartAttr.Int64 = gooxml.Int64(int64(m / measurement.Twips))
+	}
+}
+// SetHangingIndent controls the hanging indent of the paragraph.
+func (p ParagraphStyleProperties) SetHangingIndent(m measurement.Distance) {
+	if p.x.Ind == nil {
+		p.x.Ind = wml.NewCT_Ind()
+	}
+	if m == measurement.Zero {
+		p.x.Ind.HangingAttr = nil
+	} else {
+		p.x.Ind.HangingAttr = &sharedTypes.ST_TwipsMeasure{}
+		p.x.Ind.HangingAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(m / measurement.Twips))
 	}
 }
