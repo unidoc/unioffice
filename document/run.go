@@ -126,6 +126,13 @@ func (r Run) AddBreak() {
 	ic.Br = wml.NewCT_Br()
 }
 
+// AddPageBreak adds a page break to a run.
+func (r Run) AddPageBreak() {
+	ic := r.newIC()
+	ic.Br = wml.NewCT_Br()
+	ic.Br.TypeAttr = wml.ST_BrTypePage
+}
+
 // DrawingAnchored returns a slice of AnchoredDrawings.
 func (r Run) DrawingAnchored() []AnchoredDrawing {
 	ret := []AnchoredDrawing{}
