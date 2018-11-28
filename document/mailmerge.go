@@ -89,8 +89,17 @@ func parseField(mf string) mergeFieldInfo {
 
 // MergeFields returns the list of all mail merge fields found in the document.
 func (d Document) mergeFields() []mergeFieldInfo {
+	paragraphs := []Paragraph{}
 	mf := []mergeFieldInfo{}
-	for _, p := range d.Paragraphs() {
+	for _, t := range d.Tables() {
+		for _, r := range t.Rows() {
+			for _, c := range r.Cells() {
+				paragraphs = append(paragraphs, c.Paragraphs()...)
+			}
+		}
+	}
+	paragraphs = append(paragraphs, d.Paragraphs()...)
+	for _, p := range paragraphs {
 		runs := p.Runs()
 		begIdx := -1
 		sepIdx := -1
