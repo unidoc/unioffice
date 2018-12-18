@@ -88,6 +88,15 @@ func (cs CellStyle) SetHorizontalAlignment(a sml.ST_HorizontalAlignment) {
 	cs.xf.ApplyAlignmentAttr = gooxml.Bool(true)
 }
 
+// SetRotation configures the cell to be rotated.
+func (cs CellStyle) SetRotation(deg uint8) {
+	if cs.xf.Alignment == nil {
+		cs.xf.Alignment = sml.NewCT_CellAlignment()
+	}
+	cs.xf.ApplyAlignmentAttr = gooxml.Bool(true)
+	cs.xf.Alignment.TextRotationAttr = gooxml.Uint8(deg)
+}
+
 // SetVerticalAlignment sets the vertical alignment of a cell style.
 func (cs CellStyle) SetVerticalAlignment(a sml.ST_VerticalAlignment) {
 	if cs.xf.Alignment == nil {
