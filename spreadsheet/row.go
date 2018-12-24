@@ -39,11 +39,13 @@ func (r Row) RowNumber() uint32 {
 // SetHeight sets the row height in points.
 func (r Row) SetHeight(d measurement.Distance) {
 	r.x.HtAttr = gooxml.Float64(float64(d))
+	r.x.CustomHeightAttr = gooxml.Bool(true)
 }
 
 // SetHeightAuto sets the row height to be automatically determined.
 func (r Row) SetHeightAuto() {
 	r.x.HtAttr = nil
+	r.x.CustomHeightAttr = nil
 }
 
 // IsHidden returns whether the row is hidden or not.
