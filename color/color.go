@@ -23,6 +23,12 @@ func RGB(r, g, b uint8) Color {
 	return Color{r, g, b, 255, false}
 }
 
+// RGBA constructs a new RGBA color with a given red, green, blue and alpha
+// value.
+func RGBA(r, g, b, a uint8) Color {
+	return Color{r, g, b, a, false}
+}
+
 // IsAuto returns true if the color is the 'Auto' type.  If the
 // field doesn't support an Auto color, then black is used.
 func (c Color) IsAuto() bool {
