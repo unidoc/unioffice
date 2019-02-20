@@ -119,7 +119,7 @@ will be reviewed and merged.
 
 This library is offered under a dual license. It is freely available for use
 under the terms of AGPLv3. If you would like to use this library for a closed
-source project, please contact sales@baliance.com.
+source project, please contact sales@unidoc.io.
 
 There are no differences in functionality between the open source and commercial 
 versions. You are encouraged to use the open source version to evaluate the library
