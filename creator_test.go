@@ -12,11 +12,15 @@ import (
 	"encoding/xml"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 	"testing"
 
+	"baliance.com/gooxml/document"
+
 	"baliance.com/gooxml"
 
+	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
 	"baliance.com/gooxml/schema/soo/wml"
 	"baliance.com/gooxml/zippkg"
 )
@@ -74,4 +78,111 @@ func TestRawEncode(t *testing.T) {
 		t.Errorf("expected\n%q\ngot\n%q\n", exp, gotRaw)
 	}
 
+}
+
+func TestDocProcessingIssue241(t *testing.T) {
+	doc, err := document.Open("./testdata/before.docx")
+	if err != nil {
+		t.Fatalf("error opening document: %v\n", err)
+	}
+
+	var (
+		tableIdxReq1  = 40
+		tableIdxReq12 = 51
+
+		testProcNoRegexp = regexp.MustCompile(`^\s*(\d+(\.\d+)+(\.[a-z]){0,1})\s`)
+
+		reportTxtHolder = "<Report Findings Here>"
+		reportTxtPrefix = "ref-"
+	)
+
+	// Add report text refs
+	for i := tableIdxReq1; i <= tableIdxReq12; i++ {
+		addReportTextRefs(doc, i, reportTxtHolder, reportTxtPrefix, testProcNoRegexp)
+	}
+	doc.SaveToFile("./testdata/after.docx")
+
+	afterdoc, err := document.Open("./testdata/after.docx")
+
+	if afterdoc.X().Body == nil {
+		t.Errorf("Doc body is nil after processing")
+	}
+}
+
+// addReportTextRefs iterates the table at index tableIdx and adds the
+// correct report text refs. The doc should contain text matching ReportTxtHolder
+// in all cells requiring report text, otherwise the numbering will be off. Caller
+// is responsible for setting SetUpdateFieldsOnOpen(true) on doc.Settings and
+// saving the result.
+func addReportTextRefs(doc *document.Document, tableIdx int, reportTxtHolder, reportTxtPrefix string,
+	testProcNoRegexp *regexp.Regexp) {
+	tpNo := ""
+	rtIdx := 1
+	for _, row := range doc.Tables()[tableIdx].Rows() {
+		if tpn := testProcNo(row, testProcNoRegexp); tpn != "" {
+			tpNo = tpn
+			rtIdx = 1
+		}
+		for _, cell := range row.Cells() {
+			for _, para := range cell.Paragraphs() {
+				for _, run := range para.Runs() {
+					fieldDefault := findFldCharText(run, reportTxtHolder)
+					if fieldDefault == nil {
+						// possibly check if run has a FldChar, but wasn't matched
+						continue
+					}
+					rtVal := fmt.Sprintf("%s%s-%d", reportTxtPrefix, tpNo, rtIdx)
+					fieldDefault.ValAttr = rtVal
+					fmt.Println(rtVal)
+					rtIdx++
+				}
+			}
+		}
+	}
+}
+
+func testProcNo(run document.Row, testProcNoRegexp *regexp.Regexp) string {
+	if len(run.Cells()) < 2 {
+		return ""
+	}
+	paraTxt := mergeParas(run.Cells()[0].Paragraphs())
+	matchGroups := testProcNoRegexp.FindStringSubmatch(paraTxt)
+	if len(matchGroups) >= 2 {
+		return matchGroups[1]
+	}
+	return ""
+}
+
+// findFldCharText searches all content elements in a run for a FldChar
+// with default text matching s. The string pointer is returned so that the
+// text can be manipulated by the caller.
+func findFldCharText(run document.Run, s string) *wml.CT_String {
+	for _, ic := range run.X().EG_RunInnerContent {
+		if ic.FldChar != nil && ic.FldChar.FfData != nil && ic.FldChar.FfData.TextInput != nil && ic.FldChar.FfData.TextInput.Default != nil {
+			// mark them dirty here for now, but really should be done elsewhere:
+			ic.FldChar.DirtyAttr = &sharedTypes.ST_OnOff{}
+			ic.FldChar.DirtyAttr.Bool = gooxml.Bool(true)
+
+			// there is some caching of field text being displayed. try setting SetUpdateFieldsOnOpen
+			// ic.FldChar.FfData.CalcOnExit[0].ValAttr = &sharedTypes.ST_OnOff{Bool: &[]bool{true}[0]}
+			return ic.FldChar.FfData.TextInput.Default
+		}
+	}
+	return nil
+}
+
+func mergeRuns(runs []document.Run) string {
+	s := ""
+	for _, run := range runs {
+		s += run.Text()
+	}
+	return s
+}
+
+func mergeParas(paras []document.Paragraph) string {
+	s := ""
+	for _, para := range paras {
+		s += mergeRuns(para.Runs())
+	}
+	return s
 }
