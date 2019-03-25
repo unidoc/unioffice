@@ -244,7 +244,11 @@ func (d *Document) Save(w io.Writer) error {
 
 	for i, img := range d.Images {
 		fn := fmt.Sprintf("word/media/image%d.%s", i+1, strings.ToLower(img.Format()))
-		if img.Path() != "" {
+		if img.Data() != nil {
+			if err := zippkg.AddFileFromBytes(z, fn, *img.Data()); err != nil {
+				return err
+			}
+		} else if img.Path() != "" {
 			if err := zippkg.AddFileFromDisk(z, fn, img.Path()); err != nil {
 				return err
 			}
@@ -566,8 +570,8 @@ func (d *Document) validateTableCells() error {
 // can be used to add the image to a run and place it in the document contents.
 func (d *Document) AddImage(i common.Image) (common.ImageRef, error) {
 	r := common.MakeImageRef(i, &d.DocBase, d.docRels)
-	if i.Path == "" {
-		return r, errors.New("image must have a path")
+	if i.Data == nil && i.Path == "" {
+		return r, errors.New("image must have data or a path")
 	}
 
 	if i.Format == "" {

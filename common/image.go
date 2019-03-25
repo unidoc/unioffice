@@ -8,6 +8,7 @@
 package common
 
 import (
+	"bytes"
 	"fmt"
 	"image"
 	"os"
@@ -21,10 +22,12 @@ import (
 
 // Image is a container for image information. It's used as we need format and
 // and size information to use images.
+// It contains either the filesystem path to the image, or the image itself.
 type Image struct {
 	Size   image.Point
 	Format string
 	Path   string
+	Data   *[]byte
 }
 
 // ImageRef is a reference to an image within a document.
@@ -56,9 +59,14 @@ func (i ImageRef) Format() string {
 	return i.img.Format
 }
 
-// Path returns the path to an image file
+// Path returns the path to an image file, if any.
 func (i ImageRef) Path() string {
 	return i.img.Path
+}
+
+// Data returns the data of an image file, if any.
+func (i ImageRef) Data() *[]byte {
+	return i.img.Data
 }
 
 // Size returns the size of an image
@@ -98,6 +106,21 @@ func ImageFromFile(path string) (Image, error) {
 	}
 
 	r.Path = path
+	r.Format = ifmt
+	r.Size = imgDec.Bounds().Size()
+	return r, nil
+}
+
+// ImageFromBytes returns an Image struct for an in-memory image. You can also
+// construct an Image directly if the file and size are known.
+func ImageFromBytes(data []byte) (Image, error) {
+	r := Image{}
+	imgDec, ifmt, err := image.Decode(bytes.NewReader(data))
+	if err != nil {
+		return r, fmt.Errorf("unable to parse image: %s", err)
+	}
+
+	r.Data = &data
 	r.Format = ifmt
 	r.Size = imgDec.Bounds().Size()
 	return r, nil
