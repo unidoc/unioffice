@@ -3,6 +3,7 @@
 *.dll
 *.so
 *.dylib
+*.swp
 coverage*
 **/.DS_Store
 **/main
