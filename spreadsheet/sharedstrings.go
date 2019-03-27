@@ -8,6 +8,7 @@ package spreadsheet
 
 import (
 	"fmt"
+	"strings"
 
 	"baliance.com/gooxml"
 	"baliance.com/gooxml/schema/soo/sml"
@@ -57,6 +58,12 @@ func (s SharedStrings) GetString(id int) (string, error) {
 	si := s.x.Si[id]
 	if si.T != nil {
 		return *si.T, nil
+	} else if len(si.R) > 0 {
+		var b strings.Builder
+		for _, item := range si.R {
+			b.WriteString(item.T)
+		}
+		return b.String(), nil
 	}
 	return "", nil
 }
