@@ -9,6 +9,7 @@ package zippkg
 
 import (
 	"archive/zip"
+	"bytes"
 	"encoding/xml"
 	"fmt"
 	"io"
@@ -66,6 +67,16 @@ func AddFileFromDisk(z *zip.Writer, zipPath, diskPath string) error {
 		return fmt.Errorf("error opening %s: %s", diskPath, err)
 	}
 	_, err = io.Copy(w, f)
+	return err
+}
+
+// AddFileFromBytes takes a byte array and adds it at a given path to a zip file.
+func AddFileFromBytes(z *zip.Writer, zipPath string, data []byte) error {
+	w, err := z.Create(zipPath)
+	if err != nil {
+		return fmt.Errorf("error creating %s: %s", zipPath, err)
+	}
+	_, err = io.Copy(w, bytes.NewReader(data))
 	return err
 }
 
