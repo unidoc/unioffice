@@ -335,6 +335,30 @@ func (d *Document) insertTable(relativeTo Paragraph, before bool) Table {
 	return d.AddTable()
 }
 
+func (d *Document) tables(bc *wml.EG_ContentBlockContent) []Table {
+	ret := []Table{}
+	for _, t := range bc.Tbl {
+		ret = append(ret, Table{d, t})
+		for _, crc := range t.EG_ContentRowContent {
+			for _, tr := range crc.Tr {
+				for _, ccc := range tr.EG_ContentCellContent {
+					for _, tc := range ccc.Tc {
+						for _, ble := range tc.EG_BlockLevelElts {
+							for _, cbc := range ble.EG_ContentBlockContent {
+								for _, tbl := range d.tables(cbc) {
+									ret = append(ret, tbl)
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return ret
+}
+
 // Tables returns the tables defined in the document.
 func (d *Document) Tables() []Table {
 	ret := []Table{}
@@ -343,8 +367,8 @@ func (d *Document) Tables() []Table {
 	}
 	for _, ble := range d.x.Body.EG_BlockLevelElts {
 		for _, c := range ble.EG_ContentBlockContent {
-			for _, t := range c.Tbl {
-				ret = append(ret, Table{d, t})
+			for _, t := range d.tables(c) {
+				ret = append(ret, t)
 			}
 		}
 	}
