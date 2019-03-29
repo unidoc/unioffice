@@ -853,7 +853,7 @@ func (d Document) AddHyperlink(url string) common.Hyperlink {
 	return d.docRels.AddHyperlink(url)
 }
 
-func bookmarks(bc wml.EG_ContentBlockContent) []Bookmark {
+func bookmarks(bc *wml.EG_ContentBlockContent) []Bookmark {
 	ret := []Bookmark{}
 
 	// bookmarks within paragraphs
@@ -886,7 +886,7 @@ func bookmarks(bc wml.EG_ContentBlockContent) []Bookmark {
 					for _, tc := range ccc.Tc {
 						for _, ble := range tc.EG_BlockLevelElts {
 							for _, bc := range ble.EG_ContentBlockContent {
-								for _, b := range bookmarks(*bc) {
+								for _, b := range bookmarks(bc) {
 									ret = append(ret, b)
 								}
 							}
@@ -907,7 +907,7 @@ func (d Document) Bookmarks() []Bookmark {
 	ret := []Bookmark{}
 	for _, ble := range d.x.Body.EG_BlockLevelElts {
 		for _, bc := range ble.EG_ContentBlockContent {
-			for _, b := range bookmarks(*bc) {
+			for _, b := range bookmarks(bc) {
 				ret = append(ret, b)
 			}
 		}
