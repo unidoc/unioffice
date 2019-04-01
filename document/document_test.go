@@ -352,7 +352,5 @@ func TestGetTables(t *testing.T) {
 	tables = doc.Tables()
 	if len(tables) < 2 {
 		t.Errorf("nested table not enumerated. found %d, expected 2", len(tables))
-		return
 	}
-
 }
