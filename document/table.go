@@ -81,6 +81,11 @@ func (t Table) Rows() []Row {
 		for _, ctRow := range rc.Tr {
 			ret = append(ret, Row{t.d, ctRow})
 		}
+		if rc.Sdt != nil && rc.Sdt.SdtContent != nil {
+			for _, ctRow := range rc.Sdt.SdtContent.Tr {
+				ret = append(ret, Row{t.d, ctRow})
+			}
+		}
 	}
 	return ret
 }
