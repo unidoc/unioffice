@@ -46,6 +46,11 @@ func (r Row) Cells() []Cell {
 		for _, ctCell := range cc.Tc {
 			ret = append(ret, Cell{r.d, ctCell})
 		}
+		if cc.Sdt != nil && cc.Sdt.SdtContent != nil {
+			for _, ctCell := range cc.Sdt.SdtContent.Tc {
+				ret = append(ret, Cell{r.d, ctCell})
+			}
+		}
 	}
 	return ret
 }
