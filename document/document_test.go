@@ -13,6 +13,7 @@ import (
 
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/document"
+	"baliance.com/gooxml/schema/soo/wml"
 	"baliance.com/gooxml/testhelper"
 )
 
@@ -322,4 +323,34 @@ func TestIssue198(t *testing.T) {
 	got := bytes.Buffer{}
 	doc.Save(&got)
 	testhelper.CompareGoldenZip(t, fn+".golden", got.Bytes())
+}
+
+func TestGetTables(t *testing.T) {
+	doc := document.New()
+	table := doc.AddTable()
+	tables := doc.Tables()
+
+	if len(tables) != 1 {
+		t.Errorf("expected 1 table, got %d", len(tables))
+		return
+	}
+
+	if table != tables[0] {
+		t.Error("retrieved table != added table")
+		return
+	}
+
+	tbl := document.New().AddTable().X()
+
+	tc := table.AddRow().AddCell().X()
+	elts := wml.NewEG_BlockLevelElts()
+	tc.EG_BlockLevelElts = append(tc.EG_BlockLevelElts, elts)
+	c := wml.NewEG_ContentBlockContent()
+	elts.EG_ContentBlockContent = append(elts.EG_ContentBlockContent, c)
+	c.Tbl = append(c.Tbl, tbl)
+
+	tables = doc.Tables()
+	if len(tables) < 2 {
+		t.Errorf("nested table not enumerated. found %d, expected 2", len(tables))
+	}
 }

@@ -335,6 +335,30 @@ func (d *Document) insertTable(relativeTo Paragraph, before bool) Table {
 	return d.AddTable()
 }
 
+func (d *Document) tables(bc *wml.EG_ContentBlockContent) []Table {
+	ret := []Table{}
+	for _, t := range bc.Tbl {
+		ret = append(ret, Table{d, t})
+		for _, crc := range t.EG_ContentRowContent {
+			for _, tr := range crc.Tr {
+				for _, ccc := range tr.EG_ContentCellContent {
+					for _, tc := range ccc.Tc {
+						for _, ble := range tc.EG_BlockLevelElts {
+							for _, cbc := range ble.EG_ContentBlockContent {
+								for _, tbl := range d.tables(cbc) {
+									ret = append(ret, tbl)
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return ret
+}
+
 // Tables returns the tables defined in the document.
 func (d *Document) Tables() []Table {
 	ret := []Table{}
@@ -343,8 +367,8 @@ func (d *Document) Tables() []Table {
 	}
 	for _, ble := range d.x.Body.EG_BlockLevelElts {
 		for _, c := range ble.EG_ContentBlockContent {
-			for _, t := range c.Tbl {
-				ret = append(ret, Table{d, t})
+			for _, t := range d.tables(c) {
+				ret = append(ret, t)
 			}
 		}
 	}
@@ -853,6 +877,52 @@ func (d Document) AddHyperlink(url string) common.Hyperlink {
 	return d.docRels.AddHyperlink(url)
 }
 
+func bookmarks(bc *wml.EG_ContentBlockContent) []Bookmark {
+	ret := []Bookmark{}
+
+	// bookmarks within paragraphs
+	for _, p := range bc.P {
+		for _, ec := range p.EG_PContent {
+			for _, ecr := range ec.EG_ContentRunContent {
+				for _, re := range ecr.EG_RunLevelElts {
+					for _, rm := range re.EG_RangeMarkupElements {
+						if rm.BookmarkStart != nil {
+							ret = append(ret, Bookmark{rm.BookmarkStart})
+						}
+					}
+				}
+			}
+		}
+	}
+	// bookmarks within block runs
+	for _, re := range bc.EG_RunLevelElts {
+		for _, rm := range re.EG_RangeMarkupElements {
+			if rm.BookmarkStart != nil {
+				ret = append(ret, Bookmark{rm.BookmarkStart})
+			}
+		}
+	}
+	// bookmarks within tables, potentially nested
+	for _, tbl := range bc.Tbl {
+		for _, crc := range tbl.EG_ContentRowContent {
+			for _, tr := range crc.Tr {
+				for _, ccc := range tr.EG_ContentCellContent {
+					for _, tc := range ccc.Tc {
+						for _, ble := range tc.EG_BlockLevelElts {
+							for _, bc := range ble.EG_ContentBlockContent {
+								for _, b := range bookmarks(bc) {
+									ret = append(ret, b)
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return ret
+}
+
 // Bookmarks returns all of the bookmarks defined in the document.
 func (d Document) Bookmarks() []Bookmark {
 	if d.x.Body == nil {
@@ -861,26 +931,8 @@ func (d Document) Bookmarks() []Bookmark {
 	ret := []Bookmark{}
 	for _, ble := range d.x.Body.EG_BlockLevelElts {
 		for _, bc := range ble.EG_ContentBlockContent {
-			// bookmarks within paragraphs
-			for _, p := range bc.P {
-				for _, ec := range p.EG_PContent {
-					for _, ecr := range ec.EG_ContentRunContent {
-						for _, re := range ecr.EG_RunLevelElts {
-							for _, rm := range re.EG_RangeMarkupElements {
-								if rm.BookmarkStart != nil {
-									ret = append(ret, Bookmark{rm.BookmarkStart})
-								}
-							}
-						}
-					}
-				}
-			}
-			for _, re := range bc.EG_RunLevelElts {
-				for _, rm := range re.EG_RangeMarkupElements {
-					if rm.BookmarkStart != nil {
-						ret = append(ret, Bookmark{rm.BookmarkStart})
-					}
-				}
+			for _, b := range bookmarks(bc) {
+				ret = append(ret, b)
 			}
 		}
 	}
