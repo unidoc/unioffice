@@ -126,7 +126,8 @@ lCT_PolarAdjustHandle:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pos"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pos"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "pos"}:
 				if err := d.DecodeElement(m.Pos, &el); err != nil {
 					return err
 				}

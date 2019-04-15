@@ -48,12 +48,14 @@ lEG_FillModeProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tile"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tile"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "tile"}:
 				m.Tile = NewCT_TileInfoProperties()
 				if err := d.DecodeElement(m.Tile, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "stretch"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "stretch"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "stretch"}:
 				m.Stretch = NewCT_StretchInfoProperties()
 				if err := d.DecodeElement(m.Stretch, &el); err != nil {
 					return err

@@ -56,16 +56,19 @@ lCT_TextBody:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bodyPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bodyPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "bodyPr"}:
 				if err := d.DecodeElement(m.BodyPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lstStyle"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lstStyle"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lstStyle"}:
 				m.LstStyle = NewCT_TextListStyle()
 				if err := d.DecodeElement(m.LstStyle, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "p"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "p"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "p"}:
 				tmp := NewCT_TextParagraph()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

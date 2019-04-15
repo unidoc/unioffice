@@ -150,37 +150,43 @@ lCT_Path2D:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "close"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "close"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "close"}:
 				tmp := NewCT_Path2DClose()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Close = append(m.Close, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "moveTo"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "moveTo"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "moveTo"}:
 				tmp := NewCT_Path2DMoveTo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.MoveTo = append(m.MoveTo, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnTo"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnTo"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lnTo"}:
 				tmp := NewCT_Path2DLineTo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.LnTo = append(m.LnTo, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "arcTo"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "arcTo"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "arcTo"}:
 				tmp := NewCT_Path2DArcTo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.ArcTo = append(m.ArcTo, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "quadBezTo"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "quadBezTo"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "quadBezTo"}:
 				tmp := NewCT_Path2DQuadBezierTo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.QuadBezTo = append(m.QuadBezTo, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cubicBezTo"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cubicBezTo"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "cubicBezTo"}:
 				tmp := NewCT_Path2DCubicBezierTo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

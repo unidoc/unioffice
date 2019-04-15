@@ -439,332 +439,398 @@ lCT_Compat:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useSingleBorderforContiguousCells"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useSingleBorderforContiguousCells"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "useSingleBorderforContiguousCells"}:
 				m.UseSingleBorderforContiguousCells = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseSingleBorderforContiguousCells, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wpJustification"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wpJustification"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "wpJustification"}:
 				m.WpJustification = NewCT_OnOff()
 				if err := d.DecodeElement(m.WpJustification, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noTabHangInd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noTabHangInd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "noTabHangInd"}:
 				m.NoTabHangInd = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoTabHangInd, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noLeading"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noLeading"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "noLeading"}:
 				m.NoLeading = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoLeading, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "spaceForUL"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "spaceForUL"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "spaceForUL"}:
 				m.SpaceForUL = NewCT_OnOff()
 				if err := d.DecodeElement(m.SpaceForUL, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noColumnBalance"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noColumnBalance"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "noColumnBalance"}:
 				m.NoColumnBalance = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoColumnBalance, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "balanceSingleByteDoubleByteWidth"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "balanceSingleByteDoubleByteWidth"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "balanceSingleByteDoubleByteWidth"}:
 				m.BalanceSingleByteDoubleByteWidth = NewCT_OnOff()
 				if err := d.DecodeElement(m.BalanceSingleByteDoubleByteWidth, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noExtraLineSpacing"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noExtraLineSpacing"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "noExtraLineSpacing"}:
 				m.NoExtraLineSpacing = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoExtraLineSpacing, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotLeaveBackslashAlone"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotLeaveBackslashAlone"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotLeaveBackslashAlone"}:
 				m.DoNotLeaveBackslashAlone = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotLeaveBackslashAlone, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ulTrailSpace"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ulTrailSpace"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "ulTrailSpace"}:
 				m.UlTrailSpace = NewCT_OnOff()
 				if err := d.DecodeElement(m.UlTrailSpace, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotExpandShiftReturn"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotExpandShiftReturn"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotExpandShiftReturn"}:
 				m.DoNotExpandShiftReturn = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotExpandShiftReturn, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "spacingInWholePoints"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "spacingInWholePoints"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "spacingInWholePoints"}:
 				m.SpacingInWholePoints = NewCT_OnOff()
 				if err := d.DecodeElement(m.SpacingInWholePoints, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lineWrapLikeWord6"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lineWrapLikeWord6"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "lineWrapLikeWord6"}:
 				m.LineWrapLikeWord6 = NewCT_OnOff()
 				if err := d.DecodeElement(m.LineWrapLikeWord6, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "printBodyTextBeforeHeader"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "printBodyTextBeforeHeader"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "printBodyTextBeforeHeader"}:
 				m.PrintBodyTextBeforeHeader = NewCT_OnOff()
 				if err := d.DecodeElement(m.PrintBodyTextBeforeHeader, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "printColBlack"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "printColBlack"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "printColBlack"}:
 				m.PrintColBlack = NewCT_OnOff()
 				if err := d.DecodeElement(m.PrintColBlack, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wpSpaceWidth"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wpSpaceWidth"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "wpSpaceWidth"}:
 				m.WpSpaceWidth = NewCT_OnOff()
 				if err := d.DecodeElement(m.WpSpaceWidth, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "showBreaksInFrames"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "showBreaksInFrames"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "showBreaksInFrames"}:
 				m.ShowBreaksInFrames = NewCT_OnOff()
 				if err := d.DecodeElement(m.ShowBreaksInFrames, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "subFontBySize"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "subFontBySize"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "subFontBySize"}:
 				m.SubFontBySize = NewCT_OnOff()
 				if err := d.DecodeElement(m.SubFontBySize, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressBottomSpacing"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressBottomSpacing"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "suppressBottomSpacing"}:
 				m.SuppressBottomSpacing = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressBottomSpacing, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressTopSpacing"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressTopSpacing"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "suppressTopSpacing"}:
 				m.SuppressTopSpacing = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressTopSpacing, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressSpacingAtTopOfPage"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressSpacingAtTopOfPage"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "suppressSpacingAtTopOfPage"}:
 				m.SuppressSpacingAtTopOfPage = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressSpacingAtTopOfPage, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressTopSpacingWP"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressTopSpacingWP"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "suppressTopSpacingWP"}:
 				m.SuppressTopSpacingWP = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressTopSpacingWP, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressSpBfAfterPgBrk"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "suppressSpBfAfterPgBrk"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "suppressSpBfAfterPgBrk"}:
 				m.SuppressSpBfAfterPgBrk = NewCT_OnOff()
 				if err := d.DecodeElement(m.SuppressSpBfAfterPgBrk, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "swapBordersFacingPages"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "swapBordersFacingPages"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "swapBordersFacingPages"}:
 				m.SwapBordersFacingPages = NewCT_OnOff()
 				if err := d.DecodeElement(m.SwapBordersFacingPages, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "convMailMergeEsc"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "convMailMergeEsc"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "convMailMergeEsc"}:
 				m.ConvMailMergeEsc = NewCT_OnOff()
 				if err := d.DecodeElement(m.ConvMailMergeEsc, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "truncateFontHeightsLikeWP6"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "truncateFontHeightsLikeWP6"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "truncateFontHeightsLikeWP6"}:
 				m.TruncateFontHeightsLikeWP6 = NewCT_OnOff()
 				if err := d.DecodeElement(m.TruncateFontHeightsLikeWP6, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "mwSmallCaps"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "mwSmallCaps"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "mwSmallCaps"}:
 				m.MwSmallCaps = NewCT_OnOff()
 				if err := d.DecodeElement(m.MwSmallCaps, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "usePrinterMetrics"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "usePrinterMetrics"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "usePrinterMetrics"}:
 				m.UsePrinterMetrics = NewCT_OnOff()
 				if err := d.DecodeElement(m.UsePrinterMetrics, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSuppressParagraphBorders"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSuppressParagraphBorders"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotSuppressParagraphBorders"}:
 				m.DoNotSuppressParagraphBorders = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotSuppressParagraphBorders, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wrapTrailSpaces"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wrapTrailSpaces"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "wrapTrailSpaces"}:
 				m.WrapTrailSpaces = NewCT_OnOff()
 				if err := d.DecodeElement(m.WrapTrailSpaces, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footnoteLayoutLikeWW8"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footnoteLayoutLikeWW8"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "footnoteLayoutLikeWW8"}:
 				m.FootnoteLayoutLikeWW8 = NewCT_OnOff()
 				if err := d.DecodeElement(m.FootnoteLayoutLikeWW8, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "shapeLayoutLikeWW8"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "shapeLayoutLikeWW8"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "shapeLayoutLikeWW8"}:
 				m.ShapeLayoutLikeWW8 = NewCT_OnOff()
 				if err := d.DecodeElement(m.ShapeLayoutLikeWW8, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "alignTablesRowByRow"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "alignTablesRowByRow"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "alignTablesRowByRow"}:
 				m.AlignTablesRowByRow = NewCT_OnOff()
 				if err := d.DecodeElement(m.AlignTablesRowByRow, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "forgetLastTabAlignment"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "forgetLastTabAlignment"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "forgetLastTabAlignment"}:
 				m.ForgetLastTabAlignment = NewCT_OnOff()
 				if err := d.DecodeElement(m.ForgetLastTabAlignment, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "adjustLineHeightInTable"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "adjustLineHeightInTable"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "adjustLineHeightInTable"}:
 				m.AdjustLineHeightInTable = NewCT_OnOff()
 				if err := d.DecodeElement(m.AdjustLineHeightInTable, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autoSpaceLikeWord95"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autoSpaceLikeWord95"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "autoSpaceLikeWord95"}:
 				m.AutoSpaceLikeWord95 = NewCT_OnOff()
 				if err := d.DecodeElement(m.AutoSpaceLikeWord95, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noSpaceRaiseLower"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noSpaceRaiseLower"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "noSpaceRaiseLower"}:
 				m.NoSpaceRaiseLower = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoSpaceRaiseLower, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotUseHTMLParagraphAutoSpacing"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotUseHTMLParagraphAutoSpacing"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotUseHTMLParagraphAutoSpacing"}:
 				m.DoNotUseHTMLParagraphAutoSpacing = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotUseHTMLParagraphAutoSpacing, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "layoutRawTableWidth"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "layoutRawTableWidth"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "layoutRawTableWidth"}:
 				m.LayoutRawTableWidth = NewCT_OnOff()
 				if err := d.DecodeElement(m.LayoutRawTableWidth, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "layoutTableRowsApart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "layoutTableRowsApart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "layoutTableRowsApart"}:
 				m.LayoutTableRowsApart = NewCT_OnOff()
 				if err := d.DecodeElement(m.LayoutTableRowsApart, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useWord97LineBreakRules"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useWord97LineBreakRules"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "useWord97LineBreakRules"}:
 				m.UseWord97LineBreakRules = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseWord97LineBreakRules, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotBreakWrappedTables"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotBreakWrappedTables"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotBreakWrappedTables"}:
 				m.DoNotBreakWrappedTables = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotBreakWrappedTables, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSnapToGridInCell"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSnapToGridInCell"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotSnapToGridInCell"}:
 				m.DoNotSnapToGridInCell = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotSnapToGridInCell, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "selectFldWithFirstOrLastChar"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "selectFldWithFirstOrLastChar"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "selectFldWithFirstOrLastChar"}:
 				m.SelectFldWithFirstOrLastChar = NewCT_OnOff()
 				if err := d.DecodeElement(m.SelectFldWithFirstOrLastChar, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "applyBreakingRules"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "applyBreakingRules"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "applyBreakingRules"}:
 				m.ApplyBreakingRules = NewCT_OnOff()
 				if err := d.DecodeElement(m.ApplyBreakingRules, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotWrapTextWithPunct"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotWrapTextWithPunct"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotWrapTextWithPunct"}:
 				m.DoNotWrapTextWithPunct = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotWrapTextWithPunct, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotUseEastAsianBreakRules"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotUseEastAsianBreakRules"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotUseEastAsianBreakRules"}:
 				m.DoNotUseEastAsianBreakRules = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotUseEastAsianBreakRules, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useWord2002TableStyleRules"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useWord2002TableStyleRules"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "useWord2002TableStyleRules"}:
 				m.UseWord2002TableStyleRules = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseWord2002TableStyleRules, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "growAutofit"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "growAutofit"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "growAutofit"}:
 				m.GrowAutofit = NewCT_OnOff()
 				if err := d.DecodeElement(m.GrowAutofit, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useFELayout"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useFELayout"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "useFELayout"}:
 				m.UseFELayout = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseFELayout, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useNormalStyleForList"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useNormalStyleForList"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "useNormalStyleForList"}:
 				m.UseNormalStyleForList = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseNormalStyleForList, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotUseIndentAsNumberingTabStop"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotUseIndentAsNumberingTabStop"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotUseIndentAsNumberingTabStop"}:
 				m.DoNotUseIndentAsNumberingTabStop = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotUseIndentAsNumberingTabStop, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useAltKinsokuLineBreakRules"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useAltKinsokuLineBreakRules"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "useAltKinsokuLineBreakRules"}:
 				m.UseAltKinsokuLineBreakRules = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseAltKinsokuLineBreakRules, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "allowSpaceOfSameStyleInTable"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "allowSpaceOfSameStyleInTable"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "allowSpaceOfSameStyleInTable"}:
 				m.AllowSpaceOfSameStyleInTable = NewCT_OnOff()
 				if err := d.DecodeElement(m.AllowSpaceOfSameStyleInTable, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSuppressIndentation"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSuppressIndentation"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotSuppressIndentation"}:
 				m.DoNotSuppressIndentation = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotSuppressIndentation, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotAutofitConstrainedTables"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotAutofitConstrainedTables"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotAutofitConstrainedTables"}:
 				m.DoNotAutofitConstrainedTables = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotAutofitConstrainedTables, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autofitToFirstFixedWidthCell"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autofitToFirstFixedWidthCell"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "autofitToFirstFixedWidthCell"}:
 				m.AutofitToFirstFixedWidthCell = NewCT_OnOff()
 				if err := d.DecodeElement(m.AutofitToFirstFixedWidthCell, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "underlineTabInNumList"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "underlineTabInNumList"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "underlineTabInNumList"}:
 				m.UnderlineTabInNumList = NewCT_OnOff()
 				if err := d.DecodeElement(m.UnderlineTabInNumList, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "displayHangulFixedWidth"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "displayHangulFixedWidth"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "displayHangulFixedWidth"}:
 				m.DisplayHangulFixedWidth = NewCT_OnOff()
 				if err := d.DecodeElement(m.DisplayHangulFixedWidth, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "splitPgBreakAndParaMark"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "splitPgBreakAndParaMark"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "splitPgBreakAndParaMark"}:
 				m.SplitPgBreakAndParaMark = NewCT_OnOff()
 				if err := d.DecodeElement(m.SplitPgBreakAndParaMark, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotVertAlignCellWithSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotVertAlignCellWithSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotVertAlignCellWithSp"}:
 				m.DoNotVertAlignCellWithSp = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotVertAlignCellWithSp, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotBreakConstrainedForcedTable"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotBreakConstrainedForcedTable"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotBreakConstrainedForcedTable"}:
 				m.DoNotBreakConstrainedForcedTable = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotBreakConstrainedForcedTable, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotVertAlignInTxbx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotVertAlignInTxbx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotVertAlignInTxbx"}:
 				m.DoNotVertAlignInTxbx = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotVertAlignInTxbx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useAnsiKerningPairs"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "useAnsiKerningPairs"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "useAnsiKerningPairs"}:
 				m.UseAnsiKerningPairs = NewCT_OnOff()
 				if err := d.DecodeElement(m.UseAnsiKerningPairs, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cachedColBalance"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cachedColBalance"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "cachedColBalance"}:
 				m.CachedColBalance = NewCT_OnOff()
 				if err := d.DecodeElement(m.CachedColBalance, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "compatSetting"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "compatSetting"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "compatSetting"}:
 				tmp := NewCT_CompatSetting()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -46,7 +46,8 @@ lEG_OfficeArtExtensionList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ext"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ext"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "ext"}:
 				tmp := NewCT_OfficeArtExtension()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -46,7 +46,8 @@ lCT_NotesMasterIdList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "notesMasterId"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "notesMasterId"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "notesMasterId"}:
 				m.NotesMasterId = NewCT_NotesMasterIdListEntry()
 				if err := d.DecodeElement(m.NotesMasterId, &el); err != nil {
 					return err

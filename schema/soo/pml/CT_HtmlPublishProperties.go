@@ -78,7 +78,8 @@ func (m *CT_HtmlPublishProperties) MarshalXML(e *xml.Encoder, start xml.StartEle
 func (m *CT_HtmlPublishProperties) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
@@ -120,22 +121,26 @@ lCT_HtmlPublishProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldAll"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldAll"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "sldAll"}:
 				m.SldAll = NewCT_Empty()
 				if err := d.DecodeElement(m.SldAll, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldRg"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldRg"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "sldRg"}:
 				m.SldRg = NewCT_IndexRange()
 				if err := d.DecodeElement(m.SldRg, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custShow"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custShow"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "custShow"}:
 				m.CustShow = NewCT_CustomShowId()
 				if err := d.DecodeElement(m.CustShow, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

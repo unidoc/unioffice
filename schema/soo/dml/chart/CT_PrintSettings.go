@@ -60,22 +60,26 @@ lCT_PrintSettings:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "headerFooter"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "headerFooter"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "headerFooter"}:
 				m.HeaderFooter = NewCT_HeaderFooter()
 				if err := d.DecodeElement(m.HeaderFooter, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pageMargins"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pageMargins"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "pageMargins"}:
 				m.PageMargins = NewCT_PageMargins()
 				if err := d.DecodeElement(m.PageMargins, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pageSetup"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pageSetup"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "pageSetup"}:
 				m.PageSetup = NewCT_PageSetup()
 				if err := d.DecodeElement(m.PageSetup, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "legacyDrawingHF"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "legacyDrawingHF"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "legacyDrawingHF"}:
 				m.LegacyDrawingHF = NewCT_RelId()
 				if err := d.DecodeElement(m.LegacyDrawingHF, &el); err != nil {
 					return err

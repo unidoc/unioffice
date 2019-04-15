@@ -65,7 +65,8 @@ lCT_ReviewedRevisions:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "reviewed"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "reviewed"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "reviewed"}:
 				tmp := NewCT_Reviewed()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

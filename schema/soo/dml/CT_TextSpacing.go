@@ -50,12 +50,14 @@ lCT_TextSpacing:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spcPct"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spcPct"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "spcPct"}:
 				m.SpcPct = NewCT_TextSpacingPercent()
 				if err := d.DecodeElement(m.SpcPct, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spcPts"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spcPts"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "spcPts"}:
 				m.SpcPts = NewCT_TextSpacingPoint()
 				if err := d.DecodeElement(m.SpcPts, &el); err != nil {
 					return err

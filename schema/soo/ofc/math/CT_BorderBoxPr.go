@@ -85,47 +85,56 @@ lCT_BorderBoxPr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "hideTop"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "hideTop"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "hideTop"}:
 				m.HideTop = NewCT_OnOff()
 				if err := d.DecodeElement(m.HideTop, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "hideBot"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "hideBot"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "hideBot"}:
 				m.HideBot = NewCT_OnOff()
 				if err := d.DecodeElement(m.HideBot, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "hideLeft"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "hideLeft"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "hideLeft"}:
 				m.HideLeft = NewCT_OnOff()
 				if err := d.DecodeElement(m.HideLeft, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "hideRight"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "hideRight"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "hideRight"}:
 				m.HideRight = NewCT_OnOff()
 				if err := d.DecodeElement(m.HideRight, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "strikeH"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "strikeH"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "strikeH"}:
 				m.StrikeH = NewCT_OnOff()
 				if err := d.DecodeElement(m.StrikeH, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "strikeV"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "strikeV"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "strikeV"}:
 				m.StrikeV = NewCT_OnOff()
 				if err := d.DecodeElement(m.StrikeV, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "strikeBLTR"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "strikeBLTR"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "strikeBLTR"}:
 				m.StrikeBLTR = NewCT_OnOff()
 				if err := d.DecodeElement(m.StrikeBLTR, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "strikeTLBR"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "strikeTLBR"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "strikeTLBR"}:
 				m.StrikeTLBR = NewCT_OnOff()
 				if err := d.DecodeElement(m.StrikeTLBR, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "ctrlPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "ctrlPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "ctrlPr"}:
 				m.CtrlPr = NewCT_CtrlPr()
 				if err := d.DecodeElement(m.CtrlPr, &el); err != nil {
 					return err

@@ -148,42 +148,50 @@ lCT_ShowProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "present"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "present"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "present"}:
 				m.Present = NewCT_Empty()
 				if err := d.DecodeElement(m.Present, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "browse"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "browse"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "browse"}:
 				m.Browse = NewCT_ShowInfoBrowse()
 				if err := d.DecodeElement(m.Browse, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "kiosk"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "kiosk"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "kiosk"}:
 				m.Kiosk = NewCT_ShowInfoKiosk()
 				if err := d.DecodeElement(m.Kiosk, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldAll"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldAll"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "sldAll"}:
 				m.SldAll = NewCT_Empty()
 				if err := d.DecodeElement(m.SldAll, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldRg"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldRg"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "sldRg"}:
 				m.SldRg = NewCT_IndexRange()
 				if err := d.DecodeElement(m.SldRg, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custShow"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custShow"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "custShow"}:
 				m.CustShow = NewCT_CustomShowId()
 				if err := d.DecodeElement(m.CustShow, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "penClr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "penClr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "penClr"}:
 				m.PenClr = dml.NewCT_Color()
 				if err := d.DecodeElement(m.PenClr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

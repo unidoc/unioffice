@@ -100,58 +100,69 @@ lCT_OfPieChart:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ofPieType"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ofPieType"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "ofPieType"}:
 				if err := d.DecodeElement(m.OfPieType, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "varyColors"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "varyColors"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "varyColors"}:
 				m.VaryColors = NewCT_Boolean()
 				if err := d.DecodeElement(m.VaryColors, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ser"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ser"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "ser"}:
 				tmp := NewCT_PieSer()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Ser = append(m.Ser, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dLbls"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dLbls"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "dLbls"}:
 				m.DLbls = NewCT_DLbls()
 				if err := d.DecodeElement(m.DLbls, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "gapWidth"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "gapWidth"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "gapWidth"}:
 				m.GapWidth = NewCT_GapAmount()
 				if err := d.DecodeElement(m.GapWidth, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "splitType"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "splitType"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "splitType"}:
 				m.SplitType = NewCT_SplitType()
 				if err := d.DecodeElement(m.SplitType, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "splitPos"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "splitPos"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "splitPos"}:
 				m.SplitPos = NewCT_Double()
 				if err := d.DecodeElement(m.SplitPos, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "custSplit"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "custSplit"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "custSplit"}:
 				m.CustSplit = NewCT_CustSplit()
 				if err := d.DecodeElement(m.CustSplit, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "secondPieSize"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "secondPieSize"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "secondPieSize"}:
 				m.SecondPieSize = NewCT_SecondPieSize()
 				if err := d.DecodeElement(m.SecondPieSize, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "serLines"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "serLines"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "serLines"}:
 				tmp := NewCT_ChartLines()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.SerLines = append(m.SerLines, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

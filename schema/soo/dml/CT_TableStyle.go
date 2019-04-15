@@ -143,77 +143,92 @@ lCT_TableStyle:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tblBg"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tblBg"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "tblBg"}:
 				m.TblBg = NewCT_TableBackgroundStyle()
 				if err := d.DecodeElement(m.TblBg, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "wholeTbl"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "wholeTbl"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "wholeTbl"}:
 				m.WholeTbl = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.WholeTbl, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "band1H"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "band1H"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "band1H"}:
 				m.Band1H = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.Band1H, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "band2H"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "band2H"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "band2H"}:
 				m.Band2H = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.Band2H, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "band1V"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "band1V"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "band1V"}:
 				m.Band1V = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.Band1V, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "band2V"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "band2V"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "band2V"}:
 				m.Band2V = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.Band2V, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lastCol"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lastCol"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lastCol"}:
 				m.LastCol = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.LastCol, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "firstCol"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "firstCol"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "firstCol"}:
 				m.FirstCol = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.FirstCol, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lastRow"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lastRow"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lastRow"}:
 				m.LastRow = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.LastRow, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "seCell"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "seCell"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "seCell"}:
 				m.SeCell = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.SeCell, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "swCell"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "swCell"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "swCell"}:
 				m.SwCell = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.SwCell, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "firstRow"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "firstRow"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "firstRow"}:
 				m.FirstRow = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.FirstRow, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "neCell"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "neCell"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "neCell"}:
 				m.NeCell = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.NeCell, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "nwCell"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "nwCell"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "nwCell"}:
 				m.NwCell = NewCT_TablePartStyle()
 				if err := d.DecodeElement(m.NwCell, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

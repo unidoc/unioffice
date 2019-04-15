@@ -47,7 +47,8 @@ lCT_CustomWorkbookViews:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customWorkbookView"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customWorkbookView"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "customWorkbookView"}:
 				tmp := NewCT_CustomWorkbookView()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

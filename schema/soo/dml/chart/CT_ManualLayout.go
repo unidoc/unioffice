@@ -90,52 +90,62 @@ lCT_ManualLayout:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "layoutTarget"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "layoutTarget"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "layoutTarget"}:
 				m.LayoutTarget = NewCT_LayoutTarget()
 				if err := d.DecodeElement(m.LayoutTarget, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "xMode"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "xMode"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "xMode"}:
 				m.XMode = NewCT_LayoutMode()
 				if err := d.DecodeElement(m.XMode, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "yMode"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "yMode"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "yMode"}:
 				m.YMode = NewCT_LayoutMode()
 				if err := d.DecodeElement(m.YMode, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "wMode"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "wMode"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "wMode"}:
 				m.WMode = NewCT_LayoutMode()
 				if err := d.DecodeElement(m.WMode, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "hMode"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "hMode"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "hMode"}:
 				m.HMode = NewCT_LayoutMode()
 				if err := d.DecodeElement(m.HMode, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "x"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "x"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "x"}:
 				m.X = NewCT_Double()
 				if err := d.DecodeElement(m.X, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "y"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "y"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "y"}:
 				m.Y = NewCT_Double()
 				if err := d.DecodeElement(m.Y, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "w"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "w"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "w"}:
 				m.W = NewCT_Double()
 				if err := d.DecodeElement(m.W, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "h"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "h"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "h"}:
 				m.H = NewCT_Double()
 				if err := d.DecodeElement(m.H, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

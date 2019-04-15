@@ -60,22 +60,26 @@ lCT_TableBackgroundStyle:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "fill"}:
 				m.Fill = NewCT_FillProperties()
 				if err := d.DecodeElement(m.Fill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillRef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillRef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "fillRef"}:
 				m.FillRef = NewCT_StyleMatrixReference()
 				if err := d.DecodeElement(m.FillRef, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effect"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effect"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "effect"}:
 				m.Effect = NewCT_EffectProperties()
 				if err := d.DecodeElement(m.Effect, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectRef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectRef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "effectRef"}:
 				m.EffectRef = NewCT_StyleMatrixReference()
 				if err := d.DecodeElement(m.EffectRef, &el); err != nil {
 					return err

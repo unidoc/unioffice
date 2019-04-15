@@ -48,12 +48,14 @@ lEG_TextBulletTypeface:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buFontTx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buFontTx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "buFontTx"}:
 				m.BuFontTx = NewCT_TextBulletTypefaceFollowText()
 				if err := d.DecodeElement(m.BuFontTx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buFont"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buFont"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "buFont"}:
 				m.BuFont = NewCT_TextFont()
 				if err := d.DecodeElement(m.BuFont, &el); err != nil {
 					return err

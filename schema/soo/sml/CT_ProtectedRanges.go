@@ -47,7 +47,8 @@ lCT_ProtectedRanges:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "protectedRange"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "protectedRange"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "protectedRange"}:
 				tmp := NewCT_ProtectedRange()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

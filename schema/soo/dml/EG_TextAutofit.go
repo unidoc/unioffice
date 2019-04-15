@@ -53,17 +53,20 @@ lEG_TextAutofit:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noAutofit"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noAutofit"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "noAutofit"}:
 				m.NoAutofit = NewCT_TextNoAutofit()
 				if err := d.DecodeElement(m.NoAutofit, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "normAutofit"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "normAutofit"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "normAutofit"}:
 				m.NormAutofit = NewCT_TextNormalAutofit()
 				if err := d.DecodeElement(m.NormAutofit, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spAutoFit"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spAutoFit"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "spAutoFit"}:
 				m.SpAutoFit = NewCT_TextShapeAutofit()
 				if err := d.DecodeElement(m.SpAutoFit, &el); err != nil {
 					return err

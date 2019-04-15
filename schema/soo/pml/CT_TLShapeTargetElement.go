@@ -87,27 +87,32 @@ lCT_TLShapeTargetElement:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bg"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bg"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "bg"}:
 				m.Bg = NewCT_Empty()
 				if err := d.DecodeElement(m.Bg, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "subSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "subSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "subSp"}:
 				m.SubSp = NewCT_TLSubShapeId()
 				if err := d.DecodeElement(m.SubSp, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "oleChartEl"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "oleChartEl"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "oleChartEl"}:
 				m.OleChartEl = NewCT_TLOleChartTargetElement()
 				if err := d.DecodeElement(m.OleChartEl, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "txEl"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "txEl"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "txEl"}:
 				m.TxEl = NewCT_TLTextTargetElement()
 				if err := d.DecodeElement(m.TxEl, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "graphicEl"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "graphicEl"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "graphicEl"}:
 				m.GraphicEl = dml.NewCT_AnimationElementChoice()
 				if err := d.DecodeElement(m.GraphicEl, &el); err != nil {
 					return err

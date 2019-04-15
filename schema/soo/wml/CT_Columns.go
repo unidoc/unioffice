@@ -107,7 +107,8 @@ lCT_Columns:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "col"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "col"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "col"}:
 				tmp := NewCT_Column()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

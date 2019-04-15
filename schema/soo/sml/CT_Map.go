@@ -158,7 +158,8 @@ lCT_Map:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "DataBinding"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "DataBinding"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "DataBinding"}:
 				m.DataBinding = NewCT_DataBinding()
 				if err := d.DecodeElement(m.DataBinding, &el); err != nil {
 					return err

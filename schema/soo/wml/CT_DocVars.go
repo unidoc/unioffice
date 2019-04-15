@@ -49,7 +49,8 @@ lCT_DocVars:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docVar"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docVar"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "docVar"}:
 				tmp := NewCT_DocVar()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

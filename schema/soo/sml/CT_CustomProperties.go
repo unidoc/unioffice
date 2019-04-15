@@ -47,7 +47,8 @@ lCT_CustomProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "customPr"}:
 				tmp := NewCT_CustomProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

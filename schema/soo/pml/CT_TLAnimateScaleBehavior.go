@@ -80,21 +80,25 @@ lCT_TLAnimateScaleBehavior:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cBhvr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cBhvr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "cBhvr"}:
 				if err := d.DecodeElement(m.CBhvr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "by"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "by"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "by"}:
 				m.By = NewCT_TLPoint()
 				if err := d.DecodeElement(m.By, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "from"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "from"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "from"}:
 				m.From = NewCT_TLPoint()
 				if err := d.DecodeElement(m.From, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "to"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "to"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "to"}:
 				m.To = NewCT_TLPoint()
 				if err := d.DecodeElement(m.To, &el); err != nil {
 					return err

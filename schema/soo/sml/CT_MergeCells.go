@@ -65,7 +65,8 @@ lCT_MergeCells:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mergeCell"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mergeCell"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "mergeCell"}:
 				tmp := NewCT_MergeCell()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -54,16 +54,19 @@ lCT_MultiLvlStrRef:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "f"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "f"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "f"}:
 				if err := d.DecodeElement(&m.F, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "multiLvlStrCache"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "multiLvlStrCache"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "multiLvlStrCache"}:
 				m.MultiLvlStrCache = NewCT_MultiLvlStrData()
 				if err := d.DecodeElement(m.MultiLvlStrCache, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

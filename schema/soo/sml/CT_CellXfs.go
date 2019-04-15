@@ -65,7 +65,8 @@ lCT_CellXfs:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "xf"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "xf"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "xf"}:
 				tmp := NewCT_Xf()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

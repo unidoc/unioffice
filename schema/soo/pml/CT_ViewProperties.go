@@ -119,42 +119,50 @@ lCT_ViewProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "normalViewPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "normalViewPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "normalViewPr"}:
 				m.NormalViewPr = NewCT_NormalViewProperties()
 				if err := d.DecodeElement(m.NormalViewPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "slideViewPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "slideViewPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "slideViewPr"}:
 				m.SlideViewPr = NewCT_SlideViewProperties()
 				if err := d.DecodeElement(m.SlideViewPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "outlineViewPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "outlineViewPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "outlineViewPr"}:
 				m.OutlineViewPr = NewCT_OutlineViewProperties()
 				if err := d.DecodeElement(m.OutlineViewPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "notesTextViewPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "notesTextViewPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "notesTextViewPr"}:
 				m.NotesTextViewPr = NewCT_NotesTextViewProperties()
 				if err := d.DecodeElement(m.NotesTextViewPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sorterViewPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sorterViewPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "sorterViewPr"}:
 				m.SorterViewPr = NewCT_SlideSorterViewProperties()
 				if err := d.DecodeElement(m.SorterViewPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "notesViewPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "notesViewPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "notesViewPr"}:
 				m.NotesViewPr = NewCT_NotesViewProperties()
 				if err := d.DecodeElement(m.NotesViewPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "gridSpacing"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "gridSpacing"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "gridSpacing"}:
 				m.GridSpacing = dml.NewCT_PositiveSize2D()
 				if err := d.DecodeElement(m.GridSpacing, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

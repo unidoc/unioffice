@@ -52,12 +52,14 @@ lCT_Colors:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "indexedColors"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "indexedColors"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "indexedColors"}:
 				m.IndexedColors = NewCT_IndexedColors()
 				if err := d.DecodeElement(m.IndexedColors, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mruColors"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mruColors"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "mruColors"}:
 				m.MruColors = NewCT_MRUColors()
 				if err := d.DecodeElement(m.MruColors, &el); err != nil {
 					return err

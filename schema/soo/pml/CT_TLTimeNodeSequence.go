@@ -102,16 +102,19 @@ lCT_TLTimeNodeSequence:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cTn"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cTn"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "cTn"}:
 				if err := d.DecodeElement(m.CTn, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "prevCondLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "prevCondLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "prevCondLst"}:
 				m.PrevCondLst = NewCT_TLTimeConditionList()
 				if err := d.DecodeElement(m.PrevCondLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "nextCondLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "nextCondLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "nextCondLst"}:
 				m.NextCondLst = NewCT_TLTimeConditionList()
 				if err := d.DecodeElement(m.NextCondLst, &el); err != nil {
 					return err

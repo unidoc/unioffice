@@ -104,22 +104,26 @@ lCT_GroupTransform2D:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "off"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "off"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "off"}:
 				m.Off = NewCT_Point2D()
 				if err := d.DecodeElement(m.Off, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ext"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ext"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "ext"}:
 				m.Ext = NewCT_PositiveSize2D()
 				if err := d.DecodeElement(m.Ext, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "chOff"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "chOff"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "chOff"}:
 				m.ChOff = NewCT_Point2D()
 				if err := d.DecodeElement(m.ChOff, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "chExt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "chExt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "chExt"}:
 				m.ChExt = NewCT_PositiveSize2D()
 				if err := d.DecodeElement(m.ChExt, &el); err != nil {
 					return err

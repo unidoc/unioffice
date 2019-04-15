@@ -67,7 +67,8 @@ lCT_Dimensions:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dimension"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dimension"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "dimension"}:
 				tmp := NewCT_PivotDimension()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

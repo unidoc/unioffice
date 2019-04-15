@@ -152,89 +152,104 @@ lCT_TrPr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cnfStyle"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cnfStyle"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "cnfStyle"}:
 				tmp := NewCT_Cnf()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CnfStyle = append(m.CnfStyle, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "divId"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "divId"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "divId"}:
 				tmp := NewCT_DecimalNumber()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.DivId = append(m.DivId, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "gridBefore"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "gridBefore"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "gridBefore"}:
 				tmp := NewCT_DecimalNumber()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GridBefore = append(m.GridBefore, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "gridAfter"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "gridAfter"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "gridAfter"}:
 				tmp := NewCT_DecimalNumber()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GridAfter = append(m.GridAfter, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wBefore"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wBefore"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "wBefore"}:
 				tmp := NewCT_TblWidth()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.WBefore = append(m.WBefore, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wAfter"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "wAfter"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "wAfter"}:
 				tmp := NewCT_TblWidth()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.WAfter = append(m.WAfter, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cantSplit"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cantSplit"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "cantSplit"}:
 				tmp := NewCT_OnOff()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CantSplit = append(m.CantSplit, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "trHeight"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "trHeight"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "trHeight"}:
 				tmp := NewCT_Height()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.TrHeight = append(m.TrHeight, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblHeader"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblHeader"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "tblHeader"}:
 				tmp := NewCT_OnOff()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.TblHeader = append(m.TblHeader, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblCellSpacing"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblCellSpacing"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "tblCellSpacing"}:
 				tmp := NewCT_TblWidth()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.TblCellSpacing = append(m.TblCellSpacing, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "jc"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "jc"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "jc"}:
 				tmp := NewCT_JcTable()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Jc = append(m.Jc, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "hidden"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "hidden"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "hidden"}:
 				tmp := NewCT_OnOff()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Hidden = append(m.Hidden, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ins"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ins"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "ins"}:
 				m.Ins = NewCT_TrackChange()
 				if err := d.DecodeElement(m.Ins, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "del"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "del"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "del"}:
 				m.Del = NewCT_TrackChange()
 				if err := d.DecodeElement(m.Del, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "trPrChange"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "trPrChange"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "trPrChange"}:
 				m.TrPrChange = NewCT_TrPrChange()
 				if err := d.DecodeElement(m.TrPrChange, &el); err != nil {
 					return err

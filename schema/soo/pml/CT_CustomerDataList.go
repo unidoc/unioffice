@@ -55,13 +55,15 @@ lCT_CustomerDataList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custData"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custData"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "custData"}:
 				tmp := NewCT_CustomerData()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CustData = append(m.CustData, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tags"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tags"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "tags"}:
 				m.Tags = NewCT_TagsData()
 				if err := d.DecodeElement(m.Tags, &el); err != nil {
 					return err

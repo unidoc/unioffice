@@ -86,17 +86,20 @@ lCT_TextField:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "rPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "rPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "rPr"}:
 				m.RPr = NewCT_TextCharacterProperties()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "pPr"}:
 				m.PPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.PPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "t"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "t"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "t"}:
 				m.T = new(string)
 				if err := d.DecodeElement(m.T, &el); err != nil {
 					return err

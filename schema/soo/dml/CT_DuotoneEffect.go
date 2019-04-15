@@ -45,42 +45,48 @@ lCT_DuotoneEffect:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "scrgbClr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "scrgbClr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "scrgbClr"}:
 				tmpcolorchoice := NewEG_ColorChoice()
 				tmpcolorchoice.ScrgbClr = NewCT_ScRgbColor()
 				if err := d.DecodeElement(tmpcolorchoice.ScrgbClr, &el); err != nil {
 					return err
 				}
 				m.EG_ColorChoice = append(m.EG_ColorChoice, tmpcolorchoice)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "srgbClr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "srgbClr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "srgbClr"}:
 				tmpcolorchoice := NewEG_ColorChoice()
 				tmpcolorchoice.SrgbClr = NewCT_SRgbColor()
 				if err := d.DecodeElement(tmpcolorchoice.SrgbClr, &el); err != nil {
 					return err
 				}
 				m.EG_ColorChoice = append(m.EG_ColorChoice, tmpcolorchoice)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hslClr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hslClr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "hslClr"}:
 				tmpcolorchoice := NewEG_ColorChoice()
 				tmpcolorchoice.HslClr = NewCT_HslColor()
 				if err := d.DecodeElement(tmpcolorchoice.HslClr, &el); err != nil {
 					return err
 				}
 				m.EG_ColorChoice = append(m.EG_ColorChoice, tmpcolorchoice)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sysClr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sysClr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "sysClr"}:
 				tmpcolorchoice := NewEG_ColorChoice()
 				tmpcolorchoice.SysClr = NewCT_SystemColor()
 				if err := d.DecodeElement(tmpcolorchoice.SysClr, &el); err != nil {
 					return err
 				}
 				m.EG_ColorChoice = append(m.EG_ColorChoice, tmpcolorchoice)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "schemeClr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "schemeClr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "schemeClr"}:
 				tmpcolorchoice := NewEG_ColorChoice()
 				tmpcolorchoice.SchemeClr = NewCT_SchemeColor()
 				if err := d.DecodeElement(tmpcolorchoice.SchemeClr, &el); err != nil {
 					return err
 				}
 				m.EG_ColorChoice = append(m.EG_ColorChoice, tmpcolorchoice)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "prstClr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "prstClr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "prstClr"}:
 				tmpcolorchoice := NewEG_ColorChoice()
 				tmpcolorchoice.PrstClr = NewCT_PresetColor()
 				if err := d.DecodeElement(tmpcolorchoice.PrstClr, &el); err != nil {

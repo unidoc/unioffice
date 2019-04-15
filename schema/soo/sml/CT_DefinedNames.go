@@ -49,7 +49,8 @@ lCT_DefinedNames:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "definedName"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "definedName"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "definedName"}:
 				tmp := NewCT_DefinedName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

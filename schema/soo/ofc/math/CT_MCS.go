@@ -46,7 +46,8 @@ lCT_MCS:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mc"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mc"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "mc"}:
 				tmp := NewCT_MC()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

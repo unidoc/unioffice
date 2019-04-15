@@ -48,12 +48,14 @@ lEG_TextUnderlineLine:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uLnTx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uLnTx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "uLnTx"}:
 				m.ULnTx = NewCT_TextUnderlineLineFollowText()
 				if err := d.DecodeElement(m.ULnTx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uLn"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uLn"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "uLn"}:
 				m.ULn = NewCT_LineProperties()
 				if err := d.DecodeElement(m.ULn, &el); err != nil {
 					return err

@@ -83,19 +83,22 @@ lCT_Tables:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "m"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "m"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "m"}:
 				tmp := NewCT_TableMissing()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.M = append(m.M, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "s"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "s"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "s"}:
 				tmp := NewCT_XStringElement()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.S = append(m.S, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "x"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "x"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "x"}:
 				tmp := NewCT_Index()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

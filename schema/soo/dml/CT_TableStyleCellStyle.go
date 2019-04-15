@@ -60,22 +60,26 @@ lCT_TableStyleCellStyle:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tcBdr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tcBdr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "tcBdr"}:
 				m.TcBdr = NewCT_TableCellBorderStyle()
 				if err := d.DecodeElement(m.TcBdr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "fill"}:
 				m.Fill = NewCT_FillProperties()
 				if err := d.DecodeElement(m.Fill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillRef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillRef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "fillRef"}:
 				m.FillRef = NewCT_StyleMatrixReference()
 				if err := d.DecodeElement(m.FillRef, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cell3D"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cell3D"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "cell3D"}:
 				m.Cell3D = NewCT_Cell3D()
 				if err := d.DecodeElement(m.Cell3D, &el); err != nil {
 					return err

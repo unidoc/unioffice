@@ -51,12 +51,14 @@ lCT_M:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "mPr"}:
 				m.MPr = NewCT_MPr()
 				if err := d.DecodeElement(m.MPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "mr"}:
 				tmp := NewCT_MR()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

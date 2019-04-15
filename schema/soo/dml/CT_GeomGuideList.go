@@ -48,7 +48,8 @@ lCT_GeomGuideList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "gd"}:
 				tmp := NewCT_GeomGuide()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

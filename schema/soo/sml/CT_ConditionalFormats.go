@@ -65,7 +65,8 @@ lCT_ConditionalFormats:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "conditionalFormat"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "conditionalFormat"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "conditionalFormat"}:
 				tmp := NewCT_ConditionalFormat()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

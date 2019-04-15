@@ -71,27 +71,32 @@ lCT_TLAnimVariant:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "boolVal"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "boolVal"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "boolVal"}:
 				m.BoolVal = NewCT_TLAnimVariantBooleanVal()
 				if err := d.DecodeElement(m.BoolVal, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "intVal"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "intVal"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "intVal"}:
 				m.IntVal = NewCT_TLAnimVariantIntegerVal()
 				if err := d.DecodeElement(m.IntVal, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "fltVal"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "fltVal"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "fltVal"}:
 				m.FltVal = NewCT_TLAnimVariantFloatVal()
 				if err := d.DecodeElement(m.FltVal, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "strVal"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "strVal"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "strVal"}:
 				m.StrVal = NewCT_TLAnimVariantStringVal()
 				if err := d.DecodeElement(m.StrVal, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "clrVal"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "clrVal"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "clrVal"}:
 				m.ClrVal = dml.NewCT_Color()
 				if err := d.DecodeElement(m.ClrVal, &el); err != nil {
 					return err

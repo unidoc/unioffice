@@ -60,20 +60,24 @@ lCT_Scene3D:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "camera"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "camera"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "camera"}:
 				if err := d.DecodeElement(m.Camera, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lightRig"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lightRig"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lightRig"}:
 				if err := d.DecodeElement(m.LightRig, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "backdrop"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "backdrop"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "backdrop"}:
 				m.Backdrop = NewCT_Backdrop()
 				if err := d.DecodeElement(m.Backdrop, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

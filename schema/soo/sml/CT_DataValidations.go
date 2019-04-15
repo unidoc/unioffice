@@ -109,7 +109,8 @@ lCT_DataValidations:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataValidation"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataValidation"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "dataValidation"}:
 				tmp := NewCT_DataValidation()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

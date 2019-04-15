@@ -65,27 +65,32 @@ lCT_Scaling:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "logBase"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "logBase"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "logBase"}:
 				m.LogBase = NewCT_LogBase()
 				if err := d.DecodeElement(m.LogBase, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "orientation"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "orientation"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "orientation"}:
 				m.Orientation = NewCT_Orientation()
 				if err := d.DecodeElement(m.Orientation, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "max"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "max"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "max"}:
 				m.Max = NewCT_Double()
 				if err := d.DecodeElement(m.Max, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "min"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "min"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "min"}:
 				m.Min = NewCT_Double()
 				if err := d.DecodeElement(m.Min, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

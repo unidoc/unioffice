@@ -48,12 +48,14 @@ lCT_OleObjectChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "embed"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "embed"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "embed"}:
 				m.Embed = NewCT_OleObjectEmbed()
 				if err := d.DecodeElement(m.Embed, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "link"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "link"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "link"}:
 				m.Link = NewCT_OleObjectLink()
 				if err := d.DecodeElement(m.Link, &el); err != nil {
 					return err

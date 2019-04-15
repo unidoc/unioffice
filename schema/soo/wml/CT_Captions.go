@@ -53,13 +53,15 @@ lCT_Captions:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "caption"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "caption"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "caption"}:
 				tmp := NewCT_Caption()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Caption = append(m.Caption, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autoCaptions"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autoCaptions"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "autoCaptions"}:
 				m.AutoCaptions = NewCT_AutoCaptions()
 				if err := d.DecodeElement(m.AutoCaptions, &el); err != nil {
 					return err

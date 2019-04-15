@@ -50,12 +50,14 @@ lCT_NonVisualGraphicFrameProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "graphicFrameLocks"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "graphicFrameLocks"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "graphicFrameLocks"}:
 				m.GraphicFrameLocks = NewCT_GraphicalObjectFrameLocking()
 				if err := d.DecodeElement(m.GraphicFrameLocks, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

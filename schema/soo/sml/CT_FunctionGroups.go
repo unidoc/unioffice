@@ -67,7 +67,8 @@ lCT_FunctionGroups:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "functionGroup"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "functionGroup"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "functionGroup"}:
 				tmp := NewCT_FunctionGroup()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

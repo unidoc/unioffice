@@ -47,82 +47,98 @@ lMathPr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mathFont"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "mathFont"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "mathFont"}:
 				m.MathFont = NewCT_String()
 				if err := d.DecodeElement(m.MathFont, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "brkBin"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "brkBin"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "brkBin"}:
 				m.BrkBin = NewCT_BreakBin()
 				if err := d.DecodeElement(m.BrkBin, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "brkBinSub"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "brkBinSub"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "brkBinSub"}:
 				m.BrkBinSub = NewCT_BreakBinSub()
 				if err := d.DecodeElement(m.BrkBinSub, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "smallFrac"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "smallFrac"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "smallFrac"}:
 				m.SmallFrac = NewCT_OnOff()
 				if err := d.DecodeElement(m.SmallFrac, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "dispDef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "dispDef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "dispDef"}:
 				m.DispDef = NewCT_OnOff()
 				if err := d.DecodeElement(m.DispDef, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "lMargin"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "lMargin"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "lMargin"}:
 				m.LMargin = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.LMargin, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "rMargin"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "rMargin"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "rMargin"}:
 				m.RMargin = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.RMargin, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "defJc"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "defJc"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "defJc"}:
 				m.DefJc = NewCT_OMathJc()
 				if err := d.DecodeElement(m.DefJc, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "preSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "preSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "preSp"}:
 				m.PreSp = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.PreSp, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "postSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "postSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "postSp"}:
 				m.PostSp = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.PostSp, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "interSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "interSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "interSp"}:
 				m.InterSp = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.InterSp, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "intraSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "intraSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "intraSp"}:
 				m.IntraSp = NewCT_TwipsMeasure()
 				if err := d.DecodeElement(m.IntraSp, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "wrapIndent"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "wrapIndent"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "wrapIndent"}:
 				m.Choice = NewCT_MathPrChoice()
 				if err := d.DecodeElement(&m.Choice.WrapIndent, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "wrapRight"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "wrapRight"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "wrapRight"}:
 				m.Choice = NewCT_MathPrChoice()
 				if err := d.DecodeElement(&m.Choice.WrapRight, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "intLim"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "intLim"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "intLim"}:
 				m.IntLim = NewCT_LimLoc()
 				if err := d.DecodeElement(m.IntLim, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "naryLim"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "naryLim"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "naryLim"}:
 				m.NaryLim = NewCT_LimLoc()
 				if err := d.DecodeElement(m.NaryLim, &el); err != nil {
 					return err

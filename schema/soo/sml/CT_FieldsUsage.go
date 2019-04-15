@@ -67,7 +67,8 @@ lCT_FieldsUsage:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fieldUsage"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fieldUsage"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "fieldUsage"}:
 				tmp := NewCT_FieldUsage()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

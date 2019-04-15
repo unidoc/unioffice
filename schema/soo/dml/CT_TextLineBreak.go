@@ -45,7 +45,8 @@ lCT_TextLineBreak:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "rPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "rPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "rPr"}:
 				m.RPr = NewCT_TextCharacterProperties()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err

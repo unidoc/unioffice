@@ -67,7 +67,8 @@ lCT_CacheHierarchies:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cacheHierarchy"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cacheHierarchy"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "cacheHierarchy"}:
 				tmp := NewCT_CacheHierarchy()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

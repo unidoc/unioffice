@@ -65,7 +65,8 @@ lCT_WebPublishObjects:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPublishObject"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPublishObject"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "webPublishObject"}:
 				tmp := NewCT_WebPublishObject()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
