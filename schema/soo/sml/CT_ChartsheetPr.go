@@ -41,7 +41,7 @@ func (m *CT_ChartsheetPr) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	e.EncodeToken(start)
 	if m.TabColor != nil {
-		setabColor := xml.StartElement{Name: xml.Name{Local: "ma:tabColor"}}
+		setabColor := xml.StartElement{Name: xml.Name{Local: "x:tabColor"}}
 		e.EncodeElement(m.TabColor, setabColor)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -77,7 +77,8 @@ lCT_ChartsheetPr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tabColor"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tabColor"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "tabColor"}:
 				m.TabColor = NewCT_Color()
 				if err := d.DecodeElement(m.TabColor, &el); err != nil {
 					return err

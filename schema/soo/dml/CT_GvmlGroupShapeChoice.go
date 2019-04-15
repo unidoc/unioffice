@@ -81,37 +81,43 @@ lCT_GvmlGroupShapeChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "txSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "txSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "txSp"}:
 				tmp := NewCT_GvmlTextShape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.TxSp = append(m.TxSp, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "sp"}:
 				tmp := NewCT_GvmlShape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Sp = append(m.Sp, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cxnSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cxnSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "cxnSp"}:
 				tmp := NewCT_GvmlConnector()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CxnSp = append(m.CxnSp, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pic"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pic"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "pic"}:
 				tmp := NewCT_GvmlPicture()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Pic = append(m.Pic, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "graphicFrame"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "graphicFrame"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "graphicFrame"}:
 				tmp := NewCT_GvmlGraphicalObjectFrame()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GraphicFrame = append(m.GraphicFrame, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "grpSp"}:
 				tmp := NewCT_GvmlGroupShape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

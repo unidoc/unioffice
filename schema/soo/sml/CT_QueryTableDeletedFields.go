@@ -35,7 +35,7 @@ func (m *CT_QueryTableDeletedFields) MarshalXML(e *xml.Encoder, start xml.StartE
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sedeletedField := xml.StartElement{Name: xml.Name{Local: "ma:deletedField"}}
+	sedeletedField := xml.StartElement{Name: xml.Name{Local: "x:deletedField"}}
 	for _, c := range m.DeletedField {
 		e.EncodeElement(c, sedeletedField)
 	}
@@ -65,7 +65,8 @@ lCT_QueryTableDeletedFields:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "deletedField"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "deletedField"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "deletedField"}:
 				tmp := NewCT_DeletedField()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

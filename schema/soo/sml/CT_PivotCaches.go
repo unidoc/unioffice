@@ -28,7 +28,7 @@ func NewCT_PivotCaches() *CT_PivotCaches {
 
 func (m *CT_PivotCaches) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	sepivotCache := xml.StartElement{Name: xml.Name{Local: "ma:pivotCache"}}
+	sepivotCache := xml.StartElement{Name: xml.Name{Local: "x:pivotCache"}}
 	for _, c := range m.PivotCache {
 		e.EncodeElement(c, sepivotCache)
 	}
@@ -47,7 +47,8 @@ lCT_PivotCaches:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotCache"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotCache"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pivotCache"}:
 				tmp := NewCT_PivotCache()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

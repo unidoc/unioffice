@@ -36,7 +36,7 @@ func (m *CT_Dimensions) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	e.EncodeToken(start)
 	if m.Dimension != nil {
-		sedimension := xml.StartElement{Name: xml.Name{Local: "ma:dimension"}}
+		sedimension := xml.StartElement{Name: xml.Name{Local: "x:dimension"}}
 		for _, c := range m.Dimension {
 			e.EncodeElement(c, sedimension)
 		}
@@ -67,7 +67,8 @@ lCT_Dimensions:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dimension"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dimension"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "dimension"}:
 				tmp := NewCT_PivotDimension()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

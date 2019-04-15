@@ -34,7 +34,7 @@ func (m *CT_ExternalRow) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		Value: fmt.Sprintf("%v", m.RAttr)})
 	e.EncodeToken(start)
 	if m.Cell != nil {
-		secell := xml.StartElement{Name: xml.Name{Local: "ma:cell"}}
+		secell := xml.StartElement{Name: xml.Name{Local: "x:cell"}}
 		for _, c := range m.Cell {
 			e.EncodeElement(c, secell)
 		}
@@ -64,7 +64,8 @@ lCT_ExternalRow:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cell"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cell"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "cell"}:
 				tmp := NewCT_ExternalCell()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

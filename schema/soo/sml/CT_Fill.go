@@ -30,11 +30,11 @@ func NewCT_Fill() *CT_Fill {
 func (m *CT_Fill) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.PatternFill != nil {
-		sepatternFill := xml.StartElement{Name: xml.Name{Local: "ma:patternFill"}}
+		sepatternFill := xml.StartElement{Name: xml.Name{Local: "x:patternFill"}}
 		e.EncodeElement(m.PatternFill, sepatternFill)
 	}
 	if m.GradientFill != nil {
-		segradientFill := xml.StartElement{Name: xml.Name{Local: "ma:gradientFill"}}
+		segradientFill := xml.StartElement{Name: xml.Name{Local: "x:gradientFill"}}
 		e.EncodeElement(m.GradientFill, segradientFill)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -52,12 +52,14 @@ lCT_Fill:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "patternFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "patternFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "patternFill"}:
 				m.PatternFill = NewCT_PatternFill()
 				if err := d.DecodeElement(m.PatternFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "gradientFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "gradientFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "gradientFill"}:
 				m.GradientFill = NewCT_GradientFill()
 				if err := d.DecodeElement(m.GradientFill, &el); err != nil {
 					return err

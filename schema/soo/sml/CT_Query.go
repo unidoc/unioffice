@@ -33,7 +33,7 @@ func (m *CT_Query) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		Value: fmt.Sprintf("%v", m.MdxAttr)})
 	e.EncodeToken(start)
 	if m.Tpls != nil {
-		setpls := xml.StartElement{Name: xml.Name{Local: "ma:tpls"}}
+		setpls := xml.StartElement{Name: xml.Name{Local: "x:tpls"}}
 		e.EncodeElement(m.Tpls, setpls)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -61,7 +61,8 @@ lCT_Query:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tpls"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tpls"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "tpls"}:
 				m.Tpls = NewCT_Tuples()
 				if err := d.DecodeElement(m.Tpls, &el); err != nil {
 					return err

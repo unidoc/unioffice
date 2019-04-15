@@ -49,7 +49,8 @@ lCT_EmbeddedFontList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "embeddedFont"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "embeddedFont"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "embeddedFont"}:
 				tmp := NewCT_EmbeddedFontListEntry()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

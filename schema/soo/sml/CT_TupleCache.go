@@ -36,23 +36,23 @@ func NewCT_TupleCache() *CT_TupleCache {
 func (m *CT_TupleCache) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Entries != nil {
-		seentries := xml.StartElement{Name: xml.Name{Local: "ma:entries"}}
+		seentries := xml.StartElement{Name: xml.Name{Local: "x:entries"}}
 		e.EncodeElement(m.Entries, seentries)
 	}
 	if m.Sets != nil {
-		sesets := xml.StartElement{Name: xml.Name{Local: "ma:sets"}}
+		sesets := xml.StartElement{Name: xml.Name{Local: "x:sets"}}
 		e.EncodeElement(m.Sets, sesets)
 	}
 	if m.QueryCache != nil {
-		sequeryCache := xml.StartElement{Name: xml.Name{Local: "ma:queryCache"}}
+		sequeryCache := xml.StartElement{Name: xml.Name{Local: "x:queryCache"}}
 		e.EncodeElement(m.QueryCache, sequeryCache)
 	}
 	if m.ServerFormats != nil {
-		seserverFormats := xml.StartElement{Name: xml.Name{Local: "ma:serverFormats"}}
+		seserverFormats := xml.StartElement{Name: xml.Name{Local: "x:serverFormats"}}
 		e.EncodeElement(m.ServerFormats, seserverFormats)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -70,27 +70,32 @@ lCT_TupleCache:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "entries"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "entries"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "entries"}:
 				m.Entries = NewCT_PCDSDTCEntries()
 				if err := d.DecodeElement(m.Entries, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sets"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sets"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "sets"}:
 				m.Sets = NewCT_Sets()
 				if err := d.DecodeElement(m.Sets, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "queryCache"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "queryCache"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "queryCache"}:
 				m.QueryCache = NewCT_QueryCache()
 				if err := d.DecodeElement(m.QueryCache, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "serverFormats"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "serverFormats"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "serverFormats"}:
 				m.ServerFormats = NewCT_ServerFormats()
 				if err := d.DecodeElement(m.ServerFormats, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

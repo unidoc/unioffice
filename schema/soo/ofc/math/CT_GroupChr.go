@@ -50,12 +50,14 @@ lCT_GroupChr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "groupChrPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "groupChrPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "groupChrPr"}:
 				m.GroupChrPr = NewCT_GroupChrPr()
 				if err := d.DecodeElement(m.GroupChrPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "e"}:
 				if err := d.DecodeElement(m.E, &el); err != nil {
 					return err
 				}

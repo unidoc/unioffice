@@ -107,7 +107,7 @@ func (m *CT_CommentPr) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%d", b2i(*m.AutoScaleAttr))})
 	}
 	e.EncodeToken(start)
-	seanchor := xml.StartElement{Name: xml.Name{Local: "ma:anchor"}}
+	seanchor := xml.StartElement{Name: xml.Name{Local: "x:anchor"}}
 	e.EncodeElement(m.Anchor, seanchor)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -215,7 +215,8 @@ lCT_CommentPr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "anchor"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "anchor"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "anchor"}:
 				if err := d.DecodeElement(m.Anchor, &el); err != nil {
 					return err
 				}

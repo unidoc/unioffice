@@ -36,7 +36,7 @@ func (m *CT_CacheHierarchies) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	}
 	e.EncodeToken(start)
 	if m.CacheHierarchy != nil {
-		secacheHierarchy := xml.StartElement{Name: xml.Name{Local: "ma:cacheHierarchy"}}
+		secacheHierarchy := xml.StartElement{Name: xml.Name{Local: "x:cacheHierarchy"}}
 		for _, c := range m.CacheHierarchy {
 			e.EncodeElement(c, secacheHierarchy)
 		}
@@ -67,7 +67,8 @@ lCT_CacheHierarchies:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cacheHierarchy"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cacheHierarchy"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "cacheHierarchy"}:
 				tmp := NewCT_CacheHierarchy()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

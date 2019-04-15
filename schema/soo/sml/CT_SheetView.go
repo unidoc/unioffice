@@ -151,23 +151,23 @@ func (m *CT_SheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 		Value: fmt.Sprintf("%v", m.WorkbookViewIdAttr)})
 	e.EncodeToken(start)
 	if m.Pane != nil {
-		sepane := xml.StartElement{Name: xml.Name{Local: "ma:pane"}}
+		sepane := xml.StartElement{Name: xml.Name{Local: "x:pane"}}
 		e.EncodeElement(m.Pane, sepane)
 	}
 	if m.Selection != nil {
-		seselection := xml.StartElement{Name: xml.Name{Local: "ma:selection"}}
+		seselection := xml.StartElement{Name: xml.Name{Local: "x:selection"}}
 		for _, c := range m.Selection {
 			e.EncodeElement(c, seselection)
 		}
 	}
 	if m.PivotSelection != nil {
-		sepivotSelection := xml.StartElement{Name: xml.Name{Local: "ma:pivotSelection"}}
+		sepivotSelection := xml.StartElement{Name: xml.Name{Local: "x:pivotSelection"}}
 		for _, c := range m.PivotSelection {
 			e.EncodeElement(c, sepivotSelection)
 		}
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -340,24 +340,28 @@ lCT_SheetView:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pane"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pane"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pane"}:
 				m.Pane = NewCT_Pane()
 				if err := d.DecodeElement(m.Pane, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "selection"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "selection"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "selection"}:
 				tmp := NewCT_Selection()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Selection = append(m.Selection, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotSelection"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotSelection"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pivotSelection"}:
 				tmp := NewCT_PivotSelection()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.PivotSelection = append(m.PivotSelection, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

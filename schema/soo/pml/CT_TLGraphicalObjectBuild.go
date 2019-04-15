@@ -98,12 +98,14 @@ lCT_TLGraphicalObjectBuild:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldAsOne"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldAsOne"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "bldAsOne"}:
 				m.BldAsOne = NewCT_Empty()
 				if err := d.DecodeElement(m.BldAsOne, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldSub"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldSub"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "bldSub"}:
 				m.BldSub = dml.NewCT_AnimationGraphicalObjectBuildProperties()
 				if err := d.DecodeElement(m.BldSub, &el); err != nil {
 					return err

@@ -58,22 +58,26 @@ lEG_TextBullet:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buNone"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buNone"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "buNone"}:
 				m.BuNone = NewCT_TextNoBullet()
 				if err := d.DecodeElement(m.BuNone, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buAutoNum"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buAutoNum"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "buAutoNum"}:
 				m.BuAutoNum = NewCT_TextAutonumberBullet()
 				if err := d.DecodeElement(m.BuAutoNum, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buChar"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buChar"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "buChar"}:
 				m.BuChar = NewCT_TextCharBullet()
 				if err := d.DecodeElement(m.BuChar, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buBlip"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buBlip"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "buBlip"}:
 				m.BuBlip = NewCT_TextBlipBullet()
 				if err := d.DecodeElement(m.BuBlip, &el); err != nil {
 					return err

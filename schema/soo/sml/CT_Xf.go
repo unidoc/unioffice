@@ -112,15 +112,15 @@ func (m *CT_Xf) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.Alignment != nil {
-		sealignment := xml.StartElement{Name: xml.Name{Local: "ma:alignment"}}
+		sealignment := xml.StartElement{Name: xml.Name{Local: "x:alignment"}}
 		e.EncodeElement(m.Alignment, sealignment)
 	}
 	if m.Protection != nil {
-		seprotection := xml.StartElement{Name: xml.Name{Local: "ma:protection"}}
+		seprotection := xml.StartElement{Name: xml.Name{Local: "x:protection"}}
 		e.EncodeElement(m.Protection, seprotection)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -249,17 +249,20 @@ lCT_Xf:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "alignment"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "alignment"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "alignment"}:
 				m.Alignment = NewCT_CellAlignment()
 				if err := d.DecodeElement(m.Alignment, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "protection"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "protection"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "protection"}:
 				m.Protection = NewCT_CellProtection()
 				if err := d.DecodeElement(m.Protection, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

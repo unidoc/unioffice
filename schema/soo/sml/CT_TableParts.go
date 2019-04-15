@@ -36,7 +36,7 @@ func (m *CT_TableParts) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	e.EncodeToken(start)
 	if m.TablePart != nil {
-		setablePart := xml.StartElement{Name: xml.Name{Local: "ma:tablePart"}}
+		setablePart := xml.StartElement{Name: xml.Name{Local: "x:tablePart"}}
 		for _, c := range m.TablePart {
 			e.EncodeElement(c, setablePart)
 		}
@@ -67,7 +67,8 @@ lCT_TableParts:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tablePart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tablePart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "tablePart"}:
 				tmp := NewCT_TablePart()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

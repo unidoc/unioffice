@@ -30,11 +30,11 @@ func NewCT_ColorScale() *CT_ColorScale {
 
 func (m *CT_ColorScale) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	secfvo := xml.StartElement{Name: xml.Name{Local: "ma:cfvo"}}
+	secfvo := xml.StartElement{Name: xml.Name{Local: "x:cfvo"}}
 	for _, c := range m.Cfvo {
 		e.EncodeElement(c, secfvo)
 	}
-	secolor := xml.StartElement{Name: xml.Name{Local: "ma:color"}}
+	secolor := xml.StartElement{Name: xml.Name{Local: "x:color"}}
 	for _, c := range m.Color {
 		e.EncodeElement(c, secolor)
 	}
@@ -53,13 +53,15 @@ lCT_ColorScale:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cfvo"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cfvo"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "cfvo"}:
 				tmp := NewCT_Cfvo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Cfvo = append(m.Cfvo, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "color"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "color"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "color"}:
 				tmp := NewCT_Color()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

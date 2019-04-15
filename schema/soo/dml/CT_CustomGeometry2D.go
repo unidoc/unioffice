@@ -70,32 +70,38 @@ lCT_CustomGeometry2D:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "avLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "avLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "avLst"}:
 				m.AvLst = NewCT_GeomGuideList()
 				if err := d.DecodeElement(m.AvLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gdLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gdLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "gdLst"}:
 				m.GdLst = NewCT_GeomGuideList()
 				if err := d.DecodeElement(m.GdLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ahLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ahLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "ahLst"}:
 				m.AhLst = NewCT_AdjustHandleList()
 				if err := d.DecodeElement(m.AhLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cxnLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cxnLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "cxnLst"}:
 				m.CxnLst = NewCT_ConnectionSiteList()
 				if err := d.DecodeElement(m.CxnLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "rect"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "rect"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "rect"}:
 				m.Rect = NewCT_GeomRect()
 				if err := d.DecodeElement(m.Rect, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pathLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pathLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "pathLst"}:
 				if err := d.DecodeElement(m.PathLst, &el); err != nil {
 					return err
 				}

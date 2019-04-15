@@ -47,7 +47,7 @@ func (m *CT_Scenarios) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.SqrefAttr)})
 	}
 	e.EncodeToken(start)
-	sescenario := xml.StartElement{Name: xml.Name{Local: "ma:scenario"}}
+	sescenario := xml.StartElement{Name: xml.Name{Local: "x:scenario"}}
 	for _, c := range m.Scenario {
 		e.EncodeElement(c, sescenario)
 	}
@@ -94,7 +94,8 @@ lCT_Scenarios:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "scenario"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "scenario"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "scenario"}:
 				tmp := NewCT_Scenario()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

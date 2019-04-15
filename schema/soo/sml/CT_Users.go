@@ -36,7 +36,7 @@ func (m *CT_Users) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.UserInfo != nil {
-		seuserInfo := xml.StartElement{Name: xml.Name{Local: "ma:userInfo"}}
+		seuserInfo := xml.StartElement{Name: xml.Name{Local: "x:userInfo"}}
 		for _, c := range m.UserInfo {
 			e.EncodeElement(c, seuserInfo)
 		}
@@ -67,7 +67,8 @@ lCT_Users:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "userInfo"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "userInfo"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "userInfo"}:
 				tmp := NewCT_SharedUser()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

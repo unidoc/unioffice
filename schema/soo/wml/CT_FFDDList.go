@@ -61,17 +61,20 @@ lCT_FFDDList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "result"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "result"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "result"}:
 				m.Result = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.Result, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "default"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "default"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "default"}:
 				m.Default = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.Default, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "listEntry"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "listEntry"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "listEntry"}:
 				tmp := NewCT_String()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

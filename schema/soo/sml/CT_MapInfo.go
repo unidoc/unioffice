@@ -34,11 +34,11 @@ func (m *CT_MapInfo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, xml.Attr{Name: xml.Name{Local: "SelectionNamespaces"},
 		Value: fmt.Sprintf("%v", m.SelectionNamespacesAttr)})
 	e.EncodeToken(start)
-	seSchema := xml.StartElement{Name: xml.Name{Local: "ma:Schema"}}
+	seSchema := xml.StartElement{Name: xml.Name{Local: "x:Schema"}}
 	for _, c := range m.Schema {
 		e.EncodeElement(c, seSchema)
 	}
-	seMap := xml.StartElement{Name: xml.Name{Local: "ma:Map"}}
+	seMap := xml.StartElement{Name: xml.Name{Local: "x:Map"}}
 	for _, c := range m.Map {
 		e.EncodeElement(c, seMap)
 	}
@@ -67,13 +67,15 @@ lCT_MapInfo:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "Schema"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "Schema"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "Schema"}:
 				tmp := NewCT_Schema()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Schema = append(m.Schema, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "Map"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "Map"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "Map"}:
 				tmp := NewCT_Map()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

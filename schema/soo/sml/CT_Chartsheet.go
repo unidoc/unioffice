@@ -49,55 +49,55 @@ func NewCT_Chartsheet() *CT_Chartsheet {
 func (m *CT_Chartsheet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.SheetPr != nil {
-		sesheetPr := xml.StartElement{Name: xml.Name{Local: "ma:sheetPr"}}
+		sesheetPr := xml.StartElement{Name: xml.Name{Local: "x:sheetPr"}}
 		e.EncodeElement(m.SheetPr, sesheetPr)
 	}
-	sesheetViews := xml.StartElement{Name: xml.Name{Local: "ma:sheetViews"}}
+	sesheetViews := xml.StartElement{Name: xml.Name{Local: "x:sheetViews"}}
 	e.EncodeElement(m.SheetViews, sesheetViews)
 	if m.SheetProtection != nil {
-		sesheetProtection := xml.StartElement{Name: xml.Name{Local: "ma:sheetProtection"}}
+		sesheetProtection := xml.StartElement{Name: xml.Name{Local: "x:sheetProtection"}}
 		e.EncodeElement(m.SheetProtection, sesheetProtection)
 	}
 	if m.CustomSheetViews != nil {
-		secustomSheetViews := xml.StartElement{Name: xml.Name{Local: "ma:customSheetViews"}}
+		secustomSheetViews := xml.StartElement{Name: xml.Name{Local: "x:customSheetViews"}}
 		e.EncodeElement(m.CustomSheetViews, secustomSheetViews)
 	}
 	if m.PageMargins != nil {
-		sepageMargins := xml.StartElement{Name: xml.Name{Local: "ma:pageMargins"}}
+		sepageMargins := xml.StartElement{Name: xml.Name{Local: "x:pageMargins"}}
 		e.EncodeElement(m.PageMargins, sepageMargins)
 	}
 	if m.PageSetup != nil {
-		sepageSetup := xml.StartElement{Name: xml.Name{Local: "ma:pageSetup"}}
+		sepageSetup := xml.StartElement{Name: xml.Name{Local: "x:pageSetup"}}
 		e.EncodeElement(m.PageSetup, sepageSetup)
 	}
 	if m.HeaderFooter != nil {
-		seheaderFooter := xml.StartElement{Name: xml.Name{Local: "ma:headerFooter"}}
+		seheaderFooter := xml.StartElement{Name: xml.Name{Local: "x:headerFooter"}}
 		e.EncodeElement(m.HeaderFooter, seheaderFooter)
 	}
-	sedrawing := xml.StartElement{Name: xml.Name{Local: "ma:drawing"}}
+	sedrawing := xml.StartElement{Name: xml.Name{Local: "x:drawing"}}
 	e.EncodeElement(m.Drawing, sedrawing)
 	if m.LegacyDrawing != nil {
-		selegacyDrawing := xml.StartElement{Name: xml.Name{Local: "ma:legacyDrawing"}}
+		selegacyDrawing := xml.StartElement{Name: xml.Name{Local: "x:legacyDrawing"}}
 		e.EncodeElement(m.LegacyDrawing, selegacyDrawing)
 	}
 	if m.LegacyDrawingHF != nil {
-		selegacyDrawingHF := xml.StartElement{Name: xml.Name{Local: "ma:legacyDrawingHF"}}
+		selegacyDrawingHF := xml.StartElement{Name: xml.Name{Local: "x:legacyDrawingHF"}}
 		e.EncodeElement(m.LegacyDrawingHF, selegacyDrawingHF)
 	}
 	if m.DrawingHF != nil {
-		sedrawingHF := xml.StartElement{Name: xml.Name{Local: "ma:drawingHF"}}
+		sedrawingHF := xml.StartElement{Name: xml.Name{Local: "x:drawingHF"}}
 		e.EncodeElement(m.DrawingHF, sedrawingHF)
 	}
 	if m.Picture != nil {
-		sepicture := xml.StartElement{Name: xml.Name{Local: "ma:picture"}}
+		sepicture := xml.StartElement{Name: xml.Name{Local: "x:picture"}}
 		e.EncodeElement(m.Picture, sepicture)
 	}
 	if m.WebPublishItems != nil {
-		sewebPublishItems := xml.StartElement{Name: xml.Name{Local: "ma:webPublishItems"}}
+		sewebPublishItems := xml.StartElement{Name: xml.Name{Local: "x:webPublishItems"}}
 		e.EncodeElement(m.WebPublishItems, sewebPublishItems)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -117,70 +117,84 @@ lCT_Chartsheet:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "sheetPr"}:
 				m.SheetPr = NewCT_ChartsheetPr()
 				if err := d.DecodeElement(m.SheetPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetViews"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetViews"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "sheetViews"}:
 				if err := d.DecodeElement(m.SheetViews, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetProtection"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetProtection"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "sheetProtection"}:
 				m.SheetProtection = NewCT_ChartsheetProtection()
 				if err := d.DecodeElement(m.SheetProtection, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customSheetViews"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customSheetViews"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "customSheetViews"}:
 				m.CustomSheetViews = NewCT_CustomChartsheetViews()
 				if err := d.DecodeElement(m.CustomSheetViews, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageMargins"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageMargins"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pageMargins"}:
 				m.PageMargins = NewCT_PageMargins()
 				if err := d.DecodeElement(m.PageMargins, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageSetup"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageSetup"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pageSetup"}:
 				m.PageSetup = NewCT_CsPageSetup()
 				if err := d.DecodeElement(m.PageSetup, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "headerFooter"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "headerFooter"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "headerFooter"}:
 				m.HeaderFooter = NewCT_HeaderFooter()
 				if err := d.DecodeElement(m.HeaderFooter, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "drawing"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "drawing"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "drawing"}:
 				if err := d.DecodeElement(m.Drawing, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "legacyDrawing"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "legacyDrawing"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "legacyDrawing"}:
 				m.LegacyDrawing = NewCT_LegacyDrawing()
 				if err := d.DecodeElement(m.LegacyDrawing, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "legacyDrawingHF"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "legacyDrawingHF"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "legacyDrawingHF"}:
 				m.LegacyDrawingHF = NewCT_LegacyDrawing()
 				if err := d.DecodeElement(m.LegacyDrawingHF, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "drawingHF"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "drawingHF"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "drawingHF"}:
 				m.DrawingHF = NewCT_DrawingHF()
 				if err := d.DecodeElement(m.DrawingHF, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "picture"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "picture"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "picture"}:
 				m.Picture = NewCT_SheetBackgroundPicture()
 				if err := d.DecodeElement(m.Picture, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPublishItems"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPublishItems"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "webPublishItems"}:
 				m.WebPublishItems = NewCT_WebPublishItems()
 				if err := d.DecodeElement(m.WebPublishItems, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -35,7 +35,7 @@ func (m *CT_CalculatedMembers) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	secalculatedMember := xml.StartElement{Name: xml.Name{Local: "ma:calculatedMember"}}
+	secalculatedMember := xml.StartElement{Name: xml.Name{Local: "x:calculatedMember"}}
 	for _, c := range m.CalculatedMember {
 		e.EncodeElement(c, secalculatedMember)
 	}
@@ -65,7 +65,8 @@ lCT_CalculatedMembers:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "calculatedMember"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "calculatedMember"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "calculatedMember"}:
 				tmp := NewCT_CalculatedMember()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

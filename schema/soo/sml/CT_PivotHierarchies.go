@@ -35,7 +35,7 @@ func (m *CT_PivotHierarchies) MarshalXML(e *xml.Encoder, start xml.StartElement)
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sepivotHierarchy := xml.StartElement{Name: xml.Name{Local: "ma:pivotHierarchy"}}
+	sepivotHierarchy := xml.StartElement{Name: xml.Name{Local: "x:pivotHierarchy"}}
 	for _, c := range m.PivotHierarchy {
 		e.EncodeElement(c, sepivotHierarchy)
 	}
@@ -65,7 +65,8 @@ lCT_PivotHierarchies:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotHierarchy"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotHierarchy"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pivotHierarchy"}:
 				tmp := NewCT_PivotHierarchy()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

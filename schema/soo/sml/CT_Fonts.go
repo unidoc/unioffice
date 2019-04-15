@@ -36,7 +36,7 @@ func (m *CT_Fonts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.Font != nil {
-		sefont := xml.StartElement{Name: xml.Name{Local: "ma:font"}}
+		sefont := xml.StartElement{Name: xml.Name{Local: "x:font"}}
 		for _, c := range m.Font {
 			e.EncodeElement(c, sefont)
 		}
@@ -67,7 +67,8 @@ lCT_Fonts:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "font"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "font"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "font"}:
 				tmp := NewCT_Font()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

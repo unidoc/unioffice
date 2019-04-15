@@ -28,7 +28,7 @@ func NewCT_Connections() *CT_Connections {
 
 func (m *CT_Connections) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	seconnection := xml.StartElement{Name: xml.Name{Local: "ma:connection"}}
+	seconnection := xml.StartElement{Name: xml.Name{Local: "x:connection"}}
 	for _, c := range m.Connection {
 		e.EncodeElement(c, seconnection)
 	}
@@ -47,7 +47,8 @@ lCT_Connections:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "connection"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "connection"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "connection"}:
 				tmp := NewCT_Connection()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

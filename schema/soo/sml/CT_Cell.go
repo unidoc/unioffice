@@ -75,20 +75,20 @@ func (m *CT_Cell) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.F != nil {
-		sef := xml.StartElement{Name: xml.Name{Local: "ma:f"}}
+		sef := xml.StartElement{Name: xml.Name{Local: "x:f"}}
 		e.EncodeElement(m.F, sef)
 	}
 	if m.V != nil {
-		sev := xml.StartElement{Name: xml.Name{Local: "ma:v"}}
+		sev := xml.StartElement{Name: xml.Name{Local: "x:v"}}
 		gooxml.AddPreserveSpaceAttr(&sev, *m.V)
 		e.EncodeElement(m.V, sev)
 	}
 	if m.Is != nil {
-		seis := xml.StartElement{Name: xml.Name{Local: "ma:is"}}
+		seis := xml.StartElement{Name: xml.Name{Local: "x:is"}}
 		e.EncodeElement(m.Is, seis)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -155,22 +155,26 @@ lCT_Cell:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "f"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "f"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "f"}:
 				m.F = NewCT_CellFormula()
 				if err := d.DecodeElement(m.F, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "v"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "v"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "v"}:
 				m.V = new(string)
 				if err := d.DecodeElement(m.V, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "is"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "is"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "is"}:
 				m.Is = NewCT_Rst()
 				if err := d.DecodeElement(m.Is, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

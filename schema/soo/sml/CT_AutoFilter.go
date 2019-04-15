@@ -38,17 +38,17 @@ func (m *CT_AutoFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	e.EncodeToken(start)
 	if m.FilterColumn != nil {
-		sefilterColumn := xml.StartElement{Name: xml.Name{Local: "ma:filterColumn"}}
+		sefilterColumn := xml.StartElement{Name: xml.Name{Local: "x:filterColumn"}}
 		for _, c := range m.FilterColumn {
 			e.EncodeElement(c, sefilterColumn)
 		}
 	}
 	if m.SortState != nil {
-		sesortState := xml.StartElement{Name: xml.Name{Local: "ma:sortState"}}
+		sesortState := xml.StartElement{Name: xml.Name{Local: "x:sortState"}}
 		e.EncodeElement(m.SortState, sesortState)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -76,18 +76,21 @@ lCT_AutoFilter:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "filterColumn"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "filterColumn"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "filterColumn"}:
 				tmp := NewCT_FilterColumn()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.FilterColumn = append(m.FilterColumn, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sortState"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sortState"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "sortState"}:
 				m.SortState = NewCT_SortState()
 				if err := d.DecodeElement(m.SortState, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

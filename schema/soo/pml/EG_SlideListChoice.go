@@ -56,17 +56,20 @@ lEG_SlideListChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldAll"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldAll"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "sldAll"}:
 				m.SldAll = NewCT_Empty()
 				if err := d.DecodeElement(m.SldAll, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldRg"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldRg"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "sldRg"}:
 				m.SldRg = NewCT_IndexRange()
 				if err := d.DecodeElement(m.SldRg, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custShow"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custShow"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "custShow"}:
 				m.CustShow = NewCT_CustomShowId()
 				if err := d.DecodeElement(m.CustShow, &el); err != nil {
 					return err

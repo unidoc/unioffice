@@ -35,7 +35,7 @@ func (m *CT_MergeCells) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	semergeCell := xml.StartElement{Name: xml.Name{Local: "ma:mergeCell"}}
+	semergeCell := xml.StartElement{Name: xml.Name{Local: "x:mergeCell"}}
 	for _, c := range m.MergeCell {
 		e.EncodeElement(c, semergeCell)
 	}
@@ -65,7 +65,8 @@ lCT_MergeCells:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mergeCell"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mergeCell"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "mergeCell"}:
 				tmp := NewCT_MergeCell()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

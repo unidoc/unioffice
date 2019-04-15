@@ -69,7 +69,7 @@ func (m *CT_GradientFill) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	e.EncodeToken(start)
 	if m.Stop != nil {
-		sestop := xml.StartElement{Name: xml.Name{Local: "ma:stop"}}
+		sestop := xml.StartElement{Name: xml.Name{Local: "x:stop"}}
 		for _, c := range m.Stop {
 			e.EncodeElement(c, sestop)
 		}
@@ -135,7 +135,8 @@ lCT_GradientFill:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "stop"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "stop"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "stop"}:
 				tmp := NewCT_GradientStop()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

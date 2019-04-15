@@ -28,7 +28,7 @@ func NewCT_BookViews() *CT_BookViews {
 
 func (m *CT_BookViews) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	seworkbookView := xml.StartElement{Name: xml.Name{Local: "ma:workbookView"}}
+	seworkbookView := xml.StartElement{Name: xml.Name{Local: "x:workbookView"}}
 	for _, c := range m.WorkbookView {
 		e.EncodeElement(c, seworkbookView)
 	}
@@ -47,7 +47,8 @@ lCT_BookViews:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "workbookView"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "workbookView"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "workbookView"}:
 				tmp := NewCT_BookView()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

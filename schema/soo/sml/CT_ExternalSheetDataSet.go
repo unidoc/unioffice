@@ -28,7 +28,7 @@ func NewCT_ExternalSheetDataSet() *CT_ExternalSheetDataSet {
 
 func (m *CT_ExternalSheetDataSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	sesheetData := xml.StartElement{Name: xml.Name{Local: "ma:sheetData"}}
+	sesheetData := xml.StartElement{Name: xml.Name{Local: "x:sheetData"}}
 	for _, c := range m.SheetData {
 		e.EncodeElement(c, sesheetData)
 	}
@@ -47,7 +47,8 @@ lCT_ExternalSheetDataSet:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetData"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetData"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "sheetData"}:
 				tmp := NewCT_ExternalSheetData()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

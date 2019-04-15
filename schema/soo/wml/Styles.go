@@ -52,17 +52,20 @@ lStyles:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docDefaults"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docDefaults"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "docDefaults"}:
 				m.DocDefaults = NewCT_DocDefaults()
 				if err := d.DecodeElement(m.DocDefaults, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "latentStyles"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "latentStyles"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "latentStyles"}:
 				m.LatentStyles = NewCT_LatentStyles()
 				if err := d.DecodeElement(m.LatentStyles, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "style"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "style"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "style"}:
 				tmp := NewCT_Style()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

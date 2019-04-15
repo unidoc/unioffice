@@ -40,31 +40,31 @@ func NewCT_Dxf() *CT_Dxf {
 func (m *CT_Dxf) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Font != nil {
-		sefont := xml.StartElement{Name: xml.Name{Local: "ma:font"}}
+		sefont := xml.StartElement{Name: xml.Name{Local: "x:font"}}
 		e.EncodeElement(m.Font, sefont)
 	}
 	if m.NumFmt != nil {
-		senumFmt := xml.StartElement{Name: xml.Name{Local: "ma:numFmt"}}
+		senumFmt := xml.StartElement{Name: xml.Name{Local: "x:numFmt"}}
 		e.EncodeElement(m.NumFmt, senumFmt)
 	}
 	if m.Fill != nil {
-		sefill := xml.StartElement{Name: xml.Name{Local: "ma:fill"}}
+		sefill := xml.StartElement{Name: xml.Name{Local: "x:fill"}}
 		e.EncodeElement(m.Fill, sefill)
 	}
 	if m.Alignment != nil {
-		sealignment := xml.StartElement{Name: xml.Name{Local: "ma:alignment"}}
+		sealignment := xml.StartElement{Name: xml.Name{Local: "x:alignment"}}
 		e.EncodeElement(m.Alignment, sealignment)
 	}
 	if m.Border != nil {
-		seborder := xml.StartElement{Name: xml.Name{Local: "ma:border"}}
+		seborder := xml.StartElement{Name: xml.Name{Local: "x:border"}}
 		e.EncodeElement(m.Border, seborder)
 	}
 	if m.Protection != nil {
-		seprotection := xml.StartElement{Name: xml.Name{Local: "ma:protection"}}
+		seprotection := xml.StartElement{Name: xml.Name{Local: "x:protection"}}
 		e.EncodeElement(m.Protection, seprotection)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -82,37 +82,44 @@ lCT_Dxf:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "font"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "font"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "font"}:
 				m.Font = NewCT_Font()
 				if err := d.DecodeElement(m.Font, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "numFmt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "numFmt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "numFmt"}:
 				m.NumFmt = NewCT_NumFmt()
 				if err := d.DecodeElement(m.NumFmt, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "fill"}:
 				m.Fill = NewCT_Fill()
 				if err := d.DecodeElement(m.Fill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "alignment"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "alignment"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "alignment"}:
 				m.Alignment = NewCT_CellAlignment()
 				if err := d.DecodeElement(m.Alignment, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "border"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "border"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "border"}:
 				m.Border = NewCT_Border()
 				if err := d.DecodeElement(m.Border, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "protection"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "protection"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "protection"}:
 				m.Protection = NewCT_CellProtection()
 				if err := d.DecodeElement(m.Protection, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

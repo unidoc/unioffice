@@ -48,15 +48,15 @@ func (m *CT_CacheSource) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	e.EncodeToken(start)
 	if m.WorksheetSource != nil {
-		seworksheetSource := xml.StartElement{Name: xml.Name{Local: "ma:worksheetSource"}}
+		seworksheetSource := xml.StartElement{Name: xml.Name{Local: "x:worksheetSource"}}
 		e.EncodeElement(m.WorksheetSource, seworksheetSource)
 	}
 	if m.Consolidation != nil {
-		seconsolidation := xml.StartElement{Name: xml.Name{Local: "ma:consolidation"}}
+		seconsolidation := xml.StartElement{Name: xml.Name{Local: "x:consolidation"}}
 		e.EncodeElement(m.Consolidation, seconsolidation)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -90,17 +90,20 @@ lCT_CacheSource:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "worksheetSource"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "worksheetSource"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "worksheetSource"}:
 				m.WorksheetSource = NewCT_WorksheetSource()
 				if err := d.DecodeElement(m.WorksheetSource, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "consolidation"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "consolidation"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "consolidation"}:
 				m.Consolidation = NewCT_Consolidation()
 				if err := d.DecodeElement(m.Consolidation, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

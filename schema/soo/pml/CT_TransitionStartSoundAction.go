@@ -65,7 +65,8 @@ lCT_TransitionStartSoundAction:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "snd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "snd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "snd"}:
 				if err := d.DecodeElement(m.Snd, &el); err != nil {
 					return err
 				}

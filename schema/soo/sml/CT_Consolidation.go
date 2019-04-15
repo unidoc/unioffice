@@ -39,10 +39,10 @@ func (m *CT_Consolidation) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	}
 	e.EncodeToken(start)
 	if m.Pages != nil {
-		sepages := xml.StartElement{Name: xml.Name{Local: "ma:pages"}}
+		sepages := xml.StartElement{Name: xml.Name{Local: "x:pages"}}
 		e.EncodeElement(m.Pages, sepages)
 	}
-	serangeSets := xml.StartElement{Name: xml.Name{Local: "ma:rangeSets"}}
+	serangeSets := xml.StartElement{Name: xml.Name{Local: "x:rangeSets"}}
 	e.EncodeElement(m.RangeSets, serangeSets)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -70,12 +70,14 @@ lCT_Consolidation:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pages"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pages"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pages"}:
 				m.Pages = NewCT_Pages()
 				if err := d.DecodeElement(m.Pages, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rangeSets"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rangeSets"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "rangeSets"}:
 				if err := d.DecodeElement(m.RangeSets, &el); err != nil {
 					return err
 				}

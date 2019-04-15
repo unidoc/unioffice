@@ -109,17 +109,20 @@ lOleObj:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "embed"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "embed"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "embed"}:
 				m.Choice = NewCT_OleObjectChoice()
 				if err := d.DecodeElement(&m.Choice.Embed, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "link"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "link"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "link"}:
 				m.Choice = NewCT_OleObjectChoice()
 				if err := d.DecodeElement(&m.Choice.Link, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "pic"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "pic"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "pic"}:
 				m.Pic = NewCT_Picture()
 				if err := d.DecodeElement(m.Pic, &el); err != nil {
 					return err

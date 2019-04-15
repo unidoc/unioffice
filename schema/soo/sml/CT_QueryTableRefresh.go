@@ -78,18 +78,18 @@ func (m *CT_QueryTableRefresh) MarshalXML(e *xml.Encoder, start xml.StartElement
 			Value: fmt.Sprintf("%v", *m.UnboundColumnsRightAttr)})
 	}
 	e.EncodeToken(start)
-	sequeryTableFields := xml.StartElement{Name: xml.Name{Local: "ma:queryTableFields"}}
+	sequeryTableFields := xml.StartElement{Name: xml.Name{Local: "x:queryTableFields"}}
 	e.EncodeElement(m.QueryTableFields, sequeryTableFields)
 	if m.QueryTableDeletedFields != nil {
-		sequeryTableDeletedFields := xml.StartElement{Name: xml.Name{Local: "ma:queryTableDeletedFields"}}
+		sequeryTableDeletedFields := xml.StartElement{Name: xml.Name{Local: "x:queryTableDeletedFields"}}
 		e.EncodeElement(m.QueryTableDeletedFields, sequeryTableDeletedFields)
 	}
 	if m.SortState != nil {
-		sesortState := xml.StartElement{Name: xml.Name{Local: "ma:sortState"}}
+		sesortState := xml.StartElement{Name: xml.Name{Local: "x:sortState"}}
 		e.EncodeElement(m.SortState, sesortState)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -170,21 +170,25 @@ lCT_QueryTableRefresh:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "queryTableFields"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "queryTableFields"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "queryTableFields"}:
 				if err := d.DecodeElement(m.QueryTableFields, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "queryTableDeletedFields"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "queryTableDeletedFields"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "queryTableDeletedFields"}:
 				m.QueryTableDeletedFields = NewCT_QueryTableDeletedFields()
 				if err := d.DecodeElement(m.QueryTableDeletedFields, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sortState"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sortState"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "sortState"}:
 				m.SortState = NewCT_SortState()
 				if err := d.DecodeElement(m.SortState, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

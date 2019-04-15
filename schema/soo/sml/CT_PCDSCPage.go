@@ -36,7 +36,7 @@ func (m *CT_PCDSCPage) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	}
 	e.EncodeToken(start)
 	if m.PageItem != nil {
-		sepageItem := xml.StartElement{Name: xml.Name{Local: "ma:pageItem"}}
+		sepageItem := xml.StartElement{Name: xml.Name{Local: "x:pageItem"}}
 		for _, c := range m.PageItem {
 			e.EncodeElement(c, sepageItem)
 		}
@@ -67,7 +67,8 @@ lCT_PCDSCPage:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageItem"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageItem"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pageItem"}:
 				tmp := NewCT_PageItem()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

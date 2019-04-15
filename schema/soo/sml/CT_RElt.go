@@ -30,10 +30,10 @@ func NewCT_RElt() *CT_RElt {
 func (m *CT_RElt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.RPr != nil {
-		serPr := xml.StartElement{Name: xml.Name{Local: "ma:rPr"}}
+		serPr := xml.StartElement{Name: xml.Name{Local: "x:rPr"}}
 		e.EncodeElement(m.RPr, serPr)
 	}
-	set := xml.StartElement{Name: xml.Name{Local: "ma:t"}}
+	set := xml.StartElement{Name: xml.Name{Local: "x:t"}}
 	gooxml.AddPreserveSpaceAttr(&set, m.T)
 	e.EncodeElement(m.T, set)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -51,12 +51,14 @@ lCT_RElt:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "rPr"}:
 				m.RPr = NewCT_RPrElt()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "t"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "t"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "t"}:
 				if err := d.DecodeElement(&m.T, &el); err != nil {
 					return err
 				}

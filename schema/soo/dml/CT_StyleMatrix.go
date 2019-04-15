@@ -76,19 +76,23 @@ lCT_StyleMatrix:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillStyleLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillStyleLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "fillStyleLst"}:
 				if err := d.DecodeElement(m.FillStyleLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnStyleLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnStyleLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lnStyleLst"}:
 				if err := d.DecodeElement(m.LnStyleLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectStyleLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectStyleLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "effectStyleLst"}:
 				if err := d.DecodeElement(m.EffectStyleLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bgFillStyleLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bgFillStyleLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "bgFillStyleLst"}:
 				if err := d.DecodeElement(m.BgFillStyleLst, &el); err != nil {
 					return err
 				}

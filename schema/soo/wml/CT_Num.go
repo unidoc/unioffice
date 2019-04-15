@@ -70,11 +70,13 @@ lCT_Num:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "abstractNumId"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "abstractNumId"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "abstractNumId"}:
 				if err := d.DecodeElement(m.AbstractNumId, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lvlOverride"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lvlOverride"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "lvlOverride"}:
 				tmp := NewCT_NumLvl()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

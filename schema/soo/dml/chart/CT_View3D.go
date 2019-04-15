@@ -75,37 +75,44 @@ lCT_View3D:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "rotX"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "rotX"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "rotX"}:
 				m.RotX = NewCT_RotX()
 				if err := d.DecodeElement(m.RotX, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "hPercent"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "hPercent"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "hPercent"}:
 				m.HPercent = NewCT_HPercent()
 				if err := d.DecodeElement(m.HPercent, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "rotY"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "rotY"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "rotY"}:
 				m.RotY = NewCT_RotY()
 				if err := d.DecodeElement(m.RotY, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "depthPercent"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "depthPercent"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "depthPercent"}:
 				m.DepthPercent = NewCT_DepthPercent()
 				if err := d.DecodeElement(m.DepthPercent, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "rAngAx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "rAngAx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "rAngAx"}:
 				m.RAngAx = NewCT_Boolean()
 				if err := d.DecodeElement(m.RAngAx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "perspective"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "perspective"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "perspective"}:
 				m.Perspective = NewCT_Perspective()
 				if err := d.DecodeElement(m.Perspective, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

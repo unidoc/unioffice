@@ -48,12 +48,14 @@ lEG_TextUnderlineFill:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uFillTx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uFillTx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "uFillTx"}:
 				m.UFillTx = NewCT_TextUnderlineFillFollowText()
 				if err := d.DecodeElement(m.UFillTx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "uFill"}:
 				m.UFill = NewCT_TextUnderlineFillGroupWrapper()
 				if err := d.DecodeElement(m.UFill, &el); err != nil {
 					return err

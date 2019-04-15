@@ -36,7 +36,7 @@ func (m *CT_CacheFields) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	e.EncodeToken(start)
 	if m.CacheField != nil {
-		secacheField := xml.StartElement{Name: xml.Name{Local: "ma:cacheField"}}
+		secacheField := xml.StartElement{Name: xml.Name{Local: "x:cacheField"}}
 		for _, c := range m.CacheField {
 			e.EncodeElement(c, secacheField)
 		}
@@ -67,7 +67,8 @@ lCT_CacheFields:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cacheField"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cacheField"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "cacheField"}:
 				tmp := NewCT_CacheField()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

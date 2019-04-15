@@ -67,19 +67,19 @@ func (m *CT_RevisionMove) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	e.EncodeToken(start)
 	if m.Undo != nil {
-		seundo := xml.StartElement{Name: xml.Name{Local: "ma:undo"}}
+		seundo := xml.StartElement{Name: xml.Name{Local: "x:undo"}}
 		for _, c := range m.Undo {
 			e.EncodeElement(c, seundo)
 		}
 	}
 	if m.Rcc != nil {
-		sercc := xml.StartElement{Name: xml.Name{Local: "ma:rcc"}}
+		sercc := xml.StartElement{Name: xml.Name{Local: "x:rcc"}}
 		for _, c := range m.Rcc {
 			e.EncodeElement(c, sercc)
 		}
 	}
 	if m.Rfmt != nil {
-		serfmt := xml.StartElement{Name: xml.Name{Local: "ma:rfmt"}}
+		serfmt := xml.StartElement{Name: xml.Name{Local: "x:rfmt"}}
 		for _, c := range m.Rfmt {
 			e.EncodeElement(c, serfmt)
 		}
@@ -159,19 +159,22 @@ lCT_RevisionMove:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "undo"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "undo"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "undo"}:
 				tmp := NewCT_UndoInfo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Undo = append(m.Undo, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rcc"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rcc"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "rcc"}:
 				tmp := NewCT_RevisionCellChange()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Rcc = append(m.Rcc, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rfmt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rfmt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "rfmt"}:
 				tmp := NewCT_RevisionFormatting()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

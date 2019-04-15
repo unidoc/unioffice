@@ -55,16 +55,19 @@ lCT_Rad:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "radPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "radPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "radPr"}:
 				m.RadPr = NewCT_RadPr()
 				if err := d.DecodeElement(m.RadPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "deg"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "deg"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "deg"}:
 				if err := d.DecodeElement(m.Deg, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "e"}:
 				if err := d.DecodeElement(m.E, &el); err != nil {
 					return err
 				}

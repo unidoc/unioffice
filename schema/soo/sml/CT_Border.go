@@ -64,39 +64,39 @@ func (m *CT_Border) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.Start != nil {
-		sestart := xml.StartElement{Name: xml.Name{Local: "ma:start"}}
+		sestart := xml.StartElement{Name: xml.Name{Local: "x:start"}}
 		e.EncodeElement(m.Start, sestart)
 	}
 	if m.End != nil {
-		seend := xml.StartElement{Name: xml.Name{Local: "ma:end"}}
+		seend := xml.StartElement{Name: xml.Name{Local: "x:end"}}
 		e.EncodeElement(m.End, seend)
 	}
 	if m.Left != nil {
-		seleft := xml.StartElement{Name: xml.Name{Local: "ma:left"}}
+		seleft := xml.StartElement{Name: xml.Name{Local: "x:left"}}
 		e.EncodeElement(m.Left, seleft)
 	}
 	if m.Right != nil {
-		seright := xml.StartElement{Name: xml.Name{Local: "ma:right"}}
+		seright := xml.StartElement{Name: xml.Name{Local: "x:right"}}
 		e.EncodeElement(m.Right, seright)
 	}
 	if m.Top != nil {
-		setop := xml.StartElement{Name: xml.Name{Local: "ma:top"}}
+		setop := xml.StartElement{Name: xml.Name{Local: "x:top"}}
 		e.EncodeElement(m.Top, setop)
 	}
 	if m.Bottom != nil {
-		sebottom := xml.StartElement{Name: xml.Name{Local: "ma:bottom"}}
+		sebottom := xml.StartElement{Name: xml.Name{Local: "x:bottom"}}
 		e.EncodeElement(m.Bottom, sebottom)
 	}
 	if m.Diagonal != nil {
-		sediagonal := xml.StartElement{Name: xml.Name{Local: "ma:diagonal"}}
+		sediagonal := xml.StartElement{Name: xml.Name{Local: "x:diagonal"}}
 		e.EncodeElement(m.Diagonal, sediagonal)
 	}
 	if m.Vertical != nil {
-		severtical := xml.StartElement{Name: xml.Name{Local: "ma:vertical"}}
+		severtical := xml.StartElement{Name: xml.Name{Local: "x:vertical"}}
 		e.EncodeElement(m.Vertical, severtical)
 	}
 	if m.Horizontal != nil {
-		sehorizontal := xml.StartElement{Name: xml.Name{Local: "ma:horizontal"}}
+		sehorizontal := xml.StartElement{Name: xml.Name{Local: "x:horizontal"}}
 		e.EncodeElement(m.Horizontal, sehorizontal)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -140,47 +140,56 @@ lCT_Border:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "start"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "start"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "start"}:
 				m.Start = NewCT_BorderPr()
 				if err := d.DecodeElement(m.Start, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "end"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "end"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "end"}:
 				m.End = NewCT_BorderPr()
 				if err := d.DecodeElement(m.End, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "left"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "left"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "left"}:
 				m.Left = NewCT_BorderPr()
 				if err := d.DecodeElement(m.Left, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "right"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "right"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "right"}:
 				m.Right = NewCT_BorderPr()
 				if err := d.DecodeElement(m.Right, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "top"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "top"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "top"}:
 				m.Top = NewCT_BorderPr()
 				if err := d.DecodeElement(m.Top, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "bottom"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "bottom"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "bottom"}:
 				m.Bottom = NewCT_BorderPr()
 				if err := d.DecodeElement(m.Bottom, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "diagonal"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "diagonal"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "diagonal"}:
 				m.Diagonal = NewCT_BorderPr()
 				if err := d.DecodeElement(m.Diagonal, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "vertical"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "vertical"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "vertical"}:
 				m.Vertical = NewCT_BorderPr()
 				if err := d.DecodeElement(m.Vertical, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "horizontal"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "horizontal"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "horizontal"}:
 				m.Horizontal = NewCT_BorderPr()
 				if err := d.DecodeElement(m.Horizontal, &el); err != nil {
 					return err

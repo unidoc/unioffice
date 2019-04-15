@@ -57,91 +57,91 @@ func NewCT_Font() *CT_Font {
 func (m *CT_Font) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Name != nil {
-		sename := xml.StartElement{Name: xml.Name{Local: "ma:name"}}
+		sename := xml.StartElement{Name: xml.Name{Local: "x:name"}}
 		for _, c := range m.Name {
 			e.EncodeElement(c, sename)
 		}
 	}
 	if m.Charset != nil {
-		secharset := xml.StartElement{Name: xml.Name{Local: "ma:charset"}}
+		secharset := xml.StartElement{Name: xml.Name{Local: "x:charset"}}
 		for _, c := range m.Charset {
 			e.EncodeElement(c, secharset)
 		}
 	}
 	if m.Family != nil {
-		sefamily := xml.StartElement{Name: xml.Name{Local: "ma:family"}}
+		sefamily := xml.StartElement{Name: xml.Name{Local: "x:family"}}
 		for _, c := range m.Family {
 			e.EncodeElement(c, sefamily)
 		}
 	}
 	if m.B != nil {
-		seb := xml.StartElement{Name: xml.Name{Local: "ma:b"}}
+		seb := xml.StartElement{Name: xml.Name{Local: "x:b"}}
 		for _, c := range m.B {
 			e.EncodeElement(c, seb)
 		}
 	}
 	if m.I != nil {
-		sei := xml.StartElement{Name: xml.Name{Local: "ma:i"}}
+		sei := xml.StartElement{Name: xml.Name{Local: "x:i"}}
 		for _, c := range m.I {
 			e.EncodeElement(c, sei)
 		}
 	}
 	if m.Strike != nil {
-		sestrike := xml.StartElement{Name: xml.Name{Local: "ma:strike"}}
+		sestrike := xml.StartElement{Name: xml.Name{Local: "x:strike"}}
 		for _, c := range m.Strike {
 			e.EncodeElement(c, sestrike)
 		}
 	}
 	if m.Outline != nil {
-		seoutline := xml.StartElement{Name: xml.Name{Local: "ma:outline"}}
+		seoutline := xml.StartElement{Name: xml.Name{Local: "x:outline"}}
 		for _, c := range m.Outline {
 			e.EncodeElement(c, seoutline)
 		}
 	}
 	if m.Shadow != nil {
-		seshadow := xml.StartElement{Name: xml.Name{Local: "ma:shadow"}}
+		seshadow := xml.StartElement{Name: xml.Name{Local: "x:shadow"}}
 		for _, c := range m.Shadow {
 			e.EncodeElement(c, seshadow)
 		}
 	}
 	if m.Condense != nil {
-		secondense := xml.StartElement{Name: xml.Name{Local: "ma:condense"}}
+		secondense := xml.StartElement{Name: xml.Name{Local: "x:condense"}}
 		for _, c := range m.Condense {
 			e.EncodeElement(c, secondense)
 		}
 	}
 	if m.Extend != nil {
-		seextend := xml.StartElement{Name: xml.Name{Local: "ma:extend"}}
+		seextend := xml.StartElement{Name: xml.Name{Local: "x:extend"}}
 		for _, c := range m.Extend {
 			e.EncodeElement(c, seextend)
 		}
 	}
 	if m.Color != nil {
-		secolor := xml.StartElement{Name: xml.Name{Local: "ma:color"}}
+		secolor := xml.StartElement{Name: xml.Name{Local: "x:color"}}
 		for _, c := range m.Color {
 			e.EncodeElement(c, secolor)
 		}
 	}
 	if m.Sz != nil {
-		sesz := xml.StartElement{Name: xml.Name{Local: "ma:sz"}}
+		sesz := xml.StartElement{Name: xml.Name{Local: "x:sz"}}
 		for _, c := range m.Sz {
 			e.EncodeElement(c, sesz)
 		}
 	}
 	if m.U != nil {
-		seu := xml.StartElement{Name: xml.Name{Local: "ma:u"}}
+		seu := xml.StartElement{Name: xml.Name{Local: "x:u"}}
 		for _, c := range m.U {
 			e.EncodeElement(c, seu)
 		}
 	}
 	if m.VertAlign != nil {
-		severtAlign := xml.StartElement{Name: xml.Name{Local: "ma:vertAlign"}}
+		severtAlign := xml.StartElement{Name: xml.Name{Local: "x:vertAlign"}}
 		for _, c := range m.VertAlign {
 			e.EncodeElement(c, severtAlign)
 		}
 	}
 	if m.Scheme != nil {
-		sescheme := xml.StartElement{Name: xml.Name{Local: "ma:scheme"}}
+		sescheme := xml.StartElement{Name: xml.Name{Local: "x:scheme"}}
 		for _, c := range m.Scheme {
 			e.EncodeElement(c, sescheme)
 		}
@@ -161,91 +161,106 @@ lCT_Font:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "name"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "name"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "name"}:
 				tmp := NewCT_FontName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Name = append(m.Name, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "charset"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "charset"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "charset"}:
 				tmp := NewCT_IntProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Charset = append(m.Charset, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "family"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "family"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "family"}:
 				tmp := NewCT_FontFamily()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Family = append(m.Family, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "b"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "b"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "b"}:
 				tmp := NewCT_BooleanProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.B = append(m.B, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "i"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "i"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "i"}:
 				tmp := NewCT_BooleanProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.I = append(m.I, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "strike"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "strike"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "strike"}:
 				tmp := NewCT_BooleanProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Strike = append(m.Strike, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "outline"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "outline"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "outline"}:
 				tmp := NewCT_BooleanProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Outline = append(m.Outline, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "shadow"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "shadow"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "shadow"}:
 				tmp := NewCT_BooleanProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Shadow = append(m.Shadow, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "condense"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "condense"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "condense"}:
 				tmp := NewCT_BooleanProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Condense = append(m.Condense, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extend"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extend"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extend"}:
 				tmp := NewCT_BooleanProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Extend = append(m.Extend, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "color"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "color"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "color"}:
 				tmp := NewCT_Color()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Color = append(m.Color, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sz"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sz"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "sz"}:
 				tmp := NewCT_FontSize()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Sz = append(m.Sz, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "u"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "u"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "u"}:
 				tmp := NewCT_UnderlineProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.U = append(m.U, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "vertAlign"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "vertAlign"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "vertAlign"}:
 				tmp := NewCT_VerticalAlignFontProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.VertAlign = append(m.VertAlign, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "scheme"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "scheme"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "scheme"}:
 				tmp := NewCT_FontScheme()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

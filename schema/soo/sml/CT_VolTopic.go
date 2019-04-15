@@ -41,16 +41,16 @@ func (m *CT_VolTopic) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		start.Attr = append(start.Attr, attr)
 	}
 	e.EncodeToken(start)
-	sev := xml.StartElement{Name: xml.Name{Local: "ma:v"}}
+	sev := xml.StartElement{Name: xml.Name{Local: "x:v"}}
 	gooxml.AddPreserveSpaceAttr(&sev, m.V)
 	e.EncodeElement(m.V, sev)
 	if m.Stp != nil {
-		sestp := xml.StartElement{Name: xml.Name{Local: "ma:stp"}}
+		sestp := xml.StartElement{Name: xml.Name{Local: "x:stp"}}
 		for _, c := range m.Stp {
 			e.EncodeElement(c, sestp)
 		}
 	}
-	setr := xml.StartElement{Name: xml.Name{Local: "ma:tr"}}
+	setr := xml.StartElement{Name: xml.Name{Local: "x:tr"}}
 	for _, c := range m.Tr {
 		e.EncodeElement(c, setr)
 	}
@@ -75,17 +75,20 @@ lCT_VolTopic:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "v"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "v"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "v"}:
 				if err := d.DecodeElement(&m.V, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "stp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "stp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "stp"}:
 				var tmp string
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err
 				}
 				m.Stp = append(m.Stp, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "tr"}:
 				tmp := NewCT_VolTopicRef()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

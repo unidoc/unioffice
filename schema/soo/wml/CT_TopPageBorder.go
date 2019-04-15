@@ -109,7 +109,8 @@ func (m *CT_TopPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	// initialize to default
 	m.ValAttr = ST_Border(1)
 	for _, attr := range start.Attr {
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "topLeft" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "topLeft" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "topLeft" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
@@ -117,7 +118,8 @@ func (m *CT_TopPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			m.TopLeftAttr = &parsed
 			continue
 		}
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "topRight" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "topRight" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "topRight" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
@@ -125,7 +127,8 @@ func (m *CT_TopPageBorder) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 			m.TopRightAttr = &parsed
 			continue
 		}
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err

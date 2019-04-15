@@ -46,7 +46,7 @@ func (m *CT_CellSmartTag) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	e.EncodeToken(start)
 	if m.CellSmartTagPr != nil {
-		secellSmartTagPr := xml.StartElement{Name: xml.Name{Local: "ma:cellSmartTagPr"}}
+		secellSmartTagPr := xml.StartElement{Name: xml.Name{Local: "x:cellSmartTagPr"}}
 		for _, c := range m.CellSmartTagPr {
 			e.EncodeElement(c, secellSmartTagPr)
 		}
@@ -92,7 +92,8 @@ lCT_CellSmartTag:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cellSmartTagPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cellSmartTagPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "cellSmartTagPr"}:
 				tmp := NewCT_CellSmartTagPr()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

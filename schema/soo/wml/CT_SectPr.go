@@ -221,116 +221,138 @@ lCT_SectPr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "headerReference"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "headerReference"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "headerReference"}:
 				tmphdrftrreferences := NewEG_HdrFtrReferences()
 				tmphdrftrreferences.HeaderReference = NewCT_HdrFtrRef()
 				if err := d.DecodeElement(tmphdrftrreferences.HeaderReference, &el); err != nil {
 					return err
 				}
 				m.EG_HdrFtrReferences = append(m.EG_HdrFtrReferences, tmphdrftrreferences)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footerReference"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footerReference"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "footerReference"}:
 				tmphdrftrreferences := NewEG_HdrFtrReferences()
 				tmphdrftrreferences.FooterReference = NewCT_HdrFtrRef()
 				if err := d.DecodeElement(tmphdrftrreferences.FooterReference, &el); err != nil {
 					return err
 				}
 				m.EG_HdrFtrReferences = append(m.EG_HdrFtrReferences, tmphdrftrreferences)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footnotePr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "footnotePr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "footnotePr"}:
 				m.FootnotePr = NewCT_FtnProps()
 				if err := d.DecodeElement(m.FootnotePr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "endnotePr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "endnotePr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "endnotePr"}:
 				m.EndnotePr = NewCT_EdnProps()
 				if err := d.DecodeElement(m.EndnotePr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "type"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "type"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "type"}:
 				m.Type = NewCT_SectType()
 				if err := d.DecodeElement(m.Type, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pgSz"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pgSz"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "pgSz"}:
 				m.PgSz = NewCT_PageSz()
 				if err := d.DecodeElement(m.PgSz, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pgMar"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pgMar"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "pgMar"}:
 				m.PgMar = NewCT_PageMar()
 				if err := d.DecodeElement(m.PgMar, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "paperSrc"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "paperSrc"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "paperSrc"}:
 				m.PaperSrc = NewCT_PaperSource()
 				if err := d.DecodeElement(m.PaperSrc, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pgBorders"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pgBorders"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "pgBorders"}:
 				m.PgBorders = NewCT_PageBorders()
 				if err := d.DecodeElement(m.PgBorders, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lnNumType"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "lnNumType"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "lnNumType"}:
 				m.LnNumType = NewCT_LineNumber()
 				if err := d.DecodeElement(m.LnNumType, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pgNumType"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pgNumType"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "pgNumType"}:
 				m.PgNumType = NewCT_PageNumber()
 				if err := d.DecodeElement(m.PgNumType, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cols"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cols"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "cols"}:
 				m.Cols = NewCT_Columns()
 				if err := d.DecodeElement(m.Cols, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "formProt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "formProt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "formProt"}:
 				m.FormProt = NewCT_OnOff()
 				if err := d.DecodeElement(m.FormProt, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "vAlign"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "vAlign"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "vAlign"}:
 				m.VAlign = NewCT_VerticalJc()
 				if err := d.DecodeElement(m.VAlign, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noEndnote"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "noEndnote"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "noEndnote"}:
 				m.NoEndnote = NewCT_OnOff()
 				if err := d.DecodeElement(m.NoEndnote, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "titlePg"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "titlePg"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "titlePg"}:
 				m.TitlePg = NewCT_OnOff()
 				if err := d.DecodeElement(m.TitlePg, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "textDirection"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "textDirection"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "textDirection"}:
 				m.TextDirection = NewCT_TextDirection()
 				if err := d.DecodeElement(m.TextDirection, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bidi"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bidi"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "bidi"}:
 				m.Bidi = NewCT_OnOff()
 				if err := d.DecodeElement(m.Bidi, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rtlGutter"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rtlGutter"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "rtlGutter"}:
 				m.RtlGutter = NewCT_OnOff()
 				if err := d.DecodeElement(m.RtlGutter, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docGrid"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "docGrid"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "docGrid"}:
 				m.DocGrid = NewCT_DocGrid()
 				if err := d.DecodeElement(m.DocGrid, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "printerSettings"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "printerSettings"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "printerSettings"}:
 				m.PrinterSettings = NewCT_Rel()
 				if err := d.DecodeElement(m.PrinterSettings, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sectPrChange"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sectPrChange"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "sectPrChange"}:
 				m.SectPrChange = NewCT_SectPrChange()
 				if err := d.DecodeElement(m.SectPrChange, &el); err != nil {
 					return err

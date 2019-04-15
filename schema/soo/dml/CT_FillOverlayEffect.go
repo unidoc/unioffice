@@ -85,32 +85,38 @@ lCT_FillOverlayEffect:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "noFill"}:
 				m.NoFill = NewCT_NoFillProperties()
 				if err := d.DecodeElement(m.NoFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "solidFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "solidFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "solidFill"}:
 				m.SolidFill = NewCT_SolidColorFillProperties()
 				if err := d.DecodeElement(m.SolidFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gradFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gradFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "gradFill"}:
 				m.GradFill = NewCT_GradientFillProperties()
 				if err := d.DecodeElement(m.GradFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blipFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blipFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "blipFill"}:
 				m.BlipFill = NewCT_BlipFillProperties()
 				if err := d.DecodeElement(m.BlipFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pattFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pattFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "pattFill"}:
 				m.PattFill = NewCT_PatternFillProperties()
 				if err := d.DecodeElement(m.PattFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "grpFill"}:
 				m.GrpFill = NewCT_GroupFillProperties()
 				if err := d.DecodeElement(m.GrpFill, &el); err != nil {
 					return err

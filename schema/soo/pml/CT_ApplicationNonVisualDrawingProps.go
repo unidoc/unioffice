@@ -115,42 +115,50 @@ lCT_ApplicationNonVisualDrawingProps:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "ph"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "ph"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "ph"}:
 				m.Ph = NewCT_Placeholder()
 				if err := d.DecodeElement(m.Ph, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "audioCd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "audioCd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "audioCd"}:
 				m.AudioCd = dml.NewCT_AudioCD()
 				if err := d.DecodeElement(m.AudioCd, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "wavAudioFile"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "wavAudioFile"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "wavAudioFile"}:
 				m.WavAudioFile = dml.NewCT_EmbeddedWAVAudioFile()
 				if err := d.DecodeElement(m.WavAudioFile, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "audioFile"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "audioFile"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "audioFile"}:
 				m.AudioFile = dml.NewCT_AudioFile()
 				if err := d.DecodeElement(m.AudioFile, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "videoFile"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "videoFile"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "videoFile"}:
 				m.VideoFile = dml.NewCT_VideoFile()
 				if err := d.DecodeElement(m.VideoFile, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "quickTimeFile"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "quickTimeFile"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "quickTimeFile"}:
 				m.QuickTimeFile = dml.NewCT_QuickTimeFile()
 				if err := d.DecodeElement(m.QuickTimeFile, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custDataLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "custDataLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "custDataLst"}:
 				m.CustDataLst = NewCT_CustomerDataList()
 				if err := d.DecodeElement(m.CustDataLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

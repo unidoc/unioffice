@@ -28,7 +28,7 @@ func NewCT_Authors() *CT_Authors {
 func (m *CT_Authors) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Author != nil {
-		seauthor := xml.StartElement{Name: xml.Name{Local: "ma:author"}}
+		seauthor := xml.StartElement{Name: xml.Name{Local: "x:author"}}
 		for _, c := range m.Author {
 			e.EncodeElement(c, seauthor)
 		}
@@ -48,7 +48,8 @@ lCT_Authors:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "author"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "author"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "author"}:
 				var tmp string
 				if err := d.DecodeElement(&tmp, &el); err != nil {
 					return err

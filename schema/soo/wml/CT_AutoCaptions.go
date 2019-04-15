@@ -47,7 +47,8 @@ lCT_AutoCaptions:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autoCaption"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "autoCaption"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "autoCaption"}:
 				tmp := NewCT_AutoCaption()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

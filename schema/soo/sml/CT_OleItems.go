@@ -29,7 +29,7 @@ func NewCT_OleItems() *CT_OleItems {
 func (m *CT_OleItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.OleItem != nil {
-		seoleItem := xml.StartElement{Name: xml.Name{Local: "ma:oleItem"}}
+		seoleItem := xml.StartElement{Name: xml.Name{Local: "x:oleItem"}}
 		for _, c := range m.OleItem {
 			e.EncodeElement(c, seoleItem)
 		}
@@ -49,7 +49,8 @@ lCT_OleItems:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleItem"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleItem"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "oleItem"}:
 				tmp := NewCT_OleItem()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

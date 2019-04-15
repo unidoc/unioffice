@@ -28,7 +28,7 @@ func NewCT_CellWatches() *CT_CellWatches {
 
 func (m *CT_CellWatches) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	secellWatch := xml.StartElement{Name: xml.Name{Local: "ma:cellWatch"}}
+	secellWatch := xml.StartElement{Name: xml.Name{Local: "x:cellWatch"}}
 	for _, c := range m.CellWatch {
 		e.EncodeElement(c, secellWatch)
 	}
@@ -47,7 +47,8 @@ lCT_CellWatches:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cellWatch"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cellWatch"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "cellWatch"}:
 				tmp := NewCT_CellWatch()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

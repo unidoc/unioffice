@@ -328,15 +328,15 @@ func (m *CT_PivotField) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	e.EncodeToken(start)
 	if m.Items != nil {
-		seitems := xml.StartElement{Name: xml.Name{Local: "ma:items"}}
+		seitems := xml.StartElement{Name: xml.Name{Local: "x:items"}}
 		e.EncodeElement(m.Items, seitems)
 	}
 	if m.AutoSortScope != nil {
-		seautoSortScope := xml.StartElement{Name: xml.Name{Local: "ma:autoSortScope"}}
+		seautoSortScope := xml.StartElement{Name: xml.Name{Local: "x:autoSortScope"}}
 		e.EncodeElement(m.AutoSortScope, seautoSortScope)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -735,17 +735,20 @@ lCT_PivotField:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "items"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "items"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "items"}:
 				m.Items = NewCT_Items()
 				if err := d.DecodeElement(m.Items, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "autoSortScope"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "autoSortScope"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "autoSortScope"}:
 				m.AutoSortScope = NewCT_AutoSortScope()
 				if err := d.DecodeElement(m.AutoSortScope, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

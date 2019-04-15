@@ -46,15 +46,15 @@ func (m *CT_FieldGroup) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	e.EncodeToken(start)
 	if m.RangePr != nil {
-		serangePr := xml.StartElement{Name: xml.Name{Local: "ma:rangePr"}}
+		serangePr := xml.StartElement{Name: xml.Name{Local: "x:rangePr"}}
 		e.EncodeElement(m.RangePr, serangePr)
 	}
 	if m.DiscretePr != nil {
-		sediscretePr := xml.StartElement{Name: xml.Name{Local: "ma:discretePr"}}
+		sediscretePr := xml.StartElement{Name: xml.Name{Local: "x:discretePr"}}
 		e.EncodeElement(m.DiscretePr, sediscretePr)
 	}
 	if m.GroupItems != nil {
-		segroupItems := xml.StartElement{Name: xml.Name{Local: "ma:groupItems"}}
+		segroupItems := xml.StartElement{Name: xml.Name{Local: "x:groupItems"}}
 		e.EncodeElement(m.GroupItems, segroupItems)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -92,17 +92,20 @@ lCT_FieldGroup:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rangePr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rangePr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "rangePr"}:
 				m.RangePr = NewCT_RangePr()
 				if err := d.DecodeElement(m.RangePr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "discretePr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "discretePr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "discretePr"}:
 				m.DiscretePr = NewCT_DiscretePr()
 				if err := d.DecodeElement(m.DiscretePr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "groupItems"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "groupItems"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "groupItems"}:
 				m.GroupItems = NewCT_GroupItems()
 				if err := d.DecodeElement(m.GroupItems, &el); err != nil {
 					return err

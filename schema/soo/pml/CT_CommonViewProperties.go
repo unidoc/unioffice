@@ -71,11 +71,13 @@ lCT_CommonViewProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "scale"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "scale"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "scale"}:
 				if err := d.DecodeElement(m.Scale, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "origin"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "origin"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "origin"}:
 				if err := d.DecodeElement(m.Origin, &el); err != nil {
 					return err
 				}

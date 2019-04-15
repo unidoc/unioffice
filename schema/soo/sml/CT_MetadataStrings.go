@@ -35,7 +35,7 @@ func (m *CT_MetadataStrings) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	ses := xml.StartElement{Name: xml.Name{Local: "ma:s"}}
+	ses := xml.StartElement{Name: xml.Name{Local: "x:s"}}
 	for _, c := range m.S {
 		e.EncodeElement(c, ses)
 	}
@@ -65,7 +65,8 @@ lCT_MetadataStrings:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "s"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "s"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "s"}:
 				tmp := NewCT_XStringElement()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

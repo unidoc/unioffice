@@ -51,7 +51,7 @@ func (m *CT_I) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.X != nil {
-		sex := xml.StartElement{Name: xml.Name{Local: "ma:x"}}
+		sex := xml.StartElement{Name: xml.Name{Local: "x:x"}}
 		for _, c := range m.X {
 			e.EncodeElement(c, sex)
 		}
@@ -95,7 +95,8 @@ lCT_I:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "x"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "x"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "x"}:
 				tmp := NewCT_X()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

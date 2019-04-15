@@ -53,7 +53,7 @@ func (m *CT_DataValidations) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sedataValidation := xml.StartElement{Name: xml.Name{Local: "ma:dataValidation"}}
+	sedataValidation := xml.StartElement{Name: xml.Name{Local: "x:dataValidation"}}
 	for _, c := range m.DataValidation {
 		e.EncodeElement(c, sedataValidation)
 	}
@@ -109,7 +109,8 @@ lCT_DataValidations:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataValidation"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataValidation"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "dataValidation"}:
 				tmp := NewCT_DataValidation()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

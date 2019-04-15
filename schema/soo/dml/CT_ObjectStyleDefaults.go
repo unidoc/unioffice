@@ -60,22 +60,26 @@ lCT_ObjectStyleDefaults:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spDef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "spDef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "spDef"}:
 				m.SpDef = NewCT_DefaultShapeDefinition()
 				if err := d.DecodeElement(m.SpDef, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnDef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnDef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lnDef"}:
 				m.LnDef = NewCT_DefaultShapeDefinition()
 				if err := d.DecodeElement(m.LnDef, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "txDef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "txDef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "txDef"}:
 				m.TxDef = NewCT_DefaultShapeDefinition()
 				if err := d.DecodeElement(m.TxDef, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

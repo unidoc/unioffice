@@ -55,13 +55,15 @@ lCT_AdjustHandleList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ahXY"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ahXY"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "ahXY"}:
 				tmp := NewCT_XYAdjustHandle()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AhXY = append(m.AhXY, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ahPolar"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ahPolar"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "ahPolar"}:
 				tmp := NewCT_PolarAdjustHandle()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

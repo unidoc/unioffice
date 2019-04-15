@@ -53,17 +53,20 @@ lEG_TextRun:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "r"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "r"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "r"}:
 				m.R = NewCT_RegularTextRun()
 				if err := d.DecodeElement(m.R, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "br"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "br"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "br"}:
 				m.Br = NewCT_TextLineBreak()
 				if err := d.DecodeElement(m.Br, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fld"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fld"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "fld"}:
 				m.Fld = NewCT_TextField()
 				if err := d.DecodeElement(m.Fld, &el); err != nil {
 					return err

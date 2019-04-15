@@ -63,47 +63,55 @@ lWdCT_WordprocessingCanvas:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "bg"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "bg"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "bg"}:
 				m.Bg = dml.NewCT_BackgroundFormatting()
 				if err := d.DecodeElement(m.Bg, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "whole"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "whole"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "whole"}:
 				m.Whole = dml.NewCT_WholeE2oFormatting()
 				if err := d.DecodeElement(m.Whole, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "wsp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "wsp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "wsp"}:
 				tmp := NewWdCT_WordprocessingCanvasChoice()
 				if err := d.DecodeElement(&tmp.Wsp, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/picture", Local: "pic"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/picture", Local: "pic"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/picture", Local: "pic"}:
 				tmp := NewWdCT_WordprocessingCanvasChoice()
 				if err := d.DecodeElement(&tmp.Pic, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "contentPart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "contentPart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "contentPart"}:
 				tmp := NewWdCT_WordprocessingCanvasChoice()
 				if err := d.DecodeElement(&tmp.ContentPart, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "wgp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "wgp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "wgp"}:
 				tmp := NewWdCT_WordprocessingCanvasChoice()
 				if err := d.DecodeElement(&tmp.Wgp, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "graphicFrame"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "graphicFrame"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "graphicFrame"}:
 				tmp := NewWdCT_WordprocessingCanvasChoice()
 				if err := d.DecodeElement(&tmp.GraphicFrame, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "extLst"}:
 				m.ExtLst = dml.NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

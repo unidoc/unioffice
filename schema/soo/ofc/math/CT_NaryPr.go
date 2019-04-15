@@ -70,32 +70,38 @@ lCT_NaryPr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "chr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "chr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "chr"}:
 				m.Chr = NewCT_Char()
 				if err := d.DecodeElement(m.Chr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "limLoc"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "limLoc"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "limLoc"}:
 				m.LimLoc = NewCT_LimLoc()
 				if err := d.DecodeElement(m.LimLoc, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "grow"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "grow"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "grow"}:
 				m.Grow = NewCT_OnOff()
 				if err := d.DecodeElement(m.Grow, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "subHide"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "subHide"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "subHide"}:
 				m.SubHide = NewCT_OnOff()
 				if err := d.DecodeElement(m.SubHide, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "supHide"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "supHide"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "supHide"}:
 				m.SupHide = NewCT_OnOff()
 				if err := d.DecodeElement(m.SupHide, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "ctrlPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "ctrlPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "ctrlPr"}:
 				m.CtrlPr = NewCT_CtrlPr()
 				if err := d.DecodeElement(m.CtrlPr, &el); err != nil {
 					return err

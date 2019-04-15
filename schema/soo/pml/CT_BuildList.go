@@ -73,25 +73,29 @@ lCT_BuildList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldP"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldP"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "bldP"}:
 				tmp := NewCT_TLBuildParagraph()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.BldP = append(m.BldP, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldDgm"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldDgm"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "bldDgm"}:
 				tmp := NewCT_TLBuildDiagram()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.BldDgm = append(m.BldDgm, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldOleChart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldOleChart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "bldOleChart"}:
 				tmp := NewCT_TLOleBuildChart()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.BldOleChart = append(m.BldOleChart, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldGraphic"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bldGraphic"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "bldGraphic"}:
 				tmp := NewCT_TLGraphicalObjectBuild()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

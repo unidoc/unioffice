@@ -66,7 +66,7 @@ func (m *CT_Map) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		Value: fmt.Sprintf("%d", b2i(m.PreserveFormatAttr))})
 	e.EncodeToken(start)
 	if m.DataBinding != nil {
-		seDataBinding := xml.StartElement{Name: xml.Name{Local: "ma:DataBinding"}}
+		seDataBinding := xml.StartElement{Name: xml.Name{Local: "x:DataBinding"}}
 		e.EncodeElement(m.DataBinding, seDataBinding)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -158,7 +158,8 @@ lCT_Map:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "DataBinding"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "DataBinding"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "DataBinding"}:
 				m.DataBinding = NewCT_DataBinding()
 				if err := d.DecodeElement(m.DataBinding, &el); err != nil {
 					return err

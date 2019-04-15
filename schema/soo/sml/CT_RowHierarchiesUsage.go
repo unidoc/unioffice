@@ -35,7 +35,7 @@ func (m *CT_RowHierarchiesUsage) MarshalXML(e *xml.Encoder, start xml.StartEleme
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	serowHierarchyUsage := xml.StartElement{Name: xml.Name{Local: "ma:rowHierarchyUsage"}}
+	serowHierarchyUsage := xml.StartElement{Name: xml.Name{Local: "x:rowHierarchyUsage"}}
 	for _, c := range m.RowHierarchyUsage {
 		e.EncodeElement(c, serowHierarchyUsage)
 	}
@@ -65,7 +65,8 @@ lCT_RowHierarchiesUsage:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rowHierarchyUsage"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rowHierarchyUsage"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "rowHierarchyUsage"}:
 				tmp := NewCT_HierarchyUsage()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

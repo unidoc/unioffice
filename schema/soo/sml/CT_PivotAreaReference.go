@@ -133,13 +133,13 @@ func (m *CT_PivotAreaReference) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	}
 	e.EncodeToken(start)
 	if m.X != nil {
-		sex := xml.StartElement{Name: xml.Name{Local: "ma:x"}}
+		sex := xml.StartElement{Name: xml.Name{Local: "x:x"}}
 		for _, c := range m.X {
 			e.EncodeElement(c, sex)
 		}
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -297,13 +297,15 @@ lCT_PivotAreaReference:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "x"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "x"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "x"}:
 				tmp := NewCT_Index()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.X = append(m.X, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -36,7 +36,7 @@ func (m *CT_PCDKPIs) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.Kpi != nil {
-		sekpi := xml.StartElement{Name: xml.Name{Local: "ma:kpi"}}
+		sekpi := xml.StartElement{Name: xml.Name{Local: "x:kpi"}}
 		for _, c := range m.Kpi {
 			e.EncodeElement(c, sekpi)
 		}
@@ -67,7 +67,8 @@ lCT_PCDKPIs:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "kpi"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "kpi"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "kpi"}:
 				tmp := NewCT_PCDKPI()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

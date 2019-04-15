@@ -71,25 +71,29 @@ lCT_Numbering:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numPicBullet"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numPicBullet"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "numPicBullet"}:
 				tmp := NewCT_NumPicBullet()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.NumPicBullet = append(m.NumPicBullet, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "abstractNum"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "abstractNum"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "abstractNum"}:
 				tmp := NewCT_AbstractNum()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AbstractNum = append(m.AbstractNum, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "num"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "num"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "num"}:
 				tmp := NewCT_Num()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Num = append(m.Num, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numIdMacAtCleanup"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "numIdMacAtCleanup"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "numIdMacAtCleanup"}:
 				m.NumIdMacAtCleanup = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.NumIdMacAtCleanup, &el); err != nil {
 					return err

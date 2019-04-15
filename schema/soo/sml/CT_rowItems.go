@@ -35,7 +35,7 @@ func (m *CT_rowItems) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sei := xml.StartElement{Name: xml.Name{Local: "ma:i"}}
+	sei := xml.StartElement{Name: xml.Name{Local: "x:i"}}
 	for _, c := range m.I {
 		e.EncodeElement(c, sei)
 	}
@@ -65,7 +65,8 @@ lCT_rowItems:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "i"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "i"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "i"}:
 				tmp := NewCT_I()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

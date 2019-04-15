@@ -35,7 +35,7 @@ func (m *CT_GroupMembers) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	segroupMember := xml.StartElement{Name: xml.Name{Local: "ma:groupMember"}}
+	segroupMember := xml.StartElement{Name: xml.Name{Local: "x:groupMember"}}
 	for _, c := range m.GroupMember {
 		e.EncodeElement(c, segroupMember)
 	}
@@ -65,7 +65,8 @@ lCT_GroupMembers:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "groupMember"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "groupMember"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "groupMember"}:
 				tmp := NewCT_GroupMember()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -41,7 +41,7 @@ func (m *CT_DdeValues) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 			Value: fmt.Sprintf("%v", *m.ColsAttr)})
 	}
 	e.EncodeToken(start)
-	sevalue := xml.StartElement{Name: xml.Name{Local: "ma:value"}}
+	sevalue := xml.StartElement{Name: xml.Name{Local: "x:value"}}
 	for _, c := range m.Value {
 		e.EncodeElement(c, sevalue)
 	}
@@ -80,7 +80,8 @@ lCT_DdeValues:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "value"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "value"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "value"}:
 				tmp := NewCT_DdeValue()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

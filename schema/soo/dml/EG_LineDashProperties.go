@@ -48,12 +48,14 @@ lEG_LineDashProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "prstDash"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "prstDash"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "prstDash"}:
 				m.PrstDash = NewCT_PresetLineDashProperties()
 				if err := d.DecodeElement(m.PrstDash, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custDash"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custDash"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "custDash"}:
 				m.CustDash = NewCT_DashStopList()
 				if err := d.DecodeElement(m.CustDash, &el); err != nil {
 					return err

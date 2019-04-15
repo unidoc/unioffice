@@ -74,31 +74,36 @@ lCT_GroupShapeChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "sp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "sp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/spreadsheetDrawing", Local: "sp"}:
 				tmp := NewCT_Shape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Sp = append(m.Sp, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "grpSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "grpSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/spreadsheetDrawing", Local: "grpSp"}:
 				tmp := NewCT_GroupShape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GrpSp = append(m.GrpSp, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "graphicFrame"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "graphicFrame"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/spreadsheetDrawing", Local: "graphicFrame"}:
 				tmp := NewCT_GraphicalObjectFrame()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GraphicFrame = append(m.GraphicFrame, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "cxnSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "cxnSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/spreadsheetDrawing", Local: "cxnSp"}:
 				tmp := NewCT_Connector()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CxnSp = append(m.CxnSp, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "pic"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "pic"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/spreadsheetDrawing", Local: "pic"}:
 				tmp := NewCT_Picture()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

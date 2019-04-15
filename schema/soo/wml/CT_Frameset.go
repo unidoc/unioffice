@@ -70,33 +70,39 @@ lCT_Frameset:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sz"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sz"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "sz"}:
 				m.Sz = NewCT_String()
 				if err := d.DecodeElement(m.Sz, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "framesetSplitbar"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "framesetSplitbar"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "framesetSplitbar"}:
 				m.FramesetSplitbar = NewCT_FramesetSplitbar()
 				if err := d.DecodeElement(m.FramesetSplitbar, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frameLayout"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frameLayout"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "frameLayout"}:
 				m.FrameLayout = NewCT_FrameLayout()
 				if err := d.DecodeElement(m.FrameLayout, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "title"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "title"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "title"}:
 				m.Title = NewCT_String()
 				if err := d.DecodeElement(m.Title, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frameset"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frameset"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "frameset"}:
 				tmp := NewCT_FramesetChoice()
 				if err := d.DecodeElement(&tmp.Frameset, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frame"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frame"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "frame"}:
 				tmp := NewCT_FramesetChoice()
 				if err := d.DecodeElement(&tmp.Frame, &el); err != nil {
 					return err

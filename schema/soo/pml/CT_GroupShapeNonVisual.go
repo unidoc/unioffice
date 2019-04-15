@@ -59,15 +59,18 @@ lCT_GroupShapeNonVisual:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cNvPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cNvPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "cNvPr"}:
 				if err := d.DecodeElement(m.CNvPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cNvGrpSpPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cNvGrpSpPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "cNvGrpSpPr"}:
 				if err := d.DecodeElement(m.CNvGrpSpPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "nvPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "nvPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "nvPr"}:
 				if err := d.DecodeElement(m.NvPr, &el); err != nil {
 					return err
 				}

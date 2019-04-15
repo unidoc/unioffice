@@ -36,7 +36,7 @@ func (m *CT_NumFmts) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.NumFmt != nil {
-		senumFmt := xml.StartElement{Name: xml.Name{Local: "ma:numFmt"}}
+		senumFmt := xml.StartElement{Name: xml.Name{Local: "x:numFmt"}}
 		for _, c := range m.NumFmt {
 			e.EncodeElement(c, senumFmt)
 		}
@@ -67,7 +67,8 @@ lCT_NumFmts:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "numFmt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "numFmt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "numFmt"}:
 				tmp := NewCT_NumFmt()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

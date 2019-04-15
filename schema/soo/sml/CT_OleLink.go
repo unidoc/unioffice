@@ -36,7 +36,7 @@ func (m *CT_OleLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		Value: fmt.Sprintf("%v", m.ProgIdAttr)})
 	e.EncodeToken(start)
 	if m.OleItems != nil {
-		seoleItems := xml.StartElement{Name: xml.Name{Local: "ma:oleItems"}}
+		seoleItems := xml.StartElement{Name: xml.Name{Local: "x:oleItems"}}
 		e.EncodeElement(m.OleItems, seoleItems)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -46,7 +46,8 @@ func (m *CT_OleLink) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_OleLink) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
@@ -72,7 +73,8 @@ lCT_OleLink:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleItems"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleItems"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "oleItems"}:
 				m.OleItems = NewCT_OleItems()
 				if err := d.DecodeElement(m.OleItems, &el); err != nil {
 					return err

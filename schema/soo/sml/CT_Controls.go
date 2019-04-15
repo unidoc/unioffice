@@ -28,7 +28,7 @@ func NewCT_Controls() *CT_Controls {
 
 func (m *CT_Controls) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	secontrol := xml.StartElement{Name: xml.Name{Local: "ma:control"}}
+	secontrol := xml.StartElement{Name: xml.Name{Local: "x:control"}}
 	for _, c := range m.Control {
 		e.EncodeElement(c, secontrol)
 	}
@@ -47,7 +47,8 @@ lCT_Controls:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "control"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "control"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "control"}:
 				tmp := NewCT_Control()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

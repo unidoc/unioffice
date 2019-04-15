@@ -47,21 +47,24 @@ lWsDr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "twoCellAnchor"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "twoCellAnchor"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/spreadsheetDrawing", Local: "twoCellAnchor"}:
 				tmpanchor := NewEG_Anchor()
 				tmpanchor.TwoCellAnchor = NewCT_TwoCellAnchor()
 				if err := d.DecodeElement(tmpanchor.TwoCellAnchor, &el); err != nil {
 					return err
 				}
 				m.EG_Anchor = append(m.EG_Anchor, tmpanchor)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "oneCellAnchor"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "oneCellAnchor"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/spreadsheetDrawing", Local: "oneCellAnchor"}:
 				tmpanchor := NewEG_Anchor()
 				tmpanchor.OneCellAnchor = NewCT_OneCellAnchor()
 				if err := d.DecodeElement(tmpanchor.OneCellAnchor, &el); err != nil {
 					return err
 				}
 				m.EG_Anchor = append(m.EG_Anchor, tmpanchor)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "absoluteAnchor"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", Local: "absoluteAnchor"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/spreadsheetDrawing", Local: "absoluteAnchor"}:
 				tmpanchor := NewEG_Anchor()
 				tmpanchor.AbsoluteAnchor = NewCT_AbsoluteAnchor()
 				if err := d.DecodeElement(tmpanchor.AbsoluteAnchor, &el); err != nil {

@@ -56,7 +56,7 @@ func (m *CT_IconSet) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			Value: fmt.Sprintf("%d", b2i(*m.ReverseAttr))})
 	}
 	e.EncodeToken(start)
-	secfvo := xml.StartElement{Name: xml.Name{Local: "ma:cfvo"}}
+	secfvo := xml.StartElement{Name: xml.Name{Local: "x:cfvo"}}
 	for _, c := range m.Cfvo {
 		e.EncodeElement(c, secfvo)
 	}
@@ -105,7 +105,8 @@ lCT_IconSet:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cfvo"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "cfvo"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "cfvo"}:
 				tmp := NewCT_Cfvo()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -28,7 +28,7 @@ func NewCT_CustomSheetViews() *CT_CustomSheetViews {
 
 func (m *CT_CustomSheetViews) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	secustomSheetView := xml.StartElement{Name: xml.Name{Local: "ma:customSheetView"}}
+	secustomSheetView := xml.StartElement{Name: xml.Name{Local: "x:customSheetView"}}
 	for _, c := range m.CustomSheetView {
 		e.EncodeElement(c, secustomSheetView)
 	}
@@ -47,7 +47,8 @@ lCT_CustomSheetViews:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customSheetView"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customSheetView"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "customSheetView"}:
 				tmp := NewCT_CustomSheetView()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

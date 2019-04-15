@@ -60,22 +60,26 @@ lCT_NonVisualConnectorProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cxnSpLocks"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cxnSpLocks"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "cxnSpLocks"}:
 				m.CxnSpLocks = NewCT_ConnectorLocking()
 				if err := d.DecodeElement(m.CxnSpLocks, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "stCxn"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "stCxn"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "stCxn"}:
 				m.StCxn = NewCT_Connection()
 				if err := d.DecodeElement(m.StCxn, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "endCxn"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "endCxn"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "endCxn"}:
 				m.EndCxn = NewCT_Connection()
 				if err := d.DecodeElement(m.EndCxn, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

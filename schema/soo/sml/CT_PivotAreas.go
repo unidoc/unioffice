@@ -36,7 +36,7 @@ func (m *CT_PivotAreas) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	e.EncodeToken(start)
 	if m.PivotArea != nil {
-		sepivotArea := xml.StartElement{Name: xml.Name{Local: "ma:pivotArea"}}
+		sepivotArea := xml.StartElement{Name: xml.Name{Local: "x:pivotArea"}}
 		for _, c := range m.PivotArea {
 			e.EncodeElement(c, sepivotArea)
 		}
@@ -67,7 +67,8 @@ lCT_PivotAreas:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotArea"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotArea"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pivotArea"}:
 				tmp := NewCT_PivotArea()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -401,112 +401,134 @@ lCT_TextCharacterProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ln"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ln"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "ln"}:
 				m.Ln = NewCT_LineProperties()
 				if err := d.DecodeElement(m.Ln, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "noFill"}:
 				m.NoFill = NewCT_NoFillProperties()
 				if err := d.DecodeElement(m.NoFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "solidFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "solidFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "solidFill"}:
 				m.SolidFill = NewCT_SolidColorFillProperties()
 				if err := d.DecodeElement(m.SolidFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gradFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gradFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "gradFill"}:
 				m.GradFill = NewCT_GradientFillProperties()
 				if err := d.DecodeElement(m.GradFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blipFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blipFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "blipFill"}:
 				m.BlipFill = NewCT_BlipFillProperties()
 				if err := d.DecodeElement(m.BlipFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pattFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pattFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "pattFill"}:
 				m.PattFill = NewCT_PatternFillProperties()
 				if err := d.DecodeElement(m.PattFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "grpFill"}:
 				m.GrpFill = NewCT_GroupFillProperties()
 				if err := d.DecodeElement(m.GrpFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "effectLst"}:
 				m.EffectLst = NewCT_EffectList()
 				if err := d.DecodeElement(m.EffectLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectDag"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectDag"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "effectDag"}:
 				m.EffectDag = NewCT_EffectContainer()
 				if err := d.DecodeElement(m.EffectDag, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "highlight"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "highlight"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "highlight"}:
 				m.Highlight = NewCT_Color()
 				if err := d.DecodeElement(m.Highlight, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uLnTx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uLnTx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "uLnTx"}:
 				m.ULnTx = NewCT_TextUnderlineLineFollowText()
 				if err := d.DecodeElement(m.ULnTx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uLn"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uLn"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "uLn"}:
 				m.ULn = NewCT_LineProperties()
 				if err := d.DecodeElement(m.ULn, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uFillTx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uFillTx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "uFillTx"}:
 				m.UFillTx = NewCT_TextUnderlineFillFollowText()
 				if err := d.DecodeElement(m.UFillTx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "uFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "uFill"}:
 				m.UFill = NewCT_TextUnderlineFillGroupWrapper()
 				if err := d.DecodeElement(m.UFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "latin"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "latin"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "latin"}:
 				m.Latin = NewCT_TextFont()
 				if err := d.DecodeElement(m.Latin, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ea"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ea"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "ea"}:
 				m.Ea = NewCT_TextFont()
 				if err := d.DecodeElement(m.Ea, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cs"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cs"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "cs"}:
 				m.Cs = NewCT_TextFont()
 				if err := d.DecodeElement(m.Cs, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sym"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sym"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "sym"}:
 				m.Sym = NewCT_TextFont()
 				if err := d.DecodeElement(m.Sym, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hlinkClick"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hlinkClick"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "hlinkClick"}:
 				m.HlinkClick = NewCT_Hyperlink()
 				if err := d.DecodeElement(m.HlinkClick, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hlinkMouseOver"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hlinkMouseOver"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "hlinkMouseOver"}:
 				m.HlinkMouseOver = NewCT_Hyperlink()
 				if err := d.DecodeElement(m.HlinkMouseOver, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "rtl"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "rtl"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "rtl"}:
 				m.Rtl = NewCT_Boolean()
 				if err := d.DecodeElement(m.Rtl, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

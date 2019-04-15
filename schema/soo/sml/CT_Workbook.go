@@ -76,79 +76,79 @@ func (m *CT_Workbook) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	if m.FileVersion != nil {
-		sefileVersion := xml.StartElement{Name: xml.Name{Local: "ma:fileVersion"}}
+		sefileVersion := xml.StartElement{Name: xml.Name{Local: "x:fileVersion"}}
 		e.EncodeElement(m.FileVersion, sefileVersion)
 	}
 	if m.FileSharing != nil {
-		sefileSharing := xml.StartElement{Name: xml.Name{Local: "ma:fileSharing"}}
+		sefileSharing := xml.StartElement{Name: xml.Name{Local: "x:fileSharing"}}
 		e.EncodeElement(m.FileSharing, sefileSharing)
 	}
 	if m.WorkbookPr != nil {
-		seworkbookPr := xml.StartElement{Name: xml.Name{Local: "ma:workbookPr"}}
+		seworkbookPr := xml.StartElement{Name: xml.Name{Local: "x:workbookPr"}}
 		e.EncodeElement(m.WorkbookPr, seworkbookPr)
 	}
 	if m.WorkbookProtection != nil {
-		seworkbookProtection := xml.StartElement{Name: xml.Name{Local: "ma:workbookProtection"}}
+		seworkbookProtection := xml.StartElement{Name: xml.Name{Local: "x:workbookProtection"}}
 		e.EncodeElement(m.WorkbookProtection, seworkbookProtection)
 	}
 	if m.BookViews != nil {
-		sebookViews := xml.StartElement{Name: xml.Name{Local: "ma:bookViews"}}
+		sebookViews := xml.StartElement{Name: xml.Name{Local: "x:bookViews"}}
 		e.EncodeElement(m.BookViews, sebookViews)
 	}
-	sesheets := xml.StartElement{Name: xml.Name{Local: "ma:sheets"}}
+	sesheets := xml.StartElement{Name: xml.Name{Local: "x:sheets"}}
 	e.EncodeElement(m.Sheets, sesheets)
 	if m.FunctionGroups != nil {
-		sefunctionGroups := xml.StartElement{Name: xml.Name{Local: "ma:functionGroups"}}
+		sefunctionGroups := xml.StartElement{Name: xml.Name{Local: "x:functionGroups"}}
 		e.EncodeElement(m.FunctionGroups, sefunctionGroups)
 	}
 	if m.ExternalReferences != nil {
-		seexternalReferences := xml.StartElement{Name: xml.Name{Local: "ma:externalReferences"}}
+		seexternalReferences := xml.StartElement{Name: xml.Name{Local: "x:externalReferences"}}
 		e.EncodeElement(m.ExternalReferences, seexternalReferences)
 	}
 	if m.DefinedNames != nil {
-		sedefinedNames := xml.StartElement{Name: xml.Name{Local: "ma:definedNames"}}
+		sedefinedNames := xml.StartElement{Name: xml.Name{Local: "x:definedNames"}}
 		e.EncodeElement(m.DefinedNames, sedefinedNames)
 	}
 	if m.CalcPr != nil {
-		secalcPr := xml.StartElement{Name: xml.Name{Local: "ma:calcPr"}}
+		secalcPr := xml.StartElement{Name: xml.Name{Local: "x:calcPr"}}
 		e.EncodeElement(m.CalcPr, secalcPr)
 	}
 	if m.OleSize != nil {
-		seoleSize := xml.StartElement{Name: xml.Name{Local: "ma:oleSize"}}
+		seoleSize := xml.StartElement{Name: xml.Name{Local: "x:oleSize"}}
 		e.EncodeElement(m.OleSize, seoleSize)
 	}
 	if m.CustomWorkbookViews != nil {
-		secustomWorkbookViews := xml.StartElement{Name: xml.Name{Local: "ma:customWorkbookViews"}}
+		secustomWorkbookViews := xml.StartElement{Name: xml.Name{Local: "x:customWorkbookViews"}}
 		e.EncodeElement(m.CustomWorkbookViews, secustomWorkbookViews)
 	}
 	if m.PivotCaches != nil {
-		sepivotCaches := xml.StartElement{Name: xml.Name{Local: "ma:pivotCaches"}}
+		sepivotCaches := xml.StartElement{Name: xml.Name{Local: "x:pivotCaches"}}
 		e.EncodeElement(m.PivotCaches, sepivotCaches)
 	}
 	if m.SmartTagPr != nil {
-		sesmartTagPr := xml.StartElement{Name: xml.Name{Local: "ma:smartTagPr"}}
+		sesmartTagPr := xml.StartElement{Name: xml.Name{Local: "x:smartTagPr"}}
 		e.EncodeElement(m.SmartTagPr, sesmartTagPr)
 	}
 	if m.SmartTagTypes != nil {
-		sesmartTagTypes := xml.StartElement{Name: xml.Name{Local: "ma:smartTagTypes"}}
+		sesmartTagTypes := xml.StartElement{Name: xml.Name{Local: "x:smartTagTypes"}}
 		e.EncodeElement(m.SmartTagTypes, sesmartTagTypes)
 	}
 	if m.WebPublishing != nil {
-		sewebPublishing := xml.StartElement{Name: xml.Name{Local: "ma:webPublishing"}}
+		sewebPublishing := xml.StartElement{Name: xml.Name{Local: "x:webPublishing"}}
 		e.EncodeElement(m.WebPublishing, sewebPublishing)
 	}
 	if m.FileRecoveryPr != nil {
-		sefileRecoveryPr := xml.StartElement{Name: xml.Name{Local: "ma:fileRecoveryPr"}}
+		sefileRecoveryPr := xml.StartElement{Name: xml.Name{Local: "x:fileRecoveryPr"}}
 		for _, c := range m.FileRecoveryPr {
 			e.EncodeElement(c, sefileRecoveryPr)
 		}
 	}
 	if m.WebPublishObjects != nil {
-		sewebPublishObjects := xml.StartElement{Name: xml.Name{Local: "ma:webPublishObjects"}}
+		sewebPublishObjects := xml.StartElement{Name: xml.Name{Local: "x:webPublishObjects"}}
 		e.EncodeElement(m.WebPublishObjects, sewebPublishObjects)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -173,97 +173,116 @@ lCT_Workbook:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fileVersion"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fileVersion"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "fileVersion"}:
 				m.FileVersion = NewCT_FileVersion()
 				if err := d.DecodeElement(m.FileVersion, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fileSharing"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fileSharing"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "fileSharing"}:
 				m.FileSharing = NewCT_FileSharing()
 				if err := d.DecodeElement(m.FileSharing, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "workbookPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "workbookPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "workbookPr"}:
 				m.WorkbookPr = NewCT_WorkbookPr()
 				if err := d.DecodeElement(m.WorkbookPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "workbookProtection"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "workbookProtection"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "workbookProtection"}:
 				m.WorkbookProtection = NewCT_WorkbookProtection()
 				if err := d.DecodeElement(m.WorkbookProtection, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "bookViews"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "bookViews"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "bookViews"}:
 				m.BookViews = NewCT_BookViews()
 				if err := d.DecodeElement(m.BookViews, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheets"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheets"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "sheets"}:
 				if err := d.DecodeElement(m.Sheets, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "functionGroups"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "functionGroups"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "functionGroups"}:
 				m.FunctionGroups = NewCT_FunctionGroups()
 				if err := d.DecodeElement(m.FunctionGroups, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "externalReferences"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "externalReferences"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "externalReferences"}:
 				m.ExternalReferences = NewCT_ExternalReferences()
 				if err := d.DecodeElement(m.ExternalReferences, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "definedNames"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "definedNames"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "definedNames"}:
 				m.DefinedNames = NewCT_DefinedNames()
 				if err := d.DecodeElement(m.DefinedNames, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "calcPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "calcPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "calcPr"}:
 				m.CalcPr = NewCT_CalcPr()
 				if err := d.DecodeElement(m.CalcPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleSize"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleSize"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "oleSize"}:
 				m.OleSize = NewCT_OleSize()
 				if err := d.DecodeElement(m.OleSize, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customWorkbookViews"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "customWorkbookViews"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "customWorkbookViews"}:
 				m.CustomWorkbookViews = NewCT_CustomWorkbookViews()
 				if err := d.DecodeElement(m.CustomWorkbookViews, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotCaches"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pivotCaches"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pivotCaches"}:
 				m.PivotCaches = NewCT_PivotCaches()
 				if err := d.DecodeElement(m.PivotCaches, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "smartTagPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "smartTagPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "smartTagPr"}:
 				m.SmartTagPr = NewCT_SmartTagPr()
 				if err := d.DecodeElement(m.SmartTagPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "smartTagTypes"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "smartTagTypes"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "smartTagTypes"}:
 				m.SmartTagTypes = NewCT_SmartTagTypes()
 				if err := d.DecodeElement(m.SmartTagTypes, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPublishing"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPublishing"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "webPublishing"}:
 				m.WebPublishing = NewCT_WebPublishing()
 				if err := d.DecodeElement(m.WebPublishing, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fileRecoveryPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "fileRecoveryPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "fileRecoveryPr"}:
 				tmp := NewCT_FileRecoveryPr()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.FileRecoveryPr = append(m.FileRecoveryPr, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPublishObjects"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "webPublishObjects"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "webPublishObjects"}:
 				m.WebPublishObjects = NewCT_WebPublishObjects()
 				if err := d.DecodeElement(m.WebPublishObjects, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

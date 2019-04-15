@@ -28,15 +28,15 @@ func NewCT_ExternalLinkChoice() *CT_ExternalLinkChoice {
 
 func (m *CT_ExternalLinkChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.ExternalBook != nil {
-		seexternalBook := xml.StartElement{Name: xml.Name{Local: "ma:externalBook"}}
+		seexternalBook := xml.StartElement{Name: xml.Name{Local: "x:externalBook"}}
 		e.EncodeElement(m.ExternalBook, seexternalBook)
 	}
 	if m.DdeLink != nil {
-		seddeLink := xml.StartElement{Name: xml.Name{Local: "ma:ddeLink"}}
+		seddeLink := xml.StartElement{Name: xml.Name{Local: "x:ddeLink"}}
 		e.EncodeElement(m.DdeLink, seddeLink)
 	}
 	if m.OleLink != nil {
-		seoleLink := xml.StartElement{Name: xml.Name{Local: "ma:oleLink"}}
+		seoleLink := xml.StartElement{Name: xml.Name{Local: "x:oleLink"}}
 		e.EncodeElement(m.OleLink, seoleLink)
 	}
 	return nil
@@ -53,17 +53,20 @@ lCT_ExternalLinkChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "externalBook"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "externalBook"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "externalBook"}:
 				m.ExternalBook = NewCT_ExternalBook()
 				if err := d.DecodeElement(m.ExternalBook, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ddeLink"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ddeLink"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "ddeLink"}:
 				m.DdeLink = NewCT_DdeLink()
 				if err := d.DecodeElement(m.DdeLink, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleLink"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleLink"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "oleLink"}:
 				m.OleLink = NewCT_OleLink()
 				if err := d.DecodeElement(m.OleLink, &el); err != nil {
 					return err

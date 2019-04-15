@@ -68,25 +68,30 @@ lCT_FontCollection:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "latin"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "latin"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "latin"}:
 				if err := d.DecodeElement(m.Latin, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ea"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ea"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "ea"}:
 				if err := d.DecodeElement(m.Ea, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cs"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "cs"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "cs"}:
 				if err := d.DecodeElement(m.Cs, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "font"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "font"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "font"}:
 				tmp := NewCT_SupplementalFont()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Font = append(m.Font, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

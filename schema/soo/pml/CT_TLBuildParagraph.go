@@ -175,7 +175,8 @@ lCT_TLBuildParagraph:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tmplLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tmplLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "tmplLst"}:
 				m.TmplLst = NewCT_TLTemplateList()
 				if err := d.DecodeElement(m.TmplLst, &el); err != nil {
 					return err

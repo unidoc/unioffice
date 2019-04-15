@@ -35,7 +35,7 @@ func (m *CT_ConditionalFormats) MarshalXML(e *xml.Encoder, start xml.StartElemen
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	seconditionalFormat := xml.StartElement{Name: xml.Name{Local: "ma:conditionalFormat"}}
+	seconditionalFormat := xml.StartElement{Name: xml.Name{Local: "x:conditionalFormat"}}
 	for _, c := range m.ConditionalFormat {
 		e.EncodeElement(c, seconditionalFormat)
 	}
@@ -65,7 +65,8 @@ lCT_ConditionalFormats:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "conditionalFormat"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "conditionalFormat"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "conditionalFormat"}:
 				tmp := NewCT_ConditionalFormat()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -30,12 +30,12 @@ func NewCT_SheetViews() *CT_SheetViews {
 
 func (m *CT_SheetViews) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
-	sesheetView := xml.StartElement{Name: xml.Name{Local: "ma:sheetView"}}
+	sesheetView := xml.StartElement{Name: xml.Name{Local: "x:sheetView"}}
 	for _, c := range m.SheetView {
 		e.EncodeElement(c, sesheetView)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -53,13 +53,15 @@ lCT_SheetViews:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetView"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetView"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "sheetView"}:
 				tmp := NewCT_SheetView()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.SheetView = append(m.SheetView, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

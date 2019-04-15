@@ -35,7 +35,7 @@ func (m *CT_PivotAreaReferences) MarshalXML(e *xml.Encoder, start xml.StartEleme
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sereference := xml.StartElement{Name: xml.Name{Local: "ma:reference"}}
+	sereference := xml.StartElement{Name: xml.Name{Local: "x:reference"}}
 	for _, c := range m.Reference {
 		e.EncodeElement(c, sereference)
 	}
@@ -65,7 +65,8 @@ lCT_PivotAreaReferences:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "reference"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "reference"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "reference"}:
 				tmp := NewCT_PivotAreaReference()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

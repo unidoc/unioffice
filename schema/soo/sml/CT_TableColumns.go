@@ -35,7 +35,7 @@ func (m *CT_TableColumns) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	setableColumn := xml.StartElement{Name: xml.Name{Local: "ma:tableColumn"}}
+	setableColumn := xml.StartElement{Name: xml.Name{Local: "x:tableColumn"}}
 	for _, c := range m.TableColumn {
 		e.EncodeElement(c, setableColumn)
 	}
@@ -65,7 +65,8 @@ lCT_TableColumns:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tableColumn"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tableColumn"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "tableColumn"}:
 				tmp := NewCT_TableColumn()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

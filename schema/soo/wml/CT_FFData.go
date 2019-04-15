@@ -128,71 +128,83 @@ lCT_FFData:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "name"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "name"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "name"}:
 				tmp := NewCT_FFName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Name = append(m.Name, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "label"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "label"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "label"}:
 				tmp := NewCT_DecimalNumber()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Label = append(m.Label, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tabIndex"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tabIndex"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "tabIndex"}:
 				tmp := NewCT_UnsignedDecimalNumber()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.TabIndex = append(m.TabIndex, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "enabled"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "enabled"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "enabled"}:
 				tmp := NewCT_OnOff()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Enabled = append(m.Enabled, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "calcOnExit"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "calcOnExit"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "calcOnExit"}:
 				tmp := NewCT_OnOff()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CalcOnExit = append(m.CalcOnExit, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "entryMacro"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "entryMacro"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "entryMacro"}:
 				tmp := NewCT_MacroName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.EntryMacro = append(m.EntryMacro, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "exitMacro"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "exitMacro"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "exitMacro"}:
 				tmp := NewCT_MacroName()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.ExitMacro = append(m.ExitMacro, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "helpText"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "helpText"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "helpText"}:
 				tmp := NewCT_FFHelpText()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.HelpText = append(m.HelpText, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "statusText"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "statusText"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "statusText"}:
 				tmp := NewCT_FFStatusText()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.StatusText = append(m.StatusText, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "checkBox"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "checkBox"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "checkBox"}:
 				m.CheckBox = NewCT_FFCheckBox()
 				if err := d.DecodeElement(m.CheckBox, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ddList"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ddList"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "ddList"}:
 				m.DdList = NewCT_FFDDList()
 				if err := d.DecodeElement(m.DdList, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "textInput"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "textInput"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "textInput"}:
 				m.TextInput = NewCT_FFTextInput()
 				if err := d.DecodeElement(m.TextInput, &el); err != nil {
 					return err

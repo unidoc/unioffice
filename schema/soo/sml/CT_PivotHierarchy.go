@@ -100,17 +100,17 @@ func (m *CT_PivotHierarchy) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	}
 	e.EncodeToken(start)
 	if m.Mps != nil {
-		semps := xml.StartElement{Name: xml.Name{Local: "ma:mps"}}
+		semps := xml.StartElement{Name: xml.Name{Local: "x:mps"}}
 		e.EncodeElement(m.Mps, semps)
 	}
 	if m.Members != nil {
-		semembers := xml.StartElement{Name: xml.Name{Local: "ma:members"}}
+		semembers := xml.StartElement{Name: xml.Name{Local: "x:members"}}
 		for _, c := range m.Members {
 			e.EncodeElement(c, semembers)
 		}
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -218,18 +218,21 @@ lCT_PivotHierarchy:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mps"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mps"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "mps"}:
 				m.Mps = NewCT_MemberProperties()
 				if err := d.DecodeElement(m.Mps, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "members"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "members"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "members"}:
 				tmp := NewCT_Members()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Members = append(m.Members, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

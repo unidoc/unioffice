@@ -35,7 +35,7 @@ func (m *CT_DataFields) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sedataField := xml.StartElement{Name: xml.Name{Local: "ma:dataField"}}
+	sedataField := xml.StartElement{Name: xml.Name{Local: "x:dataField"}}
 	for _, c := range m.DataField {
 		e.EncodeElement(c, sedataField)
 	}
@@ -65,7 +65,8 @@ lCT_DataFields:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataField"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataField"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "dataField"}:
 				tmp := NewCT_DataField()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

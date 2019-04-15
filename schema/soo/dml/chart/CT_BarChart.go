@@ -95,54 +95,64 @@ lCT_BarChart:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "barDir"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "barDir"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "barDir"}:
 				if err := d.DecodeElement(m.BarDir, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "grouping"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "grouping"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "grouping"}:
 				m.Grouping = NewCT_BarGrouping()
 				if err := d.DecodeElement(m.Grouping, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "varyColors"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "varyColors"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "varyColors"}:
 				m.VaryColors = NewCT_Boolean()
 				if err := d.DecodeElement(m.VaryColors, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ser"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "ser"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "ser"}:
 				tmp := NewCT_BarSer()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Ser = append(m.Ser, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dLbls"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dLbls"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "dLbls"}:
 				m.DLbls = NewCT_DLbls()
 				if err := d.DecodeElement(m.DLbls, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "gapWidth"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "gapWidth"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "gapWidth"}:
 				m.GapWidth = NewCT_GapAmount()
 				if err := d.DecodeElement(m.GapWidth, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "overlap"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "overlap"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "overlap"}:
 				m.Overlap = NewCT_Overlap()
 				if err := d.DecodeElement(m.Overlap, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "serLines"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "serLines"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "serLines"}:
 				tmp := NewCT_ChartLines()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.SerLines = append(m.SerLines, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "axId"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "axId"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "axId"}:
 				tmp := NewCT_UnsignedInt()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.AxId = append(m.AxId, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

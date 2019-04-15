@@ -57,15 +57,18 @@ lCT_PivotSource:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "name"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "name"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "name"}:
 				if err := d.DecodeElement(&m.Name, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "fmtId"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "fmtId"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "fmtId"}:
 				if err := d.DecodeElement(m.FmtId, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "extLst"}:
 				tmp := NewCT_ExtensionList()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

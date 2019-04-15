@@ -29,7 +29,7 @@ func NewCT_ExtensionList() *CT_ExtensionList {
 func (m *CT_ExtensionList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	if m.Ext != nil {
-		seext := xml.StartElement{Name: xml.Name{Local: "ma:ext"}}
+		seext := xml.StartElement{Name: xml.Name{Local: "x:ext"}}
 		for _, c := range m.Ext {
 			e.EncodeElement(c, seext)
 		}
@@ -49,7 +49,8 @@ lCT_ExtensionList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ext"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ext"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "ext"}:
 				tmp := NewCT_Extension()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

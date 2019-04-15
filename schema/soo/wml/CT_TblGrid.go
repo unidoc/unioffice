@@ -54,13 +54,15 @@ lCT_TblGrid:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "gridCol"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "gridCol"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "gridCol"}:
 				tmp := NewCT_TblGridCol()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GridCol = append(m.GridCol, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblGridChange"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblGridChange"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "tblGridChange"}:
 				m.TblGridChange = NewCT_TblGridChange()
 				if err := d.DecodeElement(m.TblGridChange, &el); err != nil {
 					return err

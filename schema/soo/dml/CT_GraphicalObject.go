@@ -45,7 +45,8 @@ lCT_GraphicalObject:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "graphicData"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "graphicData"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "graphicData"}:
 				if err := d.DecodeElement(m.GraphicData, &el); err != nil {
 					return err
 				}

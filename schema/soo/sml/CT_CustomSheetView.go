@@ -173,43 +173,43 @@ func (m *CT_CustomSheetView) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	}
 	e.EncodeToken(start)
 	if m.Pane != nil {
-		sepane := xml.StartElement{Name: xml.Name{Local: "ma:pane"}}
+		sepane := xml.StartElement{Name: xml.Name{Local: "x:pane"}}
 		e.EncodeElement(m.Pane, sepane)
 	}
 	if m.Selection != nil {
-		seselection := xml.StartElement{Name: xml.Name{Local: "ma:selection"}}
+		seselection := xml.StartElement{Name: xml.Name{Local: "x:selection"}}
 		e.EncodeElement(m.Selection, seselection)
 	}
 	if m.RowBreaks != nil {
-		serowBreaks := xml.StartElement{Name: xml.Name{Local: "ma:rowBreaks"}}
+		serowBreaks := xml.StartElement{Name: xml.Name{Local: "x:rowBreaks"}}
 		e.EncodeElement(m.RowBreaks, serowBreaks)
 	}
 	if m.ColBreaks != nil {
-		secolBreaks := xml.StartElement{Name: xml.Name{Local: "ma:colBreaks"}}
+		secolBreaks := xml.StartElement{Name: xml.Name{Local: "x:colBreaks"}}
 		e.EncodeElement(m.ColBreaks, secolBreaks)
 	}
 	if m.PageMargins != nil {
-		sepageMargins := xml.StartElement{Name: xml.Name{Local: "ma:pageMargins"}}
+		sepageMargins := xml.StartElement{Name: xml.Name{Local: "x:pageMargins"}}
 		e.EncodeElement(m.PageMargins, sepageMargins)
 	}
 	if m.PrintOptions != nil {
-		seprintOptions := xml.StartElement{Name: xml.Name{Local: "ma:printOptions"}}
+		seprintOptions := xml.StartElement{Name: xml.Name{Local: "x:printOptions"}}
 		e.EncodeElement(m.PrintOptions, seprintOptions)
 	}
 	if m.PageSetup != nil {
-		sepageSetup := xml.StartElement{Name: xml.Name{Local: "ma:pageSetup"}}
+		sepageSetup := xml.StartElement{Name: xml.Name{Local: "x:pageSetup"}}
 		e.EncodeElement(m.PageSetup, sepageSetup)
 	}
 	if m.HeaderFooter != nil {
-		seheaderFooter := xml.StartElement{Name: xml.Name{Local: "ma:headerFooter"}}
+		seheaderFooter := xml.StartElement{Name: xml.Name{Local: "x:headerFooter"}}
 		e.EncodeElement(m.HeaderFooter, seheaderFooter)
 	}
 	if m.AutoFilter != nil {
-		seautoFilter := xml.StartElement{Name: xml.Name{Local: "ma:autoFilter"}}
+		seautoFilter := xml.StartElement{Name: xml.Name{Local: "x:autoFilter"}}
 		e.EncodeElement(m.AutoFilter, seautoFilter)
 	}
 	if m.ExtLst != nil {
-		seextLst := xml.StartElement{Name: xml.Name{Local: "ma:extLst"}}
+		seextLst := xml.StartElement{Name: xml.Name{Local: "x:extLst"}}
 		e.EncodeElement(m.ExtLst, seextLst)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -384,52 +384,62 @@ lCT_CustomSheetView:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pane"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pane"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pane"}:
 				m.Pane = NewCT_Pane()
 				if err := d.DecodeElement(m.Pane, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "selection"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "selection"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "selection"}:
 				m.Selection = NewCT_Selection()
 				if err := d.DecodeElement(m.Selection, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rowBreaks"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rowBreaks"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "rowBreaks"}:
 				m.RowBreaks = NewCT_PageBreak()
 				if err := d.DecodeElement(m.RowBreaks, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "colBreaks"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "colBreaks"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "colBreaks"}:
 				m.ColBreaks = NewCT_PageBreak()
 				if err := d.DecodeElement(m.ColBreaks, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageMargins"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageMargins"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pageMargins"}:
 				m.PageMargins = NewCT_PageMargins()
 				if err := d.DecodeElement(m.PageMargins, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "printOptions"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "printOptions"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "printOptions"}:
 				m.PrintOptions = NewCT_PrintOptions()
 				if err := d.DecodeElement(m.PrintOptions, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageSetup"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "pageSetup"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "pageSetup"}:
 				m.PageSetup = NewCT_PageSetup()
 				if err := d.DecodeElement(m.PageSetup, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "headerFooter"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "headerFooter"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "headerFooter"}:
 				m.HeaderFooter = NewCT_HeaderFooter()
 				if err := d.DecodeElement(m.HeaderFooter, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "autoFilter"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "autoFilter"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "autoFilter"}:
 				m.AutoFilter = NewCT_AutoFilter()
 				if err := d.DecodeElement(m.AutoFilter, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

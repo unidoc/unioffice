@@ -55,16 +55,19 @@ lCT_SSup:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sSupPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sSupPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "sSupPr"}:
 				m.SSupPr = NewCT_SSupPr()
 				if err := d.DecodeElement(m.SSupPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "e"}:
 				if err := d.DecodeElement(m.E, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sup"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sup"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "sup"}:
 				if err := d.DecodeElement(m.Sup, &el); err != nil {
 					return err
 				}

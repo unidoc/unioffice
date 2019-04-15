@@ -35,7 +35,7 @@ func (m *CT_ChartFormats) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			Value: fmt.Sprintf("%v", *m.CountAttr)})
 	}
 	e.EncodeToken(start)
-	sechartFormat := xml.StartElement{Name: xml.Name{Local: "ma:chartFormat"}}
+	sechartFormat := xml.StartElement{Name: xml.Name{Local: "x:chartFormat"}}
 	for _, c := range m.ChartFormat {
 		e.EncodeElement(c, sechartFormat)
 	}
@@ -65,7 +65,8 @@ lCT_ChartFormats:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "chartFormat"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "chartFormat"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "chartFormat"}:
 				tmp := NewCT_ChartFormat()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

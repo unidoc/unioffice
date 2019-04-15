@@ -89,22 +89,26 @@ lCT_GradientFillProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gsLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gsLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "gsLst"}:
 				m.GsLst = NewCT_GradientStopList()
 				if err := d.DecodeElement(m.GsLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lin"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lin"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lin"}:
 				m.Lin = NewCT_LinearShadeProperties()
 				if err := d.DecodeElement(m.Lin, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "path"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "path"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "path"}:
 				m.Path = NewCT_PathShadeProperties()
 				if err := d.DecodeElement(m.Path, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tileRect"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tileRect"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "tileRect"}:
 				m.TileRect = NewCT_RelativeRect()
 				if err := d.DecodeElement(m.TileRect, &el); err != nil {
 					return err

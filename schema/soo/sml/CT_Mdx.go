@@ -48,19 +48,19 @@ func (m *CT_Mdx) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Attr = append(start.Attr, attr)
 	e.EncodeToken(start)
 	if m.T != nil {
-		set := xml.StartElement{Name: xml.Name{Local: "ma:t"}}
+		set := xml.StartElement{Name: xml.Name{Local: "x:t"}}
 		e.EncodeElement(m.T, set)
 	}
 	if m.Ms != nil {
-		sems := xml.StartElement{Name: xml.Name{Local: "ma:ms"}}
+		sems := xml.StartElement{Name: xml.Name{Local: "x:ms"}}
 		e.EncodeElement(m.Ms, sems)
 	}
 	if m.P != nil {
-		sep := xml.StartElement{Name: xml.Name{Local: "ma:p"}}
+		sep := xml.StartElement{Name: xml.Name{Local: "x:p"}}
 		e.EncodeElement(m.P, sep)
 	}
 	if m.K != nil {
-		sek := xml.StartElement{Name: xml.Name{Local: "ma:k"}}
+		sek := xml.StartElement{Name: xml.Name{Local: "x:k"}}
 		e.EncodeElement(m.K, sek)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -93,22 +93,26 @@ lCT_Mdx:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "t"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "t"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "t"}:
 				m.T = NewCT_MdxTuple()
 				if err := d.DecodeElement(m.T, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ms"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ms"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "ms"}:
 				m.Ms = NewCT_MdxSet()
 				if err := d.DecodeElement(m.Ms, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "p"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "p"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "p"}:
 				m.P = NewCT_MdxMemeberProp()
 				if err := d.DecodeElement(m.P, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "k"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "k"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "k"}:
 				m.K = NewCT_MdxKPI()
 				if err := d.DecodeElement(m.K, &el); err != nil {
 					return err
