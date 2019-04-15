@@ -44,6 +44,17 @@ func TestOpen(t *testing.T) {
 	testhelper.CompareZip(t, "simple-1.docx", got.Bytes(), true)
 }
 
+func TestOpenStrict(t *testing.T) {
+	wb, err := document.Open("testdata/strict.docx")
+	if err != nil {
+		t.Errorf("error opening document: %s", err)
+	}
+
+	if err := wb.Validate(); err != nil {
+		t.Errorf("created an invalid document: %s", err)
+	}
+}
+
 func TestOpenHeaderFooter(t *testing.T) {
 	wb, err := document.Open("testdata/header-footer-multiple.docx")
 	if err != nil {
