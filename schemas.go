@@ -20,6 +20,7 @@ const (
 	DrawingTypeStrict            = "http://purl.oclc.org/ooxml/officeDocument/relationships/drawing"
 	ChartTypeStrict              = "http://purl.oclc.org/ooxml/officeDocument/relationships/chart"
 	ExtendedPropertiesTypeStrict = "http://purl.oclc.org/ooxml/officeDocument/relationships/extendedProperties"
+	CustomXMLTypeStrict          = "http://purl.oclc.org/ooxml/officeDocument/relationships/customXml"
 
 	// SML strict
 	WorksheetTypeStrict    = "http://purl.oclc.org/ooxml/officeDocument/relationships/worksheet"
@@ -58,6 +59,7 @@ const (
 	HyperLinkType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
 	ExtendedPropertiesType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties"
 	CorePropertiesType     = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"
+	CustomXMLType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml"
 
 	// SML
 	WorksheetType            = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
