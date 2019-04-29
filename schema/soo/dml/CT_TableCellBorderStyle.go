@@ -85,47 +85,56 @@ lCT_TableCellBorderStyle:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "left"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "left"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "left"}:
 				m.Left = NewCT_ThemeableLineStyle()
 				if err := d.DecodeElement(m.Left, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "right"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "right"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "right"}:
 				m.Right = NewCT_ThemeableLineStyle()
 				if err := d.DecodeElement(m.Right, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "top"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "top"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "top"}:
 				m.Top = NewCT_ThemeableLineStyle()
 				if err := d.DecodeElement(m.Top, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bottom"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bottom"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "bottom"}:
 				m.Bottom = NewCT_ThemeableLineStyle()
 				if err := d.DecodeElement(m.Bottom, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "insideH"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "insideH"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "insideH"}:
 				m.InsideH = NewCT_ThemeableLineStyle()
 				if err := d.DecodeElement(m.InsideH, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "insideV"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "insideV"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "insideV"}:
 				m.InsideV = NewCT_ThemeableLineStyle()
 				if err := d.DecodeElement(m.InsideV, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tl2br"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tl2br"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "tl2br"}:
 				m.Tl2br = NewCT_ThemeableLineStyle()
 				if err := d.DecodeElement(m.Tl2br, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tr2bl"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tr2bl"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "tr2bl"}:
 				m.Tr2bl = NewCT_ThemeableLineStyle()
 				if err := d.DecodeElement(m.Tr2bl, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

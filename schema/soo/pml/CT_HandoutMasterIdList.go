@@ -46,7 +46,8 @@ lCT_HandoutMasterIdList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "handoutMasterId"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "handoutMasterId"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "handoutMasterId"}:
 				m.HandoutMasterId = NewCT_HandoutMasterIdListEntry()
 				if err := d.DecodeElement(m.HandoutMasterId, &el); err != nil {
 					return err

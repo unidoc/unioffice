@@ -51,12 +51,14 @@ lCT_TextProps:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sp3d"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sp3d"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "sp3d"}:
 				m.Sp3d = dml.NewCT_Shape3D()
 				if err := d.DecodeElement(m.Sp3d, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "flatTx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "flatTx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "flatTx"}:
 				m.FlatTx = dml.NewCT_FlatText()
 				if err := d.DecodeElement(m.FlatTx, &el); err != nil {
 					return err

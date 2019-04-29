@@ -49,7 +49,8 @@ lCT_DocPartBehaviors:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "behavior"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "behavior"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "behavior"}:
 				tmp := NewCT_DocPartBehavior()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -216,13 +216,15 @@ lCT_Missing:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tpls"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tpls"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "tpls"}:
 				tmp := NewCT_Tuples()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Tpls = append(m.Tpls, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "x"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "x"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "x"}:
 				tmp := NewCT_X()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

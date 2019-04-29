@@ -118,73 +118,87 @@ lCT_BubbleSer:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "idx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "idx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "idx"}:
 				if err := d.DecodeElement(m.Idx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "order"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "order"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "order"}:
 				if err := d.DecodeElement(m.Order, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "tx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "tx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "tx"}:
 				m.Tx = NewCT_SerTx()
 				if err := d.DecodeElement(m.Tx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "spPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "spPr"}:
 				m.SpPr = dml.NewCT_ShapeProperties()
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "invertIfNegative"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "invertIfNegative"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "invertIfNegative"}:
 				m.InvertIfNegative = NewCT_Boolean()
 				if err := d.DecodeElement(m.InvertIfNegative, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dPt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dPt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "dPt"}:
 				tmp := NewCT_DPt()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.DPt = append(m.DPt, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dLbls"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "dLbls"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "dLbls"}:
 				m.DLbls = NewCT_DLbls()
 				if err := d.DecodeElement(m.DLbls, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "trendline"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "trendline"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "trendline"}:
 				tmp := NewCT_Trendline()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Trendline = append(m.Trendline, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "errBars"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "errBars"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "errBars"}:
 				tmp := NewCT_ErrBars()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.ErrBars = append(m.ErrBars, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "xVal"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "xVal"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "xVal"}:
 				m.XVal = NewCT_AxDataSource()
 				if err := d.DecodeElement(m.XVal, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "yVal"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "yVal"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "yVal"}:
 				m.YVal = NewCT_NumDataSource()
 				if err := d.DecodeElement(m.YVal, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "bubbleSize"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "bubbleSize"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "bubbleSize"}:
 				m.BubbleSize = NewCT_NumDataSource()
 				if err := d.DecodeElement(m.BubbleSize, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "bubble3D"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "bubble3D"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "bubble3D"}:
 				m.Bubble3D = NewCT_Boolean()
 				if err := d.DecodeElement(m.Bubble3D, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

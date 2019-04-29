@@ -44,7 +44,8 @@ lCT_DigSigBlob:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "blob"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", Local: "blob"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/docPropsVTypes", Local: "blob"}:
 				if err := d.DecodeElement(&m.Blob, &el); err != nil {
 					return err
 				}

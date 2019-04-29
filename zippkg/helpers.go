@@ -18,6 +18,8 @@ import (
 	"sort"
 	"strings"
 
+	"baliance.com/gooxml"
+
 	"baliance.com/gooxml/algo"
 	"baliance.com/gooxml/schema/soo/pkg/relationships"
 )
@@ -47,6 +49,66 @@ func Decode(f *zip.File, dest interface{}) error {
 	// this ensures that relationship ID is increasing, which we apparently rely
 	// on....
 	if ds, ok := dest.(*relationships.Relationships); ok {
+		for i, r := range ds.Relationship {
+			switch r.TypeAttr {
+			// Common
+			case gooxml.OfficeDocumentTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.OfficeDocumentType
+			case gooxml.StylesTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.StylesType
+			case gooxml.ThemeTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.ThemeType
+			case gooxml.SettingsTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.SettingsType
+			case gooxml.ImageTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.ImageType
+			case gooxml.CommentsTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.CommentsType
+			case gooxml.ThumbnailTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.ThumbnailType
+			case gooxml.DrawingTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.DrawingType
+			case gooxml.ChartTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.ChartType
+			case gooxml.ExtendedPropertiesTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.ExtendedPropertiesType
+			case gooxml.CustomXMLTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.CustomXMLType
+
+			// SML
+			case gooxml.WorksheetTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.WorksheetType
+			case gooxml.SharedStingsTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.SharedStingsType
+			case gooxml.TableTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.TableType
+
+			// WML
+			case gooxml.HeaderTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.HeaderType
+			case gooxml.FooterTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.FooterType
+			case gooxml.NumberingTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.NumberingType
+			case gooxml.FontTableTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.FontTableType
+			case gooxml.WebSettingsTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.WebSettingsType
+			case gooxml.FootNotesTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.FootNotesType
+			case gooxml.EndNotesTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.EndNotesType
+
+			// PML
+			case gooxml.SlideTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.SlideType
+
+			// VML
+			case gooxml.VMLDrawingTypeStrict:
+				ds.Relationship[i].TypeAttr = gooxml.VMLDrawingType
+			}
+		}
+
 		sort.Slice(ds.Relationship, func(i, j int) bool {
 			lhs := ds.Relationship[i]
 			rhs := ds.Relationship[j]

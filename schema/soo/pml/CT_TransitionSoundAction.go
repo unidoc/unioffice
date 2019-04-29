@@ -52,12 +52,14 @@ lCT_TransitionSoundAction:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "stSnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "stSnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "stSnd"}:
 				m.StSnd = NewCT_TransitionStartSoundAction()
 				if err := d.DecodeElement(m.StSnd, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "endSnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "endSnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "endSnd"}:
 				m.EndSnd = NewCT_Empty()
 				if err := d.DecodeElement(m.EndSnd, &el); err != nil {
 					return err

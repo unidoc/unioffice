@@ -118,67 +118,80 @@ lCT_WebSettings:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frameset"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frameset"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "frameset"}:
 				m.Frameset = NewCT_Frameset()
 				if err := d.DecodeElement(m.Frameset, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "divs"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "divs"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "divs"}:
 				m.Divs = NewCT_Divs()
 				if err := d.DecodeElement(m.Divs, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "encoding"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "encoding"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "encoding"}:
 				m.Encoding = NewCT_String()
 				if err := d.DecodeElement(m.Encoding, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "optimizeForBrowser"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "optimizeForBrowser"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "optimizeForBrowser"}:
 				m.OptimizeForBrowser = NewCT_OptimizeForBrowser()
 				if err := d.DecodeElement(m.OptimizeForBrowser, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "relyOnVML"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "relyOnVML"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "relyOnVML"}:
 				m.RelyOnVML = NewCT_OnOff()
 				if err := d.DecodeElement(m.RelyOnVML, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "allowPNG"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "allowPNG"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "allowPNG"}:
 				m.AllowPNG = NewCT_OnOff()
 				if err := d.DecodeElement(m.AllowPNG, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotRelyOnCSS"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotRelyOnCSS"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotRelyOnCSS"}:
 				m.DoNotRelyOnCSS = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotRelyOnCSS, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSaveAsSingleFile"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotSaveAsSingleFile"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotSaveAsSingleFile"}:
 				m.DoNotSaveAsSingleFile = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotSaveAsSingleFile, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotOrganizeInFolder"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotOrganizeInFolder"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotOrganizeInFolder"}:
 				m.DoNotOrganizeInFolder = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotOrganizeInFolder, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotUseLongFileNames"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "doNotUseLongFileNames"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "doNotUseLongFileNames"}:
 				m.DoNotUseLongFileNames = NewCT_OnOff()
 				if err := d.DecodeElement(m.DoNotUseLongFileNames, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pixelsPerInch"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pixelsPerInch"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "pixelsPerInch"}:
 				m.PixelsPerInch = NewCT_DecimalNumber()
 				if err := d.DecodeElement(m.PixelsPerInch, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "targetScreenSz"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "targetScreenSz"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "targetScreenSz"}:
 				m.TargetScreenSz = NewCT_TargetScreenSz()
 				if err := d.DecodeElement(m.TargetScreenSz, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "saveSmartTagsAsXml"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "saveSmartTagsAsXml"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "saveSmartTagsAsXml"}:
 				m.SaveSmartTagsAsXml = NewCT_OnOff()
 				if err := d.DecodeElement(m.SaveSmartTagsAsXml, &el); err != nil {
 					return err

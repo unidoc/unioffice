@@ -65,7 +65,8 @@ lCT_QueryCache:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "query"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "query"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "query"}:
 				tmp := NewCT_Query()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -56,17 +56,20 @@ lCT_WholeE2oFormatting:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ln"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "ln"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "ln"}:
 				m.Ln = NewCT_LineProperties()
 				if err := d.DecodeElement(m.Ln, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "effectLst"}:
 				m.EffectLst = NewCT_EffectList()
 				if err := d.DecodeElement(m.EffectLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectDag"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectDag"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "effectDag"}:
 				m.EffectDag = NewCT_EffectContainer()
 				if err := d.DecodeElement(m.EffectDag, &el); err != nil {
 					return err

@@ -119,32 +119,38 @@ lCT_HeaderFooter:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "oddHeader"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "oddHeader"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "oddHeader"}:
 				m.OddHeader = new(string)
 				if err := d.DecodeElement(m.OddHeader, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "oddFooter"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "oddFooter"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "oddFooter"}:
 				m.OddFooter = new(string)
 				if err := d.DecodeElement(m.OddFooter, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "evenHeader"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "evenHeader"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "evenHeader"}:
 				m.EvenHeader = new(string)
 				if err := d.DecodeElement(m.EvenHeader, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "evenFooter"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "evenFooter"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "evenFooter"}:
 				m.EvenFooter = new(string)
 				if err := d.DecodeElement(m.EvenFooter, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "firstHeader"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "firstHeader"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "firstHeader"}:
 				m.FirstHeader = new(string)
 				if err := d.DecodeElement(m.FirstHeader, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "firstFooter"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "firstFooter"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "firstFooter"}:
 				m.FirstFooter = new(string)
 				if err := d.DecodeElement(m.FirstFooter, &el); err != nil {
 					return err

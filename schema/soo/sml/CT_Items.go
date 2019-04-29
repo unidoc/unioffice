@@ -65,7 +65,8 @@ lCT_Items:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "item"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "item"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "item"}:
 				tmp := NewCT_Item()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

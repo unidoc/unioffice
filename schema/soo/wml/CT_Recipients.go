@@ -47,7 +47,8 @@ lCT_Recipients:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "recipientData"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "recipientData"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "recipientData"}:
 				tmp := NewCT_RecipientData()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

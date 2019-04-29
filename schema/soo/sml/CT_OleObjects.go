@@ -47,7 +47,8 @@ lCT_OleObjects:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleObject"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "oleObject"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "oleObject"}:
 				tmp := NewCT_OleObject()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

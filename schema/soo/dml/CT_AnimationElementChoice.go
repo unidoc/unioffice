@@ -51,12 +51,14 @@ lCT_AnimationElementChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "dgm"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "dgm"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "dgm"}:
 				m.Dgm = NewCT_AnimationDgmElement()
 				if err := d.DecodeElement(m.Dgm, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "chart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "chart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "chart"}:
 				m.Chart = NewCT_AnimationChartElement()
 				if err := d.DecodeElement(m.Chart, &el); err != nil {
 					return err

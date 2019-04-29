@@ -51,11 +51,13 @@ lCT_Scale2D:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "sx"}:
 				if err := d.DecodeElement(m.Sx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sy"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sy"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "sy"}:
 				if err := d.DecodeElement(m.Sy, &el); err != nil {
 					return err
 				}

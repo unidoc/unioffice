@@ -47,7 +47,8 @@ lCT_Hyperlinks:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "hyperlink"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "hyperlink"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "hyperlink"}:
 				tmp := NewCT_Hyperlink()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

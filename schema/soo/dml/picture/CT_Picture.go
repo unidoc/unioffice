@@ -56,15 +56,18 @@ lCT_Picture:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/picture", Local: "nvPicPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/picture", Local: "nvPicPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/picture", Local: "nvPicPr"}:
 				if err := d.DecodeElement(m.NvPicPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/picture", Local: "blipFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/picture", Local: "blipFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/picture", Local: "blipFill"}:
 				if err := d.DecodeElement(m.BlipFill, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/picture", Local: "spPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/picture", Local: "spPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/picture", Local: "spPr"}:
 				if err := d.DecodeElement(m.SpPr, &el); err != nil {
 					return err
 				}

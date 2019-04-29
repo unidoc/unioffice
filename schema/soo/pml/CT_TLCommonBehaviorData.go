@@ -168,15 +168,18 @@ lCT_TLCommonBehaviorData:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cTn"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cTn"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "cTn"}:
 				if err := d.DecodeElement(m.CTn, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tgtEl"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tgtEl"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "tgtEl"}:
 				if err := d.DecodeElement(m.TgtEl, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "attrNameLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "attrNameLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "attrNameLst"}:
 				m.AttrNameLst = NewCT_TLBehaviorAttributeNameList()
 				if err := d.DecodeElement(m.AttrNameLst, &el); err != nil {
 					return err

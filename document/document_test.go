@@ -9,6 +9,8 @@ package document_test
 
 import (
 	"bytes"
+	"io/ioutil"
+	"os"
 	"testing"
 
 	"baliance.com/gooxml/common"
@@ -42,6 +44,35 @@ func TestOpen(t *testing.T) {
 	}
 	wb.Save(&got)
 	testhelper.CompareZip(t, "simple-1.docx", got.Bytes(), true)
+}
+
+func TestOpenStrict(t *testing.T) {
+	strict, err := document.Open("testdata/strict.docx")
+	if err != nil {
+		t.Errorf("error opening document: %s", err)
+	}
+
+	gotStrict := bytes.Buffer{}
+	if err := strict.Validate(); err != nil {
+		t.Errorf("created an invalid document: %s", err)
+	}
+	strict.Save(&gotStrict)
+	ioutil.WriteFile("testdata/non-strict.docx", gotStrict.Bytes(), 0644)
+
+	// run test assuming that the doc is a valid non-strict doc
+	nonStrict, err := document.Open("testdata/non-strict.docx")
+	if err != nil {
+		t.Errorf("error opening document: %s", err)
+	}
+
+	gotNonStrict := bytes.Buffer{}
+	if err := nonStrict.Validate(); err != nil {
+		t.Errorf("created an invalid document: %s", err)
+	}
+	nonStrict.Save(&gotNonStrict)
+	testhelper.CompareZip(t, "non-strict.docx", gotNonStrict.Bytes(), true)
+
+	os.Remove("testdata/non-strict.docx")
 }
 
 func TestOpenHeaderFooter(t *testing.T) {

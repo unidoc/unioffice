@@ -65,27 +65,32 @@ lCT_PictureOptions:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "applyToFront"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "applyToFront"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "applyToFront"}:
 				m.ApplyToFront = NewCT_Boolean()
 				if err := d.DecodeElement(m.ApplyToFront, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "applyToSides"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "applyToSides"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "applyToSides"}:
 				m.ApplyToSides = NewCT_Boolean()
 				if err := d.DecodeElement(m.ApplyToSides, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "applyToEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "applyToEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "applyToEnd"}:
 				m.ApplyToEnd = NewCT_Boolean()
 				if err := d.DecodeElement(m.ApplyToEnd, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pictureFormat"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pictureFormat"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "pictureFormat"}:
 				m.PictureFormat = NewCT_PictureFormat()
 				if err := d.DecodeElement(m.PictureFormat, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pictureStackUnit"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "pictureStackUnit"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "pictureStackUnit"}:
 				m.PictureStackUnit = NewCT_PictureStackUnit()
 				if err := d.DecodeElement(m.PictureStackUnit, &el); err != nil {
 					return err

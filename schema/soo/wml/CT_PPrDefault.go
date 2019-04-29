@@ -46,7 +46,8 @@ lCT_PPrDefault:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "pPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "pPr"}:
 				m.PPr = NewCT_PPrGeneral()
 				if err := d.DecodeElement(m.PPr, &el); err != nil {
 					return err

@@ -33,7 +33,8 @@ func (m *Imagedata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	m.CT_ImageData = *NewCT_ImageData()
 	for _, attr := range start.Attr {
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "pict" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "pict" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "pict" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
@@ -41,7 +42,8 @@ func (m *Imagedata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.PictAttr = &parsed
 			continue
 		}
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "href" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "href" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "href" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
@@ -103,7 +105,8 @@ func (m *Imagedata) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.RelidAttr = &parsed
 			continue
 		}
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err

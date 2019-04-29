@@ -65,7 +65,8 @@ lCT_RangeSets:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rangeSet"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rangeSet"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "rangeSet"}:
 				tmp := NewCT_RangeSet()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

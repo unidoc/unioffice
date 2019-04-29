@@ -67,7 +67,8 @@ lCT_MeasureDimensionMaps:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "map"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "map"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "map"}:
 				tmp := NewCT_MeasureDimensionMap()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

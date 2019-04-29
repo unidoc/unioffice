@@ -49,7 +49,8 @@ lCT_SlideIdList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldId"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldId"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "sldId"}:
 				tmp := NewCT_SlideIdListEntry()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -60,19 +60,23 @@ lCT_BaseStyles:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "clrScheme"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "clrScheme"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "clrScheme"}:
 				if err := d.DecodeElement(m.ClrScheme, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fontScheme"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fontScheme"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "fontScheme"}:
 				if err := d.DecodeElement(m.FontScheme, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fmtScheme"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fmtScheme"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "fmtScheme"}:
 				if err := d.DecodeElement(m.FmtScheme, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

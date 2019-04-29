@@ -46,7 +46,8 @@ lCT_GradientStopList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gs"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gs"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "gs"}:
 				tmp := NewCT_GradientStop()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

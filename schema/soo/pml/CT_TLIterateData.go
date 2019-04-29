@@ -83,12 +83,14 @@ lCT_TLIterateData:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tmAbs"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tmAbs"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "tmAbs"}:
 				m.TmAbs = NewCT_TLIterateIntervalTime()
 				if err := d.DecodeElement(m.TmAbs, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tmPct"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "tmPct"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "tmPct"}:
 				m.TmPct = NewCT_TLIterateIntervalPercentage()
 				if err := d.DecodeElement(m.TmPct, &el); err != nil {
 					return err

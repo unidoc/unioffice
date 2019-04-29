@@ -48,7 +48,8 @@ lCT_BandFmts:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "bandFmt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "bandFmt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "bandFmt"}:
 				tmp := NewCT_BandFmt()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

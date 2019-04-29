@@ -48,12 +48,14 @@ lWdCT_WordprocessingShapeChoice1:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "txbx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "txbx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "txbx"}:
 				m.Txbx = NewWdCT_TextboxInfo()
 				if err := d.DecodeElement(m.Txbx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "linkedTxbx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "linkedTxbx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "linkedTxbx"}:
 				m.LinkedTxbx = NewWdCT_LinkedTextboxInformation()
 				if err := d.DecodeElement(m.LinkedTxbx, &el); err != nil {
 					return err

@@ -52,12 +52,14 @@ lCT_TLByAnimateColorTransform:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "rgb"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "rgb"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "rgb"}:
 				m.Rgb = NewCT_TLByRgbColorTransform()
 				if err := d.DecodeElement(m.Rgb, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "hsl"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "hsl"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "hsl"}:
 				m.Hsl = NewCT_TLByHslColorTransform()
 				if err := d.DecodeElement(m.Hsl, &el); err != nil {
 					return err

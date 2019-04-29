@@ -48,12 +48,14 @@ lCT_GvmlTextShapeChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "useSpRect"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "useSpRect"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "useSpRect"}:
 				m.UseSpRect = NewCT_GvmlUseShapeRectangle()
 				if err := d.DecodeElement(m.UseSpRect, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "xfrm"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "xfrm"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "xfrm"}:
 				m.Xfrm = NewCT_Transform2D()
 				if err := d.DecodeElement(m.Xfrm, &el); err != nil {
 					return err

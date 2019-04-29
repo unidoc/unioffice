@@ -68,12 +68,14 @@ lCT_Background:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bgPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bgPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "bgPr"}:
 				m.BgPr = NewCT_BackgroundProperties()
 				if err := d.DecodeElement(m.BgPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bgRef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bgRef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "bgRef"}:
 				m.BgRef = dml.NewCT_StyleMatrixReference()
 				if err := d.DecodeElement(m.BgRef, &el); err != nil {
 					return err

@@ -95,7 +95,8 @@ lCT_TableStyles:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tableStyle"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tableStyle"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "tableStyle"}:
 				tmp := NewCT_TableStyle()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

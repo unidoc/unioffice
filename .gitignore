@@ -14,3 +14,5 @@ coverage*
 **/.coverprofile
 gover.coverprofile
 spreadsheet/formula/y.output
+
+.idea

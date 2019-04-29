@@ -48,7 +48,8 @@ lCT_CustomColorList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custClr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custClr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "custClr"}:
 				tmp := NewCT_CustomColor()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

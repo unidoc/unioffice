@@ -51,12 +51,14 @@ lCT_AnimationGraphicalObjectBuildProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bldDgm"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bldDgm"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "bldDgm"}:
 				m.BldDgm = NewCT_AnimationDgmBuildProperties()
 				if err := d.DecodeElement(m.BldDgm, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bldChart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bldChart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "bldChart"}:
 				m.BldChart = NewCT_AnimationChartBuildProperties()
 				if err := d.DecodeElement(m.BldChart, &el); err != nil {
 					return err

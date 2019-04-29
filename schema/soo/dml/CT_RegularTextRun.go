@@ -49,12 +49,14 @@ lCT_RegularTextRun:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "rPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "rPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "rPr"}:
 				m.RPr = NewCT_TextCharacterProperties()
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "t"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "t"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "t"}:
 				if err := d.DecodeElement(&m.T, &el); err != nil {
 					return err
 				}

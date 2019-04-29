@@ -51,12 +51,14 @@ lCT_TablePropertiesChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tableStyle"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tableStyle"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "tableStyle"}:
 				m.TableStyle = NewCT_TableStyle()
 				if err := d.DecodeElement(m.TableStyle, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tableStyleId"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tableStyleId"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "tableStyleId"}:
 				m.TableStyleId = new(string)
 				if err := d.DecodeElement(m.TableStyleId, &el); err != nil {
 					return err

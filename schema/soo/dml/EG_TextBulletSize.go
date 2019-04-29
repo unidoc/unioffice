@@ -53,17 +53,20 @@ lEG_TextBulletSize:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buSzTx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buSzTx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "buSzTx"}:
 				m.BuSzTx = NewCT_TextBulletSizeFollowText()
 				if err := d.DecodeElement(m.BuSzTx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buSzPct"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buSzPct"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "buSzPct"}:
 				m.BuSzPct = NewCT_TextBulletSizePercent()
 				if err := d.DecodeElement(m.BuSzPct, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buSzPts"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "buSzPts"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "buSzPts"}:
 				m.BuSzPts = NewCT_TextBulletSizePoint()
 				if err := d.DecodeElement(m.BuSzPts, &el); err != nil {
 					return err

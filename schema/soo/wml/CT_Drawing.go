@@ -55,13 +55,15 @@ lCT_Drawing:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "anchor"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "anchor"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "anchor"}:
 				tmp := NewWdAnchor()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Anchor = append(m.Anchor, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "inline"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "inline"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "inline"}:
 				tmp := NewWdInline()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

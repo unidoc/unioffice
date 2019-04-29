@@ -47,16 +47,19 @@ lTbl:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tblPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tblPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "tblPr"}:
 				m.TblPr = NewCT_TableProperties()
 				if err := d.DecodeElement(m.TblPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tblGrid"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tblGrid"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "tblGrid"}:
 				if err := d.DecodeElement(m.TblGrid, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "tr"}:
 				tmp := NewCT_TableRow()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

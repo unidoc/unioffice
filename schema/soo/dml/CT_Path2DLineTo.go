@@ -45,7 +45,8 @@ lCT_Path2DLineTo:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "pt"}:
 				if err := d.DecodeElement(m.Pt, &el); err != nil {
 					return err
 				}

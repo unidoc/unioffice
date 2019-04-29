@@ -57,26 +57,31 @@ lTheme:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "themeElements"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "themeElements"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "themeElements"}:
 				if err := d.DecodeElement(m.ThemeElements, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "objectDefaults"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "objectDefaults"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "objectDefaults"}:
 				m.ObjectDefaults = NewCT_ObjectStyleDefaults()
 				if err := d.DecodeElement(m.ObjectDefaults, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extraClrSchemeLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extraClrSchemeLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extraClrSchemeLst"}:
 				m.ExtraClrSchemeLst = NewCT_ColorSchemeList()
 				if err := d.DecodeElement(m.ExtraClrSchemeLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custClrLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custClrLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "custClrLst"}:
 				m.CustClrLst = NewCT_CustomColorList()
 				if err := d.DecodeElement(m.CustClrLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err
