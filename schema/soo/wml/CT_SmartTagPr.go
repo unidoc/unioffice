@@ -49,7 +49,8 @@ lCT_SmartTagPr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "attr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "attr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "attr"}:
 				tmp := NewCT_Attr()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

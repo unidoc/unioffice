@@ -46,7 +46,8 @@ lCT_RChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "t"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "t"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "t"}:
 				tmp := NewCT_Text()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

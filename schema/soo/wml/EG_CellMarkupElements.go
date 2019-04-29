@@ -56,17 +56,20 @@ lEG_CellMarkupElements:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cellIns"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cellIns"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "cellIns"}:
 				m.CellIns = NewCT_TrackChange()
 				if err := d.DecodeElement(m.CellIns, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cellDel"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cellDel"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "cellDel"}:
 				m.CellDel = NewCT_TrackChange()
 				if err := d.DecodeElement(m.CellDel, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cellMerge"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "cellMerge"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "cellMerge"}:
 				m.CellMerge = NewCT_CellMergeTrackChange()
 				if err := d.DecodeElement(m.CellMerge, &el); err != nil {
 					return err

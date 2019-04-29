@@ -59,22 +59,26 @@ lCT_RPR:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "lit"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "lit"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "lit"}:
 				m.Lit = NewCT_OnOff()
 				if err := d.DecodeElement(m.Lit, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "nor"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "nor"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "nor"}:
 				m.Choice = NewCT_RPRChoice()
 				if err := d.DecodeElement(&m.Choice.Nor, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "brk"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "brk"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "brk"}:
 				m.Brk = NewCT_ManualBreak()
 				if err := d.DecodeElement(m.Brk, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "aln"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "aln"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "aln"}:
 				m.Aln = NewCT_OnOff()
 				if err := d.DecodeElement(m.Aln, &el); err != nil {
 					return err

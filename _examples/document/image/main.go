@@ -2,6 +2,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"log"
 
 	"baliance.com/gooxml/common"
@@ -16,18 +17,30 @@ var lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lobo
 func main() {
 	doc := document.New()
 
-	img, err := common.ImageFromFile("gophercolor.png")
+	img1, err := common.ImageFromFile("gophercolor.png")
+	if err != nil {
+		log.Fatalf("unable to create image: %s", err)
+	}
+	img2data, err := ioutil.ReadFile("gophercolor.png")
+	if err != nil {
+		log.Fatalf("unable to read file: %s", err)
+	}
+	img2, err := common.ImageFromBytes(img2data)
 	if err != nil {
 		log.Fatalf("unable to create image: %s", err)
 	}
 
-	iref, err := doc.AddImage(img)
+	img1ref, err := doc.AddImage(img1)
+	if err != nil {
+		log.Fatalf("unable to add image to document: %s", err)
+	}
+	img2ref, err := doc.AddImage(img2)
 	if err != nil {
 		log.Fatalf("unable to add image to document: %s", err)
 	}
 
 	para := doc.AddParagraph()
-	anchored, err := para.AddRun().AddDrawingAnchored(iref)
+	anchored, err := para.AddRun().AddDrawingAnchored(img1ref)
 	if err != nil {
 		log.Fatalf("unable to add anchored image: %s", err)
 	}
@@ -44,7 +57,14 @@ func main() {
 
 		// drop an inline image in
 		if i == 13 {
-			inl, err := run.AddDrawingInline(iref)
+			inl, err := run.AddDrawingInline(img1ref)
+			if err != nil {
+				log.Fatalf("unable to add inline image: %s", err)
+			}
+			inl.SetSize(1*measurement.Inch, 1*measurement.Inch)
+		}
+		if i == 15 {
+			inl, err := run.AddDrawingInline(img2ref)
 			if err != nil {
 				log.Fatalf("unable to add inline image: %s", err)
 			}

@@ -65,7 +65,8 @@ lCT_MetadataBlocks:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "bk"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "bk"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "bk"}:
 				tmp := NewCT_MetadataBlock()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

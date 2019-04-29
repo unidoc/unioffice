@@ -49,12 +49,14 @@ lCT_SerTxChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "strRef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "strRef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "strRef"}:
 				m.StrRef = NewCT_StrRef()
 				if err := d.DecodeElement(m.StrRef, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "v"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "v"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "v"}:
 				m.V = new(string)
 				if err := d.DecodeElement(m.V, &el); err != nil {
 					return err

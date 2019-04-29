@@ -118,17 +118,20 @@ lCT_Row:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblPrEx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tblPrEx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "tblPrEx"}:
 				m.TblPrEx = NewCT_TblPrEx()
 				if err := d.DecodeElement(m.TblPrEx, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "trPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "trPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "trPr"}:
 				m.TrPr = NewCT_TrPr()
 				if err := d.DecodeElement(m.TrPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tc"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tc"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "tc"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmp := NewCT_Tc()
 				if err := d.DecodeElement(tmp, &el); err != nil {
@@ -136,21 +139,24 @@ lCT_Row:
 				}
 				tmpcontentcellcontent.Tc = append(tmpcontentcellcontent.Tc, tmp)
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXml"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXml"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXml"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmpcontentcellcontent.CustomXml = NewCT_CustomXmlCell()
 				if err := d.DecodeElement(tmpcontentcellcontent.CustomXml, &el); err != nil {
 					return err
 				}
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sdt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sdt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "sdt"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmpcontentcellcontent.Sdt = NewCT_SdtCell()
 				if err := d.DecodeElement(tmpcontentcellcontent.Sdt, &el); err != nil {
 					return err
 				}
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "proofErr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "proofErr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "proofErr"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprunlevelelts.ProofErr = NewCT_ProofErr()
@@ -159,7 +165,8 @@ lCT_Row:
 				}
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "permStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "permStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "permStart"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprunlevelelts.PermStart = NewCT_PermStart()
@@ -168,7 +175,8 @@ lCT_Row:
 				}
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "permEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "permEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "permEnd"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprunlevelelts.PermEnd = NewCT_Perm()
@@ -177,7 +185,8 @@ lCT_Row:
 				}
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ins"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ins"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "ins"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprunlevelelts.Ins = NewCT_RunTrackChange()
@@ -186,7 +195,8 @@ lCT_Row:
 				}
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "del"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "del"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "del"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprunlevelelts.Del = NewCT_RunTrackChange()
@@ -195,7 +205,8 @@ lCT_Row:
 				}
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFrom"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFrom"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "moveFrom"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprunlevelelts.MoveFrom = NewCT_RunTrackChange()
@@ -204,7 +215,8 @@ lCT_Row:
 				}
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveTo"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveTo"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "moveTo"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprunlevelelts.MoveTo = NewCT_RunTrackChange()
@@ -213,7 +225,8 @@ lCT_Row:
 				}
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "bookmarkStart"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -224,7 +237,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "bookmarkEnd"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -235,7 +249,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "moveFromRangeStart"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -246,7 +261,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "moveFromRangeEnd"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -257,7 +273,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "moveToRangeStart"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -268,7 +285,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "moveToRangeEnd"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -279,7 +297,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "commentRangeStart"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -290,7 +309,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "commentRangeEnd"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -301,7 +321,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlInsRangeStart"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -312,7 +333,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlInsRangeEnd"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -323,7 +345,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlDelRangeStart"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -334,7 +357,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlDelRangeEnd"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -345,7 +369,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlMoveFromRangeStart"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -356,7 +381,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlMoveFromRangeEnd"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -367,7 +393,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlMoveToRangeStart"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -378,7 +405,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlMoveToRangeEnd"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmprangemarkupelements := NewEG_RangeMarkupElements()
@@ -389,7 +417,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMathPara"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMathPara"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "oMathPara"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmpmathcontent := NewEG_MathContent()
@@ -400,7 +429,8 @@ lCT_Row:
 				m.EG_ContentCellContent = append(m.EG_ContentCellContent, tmpcontentcellcontent)
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_MathContent = append(tmprunlevelelts.EG_MathContent, tmpmathcontent)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMath"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMath"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "oMath"}:
 				tmpcontentcellcontent := NewEG_ContentCellContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
 				tmpmathcontent := NewEG_MathContent()

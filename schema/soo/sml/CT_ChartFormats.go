@@ -65,7 +65,8 @@ lCT_ChartFormats:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "chartFormat"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "chartFormat"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "chartFormat"}:
 				tmp := NewCT_ChartFormat()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

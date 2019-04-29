@@ -98,11 +98,13 @@ lCT_CommonSlideViewProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cViewPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cViewPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "cViewPr"}:
 				if err := d.DecodeElement(m.CViewPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "guideLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "guideLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "guideLst"}:
 				m.GuideLst = NewCT_GuideList()
 				if err := d.DecodeElement(m.GuideLst, &el); err != nil {
 					return err

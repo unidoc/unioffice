@@ -95,57 +95,68 @@ lCT_TextListStyle:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "defPPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "defPPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "defPPr"}:
 				m.DefPPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.DefPPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl1pPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl1pPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lvl1pPr"}:
 				m.Lvl1pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl1pPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl2pPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl2pPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lvl2pPr"}:
 				m.Lvl2pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl2pPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl3pPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl3pPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lvl3pPr"}:
 				m.Lvl3pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl3pPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl4pPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl4pPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lvl4pPr"}:
 				m.Lvl4pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl4pPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl5pPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl5pPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lvl5pPr"}:
 				m.Lvl5pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl5pPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl6pPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl6pPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lvl6pPr"}:
 				m.Lvl6pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl6pPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl7pPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl7pPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lvl7pPr"}:
 				m.Lvl7pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl7pPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl8pPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl8pPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lvl8pPr"}:
 				m.Lvl8pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl8pPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl9pPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lvl9pPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lvl9pPr"}:
 				m.Lvl9pPr = NewCT_TextParagraphProperties()
 				if err := d.DecodeElement(m.Lvl9pPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

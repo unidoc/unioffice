@@ -53,13 +53,15 @@ lCT_FramesetChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frameset"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frameset"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "frameset"}:
 				tmp := NewCT_Frameset()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Frameset = append(m.Frameset, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frame"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "frame"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "frame"}:
 				tmp := NewCT_Frame()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

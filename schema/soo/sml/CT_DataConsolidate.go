@@ -119,7 +119,8 @@ lCT_DataConsolidate:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataRefs"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dataRefs"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "dataRefs"}:
 				m.DataRefs = NewCT_DataRefs()
 				if err := d.DecodeElement(m.DataRefs, &el); err != nil {
 					return err

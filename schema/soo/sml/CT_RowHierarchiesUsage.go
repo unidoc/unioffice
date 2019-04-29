@@ -65,7 +65,8 @@ lCT_RowHierarchiesUsage:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rowHierarchyUsage"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "rowHierarchyUsage"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "rowHierarchyUsage"}:
 				tmp := NewCT_HierarchyUsage()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

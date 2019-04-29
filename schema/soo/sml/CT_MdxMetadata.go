@@ -65,7 +65,8 @@ lCT_MdxMetadata:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mdx"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mdx"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "mdx"}:
 				tmp := NewCT_Mdx()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

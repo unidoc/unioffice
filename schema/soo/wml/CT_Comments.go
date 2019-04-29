@@ -49,7 +49,8 @@ lCT_Comments:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "comment"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "comment"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "comment"}:
 				tmp := NewCT_Comment()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

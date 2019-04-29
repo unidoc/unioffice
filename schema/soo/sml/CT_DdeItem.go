@@ -106,7 +106,8 @@ lCT_DdeItem:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "values"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "values"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "values"}:
 				m.Values = NewCT_DdeValues()
 				if err := d.DecodeElement(m.Values, &el); err != nil {
 					return err

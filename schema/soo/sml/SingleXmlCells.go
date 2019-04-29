@@ -48,7 +48,8 @@ lSingleXmlCells:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "singleXmlCell"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "singleXmlCell"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "singleXmlCell"}:
 				tmp := NewCT_SingleXmlCell()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

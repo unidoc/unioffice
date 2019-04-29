@@ -81,37 +81,43 @@ lCT_GroupShapeChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "sp"}:
 				tmp := NewCT_Shape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Sp = append(m.Sp, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "grpSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "grpSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "grpSp"}:
 				tmp := NewCT_GroupShape()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GrpSp = append(m.GrpSp, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "graphicFrame"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "graphicFrame"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "graphicFrame"}:
 				tmp := NewCT_GraphicalObjectFrame()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.GraphicFrame = append(m.GraphicFrame, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cxnSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "cxnSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "cxnSp"}:
 				tmp := NewCT_Connector()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.CxnSp = append(m.CxnSp, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "pic"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "pic"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "pic"}:
 				tmp := NewCT_Picture()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Pic = append(m.Pic, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "contentPart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "contentPart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "contentPart"}:
 				tmp := NewCT_Rel()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

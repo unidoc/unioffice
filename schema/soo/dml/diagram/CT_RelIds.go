@@ -43,7 +43,8 @@ func (m *CT_RelIds) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 func (m *CT_RelIds) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "dm" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "dm" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "dm" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
@@ -51,7 +52,8 @@ func (m *CT_RelIds) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.DmAttr = parsed
 			continue
 		}
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "lo" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "lo" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "lo" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
@@ -59,7 +61,8 @@ func (m *CT_RelIds) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.LoAttr = parsed
 			continue
 		}
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "qs" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "qs" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "qs" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
@@ -67,7 +70,8 @@ func (m *CT_RelIds) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 			m.QsAttr = parsed
 			continue
 		}
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "cs" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "cs" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "cs" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err

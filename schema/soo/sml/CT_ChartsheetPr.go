@@ -77,7 +77,8 @@ lCT_ChartsheetPr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tabColor"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tabColor"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "tabColor"}:
 				m.TabColor = NewCT_Color()
 				if err := d.DecodeElement(m.TabColor, &el); err != nil {
 					return err

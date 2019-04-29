@@ -9,10 +9,13 @@ package document_test
 
 import (
 	"bytes"
+	"io/ioutil"
+	"os"
 	"testing"
 
 	"baliance.com/gooxml/common"
 	"baliance.com/gooxml/document"
+	"baliance.com/gooxml/schema/soo/wml"
 	"baliance.com/gooxml/testhelper"
 )
 
@@ -41,6 +44,35 @@ func TestOpen(t *testing.T) {
 	}
 	wb.Save(&got)
 	testhelper.CompareZip(t, "simple-1.docx", got.Bytes(), true)
+}
+
+func TestOpenStrict(t *testing.T) {
+	strict, err := document.Open("testdata/strict.docx")
+	if err != nil {
+		t.Errorf("error opening document: %s", err)
+	}
+
+	gotStrict := bytes.Buffer{}
+	if err := strict.Validate(); err != nil {
+		t.Errorf("created an invalid document: %s", err)
+	}
+	strict.Save(&gotStrict)
+	ioutil.WriteFile("testdata/non-strict.docx", gotStrict.Bytes(), 0644)
+
+	// run test assuming that the doc is a valid non-strict doc
+	nonStrict, err := document.Open("testdata/non-strict.docx")
+	if err != nil {
+		t.Errorf("error opening document: %s", err)
+	}
+
+	gotNonStrict := bytes.Buffer{}
+	if err := nonStrict.Validate(); err != nil {
+		t.Errorf("created an invalid document: %s", err)
+	}
+	nonStrict.Save(&gotNonStrict)
+	testhelper.CompareZip(t, "non-strict.docx", gotNonStrict.Bytes(), true)
+
+	os.Remove("testdata/non-strict.docx")
 }
 
 func TestOpenHeaderFooter(t *testing.T) {
@@ -216,39 +248,97 @@ func TestHeaderAndFooterImages(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unable to create image: %s", err)
 	}
+	png3x3 := []byte{
+		0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a,
+		0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52,
+		0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x03,
+		0x08, 0x02, 0x00, 0x00, 0x00, 0xd9, 0x4a, 0x22,
+		0xe8, 0x00, 0x00, 0x00, 0x1e, 0x49, 0x44, 0x41,
+		0x54, 0x08, 0xd7, 0x63, 0xf8, 0xc5, 0x1e, 0xf8,
+		0x9d, 0xfd, 0xd7, 0x34, 0xf6, 0x5f, 0x0c, 0x10,
+		0x8a, 0x9d, 0xf7, 0x17, 0x03, 0x84, 0x62, 0xf7,
+		0xf9, 0x05, 0x00, 0xd2, 0x6f, 0x0d, 0x71, 0x26,
+		0x33, 0x2f, 0xe1, 0x00, 0x00, 0x00, 0x00, 0x49,
+		0x45, 0x4e, 0x44, 0xae, 0x42, 0x60, 0x82,
+	}
+	img3, err := common.ImageFromBytes(png3x3)
+	if err != nil {
+		t.Fatalf("unable to create image: %s", err)
+	}
+
 	dir1, err := doc.AddImage(img1)
 	if err != nil {
 		t.Fatalf("unable to add image to doc: %s", err)
 	}
+	if dir1.RelID() != "rId4" {
+		t.Errorf("expected rId4 != %s", dir1.RelID())
+	}
+
 	dir2, err := doc.AddImage(img2)
 	if err != nil {
 		t.Fatalf("unable to add image to doc: %s", err)
-	}
-
-	if dir1.RelID() != "rId4" {
-		t.Errorf("expected rId4 != %s", dir1.RelID())
 	}
 	if dir2.RelID() != "rId5" {
 		t.Errorf("expected rId5 != %s", dir2.RelID())
 	}
 
+	dir3, err := doc.AddImage(img3)
+	if err != nil {
+		t.Fatalf("unable to add image to doc: %s", err)
+	}
+	if dir3.RelID() != "rId6" {
+		t.Errorf("expected rId6 != %s", dir3.RelID())
+	}
+
 	hdr := doc.AddHeader()
 	ftr := doc.AddFooter()
+
 	hir1, err := hdr.AddImage(img1)
-	fir1, err := ftr.AddImage(img1)
-	hir2, err := hdr.AddImage(img2)
-	fir2, err := ftr.AddImage(img2)
+	if err != nil {
+		t.Fatalf("unable to add image to header: %s", err)
+	}
 	if hir1.RelID() != "rId1" {
 		t.Errorf("expected rId1 != %s", hir1.RelID())
+	}
+
+	hir2, err := hdr.AddImage(img2)
+	if err != nil {
+		t.Fatalf("unable to add image to header: %s", err)
 	}
 	if hir2.RelID() != "rId2" {
 		t.Errorf("expected rId2 != %s", hir2.RelID())
 	}
+
+	hir3, err := hdr.AddImage(img3)
+	if err != nil {
+		t.Fatalf("unable to add image to header: %s", err)
+	}
+	if hir3.RelID() != "rId3" {
+		t.Errorf("expected rId3 != %s", hir3.RelID())
+	}
+
+	fir1, err := ftr.AddImage(img1)
+	if err != nil {
+		t.Fatalf("unable to add image to footer: %s", err)
+	}
 	if fir1.RelID() != "rId1" {
-		t.Errorf("expected rId1 != %s", hir1.RelID())
+		t.Errorf("expected rId1 != %s", fir1.RelID())
+	}
+
+	fir2, err := ftr.AddImage(img2)
+	if err != nil {
+		t.Fatalf("unable to add image to footer: %s", err)
 	}
 	if fir2.RelID() != "rId2" {
-		t.Errorf("expected rId2 != %s", hir2.RelID())
+		t.Errorf("expected rId2 != %s", fir2.RelID())
+	}
+
+	fir3, err := ftr.AddImage(img3)
+	if err != nil {
+		t.Fatalf("unable to add image to footer: %s", err)
+	}
+	if fir3.RelID() != "rId3" {
+		t.Errorf("expected rId3 != %s", fir3.RelID())
 	}
 }
 
@@ -264,4 +354,34 @@ func TestIssue198(t *testing.T) {
 	got := bytes.Buffer{}
 	doc.Save(&got)
 	testhelper.CompareGoldenZip(t, fn+".golden", got.Bytes())
+}
+
+func TestGetTables(t *testing.T) {
+	doc := document.New()
+	table := doc.AddTable()
+	tables := doc.Tables()
+
+	if len(tables) != 1 {
+		t.Errorf("expected 1 table, got %d", len(tables))
+		return
+	}
+
+	if table != tables[0] {
+		t.Error("retrieved table != added table")
+		return
+	}
+
+	tbl := document.New().AddTable().X()
+
+	tc := table.AddRow().AddCell().X()
+	elts := wml.NewEG_BlockLevelElts()
+	tc.EG_BlockLevelElts = append(tc.EG_BlockLevelElts, elts)
+	c := wml.NewEG_ContentBlockContent()
+	elts.EG_ContentBlockContent = append(elts.EG_ContentBlockContent, c)
+	c.Tbl = append(c.Tbl, tbl)
+
+	tables = doc.Tables()
+	if len(tables) < 2 {
+		t.Errorf("nested table not enumerated. found %d, expected 2", len(tables))
+	}
 }

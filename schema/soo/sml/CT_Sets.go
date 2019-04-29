@@ -65,7 +65,8 @@ lCT_Sets:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "set"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "set"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "set"}:
 				tmp := NewCT_Set()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -67,13 +67,15 @@ lCT_MapInfo:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "Schema"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "Schema"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "Schema"}:
 				tmp := NewCT_Schema()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Schema = append(m.Schema, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "Map"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "Map"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "Map"}:
 				tmp := NewCT_Map()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

@@ -3,6 +3,7 @@
 *.dll
 *.so
 *.dylib
+*.swp
 coverage*
 **/.DS_Store
 **/main
@@ -13,3 +14,5 @@ coverage*
 **/.coverprofile
 gover.coverprofile
 spreadsheet/formula/y.output
+
+.idea

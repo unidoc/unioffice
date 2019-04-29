@@ -48,12 +48,14 @@ lEG_Geometry:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custGeom"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "custGeom"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "custGeom"}:
 				m.CustGeom = NewCT_CustomGeometry2D()
 				if err := d.DecodeElement(m.CustGeom, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "prstGeom"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "prstGeom"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "prstGeom"}:
 				m.PrstGeom = NewCT_PresetGeometry2D()
 				if err := d.DecodeElement(m.PrstGeom, &el); err != nil {
 					return err

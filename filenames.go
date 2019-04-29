@@ -70,12 +70,12 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 	switch typ {
 	case CorePropertiesType:
 		return "docProps/core.xml"
-	case ExtendedPropertiesType:
+	case ExtendedPropertiesType, ExtendedPropertiesTypeStrict:
 		return "docProps/app.xml"
-	case ThumbnailType:
+	case ThumbnailType, ThumbnailTypeStrict:
 		return "docProps/thumbnail.jpeg"
 
-	case OfficeDocumentType:
+	case OfficeDocumentType, OfficeDocumentTypeStrict:
 		switch dt {
 		case DocTypeSpreadsheet:
 			return "xl/workbook.xml"
@@ -87,7 +87,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
 
-	case ThemeType, ThemeContentType:
+	case ThemeType, ThemeTypeStrict, ThemeContentType:
 		switch dt {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/theme/theme%d.xml", index)
@@ -99,7 +99,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
 
-	case StylesType:
+	case StylesType, StylesTypeStrict:
 		switch dt {
 		case DocTypeSpreadsheet:
 			return "xl/styles.xml"
@@ -111,17 +111,17 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
 
-	case ChartType, ChartContentType:
+	case ChartType, ChartTypeStrict, ChartContentType:
 		switch dt {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/charts/chart%d.xml", index)
 		default:
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
-	case TableType, TableContentType:
+	case TableType, TableTypeStrict, TableContentType:
 		return fmt.Sprintf("xl/tables/table%d.xml", index)
 
-	case DrawingType, DrawingContentType:
+	case DrawingType, DrawingTypeStrict, DrawingContentType:
 		switch dt {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/drawings/drawing%d.xml", index)
@@ -129,7 +129,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
 
-	case CommentsType, CommentsContentType:
+	case CommentsType, CommentsTypeStrict, CommentsContentType:
 		switch dt {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/comments%d.xml", index)
@@ -137,7 +137,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
 
-	case VMLDrawingType, VMLDrawingContentType:
+	case VMLDrawingType, VMLDrawingTypeStrict, VMLDrawingContentType:
 		switch dt {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/drawings/vmlDrawing%d.vml", index)
@@ -145,7 +145,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
 
-	case ImageType:
+	case ImageType, ImageTypeStrict:
 		switch dt {
 		case DocTypeDocument:
 			return fmt.Sprintf("word/media/image%d.png", index)
@@ -157,31 +157,31 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
 	// SML
-	case WorksheetType, WorksheetContentType:
+	case WorksheetType, WorksheetTypeStrict, WorksheetContentType:
 		return fmt.Sprintf("xl/worksheets/sheet%d.xml", index)
-	case SharedStingsType, SharedStringsContentType:
+	case SharedStingsType, SharedStingsTypeStrict, SharedStringsContentType:
 		return "xl/sharedStrings.xml"
 
 	// WML
-	case FontTableType:
+	case FontTableType, FontTableTypeStrict:
 		return "word/fontTable.xml"
-	case EndNotesType:
+	case EndNotesType, EndNotesTypeStrict:
 		return "word/endnotes.xml"
-	case FootNotesType:
+	case FootNotesType, FootNotesTypeStrict:
 		return "word/footnotes.xml"
-	case NumberingType:
+	case NumberingType, NumberingTypeStrict:
 		return "word/numbering.xml"
-	case WebSettingsType:
+	case WebSettingsType, WebSettingsTypeStrict:
 		return "word/webSettings.xml"
-	case SettingsType:
+	case SettingsType, SettingsTypeStrict:
 		return "word/settings.xml"
-	case HeaderType:
+	case HeaderType, HeaderTypeStrict:
 		return fmt.Sprintf("word/header%d.xml", index)
-	case FooterType:
+	case FooterType, FooterTypeStrict:
 		return fmt.Sprintf("word/footer%d.xml", index)
 
 	// PML
-	case SlideType:
+	case SlideType, SlideTypeStrict:
 		return fmt.Sprintf("ppt/slides/slide%d.xml", index)
 	case SlideLayoutType:
 		return fmt.Sprintf("ppt/slideLayouts/slideLayout%d.xml", index)

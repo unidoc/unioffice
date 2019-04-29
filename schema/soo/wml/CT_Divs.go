@@ -47,7 +47,8 @@ lCT_Divs:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "div"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "div"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "div"}:
 				tmp := NewCT_Div()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

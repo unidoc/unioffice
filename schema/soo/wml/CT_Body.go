@@ -54,7 +54,8 @@ lCT_Body:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "altChunk"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "altChunk"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "altChunk"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmp := NewCT_AltChunk()
 				if err := d.DecodeElement(tmp, &el); err != nil {
@@ -62,7 +63,8 @@ lCT_Body:
 				}
 				tmpblocklevelelts.AltChunk = append(tmpblocklevelelts.AltChunk, tmp)
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXml"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXml"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXml"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmpcontentblockcontent.CustomXml = NewCT_CustomXmlBlock()
@@ -71,7 +73,8 @@ lCT_Body:
 				}
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sdt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sdt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "sdt"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmpcontentblockcontent.Sdt = NewCT_SdtBlock()
@@ -80,7 +83,8 @@ lCT_Body:
 				}
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "p"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "p"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "p"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmp := NewCT_P()
@@ -90,7 +94,8 @@ lCT_Body:
 				tmpcontentblockcontent.P = append(tmpcontentblockcontent.P, tmp)
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tbl"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "tbl"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "tbl"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmp := NewCT_Tbl()
@@ -100,7 +105,8 @@ lCT_Body:
 				tmpcontentblockcontent.Tbl = append(tmpcontentblockcontent.Tbl, tmp)
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "proofErr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "proofErr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "proofErr"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -111,7 +117,8 @@ lCT_Body:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "permStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "permStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "permStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -122,7 +129,8 @@ lCT_Body:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "permEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "permEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "permEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -133,7 +141,8 @@ lCT_Body:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ins"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "ins"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "ins"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -144,7 +153,8 @@ lCT_Body:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "del"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "del"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "del"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -155,7 +165,8 @@ lCT_Body:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFrom"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFrom"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "moveFrom"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -166,7 +177,8 @@ lCT_Body:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveTo"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveTo"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "moveTo"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -177,7 +189,8 @@ lCT_Body:
 				m.EG_BlockLevelElts = append(m.EG_BlockLevelElts, tmpblocklevelelts)
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "bookmarkStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -190,7 +203,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "bookmarkEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "bookmarkEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -203,7 +217,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "moveFromRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -216,7 +231,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveFromRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "moveFromRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -229,7 +245,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "moveToRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -242,7 +259,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "moveToRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "moveToRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -255,7 +273,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "commentRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -268,7 +287,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "commentRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "commentRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -281,7 +301,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlInsRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -294,7 +315,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlInsRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlInsRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -307,7 +329,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlDelRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -320,7 +343,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlDelRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlDelRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -333,7 +357,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlMoveFromRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -346,7 +371,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveFromRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlMoveFromRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -359,7 +385,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeStart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeStart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlMoveToRangeStart"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -372,7 +399,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeEnd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "customXmlMoveToRangeEnd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "customXmlMoveToRangeEnd"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -385,7 +413,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_RangeMarkupElements = append(tmprunlevelelts.EG_RangeMarkupElements, tmprangemarkupelements)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMathPara"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMathPara"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "oMathPara"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -398,7 +427,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_MathContent = append(tmprunlevelelts.EG_MathContent, tmpmathcontent)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMath"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "oMath"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "oMath"}:
 				tmpblocklevelelts := NewEG_BlockLevelElts()
 				tmpcontentblockcontent := NewEG_ContentBlockContent()
 				tmprunlevelelts := NewEG_RunLevelElts()
@@ -411,7 +441,8 @@ lCT_Body:
 				tmpblocklevelelts.EG_ContentBlockContent = append(tmpblocklevelelts.EG_ContentBlockContent, tmpcontentblockcontent)
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_MathContent = append(tmprunlevelelts.EG_MathContent, tmpmathcontent)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sectPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "sectPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "sectPr"}:
 				m.SectPr = NewCT_SectPr()
 				if err := d.DecodeElement(m.SectPr, &el); err != nil {
 					return err

@@ -41,7 +41,8 @@ func (m *CT_ExternalData) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 func (m *CT_ExternalData) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	// initialize to default
 	for _, attr := range start.Attr {
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err
@@ -59,7 +60,8 @@ lCT_ExternalData:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "autoUpdate"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "autoUpdate"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "autoUpdate"}:
 				m.AutoUpdate = NewCT_Boolean()
 				if err := d.DecodeElement(m.AutoUpdate, &el); err != nil {
 					return err

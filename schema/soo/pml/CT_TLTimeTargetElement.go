@@ -65,22 +65,26 @@ lCT_TLTimeTargetElement:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldTgt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sldTgt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "sldTgt"}:
 				m.SldTgt = NewCT_Empty()
 				if err := d.DecodeElement(m.SldTgt, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sndTgt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "sndTgt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "sndTgt"}:
 				m.SndTgt = dml.NewCT_EmbeddedWAVAudioFile()
 				if err := d.DecodeElement(m.SndTgt, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "spTgt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "spTgt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "spTgt"}:
 				m.SpTgt = NewCT_TLShapeTargetElement()
 				if err := d.DecodeElement(m.SpTgt, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "inkTgt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "inkTgt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "inkTgt"}:
 				m.InkTgt = NewCT_TLSubShapeId()
 				if err := d.DecodeElement(m.InkTgt, &el); err != nil {
 					return err

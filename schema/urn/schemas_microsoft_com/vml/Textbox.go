@@ -76,7 +76,8 @@ lTextbox:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "txbxContent"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "txbxContent"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "txbxContent"}:
 				m.TxbxContent = wml.NewTxbxContent()
 				if err := d.DecodeElement(m.TxbxContent, &el); err != nil {
 					return err

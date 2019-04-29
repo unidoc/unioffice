@@ -55,16 +55,19 @@ lCT_LimLow:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "limLowPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "limLowPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "limLowPr"}:
 				m.LimLowPr = NewCT_LimLowPr()
 				if err := d.DecodeElement(m.LimLowPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "e"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "e"}:
 				if err := d.DecodeElement(m.E, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "lim"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "lim"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "lim"}:
 				if err := d.DecodeElement(m.Lim, &el); err != nil {
 					return err
 				}

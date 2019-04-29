@@ -47,7 +47,8 @@ lCT_ExternalReferences:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "externalReference"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "externalReference"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "externalReference"}:
 				tmp := NewCT_ExternalReference()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

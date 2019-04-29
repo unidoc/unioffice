@@ -491,8 +491,8 @@ func (wb *Workbook) RecalculateFormulas() {
 // can be used to add the image to a drawing.
 func (wb *Workbook) AddImage(i common.Image) (common.ImageRef, error) {
 	r := common.MakeImageRef(i, &wb.DocBase, wb.wbRels)
-	if i.Path == "" {
-		return r, errors.New("image must have a path")
+	if i.Data == nil && i.Path == "" {
+		return r, errors.New("image must have data or a path")
 	}
 
 	if i.Format == "" {

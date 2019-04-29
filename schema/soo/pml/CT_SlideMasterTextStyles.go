@@ -64,22 +64,26 @@ lCT_SlideMasterTextStyles:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "titleStyle"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "titleStyle"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "titleStyle"}:
 				m.TitleStyle = dml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.TitleStyle, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bodyStyle"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "bodyStyle"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "bodyStyle"}:
 				m.BodyStyle = dml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.BodyStyle, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "otherStyle"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "otherStyle"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "otherStyle"}:
 				m.OtherStyle = dml.NewCT_TextListStyle()
 				if err := d.DecodeElement(m.OtherStyle, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_ExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

@@ -49,12 +49,14 @@ lEG_ScriptStyle:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "scr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "scr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "scr"}:
 				m.Scr = NewCT_Script()
 				if err := d.DecodeElement(m.Scr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sty"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "sty"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "sty"}:
 				m.Sty = NewCT_Style()
 				if err := d.DecodeElement(m.Sty, &el); err != nil {
 					return err

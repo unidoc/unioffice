@@ -65,7 +65,8 @@ lCT_RowFields:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "field"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "field"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "field"}:
 				tmp := NewCT_Field()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

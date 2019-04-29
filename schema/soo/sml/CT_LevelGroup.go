@@ -115,7 +115,8 @@ lCT_LevelGroup:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "groupMembers"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "groupMembers"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "groupMembers"}:
 				if err := d.DecodeElement(m.GroupMembers, &el); err != nil {
 					return err
 				}

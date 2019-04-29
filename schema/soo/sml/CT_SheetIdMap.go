@@ -65,7 +65,8 @@ lCT_SheetIdMap:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetId"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "sheetId"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "sheetId"}:
 				tmp := NewCT_SheetId()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

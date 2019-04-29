@@ -60,19 +60,23 @@ lCT_ShapeStyle:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnRef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lnRef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lnRef"}:
 				if err := d.DecodeElement(m.LnRef, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillRef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fillRef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "fillRef"}:
 				if err := d.DecodeElement(m.FillRef, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectRef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "effectRef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "effectRef"}:
 				if err := d.DecodeElement(m.EffectRef, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fontRef"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "fontRef"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "fontRef"}:
 				if err := d.DecodeElement(m.FontRef, &el); err != nil {
 					return err
 				}

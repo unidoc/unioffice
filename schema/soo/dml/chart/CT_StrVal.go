@@ -59,7 +59,8 @@ lCT_StrVal:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "v"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "v"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "v"}:
 				if err := d.DecodeElement(&m.V, &el); err != nil {
 					return err
 				}

@@ -89,7 +89,8 @@ lWdCT_WrapTight:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "wrapPolygon"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "wrapPolygon"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "wrapPolygon"}:
 				if err := d.DecodeElement(m.WrapPolygon, &el); err != nil {
 					return err
 				}

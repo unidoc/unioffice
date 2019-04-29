@@ -48,12 +48,14 @@ lEG_AxSharedChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "crosses"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "crosses"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "crosses"}:
 				m.Crosses = NewCT_Crosses()
 				if err := d.DecodeElement(m.Crosses, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "crossesAt"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/chart", Local: "crossesAt"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/chart", Local: "crossesAt"}:
 				m.CrossesAt = NewCT_Double()
 				if err := d.DecodeElement(m.CrossesAt, &el); err != nil {
 					return err

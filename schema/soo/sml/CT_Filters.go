@@ -88,13 +88,15 @@ lCT_Filters:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "filter"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "filter"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "filter"}:
 				tmp := NewCT_Filter()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Filter = append(m.Filter, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dateGroupItem"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "dateGroupItem"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "dateGroupItem"}:
 				tmp := NewCT_DateGroupItem()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

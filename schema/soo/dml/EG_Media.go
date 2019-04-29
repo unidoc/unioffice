@@ -64,27 +64,32 @@ lEG_Media:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "audioCd"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "audioCd"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "audioCd"}:
 				m.AudioCd = NewCT_AudioCD()
 				if err := d.DecodeElement(m.AudioCd, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "wavAudioFile"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "wavAudioFile"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "wavAudioFile"}:
 				m.WavAudioFile = NewCT_EmbeddedWAVAudioFile()
 				if err := d.DecodeElement(m.WavAudioFile, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "audioFile"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "audioFile"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "audioFile"}:
 				m.AudioFile = NewCT_AudioFile()
 				if err := d.DecodeElement(m.AudioFile, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "videoFile"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "videoFile"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "videoFile"}:
 				m.VideoFile = NewCT_VideoFile()
 				if err := d.DecodeElement(m.VideoFile, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "quickTimeFile"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "quickTimeFile"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "quickTimeFile"}:
 				m.QuickTimeFile = NewCT_QuickTimeFile()
 				if err := d.DecodeElement(m.QuickTimeFile, &el); err != nil {
 					return err

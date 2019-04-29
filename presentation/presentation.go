@@ -688,8 +688,8 @@ func (p *Presentation) GetLayoutByName(name string) (SlideLayout, error) {
 // can be used to add the image to a run and place it in the document contents.
 func (p *Presentation) AddImage(i common.Image) (common.ImageRef, error) {
 	r := common.MakeImageRef(i, &p.DocBase, p.prels)
-	if i.Path == "" {
-		return r, errors.New("image must have a path")
+	if i.Data == nil && i.Path == "" {
+		return r, errors.New("image must have data or a path")
 	}
 
 	if i.Format == "" {

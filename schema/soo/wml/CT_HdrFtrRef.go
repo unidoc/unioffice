@@ -42,7 +42,8 @@ func (m *CT_HdrFtrRef) UnmarshalXML(d *xml.Decoder, start xml.StartElement) erro
 	// initialize to default
 	m.TypeAttr = ST_HdrFtr(1)
 	for _, attr := range start.Attr {
-		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" {
+		if attr.Name.Space == "http://schemas.openxmlformats.org/officeDocument/2006/relationships" && attr.Name.Local == "id" ||
+			attr.Name.Space == "http://purl.oclc.org/ooxml/officeDocument/relationships" && attr.Name.Local == "id" {
 			parsed, err := attr.Value, error(nil)
 			if err != nil {
 				return err

@@ -402,32 +402,38 @@ lCT_TLCommonTimeNodeData:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "stCondLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "stCondLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "stCondLst"}:
 				m.StCondLst = NewCT_TLTimeConditionList()
 				if err := d.DecodeElement(m.StCondLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "endCondLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "endCondLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "endCondLst"}:
 				m.EndCondLst = NewCT_TLTimeConditionList()
 				if err := d.DecodeElement(m.EndCondLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "endSync"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "endSync"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "endSync"}:
 				m.EndSync = NewCT_TLTimeCondition()
 				if err := d.DecodeElement(m.EndSync, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "iterate"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "iterate"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "iterate"}:
 				m.Iterate = NewCT_TLIterateData()
 				if err := d.DecodeElement(m.Iterate, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "childTnLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "childTnLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "childTnLst"}:
 				m.ChildTnLst = NewCT_TimeNodeList()
 				if err := d.DecodeElement(m.ChildTnLst, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "subTnLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/presentationml/2006/main", Local: "subTnLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/presentationml/main", Local: "subTnLst"}:
 				m.SubTnLst = NewCT_TimeNodeList()
 				if err := d.DecodeElement(m.SubTnLst, &el); err != nil {
 					return err

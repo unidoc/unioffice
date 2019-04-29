@@ -244,7 +244,11 @@ func (d *Document) Save(w io.Writer) error {
 
 	for i, img := range d.Images {
 		fn := fmt.Sprintf("word/media/image%d.%s", i+1, strings.ToLower(img.Format()))
-		if img.Path() != "" {
+		if img.Data() != nil {
+			if err := zippkg.AddFileFromBytes(z, fn, *img.Data()); err != nil {
+				return err
+			}
+		} else if img.Path() != "" {
 			if err := zippkg.AddFileFromDisk(z, fn, img.Path()); err != nil {
 				return err
 			}
@@ -331,6 +335,30 @@ func (d *Document) insertTable(relativeTo Paragraph, before bool) Table {
 	return d.AddTable()
 }
 
+func (d *Document) tables(bc *wml.EG_ContentBlockContent) []Table {
+	ret := []Table{}
+	for _, t := range bc.Tbl {
+		ret = append(ret, Table{d, t})
+		for _, crc := range t.EG_ContentRowContent {
+			for _, tr := range crc.Tr {
+				for _, ccc := range tr.EG_ContentCellContent {
+					for _, tc := range ccc.Tc {
+						for _, ble := range tc.EG_BlockLevelElts {
+							for _, cbc := range ble.EG_ContentBlockContent {
+								for _, tbl := range d.tables(cbc) {
+									ret = append(ret, tbl)
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return ret
+}
+
 // Tables returns the tables defined in the document.
 func (d *Document) Tables() []Table {
 	ret := []Table{}
@@ -339,8 +367,8 @@ func (d *Document) Tables() []Table {
 	}
 	for _, ble := range d.x.Body.EG_BlockLevelElts {
 		for _, c := range ble.EG_ContentBlockContent {
-			for _, t := range c.Tbl {
-				ret = append(ret, Table{d, t})
+			for _, t := range d.tables(c) {
+				ret = append(ret, t)
 			}
 		}
 	}
@@ -566,8 +594,8 @@ func (d *Document) validateTableCells() error {
 // can be used to add the image to a run and place it in the document contents.
 func (d *Document) AddImage(i common.Image) (common.ImageRef, error) {
 	r := common.MakeImageRef(i, &d.DocBase, d.docRels)
-	if i.Path == "" {
-		return r, errors.New("image must have a path")
+	if i.Data == nil && i.Path == "" {
+		return r, errors.New("image must have data or a path")
 	}
 
 	if i.Format == "" {
@@ -655,7 +683,7 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 	dt := gooxml.DocTypeDocument
 
 	switch typ {
-	case gooxml.OfficeDocumentType:
+	case gooxml.OfficeDocumentType, gooxml.OfficeDocumentTypeStrict:
 		d.x = wml.NewDocument()
 		decMap.AddTarget(target, d.x, typ, 0)
 		// look for the document relationships file as well
@@ -666,11 +694,11 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 		decMap.AddTarget(target, d.CoreProperties.X(), typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.ExtendedPropertiesType:
+	case gooxml.ExtendedPropertiesType, gooxml.ExtendedPropertiesTypeStrict:
 		decMap.AddTarget(target, d.AppProperties.X(), typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.ThumbnailType:
+	case gooxml.ThumbnailType, gooxml.ThumbnailTypeStrict:
 		// read our thumbnail
 		for i, f := range files {
 			if f == nil {
@@ -690,21 +718,21 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 			}
 		}
 
-	case gooxml.SettingsType:
+	case gooxml.SettingsType, gooxml.SettingsTypeStrict:
 		decMap.AddTarget(target, d.Settings.X(), typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.NumberingType:
+	case gooxml.NumberingType, gooxml.NumberingTypeStrict:
 		d.Numbering = NewNumbering()
 		decMap.AddTarget(target, d.Numbering.X(), typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.StylesType:
+	case gooxml.StylesType, gooxml.StylesTypeStrict:
 		d.Styles.Clear()
 		decMap.AddTarget(target, d.Styles.X(), typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.HeaderType:
+	case gooxml.HeaderType, gooxml.HeaderTypeStrict:
 		hdr := wml.NewHdr()
 		decMap.AddTarget(target, hdr, typ, uint32(len(d.headers)))
 		d.headers = append(d.headers, hdr)
@@ -715,7 +743,7 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 		decMap.AddTarget(zippkg.RelationsPathFor(target), hdrRel.X(), typ, 0)
 		d.hdrRels = append(d.hdrRels, hdrRel)
 
-	case gooxml.FooterType:
+	case gooxml.FooterType, gooxml.FooterTypeStrict:
 		ftr := wml.NewFtr()
 		decMap.AddTarget(target, ftr, typ, uint32(len(d.footers)))
 		d.footers = append(d.footers, ftr)
@@ -726,33 +754,33 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 		decMap.AddTarget(zippkg.RelationsPathFor(target), ftrRel.X(), typ, 0)
 		d.ftrRels = append(d.ftrRels, ftrRel)
 
-	case gooxml.ThemeType:
+	case gooxml.ThemeType, gooxml.ThemeTypeStrict:
 		thm := dml.NewTheme()
 		decMap.AddTarget(target, thm, typ, uint32(len(d.themes)))
 		d.themes = append(d.themes, thm)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.themes))
 
-	case gooxml.WebSettingsType:
+	case gooxml.WebSettingsType, gooxml.WebSettingsTypeStrict:
 		d.webSettings = wml.NewWebSettings()
 		decMap.AddTarget(target, d.webSettings, typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.FontTableType:
+	case gooxml.FontTableType, gooxml.FontTableTypeStrict:
 		d.fontTable = wml.NewFonts()
 		decMap.AddTarget(target, d.fontTable, typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.EndNotesType:
+	case gooxml.EndNotesType, gooxml.EndNotesTypeStrict:
 		d.endNotes = wml.NewEndnotes()
 		decMap.AddTarget(target, d.endNotes, typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.FootNotesType:
+	case gooxml.FootNotesType, gooxml.FootNotesTypeStrict:
 		d.footNotes = wml.NewFootnotes()
 		decMap.AddTarget(target, d.footNotes, typ, 0)
 		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.ImageType:
+	case gooxml.ImageType, gooxml.ImageTypeStrict:
 		var iref common.ImageRef
 		for i, f := range files {
 			if f == nil {
@@ -849,6 +877,52 @@ func (d Document) AddHyperlink(url string) common.Hyperlink {
 	return d.docRels.AddHyperlink(url)
 }
 
+func bookmarks(bc *wml.EG_ContentBlockContent) []Bookmark {
+	ret := []Bookmark{}
+
+	// bookmarks within paragraphs
+	for _, p := range bc.P {
+		for _, ec := range p.EG_PContent {
+			for _, ecr := range ec.EG_ContentRunContent {
+				for _, re := range ecr.EG_RunLevelElts {
+					for _, rm := range re.EG_RangeMarkupElements {
+						if rm.BookmarkStart != nil {
+							ret = append(ret, Bookmark{rm.BookmarkStart})
+						}
+					}
+				}
+			}
+		}
+	}
+	// bookmarks within block runs
+	for _, re := range bc.EG_RunLevelElts {
+		for _, rm := range re.EG_RangeMarkupElements {
+			if rm.BookmarkStart != nil {
+				ret = append(ret, Bookmark{rm.BookmarkStart})
+			}
+		}
+	}
+	// bookmarks within tables, potentially nested
+	for _, tbl := range bc.Tbl {
+		for _, crc := range tbl.EG_ContentRowContent {
+			for _, tr := range crc.Tr {
+				for _, ccc := range tr.EG_ContentCellContent {
+					for _, tc := range ccc.Tc {
+						for _, ble := range tc.EG_BlockLevelElts {
+							for _, bc := range ble.EG_ContentBlockContent {
+								for _, b := range bookmarks(bc) {
+									ret = append(ret, b)
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	return ret
+}
+
 // Bookmarks returns all of the bookmarks defined in the document.
 func (d Document) Bookmarks() []Bookmark {
 	if d.x.Body == nil {
@@ -857,26 +931,8 @@ func (d Document) Bookmarks() []Bookmark {
 	ret := []Bookmark{}
 	for _, ble := range d.x.Body.EG_BlockLevelElts {
 		for _, bc := range ble.EG_ContentBlockContent {
-			// bookmarks within paragraphs
-			for _, p := range bc.P {
-				for _, ec := range p.EG_PContent {
-					for _, ecr := range ec.EG_ContentRunContent {
-						for _, re := range ecr.EG_RunLevelElts {
-							for _, rm := range re.EG_RangeMarkupElements {
-								if rm.BookmarkStart != nil {
-									ret = append(ret, Bookmark{rm.BookmarkStart})
-								}
-							}
-						}
-					}
-				}
-			}
-			for _, re := range bc.EG_RunLevelElts {
-				for _, rm := range re.EG_RangeMarkupElements {
-					if rm.BookmarkStart != nil {
-						ret = append(ret, Bookmark{rm.BookmarkStart})
-					}
-				}
+			for _, b := range bookmarks(bc) {
+				ret = append(ret, b)
 			}
 		}
 	}

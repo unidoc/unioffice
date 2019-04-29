@@ -65,7 +65,8 @@ lCT_Tuples:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tpl"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "tpl"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "tpl"}:
 				tmp := NewCT_Tuple()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

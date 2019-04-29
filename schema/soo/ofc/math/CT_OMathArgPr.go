@@ -45,7 +45,8 @@ lCT_OMathArgPr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "argSz"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "argSz"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "argSz"}:
 				m.ArgSz = NewCT_Integer2()
 				if err := d.DecodeElement(m.ArgSz, &el); err != nil {
 					return err

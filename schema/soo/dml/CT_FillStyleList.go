@@ -45,42 +45,48 @@ lCT_FillStyleList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "noFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "noFill"}:
 				tmpfillproperties := NewEG_FillProperties()
 				tmpfillproperties.NoFill = NewCT_NoFillProperties()
 				if err := d.DecodeElement(tmpfillproperties.NoFill, &el); err != nil {
 					return err
 				}
 				m.EG_FillProperties = append(m.EG_FillProperties, tmpfillproperties)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "solidFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "solidFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "solidFill"}:
 				tmpfillproperties := NewEG_FillProperties()
 				tmpfillproperties.SolidFill = NewCT_SolidColorFillProperties()
 				if err := d.DecodeElement(tmpfillproperties.SolidFill, &el); err != nil {
 					return err
 				}
 				m.EG_FillProperties = append(m.EG_FillProperties, tmpfillproperties)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gradFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gradFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "gradFill"}:
 				tmpfillproperties := NewEG_FillProperties()
 				tmpfillproperties.GradFill = NewCT_GradientFillProperties()
 				if err := d.DecodeElement(tmpfillproperties.GradFill, &el); err != nil {
 					return err
 				}
 				m.EG_FillProperties = append(m.EG_FillProperties, tmpfillproperties)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blipFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blipFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "blipFill"}:
 				tmpfillproperties := NewEG_FillProperties()
 				tmpfillproperties.BlipFill = NewCT_BlipFillProperties()
 				if err := d.DecodeElement(tmpfillproperties.BlipFill, &el); err != nil {
 					return err
 				}
 				m.EG_FillProperties = append(m.EG_FillProperties, tmpfillproperties)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pattFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "pattFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "pattFill"}:
 				tmpfillproperties := NewEG_FillProperties()
 				tmpfillproperties.PattFill = NewCT_PatternFillProperties()
 				if err := d.DecodeElement(tmpfillproperties.PattFill, &el); err != nil {
 					return err
 				}
 				m.EG_FillProperties = append(m.EG_FillProperties, tmpfillproperties)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpFill"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "grpFill"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "grpFill"}:
 				tmpfillproperties := NewEG_FillProperties()
 				tmpfillproperties.GrpFill = NewCT_GroupFillProperties()
 				if err := d.DecodeElement(tmpfillproperties.GrpFill, &el); err != nil {

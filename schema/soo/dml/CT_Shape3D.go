@@ -120,27 +120,32 @@ lCT_Shape3D:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bevelT"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bevelT"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "bevelT"}:
 				m.BevelT = NewCT_Bevel()
 				if err := d.DecodeElement(m.BevelT, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bevelB"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bevelB"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "bevelB"}:
 				m.BevelB = NewCT_Bevel()
 				if err := d.DecodeElement(m.BevelB, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extrusionClr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extrusionClr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extrusionClr"}:
 				m.ExtrusionClr = NewCT_Color()
 				if err := d.DecodeElement(m.ExtrusionClr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "contourClr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "contourClr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "contourClr"}:
 				m.ContourClr = NewCT_Color()
 				if err := d.DecodeElement(m.ContourClr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extLst"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extLst"}:
 				m.ExtLst = NewCT_OfficeArtExtensionList()
 				if err := d.DecodeElement(m.ExtLst, &el); err != nil {
 					return err

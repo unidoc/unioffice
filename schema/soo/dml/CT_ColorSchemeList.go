@@ -48,7 +48,8 @@ lCT_ColorSchemeList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extraClrScheme"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "extraClrScheme"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "extraClrScheme"}:
 				tmp := NewCT_ColorSchemeAndMapping()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

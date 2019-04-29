@@ -65,7 +65,8 @@ lCT_MemberProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "mp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "mp"}:
 				tmp := NewCT_MemberProperty()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

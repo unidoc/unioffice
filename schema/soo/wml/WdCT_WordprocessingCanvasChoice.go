@@ -75,31 +75,36 @@ lWdCT_WordprocessingCanvasChoice:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "wsp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "wsp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "wsp"}:
 				tmp := NewWdWsp()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Wsp = append(m.Wsp, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/picture", Local: "pic"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/picture", Local: "pic"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/picture", Local: "pic"}:
 				tmp := picture.NewPic()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Pic = append(m.Pic, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "contentPart"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "contentPart"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "contentPart"}:
 				tmp := NewWdCT_WordprocessingContentPart()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.ContentPart = append(m.ContentPart, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "wgp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "wgp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "wgp"}:
 				tmp := NewWdWgp()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
 				}
 				m.Wgp = append(m.Wgp, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "graphicFrame"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", Local: "graphicFrame"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing", Local: "graphicFrame"}:
 				tmp := NewWdCT_GraphicFrame()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

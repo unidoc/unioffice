@@ -53,17 +53,20 @@ lEG_LineJoinProperties:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "round"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "round"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "round"}:
 				m.Round = NewCT_LineJoinRound()
 				if err := d.DecodeElement(m.Round, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bevel"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "bevel"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "bevel"}:
 				m.Bevel = NewCT_LineJoinBevel()
 				if err := d.DecodeElement(m.Bevel, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "miter"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "miter"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "miter"}:
 				m.Miter = NewCT_LineJoinMiterProperties()
 				if err := d.DecodeElement(m.Miter, &el); err != nil {
 					return err

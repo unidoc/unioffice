@@ -150,7 +150,8 @@ lHeaders:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "header"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "header"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "header"}:
 				tmp := NewCT_RevisionHeader()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

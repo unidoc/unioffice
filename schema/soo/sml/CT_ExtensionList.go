@@ -49,7 +49,8 @@ lCT_ExtensionList:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ext"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "ext"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "ext"}:
 				tmp := NewCT_Extension()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err

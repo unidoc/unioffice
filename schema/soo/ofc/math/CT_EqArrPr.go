@@ -70,32 +70,38 @@ lCT_EqArrPr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "baseJc"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "baseJc"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "baseJc"}:
 				m.BaseJc = NewCT_YAlign()
 				if err := d.DecodeElement(m.BaseJc, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "maxDist"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "maxDist"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "maxDist"}:
 				m.MaxDist = NewCT_OnOff()
 				if err := d.DecodeElement(m.MaxDist, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "objDist"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "objDist"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "objDist"}:
 				m.ObjDist = NewCT_OnOff()
 				if err := d.DecodeElement(m.ObjDist, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "rSpRule"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "rSpRule"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "rSpRule"}:
 				m.RSpRule = NewCT_SpacingRule()
 				if err := d.DecodeElement(m.RSpRule, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "rSp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "rSp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "rSp"}:
 				m.RSp = NewCT_UnSignedInteger()
 				if err := d.DecodeElement(m.RSp, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "ctrlPr"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "ctrlPr"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "ctrlPr"}:
 				m.CtrlPr = NewCT_CtrlPr()
 				if err := d.DecodeElement(m.CtrlPr, &el); err != nil {
 					return err

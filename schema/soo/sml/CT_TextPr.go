@@ -274,7 +274,8 @@ lCT_TextPr:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "textFields"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", Local: "textFields"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/spreadsheetml/main", Local: "textFields"}:
 				m.TextFields = NewCT_TextFields()
 				if err := d.DecodeElement(m.TextFields, &el); err != nil {
 					return err

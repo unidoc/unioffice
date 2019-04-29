@@ -9,6 +9,39 @@ package gooxml
 
 // Consts for content types used throughout the package
 const (
+	// Common strict
+	OfficeDocumentTypeStrict     = "http://purl.oclc.org/ooxml/officeDocument/relationships/officeDocument"
+	StylesTypeStrict             = "http://purl.oclc.org/ooxml/officeDocument/relationships/styles"
+	ThemeTypeStrict              = "http://purl.oclc.org/ooxml/officeDocument/relationships/theme"
+	SettingsTypeStrict           = "http://purl.oclc.org/ooxml/officeDocument/relationships/settings"
+	ImageTypeStrict              = "http://purl.oclc.org/ooxml/officeDocument/relationships/image"
+	CommentsTypeStrict           = "http://purl.oclc.org/ooxml/officeDocument/relationships/comments"
+	ThumbnailTypeStrict          = "http://purl.oclc.org/ooxml/officeDocument/relationships/metadata/thumbnail"
+	DrawingTypeStrict            = "http://purl.oclc.org/ooxml/officeDocument/relationships/drawing"
+	ChartTypeStrict              = "http://purl.oclc.org/ooxml/officeDocument/relationships/chart"
+	ExtendedPropertiesTypeStrict = "http://purl.oclc.org/ooxml/officeDocument/relationships/extendedProperties"
+	CustomXMLTypeStrict          = "http://purl.oclc.org/ooxml/officeDocument/relationships/customXml"
+
+	// SML strict
+	WorksheetTypeStrict    = "http://purl.oclc.org/ooxml/officeDocument/relationships/worksheet"
+	SharedStingsTypeStrict = "http://purl.oclc.org/ooxml/officeDocument/relationships/sharedStrings"
+	TableTypeStrict        = "http://purl.oclc.org/ooxml/officeDocument/relationships/table"
+
+	// WML strict
+	HeaderTypeStrict      = "http://purl.oclc.org/ooxml/officeDocument/relationships/header"
+	FooterTypeStrict      = "http://purl.oclc.org/ooxml/officeDocument/relationships/footer"
+	NumberingTypeStrict   = "http://purl.oclc.org/ooxml/officeDocument/relationships/numbering"
+	FontTableTypeStrict   = "http://purl.oclc.org/ooxml/officeDocument/relationships/fontTable"
+	WebSettingsTypeStrict = "http://purl.oclc.org/ooxml/officeDocument/relationships/webSettings"
+	FootNotesTypeStrict   = "http://purl.oclc.org/ooxml/officeDocument/relationships/footnotes"
+	EndNotesTypeStrict    = "http://purl.oclc.org/ooxml/officeDocument/relationships/endnotes"
+
+	// PML strict
+	SlideTypeStrict = "http://purl.oclc.org/ooxml/officeDocument/relationships/slide"
+
+	// VML strict
+	VMLDrawingTypeStrict = "http://purl.oclc.org/ooxml/officeDocument/relationships/vmlDrawing"
+
 	// Common
 	OfficeDocumentType     = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
 	StylesType             = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles"
@@ -26,6 +59,7 @@ const (
 	HyperLinkType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
 	ExtendedPropertiesType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties"
 	CorePropertiesType     = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"
+	CustomXMLType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml"
 
 	// SML
 	WorksheetType            = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"

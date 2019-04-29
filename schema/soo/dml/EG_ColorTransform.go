@@ -178,142 +178,170 @@ lEG_ColorTransform:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tint"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "tint"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "tint"}:
 				m.Tint = NewCT_PositiveFixedPercentage()
 				if err := d.DecodeElement(m.Tint, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "shade"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "shade"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "shade"}:
 				m.Shade = NewCT_PositiveFixedPercentage()
 				if err := d.DecodeElement(m.Shade, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "comp"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "comp"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "comp"}:
 				m.Comp = NewCT_ComplementTransform()
 				if err := d.DecodeElement(m.Comp, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "inv"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "inv"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "inv"}:
 				m.Inv = NewCT_InverseTransform()
 				if err := d.DecodeElement(m.Inv, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gray"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gray"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "gray"}:
 				m.Gray = NewCT_GrayscaleTransform()
 				if err := d.DecodeElement(m.Gray, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alpha"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alpha"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "alpha"}:
 				m.Alpha = NewCT_PositiveFixedPercentage()
 				if err := d.DecodeElement(m.Alpha, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaOff"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaOff"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "alphaOff"}:
 				m.AlphaOff = NewCT_FixedPercentage()
 				if err := d.DecodeElement(m.AlphaOff, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaMod"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "alphaMod"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "alphaMod"}:
 				m.AlphaMod = NewCT_PositivePercentage()
 				if err := d.DecodeElement(m.AlphaMod, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hue"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hue"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "hue"}:
 				m.Hue = NewCT_PositiveFixedAngle()
 				if err := d.DecodeElement(m.Hue, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hueOff"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hueOff"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "hueOff"}:
 				m.HueOff = NewCT_Angle()
 				if err := d.DecodeElement(m.HueOff, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hueMod"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "hueMod"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "hueMod"}:
 				m.HueMod = NewCT_PositivePercentage()
 				if err := d.DecodeElement(m.HueMod, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sat"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "sat"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "sat"}:
 				m.Sat = NewCT_Percentage()
 				if err := d.DecodeElement(m.Sat, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "satOff"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "satOff"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "satOff"}:
 				m.SatOff = NewCT_Percentage()
 				if err := d.DecodeElement(m.SatOff, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "satMod"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "satMod"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "satMod"}:
 				m.SatMod = NewCT_Percentage()
 				if err := d.DecodeElement(m.SatMod, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lum"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lum"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lum"}:
 				m.Lum = NewCT_Percentage()
 				if err := d.DecodeElement(m.Lum, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lumOff"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lumOff"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lumOff"}:
 				m.LumOff = NewCT_Percentage()
 				if err := d.DecodeElement(m.LumOff, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lumMod"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "lumMod"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "lumMod"}:
 				m.LumMod = NewCT_Percentage()
 				if err := d.DecodeElement(m.LumMod, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "red"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "red"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "red"}:
 				m.Red = NewCT_Percentage()
 				if err := d.DecodeElement(m.Red, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "redOff"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "redOff"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "redOff"}:
 				m.RedOff = NewCT_Percentage()
 				if err := d.DecodeElement(m.RedOff, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "redMod"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "redMod"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "redMod"}:
 				m.RedMod = NewCT_Percentage()
 				if err := d.DecodeElement(m.RedMod, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "green"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "green"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "green"}:
 				m.Green = NewCT_Percentage()
 				if err := d.DecodeElement(m.Green, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "greenOff"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "greenOff"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "greenOff"}:
 				m.GreenOff = NewCT_Percentage()
 				if err := d.DecodeElement(m.GreenOff, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "greenMod"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "greenMod"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "greenMod"}:
 				m.GreenMod = NewCT_Percentage()
 				if err := d.DecodeElement(m.GreenMod, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blue"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blue"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "blue"}:
 				m.Blue = NewCT_Percentage()
 				if err := d.DecodeElement(m.Blue, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blueOff"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blueOff"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "blueOff"}:
 				m.BlueOff = NewCT_Percentage()
 				if err := d.DecodeElement(m.BlueOff, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blueMod"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "blueMod"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "blueMod"}:
 				m.BlueMod = NewCT_Percentage()
 				if err := d.DecodeElement(m.BlueMod, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gamma"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "gamma"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "gamma"}:
 				m.Gamma = NewCT_GammaTransform()
 				if err := d.DecodeElement(m.Gamma, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "invGamma"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/drawingml/2006/main", Local: "invGamma"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/drawingml/main", Local: "invGamma"}:
 				m.InvGamma = NewCT_InverseGammaTransform()
 				if err := d.DecodeElement(m.InvGamma, &el); err != nil {
 					return err

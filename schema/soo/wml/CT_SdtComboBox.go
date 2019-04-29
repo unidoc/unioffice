@@ -65,7 +65,8 @@ lCT_SdtComboBox:
 		switch el := tok.(type) {
 		case xml.StartElement:
 			switch el.Name {
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "listItem"}:
+			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "listItem"},
+				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "listItem"}:
 				tmp := NewCT_SdtListItem()
 				if err := d.DecodeElement(tmp, &el); err != nil {
 					return err
