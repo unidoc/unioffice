@@ -10,7 +10,7 @@ package spreadsheet_test
 import (
 	"testing"
 
-	"baliance.com/gooxml/spreadsheet"
+	"github.com/unidoc/unioffice/spreadsheet"
 )
 
 func TestComments(t *testing.T) {

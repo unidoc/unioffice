@@ -8,9 +8,9 @@
 package presentation
 
 import (
-	"baliance.com/gooxml/drawing"
-	"baliance.com/gooxml/schema/soo/dml"
-	"baliance.com/gooxml/schema/soo/pml"
+	"github.com/unidoc/unioffice/drawing"
+	"github.com/unidoc/unioffice/schema/soo/dml"
+	"github.com/unidoc/unioffice/schema/soo/pml"
 )
 
 // Image is an image within a slide.

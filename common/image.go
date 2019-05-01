@@ -13,7 +13,7 @@ import (
 	"image"
 	"os"
 
-	"baliance.com/gooxml/measurement"
+	"github.com/unidoc/unioffice/measurement"
 	// Add image format support
 	_ "image/gif"
 	_ "image/jpeg"

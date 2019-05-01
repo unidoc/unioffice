@@ -12,7 +12,7 @@ package math
 import (
 	"encoding/xml"
 
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 type CT_LimLowPr struct {

@@ -12,7 +12,7 @@ package extended_properties
 import (
 	"encoding/xml"
 
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 type Properties struct {

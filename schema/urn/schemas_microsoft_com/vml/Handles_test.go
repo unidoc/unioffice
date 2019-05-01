@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/urn/schemas_microsoft_com/vml"
+	"github.com/unidoc/unioffice/schema/urn/schemas_microsoft_com/vml"
 )
 
 func TestHandlesConstructor(t *testing.T) {

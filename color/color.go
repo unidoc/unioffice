@@ -8,7 +8,7 @@
 package color
 
 import (
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 // Color is a 24 bit color that can be converted to

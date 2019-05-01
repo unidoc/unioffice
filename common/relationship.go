@@ -10,7 +10,7 @@ package common
 import (
 	"fmt"
 
-	"baliance.com/gooxml/schema/soo/pkg/relationships"
+	"github.com/unidoc/unioffice/schema/soo/pkg/relationships"
 )
 
 // Relationship is a relationship within a .rels file.

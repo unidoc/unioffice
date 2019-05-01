@@ -9,7 +9,7 @@ import (
 	"log"
 	"os"
 
-	"baliance.com/gooxml/document"
+	"github.com/unidoc/unioffice/document"
 )
 
 func main() {

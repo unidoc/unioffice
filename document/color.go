@@ -10,8 +10,8 @@ package document
 import (
 	"fmt"
 
-	"baliance.com/gooxml/color"
-	"baliance.com/gooxml/schema/soo/wml"
+	"github.com/unidoc/unioffice/color"
+	"github.com/unidoc/unioffice/schema/soo/wml"
 )
 
 // Color controls the run or styles color.

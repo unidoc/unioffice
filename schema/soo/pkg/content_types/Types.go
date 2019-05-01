@@ -12,7 +12,7 @@ package content_types
 import (
 	"encoding/xml"
 
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 type Types struct {

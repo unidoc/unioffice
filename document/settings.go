@@ -8,8 +8,8 @@
 package document
 
 import (
-	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/soo/wml"
+	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/schema/soo/wml"
 )
 
 // Settings controls the document settings.

@@ -8,10 +8,10 @@
 package document
 
 import (
-	"baliance.com/gooxml"
-	"baliance.com/gooxml/measurement"
-	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
-	"baliance.com/gooxml/schema/soo/wml"
+	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/measurement"
+	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
+	"github.com/unidoc/unioffice/schema/soo/wml"
 )
 
 // ParagraphStyleProperties is the styling information for a paragraph.
@@ -127,6 +127,7 @@ func (p ParagraphStyleProperties) SetStartIndent(m measurement.Distance) {
 		p.x.Ind.StartAttr.Int64 = gooxml.Int64(int64(m / measurement.Twips))
 	}
 }
+
 // SetHangingIndent controls the hanging indent of the paragraph.
 func (p ParagraphStyleProperties) SetHangingIndent(m measurement.Distance) {
 	if p.x.Ind == nil {

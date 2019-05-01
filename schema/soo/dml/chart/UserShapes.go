@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"fmt"
 
-	"baliance.com/gooxml/schema/soo/dml/chartDrawing"
+	"github.com/unidoc/unioffice/schema/soo/dml/chartDrawing"
 )
 
 type UserShapes struct {

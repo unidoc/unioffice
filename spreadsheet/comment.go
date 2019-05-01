@@ -7,7 +7,7 @@
 
 package spreadsheet
 
-import "baliance.com/gooxml/schema/soo/sml"
+import "github.com/unidoc/unioffice/schema/soo/sml"
 
 // Comment is a single comment within a sheet.
 type Comment struct {

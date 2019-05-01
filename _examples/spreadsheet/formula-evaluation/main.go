@@ -4,8 +4,8 @@ package main
 import (
 	"fmt"
 
-	"baliance.com/gooxml/spreadsheet"
-	"baliance.com/gooxml/spreadsheet/formula"
+	"github.com/unidoc/unioffice/spreadsheet"
+	"github.com/unidoc/unioffice/spreadsheet/formula"
 )
 
 func main() {

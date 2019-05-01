@@ -7,7 +7,7 @@
 
 package drawing
 
-import "baliance.com/gooxml/schema/soo/dml"
+import "github.com/unidoc/unioffice/schema/soo/dml"
 
 // MakeRun constructs a new Run wrapper.
 func MakeRun(x *dml.EG_TextRun) Run {

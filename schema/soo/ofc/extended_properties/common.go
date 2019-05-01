@@ -9,7 +9,7 @@
 
 package extended_properties
 
-import "baliance.com/gooxml"
+import "github.com/unidoc/unioffice"
 
 // init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {

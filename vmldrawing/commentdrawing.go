@@ -10,11 +10,11 @@ package vmldrawing
 import (
 	"fmt"
 
-	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/urn/schemas_microsoft_com/office/excel"
+	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/schema/urn/schemas_microsoft_com/office/excel"
 
-	st "baliance.com/gooxml/schema/soo/ofc/sharedTypes"
-	vml "baliance.com/gooxml/schema/urn/schemas_microsoft_com/vml"
+	st "github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
+	vml "github.com/unidoc/unioffice/schema/urn/schemas_microsoft_com/vml"
 )
 
 // NewCommentDrawing constructs a new comment drawing.

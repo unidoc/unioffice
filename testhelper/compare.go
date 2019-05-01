@@ -21,7 +21,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 var update = flag.Bool("test.update", false, "update golden file")

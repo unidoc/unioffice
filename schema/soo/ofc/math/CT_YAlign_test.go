@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/ofc/math"
+	"github.com/unidoc/unioffice/schema/soo/ofc/math"
 )
 
 func TestCT_YAlignConstructor(t *testing.T) {

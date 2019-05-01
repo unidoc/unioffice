@@ -1,1 +1,1 @@
-module baliance.com/gooxml
+module github.com/unidoc/unioffice

@@ -7,7 +7,7 @@
 
 package document
 
-import "baliance.com/gooxml/schema/soo/wml"
+import "github.com/unidoc/unioffice/schema/soo/wml"
 
 // StructuredDocumentTag are a tagged bit of content in a document.
 type StructuredDocumentTag struct {

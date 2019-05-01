@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/dml/diagram"
+	"github.com/unidoc/unioffice/schema/soo/dml/diagram"
 )
 
 func TestCT_ColorTransformHeaderLstConstructor(t *testing.T) {

@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/wml"
+	"github.com/unidoc/unioffice/schema/soo/wml"
 )
 
 func TestCT_AutoCaptionsConstructor(t *testing.T) {

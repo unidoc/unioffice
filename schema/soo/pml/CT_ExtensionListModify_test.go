@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/pml"
+	"github.com/unidoc/unioffice/schema/soo/pml"
 )
 
 func TestCT_ExtensionListModifyConstructor(t *testing.T) {
