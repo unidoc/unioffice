@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"strconv"
 
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 type PivotCacheRecords struct {

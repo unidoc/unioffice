@@ -12,7 +12,7 @@ package pml
 import (
 	"encoding/xml"
 
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 type EG_SlideListChoice struct {

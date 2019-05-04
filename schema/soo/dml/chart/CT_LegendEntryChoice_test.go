@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/dml/chart"
+	"github.com/unidoc/unioffice/schema/soo/dml/chart"
 )
 
 func TestCT_LegendEntryChoiceConstructor(t *testing.T) {

@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"time"
 
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 type CT_SlideSyncProperties struct {

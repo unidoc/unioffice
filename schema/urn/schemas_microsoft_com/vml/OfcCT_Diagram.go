@@ -14,8 +14,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
+	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
 )
 
 type OfcCT_Diagram struct {

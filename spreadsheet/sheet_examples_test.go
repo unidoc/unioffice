@@ -11,7 +11,7 @@ import (
 	"fmt"
 	"time"
 
-	"baliance.com/gooxml/spreadsheet"
+	"github.com/unidoc/unioffice/spreadsheet"
 )
 
 func ExampleSheet_Cell() {

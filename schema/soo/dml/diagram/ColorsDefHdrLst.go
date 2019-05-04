@@ -12,7 +12,7 @@ package diagram
 import (
 	"encoding/xml"
 
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 type ColorsDefHdrLst struct {

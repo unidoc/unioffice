@@ -12,7 +12,7 @@ package sml
 import (
 	"encoding/xml"
 
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 type CT_ExternalLink struct {

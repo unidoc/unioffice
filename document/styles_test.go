@@ -7,9 +7,9 @@ import (
 	"os"
 	"testing"
 
-	"baliance.com/gooxml/document"
-	"baliance.com/gooxml/testhelper"
-	"baliance.com/gooxml/zippkg"
+	"github.com/unidoc/unioffice/document"
+	"github.com/unidoc/unioffice/testhelper"
+	"github.com/unidoc/unioffice/zippkg"
 )
 
 func TestStylesUnmarshal(t *testing.T) {

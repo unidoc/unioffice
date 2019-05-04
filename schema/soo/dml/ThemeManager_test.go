@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/dml"
+	"github.com/unidoc/unioffice/schema/soo/dml"
 )
 
 func TestThemeManagerConstructor(t *testing.T) {

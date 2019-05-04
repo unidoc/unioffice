@@ -12,7 +12,7 @@ package dml
 import (
 	"encoding/xml"
 
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 type CT_CustomGeometry2D struct {

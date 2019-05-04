@@ -9,8 +9,8 @@ package spreadsheet
 import (
 	"fmt"
 
-	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/soo/sml"
+	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/schema/soo/sml"
 )
 
 // SharedStrings is a shared strings table, where string data can be placed

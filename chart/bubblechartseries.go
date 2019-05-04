@@ -8,9 +8,9 @@
 package chart
 
 import (
-	"baliance.com/gooxml/drawing"
-	"baliance.com/gooxml/schema/soo/dml"
-	crt "baliance.com/gooxml/schema/soo/dml/chart"
+	"github.com/unidoc/unioffice/drawing"
+	"github.com/unidoc/unioffice/schema/soo/dml"
+	crt "github.com/unidoc/unioffice/schema/soo/dml/chart"
 )
 
 // BubbleChartSeries is a series to be used on a Bubble chart.

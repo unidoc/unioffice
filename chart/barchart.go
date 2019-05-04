@@ -8,7 +8,7 @@
 package chart
 
 import (
-	crt "baliance.com/gooxml/schema/soo/dml/chart"
+	crt "github.com/unidoc/unioffice/schema/soo/dml/chart"
 )
 
 // BarChart is a 2D bar chart.

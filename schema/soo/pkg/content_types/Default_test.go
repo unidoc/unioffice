@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/pkg/content_types"
+	"github.com/unidoc/unioffice/schema/soo/pkg/content_types"
 )
 
 func TestDefaultConstructor(t *testing.T) {

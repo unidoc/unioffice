@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"fmt"
 
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 type CT_Revisions struct {

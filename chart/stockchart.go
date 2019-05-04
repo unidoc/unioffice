@@ -8,8 +8,8 @@
 package chart
 
 import (
-	"baliance.com/gooxml"
-	crt "baliance.com/gooxml/schema/soo/dml/chart"
+	"github.com/unidoc/unioffice"
+	crt "github.com/unidoc/unioffice/schema/soo/dml/chart"
 )
 
 // StockChart is a 2D Stock chart.

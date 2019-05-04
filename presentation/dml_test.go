@@ -10,7 +10,7 @@ package presentation_test
 import (
 	"testing"
 
-	"baliance.com/gooxml/schema/soo/dml"
+	"github.com/unidoc/unioffice/schema/soo/dml"
 )
 
 // Issue #207

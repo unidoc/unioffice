@@ -12,8 +12,8 @@ package wml
 import (
 	"encoding/xml"
 
-	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/soo/ofc/math"
+	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/schema/soo/ofc/math"
 )
 
 type EG_MathContent struct {

@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"regexp"
 
-	"baliance.com/gooxml"
+	"github.com/unidoc/unioffice"
 )
 
 const ST_CyPattern = `\s*[0-9]*\.[0-9]{4}\s*`

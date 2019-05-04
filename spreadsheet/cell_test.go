@@ -13,8 +13,8 @@ import (
 	"testing"
 	"time"
 
-	"baliance.com/gooxml/schema/soo/sml"
-	"baliance.com/gooxml/spreadsheet"
+	"github.com/unidoc/unioffice/schema/soo/sml"
+	"github.com/unidoc/unioffice/spreadsheet"
 )
 
 func TestCell(t *testing.T) {

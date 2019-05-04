@@ -13,13 +13,13 @@ import (
 	"sort"
 	"strings"
 
-	"baliance.com/gooxml/spreadsheet/formula"
-	"baliance.com/gooxml/spreadsheet/reference"
+	"github.com/unidoc/unioffice/spreadsheet/formula"
+	"github.com/unidoc/unioffice/spreadsheet/reference"
 
-	"baliance.com/gooxml"
-	"baliance.com/gooxml/common"
-	"baliance.com/gooxml/schema/soo/sml"
-	"baliance.com/gooxml/vmldrawing"
+	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/common"
+	"github.com/unidoc/unioffice/schema/soo/sml"
+	"github.com/unidoc/unioffice/vmldrawing"
 )
 
 // Sheet is a single sheet within a workbook.

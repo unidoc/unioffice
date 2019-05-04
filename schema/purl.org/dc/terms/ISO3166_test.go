@@ -13,7 +13,7 @@ import (
 	"encoding/xml"
 	"testing"
 
-	"baliance.com/gooxml/schema/purl.org/dc/terms"
+	"github.com/unidoc/unioffice/schema/purl.org/dc/terms"
 )
 
 func TestISO3166Constructor(t *testing.T) {

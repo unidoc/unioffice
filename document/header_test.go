@@ -10,7 +10,7 @@ package document_test
 import (
 	"testing"
 
-	"baliance.com/gooxml/document"
+	"github.com/unidoc/unioffice/document"
 )
 
 func TestHeaderRemoveParagraph(t *testing.T) {

@@ -13,9 +13,9 @@ import (
 	"encoding/xml"
 	"fmt"
 
-	"baliance.com/gooxml"
-	"baliance.com/gooxml/schema/soo/ofc/math"
-	"baliance.com/gooxml/schema/soo/ofc/sharedTypes"
+	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/schema/soo/ofc/math"
+	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
 )
 
 type CT_SimpleField struct {

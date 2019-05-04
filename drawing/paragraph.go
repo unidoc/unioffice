@@ -8,7 +8,7 @@
 package drawing
 
 import (
-	"baliance.com/gooxml/schema/soo/dml"
+	"github.com/unidoc/unioffice/schema/soo/dml"
 )
 
 // MakeParagraph constructs a new paragraph wrapper.

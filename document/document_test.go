@@ -13,10 +13,10 @@ import (
 	"os"
 	"testing"
 
-	"baliance.com/gooxml/common"
-	"baliance.com/gooxml/document"
-	"baliance.com/gooxml/schema/soo/wml"
-	"baliance.com/gooxml/testhelper"
+	"github.com/unidoc/unioffice/common"
+	"github.com/unidoc/unioffice/document"
+	"github.com/unidoc/unioffice/schema/soo/wml"
+	"github.com/unidoc/unioffice/testhelper"
 )
 
 func TestSimpleDoc(t *testing.T) {

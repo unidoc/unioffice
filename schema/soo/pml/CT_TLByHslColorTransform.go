@@ -14,7 +14,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"baliance.com/gooxml/schema/soo/dml"
+	"github.com/unidoc/unioffice/schema/soo/dml"
 )
 
 type CT_TLByHslColorTransform struct {
