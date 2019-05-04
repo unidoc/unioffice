@@ -78,7 +78,7 @@ func (m *EG_DLblShared) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.Separator != nil {
 		seseparator := xml.StartElement{Name: xml.Name{Local: "c:separator"}}
-		gooxml.AddPreserveSpaceAttr(&seseparator, *m.Separator)
+		unioffice.AddPreserveSpaceAttr(&seseparator, *m.Separator)
 		e.EncodeElement(m.Separator, seseparator)
 	}
 	return nil
@@ -162,7 +162,7 @@ lEG_DLblShared:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on EG_DLblShared %v", el.Name)
+				unioffice.Log("skipping unsupported element on EG_DLblShared %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

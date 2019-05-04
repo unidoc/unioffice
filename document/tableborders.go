@@ -34,7 +34,7 @@ func setBorder(brd *wml.CT_Border, t wml.ST_Border, c color.Color, thickness mea
 	}
 	if thickness != measurement.Zero {
 		// sz here is in 1/8'th points, the range is 0.25 to 12 pts
-		brd.SzAttr = gooxml.Uint64(uint64(thickness / measurement.Point * 8))
+		brd.SzAttr = unioffice.Uint64(uint64(thickness / measurement.Point * 8))
 	}
 }
 

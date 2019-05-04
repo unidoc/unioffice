@@ -38,8 +38,8 @@ func Read(r io.ReaderAt, size int64) (*Presentation, error) {
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(doc.onNewRelationship)
 	// we should discover all contents by starting with these two files
-	decMap.AddTarget(gooxml.ContentTypesFilename, doc.ContentTypes.X(), "", 0)
-	decMap.AddTarget(gooxml.BaseRelsFilename, doc.Rels.X(), "", 0)
+	decMap.AddTarget(unioffice.ContentTypesFilename, doc.ContentTypes.X(), "", 0)
+	decMap.AddTarget(unioffice.BaseRelsFilename, doc.Rels.X(), "", 0)
 	if err := decMap.Decode(files); err != nil {
 		return nil, err
 	}

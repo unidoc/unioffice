@@ -837,7 +837,7 @@ lCT_Compat:
 				}
 				m.CompatSetting = append(m.CompatSetting, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Compat %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Compat %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

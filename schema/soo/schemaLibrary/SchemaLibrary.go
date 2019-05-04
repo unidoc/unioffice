@@ -52,7 +52,7 @@ lSchemaLibrary:
 				}
 				m.Schema = append(m.Schema, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on SchemaLibrary %v", el.Name)
+				unioffice.Log("skipping unsupported element on SchemaLibrary %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

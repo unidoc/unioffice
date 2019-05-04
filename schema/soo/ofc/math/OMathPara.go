@@ -61,7 +61,7 @@ lOMathPara:
 				}
 				m.OMath = append(m.OMath, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on OMathPara %v", el.Name)
+				unioffice.Log("skipping unsupported element on OMathPara %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

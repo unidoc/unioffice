@@ -44,7 +44,7 @@ func (l Legend) SetPosition(p crt.ST_LegendPos) {
 
 func (l Legend) SetOverlay(b bool) {
 	l.x.Overlay = crt.NewCT_Boolean()
-	l.x.Overlay.ValAttr = gooxml.Bool(b)
+	l.x.Overlay.ValAttr = unioffice.Bool(b)
 }
 
 func (l Legend) Properties() drawing.ShapeProperties {

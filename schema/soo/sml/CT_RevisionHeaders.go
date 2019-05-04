@@ -230,7 +230,7 @@ lCT_RevisionHeaders:
 				}
 				m.Header = append(m.Header, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_RevisionHeaders %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_RevisionHeaders %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

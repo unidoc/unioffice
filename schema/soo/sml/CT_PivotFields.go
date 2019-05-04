@@ -73,7 +73,7 @@ lCT_PivotFields:
 				}
 				m.PivotField = append(m.PivotField, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_PivotFields %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_PivotFields %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

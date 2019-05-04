@@ -144,7 +144,7 @@ lCT_AbstractNum:
 				}
 				m.Lvl = append(m.Lvl, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_AbstractNum %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_AbstractNum %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

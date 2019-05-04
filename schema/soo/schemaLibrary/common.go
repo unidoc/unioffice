@@ -13,7 +13,7 @@ import "github.com/unidoc/unioffice"
 
 // init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/schemaLibrary/2006/main", "CT_Schema", NewCT_Schema)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/schemaLibrary/2006/main", "CT_SchemaLibrary", NewCT_SchemaLibrary)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/schemaLibrary/2006/main", "schemaLibrary", NewSchemaLibrary)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/schemaLibrary/2006/main", "CT_Schema", NewCT_Schema)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/schemaLibrary/2006/main", "CT_SchemaLibrary", NewCT_SchemaLibrary)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/schemaLibrary/2006/main", "schemaLibrary", NewSchemaLibrary)
 }

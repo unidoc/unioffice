@@ -24,7 +24,7 @@ func (c Pie3DChart) X() *crt.CT_Pie3DChart {
 // InitializeDefaults the bar chart to its defaults
 func (c Pie3DChart) InitializeDefaults() {
 	c.x.VaryColors = crt.NewCT_Boolean()
-	c.x.VaryColors.ValAttr = gooxml.Bool(true)
+	c.x.VaryColors.ValAttr = unioffice.Bool(true)
 }
 
 // AddSeries adds a default series to an Pie3D chart.

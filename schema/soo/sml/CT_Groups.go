@@ -73,7 +73,7 @@ lCT_Groups:
 				}
 				m.Group = append(m.Group, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Groups %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Groups %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

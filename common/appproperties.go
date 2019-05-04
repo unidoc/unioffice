@@ -30,7 +30,7 @@ func NewAppProperties() AppProperties {
 	p.SetDocSecurity(0)
 	p.SetLinksUpToDate(false)
 	// trim the 'v'
-	ver := strings.Replace(gooxml.ReleaseVersion, "v", "", -1)
+	ver := strings.Replace(unioffice.ReleaseVersion, "v", "", -1)
 	f, _ := strconv.ParseFloat(ver, 64)
 	p.SetApplicationVersion(fmt.Sprintf("%07.4f", f))
 	return p
@@ -47,12 +47,12 @@ func (a AppProperties) Application() string {
 
 // SetLinksUpToDate sets the links up to date flag.
 func (a AppProperties) SetLinksUpToDate(v bool) {
-	a.x.LinksUpToDate = gooxml.Bool(v)
+	a.x.LinksUpToDate = unioffice.Bool(v)
 }
 
 // SetDocSecurity sets the document security flag.
 func (a AppProperties) SetDocSecurity(v int32) {
-	a.x.DocSecurity = gooxml.Int32(v)
+	a.x.DocSecurity = unioffice.Int32(v)
 }
 
 // SetApplication sets the name of the application that created the document.

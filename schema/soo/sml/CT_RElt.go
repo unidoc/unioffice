@@ -34,7 +34,7 @@ func (m *CT_RElt) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		e.EncodeElement(m.RPr, serPr)
 	}
 	set := xml.StartElement{Name: xml.Name{Local: "ma:t"}}
-	gooxml.AddPreserveSpaceAttr(&set, m.T)
+	unioffice.AddPreserveSpaceAttr(&set, m.T)
 	e.EncodeElement(m.T, set)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -63,7 +63,7 @@ lCT_RElt:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_RElt %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_RElt %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

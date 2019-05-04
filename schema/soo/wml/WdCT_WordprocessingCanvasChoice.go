@@ -111,7 +111,7 @@ lWdCT_WordprocessingCanvasChoice:
 				}
 				m.GraphicFrame = append(m.GraphicFrame, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on WdCT_WordprocessingCanvasChoice %v", el.Name)
+				unioffice.Log("skipping unsupported element on WdCT_WordprocessingCanvasChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

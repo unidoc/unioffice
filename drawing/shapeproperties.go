@@ -92,8 +92,8 @@ func (s ShapeProperties) SetPosition(x, y measurement.Distance) {
 	if s.x.Xfrm.Off == nil {
 		s.x.Xfrm.Off = dml.NewCT_Point2D()
 	}
-	s.x.Xfrm.Off.XAttr.ST_CoordinateUnqualified = gooxml.Int64(int64(x / measurement.EMU))
-	s.x.Xfrm.Off.YAttr.ST_CoordinateUnqualified = gooxml.Int64(int64(y / measurement.EMU))
+	s.x.Xfrm.Off.XAttr.ST_CoordinateUnqualified = unioffice.Int64(int64(x / measurement.EMU))
+	s.x.Xfrm.Off.YAttr.ST_CoordinateUnqualified = unioffice.Int64(int64(y / measurement.EMU))
 }
 
 // SetGeometry sets the shape type of the shape
@@ -110,7 +110,7 @@ func (s ShapeProperties) SetFlipHorizontal(b bool) {
 	if !b {
 		s.x.Xfrm.FlipHAttr = nil
 	} else {
-		s.x.Xfrm.FlipHAttr = gooxml.Bool(true)
+		s.x.Xfrm.FlipHAttr = unioffice.Bool(true)
 	}
 }
 
@@ -120,6 +120,6 @@ func (s ShapeProperties) SetFlipVertical(b bool) {
 	if !b {
 		s.x.Xfrm.FlipVAttr = nil
 	} else {
-		s.x.Xfrm.FlipVAttr = gooxml.Bool(true)
+		s.x.Xfrm.FlipVAttr = unioffice.Bool(true)
 	}
 }

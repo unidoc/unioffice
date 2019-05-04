@@ -181,7 +181,7 @@ lCT_RevisionMove:
 				}
 				m.Rfmt = append(m.Rfmt, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_RevisionMove %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_RevisionMove %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

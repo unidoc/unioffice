@@ -42,7 +42,7 @@ func (m *CT_VolTopic) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	sev := xml.StartElement{Name: xml.Name{Local: "ma:v"}}
-	gooxml.AddPreserveSpaceAttr(&sev, m.V)
+	unioffice.AddPreserveSpaceAttr(&sev, m.V)
 	e.EncodeElement(m.V, sev)
 	if m.Stp != nil {
 		sestp := xml.StartElement{Name: xml.Name{Local: "ma:stp"}}
@@ -95,7 +95,7 @@ lCT_VolTopic:
 				}
 				m.Tr = append(m.Tr, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_VolTopic %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_VolTopic %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

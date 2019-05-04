@@ -49,7 +49,7 @@ func (p ParagraphProperties) SetBulletChar(c string) {
 
 // SetLevel sets the level of indentation of a paragraph.
 func (p ParagraphProperties) SetLevel(idx int32) {
-	p.x.LvlAttr = gooxml.Int32(idx)
+	p.x.LvlAttr = unioffice.Int32(idx)
 }
 
 // SetNumbered controls if bullets are numbered or not.

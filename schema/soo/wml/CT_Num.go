@@ -83,7 +83,7 @@ lCT_Num:
 				}
 				m.LvlOverride = append(m.LvlOverride, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Num %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Num %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

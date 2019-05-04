@@ -102,7 +102,7 @@ func (h Header) AddImage(i common.Image) (common.ImageRef, error) {
 
 	h.d.Images = append(h.d.Images, r)
 	fn := fmt.Sprintf("media/image%d.%s", len(h.d.Images), i.Format)
-	rel := hdrRels.AddRelationship(fn, gooxml.ImageType)
+	rel := hdrRels.AddRelationship(fn, unioffice.ImageType)
 	r.SetRelID(rel.X().IdAttr)
 	return r, nil
 }

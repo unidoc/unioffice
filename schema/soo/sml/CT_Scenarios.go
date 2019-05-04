@@ -102,7 +102,7 @@ lCT_Scenarios:
 				}
 				m.Scenario = append(m.Scenario, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Scenarios %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Scenarios %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

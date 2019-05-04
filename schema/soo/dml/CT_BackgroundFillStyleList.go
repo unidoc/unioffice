@@ -94,7 +94,7 @@ lCT_BackgroundFillStyleList:
 				}
 				m.EG_FillProperties = append(m.EG_FillProperties, tmpfillproperties)
 			default:
-				gooxml.Log("skipping unsupported element on CT_BackgroundFillStyleList %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_BackgroundFillStyleList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -73,7 +73,7 @@ lCT_TableColumns:
 				}
 				m.TableColumn = append(m.TableColumn, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_TableColumns %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_TableColumns %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

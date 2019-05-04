@@ -72,7 +72,7 @@ lCT_ExternalRow:
 				}
 				m.Cell = append(m.Cell, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_ExternalRow %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_ExternalRow %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

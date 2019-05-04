@@ -68,23 +68,23 @@ func New() *Document {
 	d.ContentTypes.AddOverride("/word/document.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml")
 
 	d.Settings = NewSettings()
-	d.docRels.AddRelationship("settings.xml", gooxml.SettingsType)
+	d.docRels.AddRelationship("settings.xml", unioffice.SettingsType)
 	d.ContentTypes.AddOverride("/word/settings.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml")
 
 	d.Rels = common.NewRelationships()
-	d.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeDocument, "", gooxml.CorePropertiesType, 0), gooxml.CorePropertiesType)
-	d.Rels.AddRelationship("docProps/app.xml", gooxml.ExtendedPropertiesType)
-	d.Rels.AddRelationship("word/document.xml", gooxml.OfficeDocumentType)
+	d.Rels.AddRelationship(unioffice.RelativeFilename(unioffice.DocTypeDocument, "", unioffice.CorePropertiesType, 0), unioffice.CorePropertiesType)
+	d.Rels.AddRelationship("docProps/app.xml", unioffice.ExtendedPropertiesType)
+	d.Rels.AddRelationship("word/document.xml", unioffice.OfficeDocumentType)
 
 	d.Numbering = NewNumbering()
 	d.Numbering.InitializeDefault()
 	d.ContentTypes.AddOverride("/word/numbering.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml")
-	d.docRels.AddRelationship("numbering.xml", gooxml.NumberingType)
+	d.docRels.AddRelationship("numbering.xml", unioffice.NumberingType)
 
 	d.Styles = NewStyles()
 	d.Styles.InitializeDefault()
 	d.ContentTypes.AddOverride("/word/styles.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml")
-	d.docRels.AddRelationship("styles.xml", gooxml.StylesType)
+	d.docRels.AddRelationship("styles.xml", unioffice.StylesType)
 
 	d.x.Body = wml.NewCT_Body()
 	return d
@@ -101,7 +101,7 @@ func (d *Document) AddHeader() Header {
 	hdr := wml.NewHdr()
 	d.headers = append(d.headers, hdr)
 	path := fmt.Sprintf("header%d.xml", len(d.headers))
-	d.docRels.AddRelationship(path, gooxml.HeaderType)
+	d.docRels.AddRelationship(path, unioffice.HeaderType)
 
 	d.ContentTypes.AddOverride("/word/"+path, "application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml")
 	d.hdrRels = append(d.hdrRels, common.NewRelationships())
@@ -133,7 +133,7 @@ func (d *Document) AddFooter() Footer {
 	ftr := wml.NewFtr()
 	d.footers = append(d.footers, ftr)
 	path := fmt.Sprintf("footer%d.xml", len(d.footers))
-	d.docRels.AddRelationship(path, gooxml.FooterType)
+	d.docRels.AddRelationship(path, unioffice.FooterType)
 
 	d.ContentTypes.AddOverride("/word/"+path, "application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml")
 	d.ftrRels = append(d.ftrRels, common.NewRelationships())
@@ -154,19 +154,19 @@ func (d *Document) BodySection() Section {
 // Save writes the document to an io.Writer in the Zip package format.
 func (d *Document) Save(w io.Writer) error {
 	if err := d.x.Validate(); err != nil {
-		gooxml.Log("validation error in document: %s", err)
+		unioffice.Log("validation error in document: %s", err)
 	}
-	dt := gooxml.DocTypeDocument
+	dt := unioffice.DocTypeDocument
 
 	z := zip.NewWriter(w)
 	defer z.Close()
-	if err := zippkg.MarshalXML(z, gooxml.BaseRelsFilename, d.Rels.X()); err != nil {
+	if err := zippkg.MarshalXML(z, unioffice.BaseRelsFilename, d.Rels.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXMLByType(z, dt, gooxml.ExtendedPropertiesType, d.AppProperties.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.ExtendedPropertiesType, d.AppProperties.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXMLByType(z, dt, gooxml.CorePropertiesType, d.CoreProperties.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.CorePropertiesType, d.CoreProperties.X()); err != nil {
 		return err
 	}
 	if d.Thumbnail != nil {
@@ -178,10 +178,10 @@ func (d *Document) Save(w io.Writer) error {
 			return err
 		}
 	}
-	if err := zippkg.MarshalXMLByType(z, dt, gooxml.SettingsType, d.Settings.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.SettingsType, d.Settings.X()); err != nil {
 		return err
 	}
-	documentFn := gooxml.AbsoluteFilename(dt, gooxml.OfficeDocumentType, 0)
+	documentFn := unioffice.AbsoluteFilename(dt, unioffice.OfficeDocumentType, 0)
 	if err := zippkg.MarshalXML(z, documentFn, d.x); err != nil {
 		return err
 	}
@@ -190,41 +190,41 @@ func (d *Document) Save(w io.Writer) error {
 	}
 
 	if d.Numbering.X() != nil {
-		if err := zippkg.MarshalXMLByType(z, dt, gooxml.NumberingType, d.Numbering.X()); err != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, unioffice.NumberingType, d.Numbering.X()); err != nil {
 			return err
 		}
 	}
-	if err := zippkg.MarshalXMLByType(z, dt, gooxml.StylesType, d.Styles.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.StylesType, d.Styles.X()); err != nil {
 		return err
 	}
 
 	if d.webSettings != nil {
-		if err := zippkg.MarshalXMLByType(z, dt, gooxml.WebSettingsType, d.webSettings); err != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, unioffice.WebSettingsType, d.webSettings); err != nil {
 			return err
 		}
 	}
 	if d.fontTable != nil {
-		if err := zippkg.MarshalXMLByType(z, dt, gooxml.FontTableType, d.fontTable); err != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, unioffice.FontTableType, d.fontTable); err != nil {
 			return err
 		}
 	}
 	if d.endNotes != nil {
-		if err := zippkg.MarshalXMLByType(z, dt, gooxml.EndNotesType, d.endNotes); err != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, unioffice.EndNotesType, d.endNotes); err != nil {
 			return err
 		}
 	}
 	if d.footNotes != nil {
-		if err := zippkg.MarshalXMLByType(z, dt, gooxml.FootNotesType, d.footNotes); err != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, unioffice.FootNotesType, d.footNotes); err != nil {
 			return err
 		}
 	}
 	for i, thm := range d.themes {
-		if err := zippkg.MarshalXMLByTypeIndex(z, dt, gooxml.ThemeType, i+1, thm); err != nil {
+		if err := zippkg.MarshalXMLByTypeIndex(z, dt, unioffice.ThemeType, i+1, thm); err != nil {
 			return err
 		}
 	}
 	for i, hdr := range d.headers {
-		fn := gooxml.AbsoluteFilename(dt, gooxml.HeaderType, i+1)
+		fn := unioffice.AbsoluteFilename(dt, unioffice.HeaderType, i+1)
 		if err := zippkg.MarshalXML(z, fn, hdr); err != nil {
 			return err
 		}
@@ -233,8 +233,8 @@ func (d *Document) Save(w io.Writer) error {
 		}
 	}
 	for i, ftr := range d.footers {
-		fn := gooxml.AbsoluteFilename(dt, gooxml.FooterType, i+1)
-		if err := zippkg.MarshalXMLByTypeIndex(z, dt, gooxml.FooterType, i+1, ftr); err != nil {
+		fn := unioffice.AbsoluteFilename(dt, unioffice.FooterType, i+1)
+		if err := zippkg.MarshalXMLByTypeIndex(z, dt, unioffice.FooterType, i+1, ftr); err != nil {
 			return err
 		}
 		if !d.ftrRels[i].IsEmpty() {
@@ -253,11 +253,11 @@ func (d *Document) Save(w io.Writer) error {
 				return err
 			}
 		} else {
-			gooxml.Log("unsupported image source: %+v", img)
+			unioffice.Log("unsupported image source: %+v", img)
 		}
 	}
 
-	if err := zippkg.MarshalXML(z, gooxml.ContentTypesFilename, d.ContentTypes.X()); err != nil {
+	if err := zippkg.MarshalXML(z, unioffice.ContentTypesFilename, d.ContentTypes.X()); err != nil {
 		return err
 	}
 	if err := d.WriteExtraFiles(z); err != nil {
@@ -508,8 +508,8 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(doc.onNewRelationship)
 	// we should discover all contents by starting with these two files
-	decMap.AddTarget(gooxml.ContentTypesFilename, doc.ContentTypes.X(), "", 0)
-	decMap.AddTarget(gooxml.BaseRelsFilename, doc.Rels.X(), "", 0)
+	decMap.AddTarget(unioffice.ContentTypesFilename, doc.ContentTypes.X(), "", 0)
+	decMap.AddTarget(unioffice.BaseRelsFilename, doc.Rels.X(), "", 0)
 	if err := decMap.Decode(files); err != nil {
 		return nil, err
 	}
@@ -607,7 +607,7 @@ func (d *Document) AddImage(i common.Image) (common.ImageRef, error) {
 
 	d.Images = append(d.Images, r)
 	fn := fmt.Sprintf("media/image%d.%s", len(d.Images), i.Format)
-	rel := d.docRels.AddRelationship(fn, gooxml.ImageType)
+	rel := d.docRels.AddRelationship(fn, unioffice.ImageType)
 	d.ContentTypes.EnsureDefault("png", "image/png")
 	d.ContentTypes.EnsureDefault("jpeg", "image/jpeg")
 	d.ContentTypes.EnsureDefault("jpg", "image/jpeg")
@@ -680,25 +680,25 @@ func (d *Document) FormFields() []FormField {
 }
 
 func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship, src zippkg.Target) error {
-	dt := gooxml.DocTypeDocument
+	dt := unioffice.DocTypeDocument
 
 	switch typ {
-	case gooxml.OfficeDocumentType, gooxml.OfficeDocumentTypeStrict:
+	case unioffice.OfficeDocumentType, unioffice.OfficeDocumentTypeStrict:
 		d.x = wml.NewDocument()
 		decMap.AddTarget(target, d.x, typ, 0)
 		// look for the document relationships file as well
 		decMap.AddTarget(zippkg.RelationsPathFor(target), d.docRels.X(), typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.CorePropertiesType:
+	case unioffice.CorePropertiesType:
 		decMap.AddTarget(target, d.CoreProperties.X(), typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.ExtendedPropertiesType, gooxml.ExtendedPropertiesTypeStrict:
+	case unioffice.ExtendedPropertiesType, unioffice.ExtendedPropertiesTypeStrict:
 		decMap.AddTarget(target, d.AppProperties.X(), typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.ThumbnailType, gooxml.ThumbnailTypeStrict:
+	case unioffice.ThumbnailType, unioffice.ThumbnailTypeStrict:
 		// read our thumbnail
 		for i, f := range files {
 			if f == nil {
@@ -718,69 +718,69 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 			}
 		}
 
-	case gooxml.SettingsType, gooxml.SettingsTypeStrict:
+	case unioffice.SettingsType, unioffice.SettingsTypeStrict:
 		decMap.AddTarget(target, d.Settings.X(), typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.NumberingType, gooxml.NumberingTypeStrict:
+	case unioffice.NumberingType, unioffice.NumberingTypeStrict:
 		d.Numbering = NewNumbering()
 		decMap.AddTarget(target, d.Numbering.X(), typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.StylesType, gooxml.StylesTypeStrict:
+	case unioffice.StylesType, unioffice.StylesTypeStrict:
 		d.Styles.Clear()
 		decMap.AddTarget(target, d.Styles.X(), typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.HeaderType, gooxml.HeaderTypeStrict:
+	case unioffice.HeaderType, unioffice.HeaderTypeStrict:
 		hdr := wml.NewHdr()
 		decMap.AddTarget(target, hdr, typ, uint32(len(d.headers)))
 		d.headers = append(d.headers, hdr)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.headers))
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(d.headers))
 
 		// look for header rels
 		hdrRel := common.NewRelationships()
 		decMap.AddTarget(zippkg.RelationsPathFor(target), hdrRel.X(), typ, 0)
 		d.hdrRels = append(d.hdrRels, hdrRel)
 
-	case gooxml.FooterType, gooxml.FooterTypeStrict:
+	case unioffice.FooterType, unioffice.FooterTypeStrict:
 		ftr := wml.NewFtr()
 		decMap.AddTarget(target, ftr, typ, uint32(len(d.footers)))
 		d.footers = append(d.footers, ftr)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.footers))
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(d.footers))
 
 		// look for footer rels
 		ftrRel := common.NewRelationships()
 		decMap.AddTarget(zippkg.RelationsPathFor(target), ftrRel.X(), typ, 0)
 		d.ftrRels = append(d.ftrRels, ftrRel)
 
-	case gooxml.ThemeType, gooxml.ThemeTypeStrict:
+	case unioffice.ThemeType, unioffice.ThemeTypeStrict:
 		thm := dml.NewTheme()
 		decMap.AddTarget(target, thm, typ, uint32(len(d.themes)))
 		d.themes = append(d.themes, thm)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.themes))
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(d.themes))
 
-	case gooxml.WebSettingsType, gooxml.WebSettingsTypeStrict:
+	case unioffice.WebSettingsType, unioffice.WebSettingsTypeStrict:
 		d.webSettings = wml.NewWebSettings()
 		decMap.AddTarget(target, d.webSettings, typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.FontTableType, gooxml.FontTableTypeStrict:
+	case unioffice.FontTableType, unioffice.FontTableTypeStrict:
 		d.fontTable = wml.NewFonts()
 		decMap.AddTarget(target, d.fontTable, typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.EndNotesType, gooxml.EndNotesTypeStrict:
+	case unioffice.EndNotesType, unioffice.EndNotesTypeStrict:
 		d.endNotes = wml.NewEndnotes()
 		decMap.AddTarget(target, d.endNotes, typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.FootNotesType, gooxml.FootNotesTypeStrict:
+	case unioffice.FootNotesType, unioffice.FootNotesTypeStrict:
 		d.footNotes = wml.NewFootnotes()
 		decMap.AddTarget(target, d.footNotes, typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.ImageType, gooxml.ImageTypeStrict:
+	case unioffice.ImageType, unioffice.ImageTypeStrict:
 		var iref common.ImageRef
 		for i, f := range files {
 			if f == nil {
@@ -802,14 +802,14 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 		}
 
 		ext := "." + strings.ToLower(iref.Format())
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(d.Images))
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(d.Images))
 		// ensure we don't change image formats
 		if newExt := filepath.Ext(rel.TargetAttr); newExt != ext {
 			rel.TargetAttr = rel.TargetAttr[0:len(rel.TargetAttr)-len(newExt)] + ext
 		}
 
 	default:
-		gooxml.Log("unsupported relationship type: %s tgt: %s", typ, target)
+		unioffice.Log("unsupported relationship type: %s tgt: %s", typ, target)
 	}
 	return nil
 }

@@ -102,7 +102,7 @@ lCT_BuildList:
 				}
 				m.BldGraphic = append(m.BldGraphic, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_BuildList %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_BuildList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

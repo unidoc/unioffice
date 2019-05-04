@@ -27,7 +27,7 @@ func NewCT_DigSigBlob() *CT_DigSigBlob {
 func (m *CT_DigSigBlob) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	seblob := xml.StartElement{Name: xml.Name{Local: "vt:blob"}}
-	gooxml.AddPreserveSpaceAttr(&seblob, m.Blob)
+	unioffice.AddPreserveSpaceAttr(&seblob, m.Blob)
 	e.EncodeElement(m.Blob, seblob)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -50,7 +50,7 @@ lCT_DigSigBlob:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_DigSigBlob %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_DigSigBlob %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

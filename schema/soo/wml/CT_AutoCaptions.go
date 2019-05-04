@@ -55,7 +55,7 @@ lCT_AutoCaptions:
 				}
 				m.AutoCaption = append(m.AutoCaption, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_AutoCaptions %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_AutoCaptions %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

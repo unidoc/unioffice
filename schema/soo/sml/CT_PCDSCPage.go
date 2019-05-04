@@ -75,7 +75,7 @@ lCT_PCDSCPage:
 				}
 				m.PageItem = append(m.PageItem, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_PCDSCPage %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_PCDSCPage %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

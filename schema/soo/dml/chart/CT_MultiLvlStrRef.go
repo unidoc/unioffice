@@ -29,7 +29,7 @@ func NewCT_MultiLvlStrRef() *CT_MultiLvlStrRef {
 func (m *CT_MultiLvlStrRef) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	sef := xml.StartElement{Name: xml.Name{Local: "c:f"}}
-	gooxml.AddPreserveSpaceAttr(&sef, m.F)
+	unioffice.AddPreserveSpaceAttr(&sef, m.F)
 	e.EncodeElement(m.F, sef)
 	if m.MultiLvlStrCache != nil {
 		semultiLvlStrCache := xml.StartElement{Name: xml.Name{Local: "c:multiLvlStrCache"}}
@@ -72,7 +72,7 @@ lCT_MultiLvlStrRef:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_MultiLvlStrRef %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_MultiLvlStrRef %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

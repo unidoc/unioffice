@@ -41,7 +41,7 @@ func (m *CT_Trendline) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	e.EncodeToken(start)
 	if m.Name != nil {
 		sename := xml.StartElement{Name: xml.Name{Local: "c:name"}}
-		gooxml.AddPreserveSpaceAttr(&sename, *m.Name)
+		unioffice.AddPreserveSpaceAttr(&sename, *m.Name)
 		e.EncodeElement(m.Name, sename)
 	}
 	if m.SpPr != nil {
@@ -174,7 +174,7 @@ lCT_Trendline:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_Trendline %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Trendline %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

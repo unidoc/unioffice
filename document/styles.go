@@ -44,9 +44,9 @@ func (s Styles) AddStyle(styleID string, t wml.ST_StyleType, isDefault bool) Sty
 	ss.TypeAttr = t
 	if isDefault {
 		ss.DefaultAttr = &sharedTypes.ST_OnOff{}
-		ss.DefaultAttr.Bool = gooxml.Bool(isDefault)
+		ss.DefaultAttr.Bool = unioffice.Bool(isDefault)
 	}
-	ss.StyleIdAttr = gooxml.String(styleID)
+	ss.StyleIdAttr = unioffice.String(styleID)
 	s.x.Style = append(s.x.Style, ss)
 	return Style{ss}
 }
@@ -174,9 +174,9 @@ func (s Styles) initializeDocDefaults() {
 	rpr.Fonts().SetCSTheme(wml.ST_ThemeMajorBidi)
 
 	rpr.X().Lang = wml.NewCT_Language()
-	rpr.X().Lang.ValAttr = gooxml.String("en-US")
-	rpr.X().Lang.EastAsiaAttr = gooxml.String("en-US")
-	rpr.X().Lang.BidiAttr = gooxml.String("ar-SA")
+	rpr.X().Lang.ValAttr = unioffice.String("en-US")
+	rpr.X().Lang.EastAsiaAttr = unioffice.String("en-US")
+	rpr.X().Lang.BidiAttr = unioffice.String("ar-SA")
 
 	s.x.DocDefaults.PPrDefault = wml.NewCT_PPrDefault()
 }

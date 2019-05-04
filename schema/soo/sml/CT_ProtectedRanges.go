@@ -55,7 +55,7 @@ lCT_ProtectedRanges:
 				}
 				m.ProtectedRange = append(m.ProtectedRange, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_ProtectedRanges %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_ProtectedRanges %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

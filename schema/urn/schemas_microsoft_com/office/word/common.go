@@ -906,13 +906,13 @@ func (m ST_VerticalAnchor) ValidateWithPath(path string) error {
 
 // init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:word", "CT_Border", NewCT_Border)
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:word", "CT_Wrap", NewCT_Wrap)
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:word", "CT_AnchorLock", NewCT_AnchorLock)
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:word", "bordertop", NewBordertop)
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:word", "borderleft", NewBorderleft)
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:word", "borderright", NewBorderright)
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:word", "borderbottom", NewBorderbottom)
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:word", "wrap", NewWrap)
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:word", "anchorlock", NewAnchorlock)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:word", "CT_Border", NewCT_Border)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:word", "CT_Wrap", NewCT_Wrap)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:word", "CT_AnchorLock", NewCT_AnchorLock)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:word", "bordertop", NewBordertop)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:word", "borderleft", NewBorderleft)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:word", "borderright", NewBorderright)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:word", "borderbottom", NewBorderbottom)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:word", "wrap", NewWrap)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:word", "anchorlock", NewAnchorlock)
 }

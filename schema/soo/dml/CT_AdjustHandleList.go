@@ -70,7 +70,7 @@ lCT_AdjustHandleList:
 				}
 				m.AhPolar = append(m.AhPolar, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_AdjustHandleList %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_AdjustHandleList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

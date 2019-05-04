@@ -65,7 +65,7 @@ func (c ConditionalFormattingRule) SetOperator(t sml.ST_ConditionalFormattingOpe
 
 // SetStyle sets the style to be used for conditional rules
 func (c ConditionalFormattingRule) SetStyle(d DifferentialStyle) {
-	c.x.DxfIdAttr = gooxml.Uint32(d.Index())
+	c.x.DxfIdAttr = unioffice.Uint32(d.Index())
 }
 
 func (c ConditionalFormattingRule) clear() {

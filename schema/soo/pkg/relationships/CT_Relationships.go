@@ -55,7 +55,7 @@ lCT_Relationships:
 				}
 				m.Relationship = append(m.Relationship, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Relationships %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Relationships %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

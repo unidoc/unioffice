@@ -5,7 +5,7 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package gooxml_test
+package unioffice_test
 
 import (
 	"bytes"
@@ -22,17 +22,17 @@ import (
 )
 
 func TestCreatorUnknownType(t *testing.T) {
-	el, err := gooxml.CreateElement(xml.StartElement{Name: xml.Name{Local: "foo", Space: "bar"}})
+	el, err := unioffice.CreateElement(xml.StartElement{Name: xml.Name{Local: "foo", Space: "bar"}})
 	if el == nil || err != nil {
 		t.Errorf("CreateElement should never return nil: %s", err)
 	}
-	if _, ok := el.(*gooxml.XSDAny); !ok {
+	if _, ok := el.(*unioffice.XSDAny); !ok {
 		t.Errorf("CreateElement should return XSDAny for unknown types")
 	}
 }
 
 func TestCreatorKnownType(t *testing.T) {
-	el, err := gooxml.CreateElement(xml.StartElement{Name: xml.Name{Local: "CT_Settings", Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}})
+	el, err := unioffice.CreateElement(xml.StartElement{Name: xml.Name{Local: "CT_Settings", Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}})
 	if el == nil || err != nil {
 		t.Errorf("CreateElement should never return nil: %s", err)
 	}

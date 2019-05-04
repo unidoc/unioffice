@@ -74,7 +74,7 @@ lCT_ExternalLink:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_ExternalLink %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_ExternalLink %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

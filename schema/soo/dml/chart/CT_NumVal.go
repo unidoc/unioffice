@@ -37,7 +37,7 @@ func (m *CT_NumVal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	e.EncodeToken(start)
 	sev := xml.StartElement{Name: xml.Name{Local: "c:v"}}
-	gooxml.AddPreserveSpaceAttr(&sev, m.V)
+	unioffice.AddPreserveSpaceAttr(&sev, m.V)
 	e.EncodeElement(m.V, sev)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -78,7 +78,7 @@ lCT_NumVal:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_NumVal %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_NumVal %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -27,7 +27,7 @@ func (c Surface3DChart) X() *crt.CT_Surface3DChart {
 
 func (c Surface3DChart) InitializeDefaults() {
 	c.x.Wireframe = crt.NewCT_Boolean()
-	c.x.Wireframe.ValAttr = gooxml.Bool(false)
+	c.x.Wireframe.ValAttr = unioffice.Bool(false)
 
 	c.x.BandFmts = crt.NewCT_BandFmts()
 	for i := 0; i < 15; i++ {

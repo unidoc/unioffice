@@ -57,7 +57,7 @@ lCT_CommentList:
 				}
 				m.Cm = append(m.Cm, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_CommentList %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_CommentList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

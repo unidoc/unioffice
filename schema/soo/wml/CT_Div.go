@@ -152,7 +152,7 @@ lCT_Div:
 				}
 				m.DivsChild = append(m.DivsChild, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Div %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Div %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

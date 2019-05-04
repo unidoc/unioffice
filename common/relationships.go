@@ -56,14 +56,14 @@ func (r Relationships) FindRIDForN(i int, t string) string {
 // AddAutoRelationship adds a relationship with an automatically generated
 // filename based off of the type. It should be preferred over AddRelationship
 // to ensure consistent filenames are maintained.
-func (r Relationships) AddAutoRelationship(dt gooxml.DocType, src string, idx int, ctype string) Relationship {
-	return r.AddRelationship(gooxml.RelativeFilename(dt, src, ctype, idx), ctype)
+func (r Relationships) AddAutoRelationship(dt unioffice.DocType, src string, idx int, ctype string) Relationship {
+	return r.AddRelationship(unioffice.RelativeFilename(dt, src, ctype, idx), ctype)
 }
 
 // AddRelationship adds a relationship.
 func (r Relationships) AddRelationship(target, ctype string) Relationship {
 	if !strings.HasPrefix(ctype, "http://") {
-		gooxml.Log("relationship type %s should start with 'http://'", ctype)
+		unioffice.Log("relationship type %s should start with 'http://'", ctype)
 	}
 	rel := relationships.NewRelationship()
 	nextID := len(r.x.Relationship) + 1
@@ -102,7 +102,7 @@ type Hyperlink Relationship
 
 // AddHyperlink adds an external hyperlink relationship.
 func (r Relationships) AddHyperlink(target string) Hyperlink {
-	rel := r.AddRelationship(target, gooxml.HyperLinkType)
+	rel := r.AddRelationship(target, unioffice.HyperLinkType)
 	rel.x.TargetModeAttr = relationships.ST_TargetModeExternal
 	return Hyperlink(rel)
 }

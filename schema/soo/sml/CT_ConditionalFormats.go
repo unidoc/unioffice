@@ -73,7 +73,7 @@ lCT_ConditionalFormats:
 				}
 				m.ConditionalFormat = append(m.ConditionalFormat, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_ConditionalFormats %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_ConditionalFormats %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

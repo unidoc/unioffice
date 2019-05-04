@@ -55,7 +55,7 @@ func (s Sheet) Row(rowNum uint32) Row {
 func (s Sheet) Cell(cellRef string) Cell {
 	cref, err := reference.ParseCellReference(cellRef)
 	if err != nil {
-		gooxml.Log("error parsing cell reference: %s", err)
+		unioffice.Log("error parsing cell reference: %s", err)
 		return s.AddRow().AddCell()
 	}
 	return s.Row(cref.RowIdx).Cell(cref.Column)
@@ -66,7 +66,7 @@ func (s Sheet) Cell(cellRef string) Cell {
 // Row instead which creates a new row or returns an existing row.
 func (s Sheet) AddNumberedRow(rowNum uint32) Row {
 	r := sml.NewCT_Row()
-	r.RAttr = gooxml.Uint32(rowNum)
+	r.RAttr = unioffice.Uint32(rowNum)
 	s.x.SheetData.Row = append(s.x.SheetData.Row, r)
 
 	// Excel wants the rows to be sorted
@@ -89,7 +89,7 @@ func (s Sheet) AddNumberedRow(rowNum uint32) Row {
 // rows and not skipping any.
 func (s Sheet) addNumberedRowFast(rowNum uint32) Row {
 	r := sml.NewCT_Row()
-	r.RAttr = gooxml.Uint32(rowNum)
+	r.RAttr = unioffice.Uint32(rowNum)
 	s.x.SheetData.Row = append(s.x.SheetData.Row, r)
 	return Row{s.w, s.x, r}
 }
@@ -132,7 +132,7 @@ func (s Sheet) InsertRow(rowNum int) Row {
 					continue
 				}
 				cref.RowIdx++
-				c.x.RAttr = gooxml.String(cref.String())
+				c.x.RAttr = unioffice.String(cref.String())
 			}
 		}
 	}
@@ -274,7 +274,7 @@ func (s Sheet) SetDrawing(d Drawing) {
 	var drawingID string
 	for i, dr := range d.wb.drawings {
 		if dr == d.x {
-			rel := rel.AddAutoRelationship(gooxml.DocTypeSpreadsheet, gooxml.WorksheetType, i+1, gooxml.DrawingType)
+			rel := rel.AddAutoRelationship(unioffice.DocTypeSpreadsheet, unioffice.WorksheetType, i+1, unioffice.DrawingType)
 			drawingID = rel.ID()
 			break
 		}
@@ -339,7 +339,7 @@ func (s Sheet) SetAutoFilter(rangeRef string) {
 	rangeRef = strings.Replace(rangeRef, "$", "", -1)
 
 	s.x.AutoFilter = sml.NewCT_AutoFilter()
-	s.x.AutoFilter.RefAttr = gooxml.String(rangeRef)
+	s.x.AutoFilter.RefAttr = unioffice.String(rangeRef)
 	sn := "'" + s.Name() + "'!"
 	var sdn DefinedName
 
@@ -380,7 +380,7 @@ func (s Sheet) AddMergedCells(fromRef, toRef string) MergedCell {
 	merge.RefAttr = fmt.Sprintf("%s:%s", fromRef, toRef)
 
 	s.x.MergeCells.MergeCell = append(s.x.MergeCells.MergeCell, merge)
-	s.x.MergeCells.CountAttr = gooxml.Uint32(uint32(len(s.x.MergeCells.MergeCell)))
+	s.x.MergeCells.CountAttr = unioffice.Uint32(uint32(len(s.x.MergeCells.MergeCell)))
 	return MergedCell{s.w, s.x, merge}
 }
 
@@ -490,12 +490,12 @@ func (s Sheet) Comments() Comments {
 		if wks == s.x {
 			if s.w.comments[i] == nil {
 				s.w.comments[i] = sml.NewComments()
-				s.w.xwsRels[i].AddAutoRelationship(gooxml.DocTypeSpreadsheet, gooxml.WorksheetType, i+1, gooxml.CommentsType)
-				s.w.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.CommentsType, i+1), gooxml.CommentsContentType)
+				s.w.xwsRels[i].AddAutoRelationship(unioffice.DocTypeSpreadsheet, unioffice.WorksheetType, i+1, unioffice.CommentsType)
+				s.w.ContentTypes.AddOverride(unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.CommentsType, i+1), unioffice.CommentsContentType)
 			}
 			if len(s.w.vmlDrawings) == 0 {
 				s.w.vmlDrawings = append(s.w.vmlDrawings, vmldrawing.NewCommentDrawing())
-				vmlID := s.w.xwsRels[i].AddAutoRelationship(gooxml.DocTypeSpreadsheet, gooxml.WorksheetType, 1, gooxml.VMLDrawingType)
+				vmlID := s.w.xwsRels[i].AddAutoRelationship(unioffice.DocTypeSpreadsheet, unioffice.WorksheetType, 1, unioffice.VMLDrawingType)
 				if s.x.LegacyDrawing == nil {
 					s.x.LegacyDrawing = sml.NewCT_LegacyDrawing()
 				}
@@ -505,7 +505,7 @@ func (s Sheet) Comments() Comments {
 		}
 	}
 
-	gooxml.Log("attempted to access comments for non-existent sheet")
+	unioffice.Log("attempted to access comments for non-existent sheet")
 	// should never occur
 	return Comments{}
 }
@@ -608,9 +608,9 @@ func (s Sheet) AddDataValidation() DataValidation {
 		s.x.DataValidations = sml.NewCT_DataValidations()
 	}
 	dv := sml.NewCT_DataValidation()
-	dv.ShowErrorMessageAttr = gooxml.Bool(true)
+	dv.ShowErrorMessageAttr = unioffice.Bool(true)
 	s.x.DataValidations.DataValidation = append(s.x.DataValidations.DataValidation, dv)
-	s.x.DataValidations.CountAttr = gooxml.Uint32(uint32(len(s.x.DataValidations.DataValidation)))
+	s.x.DataValidations.CountAttr = unioffice.Uint32(uint32(len(s.x.DataValidations.DataValidation)))
 	return DataValidation{dv}
 }
 
@@ -651,7 +651,7 @@ func (s *Sheet) RecalculateFormulas() {
 
 				res := ev.Eval(ctx, formStr).AsString()
 				if res.Type == formula.ResultTypeError {
-					gooxml.Log("error evaulating formula %s: %s", formStr, res.ErrorMessage)
+					unioffice.Log("error evaulating formula %s: %s", formStr, res.ErrorMessage)
 					c.X().V = nil
 				} else {
 					if res.Type == formula.ResultTypeNumber {
@@ -659,7 +659,7 @@ func (s *Sheet) RecalculateFormulas() {
 					} else {
 						c.X().TAttr = sml.ST_CellTypeInlineStr
 					}
-					c.X().V = gooxml.String(res.Value())
+					c.X().V = unioffice.String(res.Value())
 
 					// the formula is of type array, so if the result is also an
 					// array we need to expand the array out into cells
@@ -700,7 +700,7 @@ func (s *Sheet) setShared(origin string, from, to reference.CellReference, formu
 			} else {
 				c.X().TAttr = sml.ST_CellTypeInlineStr
 			}
-			c.X().V = gooxml.String(res.Value())
+			c.X().V = unioffice.String(res.Value())
 		}
 	}
 	_ = ev

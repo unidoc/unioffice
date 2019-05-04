@@ -63,7 +63,7 @@ lCT_NotesViewProperties:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_NotesViewProperties %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_NotesViewProperties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

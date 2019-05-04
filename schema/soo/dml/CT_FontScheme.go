@@ -86,7 +86,7 @@ lCT_FontScheme:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_FontScheme %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_FontScheme %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

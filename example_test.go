@@ -1,4 +1,4 @@
-package gooxml_test
+package unioffice_test
 
 import (
 	"github.com/unidoc/unioffice/document"

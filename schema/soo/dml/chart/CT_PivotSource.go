@@ -31,7 +31,7 @@ func NewCT_PivotSource() *CT_PivotSource {
 func (m *CT_PivotSource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	sename := xml.StartElement{Name: xml.Name{Local: "c:name"}}
-	gooxml.AddPreserveSpaceAttr(&sename, m.Name)
+	unioffice.AddPreserveSpaceAttr(&sename, m.Name)
 	e.EncodeElement(m.Name, sename)
 	sefmtId := xml.StartElement{Name: xml.Name{Local: "c:fmtId"}}
 	e.EncodeElement(m.FmtId, sefmtId)
@@ -75,7 +75,7 @@ lCT_PivotSource:
 				}
 				m.ExtLst = append(m.ExtLst, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_PivotSource %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_PivotSource %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

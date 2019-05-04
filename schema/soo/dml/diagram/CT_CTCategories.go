@@ -55,7 +55,7 @@ lCT_CTCategories:
 				}
 				m.Cat = append(m.Cat, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_CTCategories %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_CTCategories %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

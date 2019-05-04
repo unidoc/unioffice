@@ -55,7 +55,7 @@ lCT_PivotCaches:
 				}
 				m.PivotCache = append(m.PivotCache, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_PivotCaches %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_PivotCaches %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

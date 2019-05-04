@@ -54,7 +54,7 @@ lCT_Path2DCubicBezierTo:
 				}
 				m.Pt = append(m.Pt, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Path2DCubicBezierTo %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Path2DCubicBezierTo %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -39,7 +39,7 @@ type CT_SdtPr struct {
 	// Structured Document Tag Navigation Order Index
 	TabIndex *CT_UnsignedDecimalNumber
 	Choice   *CT_SdtPrChoice
-	Extra    []gooxml.Any
+	Extra    []unioffice.Any
 }
 
 func NewCT_SdtPr() *CT_SdtPr {
@@ -255,7 +255,7 @@ lCT_SdtPr:
 					return err
 				}
 			default:
-				any := &gooxml.XSDAny{}
+				any := &unioffice.XSDAny{}
 				if err := d.DecodeElement(any, &el); err != nil {
 					return err
 				}

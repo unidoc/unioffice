@@ -67,7 +67,7 @@ lCT_SheetViews:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_SheetViews %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_SheetViews %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

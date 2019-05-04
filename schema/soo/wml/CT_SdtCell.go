@@ -77,7 +77,7 @@ lCT_SdtCell:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_SdtCell %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_SdtCell %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

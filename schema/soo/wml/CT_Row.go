@@ -442,7 +442,7 @@ lCT_Row:
 				tmpcontentcellcontent.EG_RunLevelElts = append(tmpcontentcellcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_MathContent = append(tmprunlevelelts.EG_MathContent, tmpmathcontent)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Row %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Row %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

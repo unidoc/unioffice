@@ -72,7 +72,7 @@ lCT_CustomFilters:
 				}
 				m.CustomFilter = append(m.CustomFilter, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_CustomFilters %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_CustomFilters %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -51,7 +51,7 @@ lCT_TextBlipBullet:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_TextBlipBullet %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_TextBlipBullet %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

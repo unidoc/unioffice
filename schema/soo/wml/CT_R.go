@@ -26,7 +26,7 @@ type CT_R struct {
 	// Run Properties
 	RPr                *CT_RPr
 	EG_RunInnerContent []*EG_RunInnerContent
-	Extra              []gooxml.Any
+	Extra              []unioffice.Any
 }
 
 func NewCT_R() *CT_R {
@@ -374,7 +374,7 @@ lCT_R:
 				}
 				m.EG_RunInnerContent = append(m.EG_RunInnerContent, tmpruninnercontent)
 			default:
-				any := &gooxml.XSDAny{}
+				any := &unioffice.XSDAny{}
 				if err := d.DecodeElement(any, &el); err != nil {
 					return err
 				}

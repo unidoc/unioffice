@@ -52,60 +52,60 @@ func Decode(f *zip.File, dest interface{}) error {
 		for i, r := range ds.Relationship {
 			switch r.TypeAttr {
 			// Common
-			case gooxml.OfficeDocumentTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.OfficeDocumentType
-			case gooxml.StylesTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.StylesType
-			case gooxml.ThemeTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.ThemeType
-			case gooxml.SettingsTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.SettingsType
-			case gooxml.ImageTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.ImageType
-			case gooxml.CommentsTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.CommentsType
-			case gooxml.ThumbnailTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.ThumbnailType
-			case gooxml.DrawingTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.DrawingType
-			case gooxml.ChartTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.ChartType
-			case gooxml.ExtendedPropertiesTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.ExtendedPropertiesType
-			case gooxml.CustomXMLTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.CustomXMLType
+			case unioffice.OfficeDocumentTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.OfficeDocumentType
+			case unioffice.StylesTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.StylesType
+			case unioffice.ThemeTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.ThemeType
+			case unioffice.SettingsTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.SettingsType
+			case unioffice.ImageTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.ImageType
+			case unioffice.CommentsTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.CommentsType
+			case unioffice.ThumbnailTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.ThumbnailType
+			case unioffice.DrawingTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.DrawingType
+			case unioffice.ChartTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.ChartType
+			case unioffice.ExtendedPropertiesTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.ExtendedPropertiesType
+			case unioffice.CustomXMLTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.CustomXMLType
 
 			// SML
-			case gooxml.WorksheetTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.WorksheetType
-			case gooxml.SharedStingsTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.SharedStingsType
-			case gooxml.TableTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.TableType
+			case unioffice.WorksheetTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.WorksheetType
+			case unioffice.SharedStingsTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.SharedStingsType
+			case unioffice.TableTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.TableType
 
 			// WML
-			case gooxml.HeaderTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.HeaderType
-			case gooxml.FooterTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.FooterType
-			case gooxml.NumberingTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.NumberingType
-			case gooxml.FontTableTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.FontTableType
-			case gooxml.WebSettingsTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.WebSettingsType
-			case gooxml.FootNotesTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.FootNotesType
-			case gooxml.EndNotesTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.EndNotesType
+			case unioffice.HeaderTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.HeaderType
+			case unioffice.FooterTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.FooterType
+			case unioffice.NumberingTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.NumberingType
+			case unioffice.FontTableTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.FontTableType
+			case unioffice.WebSettingsTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.WebSettingsType
+			case unioffice.FootNotesTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.FootNotesType
+			case unioffice.EndNotesTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.EndNotesType
 
 			// PML
-			case gooxml.SlideTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.SlideType
+			case unioffice.SlideTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.SlideType
 
 			// VML
-			case gooxml.VMLDrawingTypeStrict:
-				ds.Relationship[i].TypeAttr = gooxml.VMLDrawingType
+			case unioffice.VMLDrawingTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.VMLDrawingType
 			}
 		}
 

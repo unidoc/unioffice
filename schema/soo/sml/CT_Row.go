@@ -243,7 +243,7 @@ lCT_Row:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_Row %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Row %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

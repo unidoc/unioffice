@@ -52,7 +52,7 @@ func (m *CT_Comment) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	sepos := xml.StartElement{Name: xml.Name{Local: "p:pos"}}
 	e.EncodeElement(m.Pos, sepos)
 	setext := xml.StartElement{Name: xml.Name{Local: "p:text"}}
-	gooxml.AddPreserveSpaceAttr(&setext, m.Text)
+	unioffice.AddPreserveSpaceAttr(&setext, m.Text)
 	e.EncodeElement(m.Text, setext)
 	if m.ExtLst != nil {
 		seextLst := xml.StartElement{Name: xml.Name{Local: "p:extLst"}}
@@ -117,7 +117,7 @@ lCT_Comment:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_Comment %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Comment %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

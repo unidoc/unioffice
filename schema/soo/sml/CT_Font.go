@@ -267,7 +267,7 @@ lCT_Font:
 				}
 				m.Scheme = append(m.Scheme, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Font %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Font %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

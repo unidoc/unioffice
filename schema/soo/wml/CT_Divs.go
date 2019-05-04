@@ -55,7 +55,7 @@ lCT_Divs:
 				}
 				m.Div = append(m.Div, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Divs %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Divs %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

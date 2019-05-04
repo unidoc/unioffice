@@ -55,7 +55,7 @@ lCT_OleObjects:
 				}
 				m.OleObject = append(m.OleObject, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_OleObjects %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_OleObjects %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

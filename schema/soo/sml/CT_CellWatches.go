@@ -55,7 +55,7 @@ lCT_CellWatches:
 				}
 				m.CellWatch = append(m.CellWatch, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_CellWatches %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_CellWatches %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

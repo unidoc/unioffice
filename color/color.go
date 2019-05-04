@@ -38,11 +38,11 @@ func (c Color) IsAuto() bool {
 // AsRGBString is used by the various wrappers to return a pointer
 // to a string containing a six digit hex RGB value.
 func (c Color) AsRGBString() *string {
-	return gooxml.Stringf("%02x%02x%02x", c.r, c.g, c.b)
+	return unioffice.Stringf("%02x%02x%02x", c.r, c.g, c.b)
 }
 
 // AsRGBAString is used by the various wrappers to return a pointer
 // to a string containing a six digit hex RGB value.
 func (c Color) AsRGBAString() *string {
-	return gooxml.Stringf("%02x%02x%02x%02x", c.a, c.r, c.g, c.b)
+	return unioffice.Stringf("%02x%02x%02x%02x", c.a, c.r, c.g, c.b)
 }

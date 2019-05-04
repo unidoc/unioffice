@@ -68,7 +68,7 @@ lUsers:
 				}
 				m.UserInfo = append(m.UserInfo, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on Users %v", el.Name)
+				unioffice.Log("skipping unsupported element on Users %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

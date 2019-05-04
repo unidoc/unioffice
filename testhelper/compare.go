@@ -155,7 +155,7 @@ func tempFilePath(prefix string) string {
 }
 
 func xmlIndentFile(fn string) error {
-	any := gooxml.XSDAny{}
+	any := unioffice.XSDAny{}
 	f, err := os.Open(fn)
 	if err != nil {
 		return err

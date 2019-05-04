@@ -27,6 +27,6 @@ func (f Fills) X() *sml.CT_Fills {
 func (f Fills) AddFill() Fill {
 	fill := sml.NewCT_Fill()
 	f.x.Fill = append(f.x.Fill, fill)
-	f.x.CountAttr = gooxml.Uint32(uint32(len(f.x.Fill)))
+	f.x.CountAttr = unioffice.Uint32(uint32(len(f.x.Fill)))
 	return Fill{fill, f.x}
 }

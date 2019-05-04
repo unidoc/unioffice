@@ -56,7 +56,7 @@ lCT_BandFmts:
 				}
 				m.BandFmt = append(m.BandFmt, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_BandFmts %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_BandFmts %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

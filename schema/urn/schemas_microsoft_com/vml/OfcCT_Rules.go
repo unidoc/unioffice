@@ -69,7 +69,7 @@ lOfcCT_Rules:
 				}
 				m.R = append(m.R, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on OfcCT_Rules %v", el.Name)
+				unioffice.Log("skipping unsupported element on OfcCT_Rules %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

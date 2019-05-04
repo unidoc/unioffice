@@ -73,7 +73,7 @@ lCT_WebPublishItems:
 				}
 				m.WebPublishItem = append(m.WebPublishItem, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_WebPublishItems %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_WebPublishItems %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

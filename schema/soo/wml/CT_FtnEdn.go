@@ -462,7 +462,7 @@ lCT_FtnEdn:
 				tmpcontentblockcontent.EG_RunLevelElts = append(tmpcontentblockcontent.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_MathContent = append(tmprunlevelelts.EG_MathContent, tmpmathcontent)
 			default:
-				gooxml.Log("skipping unsupported element on CT_FtnEdn %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_FtnEdn %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

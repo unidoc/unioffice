@@ -31,7 +31,7 @@ func (p SheetProtection) LockSheet(b bool) {
 	if !b {
 		p.x.SheetAttr = nil
 	} else {
-		p.x.SheetAttr = gooxml.Bool(true)
+		p.x.SheetAttr = unioffice.Bool(true)
 	}
 }
 
@@ -45,7 +45,7 @@ func (p SheetProtection) LockObject(b bool) {
 	if !b {
 		p.x.ObjectsAttr = nil
 	} else {
-		p.x.ObjectsAttr = gooxml.Bool(true)
+		p.x.ObjectsAttr = unioffice.Bool(true)
 	}
 }
 
@@ -64,5 +64,5 @@ func (p SheetProtection) SetPassword(pw string) {
 
 // SetPasswordHash sets the password hash to the input.
 func (p SheetProtection) SetPasswordHash(pwHash string) {
-	p.x.PasswordAttr = gooxml.String(pwHash)
+	p.x.PasswordAttr = unioffice.String(pwHash)
 }

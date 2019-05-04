@@ -68,7 +68,7 @@ lCT_FramesetChoice:
 				}
 				m.Frame = append(m.Frame, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_FramesetChoice %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_FramesetChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

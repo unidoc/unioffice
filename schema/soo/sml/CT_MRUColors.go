@@ -55,7 +55,7 @@ lCT_MRUColors:
 				}
 				m.Color = append(m.Color, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_MRUColors %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_MRUColors %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

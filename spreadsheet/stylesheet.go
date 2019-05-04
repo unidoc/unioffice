@@ -29,19 +29,19 @@ func NewStyleSheet(wb *Workbook) StyleSheet {
 	ss.CellStyles = sml.NewCT_CellStyles()
 
 	cs := sml.NewCT_CellStyle()
-	cs.NameAttr = gooxml.String("Normal")
+	cs.NameAttr = unioffice.String("Normal")
 	cs.XfIdAttr = 0
-	cs.BuiltinIdAttr = gooxml.Uint32(0)
+	cs.BuiltinIdAttr = unioffice.Uint32(0)
 	ss.CellStyles.CellStyle = append(ss.CellStyles.CellStyle, cs)
-	ss.CellStyles.CountAttr = gooxml.Uint32(uint32(len(ss.CellStyles.CellStyle)))
+	ss.CellStyles.CountAttr = unioffice.Uint32(uint32(len(ss.CellStyles.CellStyle)))
 
 	xf := sml.NewCT_Xf()
-	xf.NumFmtIdAttr = gooxml.Uint32(0)
-	xf.FontIdAttr = gooxml.Uint32(0)
-	xf.FillIdAttr = gooxml.Uint32(0)
-	xf.BorderIdAttr = gooxml.Uint32(0)
+	xf.NumFmtIdAttr = unioffice.Uint32(0)
+	xf.FontIdAttr = unioffice.Uint32(0)
+	xf.FillIdAttr = unioffice.Uint32(0)
+	xf.BorderIdAttr = unioffice.Uint32(0)
 	ss.CellStyleXfs.Xf = append(ss.CellStyleXfs.Xf, xf)
-	ss.CellStyleXfs.CountAttr = gooxml.Uint32(uint32(len(ss.CellStyleXfs.Xf)))
+	ss.CellStyleXfs.CountAttr = unioffice.Uint32(uint32(len(ss.CellStyleXfs.Xf)))
 
 	fills := NewFills()
 	ss.Fills = fills.X()
@@ -64,10 +64,10 @@ func NewStyleSheet(wb *Workbook) StyleSheet {
 
 	xf2 := sml.NewCT_Xf()
 	*xf2 = *xf
-	xf2.XfIdAttr = gooxml.Uint32(0)
+	xf2.XfIdAttr = unioffice.Uint32(0)
 
 	ss.CellXfs.Xf = append(ss.CellXfs.Xf, xf2)
-	ss.CellXfs.CountAttr = gooxml.Uint32(uint32(len(ss.CellXfs.Xf)))
+	ss.CellXfs.CountAttr = unioffice.Uint32(uint32(len(ss.CellXfs.Xf)))
 	return s
 }
 
@@ -80,7 +80,7 @@ func (s StyleSheet) X() *sml.StyleSheet {
 func (s StyleSheet) AddFont() Font {
 	font := sml.NewCT_Font()
 	s.x.Fonts.Font = append(s.x.Fonts.Font, font)
-	s.x.Fonts.CountAttr = gooxml.Uint32(uint32(len(s.x.Fonts.Font)))
+	s.x.Fonts.CountAttr = unioffice.Uint32(uint32(len(s.x.Fonts.Font)))
 	return Font{font, s.x}
 }
 
@@ -88,7 +88,7 @@ func (s StyleSheet) AddFont() Font {
 func (s StyleSheet) AddBorder() Border {
 	b := sml.NewCT_Border()
 	s.x.Borders.Border = append(s.x.Borders.Border, b)
-	s.x.Borders.CountAttr = gooxml.Uint32(uint32(len(s.x.Borders.Border)))
+	s.x.Borders.CountAttr = unioffice.Uint32(uint32(len(s.x.Borders.Border)))
 	return Border{b, s.x.Borders}
 }
 
@@ -118,7 +118,7 @@ func (s StyleSheet) Fonts() []Font {
 func (s StyleSheet) AddCellStyle() CellStyle {
 	xf := sml.NewCT_Xf()
 	s.x.CellXfs.Xf = append(s.x.CellXfs.Xf, xf)
-	s.x.CellXfs.CountAttr = gooxml.Uint32(uint32(len(s.x.CellXfs.Xf)))
+	s.x.CellXfs.CountAttr = unioffice.Uint32(uint32(len(s.x.CellXfs.Xf)))
 	return CellStyle{s.wb, xf, s.x.CellXfs}
 }
 
@@ -138,7 +138,7 @@ func (s StyleSheet) AddDifferentialStyle() DifferentialStyle {
 	}
 	dxf := sml.NewCT_Dxf()
 	s.x.Dxfs.Dxf = append(s.x.Dxfs.Dxf, dxf)
-	s.x.Dxfs.CountAttr = gooxml.Uint32(uint32(len(s.x.Dxfs.Dxf)))
+	s.x.Dxfs.CountAttr = unioffice.Uint32(uint32(len(s.x.Dxfs.Dxf)))
 	return DifferentialStyle{dxf, s.wb, s.x.Dxfs}
 }
 
@@ -169,7 +169,7 @@ func (s StyleSheet) AddNumberFormat() NumberFormat {
 	// pre-defined formats
 	nf.NumFmtIdAttr = uint32(200 + len(s.x.NumFmts.NumFmt))
 	s.x.NumFmts.NumFmt = append(s.x.NumFmts.NumFmt, nf)
-	s.x.NumFmts.CountAttr = gooxml.Uint32(uint32(len(s.x.NumFmts.NumFmt)))
+	s.x.NumFmts.CountAttr = unioffice.Uint32(uint32(len(s.x.NumFmts.NumFmt)))
 	return NumberFormat{s.wb, nf}
 }
 

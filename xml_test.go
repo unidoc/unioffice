@@ -5,7 +5,7 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package gooxml_test
+package unioffice_test
 
 import (
 	"encoding/xml"
@@ -30,7 +30,7 @@ func TestAddPreserveSpaceAttr(t *testing.T) {
 	}
 	for _, tc := range td {
 		se := &xml.StartElement{}
-		gooxml.AddPreserveSpaceAttr(se, tc.Input)
+		unioffice.AddPreserveSpaceAttr(se, tc.Input)
 		if tc.HasAttr && len(se.Attr) == 0 {
 			t.Errorf("expected a preserve space attribute for %s", tc.Input)
 		} else if !tc.HasAttr && len(se.Attr) != 0 {

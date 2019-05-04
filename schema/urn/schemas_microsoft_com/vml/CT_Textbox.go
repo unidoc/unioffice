@@ -23,7 +23,7 @@ type CT_Textbox struct {
 	SingleclickAttr sharedTypes.ST_TrueFalse
 	InsetmodeAttr   OfcST_InsetMode
 	TxbxContent     *wml.TxbxContent
-	Any             gooxml.Any
+	Any             unioffice.Any
 	IdAttr          *string
 	StyleAttr       *string
 }
@@ -124,7 +124,7 @@ lCT_Textbox:
 					return err
 				}
 			default:
-				if anyEl, err := gooxml.CreateElement(el); err != nil {
+				if anyEl, err := unioffice.CreateElement(el); err != nil {
 					return err
 				} else {
 					if err := d.DecodeElement(anyEl, &el); err != nil {

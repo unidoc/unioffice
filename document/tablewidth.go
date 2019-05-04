@@ -32,6 +32,6 @@ func (s TableWidth) X() *wml.CT_TblWidth {
 func (s TableWidth) SetValue(m measurement.Distance) {
 	s.x.WAttr = &wml.ST_MeasurementOrPercent{}
 	s.x.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
-	s.x.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(m / measurement.Twips))
+	s.x.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = unioffice.Int64(int64(m / measurement.Twips))
 	s.x.TypeAttr = wml.ST_TblWidthDxa
 }

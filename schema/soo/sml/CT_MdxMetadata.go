@@ -73,7 +73,7 @@ lCT_MdxMetadata:
 				}
 				m.Mdx = append(m.Mdx, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_MdxMetadata %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_MdxMetadata %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

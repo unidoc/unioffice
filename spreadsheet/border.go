@@ -88,9 +88,9 @@ func (b Border) SetDiagonal(style sml.ST_BorderStyle, c color.Color, up, down bo
 	b.x.Diagonal.StyleAttr = style
 
 	if up {
-		b.x.DiagonalUpAttr = gooxml.Bool(true)
+		b.x.DiagonalUpAttr = unioffice.Bool(true)
 	}
 	if down {
-		b.x.DiagonalDownAttr = gooxml.Bool(true)
+		b.x.DiagonalDownAttr = unioffice.Bool(true)
 	}
 }

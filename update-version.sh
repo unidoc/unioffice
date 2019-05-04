@@ -9,7 +9,7 @@ cat << __EOF > version.go
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package gooxml
+package unioffice
 
 import "time"
 

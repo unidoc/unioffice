@@ -57,7 +57,7 @@ lCT_ExternalDefinedNames:
 				}
 				m.DefinedName = append(m.DefinedName, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_ExternalDefinedNames %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_ExternalDefinedNames %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

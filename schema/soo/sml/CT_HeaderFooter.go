@@ -65,32 +65,32 @@ func (m *CT_HeaderFooter) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(start)
 	if m.OddHeader != nil {
 		seoddHeader := xml.StartElement{Name: xml.Name{Local: "ma:oddHeader"}}
-		gooxml.AddPreserveSpaceAttr(&seoddHeader, *m.OddHeader)
+		unioffice.AddPreserveSpaceAttr(&seoddHeader, *m.OddHeader)
 		e.EncodeElement(m.OddHeader, seoddHeader)
 	}
 	if m.OddFooter != nil {
 		seoddFooter := xml.StartElement{Name: xml.Name{Local: "ma:oddFooter"}}
-		gooxml.AddPreserveSpaceAttr(&seoddFooter, *m.OddFooter)
+		unioffice.AddPreserveSpaceAttr(&seoddFooter, *m.OddFooter)
 		e.EncodeElement(m.OddFooter, seoddFooter)
 	}
 	if m.EvenHeader != nil {
 		seevenHeader := xml.StartElement{Name: xml.Name{Local: "ma:evenHeader"}}
-		gooxml.AddPreserveSpaceAttr(&seevenHeader, *m.EvenHeader)
+		unioffice.AddPreserveSpaceAttr(&seevenHeader, *m.EvenHeader)
 		e.EncodeElement(m.EvenHeader, seevenHeader)
 	}
 	if m.EvenFooter != nil {
 		seevenFooter := xml.StartElement{Name: xml.Name{Local: "ma:evenFooter"}}
-		gooxml.AddPreserveSpaceAttr(&seevenFooter, *m.EvenFooter)
+		unioffice.AddPreserveSpaceAttr(&seevenFooter, *m.EvenFooter)
 		e.EncodeElement(m.EvenFooter, seevenFooter)
 	}
 	if m.FirstHeader != nil {
 		sefirstHeader := xml.StartElement{Name: xml.Name{Local: "ma:firstHeader"}}
-		gooxml.AddPreserveSpaceAttr(&sefirstHeader, *m.FirstHeader)
+		unioffice.AddPreserveSpaceAttr(&sefirstHeader, *m.FirstHeader)
 		e.EncodeElement(m.FirstHeader, sefirstHeader)
 	}
 	if m.FirstFooter != nil {
 		sefirstFooter := xml.StartElement{Name: xml.Name{Local: "ma:firstFooter"}}
-		gooxml.AddPreserveSpaceAttr(&sefirstFooter, *m.FirstFooter)
+		unioffice.AddPreserveSpaceAttr(&sefirstFooter, *m.FirstFooter)
 		e.EncodeElement(m.FirstFooter, sefirstFooter)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -179,7 +179,7 @@ lCT_HeaderFooter:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_HeaderFooter %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_HeaderFooter %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

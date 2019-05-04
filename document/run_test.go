@@ -46,13 +46,13 @@ func TestRunPropertiesBold(t *testing.T) {
 	}
 	r.x.B = wml.NewCT_OnOff()
 	r.x.B.ValAttr = &sharedTypes.ST_OnOff{}
-	r.x.B.ValAttr.Bool = gooxml.Bool(false)
+	r.x.B.ValAttr.Bool = unioffice.Bool(false)
 
 	if r.IsBold() {
 		t.Errorf("expected IsBold = false with false bool value")
 	}
 
-	r.x.B.ValAttr.Bool = gooxml.Bool(true)
+	r.x.B.ValAttr.Bool = unioffice.Bool(true)
 	if !r.IsBold() {
 		t.Errorf("expected IsBold = true with true bool value")
 	}

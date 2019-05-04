@@ -75,7 +75,7 @@ lCT_FieldsUsage:
 				}
 				m.FieldUsage = append(m.FieldUsage, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_FieldsUsage %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_FieldsUsage %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

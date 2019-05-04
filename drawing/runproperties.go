@@ -26,12 +26,12 @@ func MakeRunProperties(x *dml.CT_TextCharacterProperties) RunProperties {
 
 // SetSize sets the font size of the run text
 func (r RunProperties) SetSize(sz measurement.Distance) {
-	r.x.SzAttr = gooxml.Int32(int32(sz / measurement.HundredthPoint))
+	r.x.SzAttr = unioffice.Int32(int32(sz / measurement.HundredthPoint))
 }
 
 // SetBold controls the bolding of a run.
 func (r RunProperties) SetBold(b bool) {
-	r.x.BAttr = gooxml.Bool(b)
+	r.x.BAttr = unioffice.Bool(b)
 }
 
 // SetSolidFill controls the text color of a run.

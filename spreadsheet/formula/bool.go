@@ -20,7 +20,7 @@ type Bool struct {
 func NewBool(v string) Expression {
 	b, err := strconv.ParseBool(v)
 	if err != nil {
-		gooxml.Log("error parsing formula bool %s: %s", v, err)
+		unioffice.Log("error parsing formula bool %s: %s", v, err)
 	}
 	return Bool{b}
 }

@@ -57,7 +57,7 @@ lCT_Endnotes:
 				}
 				m.Endnote = append(m.Endnote, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Endnotes %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Endnotes %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

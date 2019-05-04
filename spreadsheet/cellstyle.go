@@ -44,15 +44,15 @@ func (cs CellStyle) ClearNumberFormat() {
 // SetNumberFormatStandard sets the format based off of the ECMA 376 standard formats.  These
 // formats are standardized and don't need to be defined in the styles.
 func (cs CellStyle) SetNumberFormatStandard(s StandardFormat) {
-	cs.xf.NumFmtIdAttr = gooxml.Uint32(uint32(s))
-	cs.xf.ApplyNumberFormatAttr = gooxml.Bool(true)
+	cs.xf.NumFmtIdAttr = unioffice.Uint32(uint32(s))
+	cs.xf.ApplyNumberFormatAttr = unioffice.Bool(true)
 }
 
 func (cs CellStyle) SetNumberFormat(s string) {
 	nf := cs.wb.StyleSheet.AddNumberFormat()
 	nf.SetFormat(s)
-	cs.xf.ApplyNumberFormatAttr = gooxml.Bool(true)
-	cs.xf.NumFmtIdAttr = gooxml.Uint32(nf.ID())
+	cs.xf.ApplyNumberFormatAttr = unioffice.Bool(true)
+	cs.xf.NumFmtIdAttr = unioffice.Uint32(nf.ID())
 }
 
 // Wrapped returns true if the cell will wrap text.
@@ -74,8 +74,8 @@ func (cs CellStyle) SetWrapped(b bool) {
 	if !b {
 		cs.xf.Alignment.WrapTextAttr = nil
 	} else {
-		cs.xf.Alignment.WrapTextAttr = gooxml.Bool(true)
-		cs.xf.ApplyAlignmentAttr = gooxml.Bool(true)
+		cs.xf.Alignment.WrapTextAttr = unioffice.Bool(true)
+		cs.xf.ApplyAlignmentAttr = unioffice.Bool(true)
 	}
 }
 
@@ -85,7 +85,7 @@ func (cs CellStyle) SetHorizontalAlignment(a sml.ST_HorizontalAlignment) {
 		cs.xf.Alignment = sml.NewCT_CellAlignment()
 	}
 	cs.xf.Alignment.HorizontalAttr = a
-	cs.xf.ApplyAlignmentAttr = gooxml.Bool(true)
+	cs.xf.ApplyAlignmentAttr = unioffice.Bool(true)
 }
 
 // SetRotation configures the cell to be rotated.
@@ -93,8 +93,8 @@ func (cs CellStyle) SetRotation(deg uint8) {
 	if cs.xf.Alignment == nil {
 		cs.xf.Alignment = sml.NewCT_CellAlignment()
 	}
-	cs.xf.ApplyAlignmentAttr = gooxml.Bool(true)
-	cs.xf.Alignment.TextRotationAttr = gooxml.Uint8(deg)
+	cs.xf.ApplyAlignmentAttr = unioffice.Bool(true)
+	cs.xf.Alignment.TextRotationAttr = unioffice.Uint8(deg)
 }
 
 // SetVerticalAlignment sets the vertical alignment of a cell style.
@@ -102,7 +102,7 @@ func (cs CellStyle) SetVerticalAlignment(a sml.ST_VerticalAlignment) {
 	if cs.xf.Alignment == nil {
 		cs.xf.Alignment = sml.NewCT_CellAlignment()
 	}
-	cs.xf.ApplyAlignmentAttr = gooxml.Bool(true)
+	cs.xf.ApplyAlignmentAttr = unioffice.Bool(true)
 	cs.xf.Alignment.VerticalAttr = a
 }
 
@@ -110,11 +110,11 @@ func (cs CellStyle) SetShrinkToFit(b bool) {
 	if cs.xf.Alignment == nil {
 		cs.xf.Alignment = sml.NewCT_CellAlignment()
 	}
-	cs.xf.ApplyAlignmentAttr = gooxml.Bool(true)
+	cs.xf.ApplyAlignmentAttr = unioffice.Bool(true)
 	if !b {
 		cs.xf.Alignment.ShrinkToFitAttr = nil
 	} else {
-		cs.xf.Alignment.ShrinkToFitAttr = gooxml.Bool(b)
+		cs.xf.Alignment.ShrinkToFitAttr = unioffice.Bool(b)
 	}
 }
 
@@ -128,16 +128,16 @@ func (cs CellStyle) ClearFont() {
 // index so modifying the font afterward will affect all styles that reference
 // it.
 func (cs CellStyle) SetFont(f Font) {
-	cs.xf.FontIdAttr = gooxml.Uint32(f.Index())
-	cs.xf.ApplyFontAttr = gooxml.Bool(true)
+	cs.xf.FontIdAttr = unioffice.Uint32(f.Index())
+	cs.xf.ApplyFontAttr = unioffice.Bool(true)
 }
 
 // SetBorder applies a border to a cell style.  The border is referenced by its
 // index so modifying the border afterward will affect all styles that reference
 // it.
 func (cs CellStyle) SetBorder(b Border) {
-	cs.xf.BorderIdAttr = gooxml.Uint32(b.Index())
-	cs.xf.ApplyBorderAttr = gooxml.Bool(true)
+	cs.xf.BorderIdAttr = unioffice.Uint32(b.Index())
+	cs.xf.ApplyBorderAttr = unioffice.Bool(true)
 }
 
 // ClearBorder clears any border configuration from the cell style.
@@ -149,8 +149,8 @@ func (cs CellStyle) ClearBorder() {
 // SetFill applies a fill to a cell style.  The fill is referenced by its index
 // so modifying the fill afterward will affect all styles that reference it.
 func (cs CellStyle) SetFill(f Fill) {
-	cs.xf.FillIdAttr = gooxml.Uint32(f.Index())
-	cs.xf.ApplyFillAttr = gooxml.Bool(true)
+	cs.xf.FillIdAttr = unioffice.Uint32(f.Index())
+	cs.xf.ApplyFillAttr = unioffice.Bool(true)
 }
 
 // ClearFill clears any fill configuration from the cell style.

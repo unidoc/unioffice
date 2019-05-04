@@ -31,6 +31,6 @@ func (c IconScale) SetIcons(t sml.ST_IconSetType) {
 func (c IconScale) AddFormatValue(t sml.ST_CfvoType, val string) {
 	v := sml.NewCT_Cfvo()
 	v.TypeAttr = t
-	v.ValAttr = gooxml.String(val)
+	v.ValAttr = unioffice.String(val)
 	c.x.Cfvo = append(c.x.Cfvo, v)
 }

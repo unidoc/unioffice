@@ -111,7 +111,7 @@ lWdCT_WordprocessingGroupChoice:
 				}
 				m.ContentPart = append(m.ContentPart, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on WdCT_WordprocessingGroupChoice %v", el.Name)
+				unioffice.Log("skipping unsupported element on WdCT_WordprocessingGroupChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

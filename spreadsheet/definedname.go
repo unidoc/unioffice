@@ -37,10 +37,10 @@ func (d DefinedName) SetContent(s string) {
 
 // SetHidden marks the defined name as hidden.
 func (d DefinedName) SetHidden(b bool) {
-	d.x.HiddenAttr = gooxml.Bool(b)
+	d.x.HiddenAttr = unioffice.Bool(b)
 }
 
 // SetHidden marks the defined name as hidden.
 func (d DefinedName) SetLocalSheetID(id uint32) {
-	d.x.LocalSheetIdAttr = gooxml.Uint32(id)
+	d.x.LocalSheetIdAttr = unioffice.Uint32(id)
 }

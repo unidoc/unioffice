@@ -301,7 +301,7 @@ lCT_When:
 				}
 				m.ExtLst = append(m.ExtLst, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_When %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_When %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

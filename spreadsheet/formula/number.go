@@ -20,7 +20,7 @@ type Number struct {
 func NewNumber(v string) Expression {
 	f, err := strconv.ParseFloat(v, 64)
 	if err != nil {
-		gooxml.Log("error parsing formula number %s: %s", v, err)
+		unioffice.Log("error parsing formula number %s: %s", v, err)
 	}
 	return Number{f}
 }

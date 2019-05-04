@@ -90,7 +90,7 @@ lCT_PageBreak:
 				}
 				m.Brk = append(m.Brk, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_PageBreak %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_PageBreak %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -75,7 +75,7 @@ lCT_Fills:
 				}
 				m.Fill = append(m.Fill, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Fills %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Fills %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

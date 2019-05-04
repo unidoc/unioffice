@@ -69,7 +69,7 @@ lCT_VolMain:
 				}
 				m.Tp = append(m.Tp, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_VolMain %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_VolMain %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -70,7 +70,7 @@ lCT_Drawing:
 				}
 				m.Inline = append(m.Inline, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Drawing %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Drawing %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

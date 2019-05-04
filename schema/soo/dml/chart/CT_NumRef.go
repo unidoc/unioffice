@@ -29,7 +29,7 @@ func NewCT_NumRef() *CT_NumRef {
 func (m *CT_NumRef) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	e.EncodeToken(start)
 	sef := xml.StartElement{Name: xml.Name{Local: "c:f"}}
-	gooxml.AddPreserveSpaceAttr(&sef, m.F)
+	unioffice.AddPreserveSpaceAttr(&sef, m.F)
 	e.EncodeElement(m.F, sef)
 	if m.NumCache != nil {
 		senumCache := xml.StartElement{Name: xml.Name{Local: "c:numCache"}}
@@ -72,7 +72,7 @@ lCT_NumRef:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_NumRef %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_NumRef %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

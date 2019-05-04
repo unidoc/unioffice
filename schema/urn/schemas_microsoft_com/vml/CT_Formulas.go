@@ -55,7 +55,7 @@ lCT_Formulas:
 				}
 				m.F = append(m.F, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Formulas %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Formulas %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -5,10 +5,10 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package gooxml
+package unioffice
 
-// MinGoVersion is used to cause a compile time error if gooxml is compiled with
+// MinGoVersion is used to cause a compile time error if unioffice is compiled with
 // an older version of go.  Specifically it requires a feature in go 1.8
 // regarding collecting all attributes from arbitrary xml used in decode
-// gooxml.XSDAny.
+// unioffice.XSDAny.
 const MinGoVersion = requires_go_18

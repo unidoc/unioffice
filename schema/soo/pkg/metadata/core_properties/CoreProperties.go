@@ -59,22 +59,22 @@ lCoreProperties:
 					return err
 				}
 			case xml.Name{Space: "http://purl.org/dc/terms/", Local: "created"}:
-				m.Created = new(gooxml.XSDAny)
+				m.Created = new(unioffice.XSDAny)
 				if err := d.DecodeElement(m.Created, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "creator"}:
-				m.Creator = new(gooxml.XSDAny)
+				m.Creator = new(unioffice.XSDAny)
 				if err := d.DecodeElement(m.Creator, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "description"}:
-				m.Description = new(gooxml.XSDAny)
+				m.Description = new(unioffice.XSDAny)
 				if err := d.DecodeElement(m.Description, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "identifier"}:
-				m.Identifier = new(gooxml.XSDAny)
+				m.Identifier = new(unioffice.XSDAny)
 				if err := d.DecodeElement(m.Identifier, &el); err != nil {
 					return err
 				}
@@ -84,7 +84,7 @@ lCoreProperties:
 					return err
 				}
 			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "language"}:
-				m.Language = new(gooxml.XSDAny)
+				m.Language = new(unioffice.XSDAny)
 				if err := d.DecodeElement(m.Language, &el); err != nil {
 					return err
 				}
@@ -99,7 +99,7 @@ lCoreProperties:
 					return err
 				}
 			case xml.Name{Space: "http://purl.org/dc/terms/", Local: "modified"}:
-				m.Modified = new(gooxml.XSDAny)
+				m.Modified = new(unioffice.XSDAny)
 				if err := d.DecodeElement(m.Modified, &el); err != nil {
 					return err
 				}
@@ -109,12 +109,12 @@ lCoreProperties:
 					return err
 				}
 			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "subject"}:
-				m.Subject = new(gooxml.XSDAny)
+				m.Subject = new(unioffice.XSDAny)
 				if err := d.DecodeElement(m.Subject, &el); err != nil {
 					return err
 				}
 			case xml.Name{Space: "http://purl.org/dc/elements/1.1/", Local: "title"}:
-				m.Title = new(gooxml.XSDAny)
+				m.Title = new(unioffice.XSDAny)
 				if err := d.DecodeElement(m.Title, &el); err != nil {
 					return err
 				}
@@ -124,7 +124,7 @@ lCoreProperties:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CoreProperties %v", el.Name)
+				unioffice.Log("skipping unsupported element on CoreProperties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

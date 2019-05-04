@@ -73,7 +73,7 @@ lCT_CalculatedItems:
 				}
 				m.CalculatedItem = append(m.CalculatedItem, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_CalculatedItems %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_CalculatedItems %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

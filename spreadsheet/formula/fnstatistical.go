@@ -150,7 +150,7 @@ func Min(args []Result) Result {
 		case ResultTypeError:
 			return a
 		default:
-			gooxml.Log("unhandled MIN() argument type %s", a.Type)
+			unioffice.Log("unhandled MIN() argument type %s", a.Type)
 		}
 	}
 	if v == math.MaxFloat64 {
@@ -185,7 +185,7 @@ func Max(args []Result) Result {
 				v = 0
 			}
 		default:
-			gooxml.Log("unhandled MAX() argument type %s", a.Type)
+			unioffice.Log("unhandled MAX() argument type %s", a.Type)
 		}
 	}
 	if v == -math.MaxFloat64 {
@@ -209,7 +209,7 @@ func extractNumbers(args []Result) []float64 {
 		case ResultTypeString:
 			// treated as zero by Excel
 		default:
-			gooxml.Log("unhandled extractNumbers argument type %s", a.Type)
+			unioffice.Log("unhandled extractNumbers argument type %s", a.Type)
 		}
 	}
 	return values

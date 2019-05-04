@@ -63,7 +63,7 @@ lWdCT_TxbxContent:
 				}
 				m.AltChunk = append(m.AltChunk, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on WdCT_TxbxContent %v", el.Name)
+				unioffice.Log("skipping unsupported element on WdCT_TxbxContent %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

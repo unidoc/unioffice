@@ -21,13 +21,13 @@ const XMLHeader = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` + "\
 
 var nl = []byte{'\r', '\n'}
 
-func MarshalXMLByTypeIndex(z *zip.Writer, dt gooxml.DocType, typ string, idx int, v interface{}) error {
-	fn := gooxml.AbsoluteFilename(dt, typ, idx)
+func MarshalXMLByTypeIndex(z *zip.Writer, dt unioffice.DocType, typ string, idx int, v interface{}) error {
+	fn := unioffice.AbsoluteFilename(dt, typ, idx)
 	return MarshalXML(z, fn, v)
 }
 
-func MarshalXMLByType(z *zip.Writer, dt gooxml.DocType, typ string, v interface{}) error {
-	fn := gooxml.AbsoluteFilename(dt, typ, 0)
+func MarshalXMLByType(z *zip.Writer, dt unioffice.DocType, typ string, v interface{}) error {
+	fn := unioffice.AbsoluteFilename(dt, typ, 0)
 	return MarshalXML(z, fn, v)
 }
 

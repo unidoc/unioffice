@@ -39,13 +39,13 @@ func (s SheetView) ensurePane() {
 // SetXSplit sets the column split point
 func (s SheetView) SetXSplit(v float64) {
 	s.ensurePane()
-	s.x.Pane.XSplitAttr = gooxml.Float64(v)
+	s.x.Pane.XSplitAttr = unioffice.Float64(v)
 }
 
 // SetYSplit sets the row split point
 func (s SheetView) SetYSplit(v float64) {
 	s.ensurePane()
-	s.x.Pane.YSplitAttr = gooxml.Float64(v)
+	s.x.Pane.YSplitAttr = unioffice.Float64(v)
 
 }
 
@@ -65,7 +65,7 @@ func (s SheetView) SetZoom(pct uint32) {
 func (s SheetView) SetShowRuler(b bool) {
 	// default is true
 	if !b {
-		s.x.ShowRulerAttr = gooxml.Bool(false)
+		s.x.ShowRulerAttr = unioffice.Bool(false)
 	} else {
 		s.x.ShowRulerAttr = nil
 	}

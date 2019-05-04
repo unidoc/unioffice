@@ -32,7 +32,7 @@ func (f *plex) Lex(lval *yySymType) int {
 }
 
 func (f *plex) Error(s string) {
-	gooxml.Log("parse error: %s", s)
+	unioffice.Log("parse error: %s", s)
 }
 
 func Parse(r io.Reader) Expression {

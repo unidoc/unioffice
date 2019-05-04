@@ -126,7 +126,7 @@ lCT_CTStyleLabel:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_CTStyleLabel %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_CTStyleLabel %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

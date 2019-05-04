@@ -35,7 +35,7 @@ func (t TableProperties) SetCellSpacingPercent(pct float64) {
 	t.x.TblCellSpacing.TypeAttr = wml.ST_TblWidthPct
 	t.x.TblCellSpacing.WAttr = &wml.ST_MeasurementOrPercent{}
 	t.x.TblCellSpacing.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
-	t.x.TblCellSpacing.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(pct * 50))
+	t.x.TblCellSpacing.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = unioffice.Int64(int64(pct * 50))
 }
 
 // SetCellSpacing sets the cell spacing within a table.
@@ -44,7 +44,7 @@ func (t TableProperties) SetCellSpacing(m measurement.Distance) {
 	t.x.TblCellSpacing.TypeAttr = wml.ST_TblWidthDxa
 	t.x.TblCellSpacing.WAttr = &wml.ST_MeasurementOrPercent{}
 	t.x.TblCellSpacing.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
-	t.x.TblCellSpacing.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(m / measurement.Dxa))
+	t.x.TblCellSpacing.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = unioffice.Int64(int64(m / measurement.Dxa))
 }
 
 // SetWidthAuto sets the the table width to automatic.
@@ -60,7 +60,7 @@ func (t TableProperties) SetWidthPercent(pct float64) {
 	t.x.TblW.WAttr = &wml.ST_MeasurementOrPercent{}
 	t.x.TblW.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
 	// percent value is measured in 1/50'th of a percent
-	t.x.TblW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(pct * 50))
+	t.x.TblW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = unioffice.Int64(int64(pct * 50))
 }
 
 // SetLayout controls the table layout. wml.ST_TblLayoutTypeAutofit corresponds
@@ -92,7 +92,7 @@ func (t TableProperties) SetWidth(d measurement.Distance) {
 	t.x.TblW.TypeAttr = wml.ST_TblWidthDxa
 	t.x.TblW.WAttr = &wml.ST_MeasurementOrPercent{}
 	t.x.TblW.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
-	t.x.TblW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(d / measurement.Twips))
+	t.x.TblW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = unioffice.Int64(int64(d / measurement.Twips))
 }
 
 // SetStyle sets the table style name.

@@ -7,7 +7,7 @@
 
 /*
 
-Package gooxml provides creation, reading, and writing of ECMA 376 Office Open
+Package unioffice provides creation, reading, and writing of ECMA 376 Office Open
 XML documents, spreadsheets and presentations.  It is still early in
 development, but is progressing quickly.  This library takes a slightly
 different approach from others, in that it starts by trying to support all of
@@ -26,4 +26,4 @@ The packages of interest are github.com/unidoc/unioffice/document,
 unidoc/unioffice/spreadsheet and github.com/unidoc/unioffice/presentation.
 
 */
-package gooxml // import "github.com/unidoc/unioffice"
+package unioffice // import "github.com/unidoc/unioffice"

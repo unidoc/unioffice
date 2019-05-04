@@ -73,7 +73,7 @@ lCT_MemberProperties:
 				}
 				m.Mp = append(m.Mp, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_MemberProperties %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_MemberProperties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -31,7 +31,7 @@ func (p WorkbookProtection) LockStructure(b bool) {
 	if !b {
 		p.x.LockStructureAttr = nil
 	} else {
-		p.x.LockStructureAttr = gooxml.Bool(true)
+		p.x.LockStructureAttr = unioffice.Bool(true)
 	}
 }
 
@@ -45,7 +45,7 @@ func (p WorkbookProtection) LockWindow(b bool) {
 	if !b {
 		p.x.LockWindowsAttr = nil
 	} else {
-		p.x.LockWindowsAttr = gooxml.Bool(true)
+		p.x.LockWindowsAttr = unioffice.Bool(true)
 	}
 }
 
@@ -64,5 +64,5 @@ func (p WorkbookProtection) SetPassword(pw string) {
 
 // SetPasswordHash sets the password hash to the input.
 func (p WorkbookProtection) SetPasswordHash(pwHash string) {
-	p.x.WorkbookPasswordAttr = gooxml.String(pwHash)
+	p.x.WorkbookPasswordAttr = unioffice.String(pwHash)
 }

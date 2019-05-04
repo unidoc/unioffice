@@ -65,7 +65,7 @@ lCT_EqArr:
 				}
 				m.E = append(m.E, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_EqArr %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_EqArr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

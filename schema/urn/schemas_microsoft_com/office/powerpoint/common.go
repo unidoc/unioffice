@@ -13,8 +13,8 @@ import "github.com/unidoc/unioffice"
 
 // init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:powerpoint", "CT_Empty", NewCT_Empty)
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:powerpoint", "CT_Rel", NewCT_Rel)
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:powerpoint", "iscomment", NewIscomment)
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:powerpoint", "textdata", NewTextdata)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:powerpoint", "CT_Empty", NewCT_Empty)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:powerpoint", "CT_Rel", NewCT_Rel)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:powerpoint", "iscomment", NewIscomment)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:powerpoint", "textdata", NewTextdata)
 }

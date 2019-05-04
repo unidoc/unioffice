@@ -143,7 +143,7 @@ lCT_GradientFill:
 				}
 				m.Stop = append(m.Stop, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_GradientFill %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_GradientFill %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -18,7 +18,7 @@ import (
 
 type CT_OfficeArtExtension struct {
 	UriAttr string
-	Any     []gooxml.Any
+	Any     []unioffice.Any
 }
 
 func NewCT_OfficeArtExtension() *CT_OfficeArtExtension {
@@ -61,7 +61,7 @@ lCT_OfficeArtExtension:
 		case xml.StartElement:
 			switch el.Name {
 			default:
-				if anyEl, err := gooxml.CreateElement(el); err != nil {
+				if anyEl, err := unioffice.CreateElement(el); err != nil {
 					return err
 				} else {
 					if err := d.DecodeElement(anyEl, &el); err != nil {

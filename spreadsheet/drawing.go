@@ -41,16 +41,16 @@ func (d Drawing) AddChart(at AnchorType) (chart.Chart, Anchor) {
 	chartSpace := crt.NewChartSpace()
 	d.wb.charts = append(d.wb.charts, chartSpace)
 
-	fn := gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.ChartContentType, len(d.wb.charts))
-	d.wb.ContentTypes.AddOverride(fn, gooxml.ChartContentType)
+	fn := unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.ChartContentType, len(d.wb.charts))
+	d.wb.ContentTypes.AddOverride(fn, unioffice.ChartContentType)
 
 	var chartID string
 
 	// add relationship from drawing to the chart
 	for i, dr := range d.wb.drawings {
 		if dr == d.x {
-			fn := gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.DrawingType, gooxml.ChartType, len(d.wb.charts))
-			rel := d.wb.drawingRels[i].AddRelationship(fn, gooxml.ChartType)
+			fn := unioffice.RelativeFilename(unioffice.DocTypeSpreadsheet, unioffice.DrawingType, unioffice.ChartType, len(d.wb.charts))
+			rel := d.wb.drawingRels[i].AddRelationship(fn, unioffice.ChartType)
 			chartID = rel.ID()
 			break
 		}
@@ -91,7 +91,7 @@ func (d Drawing) AddChart(at AnchorType) (chart.Chart, Anchor) {
 	gf.Graphic.GraphicData.UriAttr = "http://schemas.openxmlformats.org/drawingml/2006/chart"
 	c := c.NewChart()
 	c.IdAttr = chartID
-	gf.Graphic.GraphicData.Any = []gooxml.Any{c}
+	gf.Graphic.GraphicData.Any = []unioffice.Any{c}
 
 	//chart.Chart.PlotVisOnly = crt.NewCT_Boolean()
 	//chart.Chart.PlotVisOnly.ValAttr = gooxml.Bool(true)
@@ -117,7 +117,7 @@ func (d Drawing) AddImage(img common.ImageRef, at AnchorType) Anchor {
 	for i, dr := range d.wb.drawings {
 		if dr == d.x {
 			fn := fmt.Sprintf("../media/image%d.%s", imgIdx, img.Format())
-			rel := d.wb.drawingRels[i].AddRelationship(fn, gooxml.ImageType)
+			rel := d.wb.drawingRels[i].AddRelationship(fn, unioffice.ImageType)
 			imgID = rel.ID()
 			break
 		}
@@ -152,13 +152,13 @@ func (d Drawing) AddImage(img common.ImageRef, at AnchorType) Anchor {
 	pic.NvPicPr.CNvPr.IdAttr = 0
 	pic.NvPicPr.CNvPr.NameAttr = "Image"
 	pic.BlipFill.Blip = dml.NewCT_Blip()
-	pic.BlipFill.Blip.EmbedAttr = gooxml.String(imgID)
+	pic.BlipFill.Blip.EmbedAttr = unioffice.String(imgID)
 	pic.BlipFill.Stretch = dml.NewCT_StretchInfoProperties()
 	pic.SpPr = dml.NewCT_ShapeProperties()
 	pic.SpPr.Xfrm = dml.NewCT_Transform2D()
 	pic.SpPr.Xfrm.Off = dml.NewCT_Point2D()
-	pic.SpPr.Xfrm.Off.XAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
-	pic.SpPr.Xfrm.Off.YAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
+	pic.SpPr.Xfrm.Off.XAttr.ST_CoordinateUnqualified = unioffice.Int64(0)
+	pic.SpPr.Xfrm.Off.YAttr.ST_CoordinateUnqualified = unioffice.Int64(0)
 	pic.SpPr.Xfrm.Ext = dml.NewCT_PositiveSize2D()
 	pic.SpPr.Xfrm.Ext.CxAttr = int64(float64(img.Size().X*measurement.Pixel72) / measurement.EMU)
 	pic.SpPr.Xfrm.Ext.CyAttr = int64(float64(img.Size().Y*measurement.Pixel72) / measurement.EMU)
@@ -190,12 +190,12 @@ func defaultTwoCellAnchor() *sd.CT_TwoCellAnchor {
 	tca.From.Col = 5
 	tca.From.Row = 0
 	// Mac Excel requires the offsets be present
-	tca.From.ColOff.ST_CoordinateUnqualified = gooxml.Int64(0)
-	tca.From.RowOff.ST_CoordinateUnqualified = gooxml.Int64(0)
+	tca.From.ColOff.ST_CoordinateUnqualified = unioffice.Int64(0)
+	tca.From.RowOff.ST_CoordinateUnqualified = unioffice.Int64(0)
 	tca.To.Col = 10
 	tca.To.Row = 20
-	tca.To.ColOff.ST_CoordinateUnqualified = gooxml.Int64(0)
-	tca.To.RowOff.ST_CoordinateUnqualified = gooxml.Int64(0)
+	tca.To.ColOff.ST_CoordinateUnqualified = unioffice.Int64(0)
+	tca.To.RowOff.ST_CoordinateUnqualified = unioffice.Int64(0)
 
 	return tca
 }

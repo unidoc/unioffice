@@ -56,7 +56,7 @@ lConnections:
 				}
 				m.Connection = append(m.Connection, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on Connections %v", el.Name)
+				unioffice.Log("skipping unsupported element on Connections %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -213,7 +213,7 @@ type CT_Settings struct {
 	DecimalSymbol *CT_String
 	// List Separator for Field Code Evaluation
 	ListSeparator *CT_String
-	Extra         []gooxml.Any
+	Extra         []unioffice.Any
 }
 
 func NewCT_Settings() *CT_Settings {
@@ -1232,7 +1232,7 @@ lCT_Settings:
 					return err
 				}
 			default:
-				any := &gooxml.XSDAny{}
+				any := &unioffice.XSDAny{}
 				if err := d.DecodeElement(any, &el); err != nil {
 					return err
 				}

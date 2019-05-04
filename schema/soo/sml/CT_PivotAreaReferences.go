@@ -73,7 +73,7 @@ lCT_PivotAreaReferences:
 				}
 				m.Reference = append(m.Reference, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_PivotAreaReferences %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_PivotAreaReferences %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}
