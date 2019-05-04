@@ -57,7 +57,7 @@ lCT_GuideList:
 				}
 				m.Guide = append(m.Guide, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_GuideList %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_GuideList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

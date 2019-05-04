@@ -73,7 +73,7 @@ lCT_ColHierarchiesUsage:
 				}
 				m.ColHierarchyUsage = append(m.ColHierarchyUsage, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_ColHierarchiesUsage %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_ColHierarchiesUsage %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

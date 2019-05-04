@@ -159,7 +159,7 @@ lCT_Shape:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_Shape %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Shape %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -73,7 +73,7 @@ lCT_MergeCells:
 				}
 				m.MergeCell = append(m.MergeCell, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_MergeCells %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_MergeCells %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

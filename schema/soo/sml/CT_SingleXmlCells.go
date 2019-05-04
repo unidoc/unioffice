@@ -55,7 +55,7 @@ lCT_SingleXmlCells:
 				}
 				m.SingleXmlCell = append(m.SingleXmlCell, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_SingleXmlCells %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_SingleXmlCells %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

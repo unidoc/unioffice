@@ -55,7 +55,7 @@ lCT_CustomProperties:
 				}
 				m.CustomPr = append(m.CustomPr, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_CustomProperties %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_CustomProperties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -113,7 +113,7 @@ lCT_DataBar:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_DataBar %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_DataBar %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -24,10 +24,10 @@ func (c DoughnutChart) X() *crt.CT_DoughnutChart {
 // InitializeDefaults the bar chart to its defaults
 func (c DoughnutChart) InitializeDefaults() {
 	c.x.VaryColors = crt.NewCT_Boolean()
-	c.x.VaryColors.ValAttr = gooxml.Bool(true)
+	c.x.VaryColors.ValAttr = unioffice.Bool(true)
 	c.x.HoleSize = crt.NewCT_HoleSize()
 	c.x.HoleSize.ValAttr = &crt.ST_HoleSize{}
-	c.x.HoleSize.ValAttr.ST_HoleSizeUByte = gooxml.Uint8(50)
+	c.x.HoleSize.ValAttr.ST_HoleSizeUByte = unioffice.Uint8(50)
 }
 
 // SetHoleSize controls the hole size in the pie chart and is measured in percent.

@@ -208,7 +208,7 @@ lCT_OMath:
 				}
 				m.EG_OMathMathElements = append(m.EG_OMathMathElements, tmpomathmathelements)
 			default:
-				gooxml.Log("skipping unsupported element on CT_OMath %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_OMath %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

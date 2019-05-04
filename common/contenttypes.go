@@ -55,7 +55,7 @@ func (c ContentTypes) AddOverride(path, contentType string) {
 		path = "/" + path
 	}
 	if strings.HasPrefix(contentType, "http") {
-		gooxml.Log("content type '%s' is incorrect, must not start with http", contentType)
+		unioffice.Log("content type '%s' is incorrect, must not start with http", contentType)
 	}
 	or := content_types.NewOverride()
 	or.PartNameAttr = path
@@ -85,7 +85,7 @@ func (c ContentTypes) EnsureOverride(path, contentType string) {
 		// found one, so just ensure the content type matches and bail
 		if ovr.PartNameAttr == path {
 			if strings.HasPrefix(contentType, "http") {
-				gooxml.Log("content type '%s' is incorrect, must not start with http", contentType)
+				unioffice.Log("content type '%s' is incorrect, must not start with http", contentType)
 			}
 			ovr.ContentTypeAttr = contentType
 			return

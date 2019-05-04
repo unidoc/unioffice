@@ -45,23 +45,23 @@ func (c Chart) AddLineChart() LineChart {
 func setup3DChart(c *crt.CT_Chart) {
 	c.View3D = crt.NewCT_View3D()
 	c.View3D.RotX = crt.NewCT_RotX()
-	c.View3D.RotX.ValAttr = gooxml.Int8(15)
+	c.View3D.RotX.ValAttr = unioffice.Int8(15)
 	c.View3D.RotY = crt.NewCT_RotY()
-	c.View3D.RotY.ValAttr = gooxml.Uint16(20)
+	c.View3D.RotY.ValAttr = unioffice.Uint16(20)
 	c.View3D.RAngAx = crt.NewCT_Boolean()
-	c.View3D.RAngAx.ValAttr = gooxml.Bool(false)
+	c.View3D.RAngAx.ValAttr = unioffice.Bool(false)
 
 	c.Floor = crt.NewCT_Surface()
 	c.Floor.Thickness = crt.NewCT_Thickness()
-	c.Floor.Thickness.ValAttr.Uint32 = gooxml.Uint32(0)
+	c.Floor.Thickness.ValAttr.Uint32 = unioffice.Uint32(0)
 
 	c.SideWall = crt.NewCT_Surface()
 	c.SideWall.Thickness = crt.NewCT_Thickness()
-	c.SideWall.Thickness.ValAttr.Uint32 = gooxml.Uint32(0)
+	c.SideWall.Thickness.ValAttr.Uint32 = unioffice.Uint32(0)
 
 	c.BackWall = crt.NewCT_Surface()
 	c.BackWall.Thickness = crt.NewCT_Thickness()
-	c.BackWall.Thickness.ValAttr.Uint32 = gooxml.Uint32(0)
+	c.BackWall.Thickness.ValAttr.Uint32 = unioffice.Uint32(0)
 
 }
 
@@ -180,10 +180,10 @@ func (c Chart) AddSurfaceChart() SurfaceChart {
 	// The surface chart is in 3d, only rotated to an initial straight down view and
 	// perspective = 0
 	setup3DChart(c.x.Chart)
-	c.x.Chart.View3D.RotX.ValAttr = gooxml.Int8(90)
-	c.x.Chart.View3D.RotY.ValAttr = gooxml.Uint16(0)
+	c.x.Chart.View3D.RotX.ValAttr = unioffice.Int8(90)
+	c.x.Chart.View3D.RotY.ValAttr = unioffice.Uint16(0)
 	c.x.Chart.View3D.Perspective = crt.NewCT_Perspective()
-	c.x.Chart.View3D.Perspective.ValAttr = gooxml.Uint8(0)
+	c.x.Chart.View3D.Perspective.ValAttr = unioffice.Uint8(0)
 
 	b := SurfaceChart{x: chc.SurfaceChart}
 	b.InitializeDefaults()
@@ -270,7 +270,7 @@ func (c Chart) AddValueAxis() ValueAxis {
 	c.x.Chart.PlotArea.CChoice.ValAx = append(c.x.Chart.PlotArea.CChoice.ValAx, va)
 
 	va.Delete = crt.NewCT_Boolean()
-	va.Delete.ValAttr = gooxml.Bool(false)
+	va.Delete.ValAttr = unioffice.Bool(false)
 
 	va.Scaling = crt.NewCT_Scaling()
 	va.Scaling.Orientation = crt.NewCT_Orientation()
@@ -306,10 +306,10 @@ func (c Chart) AddCategoryAxis() CategoryAxis {
 	c.x.Chart.PlotArea.CChoice.CatAx = append(c.x.Chart.PlotArea.CChoice.CatAx, ca)
 
 	ca.Auto = crt.NewCT_Boolean()
-	ca.Auto.ValAttr = gooxml.Bool(true)
+	ca.Auto.ValAttr = unioffice.Bool(true)
 
 	ca.Delete = crt.NewCT_Boolean()
-	ca.Delete.ValAttr = gooxml.Bool(false)
+	ca.Delete.ValAttr = unioffice.Bool(false)
 
 	cax := MakeCategoryAxis(ca)
 	cax.InitializeDefaults()
@@ -328,7 +328,7 @@ func (c Chart) AddDateAxis() DateAxis {
 	c.x.Chart.PlotArea.CChoice.DateAx = append(c.x.Chart.PlotArea.CChoice.DateAx, va)
 
 	va.Delete = crt.NewCT_Boolean()
-	va.Delete.ValAttr = gooxml.Bool(false)
+	va.Delete.ValAttr = unioffice.Bool(false)
 
 	va.Scaling = crt.NewCT_Scaling()
 	va.Scaling.Orientation = crt.NewCT_Orientation()
@@ -359,7 +359,7 @@ func (c Chart) AddSeriesAxis() SeriesAxis {
 	c.x.Chart.PlotArea.CChoice.SerAx = append(c.x.Chart.PlotArea.CChoice.SerAx, sa)
 
 	sa.Delete = crt.NewCT_Boolean()
-	sa.Delete.ValAttr = gooxml.Bool(false)
+	sa.Delete.ValAttr = unioffice.Bool(false)
 
 	sax := MakeSeriesAxis(sa)
 	sax.InitializeDefaults()
@@ -384,17 +384,17 @@ func (c Chart) AddLegend() Legend {
 func (c Chart) RemoveTitle() {
 	c.x.Chart.Title = nil
 	c.x.Chart.AutoTitleDeleted = crt.NewCT_Boolean()
-	c.x.Chart.AutoTitleDeleted.ValAttr = gooxml.Bool(true)
+	c.x.Chart.AutoTitleDeleted.ValAttr = unioffice.Bool(true)
 }
 
 // AddTitle sets a new title on the chart.
 func (c Chart) AddTitle() Title {
 	c.x.Chart.Title = crt.NewCT_Title()
 	c.x.Chart.Title.Overlay = crt.NewCT_Boolean()
-	c.x.Chart.Title.Overlay.ValAttr = gooxml.Bool(false)
+	c.x.Chart.Title.Overlay.ValAttr = unioffice.Bool(false)
 
 	c.x.Chart.AutoTitleDeleted = crt.NewCT_Boolean()
-	c.x.Chart.AutoTitleDeleted.ValAttr = gooxml.Bool(false)
+	c.x.Chart.AutoTitleDeleted.ValAttr = unioffice.Bool(false)
 
 	title := MakeTitle(c.x.Chart.Title)
 	title.InitializeDefaults()

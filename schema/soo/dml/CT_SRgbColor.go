@@ -285,7 +285,7 @@ lCT_SRgbColor:
 				}
 				m.EG_ColorTransform = append(m.EG_ColorTransform, tmpcolortransform)
 			default:
-				gooxml.Log("skipping unsupported element on CT_SRgbColor %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_SRgbColor %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

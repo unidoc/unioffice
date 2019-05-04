@@ -37,11 +37,11 @@ func (s SharedStrings) AddString(v string) int {
 		return id
 	}
 	rst := sml.NewCT_Rst()
-	rst.T = gooxml.String(v)
+	rst.T = unioffice.String(v)
 	s.x.Si = append(s.x.Si, rst)
 	id := len(s.x.Si) - 1
 	s.cachedIDs[v] = id
-	s.x.CountAttr = gooxml.Uint32(uint32(len(s.x.Si)))
+	s.x.CountAttr = unioffice.Uint32(uint32(len(s.x.Si)))
 	s.x.UniqueCountAttr = s.x.CountAttr
 	return id
 }

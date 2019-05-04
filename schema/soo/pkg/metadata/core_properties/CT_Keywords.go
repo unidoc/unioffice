@@ -70,7 +70,7 @@ lCT_Keywords:
 				}
 				m.Value = append(m.Value, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Keywords %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Keywords %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

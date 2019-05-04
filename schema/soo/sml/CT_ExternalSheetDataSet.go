@@ -55,7 +55,7 @@ lCT_ExternalSheetDataSet:
 				}
 				m.SheetData = append(m.SheetData, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_ExternalSheetDataSet %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_ExternalSheetDataSet %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

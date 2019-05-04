@@ -37,7 +37,7 @@ func (n NumberingLevel) SetText(t string) {
 		n.x.LvlText = nil
 	} else {
 		n.x.LvlText = wml.NewCT_LevelText()
-		n.x.LvlText.ValAttr = gooxml.String(t)
+		n.x.LvlText.ValAttr = unioffice.String(t)
 	}
 }
 

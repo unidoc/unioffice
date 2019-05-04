@@ -5,7 +5,7 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package gooxml
+package unioffice
 
 import (
 	"bytes"
@@ -66,7 +66,7 @@ const (
 	LicenseTypeCommercial
 )
 
-// License holds the gooxml license information.
+// License holds the unioffice license information.
 type License struct {
 	Name        string
 	Signature   string `json:",omitempty"`

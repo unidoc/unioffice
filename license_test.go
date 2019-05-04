@@ -5,11 +5,11 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased by contacting sales@baliance.com.
 
-package gooxml_test
+package unioffice_test
 
 import "testing"
 import "github.com/unidoc/unioffice"
 
 func TestOpenSourceLicense(t *testing.T) {
-	gooxml.GetLicense()
+	unioffice.GetLicense()
 }

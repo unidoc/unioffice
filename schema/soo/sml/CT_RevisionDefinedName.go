@@ -173,12 +173,12 @@ func (m *CT_RevisionDefinedName) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	e.EncodeToken(start)
 	if m.Formula != nil {
 		seformula := xml.StartElement{Name: xml.Name{Local: "ma:formula"}}
-		gooxml.AddPreserveSpaceAttr(&seformula, *m.Formula)
+		unioffice.AddPreserveSpaceAttr(&seformula, *m.Formula)
 		e.EncodeElement(m.Formula, seformula)
 	}
 	if m.OldFormula != nil {
 		seoldFormula := xml.StartElement{Name: xml.Name{Local: "ma:oldFormula"}}
-		gooxml.AddPreserveSpaceAttr(&seoldFormula, *m.OldFormula)
+		unioffice.AddPreserveSpaceAttr(&seoldFormula, *m.OldFormula)
 		e.EncodeElement(m.OldFormula, seoldFormula)
 	}
 	if m.ExtLst != nil {
@@ -419,7 +419,7 @@ lCT_RevisionDefinedName:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_RevisionDefinedName %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_RevisionDefinedName %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

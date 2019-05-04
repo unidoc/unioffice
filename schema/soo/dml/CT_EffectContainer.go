@@ -399,7 +399,7 @@ lCT_EffectContainer:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_EffectContainer %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_EffectContainer %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

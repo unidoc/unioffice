@@ -73,7 +73,7 @@ lCT_Pages:
 				}
 				m.Page = append(m.Page, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Pages %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Pages %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

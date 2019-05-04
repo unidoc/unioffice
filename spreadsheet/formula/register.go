@@ -45,7 +45,7 @@ func RegisterFunction(name string, fn Function) {
 	regLock.Lock()
 	defer regLock.Unlock()
 	if _, ok := registered[name]; ok {
-		gooxml.Log("duplicate registration of function %s", name)
+		unioffice.Log("duplicate registration of function %s", name)
 	}
 	registered[name] = fn
 }
@@ -55,7 +55,7 @@ func RegisterFunctionComplex(name string, fn FunctionComplex) {
 	regLock.Lock()
 	defer regLock.Unlock()
 	if _, ok := registeredComplex[name]; ok {
-		gooxml.Log("duplicate registration of function %s", name)
+		unioffice.Log("duplicate registration of function %s", name)
 	}
 	registeredComplex[name] = fn
 }

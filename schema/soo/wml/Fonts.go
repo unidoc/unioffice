@@ -60,7 +60,7 @@ lFonts:
 				}
 				m.Font = append(m.Font, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on Fonts %v", el.Name)
+				unioffice.Log("skipping unsupported element on Fonts %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

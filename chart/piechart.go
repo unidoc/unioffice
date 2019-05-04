@@ -24,7 +24,7 @@ func (c PieChart) X() *crt.CT_PieChart {
 // InitializeDefaults the bar chart to its defaults
 func (c PieChart) InitializeDefaults() {
 	c.x.VaryColors = crt.NewCT_Boolean()
-	c.x.VaryColors.ValAttr = gooxml.Bool(true)
+	c.x.VaryColors.ValAttr = unioffice.Bool(true)
 
 }
 

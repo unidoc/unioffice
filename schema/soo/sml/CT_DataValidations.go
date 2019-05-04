@@ -117,7 +117,7 @@ lCT_DataValidations:
 				}
 				m.DataValidation = append(m.DataValidation, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_DataValidations %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_DataValidations %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

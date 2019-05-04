@@ -54,7 +54,7 @@ lCT_MCS:
 				}
 				m.Mc = append(m.Mc, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_MCS %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_MCS %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

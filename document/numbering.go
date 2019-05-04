@@ -61,15 +61,15 @@ func (n Numbering) InitializeDefault() {
 		lvl.Suff.ValAttr = wml.ST_LevelSuffixNothing
 
 		lvl.LvlText = wml.NewCT_LevelText()
-		lvl.LvlText.ValAttr = gooxml.String("")
+		lvl.LvlText.ValAttr = unioffice.String("")
 
 		lvl.LvlJc = wml.NewCT_Jc()
 		lvl.LvlJc.ValAttr = wml.ST_JcLeft
 
 		lvl.RPr = wml.NewCT_RPr()
 		lvl.RPr.RFonts = wml.NewCT_Fonts()
-		lvl.RPr.RFonts.AsciiAttr = gooxml.String("Symbol")
-		lvl.RPr.RFonts.HAnsiAttr = gooxml.String("Symbol")
+		lvl.RPr.RFonts.AsciiAttr = unioffice.String("Symbol")
+		lvl.RPr.RFonts.HAnsiAttr = unioffice.String("Symbol")
 		lvl.RPr.RFonts.HintAttr = wml.ST_HintDefault
 
 		lvl.PPr = wml.NewCT_PPrGeneral()
@@ -77,9 +77,9 @@ func (n Numbering) InitializeDefault() {
 		indent := int64(i*indentDelta + indentStart)
 		lvl.PPr.Ind = wml.NewCT_Ind()
 		lvl.PPr.Ind.LeftAttr = &wml.ST_SignedTwipsMeasure{}
-		lvl.PPr.Ind.LeftAttr.Int64 = gooxml.Int64(indent)
+		lvl.PPr.Ind.LeftAttr.Int64 = unioffice.Int64(indent)
 		lvl.PPr.Ind.HangingAttr = &sharedTypes.ST_TwipsMeasure{}
-		lvl.PPr.Ind.HangingAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(hangingIndent))
+		lvl.PPr.Ind.HangingAttr.ST_UnsignedDecimalNumber = unioffice.Uint64(uint64(hangingIndent))
 
 		abs.Lvl = append(abs.Lvl, lvl)
 	}

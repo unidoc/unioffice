@@ -113,7 +113,7 @@ lCT_IconSet:
 				}
 				m.Cfvo = append(m.Cfvo, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_IconSet %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_IconSet %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

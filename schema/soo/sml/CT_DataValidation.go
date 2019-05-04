@@ -121,12 +121,12 @@ func (m *CT_DataValidation) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	e.EncodeToken(start)
 	if m.Formula1 != nil {
 		seformula1 := xml.StartElement{Name: xml.Name{Local: "ma:formula1"}}
-		gooxml.AddPreserveSpaceAttr(&seformula1, *m.Formula1)
+		unioffice.AddPreserveSpaceAttr(&seformula1, *m.Formula1)
 		e.EncodeElement(m.Formula1, seformula1)
 	}
 	if m.Formula2 != nil {
 		seformula2 := xml.StartElement{Name: xml.Name{Local: "ma:formula2"}}
-		gooxml.AddPreserveSpaceAttr(&seformula2, *m.Formula2)
+		unioffice.AddPreserveSpaceAttr(&seformula2, *m.Formula2)
 		e.EncodeElement(m.Formula2, seformula2)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -247,7 +247,7 @@ lCT_DataValidation:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_DataValidation %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_DataValidation %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

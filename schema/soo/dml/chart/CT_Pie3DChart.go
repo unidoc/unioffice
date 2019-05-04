@@ -89,7 +89,7 @@ lCT_Pie3DChart:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_Pie3DChart %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Pie3DChart %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

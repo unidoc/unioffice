@@ -195,7 +195,7 @@ func TestSheetClearCachedFormula(t *testing.T) {
 	sheet := ss.AddSheet()
 	cell := sheet.Cell("A1")
 	cell.SetFormulaRaw("foo")
-	cell.X().V = gooxml.String("cached-results")
+	cell.X().V = unioffice.String("cached-results")
 	sheet.ClearCachedFormulaResults()
 	if cell.X().V != nil {
 		t.Errorf("cached result not cleared")

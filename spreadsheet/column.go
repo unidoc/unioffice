@@ -26,12 +26,12 @@ func (c Column) X() *sml.CT_Col {
 
 // SetWidth controls the width of a column.
 func (c Column) SetWidth(w measurement.Distance) {
-	c.x.WidthAttr = gooxml.Float64(float64(w / measurement.Character))
+	c.x.WidthAttr = unioffice.Float64(float64(w / measurement.Character))
 }
 
 // SetStyle sets the cell style for an entire column.
 func (c Column) SetStyle(cs CellStyle) {
-	c.x.StyleAttr = gooxml.Uint32(cs.Index())
+	c.x.StyleAttr = unioffice.Uint32(cs.Index())
 }
 
 // SetHidden controls the visibility of a column.
@@ -39,6 +39,6 @@ func (c Column) SetHidden(b bool) {
 	if !b {
 		c.x.HiddenAttr = nil
 	} else {
-		c.x.HiddenAttr = gooxml.Bool(true)
+		c.x.HiddenAttr = unioffice.Bool(true)
 	}
 }

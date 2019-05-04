@@ -54,7 +54,7 @@ lStyleDefHdrLst:
 				}
 				m.StyleDefHdr = append(m.StyleDefHdr, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on StyleDefHdrLst %v", el.Name)
+				unioffice.Log("skipping unsupported element on StyleDefHdrLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -55,7 +55,7 @@ lCT_Hyperlinks:
 				}
 				m.Hyperlink = append(m.Hyperlink, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Hyperlinks %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Hyperlinks %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

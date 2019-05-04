@@ -39,7 +39,7 @@ func (r RichTextRun) ensureRpr() {
 func (r RichTextRun) SetBold(b bool) {
 	r.ensureRpr()
 	r.x.RPr.B = sml.NewCT_BooleanProperty()
-	r.x.RPr.B.ValAttr = gooxml.Bool(b)
+	r.x.RPr.B.ValAttr = unioffice.Bool(b)
 }
 
 // SetColor sets the text color.
@@ -53,7 +53,7 @@ func (r RichTextRun) SetColor(c color.Color) {
 func (r RichTextRun) SetItalic(b bool) {
 	r.ensureRpr()
 	r.x.RPr.I = sml.NewCT_BooleanProperty()
-	r.x.RPr.I.ValAttr = gooxml.Bool(b)
+	r.x.RPr.I.ValAttr = unioffice.Bool(b)
 }
 
 // SetUnderline controls if the run is underlined.

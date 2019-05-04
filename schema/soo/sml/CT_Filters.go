@@ -103,7 +103,7 @@ lCT_Filters:
 				}
 				m.DateGroupItem = append(m.DateGroupItem, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Filters %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Filters %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

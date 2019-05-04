@@ -19,7 +19,7 @@ import (
 type CT_Extension struct {
 	// URI
 	UriAttr *string
-	Any     gooxml.Any
+	Any     unioffice.Any
 }
 
 func NewCT_Extension() *CT_Extension {
@@ -62,7 +62,7 @@ lCT_Extension:
 		case xml.StartElement:
 			switch el.Name {
 			default:
-				if anyEl, err := gooxml.CreateElement(el); err != nil {
+				if anyEl, err := unioffice.CreateElement(el); err != nil {
 					return err
 				} else {
 					if err := d.DecodeElement(anyEl, &el); err != nil {

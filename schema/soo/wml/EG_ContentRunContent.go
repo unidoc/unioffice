@@ -355,7 +355,7 @@ lEG_ContentRunContent:
 				m.EG_RunLevelElts = append(m.EG_RunLevelElts, tmprunlevelelts)
 				tmprunlevelelts.EG_MathContent = append(tmprunlevelelts.EG_MathContent, tmpmathcontent)
 			default:
-				gooxml.Log("skipping unsupported element on EG_ContentRunContent %v", el.Name)
+				unioffice.Log("skipping unsupported element on EG_ContentRunContent %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

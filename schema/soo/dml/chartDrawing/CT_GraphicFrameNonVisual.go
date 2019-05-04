@@ -60,7 +60,7 @@ lCT_GraphicFrameNonVisual:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_GraphicFrameNonVisual %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_GraphicFrameNonVisual %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

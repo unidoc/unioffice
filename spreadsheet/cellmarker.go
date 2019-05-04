@@ -45,7 +45,7 @@ func (c CellMarker) SetRow(row int32) {
 
 // SetColOffset sets a column offset in absolute distance.
 func (c CellMarker) SetColOffset(m measurement.Distance) {
-	c.x.ColOff.ST_CoordinateUnqualified = gooxml.Int64(int64(m / measurement.EMU))
+	c.x.ColOff.ST_CoordinateUnqualified = unioffice.Int64(int64(m / measurement.EMU))
 }
 
 // ColOffset returns the offset from the row cell.
@@ -58,7 +58,7 @@ func (c CellMarker) ColOffset() measurement.Distance {
 
 // SetRowOffset sets a column offset in absolute distance.
 func (c CellMarker) SetRowOffset(m measurement.Distance) {
-	c.x.RowOff.ST_CoordinateUnqualified = gooxml.Int64(int64(m / measurement.EMU))
+	c.x.RowOff.ST_CoordinateUnqualified = unioffice.Int64(int64(m / measurement.EMU))
 }
 
 // RowOffset returns the offset from the row cell.

@@ -111,7 +111,7 @@ func (m *CT_ClientData) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.Anchor != nil {
 		seAnchor := xml.StartElement{Name: xml.Name{Local: "x:Anchor"}}
-		gooxml.AddPreserveSpaceAttr(&seAnchor, *m.Anchor)
+		unioffice.AddPreserveSpaceAttr(&seAnchor, *m.Anchor)
 		e.EncodeElement(m.Anchor, seAnchor)
 	}
 	if m.Locked != sharedTypes.ST_TrueFalseBlankUnset {
@@ -144,17 +144,17 @@ func (m *CT_ClientData) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.FmlaMacro != nil {
 		seFmlaMacro := xml.StartElement{Name: xml.Name{Local: "x:FmlaMacro"}}
-		gooxml.AddPreserveSpaceAttr(&seFmlaMacro, *m.FmlaMacro)
+		unioffice.AddPreserveSpaceAttr(&seFmlaMacro, *m.FmlaMacro)
 		e.EncodeElement(m.FmlaMacro, seFmlaMacro)
 	}
 	if m.TextHAlign != nil {
 		seTextHAlign := xml.StartElement{Name: xml.Name{Local: "x:TextHAlign"}}
-		gooxml.AddPreserveSpaceAttr(&seTextHAlign, *m.TextHAlign)
+		unioffice.AddPreserveSpaceAttr(&seTextHAlign, *m.TextHAlign)
 		e.EncodeElement(m.TextHAlign, seTextHAlign)
 	}
 	if m.TextVAlign != nil {
 		seTextVAlign := xml.StartElement{Name: xml.Name{Local: "x:TextVAlign"}}
-		gooxml.AddPreserveSpaceAttr(&seTextVAlign, *m.TextVAlign)
+		unioffice.AddPreserveSpaceAttr(&seTextVAlign, *m.TextVAlign)
 		e.EncodeElement(m.TextVAlign, seTextVAlign)
 	}
 	if m.LockText != sharedTypes.ST_TrueFalseBlankUnset {
@@ -231,7 +231,7 @@ func (m *CT_ClientData) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.FmlaRange != nil {
 		seFmlaRange := xml.StartElement{Name: xml.Name{Local: "x:FmlaRange"}}
-		gooxml.AddPreserveSpaceAttr(&seFmlaRange, *m.FmlaRange)
+		unioffice.AddPreserveSpaceAttr(&seFmlaRange, *m.FmlaRange)
 		e.EncodeElement(m.FmlaRange, seFmlaRange)
 	}
 	if m.WidthMin != nil {
@@ -248,27 +248,27 @@ func (m *CT_ClientData) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.SelType != nil {
 		seSelType := xml.StartElement{Name: xml.Name{Local: "x:SelType"}}
-		gooxml.AddPreserveSpaceAttr(&seSelType, *m.SelType)
+		unioffice.AddPreserveSpaceAttr(&seSelType, *m.SelType)
 		e.EncodeElement(m.SelType, seSelType)
 	}
 	if m.MultiSel != nil {
 		seMultiSel := xml.StartElement{Name: xml.Name{Local: "x:MultiSel"}}
-		gooxml.AddPreserveSpaceAttr(&seMultiSel, *m.MultiSel)
+		unioffice.AddPreserveSpaceAttr(&seMultiSel, *m.MultiSel)
 		e.EncodeElement(m.MultiSel, seMultiSel)
 	}
 	if m.LCT != nil {
 		seLCT := xml.StartElement{Name: xml.Name{Local: "x:LCT"}}
-		gooxml.AddPreserveSpaceAttr(&seLCT, *m.LCT)
+		unioffice.AddPreserveSpaceAttr(&seLCT, *m.LCT)
 		e.EncodeElement(m.LCT, seLCT)
 	}
 	if m.ListItem != nil {
 		seListItem := xml.StartElement{Name: xml.Name{Local: "x:ListItem"}}
-		gooxml.AddPreserveSpaceAttr(&seListItem, *m.ListItem)
+		unioffice.AddPreserveSpaceAttr(&seListItem, *m.ListItem)
 		e.EncodeElement(m.ListItem, seListItem)
 	}
 	if m.DropStyle != nil {
 		seDropStyle := xml.StartElement{Name: xml.Name{Local: "x:DropStyle"}}
-		gooxml.AddPreserveSpaceAttr(&seDropStyle, *m.DropStyle)
+		unioffice.AddPreserveSpaceAttr(&seDropStyle, *m.DropStyle)
 		e.EncodeElement(m.DropStyle, seDropStyle)
 	}
 	if m.Colored != sharedTypes.ST_TrueFalseBlankUnset {
@@ -285,12 +285,12 @@ func (m *CT_ClientData) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.FmlaLink != nil {
 		seFmlaLink := xml.StartElement{Name: xml.Name{Local: "x:FmlaLink"}}
-		gooxml.AddPreserveSpaceAttr(&seFmlaLink, *m.FmlaLink)
+		unioffice.AddPreserveSpaceAttr(&seFmlaLink, *m.FmlaLink)
 		e.EncodeElement(m.FmlaLink, seFmlaLink)
 	}
 	if m.FmlaPict != nil {
 		seFmlaPict := xml.StartElement{Name: xml.Name{Local: "x:FmlaPict"}}
-		gooxml.AddPreserveSpaceAttr(&seFmlaPict, *m.FmlaPict)
+		unioffice.AddPreserveSpaceAttr(&seFmlaPict, *m.FmlaPict)
 		e.EncodeElement(m.FmlaPict, seFmlaPict)
 	}
 	if m.NoThreeD != sharedTypes.ST_TrueFalseBlankUnset {
@@ -303,7 +303,7 @@ func (m *CT_ClientData) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.FmlaGroup != nil {
 		seFmlaGroup := xml.StartElement{Name: xml.Name{Local: "x:FmlaGroup"}}
-		gooxml.AddPreserveSpaceAttr(&seFmlaGroup, *m.FmlaGroup)
+		unioffice.AddPreserveSpaceAttr(&seFmlaGroup, *m.FmlaGroup)
 		e.EncodeElement(m.FmlaGroup, seFmlaGroup)
 	}
 	if m.Val != nil {
@@ -366,12 +366,12 @@ func (m *CT_ClientData) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.ScriptText != nil {
 		seScriptText := xml.StartElement{Name: xml.Name{Local: "x:ScriptText"}}
-		gooxml.AddPreserveSpaceAttr(&seScriptText, *m.ScriptText)
+		unioffice.AddPreserveSpaceAttr(&seScriptText, *m.ScriptText)
 		e.EncodeElement(m.ScriptText, seScriptText)
 	}
 	if m.ScriptExtended != nil {
 		seScriptExtended := xml.StartElement{Name: xml.Name{Local: "x:ScriptExtended"}}
-		gooxml.AddPreserveSpaceAttr(&seScriptExtended, *m.ScriptExtended)
+		unioffice.AddPreserveSpaceAttr(&seScriptExtended, *m.ScriptExtended)
 		e.EncodeElement(m.ScriptExtended, seScriptExtended)
 	}
 	if m.ScriptLanguage != nil {
@@ -384,7 +384,7 @@ func (m *CT_ClientData) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.FmlaTxbx != nil {
 		seFmlaTxbx := xml.StartElement{Name: xml.Name{Local: "x:FmlaTxbx"}}
-		gooxml.AddPreserveSpaceAttr(&seFmlaTxbx, *m.FmlaTxbx)
+		unioffice.AddPreserveSpaceAttr(&seFmlaTxbx, *m.FmlaTxbx)
 		e.EncodeElement(m.FmlaTxbx, seFmlaTxbx)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -746,7 +746,7 @@ lCT_ClientData:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_ClientData %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_ClientData %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

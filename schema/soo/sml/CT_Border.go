@@ -195,7 +195,7 @@ lCT_Border:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_Border %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Border %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

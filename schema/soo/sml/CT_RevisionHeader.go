@@ -173,7 +173,7 @@ lCT_RevisionHeader:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_RevisionHeader %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_RevisionHeader %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

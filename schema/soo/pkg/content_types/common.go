@@ -25,10 +25,10 @@ var ST_ExtensionPatternRe = regexp.MustCompile(ST_ExtensionPattern)
 
 // init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "CT_Types", NewCT_Types)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "CT_Default", NewCT_Default)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "CT_Override", NewCT_Override)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "Types", NewTypes)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "Default", NewDefault)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "Override", NewOverride)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "CT_Types", NewCT_Types)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "CT_Default", NewCT_Default)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "CT_Override", NewCT_Override)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "Types", NewTypes)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "Default", NewDefault)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/content-types", "Override", NewOverride)
 }

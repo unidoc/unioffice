@@ -73,7 +73,7 @@ lCT_GroupMembers:
 				}
 				m.GroupMember = append(m.GroupMember, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_GroupMembers %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_GroupMembers %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

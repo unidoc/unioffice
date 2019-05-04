@@ -63,7 +63,7 @@ func (c Cell) clearValue() {
 func (c Cell) SetInlineString(s string) {
 	c.clearValue()
 	c.x.Is = sml.NewCT_Rst()
-	c.x.Is.T = gooxml.String(s)
+	c.x.Is.T = unioffice.String(s)
 	c.x.TAttr = sml.ST_CellTypeInlineStr
 }
 
@@ -120,8 +120,8 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 	sid++
 
 	ref := fmt.Sprintf("%s%d:%s%d", cref.Column, cref.RowIdx, reference.IndexToColumn(cref.ColumnIdx+cols), cref.RowIdx+rows)
-	c.x.F.RefAttr = gooxml.String(ref)
-	c.x.F.SiAttr = gooxml.Uint32(sid)
+	c.x.F.RefAttr = unioffice.String(ref)
+	c.x.F.SiAttr = unioffice.Uint32(sid)
 	sheet := Sheet{c.w, nil, c.s}
 	for row := cref.RowIdx; row <= cref.RowIdx+rows; row++ {
 		for col := cref.ColumnIdx; col <= cref.ColumnIdx+cols; col++ {
@@ -132,7 +132,7 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 			sheet.Cell(ref).Clear()
 			sheet.Cell(ref).X().F = sml.NewCT_CellFormula()
 			sheet.Cell(ref).X().F.TAttr = sml.ST_CellFormulaTypeShared
-			sheet.Cell(ref).X().F.SiAttr = gooxml.Uint32(sid)
+			sheet.Cell(ref).X().F.SiAttr = unioffice.Uint32(sid)
 		}
 	}
 	return nil
@@ -144,7 +144,7 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 func (c Cell) SetString(s string) int {
 	c.clearValue()
 	id := c.w.SharedStrings.AddString(s)
-	c.x.V = gooxml.String(strconv.Itoa(id))
+	c.x.V = unioffice.String(strconv.Itoa(id))
 	c.x.TAttr = sml.ST_CellTypeS
 	return id
 }
@@ -153,7 +153,7 @@ func (c Cell) SetString(s string) int {
 // shared strings table.
 func (c Cell) SetStringByID(id int) {
 	c.clearValue()
-	c.x.V = gooxml.String(strconv.Itoa(id))
+	c.x.V = unioffice.String(strconv.Itoa(id))
 	c.x.TAttr = sml.ST_CellTypeS
 }
 
@@ -163,13 +163,13 @@ func (c Cell) SetNumber(v float64) {
 	// NaN / Infinity
 	if math.IsNaN(v) || math.IsInf(v, 0) {
 		c.x.TAttr = sml.ST_CellTypeE
-		c.x.V = gooxml.String("#NUM!")
+		c.x.V = unioffice.String("#NUM!")
 		return
 	}
 
 	// cell type number
 	c.x.TAttr = sml.ST_CellTypeN
-	c.x.V = gooxml.String(strconv.FormatFloat(v, 'g', -1, 64))
+	c.x.V = unioffice.String(strconv.FormatFloat(v, 'g', -1, 64))
 }
 
 // Column returns the cell column
@@ -265,7 +265,7 @@ func (c Cell) SetNumberWithStyle(v float64, f StandardFormat) {
 // value.
 func (c Cell) SetBool(v bool) {
 	c.clearValue()
-	c.x.V = gooxml.String(strconv.Itoa(b2i(v)))
+	c.x.V = unioffice.String(strconv.Itoa(b2i(v)))
 	c.x.TAttr = sml.ST_CellTypeB
 }
 
@@ -308,7 +308,7 @@ func (c Cell) SetTime(d time.Time) {
 	if d.Before(epoch) {
 		// the ECMA 376 standard says these works, but Excel doesn't appear to
 		// support negative serial dates
-		gooxml.Log("times before 1900 are not supported")
+		unioffice.Log("times before 1900 are not supported")
 		return
 	}
 
@@ -324,7 +324,7 @@ func (c Cell) SetTime(d time.Time) {
 	nsPerDay.SetUint64(24 * 60 * 60 * 1e9)
 	result.Quo(deltaNs, nsPerDay)
 
-	c.x.V = gooxml.String(result.Text('g', 20))
+	c.x.V = unioffice.String(result.Text('g', 20))
 }
 
 // SetDate sets the cell value to a date. It's stored as the number of days past
@@ -339,7 +339,7 @@ func (c Cell) SetDate(d time.Time) {
 	if d.Before(epoch) {
 		// the ECMA 376 standard says these works, but Excel doesn't appear to
 		// support negative serial dates
-		gooxml.Log("dates before 1900 are not supported")
+		unioffice.Log("dates before 1900 are not supported")
 		return
 	}
 	delta := d.Sub(epoch)
@@ -356,7 +356,7 @@ func (c Cell) SetDate(d time.Time) {
 
 	hrs, _ := result.Uint64()
 
-	c.x.V = gooxml.Stringf("%d", hrs)
+	c.x.V = unioffice.Stringf("%d", hrs)
 }
 
 // GetValueAsTime retrieves the cell's value as a time.  There is no difference
@@ -408,7 +408,7 @@ func (c Cell) SetStyle(cs CellStyle) {
 // SetStyleIndex directly sets a style index to the cell.  This should only be
 // called with an index retrieved from CellStyle.Index()
 func (c Cell) SetStyleIndex(idx uint32) {
-	c.x.SAttr = gooxml.Uint32(idx)
+	c.x.SAttr = unioffice.Uint32(idx)
 }
 
 // GetString returns the string in a cell if it's an inline or string table
@@ -478,7 +478,7 @@ func (c Cell) SetHyperlink(hl common.Hyperlink) {
 
 	hle := sml.NewCT_Hyperlink()
 	hle.RefAttr = c.Reference()
-	hle.IdAttr = gooxml.String(rel.ID())
+	hle.IdAttr = unioffice.String(rel.ID())
 	c.s.Hyperlinks.Hyperlink = append(c.s.Hyperlinks.Hyperlink, hle)
 }
 

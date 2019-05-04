@@ -21,12 +21,12 @@ type AbsoluteAnchor struct {
 
 // SetColOffset sets the column offset of the top-left of the image in fixed units.
 func (a AbsoluteAnchor) SetColOffset(m measurement.Distance) {
-	a.x.Pos.XAttr.ST_CoordinateUnqualified = gooxml.Int64(int64(m / measurement.EMU))
+	a.x.Pos.XAttr.ST_CoordinateUnqualified = unioffice.Int64(int64(m / measurement.EMU))
 }
 
 // SetRowOffset sets the row offset of the top-left of the image in fixed units.
 func (a AbsoluteAnchor) SetRowOffset(m measurement.Distance) {
-	a.x.Pos.YAttr.ST_CoordinateUnqualified = gooxml.Int64(int64(m / measurement.EMU))
+	a.x.Pos.YAttr.ST_CoordinateUnqualified = unioffice.Int64(int64(m / measurement.EMU))
 }
 
 // SetHeight sets the height of the anchored object.

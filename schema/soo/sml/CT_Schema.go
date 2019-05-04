@@ -25,7 +25,7 @@ type CT_Schema struct {
 	NamespaceAttr *string
 	// Schema Language
 	SchemaLanguageAttr *string
-	Any                gooxml.Any
+	Any                unioffice.Any
 }
 
 func NewCT_Schema() *CT_Schema {
@@ -102,7 +102,7 @@ lCT_Schema:
 		case xml.StartElement:
 			switch el.Name {
 			default:
-				if anyEl, err := gooxml.CreateElement(el); err != nil {
+				if anyEl, err := unioffice.CreateElement(el); err != nil {
 					return err
 				} else {
 					if err := d.DecodeElement(anyEl, &el); err != nil {

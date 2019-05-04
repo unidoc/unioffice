@@ -57,7 +57,7 @@ lCT_DocParts:
 				}
 				m.DocPart = append(m.DocPart, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_DocParts %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_DocParts %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -55,7 +55,7 @@ lCT_CxnList:
 				}
 				m.Cxn = append(m.Cxn, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_CxnList %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_CxnList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

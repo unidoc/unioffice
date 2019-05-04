@@ -76,7 +76,7 @@ func (m *OfcCT_OLEObject) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	e.EncodeToken(start)
 	if m.LinkType != nil {
 		seLinkType := xml.StartElement{Name: xml.Name{Local: "o:LinkType"}}
-		gooxml.AddPreserveSpaceAttr(&seLinkType, *m.LinkType)
+		unioffice.AddPreserveSpaceAttr(&seLinkType, *m.LinkType)
 		e.EncodeElement(m.LinkType, seLinkType)
 	}
 	if m.LockedField != sharedTypes.ST_TrueFalseBlankUnset {
@@ -85,7 +85,7 @@ func (m *OfcCT_OLEObject) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	}
 	if m.FieldCodes != nil {
 		seFieldCodes := xml.StartElement{Name: xml.Name{Local: "o:FieldCodes"}}
-		gooxml.AddPreserveSpaceAttr(&seFieldCodes, *m.FieldCodes)
+		unioffice.AddPreserveSpaceAttr(&seFieldCodes, *m.FieldCodes)
 		e.EncodeElement(m.FieldCodes, seFieldCodes)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -166,7 +166,7 @@ lOfcCT_OLEObject:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on OfcCT_OLEObject %v", el.Name)
+				unioffice.Log("skipping unsupported element on OfcCT_OLEObject %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

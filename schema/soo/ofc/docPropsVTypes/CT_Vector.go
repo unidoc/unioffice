@@ -350,7 +350,7 @@ lCT_Vector:
 				}
 				m.Clsid = append(m.Clsid, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Vector %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Vector %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

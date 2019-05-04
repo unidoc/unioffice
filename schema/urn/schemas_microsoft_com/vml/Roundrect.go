@@ -527,7 +527,7 @@ lRoundrect:
 				}
 				m.EG_ShapeElements = append(m.EG_ShapeElements, tmpshapeelements)
 			default:
-				gooxml.Log("skipping unsupported element on Roundrect %v", el.Name)
+				unioffice.Log("skipping unsupported element on Roundrect %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

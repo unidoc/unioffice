@@ -121,7 +121,7 @@ func (f *Format) AddToken(t FmtType, l []byte) {
 			// TODO: if anyone cares, parse and use the numerator format.
 		}
 	default:
-		gooxml.Log("unsupported ph type in parse %v", t)
+		unioffice.Log("unsupported ph type in parse %v", t)
 	}
 }
 
@@ -360,7 +360,7 @@ lfor:
 		case FmtTypeTime:
 			op = append(op, reverse(dTime(t, vOrig, ph.DateTime))...)
 		default:
-			gooxml.Log("unsupported type in whole %v", ph)
+			unioffice.Log("unsupported type in whole %v", ph)
 		}
 	}
 
@@ -437,7 +437,7 @@ lforPost:
 		case FmtTypeLiteral:
 			op = append(op, ph.Literal)
 		default:
-			gooxml.Log("unsupported type in fractional %v", ph)
+			unioffice.Log("unsupported type in fractional %v", ph)
 		}
 	}
 	// remaining digits are truncated
@@ -497,7 +497,7 @@ lexfor:
 		case FmtTypeLiteral:
 			op = append(op, ph.Literal)
 		default:
-			gooxml.Log("unsupported type in exp %v", ph)
+			unioffice.Log("unsupported type in exp %v", ph)
 		}
 	}
 	// remaining non-consumed digits in the exponent
@@ -649,7 +649,7 @@ func dDate(t time.Time, f string) []byte {
 		case "dddd":
 			ret = t.AppendFormat(ret, "Monday")
 		default:
-			gooxml.Log("unsupported date format %s", s)
+			unioffice.Log("unsupported date format %s", s)
 		}
 		if f[i] == '/' {
 			ret = append(ret, '/')
@@ -710,7 +710,7 @@ func dTime(t time.Time, v float64, f string) []byte {
 			ret = strconv.AppendInt(ret, int64(v*24*60*60), 10)
 		case "":
 		default:
-			gooxml.Log("unsupported time format %s", s)
+			unioffice.Log("unsupported time format %s", s)
 		}
 		if f[i] == ':' {
 			ret = append(ret, ':')

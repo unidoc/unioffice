@@ -203,7 +203,7 @@ lCT_MdxTuple:
 				}
 				m.N = append(m.N, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_MdxTuple %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_MdxTuple %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

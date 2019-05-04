@@ -63,7 +63,7 @@ lCT_FPr:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_FPr %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_FPr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

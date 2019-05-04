@@ -38,8 +38,8 @@ func (r Row) RowNumber() uint32 {
 
 // SetHeight sets the row height in points.
 func (r Row) SetHeight(d measurement.Distance) {
-	r.x.HtAttr = gooxml.Float64(float64(d))
-	r.x.CustomHeightAttr = gooxml.Bool(true)
+	r.x.HtAttr = unioffice.Float64(float64(d))
+	r.x.CustomHeightAttr = unioffice.Bool(true)
 }
 
 // SetHeightAuto sets the row height to be automatically determined.
@@ -58,7 +58,7 @@ func (r Row) SetHidden(hidden bool) {
 	if !hidden {
 		r.x.HiddenAttr = nil
 	} else {
-		r.x.HiddenAttr = gooxml.Bool(true)
+		r.x.HiddenAttr = unioffice.Bool(true)
 	}
 }
 
@@ -67,10 +67,10 @@ func (r Row) AddCell() Cell {
 	numCells := uint32(len(r.x.C))
 	var nextCellID *string
 	if numCells > 0 {
-		prevCellName := gooxml.Stringf("%s%d", reference.IndexToColumn(numCells-1), r.RowNumber())
+		prevCellName := unioffice.Stringf("%s%d", reference.IndexToColumn(numCells-1), r.RowNumber())
 		// previous cell has an expected name
 		if r.x.C[numCells-1].RAttr != nil && *r.x.C[numCells-1].RAttr == *prevCellName {
-			nextCellID = gooxml.Stringf("%s%d", reference.IndexToColumn(numCells), r.RowNumber())
+			nextCellID = unioffice.Stringf("%s%d", reference.IndexToColumn(numCells), r.RowNumber())
 		}
 	}
 
@@ -88,7 +88,7 @@ func (r Row) AddCell() Cell {
 				}
 			}
 		}
-		nextCellID = gooxml.Stringf("%s%d", reference.IndexToColumn(nextIdx), r.RowNumber())
+		nextCellID = unioffice.Stringf("%s%d", reference.IndexToColumn(nextIdx), r.RowNumber())
 	}
 	c.RAttr = nextCellID
 	return Cell{r.w, r.s, r.x, c}
@@ -112,7 +112,7 @@ func (r Row) AddNamedCell(col string) Cell {
 	c := sml.NewCT_Cell()
 
 	r.x.C = append(r.x.C, c)
-	c.RAttr = gooxml.Stringf("%s%d", col, r.RowNumber())
+	c.RAttr = unioffice.Stringf("%s%d", col, r.RowNumber())
 	return Cell{r.w, r.s, r.x, c}
 }
 
@@ -131,12 +131,12 @@ func (r Row) Cell(col string) Cell {
 // row so they refer to the new row number. This is used when sorting to fix up
 // moved rows.
 func (r Row) renumberAs(rowNumber uint32) {
-	r.x.RAttr = gooxml.Uint32(rowNumber)
+	r.x.RAttr = unioffice.Uint32(rowNumber)
 	for _, c := range r.Cells() {
 		cref, err := reference.ParseCellReference(c.Reference())
 		if err == nil {
 			newRef := fmt.Sprintf("%s%d", cref.Column, rowNumber)
-			c.x.RAttr = gooxml.String(newRef)
+			c.x.RAttr = unioffice.String(newRef)
 		}
 	}
 }

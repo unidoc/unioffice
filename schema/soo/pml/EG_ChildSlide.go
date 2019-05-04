@@ -52,7 +52,7 @@ lEG_ChildSlide:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on EG_ChildSlide %v", el.Name)
+				unioffice.Log("skipping unsupported element on EG_ChildSlide %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

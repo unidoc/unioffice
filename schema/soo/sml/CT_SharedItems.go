@@ -333,7 +333,7 @@ lCT_SharedItems:
 				}
 				m.D = append(m.D, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_SharedItems %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_SharedItems %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

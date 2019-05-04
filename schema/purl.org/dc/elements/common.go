@@ -13,8 +13,8 @@ import "github.com/unidoc/unioffice"
 
 // init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
-	gooxml.RegisterConstructor("http://purl.org/dc/elements/1.1/", "SimpleLiteral", NewSimpleLiteral)
-	gooxml.RegisterConstructor("http://purl.org/dc/elements/1.1/", "elementContainer", NewElementContainer)
-	gooxml.RegisterConstructor("http://purl.org/dc/elements/1.1/", "any", NewAny)
-	gooxml.RegisterConstructor("http://purl.org/dc/elements/1.1/", "elementsGroup", NewElementsGroup)
+	unioffice.RegisterConstructor("http://purl.org/dc/elements/1.1/", "SimpleLiteral", NewSimpleLiteral)
+	unioffice.RegisterConstructor("http://purl.org/dc/elements/1.1/", "elementContainer", NewElementContainer)
+	unioffice.RegisterConstructor("http://purl.org/dc/elements/1.1/", "any", NewAny)
+	unioffice.RegisterConstructor("http://purl.org/dc/elements/1.1/", "elementsGroup", NewElementsGroup)
 }

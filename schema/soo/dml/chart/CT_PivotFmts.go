@@ -56,7 +56,7 @@ lCT_PivotFmts:
 				}
 				m.PivotFmt = append(m.PivotFmt, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_PivotFmts %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_PivotFmts %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -56,7 +56,7 @@ func (s PlaceHolder) Clear() {
 	para := dml.NewCT_TextParagraph()
 	s.x.TxBody.P = []*dml.CT_TextParagraph{para}
 	para.EndParaRPr = dml.NewCT_TextCharacterProperties()
-	para.EndParaRPr.LangAttr = gooxml.String("en-US")
+	para.EndParaRPr.LangAttr = unioffice.String("en-US")
 }
 
 func (s PlaceHolder) Remove() error {

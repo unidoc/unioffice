@@ -40,29 +40,29 @@ func (r RunProperties) SetFontFamily(family string) {
 	if r.x.RFonts == nil {
 		r.x.RFonts = wml.NewCT_Fonts()
 	}
-	r.x.RFonts.AsciiAttr = gooxml.String(family)
-	r.x.RFonts.HAnsiAttr = gooxml.String(family)
-	r.x.RFonts.EastAsiaAttr = gooxml.String(family)
+	r.x.RFonts.AsciiAttr = unioffice.String(family)
+	r.x.RFonts.HAnsiAttr = unioffice.String(family)
+	r.x.RFonts.EastAsiaAttr = unioffice.String(family)
 }
 
 // SetSize sets the font size for a run.
 func (r RunProperties) SetSize(size measurement.Distance) {
 	r.x.Sz = wml.NewCT_HpsMeasure()
-	r.x.Sz.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(size / measurement.HalfPoint))
+	r.x.Sz.ValAttr.ST_UnsignedDecimalNumber = unioffice.Uint64(uint64(size / measurement.HalfPoint))
 	r.x.SzCs = wml.NewCT_HpsMeasure()
-	r.x.SzCs.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(size / measurement.HalfPoint))
+	r.x.SzCs.ValAttr.ST_UnsignedDecimalNumber = unioffice.Uint64(uint64(size / measurement.HalfPoint))
 }
 
 // SetKerning sets the run's font kerning.
 func (r RunProperties) SetKerning(size measurement.Distance) {
 	r.x.Kern = wml.NewCT_HpsMeasure()
-	r.x.Kern.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(size / measurement.HalfPoint))
+	r.x.Kern.ValAttr.ST_UnsignedDecimalNumber = unioffice.Uint64(uint64(size / measurement.HalfPoint))
 }
 
 // SetCharacterSpacing sets the run's Character Spacing Adjustment.
 func (r RunProperties) SetCharacterSpacing(size measurement.Distance) {
 	r.x.Spacing = wml.NewCT_SignedTwipsMeasure()
-	r.x.Spacing.ValAttr.Int64 = gooxml.Int64(int64(size / measurement.Twips))
+	r.x.Spacing.ValAttr.Int64 = unioffice.Int64(int64(size / measurement.Twips))
 }
 
 // Fonts returns the style's Fonts.

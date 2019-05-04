@@ -222,7 +222,7 @@ lCT_TrPrBase:
 				}
 				m.Hidden = append(m.Hidden, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_TrPrBase %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_TrPrBase %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

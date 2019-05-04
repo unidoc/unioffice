@@ -111,7 +111,7 @@ lCT_RadarChart:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_RadarChart %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_RadarChart %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

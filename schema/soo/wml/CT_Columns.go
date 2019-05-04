@@ -115,7 +115,7 @@ lCT_Columns:
 				}
 				m.Col = append(m.Col, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Columns %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Columns %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

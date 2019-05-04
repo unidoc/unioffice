@@ -47,7 +47,7 @@ lGraphic:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on Graphic %v", el.Name)
+				unioffice.Log("skipping unsupported element on Graphic %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -13,8 +13,8 @@ import "github.com/unidoc/unioffice"
 
 // init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/metadata/core-properties", "CT_CoreProperties", NewCT_CoreProperties)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/metadata/core-properties", "CT_Keywords", NewCT_Keywords)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/metadata/core-properties", "CT_Keyword", NewCT_Keyword)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/metadata/core-properties", "coreProperties", NewCoreProperties)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/metadata/core-properties", "CT_CoreProperties", NewCT_CoreProperties)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/metadata/core-properties", "CT_Keywords", NewCT_Keywords)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/metadata/core-properties", "CT_Keyword", NewCT_Keyword)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/metadata/core-properties", "coreProperties", NewCoreProperties)
 }

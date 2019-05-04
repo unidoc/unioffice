@@ -23,8 +23,8 @@ func (d DataValidation) X() *sml.CT_DataValidation {
 }
 
 func (d DataValidation) clear() {
-	d.x.Formula1 = gooxml.String("0")
-	d.x.Formula2 = gooxml.String("0")
+	d.x.Formula1 = unioffice.String("0")
+	d.x.Formula2 = unioffice.String("0")
 }
 
 // SetAllowBlank controls if blank values are accepted.
@@ -32,7 +32,7 @@ func (d DataValidation) SetAllowBlank(b bool) {
 	if !b {
 		d.x.AllowBlankAttr = nil
 	} else {
-		d.x.AllowBlankAttr = gooxml.Bool(true)
+		d.x.AllowBlankAttr = unioffice.Bool(true)
 	}
 }
 

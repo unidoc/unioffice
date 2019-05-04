@@ -32,7 +32,7 @@ func TestNewAppDefaultProperties(t *testing.T) {
 		t.Errorf("unexpected application: %s", got)
 	}
 
-	fv, _ := strconv.ParseFloat(strings.Replace(gooxml.ReleaseVersion, "v", "", -1), 64)
+	fv, _ := strconv.ParseFloat(strings.Replace(unioffice.ReleaseVersion, "v", "", -1), 64)
 	if got := ap.ApplicationVersion(); got != fmt.Sprintf("%07.4f", fv) {
 		t.Errorf("unexpected application version: %s", got)
 	}

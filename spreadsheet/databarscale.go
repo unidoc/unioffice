@@ -28,7 +28,7 @@ func (d DataBarScale) X() *sml.CT_DataBar {
 func (d DataBarScale) AddFormatValue(t sml.ST_CfvoType, val string) {
 	v := sml.NewCT_Cfvo()
 	v.TypeAttr = t
-	v.ValAttr = gooxml.String(val)
+	v.ValAttr = unioffice.String(val)
 	d.x.Cfvo = append(d.x.Cfvo, v)
 }
 
@@ -40,15 +40,15 @@ func (d DataBarScale) SetColor(c color.Color) {
 
 // SetShowValue controls if the cell value is displayed.
 func (d DataBarScale) SetShowValue(b bool) {
-	d.x.ShowValueAttr = gooxml.Bool(b)
+	d.x.ShowValueAttr = unioffice.Bool(b)
 }
 
 // SetMinLength sets the minimum bar length in percent.
 func (d DataBarScale) SetMinLength(l uint32) {
-	d.x.MinLengthAttr = gooxml.Uint32(l)
+	d.x.MinLengthAttr = unioffice.Uint32(l)
 }
 
 // SetMaxLength sets the maximum bar length in percent.
 func (d DataBarScale) SetMaxLength(l uint32) {
-	d.x.MaxLengthAttr = gooxml.Uint32(l)
+	d.x.MaxLengthAttr = unioffice.Uint32(l)
 }

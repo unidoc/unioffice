@@ -29,11 +29,11 @@ func (c PieOfPieChart) X() *crt.CT_OfPieChart {
 // InitializeDefaults the bar chart to its defaults
 func (c PieOfPieChart) InitializeDefaults() {
 	c.x.VaryColors = crt.NewCT_Boolean()
-	c.x.VaryColors.ValAttr = gooxml.Bool(true)
+	c.x.VaryColors.ValAttr = unioffice.Bool(true)
 	c.SetType(crt.ST_OfPieTypePie)
 	c.x.SecondPieSize = crt.NewCT_SecondPieSize()
 	c.x.SecondPieSize.ValAttr = &crt.ST_SecondPieSize{}
-	c.x.SecondPieSize.ValAttr.ST_SecondPieSizeUShort = gooxml.Uint16(75)
+	c.x.SecondPieSize.ValAttr.ST_SecondPieSizeUShort = unioffice.Uint16(75)
 	cl := crt.NewCT_ChartLines()
 	cl.SpPr = dml.NewCT_ShapeProperties()
 	sp := drawing.MakeShapeProperties(cl.SpPr)

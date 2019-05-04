@@ -73,7 +73,7 @@ lCT_RowHierarchiesUsage:
 				}
 				m.RowHierarchyUsage = append(m.RowHierarchyUsage, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_RowHierarchiesUsage %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_RowHierarchiesUsage %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

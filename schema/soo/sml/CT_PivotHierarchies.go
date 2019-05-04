@@ -73,7 +73,7 @@ lCT_PivotHierarchies:
 				}
 				m.PivotHierarchy = append(m.PivotHierarchy, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_PivotHierarchies %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_PivotHierarchies %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

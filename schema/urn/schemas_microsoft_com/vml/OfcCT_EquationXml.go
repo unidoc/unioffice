@@ -18,7 +18,7 @@ import (
 
 type OfcCT_EquationXml struct {
 	ContentTypeAttr *string
-	Any             gooxml.Any
+	Any             unioffice.Any
 }
 
 func NewOfcCT_EquationXml() *OfcCT_EquationXml {
@@ -61,7 +61,7 @@ lOfcCT_EquationXml:
 		case xml.StartElement:
 			switch el.Name {
 			default:
-				if anyEl, err := gooxml.CreateElement(el); err != nil {
+				if anyEl, err := unioffice.CreateElement(el); err != nil {
 					return err
 				} else {
 					if err := d.DecodeElement(anyEl, &el); err != nil {

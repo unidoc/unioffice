@@ -512,16 +512,16 @@ func (m ST_ArrayBaseType) ValidateWithPath(path string) error {
 
 // init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Empty", NewCT_Empty)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Null", NewCT_Null)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Vector", NewCT_Vector)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Array", NewCT_Array)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Variant", NewCT_Variant)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Vstream", NewCT_Vstream)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "variant", NewVariant)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "vector", NewVector)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "array", NewArray)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "empty", NewEmpty)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "null", NewNull)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "vstream", NewVstream)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Empty", NewCT_Empty)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Null", NewCT_Null)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Vector", NewCT_Vector)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Array", NewCT_Array)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Variant", NewCT_Variant)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "CT_Vstream", NewCT_Vstream)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "variant", NewVariant)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "vector", NewVector)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "array", NewArray)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "empty", NewEmpty)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "null", NewNull)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", "vstream", NewVstream)
 }

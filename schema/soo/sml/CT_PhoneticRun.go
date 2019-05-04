@@ -38,7 +38,7 @@ func (m *CT_PhoneticRun) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 		Value: fmt.Sprintf("%v", m.EbAttr)})
 	e.EncodeToken(start)
 	set := xml.StartElement{Name: xml.Name{Local: "ma:t"}}
-	gooxml.AddPreserveSpaceAttr(&set, m.T)
+	unioffice.AddPreserveSpaceAttr(&set, m.T)
 	e.EncodeElement(m.T, set)
 	e.EncodeToken(xml.EndElement{Name: start.Name})
 	return nil
@@ -79,7 +79,7 @@ lCT_PhoneticRun:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_PhoneticRun %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_PhoneticRun %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

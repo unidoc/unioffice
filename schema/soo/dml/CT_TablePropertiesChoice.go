@@ -34,7 +34,7 @@ func (m *CT_TablePropertiesChoice) MarshalXML(e *xml.Encoder, start xml.StartEle
 	}
 	if m.TableStyleId != nil {
 		setableStyleId := xml.StartElement{Name: xml.Name{Local: "a:tableStyleId"}}
-		gooxml.AddPreserveSpaceAttr(&setableStyleId, *m.TableStyleId)
+		unioffice.AddPreserveSpaceAttr(&setableStyleId, *m.TableStyleId)
 		e.EncodeElement(m.TableStyleId, setableStyleId)
 	}
 	return nil
@@ -64,7 +64,7 @@ lCT_TablePropertiesChoice:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_TablePropertiesChoice %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_TablePropertiesChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

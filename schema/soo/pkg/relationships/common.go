@@ -112,8 +112,8 @@ func (m ST_TargetMode) ValidateWithPath(path string) error {
 
 // init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/relationships", "CT_Relationships", NewCT_Relationships)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/relationships", "CT_Relationship", NewCT_Relationship)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/relationships", "Relationships", NewRelationships)
-	gooxml.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/relationships", "Relationship", NewRelationship)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/relationships", "CT_Relationships", NewCT_Relationships)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/relationships", "CT_Relationship", NewCT_Relationship)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/relationships", "Relationships", NewRelationships)
+	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/package/2006/relationships", "Relationship", NewRelationship)
 }

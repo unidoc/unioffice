@@ -87,7 +87,7 @@ lCT_Connector:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_Connector %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Connector %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

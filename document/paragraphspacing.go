@@ -22,13 +22,13 @@ type ParagraphSpacing struct {
 // SetBefore sets the spacing that comes before the paragraph.
 func (p ParagraphSpacing) SetBefore(before measurement.Distance) {
 	p.x.BeforeAttr = &sharedTypes.ST_TwipsMeasure{}
-	p.x.BeforeAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(before / measurement.Twips))
+	p.x.BeforeAttr.ST_UnsignedDecimalNumber = unioffice.Uint64(uint64(before / measurement.Twips))
 }
 
 // SetAfter sets the spacing that comes after the paragraph.
 func (p ParagraphSpacing) SetAfter(after measurement.Distance) {
 	p.x.AfterAttr = &sharedTypes.ST_TwipsMeasure{}
-	p.x.AfterAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(after / measurement.Twips))
+	p.x.AfterAttr.ST_UnsignedDecimalNumber = unioffice.Uint64(uint64(after / measurement.Twips))
 }
 
 // SetLineSpacing sets the spacing between lines in a paragraph.
@@ -39,7 +39,7 @@ func (p ParagraphSpacing) SetLineSpacing(d measurement.Distance, rule wml.ST_Lin
 	} else {
 		p.x.LineRuleAttr = rule
 		p.x.LineAttr = &wml.ST_SignedTwipsMeasure{}
-		p.x.LineAttr.Int64 = gooxml.Int64(int64(d / measurement.Twips))
+		p.x.LineAttr.Int64 = unioffice.Int64(int64(d / measurement.Twips))
 	}
 }
 
@@ -47,7 +47,7 @@ func (p ParagraphSpacing) SetLineSpacing(d measurement.Distance, rule wml.ST_Lin
 func (p ParagraphSpacing) SetBeforeAuto(b bool) {
 	if b {
 		p.x.BeforeAutospacingAttr = &sharedTypes.ST_OnOff{}
-		p.x.BeforeAutospacingAttr.Bool = gooxml.Bool(true)
+		p.x.BeforeAutospacingAttr.Bool = unioffice.Bool(true)
 	} else {
 		p.x.BeforeAutospacingAttr = nil
 	}
@@ -57,7 +57,7 @@ func (p ParagraphSpacing) SetBeforeAuto(b bool) {
 func (p ParagraphSpacing) SetAfterAuto(b bool) {
 	if b {
 		p.x.AfterAutospacingAttr = &sharedTypes.ST_OnOff{}
-		p.x.AfterAutospacingAttr.Bool = gooxml.Bool(true)
+		p.x.AfterAutospacingAttr.Bool = unioffice.Bool(true)
 	} else {
 		p.x.AfterAutospacingAttr = nil
 	}

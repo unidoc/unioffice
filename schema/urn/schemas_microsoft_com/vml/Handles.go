@@ -48,7 +48,7 @@ lHandles:
 				}
 				m.H = append(m.H, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on Handles %v", el.Name)
+				unioffice.Log("skipping unsupported element on Handles %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

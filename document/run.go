@@ -59,7 +59,7 @@ func (r Run) AddText(s string) {
 	ic := wml.NewEG_RunInnerContent()
 	r.x.EG_RunInnerContent = append(r.x.EG_RunInnerContent, ic)
 	ic.T = wml.NewCT_Text()
-	if gooxml.NeedsSpacePreserve(s) {
+	if unioffice.NeedsSpacePreserve(s) {
 		p := "preserve"
 		ic.T.SpaceAttr = &p
 	}
@@ -91,7 +91,7 @@ func (r Run) AddFieldWithFormatting(code string, fmt string, isDirty bool) {
 	ic.FldChar.FldCharTypeAttr = wml.ST_FldCharTypeBegin
 	if isDirty {
 		ic.FldChar.DirtyAttr = &sharedTypes.ST_OnOff{}
-		ic.FldChar.DirtyAttr.Bool = gooxml.Bool(true)
+		ic.FldChar.DirtyAttr.Bool = unioffice.Bool(true)
 	}
 
 	ic = r.newIC()
@@ -156,7 +156,7 @@ func (r Run) AddDrawingAnchored(img common.ImageRef) (AnchoredDrawing, error) {
 	ad := AnchoredDrawing{r.d, anchor}
 
 	// required by Word on OSX for the file to open
-	anchor.SimplePosAttr = gooxml.Bool(false)
+	anchor.SimplePosAttr = unioffice.Bool(false)
 
 	anchor.AllowOverlapAttr = true
 	anchor.CNvGraphicFramePr = dml.NewCT_NonVisualGraphicFrameProperties()
@@ -165,15 +165,15 @@ func (r Run) AddDrawingAnchored(img common.ImageRef) (AnchoredDrawing, error) {
 	anchor.Graphic = dml.NewGraphic()
 	anchor.Graphic.GraphicData = dml.NewCT_GraphicalObjectData()
 	anchor.Graphic.GraphicData.UriAttr = "http://schemas.openxmlformats.org/drawingml/2006/picture"
-	anchor.SimplePos.XAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
-	anchor.SimplePos.YAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
+	anchor.SimplePos.XAttr.ST_CoordinateUnqualified = unioffice.Int64(0)
+	anchor.SimplePos.YAttr.ST_CoordinateUnqualified = unioffice.Int64(0)
 	anchor.PositionH.RelativeFromAttr = wml.WdST_RelFromHPage
 	anchor.PositionH.Choice = &wml.WdCT_PosHChoice{}
-	anchor.PositionH.Choice.PosOffset = gooxml.Int32(0)
+	anchor.PositionH.Choice.PosOffset = unioffice.Int32(0)
 
 	anchor.PositionV.RelativeFromAttr = wml.WdST_RelFromVPage
 	anchor.PositionV.Choice = &wml.WdCT_PosVChoice{}
-	anchor.PositionV.Choice.PosOffset = gooxml.Int32(0)
+	anchor.PositionV.Choice.PosOffset = unioffice.Int32(0)
 
 	anchor.Extent.CxAttr = int64(float64(img.Size().X*measurement.Pixel72) / measurement.EMU)
 	anchor.Extent.CyAttr = int64(float64(img.Size().Y*measurement.Pixel72) / measurement.EMU)
@@ -206,8 +206,8 @@ func (r Run) AddDrawingAnchored(img common.ImageRef) (AnchoredDrawing, error) {
 	// Required to allow resizing
 	p.SpPr.Xfrm = dml.NewCT_Transform2D()
 	p.SpPr.Xfrm.Off = dml.NewCT_Point2D()
-	p.SpPr.Xfrm.Off.XAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
-	p.SpPr.Xfrm.Off.YAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
+	p.SpPr.Xfrm.Off.XAttr.ST_CoordinateUnqualified = unioffice.Int64(0)
+	p.SpPr.Xfrm.Off.YAttr.ST_CoordinateUnqualified = unioffice.Int64(0)
 	p.SpPr.Xfrm.Ext = dml.NewCT_PositiveSize2D()
 	p.SpPr.Xfrm.Ext.CxAttr = int64(img.Size().X * measurement.Point)
 	p.SpPr.Xfrm.Ext.CyAttr = int64(img.Size().Y * measurement.Point)
@@ -237,10 +237,10 @@ func (r Run) AddDrawingInline(img common.ImageRef) (InlineDrawing, error) {
 	inl.Graphic.GraphicData = dml.NewCT_GraphicalObjectData()
 	inl.Graphic.GraphicData.UriAttr = "http://schemas.openxmlformats.org/drawingml/2006/picture"
 
-	inl.DistTAttr = gooxml.Uint32(0)
-	inl.DistLAttr = gooxml.Uint32(0)
-	inl.DistBAttr = gooxml.Uint32(0)
-	inl.DistRAttr = gooxml.Uint32(0)
+	inl.DistTAttr = unioffice.Uint32(0)
+	inl.DistLAttr = unioffice.Uint32(0)
+	inl.DistBAttr = unioffice.Uint32(0)
+	inl.DistRAttr = unioffice.Uint32(0)
 
 	inl.Extent.CxAttr = int64(float64(img.Size().X*measurement.Pixel72) / measurement.EMU)
 	inl.Extent.CyAttr = int64(float64(img.Size().Y*measurement.Pixel72) / measurement.EMU)
@@ -270,8 +270,8 @@ func (r Run) AddDrawingInline(img common.ImageRef) (InlineDrawing, error) {
 	// Required to allow resizing
 	p.SpPr.Xfrm = dml.NewCT_Transform2D()
 	p.SpPr.Xfrm.Off = dml.NewCT_Point2D()
-	p.SpPr.Xfrm.Off.XAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
-	p.SpPr.Xfrm.Off.YAttr.ST_CoordinateUnqualified = gooxml.Int64(0)
+	p.SpPr.Xfrm.Off.XAttr.ST_CoordinateUnqualified = unioffice.Int64(0)
+	p.SpPr.Xfrm.Off.YAttr.ST_CoordinateUnqualified = unioffice.Int64(0)
 	p.SpPr.Xfrm.Ext = dml.NewCT_PositiveSize2D()
 	p.SpPr.Xfrm.Ext.CxAttr = int64(img.Size().X * measurement.Point)
 	p.SpPr.Xfrm.Ext.CyAttr = int64(img.Size().Y * measurement.Point)

@@ -41,7 +41,7 @@ func (t TableStyleProperties) SetTableIndent(ind measurement.Distance) {
 	t.x.TblInd.TypeAttr = wml.ST_TblWidthDxa
 	t.x.TblInd.WAttr = &wml.ST_MeasurementOrPercent{}
 	t.x.TblInd.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
-	t.x.TblInd.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(ind / measurement.Dxa))
+	t.x.TblInd.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = unioffice.Int64(int64(ind / measurement.Dxa))
 }
 
 // SetCellSpacingAuto sets the cell spacing within a table to automatic.
@@ -56,7 +56,7 @@ func (t TableStyleProperties) SetCellSpacingPercent(pct float64) {
 	t.x.TblCellSpacing.TypeAttr = wml.ST_TblWidthPct
 	t.x.TblCellSpacing.WAttr = &wml.ST_MeasurementOrPercent{}
 	t.x.TblCellSpacing.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
-	t.x.TblCellSpacing.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(pct * 50))
+	t.x.TblCellSpacing.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = unioffice.Int64(int64(pct * 50))
 }
 
 // Borders allows manipulation of the table borders.

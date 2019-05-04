@@ -154,7 +154,7 @@ lCT_RadarSer:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_RadarSer %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_RadarSer %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

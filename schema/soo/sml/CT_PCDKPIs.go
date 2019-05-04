@@ -75,7 +75,7 @@ lCT_PCDKPIs:
 				}
 				m.Kpi = append(m.Kpi, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_PCDKPIs %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_PCDKPIs %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

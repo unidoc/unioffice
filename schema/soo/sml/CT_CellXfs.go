@@ -73,7 +73,7 @@ lCT_CellXfs:
 				}
 				m.Xf = append(m.Xf, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_CellXfs %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_CellXfs %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

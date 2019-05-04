@@ -60,7 +60,7 @@ lFootnotes:
 				}
 				m.Footnote = append(m.Footnote, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on Footnotes %v", el.Name)
+				unioffice.Log("skipping unsupported element on Footnotes %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

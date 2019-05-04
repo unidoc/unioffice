@@ -55,7 +55,7 @@ lCT_IndexedColors:
 				}
 				m.RgbColor = append(m.RgbColor, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_IndexedColors %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_IndexedColors %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -24,12 +24,12 @@ type DataValidationList struct {
 
 // SetRange sets the range that contains the possible values. This is incompatible with SetValues.
 func (d DataValidationList) SetRange(cellRange string) {
-	d.x.Formula1 = gooxml.String(cellRange)
-	d.x.Formula2 = gooxml.String("0")
+	d.x.Formula1 = unioffice.String(cellRange)
+	d.x.Formula2 = unioffice.String("0")
 }
 
 // SetValues sets the possible values. This is incompatible with SetRange.
 func (d DataValidationList) SetValues(values []string) {
-	d.x.Formula1 = gooxml.String("\"" + strings.Join(values, ",") + "\"")
-	d.x.Formula2 = gooxml.String("0")
+	d.x.Formula1 = unioffice.String("\"" + strings.Join(values, ",") + "\"")
+	d.x.Formula2 = unioffice.String("0")
 }

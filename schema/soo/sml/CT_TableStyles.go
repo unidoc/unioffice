@@ -103,7 +103,7 @@ lCT_TableStyles:
 				}
 				m.TableStyle = append(m.TableStyle, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_TableStyles %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_TableStyles %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

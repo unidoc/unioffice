@@ -76,12 +76,12 @@ func (m *CT_Variant) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.Blob != nil {
 		seblob := xml.StartElement{Name: xml.Name{Local: "vt:blob"}}
-		gooxml.AddPreserveSpaceAttr(&seblob, *m.Blob)
+		unioffice.AddPreserveSpaceAttr(&seblob, *m.Blob)
 		e.EncodeElement(m.Blob, seblob)
 	}
 	if m.Oblob != nil {
 		seoblob := xml.StartElement{Name: xml.Name{Local: "vt:oblob"}}
-		gooxml.AddPreserveSpaceAttr(&seoblob, *m.Oblob)
+		unioffice.AddPreserveSpaceAttr(&seoblob, *m.Oblob)
 		e.EncodeElement(m.Oblob, seoblob)
 	}
 	if m.Empty != nil {
@@ -146,17 +146,17 @@ func (m *CT_Variant) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.Lpstr != nil {
 		selpstr := xml.StartElement{Name: xml.Name{Local: "vt:lpstr"}}
-		gooxml.AddPreserveSpaceAttr(&selpstr, *m.Lpstr)
+		unioffice.AddPreserveSpaceAttr(&selpstr, *m.Lpstr)
 		e.EncodeElement(m.Lpstr, selpstr)
 	}
 	if m.Lpwstr != nil {
 		selpwstr := xml.StartElement{Name: xml.Name{Local: "vt:lpwstr"}}
-		gooxml.AddPreserveSpaceAttr(&selpwstr, *m.Lpwstr)
+		unioffice.AddPreserveSpaceAttr(&selpwstr, *m.Lpwstr)
 		e.EncodeElement(m.Lpwstr, selpwstr)
 	}
 	if m.Bstr != nil {
 		sebstr := xml.StartElement{Name: xml.Name{Local: "vt:bstr"}}
-		gooxml.AddPreserveSpaceAttr(&sebstr, *m.Bstr)
+		unioffice.AddPreserveSpaceAttr(&sebstr, *m.Bstr)
 		e.EncodeElement(m.Bstr, sebstr)
 	}
 	if m.Date != nil {
@@ -173,32 +173,32 @@ func (m *CT_Variant) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.Cy != nil {
 		secy := xml.StartElement{Name: xml.Name{Local: "vt:cy"}}
-		gooxml.AddPreserveSpaceAttr(&secy, *m.Cy)
+		unioffice.AddPreserveSpaceAttr(&secy, *m.Cy)
 		e.EncodeElement(m.Cy, secy)
 	}
 	if m.Error != nil {
 		seerror := xml.StartElement{Name: xml.Name{Local: "vt:error"}}
-		gooxml.AddPreserveSpaceAttr(&seerror, *m.Error)
+		unioffice.AddPreserveSpaceAttr(&seerror, *m.Error)
 		e.EncodeElement(m.Error, seerror)
 	}
 	if m.Stream != nil {
 		sestream := xml.StartElement{Name: xml.Name{Local: "vt:stream"}}
-		gooxml.AddPreserveSpaceAttr(&sestream, *m.Stream)
+		unioffice.AddPreserveSpaceAttr(&sestream, *m.Stream)
 		e.EncodeElement(m.Stream, sestream)
 	}
 	if m.Ostream != nil {
 		seostream := xml.StartElement{Name: xml.Name{Local: "vt:ostream"}}
-		gooxml.AddPreserveSpaceAttr(&seostream, *m.Ostream)
+		unioffice.AddPreserveSpaceAttr(&seostream, *m.Ostream)
 		e.EncodeElement(m.Ostream, seostream)
 	}
 	if m.Storage != nil {
 		sestorage := xml.StartElement{Name: xml.Name{Local: "vt:storage"}}
-		gooxml.AddPreserveSpaceAttr(&sestorage, *m.Storage)
+		unioffice.AddPreserveSpaceAttr(&sestorage, *m.Storage)
 		e.EncodeElement(m.Storage, sestorage)
 	}
 	if m.Ostorage != nil {
 		seostorage := xml.StartElement{Name: xml.Name{Local: "vt:ostorage"}}
-		gooxml.AddPreserveSpaceAttr(&seostorage, *m.Ostorage)
+		unioffice.AddPreserveSpaceAttr(&seostorage, *m.Ostorage)
 		e.EncodeElement(m.Ostorage, seostorage)
 	}
 	if m.Vstream != nil {
@@ -207,7 +207,7 @@ func (m *CT_Variant) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if m.Clsid != nil {
 		seclsid := xml.StartElement{Name: xml.Name{Local: "vt:clsid"}}
-		gooxml.AddPreserveSpaceAttr(&seclsid, *m.Clsid)
+		unioffice.AddPreserveSpaceAttr(&seclsid, *m.Clsid)
 		e.EncodeElement(m.Clsid, seclsid)
 	}
 	e.EncodeToken(xml.EndElement{Name: start.Name})
@@ -430,7 +430,7 @@ lCT_Variant:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_Variant %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Variant %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

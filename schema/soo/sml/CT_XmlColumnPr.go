@@ -107,7 +107,7 @@ lCT_XmlColumnPr:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_XmlColumnPr %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_XmlColumnPr %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

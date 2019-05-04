@@ -78,7 +78,7 @@ lCT_Choose:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_Choose %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Choose %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

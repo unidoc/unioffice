@@ -81,17 +81,17 @@ func (m *CT_Properties) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	e.EncodeToken(start)
 	if m.Template != nil {
 		seTemplate := xml.StartElement{Name: xml.Name{Local: "Template"}}
-		gooxml.AddPreserveSpaceAttr(&seTemplate, *m.Template)
+		unioffice.AddPreserveSpaceAttr(&seTemplate, *m.Template)
 		e.EncodeElement(m.Template, seTemplate)
 	}
 	if m.Manager != nil {
 		seManager := xml.StartElement{Name: xml.Name{Local: "Manager"}}
-		gooxml.AddPreserveSpaceAttr(&seManager, *m.Manager)
+		unioffice.AddPreserveSpaceAttr(&seManager, *m.Manager)
 		e.EncodeElement(m.Manager, seManager)
 	}
 	if m.Company != nil {
 		seCompany := xml.StartElement{Name: xml.Name{Local: "Company"}}
-		gooxml.AddPreserveSpaceAttr(&seCompany, *m.Company)
+		unioffice.AddPreserveSpaceAttr(&seCompany, *m.Company)
 		e.EncodeElement(m.Company, seCompany)
 	}
 	if m.Pages != nil {
@@ -108,7 +108,7 @@ func (m *CT_Properties) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.PresentationFormat != nil {
 		sePresentationFormat := xml.StartElement{Name: xml.Name{Local: "PresentationFormat"}}
-		gooxml.AddPreserveSpaceAttr(&sePresentationFormat, *m.PresentationFormat)
+		unioffice.AddPreserveSpaceAttr(&sePresentationFormat, *m.PresentationFormat)
 		e.EncodeElement(m.PresentationFormat, sePresentationFormat)
 	}
 	if m.Lines != nil {
@@ -165,7 +165,7 @@ func (m *CT_Properties) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.HyperlinkBase != nil {
 		seHyperlinkBase := xml.StartElement{Name: xml.Name{Local: "HyperlinkBase"}}
-		gooxml.AddPreserveSpaceAttr(&seHyperlinkBase, *m.HyperlinkBase)
+		unioffice.AddPreserveSpaceAttr(&seHyperlinkBase, *m.HyperlinkBase)
 		e.EncodeElement(m.HyperlinkBase, seHyperlinkBase)
 	}
 	if m.HLinks != nil {
@@ -182,12 +182,12 @@ func (m *CT_Properties) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	}
 	if m.Application != nil {
 		seApplication := xml.StartElement{Name: xml.Name{Local: "Application"}}
-		gooxml.AddPreserveSpaceAttr(&seApplication, *m.Application)
+		unioffice.AddPreserveSpaceAttr(&seApplication, *m.Application)
 		e.EncodeElement(m.Application, seApplication)
 	}
 	if m.AppVersion != nil {
 		seAppVersion := xml.StartElement{Name: xml.Name{Local: "AppVersion"}}
-		gooxml.AddPreserveSpaceAttr(&seAppVersion, *m.AppVersion)
+		unioffice.AddPreserveSpaceAttr(&seAppVersion, *m.AppVersion)
 		e.EncodeElement(m.AppVersion, seAppVersion)
 	}
 	if m.DocSecurity != nil {
@@ -372,7 +372,7 @@ lCT_Properties:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_Properties %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Properties %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

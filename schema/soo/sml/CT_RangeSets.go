@@ -73,7 +73,7 @@ lCT_RangeSets:
 				}
 				m.RangeSet = append(m.RangeSet, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_RangeSets %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_RangeSets %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

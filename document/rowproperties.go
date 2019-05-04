@@ -27,7 +27,7 @@ func (r RowProperties) SetHeight(ht measurement.Distance, rule wml.ST_HeightRule
 		htv := wml.NewCT_Height()
 		htv.HRuleAttr = rule
 		htv.ValAttr = &sharedTypes.ST_TwipsMeasure{}
-		htv.ValAttr.ST_UnsignedDecimalNumber = gooxml.Uint64(uint64(ht / measurement.Twips))
+		htv.ValAttr.ST_UnsignedDecimalNumber = unioffice.Uint64(uint64(ht / measurement.Twips))
 		r.x.TrHeight = []*wml.CT_Height{htv}
 	}
 }

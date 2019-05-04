@@ -29,7 +29,7 @@ func (c StockChart) InitializeDefaults() {
 	c.x.UpDownBars = crt.NewCT_UpDownBars()
 	c.x.UpDownBars.GapWidth = crt.NewCT_GapAmount()
 	c.x.UpDownBars.GapWidth.ValAttr = &crt.ST_GapAmount{}
-	c.x.UpDownBars.GapWidth.ValAttr.ST_GapAmountUShort = gooxml.Uint16(150)
+	c.x.UpDownBars.GapWidth.ValAttr.ST_GapAmountUShort = unioffice.Uint16(150)
 	c.x.UpDownBars.UpBars = crt.NewCT_UpDownBar()
 	c.x.UpDownBars.DownBars = crt.NewCT_UpDownBar()
 }

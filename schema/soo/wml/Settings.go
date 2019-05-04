@@ -645,7 +645,7 @@ lSettings:
 					return err
 				}
 			default:
-				any := &gooxml.XSDAny{}
+				any := &unioffice.XSDAny{}
 				if err := d.DecodeElement(any, &el); err != nil {
 					return err
 				}

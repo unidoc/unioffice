@@ -100,7 +100,7 @@ lCT_CellSmartTag:
 				}
 				m.CellSmartTagPr = append(m.CellSmartTagPr, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_CellSmartTag %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_CellSmartTag %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

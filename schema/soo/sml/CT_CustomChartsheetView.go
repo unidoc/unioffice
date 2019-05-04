@@ -136,7 +136,7 @@ lCT_CustomChartsheetView:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_CustomChartsheetView %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_CustomChartsheetView %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

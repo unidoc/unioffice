@@ -58,7 +58,7 @@ func (c CellProperties) SetWidthPercent(pct float64) {
 	c.x.TcW.WAttr = &wml.ST_MeasurementOrPercent{}
 	c.x.TcW.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
 	// percent value is measured in 1/50'th of a percent
-	c.x.TcW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(pct * 50))
+	c.x.TcW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = unioffice.Int64(int64(pct * 50))
 }
 
 // SetWidth sets the cell width to a specified width.
@@ -67,7 +67,7 @@ func (c CellProperties) SetWidth(d measurement.Distance) {
 	c.x.TcW.TypeAttr = wml.ST_TblWidthDxa
 	c.x.TcW.WAttr = &wml.ST_MeasurementOrPercent{}
 	c.x.TcW.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
-	c.x.TcW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(d / measurement.Twips))
+	c.x.TcW.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = unioffice.Int64(int64(d / measurement.Twips))
 }
 
 // SetShading controls the cell shading.

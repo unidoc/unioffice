@@ -75,7 +75,7 @@ lCT_QueryTableFields:
 				}
 				m.QueryTableField = append(m.QueryTableField, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_QueryTableFields %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_QueryTableFields %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

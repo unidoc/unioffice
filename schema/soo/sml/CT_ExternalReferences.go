@@ -55,7 +55,7 @@ lCT_ExternalReferences:
 				}
 				m.ExternalReference = append(m.ExternalReference, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_ExternalReferences %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_ExternalReferences %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -1,4 +1,4 @@
-Thank you for your interest in contributing to gooxml ("We" or "Us").
+Thank you for your interest in contributing to unioffice ("We" or "Us").
 
 The purpose of this contributor agreement ("Agreement") is to clarify and
 document the rights granted by contributors to Us. 
@@ -15,7 +15,7 @@ document.
 documentation) including any modifications or additions to an existing work,
 Submitted by You to Us, in which You own the Copyright. If You do not own the
 Copyright in the entire work of authorship, please contact Us at
-gooxml@baliance.com.
+sales@unidoc.io.
 
 "COPYRIGHT" means all rights protecting works of authorship owned or controlled
 by You, including copyright, moral and neighboring rights, as appropriate, for

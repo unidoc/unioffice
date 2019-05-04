@@ -83,7 +83,7 @@ lTextbox:
 					return err
 				}
 			default:
-				if anyEl, err := gooxml.CreateElement(el); err != nil {
+				if anyEl, err := unioffice.CreateElement(el); err != nil {
 					return err
 				} else {
 					if err := d.DecodeElement(anyEl, &el); err != nil {

@@ -32,7 +32,7 @@ func (m *CT_SerTxChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	}
 	if m.V != nil {
 		sev := xml.StartElement{Name: xml.Name{Local: "c:v"}}
-		gooxml.AddPreserveSpaceAttr(&sev, *m.V)
+		unioffice.AddPreserveSpaceAttr(&sev, *m.V)
 		e.EncodeElement(m.V, sev)
 	}
 	return nil
@@ -62,7 +62,7 @@ lCT_SerTxChoice:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_SerTxChoice %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_SerTxChoice %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

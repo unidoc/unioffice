@@ -100,7 +100,7 @@ lCT_MdxSet:
 				}
 				m.N = append(m.N, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_MdxSet %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_MdxSet %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

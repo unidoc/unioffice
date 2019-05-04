@@ -55,7 +55,7 @@ lCT_StyleDefinitionHeaderLst:
 				}
 				m.StyleDefHdr = append(m.StyleDefHdr, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_StyleDefinitionHeaderLst %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_StyleDefinitionHeaderLst %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

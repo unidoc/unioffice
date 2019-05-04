@@ -104,7 +104,7 @@ lCT_SingleXmlCell:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_SingleXmlCell %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_SingleXmlCell %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

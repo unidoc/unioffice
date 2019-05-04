@@ -131,7 +131,7 @@ func (s Slide) AddImage(img common.ImageRef) Image {
 
 	pic.NvPicPr.CNvPicPr = dml.NewCT_NonVisualPictureProperties()
 	pic.NvPicPr.CNvPicPr.PicLocks = dml.NewCT_PictureLocking()
-	pic.NvPicPr.CNvPicPr.PicLocks.NoChangeAspectAttr = gooxml.Bool(true)
+	pic.NvPicPr.CNvPicPr.PicLocks.NoChangeAspectAttr = unioffice.Bool(true)
 
 	pic.BlipFill = dml.NewCT_BlipFillProperties()
 
@@ -149,11 +149,11 @@ func (s Slide) AddImage(img common.ImageRef) Image {
 	for i, os := range s.p.Slides() {
 		if os.x == s.x {
 			fn := fmt.Sprintf("../media/image%d.%s", imgIdx, img.Format())
-			rel := s.p.slideRels[i].AddRelationship(fn, gooxml.ImageType)
+			rel := s.p.slideRels[i].AddRelationship(fn, unioffice.ImageType)
 			imgID = rel.ID()
 		}
 	}
-	pic.BlipFill.Blip.EmbedAttr = gooxml.String(imgID)
+	pic.BlipFill.Blip.EmbedAttr = unioffice.String(imgID)
 
 	pic.BlipFill.Stretch = dml.NewCT_StretchInfoProperties()
 	pic.BlipFill.Stretch.FillRect = dml.NewCT_RelativeRect()

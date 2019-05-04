@@ -85,15 +85,15 @@ func (wb *Workbook) AddSheet() Sheet {
 
 	wb.comments = append(wb.comments, nil)
 
-	dt := gooxml.DocTypeSpreadsheet
+	dt := unioffice.DocTypeSpreadsheet
 
 	// update the references
-	rid := wb.wbRels.AddAutoRelationship(dt, gooxml.OfficeDocumentType, len(wb.x.Sheets.Sheet), gooxml.WorksheetType)
+	rid := wb.wbRels.AddAutoRelationship(dt, unioffice.OfficeDocumentType, len(wb.x.Sheets.Sheet), unioffice.WorksheetType)
 	rs.IdAttr = rid.ID()
 
 	// add the content type
-	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(dt, gooxml.WorksheetContentType, len(wb.x.Sheets.Sheet)),
-		gooxml.WorksheetContentType)
+	wb.ContentTypes.AddOverride(unioffice.AbsoluteFilename(dt, unioffice.WorksheetContentType, len(wb.x.Sheets.Sheet)),
+		unioffice.WorksheetContentType)
 
 	return Sheet{wb, rs, ws}
 }
@@ -129,19 +129,19 @@ func (wb *Workbook) Epoch() time.Time {
 func (wb *Workbook) Save(w io.Writer) error {
 	z := zip.NewWriter(w)
 	defer z.Close()
-	dt := gooxml.DocTypeSpreadsheet
+	dt := unioffice.DocTypeSpreadsheet
 
-	if err := zippkg.MarshalXML(z, gooxml.BaseRelsFilename, wb.Rels.X()); err != nil {
+	if err := zippkg.MarshalXML(z, unioffice.BaseRelsFilename, wb.Rels.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXMLByType(z, dt, gooxml.ExtendedPropertiesType, wb.AppProperties.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.ExtendedPropertiesType, wb.AppProperties.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXMLByType(z, dt, gooxml.CorePropertiesType, wb.CoreProperties.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.CorePropertiesType, wb.CoreProperties.X()); err != nil {
 		return err
 	}
 
-	workbookFn := gooxml.AbsoluteFilename(dt, gooxml.OfficeDocumentType, 0)
+	workbookFn := unioffice.AbsoluteFilename(dt, unioffice.OfficeDocumentType, 0)
 	if err := zippkg.MarshalXML(z, workbookFn, wb.x); err != nil {
 		return err
 	}
@@ -149,12 +149,12 @@ func (wb *Workbook) Save(w io.Writer) error {
 		return err
 	}
 
-	if err := zippkg.MarshalXMLByType(z, dt, gooxml.StylesType, wb.StyleSheet.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.StylesType, wb.StyleSheet.X()); err != nil {
 		return err
 	}
 
 	for i, thm := range wb.themes {
-		if err := zippkg.MarshalXMLByTypeIndex(z, dt, gooxml.ThemeType, i+1, thm); err != nil {
+		if err := zippkg.MarshalXMLByTypeIndex(z, dt, unioffice.ThemeType, i+1, thm); err != nil {
 			return err
 		}
 	}
@@ -162,16 +162,16 @@ func (wb *Workbook) Save(w io.Writer) error {
 		// recalculate sheet dimensions
 		sheet.Dimension.RefAttr = Sheet{wb, nil, sheet}.Extents()
 
-		fn := gooxml.AbsoluteFilename(dt, gooxml.WorksheetType, i+1)
+		fn := unioffice.AbsoluteFilename(dt, unioffice.WorksheetType, i+1)
 		zippkg.MarshalXML(z, fn, sheet)
 		zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.xwsRels[i].X())
 	}
-	if err := zippkg.MarshalXMLByType(z, dt, gooxml.SharedStingsType, wb.SharedStrings.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.SharedStingsType, wb.SharedStrings.X()); err != nil {
 		return err
 	}
 
 	if wb.Thumbnail != nil {
-		fn := gooxml.AbsoluteFilename(dt, gooxml.ThumbnailType, 0)
+		fn := unioffice.AbsoluteFilename(dt, unioffice.ThumbnailType, 0)
 		tn, err := z.Create(fn)
 		if err != nil {
 			return err
@@ -181,22 +181,22 @@ func (wb *Workbook) Save(w io.Writer) error {
 		}
 	}
 	for i, chart := range wb.charts {
-		fn := gooxml.AbsoluteFilename(dt, gooxml.ChartType, i+1)
+		fn := unioffice.AbsoluteFilename(dt, unioffice.ChartType, i+1)
 		zippkg.MarshalXML(z, fn, chart)
 	}
 	for i, tbl := range wb.tables {
-		fn := gooxml.AbsoluteFilename(dt, gooxml.TableType, i+1)
+		fn := unioffice.AbsoluteFilename(dt, unioffice.TableType, i+1)
 		zippkg.MarshalXML(z, fn, tbl)
 	}
 	for i, drawing := range wb.drawings {
-		fn := gooxml.AbsoluteFilename(dt, gooxml.DrawingType, i+1)
+		fn := unioffice.AbsoluteFilename(dt, unioffice.DrawingType, i+1)
 		zippkg.MarshalXML(z, fn, drawing)
 		if !wb.drawingRels[i].IsEmpty() {
 			zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.drawingRels[i].X())
 		}
 	}
 	for i, drawing := range wb.vmlDrawings {
-		zippkg.MarshalXML(z, gooxml.AbsoluteFilename(dt, gooxml.VMLDrawingType, i+1), drawing)
+		zippkg.MarshalXML(z, unioffice.AbsoluteFilename(dt, unioffice.VMLDrawingType, i+1), drawing)
 		// never seen relationships for a VML drawing yet
 	}
 
@@ -207,18 +207,18 @@ func (wb *Workbook) Save(w io.Writer) error {
 				return err
 			}
 		} else {
-			gooxml.Log("unsupported image source: %+v", img)
+			unioffice.Log("unsupported image source: %+v", img)
 		}
 	}
 
-	if err := zippkg.MarshalXML(z, gooxml.ContentTypesFilename, wb.ContentTypes.X()); err != nil {
+	if err := zippkg.MarshalXML(z, unioffice.ContentTypesFilename, wb.ContentTypes.X()); err != nil {
 		return err
 	}
 	for i, cmt := range wb.comments {
 		if cmt == nil {
 			continue
 		}
-		zippkg.MarshalXML(z, gooxml.AbsoluteFilename(dt, gooxml.CommentsType, i+1), cmt)
+		zippkg.MarshalXML(z, unioffice.AbsoluteFilename(dt, unioffice.CommentsType, i+1), cmt)
 	}
 
 	if err := wb.WriteExtraFiles(z); err != nil {
@@ -279,26 +279,26 @@ func (wb Workbook) SheetCount() int {
 }
 
 func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship, src zippkg.Target) error {
-	dt := gooxml.DocTypeSpreadsheet
+	dt := unioffice.DocTypeSpreadsheet
 
 	switch typ {
-	case gooxml.OfficeDocumentType:
+	case unioffice.OfficeDocumentType:
 		wb.x = sml.NewWorkbook()
 		decMap.AddTarget(target, wb.x, typ, 0)
 		// look for the workbook relationships file as well
 		wb.wbRels = common.NewRelationships()
 		decMap.AddTarget(zippkg.RelationsPathFor(target), wb.wbRels.X(), typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.CorePropertiesType:
+	case unioffice.CorePropertiesType:
 		decMap.AddTarget(target, wb.CoreProperties.X(), typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.ExtendedPropertiesType:
+	case unioffice.ExtendedPropertiesType:
 		decMap.AddTarget(target, wb.AppProperties.X(), typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.WorksheetType:
+	case unioffice.WorksheetType:
 		ws := sml.NewWorksheet()
 		idx := uint32(len(wb.xws))
 		wb.xws = append(wb.xws, ws)
@@ -314,25 +314,25 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 
 		// fix the relationship target so it points to where we'll save
 		// the worksheet
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.xws))
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(wb.xws))
 
-	case gooxml.StylesType:
+	case unioffice.StylesType:
 		wb.StyleSheet = NewStyleSheet(wb)
 		decMap.AddTarget(target, wb.StyleSheet.X(), typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.ThemeType:
+	case unioffice.ThemeType:
 		thm := dml.NewTheme()
 		wb.themes = append(wb.themes, thm)
 		decMap.AddTarget(target, thm, typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.themes))
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(wb.themes))
 
-	case gooxml.SharedStingsType:
+	case unioffice.SharedStingsType:
 		wb.SharedStrings = NewSharedStrings()
 		decMap.AddTarget(target, wb.SharedStrings.X(), typ, 0)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
-	case gooxml.ThumbnailType:
+	case unioffice.ThumbnailType:
 		// read our thumbnail
 		for i, f := range files {
 			if f == nil {
@@ -352,7 +352,7 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 			}
 		}
 
-	case gooxml.ImageType:
+	case unioffice.ImageType:
 		for i, f := range files {
 			if f == nil {
 				continue
@@ -371,9 +371,9 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 				files[i] = nil
 			}
 		}
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.Images))
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(wb.Images))
 
-	case gooxml.DrawingType:
+	case unioffice.DrawingType:
 		drawing := sd.NewWsDr()
 		idx := uint32(len(wb.drawings))
 		decMap.AddTarget(target, drawing, typ, idx)
@@ -382,34 +382,34 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		drel := common.NewRelationships()
 		decMap.AddTarget(zippkg.RelationsPathFor(target), drel.X(), typ, idx)
 		wb.drawingRels = append(wb.drawingRels, drel)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.drawings))
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(wb.drawings))
 
-	case gooxml.VMLDrawingType:
+	case unioffice.VMLDrawingType:
 		vd := vmldrawing.NewContainer()
 		idx := uint32(len(wb.vmlDrawings))
 		decMap.AddTarget(target, vd, typ, idx)
 		wb.vmlDrawings = append(wb.vmlDrawings, vd)
 
-	case gooxml.CommentsType:
+	case unioffice.CommentsType:
 		wb.comments[src.Index] = sml.NewComments()
 		decMap.AddTarget(target, wb.comments[src.Index], typ, src.Index)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.comments))
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(wb.comments))
 
-	case gooxml.ChartType:
+	case unioffice.ChartType:
 		chart := crt.NewChartSpace()
 		idx := uint32(len(wb.charts))
 		decMap.AddTarget(target, chart, typ, idx)
 		wb.charts = append(wb.charts, chart)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.charts))
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(wb.charts))
 
-	case gooxml.TableType:
+	case unioffice.TableType:
 		tbl := sml.NewTable()
 		idx := uint32(len(wb.tables))
 		decMap.AddTarget(target, tbl, typ, idx)
 		wb.tables = append(wb.tables, tbl)
-		rel.TargetAttr = gooxml.RelativeFilename(dt, src.Typ, typ, len(wb.tables))
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(wb.tables))
 	default:
-		gooxml.Log("unsupported relationship %s %s", target, typ)
+		unioffice.Log("unsupported relationship %s %s", target, typ)
 	}
 	return nil
 }
@@ -419,8 +419,8 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 func (wb *Workbook) AddDrawing() Drawing {
 	drawing := sd.NewWsDr()
 	wb.drawings = append(wb.drawings, drawing)
-	fn := gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.DrawingType, len(wb.drawings))
-	wb.ContentTypes.AddOverride(fn, gooxml.DrawingContentType)
+	fn := unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.DrawingType, len(wb.drawings))
+	wb.ContentTypes.AddOverride(fn, unioffice.DrawingContentType)
 	wb.drawingRels = append(wb.drawingRels, common.NewRelationships())
 	return Drawing{wb, drawing}
 }
@@ -504,7 +504,7 @@ func (wb *Workbook) AddImage(i common.Image) (common.ImageRef, error) {
 
 	wb.Images = append(wb.Images, r)
 	fn := fmt.Sprintf("media/image%d.%s", len(wb.Images), i.Format)
-	wb.wbRels.AddRelationship(fn, gooxml.ImageType)
+	wb.wbRels.AddRelationship(fn, unioffice.ImageType)
 	return r, nil
 }
 
@@ -528,7 +528,7 @@ func (wb *Workbook) SetActiveSheetIndex(idx uint32) {
 		wb.x.BookViews.WorkbookView = append(wb.x.BookViews.WorkbookView, sml.NewCT_BookView())
 	}
 
-	wb.x.BookViews.WorkbookView[0].ActiveTabAttr = gooxml.Uint32(idx)
+	wb.x.BookViews.WorkbookView[0].ActiveTabAttr = unioffice.Uint32(idx)
 }
 
 // Tables returns a slice of all defined tables in the workbook.

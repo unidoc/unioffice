@@ -27,7 +27,7 @@ func (c ColorScale) X() *sml.CT_ColorScale {
 func (c ColorScale) AddFormatValue(t sml.ST_CfvoType, val string) {
 	v := sml.NewCT_Cfvo()
 	v.TypeAttr = t
-	v.ValAttr = gooxml.String(val)
+	v.ValAttr = unioffice.String(val)
 	c.x.Cfvo = append(c.x.Cfvo, v)
 }
 

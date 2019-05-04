@@ -89,7 +89,7 @@ lCT_SlideMasterTextStyles:
 					return err
 				}
 			default:
-				gooxml.Log("skipping unsupported element on CT_SlideMasterTextStyles %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_SlideMasterTextStyles %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

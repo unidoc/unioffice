@@ -29,19 +29,19 @@ func New() *Workbook {
 	wb.Rels = common.NewRelationships()
 	wb.wbRels = common.NewRelationships()
 
-	wb.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, "", gooxml.ExtendedPropertiesType, 0), gooxml.ExtendedPropertiesType)
-	wb.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, "", gooxml.CorePropertiesType, 0), gooxml.CorePropertiesType)
-	wb.Rels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, "", gooxml.OfficeDocumentType, 0), gooxml.OfficeDocumentType)
-	wb.wbRels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.OfficeDocumentType, gooxml.StylesType, 0), gooxml.StylesType)
+	wb.Rels.AddRelationship(unioffice.RelativeFilename(unioffice.DocTypeSpreadsheet, "", unioffice.ExtendedPropertiesType, 0), unioffice.ExtendedPropertiesType)
+	wb.Rels.AddRelationship(unioffice.RelativeFilename(unioffice.DocTypeSpreadsheet, "", unioffice.CorePropertiesType, 0), unioffice.CorePropertiesType)
+	wb.Rels.AddRelationship(unioffice.RelativeFilename(unioffice.DocTypeSpreadsheet, "", unioffice.OfficeDocumentType, 0), unioffice.OfficeDocumentType)
+	wb.wbRels.AddRelationship(unioffice.RelativeFilename(unioffice.DocTypeSpreadsheet, unioffice.OfficeDocumentType, unioffice.StylesType, 0), unioffice.StylesType)
 
 	wb.ContentTypes = common.NewContentTypes()
-	wb.ContentTypes.AddDefault("vml", gooxml.VMLDrawingContentType)
-	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.OfficeDocumentType, 0), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml")
-	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.StylesType, 0), gooxml.SMLStyleSheetContentType)
+	wb.ContentTypes.AddDefault("vml", unioffice.VMLDrawingContentType)
+	wb.ContentTypes.AddOverride(unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.OfficeDocumentType, 0), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml")
+	wb.ContentTypes.AddOverride(unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.StylesType, 0), unioffice.SMLStyleSheetContentType)
 
 	wb.SharedStrings = NewSharedStrings()
-	wb.ContentTypes.AddOverride(gooxml.AbsoluteFilename(gooxml.DocTypeSpreadsheet, gooxml.SharedStingsType, 0), gooxml.SharedStringsContentType)
-	wb.wbRels.AddRelationship(gooxml.RelativeFilename(gooxml.DocTypeSpreadsheet, gooxml.OfficeDocumentType, gooxml.SharedStingsType, 0), gooxml.SharedStingsType)
+	wb.ContentTypes.AddOverride(unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.SharedStingsType, 0), unioffice.SharedStringsContentType)
+	wb.wbRels.AddRelationship(unioffice.RelativeFilename(unioffice.DocTypeSpreadsheet, unioffice.OfficeDocumentType, unioffice.SharedStingsType, 0), unioffice.SharedStingsType)
 
 	return wb
 }

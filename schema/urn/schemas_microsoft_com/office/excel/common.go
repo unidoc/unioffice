@@ -265,6 +265,6 @@ func (m ST_ObjectType) ValidateWithPath(path string) error {
 
 // init registers constructor functions for dynamically creating elements based off the XML namespace and name
 func init() {
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:excel", "CT_ClientData", NewCT_ClientData)
-	gooxml.RegisterConstructor("urn:schemas-microsoft-com:office:excel", "ClientData", NewClientData)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:excel", "CT_ClientData", NewCT_ClientData)
+	unioffice.RegisterConstructor("urn:schemas-microsoft-com:office:excel", "ClientData", NewClientData)
 }

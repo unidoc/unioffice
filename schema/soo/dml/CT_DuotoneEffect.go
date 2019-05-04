@@ -94,7 +94,7 @@ lCT_DuotoneEffect:
 				}
 				m.EG_ColorChoice = append(m.EG_ColorChoice, tmpcolorchoice)
 			default:
-				gooxml.Log("skipping unsupported element on CT_DuotoneEffect %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_DuotoneEffect %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

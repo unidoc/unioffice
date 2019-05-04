@@ -88,7 +88,7 @@ lCT_DdeValues:
 				}
 				m.Value = append(m.Value, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_DdeValues %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_DdeValues %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

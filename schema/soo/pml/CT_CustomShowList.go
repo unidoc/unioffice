@@ -57,7 +57,7 @@ lCT_CustomShowList:
 				}
 				m.CustShow = append(m.CustShow, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_CustomShowList %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_CustomShowList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

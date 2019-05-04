@@ -60,7 +60,7 @@ lComments:
 				}
 				m.Comment = append(m.Comment, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on Comments %v", el.Name)
+				unioffice.Log("skipping unsupported element on Comments %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -57,7 +57,7 @@ lCT_TLTemplateList:
 				}
 				m.Tmpl = append(m.Tmpl, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_TLTemplateList %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_TLTemplateList %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

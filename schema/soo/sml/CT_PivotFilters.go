@@ -75,7 +75,7 @@ lCT_PivotFilters:
 				}
 				m.Filter = append(m.Filter, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_PivotFilters %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_PivotFilters %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

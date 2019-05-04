@@ -147,7 +147,7 @@ lCT_Record:
 				}
 				m.X = append(m.X, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_Record %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_Record %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

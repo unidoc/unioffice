@@ -22,13 +22,13 @@ func setCellMarginPercent(w *wml.CT_TblWidth, pct float64) {
 	w.TypeAttr = wml.ST_TblWidthPct
 	w.WAttr = &wml.ST_MeasurementOrPercent{}
 	w.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
-	w.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(pct * 50))
+	w.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = unioffice.Int64(int64(pct * 50))
 }
 func setCellMargin(w *wml.CT_TblWidth, d measurement.Distance) {
 	w.TypeAttr = wml.ST_TblWidthDxa
 	w.WAttr = &wml.ST_MeasurementOrPercent{}
 	w.WAttr.ST_DecimalNumberOrPercent = &wml.ST_DecimalNumberOrPercent{}
-	w.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = gooxml.Int64(int64(d / measurement.Dxa))
+	w.WAttr.ST_DecimalNumberOrPercent.ST_UnqualifiedPercentage = unioffice.Int64(int64(d / measurement.Dxa))
 }
 
 // SetTopPct sets the cell top margin

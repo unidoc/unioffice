@@ -73,7 +73,7 @@ lCT_ColFields:
 				}
 				m.Field = append(m.Field, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_ColFields %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_ColFields %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

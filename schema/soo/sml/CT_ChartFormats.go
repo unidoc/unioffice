@@ -73,7 +73,7 @@ lCT_ChartFormats:
 				}
 				m.ChartFormat = append(m.ChartFormat, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_ChartFormats %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_ChartFormats %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

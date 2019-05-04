@@ -75,7 +75,7 @@ lCT_MeasureGroups:
 				}
 				m.MeasureGroup = append(m.MeasureGroup, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_MeasureGroups %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_MeasureGroups %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

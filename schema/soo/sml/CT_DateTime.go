@@ -130,7 +130,7 @@ lCT_DateTime:
 				}
 				m.X = append(m.X, tmp)
 			default:
-				gooxml.Log("skipping unsupported element on CT_DateTime %v", el.Name)
+				unioffice.Log("skipping unsupported element on CT_DateTime %v", el.Name)
 				if err := d.Skip(); err != nil {
 					return err
 				}

@@ -22,9 +22,9 @@ func NewSettings() Settings {
 	s := wml.NewSettings()
 	s.Compat = wml.NewCT_Compat()
 	stng := wml.NewCT_CompatSetting()
-	stng.NameAttr = gooxml.String("compatibilityMode")
-	stng.UriAttr = gooxml.String("http://schemas.microsoft.com/office/word")
-	stng.ValAttr = gooxml.String("15")
+	stng.NameAttr = unioffice.String("compatibilityMode")
+	stng.UriAttr = unioffice.String("http://schemas.microsoft.com/office/word")
+	stng.ValAttr = unioffice.String("15")
 	s.Compat.CompatSetting = append(s.Compat.CompatSetting, stng)
 	return Settings{s}
 }
