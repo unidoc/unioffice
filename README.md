@@ -4,11 +4,13 @@ The repository (gooxml) will be moving to a new home: https://github.com/unidoc/
 
 This will require updating import paths of existing code to `github.com/unidoc/unioffice`.  This move will take place in the weekend of the 5th of May.
 
+*Update 2019/05/04: The move has been completed.*
+
 ----
 ----
 
 
-**gooxml** is a library for creation of Office Open XML documents (.docx, .xlsx
+**unioffice** is a library for creation of Office Open XML documents (.docx, .xlsx
 and .pptx).  It's goal is to be the most compatible and highest performance Go
 library for creation and editing of docx/xlsx/pptx files.
 
@@ -20,7 +22,7 @@ Requires **go1.8+**, builds are tested with 1.8, 1.9 and tip.
 [![GoDoc](https://godoc.org/github.com/unidoc/unioffice?status.svg)](https://godoc.org/github.com/unidoc/unioffice)
 [![go 1.8+](https://img.shields.io/badge/go-1.8%2B-blue.svg)](http://golang.org)
 
-![https://github.com/unidoc/unioffice/](./_examples/preview.png "gooxml")
+![https://github.com/unidoc/unioffice/](./_examples/preview.png "unioffice")
 
 ## Status ##
 
@@ -45,7 +47,7 @@ Requires **go1.8+**, builds are tested with 1.8, 1.9 and tip.
 ## Performance ##
 
 There has been a great deal of interest in performance numbers for spreadsheet
-creation/reading lately, so here are gooxml numbers for this
+creation/reading lately, so here are unioffice numbers for this
 [benchmark](https://github.com/unidoc/unioffice/tree/master/_examples/spreadsheet/lots-of-rows)
 which creates a sheet with 30k rows, each with 100 columns.
 
