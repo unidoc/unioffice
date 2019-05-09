@@ -430,7 +430,7 @@ func (d *Document) StructuredDocumentTags() []StructuredDocumentTag {
 	return ret
 }
 
-// Paragraphs returns all of the paragraphs in the document body.
+// Paragraphs returns all of the paragraphs in the document body including tables.
 func (d *Document) Paragraphs() []Paragraph {
 	ret := []Paragraph{}
 	if d.x.Body == nil {
@@ -440,6 +440,14 @@ func (d *Document) Paragraphs() []Paragraph {
 		for _, c := range ble.EG_ContentBlockContent {
 			for _, p := range c.P {
 				ret = append(ret, Paragraph{d, p})
+			}
+		}
+	}
+
+	for _, t := range d.Tables() {
+		for _, r := range t.Rows() {
+			for _, c := range r.Cells() {
+				ret = append(ret, c.Paragraphs()...)
 			}
 		}
 	}
