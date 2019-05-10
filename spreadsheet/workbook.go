@@ -98,6 +98,54 @@ func (wb *Workbook) AddSheet() Sheet {
 	return Sheet{wb, rs, ws}
 }
 
+// RemoveSheet removes the sheet with the given index from the workbook.
+func (wb *Workbook) RemoveSheet(ind int) error {
+	if wb.SheetCount() <= ind {
+		return ErrorNotFound
+	}
+
+	for _, r := range wb.wbRels.Relationships() {
+		if r.ID() == wb.x.Sheets.Sheet[ind].IdAttr {
+			wb.wbRels.Remove(r)
+			break
+		}
+	}
+
+	wb.ContentTypes.RemoveOverride(unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet,
+		unioffice.WorksheetContentType, ind+1))
+
+	copy(wb.xws[ind:], wb.xws[ind+1:])
+	wb.xws = wb.xws[:len(wb.xws)-1]
+
+	copy(wb.x.Sheets.Sheet[ind:], wb.x.Sheets.Sheet[ind+1:])
+	wb.x.Sheets.Sheet = wb.x.Sheets.Sheet[:len(wb.x.Sheets.Sheet)-1]
+
+	copy(wb.xwsRels[ind:], wb.xwsRels[ind+1:])
+	wb.xwsRels = wb.xwsRels[:len(wb.xwsRels)-1]
+
+	copy(wb.comments[ind:], wb.comments[ind+1:])
+	wb.comments = wb.comments[:len(wb.comments)-1]
+
+	return nil
+}
+
+// RemoveSheetByName removes the sheet with the given name from the workbook.
+func (wb *Workbook) RemoveSheetByName(name string) error {
+	sheetInd := -1
+	for i, s := range wb.Sheets() {
+		if name == s.Name() {
+			sheetInd = i
+			break
+		}
+	}
+
+	if sheetInd == -1 {
+		return ErrorNotFound
+	}
+
+	return wb.RemoveSheet(sheetInd)
+}
+
 // SaveToFile writes the workbook out to a file.
 func (wb *Workbook) SaveToFile(path string) error {
 	f, err := os.Create(path)
