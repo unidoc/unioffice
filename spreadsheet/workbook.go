@@ -117,8 +117,17 @@ func (wb *Workbook) RemoveSheet(ind int) error {
 	copy(wb.xws[ind:], wb.xws[ind+1:])
 	wb.xws = wb.xws[:len(wb.xws)-1]
 
+	removed := wb.x.Sheets.Sheet[ind]
+
 	copy(wb.x.Sheets.Sheet[ind:], wb.x.Sheets.Sheet[ind+1:])
 	wb.x.Sheets.Sheet = wb.x.Sheets.Sheet[:len(wb.x.Sheets.Sheet)-1]
+
+	// fix sheet IDs by decrementing each one after the removed sheet
+	for i := range wb.x.Sheets.Sheet {
+		if wb.x.Sheets.Sheet[i].SheetIdAttr > removed.SheetIdAttr {
+			wb.x.Sheets.Sheet[i].SheetIdAttr--
+		}
+	}
 
 	copy(wb.xwsRels[ind:], wb.xwsRels[ind+1:])
 	wb.xwsRels = wb.xwsRels[:len(wb.xwsRels)-1]

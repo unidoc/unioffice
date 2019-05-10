@@ -290,3 +290,51 @@ func TestOpenOrderedSheets(t *testing.T) {
 	}
 
 }
+
+func TestRemoveSheet(t *testing.T) {
+	wb, err := spreadsheet.Open("./testdata/sheets.xlsx")
+	defer wb.Close()
+	if err != nil {
+		t.Fatalf("error opening workbook: %s", err)
+	}
+
+	wasCount := wb.SheetCount()
+
+	if err := wb.RemoveSheet(15); err == nil {
+		t.Fatalf("invalid sheet index, expected error %v, got nil", spreadsheet.ErrorNotFound)
+	}
+
+	wb.RemoveSheet(2)
+
+	if err := wb.Validate(); err != nil {
+		t.Fatalf("produced invalid workbook: %v", err)
+	}
+
+	if wb.SheetCount() != (wasCount - 1) {
+		t.Fatalf("expected sheets count %d, got %d", wasCount-1, wb.SheetCount())
+	}
+}
+
+func TestRemoveSheetByName(t *testing.T) {
+	wb, err := spreadsheet.Open("./testdata/sheets.xlsx")
+	defer wb.Close()
+	if err != nil {
+		t.Fatalf("error opening workbook: %s", err)
+	}
+
+	wasCount := wb.SheetCount()
+
+	if err := wb.RemoveSheetByName("Sheet156"); err == nil {
+		t.Fatalf("invalid sheet index, expected error %v, got nil", spreadsheet.ErrorNotFound)
+	}
+
+	wb.RemoveSheetByName("Sheet2")
+
+	if err := wb.Validate(); err != nil {
+		t.Fatalf("produced invalid workbook: %v", err)
+	}
+
+	if wb.SheetCount() != (wasCount - 1) {
+		t.Fatalf("expected sheets count %d, got %d", wasCount-1, wb.SheetCount())
+	}
+}
