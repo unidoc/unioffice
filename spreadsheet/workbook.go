@@ -193,11 +193,18 @@ func (wb *Workbook) CopySheet(ind int, copiedSheetName string) (Sheet, error) {
 	copiedSheet.NameAttr = copiedSheetName
 	copiedSheet.SheetIdAttr = nextSheetID
 
+	wb.x.Sheets.Sheet = append(wb.x.Sheets.Sheet, &copiedSheet)
+
 	copiedXwsRel := common.NewRelationshipsCopy(wb.xwsRels[ind])
 	wb.xwsRels = append(wb.xwsRels, copiedXwsRel)
 
-	copiedComments := *wb.comments[ind]
-	wb.comments = append(wb.comments, &copiedComments)
+	copiedCommentsPtr := wb.comments[ind]
+	if copiedCommentsPtr == nil {
+		wb.comments = append(wb.comments, nil)
+	} else {
+		copiedComments := *copiedCommentsPtr
+		wb.comments = append(wb.comments, &copiedComments)
+	}
 
 	return Sheet{wb, &copiedSheet, &copiedWs}, nil
 }
