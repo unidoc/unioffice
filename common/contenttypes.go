@@ -114,6 +114,10 @@ func (c ContentTypes) CopyOverride(path, newPath string) {
 		path = "/" + path
 	}
 
+	if !strings.HasPrefix(newPath, "/") {
+		newPath = "/" + newPath
+	}
+
 	for i := range c.x.Override {
 		if c.x.Override[i].PartNameAttr == path {
 			copied := *c.x.Override[i]
