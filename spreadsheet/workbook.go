@@ -155,21 +155,68 @@ func (wb *Workbook) RemoveSheetByName(name string) error {
 	return wb.RemoveSheet(sheetInd)
 }
 
-func (wb *Workbook) CopySheet(ind int, copiedSheetName string) error {
+// CopySheet copies the existing sheet at index `ind` and puts its copy with the name `copiedSheetName`.
+func (wb *Workbook) CopySheet(ind int, copiedSheetName string) (Sheet, error) {
 	if wb.SheetCount() <= ind {
-		return ErrorNotFound
+		return Sheet{}, ErrorNotFound
 	}
 
+	var copiedRel common.Relationship
 	for _, r := range wb.wbRels.Relationships() {
 		if r.ID() == wb.x.Sheets.Sheet[ind].IdAttr {
-			if _, ok := wb.wbRels.CopyRelationship(r.ID()); !ok {
-				return ErrorNotFound
+			var ok bool
+			if copiedRel, ok = wb.wbRels.CopyRelationship(r.ID()); !ok {
+				return Sheet{}, ErrorNotFound
 			}
 
 			break
 		}
 	}
 
+	wb.ContentTypes.CopyOverride(unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet,
+		unioffice.WorksheetContentType, ind+1), unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet,
+		unioffice.WorksheetContentType, len(wb.ContentTypes.X().Override)))
+
+	copiedWs := *wb.xws[ind]
+	wb.xws = append(wb.xws, &copiedWs)
+
+	var nextSheetID uint32 = 0
+	for _, s := range wb.x.Sheets.Sheet {
+		if s.SheetIdAttr > nextSheetID {
+			nextSheetID = s.SheetIdAttr
+		}
+	}
+	nextSheetID++
+
+	copiedSheet := *wb.x.Sheets.Sheet[ind]
+	copiedSheet.IdAttr = copiedRel.ID()
+	copiedSheet.NameAttr = copiedSheetName
+	copiedSheet.SheetIdAttr = nextSheetID
+
+	copiedXwsRel := common.NewRelationshipsCopy(wb.xwsRels[ind])
+	wb.xwsRels = append(wb.xwsRels, copiedXwsRel)
+
+	copiedComments := *wb.comments[ind]
+	wb.comments = append(wb.comments, &copiedComments)
+
+	return Sheet{wb, &copiedSheet, &copiedWs}, nil
+}
+
+// CopySheetByName copies the existing sheet with the name `name` and puts its copy with the name `copiedSheetName`.
+func (wb *Workbook) CopySheetByName(name, copiedSheetName string) (Sheet, error) {
+	sheetInd := -1
+	for i, s := range wb.Sheets() {
+		if name == s.Name() {
+			sheetInd = i
+			break
+		}
+	}
+
+	if sheetInd == -1 {
+		return Sheet{}, ErrorNotFound
+	}
+
+	return wb.CopySheet(sheetInd, copiedSheetName)
 }
 
 // SaveToFile writes the workbook out to a file.

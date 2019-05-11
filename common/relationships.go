@@ -25,6 +25,12 @@ func NewRelationships() Relationships {
 	return Relationships{x: relationships.NewRelationships()}
 }
 
+// NewRelationshipsCopy creates a new relationships wrapper as a copy of passed in instance.
+func NewRelationshipsCopy(rels Relationships) Relationships {
+	copiedBody := *rels.x
+	return Relationships{x: &copiedBody}
+}
+
 // X returns the underlying raw XML data.
 func (r Relationships) X() *relationships.Relationships {
 	return r.x
