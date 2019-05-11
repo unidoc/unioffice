@@ -98,7 +98,7 @@ func (r Relationships) Remove(rel Relationship) bool {
 }
 
 // CopyRelationship copies the relationship.
-func (r Relationships) CopyRelationship(idAttr string) {
+func (r Relationships) CopyRelationship(idAttr string) (Relationship, bool) {
 	for i := range r.x.Relationship {
 		if r.x.Relationship[i].IdAttr == idAttr {
 			copied := *r.x.Relationship[i]
@@ -119,9 +119,11 @@ func (r Relationships) CopyRelationship(idAttr string) {
 
 			r.x.Relationship = append(r.x.Relationship, &copied)
 
-			break
+			return Relationship{&copied}, true
 		}
 	}
+
+	return Relationship{}, false
 }
 
 // Hyperlink is just an appropriately configured relationship.

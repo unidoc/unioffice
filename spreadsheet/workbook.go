@@ -155,13 +155,19 @@ func (wb *Workbook) RemoveSheetByName(name string) error {
 	return wb.RemoveSheet(sheetInd)
 }
 
-/*func (wb *Workbook) CopySheet(ind int, copiedSheetName string) error {
+func (wb *Workbook) CopySheet(ind int, copiedSheetName string) error {
 	if wb.SheetCount() <= ind {
 		return ErrorNotFound
 	}
 
-	wb.wbRels.
-}*/
+	for _, r := range wb.wbRels.Relationships() {
+		if r.ID() == wb.x.Sheets.Sheet[ind].IdAttr {
+			wb.wbRels.CopyRelationship(r.ID())
+			break
+		}
+	}
+
+}
 
 // SaveToFile writes the workbook out to a file.
 func (wb *Workbook) SaveToFile(path string) error {

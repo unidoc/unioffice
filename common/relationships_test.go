@@ -135,13 +135,21 @@ func TestCopyRelationship(t *testing.T) {
 		t.Errorf("expected 3, got %d", len(r.Relationships()))
 	}
 
-	r.CopyRelationship(r.Relationships()[1].ID())
+	copied, ok := r.CopyRelationship(r.Relationships()[1].ID())
+	if !ok {
+		t.Errorf("expected true, got %v", ok)
+	}
 
 	if len(r.Relationships()) != 4 {
 		t.Errorf("expected 4, got %d", len(r.Relationships()))
 	}
 
-	if got := r.Relationships()[3].Target(); got != "foo2" {
+	if got := copied.Target(); got != "foo2" {
 		t.Errorf("expected foo2, got %s", got)
+	}
+
+	_, ok = r.CopyRelationship("qweqwe")
+	if ok {
+		t.Errorf("expected false, got %v", ok)
 	}
 }
