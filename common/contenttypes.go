@@ -108,3 +108,19 @@ func (c ContentTypes) RemoveOverride(path string) {
 		}
 	}
 }
+
+func (c ContentTypes) CopyOverride(path, newPath string) {
+	if !strings.HasPrefix(path, "/") {
+		path = "/" + path
+	}
+
+	for i := range c.x.Override {
+		if c.x.Override[i].PartNameAttr == path {
+			copied := *c.x.Override[i]
+
+			copied.PartNameAttr = newPath
+
+			c.x.Override = append(c.x.Override, &copied)
+		}
+	}
+}

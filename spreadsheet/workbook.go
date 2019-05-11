@@ -162,7 +162,10 @@ func (wb *Workbook) CopySheet(ind int, copiedSheetName string) error {
 
 	for _, r := range wb.wbRels.Relationships() {
 		if r.ID() == wb.x.Sheets.Sheet[ind].IdAttr {
-			wb.wbRels.CopyRelationship(r.ID())
+			if _, ok := wb.wbRels.CopyRelationship(r.ID()); !ok {
+				return ErrorNotFound
+			}
+
 			break
 		}
 	}
