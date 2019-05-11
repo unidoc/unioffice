@@ -124,3 +124,24 @@ func TestRelationshipsRemoval(t *testing.T) {
 		t.Errorf("expected 0, got %d", len(r.Relationships()))
 	}
 }
+
+func TestCopyRelationship(t *testing.T) {
+	r := common.NewRelationships()
+	r.AddRelationship("foo1", "http://bar")
+	r.AddRelationship("foo2", "http://bar")
+	r.AddRelationship("foo3", "http://bar")
+
+	if len(r.Relationships()) != 3 {
+		t.Errorf("expected 3, got %d", len(r.Relationships()))
+	}
+
+	r.CopyRelationship(r.Relationships()[1].ID())
+
+	if len(r.Relationships()) != 4 {
+		t.Errorf("expected 4, got %d", len(r.Relationships()))
+	}
+
+	if got := r.Relationships()[3].Target(); got != "foo2" {
+		t.Errorf("expected foo2, got %s", got)
+	}
+}
