@@ -155,6 +155,14 @@ func (wb *Workbook) RemoveSheetByName(name string) error {
 	return wb.RemoveSheet(sheetInd)
 }
 
+/*func (wb *Workbook) CopySheet(ind int, copiedSheetName string) error {
+	if wb.SheetCount() <= ind {
+		return ErrorNotFound
+	}
+
+	wb.wbRels.
+}*/
+
 // SaveToFile writes the workbook out to a file.
 func (wb *Workbook) SaveToFile(path string) error {
 	f, err := os.Create(path)
