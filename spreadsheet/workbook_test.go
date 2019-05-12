@@ -290,3 +290,117 @@ func TestOpenOrderedSheets(t *testing.T) {
 	}
 
 }
+
+func TestRemoveSheet(t *testing.T) {
+	wb, err := spreadsheet.Open("./testdata/sheets.xlsx")
+	defer wb.Close()
+	if err != nil {
+		t.Fatalf("error opening workbook: %s", err)
+	}
+
+	wasCount := wb.SheetCount()
+
+	if err := wb.RemoveSheet(15); err == nil {
+		t.Fatalf("invalid sheet index, expected error %v, got nil", spreadsheet.ErrorNotFound)
+	}
+
+	if err := wb.RemoveSheet(2); err != nil {
+		t.Fatalf("expected no error, got %v", err)
+	}
+
+	if err := wb.Validate(); err != nil {
+		t.Fatalf("produced invalid workbook: %v", err)
+	}
+
+	if wb.SheetCount() != (wasCount - 1) {
+		t.Fatalf("expected sheets count %d, got %d", wasCount-1, wb.SheetCount())
+	}
+}
+
+func TestRemoveSheetByName(t *testing.T) {
+	wb, err := spreadsheet.Open("./testdata/sheets.xlsx")
+	defer wb.Close()
+	if err != nil {
+		t.Fatalf("error opening workbook: %s", err)
+	}
+
+	wasCount := wb.SheetCount()
+
+	if err := wb.RemoveSheetByName("Sheet156"); err == nil {
+		t.Fatalf("invalid sheet name, expected error %v, got nil", spreadsheet.ErrorNotFound)
+	}
+
+	if err := wb.RemoveSheetByName("Sheet2"); err != nil {
+		t.Fatalf("expected no error, got %v", err)
+	}
+
+	if err := wb.Validate(); err != nil {
+		t.Fatalf("produced invalid workbook: %v", err)
+	}
+
+	if wb.SheetCount() != (wasCount - 1) {
+		t.Fatalf("expected sheets count %d, got %d", wasCount-1, wb.SheetCount())
+	}
+}
+
+func TestCopySheet(t *testing.T) {
+	wb, err := spreadsheet.Open("./testdata/sheets.xlsx")
+	defer wb.Close()
+	if err != nil {
+		t.Fatalf("error opening workbook: %s", err)
+	}
+
+	wasCount := wb.SheetCount()
+
+	if _, err := wb.CopySheet(15, "Copied Sheet"); err == nil {
+		t.Fatalf("invalid sheet index, expected error %v, got nil", spreadsheet.ErrorNotFound)
+	}
+
+	copiedSheet, err := wb.CopySheet(1, "Copied Sheet")
+	if err != nil {
+		t.Fatalf("expected no error, got %v", err)
+	}
+
+	if err := wb.Validate(); err != nil {
+		t.Fatalf("produced invalid workbook: %v", err)
+	}
+
+	if copiedSheet.Name() != "Copied Sheet" {
+		t.Fatalf("invalid name in the copied sheet, expected \"Copied Sheet\", got \"%s\"", copiedSheet.Name())
+	}
+
+	if wb.SheetCount() != (wasCount + 1) {
+		t.Fatalf("expected sheets count %d, got %d", wasCount+1, wb.SheetCount())
+	}
+}
+
+func TestCopySheetByName(t *testing.T) {
+	wb, err := spreadsheet.Open("./testdata/sheets.xlsx")
+	defer wb.Close()
+	if err != nil {
+		t.Fatalf("error opening workbook: %s", err)
+	}
+
+	wasCount := wb.SheetCount()
+
+	if _, err := wb.CopySheetByName("Sheet156", "Copied Sheet"); err == nil {
+		t.Fatalf("invalid sheet name, expected error %v, got nil", spreadsheet.ErrorNotFound)
+	}
+
+	copiedSheet, err := wb.CopySheetByName("Sheet2", "Copied Sheet")
+	if err != nil {
+		t.Fatalf("expected no error, got %v", err)
+	}
+
+	if err := wb.Validate(); err != nil {
+		t.Fatalf("produced invalid workbook: %v", err)
+	}
+
+	if copiedSheet.Name() != "Copied Sheet" {
+		t.Fatalf("invalid name in the copied sheet, expected \"Copied Sheet\", got \"%s\"", copiedSheet.Name())
+	}
+
+	if wb.SheetCount() != (wasCount + 1) {
+		t.Fatalf("expected sheets count %d, got %d", wasCount+1, wb.SheetCount())
+	}
+}

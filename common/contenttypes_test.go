@@ -37,3 +37,22 @@ func TestContentTypesUnmarshal(t *testing.T) {
 
 	testhelper.CompareGoldenXML(t, "contenttypes.xml", got.Bytes())
 }
+
+func TestCopyOverride(t *testing.T) {
+	ct := common.NewContentTypes()
+	ct.AddOverride("/foo/bar.xml", "application/xml")
+
+	lenBefore := len(ct.X().Override)
+
+	ct.CopyOverride("foo/bar.xml", "foo/bar2.xml")
+
+	if len(ct.X().Override) != (lenBefore + 1) {
+		t.Errorf("expected override len %d, got %d", lenBefore+1, len(ct.X().Override))
+	}
+
+	copyIdx := len(ct.X().Override) - 1
+
+	if ct.X().Override[copyIdx].PartNameAttr != "/foo/bar2.xml" {
+		t.Errorf("expected \"/foo/bar2.xml\" PartNameAttr, go %s", ct.X().Override[copyIdx].PartNameAttr)
+	}
+}

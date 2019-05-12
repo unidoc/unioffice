@@ -108,3 +108,24 @@ func (c ContentTypes) RemoveOverride(path string) {
 		}
 	}
 }
+
+// CopyOverride copies override content type for a given `path` and puts it with a path `newPath`.
+func (c ContentTypes) CopyOverride(path, newPath string) {
+	if !strings.HasPrefix(path, "/") {
+		path = "/" + path
+	}
+
+	if !strings.HasPrefix(newPath, "/") {
+		newPath = "/" + newPath
+	}
+
+	for i := range c.x.Override {
+		if c.x.Override[i].PartNameAttr == path {
+			copied := *c.x.Override[i]
+
+			copied.PartNameAttr = newPath
+
+			c.x.Override = append(c.x.Override, &copied)
+		}
+	}
+}

@@ -25,6 +25,12 @@ func NewRelationships() Relationships {
 	return Relationships{x: relationships.NewRelationships()}
 }
 
+// NewRelationshipsCopy creates a new relationships wrapper as a copy of passed in instance.
+func NewRelationshipsCopy(rels Relationships) Relationships {
+	copiedBody := *rels.x
+	return Relationships{x: &copiedBody}
+}
+
 // X returns the underlying raw XML data.
 func (r Relationships) X() *relationships.Relationships {
 	return r.x
@@ -95,6 +101,35 @@ func (r Relationships) Remove(rel Relationship) bool {
 		}
 	}
 	return false
+}
+
+// CopyRelationship copies the relationship.
+func (r Relationships) CopyRelationship(idAttr string) (Relationship, bool) {
+	for i := range r.x.Relationship {
+		if r.x.Relationship[i].IdAttr == idAttr {
+			copied := *r.x.Relationship[i]
+
+			nextID := len(r.x.Relationship) + 1
+			used := map[string]struct{}{}
+
+			// identify IDs in  use
+			for _, exRel := range r.x.Relationship {
+				used[exRel.IdAttr] = struct{}{}
+			}
+			// find the next ID that is unused
+			for _, ok := used[fmt.Sprintf("rId%d", nextID)]; ok; _, ok = used[fmt.Sprintf("rId%d", nextID)] {
+				nextID++
+			}
+
+			copied.IdAttr = fmt.Sprintf("rId%d", nextID)
+
+			r.x.Relationship = append(r.x.Relationship, &copied)
+
+			return Relationship{&copied}, true
+		}
+	}
+
+	return Relationship{}, false
 }
 
 // Hyperlink is just an appropriately configured relationship.

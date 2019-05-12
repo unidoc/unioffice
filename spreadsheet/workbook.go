@@ -98,6 +98,134 @@ func (wb *Workbook) AddSheet() Sheet {
 	return Sheet{wb, rs, ws}
 }
 
+// RemoveSheet removes the sheet with the given index from the workbook.
+func (wb *Workbook) RemoveSheet(ind int) error {
+	if wb.SheetCount() <= ind {
+		return ErrorNotFound
+	}
+
+	for _, r := range wb.wbRels.Relationships() {
+		if r.ID() == wb.x.Sheets.Sheet[ind].IdAttr {
+			wb.wbRels.Remove(r)
+			break
+		}
+	}
+
+	wb.ContentTypes.RemoveOverride(unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet,
+		unioffice.WorksheetContentType, ind+1))
+
+	copy(wb.xws[ind:], wb.xws[ind+1:])
+	wb.xws = wb.xws[:len(wb.xws)-1]
+
+	removed := wb.x.Sheets.Sheet[ind]
+
+	copy(wb.x.Sheets.Sheet[ind:], wb.x.Sheets.Sheet[ind+1:])
+	wb.x.Sheets.Sheet = wb.x.Sheets.Sheet[:len(wb.x.Sheets.Sheet)-1]
+
+	// fix sheet IDs by decrementing each one after the removed sheet
+	for i := range wb.x.Sheets.Sheet {
+		if wb.x.Sheets.Sheet[i].SheetIdAttr > removed.SheetIdAttr {
+			wb.x.Sheets.Sheet[i].SheetIdAttr--
+		}
+	}
+
+	copy(wb.xwsRels[ind:], wb.xwsRels[ind+1:])
+	wb.xwsRels = wb.xwsRels[:len(wb.xwsRels)-1]
+
+	copy(wb.comments[ind:], wb.comments[ind+1:])
+	wb.comments = wb.comments[:len(wb.comments)-1]
+
+	return nil
+}
+
+// RemoveSheetByName removes the sheet with the given name from the workbook.
+func (wb *Workbook) RemoveSheetByName(name string) error {
+	sheetInd := -1
+	for i, s := range wb.Sheets() {
+		if name == s.Name() {
+			sheetInd = i
+			break
+		}
+	}
+
+	if sheetInd == -1 {
+		return ErrorNotFound
+	}
+
+	return wb.RemoveSheet(sheetInd)
+}
+
+// CopySheet copies the existing sheet at index `ind` and puts its copy with the name `copiedSheetName`.
+func (wb *Workbook) CopySheet(ind int, copiedSheetName string) (Sheet, error) {
+	if wb.SheetCount() <= ind {
+		return Sheet{}, ErrorNotFound
+	}
+
+	var copiedRel common.Relationship
+	for _, r := range wb.wbRels.Relationships() {
+		if r.ID() == wb.x.Sheets.Sheet[ind].IdAttr {
+			var ok bool
+			if copiedRel, ok = wb.wbRels.CopyRelationship(r.ID()); !ok {
+				return Sheet{}, ErrorNotFound
+			}
+
+			break
+		}
+	}
+
+	wb.ContentTypes.CopyOverride(unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet,
+		unioffice.WorksheetContentType, ind+1), unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet,
+		unioffice.WorksheetContentType, len(wb.ContentTypes.X().Override)))
+
+	copiedWs := *wb.xws[ind]
+	wb.xws = append(wb.xws, &copiedWs)
+
+	var nextSheetID uint32 = 0
+	for _, s := range wb.x.Sheets.Sheet {
+		if s.SheetIdAttr > nextSheetID {
+			nextSheetID = s.SheetIdAttr
+		}
+	}
+	nextSheetID++
+
+	copiedSheet := *wb.x.Sheets.Sheet[ind]
+	copiedSheet.IdAttr = copiedRel.ID()
+	copiedSheet.NameAttr = copiedSheetName
+	copiedSheet.SheetIdAttr = nextSheetID
+
+	wb.x.Sheets.Sheet = append(wb.x.Sheets.Sheet, &copiedSheet)
+
+	copiedXwsRel := common.NewRelationshipsCopy(wb.xwsRels[ind])
+	wb.xwsRels = append(wb.xwsRels, copiedXwsRel)
+
+	copiedCommentsPtr := wb.comments[ind]
+	if copiedCommentsPtr == nil {
+		wb.comments = append(wb.comments, nil)
+	} else {
+		copiedComments := *copiedCommentsPtr
+		wb.comments = append(wb.comments, &copiedComments)
+	}
+
+	return Sheet{wb, &copiedSheet, &copiedWs}, nil
+}
+
+// CopySheetByName copies the existing sheet with the name `name` and puts its copy with the name `copiedSheetName`.
+func (wb *Workbook) CopySheetByName(name, copiedSheetName string) (Sheet, error) {
+	sheetInd := -1
+	for i, s := range wb.Sheets() {
+		if name == s.Name() {
+			sheetInd = i
+			break
+		}
+	}
+
+	if sheetInd == -1 {
+		return Sheet{}, ErrorNotFound
+	}
+
+	return wb.CopySheet(sheetInd, copiedSheetName)
+}
+
 // SaveToFile writes the workbook out to a file.
 func (wb *Workbook) SaveToFile(path string) error {
 	f, err := os.Create(path)
