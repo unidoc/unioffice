@@ -109,6 +109,7 @@ func (c ContentTypes) RemoveOverride(path string) {
 	}
 }
 
+// CopyOverride copies override content type for a given `path` and puts it with a path `newPath`.
 func (c ContentTypes) CopyOverride(path, newPath string) {
 	if !strings.HasPrefix(path, "/") {
 		path = "/" + path
