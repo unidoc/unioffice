@@ -1,1 +1,1 @@
-module github.com/unidoc/unioffice
+module github.com/Novetta/unioffice
