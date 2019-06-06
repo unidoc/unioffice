@@ -319,14 +319,7 @@ func (p *Presentation) AddSlideWithLayout(l SlideLayout) (Slide, error) {
 	// clear layout name on the slide
 	slide.CSld.NameAttr = nil
 	//, chc := range slide.CSld.SpTree.Choice {
-	for i := 0; i < len(slide.CSld.SpTree.Choice); i++ {
-		chc := slide.CSld.SpTree.Choice[i]
-		for len(chc.Pic) > 0 {
-			copy(slide.CSld.SpTree.Choice[i:], slide.CSld.SpTree.Choice[i+1:])
-			slide.CSld.SpTree.Choice = slide.CSld.SpTree.Choice[0 : len(slide.CSld.SpTree.Choice)-1]
-			chc = slide.CSld.SpTree.Choice[i]
-		}
-	}
+	slide.CSld.SpTree.Choice = removeChoicesWithPics(slide.CSld.SpTree.Choice)
 
 	p.slides = append(p.slides, slide)
 
@@ -348,6 +341,18 @@ func (p *Presentation) AddSlideWithLayout(l SlideLayout) (Slide, error) {
 	csld := Slide{sd, slide, p}
 
 	return csld, nil
+}
+
+func removeChoicesWithPics(choices []*pml.CT_GroupShapeChoice) []*pml.CT_GroupShapeChoice {
+	for i := 0; i < len(choices); i++ {
+		chc := choices[i]
+		for len(chc.Pic) > 0 {
+			copy(choices[i:], choices[i+1:])
+			choices = choices[0 : len(choices)-1]
+			chc = choices[i]
+		}
+	}
+	return choices
 }
 
 // AddDefaultSlideWithLayout tries to replicate what PowerPoint does when
