@@ -44,7 +44,8 @@ func SetLicenseKey(content string, customerName string) error {
 	return nil
 }
 
-// This is to install legacy licenses, will go out at some point in the future.
+// SetLegacyLicenseKey installs a legacy license code. License codes issued prior to June 2019.
+// Will be removed at some point in a future major version.
 func SetLegacyLicenseKey(s string) error {
 	re := regexp.MustCompile("\\s")
 	s = re.ReplaceAllString(s, "")

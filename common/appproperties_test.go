@@ -8,6 +8,8 @@
 package common_test
 
 import (
+	"fmt"
+	"strconv"
 	"testing"
 
 	"github.com/unidoc/unioffice/common"
@@ -27,7 +29,8 @@ func TestNewAppDefaultProperties(t *testing.T) {
 		t.Errorf("unexpected application: %s", got)
 	}
 
-	if got := ap.ApplicationVersion(); got != "00.8000" { // Need to edit the schema to change this versioning...
+	fv, _ := strconv.ParseFloat(common.Version, 64)
+	if got := ap.ApplicationVersion(); got != fmt.Sprintf("%07.4f", fv) {
 		t.Errorf("unexpected application version: %s", got)
 	}
 	ap.X().AppVersion = nil

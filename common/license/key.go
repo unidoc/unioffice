@@ -12,6 +12,7 @@ import (
 	"github.com/unidoc/unioffice/common"
 )
 
+// License tiers.
 const (
 	LicenseTierUnlicensed = "unlicensed"
 	LicenseTierCommunity  = "community"
@@ -22,6 +23,7 @@ const (
 // Make sure all time is at least after this for sanity check.
 var testTime = time.Date(2010, 1, 1, 0, 0, 0, 0, time.UTC)
 
+// LicenseKey represents a license key for UniOffice.
 type LicenseKey struct {
 	LicenseId    string    `json:"license_id"`
 	CustomerId   string    `json:"customer_id"`
@@ -40,8 +42,8 @@ type LicenseKey struct {
 
 // Returns the date to compare against, for trial licenses it is the current time,
 // but for production it is the current release date.
-func (this *LicenseKey) getExpiryDateToCompare() time.Time {
-	if this.Trial {
+func (k *LicenseKey) getExpiryDateToCompare() time.Time {
+	if k.Trial {
 		return time.Now().UTC()
 	}
 
@@ -52,6 +54,7 @@ func (k *LicenseKey) isExpired() bool {
 	return k.getExpiryDateToCompare().After(k.ExpiresAt)
 }
 
+// Validate returns an error if the licenseis invalid, nil otherwise.
 func (k *LicenseKey) Validate() error {
 	if len(k.LicenseId) < 10 {
 		return fmt.Errorf("invalid license: License Id")
@@ -92,6 +95,7 @@ func (k *LicenseKey) Validate() error {
 	return nil
 }
 
+// TypeToString returns a string representation of the license type.
 func (k *LicenseKey) TypeToString() string {
 	if k.Tier == LicenseTierUnlicensed {
 		return "Unlicensed"
@@ -108,6 +112,7 @@ func (k *LicenseKey) TypeToString() string {
 	return "Commercial License - Business"
 }
 
+// ToString returns a string representing the license information.
 func (k *LicenseKey) ToString() string {
 	str := fmt.Sprintf("License Id: %s\n", k.LicenseId)
 	str += fmt.Sprintf("Customer Id: %s\n", k.CustomerId)
@@ -119,10 +124,12 @@ func (k *LicenseKey) ToString() string {
 	return str
 }
 
+// IsLicensed returns true if the package is licensed.
 func (k *LicenseKey) IsLicensed() bool {
 	return k.Tier != LicenseTierUnlicensed
 }
 
+// MakeUnlicensedKey returns an unlicensed key.
 func MakeUnlicensedKey() *LicenseKey {
 	lk := LicenseKey{}
 	lk.CustomerName = "Unlicensed"

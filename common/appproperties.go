@@ -8,6 +8,9 @@
 package common
 
 import (
+	"fmt"
+	"strconv"
+
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/schema/soo/ofc/extended_properties"
 )
@@ -25,8 +28,8 @@ func NewAppProperties() AppProperties {
 	p.SetApplication("github.com/unidoc/unioffice")
 	p.SetDocSecurity(0)
 	p.SetLinksUpToDate(false)
-	// trim the 'v'
-	p.SetApplicationVersion("00.8000") // Need to edit the schema to change this versioning...
+	f, _ := strconv.ParseFloat(Version, 64)
+	p.SetApplicationVersion(fmt.Sprintf("%07.4f", f))
 	return p
 }
 
