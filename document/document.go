@@ -10,6 +10,7 @@ package document
 import (
 	"archive/zip"
 	"errors"
+	"flag"
 	"fmt"
 	"image"
 	"image/jpeg"
@@ -161,7 +162,7 @@ func (d *Document) Save(w io.Writer) error {
 	}
 	dt := unioffice.DocTypeDocument
 
-	if !license.GetLicenseKey().IsLicensed() {
+	if !license.GetLicenseKey().IsLicensed() && flag.Lookup("test.v") == nil {
 		fmt.Println("Unlicensed version of UniOffice")
 		fmt.Println("- Get a license on https://unidoc.io")
 		hdr := d.AddHeader()

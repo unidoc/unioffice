@@ -9,7 +9,6 @@ package common
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/schema/soo/ofc/extended_properties"
@@ -24,11 +23,14 @@ type AppProperties struct {
 // NewAppProperties constructs a new AppProperties.
 func NewAppProperties() AppProperties {
 	p := AppProperties{x: extended_properties.NewProperties()}
-	p.SetCompany("Baliance LLC")
+	p.SetCompany("FoxyUtils ehf")
 	p.SetApplication("github.com/unidoc/unioffice")
 	p.SetDocSecurity(0)
 	p.SetLinksUpToDate(false)
-	f, _ := strconv.ParseFloat(Version, 64)
+
+	var major, minor, patch int64
+	fmt.Sscanf(Version, "%d.%d.%d", &major, &minor, &patch)
+	f := float64(major) + float64(minor)/10000.0
 	p.SetApplicationVersion(fmt.Sprintf("%07.4f", f))
 	return p
 }
