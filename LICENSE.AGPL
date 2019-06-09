@@ -1,3 +1,37 @@
+UniDoc unioffice - Office library for golang
+Copyright (C) 2016-2019 FoxyUtils ehf.
+
+This program provided by FoxyUtils ehf ("Company") is free software ("covered
+work"). You can redistribute it and/or modify it under the terms of the GNU
+Affero General Public License, Version 3 ("License") which is currently located
+here ?http://www.gnu.org/licenses/agpl.html (and listed in full below), with
+the addition of the following permission added to Section 15 as permitted in
+Section 7(a): FOR ANY PART OF THE COVERED WORK IN WHICH THE COPYRIGHT IS
+OWNED BY THE COMPANY, THE COMPANY DISCLAIMS THE WARRANTY OF NON INFRINGEMENT
+OF THIRD PARTY RIGHTS. YOU USE THIS WORK AT YOUR OWN RISK.
+
+This covered work is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY, without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the License for further details.
+
+The interactive user interfaces in modified source and object code versions of
+this covered work must display Appropriate Legal Notices, as required under
+Section 5 of the License.
+
+You can be released from the requirements of the license by purchasing a
+commercial license. Buying such a license is mandatory as soon as you develop
+activities involving unioffice without disclosing the source code of your own
+applications under the AGPL license. These activities include offering services
+as an application service provider or providing an over-network based
+application programming interface (API), creating or manipulating documents for
+users in a web/server/cloud application, incorporating unioffice into a closed
+source product.
+
+For more information, please contact the Company by emailing sales@unidoc.io.
+
+-------------------------------------------------------------------------------
+                               AGPLv3 LICENSE
+-------------------------------------------------------------------------------
                     GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007
 
@@ -615,3 +649,47 @@ reviewing courts shall apply local law that most closely approximates
 an absolute waiver of all civil liability in connection with the
 Program, unless a warranty or assumption of liability accompanies a
 copy of the Program in return for a fee.
+
+                     END OF TERMS AND CONDITIONS
+
+            How to Apply These Terms to Your New Programs
+
+  If you develop a new program, and you want it to be of the greatest
+possible use to the public, the best way to achieve this is to make it
+free software which everyone can redistribute and change under these terms.
+
+  To do so, attach the following notices to the program.  It is safest
+to attach them to the start of each source file to most effectively
+state the exclusion of warranty; and each file should have at least
+the "copyright" line and a pointer to where the full notice is found.
+
+    <one line to give the program's name and a brief idea of what it does.>
+    Copyright (C) <year>  <name of author>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+Also add information on how to contact you by electronic and paper mail.
+
+  If your software can interact with users remotely through a computer
+network, you should also make sure that it provides a way for users to
+get its source.  For example, if your program is a web application, its
+interface could display a "Source" link that leads users to an archive
+of the code.  There are many ways you could offer source, and different
+solutions will be better for different programs; see section 13 for the
+specific requirements.
+
+  You should also get your employer (if you work as a programmer) or school,
+if any, to sign a "copyright disclaimer" for the program, if necessary.
+For more information on this, and how to apply and follow the GNU AGPL, see
+<http://www.gnu.org/licenses/>.

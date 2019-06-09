@@ -21,6 +21,8 @@ import (
 
 func TestSimpleDoc(t *testing.T) {
 	doc := document.New()
+	testVersion := "00.8000"
+	doc.AppProperties.X().AppVersion = &testVersion
 	para := doc.AddParagraph()
 	run := para.AddRun()
 	run.AddText("foo")
