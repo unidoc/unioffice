@@ -9,6 +9,7 @@ package document
 
 import (
 	"archive/zip"
+	"bytes"
 	"errors"
 	"flag"
 	"fmt"
@@ -964,4 +965,21 @@ func (d Document) Bookmarks() []Bookmark {
 		}
 	}
 	return ret
+}
+
+func ExtractText(inputPath string, pages []int) (string, error) {
+	doc, err := Open(inputPath)
+	if err != nil {
+		return "", err
+	}
+
+	text := bytes.NewBuffer(nil)
+
+	for _, p := range doc.Paragraphs() {
+		for _, r := range p.Runs() {
+			text.WriteString(r.Text())
+		}
+	}
+
+	return text.String(), nil
 }
