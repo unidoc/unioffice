@@ -967,7 +967,7 @@ func (d Document) Bookmarks() []Bookmark {
 	return ret
 }
 
-func ExtractText(inputPath string, pages []int) (string, error) {
+func ExtractText(inputPath string) (string, error) {
 	doc, err := Open(inputPath)
 	if err != nil {
 		return "", err
