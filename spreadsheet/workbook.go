@@ -9,6 +9,7 @@ package spreadsheet
 
 import (
 	"archive/zip"
+	"bytes"
 	"errors"
 	"fmt"
 	"image"
@@ -731,4 +732,25 @@ func (wb *Workbook) RemoveCalcChain() {
 			return
 		}
 	}
+}
+
+func ExtractText(inputPath string) (string, error) {
+	wb, err := Open(inputPath)
+	if err != nil {
+		return "", err
+	}
+
+	text := bytes.NewBuffer(nil)
+
+	for _, s := range wb.Sheets() {
+		for _, r := range s.Rows() {
+			for _, c := range r.Cells() {
+				if c.x.V != nil {
+					text.WriteString(*c.x.V)
+				}
+			}
+		}
+	}
+
+	return text.String(), nil
 }
