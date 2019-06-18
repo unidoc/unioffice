@@ -329,7 +329,7 @@ func (wb *Workbook) Save(w io.Writer) error {
 	}
 
 	for i, img := range wb.Images {
-		if err := common.AddImageToZip(z, img, i, unioffice.DocTypeSpreadsheet); err != nil {
+		if err := common.AddImageToZip(z, img, i+1, unioffice.DocTypeSpreadsheet); err != nil {
 			return err
 		}
 	}

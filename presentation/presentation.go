@@ -439,7 +439,7 @@ func (p *Presentation) Save(w io.Writer) error {
 	}
 
 	for i, img := range p.Images {
-		if err := common.AddImageToZip(z, img, i, unioffice.DocTypePresentation); err != nil {
+		if err := common.AddImageToZip(z, img, i+1, unioffice.DocTypePresentation); err != nil {
 			return err
 		}
 	}

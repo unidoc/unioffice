@@ -243,7 +243,7 @@ func (d *Document) Save(w io.Writer) error {
 	}
 
 	for i, img := range d.Images {
-		if err := common.AddImageToZip(z, img, i, unioffice.DocTypeDocument); err != nil {
+		if err := common.AddImageToZip(z, img, i+1, unioffice.DocTypeDocument); err != nil {
 			return err
 		}
 	}

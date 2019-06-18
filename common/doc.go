@@ -11,8 +11,8 @@ import (
 )
 
 //AddImageToZip adds an image (either from bytes or from disk) and adds it to the zip file.
-func AddImageToZip(z *zip.Writer, img ImageRef, i int, dt unioffice.DocType) error {
-	fn := unioffice.AbsoluteFilename(dt, unioffice.ImageType, i+1)
+func AddImageToZip(z *zip.Writer, img ImageRef, imageNum int, dt unioffice.DocType) error {
+	fn := unioffice.AbsoluteFilename(dt, unioffice.ImageType, imageNum)
 	fn = fn[0:len(fn)-3] + strings.ToLower(img.Format())
 	if img.Data() != nil && len(*img.Data()) > 0 {
 		if err := zippkg.AddFileFromBytes(z, fn, *img.Data()); err != nil {
