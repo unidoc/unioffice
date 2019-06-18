@@ -722,13 +722,25 @@ func ExtractText(inputPath string) (string, error) {
 		return "", err
 	}
 
+	text := bytes.NewBuffer(nil)
+
 	for _, s := range pres.Slides() {
 		for _, ph := range s.PlaceHolders() {
 			for _, p := range ph.Paragraphs() {
-				p.Runs()
+				for _, r := range p.Runs() {
+					runX := r.X()
+
+					if runX.R != nil {
+						text.WriteString(runX.R.T)
+					}
+
+					if runX.Fld != nil && runX.Fld.T != nil {
+						text.WriteString(*runX.Fld.T)
+					}
+				}
 			}
 		}
 	}
 
-	return "", nil
+	return text.String(), nil
 }
