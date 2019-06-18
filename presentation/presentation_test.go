@@ -14,9 +14,15 @@ func TestRemoveChoicesWithPics(t *testing.T) {
 	choices = append(choices, &pml.CT_GroupShapeChoice{
 		Pic: pics,
 	})
+	choices = append(choices, &pml.CT_GroupShapeChoice{
+		Pic: pics,
+	})
+	choices = append(choices, pml.NewCT_GroupShapeChoice())
 
 	choices = removeChoicesWithPics(choices)
-	if len(choices) != 1 {
-		t.Fatalf("expected choices to be length 1, found it to be: %d", len(choices))
+	for _, choice := range choices {
+		if len(choice.Pic) > 0 {
+			t.Fatal("expected to have removed all choices with pics")
+		}
 	}
 }

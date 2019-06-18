@@ -344,14 +344,13 @@ func (p *Presentation) AddSlideWithLayout(l SlideLayout) (Slide, error) {
 }
 
 func removeChoicesWithPics(choices []*pml.CT_GroupShapeChoice) []*pml.CT_GroupShapeChoice {
-	for i := 0; i < len(choices); i++ {
-		chc := choices[i]
-		if len(chc.Pic) > 0 {
-			copy(choices[i:], choices[i+1:])
-			choices = choices[0 : len(choices)-1]
+	var newChoices []*pml.CT_GroupShapeChoice
+	for _, aChoice := range choices {
+		if len(aChoice.Pic) == 0 {
+			newChoices = append(newChoices, aChoice)
 		}
 	}
-	return choices
+	return newChoices
 }
 
 // AddDefaultSlideWithLayout tries to replicate what PowerPoint does when
