@@ -52,7 +52,7 @@ func (p Paragraph) Runs() []Run {
 	var runs []Run
 
 	for _, tr := range p.x.EG_TextRun {
-		runs = append(runs, tr)
+		runs = append(runs, MakeRun(tr))
 	}
 
 	return runs
