@@ -715,3 +715,20 @@ func (p *Presentation) GetImageByRelID(relID string) (common.ImageRef, bool) {
 	}
 	return common.ImageRef{}, false
 }
+
+func ExtractText(inputPath string) (string, error) {
+	pres, err := Open(inputPath)
+	if err != nil {
+		return "", err
+	}
+
+	for _, s := range pres.Slides() {
+		for _, ph := range s.PlaceHolders() {
+			for _, p := range ph.Paragraphs() {
+				p.Runs()
+			}
+		}
+	}
+
+	return "", nil
+}

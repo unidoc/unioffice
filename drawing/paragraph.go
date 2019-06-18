@@ -47,3 +47,13 @@ func (p Paragraph) Properties() ParagraphProperties {
 	}
 	return MakeParagraphProperties(p.x.PPr)
 }
+
+func (p Paragraph) Runs() []Run {
+	var runs []Run
+
+	for _, tr := range p.x.EG_TextRun {
+		runs = append(runs, tr)
+	}
+
+	return runs
+}
