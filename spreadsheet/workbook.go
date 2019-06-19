@@ -746,7 +746,12 @@ func ExtractText(inputPath string) (string, error) {
 		for _, r := range s.Rows() {
 			for _, c := range r.Cells() {
 				if c.x.V != nil {
-					text.WriteString(*c.x.V)
+					val, err := c.GetRawValue()
+					if err != nil {
+						return "", err
+					}
+
+					text.WriteString(val)
 				}
 			}
 		}
