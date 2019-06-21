@@ -2,6 +2,7 @@ package zipping
 
 import (
 	"archive/zip"
+	"fmt"
 	"strings"
 
 	"github.com/mec07/unioffice"
@@ -21,7 +22,7 @@ func AddImage(z *zip.Writer, img common.ImageRef, imageNum int, dt unioffice.Doc
 			return err
 		}
 	} else {
-		unioffice.Log("unsupported image source: %+v", img)
+		return fmt.Errorf("unsupported image source: %+v", img)
 	}
 	return nil
 }
