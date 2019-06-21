@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mec07/unioffice"
-	"github.com/mec07/unioffice/common"
-	"github.com/mec07/unioffice/zippkg"
+	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/common"
+	"github.com/unidoc/unioffice/zippkg"
 )
 
 //AddImage adds an image (either from bytes or from disk) and adds it to the zip file.

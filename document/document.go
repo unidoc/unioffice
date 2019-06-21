@@ -19,9 +19,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/mec07/unioffice/zipping"
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/common"
+	"github.com/unidoc/unioffice/zipping"
 	"github.com/unidoc/unioffice/zippkg"
 
 	"github.com/unidoc/unioffice/schema/soo/dml"

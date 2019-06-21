@@ -20,7 +20,6 @@ import (
 	"os"
 	"path"
 
-	"github.com/mec07/unioffice/zipping"
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/measurement"
@@ -28,6 +27,7 @@ import (
 	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
 	"github.com/unidoc/unioffice/schema/soo/pkg/relationships"
 	"github.com/unidoc/unioffice/schema/soo/pml"
+	"github.com/unidoc/unioffice/zipping"
 	"github.com/unidoc/unioffice/zippkg"
 )
 
