@@ -71,13 +71,13 @@ func (h Header) Paragraphs() []Paragraph {
 		}
 	}
 
-	/*for _, t := range d.Tables() {
+	for _, t := range h.Tables() {
 		for _, r := range t.Rows() {
 			for _, c := range r.Cells() {
 				ret = append(ret, c.Paragraphs()...)
 			}
 		}
-	}*/
+	}
 	return ret
 }
 
