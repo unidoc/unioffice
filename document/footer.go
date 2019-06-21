@@ -70,6 +70,14 @@ func (f Footer) Paragraphs() []Paragraph {
 			ret = append(ret, Paragraph{f.d, p})
 		}
 	}
+
+	for _, t := range f.Tables() {
+		for _, r := range t.Rows() {
+			for _, c := range r.Cells() {
+				ret = append(ret, c.Paragraphs()...)
+			}
+		}
+	}
 	return ret
 }
 
