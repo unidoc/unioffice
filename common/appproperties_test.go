@@ -9,11 +9,7 @@ package common_test
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 	"testing"
-
-	"github.com/unidoc/unioffice"
 
 	"github.com/unidoc/unioffice/common"
 )
@@ -32,7 +28,9 @@ func TestNewAppDefaultProperties(t *testing.T) {
 		t.Errorf("unexpected application: %s", got)
 	}
 
-	fv, _ := strconv.ParseFloat(strings.Replace(unioffice.ReleaseVersion, "v", "", -1), 64)
+	var major, minor, patch int64
+	fmt.Sscanf(common.Version, "%d.%d.%d", &major, &minor, &patch)
+	fv := float64(major) + float64(minor)/10000.0
 	if got := ap.ApplicationVersion(); got != fmt.Sprintf("%07.4f", fv) {
 		t.Errorf("unexpected application version: %s", got)
 	}

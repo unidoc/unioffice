@@ -59,7 +59,7 @@ func (wb *Workbook) X() *sml.Workbook {
 	return wb.x
 }
 
-// AddSheet adds a new sheet with a given name to a workbook.
+// AddSheet adds a new sheet to a workbook.
 func (wb *Workbook) AddSheet() Sheet {
 	rs := sml.NewCT_Sheet()
 
