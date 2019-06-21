@@ -48,6 +48,20 @@ func (f Footer) Index() int {
 	return -1
 }
 
+// Tables returns the tables defined in the footer.
+func (f Footer) Tables() []Table {
+	ret := []Table{}
+	if f.x == nil {
+		return nil
+	}
+	for _, c := range f.x.EG_ContentBlockContent {
+		for _, t := range f.tables(f.d, c) {
+			ret = append(ret, t)
+		}
+	}
+	return ret
+}
+
 // Paragraphs returns the paragraphs defined in a footer.
 func (f Footer) Paragraphs() []Paragraph {
 	ret := []Paragraph{}
@@ -105,4 +119,28 @@ func (f Footer) AddImage(i common.Image) (common.ImageRef, error) {
 	rel := ftrRels.AddRelationship(fn, unioffice.ImageType)
 	r.SetRelID(rel.X().IdAttr)
 	return r, nil
+}
+
+func (f Footer) tables(d *Document, bc *wml.EG_ContentBlockContent) []Table {
+	ret := []Table{}
+	for _, t := range bc.Tbl {
+		ret = append(ret, Table{d, t})
+		for _, crc := range t.EG_ContentRowContent {
+			for _, tr := range crc.Tr {
+				for _, ccc := range tr.EG_ContentCellContent {
+					for _, tc := range ccc.Tc {
+						for _, ble := range tc.EG_BlockLevelElts {
+							for _, cbc := range ble.EG_ContentBlockContent {
+								for _, tbl := range f.tables(d, cbc) {
+									ret = append(ret, tbl)
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return ret
 }
