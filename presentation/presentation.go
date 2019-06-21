@@ -20,6 +20,7 @@ import (
 	"os"
 	"path"
 
+	"github.com/mec07/unioffice/zipping"
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/measurement"
@@ -439,7 +440,7 @@ func (p *Presentation) Save(w io.Writer) error {
 	}
 
 	for i, img := range p.Images {
-		if err := common.AddImageToZip(z, img, i+1, unioffice.DocTypePresentation); err != nil {
+		if err := zipping.AddImage(z, img, i+1, unioffice.DocTypePresentation); err != nil {
 			return err
 		}
 	}

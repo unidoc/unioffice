@@ -19,6 +19,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/mec07/unioffice/zipping"
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/zippkg"
@@ -243,7 +244,7 @@ func (d *Document) Save(w io.Writer) error {
 	}
 
 	for i, img := range d.Images {
-		if err := common.AddImageToZip(z, img, i+1, unioffice.DocTypeDocument); err != nil {
+		if err := zipping.AddImage(z, img, i+1, unioffice.DocTypeDocument); err != nil {
 			return err
 		}
 	}
