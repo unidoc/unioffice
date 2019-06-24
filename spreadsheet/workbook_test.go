@@ -408,3 +408,19 @@ func TestCopySheetByName(t *testing.T) {
 		t.Fatalf("expected sheets count %d, got %d", wasCount+1, wb.SheetCount())
 	}
 }
+
+func TestExtractText(t *testing.T) {
+	testFilePath := "./testdata/extraction.xlsx"
+
+	want := "qweasdzxcsdfgdfgcvbdgddfgcbn123556434"
+
+	got, err := spreadsheet.ExtractText(testFilePath)
+	if err != nil {
+		t.Errorf("Error opening wb: %v", err)
+		return
+	}
+
+	if want != got {
+		t.Errorf("extracted text mismatch. got\n\"%s\"\nwant\n\"%s\"", got, want)
+	}
+}
