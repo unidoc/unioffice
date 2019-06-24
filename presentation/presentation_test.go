@@ -26,3 +26,19 @@ func TestRemoveChoicesWithPics(t *testing.T) {
 		}
 	}
 }
+
+func TestExtractText(t *testing.T) {
+	testFilePath := "./testdata/extraction.pptx"
+
+	want := "TestSubtestHeader 1Test ErrewrTests sf s. dsf Sdfsd xvxv Header 2Qweqre wefs dfSd f sdf"
+
+	got, err := ExtractText(testFilePath)
+	if err != nil {
+		t.Errorf("Error opening pres: %v", err)
+		return
+	}
+
+	if want != got {
+		t.Errorf("extracted text mismatch. got\n\"%s\"\nwant\n\"%s\"", got, want)
+	}
+}
