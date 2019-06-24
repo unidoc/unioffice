@@ -387,3 +387,19 @@ func TestGetTables(t *testing.T) {
 		t.Errorf("nested table not enumerated. found %d, expected 2", len(tables))
 	}
 }
+
+func TestExtractText(t *testing.T) {
+	testFilePath := "./testdata/extraction.docx"
+
+	want := "Line11 line12 line13.      Line14Line21Line31.    	Line32Line41Tab1Tab2Tab3"
+
+	got, err := document.ExtractText(testFilePath)
+	if err != nil {
+		t.Errorf("Error opening doc: %v", err)
+		return
+	}
+
+	if want != got {
+		t.Errorf("extracted text mismatch. got\n\"%s\"\nwant\n\"%s\"", got, want)
+	}
+}
