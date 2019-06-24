@@ -48,12 +48,34 @@ func (h Header) Index() int {
 	return -1
 }
 
+// Tables returns the tables defined in the header.
+func (h Header) Tables() []Table {
+	ret := []Table{}
+	if h.x == nil {
+		return nil
+	}
+	for _, c := range h.x.EG_ContentBlockContent {
+		for _, t := range h.tables(h.d, c) {
+			ret = append(ret, t)
+		}
+	}
+	return ret
+}
+
 // Paragraphs returns the paragraphs defined in a header.
 func (h Header) Paragraphs() []Paragraph {
 	ret := []Paragraph{}
 	for _, ec := range h.x.EG_ContentBlockContent {
 		for _, p := range ec.P {
 			ret = append(ret, Paragraph{h.d, p})
+		}
+	}
+
+	for _, t := range h.Tables() {
+		for _, r := range t.Rows() {
+			for _, c := range r.Cells() {
+				ret = append(ret, c.Paragraphs()...)
+			}
 		}
 	}
 	return ret
@@ -105,4 +127,28 @@ func (h Header) AddImage(i common.Image) (common.ImageRef, error) {
 	rel := hdrRels.AddRelationship(fn, unioffice.ImageType)
 	r.SetRelID(rel.X().IdAttr)
 	return r, nil
+}
+
+func (h Header) tables(d *Document, bc *wml.EG_ContentBlockContent) []Table {
+	ret := []Table{}
+	for _, t := range bc.Tbl {
+		ret = append(ret, Table{d, t})
+		for _, crc := range t.EG_ContentRowContent {
+			for _, tr := range crc.Tr {
+				for _, ccc := range tr.EG_ContentCellContent {
+					for _, tc := range ccc.Tc {
+						for _, ble := range tc.EG_BlockLevelElts {
+							for _, cbc := range ble.EG_ContentBlockContent {
+								for _, tbl := range h.tables(d, cbc) {
+									ret = append(ret, tbl)
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return ret
 }
