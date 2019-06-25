@@ -719,6 +719,7 @@ func (p *Presentation) GetImageByRelID(relID string) (common.ImageRef, bool) {
 	return common.ImageRef{}, false
 }
 
+// ExtractText extracts all text content from the presentation specified by `inputPath`.
 func ExtractText(inputPath string) (string, error) {
 	pres, err := Open(inputPath)
 	if err != nil {

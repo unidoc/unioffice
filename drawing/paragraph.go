@@ -48,6 +48,7 @@ func (p Paragraph) Properties() ParagraphProperties {
 	return MakeParagraphProperties(p.x.PPr)
 }
 
+// Runs returns all runs from the paragraph.
 func (p Paragraph) Runs() []Run {
 	var runs []Run
 

@@ -734,6 +734,7 @@ func (wb *Workbook) RemoveCalcChain() {
 	}
 }
 
+// ExtractText extracts all text content from the workbook specified by `inputPath`.
 func ExtractText(inputPath string) (string, error) {
 	wb, err := Open(inputPath)
 	if err != nil {

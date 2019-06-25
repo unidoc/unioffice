@@ -967,6 +967,7 @@ func (d Document) Bookmarks() []Bookmark {
 	return ret
 }
 
+// ExtractText extracts all text content from the document specified by `inputPath`.
 func ExtractText(inputPath string) (string, error) {
 	doc, err := Open(inputPath)
 	if err != nil {
@@ -978,6 +979,7 @@ func ExtractText(inputPath string) (string, error) {
 	for _, p := range doc.Paragraphs() {
 		for _, r := range p.Runs() {
 			text.WriteString(r.Text())
+			text.WriteString("\n")
 		}
 	}
 
