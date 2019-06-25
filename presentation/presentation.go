@@ -720,7 +720,9 @@ func (p *Presentation) GetImageByRelID(relID string) (common.ImageRef, bool) {
 }
 
 // ExtractText extracts all text content from the presentation specified by `inputPath`.
-func ExtractText(inputPath string) (string, error) {
+// Text is being extracted from the slides passed in `slides`. If `slides` is 0-length -
+// text is being extracted from all slides.
+func ExtractText(inputPath string, slides []int) (string, error) {
 	pres, err := Open(inputPath)
 	if err != nil {
 		return "", err
@@ -728,8 +730,18 @@ func ExtractText(inputPath string) (string, error) {
 
 	text := bytes.NewBuffer(nil)
 
-	for _, s := range pres.Slides() {
-		for _, ph := range s.PlaceHolders() {
+	presSlides := pres.Slides()
+
+	if len(slides) == 0 {
+		slides = make([]int, 0, len(presSlides))
+
+		for i := range presSlides {
+			slides = append(slides, i)
+		}
+	}
+
+	for _, slideInd := range slides {
+		for _, ph := range presSlides[slideInd].PlaceHolders() {
 			for _, p := range ph.Paragraphs() {
 				for _, r := range p.Runs() {
 					runX := r.X()
