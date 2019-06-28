@@ -21,7 +21,6 @@ import (
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/vmldrawing"
-	"github.com/unidoc/unioffice/zipping"
 	"github.com/unidoc/unioffice/zippkg"
 
 	"github.com/unidoc/unioffice/schema/soo/dml"
@@ -330,7 +329,7 @@ func (wb *Workbook) Save(w io.Writer) error {
 	}
 
 	for i, img := range wb.Images {
-		if err := zipping.AddImage(z, img, i+1, unioffice.DocTypeSpreadsheet); err != nil {
+		if err := common.AddImageToZip(z, img, i+1, unioffice.DocTypeSpreadsheet); err != nil {
 			return err
 		}
 	}

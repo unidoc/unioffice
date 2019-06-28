@@ -25,7 +25,6 @@ import (
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/common/license"
 	"github.com/unidoc/unioffice/measurement"
-  "github.com/unidoc/unioffice/zipping"
 	"github.com/unidoc/unioffice/zippkg"
 
 	"github.com/unidoc/unioffice/schema/soo/dml"
@@ -263,7 +262,7 @@ func (d *Document) Save(w io.Writer) error {
 	}
 
 	for i, img := range d.Images {
-		if err := zipping.AddImage(z, img, i+1, unioffice.DocTypeDocument); err != nil {
+		if err := common.AddImageToZip(z, img, i+1, unioffice.DocTypeDocument); err != nil {
 			return err
 		}
 	}

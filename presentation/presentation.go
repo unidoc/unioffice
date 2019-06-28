@@ -27,7 +27,6 @@ import (
 	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
 	"github.com/unidoc/unioffice/schema/soo/pkg/relationships"
 	"github.com/unidoc/unioffice/schema/soo/pml"
-	"github.com/unidoc/unioffice/zipping"
 	"github.com/unidoc/unioffice/zippkg"
 )
 
@@ -440,7 +439,7 @@ func (p *Presentation) Save(w io.Writer) error {
 	}
 
 	for i, img := range p.Images {
-		if err := zipping.AddImage(z, img, i+1, unioffice.DocTypePresentation); err != nil {
+		if err := common.AddImageToZip(z, img, i+1, unioffice.DocTypePresentation); err != nil {
 			return err
 		}
 	}
