@@ -977,10 +977,19 @@ func ExtractText(inputPath string) (string, error) {
 	text := bytes.NewBuffer(nil)
 
 	for _, p := range doc.Paragraphs() {
-		for _, r := range p.Runs() {
-			text.WriteString(r.Text())
+		runs := p.Runs()
+		if len(runs) > 0 {
+			for _, r := range runs {
+				text.WriteString(r.Text())
+			}
+
 			text.WriteString("\n")
 		}
+	}
+
+	if text.Len() > 0 {
+		// discard last '\n'
+		text.Truncate(text.Len() - 1)
 	}
 
 	return text.String(), nil

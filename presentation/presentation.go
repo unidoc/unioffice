@@ -720,42 +720,53 @@ func (p *Presentation) GetImageByRelID(relID string) (common.ImageRef, bool) {
 }
 
 // ExtractText extracts all text content from the presentation specified by `inputPath`.
-// Text is being extracted from the slides passed in `slides`. If `slides` is 0-length -
-// text is being extracted from all slides.
-func ExtractText(inputPath string, slides []int) (string, error) {
+// Text is being extracted from the slides specified by their indexes passed in `slidesIdxs`.
+// If `slides` is 0-length - text is being extracted from all slides.
+func ExtractText(inputPath string, slidesIdxs []int) (string, error) {
 	pres, err := Open(inputPath)
 	if err != nil {
 		return "", err
 	}
 
-	text := bytes.NewBuffer(nil)
+	slides := pres.Slides()
 
-	presSlides := pres.Slides()
+	if len(slidesIdxs) == 0 {
+		slidesIdxs = make([]int, 0, len(slides))
 
-	if len(slides) == 0 {
-		slides = make([]int, 0, len(presSlides))
-
-		for i := range presSlides {
-			slides = append(slides, i)
+		for i := range slides {
+			slidesIdxs = append(slidesIdxs, i)
 		}
 	}
 
-	for _, slideInd := range slides {
-		for _, ph := range presSlides[slideInd].PlaceHolders() {
+	text := bytes.NewBuffer(nil)
+
+	for _, slideInd := range slidesIdxs {
+		s := slides[slideInd]
+		for _, ph := range s.PlaceHolders() {
 			for _, p := range ph.Paragraphs() {
-				for _, r := range p.Runs() {
-					runX := r.X()
+				runs := p.Runs()
+				if len(runs) > 0 {
+					for _, r := range runs {
+						runX := r.X()
 
-					if runX.R != nil {
-						text.WriteString(runX.R.T)
+						if runX.R != nil {
+							text.WriteString(runX.R.T)
+						}
+
+						if runX.Fld != nil && runX.Fld.T != nil {
+							text.WriteString(*runX.Fld.T)
+						}
 					}
 
-					if runX.Fld != nil && runX.Fld.T != nil {
-						text.WriteString(*runX.Fld.T)
-					}
+					text.WriteString("\n")
 				}
 			}
 		}
+	}
+
+	if text.Len() > 0 {
+		// discard last '\n'
+		text.Truncate(text.Len() - 1)
 	}
 
 	return text.String(), nil
