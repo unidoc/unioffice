@@ -30,15 +30,28 @@ func TestRemoveChoicesWithPics(t *testing.T) {
 func TestExtractText(t *testing.T) {
 	testFilePath := "./testdata/extraction.pptx"
 
-	want := "TestSubtestHeader 1Test ErrewrTests sf s. dsf Sdfsd xvxv Header 2Qweqre wefs dfSd f sdf"
+	// test the whole text extraction
+	want := "Test\nSubtest\nHeader 1\nTest \nErrewr\nTests sf s. dsf \nSdfsd xvxv \nHeader 2\n" +
+		"Qweqre wefs df\nSd f\n sdf"
 
-	got, err := ExtractText(testFilePath)
+	got, err := ExtractText(testFilePath, nil)
 	if err != nil {
-		t.Errorf("Error opening pres: %v", err)
-		return
+		t.Fatalf("error opening pres: %v", err)
 	}
 
 	if want != got {
-		t.Errorf("extracted text mismatch. got\n\"%s\"\nwant\n\"%s\"", got, want)
+		t.Fatalf("extracted text mismatch. got\n\"%s\"\nwant\n\"%s\"", got, want)
+	}
+
+	// test extraction from specific slide
+	want = "Header 1\nTest \nErrewr\nTests sf s. dsf \nSdfsd xvxv "
+
+	got, err = ExtractText(testFilePath, []int{1})
+	if err != nil {
+		t.Fatalf("error opening pres: %v", err)
+	}
+
+	if want != got {
+		t.Fatalf("extracted text mismatch. got\n\"%s\"\nwant\n\"%s\"", got, want)
 	}
 }
