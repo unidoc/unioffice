@@ -391,11 +391,11 @@ func TestGetTables(t *testing.T) {
 func TestExtractText(t *testing.T) {
 	testFilePath := "./testdata/extraction.docx"
 
-	want := "Line11 line12 line13.      Line14Line21Line31.    	Line32Line41Tab1Tab2Tab3"
+	want := "Line11 line12 line13.      Line14\nLine21\nLine31.    	Line32\nLine41\nTab1\nTab2\nTab3"
 
 	got, err := document.ExtractText(testFilePath)
 	if err != nil {
-		t.Errorf("Error opening doc: %v", err)
+		t.Errorf("error opening doc: %v", err)
 		return
 	}
 
