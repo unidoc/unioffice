@@ -740,8 +740,12 @@ func ExtractText(inputPath string, slidesIdxs []int) (string, error) {
 
 	text := bytes.NewBuffer(nil)
 
-	for _, slideInd := range slidesIdxs {
-		s := slides[slideInd]
+	for _, slideIdx := range slidesIdxs {
+		if slideIdx < 0 || slideIdx >= len(slides) {
+			return "", fmt.Errorf("slide idx out of range: %v", slideIdx)
+		}
+
+		s := slides[slideIdx]
 		for _, ph := range s.PlaceHolders() {
 			for _, p := range ph.Paragraphs() {
 				runs := p.Runs()

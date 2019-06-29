@@ -755,8 +755,12 @@ func ExtractText(inputPath string, sheetsIdxs []int) (string, error) {
 		}
 	}
 
-	for _, sInd := range sheetsIdxs {
-		s := sheets[sInd]
+	for _, sheetIdx := range sheetsIdxs {
+		if sheetIdx < 0 || sheetIdx >= len(sheets) {
+			return "", fmt.Errorf("sheet idx out of range: %v", sheetIdx)
+		}
+
+		s := sheets[sheetIdx]
 		for _, r := range s.Rows() {
 			cells := r.Cells()
 			if len(cells) > 0 {
