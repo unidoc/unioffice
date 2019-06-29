@@ -412,15 +412,27 @@ func TestCopySheetByName(t *testing.T) {
 func TestExtractText(t *testing.T) {
 	testFilePath := "./testdata/extraction.xlsx"
 
-	want := "qweasdzxcsdfgdfgcvbdgddfgcbn123556434"
+	// test the whole text extraction
+	want := "qweasd\nzxc\nsdfg\ndfg\ncvbdgddfgcbn123\n556\n434\nl21\nl22\nl23\nl24l25"
 
-	got, err := spreadsheet.ExtractText(testFilePath)
+	got, err := spreadsheet.ExtractText(testFilePath, nil)
 	if err != nil {
-		t.Errorf("Error opening wb: %v", err)
-		return
+		t.Fatalf("error opening wb: %v", err)
 	}
 
 	if want != got {
-		t.Errorf("extracted text mismatch. got\n\"%s\"\nwant\n\"%s\"", got, want)
+		t.Fatalf("extracted text mismatch. got\n\"%s\"\nwant\n\"%s\"", got, want)
+	}
+
+	// test extraction from specific worksheet
+	want = "l21\nl22\nl23\nl24l25"
+
+	got, err = spreadsheet.ExtractText(testFilePath, []int{1})
+	if err != nil {
+		t.Fatalf("error opening wb: %v", err)
+	}
+
+	if want != got {
+		t.Fatalf("extracted text mismatch. got\n\"%s\"\nwant\n\"%s\"", got, want)
 	}
 }
