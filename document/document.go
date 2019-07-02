@@ -262,17 +262,8 @@ func (d *Document) Save(w io.Writer) error {
 	}
 
 	for i, img := range d.Images {
-		fn := fmt.Sprintf("word/media/image%d.%s", i+1, strings.ToLower(img.Format()))
-		if img.Data() != nil {
-			if err := zippkg.AddFileFromBytes(z, fn, *img.Data()); err != nil {
-				return err
-			}
-		} else if img.Path() != "" {
-			if err := zippkg.AddFileFromDisk(z, fn, img.Path()); err != nil {
-				return err
-			}
-		} else {
-			unioffice.Log("unsupported image source: %+v", img)
+		if err := common.AddImageToZip(z, img, i+1, unioffice.DocTypeDocument); err != nil {
+			return err
 		}
 	}
 

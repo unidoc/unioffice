@@ -329,13 +329,8 @@ func (wb *Workbook) Save(w io.Writer) error {
 	}
 
 	for i, img := range wb.Images {
-		fn := fmt.Sprintf("xl/media/image%d.%s", i+1, img.Format())
-		if img.Path() != "" {
-			if err := zippkg.AddFileFromDisk(z, fn, img.Path()); err != nil {
-				return err
-			}
-		} else {
-			unioffice.Log("unsupported image source: %+v", img)
+		if err := common.AddImageToZip(z, img, i+1, unioffice.DocTypeSpreadsheet); err != nil {
+			return err
 		}
 	}
 

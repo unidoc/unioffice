@@ -193,3 +193,11 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 	}
 	return ""
 }
+
+// AbsoluteImageFilename returns the full path to an image from the root of the
+// zip container.
+func AbsoluteImageFilename(dt DocType, index int, fileExtension string) string {
+	filename := AbsoluteFilename(dt, ImageType, index)
+	// replace "png" with the actual file extension
+	return filename[0:len(filename)-3] + fileExtension
+}
