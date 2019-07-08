@@ -680,6 +680,8 @@ func dTime(t time.Time, v float64, f string) []byte {
 			ret = t.AppendFormat(ret, "2")
 		case "h":
 			ret = t.AppendFormat(ret, "3")
+		case "hh":
+			ret = t.AppendFormat(ret, "15")
 		case "m":
 			ret = t.AppendFormat(ret, "4")
 		case "mm":
