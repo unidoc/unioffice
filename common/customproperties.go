@@ -12,7 +12,6 @@ import (
 
 	"github.com/unidoc/unioffice/schema/soo/ofc/custom_properties"
 	"github.com/unidoc/unioffice/schema/soo/ofc/docPropsVTypes"
-	//"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
 )
 
 // CustomProperties contains document specific properties.
