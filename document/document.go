@@ -68,6 +68,7 @@ func New() *Document {
 
 	d.AppProperties = common.NewAppProperties()
 	d.CoreProperties = common.NewCoreProperties()
+	d.CustomProperties = common.NewCustomProperties()
 
 	d.ContentTypes.AddOverride("/word/document.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml")
 
@@ -77,6 +78,7 @@ func New() *Document {
 
 	d.Rels = common.NewRelationships()
 	d.Rels.AddRelationship(unioffice.RelativeFilename(unioffice.DocTypeDocument, "", unioffice.CorePropertiesType, 0), unioffice.CorePropertiesType)
+	d.Rels.AddRelationship("docProps/custom.xml", unioffice.CustomPropertiesType)
 	d.Rels.AddRelationship("docProps/app.xml", unioffice.ExtendedPropertiesType)
 	d.Rels.AddRelationship("word/document.xml", unioffice.OfficeDocumentType)
 
@@ -186,6 +188,9 @@ func (d *Document) Save(w io.Writer) error {
 		return err
 	}
 	if err := zippkg.MarshalXMLByType(z, dt, unioffice.CorePropertiesType, d.CoreProperties.X()); err != nil {
+		return err
+	}
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.CustomPropertiesType, d.CustomProperties.X()); err != nil {
 		return err
 	}
 	if d.Thumbnail != nil {
@@ -710,6 +715,10 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 
 	case unioffice.CorePropertiesType:
 		decMap.AddTarget(target, d.CoreProperties.X(), typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
+
+	case unioffice.CustomPropertiesType:
+		decMap.AddTarget(target, d.CustomProperties.X(), typ, 0)
 		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case unioffice.ExtendedPropertiesType, unioffice.ExtendedPropertiesTypeStrict:
