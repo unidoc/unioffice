@@ -55,7 +55,7 @@ func (h Header) Tables() []Table {
 		return nil
 	}
 	for _, c := range h.x.EG_ContentBlockContent {
-		for _, t := range h.tables(h.d, c) {
+		for _, t := range h.d.tables(c) {
 			ret = append(ret, t)
 		}
 	}
@@ -127,28 +127,4 @@ func (h Header) AddImage(i common.Image) (common.ImageRef, error) {
 	rel := hdrRels.AddRelationship(fn, unioffice.ImageType)
 	r.SetRelID(rel.X().IdAttr)
 	return r, nil
-}
-
-func (h Header) tables(d *Document, bc *wml.EG_ContentBlockContent) []Table {
-	ret := []Table{}
-	for _, t := range bc.Tbl {
-		ret = append(ret, Table{d, t})
-		for _, crc := range t.EG_ContentRowContent {
-			for _, tr := range crc.Tr {
-				for _, ccc := range tr.EG_ContentCellContent {
-					for _, tc := range ccc.Tc {
-						for _, ble := range tc.EG_BlockLevelElts {
-							for _, cbc := range ble.EG_ContentBlockContent {
-								for _, tbl := range h.tables(d, cbc) {
-									ret = append(ret, tbl)
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	return ret
 }
