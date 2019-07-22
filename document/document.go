@@ -545,6 +545,18 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 			return nil, err
 		}
 	}
+
+	customPropertiesExist := false
+	for _, rel := range doc.Rels.X().Relationship {
+		if rel.TargetAttr == "docProps/custom.xml" {
+			customPropertiesExist = true
+			break
+		}
+	}
+	if !customPropertiesExist {
+		doc.Rels.AddRelationship("docProps/custom.xml", unioffice.CustomPropertiesType)
+	}
+
 	return doc, nil
 }
 
@@ -703,6 +715,7 @@ func (d *Document) FormFields() []FormField {
 }
 
 func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship, src zippkg.Target) error {
+
 	dt := unioffice.DocTypeDocument
 
 	switch typ {

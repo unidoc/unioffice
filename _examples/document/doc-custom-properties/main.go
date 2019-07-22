@@ -19,9 +19,9 @@ func main() {
 	cp := doc.CustomProperties
 	// You can read properties from the document
 	fmt.Println("AppVersion", *cp.GetPropertyByName("AppVersion").Lpwstr)
-	fmt.Println("category", *cp.GetPropertyByName("category").Lpwstr)
-	fmt.Println("contentStatus", *cp.GetPropertyByName("contentStatus").Lpwstr)
-	fmt.Println("HyperlinksChanged", *cp.GetPropertyByName("HyperlinksChanged").Bool)
+	fmt.Println("Company", *cp.GetPropertyByName("Company").Lpwstr)
+	fmt.Println("DocSecurity", *cp.GetPropertyByName("DocSecurity").I4)
+	fmt.Println("LinksUpToDate", *cp.GetPropertyByName("LinksUpToDate").Bool)
 	fmt.Println("Non-existent", cp.GetPropertyByName("nonexistentproperty"))
 
 	// And change them as well
