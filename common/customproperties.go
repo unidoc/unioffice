@@ -1,9 +1,9 @@
-// Copyright 2017 Baliance. All rights reserved.
+// Copyright 2017 FoxyUtils ehf. All rights reserved.
 //
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased by contacting sales@baliance.com.
+// commercial license can be purchased via https://unidoc.io website.
 
 package common
 
@@ -19,6 +19,7 @@ type CustomProperties struct {
 	x *custom_properties.Properties
 }
 
+// CustomProperty contains document specific property
 type CustomProperty *custom_properties.CT_Property
 
 // NewCustomProperties constructs a new CustomProperties.
