@@ -1,4 +1,4 @@
-// Copyright 2018 Baliance. All rights reserved.
+// Copyright 2018 FoxyUtils ehf. All rights reserved.
 package main
 
 import (
