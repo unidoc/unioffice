@@ -685,6 +685,7 @@ func (d *Document) FormFields() []FormField {
 								// the value should be the text in the next inner content that is not a field char
 								if runs[j+1].x.EG_RunInnerContent[0].FldChar == nil {
 									field.textIC = runs[j+1].x.EG_RunInnerContent[0]
+									break
 								}
 							}
 						}
