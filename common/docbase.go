@@ -1,4 +1,4 @@
-// Copyright 2017 Baliance. All rights reserved.
+// Copyright 2017 FoxyUtils ehf. All rights reserved.
 //
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
@@ -18,11 +18,12 @@ import (
 // DocBase is the type embedded in in the Document/Workbook/Presentation types
 // that contains members common to all.
 type DocBase struct {
-	ContentTypes   ContentTypes
-	AppProperties  AppProperties
-	Rels           Relationships
-	CoreProperties CoreProperties
-	Thumbnail      image.Image // thumbnail preview of the document
+	ContentTypes     ContentTypes
+	AppProperties    AppProperties
+	Rels             Relationships
+	CoreProperties   CoreProperties
+	CustomProperties CustomProperties
+	Thumbnail        image.Image // thumbnail preview of the document
 
 	Images     []ImageRef
 	ExtraFiles []ExtraFile

@@ -1,5 +1,5 @@
 // line 1 "lexer.rl"
-// Copyright 2017 Baliance. All rights reserved.
+// Copyright 2017 FoxyUtils ehf. All rights reserved.
 //
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and

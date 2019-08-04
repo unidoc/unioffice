@@ -1,4 +1,4 @@
-// Copyright 2017 Baliance. All rights reserved.
+// Copyright 2017 FoxyUtils ehf. All rights reserved.
 //
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
@@ -59,6 +59,7 @@ const (
 	HyperLinkType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink"
 	ExtendedPropertiesType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties"
 	CorePropertiesType     = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"
+	CustomPropertiesType   = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties"
 	CustomXMLType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml"
 
 	// SML
