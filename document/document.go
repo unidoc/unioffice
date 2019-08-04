@@ -1,4 +1,4 @@
-// Copyright 2017 Baliance. All rights reserved.
+// Copyright 2017 FoxyUtils ehf. All rights reserved.
 //
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
@@ -702,6 +702,7 @@ func (d *Document) FormFields() []FormField {
 								// the value should be the text in the next inner content that is not a field char
 								if runs[j+1].x.EG_RunInnerContent[0].FldChar == nil {
 									field.textIC = runs[j+1].x.EG_RunInnerContent[0]
+									break
 								}
 							}
 						}
