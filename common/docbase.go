@@ -18,11 +18,12 @@ import (
 // DocBase is the type embedded in in the Document/Workbook/Presentation types
 // that contains members common to all.
 type DocBase struct {
-	ContentTypes   ContentTypes
-	AppProperties  AppProperties
-	Rels           Relationships
-	CoreProperties CoreProperties
-	Thumbnail      image.Image // thumbnail preview of the document
+	ContentTypes     ContentTypes
+	AppProperties    AppProperties
+	Rels             Relationships
+	CoreProperties   CoreProperties
+	CustomProperties CustomProperties
+	Thumbnail        image.Image // thumbnail preview of the document
 
 	Images     []ImageRef
 	ExtraFiles []ExtraFile
