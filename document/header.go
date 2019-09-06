@@ -125,6 +125,11 @@ func (h Header) AddImage(i common.Image) (common.ImageRef, error) {
 	h.d.Images = append(h.d.Images, r)
 	fn := fmt.Sprintf("media/image%d.%s", len(h.d.Images), i.Format)
 	rel := hdrRels.AddRelationship(fn, unioffice.ImageType)
+	h.d.ContentTypes.EnsureDefault("png", "image/png")
+	h.d.ContentTypes.EnsureDefault("jpeg", "image/jpeg")
+	h.d.ContentTypes.EnsureDefault("jpg", "image/jpeg")
+	h.d.ContentTypes.EnsureDefault("wmf", "image/x-wmf")
+	h.d.ContentTypes.EnsureDefault(i.Format, "image/"+i.Format)
 	r.SetRelID(rel.X().IdAttr)
 	return r, nil
 }
