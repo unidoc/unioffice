@@ -75,6 +75,7 @@ func New() *Document {
 	d.Settings = NewSettings()
 	d.docRels.AddRelationship("settings.xml", unioffice.SettingsType)
 	d.ContentTypes.AddOverride("/word/settings.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml")
+	d.ContentTypes.AddOverride("/docProps/custom.xml", "application/vnd.openxmlformats-officedocument.custom-properties+xml")
 
 	d.Rels = common.NewRelationships()
 	d.Rels.AddRelationship(unioffice.RelativeFilename(unioffice.DocTypeDocument, "", unioffice.CorePropertiesType, 0), unioffice.CorePropertiesType)
@@ -555,6 +556,7 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	}
 	if !customPropertiesExist {
 		doc.Rels.AddRelationship("docProps/custom.xml", unioffice.CustomPropertiesType)
+		doc.ContentTypes.AddOverride("/docProps/custom.xml", "application/vnd.openxmlformats-officedocument.custom-properties+xml")
 	}
 
 	return doc, nil
