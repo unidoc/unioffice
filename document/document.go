@@ -839,6 +839,14 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 					return err
 				}
 				iref = common.MakeImageRef(img, &d.DocBase, d.docRels)
+
+				//name: zhexiao
+				//date: 2019-10-09
+				//ImageRef add relID
+				//================================start
+				iref.SetRelID(rel.IdAttr)
+				//================================end
+
 				d.Images = append(d.Images, iref)
 				files[i] = nil
 			}

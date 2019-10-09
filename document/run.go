@@ -133,6 +133,26 @@ func (r Run) AddPageBreak() {
 	ic.Br.TypeAttr = wml.ST_BrTypePage
 }
 
+//name: zhexiao
+//date: 2019-10-09
+//get inline image from document xml
+//================================start
+func (r Run) DrawingInline() []InlineDrawing {
+	var ret []InlineDrawing
+	for _, ic := range r.x.EG_RunInnerContent {
+		if ic.Drawing == nil {
+			continue
+		}
+
+		for _, inl := range ic.Drawing.Inline {
+			ret = append(ret, InlineDrawing{r.d, inl})
+		}
+	}
+	return ret
+}
+
+//=================================end
+
 // DrawingAnchored returns a slice of AnchoredDrawings.
 func (r Run) DrawingAnchored() []AnchoredDrawing {
 	ret := []AnchoredDrawing{}
