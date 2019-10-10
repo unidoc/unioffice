@@ -10,6 +10,7 @@ package spreadsheet
 import (
 	"archive/zip"
 	"errors"
+	"flag"
 	"fmt"
 	"image"
 	"image/jpeg"
@@ -19,7 +20,9 @@ import (
 	"time"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/common"
+	"github.com/unidoc/unioffice/common/license"
 	"github.com/unidoc/unioffice/vmldrawing"
 	"github.com/unidoc/unioffice/zippkg"
 
@@ -255,6 +258,20 @@ func (wb *Workbook) Epoch() time.Time {
 
 // Save writes the workbook out to a writer in the zipped xlsx format.
 func (wb *Workbook) Save(w io.Writer) error {
+	if !license.GetLicenseKey().IsLicensed() && flag.Lookup("test.v") == nil {
+		fmt.Println("Unlicensed version of UniOffice")
+		fmt.Println("- Get a license on https://unidoc.io")
+		for _, sheet := range wb.Sheets() {
+			a1 := sheet.Cell("A1")
+
+			rt := a1.SetRichTextString()
+			run := rt.AddRun()
+			run.SetText("Unlicensed version of UniOffice - Get a license on https://unidoc.io")
+			run.SetBold(true)
+			run.SetColor(color.Red)
+		}
+	}
+
 	z := zip.NewWriter(w)
 	defer z.Close()
 	dt := unioffice.DocTypeSpreadsheet
