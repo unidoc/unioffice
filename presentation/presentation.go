@@ -12,6 +12,7 @@ import (
 	"bytes"
 	"encoding/xml"
 	"errors"
+	"flag"
 	"fmt"
 	"image"
 	"image/jpeg"
@@ -21,7 +22,9 @@ import (
 	"path"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/common"
+	"github.com/unidoc/unioffice/common/license"
 	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/schema/soo/dml"
 	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
@@ -376,6 +379,22 @@ func (p *Presentation) Save(w io.Writer) error {
 	if err := p.x.Validate(); err != nil {
 		log.Printf("validation error in document: %s", err)
 	}
+
+	if !license.GetLicenseKey().IsLicensed() && flag.Lookup("test.v") == nil {
+		fmt.Println("Unlicensed version of UniOffice")
+		fmt.Println("- Get a license on https://unidoc.io")
+		slide := p.Slides()[0]
+		tb := slide.AddTextBox()
+		tb.Properties().SetPosition(0, 0)
+		tb.Properties().LineProperties().SetWidth(2 * measurement.Inch)
+		p := tb.AddParagraph()
+		r := p.AddRun()
+		r.SetText("Unlicensed version of UniOffice - Get a license on https://unidoc.io")
+		r.Properties().SetSize(12 * measurement.Point)
+		r.Properties().SetBold(true)
+		r.Properties().SetSolidFill(color.Red)
+	}
+
 
 	dt := unioffice.DocTypePresentation
 
