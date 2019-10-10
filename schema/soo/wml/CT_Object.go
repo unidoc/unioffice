@@ -12,7 +12,6 @@ package wml
 import (
 	"encoding/xml"
 	"fmt"
-
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
 )
@@ -24,6 +23,14 @@ type CT_Object struct {
 	DyaOrigAttr *sharedTypes.ST_TwipsMeasure
 	Drawing     *CT_Drawing
 	Choice      *CT_ObjectChoice
+
+	//name: zhexiao
+	//date: 2019-10-10
+	//add OLEObject and shape
+	//================================start
+	OleObject *CT_OleObject
+	Shape     *CT_Shape
+	//================================end
 }
 
 func NewCT_Object() *CT_Object {
@@ -111,6 +118,26 @@ lCT_Object:
 				if err := d.DecodeElement(&m.Choice.Movie, &el); err != nil {
 					return err
 				}
+
+			//name: zhexiao
+			//date: 2019-10-10
+			//add shape and OLEObject
+			//================================start
+			case xml.Name{Space: "urn:schemas-microsoft-com:vml", Local: "shape"}:
+				m.Shape = NewCT_Shape()
+				if err := d.DecodeElement(&m.Shape, &el); err != nil {
+					return err
+				}
+				//fmt.Printf("%#v \n", m.Shape)
+
+			case xml.Name{Space: "urn:schemas-microsoft-com:office:office", Local: "OLEObject"}:
+				m.OleObject = NewCT_OleObject()
+				if err := d.DecodeElement(&m.OleObject, &el); err != nil {
+					return err
+				}
+				//fmt.Printf("%#v \n", m.OleObject)
+			//================================end
+
 			default:
 				unioffice.Log("skipping unsupported element on CT_Object %v", el.Name)
 				if err := d.Skip(); err != nil {
