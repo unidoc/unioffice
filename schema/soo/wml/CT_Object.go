@@ -24,9 +24,9 @@ type CT_Object struct {
 	Drawing     *CT_Drawing
 	Choice      *CT_ObjectChoice
 
-	//name: zhexiao
+	//name: zhexiao(肖哲)
 	//date: 2019-10-10
-	//add OLEObject and shape
+	//新增CT_Object对OLEObject和Shape属性的支持
 	//================================start
 	OleObject *CT_OleObject
 	Shape     *CT_Shape
@@ -119,9 +119,9 @@ lCT_Object:
 					return err
 				}
 
-			//name: zhexiao
+			//name: zhexiao(肖哲)
 			//date: 2019-10-10
-			//add shape and OLEObject
+			//解析Shape和Oleobject属性数据
 			//================================start
 			case xml.Name{Space: "urn:schemas-microsoft-com:vml", Local: "shape"}:
 				m.Shape = NewCT_Shape()

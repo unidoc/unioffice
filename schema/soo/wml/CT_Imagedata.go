@@ -1,6 +1,6 @@
-//name: zhexiao
+//name: zhexiao(肖哲)
 //date: 2019-10-10
-//create object shape imagedata for document xml
+//新增CT_Shape下面的imagedata解析
 //================================start
 package wml
 

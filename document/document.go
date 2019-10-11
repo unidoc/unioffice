@@ -56,6 +56,15 @@ type Document struct {
 	fontTable   *wml.Fonts
 	endNotes    *wml.Endnotes
 	footNotes   *wml.Footnotes
+
+	//name: zhexiao(肖哲)
+	//date: 2019-10-09
+	//编写doc数据结构对OLEobject类型的支持，一个公式路径，一个是公式自带的wmf图片路径
+	//================================start
+	OleObjectPaths   []OleObjectPath
+	OleObjectWmfPath []OleObjectWmfPath
+	//================================end
+
 }
 
 // New constructs an empty document that content can be added to.
@@ -829,20 +838,37 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 			if f == nil {
 				continue
 			}
+
 			if f.Name == target {
 				path, err := zippkg.ExtractToDiskTmp(f, d.TmpPath)
 				if err != nil {
 					return err
 				}
+
+				//name: zhexiao(肖哲)
+				//date: 2019-10-09
+				//处理公式自带的wmf图片
+				//================================start
+				if strings.Contains(rel.TargetAttr, ".wmf") {
+					d.OleObjectWmfPath = append(d.OleObjectWmfPath, OleObjectWmfPath{
+						rid:  rel.IdAttr,
+						path: path,
+					})
+
+					continue
+				}
+				//================================end
+
 				img, err := common.ImageFromFile(path)
 				if err != nil {
 					return err
 				}
+
 				iref = common.MakeImageRef(img, &d.DocBase, d.docRels)
 
-				//name: zhexiao
+				//name: zhexiao(肖哲)
 				//date: 2019-10-09
-				//ImageRef add relID
+				//BUG修复：新增图片的relID
 				//================================start
 				iref.SetRelID(rel.IdAttr)
 				//================================end
@@ -858,6 +884,32 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 		if newExt := filepath.Ext(rel.TargetAttr); newExt != ext {
 			rel.TargetAttr = rel.TargetAttr[0:len(rel.TargetAttr)-len(newExt)] + ext
 		}
+
+	//name: zhexiao(肖哲)
+	//date: 2019-10-09
+	//对文档公式数据的解析
+	//================================start
+	case unioffice.OleObjectType:
+		for _, f := range files {
+			if f == nil {
+				continue
+			}
+
+			//fmt.Printf("%#v \n", rel)
+
+			if f.Name == target {
+				path, err := zippkg.ExtractToDiskTmp(f, d.TmpPath)
+				if err != nil {
+					return err
+				}
+
+				d.OleObjectPaths = append(d.OleObjectPaths, OleObjectPath{
+					rid:  rel.IdAttr,
+					path: path,
+				})
+			}
+		}
+		//================================end
 
 	default:
 		unioffice.Log("unsupported relationship type: %s tgt: %s", typ, target)

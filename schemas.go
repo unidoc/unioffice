@@ -62,6 +62,13 @@ const (
 	CustomPropertiesType   = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties"
 	CustomXMLType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml"
 
+	//name: zhexiao(肖哲)
+	//date: 2019-10-10
+	//新增文档初始化解析对OleObject的处理
+	//================================start
+	OleObjectType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/oleObject"
+	//================================end
+
 	// SML
 	WorksheetType            = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
 	WorksheetContentType     = "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
