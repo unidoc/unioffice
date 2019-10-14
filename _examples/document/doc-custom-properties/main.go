@@ -16,7 +16,8 @@ func main() {
 		log.Fatalf("error opening document: %s", err)
 	}
 
-	cp := doc.CustomProperties
+	cp := doc.GetOrCreateCustomProperties()
+
 	// You can read properties from the document
 	fmt.Println("AppVersion", *cp.GetPropertyByName("AppVersion").Lpwstr)
 	fmt.Println("Company", *cp.GetPropertyByName("Company").Lpwstr)
@@ -31,4 +32,15 @@ func main() {
 	cp.SetPropertyAsDate("Another date property", time.Now()) // date
 
 	doc.SaveToFile("document.docx")
+
+	// For new documents all is the same
+	docNew := document.New()
+
+	cpNew := docNew.GetOrCreateCustomProperties()
+	cpNew.SetPropertyAsLpwstr("Another text property", "My text value") // text
+	cpNew.SetPropertyAsI4("Another integer number property", 42) // int23
+	cpNew.SetPropertyAsR8("Another float number property", 3.14) // float64
+	cpNew.SetPropertyAsDate("Another date property", time.Now()) // date
+
+	docNew.SaveToFile("document_new.docx")
 }
