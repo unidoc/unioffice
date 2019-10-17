@@ -94,6 +94,7 @@ func New() *Document {
 	return d
 }
 
+// Shortcut for getting custom properties of the document (and if they not exist yet, creating them first)
 func (d *Document) GetOrCreateCustomProperties() common.CustomProperties {
 	if d.CustomProperties.X() == nil {
 		d.createCustomProperties()
