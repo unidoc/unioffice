@@ -31,7 +31,7 @@ func main() {
 	cp.SetPropertyAsR8("Another float number property", 3.14) // float64
 	cp.SetPropertyAsDate("Another date property", time.Now()) // date
 
-	doc.SaveToFile("document.docx")
+	doc.SaveToFile("document_customized.docx")
 
 	// For new documents all is the same
 	docNew := document.New()
@@ -42,5 +42,5 @@ func main() {
 	cpNew.SetPropertyAsR8("Another float number property", 3.14) // float64
 	cpNew.SetPropertyAsDate("Another date property", time.Now()) // date
 
-	docNew.SaveToFile("document_customized.docx")
+	docNew.SaveToFile("document_new.docx")
 }
