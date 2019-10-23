@@ -730,3 +730,60 @@ func (p *Presentation) GetImageByRelID(relID string) (common.ImageRef, bool) {
 	}
 	return common.ImageRef{}, false
 }
+
+// ExtractText extracts all text content from the presentation specified by `inputPath`.
+// Text is being extracted from the slides specified by their indexes passed in `slidesIdxs`.
+// If `slides` is 0-length - text is being extracted from all slides.
+func ExtractText(inputPath string, slidesIdxs []int) (string, error) {
+	pres, err := Open(inputPath)
+	if err != nil {
+		return "", err
+	}
+
+	slides := pres.Slides()
+
+	if len(slidesIdxs) == 0 {
+		slidesIdxs = make([]int, 0, len(slides))
+
+		for i := range slides {
+			slidesIdxs = append(slidesIdxs, i)
+		}
+	}
+
+	text := bytes.NewBuffer(nil)
+
+	for _, slideIdx := range slidesIdxs {
+		if slideIdx < 0 || slideIdx >= len(slides) {
+			return "", fmt.Errorf("slide idx out of range: %v", slideIdx)
+		}
+
+		s := slides[slideIdx]
+		for _, ph := range s.PlaceHolders() {
+			for _, p := range ph.Paragraphs() {
+				runs := p.Runs()
+				if len(runs) > 0 {
+					for _, r := range runs {
+						runX := r.X()
+
+						if runX.R != nil {
+							text.WriteString(runX.R.T)
+						}
+
+						if runX.Fld != nil && runX.Fld.T != nil {
+							text.WriteString(*runX.Fld.T)
+						}
+					}
+
+					text.WriteString("\n")
+				}
+			}
+		}
+	}
+
+	if text.Len() > 0 {
+		// discard last '\n'
+		text.Truncate(text.Len() - 1)
+	}
+
+	return text.String(), nil
+}

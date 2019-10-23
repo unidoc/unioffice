@@ -47,3 +47,14 @@ func (p Paragraph) Properties() ParagraphProperties {
 	}
 	return MakeParagraphProperties(p.x.PPr)
 }
+
+// Runs returns all runs from the paragraph.
+func (p Paragraph) Runs() []Run {
+	var runs []Run
+
+	for _, tr := range p.x.EG_TextRun {
+		runs = append(runs, MakeRun(tr))
+	}
+
+	return runs
+}

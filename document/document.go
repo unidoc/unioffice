@@ -9,6 +9,7 @@ package document
 
 import (
 	"archive/zip"
+	"bytes"
 	"errors"
 	"flag"
 	"fmt"
@@ -1009,4 +1010,32 @@ func (d Document) Bookmarks() []Bookmark {
 		}
 	}
 	return ret
+}
+
+// ExtractText extracts all text content from the document specified by `inputPath`.
+func ExtractText(inputPath string) (string, error) {
+	doc, err := Open(inputPath)
+	if err != nil {
+		return "", err
+	}
+
+	text := bytes.NewBuffer(nil)
+
+	for _, p := range doc.Paragraphs() {
+		runs := p.Runs()
+		if len(runs) > 0 {
+			for _, r := range runs {
+				text.WriteString(r.Text())
+			}
+
+			text.WriteString("\n")
+		}
+	}
+
+	if text.Len() > 0 {
+		// discard last '\n'
+		text.Truncate(text.Len() - 1)
+	}
+
+	return text.String(), nil
 }

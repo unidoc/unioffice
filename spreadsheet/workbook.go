@@ -9,6 +9,7 @@ package spreadsheet
 
 import (
 	"archive/zip"
+	"bytes"
 	"errors"
 	"flag"
 	"fmt"
@@ -743,4 +744,58 @@ func (wb *Workbook) RemoveCalcChain() {
 			return
 		}
 	}
+}
+
+// ExtractText extracts all text content from the workbook specified by `inputPath`.
+// Text is being extracted from the sheets specified by their indexes passed in `slidesIdxs`.
+// If `slides` is 0-length - text is being extracted from all slides.
+func ExtractText(inputPath string, sheetsIdxs []int) (string, error) {
+	wb, err := Open(inputPath)
+	if err != nil {
+		return "", err
+	}
+
+	text := bytes.NewBuffer(nil)
+
+	sheets := wb.Sheets()
+
+	if len(sheetsIdxs) == 0 {
+		sheetsIdxs = make([]int, 0, len(sheets))
+
+		for i := range sheets {
+			sheetsIdxs = append(sheetsIdxs, i)
+		}
+	}
+
+	for _, sheetIdx := range sheetsIdxs {
+		if sheetIdx < 0 || sheetIdx >= len(sheets) {
+			return "", fmt.Errorf("sheet idx out of range: %v", sheetIdx)
+		}
+
+		s := sheets[sheetIdx]
+		for _, r := range s.Rows() {
+			cells := r.Cells()
+			if len(cells) > 0 {
+				for _, c := range cells {
+					if c.x.V != nil {
+						val, err := c.GetRawValue()
+						if err != nil {
+							return "", err
+						}
+
+						text.WriteString(val)
+					}
+				}
+
+				text.WriteString("\n")
+			}
+		}
+	}
+
+	if text.Len() > 0 {
+		// discard last '\n'
+		text.Truncate(text.Len() - 1)
+	}
+
+	return text.String(), nil
 }
