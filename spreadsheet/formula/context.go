@@ -17,6 +17,24 @@ type Context interface {
 	// when evaluating cells that pull data from other sheets (e.g. ='Sheet 2'!A1)
 	Sheet(name string) Context
 
+	// GetFilename returns the full filename of the context's Workbook
+	GetFilename() string
+
+	// GetWidth returns a worksheet's column width
+	GetWidth(colIdx int) float64
+
+	// GetFormat returns a cell's format
+	GetFormat(cellRef string) string
+
+	// GetFormat returns cell's label prefix dependent on cell horizontal alignment
+	GetLabelPrefix(cellRef string) string
+
+	// GetFormat returns if cell is protected
+	GetLocked(cellRef string) bool
+
+	// GetFormat returns sets cell's protected attribute
+	SetLocked(cellRef string, locked bool)
+
 	// NamedRange returns a named range.
 	NamedRange(name string) Reference
 

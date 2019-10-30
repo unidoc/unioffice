@@ -30,3 +30,27 @@ func (i *ivr) Sheet(name string) Context {
 func (i *ivr) SetOffset(col, row uint32) {
 
 }
+
+func (i *ivr) GetFormat(cellRef string) string {
+	return ""
+}
+
+func (i *ivr) GetLabelPrefix(cellRef string) string {
+	return ""
+}
+
+func (i *ivr) GetLocked(cellRef string) bool {
+	return false
+}
+
+func (i *ivr) SetLocked(cellRef string, locked bool) {
+
+}
+
+func (i *ivr) GetWidth(colIdx int) float64 {
+	return float64(0)
+}
+
+func (i *ivr) GetFilename() string {
+	return ""
+}

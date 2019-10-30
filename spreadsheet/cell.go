@@ -191,6 +191,30 @@ func (c Cell) getFormat() string {
 	return nf.GetFormat()
 }
 
+func (c Cell) getLabelPrefix() string {
+	if c.x.SAttr == nil {
+		return ""
+	}
+	sid := *c.x.SAttr
+	cs := c.w.StyleSheet.GetCellStyle(sid)
+	switch cs.xf.Alignment.HorizontalAttr {
+	case sml.ST_HorizontalAlignmentLeft: return "'"
+	case sml.ST_HorizontalAlignmentRight: return "\""
+	case sml.ST_HorizontalAlignmentCenter: return "^"
+	case sml.ST_HorizontalAlignmentFill: return "\\"
+	default: return ""
+	}
+}
+
+func (c Cell) getLocked() bool {
+	if c.x.SAttr == nil {
+		return false
+	}
+	sid := *c.x.SAttr
+	f := c.w.StyleSheet.GetCellStyle(sid)
+	return *f.xf.Protection.LockedAttr
+}
+
 // GetFormattedValue returns the formatted cell value as it would appear in
 // Excel. This involves determining the format string to apply, parsing it, and
 // then formatting the value according to the format string.  This should only
@@ -551,6 +575,17 @@ func (c Cell) getRawSortValue() (string, bool) {
 // not needed but is used internally when expanding an array formula.
 func (c Cell) SetCachedFormulaResult(s string) {
 	c.x.V = &s
+}
+
+func (c Cell) setLocked(locked bool) {
+	sid := c.x.SAttr
+	if sid != nil {
+		f := c.w.StyleSheet.GetCellStyle(*sid)
+		if f.xf.Protection == nil {
+			f.xf.Protection = sml.NewCT_CellProtection()
+		}
+		f.xf.Protection.LockedAttr = &locked
+	}
 }
 
 func b2i(v bool) int {
