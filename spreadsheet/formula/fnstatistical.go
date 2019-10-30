@@ -19,6 +19,7 @@ func init() {
 	RegisterFunction("AVERAGEA", Averagea)
 	RegisterFunction("COUNT", Count)
 	RegisterFunction("COUNTA", Counta)
+	RegisterFunction("COUNTIF", CountIf)
 	RegisterFunction("COUNTBLANK", CountBlank)
 	RegisterFunction("MAX", Max)
 	RegisterFunction("MIN", Min)
@@ -119,6 +120,37 @@ func CountBlank(args []Result) Result {
 		return MakeErrorResult("COUNTBLANK requires an argument")
 	}
 	return MakeNumberResult(count(args, countEmpty))
+}
+
+// CountIf implements the COUNTIF function.
+func CountIf(args []Result) Result {
+	// COUNT and COUNTA don't require arguments, COUNTBLANK does
+	if len(args) < 2 {
+		return MakeErrorResult("COUNTIF requires two argumentss")
+	}
+	arr := args[0]
+	if arr.Type != ResultTypeArray && arr.Type != ResultTypeList {
+		return MakeErrorResult("COUNTIF requires first argument of type array")
+	}
+	criteria := args[1]
+	isNumber := criteria.Type == ResultTypeNumber
+	cNum := criteria.ValueNumber
+	cStr := criteria.ValueString
+	count := 0
+	for _, r := range arr.ValueArray {
+		for _, c := range r {
+			if isNumber {
+				if c.ValueNumber == cNum {
+					count++
+				}
+			} else {
+				if c.ValueString == cStr {
+					count++
+				}
+			}
+		}
+	}
+	return MakeNumberResult(float64(count))
 }
 
 // Min is an implementation of the Excel MIN() function.

@@ -298,3 +298,31 @@ func TestColumns(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestCountIf(t *testing.T) {
+	td := []testStruct{
+		{`=COUNTIF(B1:B10,A1)`, `2 ResultTypeNumber`},
+		{`=COUNTIF(B1:B10,A2)`, `3 ResultTypeNumber`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1234.4321)
+	sheet.Cell("A2").SetString("value1")
+
+	sheet.Cell("B1").SetString("value1")
+	sheet.Cell("B2").SetString("value2")
+	sheet.Cell("B3").SetString("value3")
+	sheet.Cell("B4").SetNumber(1234.4321)
+	sheet.Cell("B5").SetString("value1")
+	sheet.Cell("B6").SetString("value2")
+	sheet.Cell("B7").SetString("value3")
+	sheet.Cell("B8").SetString("value1")
+	sheet.Cell("B9").SetNumber(1234.4322)
+	sheet.Cell("B10").SetNumber(1234.4321)
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
