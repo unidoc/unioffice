@@ -248,6 +248,7 @@ func TestChoose(t *testing.T) {
 		{`=CHOOSE(A1,B1,B2,B3)`, `value1 ResultTypeString`},
 		{`=CHOOSE(A2,B1,B2,B3)`, `value2 ResultTypeString`},
 		{`=CHOOSE(A3,B1,B2,B3)`, `value3 ResultTypeString`},
+		{`=CHOOSE(A3,B1,B2)`, `#VALUE! ResultTypeError`},
 	}
 
 	ss := spreadsheet.New()
