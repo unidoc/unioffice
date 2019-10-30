@@ -19,11 +19,31 @@ import (
 	"github.com/unidoc/unioffice/spreadsheet/formula"
 )
 
+type testStruct struct {
+	Inp string
+	Exp string
+}
+
+func runTests(t *testing.T, ctx formula.Context, td []testStruct) {
+	ev := formula.NewEvaluator()
+	for _, tc := range td {
+		t.Run(tc.Inp, func(t *testing.T) {
+			p := formula.Parse(strings.NewReader(tc.Inp))
+			if p == nil {
+				t.Errorf("error parsing %s", tc.Inp)
+				return
+			}
+			result := p.Eval(ctx, ev)
+			got := fmt.Sprintf("%s %s", result.Value(), result.Type)
+			if got != tc.Exp {
+				t.Errorf("expected %s = %s, got %s", tc.Inp, tc.Exp, got)
+			}
+		})
+	}
+}
+
 func TestCell(t *testing.T) {
-	td := []struct {
-		Inp string
-		Exp string
-	}{
+	td := []testStruct{
 		{`=CELL("address",A1)`, `$A$1 ResultTypeString`},
 		{`=CELL("col",B1)`, `2 ResultTypeNumber`},
 		{`=CELL("row",A1)`, `1 ResultTypeNumber`},
@@ -223,28 +243,11 @@ func TestCell(t *testing.T) {
 	sheet.Column(1).SetWidth(1.5 * measurement.Inch)
 	sheet.Column(2).SetWidth(2.5 * measurement.Inch)
 
-	ev := formula.NewEvaluator()
-	for _, tc := range td {
-		t.Run(tc.Inp, func(t *testing.T) {
-			p := formula.Parse(strings.NewReader(tc.Inp))
-			if p == nil {
-				t.Errorf("error parsing %s", tc.Inp)
-				return
-			}
-			result := p.Eval(ctx, ev)
-			got := fmt.Sprintf("%s %s", result.Value(), result.Type)
-			if got != tc.Exp {
-				t.Errorf("expected %s = %s, got %s", tc.Inp, tc.Exp, got)
-			}
-		})
-	}
+	runTests(t, ctx, td)
 }
 
 func TestChoose(t *testing.T) {
-	td := []struct {
-		Inp string
-		Exp string
-	}{
+	td := []testStruct{
 		{`=CHOOSE(A1,B1,B2,B3)`, `value1 ResultTypeString`},
 		{`=CHOOSE(A2,B1,B2,B3)`, `value2 ResultTypeString`},
 		{`=CHOOSE(A3,B1,B2,B3)`, `value3 ResultTypeString`},
@@ -264,19 +267,20 @@ func TestChoose(t *testing.T) {
 
 	ctx := sheet.FormulaContext()
 
-	ev := formula.NewEvaluator()
-	for _, tc := range td {
-		t.Run(tc.Inp, func(t *testing.T) {
-			p := formula.Parse(strings.NewReader(tc.Inp))
-			if p == nil {
-				t.Errorf("error parsing %s", tc.Inp)
-				return
-			}
-			result := p.Eval(ctx, ev)
-			got := fmt.Sprintf("%s %s", result.Value(), result.Type)
-			if got != tc.Exp {
-				t.Errorf("expected %s = %s, got %s", tc.Inp, tc.Exp, got)
-			}
-		})
+	runTests(t, ctx, td)
+}
+
+func TestColumn(t *testing.T) {
+	td := []testStruct{
+		{`=COLUMN(A1)`, `1 ResultTypeNumber`},
+		{`=COLUMN(A2)`, `1 ResultTypeNumber`},
+		{`=COLUMN(B1)`, `2 ResultTypeNumber`},
 	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
 }
