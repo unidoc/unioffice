@@ -284,3 +284,17 @@ func TestColumn(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestColumns(t *testing.T) {
+	td := []testStruct{
+		{`=COLUMNS(A1:E8)`, `5 ResultTypeNumber`},
+		{`=COLUMNS(E8:A1)`, `#VALUE! ResultTypeError`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}

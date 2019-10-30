@@ -17,6 +17,7 @@ import (
 func init() {
 	RegisterFunction("CHOOSE", Choose)
 	RegisterFunction("COLUMN", Column)
+	RegisterFunction("COLUMNS", Columns)
 	RegisterFunction("INDEX", Index)
 	RegisterFunctionComplex("INDIRECT", Indirect)
 	RegisterFunctionComplex("OFFSET", Offset)
@@ -56,6 +57,22 @@ func Column(args []Result) Result {
 		return MakeErrorResult("Incorrect reference: " + ref.Value)
 	}
 	return MakeNumberResult(float64(cr.ColumnIdx+1))
+}
+
+// Columns implements the Excel COLUMNS function
+func Columns(args []Result) Result {
+	if len(args) < 1 {
+		return MakeErrorResult("COLUMNS requires one argument")
+	}
+	arrResult := args[0]
+	if arrResult.Type != ResultTypeArray && arrResult.Type != ResultTypeList {
+		return MakeErrorResult("COLUMNS requires first argument of type array")
+	}
+	arr := arrResult.ValueArray
+	if len(arr) == 0 {
+		return MakeErrorResult("COLUMNS requires array to contain at least 1 row")
+	}
+	return MakeNumberResult(float64(len(arr[0])))
 }
 
 // Index implements the Excel INDEX function
