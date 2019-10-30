@@ -91,126 +91,126 @@ func TestCell(t *testing.T) {
 
 // for testing "color" function
 	redStyle := ss.StyleSheet.AddCellStyle()
-        redStyle.SetNumberFormat("#,##0.00000;[RED]-#,##0.00000")
+	redStyle.SetNumberFormat("#,##0.00000;[RED]-#,##0.00000")
 	sheet.Cell("A1").SetStyle(redStyle)
 
 // for testing "parentheses" function
 	parStyle := ss.StyleSheet.AddCellStyle()
-        parStyle.SetNumberFormat("#,##0.00_);(#,##0.00)")
+	parStyle.SetNumberFormat("#,##0.00_);(#,##0.00)")
 	sheet.Cell("C1").SetStyle(parStyle)
 
 // for testing "format" function
 	integerStyle := ss.StyleSheet.AddCellStyle()
-        integerStyle.SetNumberFormat("00000")
+	integerStyle.SetNumberFormat("00000")
 	sheet.Cell("A2").SetStyle(integerStyle)
 
 	intSepStyle := ss.StyleSheet.AddCellStyle()
-        intSepStyle.SetNumberFormat("000,000,000")
+	intSepStyle.SetNumberFormat("000,000,000")
 	sheet.Cell("A3").SetStyle(intSepStyle)
 
 	intParStyle := ss.StyleSheet.AddCellStyle()
-        intParStyle.SetNumberFormat("#,##0_);(#,##0)")
+	intParStyle.SetNumberFormat("#,##0_);(#,##0)")
 	sheet.Cell("A4").SetStyle(intParStyle)
 
 	financeStyle := ss.StyleSheet.AddCellStyle()
-        financeStyle.SetNumberFormat("0.00")
+	financeStyle.SetNumberFormat("0.00")
 	sheet.Cell("A5").SetStyle(financeStyle)
 
 	decimalStyle := ss.StyleSheet.AddCellStyle()
-        decimalStyle.SetNumberFormat("#,##0.00")
+	decimalStyle.SetNumberFormat("#,##0.00")
 	sheet.Cell("A6").SetStyle(decimalStyle)
 
 	decJustStyle := ss.StyleSheet.AddCellStyle()
-        decJustStyle.SetNumberFormat("_-* #,##0.00_-;-* #,##0.00_-;_-* \"-\"??_-;_-@_-")
+	decJustStyle.SetNumberFormat("_-* #,##0.00_-;-* #,##0.00_-;_-* \"-\"??_-;_-@_-")
 	sheet.Cell("A7").SetStyle(decJustStyle)
 
 	decParStyle := ss.StyleSheet.AddCellStyle()
-        decParStyle.SetNumberFormat("#,##0.00_);(#,##0.00)")
+	decParStyle.SetNumberFormat("#,##0.00_);(#,##0.00)")
 	sheet.Cell("A8").SetStyle(decParStyle)
 
 	percentStyle := ss.StyleSheet.AddCellStyle()
-        percentStyle.SetNumberFormat("0.00%")
+	percentStyle.SetNumberFormat("0.00%")
 	sheet.Cell("A9").SetStyle(percentStyle)
 
 	intCurStyle := ss.StyleSheet.AddCellStyle()
-        intCurStyle.SetNumberFormat("[$$-409]#,##0;-[$$-409]#,##0")
+	intCurStyle.SetNumberFormat("[$$-409]#,##0;-[$$-409]#,##0")
 	sheet.Cell("A10").SetStyle(intCurStyle)
 
 	curStyle := ss.StyleSheet.AddCellStyle()
-        curStyle.SetNumberFormat("[$$-409]#,##0.00;-[$$-409]#,##0.00")
+	curStyle.SetNumberFormat("[$$-409]#,##0.00;-[$$-409]#,##0.00")
 	sheet.Cell("A11").SetStyle(curStyle)
 
 	curLabelStyle := ss.StyleSheet.AddCellStyle()
-        curLabelStyle.SetNumberFormat("#,##0.00 [$USD];-#,##0.00 [$USD]")
+	curLabelStyle.SetNumberFormat("#,##0.00 [$USD];-#,##0.00 [$USD]")
 	sheet.Cell("A12").SetStyle(curLabelStyle)
 
 	mdyStyle := ss.StyleSheet.AddCellStyle()
-        mdyStyle.SetNumberFormat("MM/DD/YY")
+	mdyStyle.SetNumberFormat("MM/DD/YY")
 	sheet.Cell("A13").SetStyle(mdyStyle)
 
 	dmyStyle := ss.StyleSheet.AddCellStyle()
-        dmyStyle.SetNumberFormat("D. MMMM YYYY")
+	dmyStyle.SetNumberFormat("D. MMMM YYYY")
 	sheet.Cell("A14").SetStyle(dmyStyle)
 
 	d2Style := ss.StyleSheet.AddCellStyle()
-        d2Style.SetNumberFormat("MMM DD")
+	d2Style.SetNumberFormat("MMM DD")
 	sheet.Cell("A15").SetStyle(d2Style)
 
 	d3Style := ss.StyleSheet.AddCellStyle()
-        d3Style.SetNumberFormat("MM/YY")
+	d3Style.SetNumberFormat("MM/YY")
 	sheet.Cell("A16").SetStyle(d3Style)
 
 	d4Style := ss.StyleSheet.AddCellStyle()
-        d4Style.SetNumberFormat("MM/DD/YY\\ HH:MM\\ AM/PM")
+	d4Style.SetNumberFormat("MM/DD/YY\\ HH:MM\\ AM/PM")
 	sheet.Cell("A17").SetStyle(d4Style)
 
 	d4Style = ss.StyleSheet.AddCellStyle()
-        d4Style.SetNumberFormat("MM/DD/YYYY\\ HH:MM:SS")
+	d4Style.SetNumberFormat("MM/DD/YYYY\\ HH:MM:SS")
 	sheet.Cell("A18").SetStyle(d4Style)
 
 	d5Style := ss.StyleSheet.AddCellStyle()
-        d5Style.SetNumberFormat("MM\\-DD")
+	d5Style.SetNumberFormat("MM\\-DD")
 	sheet.Cell("A19").SetStyle(d5Style)
 
 	d6Style := ss.StyleSheet.AddCellStyle()
-        d6Style.SetNumberFormat("HH:MM:SS\\ AM/PM")
+	d6Style.SetNumberFormat("HH:MM:SS\\ AM/PM")
 	sheet.Cell("A20").SetStyle(d6Style)
 
 	d7Style := ss.StyleSheet.AddCellStyle()
-        d7Style.SetNumberFormat("HH:MM\\ AM/PM")
+	d7Style.SetNumberFormat("HH:MM\\ AM/PM")
 	sheet.Cell("A21").SetStyle(d7Style)
 
 	d8Style := ss.StyleSheet.AddCellStyle()
-        d8Style.SetNumberFormat("HH:MM:SS")
+	d8Style.SetNumberFormat("HH:MM:SS")
 	sheet.Cell("A22").SetStyle(d8Style)
 
 	d9Style := ss.StyleSheet.AddCellStyle()
-        d9Style.SetNumberFormat("HH:MM")
+	d9Style.SetNumberFormat("HH:MM")
 	sheet.Cell("A23").SetStyle(d9Style)
 
 	sciStyle := ss.StyleSheet.AddCellStyle()
-        sciStyle.SetNumberFormat("##0.00E+00")
+	sciStyle.SetNumberFormat("##0.00E+00")
 	sheet.Cell("A24").SetStyle(sciStyle)
 
 	incorrectStyle := ss.StyleSheet.AddCellStyle()
-        incorrectStyle.SetNumberFormat("incorrect style")
+	incorrectStyle.SetNumberFormat("incorrect style")
 	sheet.Cell("A25").SetStyle(incorrectStyle)
 
 // for testing alignments ("prefix" function)
 	leftStyle := ss.StyleSheet.AddCellStyle()
-        leftStyle.SetHorizontalAlignment(sml.ST_HorizontalAlignmentLeft)
+	leftStyle.SetHorizontalAlignment(sml.ST_HorizontalAlignmentLeft)
 	sheet.Cell("B2").SetStyle(leftStyle)
 
 	rightStyle := ss.StyleSheet.AddCellStyle()
-        rightStyle.SetHorizontalAlignment(sml.ST_HorizontalAlignmentRight)
+	rightStyle.SetHorizontalAlignment(sml.ST_HorizontalAlignmentRight)
 	sheet.Cell("B3").SetStyle(rightStyle)
 
 	centerStyle := ss.StyleSheet.AddCellStyle()
-        centerStyle.SetHorizontalAlignment(sml.ST_HorizontalAlignmentCenter)
+	centerStyle.SetHorizontalAlignment(sml.ST_HorizontalAlignmentCenter)
 	sheet.Cell("B4").SetStyle(centerStyle)
 
 	fillStyle := ss.StyleSheet.AddCellStyle()
-        fillStyle.SetHorizontalAlignment(sml.ST_HorizontalAlignmentFill)
+	fillStyle.SetHorizontalAlignment(sml.ST_HorizontalAlignmentFill)
 	sheet.Cell("B5").SetStyle(fillStyle)
 
 	ctx := sheet.FormulaContext()
