@@ -15,6 +15,7 @@ import (
 )
 
 func init() {
+	RegisterFunction("CHOOSE", Choose)
 	RegisterFunction("INDEX", Index)
 	RegisterFunctionComplex("INDIRECT", Indirect)
 	RegisterFunctionComplex("OFFSET", Offset)
@@ -23,6 +24,23 @@ func init() {
 	RegisterFunction("VLOOKUP", VLookup)
 	RegisterFunction("TRANSPOSE", Transpose)
 }
+
+// Choose implements the Excel CHOOSE function
+func Choose(args []Result) Result {
+	if len(args) < 2 {
+		return MakeErrorResult("CHOOSE requires two arguments")
+	}
+	index := args[0]
+	if index.Type != ResultTypeNumber {
+		return MakeErrorResult("CHOOSE requires first argument of type number")
+	}
+	i := int(index.ValueNumber)
+	if len(args) <= i {
+		return MakeErrorResult("Index should be less or equal to the number of values")
+	}
+	return args[i]
+}
+
 
 // Index implements the Excel INDEX function
 func Index(args []Result) Result {

@@ -239,3 +239,43 @@ func TestCell(t *testing.T) {
 		})
 	}
 }
+
+func TestChoose(t *testing.T) {
+	td := []struct {
+		Inp string
+		Exp string
+	}{
+		{`=CHOOSE(A1,B1,B2,B3)`, `value1 ResultTypeString`},
+		{`=CHOOSE(A2,B1,B2,B3)`, `value2 ResultTypeString`},
+		{`=CHOOSE(A3,B1,B2,B3)`, `value3 ResultTypeString`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("A2").SetNumber(2)
+	sheet.Cell("A3").SetNumber(3)
+
+	sheet.Cell("B1").SetString("value1")
+	sheet.Cell("B2").SetString("value2")
+	sheet.Cell("B3").SetString("value3")
+
+	ctx := sheet.FormulaContext()
+
+	ev := formula.NewEvaluator()
+	for _, tc := range td {
+		t.Run(tc.Inp, func(t *testing.T) {
+			p := formula.Parse(strings.NewReader(tc.Inp))
+			if p == nil {
+				t.Errorf("error parsing %s", tc.Inp)
+				return
+			}
+			result := p.Eval(ctx, ev)
+			got := fmt.Sprintf("%s %s", result.Value(), result.Type)
+			if got != tc.Exp {
+				t.Errorf("expected %s = %s, got %s", tc.Inp, tc.Exp, got)
+			}
+		})
+	}
+}
