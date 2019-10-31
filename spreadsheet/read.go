@@ -73,6 +73,6 @@ func Open(filename string) (*Workbook, error) {
 		return nil, err
 	}
 	dir, _ := filepath.Abs(filepath.Dir(filename))
-	wb.filename = dir + "/" + filename
+	wb.filename = filepath.Join(dir, filename)
 	return wb, nil
 }

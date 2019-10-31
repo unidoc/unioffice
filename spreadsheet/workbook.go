@@ -746,6 +746,7 @@ func (wb *Workbook) RemoveCalcChain() {
 	}
 }
 
+// GetFilename returns the name of file from which workbook was opened with full path to it
 func (wb *Workbook) GetFilename() string {
 	return wb.filename
 }

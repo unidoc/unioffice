@@ -124,7 +124,6 @@ func CountBlank(args []Result) Result {
 
 // CountIf implements the COUNTIF function.
 func CountIf(args []Result) Result {
-	// COUNT and COUNTA don't require arguments, COUNTBLANK does
 	if len(args) < 2 {
 		return MakeErrorResult("COUNTIF requires two argumentss")
 	}

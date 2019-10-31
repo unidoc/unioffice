@@ -19,24 +19,26 @@ import (
 	"github.com/unidoc/unioffice/spreadsheet/formula"
 )
 
+// Input is an input formula string.
+// Expected is the expected output of the formula as a string of format: "value type". It depends on Input and workbook that is being worked with.
 type testStruct struct {
-	Inp string
-	Exp string
+	Input string
+	Expected string
 }
 
 func runTests(t *testing.T, ctx formula.Context, td []testStruct) {
 	ev := formula.NewEvaluator()
 	for _, tc := range td {
-		t.Run(tc.Inp, func(t *testing.T) {
-			p := formula.Parse(strings.NewReader(tc.Inp))
+		t.Run(tc.Input, func(t *testing.T) {
+			p := formula.Parse(strings.NewReader(tc.Input))
 			if p == nil {
-				t.Errorf("error parsing %s", tc.Inp)
+				t.Errorf("error parsing %s", tc.Input)
 				return
 			}
 			result := p.Eval(ctx, ev)
 			got := fmt.Sprintf("%s %s", result.Value(), result.Type)
-			if got != tc.Exp {
-				t.Errorf("expected %s = %s, got %s", tc.Inp, tc.Exp, got)
+			if got != tc.Expected {
+				t.Errorf("expected %s = %s, got %s", tc.Input, tc.Expected, got)
 			}
 		})
 	}
@@ -97,29 +99,29 @@ func TestCell(t *testing.T) {
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
-// cells with number, needed for testing different formats
+	// cells with number, needed for testing different formats
 	for i := 1; i <= 25; i++ {
 		sheet.Cell("A"+strconv.Itoa(i)).SetNumber(-12345.6789)
 	}
 
-// cells with string values, needed for testing different alignments
+	// cells with string values, needed for testing different alignments
 	sheet.Cell("B1").SetString("Hello World")
 	sheet.Cell("B2").SetString("Hello World Left")
 	sheet.Cell("B3").SetString("Hello World Right")
 	sheet.Cell("B4").SetString("Hello World Centered")
 	sheet.Cell("B5").SetString("Hello World Fill")
 
-// for testing "color" function
+	// for testing "color" function
 	redStyle := ss.StyleSheet.AddCellStyle()
 	redStyle.SetNumberFormat("#,##0.00000;[RED]-#,##0.00000")
 	sheet.Cell("A1").SetStyle(redStyle)
 
-// for testing "parentheses" function
+	// for testing "parentheses" function
 	parStyle := ss.StyleSheet.AddCellStyle()
 	parStyle.SetNumberFormat("#,##0.00_);(#,##0.00)")
 	sheet.Cell("C1").SetStyle(parStyle)
 
-// for testing "format" function
+	// for testing "format" function
 	integerStyle := ss.StyleSheet.AddCellStyle()
 	integerStyle.SetNumberFormat("00000")
 	sheet.Cell("A2").SetStyle(integerStyle)
@@ -216,7 +218,7 @@ func TestCell(t *testing.T) {
 	incorrectStyle.SetNumberFormat("incorrect style")
 	sheet.Cell("A25").SetStyle(incorrectStyle)
 
-// for testing alignments ("prefix" function)
+	// for testing alignments ("prefix" function)
 	leftStyle := ss.StyleSheet.AddCellStyle()
 	leftStyle.SetHorizontalAlignment(sml.ST_HorizontalAlignmentLeft)
 	sheet.Cell("B2").SetStyle(leftStyle)
@@ -235,11 +237,11 @@ func TestCell(t *testing.T) {
 
 	ctx := sheet.FormulaContext()
 
-// for testing protected cells
+	// for testing protected cells
 	ctx.SetLocked("A1", true)
 	ctx.SetLocked("B1", false)
 
-// for testing widths
+	// for testing widths
 	sheet.Column(1).SetWidth(1.5 * measurement.Inch)
 	sheet.Column(2).SetWidth(2.5 * measurement.Inch)
 
