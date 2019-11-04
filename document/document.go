@@ -68,18 +68,15 @@ func New() *Document {
 
 	d.AppProperties = common.NewAppProperties()
 	d.CoreProperties = common.NewCoreProperties()
-	d.CustomProperties = common.NewCustomProperties()
 
 	d.ContentTypes.AddOverride("/word/document.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml")
 
 	d.Settings = NewSettings()
 	d.docRels.AddRelationship("settings.xml", unioffice.SettingsType)
 	d.ContentTypes.AddOverride("/word/settings.xml", "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml")
-	d.ContentTypes.AddOverride("/docProps/custom.xml", "application/vnd.openxmlformats-officedocument.custom-properties+xml")
 
 	d.Rels = common.NewRelationships()
 	d.Rels.AddRelationship(unioffice.RelativeFilename(unioffice.DocTypeDocument, "", unioffice.CorePropertiesType, 0), unioffice.CorePropertiesType)
-	d.Rels.AddRelationship("docProps/custom.xml", unioffice.CustomPropertiesType)
 	d.Rels.AddRelationship("docProps/app.xml", unioffice.ExtendedPropertiesType)
 	d.Rels.AddRelationship("word/document.xml", unioffice.OfficeDocumentType)
 
@@ -95,6 +92,24 @@ func New() *Document {
 
 	d.x.Body = wml.NewCT_Body()
 	return d
+}
+
+// GetOrCreateCustomProperties returns the custom properties of the document (and if they not exist yet, creating them first)
+func (d *Document) GetOrCreateCustomProperties() common.CustomProperties {
+	if d.CustomProperties.X() == nil {
+		d.createCustomProperties()
+	}
+	return d.CustomProperties
+}
+
+func (d *Document) createCustomProperties() {
+	d.CustomProperties = common.NewCustomProperties()
+	d.addCustomRelationships()
+}
+
+func (d *Document) addCustomRelationships() {
+	d.ContentTypes.AddOverride("/docProps/custom.xml", "application/vnd.openxmlformats-officedocument.custom-properties+xml")
+	d.Rels.AddRelationship("docProps/custom.xml", unioffice.CustomPropertiesType)
 }
 
 // X returns the inner wrapped XML type.
@@ -191,8 +206,10 @@ func (d *Document) Save(w io.Writer) error {
 	if err := zippkg.MarshalXMLByType(z, dt, unioffice.CorePropertiesType, d.CoreProperties.X()); err != nil {
 		return err
 	}
-	if err := zippkg.MarshalXMLByType(z, dt, unioffice.CustomPropertiesType, d.CustomProperties.X()); err != nil {
-		return err
+	if d.CustomProperties.X() != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, unioffice.CustomPropertiesType, d.CustomProperties.X()); err != nil {
+			return err
+		}
 	}
 	if d.Thumbnail != nil {
 		tn, err := z.Create("docProps/thumbnail.jpeg")
@@ -529,6 +546,17 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	files := []*zip.File{}
 	files = append(files, zr.File...)
 
+	addCustom := false
+	for _, f := range files {
+		if f.FileHeader.Name == "docProps/custom.xml" {
+			addCustom = true
+			break
+		}
+	}
+	if addCustom {
+		doc.createCustomProperties()
+	}
+
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(doc.onNewRelationship)
 	// we should discover all contents by starting with these two files
@@ -547,16 +575,17 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 		}
 	}
 
-	customPropertiesExist := false
-	for _, rel := range doc.Rels.X().Relationship {
-		if rel.TargetAttr == "docProps/custom.xml" {
-			customPropertiesExist = true
-			break
+	if addCustom {
+		customPropertiesExist := false
+		for _, rel := range doc.Rels.X().Relationship {
+			if rel.TargetAttr == "docProps/custom.xml" {
+				customPropertiesExist = true
+				break
+			}
 		}
-	}
-	if !customPropertiesExist {
-		doc.Rels.AddRelationship("docProps/custom.xml", unioffice.CustomPropertiesType)
-		doc.ContentTypes.AddOverride("/docProps/custom.xml", "application/vnd.openxmlformats-officedocument.custom-properties+xml")
+		if !customPropertiesExist {
+			doc.addCustomRelationships()
+		}
 	}
 
 	return doc, nil
