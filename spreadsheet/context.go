@@ -96,32 +96,32 @@ func (e *evalContext) SetOffset(col, row uint32) {
 	e.rowOff = row
 }
 
-// GetFilename returns the filename of the context's workbook
+// GetFilename returns the filename of the context's workbook.
 func (e *evalContext) GetFilename() string {
 	return e.s.w.GetFilename()
 }
 
-// GetFormat returns a cell data format
+// GetFormat returns a cell data format.
 func (e *evalContext) GetFormat(cellRef string) string {
 	return e.s.Cell(cellRef).getFormat()
 }
 
-// GetLabelPrefix returns label prefix which depends on the cell's horizontal alignment
+// GetLabelPrefix returns label prefix which depends on the cell's horizontal alignment.
 func (e *evalContext) GetLabelPrefix(cellRef string) string {
 	return e.s.Cell(cellRef).getLabelPrefix()
 }
 
-// GetLocked returns if the cell is locked
+// GetLocked returns if the cell is locked.
 func (e *evalContext) GetLocked(cellRef string) bool {
 	return e.s.Cell(cellRef).getLocked()
 }
 
-// SetLocked sets cell locked or not
+// SetLocked sets cell locked or not.
 func (e *evalContext) SetLocked(cellRef string, locked bool) {
 	e.s.Cell(cellRef).setLocked(locked)
 }
 
-// GetWidth returns a worksheet's column width
+// GetWidth returns a worksheet's column width.
 func (e *evalContext) GetWidth(colIdx int) float64 {
 	colIdx++
 	for _, c := range e.s.X().Cols[0].Col {

@@ -27,7 +27,7 @@ func init() {
 	RegisterFunction("TRANSPOSE", Transpose)
 }
 
-// Choose implements the Excel CHOOSE function
+// Choose implements the Excel CHOOSE function.
 func Choose(args []Result) Result {
 	if len(args) < 2 {
 		return MakeErrorResult("CHOOSE requires two arguments")
@@ -43,7 +43,7 @@ func Choose(args []Result) Result {
 	return args[i]
 }
 
-// Column implements the Excel COLUMN function
+// Column implements the Excel COLUMN function.
 func Column(args []Result) Result {
 	if len(args) < 1 {
 		return MakeErrorResult("COLUMN requires one argument")
@@ -59,7 +59,7 @@ func Column(args []Result) Result {
 	return MakeNumberResult(float64(cr.ColumnIdx+1))
 }
 
-// Columns implements the Excel COLUMNS function
+// Columns implements the Excel COLUMNS function.
 func Columns(args []Result) Result {
 	if len(args) < 1 {
 		return MakeErrorResult("COLUMNS requires one argument")
@@ -75,7 +75,7 @@ func Columns(args []Result) Result {
 	return MakeNumberResult(float64(len(arr[0])))
 }
 
-// Index implements the Excel INDEX function
+// Index implements the Excel INDEX function.
 func Index(args []Result) Result {
 	if len(args) < 3 {
 		return MakeErrorResult("INDEX requires three arguments")
@@ -132,6 +132,7 @@ func Indirect(ctx Context, ev Evaluator, args []Result) Result {
 	return ctx.Cell(sarg.ValueString, ev)
 }
 
+// Offset is an implementation of the Excel OFFSET function.
 func Offset(ctx Context, ev Evaluator, args []Result) Result {
 	if len(args) != 5 {
 		return MakeErrorResult("OFFSET requires one or two arguments")

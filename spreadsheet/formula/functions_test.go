@@ -328,3 +328,185 @@ func TestCountIf(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestCountIfs(t *testing.T) {
+	td := []testStruct{
+		{`=COUNTIFS(A1:E1,">1")`, `1 ResultTypeNumber`},
+		{`=COUNTIFS(A2:E2,">1")`, `0 ResultTypeNumber`},
+		{`=COUNTIFS(A3:C4,">1")`, `2 ResultTypeNumber`},
+		{`=COUNTIFS(A5:C6,"a")`, `2 ResultTypeNumber`},
+		{`=COUNTIFS(A7:B7,"1",A8:B8,"2")`, `0 ResultTypeNumber`},
+		{`=COUNTIFS(A9:A10,"1",B9:B10,"2")`, `1 ResultTypeNumber`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("C1").SetNumber(3)
+	sheet.Cell("D1").SetString("a")
+	sheet.Cell("E1").SetString("")
+
+	sheet.Cell("A2").SetNumber(1)
+	sheet.Cell("C2").SetNumber(0)
+	sheet.Cell("D2").SetString("a")
+	sheet.Cell("E2").SetString("")
+
+	sheet.Cell("A3").SetNumber(1)
+	sheet.Cell("C3").SetNumber(3)
+	sheet.Cell("A4").SetString("a")
+	sheet.Cell("B4").SetNumber(4)
+	sheet.Cell("C4").SetString("c")
+
+	sheet.Cell("A5").SetNumber(1)
+	sheet.Cell("C5").SetString("a")
+	sheet.Cell("A6").SetString("a")
+	sheet.Cell("B6").SetNumber(4)
+	sheet.Cell("C6").SetString("c")
+
+	sheet.Cell("A7").SetNumber(1)
+	sheet.Cell("B8").SetNumber(2)
+
+	sheet.Cell("A9").SetNumber(1)
+	sheet.Cell("B9").SetNumber(2)
+	sheet.Cell("B10").SetNumber(1)
+
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestSumIf(t *testing.T) {
+	td := []testStruct{
+		{`=SUMIF(A1:E1,">2",A3:E3)`, `11100 ResultTypeNumber`},
+		{`=SUMIF(A2:E2,"*ound",A3:E3)`, `10100 ResultTypeNumber`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("B1").SetNumber(2)
+	sheet.Cell("C1").SetNumber(3)
+	sheet.Cell("D1").SetNumber(4)
+	sheet.Cell("E1").SetNumber(5)
+
+	sheet.Cell("A2").SetString("What")
+	sheet.Cell("B2").SetString("goes")
+	sheet.Cell("C2").SetString("around")
+	sheet.Cell("D2").SetString("comes")
+	sheet.Cell("E2").SetString("around")
+
+	sheet.Cell("A3").SetNumber(1)
+	sheet.Cell("B3").SetNumber(10)
+	sheet.Cell("C3").SetNumber(100)
+	sheet.Cell("D3").SetNumber(1000)
+	sheet.Cell("E3").SetNumber(10000)
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestSumIfs(t *testing.T) {
+	td := []testStruct{
+		{`=SUMIFS(A3:E3,A1:E1,">2",A2:E2,"*ound")`, `100 ResultTypeNumber`},
+		{`=SUMIFS(A3:E3,A1:E1,">3",A2:E2,"*ound")`, `0 ResultTypeNumber`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(5)
+	sheet.Cell("B1").SetNumber(4)
+	sheet.Cell("C1").SetNumber(3)
+	sheet.Cell("D1").SetNumber(2)
+	sheet.Cell("E1").SetNumber(1)
+
+	sheet.Cell("A2").SetString("What")
+	sheet.Cell("B2").SetString("goes")
+	sheet.Cell("C2").SetString("around")
+	sheet.Cell("D2").SetString("comes")
+	sheet.Cell("E2").SetString("around")
+
+	sheet.Cell("A3").SetNumber(1)
+	sheet.Cell("B3").SetNumber(10)
+	sheet.Cell("C3").SetNumber(100)
+	sheet.Cell("D3").SetNumber(1000)
+	sheet.Cell("E3").SetNumber(10000)
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestMinIfs(t *testing.T) {
+	td := []testStruct{
+		{`=MINIFS(C1:C5,A1:A5,">2")`, `-1000 ResultTypeNumber`},
+		{`=MINIFS(C1:C5,B1:B5,"????")`, `-1000 ResultTypeNumber`},
+		{`=MINIFS(C1:C5,B1:B5,"*ound")`, `10 ResultTypeNumber`},
+		{`=MINIFS(C1:C5,A1:A5,">3",B1:B5,"????")`, `-1000 ResultTypeNumber`},
+		{`=MINIFS(C1:C5,A1:A5,">3",B1:B5,"*ound")`, `0 ResultTypeNumber`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(5)
+	sheet.Cell("A2").SetNumber(4)
+	sheet.Cell("A3").SetNumber(3)
+	sheet.Cell("A4").SetNumber(2)
+	sheet.Cell("A5").SetNumber(1)
+
+	sheet.Cell("B1").SetString("What")
+	sheet.Cell("B2").SetString("goes")
+	sheet.Cell("B3").SetString("around")
+	sheet.Cell("B4").SetString("comes")
+	sheet.Cell("B5").SetString("around")
+
+	sheet.Cell("C1").SetNumber(-1000)
+	sheet.Cell("C2").SetNumber(-100)
+	sheet.Cell("C3").SetNumber(10)
+	sheet.Cell("C4").SetNumber(100)
+	sheet.Cell("C5").SetNumber(1000)
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestMaxIfs(t *testing.T) {
+	td := []testStruct{
+		{`=MAXIFS(C1:C5,A1:A5,">2")`, `10 ResultTypeNumber`},
+		{`=MAXIFS(C1:C5,B1:B5,"????")`, `-100 ResultTypeNumber`},
+		{`=MAXIFS(C1:C5,B1:B5,"*ound")`, `1000 ResultTypeNumber`},
+		{`=MAXIFS(C1:C5,A1:A5,">2",B1:B5,"*es")`, `-100 ResultTypeNumber`},
+		{`=MAXIFS(C1:C5,A1:A5,">3",B1:B5,"*ound")`, `0 ResultTypeNumber`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(5)
+	sheet.Cell("A2").SetNumber(4)
+	sheet.Cell("A3").SetNumber(3)
+	sheet.Cell("A4").SetNumber(2)
+	sheet.Cell("A5").SetNumber(1)
+
+	sheet.Cell("B1").SetString("What")
+	sheet.Cell("B2").SetString("goes")
+	sheet.Cell("B3").SetString("around")
+	sheet.Cell("B4").SetString("comes")
+	sheet.Cell("B5").SetString("around")
+
+	sheet.Cell("C1").SetNumber(-1000)
+	sheet.Cell("C2").SetNumber(-100)
+	sheet.Cell("C3").SetNumber(10)
+	sheet.Cell("C4").SetNumber(100)
+	sheet.Cell("C5").SetNumber(1000)
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}

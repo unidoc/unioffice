@@ -16,7 +16,7 @@ import (
 )
 
 func init() {
-	initRegexp()
+	initRegexpInformation()
 	RegisterFunction("NA", NA)
 	RegisterFunctionComplex("CELL", Cell)
 }
@@ -24,7 +24,7 @@ func init() {
 var bs string = string([]byte{92})
 var integer, finance, intSep, intPar, decimal, decJust, decPar, par, percent, intCur, cur, curLabel, mdy, dmy, sci *regexp.Regexp
 
-func initRegexp() {
+func initRegexpInformation() {
 	integer = regexp.MustCompile(`^0+$`) // 12345
 	intSep = regexp.MustCompile("^((#|0)+,)+(#|0)+(;|$)") // 123,456,789
 	intPar = regexp.MustCompile("^(#|0|,)*_\\);") // (123,456,789)

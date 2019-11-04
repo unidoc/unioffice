@@ -9,21 +9,44 @@ package formula
 
 import (
 	"math"
+	"github.com/minio/minio/pkg/wildcard"
+	"regexp"
 	"sort"
+	"strconv"
+	"strings"
 
 	"github.com/unidoc/unioffice"
 )
 
 func init() {
+	initRegexpStatistical()
 	RegisterFunction("AVERAGE", Average)
 	RegisterFunction("AVERAGEA", Averagea)
 	RegisterFunction("COUNT", Count)
 	RegisterFunction("COUNTA", Counta)
 	RegisterFunction("COUNTIF", CountIf)
+	RegisterFunction("COUNTIFS", CountIfs)
 	RegisterFunction("COUNTBLANK", CountBlank)
 	RegisterFunction("MAX", Max)
-	RegisterFunction("MIN", Min)
+	RegisterFunction("MAXIFS", MaxIfs)
+	RegisterFunction("_xlfn.MAXIFS", MaxIfs)
 	RegisterFunction("MEDIAN", Median)
+	RegisterFunction("MIN", Min)
+	RegisterFunction("MINIFS", MinIfs)
+	RegisterFunction("_xlfn.MINIFS", MinIfs)
+	RegisterFunction("SUMIF", SumIf)
+	RegisterFunction("SUMIFS", SumIfs)
+}
+
+var number, eq, g, l, ge, le *regexp.Regexp
+
+func initRegexpStatistical() {
+	number = regexp.MustCompile(`^([0-9]+)$`)
+	eq = regexp.MustCompile(`^=(.*)$`) // =-12345.67, =A6
+	l = regexp.MustCompile(`^<(.*)$`) // <-12345.67, <A6
+	g = regexp.MustCompile(`^>(.*)$`) // >-12345.67, >A6
+	le = regexp.MustCompile(`^<=(.*)$`) // <=-12345.67, <=A6
+	ge = regexp.MustCompile(`^>=(.*)$`) // >=-12345.67, >=A6
 }
 
 func sumCount(args []Result, countText bool) (float64, float64) {
@@ -122,6 +145,67 @@ func CountBlank(args []Result) Result {
 	return MakeNumberResult(count(args, countEmpty))
 }
 
+type criteriaParsed struct {
+	isNumber bool
+	cNum float64
+	cStr string
+	cRegex *criteriaRegex
+}
+
+const (
+	_ byte = iota
+	isEq
+	isLe
+	isGe
+	isL
+	isG
+)
+
+type criteriaRegex struct {
+	regexType byte		// type of condition
+	compareWith string	// value to apply condition to
+}
+
+func parseCriteria(criteria Result) *criteriaParsed {
+	isNumber := criteria.Type == ResultTypeNumber
+	cNum := criteria.ValueNumber
+	cStr := strings.ToLower(criteria.ValueString)
+	cRegex := parseCriteriaRegex(cStr)
+	return &criteriaParsed{
+		isNumber,
+		cNum,
+		cStr,
+		cRegex,
+	}
+}
+
+func parseCriteriaRegex(cStr string) *criteriaRegex {
+	cRegex := &criteriaRegex{}
+	if cStr == "" {
+		return cRegex
+	}
+	if submatch := number.FindStringSubmatch(cStr); len(submatch) > 1 {
+		cRegex.regexType = isEq
+		cRegex.compareWith = submatch[1]
+	} else if submatch := eq.FindStringSubmatch(cStr); len(submatch) > 1 {
+		cRegex.regexType = isEq
+		cRegex.compareWith = submatch[1]
+	} else if submatch := le.FindStringSubmatch(cStr); len(submatch) > 1 {
+		cRegex.regexType = isLe
+		cRegex.compareWith = submatch[1]
+	} else if submatch := ge.FindStringSubmatch(cStr); len(submatch) > 1 {
+		cRegex.regexType = isGe
+		cRegex.compareWith = submatch[1]
+	} else if submatch := l.FindStringSubmatch(cStr); len(submatch) > 1 {
+		cRegex.regexType = isL
+		cRegex.compareWith = submatch[1]
+	} else if submatch := g.FindStringSubmatch(cStr); len(submatch) > 1 {
+		cRegex.regexType = isG
+		cRegex.compareWith = submatch[1]
+	}
+	return cRegex
+}
+
 // CountIf implements the COUNTIF function.
 func CountIf(args []Result) Result {
 	if len(args) < 2 {
@@ -131,25 +215,203 @@ func CountIf(args []Result) Result {
 	if arr.Type != ResultTypeArray && arr.Type != ResultTypeList {
 		return MakeErrorResult("COUNTIF requires first argument of type array")
 	}
-	criteria := args[1]
-	isNumber := criteria.Type == ResultTypeNumber
-	cNum := criteria.ValueNumber
-	cStr := criteria.ValueString
+	criteria := parseCriteria(args[1])
 	count := 0
-	for _, r := range arr.ValueArray {
-		for _, c := range r {
-			if isNumber {
-				if c.ValueNumber == cNum {
-					count++
-				}
-			} else {
-				if c.ValueString == cStr {
-					count++
-				}
+	for _, r := range arrayFromRange(arr) {
+		for _, value := range r {
+			if compare(value, criteria) {
+				count++
 			}
 		}
 	}
 	return MakeNumberResult(float64(count))
+}
+
+// SumIf implements the SUMIF function.
+func SumIf(args []Result) Result {
+	if len(args) < 3 {
+		return MakeErrorResult("SUMIF requires three arguments")
+	}
+
+	arrResult := args[0]
+	if arrResult.Type != ResultTypeArray && arrResult.Type != ResultTypeList {
+		return MakeErrorResult("SUMIF requires first argument of type array")
+	}
+	arr := arrayFromRange(arrResult)
+
+	sumArrResult := args[2]
+	if sumArrResult.Type != ResultTypeArray && sumArrResult.Type != ResultTypeList {
+		return MakeErrorResult("SUMIF requires last argument of type array")
+	}
+	sumArr := arrayFromRange(sumArrResult)
+
+	criteria := parseCriteria(args[1])
+	sum := 0.0
+	for ir, r := range arr {
+		for ic, value := range r {
+			if compare(value, criteria) {
+				sum += sumArr[ir][ic].ValueNumber
+			}
+		}
+	}
+	return MakeNumberResult(sum)
+}
+
+func arrayFromRange(result Result) [][]Result {
+	switch result.Type {
+	case ResultTypeArray:
+		return result.ValueArray
+	case ResultTypeList:
+		return [][]Result{
+			result.ValueList,
+		}
+	default:
+		return [][]Result{}
+	}
+}
+
+// helper type for storing indexes of found values
+type rangeIndex struct {
+	rowIndex int
+	colIndex int
+}
+
+func checkIfsRanges(args []Result, sumRange bool, fnName string) Result {
+	// quick check before searching
+	var minArgs, oddEven string
+	if sumRange {
+		minArgs = "three"
+		oddEven = "odd"
+	} else {
+		minArgs = "two"
+		oddEven = "even"
+	}
+	argsNum := len(args)
+	if (sumRange && argsNum < 3) || (!sumRange && argsNum < 2) {
+		return MakeErrorResult(fnName + " requires at least " + minArgs + " argumentss")
+	}
+	if (argsNum/2*2 == argsNum) == sumRange {
+		return MakeErrorResult(fnName + " requires " + oddEven + " number of arguments")
+	}
+
+	rangeWidth := -1
+	rangeHeight := -1
+	for i := 0; i < argsNum; i+=2 {
+		arrResult := args[i]
+		if arrResult.Type != ResultTypeArray && arrResult.Type != ResultTypeList {
+			return MakeErrorResult(fnName + " requires ranges of type list or array")
+		}
+		arr := arrayFromRange(arrResult)
+		if rangeHeight == -1 {
+			rangeHeight = len(arr)
+			rangeWidth = len(arr[0])
+		} else if len(arr) != rangeHeight || len(arr[0]) != rangeWidth {
+			return MakeErrorResult(fnName + " requires all ranges to be of the same size")
+		}
+		if sumRange && i == 0 {
+			i-- // after sumRange should go column 1, not 2
+		}
+	}
+	return MakeEmptyResult()
+}
+
+//getIfsMatch returns an array of indexes of cells which meets all *IFS criterias
+func getIfsMatch(args []Result) []rangeIndex {
+	toLook := []rangeIndex{}
+	argsNum := len(args)
+	for i := 0; i < argsNum-1; i+=2 {
+		found := []rangeIndex{}
+		arr := arrayFromRange(args[i])
+		criteria := parseCriteria(args[i+1])
+		if i == 0 {
+			for rowIndex, row := range arr { // for the first range look in every cell of the range
+				for colIndex, value := range row {
+					if compare(value, criteria) {
+						found = append(found, rangeIndex{rowIndex, colIndex})
+					}
+				}
+			}
+		} else {
+			for _, index2d := range toLook { // for next ranges look only in cells of the range in which values matched for the previous range
+				value := arr[index2d.rowIndex][index2d.colIndex]
+				if compare(value, criteria) {
+					found = append(found, index2d)
+				}
+			}
+		}
+		if len(found) == 0 { // if nothing found at some step no sense to continue
+			return []rangeIndex{}
+		}
+		toLook = found[:] // next time look only in the cells with the same indexes where matches happen in the previous range
+	}
+	return toLook
+}
+
+// CountIfs implements the COUNTIFS function.
+func CountIfs(args []Result) Result {
+	errorResult := checkIfsRanges(args, false, "COUNTIFS")
+	if errorResult.Type != ResultTypeEmpty {
+		return errorResult
+	}
+	match := getIfsMatch(args)
+	return MakeNumberResult(float64(len(match)))
+}
+
+// MaxIfs implements the MAXIFS function.
+func MaxIfs(args []Result) Result {
+	errorResult := checkIfsRanges(args, true, "MAXIFS")
+	if errorResult.Type != ResultTypeEmpty {
+		return errorResult
+	}
+	match := getIfsMatch(args[1:])
+	max := -math.MaxFloat64
+	maxArr := arrayFromRange(args[0])
+	for _, indexes := range match {
+		value := maxArr[indexes.rowIndex][indexes.colIndex].ValueNumber
+		if max < value {
+			max = value
+		}
+	}
+	if max == -math.MaxFloat64 {
+		max = 0
+	}
+	return MakeNumberResult(float64(max))
+}
+
+// MinIfs implements the MINIFS function.
+func MinIfs(args []Result) Result {
+	errorResult := checkIfsRanges(args, true, "MINIFS")
+	if errorResult.Type != ResultTypeEmpty {
+		return errorResult
+	}
+	match := getIfsMatch(args[1:])
+	min := math.MaxFloat64
+	minArr := arrayFromRange(args[0])
+	for _, indexes := range match {
+		value := minArr[indexes.rowIndex][indexes.colIndex].ValueNumber
+		if min > value {
+			min = value
+		}
+	}
+	if min == math.MaxFloat64 {
+		min = 0
+	}
+	return MakeNumberResult(float64(min))
+}
+
+// SumIfs implements the SUMIFS function.
+func SumIfs(args []Result) Result {
+	errorResult := checkIfsRanges(args, true, "SUMIFS")
+	if errorResult.Type != ResultTypeEmpty {
+		return errorResult
+	}
+	match := getIfsMatch(args[1:])
+	sum := 0.0
+	sumArr := arrayFromRange(args[0])
+	for _, indexes := range match {
+		sum += sumArr[indexes.rowIndex][indexes.colIndex].ValueNumber
+	}
+	return MakeNumberResult(float64(sum))
 }
 
 // Min is an implementation of the Excel MIN() function.
@@ -261,4 +523,67 @@ func Median(args []Result) Result {
 		v = values[len(values)/2]
 	}
 	return MakeNumberResult(v)
+}
+
+func compare(value Result, criteria *criteriaParsed) bool {
+	t := value.Type
+	if criteria.isNumber {
+		return t == ResultTypeNumber && value.ValueNumber == criteria.cNum
+	} else if t == ResultTypeNumber {
+		return compareNumberWithRegex(value.ValueNumber, criteria.cRegex)
+	}
+	return compareStrings(value, criteria)
+}
+
+func compareStrings(valueResult Result, criteria *criteriaParsed) bool {
+	value := strings.ToLower(valueResult.ValueString) // Excel compares string case-insensitive
+
+	regexType := criteria.cRegex.regexType
+	compareWith := criteria.cRegex.compareWith
+
+	if regexType == isEq {
+		return value == compareWith || wildcard.Match(compareWith, value)
+	}
+	if valueResult.Type != ResultTypeEmpty { // the only case when empty result should be taken into account is 'equal' condition like "="&A1 which is handled above, other cases with empty cells (including just A1) should be skipped
+		if value == criteria.cStr || wildcard.Match(criteria.cStr, value) {
+			return true
+		}
+		if _, err := strconv.ParseFloat(compareWith, 64); err == nil { // criteria should't be the number when compared to string (except 'equal' condition which is handled above)
+			return false
+		}
+		switch regexType {
+		case isLe:
+			return value <= compareWith // office apps use the same string comparison as in Golang
+		case isGe:
+			return value >= compareWith
+		case isL:
+			return value < compareWith
+		case isG:
+			return value > compareWith
+		}
+	}
+
+	return false
+}
+
+func compareNumberWithRegex(value float64, cRegex *criteriaRegex) bool {
+	compareWith, err := strconv.ParseFloat(cRegex.compareWith, 64)
+	if err != nil {
+		return false
+	}
+
+	switch cRegex.regexType {
+	case isEq:
+		return value == compareWith
+	case isLe:
+		return value <= compareWith
+	case isGe:
+		return value >= compareWith
+	case isL:
+		return value < compareWith
+	case isG:
+		return value > compareWith
+	}
+
+	return false
 }
