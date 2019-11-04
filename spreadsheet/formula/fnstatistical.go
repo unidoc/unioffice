@@ -34,8 +34,6 @@ func init() {
 	RegisterFunction("MIN", Min)
 	RegisterFunction("MINIFS", MinIfs)
 	RegisterFunction("_xlfn.MINIFS", MinIfs)
-	RegisterFunction("SUMIF", SumIf)
-	RegisterFunction("SUMIFS", SumIfs)
 }
 
 var number, eq, g, l, ge, le *regexp.Regexp
@@ -227,36 +225,6 @@ func CountIf(args []Result) Result {
 	return MakeNumberResult(float64(count))
 }
 
-// SumIf implements the SUMIF function.
-func SumIf(args []Result) Result {
-	if len(args) < 3 {
-		return MakeErrorResult("SUMIF requires three arguments")
-	}
-
-	arrResult := args[0]
-	if arrResult.Type != ResultTypeArray && arrResult.Type != ResultTypeList {
-		return MakeErrorResult("SUMIF requires first argument of type array")
-	}
-	arr := arrayFromRange(arrResult)
-
-	sumArrResult := args[2]
-	if sumArrResult.Type != ResultTypeArray && sumArrResult.Type != ResultTypeList {
-		return MakeErrorResult("SUMIF requires last argument of type array")
-	}
-	sumArr := arrayFromRange(sumArrResult)
-
-	criteria := parseCriteria(args[1])
-	sum := 0.0
-	for ir, r := range arr {
-		for ic, value := range r {
-			if compare(value, criteria) {
-				sum += sumArr[ir][ic].ValueNumber
-			}
-		}
-	}
-	return MakeNumberResult(sum)
-}
-
 func arrayFromRange(result Result) [][]Result {
 	switch result.Type {
 	case ResultTypeArray:
@@ -397,21 +365,6 @@ func MinIfs(args []Result) Result {
 		min = 0
 	}
 	return MakeNumberResult(float64(min))
-}
-
-// SumIfs implements the SUMIFS function.
-func SumIfs(args []Result) Result {
-	errorResult := checkIfsRanges(args, true, "SUMIFS")
-	if errorResult.Type != ResultTypeEmpty {
-		return errorResult
-	}
-	match := getIfsMatch(args[1:])
-	sum := 0.0
-	sumArr := arrayFromRange(args[0])
-	for _, indexes := range match {
-		sum += sumArr[indexes.rowIndex][indexes.colIndex].ValueNumber
-	}
-	return MakeNumberResult(float64(sum))
 }
 
 // Min is an implementation of the Excel MIN() function.
