@@ -517,8 +517,7 @@ func TestValue(t *testing.T) {
 		{`=VALUE(A1)`, `5000 ResultTypeNumber`},
 		{`=VALUE(A2)`, `4000 ResultTypeNumber`},
 		{`=VALUE(A1)-VALUE(A2)`, `1000 ResultTypeNumber`},
-		{`=VALUE(A3)`, `43773.825 ResultTypeNumber`},
-		{`=VALUE(A4)`, `43773.625 ResultTypeNumber`},
+		{`=VALUE(A3)-VALUE(A4)`, `0.25 ResultTypeNumber`},
 		{`=VALUE(A5)`, `#VALUE! ResultTypeError`},
 	}
 
@@ -527,8 +526,8 @@ func TestValue(t *testing.T) {
 
 	sheet.Cell("A1").SetNumber(5000)
 	sheet.Cell("A2").SetString("4e+03")
-	sheet.Cell("A3").SetTime(time.Date(2019, time.November, 4, 16, 48, 0, 0, time.UTC))
-	sheet.Cell("A4").SetTime(time.Date(2019, time.November, 4, 12, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetTime(time.Date(2019, time.November, 4, 16, 0, 0, 0, time.UTC))
+	sheet.Cell("A4").SetTime(time.Date(2019, time.November, 4, 10, 0, 0, 0, time.UTC))
 	sheet.Cell("A5").SetString("abcde")
 
 	ctx := sheet.FormulaContext()

@@ -15,7 +15,7 @@ import (
 	"strings"
 
 	"github.com/unidoc/unioffice"
-	"github.com/unidoc/unioffice/common/wildcard"
+	"github.com/unidoc/unioffice/internal/wildcard"
 )
 
 func init() {
