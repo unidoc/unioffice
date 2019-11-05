@@ -9,13 +9,13 @@ package formula
 
 import (
 	"math"
-	"github.com/minio/minio/pkg/wildcard"
 	"regexp"
 	"sort"
 	"strconv"
 	"strings"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/common/wildcard"
 )
 
 func init() {
