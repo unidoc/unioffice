@@ -47,8 +47,16 @@ func (c CustomProperties) GetPropertyByName(name string) CustomProperty {
 }
 
 func (c CustomProperties) getNewProperty(name string) *custom_properties.CT_Property {
+	list := c.x.Property
+	maxPid := int32(1)
+	for _, p := range list {
+		if p.PidAttr > maxPid {
+			maxPid = p.PidAttr
+		}
+	}
 	newProperty := custom_properties.NewCT_Property()
 	newProperty.NameAttr = &name
+	newProperty.PidAttr = maxPid + 1
 	return newProperty
 }
 
@@ -58,7 +66,9 @@ func (c CustomProperties) setProperty(newProperty *custom_properties.CT_Property
 		c.x.Property = append(c.x.Property, newProperty)
 	} else {
 		newProperty.FmtidAttr = existingProperty.FmtidAttr
-		newProperty.PidAttr = existingProperty.PidAttr
+		if existingProperty.PidAttr == 0 {
+			newProperty.PidAttr = existingProperty.PidAttr
+		}
 		newProperty.LinkTargetAttr = existingProperty.LinkTargetAttr
 		*existingProperty = *newProperty
 	}
