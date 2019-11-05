@@ -135,7 +135,7 @@ func Cell(ctx Context, ev Evaluator, args []Result) Result {
 		} else if submatch := sci.FindStringSubmatch(format); len(submatch) > 1 {
 			result = "S" + itemFromEndLength(submatch, 3)
 		}
-		if strings.Contains(format, "[RED]") {
+		if result != "G" && strings.Contains(format, "[RED]") {
 			result += "-"
 		}
 		return MakeStringResult(result)
