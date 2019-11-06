@@ -116,6 +116,11 @@ func (e *evalContext) GetLocked(cellRef string) bool {
 	return e.s.Cell(cellRef).getLocked()
 }
 
+// HasFormula returns if the cell contains formula.
+func (e *evalContext) HasFormula(cellRef string) bool {
+	return e.s.Cell(cellRef).HasFormula()
+}
+
 // SetLocked sets cell locked or not.
 func (e *evalContext) SetLocked(cellRef string, locked bool) {
 	e.s.Cell(cellRef).setLocked(locked)

@@ -18,6 +18,16 @@ import (
 func init() {
 	initRegexpInformation()
 	RegisterFunction("NA", NA)
+	RegisterFunction("ISBLANK", IsBlank)
+	RegisterFunction("ISERR", IsErr)
+	RegisterFunction("ISERROR", IsError)
+	RegisterFunction("ISEVEN", IsEven)
+	RegisterFunctionComplex("ISFORMULA", IsFormula)
+	RegisterFunctionComplex("_xlfn.ISFORMULA", IsFormula)
+	RegisterFunction("ISNONTEXT", IsNonText)
+	RegisterFunction("ISNUMBER", IsNumber)
+	RegisterFunction("ISODD", IsOdd)
+	RegisterFunction("ISTEXT", IsText)
 	RegisterFunctionComplex("CELL", Cell)
 }
 
@@ -181,4 +191,95 @@ func Cell(ctx Context, ev Evaluator, args []Result) Result {
 
 func itemFromEndLength(submatch []string, additionalShift int) string {
 	return strconv.Itoa(len(submatch[len(submatch)-1-additionalShift]))
+}
+
+// ISBLANK is an implementation of the Excel ISBLANK() function.
+func IsBlank(args []Result) Result {
+	if len(args) != 1 {
+		MakeErrorResult("ISBLANK() accepts a single argument")
+	}
+	return MakeBoolResult(args[0].Type == ResultTypeEmpty)
+}
+
+// ISERR is an implementation of the Excel ISERR() function.
+func IsErr(args []Result) Result {
+	if len(args) != 1 {
+		MakeErrorResult("ISERR() accepts a single argument")
+	}
+
+	return MakeBoolResult(args[0].Type == ResultTypeError && args[0].ValueString != "#N/A")
+}
+
+// ISERROR is an implementation of the Excel ISERROR() function.
+func IsError(args []Result) Result {
+	if len(args) != 1 {
+		MakeErrorResult("ISERROR() accepts a single argument")
+	}
+
+	return MakeBoolResult(args[0].Type == ResultTypeError)
+}
+
+// ISEVEN is an implementation of the Excel ISEVEN() function.
+func IsEven(args []Result) Result {
+	if len(args) != 1 {
+		MakeErrorResult("ISEVEN() accepts a single argument")
+	}
+
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("ISEVEN accepts a numeric argument")
+	}
+	value:= int(args[0].ValueNumber)
+
+	return MakeBoolResult(value == value/2*2)
+}
+
+// ISFORMULA is an implementation of the Excel ISFORMULA() function.
+func IsFormula(ctx Context, ev Evaluator, args []Result) Result {
+	if len(args) != 1 {
+		MakeErrorResult("ISFORMULA() accepts a single argument")
+	}
+	ref := args[0].Ref
+	if ref.Type != ReferenceTypeCell {
+		return MakeErrorResult("ISFORMULA requires the first argument to be of type reference")
+	}
+
+	return MakeBoolResult(ctx.HasFormula(ref.Value))
+}
+
+// ISNONTEXT is an implementation of the Excel ISNONTEXT() function.
+func IsNonText(args []Result) Result {
+	if len(args) != 1 {
+		MakeErrorResult("ISNONTEXT() accepts a single argument")
+	}
+	return MakeBoolResult(args[0].Type != ResultTypeString)
+}
+
+// ISNUMBER is an implementation of the Excel ISNUMBER() function.
+func IsNumber(args []Result) Result {
+	if len(args) != 1 {
+		MakeErrorResult("ISNUMBER() accepts a single argument")
+	}
+	return MakeBoolResult(args[0].Type == ResultTypeNumber)
+}
+
+// ISODD is an implementation of the Excel ISODD() function.
+func IsOdd(args []Result) Result {
+	if len(args) != 1 {
+		MakeErrorResult("ISODD() accepts a single argument")
+	}
+
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("ISODD accepts a numeric argument")
+	}
+	value:= int(args[0].ValueNumber)
+
+	return MakeBoolResult(value != value/2*2)
+}
+
+// ISTEXT is an implementation of the Excel ISTEXT() function.
+func IsText(args []Result) Result {
+	if len(args) != 1 {
+		MakeErrorResult("ISTEXT() accepts a single argument")
+	}
+	return MakeBoolResult(args[0].Type == ResultTypeString)
 }

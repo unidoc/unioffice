@@ -191,7 +191,6 @@ func Match(args []Result) Result {
 				return MakeNumberResult(float64(i))
 			}
 		}
-		return MakeNumberResult(float64(len(values)))
 	case 1:
 		for i := 0; i < len(values); i++ {
 			if compareForMatch(values[i], criteria) {
@@ -204,7 +203,6 @@ func Match(args []Result) Result {
 				return MakeNumberResult(float64(i))
 			}
 		}
-		return MakeNumberResult(float64(len(values)))
 	}
 	return MakeErrorResultType(ErrorTypeNA, "")
 }

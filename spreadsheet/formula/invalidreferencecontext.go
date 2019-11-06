@@ -46,6 +46,11 @@ func (i *ivr) GetLocked(cellRef string) bool {
 	return false
 }
 
+// HasFormula returns FALSE for the invalid reference context.
+func (i *ivr) HasFormula(cellRef string) bool {
+	return false
+}
+
 // SetLocked does nothing for the invalid reference context.
 func (i *ivr) SetLocked(cellRef string, locked bool) {
 

@@ -32,7 +32,10 @@ type Context interface {
 	// GetFormat returns if cell is protected.
 	GetLocked(cellRef string) bool
 
-	// GetFormat returns sets cell's protected attribute.
+	// HasFormula returns if cell contains formula.
+	HasFormula(cellRef string) bool
+
+	// SetLocked returns sets cell's protected attribute.
 	SetLocked(cellRef string, locked bool)
 
 	// NamedRange returns a named range.

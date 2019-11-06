@@ -643,7 +643,6 @@ func TestIfs(t *testing.T) {
 }
 
 func TestOffset(t *testing.T) {
-
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
@@ -669,5 +668,190 @@ func TestOffset(t *testing.T) {
 		{`=SUM(OFFSET(B1,1,2,0,0))`, `#REF! ResultTypeError`},
 	}
 
+	runTests(t, ctx, td)
+}
+
+func TestIsBlank(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B1").SetString(" ")
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=ISBLANK(B1)`, `0 ResultTypeNumber`},
+		{`=ISBLANK(C1)`, `1 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIsErr(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(-1)
+	sheet.Cell("A2").SetNumber(2)
+	sheet.Cell("A3").SetNumber(0)
+	sheet.Cell("A4").SetString("abcde")
+
+	sheet.Cell("B1").SetFormulaRaw("1/A1")
+	sheet.Cell("B2").SetFormulaRaw("1/A2")
+	sheet.Cell("B3").SetFormulaRaw("1/A3")
+	sheet.Cell("B4").SetFormulaRaw("1/A4")
+	sheet.Cell("B5").SetFormulaRaw("MATCH(1,C1:C5)")
+
+	td := []testStruct{
+		{`=ISERR(B1)`, `0 ResultTypeNumber`},
+		{`=ISERR(B2)`, `0 ResultTypeNumber`},
+		{`=ISERR(B3)`, `1 ResultTypeNumber`},
+		{`=ISERR(B4)`, `1 ResultTypeNumber`},
+		{`=ISERR(B5)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsError(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(-1)
+	sheet.Cell("A2").SetNumber(2)
+	sheet.Cell("A3").SetNumber(0)
+	sheet.Cell("A4").SetString("abcde")
+
+	sheet.Cell("B1").SetFormulaRaw("1/A1")
+	sheet.Cell("B2").SetFormulaRaw("1/A2")
+	sheet.Cell("B3").SetFormulaRaw("1/A3")
+	sheet.Cell("B4").SetFormulaRaw("1/A4")
+	sheet.Cell("B5").SetFormulaRaw("MATCH(1,C1:C5)")
+
+	td := []testStruct{
+		{`=ISERROR(B1)`, `0 ResultTypeNumber`},
+		{`=ISERROR(B2)`, `0 ResultTypeNumber`},
+		{`=ISERROR(B3)`, `1 ResultTypeNumber`},
+		{`=ISERROR(B4)`, `1 ResultTypeNumber`},
+		{`=ISERROR(B5)`, `1 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsEven(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B1").SetNumber(0)
+	sheet.Cell("B2").SetNumber(2)
+	sheet.Cell("B3").SetNumber(123.456)
+	sheet.Cell("B4").SetNumber(2.789)
+
+	td := []testStruct{
+		{`=ISEVEN(B1)`, `1 ResultTypeNumber`},
+		{`=ISEVEN(B2)`, `1 ResultTypeNumber`},
+		{`=ISEVEN(B3)`, `0 ResultTypeNumber`},
+		{`=ISEVEN(B4)`, `1 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsFormula(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0)
+	sheet.Cell("A2").SetString("2")
+	sheet.Cell("A3").SetFormulaRaw("=A2=A1")
+
+	td := []testStruct{
+		{`=ISFORMULA(A1)`, `0 ResultTypeNumber`},
+		{`=ISFORMULA(A2)`, `0 ResultTypeNumber`},
+		{`=ISFORMULA(A3)`, `1 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsNonText(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B2").SetString(" ")
+	sheet.Cell("B3").SetNumber(123.456)
+	sheet.Cell("B4").SetString("123.456")
+
+	td := []testStruct{
+		{`=ISNONTEXT(B1)`, `1 ResultTypeNumber`},
+		{`=ISNONTEXT(B2)`, `0 ResultTypeNumber`},
+		{`=ISNONTEXT(B3)`, `1 ResultTypeNumber`},
+		{`=ISNONTEXT(B4)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsNumber(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B2").SetString(" ")
+	sheet.Cell("B3").SetNumber(123.456)
+	sheet.Cell("B4").SetString("123.456")
+
+	td := []testStruct{
+		{`=ISNUMBER(B1)`, `0 ResultTypeNumber`},
+		{`=ISNUMBER(B2)`, `0 ResultTypeNumber`},
+		{`=ISNUMBER(B3)`, `1 ResultTypeNumber`},
+		{`=ISNUMBER(B4)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsOdd(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B1").SetNumber(0)
+	sheet.Cell("B2").SetNumber(2)
+	sheet.Cell("B3").SetNumber(123.456)
+	sheet.Cell("B4").SetNumber(2.789)
+
+	td := []testStruct{
+		{`=ISODD(B1)`, `0 ResultTypeNumber`},
+		{`=ISODD(B2)`, `0 ResultTypeNumber`},
+		{`=ISODD(B3)`, `1 ResultTypeNumber`},
+		{`=ISODD(B4)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsText(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B2").SetString(" ")
+	sheet.Cell("B3").SetNumber(123.456)
+	sheet.Cell("B4").SetString("123.456")
+
+	td := []testStruct{
+		{`=ISTEXT(B1)`, `0 ResultTypeNumber`},
+		{`=ISTEXT(B2)`, `1 ResultTypeNumber`},
+		{`=ISTEXT(B3)`, `0 ResultTypeNumber`},
+		{`=ISTEXT(B4)`, `1 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
