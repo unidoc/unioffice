@@ -13,7 +13,8 @@ func init() {
 	RegisterFunction("IF", If)
 	RegisterFunction("IFERROR", IfError)
 	RegisterFunction("_xlfn.IFNA", IfNA) // Only in Excel 2013+
-	// TODO:  RegisterFunction("IFS", Ifs) // Only in Excel 2016+
+	RegisterFunction("IFS", Ifs)
+	RegisterFunction("_xlfn.IFS", Ifs)
 	RegisterFunction("NOT", Not)
 	RegisterFunction("OR", Or)
 	// TODO: RegisterFunction("SWITCH", Switch) // Only in Excel 2016+
@@ -126,6 +127,19 @@ func IfNA(args []Result) Result {
 		return args[1]
 	}
 	return args[0]
+}
+
+// Ifs is an implementation of the Excel IFS() function.
+func Ifs(args []Result) Result {
+	if len(args) < 2 {
+		return MakeErrorResult("IFS requires at least two arguments")
+	}
+	for i := 0; i < len(args)-1; i+=2 {
+		if args[i].ValueNumber == 1 {
+			return args[i+1]
+		}
+	}
+	return MakeStringResult("#N/A")
 }
 
 // Not is an implementation of the Excel NOT() function and takes a single

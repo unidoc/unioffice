@@ -105,11 +105,17 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 			if lhs.Type == ResultTypeNumber {
 				return MakeBoolResult(lhs.ValueNumber < rhs.ValueNumber)
 			}
+			if lhs.Type == ResultTypeString {
+				return MakeBoolResult(lhs.ValueString < rhs.ValueString)
+			}
 		}
 	case BinOpTypeGT:
 		if lhs.Type == rhs.Type {
 			if lhs.Type == ResultTypeNumber {
 				return MakeBoolResult(lhs.ValueNumber > rhs.ValueNumber)
+			}
+			if lhs.Type == ResultTypeString {
+				return MakeBoolResult(lhs.ValueString > rhs.ValueString)
 			}
 		}
 	case BinOpTypeEQ:
@@ -118,11 +124,17 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 				// TODO: see what Excel does regarding floating point comparison
 				return MakeBoolResult(lhs.ValueNumber == rhs.ValueNumber)
 			}
+			if lhs.Type == ResultTypeString {
+				return MakeBoolResult(lhs.ValueString == rhs.ValueString)
+			}
 		}
 	case BinOpTypeNE:
 		if lhs.Type == rhs.Type {
 			if lhs.Type == ResultTypeNumber {
 				return MakeBoolResult(lhs.ValueNumber != rhs.ValueNumber)
+			}
+			if lhs.Type == ResultTypeString {
+				return MakeBoolResult(lhs.ValueString != rhs.ValueString)
 			}
 		}
 	case BinOpTypeLEQ:
@@ -130,11 +142,17 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 			if lhs.Type == ResultTypeNumber {
 				return MakeBoolResult(lhs.ValueNumber <= rhs.ValueNumber)
 			}
+			if lhs.Type == ResultTypeString {
+				return MakeBoolResult(lhs.ValueString <= rhs.ValueString)
+			}
 		}
 	case BinOpTypeGEQ:
 		if lhs.Type == rhs.Type {
 			if lhs.Type == ResultTypeNumber {
 				return MakeBoolResult(lhs.ValueNumber >= rhs.ValueNumber)
+			}
+			if lhs.Type == ResultTypeString {
+				return MakeBoolResult(lhs.ValueString >= rhs.ValueString)
 			}
 		}
 	case BinOpTypeConcat:

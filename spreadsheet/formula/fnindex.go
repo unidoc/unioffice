@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/unidoc/unioffice/internal/wildcard"
 	"github.com/unidoc/unioffice/spreadsheet/reference"
 )
 
@@ -21,6 +22,7 @@ func init() {
 	RegisterFunction("INDEX", Index)
 	RegisterFunctionComplex("INDIRECT", Indirect)
 	RegisterFunctionComplex("OFFSET", Offset)
+	RegisterFunction("MATCH", Match)
 	RegisterFunction("HLOOKUP", HLookup)
 	RegisterFunction("LOOKUP", Lookup)
 	RegisterFunction("VLOOKUP", VLookup)
@@ -130,6 +132,93 @@ func Indirect(ctx Context, ev Evaluator, args []Result) Result {
 		return MakeErrorResult("INDIRECT requires first argument to be of type string")
 	}
 	return ctx.Cell(sarg.ValueString, ev)
+}
+
+// Match implements the MATCH function.
+func Match(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 2 && argsNum != 3 {
+		return MakeErrorResult("MATCH requires two or three arguments")
+	}
+
+	matchType := 1
+	if argsNum == 3 {
+		if args[2].Type != ResultTypeNumber {
+			return MakeErrorResult("MATCH requires the third argument to be a number")
+		}
+		typeArg := args[2].ValueNumber
+		if typeArg == -1 || typeArg == 0 {
+			matchType = int(typeArg)
+		}
+	}
+
+	arrResult := args[1]
+	var values []Result
+
+	switch arrResult.Type {
+	case ResultTypeList:
+		values = arrResult.ValueList
+	case ResultTypeArray:
+		arr := arrResult.ValueArray
+		if len(arr[0]) != 1 {
+			return MakeErrorResult("MATCH requires the second argument to be a one-dimensional range")
+		}
+		for _, list := range arr {
+			values = append(values, list[0])
+		}
+	default:
+		return MakeErrorResult("MATCH requires the second argument to be a one-dimensional range")
+	}
+
+	criteria := parseCriteria(args[0])
+
+	switch matchType {
+	case 0:
+		for i, value := range values {
+			if compareForMatch(value, criteria) {
+				return MakeNumberResult(float64(i+1))
+			}
+		}
+	case -1:
+		for i := 0; i < len(values); i++ {
+			if compareForMatch(values[i], criteria) {
+				return MakeNumberResult(float64(i+1))
+			}
+			if criteria.isNumber && (values[i].ValueNumber < criteria.cNum) {
+				if i == 0 {
+					return MakeStringResult("#N/A")
+				}
+				return MakeNumberResult(float64(i))
+			}
+		}
+		return MakeNumberResult(float64(len(values)))
+	case 1:
+		for i := 0; i < len(values); i++ {
+			if compareForMatch(values[i], criteria) {
+				return MakeNumberResult(float64(i+1))
+			}
+			if criteria.isNumber && (values[i].ValueNumber > criteria.cNum) {
+				if i == 0 {
+					return MakeStringResult("#N/A")
+				}
+				return MakeNumberResult(float64(i))
+			}
+		}
+		return MakeNumberResult(float64(len(values)))
+	}
+	return MakeStringResult("#N/A")
+}
+
+func compareForMatch(value Result, criteria *criteriaParsed) bool {
+	if value.Type == ResultTypeEmpty {
+		return false
+	}
+	if criteria.isNumber {
+		return value.ValueNumber == criteria.cNum
+	} else {
+		valueStr := strings.ToLower(value.ValueString)
+		return criteria.cStr == valueStr || wildcard.Match(criteria.cStr, valueStr)
+	}
 }
 
 // Offset is an implementation of the Excel OFFSET function.

@@ -534,3 +534,110 @@ func TestValue(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestMatch(t *testing.T) {
+	td := []testStruct{
+		{`MATCH("??ny",A1:A5)`, `2 ResultTypeNumber`},
+		{`MATCH("*nny",A1:A5)`, `4 ResultTypeNumber`},
+		{`=MATCH(5,B1:B5,1)`, `2 ResultTypeNumber`},
+		{`=MATCH(5,C1:C5,-1)`, `3 ResultTypeNumber`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetString("John")
+	sheet.Cell("A2").SetString("Tony")
+	sheet.Cell("A3").SetString("Tony")
+	sheet.Cell("A4").SetString("Benny")
+	sheet.Cell("A5").SetString("Willy")
+
+	sheet.Cell("B1").SetNumber(2)
+	sheet.Cell("B2").SetNumber(4)
+	sheet.Cell("B3").SetNumber(6)
+	sheet.Cell("B4").SetNumber(8)
+	sheet.Cell("B5").SetNumber(10)
+
+	sheet.Cell("C1").SetNumber(10)
+	sheet.Cell("C2").SetNumber(8)
+	sheet.Cell("C3").SetNumber(6)
+	sheet.Cell("C4").SetNumber(4)
+	sheet.Cell("C5").SetNumber(2)
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestMaxA(t *testing.T) {
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("B1").SetNumber(0.2)
+
+	sheet.Cell("A2").SetNumber(0.4)
+	sheet.Cell("B2").SetNumber(0.8)
+
+	sheet.Cell("A3").SetBool(true)
+	sheet.Cell("B3").SetBool(false)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`MAXA(A1:B3)`, `1 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestMinA(t *testing.T) {
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("B1").SetNumber(0.2)
+
+	sheet.Cell("A2").SetNumber(0.4)
+	sheet.Cell("B2").SetNumber(0.8)
+
+	sheet.Cell("A3").SetBool(true)
+	sheet.Cell("B3").SetBool(false)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`MINA(A1:B3)`, `0 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIfs(t *testing.T) {
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B1").SetNumber(1)
+	sheet.Cell("B2").SetString("a")
+	sheet.Cell("B3").SetNumber(2)
+	sheet.Cell("B4").SetString("b")
+	sheet.Cell("B5").SetNumber(3)
+	sheet.Cell("B6").SetString("c")
+	sheet.Cell("B7").SetNumber(4)
+	sheet.Cell("B8").SetString("d")
+	sheet.Cell("B9").SetNumber(5)
+	sheet.Cell("B10").SetString("e")
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=IFS(B1>3,"B1",B2="a","B2",B3>2,"B3",B4="c","B4",B5>4,"B5",B6="d","B6",B7=4,"B7",B8="d","B8",B9<=4,"B9",B10="e","B10")`, `B2 ResultTypeString`},
+		{`=IFS(B1>3,"B1",B2="b","B2",B3>2,"B3",B4="c","B4",B5>4,"B5",B6="d","B6",B7=4,"B7",B8="d","B8",B9<=4,"B9",B10="e","B10")`, `B7 ResultTypeString`},
+		{`=IFS(B1>3,"B1",B2="b","B2",B3>2,"B3",B4="c","B4",B5>4,"B5",B6="d","B6",B7=5,"B7",B8="e","B8",B9<=4,"B9",B10="f","B10")`, `#N/A ResultTypeString`},
+	}
+
+	runTests(t, ctx, td)
+}
