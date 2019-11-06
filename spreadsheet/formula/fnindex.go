@@ -186,7 +186,7 @@ func Match(args []Result) Result {
 			}
 			if criteria.isNumber && (values[i].ValueNumber < criteria.cNum) {
 				if i == 0 {
-					return MakeStringResult("#N/A")
+					return MakeErrorResultType(ErrorTypeNA, "")
 				}
 				return MakeNumberResult(float64(i))
 			}
@@ -199,14 +199,14 @@ func Match(args []Result) Result {
 			}
 			if criteria.isNumber && (values[i].ValueNumber > criteria.cNum) {
 				if i == 0 {
-					return MakeStringResult("#N/A")
+					return MakeErrorResultType(ErrorTypeNA, "")
 				}
 				return MakeNumberResult(float64(i))
 			}
 		}
 		return MakeNumberResult(float64(len(values)))
 	}
-	return MakeStringResult("#N/A")
+	return MakeErrorResultType(ErrorTypeNA, "")
 }
 
 func compareForMatch(value Result, criteria *criteriaParsed) bool {
@@ -223,8 +223,8 @@ func compareForMatch(value Result, criteria *criteriaParsed) bool {
 
 // Offset is an implementation of the Excel OFFSET function.
 func Offset(ctx Context, ev Evaluator, args []Result) Result {
-	if len(args) != 5 {
-		return MakeErrorResult("OFFSET requires one or two arguments")
+	if len(args) != 3 && len(args) != 5 {
+		return MakeErrorResult("OFFSET requires three or five arguments")
 	}
 	ref := args[0].Ref
 	// resolve a named range
@@ -259,19 +259,44 @@ func Offset(ctx Context, ev Evaluator, args []Result) Result {
 		return MakeErrorResult("OFFSET requires numeric col offset")
 	}
 
-	height := args[3].AsNumber()
-	if height.Type != ResultTypeNumber {
-		return MakeErrorResult("OFFSET requires numeric height")
-	}
-	width := args[4].AsNumber()
-	if width.Type != ResultTypeNumber {
-		return MakeErrorResult("OFFSET requires numeric width")
+	var height, width Result
+
+	if len(args) == 3 {
+		height = MakeNumberResult(1)
+		width = MakeNumberResult(1)
+	} else {
+		height = args[3].AsNumber()
+		if height.Type != ResultTypeNumber {
+			return MakeErrorResult("OFFSET requires numeric height")
+		}
+		if height.ValueNumber == 0 {
+			return MakeErrorResultType(ErrorTypeRef, "")
+		}
+		width = args[4].AsNumber()
+		if width.Type != ResultTypeNumber {
+			return MakeErrorResult("OFFSET requires numeric width")
+		}
+		if width.ValueNumber == 0 {
+			return MakeErrorResultType(ErrorTypeRef, "")
+		}
 	}
 	colIdx := reference.ColumnToIndex(col)
 	origRow := rowIdx + uint32(rOff.ValueNumber)
 	origCol := colIdx + uint32(cOff.ValueNumber)
-	endRow := origRow + uint32(height.ValueNumber) - 1
-	endCol := origCol + uint32(width.ValueNumber) - 1
+	endRow := origRow + uint32(height.ValueNumber)
+	endCol := origCol + uint32(width.ValueNumber)
+	if height.ValueNumber > 0 {
+		endRow--
+	} else {
+		endRow++
+		origRow, endRow = endRow, origRow
+	}
+	if width.ValueNumber > 0 {
+		endCol--
+	} else {
+		endCol++
+		origCol, endCol = endCol, origCol
+	}
 
 	beg := fmt.Sprintf("%s%d", reference.IndexToColumn(origCol), origRow)
 	end := fmt.Sprintf("%s%d", reference.IndexToColumn(endCol), endRow)

@@ -139,7 +139,7 @@ func Ifs(args []Result) Result {
 			return args[i+1]
 		}
 	}
-	return MakeStringResult("#N/A")
+	return MakeErrorResultType(ErrorTypeNA, "")
 }
 
 // Not is an implementation of the Excel NOT() function and takes a single

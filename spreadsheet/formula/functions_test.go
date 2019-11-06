@@ -636,7 +636,37 @@ func TestIfs(t *testing.T) {
 	td := []testStruct{
 		{`=IFS(B1>3,"B1",B2="a","B2",B3>2,"B3",B4="c","B4",B5>4,"B5",B6="d","B6",B7=4,"B7",B8="d","B8",B9<=4,"B9",B10="e","B10")`, `B2 ResultTypeString`},
 		{`=IFS(B1>3,"B1",B2="b","B2",B3>2,"B3",B4="c","B4",B5>4,"B5",B6="d","B6",B7=4,"B7",B8="d","B8",B9<=4,"B9",B10="e","B10")`, `B7 ResultTypeString`},
-		{`=IFS(B1>3,"B1",B2="b","B2",B3>2,"B3",B4="c","B4",B5>4,"B5",B6="d","B6",B7=5,"B7",B8="e","B8",B9<=4,"B9",B10="f","B10")`, `#N/A ResultTypeString`},
+		{`=IFS(B1>3,"B1",B2="b","B2",B3>2,"B3",B4="c","B4",B5>4,"B5",B6="d","B6",B7=5,"B7",B8="e","B8",B9<=4,"B9",B10="f","B10")`, `#N/A ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestOffset(t *testing.T) {
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B1").SetNumber(1)
+	sheet.Cell("C1").SetNumber(2)
+	sheet.Cell("D1").SetNumber(3)
+	sheet.Cell("E1").SetNumber(4)
+	sheet.Cell("B2").SetNumber(5)
+	sheet.Cell("C2").SetNumber(6)
+	sheet.Cell("D2").SetNumber(7)
+	sheet.Cell("E2").SetNumber(8)
+	sheet.Cell("B3").SetNumber(9)
+	sheet.Cell("C3").SetNumber(10)
+	sheet.Cell("D3").SetNumber(11)
+	sheet.Cell("E3").SetNumber(12)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=OFFSET(B1,1,2)`, `7 ResultTypeNumber`},
+		{`=SUM(OFFSET(E3,-1,-1,2,2))`, `38 ResultTypeNumber`},
+		{`=AVERAGE(OFFSET(B1,1,2,-2,-2))`, `4.5 ResultTypeNumber`},
+		{`=SUM(OFFSET(B1,1,2,0,0))`, `#REF! ResultTypeError`},
 	}
 
 	runTests(t, ctx, td)
