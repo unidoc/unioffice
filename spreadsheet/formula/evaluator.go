@@ -7,7 +7,12 @@
 
 package formula
 
-import "fmt"
+import (
+	"fmt"
+	"regexp"
+	"strconv"
+	"strings"
+)
 
 // Evaluator is the interface for a formula evaluator.  This is needed so we can
 // pass it to the spreadsheet to let it evaluate formula cells before returning
@@ -21,12 +26,51 @@ func NewEvaluator() Evaluator {
 }
 
 type defEval struct {
+	isRef bool
 }
 
 func (d *defEval) Eval(ctx Context, formula string) Result {
 	expr := ParseString(formula)
 	if expr != nil {
+		d.checkIfRef(ctx, expr)
 		return expr.Eval(ctx, d)
 	}
 	return MakeErrorResult(fmt.Sprintf("unable to parse formula %s", formula))
+}
+
+func (d *defEval) checkIfRef(ctx Context, expr Expression) {
+	switch expr.(type) {
+	case FunctionCall:
+		if expr.(FunctionCall).name == "ISREF" {
+			for _, arg := range expr.(FunctionCall).args {
+				switch arg.(type) {
+				case CellRef:
+					d.isRef = validateRef(arg.(CellRef))
+					return
+				case Range:
+					switch arg.(Range).from.(type) {
+					case CellRef:
+						d.isRef = validateRef(arg.(Range).from.(CellRef))
+						return
+					}
+					switch arg.(Range).to.(type) {
+					case CellRef:
+						d.isRef = validateRef(arg.(Range).to.(CellRef))
+						return
+					}
+				}
+			}
+		}
+	}
+}
+
+var refRegexp *regexp.Regexp = regexp.MustCompile(`^([a-z]+)([0-9]+)$`)
+
+func validateRef(cr CellRef) bool {
+	if submatch := refRegexp.FindStringSubmatch(strings.ToLower(cr.s)); len(submatch) > 2 {
+		col := submatch[1]
+		row, _ := strconv.Atoi(submatch[2])
+		return row <= 1048576 && col <= "zz"
+	}
+	return false
 }

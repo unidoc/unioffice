@@ -7,6 +7,8 @@
 
 package formula
 
+import "time"
+
 // Context is a formula execution context.  Formula evaluation uses the context
 // to retreive information from sheets.
 type Context interface {
@@ -16,6 +18,9 @@ type Context interface {
 	// Sheet returns an evaluation context for a given sheet name.  This is used
 	// when evaluating cells that pull data from other sheets (e.g. ='Sheet 2'!A1).
 	Sheet(name string) Context
+
+	// GetEpoch returns the time epoch of the context's Workbook.
+	GetEpoch() time.Time
 
 	// GetFilename returns the full filename of the context's Workbook.
 	GetFilename() string
@@ -34,6 +39,9 @@ type Context interface {
 
 	// HasFormula returns if cell contains formula.
 	HasFormula(cellRef string) bool
+
+	// IsBool returns if cell contains boolean value.
+	IsBool(cellRef string) bool
 
 	// SetLocked returns sets cell's protected attribute.
 	SetLocked(cellRef string, locked bool)

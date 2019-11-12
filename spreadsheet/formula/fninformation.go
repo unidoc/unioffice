@@ -8,9 +8,11 @@
 package formula
 
 import (
+	"math/big"
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/unidoc/unioffice/spreadsheet/reference"
 )
@@ -22,11 +24,14 @@ func init() {
 	RegisterFunction("ISERR", IsErr)
 	RegisterFunction("ISERROR", IsError)
 	RegisterFunction("ISEVEN", IsEven)
-	RegisterFunctionComplex("ISFORMULA", IsFormula)
 	RegisterFunctionComplex("_xlfn.ISFORMULA", IsFormula)
+	RegisterFunctionComplex("ORG.OPENOFFICE.ISLEAPYEAR", IsLeapYear)
+	RegisterFunctionComplex("ISLOGICAL", IsLogical)
+	RegisterFunction("ISNA", IsNA)
 	RegisterFunction("ISNONTEXT", IsNonText)
 	RegisterFunction("ISNUMBER", IsNumber)
 	RegisterFunction("ISODD", IsOdd)
+	RegisterFunctionComplex("ISREF", IsRef)
 	RegisterFunction("ISTEXT", IsText)
 	RegisterFunctionComplex("CELL", Cell)
 }
@@ -246,6 +251,62 @@ func IsFormula(ctx Context, ev Evaluator, args []Result) Result {
 	return MakeBoolResult(ctx.HasFormula(ref.Value))
 }
 
+// IsLeapYear is an implementation of the Excel ISLEAPYEAR() function.
+func IsLeapYear(ctx Context, ev Evaluator, args []Result) Result {
+	if len(args) != 1 || args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("ISLEAPYEAR requires a single number argument")
+	}
+	epoch := ctx.GetEpoch()
+	t, err := getValueAsTime(args[0].Value(), epoch)
+	if err != nil {
+		return MakeErrorResult("ISLEAPYEAR requires a single number argument")
+	}
+	year := t.Year()
+	return MakeBoolResult(year == year/4*4)
+}
+
+func getValueAsTime(value string, epoch time.Time) (time.Time, error) {
+	f, _, err := big.ParseFloat(value, 10, 128, big.ToNearestEven)
+	if err != nil {
+		return time.Time{}, err
+	}
+
+	day := new(big.Float)
+	day.SetUint64(uint64(24 * time.Hour))
+	f.Mul(f, day)
+	ns, _ := f.Uint64()
+	t := epoch.Add(time.Duration(ns))
+	return asLocal(t), nil
+}
+
+func asLocal(d time.Time) time.Time {
+	d = d.UTC()
+	return time.Date(d.Year(), d.Month(), d.Day(), d.Hour(),
+		d.Minute(), d.Second(), d.Nanosecond(), time.Local)
+}
+
+// IsLogical is an implementation of the Excel ISLOGICAL() function.
+func IsLogical(ctx Context, ev Evaluator, args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("ISLOGICAL requires a single number argument")
+	}
+	ref := args[0].Ref
+	if ref.Type != ReferenceTypeCell {
+		return MakeErrorResult("ISLOGICAL requires the first argument to be of type reference")
+	}
+
+	return MakeBoolResult(ctx.IsBool(ref.Value))
+}
+
+// IsNA is an implementation of the Excel ISNA() function.
+func IsNA(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("ISNA requires one argument")
+	}
+
+	return MakeBoolResult(args[0].Type == ResultTypeError && args[0].ValueString == "#N/A")
+}
+
 // ISNONTEXT is an implementation of the Excel ISNONTEXT() function.
 func IsNonText(args []Result) Result {
 	if len(args) != 1 {
@@ -274,6 +335,16 @@ func IsOdd(args []Result) Result {
 	value:= int(args[0].ValueNumber)
 
 	return MakeBoolResult(value != value/2*2)
+}
+
+// ISREF is an implementation of the Excel ISREF() function.
+func IsRef(ctx Context, ev Evaluator, args []Result) Result {
+	if len(args) != 1 {
+		MakeErrorResult("ISREF() accepts a single argument")
+	}
+//	refs := ev.(*defEval).args
+	//return MakeBoolResult(len(refs) > 0)
+	return MakeBoolResult(ev.(*defEval).isRef)
 }
 
 // ISTEXT is an implementation of the Excel ISTEXT() function.

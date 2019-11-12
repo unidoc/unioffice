@@ -770,9 +770,29 @@ func TestIsFormula(t *testing.T) {
 	sheet.Cell("A3").SetFormulaRaw("=A2=A1")
 
 	td := []testStruct{
-		{`=ISFORMULA(A1)`, `0 ResultTypeNumber`},
-		{`=ISFORMULA(A2)`, `0 ResultTypeNumber`},
-		{`=ISFORMULA(A3)`, `1 ResultTypeNumber`},
+		{`=_xlfn.ISFORMULA(A1)`, `0 ResultTypeNumber`},
+		{`=_xlfn.ISFORMULA(A2)`, `0 ResultTypeNumber`},
+		{`=_xlfn.ISFORMULA(A3)`, `1 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsLeapYear(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2016, 1, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2017, 1, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetDate(time.Date(2018, 1, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A4").SetDate(time.Date(2019, 1, 1, 0, 0, 0, 0, time.UTC))
+
+	td := []testStruct{
+		{`=ORG.OPENOFFICE.ISLEAPYEAR(A1)`, `1 ResultTypeNumber`},
+		{`=ORG.OPENOFFICE.ISLEAPYEAR(A2)`, `0 ResultTypeNumber`},
+		{`=ORG.OPENOFFICE.ISLEAPYEAR(A3)`, `0 ResultTypeNumber`},
+		{`=ORG.OPENOFFICE.ISLEAPYEAR(A4)`, `0 ResultTypeNumber`},
 	}
 
 	ctx := sheet.FormulaContext()
@@ -850,6 +870,69 @@ func TestIsText(t *testing.T) {
 		{`=ISTEXT(B2)`, `1 ResultTypeNumber`},
 		{`=ISTEXT(B3)`, `0 ResultTypeNumber`},
 		{`=ISTEXT(B4)`, `1 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsLogical(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetBool(true)
+	sheet.Cell("A2").SetBool(false)
+	sheet.Cell("A3").SetNumber(0)
+	sheet.Cell("A4").SetString("FALSE")
+
+	td := []testStruct{
+		{`=ISLOGICAL(A1)`, `1 ResultTypeNumber`},
+		{`=ISLOGICAL(A2)`, `1 ResultTypeNumber`},
+		{`=ISLOGICAL(A3)`, `0 ResultTypeNumber`},
+		{`=ISLOGICAL(A4)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsNA(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetFormulaRaw("MATCH(1,B1:B5)")
+	sheet.Cell("A2").SetString("#N/A")
+	sheet.Cell("A3").SetNumber(0)
+
+	td := []testStruct{
+		{`=ISNA(A1)`, `1 ResultTypeNumber`},
+		{`=ISNA(A2)`, `0 ResultTypeNumber`},
+		{`=ISNA(A3)`, `0 ResultTypeNumber`},
+		{`=ISNA(A4)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsRef(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetFormulaRaw("=ISREF(B1)")
+	sheet.Cell("A2").SetFormulaRaw("=ISREF(B1:Z999)")
+	sheet.Cell("A3").SetFormulaRaw("=ISREF(A1048577)")
+	sheet.Cell("A4").SetFormulaRaw("=ISREF(ZZA0)")
+	sheet.Cell("A5").SetFormulaRaw("=ISREF(ZZ0)")
+	sheet.Cell("A6").SetString("A1")
+
+	td := []testStruct{
+		{`A1`, `1 ResultTypeNumber`},
+		{`A2`, `1 ResultTypeNumber`},
+		{`A3`, `0 ResultTypeNumber`},
+		{`A4`, `0 ResultTypeNumber`},
+		{`A5`, `1 ResultTypeNumber`},
+		{`A6`, `A1 ResultTypeString`},
 	}
 
 	ctx := sheet.FormulaContext()

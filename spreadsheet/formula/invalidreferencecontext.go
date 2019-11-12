@@ -7,6 +7,8 @@
 
 package formula
 
+import "time"
+
 // InvalidReferenceContext is a Context that can be used when evaluating an
 // invalid reference (e.g. referencing a non-existent sheet).  It implements
 // Context safely, but returns error results.
@@ -64,4 +66,14 @@ func (i *ivr) GetWidth(colIdx int) float64 {
 // GetFilename returns an empty string for the invalid reference context.
 func (i *ivr) GetFilename() string {
 	return ""
+}
+
+// GetEpoch returns a null time object for the invalid reference context.
+func (i *ivr) GetEpoch() time.Time {
+	return time.Time{}
+}
+
+// IsBool returns false for the invalid reference context.
+func (i *ivr) IsBool(cellRef string) bool {
+	return false
 }

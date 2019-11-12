@@ -9,6 +9,7 @@ package spreadsheet
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/unidoc/unioffice/spreadsheet/formula"
 	"github.com/unidoc/unioffice/spreadsheet/reference"
@@ -121,6 +122,11 @@ func (e *evalContext) HasFormula(cellRef string) bool {
 	return e.s.Cell(cellRef).HasFormula()
 }
 
+// IsBool returns if the cell boolean value.
+func (e *evalContext) IsBool(cellRef string) bool {
+	return e.s.Cell(cellRef).IsBool()
+}
+
 // SetLocked sets cell locked or not.
 func (e *evalContext) SetLocked(cellRef string, locked bool) {
 	e.s.Cell(cellRef).setLocked(locked)
@@ -135,4 +141,9 @@ func (e *evalContext) GetWidth(colIdx int) float64 {
 		}
 	}
 	return 0
+}
+
+// GetEpoch returns a workbook's time epoch.
+func (e *evalContext) GetEpoch() time.Time {
+	return e.s.w.Epoch()
 }
