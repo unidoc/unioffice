@@ -26,8 +26,8 @@ func init() {
 	// RegisterFunction("DBCS")
 	// RegisterFunction("DOLLAR") Need to test with Excel
 	RegisterFunction("EXACT", Exact)
-	// RegisterFunction("FIND")
-	// RegisterFunction("FINDB")
+	RegisterFunction("FIND", Find)
+	RegisterFunctionComplex("FINDB", Findb)
 	RegisterFunction("LEFT", Left)
 	RegisterFunction("LEFTB", Left) // for now
 	RegisterFunction("LEN", Len)
@@ -152,6 +152,97 @@ func Exact(args []Result) Result {
 		return MakeErrorResult("CONCATENATE() requires two string arguments")
 	}
 	return MakeBoolResult(arg1.ValueString == arg2.ValueString)
+}
+
+// Find is an implementation of the Excel FIND().
+func Find(args []Result) Result {
+	if len(args) != 2 && len(args) != 3 {
+		return MakeErrorResult("FIND() requires two or three arguments")
+	}
+	findTextResult := args[0]
+	if findTextResult.Type != ResultTypeString {
+		return MakeErrorResult("The first argument should be a string")
+	}
+	textResult := args[1]
+	if textResult.Type != ResultTypeString {
+		return MakeErrorResult("The second argument should be a string")
+	}
+	position := 1
+	if len(args) == 3 {
+		positionResult := args[2]
+		if positionResult.Type != ResultTypeNumber {
+			return MakeErrorResult("Position should be a number")
+		}
+		position = int(positionResult.ValueNumber)
+		if position < 1 {
+			return MakeErrorResultType(ErrorTypeValue, "Position should be a number more than 0")
+		}
+	}
+	findText := findTextResult.ValueString
+	text := textResult.ValueString
+	stepsCounter := 1
+	for i := range text {
+		if stepsCounter < position {
+			stepsCounter++
+			continue
+		}
+		index := strings.Index(text[i:], findText)
+		if index == 0 {
+			return MakeNumberResult(float64(stepsCounter))
+		}
+		stepsCounter++
+	}
+	return MakeErrorResultType(ErrorTypeValue, "Not found")
+}
+
+// Findb is an implementation of the Excel FINDB().
+func Findb(ctx Context, ev Evaluator, args []Result) Result {
+	if !ctx.IsDBCS() {
+		return Find(args)
+	}
+	if len(args) != 2 && len(args) != 3 {
+		return MakeErrorResult("FINDB() requires two or three arguments")
+	}
+	findTextResult := args[0]
+	if findTextResult.Type != ResultTypeString {
+		return MakeErrorResult("The first argument should be a string")
+	}
+	textResult := args[1]
+	if textResult.Type != ResultTypeString {
+		return MakeErrorResult("The second argument should be a string")
+	}
+	position := 0
+	if len(args) == 3 {
+		positionResult := args[2]
+		if positionResult.Type != ResultTypeNumber {
+			return MakeErrorResult("Position should be a number")
+		}
+		position = int(positionResult.ValueNumber) - 1
+		if position < 0 {
+			return MakeErrorResultType(ErrorTypeValue, "Position should be a number more than 0")
+		}
+	}
+	findText := findTextResult.ValueString
+	text := textResult.ValueString
+	stepsCounter := 1
+	lastIndex := 0
+	for i := range text {
+		if i != 0 {
+			add := 1
+			if i - lastIndex > 1 {
+				add = 2
+			}
+			stepsCounter += add
+		}
+		if stepsCounter > position {
+			index := strings.Index(text[i:], findText)
+			if index == 0 {
+				return MakeNumberResult(float64(stepsCounter))
+			}
+		}
+		lastIndex = i
+	}
+	return MakeErrorResultType(ErrorTypeValue, "Not found")
 }
 
 // Left implements the Excel LEFT(string,[n]) function which returns the

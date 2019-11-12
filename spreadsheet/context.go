@@ -147,3 +147,28 @@ func (e *evalContext) GetWidth(colIdx int) float64 {
 func (e *evalContext) GetEpoch() time.Time {
 	return e.s.w.Epoch()
 }
+
+var dbcs []string = []string{
+	"zh-HK",
+	"zh-MO",
+	"zh-CN",
+	"zh-SG",
+	"zh-TW",
+	"ja-JP",
+	"ko-KR",
+}
+
+// IsDBCS returns if a workbook's default language is among DBCS.
+func (e *evalContext) IsDBCS() bool {
+	language := e.s.w.CoreProperties.X().Language
+	if language == nil {
+		return false
+	}
+	defaultLanguage := string(language.Data)
+	for _, lang := range dbcs {
+		if defaultLanguage == lang {
+			return true
+		}
+	}
+	return false
+}

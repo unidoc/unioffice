@@ -77,3 +77,8 @@ func (i *ivr) GetEpoch() time.Time {
 func (i *ivr) IsBool(cellRef string) bool {
 	return false
 }
+
+// IsDBCS returns false for the invalid reference context.
+func (i *ivr) IsDBCS() bool {
+	return false
+}

@@ -43,6 +43,9 @@ type Context interface {
 	// IsBool returns if cell contains boolean value.
 	IsBool(cellRef string) bool
 
+	// IsDBCS returns if workbook default language is among DBCS.
+	IsDBCS() bool
+
 	// SetLocked returns sets cell's protected attribute.
 	SetLocked(cellRef string, locked bool)
 

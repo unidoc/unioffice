@@ -938,3 +938,54 @@ func TestIsRef(t *testing.T) {
 	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
+
+func TestFind(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetString("abcde")
+	sheet.Cell("B1").SetString("a")
+	sheet.Cell("B2").SetString("c")
+
+	sheet.Cell("C1").SetString("\u4f60\u597d\uff0c\u4e16\u754c")
+	sheet.Cell("D1").SetString("\u4f60")
+	sheet.Cell("D2").SetString("\u4e16\u754c")
+
+	td := []testStruct{
+		{`FIND(B1,A1)`, `1 ResultTypeNumber`},
+		{`FIND(B2,A1,3)`, `3 ResultTypeNumber`},
+		{`FIND(B2,A1,4)`, `#VALUE! ResultTypeError`},
+		{`FIND(D1,C1)`, `1 ResultTypeNumber`},
+		{`FIND(D2,C1,3)`, `4 ResultTypeNumber`},
+		{`FIND(D2,C1,5)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestFindb(t *testing.T) {
+	ss := spreadsheet.New()
+	ss.CoreProperties.SetLanguage("ko-KR")
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetString("abcde")
+	sheet.Cell("B1").SetString("a")
+	sheet.Cell("B2").SetString("c")
+
+	sheet.Cell("C1").SetString("\u4f60\u597d\uff0c\u4e16\u754c")
+	sheet.Cell("D1").SetString("\u4f60")
+	sheet.Cell("D2").SetString("\u4e16\u754c")
+
+	td := []testStruct{
+		{`FINDB(B1,A1)`, `1 ResultTypeNumber`},
+		{`FINDB(B2,A1,3)`, `3 ResultTypeNumber`},
+		{`FINDB(B2,A1,4)`, `#VALUE! ResultTypeError`},
+		{`FINDB(D1,C1)`, `1 ResultTypeNumber`},
+		{`FINDB(D2,C1,3)`, `7 ResultTypeNumber`},
+		{`FINDB(D2,C1,8)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
