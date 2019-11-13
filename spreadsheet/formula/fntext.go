@@ -13,6 +13,8 @@ import (
 	"strconv"
 	"strings"
 	"unicode"
+
+	"github.com/unidoc/unioffice/internal/wildcard"
 )
 
 func init() {
@@ -43,8 +45,8 @@ func init() {
 	RegisterFunction("REPT", Rept)
 	RegisterFunction("RIGHT", Right)
 	RegisterFunction("RIGHTB", Right) // for now
-	//RegisterFunction("SEARCH", )
-	//RegisterFunction("SEARCHB", )
+	RegisterFunction("SEARCH", Search)
+	RegisterFunctionComplex("SEARCHB", Searchb)
 	//RegisterFunction("SUBSTITUTE", )
 	RegisterFunction("T", T)
 	//RegisterFunction("TEXT")
@@ -154,32 +156,59 @@ func Exact(args []Result) Result {
 	return MakeBoolResult(arg1.ValueString == arg2.ValueString)
 }
 
-// Find is an implementation of the Excel FIND().
-func Find(args []Result) Result {
+type parsedSearchObject struct {
+	findText string
+	text string
+	position int
+}
+
+func parseSearchResults(fname string, args []Result) (*parsedSearchObject, Result) {
 	if len(args) != 2 && len(args) != 3 {
-		return MakeErrorResult("FIND() requires two or three arguments")
+		return nil, MakeErrorResult(fname + " requires two or three arguments")
 	}
 	findTextResult := args[0]
 	if findTextResult.Type != ResultTypeString {
-		return MakeErrorResult("The first argument should be a string")
+		return nil, MakeErrorResult("The first argument should be a string")
 	}
 	textResult := args[1]
 	if textResult.Type != ResultTypeString {
-		return MakeErrorResult("The second argument should be a string")
+		return nil, MakeErrorResult("The second argument should be a string")
 	}
+	text := textResult.ValueString
+	findText := findTextResult.ValueString
 	position := 1
 	if len(args) == 3 {
 		positionResult := args[2]
 		if positionResult.Type != ResultTypeNumber {
-			return MakeErrorResult("Position should be a number")
+			return nil, MakeErrorResult("Position should be a number")
 		}
 		position = int(positionResult.ValueNumber)
 		if position < 1 {
-			return MakeErrorResultType(ErrorTypeValue, "Position should be a number more than 0")
+			return nil, MakeErrorResultType(ErrorTypeValue, "Position should be a number more than 0")
+		}
+		if position > len(text) {
+			return nil, MakeErrorResultType(ErrorTypeValue, "Position should be a number more than 0")
 		}
 	}
-	findText := findTextResult.ValueString
-	text := textResult.ValueString
+	return &parsedSearchObject{
+		findText,
+		text,
+		position,
+	}, MakeEmptyResult()
+}
+
+// Find is an implementation of the Excel FIND().
+func Find(args []Result) Result {
+	parsed, errResult := parseSearchResults("FIND", args)
+	if errResult.Type != ResultTypeEmpty {
+		return errResult
+	}
+	findText := parsed.findText
+	if findText == "" {
+		return MakeNumberResult(1.0)
+	}
+	text := parsed.text
+	position := parsed.position
 	stepsCounter := 1
 	for i := range text {
 		if stepsCounter < position {
@@ -200,30 +229,16 @@ func Findb(ctx Context, ev Evaluator, args []Result) Result {
 	if !ctx.IsDBCS() {
 		return Find(args)
 	}
-	if len(args) != 2 && len(args) != 3 {
-		return MakeErrorResult("FINDB() requires two or three arguments")
+	parsed, errResult := parseSearchResults("FIND", args)
+	if errResult.Type != ResultTypeEmpty {
+		return errResult
 	}
-	findTextResult := args[0]
-	if findTextResult.Type != ResultTypeString {
-		return MakeErrorResult("The first argument should be a string")
+	findText := parsed.findText
+	if findText == "" {
+		return MakeNumberResult(1.0)
 	}
-	textResult := args[1]
-	if textResult.Type != ResultTypeString {
-		return MakeErrorResult("The second argument should be a string")
-	}
-	position := 0
-	if len(args) == 3 {
-		positionResult := args[2]
-		if positionResult.Type != ResultTypeNumber {
-			return MakeErrorResult("Position should be a number")
-		}
-		position = int(positionResult.ValueNumber) - 1
-		if position < 0 {
-			return MakeErrorResultType(ErrorTypeValue, "Position should be a number more than 0")
-		}
-	}
-	findText := findTextResult.ValueString
-	text := textResult.ValueString
+	text := parsed.text
+	position := parsed.position - 1
 	stepsCounter := 1
 	lastIndex := 0
 	for i := range text {
@@ -397,6 +412,69 @@ func Right(args []Result) Result {
 		return MakeStringResult(v)
 	}
 	return MakeStringResult(v[m-n : m])
+}
+
+// Search is an implementation of the Excel SEARCH().
+func Search(args []Result) Result {
+	parsed, errResult := parseSearchResults("FIND", args)
+	if errResult.Type != ResultTypeEmpty {
+		return errResult
+	}
+	findText := strings.ToLower(parsed.findText)
+	if findText == "" {
+		return MakeNumberResult(1.0)
+	}
+	text := strings.ToLower(parsed.text)
+	position := parsed.position
+	stepsCounter := 1
+	for i := range text {
+		if stepsCounter < position {
+			stepsCounter++
+			continue
+		}
+		index := wildcard.Index(findText, text[i:])
+		if index == 0 {
+			return MakeNumberResult(float64(stepsCounter))
+		}
+		stepsCounter++
+	}
+	return MakeErrorResultType(ErrorTypeValue, "Not found")
+}
+
+// Searchb is an implementation of the Excel SEARCHB().
+func Searchb(ctx Context, ev Evaluator, args []Result) Result {
+	if !ctx.IsDBCS() {
+		return Search(args)
+	}
+	parsed, errResult := parseSearchResults("FIND", args)
+	if errResult.Type != ResultTypeEmpty {
+		return errResult
+	}
+	findText := strings.ToLower(parsed.findText)
+	text := strings.ToLower(parsed.text)
+	if findText == "" {
+		return MakeNumberResult(1.0)
+	}
+	position := parsed.position - 1
+	stepsCounter := 1
+	lastIndex := 0
+	for i := range text {
+		if i != 0 {
+			add := 1
+			if i - lastIndex > 1 {
+				add = 2
+			}
+			stepsCounter += add
+		}
+		if stepsCounter > position {
+			index := wildcard.Index(findText, text[i:])
+			if index == 0 {
+				return MakeNumberResult(float64(stepsCounter))
+			}
+		}
+		lastIndex = i
+	}
+	return MakeErrorResultType(ErrorTypeValue, "Not found")
 }
 
 // T is an implementation of the Excel T function that returns whether the

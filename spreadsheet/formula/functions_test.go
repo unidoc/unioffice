@@ -944,7 +944,7 @@ func TestFind(t *testing.T) {
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetString("abcde")
-	sheet.Cell("B1").SetString("a")
+	sheet.Cell("B1").SetString("b")
 	sheet.Cell("B2").SetString("c")
 
 	sheet.Cell("C1").SetString("\u4f60\u597d\uff0c\u4e16\u754c")
@@ -952,7 +952,8 @@ func TestFind(t *testing.T) {
 	sheet.Cell("D2").SetString("\u4e16\u754c")
 
 	td := []testStruct{
-		{`FIND(B1,A1)`, `1 ResultTypeNumber`},
+		{`FIND("",A1)`, `1 ResultTypeNumber`},
+		{`FIND(B1,A1)`, `2 ResultTypeNumber`},
 		{`FIND(B2,A1,3)`, `3 ResultTypeNumber`},
 		{`FIND(B2,A1,4)`, `#VALUE! ResultTypeError`},
 		{`FIND(D1,C1)`, `1 ResultTypeNumber`},
@@ -966,11 +967,11 @@ func TestFind(t *testing.T) {
 
 func TestFindb(t *testing.T) {
 	ss := spreadsheet.New()
-	ss.CoreProperties.SetLanguage("ko-KR")
+	ss.CoreProperties.SetLanguage("zh-TW") // set DBCS language
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetString("abcde")
-	sheet.Cell("B1").SetString("a")
+	sheet.Cell("B1").SetString("b")
 	sheet.Cell("B2").SetString("c")
 
 	sheet.Cell("C1").SetString("\u4f60\u597d\uff0c\u4e16\u754c")
@@ -978,12 +979,69 @@ func TestFindb(t *testing.T) {
 	sheet.Cell("D2").SetString("\u4e16\u754c")
 
 	td := []testStruct{
-		{`FINDB(B1,A1)`, `1 ResultTypeNumber`},
+		{`FINDB("",A1)`, `1 ResultTypeNumber`},
+		{`FINDB(B1,A1)`, `2 ResultTypeNumber`},
 		{`FINDB(B2,A1,3)`, `3 ResultTypeNumber`},
 		{`FINDB(B2,A1,4)`, `#VALUE! ResultTypeError`},
 		{`FINDB(D1,C1)`, `1 ResultTypeNumber`},
 		{`FINDB(D2,C1,3)`, `7 ResultTypeNumber`},
 		{`FINDB(D2,C1,8)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestSearch(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetString("ABCDE")
+	sheet.Cell("B1").SetString("b")
+	sheet.Cell("B2").SetString("*c")
+	sheet.Cell("B3").SetString("??d")
+
+	sheet.Cell("C1").SetString("\u4f60\u597d\uff0c\u4e16\u754c")
+	sheet.Cell("D1").SetString("*\u4f60")
+	sheet.Cell("D2").SetString("??\u4e16\u754c")
+
+	td := []testStruct{
+		{`SEARCH("",A1)`, `1 ResultTypeNumber`},
+		{`SEARCH(B1,A1)`, `2 ResultTypeNumber`},
+		{`SEARCH(B2,A1,3)`, `3 ResultTypeNumber`},
+		{`SEARCH(B2,A1,4)`, `#VALUE! ResultTypeError`},
+		{`SEARCH(B3,A1,2)`, `2 ResultTypeNumber`},
+		{`SEARCH(D1,C1)`, `1 ResultTypeNumber`},
+		{`SEARCH(D2,C1,2)`, `2 ResultTypeNumber`},
+		{`SEARCH(D2,C1,5)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestSearchb(t *testing.T) {
+	ss := spreadsheet.New()
+	ss.CoreProperties.SetLanguage("zh-TW") // set DBCS language
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetString("ABCDE")
+	sheet.Cell("B1").SetString("b")
+	sheet.Cell("B2").SetString("*c")
+	sheet.Cell("B3").SetString("??d")
+
+	sheet.Cell("C1").SetString("\u4f60\u597d\uff0c\u4e16\u754c")
+	sheet.Cell("D1").SetString("*\u4f60")
+	sheet.Cell("D2").SetString("??\u4e16\u754c")
+
+	td := []testStruct{
+		{`SEARCHB("",A1)`, `1 ResultTypeNumber`},
+		{`SEARCHB(B1,A1)`, `2 ResultTypeNumber`},
+		{`SEARCHB(B2,A1,3)`, `3 ResultTypeNumber`},
+		{`SEARCHB(B2,A1,4)`, `#VALUE! ResultTypeError`},
+		{`SEARCHB(D1,C1)`, `1 ResultTypeNumber`},
+		{`SEARCHB(D2,C1,3)`, `3 ResultTypeNumber`},
+		{`SEARCHB(D2,C1,8)`, `#VALUE! ResultTypeError`},
 	}
 
 	ctx := sheet.FormulaContext()

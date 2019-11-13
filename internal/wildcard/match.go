@@ -81,3 +81,59 @@ func deepMatchRune(str, pattern []rune, simple bool) bool {
 	}
 	return len(str) == 0 && len(pattern) == 0
 }
+
+// Match -  finds whether the text matches/satisfies the pattern string.
+// supports  '*' and '?' wildcards in the pattern string.
+// unlike path.Match(), considers a path as a flat name space while matching the pattern.
+// The difference is illustrated in the example here https://play.golang.org/p/Ega9qgD4Qz .
+func Index(pattern, name string) (index int) {
+	if pattern == "" || pattern == "*" {
+		return 0
+	}
+	rname := make([]rune, 0, len(name))
+	rpattern := make([]rune, 0, len(pattern))
+	for _, r := range name {
+		rname = append(rname, r)
+	}
+	for _, r := range pattern {
+		rpattern = append(rpattern, r)
+	}
+	simple := false // Does extended wildcard '*' and '?' match.
+	return deepIndexRune(rname, rpattern, simple, 0)
+}
+
+func deepIndexRune(str, pattern []rune, simple bool, counter int) int {
+	for len(pattern) > 0 {
+		switch pattern[0] {
+		default:
+			if len(str) == 0 {
+				return -1
+			}
+			if str[0] != pattern[0] {
+				return deepIndexRune(str[1:], pattern, simple, counter+1)
+			}
+		case '?':
+			if len(str) == 0 {
+				return -1
+			}
+		case '*':
+			if len(str) == 0 {
+				return -1
+			}
+			subIndex := deepIndexRune(str, pattern[1:], simple, counter)
+			if subIndex != -1 {
+				return counter
+			} else {
+				subIndex = deepIndexRune(str[1:], pattern, simple, counter)
+				if subIndex != -1 {
+					return counter
+				} else {
+					return -1
+				}
+			}
+		}
+		str = str[1:]
+		pattern = pattern[1:]
+	}
+	return counter
+}
