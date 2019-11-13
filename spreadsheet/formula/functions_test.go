@@ -1047,3 +1047,22 @@ func TestSearchb(t *testing.T) {
 	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
+
+func TestConcat(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetBool(true)
+	sheet.Cell("A2").SetBool(false)
+
+	td := []testStruct{
+		{`CONCAT("Hello"," ","world")`, `Hello world ResultTypeString`},
+		{`CONCAT("Hello"," my ","world")`, `Hello my world ResultTypeString`},
+		{`CONCAT("1","one")`, `1one ResultTypeString`},
+		{`CONCAT(A1,"yes")`, `1yes ResultTypeString`},
+		{`CONCAT(A2,"no")`, `0no ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}

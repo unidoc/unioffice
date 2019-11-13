@@ -23,8 +23,9 @@ func init() {
 	RegisterFunction("CHAR", Char)
 	RegisterFunction("CLEAN", Clean)
 	RegisterFunction("CODE", Code)
-	RegisterFunction("CONCATENATE", Concatenate)
-	// RegisterFunction("CONCAT", ) Need to test with Excel
+	RegisterFunction("CONCATENATE", Concat)
+	RegisterFunction("CONCAT", Concat)
+	RegisterFunction("_xlfn.CONCAT", Concat)
 	// RegisterFunction("DBCS")
 	// RegisterFunction("DOLLAR") Need to test with Excel
 	RegisterFunction("EXACT", Exact)
@@ -128,14 +129,15 @@ func Unicode(args []Result) Result {
 	return MakeNumberResult(float64(s.ValueString[0]))
 }
 
-// Concatenate is an implementation of the Excel CONCATENATE() function.
-func Concatenate(args []Result) Result {
+// Concat is an implementation of the Excel CONCAT() and deprecated CONCATENATE() function.
+func Concat(args []Result) Result {
 	buf := bytes.Buffer{}
 	for _, a := range args {
-		a = a.AsString()
 		switch a.Type {
 		case ResultTypeString:
 			buf.WriteString(a.ValueString)
+		case ResultTypeNumber:
+			buf.WriteString(a.AsString().ValueString)
 		default:
 			return MakeErrorResult("CONCATENATE() requires arguments to be strings")
 		}
