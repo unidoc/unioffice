@@ -262,7 +262,7 @@ func IsLeapYear(ctx Context, ev Evaluator, args []Result) Result {
 		return MakeErrorResult("ISLEAPYEAR requires a single number argument")
 	}
 	year := t.Year()
-	return MakeBoolResult(year == year/4*4)
+	return MakeBoolResult(isLeapYear(year))
 }
 
 func getValueAsTime(value string, epoch time.Time) (time.Time, error) {

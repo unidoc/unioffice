@@ -1066,3 +1066,52 @@ func TestConcat(t *testing.T) {
 	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
+
+func TestYear(t *testing.T) {
+	td := []testStruct{
+		{`=YEAR(A1)`, `2019 ResultTypeNumber`},
+		{`=YEAR(A2)`, `#VALUE! ResultTypeError`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(2019, time.November, 4, 16, 0, 0, 0, time.UTC))
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestYearFrac(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(1900, time.January, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetTime(time.Date(1900, time.January, 2, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetTime(time.Date(1900, time.January, 31, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A4").SetTime(time.Date(1900, time.March, 31, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A5").SetTime(time.Date(1900, time.February, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A6").SetTime(time.Date(1904, time.January, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A7").SetTime(time.Date(1904, time.January, 2, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A8").SetTime(time.Date(1905, time.January, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A9").SetString("Hello")
+	sheet.Cell("A10").SetString("World")
+
+	td := []testStruct{
+		{`=YEARFRAC(A1,A2)`, `0.00277777777 ResultTypeNumber`},
+		{`=YEARFRAC(A3,A4)`, `0.16666666666 ResultTypeNumber`},
+		{`=YEARFRAC(A3,A5)`, `0.00277777777 ResultTypeNumber`},
+		{`=YEARFRAC(A1,A2,1)`, `0.00273972602 ResultTypeNumber`},
+		{`=YEARFRAC(A6,A7,1)`, `0.00273224043 ResultTypeNumber`},
+		{`=YEARFRAC(A6,A8,1)`, `1 ResultTypeNumber`},
+		{`=YEARFRAC(A1,A2,2)`, `0.00277777777 ResultTypeNumber`},
+		{`=YEARFRAC(A1,A2,3)`, `0.00273972602 ResultTypeNumber`},
+		{`=YEARFRAC(A1,A2,4)`, `0.00277777777 ResultTypeNumber`},
+		{`=YEARFRAC(A9,A2)`, `#VALUE! ResultTypeError`},
+		{`=YEARFRAC(A1,A10)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
