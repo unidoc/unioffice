@@ -27,21 +27,23 @@ func NewEvaluator() Evaluator {
 
 type defEval struct {
 	isRef bool
+	booleans []bool
 }
 
 func (d *defEval) Eval(ctx Context, formula string) Result {
 	expr := ParseString(formula)
 	if expr != nil {
-		d.checkIfRef(ctx, expr)
+		d.addInfo(ctx, expr)
 		return expr.Eval(ctx, d)
 	}
 	return MakeErrorResult(fmt.Sprintf("unable to parse formula %s", formula))
 }
 
-func (d *defEval) checkIfRef(ctx Context, expr Expression) {
+func (d *defEval) addInfo(ctx Context, expr Expression) {
 	switch expr.(type) {
 	case FunctionCall:
-		if expr.(FunctionCall).name == "ISREF" {
+		switch expr.(FunctionCall).name {
+		case "ISREF":
 			for _, arg := range expr.(FunctionCall).args {
 				switch arg.(type) {
 				case CellRef:
@@ -58,6 +60,15 @@ func (d *defEval) checkIfRef(ctx Context, expr Expression) {
 						d.isRef = validateRef(arg.(Range).to.(CellRef))
 						return
 					}
+				}
+			}
+		case "CONCAT", "_xlfn.CONCAT", "CONCATENATE":
+			d.booleans = []bool{}
+			for _, arg := range expr.(FunctionCall).args {
+				switch arg.(type) {
+					case CellRef:
+						cr := arg.(CellRef).s
+						d.booleans = append(d.booleans, ctx.IsBool(cr))
 				}
 			}
 		}

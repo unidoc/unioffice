@@ -10,7 +10,6 @@ package formula_test
 import (
 	"fmt"
 	"strconv"
-	"strings"
 	"testing"
 	"time"
 
@@ -28,15 +27,10 @@ type testStruct struct {
 }
 
 func runTests(t *testing.T, ctx formula.Context, td []testStruct) {
-	ev := formula.NewEvaluator()
 	for _, tc := range td {
 		t.Run(tc.Input, func(t *testing.T) {
-			p := formula.Parse(strings.NewReader(tc.Input))
-			if p == nil {
-				t.Errorf("error parsing %s", tc.Input)
-				return
-			}
-			result := p.Eval(ctx, ev)
+			ev := formula.NewEvaluator()
+			result := ev.Eval(ctx, tc.Input)
 			got := fmt.Sprintf("%s %s", result.Value(), result.Type)
 			if got != tc.Expected {
 				t.Errorf("expected %s = %s, got %s", tc.Input, tc.Expected, got)
@@ -1059,8 +1053,8 @@ func TestConcat(t *testing.T) {
 		{`CONCAT("Hello"," ","world")`, `Hello world ResultTypeString`},
 		{`CONCAT("Hello"," my ","world")`, `Hello my world ResultTypeString`},
 		{`CONCAT("1","one")`, `1one ResultTypeString`},
-		{`CONCAT(A1,"yes")`, `1yes ResultTypeString`},
-		{`CONCAT(A2,"no")`, `0no ResultTypeString`},
+		{`CONCAT(A1,"yes")`, `TRUEyes ResultTypeString`},
+		{`CONCAT(A2,"no")`, `FALSEno ResultTypeString`},
 	}
 
 	ctx := sheet.FormulaContext()
