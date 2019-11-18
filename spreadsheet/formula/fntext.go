@@ -10,6 +10,7 @@ package formula
 import (
 	"bytes"
 	"fmt"
+	"strconv"
 	"strings"
 	"unicode"
 )
@@ -52,7 +53,7 @@ func init() {
 	RegisterFunction("_xlfn.UNICHAR", Char) // for now
 	RegisterFunction("_xlfn.UNICODE", Unicode)
 	RegisterFunction("UPPER", Upper)
-	//RegisterFunction("VALUE", )
+	RegisterFunction("VALUE", Value)
 }
 
 // Char is an implementation of the Excel CHAR function that takes an integer in
@@ -367,4 +368,25 @@ func Upper(args []Result) Result {
 	}
 
 	return MakeStringResult(strings.ToUpper(s.ValueString))
+}
+
+// Value is an implementation of the Excel VALUE function.
+func Value(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("VALUE requires a single argument")
+	}
+
+	value := args[0]
+	if value.Type == ResultTypeNumber {
+		return value
+	}
+
+	if value.Type == ResultTypeString {
+		result, err := strconv.ParseFloat(value.Value(), 64)
+		if err == nil {
+			return MakeNumberResult(result)
+		}
+	}
+
+	return MakeErrorResult("Incorrect argument for VALUE")
 }
