@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"path/filepath"
 	"os"
 
 	"github.com/unidoc/unioffice"
@@ -67,5 +68,11 @@ func Open(filename string) (*Workbook, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error opening %s: %s", filename, err)
 	}
-	return Read(f, fi.Size())
+	wb, err := Read(f, fi.Size())
+	if err != nil {
+		return nil, err
+	}
+	dir, _ := filepath.Abs(filepath.Dir(filename))
+	wb.filename = filepath.Join(dir, filename)
+	return wb, nil
 }

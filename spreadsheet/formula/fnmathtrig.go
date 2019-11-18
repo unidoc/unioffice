@@ -90,9 +90,8 @@ func init() {
 	RegisterFunction("SQRTPI", makeMathWrapper("SQRTPI", func(v float64) float64 { return math.Sqrt(v * math.Pi) }))
 	// RegisterFunction("SUBTOTAL"
 	RegisterFunction("SUM", Sum)
-	// RegisterFunction("SUMIF",
-	// RegisterFunction("SUMIFS",
-	// RegisterFunction("SUMIFS",
+	RegisterFunction("SUMIF", SumIf)
+	RegisterFunction("SUMIFS", SumIfs)
 	RegisterFunction("SUMPRODUCT", SumProduct)
 	RegisterFunction("SUMSQ", SumSquares)
 	//RegisterFunction("SUMX2MY2"
@@ -1513,6 +1512,51 @@ func Sum(args []Result) Result {
 		}
 	}
 	return res
+}
+
+// SumIf implements the SUMIF function.
+func SumIf(args []Result) Result {
+	if len(args) < 3 {
+		return MakeErrorResult("SUMIF requires three arguments")
+	}
+
+	arrResult := args[0]
+	if arrResult.Type != ResultTypeArray && arrResult.Type != ResultTypeList {
+		return MakeErrorResult("SUMIF requires first argument of type array")
+	}
+	arr := arrayFromRange(arrResult)
+
+	sumArrResult := args[2]
+	if sumArrResult.Type != ResultTypeArray && sumArrResult.Type != ResultTypeList {
+		return MakeErrorResult("SUMIF requires last argument of type array")
+	}
+	sumArr := arrayFromRange(sumArrResult)
+
+	criteria := parseCriteria(args[1])
+	sum := 0.0
+	for ir, r := range arr {
+		for ic, value := range r {
+			if compare(value, criteria) {
+				sum += sumArr[ir][ic].ValueNumber
+			}
+		}
+	}
+	return MakeNumberResult(sum)
+}
+
+// SumIfs implements the SUMIFS function.
+func SumIfs(args []Result) Result {
+	errorResult := checkIfsRanges(args, true, "SUMIFS")
+	if errorResult.Type != ResultTypeEmpty {
+		return errorResult
+	}
+	match := getIfsMatch(args[1:])
+	sum := 0.0
+	sumArr := arrayFromRange(args[0])
+	for _, indexes := range match {
+		sum += sumArr[indexes.rowIndex][indexes.colIndex].ValueNumber
+	}
+	return MakeNumberResult(float64(sum))
 }
 
 // SumProduct is an implementation of the Excel SUMPRODUCT() function.

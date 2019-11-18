@@ -30,3 +30,33 @@ func (i *ivr) Sheet(name string) Context {
 func (i *ivr) SetOffset(col, row uint32) {
 
 }
+
+// GetFormat returns an empty string for the invalid reference context.
+func (i *ivr) GetFormat(cellRef string) string {
+	return ""
+}
+
+// GetLabelPrefix returns an empty string for the invalid reference context.
+func (i *ivr) GetLabelPrefix(cellRef string) string {
+	return ""
+}
+
+// GetLocked returns FALSE for the invalid reference context.
+func (i *ivr) GetLocked(cellRef string) bool {
+	return false
+}
+
+// SetLocked does nothing for the invalid reference context.
+func (i *ivr) SetLocked(cellRef string, locked bool) {
+
+}
+
+// GetWidth returns 0 for the invalid reference context.
+func (i *ivr) GetWidth(colIdx int) float64 {
+	return float64(0)
+}
+
+// GetFilename returns an empty string for the invalid reference context.
+func (i *ivr) GetFilename() string {
+	return ""
+}

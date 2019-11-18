@@ -54,6 +54,7 @@ type Workbook struct {
 	vmlDrawings []*vmldrawing.Container
 	charts      []*crt.ChartSpace
 	tables      []*sml.Table
+	filename    string
 }
 
 // X returns the inner wrapped XML type.
@@ -743,4 +744,9 @@ func (wb *Workbook) RemoveCalcChain() {
 			return
 		}
 	}
+}
+
+// GetFilename returns the name of file from which workbook was opened with full path to it
+func (wb *Workbook) GetFilename() string {
+	return wb.filename
 }
