@@ -16,6 +16,7 @@ import (
 
 func init() {
 	initRegexpTime()
+	RegisterFunction("DATE", Date)
 	RegisterFunction("NOW", Now)
 	RegisterFunction("TIME", Time)
 	RegisterFunction("TIMEVALUE", TimeValue)
@@ -35,6 +36,27 @@ func initRegexpTime() {
 	timeFormats["hh:mm"] = regexp.MustCompile(datePrefix + `(([0-9])+):(([0-9])+)( (am|pm))?$`)
 	timeFormats["mm:ss"] = regexp.MustCompile(datePrefix + `(([0-9])+):(([0-9])+\.([0-9])+)( (am|pm))?$`)
 	timeFormats["hh:mm:ss"] = regexp.MustCompile(datePrefix + `(([0-9])+):(([0-9])+):(([0-9])+(\.([0-9])+)?)( (am|pm))?$`)
+}
+
+// Date is an implementation of the Excel DATE() function.
+func Date(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("DATE requires three number arguments")
+	}
+	year := int(args[0].ValueNumber)
+	if year < 0 || year >= 10000 {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect date")
+	} else if year <= 1899 {
+		year += 1900
+	}
+	month := time.Month(args[1].ValueNumber)
+	day := int(args[2].ValueNumber)
+	dateS := makeDateS(year, month, day)
+	days := daysBetween(date1900, dateS) + 1
+	if days < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect date")
+	}
+	return MakeNumberResult(days)
 }
 
 // Now is an implementation of the Excel NOW() function.

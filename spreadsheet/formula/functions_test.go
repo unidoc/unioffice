@@ -1139,3 +1139,17 @@ func TestTimeValue(t *testing.T) {
 	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
+
+func TestDate(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=DATE(1899,1,1)`, `693598 ResultTypeNumber`},
+		{`=DATE(10000,1,1)`, `#NUM! ResultTypeError`},
+		{`=DATE(2020,3,31)`, `43921 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
