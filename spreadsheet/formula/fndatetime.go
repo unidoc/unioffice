@@ -8,12 +8,169 @@
 package formula
 
 import (
+	"regexp"
+	"strconv"
+	"strings"
 	"time"
 )
 
 func init() {
+	initRegexpTime()
+	RegisterFunction("NOW", Now)
+	RegisterFunction("TIME", Time)
+	RegisterFunction("TIMEVALUE", TimeValue)
+	RegisterFunction("TODAY", Today)
 	RegisterFunctionComplex("YEAR", Year)
 	RegisterFunctionComplex("YEARFRAC", YearFrac)
+}
+
+var date1900 int64 = makeDateS(1900, time.January, 0)
+var daysTo1970 float64 = 25569.0
+
+var timeFormats map[string]*regexp.Regexp = map[string]*regexp.Regexp{}
+const datePrefix = `^(([0-9])+/([0-9])+/([0-9])+ )?`
+
+func initRegexpTime() {
+	timeFormats["hh"] = regexp.MustCompile(datePrefix + `(([0-9])+) (am|pm)$`)
+	timeFormats["hh:mm"] = regexp.MustCompile(datePrefix + `(([0-9])+):(([0-9])+)( (am|pm))?$`)
+	timeFormats["mm:ss"] = regexp.MustCompile(datePrefix + `(([0-9])+):(([0-9])+\.([0-9])+)( (am|pm))?$`)
+	timeFormats["hh:mm:ss"] = regexp.MustCompile(datePrefix + `(([0-9])+):(([0-9])+):(([0-9])+(\.([0-9])+)?)( (am|pm))?$`)
+}
+
+// Now is an implementation of the Excel NOW() function.
+func Now(args []Result) Result {
+	if len(args) > 0 {
+		return MakeErrorResult("NOW doesn't require arguments")
+	}
+	now := time.Now()
+	_, offset := now.Zone()
+	nowS := daysTo1970 + float64(now.Unix() + int64(offset))/86400
+	return MakeNumberResult(nowS)
+}
+
+// Today is an implementation of the Excel TODAY() function.
+func Today(args []Result) Result {
+	if len(args) > 0 {
+		return MakeErrorResult("TODAY doesn't require arguments")
+	}
+	now := time.Now()
+	_, offset := now.Zone()
+	nowS := daysBetween(date1900, now.Unix() + int64(offset)) + 1
+	return MakeNumberResult(nowS)
+}
+
+func daysFromTime(hours, minutes, seconds float64) float64 {
+	return (hours * 3600 + minutes * 60 + seconds) / 86400
+}
+
+// Time is an implementation of the Excel TIME() function.
+func Time(args []Result) Result {
+	if len(args) != 3 || args[0].Type != ResultTypeNumber || args[1].Type != ResultTypeNumber || args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("TIME requires three number arguments")
+	}
+	hours := args[0].ValueNumber
+	minutes := args[1].ValueNumber
+	seconds := args[2].ValueNumber
+	total := daysFromTime(hours, minutes, seconds)
+	if total >= 0 {
+		return MakeNumberResult(total)
+	} else {
+		return MakeErrorResultType(ErrorTypeNum, "")
+	}
+}
+
+const tvErrMsg = "Incorrect argument for TIMEVALUE"
+
+// TimeValue is an implementation of the Excel TIMEVALUE() function.
+func TimeValue(args []Result) Result {
+	if len(args) != 1 || args[0].Type != ResultTypeString {
+		return MakeErrorResult("TIMEVALUE requires a single string arguments")
+	}
+	timeString := strings.ToLower(args[0].ValueString)
+	pattern := ""
+	submatch := []string{}
+	for key, tf := range timeFormats {
+		submatch = tf.FindStringSubmatch(timeString)
+		if len(submatch) > 1 {
+			pattern = key
+			break
+		}
+	}
+	if pattern == "" {
+		return MakeErrorResult(tvErrMsg)
+	}
+	submatch = submatch[5:] // cut off date
+
+	l := len(submatch)
+	last := submatch[l-1]
+	am := last == "am"
+	pm := last == "pm"
+
+	var hours, minutes int
+	var seconds float64
+	var err error
+
+	switch pattern {
+	case "hh":
+		hours, err = strconv.Atoi(submatch[0])
+		if err != nil {
+			return MakeErrorResult(tvErrMsg)
+		}
+		minutes = 0
+		seconds = 0
+	case "hh:mm":
+		hours, err = strconv.Atoi(submatch[0])
+		if err != nil {
+			return MakeErrorResult(tvErrMsg)
+		}
+		minutes, err = strconv.Atoi(submatch[2])
+		if err != nil {
+			return MakeErrorResult(tvErrMsg)
+		}
+		seconds = 0
+	case "mm:ss":
+		hours = 0
+		minutes, err = strconv.Atoi(submatch[0])
+		if err != nil {
+			return MakeErrorResult(tvErrMsg)
+		}
+		seconds, err = strconv.ParseFloat(submatch[2], 64)
+		if err != nil {
+			return MakeErrorResult(tvErrMsg)
+		}
+	case "hh:mm:ss":
+		hours, err = strconv.Atoi(submatch[0])
+		if err != nil {
+			return MakeErrorResult(tvErrMsg)
+		}
+		minutes, err = strconv.Atoi(submatch[2])
+		if err != nil {
+			return MakeErrorResult(tvErrMsg)
+		}
+		seconds, err = strconv.ParseFloat(submatch[4], 64)
+		if err != nil {
+			return MakeErrorResult(tvErrMsg)
+		}
+	}
+	if minutes >= 60 {
+		return MakeErrorResult(tvErrMsg)
+	}
+	if am || pm {
+		if hours > 12 || seconds >= 60 {
+			return MakeErrorResult(tvErrMsg)
+		} else if hours == 12 {
+			hours = 0
+		}
+	} else if hours >= 24 || seconds >= 10000 {
+		return MakeErrorResult(tvErrMsg)
+	}
+	resultValue := daysFromTime(float64(hours), float64(minutes), seconds)
+	if pm {
+		resultValue += 0.5
+	} else if resultValue >= 1 {
+		resultValue -= float64(int(resultValue))
+	}
+	return MakeNumberResult(resultValue)
 }
 
 // Year is an implementation of the Excel YEAR() function.

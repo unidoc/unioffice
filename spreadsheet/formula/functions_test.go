@@ -1109,3 +1109,33 @@ func TestYearFrac(t *testing.T) {
 	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
+
+func TestTime(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=TIME(6,0,0)`, `0.25 ResultTypeNumber`},
+		{`=TIME(12,0,0)`, `0.5 ResultTypeNumber`},
+		{`=TIME(2,24,0)`, `0.1 ResultTypeNumber`},
+		{`=TIME(7,-60,0)`, `0.25 ResultTypeNumber`},
+		{`=TIME(1,-120,0)`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestTimeValue(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=TIMEVALUE("1/1/1900 00:00:00")`, `0 ResultTypeNumber`},
+		{`=TIMEVALUE("1/1/1900 12:00:00")`, `0.5 ResultTypeNumber`},
+		{`=TIMEVALUE("a")`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
