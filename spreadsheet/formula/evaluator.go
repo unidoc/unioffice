@@ -39,6 +39,7 @@ func (d *defEval) Eval(ctx Context, formula string) Result {
 	return MakeErrorResult(fmt.Sprintf("unable to parse formula %s", formula))
 }
 
+//addInfo adds information which is needed for some functions but is lost after evaluation. E.g. which zeroes and ones were actually booleans before evaluation and which arguments are actually references.
 func (d *defEval) addInfo(ctx Context, expr Expression) {
 	switch expr.(type) {
 	case FunctionCall:

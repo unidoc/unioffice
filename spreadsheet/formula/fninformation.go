@@ -342,8 +342,6 @@ func IsRef(ctx Context, ev Evaluator, args []Result) Result {
 	if len(args) != 1 {
 		MakeErrorResult("ISREF() accepts a single argument")
 	}
-//	refs := ev.(*defEval).args
-	//return MakeBoolResult(len(refs) > 0)
 	return MakeBoolResult(ev.(*defEval).isRef)
 }
 

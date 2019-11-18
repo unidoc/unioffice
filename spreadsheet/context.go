@@ -112,17 +112,17 @@ func (e *evalContext) GetLabelPrefix(cellRef string) string {
 	return e.s.Cell(cellRef).getLabelPrefix()
 }
 
-// GetLocked returns if the cell is locked.
+// GetLocked returns true if the cell is locked.
 func (e *evalContext) GetLocked(cellRef string) bool {
 	return e.s.Cell(cellRef).getLocked()
 }
 
-// HasFormula returns if the cell contains formula.
+// HasFormula returns true if the cell contains formula.
 func (e *evalContext) HasFormula(cellRef string) bool {
 	return e.s.Cell(cellRef).HasFormula()
 }
 
-// IsBool returns if the cell boolean value.
+// IsBool returns true if the cell boolean value.
 func (e *evalContext) IsBool(cellRef string) bool {
 	return e.s.Cell(cellRef).IsBool()
 }
@@ -148,6 +148,7 @@ func (e *evalContext) GetEpoch() time.Time {
 	return e.s.w.Epoch()
 }
 
+//dbcs is a list of languages which use DBCS or double-byte character set (Chinese dialects, Japanese and Korean)
 var dbcs []string = []string{
 	"zh-HK",
 	"zh-MO",
