@@ -17,6 +17,7 @@ import (
 func init() {
 	initRegexpTime()
 	RegisterFunction("DATE", Date)
+	RegisterFunction("DATEDIF", DateDif)
 	RegisterFunction("NOW", Now)
 	RegisterFunction("TIME", Time)
 	RegisterFunction("TIMEVALUE", TimeValue)
@@ -40,7 +41,7 @@ func initRegexpTime() {
 
 // Date is an implementation of the Excel DATE() function.
 func Date(args []Result) Result {
-	if len(args) != 3 {
+	if len(args) != 3 || args[0].Type != ResultTypeNumber || args[1].Type != ResultTypeNumber || args[2].Type != ResultTypeNumber {
 		return MakeErrorResult("DATE requires three number arguments")
 	}
 	year := int(args[0].ValueNumber)
@@ -57,6 +58,82 @@ func Date(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "Incorrect date")
 	}
 	return MakeNumberResult(days)
+}
+
+const nsPerDay = 86400000000000
+
+func dateFromDays(days float64) time.Time {
+	unix := int64((days - daysTo1970) * nsPerDay)
+	return time.Unix(0, unix)
+}
+
+func daysFromDate(y,m,d int) float64 {
+	return float64(makeDateS(y, time.Month(m), d) / 86400) + daysTo1970
+}
+
+// DateDif is an implementation of the Excel DATEDIF() function.
+func DateDif(args []Result) Result {
+	if len(args) != 3 || args[0].Type != ResultTypeNumber || args[1].Type != ResultTypeNumber || args[2].Type != ResultTypeString {
+		return MakeErrorResult("DATEDIF requires two number and one string argument")
+	}
+	startDateDays := args[0].ValueNumber
+	endDateDays := args[1].ValueNumber
+	if endDateDays < startDateDays {
+		return MakeErrorResultType(ErrorTypeNum, "Start date is greater than end date")
+	}
+	if endDateDays == startDateDays {
+		return MakeNumberResult(0)
+	}
+	interval := strings.ToLower(args[2].ValueString)
+	if interval == "d" {
+		return MakeNumberResult(endDateDays - startDateDays)
+	}
+	startDate := dateFromDays(startDateDays)
+	endDate := dateFromDays(endDateDays)
+	sy, smm, sd := startDate.Date()
+	ey, emm, ed := endDate.Date()
+	sm := int(smm)
+	em := int(emm)
+	var diff float64
+	switch interval {
+	case "y":
+		diff = float64(ey - sy)
+		if em < sm || (em == sm && ed < sd) {
+			diff--
+		}
+	case "m":
+		ydiff := ey - sy
+		mdiff := em - sm
+		if ed < sd {
+			mdiff--
+		}
+		if mdiff < 0 {
+			ydiff--
+			mdiff += 12
+		}
+		diff = float64(ydiff*12 + mdiff)
+	case "md":
+		smMD := em
+		if ed < sd {
+			smMD--
+		}
+		diff = float64(int(endDateDays - daysFromDate(ey, smMD, sd)))
+	case "ym":
+		diff = float64(em - sm)
+		if ed < sd {
+			diff--
+		}
+		if diff < 0 {
+			diff += 12
+		}
+	case "yd":
+		syYD := ey
+		if em < sm || (em == sm && ed < sd) {
+			syYD--
+		}
+		diff = float64(int(endDateDays - daysFromDate(syYD, sm, sd)))
+	}
+	return MakeNumberResult(diff)
 }
 
 // Now is an implementation of the Excel NOW() function.

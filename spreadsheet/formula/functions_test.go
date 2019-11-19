@@ -1153,3 +1153,24 @@ func TestDate(t *testing.T) {
 	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
+
+func TestDateDif(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(2019, time.February, 7, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetTime(time.Date(2021, time.April, 6, 0, 0, 0, 0, time.UTC))
+
+	td := []testStruct{
+		{`=DATEDIF(A1,A2,"y")`, `2 ResultTypeNumber`},
+		{`=DATEDIF(A1,A2,"m")`, `25 ResultTypeNumber`},
+		{`=DATEDIF(A1,A2,"d")`, `789 ResultTypeNumber`},
+		{`=DATEDIF(A1,A2,"ym")`, `1 ResultTypeNumber`},
+		{`=DATEDIF(A1,A2,"yd")`, `58 ResultTypeNumber`},
+		{`=DATEDIF(A1,A2,"md")`, `30 ResultTypeNumber`},
+		{`=DATEDIF(A2,A1,"y")`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
