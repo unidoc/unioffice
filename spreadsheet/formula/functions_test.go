@@ -1169,6 +1169,7 @@ func TestDateDif(t *testing.T) {
 		{`=DATEDIF(A1,A2,"yd")`, `58 ResultTypeNumber`},
 		{`=DATEDIF(A1,A2,"md")`, `30 ResultTypeNumber`},
 		{`=DATEDIF(A2,A1,"y")`, `#NUM! ResultTypeError`},
+		{`=DATEDIF(A1,A2,"yy")`, `#NUM! ResultTypeError`},
 	}
 
 	ctx := sheet.FormulaContext()

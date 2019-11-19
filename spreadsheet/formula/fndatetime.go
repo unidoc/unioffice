@@ -74,12 +74,12 @@ func daysFromDate(y,m,d int) float64 {
 // DateDif is an implementation of the Excel DATEDIF() function.
 func DateDif(args []Result) Result {
 	if len(args) != 3 || args[0].Type != ResultTypeNumber || args[1].Type != ResultTypeNumber || args[2].Type != ResultTypeString {
-		return MakeErrorResult("DATEDIF requires two number and one string argument")
+		return MakeErrorResultType(ErrorTypeValue, "DATEDIF requires two number and one string argument")
 	}
 	startDateDays := args[0].ValueNumber
 	endDateDays := args[1].ValueNumber
 	if endDateDays < startDateDays {
-		return MakeErrorResultType(ErrorTypeNum, "Start date is greater than end date")
+		return MakeErrorResultType(ErrorTypeNum, "The start date is greater than the end date")
 	}
 	if endDateDays == startDateDays {
 		return MakeNumberResult(0)
@@ -132,6 +132,8 @@ func DateDif(args []Result) Result {
 			syYD--
 		}
 		diff = float64(int(endDateDays - daysFromDate(syYD, sm, sd)))
+	default:
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect interval value")
 	}
 	return MakeNumberResult(diff)
 }
