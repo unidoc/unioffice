@@ -1,0 +1,22 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: |
+          Welcome! Thanks for posting your first issue. The way things work here is that while customer issues are prioritized,
+          other issues go into our backlog where they are assessed and fitted into the roadmap when suitable.
+          If you need to get this done, consider buying a license which also enables you to use it in your commercial products.
+          More information can be found on https://unidoc.io/
+        pr-message: |
+          Thanks for posting your first PR. Please be sure to sign the CLA and make sure that the
+          the Developer Guidelines https://github.com/unidoc/unioffice/wiki/UniOffice-Developer-Guide were followed.
+          You can expect that we will review the PR and post comments. The timeframe fpr this can vary depending
+          on various factors, including which issue(s) the PR addresses and where it fits in the roadmap.
+          Note also that customer PRs are prioritized.
