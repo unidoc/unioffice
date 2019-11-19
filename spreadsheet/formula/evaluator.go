@@ -3,7 +3,7 @@
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased by contacting sales@baliance.com.
+// commercial license can be purchased by contacting support@unidoc.io.
 
 package formula
 
@@ -39,7 +39,7 @@ func (d *defEval) Eval(ctx Context, formula string) Result {
 	return MakeErrorResult(fmt.Sprintf("unable to parse formula %s", formula))
 }
 
-//addInfo adds information which is needed for some functions but is lost after evaluation. E.g. which zeroes and ones were actually booleans before evaluation and which arguments are actually references.
+// addInfo adds information which is needed for some functions but is lost after evaluation. E.g. which zeroes and ones were actually booleans before evaluation and which arguments are actually references.
 func (d *defEval) addInfo(ctx Context, expr Expression) {
 	switch expr.(type) {
 	case FunctionCall:

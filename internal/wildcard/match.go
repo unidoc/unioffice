@@ -100,7 +100,7 @@ func Index(pattern, name string) (index int) {
 	return deepIndexRune(rname, rpattern, 0)
 }
 
-//deepIndexRune is recursive function which searches for a position of substring which matches given wildcard pattern
+// deepIndexRune is a recursive function which searches for a position of substring which matches given wildcard pattern.
 func deepIndexRune(str, pattern []rune, position int) int {
 	for len(pattern) > 0 {
 		switch pattern[0] {
