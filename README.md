@@ -1,15 +1,3 @@
-***Announcement (2019/04/29): UniDoc aquires gooxml.*** [UniDoc](https://unidoc.io) (https://unidoc.io and https://github.com/unidoc) has aquired gooxml from Baliance and we plan to add it to our suite of document format support for Go.
-
-The repository (gooxml) will be moving to a new home: https://github.com/unidoc/unioffice and the package name will be come `unioffice`.
-
-This will require updating import paths of existing code to `github.com/unidoc/unioffice`.  This move will take place in the weekend of the 5th of May.
-
-*Update 2019/05/04: The move has been completed.*
-
-----
-----
-
-
 **unioffice** is a library for creation of Office Open XML documents (.docx, .xlsx
 and .pptx).  It's goal is to be the most compatible and highest performance Go
 library for creation and editing of docx/xlsx/pptx files.
