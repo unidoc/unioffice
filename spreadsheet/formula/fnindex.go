@@ -3,7 +3,7 @@
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased by contacting sales@baliance.com.
+// commercial license can be purchased on https://unidoc.io.
 
 package formula
 
@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/unidoc/unioffice/internal/wildcard"
 	"github.com/unidoc/unioffice/spreadsheet/reference"
 )
 
@@ -21,6 +22,7 @@ func init() {
 	RegisterFunction("INDEX", Index)
 	RegisterFunctionComplex("INDIRECT", Indirect)
 	RegisterFunctionComplex("OFFSET", Offset)
+	RegisterFunction("MATCH", Match)
 	RegisterFunction("HLOOKUP", HLookup)
 	RegisterFunction("LOOKUP", Lookup)
 	RegisterFunction("VLOOKUP", VLookup)
@@ -132,10 +134,95 @@ func Indirect(ctx Context, ev Evaluator, args []Result) Result {
 	return ctx.Cell(sarg.ValueString, ev)
 }
 
+// Match implements the MATCH function.
+func Match(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 2 && argsNum != 3 {
+		return MakeErrorResult("MATCH requires two or three arguments")
+	}
+
+	matchType := 1
+	if argsNum == 3 {
+		if args[2].Type != ResultTypeNumber {
+			return MakeErrorResult("MATCH requires the third argument to be a number")
+		}
+		typeArg := args[2].ValueNumber
+		if typeArg == -1 || typeArg == 0 {
+			matchType = int(typeArg)
+		}
+	}
+
+	arrResult := args[1]
+	var values []Result
+
+	switch arrResult.Type {
+	case ResultTypeList:
+		values = arrResult.ValueList
+	case ResultTypeArray:
+		arr := arrResult.ValueArray
+		if len(arr[0]) != 1 {
+			return MakeErrorResult("MATCH requires the second argument to be a one-dimensional range")
+		}
+		for _, list := range arr {
+			values = append(values, list[0])
+		}
+	default:
+		return MakeErrorResult("MATCH requires the second argument to be a one-dimensional range")
+	}
+
+	criteria := parseCriteria(args[0])
+
+	switch matchType {
+	case 0:
+		for i, value := range values {
+			if compareForMatch(value, criteria) {
+				return MakeNumberResult(float64(i+1))
+			}
+		}
+	case -1:
+		for i := 0; i < len(values); i++ {
+			if compareForMatch(values[i], criteria) {
+				return MakeNumberResult(float64(i+1))
+			}
+			if criteria.isNumber && (values[i].ValueNumber < criteria.cNum) {
+				if i == 0 {
+					return MakeErrorResultType(ErrorTypeNA, "")
+				}
+				return MakeNumberResult(float64(i))
+			}
+		}
+	case 1:
+		for i := 0; i < len(values); i++ {
+			if compareForMatch(values[i], criteria) {
+				return MakeNumberResult(float64(i+1))
+			}
+			if criteria.isNumber && (values[i].ValueNumber > criteria.cNum) {
+				if i == 0 {
+					return MakeErrorResultType(ErrorTypeNA, "")
+				}
+				return MakeNumberResult(float64(i))
+			}
+		}
+	}
+	return MakeErrorResultType(ErrorTypeNA, "")
+}
+
+func compareForMatch(value Result, criteria *criteriaParsed) bool {
+	if value.Type == ResultTypeEmpty {
+		return false
+	}
+	if criteria.isNumber {
+		return value.ValueNumber == criteria.cNum
+	} else {
+		valueStr := strings.ToLower(value.ValueString)
+		return criteria.cStr == valueStr || wildcard.Match(criteria.cStr, valueStr)
+	}
+}
+
 // Offset is an implementation of the Excel OFFSET function.
 func Offset(ctx Context, ev Evaluator, args []Result) Result {
-	if len(args) != 5 {
-		return MakeErrorResult("OFFSET requires one or two arguments")
+	if len(args) != 3 && len(args) != 5 {
+		return MakeErrorResult("OFFSET requires three or five arguments")
 	}
 	ref := args[0].Ref
 	// resolve a named range
@@ -170,19 +257,44 @@ func Offset(ctx Context, ev Evaluator, args []Result) Result {
 		return MakeErrorResult("OFFSET requires numeric col offset")
 	}
 
-	height := args[3].AsNumber()
-	if height.Type != ResultTypeNumber {
-		return MakeErrorResult("OFFSET requires numeric height")
-	}
-	width := args[4].AsNumber()
-	if width.Type != ResultTypeNumber {
-		return MakeErrorResult("OFFSET requires numeric width")
+	var height, width Result
+
+	if len(args) == 3 {
+		height = MakeNumberResult(1)
+		width = MakeNumberResult(1)
+	} else {
+		height = args[3].AsNumber()
+		if height.Type != ResultTypeNumber {
+			return MakeErrorResult("OFFSET requires numeric height")
+		}
+		if height.ValueNumber == 0 {
+			return MakeErrorResultType(ErrorTypeRef, "")
+		}
+		width = args[4].AsNumber()
+		if width.Type != ResultTypeNumber {
+			return MakeErrorResult("OFFSET requires numeric width")
+		}
+		if width.ValueNumber == 0 {
+			return MakeErrorResultType(ErrorTypeRef, "")
+		}
 	}
 	colIdx := reference.ColumnToIndex(col)
 	origRow := rowIdx + uint32(rOff.ValueNumber)
 	origCol := colIdx + uint32(cOff.ValueNumber)
-	endRow := origRow + uint32(height.ValueNumber) - 1
-	endCol := origCol + uint32(width.ValueNumber) - 1
+	endRow := origRow + uint32(height.ValueNumber)
+	endCol := origCol + uint32(width.ValueNumber)
+	if height.ValueNumber > 0 {
+		endRow--
+	} else {
+		endRow++
+		origRow, endRow = endRow, origRow
+	}
+	if width.ValueNumber > 0 {
+		endCol--
+	} else {
+		endCol++
+		origCol, endCol = endCol, origCol
+	}
 
 	beg := fmt.Sprintf("%s%d", reference.IndexToColumn(origCol), origRow)
 	end := fmt.Sprintf("%s%d", reference.IndexToColumn(endCol), endRow)

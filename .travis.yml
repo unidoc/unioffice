@@ -6,7 +6,7 @@ go:
         - 1.11
 
 install:
-        - mkdir -p $HOME/gopath/src/baliance.com/
+        - mkdir -p $HOME/gopath/src/unidoc/
         - ln -s $HOME/gopath/src/github.com/unidoc/unioffice $HOME/gopath/src/github.com/unidoc/unioffice
 
 script:

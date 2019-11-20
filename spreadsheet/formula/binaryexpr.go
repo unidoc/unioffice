@@ -3,7 +3,7 @@
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased by contacting sales@baliance.com.
+// commercial license can be purchased on https://unidoc.io.
 
 package formula
 
@@ -105,11 +105,17 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 			if lhs.Type == ResultTypeNumber {
 				return MakeBoolResult(lhs.ValueNumber < rhs.ValueNumber)
 			}
+			if lhs.Type == ResultTypeString {
+				return MakeBoolResult(lhs.ValueString < rhs.ValueString)
+			}
 		}
 	case BinOpTypeGT:
 		if lhs.Type == rhs.Type {
 			if lhs.Type == ResultTypeNumber {
 				return MakeBoolResult(lhs.ValueNumber > rhs.ValueNumber)
+			}
+			if lhs.Type == ResultTypeString {
+				return MakeBoolResult(lhs.ValueString > rhs.ValueString)
 			}
 		}
 	case BinOpTypeEQ:
@@ -118,11 +124,17 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 				// TODO: see what Excel does regarding floating point comparison
 				return MakeBoolResult(lhs.ValueNumber == rhs.ValueNumber)
 			}
+			if lhs.Type == ResultTypeString {
+				return MakeBoolResult(lhs.ValueString == rhs.ValueString)
+			}
 		}
 	case BinOpTypeNE:
 		if lhs.Type == rhs.Type {
 			if lhs.Type == ResultTypeNumber {
 				return MakeBoolResult(lhs.ValueNumber != rhs.ValueNumber)
+			}
+			if lhs.Type == ResultTypeString {
+				return MakeBoolResult(lhs.ValueString != rhs.ValueString)
 			}
 		}
 	case BinOpTypeLEQ:
@@ -130,11 +142,17 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 			if lhs.Type == ResultTypeNumber {
 				return MakeBoolResult(lhs.ValueNumber <= rhs.ValueNumber)
 			}
+			if lhs.Type == ResultTypeString {
+				return MakeBoolResult(lhs.ValueString <= rhs.ValueString)
+			}
 		}
 	case BinOpTypeGEQ:
 		if lhs.Type == rhs.Type {
 			if lhs.Type == ResultTypeNumber {
 				return MakeBoolResult(lhs.ValueNumber >= rhs.ValueNumber)
+			}
+			if lhs.Type == ResultTypeString {
+				return MakeBoolResult(lhs.ValueString >= rhs.ValueString)
 			}
 		}
 	case BinOpTypeConcat:

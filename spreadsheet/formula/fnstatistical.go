@@ -3,7 +3,7 @@
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased by contacting sales@baliance.com.
+// commercial license can be purchased on https://unidoc.io.
 
 package formula
 
@@ -28,10 +28,12 @@ func init() {
 	RegisterFunction("COUNTIFS", CountIfs)
 	RegisterFunction("COUNTBLANK", CountBlank)
 	RegisterFunction("MAX", Max)
+	RegisterFunction("MAXA", MaxA)
 	RegisterFunction("MAXIFS", MaxIfs)
 	RegisterFunction("_xlfn.MAXIFS", MaxIfs)
 	RegisterFunction("MEDIAN", Median)
 	RegisterFunction("MIN", Min)
+	RegisterFunction("MINA", MinA)
 	RegisterFunction("MINIFS", MinIfs)
 	RegisterFunction("_xlfn.MINIFS", MinIfs)
 }
@@ -367,36 +369,90 @@ func MinIfs(args []Result) Result {
 	return MakeNumberResult(float64(min))
 }
 
-// Min is an implementation of the Excel MIN() function.
-func Min(args []Result) Result {
-	if len(args) == 0 {
-		return MakeErrorResult("MIN requires at least one argument")
+func max(args []Result, isMaxA bool) Result {
+	fName := "MAX"
+	if isMaxA {
+		fName = "MAXA"
 	}
+	if len(args) == 0 {
+		return MakeErrorResult(fName + " requires at least one argument")
+	}
+	v := -math.MaxFloat64
+	for _, a := range args {
+		switch a.Type {
+		case ResultTypeNumber:
+			if a.ValueNumber > v {
+				v = a.ValueNumber
+			}
+		case ResultTypeList, ResultTypeArray:
+			subMax := max(a.ListValues(), isMaxA)
+			if subMax.ValueNumber > v {
+				v = subMax.ValueNumber
+			}
+		case ResultTypeEmpty:
+			// skip
+		case ResultTypeString:
+			crit := 0.0
+			if isMaxA {
+				crit = a.AsNumber().ValueNumber
+			}
+			// treated as zero by Excel
+			if crit > v {
+				v = crit
+			}
+		default:
+			unioffice.Log("unhandled " + fName + "() argument type %s", a.Type)
+		}
+	}
+	if v == -math.MaxFloat64 {
+		v = 0
+	}
+	return MakeNumberResult(v)
+}
 
+// Max is an implementation of the Excel MAX() function.
+func Max(args []Result) Result {
+	return max(args, false)
+}
+
+// MaxA is an implementation of the Excel MAXA() function.
+func MaxA(args []Result) Result {
+	return max(args, true)
+}
+
+func min(args []Result, isMinA bool) Result {
+	fName := "MIN"
+	if isMinA {
+		fName = "MINA"
+	}
+	if len(args) == 0 {
+		return MakeErrorResult(fName + " requires at least one argument")
+	}
 	v := math.MaxFloat64
 	for _, a := range args {
-		a = a.AsNumber()
 		switch a.Type {
 		case ResultTypeNumber:
 			if a.ValueNumber < v {
 				v = a.ValueNumber
 			}
 		case ResultTypeList, ResultTypeArray:
-			subMin := Min(a.ListValues())
+			subMin := min(a.ListValues(), isMinA)
 			if subMin.ValueNumber < v {
 				v = subMin.ValueNumber
 			}
-		case ResultTypeString:
-			// treated as zero by Excel
-			if 0 < v {
-				v = 0
-			}
 		case ResultTypeEmpty:
-		// skip
-		case ResultTypeError:
-			return a
+			// skip
+		case ResultTypeString:
+			crit := 0.0
+			if isMinA {
+				crit = a.AsNumber().ValueNumber
+			}
+			// treated as zero by Excel
+			if crit < v {
+				v = crit
+			}
 		default:
-			unioffice.Log("unhandled MIN() argument type %s", a.Type)
+			unioffice.Log("unhandled " + fName + "() argument type %s", a.Type)
 		}
 	}
 	if v == math.MaxFloat64 {
@@ -405,39 +461,14 @@ func Min(args []Result) Result {
 	return MakeNumberResult(v)
 }
 
-// Max is an implementation of the Excel MAX() function.
-func Max(args []Result) Result {
-	if len(args) == 0 {
-		return MakeErrorResult("MAX requires at least one argument")
-	}
-	v := -math.MaxFloat64
-	for _, a := range args {
-		a = a.AsNumber()
-		switch a.Type {
-		case ResultTypeNumber:
-			if a.ValueNumber > v {
-				v = a.ValueNumber
-			}
-		case ResultTypeList, ResultTypeArray:
-			subMax := Max(a.ListValues())
-			if subMax.ValueNumber > v {
-				v = subMax.ValueNumber
-			}
-		case ResultTypeEmpty:
-			// skip
-		case ResultTypeString:
-			// treated as zero by Excel
-			if 0 > v {
-				v = 0
-			}
-		default:
-			unioffice.Log("unhandled MAX() argument type %s", a.Type)
-		}
-	}
-	if v == -math.MaxFloat64 {
-		v = 0
-	}
-	return MakeNumberResult(v)
+// Min is an implementation of the Excel MIN() function.
+func Min(args []Result) Result {
+	return min(args, false)
+}
+
+// MinA is an implementation of the Excel MINA() function.
+func MinA(args []Result) Result {
+	return min(args, true)
 }
 
 func extractNumbers(args []Result) []float64 {

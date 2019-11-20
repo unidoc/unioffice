@@ -3,7 +3,7 @@
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased by contacting sales@baliance.com.
+// commercial license can be purchased on https://unidoc.io.
 
 package formula
 
@@ -13,6 +13,8 @@ import (
 	"strconv"
 	"strings"
 	"unicode"
+
+	"github.com/unidoc/unioffice/internal/wildcard"
 )
 
 func init() {
@@ -21,13 +23,14 @@ func init() {
 	RegisterFunction("CHAR", Char)
 	RegisterFunction("CLEAN", Clean)
 	RegisterFunction("CODE", Code)
-	RegisterFunction("CONCATENATE", Concatenate)
-	// RegisterFunction("CONCAT", ) Need to test with Excel
+	RegisterFunctionComplex("CONCATENATE", Concat)
+	RegisterFunctionComplex("CONCAT", Concat)
+	RegisterFunctionComplex("_xlfn.CONCAT", Concat)
 	// RegisterFunction("DBCS")
 	// RegisterFunction("DOLLAR") Need to test with Excel
 	RegisterFunction("EXACT", Exact)
-	// RegisterFunction("FIND")
-	// RegisterFunction("FINDB")
+	RegisterFunction("FIND", Find)
+	RegisterFunctionComplex("FINDB", Findb)
 	RegisterFunction("LEFT", Left)
 	RegisterFunction("LEFTB", Left) // for now
 	RegisterFunction("LEN", Len)
@@ -43,8 +46,8 @@ func init() {
 	RegisterFunction("REPT", Rept)
 	RegisterFunction("RIGHT", Right)
 	RegisterFunction("RIGHTB", Right) // for now
-	//RegisterFunction("SEARCH", )
-	//RegisterFunction("SEARCHB", )
+	RegisterFunction("SEARCH", Search)
+	RegisterFunctionComplex("SEARCHB", Searchb)
 	//RegisterFunction("SUBSTITUTE", )
 	RegisterFunction("T", T)
 	//RegisterFunction("TEXT")
@@ -126,16 +129,28 @@ func Unicode(args []Result) Result {
 	return MakeNumberResult(float64(s.ValueString[0]))
 }
 
-// Concatenate is an implementation of the Excel CONCATENATE() function.
-func Concatenate(args []Result) Result {
+// Concat is an implementation of the Excel CONCAT() and deprecated CONCATENATE() function.
+func Concat(ctx Context, ev Evaluator, args []Result) Result {
+	eval := ev.(*defEval)
 	buf := bytes.Buffer{}
-	for _, a := range args {
-		a = a.AsString()
+	for i, a := range args {
 		switch a.Type {
 		case ResultTypeString:
 			buf.WriteString(a.ValueString)
+		case ResultTypeNumber:
+			var str string
+			if eval.booleans[i] {
+				if a.ValueNumber == 0 {
+					str = "FALSE"
+				} else {
+					str = "TRUE"
+				}
+			} else {
+				str = a.AsString().ValueString
+			}
+			buf.WriteString(str)
 		default:
-			return MakeErrorResult("CONCATENATE() requires arguments to be strings")
+			return MakeErrorResult("CONCAT() requires arguments to be strings")
 		}
 	}
 	return MakeStringResult(buf.String())
@@ -152,6 +167,110 @@ func Exact(args []Result) Result {
 		return MakeErrorResult("CONCATENATE() requires two string arguments")
 	}
 	return MakeBoolResult(arg1.ValueString == arg2.ValueString)
+}
+
+type parsedSearchObject struct {
+	findText string
+	text string
+	position int
+}
+
+func parseSearchResults(fname string, args []Result) (*parsedSearchObject, Result) {
+	if len(args) != 2 && len(args) != 3 {
+		return nil, MakeErrorResult(fname + " requires two or three arguments")
+	}
+	findTextResult := args[0]
+	if findTextResult.Type != ResultTypeString {
+		return nil, MakeErrorResult("The first argument should be a string")
+	}
+	textResult := args[1]
+	if textResult.Type != ResultTypeString {
+		return nil, MakeErrorResult("The second argument should be a string")
+	}
+	text := textResult.ValueString
+	findText := findTextResult.ValueString
+	position := 1
+	if len(args) == 3 {
+		positionResult := args[2]
+		if positionResult.Type != ResultTypeNumber {
+			return nil, MakeErrorResult("Position should be a number")
+		}
+		position = int(positionResult.ValueNumber)
+		if position < 1 {
+			return nil, MakeErrorResultType(ErrorTypeValue, "Position should be a number more than 0")
+		}
+		if position > len(text) {
+			return nil, MakeErrorResultType(ErrorTypeValue, "Position should be a number more than 0")
+		}
+	}
+	return &parsedSearchObject{
+		findText,
+		text,
+		position,
+	}, MakeEmptyResult()
+}
+
+// Find is an implementation of the Excel FIND().
+func Find(args []Result) Result {
+	parsed, errResult := parseSearchResults("FIND", args)
+	if errResult.Type != ResultTypeEmpty {
+		return errResult
+	}
+	findText := parsed.findText
+	if findText == "" {
+		return MakeNumberResult(1.0)
+	}
+	text := parsed.text
+	position := parsed.position
+	stepsCounter := 1
+	for i := range text {
+		if stepsCounter < position {
+			stepsCounter++
+			continue
+		}
+		index := strings.Index(text[i:], findText)
+		if index == 0 {
+			return MakeNumberResult(float64(stepsCounter))
+		}
+		stepsCounter++
+	}
+	return MakeErrorResultType(ErrorTypeValue, "Not found")
+}
+
+// Findb is an implementation of the Excel FINDB().
+func Findb(ctx Context, ev Evaluator, args []Result) Result {
+	if !ctx.IsDBCS() {
+		return Find(args)
+	}
+	parsed, errResult := parseSearchResults("FIND", args)
+	if errResult.Type != ResultTypeEmpty {
+		return errResult
+	}
+	findText := parsed.findText
+	if findText == "" {
+		return MakeNumberResult(1.0)
+	}
+	text := parsed.text
+	position := parsed.position - 1
+	stepsCounter := 1
+	lastIndex := 0
+	for i := range text {
+		if i != 0 {
+			add := 1
+			if i - lastIndex > 1 {
+				add = 2
+			}
+			stepsCounter += add
+		}
+		if stepsCounter > position {
+			index := strings.Index(text[i:], findText)
+			if index == 0 {
+				return MakeNumberResult(float64(stepsCounter))
+			}
+		}
+		lastIndex = i
+	}
+	return MakeErrorResultType(ErrorTypeValue, "Not found")
 }
 
 // Left implements the Excel LEFT(string,[n]) function which returns the
@@ -306,6 +425,69 @@ func Right(args []Result) Result {
 		return MakeStringResult(v)
 	}
 	return MakeStringResult(v[m-n : m])
+}
+
+// Search is an implementation of the Excel SEARCH().
+func Search(args []Result) Result {
+	parsed, errResult := parseSearchResults("FIND", args)
+	if errResult.Type != ResultTypeEmpty {
+		return errResult
+	}
+	findText := strings.ToLower(parsed.findText)
+	if findText == "" {
+		return MakeNumberResult(1.0)
+	}
+	text := strings.ToLower(parsed.text)
+	position := parsed.position
+	stepsCounter := 1
+	for i := range text {
+		if stepsCounter < position {
+			stepsCounter++
+			continue
+		}
+		index := wildcard.Index(findText, text[i:])
+		if index == 0 {
+			return MakeNumberResult(float64(stepsCounter))
+		}
+		stepsCounter++
+	}
+	return MakeErrorResultType(ErrorTypeValue, "Not found")
+}
+
+// Searchb is an implementation of the Excel SEARCHB().
+func Searchb(ctx Context, ev Evaluator, args []Result) Result {
+	if !ctx.IsDBCS() {
+		return Search(args)
+	}
+	parsed, errResult := parseSearchResults("FIND", args)
+	if errResult.Type != ResultTypeEmpty {
+		return errResult
+	}
+	findText := strings.ToLower(parsed.findText)
+	text := strings.ToLower(parsed.text)
+	if findText == "" {
+		return MakeNumberResult(1.0)
+	}
+	position := parsed.position - 1
+	stepsCounter := 1
+	lastIndex := 0
+	for i := range text {
+		if i != 0 {
+			add := 1
+			if i - lastIndex > 1 {
+				add = 2
+			}
+			stepsCounter += add
+		}
+		if stepsCounter > position {
+			index := wildcard.Index(findText, text[i:])
+			if index == 0 {
+				return MakeNumberResult(float64(stepsCounter))
+			}
+		}
+		lastIndex = i
+	}
+	return MakeErrorResultType(ErrorTypeValue, "Not found")
 }
 
 // T is an implementation of the Excel T function that returns whether the

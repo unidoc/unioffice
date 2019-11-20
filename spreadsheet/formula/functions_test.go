@@ -3,14 +3,13 @@
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased by contacting sales@baliance.com.
+// commercial license can be purchased on https://unidoc.io.
 
 package formula_test
 
 import (
 	"fmt"
 	"strconv"
-	"strings"
 	"testing"
 	"time"
 
@@ -28,15 +27,10 @@ type testStruct struct {
 }
 
 func runTests(t *testing.T, ctx formula.Context, td []testStruct) {
-	ev := formula.NewEvaluator()
 	for _, tc := range td {
 		t.Run(tc.Input, func(t *testing.T) {
-			p := formula.Parse(strings.NewReader(tc.Input))
-			if p == nil {
-				t.Errorf("error parsing %s", tc.Input)
-				return
-			}
-			result := p.Eval(ctx, ev)
+			ev := formula.NewEvaluator()
+			result := ev.Eval(ctx, tc.Input)
 			got := fmt.Sprintf("%s %s", result.Value(), result.Type)
 			if got != tc.Expected {
 				t.Errorf("expected %s = %s, got %s", tc.Input, tc.Expected, got)
@@ -532,5 +526,652 @@ func TestValue(t *testing.T) {
 
 	ctx := sheet.FormulaContext()
 
+	runTests(t, ctx, td)
+}
+
+func TestMatch(t *testing.T) {
+	td := []testStruct{
+		{`MATCH("??ny",A1:A5)`, `2 ResultTypeNumber`},
+		{`MATCH("*nny",A1:A5)`, `4 ResultTypeNumber`},
+		{`=MATCH(5,B1:B5,1)`, `2 ResultTypeNumber`},
+		{`=MATCH(5,C1:C5,-1)`, `3 ResultTypeNumber`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetString("John")
+	sheet.Cell("A2").SetString("Tony")
+	sheet.Cell("A3").SetString("Tony")
+	sheet.Cell("A4").SetString("Benny")
+	sheet.Cell("A5").SetString("Willy")
+
+	sheet.Cell("B1").SetNumber(2)
+	sheet.Cell("B2").SetNumber(4)
+	sheet.Cell("B3").SetNumber(6)
+	sheet.Cell("B4").SetNumber(8)
+	sheet.Cell("B5").SetNumber(10)
+
+	sheet.Cell("C1").SetNumber(10)
+	sheet.Cell("C2").SetNumber(8)
+	sheet.Cell("C3").SetNumber(6)
+	sheet.Cell("C4").SetNumber(4)
+	sheet.Cell("C5").SetNumber(2)
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestMaxA(t *testing.T) {
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("B1").SetNumber(0.2)
+
+	sheet.Cell("A2").SetNumber(0.4)
+	sheet.Cell("B2").SetNumber(0.8)
+
+	sheet.Cell("A3").SetBool(true)
+	sheet.Cell("B3").SetBool(false)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`MAXA(A1:B3)`, `1 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestMinA(t *testing.T) {
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("B1").SetNumber(0.2)
+
+	sheet.Cell("A2").SetNumber(0.4)
+	sheet.Cell("B2").SetNumber(0.8)
+
+	sheet.Cell("A3").SetBool(true)
+	sheet.Cell("B3").SetBool(false)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`MINA(A1:B3)`, `0 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIfs(t *testing.T) {
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B1").SetNumber(1)
+	sheet.Cell("B2").SetString("a")
+	sheet.Cell("B3").SetNumber(2)
+	sheet.Cell("B4").SetString("b")
+	sheet.Cell("B5").SetNumber(3)
+	sheet.Cell("B6").SetString("c")
+	sheet.Cell("B7").SetNumber(4)
+	sheet.Cell("B8").SetString("d")
+	sheet.Cell("B9").SetNumber(5)
+	sheet.Cell("B10").SetString("e")
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=IFS(B1>3,"B1",B2="a","B2",B3>2,"B3",B4="c","B4",B5>4,"B5",B6="d","B6",B7=4,"B7",B8="d","B8",B9<=4,"B9",B10="e","B10")`, `B2 ResultTypeString`},
+		{`=IFS(B1>3,"B1",B2="b","B2",B3>2,"B3",B4="c","B4",B5>4,"B5",B6="d","B6",B7=4,"B7",B8="d","B8",B9<=4,"B9",B10="e","B10")`, `B7 ResultTypeString`},
+		{`=IFS(B1>3,"B1",B2="b","B2",B3>2,"B3",B4="c","B4",B5>4,"B5",B6="d","B6",B7=5,"B7",B8="e","B8",B9<=4,"B9",B10="f","B10")`, `#N/A ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestOffset(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B1").SetNumber(1)
+	sheet.Cell("C1").SetNumber(2)
+	sheet.Cell("D1").SetNumber(3)
+	sheet.Cell("E1").SetNumber(4)
+	sheet.Cell("B2").SetNumber(5)
+	sheet.Cell("C2").SetNumber(6)
+	sheet.Cell("D2").SetNumber(7)
+	sheet.Cell("E2").SetNumber(8)
+	sheet.Cell("B3").SetNumber(9)
+	sheet.Cell("C3").SetNumber(10)
+	sheet.Cell("D3").SetNumber(11)
+	sheet.Cell("E3").SetNumber(12)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=OFFSET(B1,1,2)`, `7 ResultTypeNumber`},
+		{`=SUM(OFFSET(E3,-1,-1,2,2))`, `38 ResultTypeNumber`},
+		{`=AVERAGE(OFFSET(B1,1,2,-2,-2))`, `4.5 ResultTypeNumber`},
+		{`=SUM(OFFSET(B1,1,2,0,0))`, `#REF! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIsBlank(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B1").SetString(" ")
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=ISBLANK(B1)`, `0 ResultTypeNumber`},
+		{`=ISBLANK(C1)`, `1 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIsErr(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(-1)
+	sheet.Cell("A2").SetNumber(2)
+	sheet.Cell("A3").SetNumber(0)
+	sheet.Cell("A4").SetString("abcde")
+
+	sheet.Cell("B1").SetFormulaRaw("1/A1")
+	sheet.Cell("B2").SetFormulaRaw("1/A2")
+	sheet.Cell("B3").SetFormulaRaw("1/A3")
+	sheet.Cell("B4").SetFormulaRaw("1/A4")
+	sheet.Cell("B5").SetFormulaRaw("MATCH(1,C1:C5)")
+
+	td := []testStruct{
+		{`=ISERR(B1)`, `0 ResultTypeNumber`},
+		{`=ISERR(B2)`, `0 ResultTypeNumber`},
+		{`=ISERR(B3)`, `1 ResultTypeNumber`},
+		{`=ISERR(B4)`, `1 ResultTypeNumber`},
+		{`=ISERR(B5)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsError(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(-1)
+	sheet.Cell("A2").SetNumber(2)
+	sheet.Cell("A3").SetNumber(0)
+	sheet.Cell("A4").SetString("abcde")
+
+	sheet.Cell("B1").SetFormulaRaw("1/A1")
+	sheet.Cell("B2").SetFormulaRaw("1/A2")
+	sheet.Cell("B3").SetFormulaRaw("1/A3")
+	sheet.Cell("B4").SetFormulaRaw("1/A4")
+	sheet.Cell("B5").SetFormulaRaw("MATCH(1,C1:C5)")
+
+	td := []testStruct{
+		{`=ISERROR(B1)`, `0 ResultTypeNumber`},
+		{`=ISERROR(B2)`, `0 ResultTypeNumber`},
+		{`=ISERROR(B3)`, `1 ResultTypeNumber`},
+		{`=ISERROR(B4)`, `1 ResultTypeNumber`},
+		{`=ISERROR(B5)`, `1 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsEven(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B1").SetNumber(0)
+	sheet.Cell("B2").SetNumber(2)
+	sheet.Cell("B3").SetNumber(123.456)
+	sheet.Cell("B4").SetNumber(2.789)
+
+	td := []testStruct{
+		{`=ISEVEN(B1)`, `1 ResultTypeNumber`},
+		{`=ISEVEN(B2)`, `1 ResultTypeNumber`},
+		{`=ISEVEN(B3)`, `0 ResultTypeNumber`},
+		{`=ISEVEN(B4)`, `1 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsFormula(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0)
+	sheet.Cell("A2").SetString("2")
+	sheet.Cell("A3").SetFormulaRaw("=A2=A1")
+
+	td := []testStruct{
+		{`=_xlfn.ISFORMULA(A1)`, `0 ResultTypeNumber`},
+		{`=_xlfn.ISFORMULA(A2)`, `0 ResultTypeNumber`},
+		{`=_xlfn.ISFORMULA(A3)`, `1 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsLeapYear(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2016, 1, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2017, 1, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetDate(time.Date(2018, 1, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A4").SetDate(time.Date(2019, 1, 1, 0, 0, 0, 0, time.UTC))
+
+	td := []testStruct{
+		{`=ORG.OPENOFFICE.ISLEAPYEAR(A1)`, `1 ResultTypeNumber`},
+		{`=ORG.OPENOFFICE.ISLEAPYEAR(A2)`, `0 ResultTypeNumber`},
+		{`=ORG.OPENOFFICE.ISLEAPYEAR(A3)`, `0 ResultTypeNumber`},
+		{`=ORG.OPENOFFICE.ISLEAPYEAR(A4)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsNonText(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B2").SetString(" ")
+	sheet.Cell("B3").SetNumber(123.456)
+	sheet.Cell("B4").SetString("123.456")
+
+	td := []testStruct{
+		{`=ISNONTEXT(B1)`, `1 ResultTypeNumber`},
+		{`=ISNONTEXT(B2)`, `0 ResultTypeNumber`},
+		{`=ISNONTEXT(B3)`, `1 ResultTypeNumber`},
+		{`=ISNONTEXT(B4)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsNumber(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B2").SetString(" ")
+	sheet.Cell("B3").SetNumber(123.456)
+	sheet.Cell("B4").SetString("123.456")
+
+	td := []testStruct{
+		{`=ISNUMBER(B1)`, `0 ResultTypeNumber`},
+		{`=ISNUMBER(B2)`, `0 ResultTypeNumber`},
+		{`=ISNUMBER(B3)`, `1 ResultTypeNumber`},
+		{`=ISNUMBER(B4)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsOdd(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B1").SetNumber(0)
+	sheet.Cell("B2").SetNumber(2)
+	sheet.Cell("B3").SetNumber(123.456)
+	sheet.Cell("B4").SetNumber(2.789)
+
+	td := []testStruct{
+		{`=ISODD(B1)`, `0 ResultTypeNumber`},
+		{`=ISODD(B2)`, `0 ResultTypeNumber`},
+		{`=ISODD(B3)`, `1 ResultTypeNumber`},
+		{`=ISODD(B4)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsText(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("B2").SetString(" ")
+	sheet.Cell("B3").SetNumber(123.456)
+	sheet.Cell("B4").SetString("123.456")
+
+	td := []testStruct{
+		{`=ISTEXT(B1)`, `0 ResultTypeNumber`},
+		{`=ISTEXT(B2)`, `1 ResultTypeNumber`},
+		{`=ISTEXT(B3)`, `0 ResultTypeNumber`},
+		{`=ISTEXT(B4)`, `1 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsLogical(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetBool(true)
+	sheet.Cell("A2").SetBool(false)
+	sheet.Cell("A3").SetNumber(0)
+	sheet.Cell("A4").SetString("FALSE")
+
+	td := []testStruct{
+		{`=ISLOGICAL(A1)`, `1 ResultTypeNumber`},
+		{`=ISLOGICAL(A2)`, `1 ResultTypeNumber`},
+		{`=ISLOGICAL(A3)`, `0 ResultTypeNumber`},
+		{`=ISLOGICAL(A4)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsNA(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetFormulaRaw("MATCH(1,B1:B5)")
+	sheet.Cell("A2").SetString("#N/A")
+	sheet.Cell("A3").SetNumber(0)
+
+	td := []testStruct{
+		{`=ISNA(A1)`, `1 ResultTypeNumber`},
+		{`=ISNA(A2)`, `0 ResultTypeNumber`},
+		{`=ISNA(A3)`, `0 ResultTypeNumber`},
+		{`=ISNA(A4)`, `0 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestIsRef(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetFormulaRaw("=ISREF(B1)")
+	sheet.Cell("A2").SetFormulaRaw("=ISREF(B1:Z999)")
+	sheet.Cell("A3").SetFormulaRaw("=ISREF(A1048577)")
+	sheet.Cell("A4").SetFormulaRaw("=ISREF(ZZA0)")
+	sheet.Cell("A5").SetFormulaRaw("=ISREF(ZZ0)")
+	sheet.Cell("A6").SetString("A1")
+
+	td := []testStruct{
+		{`A1`, `1 ResultTypeNumber`},
+		{`A2`, `1 ResultTypeNumber`},
+		{`A3`, `0 ResultTypeNumber`},
+		{`A4`, `0 ResultTypeNumber`},
+		{`A5`, `1 ResultTypeNumber`},
+		{`A6`, `A1 ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestFind(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetString("abcde")
+	sheet.Cell("B1").SetString("b")
+	sheet.Cell("B2").SetString("c")
+
+	sheet.Cell("C1").SetString("\u4f60\u597d\uff0c\u4e16\u754c")
+	sheet.Cell("D1").SetString("\u4f60")
+	sheet.Cell("D2").SetString("\u4e16\u754c")
+
+	td := []testStruct{
+		{`FIND("",A1)`, `1 ResultTypeNumber`},
+		{`FIND(B1,A1)`, `2 ResultTypeNumber`},
+		{`FIND(B2,A1,3)`, `3 ResultTypeNumber`},
+		{`FIND(B2,A1,4)`, `#VALUE! ResultTypeError`},
+		{`FIND(D1,C1)`, `1 ResultTypeNumber`},
+		{`FIND(D2,C1,3)`, `4 ResultTypeNumber`},
+		{`FIND(D2,C1,5)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestFindb(t *testing.T) {
+	ss := spreadsheet.New()
+	ss.CoreProperties.SetLanguage("zh-TW") // set DBCS language
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetString("abcde")
+	sheet.Cell("B1").SetString("b")
+	sheet.Cell("B2").SetString("c")
+
+	sheet.Cell("C1").SetString("\u4f60\u597d\uff0c\u4e16\u754c")
+	sheet.Cell("D1").SetString("\u4f60")
+	sheet.Cell("D2").SetString("\u4e16\u754c")
+
+	td := []testStruct{
+		{`FINDB("",A1)`, `1 ResultTypeNumber`},
+		{`FINDB(B1,A1)`, `2 ResultTypeNumber`},
+		{`FINDB(B2,A1,3)`, `3 ResultTypeNumber`},
+		{`FINDB(B2,A1,4)`, `#VALUE! ResultTypeError`},
+		{`FINDB(D1,C1)`, `1 ResultTypeNumber`},
+		{`FINDB(D2,C1,3)`, `7 ResultTypeNumber`},
+		{`FINDB(D2,C1,8)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestSearch(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetString("ABCDE")
+	sheet.Cell("B1").SetString("b")
+	sheet.Cell("B2").SetString("*c")
+	sheet.Cell("B3").SetString("??d")
+
+	sheet.Cell("C1").SetString("\u4f60\u597d\uff0c\u4e16\u754c")
+	sheet.Cell("D1").SetString("*\u4f60")
+	sheet.Cell("D2").SetString("??\u4e16\u754c")
+
+	td := []testStruct{
+		{`SEARCH("",A1)`, `1 ResultTypeNumber`},
+		{`SEARCH(B1,A1)`, `2 ResultTypeNumber`},
+		{`SEARCH(B2,A1,3)`, `3 ResultTypeNumber`},
+		{`SEARCH(B2,A1,4)`, `#VALUE! ResultTypeError`},
+		{`SEARCH(B3,A1,2)`, `2 ResultTypeNumber`},
+		{`SEARCH(D1,C1)`, `1 ResultTypeNumber`},
+		{`SEARCH(D2,C1,2)`, `2 ResultTypeNumber`},
+		{`SEARCH(D2,C1,5)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestSearchb(t *testing.T) {
+	ss := spreadsheet.New()
+	ss.CoreProperties.SetLanguage("zh-TW") // set DBCS language
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetString("ABCDE")
+	sheet.Cell("B1").SetString("b")
+	sheet.Cell("B2").SetString("*c")
+	sheet.Cell("B3").SetString("??d")
+
+	sheet.Cell("C1").SetString("\u4f60\u597d\uff0c\u4e16\u754c")
+	sheet.Cell("D1").SetString("*\u4f60")
+	sheet.Cell("D2").SetString("??\u4e16\u754c")
+
+	td := []testStruct{
+		{`SEARCHB("",A1)`, `1 ResultTypeNumber`},
+		{`SEARCHB(B1,A1)`, `2 ResultTypeNumber`},
+		{`SEARCHB(B2,A1,3)`, `3 ResultTypeNumber`},
+		{`SEARCHB(B2,A1,4)`, `#VALUE! ResultTypeError`},
+		{`SEARCHB(D1,C1)`, `1 ResultTypeNumber`},
+		{`SEARCHB(D2,C1,3)`, `3 ResultTypeNumber`},
+		{`SEARCHB(D2,C1,8)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestConcat(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetBool(true)
+	sheet.Cell("A2").SetBool(false)
+
+	td := []testStruct{
+		{`CONCAT("Hello"," ","world")`, `Hello world ResultTypeString`},
+		{`CONCAT("Hello"," my ","world")`, `Hello my world ResultTypeString`},
+		{`CONCAT("1","one")`, `1one ResultTypeString`},
+		{`CONCAT(A1,"yes")`, `TRUEyes ResultTypeString`},
+		{`CONCAT(A2,"no")`, `FALSEno ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestYear(t *testing.T) {
+	td := []testStruct{
+		{`=YEAR(A1)`, `2019 ResultTypeNumber`},
+		{`=YEAR(A2)`, `#VALUE! ResultTypeError`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(2019, time.November, 4, 16, 0, 0, 0, time.UTC))
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestYearFrac(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(1900, time.January, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetTime(time.Date(1900, time.January, 2, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetTime(time.Date(1900, time.January, 31, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A4").SetTime(time.Date(1900, time.March, 31, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A5").SetTime(time.Date(1900, time.February, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A6").SetTime(time.Date(1904, time.January, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A7").SetTime(time.Date(1904, time.January, 2, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A8").SetTime(time.Date(1905, time.January, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A9").SetString("Hello")
+	sheet.Cell("A10").SetString("World")
+
+	td := []testStruct{
+		{`=YEARFRAC(A1,A2)`, `0.00277777777 ResultTypeNumber`},
+		{`=YEARFRAC(A3,A4)`, `0.16666666666 ResultTypeNumber`},
+		{`=YEARFRAC(A3,A5)`, `0.00277777777 ResultTypeNumber`},
+		{`=YEARFRAC(A1,A2,1)`, `0.00273972602 ResultTypeNumber`},
+		{`=YEARFRAC(A6,A7,1)`, `0.00273224043 ResultTypeNumber`},
+		{`=YEARFRAC(A6,A8,1)`, `1 ResultTypeNumber`},
+		{`=YEARFRAC(A1,A2,2)`, `0.00277777777 ResultTypeNumber`},
+		{`=YEARFRAC(A1,A2,3)`, `0.00273972602 ResultTypeNumber`},
+		{`=YEARFRAC(A1,A2,4)`, `0.00277777777 ResultTypeNumber`},
+		{`=YEARFRAC(A9,A2)`, `#VALUE! ResultTypeError`},
+		{`=YEARFRAC(A1,A10)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestTime(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=TIME(6,0,0)`, `0.25 ResultTypeNumber`},
+		{`=TIME(12,0,0)`, `0.5 ResultTypeNumber`},
+		{`=TIME(2,24,0)`, `0.1 ResultTypeNumber`},
+		{`=TIME(7,-60,0)`, `0.25 ResultTypeNumber`},
+		{`=TIME(1,-120,0)`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestTimeValue(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=TIMEVALUE("1/1/1900 00:00:00")`, `0 ResultTypeNumber`},
+		{`=TIMEVALUE("1/1/1900 12:00:00")`, `0.5 ResultTypeNumber`},
+		{`=TIMEVALUE("a")`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestDate(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=DATE(1899,1,1)`, `693598 ResultTypeNumber`},
+		{`=DATE(10000,1,1)`, `#NUM! ResultTypeError`},
+		{`=DATE(2020,3,31)`, `43921 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestDateDif(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(2019, time.February, 7, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetTime(time.Date(2021, time.April, 6, 0, 0, 0, 0, time.UTC))
+
+	td := []testStruct{
+		{`=DATEDIF(A1,A2,"y")`, `2 ResultTypeNumber`},
+		{`=DATEDIF(A1,A2,"m")`, `25 ResultTypeNumber`},
+		{`=DATEDIF(A1,A2,"d")`, `789 ResultTypeNumber`},
+		{`=DATEDIF(A1,A2,"ym")`, `1 ResultTypeNumber`},
+		{`=DATEDIF(A1,A2,"yd")`, `58 ResultTypeNumber`},
+		{`=DATEDIF(A1,A2,"md")`, `30 ResultTypeNumber`},
+		{`=DATEDIF(A2,A1,"y")`, `#NUM! ResultTypeError`},
+		{`=DATEDIF(A1,A2,"yy")`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
