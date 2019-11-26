@@ -98,7 +98,16 @@ func (r Row) AddCell() Cell {
 // to the slice will have no effect.
 func (r Row) Cells() []Cell {
 	ret := []Cell{}
+	lastIndex := -1
 	for _, c := range r.x.C {
+		ref, _ := reference.ParseCellReference(*c.RAttr)
+		currentIndex := int(ref.ColumnIdx)
+		if currentIndex - lastIndex > 1 {
+			for col := lastIndex + 1; col < currentIndex;  col++ {
+				ret = append(ret, r.AddNamedCell(reference.IndexToColumn(uint32(col))))
+			}
+		}
+		lastIndex = currentIndex
 		ret = append(ret, Cell{r.w, r.s, r.x, c})
 	}
 	return ret

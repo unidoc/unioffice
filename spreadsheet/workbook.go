@@ -263,7 +263,9 @@ func (wb *Workbook) Save(w io.Writer) error {
 		fmt.Println("Unlicensed version of UniOffice")
 		fmt.Println("- Get a license on https://unidoc.io")
 		for _, sheet := range wb.Sheets() {
-			a1 := sheet.Cell("A1")
+			row1 := sheet.Row(1)
+			row1.SetHeight(50)
+			a1 := row1.Cell("A")
 
 			rt := a1.SetRichTextString()
 			run := rt.AddRun()
