@@ -23,9 +23,9 @@ func init() {
 	RegisterFunction("CHAR", Char)
 	RegisterFunction("CLEAN", Clean)
 	RegisterFunction("CODE", Code)
-	RegisterFunctionComplex("CONCATENATE", Concat)
-	RegisterFunctionComplex("CONCAT", Concat)
-	RegisterFunctionComplex("_xlfn.CONCAT", Concat)
+	RegisterFunction("CONCATENATE", Concat)
+	RegisterFunction("CONCAT", Concat)
+	RegisterFunction("_xlfn.CONCAT", Concat)
 	// RegisterFunction("DBCS")
 	// RegisterFunction("DOLLAR") Need to test with Excel
 	RegisterFunction("EXACT", Exact)
@@ -130,16 +130,15 @@ func Unicode(args []Result) Result {
 }
 
 // Concat is an implementation of the Excel CONCAT() and deprecated CONCATENATE() function.
-func Concat(ctx Context, ev Evaluator, args []Result) Result {
-	eval := ev.(*defEval)
+func Concat(args []Result) Result {
 	buf := bytes.Buffer{}
-	for i, a := range args {
+	for _, a := range args {
 		switch a.Type {
 		case ResultTypeString:
 			buf.WriteString(a.ValueString)
 		case ResultTypeNumber:
 			var str string
-			if eval.booleans[i] {
+			if a.IsBoolean {
 				if a.ValueNumber == 0 {
 					str = "FALSE"
 				} else {

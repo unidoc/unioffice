@@ -55,8 +55,10 @@ func sumCount(args []Result, countText bool) (float64, float64) {
 	for _, arg := range args {
 		switch arg.Type {
 		case ResultTypeNumber:
-			sum += arg.ValueNumber
-			cnt++
+			if countText || !arg.IsBoolean {
+				sum += arg.ValueNumber
+				cnt++
+			}
 		case ResultTypeList, ResultTypeArray:
 			s, c := sumCount(arg.ListValues(), countText)
 			sum += s
@@ -107,7 +109,7 @@ func count(args []Result, m countMode) float64 {
 	for _, arg := range args {
 		switch arg.Type {
 		case ResultTypeNumber:
-			if m != countEmpty {
+			if m == countText || (m == countNormal && !arg.IsBoolean) {
 				cnt++
 			}
 		case ResultTypeList, ResultTypeArray:
@@ -381,7 +383,7 @@ func max(args []Result, isMaxA bool) Result {
 	for _, a := range args {
 		switch a.Type {
 		case ResultTypeNumber:
-			if a.ValueNumber > v {
+			if (isMaxA || !a.IsBoolean) && a.ValueNumber > v {
 				v = a.ValueNumber
 			}
 		case ResultTypeList, ResultTypeArray:
@@ -432,7 +434,7 @@ func min(args []Result, isMinA bool) Result {
 	for _, a := range args {
 		switch a.Type {
 		case ResultTypeNumber:
-			if a.ValueNumber < v {
+			if (isMinA || !a.IsBoolean) && a.ValueNumber < v {
 				v = a.ValueNumber
 			}
 		case ResultTypeList, ResultTypeArray:
@@ -480,7 +482,9 @@ func extractNumbers(args []Result) []float64 {
 		a = a.AsNumber()
 		switch a.Type {
 		case ResultTypeNumber:
-			values = append(values, a.ValueNumber)
+			if !a.IsBoolean {
+				values = append(values, a.ValueNumber)
+			}
 		case ResultTypeList, ResultTypeArray:
 			values = append(values, extractNumbers(a.ListValues())...)
 		case ResultTypeString:
@@ -510,6 +514,9 @@ func Median(args []Result) Result {
 }
 
 func compare(value Result, criteria *criteriaParsed) bool {
+	if value.IsBoolean {
+		return false
+	}
 	t := value.Type
 	if criteria.isNumber {
 		return t == ResultTypeNumber && value.ValueNumber == criteria.cNum

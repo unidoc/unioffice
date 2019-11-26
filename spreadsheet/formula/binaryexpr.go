@@ -63,6 +63,10 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 			return listOp(b.op, lhs.ValueList, rhs.ValueList)
 		}
 
+	} else if lhs.Type == ResultTypeArray && (rhs.Type == ResultTypeNumber || rhs.Type == ResultTypeString) {
+		return arrayValueOp(b.op, lhs.ValueArray, rhs)
+	} else if lhs.Type == ResultTypeList && (rhs.Type == ResultTypeNumber || rhs.Type == ResultTypeString) {
+		return listValueOp(b.op, lhs.ValueList, rhs)
 	}
 
 	// TODO: check for and add support for binary operators on boolean values
@@ -232,6 +236,94 @@ func listOp(op BinOpType, lhs, rhs []Result) Result {
 		default:
 			return MakeErrorResult(fmt.Sprintf("unsupported list binary op %s", op))
 		}
+	}
+	return MakeListResult(res)
+}
+
+func arrayValueOp(op BinOpType, lhs [][]Result, rhs Result) Result {
+	// compare every item of array with a value
+	res := [][]Result{}
+	for i := range lhs {
+		lst := listValueOp(op, lhs[i], rhs)
+		if lst.Type == ResultTypeError {
+			return lst
+		}
+		res = append(res, lst.ValueList)
+	}
+	return MakeArrayResult(res)
+}
+
+func listValueOp(op BinOpType, lhs []Result, rhs Result) Result {
+	res := []Result{}
+	// we can assume the arrays are the same size here
+	switch rhs.Type {
+	case ResultTypeNumber:
+		rv := rhs.ValueNumber
+		for i := range lhs {
+			l := lhs[i].AsNumber()
+			if l.Type != ResultTypeNumber {
+				return MakeErrorResult("non-nunmeric value in binary operation")
+			}
+			switch op {
+			case BinOpTypePlus:
+				res = append(res, MakeNumberResult(l.ValueNumber+rv))
+			case BinOpTypeMinus:
+				res = append(res, MakeNumberResult(l.ValueNumber-rv))
+			case BinOpTypeMult:
+				res = append(res, MakeNumberResult(l.ValueNumber*rv))
+			case BinOpTypeDiv:
+				if rv == 0 {
+					return MakeErrorResultType(ErrorTypeDivideByZero, "")
+				}
+				res = append(res, MakeNumberResult(l.ValueNumber/rv))
+			case BinOpTypeExp:
+				res = append(res, MakeNumberResult(math.Pow(l.ValueNumber, rv)))
+			case BinOpTypeLT:
+				res = append(res, MakeBoolResult(l.ValueNumber < rv))
+			case BinOpTypeGT:
+				res = append(res, MakeBoolResult(l.ValueNumber > rv))
+			case BinOpTypeEQ:
+				res = append(res, MakeBoolResult(l.ValueNumber == rv))
+			case BinOpTypeLEQ:
+				res = append(res, MakeBoolResult(l.ValueNumber <= rv))
+			case BinOpTypeGEQ:
+				res = append(res, MakeBoolResult(l.ValueNumber >= rv))
+			case BinOpTypeNE:
+				res = append(res, MakeBoolResult(l.ValueNumber != rv))
+			// TODO: support concat here
+			// case BinOpTypeConcat:
+			default:
+				return MakeErrorResult(fmt.Sprintf("unsupported list binary op %s", op))
+			}
+		}
+	case ResultTypeString:
+		rv := rhs.ValueString
+		for i := range lhs {
+			l := lhs[i].AsString()
+			if l.Type != ResultTypeString {
+				return MakeErrorResult("non-nunmeric value in binary operation")
+			}
+			switch op {
+			case BinOpTypeLT:
+				res = append(res, MakeBoolResult(l.ValueString < rv))
+			case BinOpTypeGT:
+				res = append(res, MakeBoolResult(l.ValueString > rv))
+			case BinOpTypeEQ:
+				res = append(res, MakeBoolResult(l.ValueString == rv))
+			case BinOpTypeLEQ:
+				res = append(res, MakeBoolResult(l.ValueString <= rv))
+			case BinOpTypeGEQ:
+				res = append(res, MakeBoolResult(l.ValueString >= rv))
+			case BinOpTypeNE:
+				res = append(res, MakeBoolResult(l.ValueString != rv))
+			// TODO: support concat here
+			// case BinOpTypeConcat:
+			default:
+				return MakeErrorResult(fmt.Sprintf("unsupported list binary op %s", op))
+			}
+		}
+	default:
+		return MakeErrorResult("non-nunmeric and non-string value in binary operation")
 	}
 	return MakeListResult(res)
 }

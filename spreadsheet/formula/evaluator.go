@@ -27,7 +27,6 @@ func NewEvaluator() Evaluator {
 
 type defEval struct {
 	isRef bool
-	booleans []bool
 }
 
 func (d *defEval) Eval(ctx Context, formula string) Result {
@@ -61,15 +60,6 @@ func (d *defEval) addInfo(ctx Context, expr Expression) {
 						d.isRef = validateRef(arg.(Range).to.(CellRef))
 						return
 					}
-				}
-			}
-		case "CONCAT", "_xlfn.CONCAT", "CONCATENATE":
-			d.booleans = []bool{}
-			for _, arg := range expr.(FunctionCall).args {
-				switch arg.(type) {
-					case CellRef:
-						cr := arg.(CellRef).s
-						d.booleans = append(d.booleans, ctx.IsBool(cr))
 				}
 			}
 		}
