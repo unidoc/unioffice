@@ -22,6 +22,7 @@ func init() {
 	RegisterFunction("DAY", Day)
 	RegisterFunction("DAYS", Days)
 	RegisterFunction("_xlfn.DAYS", Days)
+	RegisterFunction("MONTH", Month)
 	RegisterFunction("NOW", Now)
 	RegisterFunction("TIME", Time)
 	RegisterFunction("TIMEVALUE", TimeValue)
@@ -421,6 +422,40 @@ func modifyYear(year int) int {
 		}
 	}
 	return year
+}
+
+// Month is an implementation of the Excel MONTH() function.
+func Month(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("MONTH requires one argument")
+	}
+	dateArg := args[0]
+	switch dateArg.Type {
+	case ResultTypeEmpty:
+		return MakeNumberResult(1)
+	case ResultTypeNumber:
+		date := dateFromDays(dateArg.ValueNumber)
+		return MakeNumberResult(float64(date.Month()))
+	case ResultTypeString:
+		dateString := strings.ToLower(dateArg.ValueString)
+		if !checkDateOnly(dateString) { // If time also presents in string, we should validate it first as Excel does
+			_, _, _, _, dateIsEmpty, errResult := timeValue(dateString)
+			if errResult.Type == ResultTypeError {
+				errResult.ErrorMessage = "Incorrect arguments for MONTH"
+				return errResult
+			}
+			if dateIsEmpty {
+				return MakeNumberResult(0)
+			}
+		}
+		_, month, _, _, errResult := dateValue(dateString)
+		if errResult.Type == ResultTypeError {
+			return errResult
+		}
+		return MakeNumberResult(float64(month))
+	default:
+		return MakeErrorResult("Incorrect argument for DAY")
+	}
 }
 
 // Now is an implementation of the Excel NOW() function.
