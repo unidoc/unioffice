@@ -1230,6 +1230,21 @@ func TestDateDif(t *testing.T) {
 	runTests(t, ctx, td)
 }
 
+func TestMinute(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=MINUTE("02-29-2019 14:18:16")`, `#VALUE! ResultTypeError`},
+		{`=MINUTE("02-29-2020 14:18:16")`, `18 ResultTypeNumber`},
+		{`=MINUTE("01/03/2019 12:14")`, `14 ResultTypeNumber`},
+		{`=MINUTE("January 25, 2020 01:03 AM")`, `3 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
 func TestMonth(t *testing.T) {
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()

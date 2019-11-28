@@ -22,6 +22,7 @@ func init() {
 	RegisterFunction("DAY", Day)
 	RegisterFunction("DAYS", Days)
 	RegisterFunction("_xlfn.DAYS", Days)
+	RegisterFunction("MINUTE", Minute)
 	RegisterFunction("MONTH", Month)
 	RegisterFunction("NOW", Now)
 	RegisterFunction("TIME", Time)
@@ -424,6 +425,40 @@ func modifyYear(year int) int {
 	return year
 }
 
+// Minute is an implementation of the Excel MINUTE() function.
+func Minute(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("MINUTE requires one argument")
+	}
+	timeArg := args[0]
+	switch timeArg.Type {
+	case ResultTypeEmpty:
+		return MakeNumberResult(0)
+	case ResultTypeNumber:
+		date := dateFromDays(timeArg.ValueNumber)
+		return MakeNumberResult(float64(date.Minute()))
+	case ResultTypeString:
+		timeString := strings.ToLower(timeArg.ValueString)
+		if !checkTimeOnly(timeString) { // If date also presents in string, we should validate it first as Excel does
+			_, _, _, timeIsEmpty, errResult := dateValue(timeString)
+			if errResult.Type == ResultTypeError {
+				errResult.ErrorMessage = "Incorrect arguments for MINUTE"
+				return errResult
+			}
+			if timeIsEmpty {
+				return MakeNumberResult(0)
+			}
+		}
+		_, minute, _, _, _, errResult := timeValue(timeString)
+		if errResult.Type == ResultTypeError {
+			return errResult
+		}
+		return MakeNumberResult(float64(minute))
+	default:
+		return MakeErrorResult("Incorrect argument for MINUTE")
+	}
+}
+
 // Month is an implementation of the Excel MONTH() function.
 func Month(args []Result) Result {
 	if len(args) != 1 {
@@ -454,7 +489,7 @@ func Month(args []Result) Result {
 		}
 		return MakeNumberResult(float64(month))
 	default:
-		return MakeErrorResult("Incorrect argument for DAY")
+		return MakeErrorResult("Incorrect argument for MONTH")
 	}
 }
 
