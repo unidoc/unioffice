@@ -1133,6 +1133,8 @@ func TestTimeValue(t *testing.T) {
 	td := []testStruct{
 		{`=TIMEVALUE("1/1/1900 00:00:00")`, `0 ResultTypeNumber`},
 		{`=TIMEVALUE("1/1/1900 12:00:00")`, `0.5 ResultTypeNumber`},
+		{`=TIMEVALUE("1/1/1900")`, `0 ResultTypeNumber`},
+		{`=TIMEVALUE("02:12:18 PM")`, `0.591875 ResultTypeNumber`},
 		{`=TIMEVALUE("a")`, `#VALUE! ResultTypeError`},
 	}
 
@@ -1148,6 +1150,23 @@ func TestDate(t *testing.T) {
 		{`=DATE(1899,1,1)`, `693598 ResultTypeNumber`},
 		{`=DATE(10000,1,1)`, `#NUM! ResultTypeError`},
 		{`=DATE(2020,3,31)`, `43921 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestDateValue(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=DATEVALUE("1/1/1900 00:00:00")`, `1 ResultTypeNumber`},
+		{`=DATEVALUE("1/1/1900 7:00 AM")`, `1 ResultTypeNumber`},
+		{`=DATEVALUE("1/1/1900")`, `1 ResultTypeNumber`},
+		{`=DATEVALUE("11/27/2019")`, `43796 ResultTypeNumber`},
+		{`=DATEVALUE("02:12:18 PM")`, `0 ResultTypeNumber`},
+		{`=DATEVALUE("a")`, `#VALUE! ResultTypeError`},
 	}
 
 	ctx := sheet.FormulaContext()
