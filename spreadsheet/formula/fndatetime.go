@@ -19,6 +19,9 @@ func init() {
 	RegisterFunction("DATE", Date)
 	RegisterFunction("DATEDIF", DateDif)
 	RegisterFunction("DATEVALUE", DateValue)
+	RegisterFunction("DAY", Day)
+	RegisterFunction("DAYS", Days)
+	RegisterFunction("_xlfn.DAYS", Days)
 	RegisterFunction("NOW", Now)
 	RegisterFunction("TIME", Time)
 	RegisterFunction("TIMEVALUE", TimeValue)
@@ -68,7 +71,8 @@ const monthRe = `((jan|january)|(feb|february)|(mar|march)|(apr|april)|(may)|(ju
 const df1 = `(([0-9])+)/(([0-9])+)/(([0-9])+)`
 const df2 = monthRe + ` (([0-9])+), (([0-9])+)`
 const df3 = `(([0-9])+)-(([0-9])+)-(([0-9])+)`
-const datePrefix = `^((` + df1 + `|` + df2 + `|` + df3 + `) )?`
+const df4 = `(([0-9])+)-` + monthRe + `-(([0-9])+)`
+const datePrefix = `^((` + df1 + `|` + df2 + `|` + df3 + `|` + df4 + `) )?`
 
 const tfhh = `(([0-9])+) (am|pm)`
 const tfhhmm = `(([0-9])+):(([0-9])+)( (am|pm))?`
@@ -80,6 +84,7 @@ func initRegexpTime() {
 	dateFormats["mm/dd/yy"] = regexp.MustCompile(`^` + df1 + timeSuffix)
 	dateFormats["mm dd, yy"] = regexp.MustCompile(`^` + df2 + timeSuffix)
 	dateFormats["yy-mm-dd"] = regexp.MustCompile(`^` + df3 + timeSuffix)
+	dateFormats["yy-mmStr-dd"] = regexp.MustCompile(`^` + df4 + timeSuffix)
 	timeFormats["hh"] = regexp.MustCompile(datePrefix + tfhh + `$`)
 	timeFormats["hh:mm"] = regexp.MustCompile(datePrefix + tfhhmm + `$`)
 	timeFormats["mm:ss"] = regexp.MustCompile(datePrefix + tfmmss + `$`)
@@ -88,6 +93,7 @@ func initRegexpTime() {
 		regexp.MustCompile(`^` + df1 + `$`),
 		regexp.MustCompile(`^` + df2 + `$`),
 		regexp.MustCompile(`^` + df3 + `$`),
+		regexp.MustCompile(`^` + df4 + `$`),
 	}
 	timeOnlyFormats = []*regexp.Regexp{
 		regexp.MustCompile(`^` + tfhh + `$`),
@@ -95,6 +101,71 @@ func initRegexpTime() {
 		regexp.MustCompile(`^` + tfmmss + `$`),
 		regexp.MustCompile(`^` + tfhhmmss + `$`),
 	}
+}
+
+// Day is an implementation of the Excel DAY() function.
+func Day(args []Result) Result {
+	if len(args) != 1 {
+		return MakeErrorResult("DAY requires one argument")
+	}
+	dateArg := args[0]
+	switch dateArg.Type {
+	case ResultTypeEmpty:
+		return MakeNumberResult(0)
+	case ResultTypeNumber:
+		date := dateFromDays(dateArg.ValueNumber)
+		return MakeNumberResult(float64(date.Day()))
+	case ResultTypeString:
+		dateString := strings.ToLower(dateArg.ValueString)
+		if !checkDateOnly(dateString) { // If time also presents in string, we should validate it first as Excel does
+			_, _, _, _, dateIsEmpty, errResult := timeValue(dateString)
+			if errResult.Type == ResultTypeError {
+				errResult.ErrorMessage = "Incorrect arguments for DAY"
+				return errResult
+			}
+			if dateIsEmpty {
+				return MakeNumberResult(0)
+			}
+		}
+		_, _, day, _, errResult := dateValue(dateString)
+		if errResult.Type == ResultTypeError {
+			return errResult
+		}
+		return MakeNumberResult(float64(day))
+	default:
+		return MakeErrorResult("Incorrect argument for DAY")
+	}
+}
+
+// Days is an implementation of the Excel DAYS() function.
+func Days(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("DAYS requires two arguments")
+	}
+	var sd, ed float64
+	if args[0].Type == ResultTypeNumber {
+		ed = args[0].ValueNumber
+	} else {
+		edResult := DateValue([]Result{args[0]})
+		if edResult.Type == ResultTypeError {
+			return MakeErrorResult("Incorrect end date for DAYS")
+		}
+		ed = edResult.ValueNumber
+	}
+	if args[1].Type == ResultTypeNumber {
+		sd = args[1].ValueNumber
+		if sd < 62 && ed >= 62 {
+			sd--
+		}
+	} else {
+		sdResult := DateValue([]Result{args[1]})
+		if sdResult.Type == ResultTypeError {
+			return MakeErrorResult("Incorrect start date for DAYS")
+		}
+		sd = sdResult.ValueNumber
+	}
+	days := float64(int(ed - sd))
+	return MakeNumberResult(days)
 }
 
 // Date is an implementation of the Excel DATE() function.
@@ -251,31 +322,6 @@ func dateValue(dateString string) (int, int, int, bool, Result) {
 	var err error
 
 	switch pattern {
-	case "yy-mm-dd":
-		v1, err := strconv.Atoi(submatch[1])
-		if err != nil {
-			return 0, 0, 0, false, MakeErrorResultType(ErrorTypeValue, dvErrMsg)
-		}
-		v2, err := strconv.Atoi(submatch[3])
-		if err != nil {
-			return 0, 0, 0, false, MakeErrorResultType(ErrorTypeValue, dvErrMsg)
-		}
-		v3, err := strconv.Atoi(submatch[5])
-		if err != nil {
-			return 0, 0, 0, false, MakeErrorResultType(ErrorTypeValue, dvErrMsg)
-		}
-		if v1 >= 1900 && v1 < 10000 {
-			year = v1
-			month = v2
-			day = v3
-		} else if v1 > 0 && v1 < 13 {
-			month = v1
-			day = v2
-			year = v3
-		} else {
-			return 0, 0, 0, false, MakeErrorResultType(ErrorTypeValue, dvErrMsg)
-		}
-		timeIsEmpty = submatch[8] == ""
 	case "mm/dd/yy":
 		month, err = strconv.Atoi(submatch[1])
 		if err != nil {
@@ -308,6 +354,42 @@ func dateValue(dateString string) (int, int, int, bool, Result) {
 			return 0, 0, 0, false, MakeErrorResultType(ErrorTypeValue, dvErrMsg)
 		}
 		year = modifyYear(year)
+		timeIsEmpty = submatch[19] == ""
+	case "yy-mm-dd":
+		v1, err := strconv.Atoi(submatch[1])
+		if err != nil {
+			return 0, 0, 0, false, MakeErrorResultType(ErrorTypeValue, dvErrMsg)
+		}
+		v2, err := strconv.Atoi(submatch[3])
+		if err != nil {
+			return 0, 0, 0, false, MakeErrorResultType(ErrorTypeValue, dvErrMsg)
+		}
+		v3, err := strconv.Atoi(submatch[5])
+		if err != nil {
+			return 0, 0, 0, false, MakeErrorResultType(ErrorTypeValue, dvErrMsg)
+		}
+		if v1 >= 1900 && v1 < 10000 {
+			year = v1
+			month = v2
+			day = v3
+		} else if v1 > 0 && v1 < 13 {
+			month = v1
+			day = v2
+			year = v3
+		} else {
+			return 0, 0, 0, false, MakeErrorResultType(ErrorTypeValue, dvErrMsg)
+		}
+		timeIsEmpty = submatch[8] == ""
+	case "yy-mmStr-dd":
+		year, err = strconv.Atoi(submatch[16])
+		if err != nil {
+			return 0, 0, 0, false, MakeErrorResultType(ErrorTypeValue, dvErrMsg)
+		}
+		month = month2num[submatch[3]]
+		day, err = strconv.Atoi(submatch[1])
+		if err != nil {
+			return 0, 0, 0, false, MakeErrorResultType(ErrorTypeValue, dvErrMsg)
+		}
 		timeIsEmpty = submatch[19] == ""
 	}
 	if !validateDate(year, month, day) {
@@ -438,7 +520,7 @@ func timeValue(timeString string) (int, int, float64, bool, bool, Result) {
 		return 0, 0, 0, false, false, MakeErrorResultType(ErrorTypeValue, tvErrMsg)
 	}
 	dateIsEmpty := submatch[1] == ""
-	submatch = submatch[32:] // cut off date
+	submatch = submatch[49:] // cut off date
 
 	l := len(submatch)
 	last := submatch[l-1]

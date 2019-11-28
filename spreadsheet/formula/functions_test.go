@@ -1142,6 +1142,40 @@ func TestTimeValue(t *testing.T) {
 	runTests(t, ctx, td)
 }
 
+func TestDay(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=DAY("02-29-2019")`, `#VALUE! ResultTypeError`},
+		{`=DAY("02-29-2020")`, `29 ResultTypeNumber`},
+		{`=DAY("01/03/2019 12:14:16")`, `3 ResultTypeNumber`},
+		{`=DAY("January 25, 2020 01:03 AM")`, `25 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestDays(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(2021, time.February, 28, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetTime(time.Date(1900, time.January, 25, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetString("02/28/2021")
+	sheet.Cell("A4").SetString("01/25/1900")
+
+	td := []testStruct{
+		{`=DAYS(A1,A2)`, `44230 ResultTypeNumber`},
+		{`=DAYS(A3,A4)`, `44230 ResultTypeNumber`},
+		{`=DAYS(A3,"02/29/1900")`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
 func TestDate(t *testing.T) {
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
@@ -1165,6 +1199,7 @@ func TestDateValue(t *testing.T) {
 		{`=DATEVALUE("1/1/1900 7:00 AM")`, `1 ResultTypeNumber`},
 		{`=DATEVALUE("1/1/1900")`, `1 ResultTypeNumber`},
 		{`=DATEVALUE("11/27/2019")`, `43796 ResultTypeNumber`},
+		{`=DATEVALUE("25-Jan-2019")`, `43490 ResultTypeNumber`},
 		{`=DATEVALUE("02:12:18 PM")`, `0 ResultTypeNumber`},
 		{`=DATEVALUE("a")`, `#VALUE! ResultTypeError`},
 	}

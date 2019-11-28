@@ -100,7 +100,15 @@ func (r Row) Cells() []Cell {
 	ret := []Cell{}
 	lastIndex := -1
 	for _, c := range r.x.C {
-		ref, _ := reference.ParseCellReference(*c.RAttr)
+		if c.RAttr == nil {
+			fmt.Println("RAttr is nil for a cell, skipping.")
+			continue
+		}
+		ref, err := reference.ParseCellReference(*c.RAttr)
+		if err != nil {
+			fmt.Println("RAttr is incorrect for a cell: " + *c.RAttr + ", skipping.")
+			continue
+		}
 		currentIndex := int(ref.ColumnIdx)
 		if currentIndex - lastIndex > 1 {
 			for col := lastIndex + 1; col < currentIndex;  col++ {
