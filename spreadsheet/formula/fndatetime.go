@@ -23,6 +23,7 @@ func init() {
 	RegisterFunction("DAYS", Days)
 	RegisterFunction("_xlfn.DAYS", Days)
 	RegisterFunction("EDATE", Edate)
+	RegisterFunction("EOMONTH", Eomonth)
 	RegisterFunction("MINUTE", Minute)
 	RegisterFunction("MONTH", Month)
 	RegisterFunction("NOW", Now)
@@ -455,10 +456,48 @@ func Edate(args []Result) Result {
 	newDate := initialDate.AddDate(0, int(mDelta), 0)
 	y, m, d := newDate.Date()
 	newDays := daysFromDate(y, int(m), d)
-	if newDays < 0 {
+	if newDays < 1 {
 		return MakeErrorResultType(ErrorTypeNum, "Incorrect argument for EDATE")
 	}
 	return MakeNumberResult(newDays)
+}
+
+// Eomonth is an implementation of the Excel EOMONTH() function.
+func Eomonth(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("EOMONTH requires two arguments")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("Incorrect argument for EOMONTH")
+	}
+	mDelta := args[1].ValueNumber
+	initialDateArg := args[0]
+	var initialDateDay float64
+	switch initialDateArg.Type {
+	case ResultTypeEmpty:
+		initialDateDay = 0
+	case ResultTypeNumber:
+		initialDateDay = initialDateArg.ValueNumber
+	case ResultTypeString:
+		initialDateDayResult := DateValue([]Result{args[0]})
+		if initialDateDayResult.Type == ResultTypeError {
+			return MakeErrorResult("Incorrect argument for EOMONTH")
+		}
+		initialDateDay = initialDateDayResult.ValueNumber
+	default:
+		return MakeErrorResult("Incorrect argument for EOMONTH")
+	}
+	initialDate := dateFromDays(initialDateDay)
+	newDate := initialDate.AddDate(0, int(mDelta+1), 0)
+	y, m, _ := newDate.Date()
+	eomonth := daysFromDate(y, int(m), 0)
+	if eomonth < 1 {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect argument for EOMONTH")
+	}
+	if y == 1900 && m == 3 {
+		eomonth--
+	}
+	return MakeNumberResult(eomonth)
 }
 
 // Minute is an implementation of the Excel MINUTE() function.

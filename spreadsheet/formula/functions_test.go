@@ -1275,3 +1275,19 @@ func TestEdate(t *testing.T) {
 	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
+
+func TestEomonth(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=EOMONTH("02-29-2019",-6)`, `#VALUE! ResultTypeError`},
+		{`=EOMONTH("02-29-2020",-6)`, `43708 ResultTypeNumber`},
+		{`=EOMONTH("06/30/1900 12:14:16",-6)`, `#NUM! ResultTypeError`},
+		{`=EOMONTH("07/01/1900 12:14:16",-6)`, `31 ResultTypeNumber`},
+		{`=EOMONTH("01:03 AM",-6)`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
