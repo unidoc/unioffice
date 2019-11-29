@@ -71,7 +71,10 @@ var refRegexp *regexp.Regexp = regexp.MustCompile(`^([a-z]+)([0-9]+)$`)
 func validateRef(cr CellRef) bool {
 	if submatch := refRegexp.FindStringSubmatch(strings.ToLower(cr.s)); len(submatch) > 2 {
 		col := submatch[1]
-		row, _ := strconv.Atoi(submatch[2])
+		row, err := strconv.Atoi(submatch[2])
+		if err != nil { // for the case if the row number is bigger then int capacity
+			return false
+		}
 		return row <= 1048576 && col <= "zz"
 	}
 	return false
