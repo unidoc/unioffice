@@ -555,7 +555,7 @@ func Month(args []Result) Result {
 				return errResult
 			}
 			if dateIsEmpty {
-				return MakeNumberResult(0)
+				return MakeNumberResult(1)
 			}
 		}
 		_, month, _, _, errResult := dateValue(dateString)

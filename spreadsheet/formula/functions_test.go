@@ -1253,7 +1253,8 @@ func TestMonth(t *testing.T) {
 		{`=MONTH("02-29-2019")`, `#VALUE! ResultTypeError`},
 		{`=MONTH("02-29-2020")`, `2 ResultTypeNumber`},
 		{`=MONTH("01/03/2019 12:14:16")`, `1 ResultTypeNumber`},
-		{`=MONTH("January 25, 2020 01:03 AM")`, `1 ResultTypeNumber`},
+		{`=MONTH("February 25, 2020 01:03 AM")`, `2 ResultTypeNumber`},
+		{`=MONTH("12:14:16")`, `1 ResultTypeNumber`},
 	}
 
 	ctx := sheet.FormulaContext()
