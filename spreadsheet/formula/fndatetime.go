@@ -22,6 +22,7 @@ func init() {
 	RegisterFunction("DAY", Day)
 	RegisterFunction("DAYS", Days)
 	RegisterFunction("_xlfn.DAYS", Days)
+	RegisterFunction("EDATE", Edate)
 	RegisterFunction("MINUTE", Minute)
 	RegisterFunction("MONTH", Month)
 	RegisterFunction("NOW", Now)
@@ -423,6 +424,41 @@ func modifyYear(year int) int {
 		}
 	}
 	return year
+}
+
+// Edate is an implementation of the Excel EDATE() function.
+func Edate(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("EDATE requires two arguments")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("Incorrect argument for EDATE")
+	}
+	mDelta := args[1].ValueNumber
+	initialDateArg := args[0]
+	var initialDateDay float64
+	switch initialDateArg.Type {
+	case ResultTypeEmpty:
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect argument for EDATE")
+	case ResultTypeNumber:
+		initialDateDay = initialDateArg.ValueNumber
+	case ResultTypeString:
+		initialDateDayResult := DateValue([]Result{args[0]})
+		if initialDateDayResult.Type == ResultTypeError {
+			return MakeErrorResult("Incorrect argument for EDATE")
+		}
+		initialDateDay = initialDateDayResult.ValueNumber
+	default:
+		return MakeErrorResult("Incorrect argument for EDATE")
+	}
+	initialDate := dateFromDays(initialDateDay)
+	newDate := initialDate.AddDate(0, int(mDelta), 0)
+	y, m, d := newDate.Date()
+	newDays := daysFromDate(y, int(m), d)
+	if newDays < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect argument for EDATE")
+	}
+	return MakeNumberResult(newDays)
 }
 
 // Minute is an implementation of the Excel MINUTE() function.
