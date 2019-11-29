@@ -101,12 +101,12 @@ func (r Row) Cells() []Cell {
 	lastIndex := -1
 	for _, c := range r.x.C {
 		if c.RAttr == nil {
-			fmt.Println("RAttr is nil for a cell, skipping.")
+			unioffice.Log("RAttr is nil for a cell, skipping.")
 			continue
 		}
 		ref, err := reference.ParseCellReference(*c.RAttr)
 		if err != nil {
-			fmt.Println("RAttr is incorrect for a cell: " + *c.RAttr + ", skipping.")
+			unioffice.Log("RAttr is incorrect for a cell: " + *c.RAttr + ", skipping.")
 			continue
 		}
 		currentIndex := int(ref.ColumnIdx)
