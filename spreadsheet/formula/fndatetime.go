@@ -306,7 +306,8 @@ func checkDateOnly(dateString string) bool {
 	return false
 }
 
-// dateValue is a helper for DateValue which is used also by TimeValue to validate date part of the string
+// dateValue is a helper for DateValue which is used also by TimeValue to validate date part of the string.
+It returns output in a format of (hours, minutes, seconds, timeIsEmpty, errorResult), where timeIsEmpty is true if the input string contains only date (say, 11/11/2019, not 11/11/2019 12:14:18), errorResult is of ResultTypeError if an error occurs and ResultTypeEmpty if not.
 func dateValue(dateString string) (int, int, int, bool, Result) {
 	pattern := ""
 	submatch := []string{}
@@ -651,6 +652,8 @@ func checkTimeOnly(timeString string) bool {
 	return false
 }
 
+// timeValue is a helper for TimeValue which is used also by DateValue to validate time part of the string.
+It returns output in a format of (year, month, day, pm, dateIsEmpty, errorResult), where pm is true if the time is marked as PM, dateIsEmpty is true if the input string contains only time (say, 12:14:18, not 11/11/2019 12:14:18), errorResult is of ResultTypeError if an error occurs and ResultTypeEmpty if not.
 func timeValue(timeString string) (int, int, float64, bool, bool, Result) {
 	pattern := ""
 	submatch := []string{}
