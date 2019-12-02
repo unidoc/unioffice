@@ -1133,7 +1133,43 @@ func TestTimeValue(t *testing.T) {
 	td := []testStruct{
 		{`=TIMEVALUE("1/1/1900 00:00:00")`, `0 ResultTypeNumber`},
 		{`=TIMEVALUE("1/1/1900 12:00:00")`, `0.5 ResultTypeNumber`},
+		{`=TIMEVALUE("1/1/1900")`, `0 ResultTypeNumber`},
+		{`=TIMEVALUE("02:12:18 PM")`, `0.591875 ResultTypeNumber`},
 		{`=TIMEVALUE("a")`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestDay(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=DAY("02-29-2019")`, `#VALUE! ResultTypeError`},
+		{`=DAY("02-29-2020")`, `29 ResultTypeNumber`},
+		{`=DAY("01/03/2019 12:14:16")`, `3 ResultTypeNumber`},
+		{`=DAY("January 25, 2020 01:03 AM")`, `25 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestDays(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(2021, time.February, 28, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetTime(time.Date(1900, time.January, 25, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetString("02/28/2021")
+	sheet.Cell("A4").SetString("01/25/1900")
+
+	td := []testStruct{
+		{`=DAYS(A1,A2)`, `44230 ResultTypeNumber`},
+		{`=DAYS(A3,A4)`, `44230 ResultTypeNumber`},
+		{`=DAYS(A3,"02/29/1900")`, `#VALUE! ResultTypeError`},
 	}
 
 	ctx := sheet.FormulaContext()
@@ -1148,6 +1184,24 @@ func TestDate(t *testing.T) {
 		{`=DATE(1899,1,1)`, `693598 ResultTypeNumber`},
 		{`=DATE(10000,1,1)`, `#NUM! ResultTypeError`},
 		{`=DATE(2020,3,31)`, `43921 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestDateValue(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=DATEVALUE("1/1/1900 00:00:00")`, `1 ResultTypeNumber`},
+		{`=DATEVALUE("1/1/1900 7:00 AM")`, `1 ResultTypeNumber`},
+		{`=DATEVALUE("1/1/1900")`, `1 ResultTypeNumber`},
+		{`=DATEVALUE("11/27/2019")`, `43796 ResultTypeNumber`},
+		{`=DATEVALUE("25-Jan-2019")`, `43490 ResultTypeNumber`},
+		{`=DATEVALUE("02:12:18 PM")`, `0 ResultTypeNumber`},
+		{`=DATEVALUE("a")`, `#VALUE! ResultTypeError`},
 	}
 
 	ctx := sheet.FormulaContext()
@@ -1170,6 +1224,69 @@ func TestDateDif(t *testing.T) {
 		{`=DATEDIF(A1,A2,"md")`, `30 ResultTypeNumber`},
 		{`=DATEDIF(A2,A1,"y")`, `#NUM! ResultTypeError`},
 		{`=DATEDIF(A1,A2,"yy")`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestMinute(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=MINUTE("02-29-2019 14:18:16")`, `#VALUE! ResultTypeError`},
+		{`=MINUTE("02-29-2020 14:18:16")`, `18 ResultTypeNumber`},
+		{`=MINUTE("01/03/2019 12:14")`, `14 ResultTypeNumber`},
+		{`=MINUTE("January 25, 2020 01:03 AM")`, `3 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestMonth(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=MONTH("02-29-2019")`, `#VALUE! ResultTypeError`},
+		{`=MONTH("02-29-2020")`, `2 ResultTypeNumber`},
+		{`=MONTH("01/03/2019 12:14:16")`, `1 ResultTypeNumber`},
+		{`=MONTH("February 25, 2020 01:03 AM")`, `2 ResultTypeNumber`},
+		{`=MONTH("12:14:16")`, `1 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestEdate(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=EDATE("02-29-2019",-6)`, `#VALUE! ResultTypeError`},
+		{`=EDATE("02-29-2020",-6)`, `43706 ResultTypeNumber`},
+		{`=EDATE("06/30/1900 12:14:16",-6)`, `#NUM! ResultTypeError`},
+		{`=EDATE("07/01/1900 12:14:16",-6)`, `1 ResultTypeNumber`},
+		{`=EDATE("01:03 AM",-6)`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestEomonth(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=EOMONTH("02-29-2019",-6)`, `#VALUE! ResultTypeError`},
+		{`=EOMONTH("02-29-2020",-6)`, `43708 ResultTypeNumber`},
+		{`=EOMONTH("06/30/1900 12:14:16",-6)`, `#NUM! ResultTypeError`},
+		{`=EOMONTH("07/01/1900 12:14:16",-6)`, `31 ResultTypeNumber`},
+		{`=EOMONTH("01:03 AM",-6)`, `#NUM! ResultTypeError`},
 	}
 
 	ctx := sheet.FormulaContext()

@@ -27,7 +27,6 @@ func NewEvaluator() Evaluator {
 
 type defEval struct {
 	isRef bool
-	booleans []bool
 }
 
 func (d *defEval) Eval(ctx Context, formula string) Result {
@@ -63,15 +62,6 @@ func (d *defEval) addInfo(ctx Context, expr Expression) {
 					}
 				}
 			}
-		case "CONCAT", "_xlfn.CONCAT", "CONCATENATE":
-			d.booleans = []bool{}
-			for _, arg := range expr.(FunctionCall).args {
-				switch arg.(type) {
-					case CellRef:
-						cr := arg.(CellRef).s
-						d.booleans = append(d.booleans, ctx.IsBool(cr))
-				}
-			}
 		}
 	}
 }
@@ -81,7 +71,10 @@ var refRegexp *regexp.Regexp = regexp.MustCompile(`^([a-z]+)([0-9]+)$`)
 func validateRef(cr CellRef) bool {
 	if submatch := refRegexp.FindStringSubmatch(strings.ToLower(cr.s)); len(submatch) > 2 {
 		col := submatch[1]
-		row, _ := strconv.Atoi(submatch[2])
+		row, err := strconv.Atoi(submatch[2])
+		if err != nil { // for the case if the row number is bigger then int capacity
+			return false
+		}
 		return row <= 1048576 && col <= "zz"
 	}
 	return false

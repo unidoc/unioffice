@@ -98,7 +98,24 @@ func (r Row) AddCell() Cell {
 // to the slice will have no effect.
 func (r Row) Cells() []Cell {
 	ret := []Cell{}
+	lastIndex := -1
 	for _, c := range r.x.C {
+		if c.RAttr == nil {
+			unioffice.Log("RAttr is nil for a cell, skipping.")
+			continue
+		}
+		ref, err := reference.ParseCellReference(*c.RAttr)
+		if err != nil {
+			unioffice.Log("RAttr is incorrect for a cell: " + *c.RAttr + ", skipping.")
+			continue
+		}
+		currentIndex := int(ref.ColumnIdx)
+		if currentIndex - lastIndex > 1 {
+			for col := lastIndex + 1; col < currentIndex;  col++ {
+				ret = append(ret, r.AddNamedCell(reference.IndexToColumn(uint32(col))))
+			}
+		}
+		lastIndex = currentIndex
 		ret = append(ret, Cell{r.w, r.s, r.x, c})
 	}
 	return ret
