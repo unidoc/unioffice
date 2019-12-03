@@ -1354,3 +1354,32 @@ func TestPduration(t *testing.T) {
 	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
+
+func TestRow(t *testing.T) {
+	td := []testStruct{
+		{`=ROW(A1)`, `1 ResultTypeNumber`},
+		{`=ROW(A11)`, `11 ResultTypeNumber`},
+		{`=ROW(B11)`, `11 ResultTypeNumber`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestRows(t *testing.T) {
+	td := []testStruct{
+		{`=ROWS(A1:E8)`, `8 ResultTypeNumber`},
+		{`=ROWS(E8:A1)`, `#VALUE! ResultTypeError`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}

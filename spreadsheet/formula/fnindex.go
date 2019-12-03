@@ -25,6 +25,8 @@ func init() {
 	RegisterFunction("MATCH", Match)
 	RegisterFunction("HLOOKUP", HLookup)
 	RegisterFunction("LOOKUP", Lookup)
+	RegisterFunction("ROW", Row)
+	RegisterFunction("ROWS", Rows)
 	RegisterFunction("VLOOKUP", VLookup)
 	RegisterFunction("TRANSPOSE", Transpose)
 }
@@ -600,4 +602,36 @@ func Transpose(args []Result) Result {
 		}
 	}
 	return MakeArrayResult(res)
+}
+
+// Row implements the Excel ROW function.
+func Row(args []Result) Result {
+	if len(args) < 1 {
+		return MakeErrorResult("ROW requires one argument")
+	}
+	ref := args[0].Ref
+	if ref.Type != ReferenceTypeCell {
+		return MakeErrorResult("ROW requires an argument to be of type reference")
+	}
+	cr, err := reference.ParseCellReference(ref.Value)
+	if err != nil {
+		return MakeErrorResult("Incorrect reference: " + ref.Value)
+	}
+	return MakeNumberResult(float64(cr.RowIdx))
+}
+
+// Rows implements the Excel ROWS function.
+func Rows(args []Result) Result {
+	if len(args) < 1 {
+		return MakeErrorResult("ROWS requires one argument")
+	}
+	arrResult := args[0]
+	if arrResult.Type != ResultTypeArray && arrResult.Type != ResultTypeList {
+		return MakeErrorResult("ROWS requires first argument of type array")
+	}
+	arr := arrResult.ValueArray
+	if len(arr) == 0 {
+		return MakeErrorResult("ROWS requires array to contain at least 1 row")
+	}
+	return MakeNumberResult(float64(len(arr)))
 }
