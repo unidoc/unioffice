@@ -1292,3 +1292,51 @@ func TestEomonth(t *testing.T) {
 	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
+
+func TestDuration(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(2018, time.July, 1, 0, 0, 0, 0, time.UTC)) // settlement date
+	sheet.Cell("A2").SetTime(time.Date(2048, time.January, 1, 0, 0, 0, 0, time.UTC)) // maturity date
+	sheet.Cell("A3").SetNumber(0.08) // coupon rate
+	sheet.Cell("A4").SetNumber(0.09) // yield rate
+	sheet.Cell("A5").SetNumber(2) // frequency of payments
+	sheet.Cell("A6").SetNumber(0) // basis
+	sheet.Cell("A7").SetString("07/01/2018") // settlement date in string format
+	sheet.Cell("A8").SetString("01/01/2048") // maturity date in string format
+
+	td := []testStruct{
+		{`=DURATION(A1,A2,A3,A4,A5,A6)`, `10.9191452815 ResultTypeNumber`},
+		{`=DURATION(A7,A8,A3,A4,A5,A6)`, `10.9191452815 ResultTypeNumber`},
+		{`=DURATION(A1,A2,A3,A4,A5,5)`, `#NUM! ResultTypeError`},
+		{`=DURATION(A8,A7,A3,A4,A5,A6)`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestMduration(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(2008, time.January, 1, 0, 0, 0, 0, time.UTC)) // settlement date
+	sheet.Cell("A2").SetTime(time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC)) // maturity date
+	sheet.Cell("A3").SetNumber(0.08) // coupon rate
+	sheet.Cell("A4").SetNumber(0.09) // yield rate
+	sheet.Cell("A5").SetNumber(2) // frequency of payments
+	sheet.Cell("A6").SetNumber(0) // basis
+	sheet.Cell("A7").SetString("01/01/2008") // settlement date in string format
+	sheet.Cell("A8").SetString("01/01/2016") // maturity date in string format
+
+	td := []testStruct{
+		{`=MDURATION(A1,A2,A3,A4,A5,A6)`, `5.73566981391 ResultTypeNumber`},
+		{`=MDURATION(A7,A8,A3,A4,A5,A6)`, `5.73566981391 ResultTypeNumber`},
+		{`=MDURATION(A1,A2,A3,A4,A5,5)`, `#NUM! ResultTypeError`},
+		{`=MDURATION(A8,A7,A3,A4,A5,A6)`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
