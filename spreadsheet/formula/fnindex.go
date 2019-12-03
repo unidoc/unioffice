@@ -13,6 +13,7 @@ import (
 
 	"github.com/unidoc/unioffice/internal/wildcard"
 	"github.com/unidoc/unioffice/spreadsheet/reference"
+	"github.com/unidoc/unioffice/internal/mergesort"
 )
 
 func init() {
@@ -24,9 +25,11 @@ func init() {
 	RegisterFunctionComplex("OFFSET", Offset)
 	RegisterFunction("MATCH", Match)
 	RegisterFunction("HLOOKUP", HLookup)
+	RegisterFunction("LARGE", Large)
 	RegisterFunction("LOOKUP", Lookup)
 	RegisterFunction("ROW", Row)
 	RegisterFunction("ROWS", Rows)
+	RegisterFunction("SMALL", Small)
 	RegisterFunction("VLOOKUP", VLookup)
 	RegisterFunction("TRANSPOSE", Transpose)
 }
@@ -634,4 +637,67 @@ func Rows(args []Result) Result {
 		return MakeErrorResult("ROWS requires array to contain at least 1 row")
 	}
 	return MakeNumberResult(float64(len(arr)))
+}
+
+// Large implements the Excel LARGE function.
+func Large(args []Result) Result {
+	return kth(args, true)
+}
+
+// Small implements the Excel SMALL function.
+func Small(args []Result) Result {
+	return kth(args, false)
+}
+
+func kth(args []Result, large bool) Result {
+	var funcName string
+	if large {
+		funcName = "LARGE"
+	} else {
+		funcName = "SMALL"
+	}
+	if len(args) != 2 {
+		return MakeErrorResult(funcName + " requires two arguments")
+	}
+	arrResult := args[0]
+	var arr [][]Result
+	switch arrResult.Type {
+	case ResultTypeArray:
+		arr = arrResult.ValueArray
+	case ResultTypeList:
+		arr = [][]Result{arrResult.ValueList}
+	default:
+		return MakeErrorResult(funcName + " requires first argument of type array")
+	}
+	if len(arr) == 0 {
+		return MakeErrorResult(funcName + " requires array to contain at least 1 row")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult(funcName + " requires second argument of type number")
+	}
+	kfloat := args[1].ValueNumber
+	if kfloat < 1 {
+		return MakeErrorResultType(ErrorTypeNum, funcName + " requires second argument of type number more than 0")
+	}
+	k := int(kfloat)
+	if float64(k) != kfloat {
+		return MakeErrorResultType(ErrorTypeNum, funcName + " requires second argument of type number more than 0")
+	}
+	unsorted := []float64{}
+	for _, row := range arr {
+		for _, v := range row {
+			if v.Type == ResultTypeNumber {
+				unsorted = append(unsorted, v.ValueNumber)
+			}
+		}
+	}
+	if k > len(unsorted) {
+		return MakeErrorResultType(ErrorTypeNum, funcName + " requires second argument of type number less or equal than the number of numbers in the array")
+	}
+	sorted := mergesort.MergeSort(unsorted)
+	if large {
+		return MakeNumberResult(sorted[len(sorted) - k])
+	} else {
+		return MakeNumberResult(sorted[k - 1])
+	}
 }

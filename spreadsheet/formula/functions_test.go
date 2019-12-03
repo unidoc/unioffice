@@ -1432,3 +1432,57 @@ func TestVlookup(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestLarge(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(400)
+	sheet.Cell("A2").SetNumber(300)
+	sheet.Cell("A3").SetNumber(500)
+	sheet.Cell("A4").SetNumber(100)
+	sheet.Cell("A5").SetNumber(200)
+	sheet.Cell("B1").SetString("abcde")
+	sheet.Cell("B2").SetNumber(150)
+	sheet.Cell("B3").SetNumber(350)
+	sheet.Cell("B4").SetNumber(450)
+	sheet.Cell("B5").SetNumber(250)
+
+	td := []testStruct{
+		{`=LARGE(A1:B5,4)`, `350 ResultTypeNumber`},
+		{`=LARGE(A1:B5,0)`, `#NUM! ResultTypeError`},
+		{`=LARGE(A1:B5,10)`, `#NUM! ResultTypeError`},
+		{`=LARGE(A2:B2,2)`, `150 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestSmall(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(400)
+	sheet.Cell("A2").SetNumber(300)
+	sheet.Cell("A3").SetNumber(500)
+	sheet.Cell("A4").SetNumber(100)
+	sheet.Cell("A5").SetNumber(200)
+	sheet.Cell("B1").SetString("abcde")
+	sheet.Cell("B2").SetNumber(150)
+	sheet.Cell("B3").SetNumber(350)
+	sheet.Cell("B4").SetNumber(450)
+	sheet.Cell("B5").SetNumber(250)
+
+	td := []testStruct{
+		{`=SMALL(A1:B5,4)`, `250 ResultTypeNumber`},
+		{`=SMALL(A1:B5,0)`, `#NUM! ResultTypeError`},
+		{`=SMALL(A1:B5,10)`, `#NUM! ResultTypeError`},
+		{`=SMALL(A2:B2,2)`, `300 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
