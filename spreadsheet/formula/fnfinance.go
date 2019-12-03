@@ -8,7 +8,6 @@
 package formula
 
 import (
-	//"fmt"
 	"time"
 	"math"
 )
@@ -26,7 +25,7 @@ func getCouppcd(settlementDate, maturityDate time.Time, freq int) time.Time {
 	if settlementDate.After(rDate) {
 		rDate = rDate.AddDate(1, 0, 0)
 	}
-	monthsToAdd := -12 / freq // FREQ
+	monthsToAdd := -12 / freq
 	for rDate.After(settlementDate) {
 		rDate = rDate.AddDate(0, monthsToAdd, 0)
 	}
@@ -38,7 +37,7 @@ func getCoupnum(settlementDate, maturityDate time.Time, freq, basis int) float64
 	if maturityDate.After(settlementDate) {
 		aDate := getCouppcd(settlementDate, maturityDate, freq)
 		months := (maturityDate.Year() - aDate.Year()) * 12 + int(maturityDate.Month()) - int(aDate.Month())
-		return float64(months * freq) / 12.0 // FREQ
+		return float64(months * freq) / 12.0
 	}
 	return 0.0 // replace for error
 }
@@ -53,10 +52,10 @@ func getDuration(settlementDate, maturityDate time.Time, coup, yield, freq float
 	nCoups := getCoupnum(settlementDate, maturityDate, int(freq), basis)
 	duration := 0.0
 	p := 0.0
-	coup *= 100 / float64(freq)
-	yield /= float64(freq) // FREQ
+	coup *= 100 / freq
+	yield /= freq
 	yield++
-	diff := frac * float64(freq) - nCoups // FREQ
+	diff := frac * freq - nCoups
 	for t := 1.0; t < nCoups; t++ {
 		tDiff := t + diff
 		add := coup / math.Pow(yield, tDiff)
@@ -70,7 +69,7 @@ func getDuration(settlementDate, maturityDate time.Time, coup, yield, freq float
 	duration += (nCoups + diff) * add
 
 	duration /= p
-	duration /= float64(freq) // FREQ
+	duration /= freq
 
 	return MakeNumberResult(duration)
 }
@@ -94,7 +93,7 @@ func MDuration(args []Result) Result {
 	if duration.Type == ResultTypeError {
 		return duration
 	}
-	mDuration := duration.ValueNumber / (1.0 + yield / float64(freq))
+	mDuration := duration.ValueNumber / (1.0 + yield / freq)
 	return MakeNumberResult(mDuration)
 }
 
