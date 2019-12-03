@@ -14,7 +14,61 @@ import (
 
 func init() {
 	RegisterFunction("DURATION", Duration)
-	RegisterFunction("MDURATION", MDuration)
+	RegisterFunction("MDURATION", Mduration)
+	RegisterFunction("PDURATION", Pduration)
+	RegisterFunction("_xlfn.PDURATION", Pduration)
+}
+
+// Duration implements the Excel DURATION function.
+func Duration(args []Result) Result {
+	settlementDate, maturityDate, coupon, yield, freq, basis, err := parseDurationData(args, "DURATION")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	return getDuration(dateFromDays(settlementDate), dateFromDays(maturityDate), coupon, yield, freq, basis)
+}
+
+// Mduration implements the Excel MDURATION function.
+func Mduration(args []Result) Result {
+	settlementDate, maturityDate, coupon, yield, freq, basis, err := parseDurationData(args, "MDURATION")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	duration := getDuration(dateFromDays(settlementDate), dateFromDays(maturityDate), coupon, yield, freq, basis)
+	if duration.Type == ResultTypeError {
+		return duration
+	}
+	mDuration := duration.ValueNumber / (1.0 + yield / freq)
+	return MakeNumberResult(mDuration)
+}
+
+// Pduration implements the Excel PDURATION function.
+func Pduration(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("PDURATION requires three number arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("PDURATION requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if rate <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PDURATION requires rate to be positive")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("PDURATION requires current value to be number argument")
+	}
+	currentValue := args[1].ValueNumber
+	if currentValue <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PDURATION requires current value to be positive")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("PDURATION requires specified value to be number argument")
+	}
+	specifiedValue := args[2].ValueNumber
+	if specifiedValue <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PDURATION requires specified value to be positive")
+	}
+	return MakeNumberResult((math.Log10(specifiedValue) - math.Log10(currentValue)) / math.Log10(1 + rate))
 }
 
 // getCouppcd finds last coupon date before settlement (can be equal to settlement).
@@ -72,29 +126,6 @@ func getDuration(settlementDate, maturityDate time.Time, coup, yield, freq float
 	duration /= freq
 
 	return MakeNumberResult(duration)
-}
-
-// Duration implements the Excel DURATION function.
-func Duration(args []Result) Result {
-	settlementDate, maturityDate, coupon, yield, freq, basis, err := parseDurationData(args, "DURATION")
-	if err.Type == ResultTypeError {
-		return err
-	}
-	return getDuration(dateFromDays(settlementDate), dateFromDays(maturityDate), coupon, yield, freq, basis)
-}
-
-// MDuration implements the Excel MDURATION function.
-func MDuration(args []Result) Result {
-	settlementDate, maturityDate, coupon, yield, freq, basis, err := parseDurationData(args, "MDURATION")
-	if err.Type == ResultTypeError {
-		return err
-	}
-	duration := getDuration(dateFromDays(settlementDate), dateFromDays(maturityDate), coupon, yield, freq, basis)
-	if duration.Type == ResultTypeError {
-		return duration
-	}
-	mDuration := duration.ValueNumber / (1.0 + yield / freq)
-	return MakeNumberResult(mDuration)
 }
 
 // validateDurationData returns settlement date, maturity date, coupon rate, yield rate, frequency of payments, day count basis and error result by parsing incoming arguments

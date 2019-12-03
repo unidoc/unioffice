@@ -1340,3 +1340,17 @@ func TestMduration(t *testing.T) {
 	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
+
+func TestPduration(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=PDURATION(0.025,2000,2200)`, `3.85986616262 ResultTypeNumber`},
+		{`=PDURATION(0,2000,2200)`, `#NUM! ResultTypeError`},
+		{`=PDURATION(0.025,"2000",2200)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
