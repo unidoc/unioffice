@@ -1383,3 +1383,52 @@ func TestRows(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestLookup(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("A2").SetNumber(2)
+	sheet.Cell("A3").SetNumber(3)
+
+	sheet.Cell("B1").SetString("value1")
+	sheet.Cell("B2").SetString("value2")
+	sheet.Cell("B3").SetString("value3")
+
+	td := []testStruct{
+		{`=LOOKUP(2,A1:A3,B1:B3)`, `value2 ResultTypeString`},
+		{`=LOOKUP(2,A1:B1,A2:B2)`, `#N/A ResultTypeError`},
+		{`=LOOKUP(1,A1:B1,A2:B2)`, `2 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestVlookup(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(100)
+	sheet.Cell("A2").SetNumber(200)
+	sheet.Cell("A3").SetNumber(300)
+	sheet.Cell("A4").SetNumber(400)
+
+	sheet.Cell("B1").SetString("value1")
+	sheet.Cell("B2").SetString("value2")
+	sheet.Cell("B3").SetString("value3")
+	sheet.Cell("B4").SetString("value4")
+
+	td := []testStruct{
+		{`=VLOOKUP(150,A1:B4,2)`, `value1 ResultTypeString`},
+		{`=VLOOKUP(250,A1:B4,2)`, `value2 ResultTypeString`},
+		{`=VLOOKUP(250,A1:B4,2,FALSE)`, `#N/A ResultTypeError`},
+		{`=VLOOKUP(300,A1:B4,2,FALSE)`, `value3 ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
