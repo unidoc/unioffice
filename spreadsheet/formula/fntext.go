@@ -41,8 +41,8 @@ func init() {
 	// RegisterFunction("NUMBERVALUE")
 	// RegisterFunction("PHONETIC")
 	RegisterFunction("PROPER", Proper)
-	// RegisterFunction("REPLACE")
-	// RegisterFunction("REPLACEB")
+	RegisterFunction("REPLACE", Replace)
+	//RegisterFunctionComplex("REPLACEB", Replaceb)
 	RegisterFunction("REPT", Rept)
 	RegisterFunction("RIGHT", Right)
 	RegisterFunction("RIGHTB", Right) // for now
@@ -623,4 +623,61 @@ func Value(args []Result) Result {
 	}
 
 	return MakeErrorResult("Incorrect argument for VALUE")
+}
+
+type parsedReplaceObject struct {
+	text string
+	startPos int
+	length int
+	textToReplace string
+}
+
+func parseReplaceResults(fname string, args []Result) (*parsedReplaceObject, Result) {
+	if len(args) != 4 {
+		return nil, MakeErrorResult(fname + " requires four arguments")
+	}
+	if args[0].Type != ResultTypeString {
+		return nil, MakeErrorResult(fname + " requires first argument to be a string")
+	}
+	text := args[0].ValueString
+	if args[1].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(fname + " requires second argument to be a number")
+	}
+	startPos := int(args[1].ValueNumber) - 1
+	if args[2].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(fname + " requires third argument to be a number")
+	}
+	length := int(args[2].ValueNumber)
+	if args[3].Type != ResultTypeString {
+		return nil, MakeErrorResult(fname + " requires fourth argument to be a string")
+	}
+	textToReplace := args[3].ValueString
+	return &parsedReplaceObject{
+		text,
+		startPos,
+		length,
+		textToReplace,
+	}, MakeEmptyResult()
+}
+
+// Replace is an implementation of the Excel REPLACE().
+func Replace(args []Result) Result {
+	parsed, errResult := parseReplaceResults("REPLACE", args)
+	if errResult.Type != ResultTypeEmpty {
+		return errResult
+	}
+	text := parsed.text
+	startPos := parsed.startPos
+	length := parsed.length
+	textToReplace := parsed.textToReplace
+	textLen := len(text)
+	if startPos > textLen {
+		startPos = textLen
+	}
+	endPos := startPos + length
+	if endPos > textLen {
+		endPos = textLen
+	}
+	newText := text[0:startPos] + textToReplace + text[endPos:]
+	return MakeStringResult(newText)
 }

@@ -1509,3 +1509,26 @@ func TestLower(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestReplace(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(400)
+	sheet.Cell("A2").SetString("Hello")
+	sheet.Cell("B1").SetString("World!")
+
+	sheet.Cell("D1").SetFormulaArray("=LOWER(A1:B2)")
+	sheet.RecalculateFormulas()
+
+	td := []testStruct{
+		{`=REPLACE("Hello World!",7,5,"Earth")`, `Hello Earth! ResultTypeString`},
+		{`=REPLACE("Hello World!",7,10,"Earth")`, `Hello Earth ResultTypeString`},
+		{`=REPLACE("Hello World",30,10,"!")`, `Hello World! ResultTypeString`},
+		{`=REPLACE("Hello World!",7,0,"new ")`, `Hello new World! ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
