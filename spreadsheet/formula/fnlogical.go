@@ -3,7 +3,7 @@
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased by contacting sales@baliance.com.
+// commercial license can be purchased on https://unidoc.io.
 
 package formula
 
@@ -13,7 +13,8 @@ func init() {
 	RegisterFunction("IF", If)
 	RegisterFunction("IFERROR", IfError)
 	RegisterFunction("_xlfn.IFNA", IfNA) // Only in Excel 2013+
-	// TODO:  RegisterFunction("IFS", Ifs) // Only in Excel 2016+
+	RegisterFunction("IFS", Ifs)
+	RegisterFunction("_xlfn.IFS", Ifs)
 	RegisterFunction("NOT", Not)
 	RegisterFunction("OR", Or)
 	// TODO: RegisterFunction("SWITCH", Switch) // Only in Excel 2016+
@@ -72,31 +73,177 @@ func If(args []Result) Result {
 	if len(args) > 3 {
 		return MakeErrorResult("IF accepts at most three arguments")
 	}
+
 	cond := args[0]
 	switch cond.Type {
-	case ResultTypeNumber:
 	case ResultTypeError:
 		return cond
+	case ResultTypeNumber:
+		// single argument just returns the condition value
+		if len(args) == 1 {
+			return MakeBoolResult(cond.ValueNumber != 0)
+		}
+
+		// true case
+		if cond.ValueNumber != 0 {
+			return args[1]
+		}
+
+		// false case
+		if len(args) == 3 {
+			return args[2]
+		}
+	case ResultTypeList:
+		return MakeListResult(ifList(args))
+	case ResultTypeArray:
+		return ifArray(args)
+
 	default:
-		return MakeErrorResult("IF initial argument must be numeric")
+		return MakeErrorResult("IF initial argument must be numeric or array")
 	}
+	return MakeBoolResult(false)
+}
 
-	// single argument just returns the condition value
+func fillArray(arg Result, rows, cols int) [][]Result {
+	array := [][]Result{}
+	switch arg.Type {
+	case ResultTypeArray:
+		return arg.ValueArray
+	case ResultTypeNumber, ResultTypeString:
+		for r := 0; r < rows; r++ {
+			list := []Result{}
+			for c := 0; c < cols; c++ {
+				list = append(list, arg)
+			}
+			array = append(array, list)
+		}
+		return array
+	case ResultTypeList:
+		return [][]Result{arg.ValueList}
+	}
+	return [][]Result{}
+}
+
+func ifArray(args []Result) Result {
+	condArray := args[0].ValueArray
+	// single argument returns list of contitions
 	if len(args) == 1 {
-		return MakeBoolResult(cond.ValueNumber != 0)
+		result := [][]Result{}
+		for _, v := range condArray {
+			result = append(result, ifList([]Result{MakeListResult(v)}))
+		}
+		return MakeArrayResult(result)
+	} else if len(args) == 2 {
+		rows := len(condArray)
+		cols := len(condArray[0])
+		truesArray := fillArray(args[1], rows, cols)
+		tl := len(truesArray)
+		result := [][]Result{}
+		var truesList []Result
+		for i, v := range condArray {
+			if i < tl {
+				truesList = truesArray[i]
+			} else {
+				truesList = []Result{}
+				for j := 0; j < cols; j++ {
+					truesList = append(truesList, MakeErrorResultType(ErrorTypeValue, ""))
+				}
+			}
+			result = append(result, ifList([]Result{MakeListResult(v), MakeListResult(truesList)}))
+		}
+		return MakeArrayResult(result)
+	} else if len(args) == 3 {
+		rows := len(condArray)
+		cols := len(condArray[0])
+		truesArray := fillArray(args[1], rows, cols)
+		falsesArray := fillArray(args[2], rows, cols)
+		tl := len(truesArray)
+		fl := len(falsesArray)
+		result := [][]Result{}
+		var truesList, falsesList []Result
+		for i, v := range condArray {
+			if i < tl {
+				truesList = truesArray[i]
+			} else {
+				truesList = []Result{}
+				for j := 0; j < cols; j++ {
+					truesList = append(truesList, MakeErrorResultType(ErrorTypeValue, ""))
+				}
+			}
+			if i < fl {
+				falsesList = falsesArray[i]
+			} else {
+				falsesList = []Result{}
+				for j := 0; j < cols; j++ {
+					falsesList = append(falsesList, MakeErrorResultType(ErrorTypeValue, ""))
+				}
+			}
+			result = append(result, ifList([]Result{MakeListResult(v), MakeListResult(truesList), MakeListResult(falsesList)}))
+		}
+		return MakeArrayResult(result)
+	}
+	return MakeErrorResultType(ErrorTypeValue, "")
+}
+
+func ifList(args []Result) []Result {
+	condList := args[0].ValueList
+	// single argument returns list of contitions
+	if len(args) == 1 {
+		result := []Result{}
+		for _, v := range condList {
+			result = append(result, MakeBoolResult(v.ValueNumber != 0))
+		}
+		return result
 	}
 
-	// true case
-	if cond.ValueNumber != 0 {
-		return args[1]
+	// two arguments case
+	if len(args) == 2 {
+		trues := args[1].ValueList
+		tl := len(trues)
+		result := []Result{}
+		for i, v := range condList {
+			var newValue Result
+			if v.ValueNumber == 0 {
+				newValue = MakeBoolResult(false)
+			} else {
+				if i < tl {
+					newValue = trues[i]
+				} else {
+					newValue = MakeErrorResultType(ErrorTypeValue, "")
+				}
+			}
+			result = append(result, newValue)
+		}
+		return result
 	}
 
 	// false case
 	if len(args) == 3 {
-		return args[2]
+		trues := args[1].ValueList
+		falses := args[2].ValueList
+		tl := len(trues)
+		tf := len(falses)
+		result := []Result{}
+		for i, v := range condList {
+			var newValue Result
+			if v.ValueNumber != 0 {
+				if i < tl {
+					newValue = trues[i]
+				} else {
+					newValue = MakeErrorResultType(ErrorTypeValue, "")
+				}
+			} else {
+				if i < tf {
+					newValue = falses[i]
+				} else {
+					newValue = MakeErrorResultType(ErrorTypeValue, "")
+				}
+			}
+			result = append(result, newValue)
+		}
+		return result
 	}
-	return MakeBoolResult(false)
-
+	return []Result{}
 }
 
 // IfError is an implementation of the Excel IFERROR() function. It takes two arguments.
@@ -126,6 +273,19 @@ func IfNA(args []Result) Result {
 		return args[1]
 	}
 	return args[0]
+}
+
+// Ifs is an implementation of the Excel IFS() function.
+func Ifs(args []Result) Result {
+	if len(args) < 2 {
+		return MakeErrorResult("IFS requires at least two arguments")
+	}
+	for i := 0; i < len(args)-1; i+=2 {
+		if args[i].ValueNumber == 1 {
+			return args[i+1]
+		}
+	}
+	return MakeErrorResultType(ErrorTypeNA, "")
 }
 
 // Not is an implementation of the Excel NOT() function and takes a single

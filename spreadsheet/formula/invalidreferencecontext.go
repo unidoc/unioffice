@@ -3,9 +3,11 @@
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased by contacting sales@baliance.com.
+// commercial license can be purchased on https://unidoc.io.
 
 package formula
+
+import "time"
 
 // InvalidReferenceContext is a Context that can be used when evaluating an
 // invalid reference (e.g. referencing a non-existent sheet).  It implements
@@ -46,6 +48,11 @@ func (i *ivr) GetLocked(cellRef string) bool {
 	return false
 }
 
+// HasFormula returns FALSE for the invalid reference context.
+func (i *ivr) HasFormula(cellRef string) bool {
+	return false
+}
+
 // SetLocked does nothing for the invalid reference context.
 func (i *ivr) SetLocked(cellRef string, locked bool) {
 
@@ -59,4 +66,19 @@ func (i *ivr) GetWidth(colIdx int) float64 {
 // GetFilename returns an empty string for the invalid reference context.
 func (i *ivr) GetFilename() string {
 	return ""
+}
+
+// GetEpoch returns a null time object for the invalid reference context.
+func (i *ivr) GetEpoch() time.Time {
+	return time.Time{}
+}
+
+// IsBool returns false for the invalid reference context.
+func (i *ivr) IsBool(cellRef string) bool {
+	return false
+}
+
+// IsDBCS returns false for the invalid reference context.
+func (i *ivr) IsDBCS() bool {
+	return false
 }

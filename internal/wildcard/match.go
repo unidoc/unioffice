@@ -81,3 +81,58 @@ func deepMatchRune(str, pattern []rune, simple bool) bool {
 	}
 	return len(str) == 0 && len(pattern) == 0
 }
+
+// Index - finds a position of substring which matches/satisfies the pattern string.
+// Supports  '*' and '?' wildcards in the pattern string.
+// If nothing is found, it returns -1.
+func Index(pattern, name string) (index int) {
+	if pattern == "" || pattern == "*" {
+		return 0
+	}
+	rname := make([]rune, 0, len(name))
+	rpattern := make([]rune, 0, len(pattern))
+	for _, r := range name {
+		rname = append(rname, r)
+	}
+	for _, r := range pattern {
+		rpattern = append(rpattern, r)
+	}
+	return deepIndexRune(rname, rpattern, 0)
+}
+
+// deepIndexRune is a recursive function which searches for a position of substring which matches given wildcard pattern.
+func deepIndexRune(str, pattern []rune, position int) int {
+	for len(pattern) > 0 {
+		switch pattern[0] {
+		default:
+			if len(str) == 0 {
+				return -1
+			} // if pattern is not empty and string is empty, then nothing is found
+			if str[0] != pattern[0] {
+				return deepIndexRune(str[1:], pattern, position+1)
+			} // if first characters don't match, try search from the next position
+		case '?':
+			if len(str) == 0 {
+				return -1
+			} // if string is empty, nothing is found. Otherwise as '?' means any character just throw both first string and first pattern symbols and continue search
+		case '*':
+			if len(str) == 0 {
+				return -1
+			} // if str is empty, nothing is found
+			subIndex := deepIndexRune(str, pattern[1:], position) // throw the '*' and search with the rest of the pattern
+			if subIndex != -1 {
+				return position
+			} else { // if nothing is found, continue from the next string position
+				subIndex = deepIndexRune(str[1:], pattern, position)
+				if subIndex != -1 {
+					return position
+				} else {
+					return -1
+				}
+			}
+		}
+		str = str[1:]
+		pattern = pattern[1:]
+	}
+	return position // if pattern becomes empty and -1 never returned, that means that the position of the substring is found
+}

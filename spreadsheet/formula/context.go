@@ -3,9 +3,11 @@
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased by contacting sales@baliance.com.
+// commercial license can be purchased on https://unidoc.io.
 
 package formula
+
+import "time"
 
 // Context is a formula execution context.  Formula evaluation uses the context
 // to retreive information from sheets.
@@ -16,6 +18,9 @@ type Context interface {
 	// Sheet returns an evaluation context for a given sheet name.  This is used
 	// when evaluating cells that pull data from other sheets (e.g. ='Sheet 2'!A1).
 	Sheet(name string) Context
+
+	// GetEpoch returns the time epoch of the context's Workbook.
+	GetEpoch() time.Time
 
 	// GetFilename returns the full filename of the context's Workbook.
 	GetFilename() string
@@ -32,7 +37,16 @@ type Context interface {
 	// GetFormat returns if cell is protected.
 	GetLocked(cellRef string) bool
 
-	// GetFormat returns sets cell's protected attribute.
+	// HasFormula returns if cell contains formula.
+	HasFormula(cellRef string) bool
+
+	// IsBool returns if cell contains boolean value.
+	IsBool(cellRef string) bool
+
+	// IsDBCS returns if workbook default language is among DBCS.
+	IsDBCS() bool
+
+	// SetLocked returns sets cell's protected attribute.
 	SetLocked(cellRef string, locked bool)
 
 	// NamedRange returns a named range.

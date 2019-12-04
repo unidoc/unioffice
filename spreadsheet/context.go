@@ -3,12 +3,13 @@
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased by contacting sales@baliance.com.
+// commercial license can be purchased on https://unidoc.io.
 
 package spreadsheet
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/unidoc/unioffice/spreadsheet/formula"
 	"github.com/unidoc/unioffice/spreadsheet/reference"
@@ -111,9 +112,19 @@ func (e *evalContext) GetLabelPrefix(cellRef string) string {
 	return e.s.Cell(cellRef).getLabelPrefix()
 }
 
-// GetLocked returns if the cell is locked.
+// GetLocked returns true if the cell is locked.
 func (e *evalContext) GetLocked(cellRef string) bool {
 	return e.s.Cell(cellRef).getLocked()
+}
+
+// HasFormula returns true if the cell contains formula.
+func (e *evalContext) HasFormula(cellRef string) bool {
+	return e.s.Cell(cellRef).HasFormula()
+}
+
+// IsBool returns true if the cell boolean value.
+func (e *evalContext) IsBool(cellRef string) bool {
+	return e.s.Cell(cellRef).IsBool()
 }
 
 // SetLocked sets cell locked or not.
@@ -130,4 +141,35 @@ func (e *evalContext) GetWidth(colIdx int) float64 {
 		}
 	}
 	return 0
+}
+
+// GetEpoch returns a workbook's time epoch.
+func (e *evalContext) GetEpoch() time.Time {
+	return e.s.w.Epoch()
+}
+
+// dbcs is a list of languages which use DBCS or double-byte character set (Chinese dialects, Japanese and Korean).
+var dbcs []string = []string{
+	"zh-HK",
+	"zh-MO",
+	"zh-CN",
+	"zh-SG",
+	"zh-TW",
+	"ja-JP",
+	"ko-KR",
+}
+
+// IsDBCS returns if a workbook's default language is among DBCS.
+func (e *evalContext) IsDBCS() bool {
+	language := e.s.w.CoreProperties.X().Language
+	if language == nil {
+		return false
+	}
+	defaultLanguage := string(language.Data)
+	for _, lang := range dbcs {
+		if defaultLanguage == lang {
+			return true
+		}
+	}
+	return false
 }

@@ -3,7 +3,7 @@
 // Use of this source code is governed by the terms of the Affero GNU General
 // Public License version 3.0 as published by the Free Software Foundation and
 // appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased by contacting sales@baliance.com.
+// commercial license can be purchased on https://unidoc.io.
 
 package formula
 
@@ -33,6 +33,7 @@ type Result struct {
 	ValueString  string
 	ValueList    []Result
 	ValueArray   [][]Result
+	IsBoolean    bool
 	ErrorMessage string
 	Type         ResultType
 
@@ -135,9 +136,9 @@ func MakeNumberResult(v float64) Result {
 // MakeBoolResult constructs a boolean result (internally a number).
 func MakeBoolResult(b bool) Result {
 	if b {
-		return Result{Type: ResultTypeNumber, ValueNumber: 1}
+		return Result{Type: ResultTypeNumber, ValueNumber: 1, IsBoolean: true}
 	}
-	return Result{Type: ResultTypeNumber, ValueNumber: 0}
+	return Result{Type: ResultTypeNumber, ValueNumber: 0, IsBoolean: true}
 }
 
 // MakeErrorResult constructs a #VALUE! error with a given extra error message.
