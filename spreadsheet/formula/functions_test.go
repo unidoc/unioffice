@@ -1532,3 +1532,29 @@ func TestReplace(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestTextJoin(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("B1").SetString("2")
+	sheet.Cell("A2").SetNumber(3)
+	sheet.Cell("B2").SetString("4")
+	sheet.Cell("A3").SetNumber(5)
+	sheet.Cell("B3").SetString("6")
+	sheet.Cell("A4").SetString("7")
+	sheet.Cell("A6").SetString("8")
+	sheet.Cell("A7").SetString("9")
+
+	td := []testStruct{
+		{`=TEXTJOIN(".",FALSE,A1)`, `1 ResultTypeString`},
+		{`=TEXTJOIN("|",TRUE,A4:A7)`, `7|8|9 ResultTypeString`},
+		{`=TEXTJOIN("|",FALSE,A4:A7)`, `7||8|9 ResultTypeString`},
+		{`=TEXTJOIN(".",TRUE,A1:B2,A3:B3,A4,A5,A6,A7)`, `1.2.3.4.5.6.7.8.9 ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}

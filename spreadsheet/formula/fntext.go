@@ -51,7 +51,8 @@ func init() {
 	//RegisterFunction("SUBSTITUTE", )
 	RegisterFunction("T", T)
 	//RegisterFunction("TEXT")
-	//RegisterFunction("TEXTJOIN")
+	RegisterFunction("TEXTJOIN", TextJoin)
+	RegisterFunction("_xlfn.TEXTJOIN", TextJoin)
 	RegisterFunction("TRIM", Trim)
 	RegisterFunction("_xlfn.UNICHAR", Char) // for now
 	RegisterFunction("_xlfn.UNICODE", Unicode)
@@ -680,4 +681,55 @@ func Replace(args []Result) Result {
 	}
 	newText := text[0:startPos] + textToReplace + text[endPos:]
 	return MakeStringResult(newText)
+}
+
+// TextJoin is an implementation of the Excel TEXTJOIN function.
+func TextJoin(args []Result) Result {
+	if len(args) < 3 {
+		return MakeErrorResult("TEXTJOIN requires three or more arguments")
+	}
+
+	if args[0].Type != ResultTypeString {
+		return MakeErrorResult("TEXTJOIN requires delimiter to be a string")
+	}
+	delimiter := args[0].ValueString
+
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("TEXTJOIN requires second argument to be a number or boolean")
+	}
+	ignoreEmpty := args[1].ValueNumber != 0
+
+	arr := collectStrings(args[2:], []string{}, ignoreEmpty)
+	return MakeStringResult(strings.Join(arr, delimiter))
+}
+
+func collectStrings(args []Result, arr []string, ignoreEmpty bool) []string {
+	for _, result := range args {
+		switch result.Type {
+		case ResultTypeEmpty:
+			if !ignoreEmpty {
+				arr = append(arr, "")
+			}
+		case ResultTypeString:
+			if result.ValueString != "" || !ignoreEmpty {
+				arr = append(arr, result.ValueString)
+			}
+		case ResultTypeNumber:
+			arr = append(arr, result.Value())
+		case ResultTypeList:
+			arr = appendSlices(arr, collectStrings(result.ValueList, []string{}, ignoreEmpty))
+		case ResultTypeArray:
+			for _, row := range result.ValueArray {
+				arr = appendSlices(arr, collectStrings(row, []string{}, ignoreEmpty))
+			}
+		}
+	}
+	return arr
+}
+
+func appendSlices(s0, s1 []string) []string {
+	for _, item := range s1 {
+		s0 = append(s0, item)
+	}
+	return s0
 }
