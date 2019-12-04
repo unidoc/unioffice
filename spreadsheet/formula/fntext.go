@@ -327,12 +327,65 @@ func Lower(args []Result) Result {
 	if len(args) != 1 {
 		return MakeErrorResult("LOWER requires a single string argument")
 	}
-	s := args[0].AsString()
+
+	arg := args[0]
+	switch arg.Type {
+	case ResultTypeError:
+		return arg
+	case ResultTypeNumber, ResultTypeString:
+		return lower(args[0])
+	case ResultTypeList:
+		list := arg.ValueList
+		resultList := []Result{}
+		for _, v := range list {
+			vLower := lower(v)
+			if vLower.Type == ResultTypeError {
+				return vLower
+			}
+			resultList = append(resultList, vLower)
+		}
+		return MakeListResult(resultList)
+	case ResultTypeArray:
+		array := arg.ValueArray
+		resultArray := [][]Result{}
+		for _, r := range array {
+			row := []Result{}
+			for _, v := range r {
+				vLower := lower(v)
+				if vLower.Type == ResultTypeError {
+					return vLower
+				}
+				row = append(row, vLower)
+			}
+			resultArray = append(resultArray, row)
+		}
+		return MakeArrayResult(resultArray)
+
+	default:
+		return MakeErrorResult("Incorrect argument for LOWER")
+	}
+	return MakeErrorResult("Incorrect argument for LOWER")
+}
+
+func lower(arg Result) Result {
+	if arg.Type == ResultTypeEmpty {
+		return arg
+	}
+	s := arg.AsString()
 	if s.Type != ResultTypeString {
 		return MakeErrorResult("LOWER requires a single string argument")
 	}
-
-	return MakeStringResult(strings.ToLower(s.ValueString))
+	if arg.IsBoolean {
+		if s.ValueString == "1" {
+			return MakeStringResult("true")
+		} else if s.ValueString == "0" {
+			return MakeStringResult("false")
+		} else {
+			return MakeErrorResult("Incorrect argument for LOWER")
+		}
+	} else {
+		return MakeStringResult(strings.ToLower(s.ValueString))
+	}
 }
 
 // Proper is an implementation of the Excel PROPER function that returns a copy

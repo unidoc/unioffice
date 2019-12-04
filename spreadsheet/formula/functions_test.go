@@ -1486,3 +1486,26 @@ func TestSmall(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestLower(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(400)
+	sheet.Cell("A2").SetString("Hello")
+	sheet.Cell("B1").SetString("World!")
+
+	sheet.Cell("D1").SetFormulaArray("=LOWER(A1:B2)")
+	sheet.RecalculateFormulas()
+
+	td := []testStruct{
+		{`=D1`, `400 ResultTypeArray`},
+		{`=D2`, `hello ResultTypeString`},
+		{`=E1`, `world! ResultTypeString`},
+		{`=E2`, ` ResultTypeEmpty`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
