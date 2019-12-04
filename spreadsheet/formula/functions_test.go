@@ -1558,3 +1558,38 @@ func TestTextJoin(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestIndex(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("B1").SetString("2")
+	sheet.Cell("C1").SetNumber(3)
+	sheet.Cell("B2").SetNumber(5)
+	sheet.Cell("C2").SetString("6")
+	sheet.Cell("A3").SetString("7")
+	sheet.Cell("B3").SetString("8")
+	sheet.Cell("C3").SetString("9")
+
+	sheet.Cell("A4").SetFormulaRaw(`=INDEX(A1:C3,1,1)`)
+	sheet.Cell("A5").SetFormulaArray(`=INDEX(A1:C3,2)`)
+	sheet.Cell("A6").SetFormulaArray(`=INDEX(A1:C3,,2)`)
+	sheet.Cell("A10").SetFormulaArray(`=INDEX(A1:C3)`)
+
+	sheet.RecalculateFormulas()
+
+	td := []testStruct{
+		{`=A4`, `1 ResultTypeNumber`},
+		{`=A5`, `0 ResultTypeArray`},
+		{`=B5`, `5 ResultTypeNumber`},
+		{`=C5`, `6 ResultTypeNumber`},
+		{`=A7`, `5 ResultTypeNumber`},
+		{`=A8`, `8 ResultTypeNumber`},
+		{`=A10`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}

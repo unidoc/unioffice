@@ -84,8 +84,9 @@ func Columns(args []Result) Result {
 
 // Index implements the Excel INDEX function.
 func Index(args []Result) Result {
-	if len(args) < 3 {
-		return MakeErrorResult("INDEX requires three arguments")
+	argsNum := len(args)
+	if argsNum < 2 || argsNum > 3 {
+		return MakeErrorResult("INDEX requires from one to three arguments")
 	}
 	arr := args[0]
 	if arr.Type != ResultTypeArray && arr.Type != ResultTypeList {
@@ -95,27 +96,71 @@ func Index(args []Result) Result {
 	if rowArg.Type != ResultTypeNumber {
 		return MakeErrorResult("INDEX requires numeric row argument")
 	}
-	colArg := args[2].AsNumber()
-	if colArg.Type != ResultTypeNumber {
-		return MakeErrorResult("INDEX requires numeric col argument")
-	}
 	row := int(rowArg.ValueNumber) - 1
-	col := int(colArg.ValueNumber) - 1
+	col := -1
+	if argsNum == 3 {
+		colArg := args[2].AsNumber()
+		if colArg.Type != ResultTypeNumber {
+			return MakeErrorResult("INDEX requires numeric col argument")
+		}
+		col = int(colArg.ValueNumber) - 1
+	}
+	if row == -1 && col == -1 {
+		return MakeErrorResult("INDEX requires row or col argument")
+	}
 	var rowVal []Result
 	if arr.Type == ResultTypeArray {
-		if row < 0 || row >= len(arr.ValueArray) {
+		valueArray := arr.ValueArray
+		if row < -1 || row >= len(valueArray) {
 			return MakeErrorResult("INDEX has row out of range")
 		}
-		rowVal = arr.ValueArray[row]
+		if row == -1 {
+			if col >= len(valueArray[0]) {
+				return MakeErrorResult("INDEX has col out of range")
+			}
+			oneColumnArray := [][]Result{}
+			for _, row := range valueArray {
+				v := row[col]
+				if v.Type == ResultTypeEmpty {
+					v = MakeNumberResult(0)
+				}
+				oneColumnArray = append(oneColumnArray, []Result{v})
+			}
+			return MakeArrayResult(oneColumnArray)
+		}
+		rowVal = valueArray[row]
 	} else {
-		if row < 0 || row >= 1 {
+		valueList := arr.ValueList
+		if row < -1 || row >= 1 {
 			return MakeErrorResult("INDEX has row out of range")
 		}
-		rowVal = arr.ValueList
+		if row == -1 {
+			if col >= len(valueList) {
+				return MakeErrorResult("INDEX has col out of range")
+			}
+			v := valueList[col]
+			if v.Type == ResultTypeEmpty {
+				v = MakeNumberResult(0)
+			}
+			return v
+		}
+		rowVal = valueList
 	}
 
-	if col < 0 || col > len(rowVal) {
+	if col < -1 || col > len(rowVal) {
 		return MakeErrorResult("INDEX has col out of range")
+	}
+
+	if col == -1 {
+		listResult := []Result{}
+		for _, v := range rowVal {
+			if v.Type == ResultTypeEmpty {
+				listResult = append(listResult, MakeNumberResult(0))
+			} else {
+				listResult = append(listResult, v)
+			}
+		}
+		return MakeArrayResult([][]Result{listResult})
 	}
 
 	rv := rowVal[col]

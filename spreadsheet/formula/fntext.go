@@ -365,7 +365,6 @@ func Lower(args []Result) Result {
 	default:
 		return MakeErrorResult("Incorrect argument for LOWER")
 	}
-	return MakeErrorResult("Incorrect argument for LOWER")
 }
 
 func lower(arg Result) Result {
