@@ -26,7 +26,6 @@ func init() {
 	RegisterFunction("ACOSH", makeMathWrapper("ASIN", math.Acosh))
 	RegisterFunction("_xlfn.ACOT", makeMathWrapper("ACOT", func(v float64) float64 { return math.Pi/2 - math.Atan(v) }))
 	RegisterFunction("_xlfn.ACOTH", makeMathWrapper("ACOTH", func(v float64) float64 { return math.Atanh(1 / v) }))
-	// TODO: RegisterFunction("_xlfn.AGGREGATE", Aggregate) // lots of dependencies
 	RegisterFunction("_xlfn.ARABIC", Arabic)
 	RegisterFunction("ASIN", makeMathWrapper("ASIN", math.Asin))
 	RegisterFunction("ASINH", makeMathWrapper("ASINH", math.Asinh))
@@ -56,14 +55,12 @@ func init() {
 	RegisterFunction("_xlfn.FLOOR.PRECISE", FloorPrecise)
 	RegisterFunction("GCD", GCD)
 	RegisterFunction("INT", Int)
-	RegisterFunction("ISO.CEILING", CeilingPrecise) // appears to be the same from what I can tell
+	RegisterFunction("ISO.CEILING", CeilingPrecise)
 	RegisterFunction("LCM", LCM)
 	RegisterFunction("LN", makeMathWrapper("LN", math.Log))
 	RegisterFunction("LOG", Log)
 	RegisterFunction("LOG10", makeMathWrapper("LOG10", math.Log10))
 	RegisterFunction("MDETERM", MDeterm)
-	// RegisterFunction("MINVERSE", MInverse) // TODO: skipping the other matrix functinos, not sure how common they are
-	// RegisterFunction("MMULT"
 	RegisterFunction("MOD", Mod)
 	RegisterFunction("MROUND", Mround)
 	RegisterFunction("MULTINOMIAL", Multinomial)
@@ -88,15 +85,11 @@ func init() {
 	RegisterFunction("SINH", makeMathWrapper("SINH", math.Sinh))
 	RegisterFunction("SQRT", makeMathWrapper("SQRT", math.Sqrt))
 	RegisterFunction("SQRTPI", makeMathWrapper("SQRTPI", func(v float64) float64 { return math.Sqrt(v * math.Pi) }))
-	// RegisterFunction("SUBTOTAL"
 	RegisterFunction("SUM", Sum)
 	RegisterFunction("SUMIF", SumIf)
 	RegisterFunction("SUMIFS", SumIfs)
 	RegisterFunction("SUMPRODUCT", SumProduct)
 	RegisterFunction("SUMSQ", SumSquares)
-	//RegisterFunction("SUMX2MY2"
-	//RegisterFunction("SUMX2PY2"
-	//RegisterFunction("SUMXMY2"
 	RegisterFunction("TAN", makeMathWrapper("TAN", math.Tan))
 	RegisterFunction("TANH", makeMathWrapper("TANH", math.Tanh))
 	RegisterFunction("TRUNC", Trunc)

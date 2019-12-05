@@ -18,43 +18,32 @@ import (
 )
 
 func init() {
-	// RegisterFunction("ASC") Need to figure out how to test
-	// RegisterFunction("BAHTTEXT")
 	RegisterFunction("CHAR", Char)
 	RegisterFunction("CLEAN", Clean)
 	RegisterFunction("CODE", Code)
 	RegisterFunction("CONCATENATE", Concat)
 	RegisterFunction("CONCAT", Concat)
 	RegisterFunction("_xlfn.CONCAT", Concat)
-	// RegisterFunction("DBCS")
-	// RegisterFunction("DOLLAR") Need to test with Excel
 	RegisterFunction("EXACT", Exact)
 	RegisterFunction("FIND", Find)
 	RegisterFunctionComplex("FINDB", Findb)
 	RegisterFunction("LEFT", Left)
-	RegisterFunction("LEFTB", Left) // for now
+	RegisterFunction("LEFTB", Left)
 	RegisterFunction("LEN", Len)
-	RegisterFunction("LENB", Len) // for now
+	RegisterFunction("LENB", Len)
 	RegisterFunction("LOWER", Lower)
-	// RegisterFunction("MID")
-	// RegisterFunction("MIDB")
-	// RegisterFunction("NUMBERVALUE")
-	// RegisterFunction("PHONETIC")
 	RegisterFunction("PROPER", Proper)
 	RegisterFunction("REPLACE", Replace)
-	//RegisterFunctionComplex("REPLACEB", Replaceb)
 	RegisterFunction("REPT", Rept)
 	RegisterFunction("RIGHT", Right)
-	RegisterFunction("RIGHTB", Right) // for now
+	RegisterFunction("RIGHTB", Right)
 	RegisterFunction("SEARCH", Search)
 	RegisterFunctionComplex("SEARCHB", Searchb)
-	//RegisterFunction("SUBSTITUTE", )
 	RegisterFunction("T", T)
-	//RegisterFunction("TEXT")
 	RegisterFunction("TEXTJOIN", TextJoin)
 	RegisterFunction("_xlfn.TEXTJOIN", TextJoin)
 	RegisterFunction("TRIM", Trim)
-	RegisterFunction("_xlfn.UNICHAR", Char) // for now
+	RegisterFunction("_xlfn.UNICHAR", Char)
 	RegisterFunction("_xlfn.UNICODE", Unicode)
 	RegisterFunction("UPPER", Upper)
 	RegisterFunction("VALUE", Value)

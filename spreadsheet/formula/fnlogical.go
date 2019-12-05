@@ -17,8 +17,7 @@ func init() {
 	RegisterFunction("_xlfn.IFS", Ifs)
 	RegisterFunction("NOT", Not)
 	RegisterFunction("OR", Or)
-	// TODO: RegisterFunction("SWITCH", Switch) // Only in Excel 2016+
-	RegisterFunction("TRUE", True) // yup, TRUE()/FALSE() are functions in Excel, news to me...
+	RegisterFunction("TRUE", True)
 	RegisterFunction("_xlfn.XOR", Xor)
 
 }
