@@ -15,6 +15,7 @@ import (
 	"unicode"
 
 	"github.com/unidoc/unioffice/internal/wildcard"
+	"github.com/unidoc/unioffice/spreadsheet/format"
 )
 
 func init() {
@@ -40,6 +41,7 @@ func init() {
 	RegisterFunction("SEARCH", Search)
 	RegisterFunctionComplex("SEARCHB", Searchb)
 	RegisterFunction("T", T)
+	RegisterFunction("TEXT", Text)
 	RegisterFunction("TEXTJOIN", TextJoin)
 	RegisterFunction("_xlfn.TEXTJOIN", TextJoin)
 	RegisterFunction("TRIM", Trim)
@@ -720,4 +722,32 @@ func appendSlices(s0, s1 []string) []string {
 		s0 = append(s0, item)
 	}
 	return s0
+}
+
+// Text is an implementation of the Excel TEXT function.
+func Text(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("TEXT requires two arguments")
+	}
+	valueResult := args[0]
+	if valueResult.Type != ResultTypeNumber && valueResult.Type != ResultTypeString && valueResult.Type != ResultTypeEmpty {
+		return MakeErrorResult("TEXT requires first argument to be a number or string")
+	}
+	if args[1].Type != ResultTypeString {
+		return MakeErrorResult("TEXT requires second argument to be a string")
+	}
+	f := args[1].ValueString
+
+	switch valueResult.Type {
+	case ResultTypeNumber:
+		return MakeStringResult(format.Number(valueResult.ValueNumber, f))
+	case ResultTypeString:
+		return MakeStringResult(format.String(valueResult.ValueString, f))
+	case ResultTypeEmpty:
+		return MakeStringResult(format.Number(0, f))
+	case ResultTypeArray, ResultTypeList:
+		return MakeErrorResultType(ErrorTypeSpill, "TEXT doesn't work with arrays")
+	default:
+		return MakeErrorResult("Incorrect argument for TEXT")
+	}
 }
