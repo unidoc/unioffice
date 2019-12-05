@@ -158,6 +158,7 @@ const (
 	ErrorTypeRef
 	ErrorTypeName
 	ErrorTypeNum
+	ErrorTypeSpill
 	ErrorTypeNA
 	ErrorTypeDivideByZero
 )
@@ -176,6 +177,8 @@ func MakeErrorResultType(t ErrorType, msg string) Result {
 		return Result{Type: ResultTypeError, ValueString: "#NAME?", ErrorMessage: msg}
 	case ErrorTypeNum:
 		return Result{Type: ResultTypeError, ValueString: "#NUM!", ErrorMessage: msg}
+	case ErrorTypeSpill:
+		return Result{Type: ResultTypeError, ValueString: "#SPILL!", ErrorMessage: msg}
 	case ErrorTypeNA:
 		return Result{Type: ResultTypeError, ValueString: "#N/A", ErrorMessage: msg}
 	case ErrorTypeDivideByZero:

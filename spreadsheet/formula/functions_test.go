@@ -1575,7 +1575,6 @@ func TestIndex(t *testing.T) {
 	sheet.Cell("A4").SetFormulaRaw(`=INDEX(A1:C3,1,1)`)
 	sheet.Cell("A5").SetFormulaArray(`=INDEX(A1:C3,2)`)
 	sheet.Cell("A6").SetFormulaArray(`=INDEX(A1:C3,,2)`)
-	sheet.Cell("A10").SetFormulaArray(`=INDEX(A1:C3)`)
 
 	sheet.RecalculateFormulas()
 
@@ -1586,7 +1585,23 @@ func TestIndex(t *testing.T) {
 		{`=C5`, `6 ResultTypeNumber`},
 		{`=A7`, `5 ResultTypeNumber`},
 		{`=A8`, `8 ResultTypeNumber`},
-		{`=A10`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestText(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=TEXT(A1,"0#.00")`, `00.00 ResultTypeString`},
+		{`=TEXT(1,"0.00")`, `1.00 ResultTypeString`},
+		{`=TEXT(12345678,"0.00E+000")`, `1.23E+007 ResultTypeString`},
+		{`=TEXT(0.987654321,"0.000%")`, `98.765% ResultTypeString`},
+		{`=TEXT(0.05,"# ??/??")`, `1/20 ResultTypeString`},
 	}
 
 	ctx := sheet.FormulaContext()
