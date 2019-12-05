@@ -18,42 +18,32 @@ import (
 )
 
 func init() {
-	// RegisterFunction("ASC") Need to figure out how to test
-	// RegisterFunction("BAHTTEXT")
 	RegisterFunction("CHAR", Char)
 	RegisterFunction("CLEAN", Clean)
 	RegisterFunction("CODE", Code)
 	RegisterFunction("CONCATENATE", Concat)
 	RegisterFunction("CONCAT", Concat)
 	RegisterFunction("_xlfn.CONCAT", Concat)
-	// RegisterFunction("DBCS")
-	// RegisterFunction("DOLLAR") Need to test with Excel
 	RegisterFunction("EXACT", Exact)
 	RegisterFunction("FIND", Find)
 	RegisterFunctionComplex("FINDB", Findb)
 	RegisterFunction("LEFT", Left)
-	RegisterFunction("LEFTB", Left) // for now
+	RegisterFunction("LEFTB", Left)
 	RegisterFunction("LEN", Len)
-	RegisterFunction("LENB", Len) // for now
+	RegisterFunction("LENB", Len)
 	RegisterFunction("LOWER", Lower)
-	// RegisterFunction("MID")
-	// RegisterFunction("MIDB")
-	// RegisterFunction("NUMBERVALUE")
-	// RegisterFunction("PHONETIC")
 	RegisterFunction("PROPER", Proper)
-	// RegisterFunction("REPLACE")
-	// RegisterFunction("REPLACEB")
+	RegisterFunction("REPLACE", Replace)
 	RegisterFunction("REPT", Rept)
 	RegisterFunction("RIGHT", Right)
-	RegisterFunction("RIGHTB", Right) // for now
+	RegisterFunction("RIGHTB", Right)
 	RegisterFunction("SEARCH", Search)
 	RegisterFunctionComplex("SEARCHB", Searchb)
-	//RegisterFunction("SUBSTITUTE", )
 	RegisterFunction("T", T)
-	//RegisterFunction("TEXT")
-	//RegisterFunction("TEXTJOIN")
+	RegisterFunction("TEXTJOIN", TextJoin)
+	RegisterFunction("_xlfn.TEXTJOIN", TextJoin)
 	RegisterFunction("TRIM", Trim)
-	RegisterFunction("_xlfn.UNICHAR", Char) // for now
+	RegisterFunction("_xlfn.UNICHAR", Char)
 	RegisterFunction("_xlfn.UNICODE", Unicode)
 	RegisterFunction("UPPER", Upper)
 	RegisterFunction("VALUE", Value)
@@ -327,12 +317,64 @@ func Lower(args []Result) Result {
 	if len(args) != 1 {
 		return MakeErrorResult("LOWER requires a single string argument")
 	}
-	s := args[0].AsString()
+
+	arg := args[0]
+	switch arg.Type {
+	case ResultTypeError:
+		return arg
+	case ResultTypeNumber, ResultTypeString:
+		return lower(args[0])
+	case ResultTypeList:
+		list := arg.ValueList
+		resultList := []Result{}
+		for _, v := range list {
+			vLower := lower(v)
+			if vLower.Type == ResultTypeError {
+				return vLower
+			}
+			resultList = append(resultList, vLower)
+		}
+		return MakeListResult(resultList)
+	case ResultTypeArray:
+		array := arg.ValueArray
+		resultArray := [][]Result{}
+		for _, r := range array {
+			row := []Result{}
+			for _, v := range r {
+				vLower := lower(v)
+				if vLower.Type == ResultTypeError {
+					return vLower
+				}
+				row = append(row, vLower)
+			}
+			resultArray = append(resultArray, row)
+		}
+		return MakeArrayResult(resultArray)
+
+	default:
+		return MakeErrorResult("Incorrect argument for LOWER")
+	}
+}
+
+func lower(arg Result) Result {
+	if arg.Type == ResultTypeEmpty {
+		return arg
+	}
+	s := arg.AsString()
 	if s.Type != ResultTypeString {
 		return MakeErrorResult("LOWER requires a single string argument")
 	}
-
-	return MakeStringResult(strings.ToLower(s.ValueString))
+	if arg.IsBoolean {
+		if s.ValueString == "1" {
+			return MakeStringResult("true")
+		} else if s.ValueString == "0" {
+			return MakeStringResult("false")
+		} else {
+			return MakeErrorResult("Incorrect argument for LOWER")
+		}
+	} else {
+		return MakeStringResult(strings.ToLower(s.ValueString))
+	}
 }
 
 // Proper is an implementation of the Excel PROPER function that returns a copy
@@ -570,4 +612,112 @@ func Value(args []Result) Result {
 	}
 
 	return MakeErrorResult("Incorrect argument for VALUE")
+}
+
+type parsedReplaceObject struct {
+	text string
+	startPos int
+	length int
+	textToReplace string
+}
+
+func parseReplaceResults(fname string, args []Result) (*parsedReplaceObject, Result) {
+	if len(args) != 4 {
+		return nil, MakeErrorResult(fname + " requires four arguments")
+	}
+	if args[0].Type != ResultTypeString {
+		return nil, MakeErrorResult(fname + " requires first argument to be a string")
+	}
+	text := args[0].ValueString
+	if args[1].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(fname + " requires second argument to be a number")
+	}
+	startPos := int(args[1].ValueNumber) - 1
+	if args[2].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(fname + " requires third argument to be a number")
+	}
+	length := int(args[2].ValueNumber)
+	if args[3].Type != ResultTypeString {
+		return nil, MakeErrorResult(fname + " requires fourth argument to be a string")
+	}
+	textToReplace := args[3].ValueString
+	return &parsedReplaceObject{
+		text,
+		startPos,
+		length,
+		textToReplace,
+	}, MakeEmptyResult()
+}
+
+// Replace is an implementation of the Excel REPLACE().
+func Replace(args []Result) Result {
+	parsed, errResult := parseReplaceResults("REPLACE", args)
+	if errResult.Type != ResultTypeEmpty {
+		return errResult
+	}
+	text := parsed.text
+	startPos := parsed.startPos
+	length := parsed.length
+	textToReplace := parsed.textToReplace
+	textLen := len(text)
+	if startPos > textLen {
+		startPos = textLen
+	}
+	endPos := startPos + length
+	if endPos > textLen {
+		endPos = textLen
+	}
+	newText := text[0:startPos] + textToReplace + text[endPos:]
+	return MakeStringResult(newText)
+}
+
+// TextJoin is an implementation of the Excel TEXTJOIN function.
+func TextJoin(args []Result) Result {
+	if len(args) < 3 {
+		return MakeErrorResult("TEXTJOIN requires three or more arguments")
+	}
+
+	if args[0].Type != ResultTypeString {
+		return MakeErrorResult("TEXTJOIN requires delimiter to be a string")
+	}
+	delimiter := args[0].ValueString
+
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("TEXTJOIN requires second argument to be a number or boolean")
+	}
+	ignoreEmpty := args[1].ValueNumber != 0
+
+	arr := collectStrings(args[2:], []string{}, ignoreEmpty)
+	return MakeStringResult(strings.Join(arr, delimiter))
+}
+
+func collectStrings(args []Result, arr []string, ignoreEmpty bool) []string {
+	for _, result := range args {
+		switch result.Type {
+		case ResultTypeEmpty:
+			if !ignoreEmpty {
+				arr = append(arr, "")
+			}
+		case ResultTypeString:
+			if result.ValueString != "" || !ignoreEmpty {
+				arr = append(arr, result.ValueString)
+			}
+		case ResultTypeNumber:
+			arr = append(arr, result.Value())
+		case ResultTypeList:
+			arr = appendSlices(arr, collectStrings(result.ValueList, []string{}, ignoreEmpty))
+		case ResultTypeArray:
+			for _, row := range result.ValueArray {
+				arr = appendSlices(arr, collectStrings(row, []string{}, ignoreEmpty))
+			}
+		}
+	}
+	return arr
+}
+
+func appendSlices(s0, s1 []string) []string {
+	for _, item := range s1 {
+		s0 = append(s0, item)
+	}
+	return s0
 }

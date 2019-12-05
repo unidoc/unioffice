@@ -1292,3 +1292,304 @@ func TestEomonth(t *testing.T) {
 	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
+
+func TestDuration(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(2018, time.July, 1, 0, 0, 0, 0, time.UTC)) // settlement date
+	sheet.Cell("A2").SetTime(time.Date(2048, time.January, 1, 0, 0, 0, 0, time.UTC)) // maturity date
+	sheet.Cell("A3").SetNumber(0.08) // coupon rate
+	sheet.Cell("A4").SetNumber(0.09) // yield rate
+	sheet.Cell("A5").SetNumber(2) // frequency of payments
+	sheet.Cell("A6").SetNumber(0) // basis
+	sheet.Cell("A7").SetString("07/01/2018") // settlement date in string format
+	sheet.Cell("A8").SetString("01/01/2048") // maturity date in string format
+
+	td := []testStruct{
+		{`=DURATION(A1,A2,A3,A4,A5,A6)`, `10.9191452815 ResultTypeNumber`},
+		{`=DURATION(A7,A8,A3,A4,A5,A6)`, `10.9191452815 ResultTypeNumber`},
+		{`=DURATION(A1,A2,A3,A4,A5,5)`, `#NUM! ResultTypeError`},
+		{`=DURATION(A8,A7,A3,A4,A5,A6)`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestMduration(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(2008, time.January, 1, 0, 0, 0, 0, time.UTC)) // settlement date
+	sheet.Cell("A2").SetTime(time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC)) // maturity date
+	sheet.Cell("A3").SetNumber(0.08) // coupon rate
+	sheet.Cell("A4").SetNumber(0.09) // yield rate
+	sheet.Cell("A5").SetNumber(2) // frequency of payments
+	sheet.Cell("A6").SetNumber(0) // basis
+	sheet.Cell("A7").SetString("01/01/2008") // settlement date in string format
+	sheet.Cell("A8").SetString("01/01/2016") // maturity date in string format
+
+	td := []testStruct{
+		{`=MDURATION(A1,A2,A3,A4,A5,A6)`, `5.73566981391 ResultTypeNumber`},
+		{`=MDURATION(A7,A8,A3,A4,A5,A6)`, `5.73566981391 ResultTypeNumber`},
+		{`=MDURATION(A1,A2,A3,A4,A5,5)`, `#NUM! ResultTypeError`},
+		{`=MDURATION(A8,A7,A3,A4,A5,A6)`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestPduration(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=PDURATION(0.025,2000,2200)`, `3.85986616262 ResultTypeNumber`},
+		{`=PDURATION(0,2000,2200)`, `#NUM! ResultTypeError`},
+		{`=PDURATION(0.025,"2000",2200)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestRow(t *testing.T) {
+	td := []testStruct{
+		{`=ROW(A1)`, `1 ResultTypeNumber`},
+		{`=ROW(A11)`, `11 ResultTypeNumber`},
+		{`=ROW(B11)`, `11 ResultTypeNumber`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestRows(t *testing.T) {
+	td := []testStruct{
+		{`=ROWS(A1:E8)`, `8 ResultTypeNumber`},
+		{`=ROWS(E8:A1)`, `#VALUE! ResultTypeError`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestLookup(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("A2").SetNumber(2)
+	sheet.Cell("A3").SetNumber(3)
+
+	sheet.Cell("B1").SetString("value1")
+	sheet.Cell("B2").SetString("value2")
+	sheet.Cell("B3").SetString("value3")
+
+	td := []testStruct{
+		{`=LOOKUP(2,A1:A3,B1:B3)`, `value2 ResultTypeString`},
+		{`=LOOKUP(2,A1:B1,A2:B2)`, `#N/A ResultTypeError`},
+		{`=LOOKUP(1,A1:B1,A2:B2)`, `2 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestVlookup(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(100)
+	sheet.Cell("A2").SetNumber(200)
+	sheet.Cell("A3").SetNumber(300)
+	sheet.Cell("A4").SetNumber(400)
+
+	sheet.Cell("B1").SetString("value1")
+	sheet.Cell("B2").SetString("value2")
+	sheet.Cell("B3").SetString("value3")
+	sheet.Cell("B4").SetString("value4")
+
+	td := []testStruct{
+		{`=VLOOKUP(150,A1:B4,2)`, `value1 ResultTypeString`},
+		{`=VLOOKUP(250,A1:B4,2)`, `value2 ResultTypeString`},
+		{`=VLOOKUP(250,A1:B4,2,FALSE)`, `#N/A ResultTypeError`},
+		{`=VLOOKUP(300,A1:B4,2,FALSE)`, `value3 ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestLarge(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(400)
+	sheet.Cell("A2").SetNumber(300)
+	sheet.Cell("A3").SetNumber(500)
+	sheet.Cell("A4").SetNumber(100)
+	sheet.Cell("A5").SetNumber(200)
+	sheet.Cell("B1").SetString("abcde")
+	sheet.Cell("B2").SetNumber(150)
+	sheet.Cell("B3").SetNumber(350)
+	sheet.Cell("B4").SetNumber(450)
+	sheet.Cell("B5").SetNumber(250)
+
+	td := []testStruct{
+		{`=LARGE(A1:B5,4)`, `350 ResultTypeNumber`},
+		{`=LARGE(A1:B5,0)`, `#NUM! ResultTypeError`},
+		{`=LARGE(A1:B5,10)`, `#NUM! ResultTypeError`},
+		{`=LARGE(A2:B2,2)`, `150 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestSmall(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(400)
+	sheet.Cell("A2").SetNumber(300)
+	sheet.Cell("A3").SetNumber(500)
+	sheet.Cell("A4").SetNumber(100)
+	sheet.Cell("A5").SetNumber(200)
+	sheet.Cell("B1").SetString("abcde")
+	sheet.Cell("B2").SetNumber(150)
+	sheet.Cell("B3").SetNumber(350)
+	sheet.Cell("B4").SetNumber(450)
+	sheet.Cell("B5").SetNumber(250)
+
+	td := []testStruct{
+		{`=SMALL(A1:B5,4)`, `250 ResultTypeNumber`},
+		{`=SMALL(A1:B5,0)`, `#NUM! ResultTypeError`},
+		{`=SMALL(A1:B5,10)`, `#NUM! ResultTypeError`},
+		{`=SMALL(A2:B2,2)`, `300 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestLower(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(400)
+	sheet.Cell("A2").SetString("Hello")
+	sheet.Cell("B1").SetString("World!")
+
+	sheet.Cell("D1").SetFormulaArray("=LOWER(A1:B2)")
+	sheet.RecalculateFormulas()
+
+	td := []testStruct{
+		{`=D1`, `400 ResultTypeArray`},
+		{`=D2`, `hello ResultTypeString`},
+		{`=E1`, `world! ResultTypeString`},
+		{`=E2`, ` ResultTypeEmpty`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestReplace(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(400)
+	sheet.Cell("A2").SetString("Hello")
+	sheet.Cell("B1").SetString("World!")
+
+	sheet.Cell("D1").SetFormulaArray("=LOWER(A1:B2)")
+	sheet.RecalculateFormulas()
+
+	td := []testStruct{
+		{`=REPLACE("Hello World!",7,5,"Earth")`, `Hello Earth! ResultTypeString`},
+		{`=REPLACE("Hello World!",7,10,"Earth")`, `Hello Earth ResultTypeString`},
+		{`=REPLACE("Hello World",30,10,"!")`, `Hello World! ResultTypeString`},
+		{`=REPLACE("Hello World!",7,0,"new ")`, `Hello new World! ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestTextJoin(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("B1").SetString("2")
+	sheet.Cell("A2").SetNumber(3)
+	sheet.Cell("B2").SetString("4")
+	sheet.Cell("A3").SetNumber(5)
+	sheet.Cell("B3").SetString("6")
+	sheet.Cell("A4").SetString("7")
+	sheet.Cell("A6").SetString("8")
+	sheet.Cell("A7").SetString("9")
+
+	td := []testStruct{
+		{`=TEXTJOIN(".",FALSE,A1)`, `1 ResultTypeString`},
+		{`=TEXTJOIN("|",TRUE,A4:A7)`, `7|8|9 ResultTypeString`},
+		{`=TEXTJOIN("|",FALSE,A4:A7)`, `7||8|9 ResultTypeString`},
+		{`=TEXTJOIN(".",TRUE,A1:B2,A3:B3,A4,A5,A6,A7)`, `1.2.3.4.5.6.7.8.9 ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestIndex(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("B1").SetString("2")
+	sheet.Cell("C1").SetNumber(3)
+	sheet.Cell("B2").SetNumber(5)
+	sheet.Cell("C2").SetString("6")
+	sheet.Cell("A3").SetString("7")
+	sheet.Cell("B3").SetString("8")
+	sheet.Cell("C3").SetString("9")
+
+	sheet.Cell("A4").SetFormulaRaw(`=INDEX(A1:C3,1,1)`)
+	sheet.Cell("A5").SetFormulaArray(`=INDEX(A1:C3,2)`)
+	sheet.Cell("A6").SetFormulaArray(`=INDEX(A1:C3,,2)`)
+	sheet.Cell("A10").SetFormulaArray(`=INDEX(A1:C3)`)
+
+	sheet.RecalculateFormulas()
+
+	td := []testStruct{
+		{`=A4`, `1 ResultTypeNumber`},
+		{`=A5`, `0 ResultTypeArray`},
+		{`=B5`, `5 ResultTypeNumber`},
+		{`=C5`, `6 ResultTypeNumber`},
+		{`=A7`, `5 ResultTypeNumber`},
+		{`=A8`, `8 ResultTypeNumber`},
+		{`=A10`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}

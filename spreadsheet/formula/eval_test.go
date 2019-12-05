@@ -177,5 +177,4 @@ func TestArrayFormula(t *testing.T) {
 	if got := sheet.Cell("F2").GetFormattedValue(); got != "8" {
 		t.Errorf("expected 8 in F2, got %s", got)
 	}
-
 }

@@ -13,6 +13,7 @@ import (
 
 	"github.com/unidoc/unioffice/internal/wildcard"
 	"github.com/unidoc/unioffice/spreadsheet/reference"
+	"github.com/unidoc/unioffice/internal/mergesort"
 )
 
 func init() {
@@ -24,7 +25,11 @@ func init() {
 	RegisterFunctionComplex("OFFSET", Offset)
 	RegisterFunction("MATCH", Match)
 	RegisterFunction("HLOOKUP", HLookup)
+	RegisterFunction("LARGE", Large)
 	RegisterFunction("LOOKUP", Lookup)
+	RegisterFunction("ROW", Row)
+	RegisterFunction("ROWS", Rows)
+	RegisterFunction("SMALL", Small)
 	RegisterFunction("VLOOKUP", VLookup)
 	RegisterFunction("TRANSPOSE", Transpose)
 }
@@ -79,8 +84,9 @@ func Columns(args []Result) Result {
 
 // Index implements the Excel INDEX function.
 func Index(args []Result) Result {
-	if len(args) < 3 {
-		return MakeErrorResult("INDEX requires three arguments")
+	argsNum := len(args)
+	if argsNum < 2 || argsNum > 3 {
+		return MakeErrorResult("INDEX requires from one to three arguments")
 	}
 	arr := args[0]
 	if arr.Type != ResultTypeArray && arr.Type != ResultTypeList {
@@ -90,27 +96,71 @@ func Index(args []Result) Result {
 	if rowArg.Type != ResultTypeNumber {
 		return MakeErrorResult("INDEX requires numeric row argument")
 	}
-	colArg := args[2].AsNumber()
-	if colArg.Type != ResultTypeNumber {
-		return MakeErrorResult("INDEX requires numeric col argument")
-	}
 	row := int(rowArg.ValueNumber) - 1
-	col := int(colArg.ValueNumber) - 1
+	col := -1
+	if argsNum == 3 {
+		colArg := args[2].AsNumber()
+		if colArg.Type != ResultTypeNumber {
+			return MakeErrorResult("INDEX requires numeric col argument")
+		}
+		col = int(colArg.ValueNumber) - 1
+	}
+	if row == -1 && col == -1 {
+		return MakeErrorResult("INDEX requires row or col argument")
+	}
 	var rowVal []Result
 	if arr.Type == ResultTypeArray {
-		if row < 0 || row >= len(arr.ValueArray) {
+		valueArray := arr.ValueArray
+		if row < -1 || row >= len(valueArray) {
 			return MakeErrorResult("INDEX has row out of range")
 		}
-		rowVal = arr.ValueArray[row]
+		if row == -1 {
+			if col >= len(valueArray[0]) {
+				return MakeErrorResult("INDEX has col out of range")
+			}
+			oneColumnArray := [][]Result{}
+			for _, row := range valueArray {
+				v := row[col]
+				if v.Type == ResultTypeEmpty {
+					v = MakeNumberResult(0)
+				}
+				oneColumnArray = append(oneColumnArray, []Result{v})
+			}
+			return MakeArrayResult(oneColumnArray)
+		}
+		rowVal = valueArray[row]
 	} else {
-		if row < 0 || row >= 1 {
+		valueList := arr.ValueList
+		if row < -1 || row >= 1 {
 			return MakeErrorResult("INDEX has row out of range")
 		}
-		rowVal = arr.ValueList
+		if row == -1 {
+			if col >= len(valueList) {
+				return MakeErrorResult("INDEX has col out of range")
+			}
+			v := valueList[col]
+			if v.Type == ResultTypeEmpty {
+				v = MakeNumberResult(0)
+			}
+			return v
+		}
+		rowVal = valueList
 	}
 
-	if col < 0 || col > len(rowVal) {
+	if col < -1 || col > len(rowVal) {
 		return MakeErrorResult("INDEX has col out of range")
+	}
+
+	if col == -1 {
+		listResult := []Result{}
+		for _, v := range rowVal {
+			if v.Type == ResultTypeEmpty {
+				listResult = append(listResult, MakeNumberResult(0))
+			} else {
+				listResult = append(listResult, v)
+			}
+		}
+		return MakeArrayResult([][]Result{listResult})
 	}
 
 	rv := rowVal[col]
@@ -600,4 +650,99 @@ func Transpose(args []Result) Result {
 		}
 	}
 	return MakeArrayResult(res)
+}
+
+// Row implements the Excel ROW function.
+func Row(args []Result) Result {
+	if len(args) < 1 {
+		return MakeErrorResult("ROW requires one argument")
+	}
+	ref := args[0].Ref
+	if ref.Type != ReferenceTypeCell {
+		return MakeErrorResult("ROW requires an argument to be of type reference")
+	}
+	cr, err := reference.ParseCellReference(ref.Value)
+	if err != nil {
+		return MakeErrorResult("Incorrect reference: " + ref.Value)
+	}
+	return MakeNumberResult(float64(cr.RowIdx))
+}
+
+// Rows implements the Excel ROWS function.
+func Rows(args []Result) Result {
+	if len(args) < 1 {
+		return MakeErrorResult("ROWS requires one argument")
+	}
+	arrResult := args[0]
+	if arrResult.Type != ResultTypeArray && arrResult.Type != ResultTypeList {
+		return MakeErrorResult("ROWS requires first argument of type array")
+	}
+	arr := arrResult.ValueArray
+	if len(arr) == 0 {
+		return MakeErrorResult("ROWS requires array to contain at least 1 row")
+	}
+	return MakeNumberResult(float64(len(arr)))
+}
+
+// Large implements the Excel LARGE function.
+func Large(args []Result) Result {
+	return kth(args, true)
+}
+
+// Small implements the Excel SMALL function.
+func Small(args []Result) Result {
+	return kth(args, false)
+}
+
+func kth(args []Result, large bool) Result {
+	var funcName string
+	if large {
+		funcName = "LARGE"
+	} else {
+		funcName = "SMALL"
+	}
+	if len(args) != 2 {
+		return MakeErrorResult(funcName + " requires two arguments")
+	}
+	arrResult := args[0]
+	var arr [][]Result
+	switch arrResult.Type {
+	case ResultTypeArray:
+		arr = arrResult.ValueArray
+	case ResultTypeList:
+		arr = [][]Result{arrResult.ValueList}
+	default:
+		return MakeErrorResult(funcName + " requires first argument of type array")
+	}
+	if len(arr) == 0 {
+		return MakeErrorResult(funcName + " requires array to contain at least 1 row")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult(funcName + " requires second argument of type number")
+	}
+	kfloat := args[1].ValueNumber
+	if kfloat < 1 {
+		return MakeErrorResultType(ErrorTypeNum, funcName + " requires second argument of type number more than 0")
+	}
+	k := int(kfloat)
+	if float64(k) != kfloat {
+		return MakeErrorResultType(ErrorTypeNum, funcName + " requires second argument of type number more than 0")
+	}
+	unsorted := []float64{}
+	for _, row := range arr {
+		for _, v := range row {
+			if v.Type == ResultTypeNumber {
+				unsorted = append(unsorted, v.ValueNumber)
+			}
+		}
+	}
+	if k > len(unsorted) {
+		return MakeErrorResultType(ErrorTypeNum, funcName + " requires second argument of type number less or equal than the number of numbers in the array")
+	}
+	sorted := mergesort.MergeSort(unsorted)
+	if large {
+		return MakeNumberResult(sorted[len(sorted) - k])
+	} else {
+		return MakeNumberResult(sorted[k - 1])
+	}
 }

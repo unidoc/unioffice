@@ -147,26 +147,32 @@ func Days(args []Result) Result {
 		return MakeErrorResult("DAYS requires two arguments")
 	}
 	var sd, ed float64
-	if args[0].Type == ResultTypeNumber {
+	switch args[0].Type {
+	case ResultTypeNumber:
 		ed = args[0].ValueNumber
-	} else {
+	case ResultTypeString:
 		edResult := DateValue([]Result{args[0]})
 		if edResult.Type == ResultTypeError {
 			return MakeErrorResult("Incorrect end date for DAYS")
 		}
 		ed = edResult.ValueNumber
+	default:
+		return MakeErrorResult("Incorrect argument for DAYS")
 	}
-	if args[1].Type == ResultTypeNumber {
+	switch args[1].Type {
+	case ResultTypeNumber:
 		sd = args[1].ValueNumber
 		if sd < 62 && ed >= 62 {
 			sd--
 		}
-	} else {
+	case ResultTypeString:
 		sdResult := DateValue([]Result{args[1]})
 		if sdResult.Type == ResultTypeError {
 			return MakeErrorResult("Incorrect start date for DAYS")
 		}
 		sd = sdResult.ValueNumber
+	default:
+		return MakeErrorResult("Incorrect argument for DAYS")
 	}
 	days := float64(int(ed - sd))
 	return MakeNumberResult(days)
@@ -769,11 +775,15 @@ func YearFrac(ctx Context, ev Evaluator, args []Result) Result {
 	if err != nil {
 		return MakeErrorResult("incorrect start date")
 	}
-	startDateS := startDate.Unix()
 	endDate, err := getValueAsTime(args[1].Value(), epoch)
 	if err != nil {
 		return MakeErrorResult("incorrect end date")
 	}
+	return yearFrac(startDate, endDate, basis)
+}
+
+func yearFrac(startDate, endDate time.Time, basis int) Result {
+	startDateS := startDate.Unix()
 	endDateS := endDate.Unix()
 	sy, sm, sd := startDate.Date()
 	ey, em, ed := endDate.Date()
