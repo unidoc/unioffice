@@ -1608,3 +1608,54 @@ func TestText(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestSum(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("B1").SetNumber(2)
+	sheet.Cell("C1").SetNumber(3)
+	sheet.Cell("D1").SetNumber(4)
+	sheet.Cell("E1").SetNumber(5)
+
+	sheet.Cell("A2").SetNumber(1)
+	sheet.Cell("B2").SetNumber(10)
+	sheet.Cell("C2").SetNumber(100)
+	sheet.Cell("D2").SetNumber(1000)
+	sheet.Cell("E2").SetNumber(10000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=SUM(A1:E1)`, `15 ResultTypeNumber`},
+		{`=SUM(A2:C2,E2)`, `10111 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIf(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("A2").SetNumber(2)
+	sheet.Cell("A3").SetNumber(3)
+	sheet.Cell("A4").SetNumber(4)
+	sheet.Cell("A5").SetNumber(5)
+	sheet.Cell("A6").SetFormulaArray(`IF(A1:A5>2,"passed","not passed")`)
+
+	sheet.RecalculateFormulas()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=IF(A5=5,"five",""))`, `five ResultTypeString`},
+		{`=A6)`, `not passed ResultTypeArray`},
+		{`=A8)`, `passed ResultTypeString`},
+		{`=A9)`, `passed ResultTypeString`},
+	}
+
+	runTests(t, ctx, td)
+}
