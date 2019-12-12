@@ -404,18 +404,18 @@ func Amordegrc(args []Result) Result {
 	if yfResult.Type == ResultTypeError {
 		return MakeErrorResult("incorrect dates for AMORDEGRC")
 	}
-	nRate := math.Round(yfResult.ValueNumber * rate * cost)
+	nRate := mathRound(yfResult.ValueNumber * rate * cost)
 	cost -= nRate
 	rest := cost - salvage
 
 	for n := 0; n < period; n++ {
-		nRate = math.Round(rate * cost)
+		nRate = mathRound(rate * cost)
 		rest -= nRate
 		if rest < 0 {
 			switch period - n {
 			case 0:
 			case 1:
-				return MakeNumberResult(math.Round(cost * 0.5))
+				return MakeNumberResult(mathRound(cost * 0.5))
 			default:
 				return MakeNumberResult(0)
 			}
@@ -538,4 +538,8 @@ func parseAmorArgs(args []Result, funcName string) (*amorArgs, Result) {
 		rate,
 		basis,
 	}, MakeEmptyResult()
+}
+
+func mathRound(x float64) float64 {
+	return float64(int(x + 0.5))
 }
