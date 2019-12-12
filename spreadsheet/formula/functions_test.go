@@ -1659,3 +1659,76 @@ func TestIf(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestAccrintm(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=ACCRINTM(39539,39614,0.1,1000,0))`, `20.5555555555 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,1))`, `20.4918032786 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,2))`, `20.8333333333 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,3))`, `20.5479452054 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,4))`, `20.5555555555 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestAmordegrc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=AMORDEGRC(2400,39679,39813,300,1,0.15,1)`, `776 ResultTypeNumber`},
+		{`=AMORDEGRC(2400,39679,39813,300,1,0.15,2)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestAmorlinc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=AMORLINC(2400,39679,39813,300,1,0.15,1)`, `360 ResultTypeNumber`},
+		{`=AMORLINC(2400,39679,39813,300,1,0.15,2)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCouppcd(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPPCD(40568,40862,2,1)`, `40497 ResultTypeNumber`},
+		{`=COUPPCD(40872,40568,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupnum(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPNUM(39107,39767,2,1)`, `4 ResultTypeNumber`},
+		{`=COUPNUM(39767,39107,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}

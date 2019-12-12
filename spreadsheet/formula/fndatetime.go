@@ -779,10 +779,14 @@ func YearFrac(ctx Context, ev Evaluator, args []Result) Result {
 	if err != nil {
 		return MakeErrorResult("incorrect end date")
 	}
-	return yearFrac(startDate, endDate, basis)
+	return yearFracFromTime(startDate, endDate, basis)
 }
 
-func yearFrac(startDate, endDate time.Time, basis int) Result {
+func yearFrac(startDate, endDate float64, basis int) Result {
+	return yearFracFromTime(dateFromDays(startDate), dateFromDays(endDate), basis)
+}
+
+func yearFracFromTime(startDate, endDate time.Time, basis int) Result {
 	startDateS := startDate.Unix()
 	endDateS := endDate.Unix()
 	sy, sm, sd := startDate.Date()

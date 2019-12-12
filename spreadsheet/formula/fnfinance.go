@@ -17,24 +17,43 @@ func init() {
 	RegisterFunction("MDURATION", Mduration)
 	RegisterFunction("PDURATION", Pduration)
 	RegisterFunction("_xlfn.PDURATION", Pduration)
+	RegisterFunction("ACCRINTM", Accrintm)
+	RegisterFunction("AMORDEGRC", Amordegrc)
+	RegisterFunction("AMORLINC", Amorlinc)
+	RegisterFunction("COUPNUM", Coupnum)
+	RegisterFunction("COUPPCD", Couppcd)
 }
 
 // Duration implements the Excel DURATION function.
 func Duration(args []Result) Result {
-	settlementDate, maturityDate, coupon, yield, freq, basis, err := parseDurationData(args, "DURATION")
+	parsedArgs, err := parseDurationData(args, "DURATION")
 	if err.Type == ResultTypeError {
 		return err
 	}
-	return getDuration(dateFromDays(settlementDate), dateFromDays(maturityDate), coupon, yield, freq, basis)
+	settlementDate := parsedArgs.settlementDate
+	maturityDate := parsedArgs.maturityDate
+	coupon := parsedArgs.coupon
+	yield := parsedArgs.yield
+	freq := parsedArgs.freq
+	basis := parsedArgs.basis
+
+	return getDuration(settlementDate, maturityDate, coupon, yield, freq, basis)
 }
 
 // Mduration implements the Excel MDURATION function.
 func Mduration(args []Result) Result {
-	settlementDate, maturityDate, coupon, yield, freq, basis, err := parseDurationData(args, "MDURATION")
+	parsedArgs, err := parseDurationData(args, "MDURATION")
 	if err.Type == ResultTypeError {
 		return err
 	}
-	duration := getDuration(dateFromDays(settlementDate), dateFromDays(maturityDate), coupon, yield, freq, basis)
+	settlementDate := parsedArgs.settlementDate
+	maturityDate := parsedArgs.maturityDate
+	coupon := parsedArgs.coupon
+	yield := parsedArgs.yield
+	freq := parsedArgs.freq
+	basis := parsedArgs.basis
+
+	duration := getDuration(settlementDate, maturityDate, coupon, yield, freq, basis)
 	if duration.Type == ResultTypeError {
 		return duration
 	}
@@ -71,8 +90,88 @@ func Pduration(args []Result) Result {
 	return MakeNumberResult((math.Log10(specifiedValue) - math.Log10(currentValue)) / math.Log10(1 + rate))
 }
 
-// getCouppcd finds last coupon date before settlement (can be equal to settlement).
-func getCouppcd(settlementDate, maturityDate time.Time, freq int) time.Time {
+type couponArgs struct {
+	settlementDate float64
+	maturityDate float64
+	freq int
+	basis int
+}
+
+// Couppcd implements the Excel COUPPCD function.
+func Couppcd(args []Result) Result {
+	parsedArgs, err := parseCouponArgs(args, "COUPPCD")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	settlementDate := dateFromDays(parsedArgs.settlementDate)
+	maturityDate := dateFromDays(parsedArgs.maturityDate)
+	freq := parsedArgs.freq
+	pcd := couppcd(settlementDate, maturityDate, freq)
+	y := pcd.Year()
+	m := int(pcd.Month())
+	d := pcd.Day()
+	return MakeNumberResult(daysFromDate(y, m, d))
+}
+
+// Coupnum implements the Excel COUPNUM function.
+func Coupnum(args []Result) Result {
+	parsedArgs, err := parseCouponArgs(args, "COUPNUM")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	settlementDate := dateFromDays(parsedArgs.settlementDate)
+	maturityDate := dateFromDays(parsedArgs.maturityDate)
+	freq := parsedArgs.freq
+	basis := parsedArgs.basis
+	return MakeNumberResult(coupnum(settlementDate, maturityDate, freq, basis))
+}
+
+func parseCouponArgs(args []Result, funcName string) (*couponArgs, Result) {
+	argsNum := len(args)
+	if argsNum != 3 && argsNum != 4 {
+		return nil, MakeErrorResult(funcName + " requires four arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires settlement date to be number argument")
+	}
+	settlementDate := args[0].ValueNumber
+	if settlementDate < 0 {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires settlement date to be non negative")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires maturity date to be number argument")
+	}
+	maturityDate := args[1].ValueNumber
+	if maturityDate <= settlementDate {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires maturity date to be later than settlement date")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires frequency to be number argument")
+	}
+	freq := args[2].ValueNumber
+	if !checkFreq(freq) {
+		return nil, MakeErrorResult("Incorrect frequency for " + funcName)
+	}
+	basis := 0
+	if argsNum == 4 {
+		if args[3].Type != ResultTypeNumber {
+			return nil, MakeErrorResult(funcName + " requires basis to be number argument")
+		}
+		basis = int(args[3].ValueNumber)
+		if !checkBasis(basis) {
+			return nil, MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for " + funcName)
+		}
+	}
+	return &couponArgs{
+		settlementDate,
+		maturityDate,
+		int(freq),
+		basis,
+	}, MakeEmptyResult()
+}
+
+// couppcd finds last coupon date before settlement (can be equal to settlement).
+func couppcd(settlementDate, maturityDate time.Time, freq int) time.Time {
 	rDate := maturityDate
 	diffYears := settlementDate.Year() - maturityDate.Year()
 	rDate = rDate.AddDate(diffYears, 0, 0)
@@ -86,10 +185,10 @@ func getCouppcd(settlementDate, maturityDate time.Time, freq int) time.Time {
 	return rDate
 }
 
-// getCoupnum gets count of coupon dates.
-func getCoupnum(settlementDate, maturityDate time.Time, freq, basis int) float64 {
+// coupnum gets count of coupon dates.
+func coupnum(settlementDate, maturityDate time.Time, freq, basis int) float64 {
 	if maturityDate.After(settlementDate) {
-		aDate := getCouppcd(settlementDate, maturityDate, freq)
+		aDate := couppcd(settlementDate, maturityDate, freq)
 		months := (maturityDate.Year() - aDate.Year()) * 12 + int(maturityDate.Month()) - int(aDate.Month())
 		return float64(months * freq) / 12.0
 	}
@@ -97,30 +196,30 @@ func getCoupnum(settlementDate, maturityDate time.Time, freq, basis int) float64
 }
 
 // getDuration returns the Macauley duration for an assumed par value of $100. It is defined as the weighted average of the present value of cash flows, and is used as a measure of a bond price's response to changes in yield.
-func getDuration(settlementDate, maturityDate time.Time, coup, yield, freq float64, basis int) Result {
+func getDuration(settlementDate, maturityDate, coup, yield, freq float64, basis int) Result {
 	fracResult := yearFrac(settlementDate, maturityDate, basis)
 	if fracResult.Type == ResultTypeError {
 		return fracResult
 	}
 	frac := fracResult.ValueNumber
-	nCoups := getCoupnum(settlementDate, maturityDate, int(freq), basis)
+	coups := coupnum(dateFromDays(settlementDate), dateFromDays(maturityDate), int(freq), basis)
 	duration := 0.0
 	p := 0.0
 	coup *= 100 / freq
 	yield /= freq
 	yield++
-	diff := frac * freq - nCoups
-	for t := 1.0; t < nCoups; t++ {
+	diff := frac * freq - coups
+	for t := 1.0; t < coups; t++ {
 		tDiff := t + diff
 		add := coup / math.Pow(yield, tDiff)
 		p += add
 		duration += tDiff * add
 	}
 
-	add := (coup + 100) / math.Pow(yield, nCoups + diff)
+	add := (coup + 100) / math.Pow(yield, coups + diff)
 
 	p += add
-	duration += (nCoups + diff) * add
+	duration += (coups + diff) * add
 
 	duration /= p
 	duration /= freq
@@ -128,10 +227,19 @@ func getDuration(settlementDate, maturityDate time.Time, coup, yield, freq float
 	return MakeNumberResult(duration)
 }
 
+type durationArgs struct {
+	settlementDate float64
+	maturityDate float64
+	coupon float64
+	yield float64
+	freq float64
+	basis int
+}
+
 // validateDurationData returns settlement date, maturity date, coupon rate, yield rate, frequency of payments, day count basis and error result by parsing incoming arguments
-func parseDurationData(args []Result, funcName string) (float64, float64, float64, float64, float64, int, Result) {
+func parseDurationData(args []Result, funcName string) (*durationArgs, Result) {
 	if len(args) != 5 && len(args) != 6 {
-		return 0, 0, 0, 0, 0, 0, MakeErrorResult(funcName + " requires five or six arguments")
+		return nil, MakeErrorResult(funcName + " requires five or six arguments")
 	}
 	var settlementDate, maturityDate float64
 	settlementResult := args[0]
@@ -141,11 +249,11 @@ func parseDurationData(args []Result, funcName string) (float64, float64, float6
 	case ResultTypeString:
 		settlementFromString := DateValue([]Result{settlementResult})
 		if settlementFromString.Type == ResultTypeError {
-			return 0, 0, 0, 0, 0, 0, MakeErrorResult("Incorrect settltment date for " + funcName)
+			return nil, MakeErrorResult("Incorrect settltment date for " + funcName)
 		}
 		settlementDate = settlementFromString.ValueNumber
 	default:
-		return 0, 0, 0, 0, 0, 0, MakeErrorResult("Incorrect argument for " + funcName)
+		return nil, MakeErrorResult("Incorrect argument for " + funcName)
 	}
 	maturityResult := args[1]
 	switch maturityResult.Type {
@@ -154,49 +262,280 @@ func parseDurationData(args []Result, funcName string) (float64, float64, float6
 	case ResultTypeString:
 		maturityFromString := DateValue([]Result{maturityResult})
 		if maturityFromString.Type == ResultTypeError {
-			return 0, 0, 0, 0, 0, 0, MakeErrorResult("Incorrect settltment date for " + funcName)
+			return nil, MakeErrorResult("Incorrect settltment date for " + funcName)
 		}
 		maturityDate = maturityFromString.ValueNumber
 	default:
-		return 0, 0, 0, 0, 0, 0, MakeErrorResult("Incorrect argument for " + funcName)
+		return nil, MakeErrorResult("Incorrect argument for " + funcName)
 	}
 	if settlementDate >= maturityDate {
-		return 0, 0, 0, 0, 0, 0, MakeErrorResultType(ErrorTypeNum, "Settlement date should be before maturity date")
+		return nil, MakeErrorResultType(ErrorTypeNum, "Settlement date should be before maturity date")
 	}
 	couponResult := args[2]
 	if couponResult.Type != ResultTypeNumber {
-		return 0, 0, 0, 0, 0, 0, MakeErrorResult(funcName + " requires third argument of type number")
+		return nil, MakeErrorResult(funcName + " requires third argument of type number")
 	}
 	coupon := couponResult.ValueNumber
 	if coupon < 0 {
-		return 0, 0, 0, 0, 0, 0, MakeErrorResultType(ErrorTypeNum, "Coupon rate should not be negative")
+		return nil, MakeErrorResultType(ErrorTypeNum, "Coupon rate should not be negative")
 	}
 	yieldResult := args[3]
 	if yieldResult.Type != ResultTypeNumber {
-		return 0, 0, 0, 0, 0, 0, MakeErrorResult(funcName + " requires fourth argument of type number")
+		return nil, MakeErrorResult(funcName + " requires fourth argument of type number")
 	}
 	yield := yieldResult.ValueNumber
 	if yield < 0 {
-		return 0, 0, 0, 0, 0, 0, MakeErrorResultType(ErrorTypeNum, "Yield rate should not be negative")
+		return nil, MakeErrorResultType(ErrorTypeNum, "Yield rate should not be negative")
 	}
 	freqResult := args[4]
 	if freqResult.Type != ResultTypeNumber {
-		return 0, 0, 0, 0, 0, 0, MakeErrorResult(funcName + " requires fifth argument of type number")
+		return nil, MakeErrorResult(funcName + " requires fifth argument of type number")
 	}
 	freq := float64(int(freqResult.ValueNumber))
-	if freq != 1 && freq != 2 && freq != 4 {
-		return 0, 0, 0, 0, 0, 0, MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
+	if !checkFreq(freq) {
+		return nil, MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
 	}
 	basis := 0
 	if len(args) == 6 {
 		basisResult := args[5]
 		if basisResult.Type != ResultTypeNumber {
-			return 0, 0, 0, 0, 0, 0, MakeErrorResult(funcName + " requires sixth argument of type number")
+			return nil, MakeErrorResult(funcName + " requires sixth argument of type number")
 		}
 		basis = int(basisResult.ValueNumber)
-		if basis < 0 || basis > 4 {
-			return 0, 0, 0, 0, 0, 0, MakeErrorResultType(ErrorTypeNum, "Incorrect basis value")
+		if !checkBasis(basis) {
+			return nil, MakeErrorResultType(ErrorTypeNum, "Incorrect basis value")
 		}
 	}
-	return settlementDate, maturityDate, coupon, yield, freq, basis, MakeEmptyResult()
+	return &durationArgs{
+		settlementDate,
+		maturityDate,
+		coupon,
+		yield,
+		freq,
+		basis,
+	}, MakeEmptyResult()
+}
+
+func checkFreq(freq float64) bool {
+	return freq == 1 || freq == 2 || freq == 4
+}
+
+func checkBasis(basis int) bool {
+	return basis >= 0 && basis <= 4
+}
+
+// Accrintm implements the Excel ACCRINTM function.
+func Accrintm(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("ACCRINTM requires four or five arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("ACCRINTM requires issue date to be number argument")
+	}
+	issue := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("ACCRINTM requires settlement date to be number argument")
+	}
+	settlement := args[1].ValueNumber
+	if issue >= settlement {
+		return MakeErrorResultType(ErrorTypeNum, "ACCRINTM requires settlement date to be later than issue date")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("ACCRINTM requires rate to be number argument")
+	}
+	rate := args[2].ValueNumber
+	if rate <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "ACCRINTM requires rate to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("ACCRINTM requires par to be number argument")
+	}
+	par := args[3].ValueNumber
+	if par <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "ACCRINTM requires par to be positive number argument")
+	}
+	basis := 0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("ACCRINTM requires basis to be number argument")
+		}
+		basis = int(args[4].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for ACCRINTM")
+		}
+	}
+	fracResult := yearFrac(issue, settlement, basis)
+	if fracResult.Type == ResultTypeError {
+		return fracResult
+	}
+	return MakeNumberResult(par * rate * fracResult.ValueNumber)
+}
+
+// Amordegrc implements the Excel AMORDEGRC function.
+func Amordegrc(args []Result) Result {
+	parsedArgs, err := parseAmorArgs(args, "AMORDEGRC")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	cost := parsedArgs.cost
+	datePurchased := parsedArgs.datePurchased
+	firstPeriod := parsedArgs.firstPeriod
+	salvage := parsedArgs.salvage
+	period := parsedArgs.period
+	rate := parsedArgs.rate
+	if rate >= 0.5 {
+		return MakeErrorResultType(ErrorTypeNum, "AMORDEGRC requires rate to be less than 0.5")
+	}
+	basis := parsedArgs.basis
+
+	lifeOfAssets := 1.0 / rate
+	amorCoeff := 2.5
+	if lifeOfAssets < 3 {
+		amorCoeff = 1
+	} else if lifeOfAssets < 5 {
+		amorCoeff = 1.5
+	} else if lifeOfAssets <= 6 {
+		amorCoeff = 2
+	}
+
+	rate *= amorCoeff
+	yfResult := yearFrac(datePurchased, firstPeriod, basis)
+	if yfResult.Type == ResultTypeError {
+		return MakeErrorResult("incorrect dates for AMORDEGRC")
+	}
+	nRate := math.Round(yfResult.ValueNumber * rate * cost)
+	cost -= nRate
+	rest := cost - salvage
+
+	for n := 0; n < period; n++ {
+		nRate = math.Round(rate * cost)
+		rest -= nRate
+		if rest < 0 {
+			switch period - n {
+			case 0:
+			case 1:
+				return MakeNumberResult(math.Round(cost * 0.5))
+			default:
+				return MakeNumberResult(0)
+			}
+		}
+		cost -= nRate
+	}
+
+	return MakeNumberResult(nRate)
+}
+
+// Amorlinc implements the Excel AMORLINC function.
+func Amorlinc(args []Result) Result {
+	parsedArgs, err := parseAmorArgs(args, "AMORLINC")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	cost := parsedArgs.cost
+	datePurchased := parsedArgs.datePurchased
+	firstPeriod := parsedArgs.firstPeriod
+	salvage := parsedArgs.salvage
+	period := parsedArgs.period
+	rate := parsedArgs.rate
+	basis := parsedArgs.basis
+
+	yfResult := yearFrac(datePurchased, firstPeriod, basis)
+	if yfResult.Type == ResultTypeError {
+		return MakeErrorResult("incorrect dates for AMORLINC")
+	}
+	r0 := yfResult.ValueNumber * rate * cost
+	if period == 0 {
+		return MakeNumberResult(r0)
+	}
+
+	oneRate := cost * rate
+	costDelta := cost - salvage
+	numOfFullPeriods := int((costDelta - r0) / oneRate)
+
+	if period <= numOfFullPeriods {
+		return MakeNumberResult(oneRate)
+	} else if period == numOfFullPeriods + 1 {
+		return MakeNumberResult(costDelta - oneRate * float64(numOfFullPeriods) - r0)
+	} else {
+		return MakeNumberResult(0)
+	}
+}
+
+type amorArgs struct {
+	cost float64
+	datePurchased float64
+	firstPeriod float64
+	salvage float64
+	period int
+	rate float64
+	basis int
+}
+
+func parseAmorArgs(args []Result, funcName string) (*amorArgs, Result) {
+	argsNum := len(args)
+	if argsNum != 6 && argsNum != 7 {
+		return nil, MakeErrorResult(funcName + " requires six or seven arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires cost to be number argument")
+	}
+	cost := args[0].ValueNumber
+	if cost < 0 {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires cost to be positive")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires date purchased to be number argument")
+	}
+	datePurchased := args[1].ValueNumber
+	if datePurchased < 0 {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires date purchased to be positive")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires first period to be number argument")
+	}
+	firstPeriod := args[2].ValueNumber
+	if firstPeriod < datePurchased {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires first period to be later than date purchased")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires salvage to be number argument")
+	}
+	salvage := args[3].ValueNumber
+	if salvage < 0 || salvage > cost {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires salvage to be between 0 and the initial cost")
+	}
+	if args[4].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires period to be number argument")
+	}
+	period := int(args[4].ValueNumber)
+	if period < 0 {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires period to be non-negative")
+	}
+	if args[5].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires depreciation rate to be number argument")
+	}
+	rate := args[5].ValueNumber
+	if rate < 0 {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires rate to be more than 0 and less than 0.5")
+	}
+	basis := 0
+	if argsNum == 7 {
+		if args[6].Type != ResultTypeNumber {
+			return nil, MakeErrorResult(funcName + " requires basis to be number argument")
+		}
+		basis = int(args[6].ValueNumber)
+		if !checkBasis(basis) || basis == 2 {
+			return nil, MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for " + funcName)
+		}
+	}
+	return &amorArgs{
+		cost,
+		datePurchased,
+		firstPeriod,
+		salvage,
+		period,
+		rate,
+		basis,
+	}, MakeEmptyResult()
 }
