@@ -1705,6 +1705,34 @@ func TestAmorlinc(t *testing.T) {
 	runTests(t, ctx, td)
 }
 
+func TestCoupdaybs(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPDAYBS(40568,40862,2,0)`, `70 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,1)`, `71 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,2)`, `71 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,3)`, `71 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,4)`, `70 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,0)`, `100 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,1)`, `102 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,2)`, `102 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,3)`, `102 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,4)`, `100 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,0)`, `130 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,1)`, `133 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,2)`, `133 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,3)`, `133 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,4)`, `130 ResultTypeNumber`},
+		{`=COUPDAYBS(40872,40568,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
 func TestCouppcd(t *testing.T) {
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()

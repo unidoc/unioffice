@@ -20,6 +20,7 @@ func init() {
 	RegisterFunction("ACCRINTM", Accrintm)
 	RegisterFunction("AMORDEGRC", Amordegrc)
 	RegisterFunction("AMORLINC", Amorlinc)
+	RegisterFunction("COUPDAYBS", Coupdaybs)
 	RegisterFunction("COUPNUM", Coupnum)
 	RegisterFunction("COUPPCD", Couppcd)
 }
@@ -97,6 +98,20 @@ type couponArgs struct {
 	basis int
 }
 
+// Coupdaybs implements the Excel COUPDAYBS function.
+func Coupdaybs(args []Result) Result {
+	parsedArgs, err := parseCouponArgs(args, "COUPDAYBS")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	settlementDate := dateFromDays(parsedArgs.settlementDate)
+	maturityDate := dateFromDays(parsedArgs.maturityDate)
+	freq := parsedArgs.freq
+	basis := parsedArgs.basis
+	pcd := couppcd(settlementDate, maturityDate, freq, basis)
+	return MakeNumberResult(getDiff(pcd, settlementDate, basis))
+}
+
 // Couppcd implements the Excel COUPPCD function.
 func Couppcd(args []Result) Result {
 	parsedArgs, err := parseCouponArgs(args, "COUPPCD")
@@ -106,11 +121,10 @@ func Couppcd(args []Result) Result {
 	settlementDate := dateFromDays(parsedArgs.settlementDate)
 	maturityDate := dateFromDays(parsedArgs.maturityDate)
 	freq := parsedArgs.freq
-	pcd := couppcd(settlementDate, maturityDate, freq)
-	y := pcd.Year()
-	m := int(pcd.Month())
-	d := pcd.Day()
-	return MakeNumberResult(daysFromDate(y, m, d))
+	basis := parsedArgs.basis
+	pcd := couppcd(settlementDate, maturityDate, freq, basis)
+	y, m, d := pcd.Date()
+	return MakeNumberResult(daysFromDate(y, int(m), d))
 }
 
 // Coupnum implements the Excel COUPNUM function.
@@ -123,7 +137,11 @@ func Coupnum(args []Result) Result {
 	maturityDate := dateFromDays(parsedArgs.maturityDate)
 	freq := parsedArgs.freq
 	basis := parsedArgs.basis
-	return MakeNumberResult(coupnum(settlementDate, maturityDate, freq, basis))
+	cn, err := coupnum(settlementDate, maturityDate, freq, basis)
+	if err.Type == ResultTypeError {
+		return err
+	}
+	return MakeNumberResult(cn)
 }
 
 func parseCouponArgs(args []Result, funcName string) (*couponArgs, Result) {
@@ -171,7 +189,7 @@ func parseCouponArgs(args []Result, funcName string) (*couponArgs, Result) {
 }
 
 // couppcd finds last coupon date before settlement (can be equal to settlement).
-func couppcd(settlementDate, maturityDate time.Time, freq int) time.Time {
+func couppcd(settlementDate, maturityDate time.Time, freq, basis int) time.Time {
 	rDate := maturityDate
 	diffYears := settlementDate.Year() - maturityDate.Year()
 	rDate = rDate.AddDate(diffYears, 0, 0)
@@ -186,13 +204,13 @@ func couppcd(settlementDate, maturityDate time.Time, freq int) time.Time {
 }
 
 // coupnum gets count of coupon dates.
-func coupnum(settlementDate, maturityDate time.Time, freq, basis int) float64 {
+func coupnum(settlementDate, maturityDate time.Time, freq, basis int) (float64, Result) {
 	if maturityDate.After(settlementDate) {
-		aDate := couppcd(settlementDate, maturityDate, freq)
+		aDate := couppcd(settlementDate, maturityDate, freq, basis)
 		months := (maturityDate.Year() - aDate.Year()) * 12 + int(maturityDate.Month()) - int(aDate.Month())
-		return float64(months * freq) / 12.0
+		return float64(months * freq) / 12.0, MakeEmptyResult()
 	}
-	return 0.0 // replace for error
+	return 0, MakeErrorResultType(ErrorTypeNum, "Settlement date should be before maturity date")
 }
 
 // getDuration returns the Macauley duration for an assumed par value of $100. It is defined as the weighted average of the present value of cash flows, and is used as a measure of a bond price's response to changes in yield.
@@ -202,7 +220,10 @@ func getDuration(settlementDate, maturityDate, coup, yield, freq float64, basis 
 		return fracResult
 	}
 	frac := fracResult.ValueNumber
-	coups := coupnum(dateFromDays(settlementDate), dateFromDays(maturityDate), int(freq), basis)
+	coups, err := coupnum(dateFromDays(settlementDate), dateFromDays(maturityDate), int(freq), basis)
+	if err.Type == ResultTypeError {
+		return err
+	}
 	duration := 0.0
 	p := 0.0
 	coup *= 100 / freq

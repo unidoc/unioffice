@@ -416,10 +416,14 @@ func validateDate(year, month, day int) bool {
 	if day < 1 {
 		return false
 	}
+	return day <= getDaysInMonth(year, month)
+}
+
+func getDaysInMonth(year, month int) int {
 	if month == 2 && isLeapYear(year) {
-		return day <= 29
+		return 29
 	} else {
-		return day <= daysInMonth[month-1]
+		return daysInMonth[month-1]
 	}
 }
 
@@ -858,4 +862,105 @@ func feb29Between(date1, date2 time.Time) bool {
 	var year2 = date2.Year()
 	var mar1year2 = makeDateS(year2, time.March, 1)
 	return (isLeapYear(year2) && date2S >= mar1year2 && date1S < mar1year2)
+}
+
+func getDiff(from, to time.Time, basis int) float64 {
+	if from.After(to) {
+		from, to = to, from
+	}
+	diff := 0
+
+	yFrom, mFromM, dFromOrig := from.Date()
+	yTo, mToM, dToOrig := to.Date()
+
+	mFrom, mTo := int(mFromM), int(mToM)
+	dFrom, dTo := getDayOnBasis(yFrom, mFrom, dFromOrig, basis), getDayOnBasis(yTo, mTo, dToOrig, basis)
+
+	if !basis30(basis) {
+		return daysFromDate(yTo, mTo, dTo) - daysFromDate(yFrom, mFrom, dFrom)
+	}
+
+	if basis == 0 {
+		if (mFrom == 2 || dFrom < 30 ) && dToOrig == 31 {
+			dTo = 31
+		} else if mTo == 2 && dTo == getDaysInMonth(yTo, mTo) {
+			dTo = getDaysInMonth(yTo, 2)
+		}
+	} else {
+		if mFrom == 2 && dFrom == 30 {
+			dFrom = getDaysInMonth(yFrom, 2)
+		}
+		if mTo == 2 && dTo == 30 {
+			dTo = getDaysInMonth(yTo, 2)
+		}
+	}
+
+	if yFrom < yTo || (yFrom == yTo && mFrom < mTo) {
+		diff = 30 - dFrom + 1
+		dFromOrig = 1
+		dFrom = 1
+		fromNew := time.Date(yFrom, time.Month(mFrom), dFromOrig, 0, 0, 0, 0, time.UTC).AddDate(0,1,0)
+		if fromNew.Year() < yTo {
+			diff += getDaysInMonthRange(fromNew.Year(), int(fromNew.Month()), 12, basis)
+			fromNew = fromNew.AddDate(0, 13 - int(fromNew.Month()), 0)
+			diff += getDaysInYearRange(fromNew.Year(), yTo - 1, basis)
+		}
+		diff += getDaysInMonthRange(yTo, int(fromNew.Month()), mTo - 1, basis)
+		fromNew = fromNew.AddDate(0, mTo - int(fromNew.Month()), 0)
+		mFrom = fromNew.Day()
+	}
+	diff += dTo - dFrom
+	if diff > 0 {
+		return float64(diff)
+	} else {
+		return 0
+	}
+}
+
+func getDayOnBasis(year, month, dayOrig, basis int) int {
+	if !basis30(basis) {
+		return dayOrig
+	}
+	day := dayOrig
+	dim := getDaysInMonth(year, month)
+	if day > 30 || dayOrig >= dim || day >= dim {
+		day = 30
+	}
+	return day
+}
+
+func getDaysInMonthRange(y, from, to, basis int) int {
+	if from > to {
+		return 0
+	}
+	if basis30(basis) {
+		return (to - from + 1) * 30
+	}
+	days := 0
+	for m := from; m <= to; m++ {
+		days += getDaysInMonth(y, m)
+	}
+	return days
+}
+
+func getDaysInYearRange(from, to, basis int) int {
+	if from > to {
+		return 0
+	}
+	if basis30(basis) {
+		return (to - from + 1) * 360
+	}
+	days := 0
+	for y := from; y <= to; y++ {
+		dy := 365
+		if isLeapYear(y) {
+			dy = 366
+		}
+		days += dy
+	}
+	return days
+}
+
+func basis30(basis int) bool {
+	return basis == 0 || basis == 4
 }
