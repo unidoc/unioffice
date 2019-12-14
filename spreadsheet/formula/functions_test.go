@@ -1733,6 +1733,78 @@ func TestCoupdaybs(t *testing.T) {
 	runTests(t, ctx, td)
 }
 
+func TestCoupdays(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPDAYS(40964,41228,1,0)`, `360 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,1)`, `366 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,2)`, `360 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,3)`, `365 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,4)`, `360 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,0)`, `180 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,1)`, `182 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,2)`, `180 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,3)`, `182.5 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,4)`, `180 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,0)`, `90 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,1)`, `90 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,2)`, `90 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,3)`, `91.25 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,4)`, `90 ResultTypeNumber`},
+		{`=COUPDAYS(41228,40964,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupdaysnc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPDAYSNC(40933,41228,1,0)`, `290 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,1)`, `295 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,2)`, `295 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,3)`, `295 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,4)`, `290 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,0)`, `110 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,1)`, `111 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,2)`, `111 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,3)`, `111 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,4)`, `110 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,0)`, `20 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,1)`, `21 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,2)`, `21 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,3)`, `21 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,4)`, `20 ResultTypeNumber`},
+		{`=COUPDAYSNC(41228,40933,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupncd(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPNCD(40568,40862,1,1)`, `40862 ResultTypeNumber`},
+		{`=COUPNCD(40568,40862,2,1)`, `40678 ResultTypeNumber`},
+		{`=COUPNCD(40568,40862,4,1)`, `40589 ResultTypeNumber`},
+		{`=COUPNCD(40872,40568,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
 func TestCouppcd(t *testing.T) {
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()

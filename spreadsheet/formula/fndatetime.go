@@ -829,6 +829,21 @@ func yearFracFromTime(startDate, endDate time.Time, basis int) Result {
 	return MakeErrorResultType(ErrorTypeValue, "")
 }
 
+func getDaysInYear(year, basis int) int {
+	switch basis {
+	case 1:
+		if isLeapYear(year) {
+			return 366
+		} else {
+			return 365
+		}
+	case 3:
+		return 365
+	default:
+		return 360
+	}
+}
+
 func makeDateS(y int, m time.Month, d int) int64 {
 	if y == 1900 && int(m) <= 2 {
 		d--

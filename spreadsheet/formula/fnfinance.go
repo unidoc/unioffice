@@ -21,7 +21,10 @@ func init() {
 	RegisterFunction("AMORDEGRC", Amordegrc)
 	RegisterFunction("AMORLINC", Amorlinc)
 	RegisterFunction("COUPDAYBS", Coupdaybs)
+	RegisterFunction("COUPDAYS", Coupdays)
+	RegisterFunction("COUPDAYSNC", Coupdaysnc)
 	RegisterFunction("COUPNUM", Coupnum)
+	RegisterFunction("COUPNCD", Coupncd)
 	RegisterFunction("COUPPCD", Couppcd)
 }
 
@@ -112,6 +115,38 @@ func Coupdaybs(args []Result) Result {
 	return MakeNumberResult(getDiff(pcd, settlementDate, basis))
 }
 
+// Coupdays implements the Excel COUPDAYS function.
+func Coupdays(args []Result) Result {
+	parsedArgs, err := parseCouponArgs(args, "COUPDAYS")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	settlementDate := dateFromDays(parsedArgs.settlementDate)
+	maturityDate := dateFromDays(parsedArgs.maturityDate)
+	freq := parsedArgs.freq
+	basis := parsedArgs.basis
+	if basis == 1 {
+		pcd := couppcd(settlementDate, maturityDate, freq, 1)
+		next := pcd.AddDate(0, 12 / freq, 0)
+		return MakeNumberResult(getDiff(pcd, next, basis))
+	}
+	return MakeNumberResult(float64(getDaysInYear(0, basis)) / float64(freq))
+}
+
+// Coupdaysnc implements the Excel COUPDAYSNC function.
+func Coupdaysnc(args []Result) Result {
+	parsedArgs, err := parseCouponArgs(args, "COUPDAYSNC")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	settlementDate := dateFromDays(parsedArgs.settlementDate)
+	maturityDate := dateFromDays(parsedArgs.maturityDate)
+	freq := parsedArgs.freq
+	basis := parsedArgs.basis
+	ncd := coupncd(settlementDate, maturityDate, freq)
+	return MakeNumberResult(getDiff(settlementDate, ncd, basis))
+}
+
 // Couppcd implements the Excel COUPPCD function.
 func Couppcd(args []Result) Result {
 	parsedArgs, err := parseCouponArgs(args, "COUPPCD")
@@ -142,6 +177,31 @@ func Coupnum(args []Result) Result {
 		return err
 	}
 	return MakeNumberResult(cn)
+}
+
+// Coupncd implements the Excel COUPNCD function.
+func Coupncd(args []Result) Result {
+	parsedArgs, err := parseCouponArgs(args, "COUPNCD")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	settlementDate := dateFromDays(parsedArgs.settlementDate)
+	maturityDate := dateFromDays(parsedArgs.maturityDate)
+	freq := parsedArgs.freq
+	ncd := coupncd(settlementDate, maturityDate, freq)
+	y, m, d := ncd.Date()
+	return MakeNumberResult(daysFromDate(y, int(m), d))
+}
+
+func coupncd(settlementDate, maturityDate time.Time, freq int) time.Time {
+	ncd := time.Date(settlementDate.Year(), maturityDate.Month(), maturityDate.Day(), 0, 0, 0, 0, time.UTC)
+	if ncd.After(settlementDate) {
+		ncd = ncd.AddDate(-1, 0, 0)
+	}
+	for !ncd.After(settlementDate) {
+		ncd = ncd.AddDate(0, 12 / freq, 0)
+	}
+	return ncd
 }
 
 func parseCouponArgs(args []Result, funcName string) (*couponArgs, Result) {
