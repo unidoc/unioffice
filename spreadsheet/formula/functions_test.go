@@ -1659,3 +1659,212 @@ func TestIf(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestAccrintm(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=ACCRINTM(39539,39614,0.1,1000,0))`, `20.5555555555 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,1))`, `20.4918032786 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,2))`, `20.8333333333 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,3))`, `20.5479452054 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,4))`, `20.5555555555 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestAmordegrc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=AMORDEGRC(2400,39679,39813,300,1,0.15,1)`, `776 ResultTypeNumber`},
+		{`=AMORDEGRC(2400,39679,39813,300,1,0.15,2)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestAmorlinc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=AMORLINC(2400,39679,39813,300,1,0.15,1)`, `360 ResultTypeNumber`},
+		{`=AMORLINC(2400,39679,39813,300,1,0.15,2)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupdaybs(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPDAYBS(40568,40862,2,0)`, `70 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,1)`, `71 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,2)`, `71 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,3)`, `71 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,4)`, `70 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,0)`, `100 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,1)`, `102 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,2)`, `102 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,3)`, `102 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,4)`, `100 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,0)`, `130 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,1)`, `133 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,2)`, `133 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,3)`, `133 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,4)`, `130 ResultTypeNumber`},
+		{`=COUPDAYBS(40872,40568,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupdays(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPDAYS(40964,41228,1,0)`, `360 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,1)`, `366 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,2)`, `360 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,3)`, `365 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,4)`, `360 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,0)`, `180 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,1)`, `182 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,2)`, `180 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,3)`, `182.5 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,4)`, `180 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,0)`, `90 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,1)`, `90 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,2)`, `90 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,3)`, `91.25 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,4)`, `90 ResultTypeNumber`},
+		{`=COUPDAYS(41228,40964,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupdaysnc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPDAYSNC(40933,41228,1,0)`, `290 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,1)`, `295 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,2)`, `295 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,3)`, `295 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,4)`, `290 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,0)`, `110 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,1)`, `111 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,2)`, `111 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,3)`, `111 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,4)`, `110 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,0)`, `20 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,1)`, `21 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,2)`, `21 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,3)`, `21 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,4)`, `20 ResultTypeNumber`},
+		{`=COUPDAYSNC(41228,40933,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupncd(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPNCD(40568,40862,1,1)`, `40862 ResultTypeNumber`},
+		{`=COUPNCD(40568,40862,2,1)`, `40678 ResultTypeNumber`},
+		{`=COUPNCD(40568,40862,4,1)`, `40589 ResultTypeNumber`},
+		{`=COUPNCD(40872,40568,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCouppcd(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPPCD(40568,40862,2,1)`, `40497 ResultTypeNumber`},
+		{`=COUPPCD(40872,40568,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupnum(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPNUM(39107,39767,2,1)`, `4 ResultTypeNumber`},
+		{`=COUPNUM(39767,39107,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCumipmt(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.09)
+	sheet.Cell("A2").SetNumber(30)
+	sheet.Cell("A3").SetNumber(125000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=CUMIPMT(A1/12,A2*12,A3,13,24,0)`, `-11135.23213 ResultTypeNumber`},
+		{`=CUMIPMT(A1/12,A2*12,A3,1,1,0)`, `-937.5 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCumprinc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.09)
+	sheet.Cell("A2").SetNumber(30)
+	sheet.Cell("A3").SetNumber(125000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=CUMPRINC(A1/12,A2*12,A3,13,24,0)`, `-934.10712342 ResultTypeNumber`},
+		{`=CUMPRINC(A1/12,A2*12,A3,1,1,0)`, `-68.27827118 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
