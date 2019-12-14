@@ -26,6 +26,8 @@ func init() {
 	RegisterFunction("COUPNUM", Coupnum)
 	RegisterFunction("COUPNCD", Coupncd)
 	RegisterFunction("COUPPCD", Couppcd)
+	RegisterFunction("CUMIPMT", Cumipmt)
+	RegisterFunction("CUMPRINC", Cumprinc)
 }
 
 // Duration implements the Excel DURATION function.
@@ -623,4 +625,167 @@ func parseAmorArgs(args []Result, funcName string) (*amorArgs, Result) {
 
 func mathRound(x float64) float64 {
 	return float64(int(x + 0.5))
+}
+
+type cumulArgs struct {
+	rate float64
+	nPer float64
+	pv float64
+	startPeriod float64
+	endPeriod float64
+	t int
+}
+
+// Cumipmt implements the Excel CUMIPMT function.
+func Cumipmt(args []Result) Result {
+	parsedArgs, err := parseCumulArgs(args, "CUMIPMT")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	rate := parsedArgs.rate
+	nPer := parsedArgs.nPer
+	pv := parsedArgs.pv
+	startPeriod := parsedArgs.startPeriod
+	endPeriod := parsedArgs.endPeriod
+	t := parsedArgs.t
+
+	payment := pmt(rate, nPer, pv, 0, t)
+	interest := 0.0
+	if startPeriod == 1 {
+		if t == 0 {
+			interest = -pv
+			startPeriod++
+		}
+	}
+	for i := startPeriod; i <= endPeriod; i++ {
+		if t == 1 {
+			interest += fv(rate, i - 2, payment, pv, 1) - payment
+		} else {
+			interest += fv(rate, i - 1, payment, pv, 0)
+		}
+	}
+	interest *= rate
+	return MakeNumberResult(interest)
+}
+
+// Cumprinc implements the Excel CUMPRINC function.
+func Cumprinc(args []Result) Result {
+	parsedArgs, err := parseCumulArgs(args, "CUMPRINC")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	rate := parsedArgs.rate
+	nPer := parsedArgs.nPer
+	pv := parsedArgs.pv
+	startPeriod := parsedArgs.startPeriod
+	endPeriod := parsedArgs.endPeriod
+	t := parsedArgs.t
+
+	payment := pmt(rate, nPer, pv, 0, t)
+	principal := 0.0
+	if startPeriod == 1 {
+		if t == 0 {
+			principal = payment + pv * rate
+		} else {
+			principal = payment
+		}
+		startPeriod++
+	}
+	for i := startPeriod; i <= endPeriod; i++ {
+		if t == 1 {
+			principal += payment - (fv(rate, i - 2, payment, pv, 1) - payment) * rate
+		} else {
+			principal += payment - fv(rate, i - 1, payment, pv, 0) * rate
+		}
+	}
+	return MakeNumberResult(principal)
+}
+
+func parseCumulArgs(args []Result, funcName string) (*cumulArgs, Result) {
+	if len(args) != 6 {
+		return nil, MakeErrorResult(funcName + " requires six arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if rate <= 0 {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires rate to be positive number argument")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires number of periods to be number argument")
+	}
+	nPer := args[1].ValueNumber
+	if nPer <= 0 {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires number of periods to be positive number argument")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires present value to be number argument")
+	}
+	pv := args[2].ValueNumber
+	if pv <= 0 {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires present value to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires start period to be number argument")
+	}
+	startPeriod := args[3].ValueNumber
+	if startPeriod <= 0 {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires start period to be positive number argument")
+	}
+	if args[4].Type != ResultTypeNumber {
+		return nil, MakeErrorResult(funcName + " requires end period to be number argument")
+	}
+	endPeriod := args[4].ValueNumber
+	if endPeriod <= 0 {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires end period to be positive number argument")
+	}
+	if endPeriod < startPeriod {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires end period to be later or equal to start period")
+	}
+	if endPeriod > nPer {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires periods to be in number of periods range")
+	}
+	t := int(args[5].ValueNumber)
+	if t != 0 && t != 1 {
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires type to be 0 or 1")
+	}
+	return &cumulArgs{
+		rate,
+		nPer,
+		pv,
+		startPeriod,
+		endPeriod,
+		t,
+	}, MakeEmptyResult()
+}
+
+func pmt(rate, periods, present, future float64, t int ) float64 {
+	var result float64
+	if rate == 0 {
+		result = (present + future) / periods
+	} else {
+		term := math.Pow(1 + rate, periods)
+		if t == 1 {
+			result = (future * rate / (term - 1) + present * rate / (1 - 1 / term)) / (1 + rate)
+		} else {
+			result = future * rate / (term - 1) + present * rate / (1 - 1 / term)
+		}
+	}
+	return -result
+}
+
+func fv(rate, periods, payment, value float64, t int) float64 {
+	var result float64
+	if rate == 0 {
+		result = value + payment * periods
+	} else {
+		term := math.Pow(1 + rate, periods)
+		if t == 1 {
+			result = value * term + payment * (1 + rate) * (term - 1) / rate
+		} else {
+			result = value * term + payment * (term - 1) / rate
+		}
+	}
+	return -result
 }

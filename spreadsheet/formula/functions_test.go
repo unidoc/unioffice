@@ -1832,3 +1832,39 @@ func TestCoupnum(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestCumipmt(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.09)
+	sheet.Cell("A2").SetNumber(30)
+	sheet.Cell("A3").SetNumber(125000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=CUMIPMT(A1/12,A2*12,A3,13,24,0)`, `-11135.23213 ResultTypeNumber`},
+		{`=CUMIPMT(A1/12,A2*12,A3,1,1,0)`, `-937.5 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCumprinc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.09)
+	sheet.Cell("A2").SetNumber(30)
+	sheet.Cell("A3").SetNumber(125000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=CUMPRINC(A1/12,A2*12,A3,13,24,0)`, `-934.10712342 ResultTypeNumber`},
+		{`=CUMPRINC(A1/12,A2*12,A3,1,1,0)`, `-68.27827118 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
