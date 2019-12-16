@@ -1868,3 +1868,47 @@ func TestCumprinc(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestDb(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1000000)
+	sheet.Cell("A2").SetNumber(100000)
+	sheet.Cell("A3").SetNumber(6)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=DB(A1,A2,A3,1,7)`, `186083.333333 ResultTypeNumber`},
+		{`=DB(A1,A2,A3,2,7)`, `259639.416666 ResultTypeNumber`},
+		{`=DB(A1,A2,A3,3,7)`, `176814.44275 ResultTypeNumber`},
+		{`=DB(A1,A2,A3,4,7)`, `120410.635512 ResultTypeNumber`},
+		{`=DB(A1,A2,A3,5,7)`, `81999.6427841 ResultTypeNumber`},
+		{`=DB(A1,A2,A3,6,7)`, `55841.756736 ResultTypeNumber`},
+		{`=DB(A1,A2,A3,7,7)`, `15845.0984738 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestDdb(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(2400)
+	sheet.Cell("A2").SetNumber(300)
+	sheet.Cell("A3").SetNumber(10)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=DDB(A1,A2,A3*365,1)`, `1.31506849315 ResultTypeNumber`},
+		{`=DDB(A1,A2,A3*12,1,2)`, `40 ResultTypeNumber`},
+		{`=DDB(A1,A2,A3,1,2)`, `480 ResultTypeNumber`},
+		{`=DDB(A1,A2,A3,2,1.5)`, `306. ResultTypeNumber`},
+		{`=DDB(A1,A2,A3,10)`, `22.1225472 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}

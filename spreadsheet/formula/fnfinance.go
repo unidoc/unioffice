@@ -13,10 +13,6 @@ import (
 )
 
 func init() {
-	RegisterFunction("DURATION", Duration)
-	RegisterFunction("MDURATION", Mduration)
-	RegisterFunction("PDURATION", Pduration)
-	RegisterFunction("_xlfn.PDURATION", Pduration)
 	RegisterFunction("ACCRINTM", Accrintm)
 	RegisterFunction("AMORDEGRC", Amordegrc)
 	RegisterFunction("AMORLINC", Amorlinc)
@@ -28,6 +24,12 @@ func init() {
 	RegisterFunction("COUPPCD", Couppcd)
 	RegisterFunction("CUMIPMT", Cumipmt)
 	RegisterFunction("CUMPRINC", Cumprinc)
+	RegisterFunction("DB", Db)
+	RegisterFunction("DDB", Ddb)
+	RegisterFunction("DURATION", Duration)
+	RegisterFunction("MDURATION", Mduration)
+	RegisterFunction("PDURATION", Pduration)
+	RegisterFunction("_xlfn.PDURATION", Pduration)
 }
 
 // Duration implements the Excel DURATION function.
@@ -788,4 +790,152 @@ func fv(rate, periods, payment, value float64, t int) float64 {
 		}
 	}
 	return -result
+}
+
+// Db implements the Excel DB function.
+func Db(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("DB requires four or five number arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("DB requires cost to be number argument")
+	}
+	cost := args[0].ValueNumber
+	if cost < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DB requires cost to be non negative")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("DB requires salvage to be number argument")
+	}
+	salvage := args[1].ValueNumber
+	if salvage < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DB requires salvage to be non negative")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("DB requires life to be number argument")
+	}
+	life := args[2].ValueNumber
+	if life <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DB requires life to be positive")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("DB requires period to be number argument")
+	}
+	period := args[3].ValueNumber
+	if period <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DB requires period to be positive")
+	}
+	if period - life > 1 {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect period for DB")
+	}
+	month := 12.0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("DB requires month to be number argument")
+		}
+		month = args[4].ValueNumber
+		if month < 1 || month > 12 {
+			return MakeErrorResultType(ErrorTypeNum, "DB requires month to be in range of 1 and 12")
+		}
+	}
+	if month == 12 && period > life {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect period for DB")
+	}
+	if salvage >= cost {
+		return MakeNumberResult(0)
+	}
+	rate := 1 - math.Pow(salvage / cost, 1 / life)
+	rate = float64(int(rate * 1000 + 0.5)) / 1000 // round to 3 decimal places
+	initial := cost * rate * month / 12
+	if period == 1 {
+		return MakeNumberResult(initial)
+	}
+	total := initial
+	current := 0.0
+	ceiling := life
+	if ceiling > period {
+		ceiling = period
+	}
+	for i := 2.0; i <= ceiling; i++ {
+		current = (cost - total) * rate
+		total += current
+	}
+	if period > life {
+		return MakeNumberResult((cost - total) * rate * (12 - month) / 12)
+	}
+	return MakeNumberResult(current)
+}
+
+// Ddb implements the Excel DDB function.
+func Ddb(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("DDB requires four or five number arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("DDB requires cost to be number argument")
+	}
+	cost := args[0].ValueNumber
+	if cost < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DDB requires cost to be non negative")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("DDB requires salvage to be number argument")
+	}
+	salvage := args[1].ValueNumber
+	if salvage < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DDB requires salvage to be non negative")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("DDB requires life to be number argument")
+	}
+	life := args[2].ValueNumber
+	if life <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DDB requires life to be positive")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("DDB requires period to be number argument")
+	}
+	period := args[3].ValueNumber
+	if period < 1 {
+		return MakeErrorResultType(ErrorTypeNum, "DDB requires period to be positive")
+	}
+	if period > life {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect period for DDB")
+	}
+	factor := 2.0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("DDB requires factor to be number argument")
+		}
+		factor = args[4].ValueNumber
+		if factor < 0 {
+			return MakeErrorResultType(ErrorTypeNum, "DDB requires factor to be non negative")
+		}
+	}
+
+	oldValue := 0.0
+	rate := factor / life
+	if rate >= 1 {
+		rate = 1
+		if period == 1 {
+			oldValue = cost
+		}
+	} else {
+		oldValue = cost * math.Pow(1 - rate, period - 1)
+	}
+	newValue := cost * math.Pow(1 - rate, period)
+
+	var ddb float64
+
+	if newValue < salvage {
+		ddb = oldValue - salvage
+	} else {
+		ddb = oldValue - newValue
+	}
+	if ddb < 0 {
+		ddb = 0
+	}
+	return MakeNumberResult(ddb)
 }
