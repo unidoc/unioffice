@@ -1964,3 +1964,18 @@ func TestDollarfr(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestEffect(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=EFFECT(0.0525,4)`, `0.05354266737 ResultTypeNumber`},
+		{`=EFFECT(0.1,4)`, `0.10381289062 ResultTypeNumber`},
+		{`=EFFECT(0.1,4.5)`, `0.10381289062 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}

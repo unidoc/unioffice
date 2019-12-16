@@ -32,6 +32,7 @@ func init() {
 	RegisterFunction("DOLLARDE", Dollarde)
 	RegisterFunction("DOLLARFR", Dollarfr)
 	RegisterFunction("DURATION", Duration)
+	RegisterFunction("EFFECT", Effect)
 	RegisterFunction("MDURATION", Mduration)
 	RegisterFunction("PDURATION", Pduration)
 	RegisterFunction("_xlfn.PDURATION", Pduration)
@@ -1075,4 +1076,26 @@ func parseDollarArgs(args []Result, funcName string) (float64, float64, Result) 
 		return 0, 0, MakeErrorResultType(ErrorTypeNum, funcName + "  requires fraction to be positive number")
 	}
 	return dollar, fraction, MakeEmptyResult()
+}
+
+// Effect implements the Excel EFFECT function.
+func Effect(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("EFFECT requires two arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("EFFECT requires nominal interest rate to be number argument")
+	}
+	nominal := args[0].ValueNumber
+	if nominal <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "EFFECT requires nominal interest rate to be positive number argument")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("EFFECT requires number of compounding periods to be number argument")
+	}
+	npery := float64(int(args[1].ValueNumber))
+	if npery < 1 {
+		return MakeErrorResult("EFFECT requires number of compounding periods to be 1 or more")
+	}
+	return MakeNumberResult(math.Pow((1 + nominal / npery), npery) - 1)
 }
