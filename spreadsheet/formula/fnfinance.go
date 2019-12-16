@@ -33,6 +33,7 @@ func init() {
 	RegisterFunction("DOLLARFR", Dollarfr)
 	RegisterFunction("DURATION", Duration)
 	RegisterFunction("EFFECT", Effect)
+	RegisterFunction("FV", Fv)
 	RegisterFunction("MDURATION", Mduration)
 	RegisterFunction("PDURATION", Pduration)
 	RegisterFunction("_xlfn.PDURATION", Pduration)
@@ -1098,4 +1099,48 @@ func Effect(args []Result) Result {
 		return MakeErrorResult("EFFECT requires number of compounding periods to be 1 or more")
 	}
 	return MakeNumberResult(math.Pow((1 + nominal / npery), npery) - 1)
+}
+
+// Fv implements the Excel FV function.
+func Fv(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 3 || argsNum > 5 {
+		return MakeErrorResult("FV requires number of arguments in range of 3 and 5")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("FV requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("FV requires number of periods to be number argument")
+	}
+	nPer := args[1].ValueNumber
+	if nPer != float64(int(nPer)) {
+		return MakeErrorResultType(ErrorTypeNum, "FV requires number of periods to be integer number argument")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("FV requires payment to be number argument")
+	}
+	pmt := args[2].ValueNumber
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("FV requires payment to be number argument")
+	}
+	pv := 0.0
+	if argsNum >= 4 {
+		if args[3].Type != ResultTypeNumber {
+			return MakeErrorResult("FV requires present value to be number argument")
+		}
+		pv = args[3].ValueNumber
+	}
+	t := 0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("FV requires type to be number argument")
+		}
+		t = int(args[4].ValueNumber)
+		if t != 0 {
+			t = 1
+		}
+	}
+	return MakeNumberResult(fv(rate, nPer, pmt, pv, t))
 }

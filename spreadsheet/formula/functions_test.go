@@ -1979,3 +1979,17 @@ func TestEffect(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestFv(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=FV(0.06/12,10,-200,-500,1)`, `2581.40337406 ResultTypeNumber`},
+		{`=FV(0,12,-100,-1000,1)`, `2200 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
