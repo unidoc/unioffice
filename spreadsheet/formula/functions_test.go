@@ -1912,3 +1912,55 @@ func TestDdb(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestDisc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2018, 7, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2048, 1, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(97.975)
+	sheet.Cell("A4").SetNumber(100)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=DISC(A1,A2,A3,A4,0)`, `0.00068644067 ResultTypeNumber`},
+		{`=DISC(A1,A2,A3,A4,1)`, `0.00068638416 ResultTypeNumber`},
+		{`=DISC(A1,A2,A3,A4,2)`, `0.00067650334 ResultTypeNumber`},
+		{`=DISC(A1,A2,A3,A4,3)`, `0.00068589922 ResultTypeNumber`},
+		{`=DISC(A1,A2,A3,A4,4)`, `0.00068644067 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestDollarde(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=DOLLARDE(1.02,16)`, `1.125 ResultTypeNumber`},
+		{`=DOLLARDE(1.1,32)`, `1.3125 ResultTypeNumber`},
+		{`=DOLLARDE(-1.1,32)`, `-1.3125 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestDollarfr(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=DOLLARFR(1.125,16)`, `1.02 ResultTypeNumber`},
+		{`=DOLLARFR(1.125,32)`, `1.04 ResultTypeNumber`},
+		{`=DOLLARFR(-1.125,32)`, `-1.04 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}

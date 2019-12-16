@@ -10,6 +10,8 @@ package formula
 import (
 	"time"
 	"math"
+	"strconv"
+	"strings"
 )
 
 func init() {
@@ -26,6 +28,9 @@ func init() {
 	RegisterFunction("CUMPRINC", Cumprinc)
 	RegisterFunction("DB", Db)
 	RegisterFunction("DDB", Ddb)
+	RegisterFunction("DISC", Disc)
+	RegisterFunction("DOLLARDE", Dollarde)
+	RegisterFunction("DOLLARFR", Dollarfr)
 	RegisterFunction("DURATION", Duration)
 	RegisterFunction("MDURATION", Mduration)
 	RegisterFunction("PDURATION", Pduration)
@@ -938,4 +943,136 @@ func Ddb(args []Result) Result {
 		ddb = 0
 	}
 	return MakeNumberResult(ddb)
+}
+
+// Disc implements the Excel DISC function.
+func Disc(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("DISC requires four or five arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("DISC requires settlement date to be number argument")
+	}
+	settlement := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("DISC requires maturity date to be number argument")
+	}
+	maturity := args[1].ValueNumber
+	if settlement >= maturity {
+		return MakeErrorResultType(ErrorTypeNum, "DISC requires maturity date to be later than settlement date")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("DISC requires pr to be number argument")
+	}
+	pr := args[2].ValueNumber
+	if pr <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DISC requires pr to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("DISC requires redemption to be number argument")
+	}
+	redemption := args[3].ValueNumber
+	if redemption <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DISC requires redemption to be positive number argument")
+	}
+	basis := 0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("DISC requires basis to be number argument")
+		}
+		basis = int(args[4].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for DISC")
+		}
+	}
+	fracResult := yearFrac(settlement, maturity, basis)
+	if fracResult.Type == ResultTypeError {
+		return fracResult
+	}
+	return MakeNumberResult((redemption - pr) / redemption / fracResult.ValueNumber)
+}
+
+// Dollarde implements the Excel DOLLARDE function.
+func Dollarde(args []Result) Result {
+	dollar, fraction, resultErr := parseDollarArgs(args, "DOLLARDE")
+	if resultErr.Type == ResultTypeError {
+		return resultErr
+	}
+	if fraction < 1 {
+		return MakeErrorResultType(ErrorTypeDivideByZero, "DOLLARDE requires fraction to be equal or more than 1")
+	}
+	if dollar == 0 {
+		return MakeNumberResult(0)
+	}
+	neg := dollar < 0
+	if neg {
+		dollar = -dollar
+	}
+	dollarStr := args[0].Value()
+	split := strings.Split(dollarStr, ".")
+	dollarInt := float64(int(dollar))
+	dollarFracStr := split[1]
+	dollarFracOrder := len(dollarFracStr)
+	fractionOrder := int(math.Log10(fraction)) + 1
+	power := float64(fractionOrder - dollarFracOrder)
+	dollarFrac, err := strconv.ParseFloat(dollarFracStr, 64)
+	if err != nil {
+		return MakeErrorResult("Incorrect fraction argument for DOLLARDE")
+	}
+	dollarFrac *= math.Pow(10, power)
+	dollarde := dollarInt + dollarFrac / fraction
+	if neg {
+		dollarde = -dollarde
+	}
+	return MakeNumberResult(dollarde)
+}
+
+// Dollarfr implements the Excel DOLLARFR function.
+func Dollarfr(args []Result) Result {
+	dollar, fraction, resultErr := parseDollarArgs(args, "DOLLARFR")
+	if resultErr.Type == ResultTypeError {
+		return resultErr
+	}
+	if dollar == 0 {
+		return MakeNumberResult(0)
+	}
+	neg := dollar < 0
+	if neg {
+		dollar = -dollar
+	}
+	dollarInt := float64(int(dollar))
+	dollarStr := args[0].Value()
+	split := strings.Split(dollarStr, ".")
+	dollarFracStr := split[1]
+	dollarFrac, err := strconv.ParseFloat(dollarFracStr, 64)
+	if err != nil {
+		return MakeErrorResult("Incorrect fraction argument for DOLLARFR")
+	}
+	dollarFracOrder := float64(len(dollarFracStr))
+	dollarFrac /= math.Pow(10, dollarFracOrder)
+
+	dollarfr := dollarFrac * fraction / math.Pow(10, float64(int(math.Log10(fraction))) + 1) + dollarInt
+	if neg {
+		dollarfr = -dollarfr
+	}
+	return MakeNumberResult(dollarfr)
+}
+
+func parseDollarArgs(args []Result, funcName string) (float64, float64, Result) {
+	if len(args) != 2 {
+		return 0, 0, MakeErrorResult(funcName + " requires two arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return 0, 0, MakeErrorResult(funcName + "  requires fractional dollar to be number argument")
+	}
+	dollar := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return 0, 0, MakeErrorResult(funcName + "  requires fraction to be number argument")
+	}
+	fraction := float64(int(args[1].ValueNumber))
+	if fraction < 0 {
+		return 0, 0, MakeErrorResultType(ErrorTypeNum, funcName + "  requires fraction to be positive number")
+	}
+	return dollar, fraction, MakeEmptyResult()
 }
