@@ -2057,3 +2057,47 @@ func TestIpmt(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestIrr(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(-70000)
+	sheet.Cell("A2").SetNumber(12000)
+	sheet.Cell("A3").SetNumber(15000)
+	sheet.Cell("A4").SetNumber(18000)
+	sheet.Cell("A5").SetNumber(21000)
+	sheet.Cell("A6").SetNumber(26000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=IRR(A1:A6)`, `0.08663094803 ResultTypeNumber`},
+		{`=IRR(A1:A5)`, `-0.0212448482 ResultTypeNumber`},
+		{`=IRR(A1:A4)`, `-0.1821374641 ResultTypeNumber`},
+		{`=IRR(A1:A3,0.2)`, `-0.4435069413 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIspmt(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("A2").SetNumber(4)
+	sheet.Cell("A3").SetNumber(4000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=ISPMT(0.1/12,6,2*12,100000)`, `-625 ResultTypeNumber`},
+		{`=ISPMT(A1,0,A2,A3)`, `-400 ResultTypeNumber`},
+		{`=ISPMT(A1,1,A2,A3)`, `-300 ResultTypeNumber`},
+		{`=ISPMT(A1,2,A2,A3)`, `-200 ResultTypeNumber`},
+		{`=ISPMT(A1,3,A2,A3)`, `-100 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}

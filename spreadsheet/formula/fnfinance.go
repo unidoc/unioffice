@@ -37,6 +37,8 @@ func init() {
 	RegisterFunction("FVSCHEDULE", Fvschedule)
 	RegisterFunction("INTRATE", Intrate)
 	RegisterFunction("IPMT", Ipmt)
+	RegisterFunction("IRR", Irr)
+	RegisterFunction("ISPMT", Ispmt)
 	RegisterFunction("MDURATION", Mduration)
 	RegisterFunction("PDURATION", Pduration)
 	RegisterFunction("_xlfn.PDURATION", Pduration)
@@ -1286,4 +1288,136 @@ func Ipmt(args []Result) Result {
 	}
 
 	return MakeNumberResult(interest * rate)
+}
+
+// Irr implements the Excel IRR function.
+func Irr(args []Result) Result {
+	argsNum := len(args)
+	if argsNum > 2 {
+		return MakeErrorResult("IRR requires one or two arguments")
+	}
+	if args[0].Type != ResultTypeList && args[0].Type != ResultTypeArray {
+		return MakeErrorResult("IRR requires values to be range argument")
+	}
+	valuesR := arrayFromRange(args[0])
+	values := []float64{}
+	for _, row := range valuesR {
+		for _, vR := range row {
+			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
+				values = append(values, vR.ValueNumber)
+			}
+		}
+	}
+	vlen := len(values)
+	if len(values) < 2 {
+		return MakeErrorResultType(ErrorTypeNum, "")
+	}
+	guess := 0.1
+	if argsNum == 2 {
+		if args[1].Type != ResultTypeNumber {
+			return MakeErrorResult("IRR requires guess to be number argument")
+		}
+		guess = args[1].ValueNumber
+		if guess <= -1 {
+			return MakeErrorResult("IRR requires guess to be more than -1")
+		}
+	}
+
+	dates := []float64{}
+	positive := false
+	negative := false
+
+	for i := 0; i < vlen; i++ {
+		if i == 0 {
+			dates = append(dates, 0)
+		} else {
+			dates = append(dates, dates[i - 1] + 365)
+		}
+		if values[i] > 0 {
+			positive = true
+		}
+		if values[i] < 0 {
+			negative = true
+		}
+	}
+
+	if !positive || !negative {
+		return MakeErrorResultType(ErrorTypeNum, "")
+	}
+
+	resultRate := guess
+	epsMax := 1e-10
+	iter := 0
+	maxIter := 50
+	isErr := false
+
+	for {
+		resultValue := irrResult(values, dates, resultRate)
+		newRate := resultRate - resultValue / irrResultDeriv(values, dates, resultRate)
+		epsRate := math.Abs(newRate - resultRate)
+		resultRate = newRate
+		iter++
+		if iter > maxIter || epsRate <= epsMax || math.Abs(resultValue) <= epsMax {
+			break
+		}
+		if iter > maxIter {
+			isErr = true
+			break
+		}
+	}
+	if isErr || math.IsNaN(resultRate) || math.IsInf(resultRate, 0) {
+		return MakeErrorResultType(ErrorTypeNum, "")
+	}
+	return MakeNumberResult(resultRate)
+}
+
+func irrResult(values, dates []float64, rate float64) float64 {
+	r := rate + 1
+	result := values[0]
+	vlen := len(values)
+	firstDate := dates[0]
+	for i := 1; i < vlen; i++ {
+		result += values[i] / math.Pow(r, (dates[i] - firstDate) / 365)
+	}
+	return result
+}
+
+func irrResultDeriv(values, dates []float64, rate float64) float64 {
+	r := rate + 1
+	result := 0.0
+	vlen := len(values)
+	firstDate := dates[0]
+	for i := 1; i < vlen; i++ {
+		frac := (dates[i] - firstDate) / 365
+		result -= frac * values[i] / math.Pow(r, frac + 1)
+	}
+	return result
+}
+
+// Ispmt implements the Excel ISPMT function.
+func Ispmt(args []Result) Result {
+	if len(args) != 4 {
+		return MakeErrorResult("ISPMT requires six arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("ISPMT requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("ISPMT requires period to be number argument")
+	}
+	period := args[1].ValueNumber
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("ISPMT requires number of periods to be number argument")
+	}
+	nPer := args[2].ValueNumber
+	if nPer <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "ISPMT requires number of periods to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("ISPMT requires present value to be number argument")
+	}
+	pv := args[3].ValueNumber
+
+	return MakeNumberResult(pv * rate * (period / nPer - 1))
 }
