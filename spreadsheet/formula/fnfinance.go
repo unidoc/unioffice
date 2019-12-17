@@ -34,6 +34,9 @@ func init() {
 	RegisterFunction("DURATION", Duration)
 	RegisterFunction("EFFECT", Effect)
 	RegisterFunction("FV", Fv)
+	RegisterFunction("FVSCHEDULE", Fvschedule)
+	RegisterFunction("INTRATE", Intrate)
+	RegisterFunction("IPMT", Ipmt)
 	RegisterFunction("MDURATION", Mduration)
 	RegisterFunction("PDURATION", Pduration)
 	RegisterFunction("_xlfn.PDURATION", Pduration)
@@ -1066,15 +1069,15 @@ func parseDollarArgs(args []Result, funcName string) (float64, float64, Result) 
 		return 0, 0, MakeErrorResult(funcName + " requires two arguments")
 	}
 	if args[0].Type != ResultTypeNumber {
-		return 0, 0, MakeErrorResult(funcName + "  requires fractional dollar to be number argument")
+		return 0, 0, MakeErrorResult(funcName + " requires fractional dollar to be number argument")
 	}
 	dollar := args[0].ValueNumber
 	if args[1].Type != ResultTypeNumber {
-		return 0, 0, MakeErrorResult(funcName + "  requires fraction to be number argument")
+		return 0, 0, MakeErrorResult(funcName + " requires fraction to be number argument")
 	}
 	fraction := float64(int(args[1].ValueNumber))
 	if fraction < 0 {
-		return 0, 0, MakeErrorResultType(ErrorTypeNum, funcName + "  requires fraction to be positive number")
+		return 0, 0, MakeErrorResultType(ErrorTypeNum, funcName + " requires fraction to be positive number")
 	}
 	return dollar, fraction, MakeEmptyResult()
 }
@@ -1143,4 +1146,144 @@ func Fv(args []Result) Result {
 		}
 	}
 	return MakeNumberResult(fv(rate, nPer, pmt, pv, t))
+}
+
+// Fvschedule implements the Excel FVSCHEDULE function.
+func Fvschedule(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("FVSCHEDULE requires two arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("FVSCHEDULE requires principal to be number argument")
+	}
+	principal := args[0].ValueNumber
+	switch args[1].Type {
+	case ResultTypeNumber:
+		return MakeNumberResult(principal * (args[1].ValueNumber+1))
+	case ResultTypeList, ResultTypeArray:
+		schedule := arrayFromRange(args[1])
+		for _, row := range schedule {
+			for _, rate := range row {
+				if rate.Type != ResultTypeNumber || rate.IsBoolean {
+					return MakeErrorResult("FVSCHEDULE requires rates to be numbers")
+				}
+				principal *= 1.0 + rate.ValueNumber
+			}
+		}
+		return MakeNumberResult(principal)
+	default:
+		return MakeErrorResult("FVSCHEDULE requires schedule to be of array type")
+	}
+}
+
+// Intrate implements the Excel INTRATE function.
+func Intrate(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("INTRATE requires four or five arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("INTRATE requires settlement date to be number argument")
+	}
+	settlement := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("INTRATE requires maturity date to be number argument")
+	}
+	maturity := args[1].ValueNumber
+	if settlement >= maturity {
+		return MakeErrorResultType(ErrorTypeNum, "INTRATE requires maturity date to be later than settlement date")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("INTRATE requires investment to be number argument")
+	}
+	investment := args[2].ValueNumber
+	if investment <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "INTRATE requires investment to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("INTRATE requires redemption to be number argument")
+	}
+	redemption := args[3].ValueNumber
+	if redemption <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "INTRATE requires redemption to be positive number argument")
+	}
+	basis := 0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("INTRATE requires basis to be number argument")
+		}
+		basis = int(args[4].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for INTRATE")
+		}
+	}
+	fracResult := yearFrac(settlement, maturity, basis)
+	if fracResult.Type == ResultTypeError {
+		return fracResult
+	}
+	return MakeNumberResult((redemption - investment) / investment / fracResult.ValueNumber)
+}
+
+// Ipmt implements the Excel IPMT function.
+func Ipmt(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 4 || argsNum > 6 {
+		return MakeErrorResult("IPMT requires six arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("IPMT requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("IPMT requires period to be number argument")
+	}
+	period := args[1].ValueNumber
+	if period <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "IPMT requires period to be positive number argument")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("IPMT requires number of periods to be number argument")
+	}
+	nPer := args[2].ValueNumber
+	if nPer <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "IPMT requires number of periods to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("IPMT requires present value to be number argument")
+	}
+	presentValue := args[3].ValueNumber
+	futureValue := 0.0
+	if argsNum > 4 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("IPMT requires future value to be number argument")
+		}
+		futureValue = args[4].ValueNumber
+	}
+	t := 0
+	if argsNum == 6 {
+		if args[5].Type != ResultTypeNumber {
+			return MakeErrorResult("IPMT requires start period to be number argument")
+		}
+		t = int(args[5].ValueNumber)
+		if t != 0  {
+			t = 1
+		}
+	}
+	payment := pmt(rate, nPer, presentValue, futureValue, t)
+	var interest float64
+	if period == 1 {
+		if t == 1 {
+			interest = 0
+		} else {
+			interest = -presentValue
+		}
+	} else {
+		if t == 1 {
+			interest = fv(rate, period - 2, payment, presentValue, 1) - payment
+		} else {
+			interest = fv(rate, period - 1, payment, presentValue, 0)
+		}
+	}
+
+	return MakeNumberResult(interest * rate)
 }

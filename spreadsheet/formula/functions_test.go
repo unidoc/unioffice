@@ -1993,3 +1993,67 @@ func TestFv(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestFvschedule(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.09)
+	sheet.Cell("A2").SetNumber(0.11)
+	sheet.Cell("A3").SetNumber(0.1)
+	sheet.Cell("A4").SetBool(true)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=FVSCHEDULE(1,A1:A3)`, `1.33089 ResultTypeNumber`},
+		{`=FVSCHEDULE(1,A1:A4)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIntrate(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 2, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 5, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(1000000)
+	sheet.Cell("A4").SetNumber(1014420)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=INTRATE(A1,A2,A3,A4,0)`, `0.05768 ResultTypeNumber`},
+		{`=INTRATE(A1,A2,A3,A4,1)`, `0.05864133333 ResultTypeNumber`},
+		{`=INTRATE(A1,A2,A3,A4,2)`, `0.05768 ResultTypeNumber`},
+		{`=INTRATE(A1,A2,A3,A4,3)`, `0.05848111111 ResultTypeNumber`},
+		{`=INTRATE(A1,A2,A3,A4,4)`, `0.05768 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIpmt(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("A2").SetNumber(1)
+	sheet.Cell("A3").SetNumber(3)
+	sheet.Cell("A4").SetNumber(8000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=IPMT(0.1/12,1,36,8000)`, `-66.666666666 ResultTypeNumber`},
+		{`=IPMT(0.1,3,3,8000)`, `-292.4471299 ResultTypeNumber`},
+		{`=IPMT(0.1/12,6,24,100000,1000000,0)`, `928.82357184 ResultTypeNumber`},
+		{`=IPMT(0.1/12,6,24,100000,1000000,1)`, `921.147343973 ResultTypeNumber`},
+		{`=IPMT(0.1/12,1,24,100000,1000000,1)`, `0 ResultTypeNumber`},
+		{`=IPMT(0.1/12,1,24,100000,1000000,0)`, `-833.33333333 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
