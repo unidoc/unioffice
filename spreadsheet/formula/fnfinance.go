@@ -40,6 +40,10 @@ func init() {
 	RegisterFunction("IRR", Irr)
 	RegisterFunction("ISPMT", Ispmt)
 	RegisterFunction("MDURATION", Mduration)
+	RegisterFunction("MIRR", Mirr)
+	RegisterFunction("NOMINAL", Nominal)
+	RegisterFunction("NPER", Nper)
+	RegisterFunction("NPV", Npv)
 	RegisterFunction("PDURATION", Pduration)
 	RegisterFunction("_xlfn.PDURATION", Pduration)
 }
@@ -1101,7 +1105,7 @@ func Effect(args []Result) Result {
 	}
 	npery := float64(int(args[1].ValueNumber))
 	if npery < 1 {
-		return MakeErrorResult("EFFECT requires number of compounding periods to be 1 or more")
+		return MakeErrorResultType(ErrorTypeNum, "EFFECT requires number of compounding periods to be 1 or more")
 	}
 	return MakeNumberResult(math.Pow((1 + nominal / npery), npery) - 1)
 }
@@ -1420,4 +1424,158 @@ func Ispmt(args []Result) Result {
 	pv := args[3].ValueNumber
 
 	return MakeNumberResult(pv * rate * (period / nPer - 1))
+}
+
+// Mirr implements the Excel MIRR function.
+func Mirr(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("MIRR requires three arguments")
+	}
+	if args[0].Type != ResultTypeList && args[0].Type != ResultTypeArray {
+		return MakeErrorResult("MIRR requires values to be range argument")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("MIRR requires finance rate to be number argument")
+	}
+	finRate := args[1].ValueNumber + 1
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("MIRR requires reinvest rate to be number argument")
+	}
+	reinvRate := args[2].ValueNumber + 1
+	if reinvRate == 0 {
+		return MakeErrorResultType(ErrorTypeDivideByZero, "")
+	}
+
+	valuesR := arrayFromRange(args[0])
+	n := float64(len(valuesR))
+	npvInvest, npvReinvest := 0.0, 0.0
+	powInvest, powReinvest := 1.0, 1.0
+	hasPositive, hasNegative := false, false
+	for _, row := range valuesR {
+		for _, vR := range row {
+			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
+				v := vR.ValueNumber
+				if v == 0 {
+					continue
+				} else {
+					if v > 0 {
+						hasPositive = true
+						npvReinvest += vR.ValueNumber * powReinvest
+					} else {
+						hasNegative = true
+						npvInvest += vR.ValueNumber * powInvest
+					}
+					powInvest /= finRate
+					powReinvest /= reinvRate
+				}
+			}
+		}
+	}
+
+	if !hasPositive || !hasNegative {
+		return MakeErrorResultType(ErrorTypeDivideByZero, "")
+	}
+
+	result := -npvReinvest / npvInvest
+	result *= math.Pow(reinvRate, n - 1)
+	result = math.Pow(result, 1 / (n - 1))
+	return MakeNumberResult(result - 1)
+}
+
+// Nominal implements the Excel NOMINAL function.
+func Nominal(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("NOMINAL requires two arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("NOMINAL requires nominal interest rate to be number argument")
+	}
+	effect := args[0].ValueNumber
+	if effect <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "NOMINAL requires effect interest rate to be positive number argument")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("NOMINAL requires number of compounding periods to be number argument")
+	}
+	npery := float64(int(args[1].ValueNumber))
+	if npery < 1 {
+		return MakeErrorResultType(ErrorTypeNum, "NOMINAL requires number of compounding periods to be 1 or more")
+	}
+	return MakeNumberResult((math.Pow(effect + 1, 1 / npery) - 1) * npery)
+}
+
+// Nper implements the Excel NPER function.
+func Nper(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 3 || argsNum > 5 {
+		return MakeErrorResult("NPER requires number of arguments in range of 3 and 5")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("NPER requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("NPER requires payment to be number argument")
+	}
+	pmt := args[1].ValueNumber
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("NPER requires present value to be number argument")
+	}
+	pv := args[2].ValueNumber
+	fv := 0.0
+	if argsNum >= 4 {
+		if args[3].Type != ResultTypeNumber {
+			return MakeErrorResult("NPER requires future value to be number argument")
+		}
+		fv = args[3].ValueNumber
+	}
+	t := 0.0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("NPER requires type to be number argument")
+		}
+		t = args[4].ValueNumber
+		if t != 0 {
+			t = 1
+		}
+	}
+	num := pmt * (1 + rate * t) - fv * rate
+	den := (pv * rate + pmt * (1 + rate * t))
+	return MakeNumberResult(math.Log(num / den) / math.Log(1 + rate))
+}
+
+// Npv implements the Excel NPV function.
+func Npv(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 2 {
+		return MakeErrorResult("NPV requires two or more arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("NPV requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if rate == -1 {
+		return MakeErrorResultType(ErrorTypeDivideByZero, "")
+	}
+	values := []float64{}
+	for _, arg := range args[1:] {
+		switch arg.Type {
+		case ResultTypeNumber:
+			values = append(values, arg.ValueNumber)
+		case ResultTypeArray, ResultTypeList:
+			rangeR := arrayFromRange(arg)
+			for _, r := range rangeR {
+				for _, vR := range r {
+					if vR.Type == ResultTypeNumber && !vR.IsBoolean {
+						values = append(values, vR.ValueNumber)
+					}
+				}
+			}
+		}
+	}
+	npv := 0.0
+	for i, value := range values {
+		npv += value / math.Pow(1 + rate, float64(i) + 1)
+	}
+	return MakeNumberResult(npv)
 }

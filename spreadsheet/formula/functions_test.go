@@ -1975,6 +1975,9 @@ func TestEffect(t *testing.T) {
 		{`=EFFECT(0.0525,4)`, `0.05354266737 ResultTypeNumber`},
 		{`=EFFECT(0.1,4)`, `0.10381289062 ResultTypeNumber`},
 		{`=EFFECT(0.1,4.5)`, `0.10381289062 ResultTypeNumber`},
+		{`=EFFECT(0,4.5)`, `#NUM! ResultTypeError`},
+		{`=EFFECT(0.1,0.5)`, `#NUM! ResultTypeError`},
+		{`=EFFECT("Hello world",4)`, `#VALUE! ResultTypeError`},
 	}
 
 	runTests(t, ctx, td)
@@ -2097,6 +2100,94 @@ func TestIspmt(t *testing.T) {
 		{`=ISPMT(A1,1,A2,A3)`, `-300 ResultTypeNumber`},
 		{`=ISPMT(A1,2,A2,A3)`, `-200 ResultTypeNumber`},
 		{`=ISPMT(A1,3,A2,A3)`, `-100 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestMirr(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(-120000)
+	sheet.Cell("A2").SetNumber(39000)
+	sheet.Cell("A3").SetNumber(30000)
+	sheet.Cell("A4").SetNumber(21000)
+	sheet.Cell("A5").SetNumber(37000)
+	sheet.Cell("A6").SetNumber(46000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=MIRR(A1:A6,0.1,0.12)`, `0.12609413036 ResultTypeNumber`},
+		{`=MIRR(A1:A4,0.1,0.12)`, `-0.0480446552 ResultTypeNumber`},
+		{`=MIRR(A1:A6,0.1,0.14)`, `0.13475911082 ResultTypeNumber`},
+		{`=MIRR(A1:A6,0.2,0.14)`, `0.13475911082 ResultTypeNumber`},
+		{`=MIRR(A1:A6,0.3,0.14)`, `0.13475911082 ResultTypeNumber`},
+		{`=MIRR(A1:A6,0.4,0.14)`, `0.13475911082 ResultTypeNumber`},
+		{`=MIRR(A1:A6,0,0.14)`, `0.13475911082 ResultTypeNumber`},
+		{`=MIRR(A1:A6,-1,0.14)`, `0.13475911082 ResultTypeNumber`},
+		{`=MIRR(A1:A6,0.1,-1)`, `#DIV/0! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestNominal(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=NOMINAL(0.053543,4)`, `0.05250031986 ResultTypeNumber`},
+		{`=NOMINAL(0.1,4)`, `0.09645475633 ResultTypeNumber`},
+		{`=NOMINAL(0.1,4.5)`, `0.09645475633 ResultTypeNumber`},
+		{`=NOMINAL(0,4.5)`, `#NUM! ResultTypeError`},
+		{`=NOMINAL(0.1,0.5)`, `#NUM! ResultTypeError`},
+		{`=NOMINAL("Hello world",4.5)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestNper(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.12)
+	sheet.Cell("A2").SetNumber(-100)
+	sheet.Cell("A3").SetNumber(-1000)
+	sheet.Cell("A4").SetNumber(10000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=NPER(A1/12,A2,A3,A4,1)`, `59.6738656742 ResultTypeNumber`},
+		{`=NPER(A1/12,A2,A3,A4)`, `60.0821228537 ResultTypeNumber`},
+		{`=NPER(A1/12,A2,A3)`, `-9.5785940398 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestNpv(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("A2").SetNumber(-10000)
+	sheet.Cell("A3").SetNumber(3000)
+	sheet.Cell("A4").SetNumber(4200)
+	sheet.Cell("A5").SetNumber(6800)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=NPV(A1,A2,A3,A4,A5)`, `1188.44341233 ResultTypeNumber`},
+		{`=NPV(A1,A2:A4,A5)`, `1188.44341233 ResultTypeNumber`},
+		{`=NPV(A1,A2:A4,"Hello world",A5)`, `1188.44341233 ResultTypeNumber`},
+		{`=NPV(0.12,12000,15000,18000,21000,24000)`, `62448.3625219 ResultTypeNumber`},
 	}
 
 	runTests(t, ctx, td)
