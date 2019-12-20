@@ -903,8 +903,6 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 				continue
 			}
 
-			//fmt.Printf("%#v \n", rel)
-
 			if f.Name == target {
 				path, err := zippkg.ExtractToDiskTmp(f, d.TmpPath)
 				if err != nil {

@@ -110,7 +110,7 @@ const (
 	pi = 152400
 )
 
-//这里只计算返回的单位为PT的大小
+//return width and height by using pt
 func (m *CT_PositiveSize2D) Size() EmuSize {
 	return EmuSize{
 		Width:  fmt.Sprintf("%spt", strconv.FormatInt(m.CxAttr/pt, 10)),
