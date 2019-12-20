@@ -24,13 +24,8 @@ type CT_Object struct {
 	Drawing     *CT_Drawing
 	Choice      *CT_ObjectChoice
 
-	//name: zhexiao(肖哲)
-	//date: 2019-10-10
-	//新增CT_Object对OLEObject和Shape属性的支持
-	//================================start
 	OleObject *CT_OleObject
 	Shape     *CT_Shape
-	//================================end
 }
 
 func NewCT_Object() *CT_Object {
@@ -119,24 +114,17 @@ lCT_Object:
 					return err
 				}
 
-			//name: zhexiao(肖哲)
-			//date: 2019-10-10
-			//解析Shape和Oleobject属性数据
-			//================================start
 			case xml.Name{Space: "urn:schemas-microsoft-com:vml", Local: "shape"}:
 				m.Shape = NewCT_Shape()
 				if err := d.DecodeElement(&m.Shape, &el); err != nil {
 					return err
 				}
-				//fmt.Printf("%#v \n", m.Shape)
 
 			case xml.Name{Space: "urn:schemas-microsoft-com:office:office", Local: "OLEObject"}:
 				m.OleObject = NewCT_OleObject()
 				if err := d.DecodeElement(&m.OleObject, &el); err != nil {
 					return err
 				}
-				//fmt.Printf("%#v \n", m.OleObject)
-			//================================end
 
 			default:
 				unioffice.Log("skipping unsupported element on CT_Object %v", el.Name)

@@ -1,7 +1,9 @@
-//name: zhexiao(肖哲)
-//date: 2019-10-10
-//新增CT_Object下面的OleObject解析
-//================================start
+// Copyright 2017 FoxyUtils ehf. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
 package wml
 
 import (
@@ -124,5 +126,3 @@ func (m *CT_OleObject) Validate() error {
 func (m *CT_OleObject) ValidateWithPath(path string) error {
 	return nil
 }
-
-//================================end

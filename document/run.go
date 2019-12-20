@@ -282,10 +282,6 @@ func (r Run) AddDrawingInline(img common.ImageRef) (InlineDrawing, error) {
 	return inline, nil
 }
 
-//name: zhexiao(肖哲)
-//date: 2019-10-09
-//从doc xml中读取inline类型的图片
-//================================start
 func (r Run) DrawingInline() []InlineDrawing {
 	var ret []InlineDrawing
 	for _, ic := range r.x.EG_RunInnerContent {
@@ -300,12 +296,6 @@ func (r Run) DrawingInline() []InlineDrawing {
 	return ret
 }
 
-//=================================end
-
-//name: zhexiao(肖哲)
-//date: 2019-10-10
-//从doc xml中读取ole公式对象数据
-//================================start
 func (r Run) OleObjects() []OleObject {
 	var ret []OleObject
 	for _, ic := range r.x.EG_RunInnerContent {
@@ -326,5 +316,3 @@ func (r Run) OleObjects() []OleObject {
 
 	return ret
 }
-
-//=================================end
