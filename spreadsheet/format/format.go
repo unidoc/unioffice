@@ -129,7 +129,7 @@ func (f *Format) AddToken(t FmtType, l []byte) {
 // string is empty, then General number formatting is used which attempts to mimic
 // Excel's general formatting.
 func Number(v float64, f string) string {
-	if f == "" || f == "General" {
+	if f == "" || f == "General" || f == "@" {
 		return NumberGeneric(v)
 	}
 	fmts := Parse(f)

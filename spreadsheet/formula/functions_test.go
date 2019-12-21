@@ -1292,3 +1292,903 @@ func TestEomonth(t *testing.T) {
 	ctx := sheet.FormulaContext()
 	runTests(t, ctx, td)
 }
+
+func TestDuration(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(2018, time.July, 1, 0, 0, 0, 0, time.UTC)) // settlement date
+	sheet.Cell("A2").SetTime(time.Date(2048, time.January, 1, 0, 0, 0, 0, time.UTC)) // maturity date
+	sheet.Cell("A3").SetNumber(0.08) // coupon rate
+	sheet.Cell("A4").SetNumber(0.09) // yield rate
+	sheet.Cell("A5").SetNumber(2) // frequency of payments
+	sheet.Cell("A6").SetNumber(0) // basis
+	sheet.Cell("A7").SetString("07/01/2018") // settlement date in string format
+	sheet.Cell("A8").SetString("01/01/2048") // maturity date in string format
+
+	td := []testStruct{
+		{`=DURATION(A1,A2,A3,A4,A5,A6)`, `10.9191452815 ResultTypeNumber`},
+		{`=DURATION(A7,A8,A3,A4,A5,A6)`, `10.9191452815 ResultTypeNumber`},
+		{`=DURATION(A1,A2,A3,A4,A5,5)`, `#NUM! ResultTypeError`},
+		{`=DURATION(A8,A7,A3,A4,A5,A6)`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestMduration(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetTime(time.Date(2008, time.January, 1, 0, 0, 0, 0, time.UTC)) // settlement date
+	sheet.Cell("A2").SetTime(time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC)) // maturity date
+	sheet.Cell("A3").SetNumber(0.08) // coupon rate
+	sheet.Cell("A4").SetNumber(0.09) // yield rate
+	sheet.Cell("A5").SetNumber(2) // frequency of payments
+	sheet.Cell("A6").SetNumber(0) // basis
+	sheet.Cell("A7").SetString("01/01/2008") // settlement date in string format
+	sheet.Cell("A8").SetString("01/01/2016") // maturity date in string format
+
+	td := []testStruct{
+		{`=MDURATION(A1,A2,A3,A4,A5,A6)`, `5.73566981391 ResultTypeNumber`},
+		{`=MDURATION(A7,A8,A3,A4,A5,A6)`, `5.73566981391 ResultTypeNumber`},
+		{`=MDURATION(A1,A2,A3,A4,A5,5)`, `#NUM! ResultTypeError`},
+		{`=MDURATION(A8,A7,A3,A4,A5,A6)`, `#NUM! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestPduration(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=PDURATION(0.025,2000,2200)`, `3.85986616262 ResultTypeNumber`},
+		{`=PDURATION(0,2000,2200)`, `#NUM! ResultTypeError`},
+		{`=PDURATION(0.025,"2000",2200)`, `#VALUE! ResultTypeError`},
+	}
+
+	ctx := sheet.FormulaContext()
+	runTests(t, ctx, td)
+}
+
+func TestRow(t *testing.T) {
+	td := []testStruct{
+		{`=ROW(A1)`, `1 ResultTypeNumber`},
+		{`=ROW(A11)`, `11 ResultTypeNumber`},
+		{`=ROW(B11)`, `11 ResultTypeNumber`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestRows(t *testing.T) {
+	td := []testStruct{
+		{`=ROWS(A1:E8)`, `8 ResultTypeNumber`},
+		{`=ROWS(E8:A1)`, `#VALUE! ResultTypeError`},
+	}
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestLookup(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("A2").SetNumber(2)
+	sheet.Cell("A3").SetNumber(3)
+
+	sheet.Cell("B1").SetString("value1")
+	sheet.Cell("B2").SetString("value2")
+	sheet.Cell("B3").SetString("value3")
+
+	td := []testStruct{
+		{`=LOOKUP(2,A1:A3,B1:B3)`, `value2 ResultTypeString`},
+		{`=LOOKUP(2,A1:B1,A2:B2)`, `#N/A ResultTypeError`},
+		{`=LOOKUP(1,A1:B1,A2:B2)`, `2 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestVlookup(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(100)
+	sheet.Cell("A2").SetNumber(200)
+	sheet.Cell("A3").SetNumber(300)
+	sheet.Cell("A4").SetNumber(400)
+
+	sheet.Cell("B1").SetString("value1")
+	sheet.Cell("B2").SetString("value2")
+	sheet.Cell("B3").SetString("value3")
+	sheet.Cell("B4").SetString("value4")
+
+	td := []testStruct{
+		{`=VLOOKUP(150,A1:B4,2)`, `value1 ResultTypeString`},
+		{`=VLOOKUP(250,A1:B4,2)`, `value2 ResultTypeString`},
+		{`=VLOOKUP(250,A1:B4,2,FALSE)`, `#N/A ResultTypeError`},
+		{`=VLOOKUP(300,A1:B4,2,FALSE)`, `value3 ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestLarge(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(400)
+	sheet.Cell("A2").SetNumber(300)
+	sheet.Cell("A3").SetNumber(500)
+	sheet.Cell("A4").SetNumber(100)
+	sheet.Cell("A5").SetNumber(200)
+	sheet.Cell("B1").SetString("abcde")
+	sheet.Cell("B2").SetNumber(150)
+	sheet.Cell("B3").SetNumber(350)
+	sheet.Cell("B4").SetNumber(450)
+	sheet.Cell("B5").SetNumber(250)
+
+	td := []testStruct{
+		{`=LARGE(A1:B5,4)`, `350 ResultTypeNumber`},
+		{`=LARGE(A1:B5,0)`, `#NUM! ResultTypeError`},
+		{`=LARGE(A1:B5,10)`, `#NUM! ResultTypeError`},
+		{`=LARGE(A2:B2,2)`, `150 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestSmall(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(400)
+	sheet.Cell("A2").SetNumber(300)
+	sheet.Cell("A3").SetNumber(500)
+	sheet.Cell("A4").SetNumber(100)
+	sheet.Cell("A5").SetNumber(200)
+	sheet.Cell("B1").SetString("abcde")
+	sheet.Cell("B2").SetNumber(150)
+	sheet.Cell("B3").SetNumber(350)
+	sheet.Cell("B4").SetNumber(450)
+	sheet.Cell("B5").SetNumber(250)
+
+	td := []testStruct{
+		{`=SMALL(A1:B5,4)`, `250 ResultTypeNumber`},
+		{`=SMALL(A1:B5,0)`, `#NUM! ResultTypeError`},
+		{`=SMALL(A1:B5,10)`, `#NUM! ResultTypeError`},
+		{`=SMALL(A2:B2,2)`, `300 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestLower(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(400)
+	sheet.Cell("A2").SetString("Hello")
+	sheet.Cell("B1").SetString("World!")
+
+	sheet.Cell("D1").SetFormulaArray("=LOWER(A1:B2)")
+	sheet.RecalculateFormulas()
+
+	td := []testStruct{
+		{`=D1`, `400 ResultTypeArray`},
+		{`=D2`, `hello ResultTypeString`},
+		{`=E1`, `world! ResultTypeString`},
+		{`=E2`, ` ResultTypeEmpty`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestReplace(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(400)
+	sheet.Cell("A2").SetString("Hello")
+	sheet.Cell("B1").SetString("World!")
+
+	sheet.Cell("D1").SetFormulaArray("=LOWER(A1:B2)")
+	sheet.RecalculateFormulas()
+
+	td := []testStruct{
+		{`=REPLACE("Hello World!",7,5,"Earth")`, `Hello Earth! ResultTypeString`},
+		{`=REPLACE("Hello World!",7,10,"Earth")`, `Hello Earth ResultTypeString`},
+		{`=REPLACE("Hello World",30,10,"!")`, `Hello World! ResultTypeString`},
+		{`=REPLACE("Hello World!",7,0,"new ")`, `Hello new World! ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestTextJoin(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("B1").SetString("2")
+	sheet.Cell("A2").SetNumber(3)
+	sheet.Cell("B2").SetString("4")
+	sheet.Cell("A3").SetNumber(5)
+	sheet.Cell("B3").SetString("6")
+	sheet.Cell("A4").SetString("7")
+	sheet.Cell("A6").SetString("8")
+	sheet.Cell("A7").SetString("9")
+
+	td := []testStruct{
+		{`=TEXTJOIN(".",FALSE,A1)`, `1 ResultTypeString`},
+		{`=TEXTJOIN("|",TRUE,A4:A7)`, `7|8|9 ResultTypeString`},
+		{`=TEXTJOIN("|",FALSE,A4:A7)`, `7||8|9 ResultTypeString`},
+		{`=TEXTJOIN(".",TRUE,A1:B2,A3:B3,A4,A5,A6,A7)`, `1.2.3.4.5.6.7.8.9 ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestIndex(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("B1").SetString("2")
+	sheet.Cell("C1").SetNumber(3)
+	sheet.Cell("B2").SetNumber(5)
+	sheet.Cell("C2").SetString("6")
+	sheet.Cell("A3").SetString("7")
+	sheet.Cell("B3").SetString("8")
+	sheet.Cell("C3").SetString("9")
+
+	sheet.Cell("A4").SetFormulaRaw(`=INDEX(A1:C3,1,1)`)
+	sheet.Cell("A5").SetFormulaArray(`=INDEX(A1:C3,2)`)
+	sheet.Cell("A6").SetFormulaArray(`=INDEX(A1:C3,,2)`)
+
+	sheet.RecalculateFormulas()
+
+	td := []testStruct{
+		{`=A4`, `1 ResultTypeNumber`},
+		{`=A5`, `0 ResultTypeArray`},
+		{`=B5`, `5 ResultTypeNumber`},
+		{`=C5`, `6 ResultTypeNumber`},
+		{`=A7`, `5 ResultTypeNumber`},
+		{`=A8`, `8 ResultTypeNumber`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestText(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	td := []testStruct{
+		{`=TEXT(A1,"0#.00")`, `00.00 ResultTypeString`},
+		{`=TEXT(1,"0.00")`, `1.00 ResultTypeString`},
+		{`=TEXT(12345678,"0.00E+000")`, `1.23E+007 ResultTypeString`},
+		{`=TEXT(0.987654321,"0.000%")`, `98.765% ResultTypeString`},
+		{`=TEXT(0.05,"# ??/??")`, `1/20 ResultTypeString`},
+	}
+
+	ctx := sheet.FormulaContext()
+
+	runTests(t, ctx, td)
+}
+
+func TestSum(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("B1").SetNumber(2)
+	sheet.Cell("C1").SetNumber(3)
+	sheet.Cell("D1").SetNumber(4)
+	sheet.Cell("E1").SetNumber(5)
+
+	sheet.Cell("A2").SetNumber(1)
+	sheet.Cell("B2").SetNumber(10)
+	sheet.Cell("C2").SetNumber(100)
+	sheet.Cell("D2").SetNumber(1000)
+	sheet.Cell("E2").SetNumber(10000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=SUM(A1:E1)`, `15 ResultTypeNumber`},
+		{`=SUM(A2:C2,E2)`, `10111 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIf(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("A2").SetNumber(2)
+	sheet.Cell("A3").SetNumber(3)
+	sheet.Cell("A4").SetNumber(4)
+	sheet.Cell("A5").SetNumber(5)
+	sheet.Cell("A6").SetFormulaArray(`IF(A1:A5>2,"passed","not passed")`)
+
+	sheet.RecalculateFormulas()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=IF(A5=5,"five",""))`, `five ResultTypeString`},
+		{`=A6)`, `not passed ResultTypeArray`},
+		{`=A8)`, `passed ResultTypeString`},
+		{`=A9)`, `passed ResultTypeString`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestAccrintm(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=ACCRINTM(39539,39614,0.1,1000,0))`, `20.5555555555 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,1))`, `20.4918032786 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,2))`, `20.8333333333 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,3))`, `20.5479452054 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,4))`, `20.5555555555 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestAmordegrc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=AMORDEGRC(2400,39679,39813,300,1,0.15,1)`, `776 ResultTypeNumber`},
+		{`=AMORDEGRC(2400,39679,39813,300,1,0.15,2)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestAmorlinc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=AMORLINC(2400,39679,39813,300,1,0.15,1)`, `360 ResultTypeNumber`},
+		{`=AMORLINC(2400,39679,39813,300,1,0.15,2)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupdaybs(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPDAYBS(40568,40862,2,0)`, `70 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,1)`, `71 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,2)`, `71 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,3)`, `71 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,4)`, `70 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,0)`, `100 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,1)`, `102 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,2)`, `102 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,3)`, `102 ResultTypeNumber`},
+		{`=COUPDAYBS(40599,40862,2,4)`, `100 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,0)`, `130 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,1)`, `133 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,2)`, `133 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,3)`, `133 ResultTypeNumber`},
+		{`=COUPDAYBS(40811,40862,2,4)`, `130 ResultTypeNumber`},
+		{`=COUPDAYBS(40872,40568,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupdays(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPDAYS(40964,41228,1,0)`, `360 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,1)`, `366 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,2)`, `360 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,3)`, `365 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,4)`, `360 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,0)`, `180 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,1)`, `182 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,2)`, `180 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,3)`, `182.5 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,2,4)`, `180 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,0)`, `90 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,1)`, `90 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,2)`, `90 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,3)`, `91.25 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,4,4)`, `90 ResultTypeNumber`},
+		{`=COUPDAYS(41228,40964,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupdaysnc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPDAYSNC(40933,41228,1,0)`, `290 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,1)`, `295 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,2)`, `295 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,3)`, `295 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,4)`, `290 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,0)`, `110 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,1)`, `111 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,2)`, `111 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,3)`, `111 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,2,4)`, `110 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,0)`, `20 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,1)`, `21 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,2)`, `21 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,3)`, `21 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,4,4)`, `20 ResultTypeNumber`},
+		{`=COUPDAYSNC(41228,40933,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupncd(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPNCD(40568,40862,1,1)`, `40862 ResultTypeNumber`},
+		{`=COUPNCD(40568,40862,2,1)`, `40678 ResultTypeNumber`},
+		{`=COUPNCD(40568,40862,4,1)`, `40589 ResultTypeNumber`},
+		{`=COUPNCD(40872,40568,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCouppcd(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPPCD(40568,40862,2,1)`, `40497 ResultTypeNumber`},
+		{`=COUPPCD(40872,40568,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCoupnum(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=COUPNUM(39107,39767,2,1)`, `4 ResultTypeNumber`},
+		{`=COUPNUM(39767,39107,2,1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCumipmt(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.09)
+	sheet.Cell("A2").SetNumber(30)
+	sheet.Cell("A3").SetNumber(125000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=CUMIPMT(A1/12,A2*12,A3,13,24,0)`, `-11135.23213 ResultTypeNumber`},
+		{`=CUMIPMT(A1/12,A2*12,A3,1,1,0)`, `-937.5 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestCumprinc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.09)
+	sheet.Cell("A2").SetNumber(30)
+	sheet.Cell("A3").SetNumber(125000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=CUMPRINC(A1/12,A2*12,A3,13,24,0)`, `-934.10712342 ResultTypeNumber`},
+		{`=CUMPRINC(A1/12,A2*12,A3,1,1,0)`, `-68.27827118 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestDb(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(1000000)
+	sheet.Cell("A2").SetNumber(100000)
+	sheet.Cell("A3").SetNumber(6)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=DB(A1,A2,A3,1,7)`, `186083.333333 ResultTypeNumber`},
+		{`=DB(A1,A2,A3,2,7)`, `259639.416666 ResultTypeNumber`},
+		{`=DB(A1,A2,A3,3,7)`, `176814.44275 ResultTypeNumber`},
+		{`=DB(A1,A2,A3,4,7)`, `120410.635512 ResultTypeNumber`},
+		{`=DB(A1,A2,A3,5,7)`, `81999.6427841 ResultTypeNumber`},
+		{`=DB(A1,A2,A3,6,7)`, `55841.756736 ResultTypeNumber`},
+		{`=DB(A1,A2,A3,7,7)`, `15845.0984738 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestDdb(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(2400)
+	sheet.Cell("A2").SetNumber(300)
+	sheet.Cell("A3").SetNumber(10)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=DDB(A1,A2,A3*365,1)`, `1.31506849315 ResultTypeNumber`},
+		{`=DDB(A1,A2,A3*12,1,2)`, `40 ResultTypeNumber`},
+		{`=DDB(A1,A2,A3,1,2)`, `480 ResultTypeNumber`},
+		{`=DDB(A1,A2,A3,2,1.5)`, `306. ResultTypeNumber`},
+		{`=DDB(A1,A2,A3,10)`, `22.1225472 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestDisc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2018, 7, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2048, 1, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(97.975)
+	sheet.Cell("A4").SetNumber(100)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=DISC(A1,A2,A3,A4,0)`, `0.00068644067 ResultTypeNumber`},
+		{`=DISC(A1,A2,A3,A4,1)`, `0.00068638416 ResultTypeNumber`},
+		{`=DISC(A1,A2,A3,A4,2)`, `0.00067650334 ResultTypeNumber`},
+		{`=DISC(A1,A2,A3,A4,3)`, `0.00068589922 ResultTypeNumber`},
+		{`=DISC(A1,A2,A3,A4,4)`, `0.00068644067 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestDollarde(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=DOLLARDE(1.02,16)`, `1.125 ResultTypeNumber`},
+		{`=DOLLARDE(1.1,32)`, `1.3125 ResultTypeNumber`},
+		{`=DOLLARDE(-1.1,32)`, `-1.3125 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestDollarfr(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=DOLLARFR(1.125,16)`, `1.02 ResultTypeNumber`},
+		{`=DOLLARFR(1.125,32)`, `1.04 ResultTypeNumber`},
+		{`=DOLLARFR(-1.125,32)`, `-1.04 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestEffect(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=EFFECT(0.0525,4)`, `0.05354266737 ResultTypeNumber`},
+		{`=EFFECT(0.1,4)`, `0.10381289062 ResultTypeNumber`},
+		{`=EFFECT(0.1,4.5)`, `0.10381289062 ResultTypeNumber`},
+		{`=EFFECT(0,4.5)`, `#NUM! ResultTypeError`},
+		{`=EFFECT(0.1,0.5)`, `#NUM! ResultTypeError`},
+		{`=EFFECT("Hello world",4)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestFv(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=FV(0.06/12,10,-200,-500,1)`, `2581.40337406 ResultTypeNumber`},
+		{`=FV(0,12,-100,-1000,1)`, `2200 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestFvschedule(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.09)
+	sheet.Cell("A2").SetNumber(0.11)
+	sheet.Cell("A3").SetNumber(0.1)
+	sheet.Cell("A4").SetBool(true)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=FVSCHEDULE(1,A1:A3)`, `1.33089 ResultTypeNumber`},
+		{`=FVSCHEDULE(1,A1:A4)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIntrate(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 2, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 5, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(1000000)
+	sheet.Cell("A4").SetNumber(1014420)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=INTRATE(A1,A2,A3,A4,0)`, `0.05768 ResultTypeNumber`},
+		{`=INTRATE(A1,A2,A3,A4,1)`, `0.05864133333 ResultTypeNumber`},
+		{`=INTRATE(A1,A2,A3,A4,2)`, `0.05768 ResultTypeNumber`},
+		{`=INTRATE(A1,A2,A3,A4,3)`, `0.05848111111 ResultTypeNumber`},
+		{`=INTRATE(A1,A2,A3,A4,4)`, `0.05768 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIpmt(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("A2").SetNumber(1)
+	sheet.Cell("A3").SetNumber(3)
+	sheet.Cell("A4").SetNumber(8000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=IPMT(0.1/12,1,36,8000)`, `-66.666666666 ResultTypeNumber`},
+		{`=IPMT(0.1,3,3,8000)`, `-292.4471299 ResultTypeNumber`},
+		{`=IPMT(0.1/12,6,24,100000,1000000,0)`, `928.82357184 ResultTypeNumber`},
+		{`=IPMT(0.1/12,6,24,100000,1000000,1)`, `921.147343973 ResultTypeNumber`},
+		{`=IPMT(0.1/12,1,24,100000,1000000,1)`, `0 ResultTypeNumber`},
+		{`=IPMT(0.1/12,1,24,100000,1000000,0)`, `-833.33333333 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIrr(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(-70000)
+	sheet.Cell("A2").SetNumber(12000)
+	sheet.Cell("A3").SetNumber(15000)
+	sheet.Cell("A4").SetNumber(18000)
+	sheet.Cell("A5").SetNumber(21000)
+	sheet.Cell("A6").SetNumber(26000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=IRR(A1:A6)`, `0.08663094803 ResultTypeNumber`},
+		{`=IRR(A1:A5)`, `-0.0212448482 ResultTypeNumber`},
+		{`=IRR(A1:A4)`, `-0.1821374641 ResultTypeNumber`},
+		{`=IRR(A1:A3,0.2)`, `-0.4435069413 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIspmt(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("A2").SetNumber(4)
+	sheet.Cell("A3").SetNumber(4000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=ISPMT(0.1/12,6,2*12,100000)`, `-625 ResultTypeNumber`},
+		{`=ISPMT(A1,0,A2,A3)`, `-400 ResultTypeNumber`},
+		{`=ISPMT(A1,1,A2,A3)`, `-300 ResultTypeNumber`},
+		{`=ISPMT(A1,2,A2,A3)`, `-200 ResultTypeNumber`},
+		{`=ISPMT(A1,3,A2,A3)`, `-100 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestMirr(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(-120000)
+	sheet.Cell("A2").SetNumber(39000)
+	sheet.Cell("A3").SetNumber(30000)
+	sheet.Cell("A4").SetNumber(21000)
+	sheet.Cell("A5").SetNumber(37000)
+	sheet.Cell("A6").SetNumber(46000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=MIRR(A1:A6,0.1,0.12)`, `0.12609413036 ResultTypeNumber`},
+		{`=MIRR(A1:A4,0.1,0.12)`, `-0.0480446552 ResultTypeNumber`},
+		{`=MIRR(A1:A6,0.1,0.14)`, `0.13475911082 ResultTypeNumber`},
+		{`=MIRR(A1:A6,0.2,0.14)`, `0.13475911082 ResultTypeNumber`},
+		{`=MIRR(A1:A6,0.3,0.14)`, `0.13475911082 ResultTypeNumber`},
+		{`=MIRR(A1:A6,0.4,0.14)`, `0.13475911082 ResultTypeNumber`},
+		{`=MIRR(A1:A6,0,0.14)`, `0.13475911082 ResultTypeNumber`},
+		{`=MIRR(A1:A6,-1,0.14)`, `0.13475911082 ResultTypeNumber`},
+		{`=MIRR(A1:A6,0.1,-1)`, `#DIV/0! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestNominal(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=NOMINAL(0.053543,4)`, `0.05250031986 ResultTypeNumber`},
+		{`=NOMINAL(0.1,4)`, `0.09645475633 ResultTypeNumber`},
+		{`=NOMINAL(0.1,4.5)`, `0.09645475633 ResultTypeNumber`},
+		{`=NOMINAL(0,4.5)`, `#NUM! ResultTypeError`},
+		{`=NOMINAL(0.1,0.5)`, `#NUM! ResultTypeError`},
+		{`=NOMINAL("Hello world",4.5)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestNper(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.12)
+	sheet.Cell("A2").SetNumber(-100)
+	sheet.Cell("A3").SetNumber(-1000)
+	sheet.Cell("A4").SetNumber(10000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=NPER(A1/12,A2,A3,A4,1)`, `59.6738656742 ResultTypeNumber`},
+		{`=NPER(A1/12,A2,A3,A4)`, `60.0821228537 ResultTypeNumber`},
+		{`=NPER(A1/12,A2,A3)`, `-9.5785940398 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestNpv(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("A2").SetNumber(-10000)
+	sheet.Cell("A3").SetNumber(3000)
+	sheet.Cell("A4").SetNumber(4200)
+	sheet.Cell("A5").SetNumber(6800)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=NPV(A1,A2,A3,A4,A5)`, `1188.44341233 ResultTypeNumber`},
+		{`=NPV(A1,A2:A4,A5)`, `1188.44341233 ResultTypeNumber`},
+		{`=NPV(A1,A2:A4,"Hello world",A5)`, `1188.44341233 ResultTypeNumber`},
+		{`=NPV(0.12,12000,15000,18000,21000,24000)`, `62448.3625219 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}

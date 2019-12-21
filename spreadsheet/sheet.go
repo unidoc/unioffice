@@ -719,7 +719,9 @@ func (s *Sheet) setArray(origin string, arr formula.Result) error {
 		sr := s.Row(cref.RowIdx + uint32(ir))
 		for ic, val := range row {
 			cell := sr.Cell(reference.IndexToColumn(cref.ColumnIdx + uint32(ic)))
-			cell.SetCachedFormulaResult(val.String())
+			if val.Type != formula.ResultTypeEmpty  {
+				cell.SetCachedFormulaResult(val.String())
+			}
 		}
 	}
 	return nil
