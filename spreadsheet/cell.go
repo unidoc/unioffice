@@ -169,7 +169,7 @@ func (c Cell) SetNumber(v float64) {
 
 	// cell type number
 	c.x.TAttr = sml.ST_CellTypeN
-	c.x.V = unioffice.String(strconv.FormatFloat(v, 'g', -1, 64))
+	c.x.V = unioffice.String(strconv.FormatFloat(v, 'f', -1, 64))
 }
 
 // Column returns the cell column

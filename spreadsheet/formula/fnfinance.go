@@ -10,13 +10,11 @@ package formula
 import (
 	"time"
 	"math"
+	"strconv"
+	"strings"
 )
 
 func init() {
-	RegisterFunction("DURATION", Duration)
-	RegisterFunction("MDURATION", Mduration)
-	RegisterFunction("PDURATION", Pduration)
-	RegisterFunction("_xlfn.PDURATION", Pduration)
 	RegisterFunction("ACCRINTM", Accrintm)
 	RegisterFunction("AMORDEGRC", Amordegrc)
 	RegisterFunction("AMORLINC", Amorlinc)
@@ -28,6 +26,26 @@ func init() {
 	RegisterFunction("COUPPCD", Couppcd)
 	RegisterFunction("CUMIPMT", Cumipmt)
 	RegisterFunction("CUMPRINC", Cumprinc)
+	RegisterFunction("DB", Db)
+	RegisterFunction("DDB", Ddb)
+	RegisterFunction("DISC", Disc)
+	RegisterFunction("DOLLARDE", Dollarde)
+	RegisterFunction("DOLLARFR", Dollarfr)
+	RegisterFunction("DURATION", Duration)
+	RegisterFunction("EFFECT", Effect)
+	RegisterFunction("FV", Fv)
+	RegisterFunction("FVSCHEDULE", Fvschedule)
+	RegisterFunction("INTRATE", Intrate)
+	RegisterFunction("IPMT", Ipmt)
+	RegisterFunction("IRR", Irr)
+	RegisterFunction("ISPMT", Ispmt)
+	RegisterFunction("MDURATION", Mduration)
+	RegisterFunction("MIRR", Mirr)
+	RegisterFunction("NOMINAL", Nominal)
+	RegisterFunction("NPER", Nper)
+	RegisterFunction("NPV", Npv)
+	RegisterFunction("PDURATION", Pduration)
+	RegisterFunction("_xlfn.PDURATION", Pduration)
 }
 
 // Duration implements the Excel DURATION function.
@@ -788,4 +806,776 @@ func fv(rate, periods, payment, value float64, t int) float64 {
 		}
 	}
 	return -result
+}
+
+// Db implements the Excel DB function.
+func Db(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("DB requires four or five number arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("DB requires cost to be number argument")
+	}
+	cost := args[0].ValueNumber
+	if cost < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DB requires cost to be non negative")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("DB requires salvage to be number argument")
+	}
+	salvage := args[1].ValueNumber
+	if salvage < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DB requires salvage to be non negative")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("DB requires life to be number argument")
+	}
+	life := args[2].ValueNumber
+	if life <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DB requires life to be positive")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("DB requires period to be number argument")
+	}
+	period := args[3].ValueNumber
+	if period <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DB requires period to be positive")
+	}
+	if period - life > 1 {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect period for DB")
+	}
+	month := 12.0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("DB requires month to be number argument")
+		}
+		month = args[4].ValueNumber
+		if month < 1 || month > 12 {
+			return MakeErrorResultType(ErrorTypeNum, "DB requires month to be in range of 1 and 12")
+		}
+	}
+	if month == 12 && period > life {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect period for DB")
+	}
+	if salvage >= cost {
+		return MakeNumberResult(0)
+	}
+	rate := 1 - math.Pow(salvage / cost, 1 / life)
+	rate = float64(int(rate * 1000 + 0.5)) / 1000 // round to 3 decimal places
+	initial := cost * rate * month / 12
+	if period == 1 {
+		return MakeNumberResult(initial)
+	}
+	total := initial
+	current := 0.0
+	ceiling := life
+	if ceiling > period {
+		ceiling = period
+	}
+	for i := 2.0; i <= ceiling; i++ {
+		current = (cost - total) * rate
+		total += current
+	}
+	if period > life {
+		return MakeNumberResult((cost - total) * rate * (12 - month) / 12)
+	}
+	return MakeNumberResult(current)
+}
+
+// Ddb implements the Excel DDB function.
+func Ddb(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("DDB requires four or five number arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("DDB requires cost to be number argument")
+	}
+	cost := args[0].ValueNumber
+	if cost < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DDB requires cost to be non negative")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("DDB requires salvage to be number argument")
+	}
+	salvage := args[1].ValueNumber
+	if salvage < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DDB requires salvage to be non negative")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("DDB requires life to be number argument")
+	}
+	life := args[2].ValueNumber
+	if life <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DDB requires life to be positive")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("DDB requires period to be number argument")
+	}
+	period := args[3].ValueNumber
+	if period < 1 {
+		return MakeErrorResultType(ErrorTypeNum, "DDB requires period to be positive")
+	}
+	if period > life {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect period for DDB")
+	}
+	factor := 2.0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("DDB requires factor to be number argument")
+		}
+		factor = args[4].ValueNumber
+		if factor < 0 {
+			return MakeErrorResultType(ErrorTypeNum, "DDB requires factor to be non negative")
+		}
+	}
+
+	oldValue := 0.0
+	rate := factor / life
+	if rate >= 1 {
+		rate = 1
+		if period == 1 {
+			oldValue = cost
+		}
+	} else {
+		oldValue = cost * math.Pow(1 - rate, period - 1)
+	}
+	newValue := cost * math.Pow(1 - rate, period)
+
+	var ddb float64
+
+	if newValue < salvage {
+		ddb = oldValue - salvage
+	} else {
+		ddb = oldValue - newValue
+	}
+	if ddb < 0 {
+		ddb = 0
+	}
+	return MakeNumberResult(ddb)
+}
+
+// Disc implements the Excel DISC function.
+func Disc(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("DISC requires four or five arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("DISC requires settlement date to be number argument")
+	}
+	settlement := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("DISC requires maturity date to be number argument")
+	}
+	maturity := args[1].ValueNumber
+	if settlement >= maturity {
+		return MakeErrorResultType(ErrorTypeNum, "DISC requires maturity date to be later than settlement date")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("DISC requires pr to be number argument")
+	}
+	pr := args[2].ValueNumber
+	if pr <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DISC requires pr to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("DISC requires redemption to be number argument")
+	}
+	redemption := args[3].ValueNumber
+	if redemption <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "DISC requires redemption to be positive number argument")
+	}
+	basis := 0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("DISC requires basis to be number argument")
+		}
+		basis = int(args[4].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for DISC")
+		}
+	}
+	fracResult := yearFrac(settlement, maturity, basis)
+	if fracResult.Type == ResultTypeError {
+		return fracResult
+	}
+	return MakeNumberResult((redemption - pr) / redemption / fracResult.ValueNumber)
+}
+
+// Dollarde implements the Excel DOLLARDE function.
+func Dollarde(args []Result) Result {
+	dollar, fraction, resultErr := parseDollarArgs(args, "DOLLARDE")
+	if resultErr.Type == ResultTypeError {
+		return resultErr
+	}
+	if fraction < 1 {
+		return MakeErrorResultType(ErrorTypeDivideByZero, "DOLLARDE requires fraction to be equal or more than 1")
+	}
+	if dollar == 0 {
+		return MakeNumberResult(0)
+	}
+	neg := dollar < 0
+	if neg {
+		dollar = -dollar
+	}
+	dollarStr := args[0].Value()
+	split := strings.Split(dollarStr, ".")
+	dollarInt := float64(int(dollar))
+	dollarFracStr := split[1]
+	dollarFracOrder := len(dollarFracStr)
+	fractionOrder := int(math.Log10(fraction)) + 1
+	power := float64(fractionOrder - dollarFracOrder)
+	dollarFrac, err := strconv.ParseFloat(dollarFracStr, 64)
+	if err != nil {
+		return MakeErrorResult("Incorrect fraction argument for DOLLARDE")
+	}
+	dollarFrac *= math.Pow(10, power)
+	dollarde := dollarInt + dollarFrac / fraction
+	if neg {
+		dollarde = -dollarde
+	}
+	return MakeNumberResult(dollarde)
+}
+
+// Dollarfr implements the Excel DOLLARFR function.
+func Dollarfr(args []Result) Result {
+	dollar, fraction, resultErr := parseDollarArgs(args, "DOLLARFR")
+	if resultErr.Type == ResultTypeError {
+		return resultErr
+	}
+	if dollar == 0 {
+		return MakeNumberResult(0)
+	}
+	neg := dollar < 0
+	if neg {
+		dollar = -dollar
+	}
+	dollarInt := float64(int(dollar))
+	dollarStr := args[0].Value()
+	split := strings.Split(dollarStr, ".")
+	dollarFracStr := split[1]
+	dollarFrac, err := strconv.ParseFloat(dollarFracStr, 64)
+	if err != nil {
+		return MakeErrorResult("Incorrect fraction argument for DOLLARFR")
+	}
+	dollarFracOrder := float64(len(dollarFracStr))
+	dollarFrac /= math.Pow(10, dollarFracOrder)
+
+	dollarfr := dollarFrac * fraction / math.Pow(10, float64(int(math.Log10(fraction))) + 1) + dollarInt
+	if neg {
+		dollarfr = -dollarfr
+	}
+	return MakeNumberResult(dollarfr)
+}
+
+func parseDollarArgs(args []Result, funcName string) (float64, float64, Result) {
+	if len(args) != 2 {
+		return 0, 0, MakeErrorResult(funcName + " requires two arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return 0, 0, MakeErrorResult(funcName + " requires fractional dollar to be number argument")
+	}
+	dollar := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return 0, 0, MakeErrorResult(funcName + " requires fraction to be number argument")
+	}
+	fraction := float64(int(args[1].ValueNumber))
+	if fraction < 0 {
+		return 0, 0, MakeErrorResultType(ErrorTypeNum, funcName + " requires fraction to be positive number")
+	}
+	return dollar, fraction, MakeEmptyResult()
+}
+
+// Effect implements the Excel EFFECT function.
+func Effect(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("EFFECT requires two arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("EFFECT requires nominal interest rate to be number argument")
+	}
+	nominal := args[0].ValueNumber
+	if nominal <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "EFFECT requires nominal interest rate to be positive number argument")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("EFFECT requires number of compounding periods to be number argument")
+	}
+	npery := float64(int(args[1].ValueNumber))
+	if npery < 1 {
+		return MakeErrorResultType(ErrorTypeNum, "EFFECT requires number of compounding periods to be 1 or more")
+	}
+	return MakeNumberResult(math.Pow((1 + nominal / npery), npery) - 1)
+}
+
+// Fv implements the Excel FV function.
+func Fv(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 3 || argsNum > 5 {
+		return MakeErrorResult("FV requires number of arguments in range of 3 and 5")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("FV requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("FV requires number of periods to be number argument")
+	}
+	nPer := args[1].ValueNumber
+	if nPer != float64(int(nPer)) {
+		return MakeErrorResultType(ErrorTypeNum, "FV requires number of periods to be integer number argument")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("FV requires payment to be number argument")
+	}
+	pmt := args[2].ValueNumber
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("FV requires payment to be number argument")
+	}
+	pv := 0.0
+	if argsNum >= 4 {
+		if args[3].Type != ResultTypeNumber {
+			return MakeErrorResult("FV requires present value to be number argument")
+		}
+		pv = args[3].ValueNumber
+	}
+	t := 0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("FV requires type to be number argument")
+		}
+		t = int(args[4].ValueNumber)
+		if t != 0 {
+			t = 1
+		}
+	}
+	return MakeNumberResult(fv(rate, nPer, pmt, pv, t))
+}
+
+// Fvschedule implements the Excel FVSCHEDULE function.
+func Fvschedule(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("FVSCHEDULE requires two arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("FVSCHEDULE requires principal to be number argument")
+	}
+	principal := args[0].ValueNumber
+	switch args[1].Type {
+	case ResultTypeNumber:
+		return MakeNumberResult(principal * (args[1].ValueNumber+1))
+	case ResultTypeList, ResultTypeArray:
+		schedule := arrayFromRange(args[1])
+		for _, row := range schedule {
+			for _, rate := range row {
+				if rate.Type != ResultTypeNumber || rate.IsBoolean {
+					return MakeErrorResult("FVSCHEDULE requires rates to be numbers")
+				}
+				principal *= 1.0 + rate.ValueNumber
+			}
+		}
+		return MakeNumberResult(principal)
+	default:
+		return MakeErrorResult("FVSCHEDULE requires schedule to be of array type")
+	}
+}
+
+// Intrate implements the Excel INTRATE function.
+func Intrate(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("INTRATE requires four or five arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("INTRATE requires settlement date to be number argument")
+	}
+	settlement := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("INTRATE requires maturity date to be number argument")
+	}
+	maturity := args[1].ValueNumber
+	if settlement >= maturity {
+		return MakeErrorResultType(ErrorTypeNum, "INTRATE requires maturity date to be later than settlement date")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("INTRATE requires investment to be number argument")
+	}
+	investment := args[2].ValueNumber
+	if investment <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "INTRATE requires investment to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("INTRATE requires redemption to be number argument")
+	}
+	redemption := args[3].ValueNumber
+	if redemption <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "INTRATE requires redemption to be positive number argument")
+	}
+	basis := 0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("INTRATE requires basis to be number argument")
+		}
+		basis = int(args[4].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for INTRATE")
+		}
+	}
+	fracResult := yearFrac(settlement, maturity, basis)
+	if fracResult.Type == ResultTypeError {
+		return fracResult
+	}
+	return MakeNumberResult((redemption - investment) / investment / fracResult.ValueNumber)
+}
+
+// Ipmt implements the Excel IPMT function.
+func Ipmt(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 4 || argsNum > 6 {
+		return MakeErrorResult("IPMT requires six arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("IPMT requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("IPMT requires period to be number argument")
+	}
+	period := args[1].ValueNumber
+	if period <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "IPMT requires period to be positive number argument")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("IPMT requires number of periods to be number argument")
+	}
+	nPer := args[2].ValueNumber
+	if nPer <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "IPMT requires number of periods to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("IPMT requires present value to be number argument")
+	}
+	presentValue := args[3].ValueNumber
+	futureValue := 0.0
+	if argsNum > 4 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("IPMT requires future value to be number argument")
+		}
+		futureValue = args[4].ValueNumber
+	}
+	t := 0
+	if argsNum == 6 {
+		if args[5].Type != ResultTypeNumber {
+			return MakeErrorResult("IPMT requires start period to be number argument")
+		}
+		t = int(args[5].ValueNumber)
+		if t != 0  {
+			t = 1
+		}
+	}
+	payment := pmt(rate, nPer, presentValue, futureValue, t)
+	var interest float64
+	if period == 1 {
+		if t == 1 {
+			interest = 0
+		} else {
+			interest = -presentValue
+		}
+	} else {
+		if t == 1 {
+			interest = fv(rate, period - 2, payment, presentValue, 1) - payment
+		} else {
+			interest = fv(rate, period - 1, payment, presentValue, 0)
+		}
+	}
+
+	return MakeNumberResult(interest * rate)
+}
+
+// Irr implements the Excel IRR function.
+func Irr(args []Result) Result {
+	argsNum := len(args)
+	if argsNum > 2 {
+		return MakeErrorResult("IRR requires one or two arguments")
+	}
+	if args[0].Type != ResultTypeList && args[0].Type != ResultTypeArray {
+		return MakeErrorResult("IRR requires values to be range argument")
+	}
+	valuesR := arrayFromRange(args[0])
+	values := []float64{}
+	for _, row := range valuesR {
+		for _, vR := range row {
+			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
+				values = append(values, vR.ValueNumber)
+			}
+		}
+	}
+	vlen := len(values)
+	if len(values) < 2 {
+		return MakeErrorResultType(ErrorTypeNum, "")
+	}
+	guess := 0.1
+	if argsNum == 2 {
+		if args[1].Type != ResultTypeNumber {
+			return MakeErrorResult("IRR requires guess to be number argument")
+		}
+		guess = args[1].ValueNumber
+		if guess <= -1 {
+			return MakeErrorResult("IRR requires guess to be more than -1")
+		}
+	}
+
+	dates := []float64{}
+	positive := false
+	negative := false
+
+	for i := 0; i < vlen; i++ {
+		if i == 0 {
+			dates = append(dates, 0)
+		} else {
+			dates = append(dates, dates[i - 1] + 365)
+		}
+		if values[i] > 0 {
+			positive = true
+		}
+		if values[i] < 0 {
+			negative = true
+		}
+	}
+
+	if !positive || !negative {
+		return MakeErrorResultType(ErrorTypeNum, "")
+	}
+
+	resultRate := guess
+	epsMax := 1e-10
+	iter := 0
+	maxIter := 50
+	isErr := false
+
+	for {
+		resultValue := irrResult(values, dates, resultRate)
+		newRate := resultRate - resultValue / irrResultDeriv(values, dates, resultRate)
+		epsRate := math.Abs(newRate - resultRate)
+		resultRate = newRate
+		iter++
+		if iter > maxIter || epsRate <= epsMax || math.Abs(resultValue) <= epsMax {
+			break
+		}
+		if iter > maxIter {
+			isErr = true
+			break
+		}
+	}
+	if isErr || math.IsNaN(resultRate) || math.IsInf(resultRate, 0) {
+		return MakeErrorResultType(ErrorTypeNum, "")
+	}
+	return MakeNumberResult(resultRate)
+}
+
+func irrResult(values, dates []float64, rate float64) float64 {
+	r := rate + 1
+	result := values[0]
+	vlen := len(values)
+	firstDate := dates[0]
+	for i := 1; i < vlen; i++ {
+		result += values[i] / math.Pow(r, (dates[i] - firstDate) / 365)
+	}
+	return result
+}
+
+func irrResultDeriv(values, dates []float64, rate float64) float64 {
+	r := rate + 1
+	result := 0.0
+	vlen := len(values)
+	firstDate := dates[0]
+	for i := 1; i < vlen; i++ {
+		frac := (dates[i] - firstDate) / 365
+		result -= frac * values[i] / math.Pow(r, frac + 1)
+	}
+	return result
+}
+
+// Ispmt implements the Excel ISPMT function.
+func Ispmt(args []Result) Result {
+	if len(args) != 4 {
+		return MakeErrorResult("ISPMT requires six arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("ISPMT requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("ISPMT requires period to be number argument")
+	}
+	period := args[1].ValueNumber
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("ISPMT requires number of periods to be number argument")
+	}
+	nPer := args[2].ValueNumber
+	if nPer <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "ISPMT requires number of periods to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("ISPMT requires present value to be number argument")
+	}
+	pv := args[3].ValueNumber
+
+	return MakeNumberResult(pv * rate * (period / nPer - 1))
+}
+
+// Mirr implements the Excel MIRR function.
+func Mirr(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("MIRR requires three arguments")
+	}
+	if args[0].Type != ResultTypeList && args[0].Type != ResultTypeArray {
+		return MakeErrorResult("MIRR requires values to be range argument")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("MIRR requires finance rate to be number argument")
+	}
+	finRate := args[1].ValueNumber + 1
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("MIRR requires reinvest rate to be number argument")
+	}
+	reinvRate := args[2].ValueNumber + 1
+	if reinvRate == 0 {
+		return MakeErrorResultType(ErrorTypeDivideByZero, "")
+	}
+
+	valuesR := arrayFromRange(args[0])
+	n := float64(len(valuesR))
+	npvInvest, npvReinvest := 0.0, 0.0
+	powInvest, powReinvest := 1.0, 1.0
+	hasPositive, hasNegative := false, false
+	for _, row := range valuesR {
+		for _, vR := range row {
+			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
+				v := vR.ValueNumber
+				if v == 0 {
+					continue
+				} else {
+					if v > 0 {
+						hasPositive = true
+						npvReinvest += vR.ValueNumber * powReinvest
+					} else {
+						hasNegative = true
+						npvInvest += vR.ValueNumber * powInvest
+					}
+					powInvest /= finRate
+					powReinvest /= reinvRate
+				}
+			}
+		}
+	}
+
+	if !hasPositive || !hasNegative {
+		return MakeErrorResultType(ErrorTypeDivideByZero, "")
+	}
+
+	result := -npvReinvest / npvInvest
+	result *= math.Pow(reinvRate, n - 1)
+	result = math.Pow(result, 1 / (n - 1))
+	return MakeNumberResult(result - 1)
+}
+
+// Nominal implements the Excel NOMINAL function.
+func Nominal(args []Result) Result {
+	if len(args) != 2 {
+		return MakeErrorResult("NOMINAL requires two arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("NOMINAL requires nominal interest rate to be number argument")
+	}
+	effect := args[0].ValueNumber
+	if effect <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "NOMINAL requires effect interest rate to be positive number argument")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("NOMINAL requires number of compounding periods to be number argument")
+	}
+	npery := float64(int(args[1].ValueNumber))
+	if npery < 1 {
+		return MakeErrorResultType(ErrorTypeNum, "NOMINAL requires number of compounding periods to be 1 or more")
+	}
+	return MakeNumberResult((math.Pow(effect + 1, 1 / npery) - 1) * npery)
+}
+
+// Nper implements the Excel NPER function.
+func Nper(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 3 || argsNum > 5 {
+		return MakeErrorResult("NPER requires number of arguments in range of 3 and 5")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("NPER requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("NPER requires payment to be number argument")
+	}
+	pmt := args[1].ValueNumber
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("NPER requires present value to be number argument")
+	}
+	pv := args[2].ValueNumber
+	fv := 0.0
+	if argsNum >= 4 {
+		if args[3].Type != ResultTypeNumber {
+			return MakeErrorResult("NPER requires future value to be number argument")
+		}
+		fv = args[3].ValueNumber
+	}
+	t := 0.0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("NPER requires type to be number argument")
+		}
+		t = args[4].ValueNumber
+		if t != 0 {
+			t = 1
+		}
+	}
+	num := pmt * (1 + rate * t) - fv * rate
+	den := (pv * rate + pmt * (1 + rate * t))
+	return MakeNumberResult(math.Log(num / den) / math.Log(1 + rate))
+}
+
+// Npv implements the Excel NPV function.
+func Npv(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 2 {
+		return MakeErrorResult("NPV requires two or more arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("NPV requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if rate == -1 {
+		return MakeErrorResultType(ErrorTypeDivideByZero, "")
+	}
+	values := []float64{}
+	for _, arg := range args[1:] {
+		switch arg.Type {
+		case ResultTypeNumber:
+			values = append(values, arg.ValueNumber)
+		case ResultTypeArray, ResultTypeList:
+			rangeR := arrayFromRange(arg)
+			for _, r := range rangeR {
+				for _, vR := range r {
+					if vR.Type == ResultTypeNumber && !vR.IsBoolean {
+						values = append(values, vR.ValueNumber)
+					}
+				}
+			}
+		}
+	}
+	npv := 0.0
+	for i, value := range values {
+		npv += value / math.Pow(1 + rate, float64(i) + 1)
+	}
+	return MakeNumberResult(npv)
 }
