@@ -2192,3 +2192,42 @@ func TestNpv(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestPmt(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.08)
+	sheet.Cell("A2").SetNumber(10)
+	sheet.Cell("A3").SetNumber(10000)
+	sheet.Cell("A4").SetNumber(0.06)
+	sheet.Cell("A5").SetNumber(18)
+	sheet.Cell("A6").SetNumber(50000)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=PMT(A1/12,A2,A3)`, `-1037.0320893 ResultTypeNumber`},
+		{`=PMT(A1/12,A2,A3,1)`, `-1037.1291259 ResultTypeNumber`},
+		{`=PMT(A4/12,A5*12,0,A6)`, `-129.08116086 ResultTypeNumber`},
+		{`=PMT("A4/12",A5*12,0,A6)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestPpmt(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=PPMT(0.1/12,1,2*12,2000)`, `-75.623186008 ResultTypeNumber`},
+		{`=PPMT(0.08,10,10,200000)`, `-27598.053462 ResultTypeNumber`},
+		{`=PPMT(0.08,11,10,200000)`, `#NUM! ResultTypeError`},
+		{`=PPMT("0.08%",10,10,200000)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}

@@ -45,6 +45,8 @@ func init() {
 	RegisterFunction("NPER", Nper)
 	RegisterFunction("NPV", Npv)
 	RegisterFunction("PDURATION", Pduration)
+	RegisterFunction("PMT", Pmt)
+	RegisterFunction("PPMT", Ppmt)
 	RegisterFunction("_xlfn.PDURATION", Pduration)
 }
 
@@ -127,12 +129,14 @@ func Coupdaybs(args []Result) Result {
 	if err.Type == ResultTypeError {
 		return err
 	}
-	settlementDate := dateFromDays(parsedArgs.settlementDate)
-	maturityDate := dateFromDays(parsedArgs.maturityDate)
-	freq := parsedArgs.freq
-	basis := parsedArgs.basis
+	return MakeNumberResult(coupdaybs(parsedArgs.settlementDate, parsedArgs.maturityDate, parsedArgs.freq, parsedArgs.basis))
+}
+
+func coupdaybs(settlementDateF, maturityDateF float64, freq, basis int) float64 {
+	settlementDate := dateFromDays(settlementDateF)
+	maturityDate := dateFromDays(maturityDateF)
 	pcd := couppcd(settlementDate, maturityDate, freq, basis)
-	return MakeNumberResult(getDiff(pcd, settlementDate, basis))
+	return getDiff(pcd, settlementDate, basis)
 }
 
 // Coupdays implements the Excel COUPDAYS function.
@@ -141,16 +145,18 @@ func Coupdays(args []Result) Result {
 	if err.Type == ResultTypeError {
 		return err
 	}
-	settlementDate := dateFromDays(parsedArgs.settlementDate)
-	maturityDate := dateFromDays(parsedArgs.maturityDate)
-	freq := parsedArgs.freq
-	basis := parsedArgs.basis
+	return MakeNumberResult(coupdays(parsedArgs.settlementDate, parsedArgs.maturityDate, parsedArgs.freq, parsedArgs.basis))
+}
+
+func coupdays(settlementDateF, maturityDateF float64, freq, basis int) float64 {
+	settlementDate := dateFromDays(settlementDateF)
+	maturityDate := dateFromDays(maturityDateF)
 	if basis == 1 {
 		pcd := couppcd(settlementDate, maturityDate, freq, 1)
 		next := pcd.AddDate(0, 12 / freq, 0)
-		return MakeNumberResult(getDiff(pcd, next, basis))
+		return getDiff(pcd, next, basis)
 	}
-	return MakeNumberResult(float64(getDaysInYear(0, basis)) / float64(freq))
+	return float64(getDaysInYear(0, basis)) / float64(freq)
 }
 
 // Coupdaysnc implements the Excel COUPDAYSNC function.
@@ -159,12 +165,14 @@ func Coupdaysnc(args []Result) Result {
 	if err.Type == ResultTypeError {
 		return err
 	}
-	settlementDate := dateFromDays(parsedArgs.settlementDate)
-	maturityDate := dateFromDays(parsedArgs.maturityDate)
-	freq := parsedArgs.freq
-	basis := parsedArgs.basis
+	return MakeNumberResult(coupdaysnc(parsedArgs.settlementDate, parsedArgs.maturityDate, parsedArgs.freq, parsedArgs.basis))
+}
+
+func coupdaysnc(settlementDateF, maturityDateF float64, freq, basis int) float64 {
+	settlementDate := dateFromDays(settlementDateF)
+	maturityDate := dateFromDays(maturityDateF)
 	ncd := coupncd(settlementDate, maturityDate, freq)
-	return MakeNumberResult(getDiff(settlementDate, ncd, basis))
+	return getDiff(settlementDate, ncd, basis)
 }
 
 // Couppcd implements the Excel COUPPCD function.
@@ -188,11 +196,9 @@ func Coupnum(args []Result) Result {
 	if err.Type == ResultTypeError {
 		return err
 	}
-	settlementDate := dateFromDays(parsedArgs.settlementDate)
-	maturityDate := dateFromDays(parsedArgs.maturityDate)
 	freq := parsedArgs.freq
 	basis := parsedArgs.basis
-	cn, err := coupnum(settlementDate, maturityDate, freq, basis)
+	cn, err := coupnum(parsedArgs.settlementDate, parsedArgs.maturityDate, freq, basis)
 	if err.Type == ResultTypeError {
 		return err
 	}
@@ -284,7 +290,8 @@ func couppcd(settlementDate, maturityDate time.Time, freq, basis int) time.Time 
 }
 
 // coupnum gets count of coupon dates.
-func coupnum(settlementDate, maturityDate time.Time, freq, basis int) (float64, Result) {
+func coupnum(settlementDateF, maturityDateF float64, freq, basis int) (float64, Result) {
+	settlementDate, maturityDate := dateFromDays(settlementDateF), dateFromDays(maturityDateF)
 	if maturityDate.After(settlementDate) {
 		aDate := couppcd(settlementDate, maturityDate, freq, basis)
 		months := (maturityDate.Year() - aDate.Year()) * 12 + int(maturityDate.Month()) - int(aDate.Month())
@@ -295,12 +302,11 @@ func coupnum(settlementDate, maturityDate time.Time, freq, basis int) (float64, 
 
 // getDuration returns the Macauley duration for an assumed par value of $100. It is defined as the weighted average of the present value of cash flows, and is used as a measure of a bond price's response to changes in yield.
 func getDuration(settlementDate, maturityDate, coup, yield, freq float64, basis int) Result {
-	fracResult := yearFrac(settlementDate, maturityDate, basis)
-	if fracResult.Type == ResultTypeError {
-		return fracResult
+	frac, errResult := yearFrac(settlementDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
 	}
-	frac := fracResult.ValueNumber
-	coups, err := coupnum(dateFromDays(settlementDate), dateFromDays(maturityDate), int(freq), basis)
+	coups, err := coupnum(settlementDate, maturityDate, int(freq), basis)
 	if err.Type == ResultTypeError {
 		return err
 	}
@@ -350,7 +356,7 @@ func parseDurationData(args []Result, funcName string) (*durationArgs, Result) {
 	case ResultTypeString:
 		settlementFromString := DateValue([]Result{settlementResult})
 		if settlementFromString.Type == ResultTypeError {
-			return nil, MakeErrorResult("Incorrect settltment date for " + funcName)
+			return nil, MakeErrorResult("Incorrect settlement date for " + funcName)
 		}
 		settlementDate = settlementFromString.ValueNumber
 	default:
@@ -363,7 +369,7 @@ func parseDurationData(args []Result, funcName string) (*durationArgs, Result) {
 	case ResultTypeString:
 		maturityFromString := DateValue([]Result{maturityResult})
 		if maturityFromString.Type == ResultTypeError {
-			return nil, MakeErrorResult("Incorrect settltment date for " + funcName)
+			return nil, MakeErrorResult("Incorrect maturity date for " + funcName)
 		}
 		maturityDate = maturityFromString.ValueNumber
 	default:
@@ -404,7 +410,7 @@ func parseDurationData(args []Result, funcName string) (*durationArgs, Result) {
 		}
 		basis = int(basisResult.ValueNumber)
 		if !checkBasis(basis) {
-			return nil, MakeErrorResultType(ErrorTypeNum, "Incorrect basis value")
+			return nil, MakeErrorResultType(ErrorTypeNum, "Incorrect basis value for " + funcName)
 		}
 	}
 	return &durationArgs{
@@ -466,11 +472,11 @@ func Accrintm(args []Result) Result {
 			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for ACCRINTM")
 		}
 	}
-	fracResult := yearFrac(issue, settlement, basis)
-	if fracResult.Type == ResultTypeError {
-		return fracResult
+	frac, errResult := yearFrac(issue, settlement, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
 	}
-	return MakeNumberResult(par * rate * fracResult.ValueNumber)
+	return MakeNumberResult(par * rate * frac)
 }
 
 // Amordegrc implements the Excel AMORDEGRC function.
@@ -501,11 +507,11 @@ func Amordegrc(args []Result) Result {
 	}
 
 	rate *= amorCoeff
-	yfResult := yearFrac(datePurchased, firstPeriod, basis)
-	if yfResult.Type == ResultTypeError {
+	yf, errResult := yearFrac(datePurchased, firstPeriod, basis)
+	if errResult.Type == ResultTypeError {
 		return MakeErrorResult("incorrect dates for AMORDEGRC")
 	}
-	nRate := mathRound(yfResult.ValueNumber * rate * cost)
+	nRate := mathRound(yf * rate * cost)
 	cost -= nRate
 	rest := cost - salvage
 
@@ -541,11 +547,11 @@ func Amorlinc(args []Result) Result {
 	rate := parsedArgs.rate
 	basis := parsedArgs.basis
 
-	yfResult := yearFrac(datePurchased, firstPeriod, basis)
-	if yfResult.Type == ResultTypeError {
+	yf, errResult := yearFrac(datePurchased, firstPeriod, basis)
+	if errResult.Type == ResultTypeError {
 		return MakeErrorResult("incorrect dates for AMORLINC")
 	}
-	r0 := yfResult.ValueNumber * rate * cost
+	r0 := yf * rate * cost
 	if period == 0 {
 		return MakeNumberResult(r0)
 	}
@@ -583,14 +589,14 @@ func parseAmorArgs(args []Result, funcName string) (*amorArgs, Result) {
 	}
 	cost := args[0].ValueNumber
 	if cost < 0 {
-		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires cost to be positive")
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires cost to be non negative")
 	}
 	if args[1].Type != ResultTypeNumber {
 		return nil, MakeErrorResult(funcName + " requires date purchased to be number argument")
 	}
 	datePurchased := args[1].ValueNumber
 	if datePurchased < 0 {
-		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires date purchased to be positive")
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires date purchased to be non negative")
 	}
 	if args[2].Type != ResultTypeNumber {
 		return nil, MakeErrorResult(funcName + " requires first period to be number argument")
@@ -648,7 +654,7 @@ func mathRound(x float64) float64 {
 type cumulArgs struct {
 	rate float64
 	nPer float64
-	pv float64
+	presentValue float64
 	startPeriod float64
 	endPeriod float64
 	t int
@@ -662,24 +668,24 @@ func Cumipmt(args []Result) Result {
 	}
 	rate := parsedArgs.rate
 	nPer := parsedArgs.nPer
-	pv := parsedArgs.pv
+	presentValue := parsedArgs.presentValue
 	startPeriod := parsedArgs.startPeriod
 	endPeriod := parsedArgs.endPeriod
 	t := parsedArgs.t
 
-	payment := pmt(rate, nPer, pv, 0, t)
+	payment := pmt(rate, nPer, presentValue, 0, t)
 	interest := 0.0
 	if startPeriod == 1 {
 		if t == 0 {
-			interest = -pv
+			interest = -presentValue
 			startPeriod++
 		}
 	}
 	for i := startPeriod; i <= endPeriod; i++ {
 		if t == 1 {
-			interest += fv(rate, i - 2, payment, pv, 1) - payment
+			interest += fv(rate, i - 2, payment, presentValue, 1) - payment
 		} else {
-			interest += fv(rate, i - 1, payment, pv, 0)
+			interest += fv(rate, i - 1, payment, presentValue, 0)
 		}
 	}
 	interest *= rate
@@ -694,16 +700,16 @@ func Cumprinc(args []Result) Result {
 	}
 	rate := parsedArgs.rate
 	nPer := parsedArgs.nPer
-	pv := parsedArgs.pv
+	presentValue := parsedArgs.presentValue
 	startPeriod := parsedArgs.startPeriod
 	endPeriod := parsedArgs.endPeriod
 	t := parsedArgs.t
 
-	payment := pmt(rate, nPer, pv, 0, t)
+	payment := pmt(rate, nPer, presentValue, 0, t)
 	principal := 0.0
 	if startPeriod == 1 {
 		if t == 0 {
-			principal = payment + pv * rate
+			principal = payment + presentValue * rate
 		} else {
 			principal = payment
 		}
@@ -711,9 +717,9 @@ func Cumprinc(args []Result) Result {
 	}
 	for i := startPeriod; i <= endPeriod; i++ {
 		if t == 1 {
-			principal += payment - (fv(rate, i - 2, payment, pv, 1) - payment) * rate
+			principal += payment - (fv(rate, i - 2, payment, presentValue, 1) - payment) * rate
 		} else {
-			principal += payment - fv(rate, i - 1, payment, pv, 0) * rate
+			principal += payment - fv(rate, i - 1, payment, presentValue, 0) * rate
 		}
 	}
 	return MakeNumberResult(principal)
@@ -740,8 +746,8 @@ func parseCumulArgs(args []Result, funcName string) (*cumulArgs, Result) {
 	if args[2].Type != ResultTypeNumber {
 		return nil, MakeErrorResult(funcName + " requires present value to be number argument")
 	}
-	pv := args[2].ValueNumber
-	if pv <= 0 {
+	presentValue := args[2].ValueNumber
+	if presentValue <= 0 {
 		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires present value to be positive number argument")
 	}
 	if args[3].Type != ResultTypeNumber {
@@ -771,7 +777,7 @@ func parseCumulArgs(args []Result, funcName string) (*cumulArgs, Result) {
 	return &cumulArgs{
 		rate,
 		nPer,
-		pv,
+		presentValue,
 		startPeriod,
 		endPeriod,
 		t,
@@ -997,11 +1003,11 @@ func Disc(args []Result) Result {
 			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for DISC")
 		}
 	}
-	fracResult := yearFrac(settlement, maturity, basis)
-	if fracResult.Type == ResultTypeError {
-		return fracResult
+	frac, errResult := yearFrac(settlement, maturity, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
 	}
-	return MakeNumberResult((redemption - pr) / redemption / fracResult.ValueNumber)
+	return MakeNumberResult((redemption - pr) / redemption / frac)
 }
 
 // Dollarde implements the Excel DOLLARDE function.
@@ -1083,7 +1089,7 @@ func parseDollarArgs(args []Result, funcName string) (float64, float64, Result) 
 	}
 	fraction := float64(int(args[1].ValueNumber))
 	if fraction < 0 {
-		return 0, 0, MakeErrorResultType(ErrorTypeNum, funcName + " requires fraction to be positive number")
+		return 0, 0, MakeErrorResultType(ErrorTypeNum, funcName + " requires fraction to be non negative number")
 	}
 	return dollar, fraction, MakeEmptyResult()
 }
@@ -1134,12 +1140,12 @@ func Fv(args []Result) Result {
 	if args[3].Type != ResultTypeNumber {
 		return MakeErrorResult("FV requires payment to be number argument")
 	}
-	pv := 0.0
+	presentValue := 0.0
 	if argsNum >= 4 {
 		if args[3].Type != ResultTypeNumber {
 			return MakeErrorResult("FV requires present value to be number argument")
 		}
-		pv = args[3].ValueNumber
+		presentValue = args[3].ValueNumber
 	}
 	t := 0
 	if argsNum == 5 {
@@ -1151,7 +1157,7 @@ func Fv(args []Result) Result {
 			t = 1
 		}
 	}
-	return MakeNumberResult(fv(rate, nPer, pmt, pv, t))
+	return MakeNumberResult(fv(rate, nPer, pmt, presentValue, t))
 }
 
 // Fvschedule implements the Excel FVSCHEDULE function.
@@ -1223,11 +1229,11 @@ func Intrate(args []Result) Result {
 			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for INTRATE")
 		}
 	}
-	fracResult := yearFrac(settlement, maturity, basis)
-	if fracResult.Type == ResultTypeError {
-		return fracResult
+	frac, errResult := yearFrac(settlement, maturity, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
 	}
-	return MakeNumberResult((redemption - investment) / investment / fracResult.ValueNumber)
+	return MakeNumberResult((redemption - investment) / investment / frac)
 }
 
 // Ipmt implements the Excel IPMT function.
@@ -1271,10 +1277,15 @@ func Ipmt(args []Result) Result {
 			return MakeErrorResult("IPMT requires start period to be number argument")
 		}
 		t = int(args[5].ValueNumber)
-		if t != 0  {
+		if t != 0 {
 			t = 1
 		}
 	}
+
+	return MakeNumberResult(ipmt(rate, period, nPer, presentValue, futureValue, t))
+}
+
+func ipmt(rate, period, nPer, presentValue, futureValue float64, t int) float64 {
 	payment := pmt(rate, nPer, presentValue, futureValue, t)
 	var interest float64
 	if period == 1 {
@@ -1290,8 +1301,7 @@ func Ipmt(args []Result) Result {
 			interest = fv(rate, period - 1, payment, presentValue, 0)
 		}
 	}
-
-	return MakeNumberResult(interest * rate)
+	return interest * rate
 }
 
 // Irr implements the Excel IRR function.
@@ -1421,9 +1431,9 @@ func Ispmt(args []Result) Result {
 	if args[3].Type != ResultTypeNumber {
 		return MakeErrorResult("ISPMT requires present value to be number argument")
 	}
-	pv := args[3].ValueNumber
+	presentValue := args[3].ValueNumber
 
-	return MakeNumberResult(pv * rate * (period / nPer - 1))
+	return MakeNumberResult(presentValue * rate * (period / nPer - 1))
 }
 
 // Mirr implements the Excel MIRR function.
@@ -1521,13 +1531,13 @@ func Nper(args []Result) Result {
 	if args[2].Type != ResultTypeNumber {
 		return MakeErrorResult("NPER requires present value to be number argument")
 	}
-	pv := args[2].ValueNumber
-	fv := 0.0
+	presentValue := args[2].ValueNumber
+	futureValue := 0.0
 	if argsNum >= 4 {
 		if args[3].Type != ResultTypeNumber {
 			return MakeErrorResult("NPER requires future value to be number argument")
 		}
-		fv = args[3].ValueNumber
+		futureValue = args[3].ValueNumber
 	}
 	t := 0.0
 	if argsNum == 5 {
@@ -1539,8 +1549,8 @@ func Nper(args []Result) Result {
 			t = 1
 		}
 	}
-	num := pmt * (1 + rate * t) - fv * rate
-	den := (pv * rate + pmt * (1 + rate * t))
+	num := pmt * (1 + rate * t) - futureValue * rate
+	den := (presentValue * rate + pmt * (1 + rate * t))
 	return MakeNumberResult(math.Log(num / den) / math.Log(1 + rate))
 }
 
@@ -1578,4 +1588,104 @@ func Npv(args []Result) Result {
 		npv += value / math.Pow(1 + rate, float64(i) + 1)
 	}
 	return MakeNumberResult(npv)
+}
+
+// Pmt implements the Excel PMT function.
+func Pmt(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 3 || argsNum > 5 {
+		return MakeErrorResult("PMT requires number of arguments in range of 3 and 5")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("PMT requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("PMT requires number of periods to be number argument")
+	}
+	nPer := args[1].ValueNumber
+	if nPer == 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PMT requires number of periods to be not equal to 0")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("PMT requires present value to be number argument")
+	}
+	presentValue := args[2].ValueNumber
+	futureValue := 0.0
+	if argsNum >= 4 {
+		if args[3].Type != ResultTypeNumber {
+			return MakeErrorResult("PMT requires future value to be number argument")
+		}
+		futureValue = args[3].ValueNumber
+	}
+	t := 0.0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("PMT requires type to be number argument")
+		}
+		t = args[4].ValueNumber
+		if t != 0 {
+			t = 1
+		}
+	}
+	var result float64
+	if rate == 0 {
+		result = (presentValue + futureValue) / nPer
+	} else {
+		term := math.Pow(1 + rate, nPer)
+		if t == 1 {
+			result = (futureValue * rate / (term - 1) + presentValue * rate / (1 - 1 / term)) / (1 + rate)
+		} else {
+			result = futureValue * rate / (term - 1) + presentValue * rate / (1 - 1 / term)
+		}
+	}
+	return MakeNumberResult(-result)
+}
+
+// Ppmt implements the Excel PPPMT function.
+func Ppmt(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 4 || argsNum > 6 {
+		return MakeErrorResult("PPMT requires number of arguments in range of 3 and 5")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("PPMT requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("PPMT requires number of periods to be number argument")
+	}
+	period := args[1].ValueNumber
+	if period <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PPMT requires period to be positive")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("PPMT requires number of periods to be number argument")
+	}
+	nPer := args[2].ValueNumber
+	if nPer < period {
+		return MakeErrorResultType(ErrorTypeNum, "PPMT requires number of periods to be not less than period")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("PPMT requires present value to be number argument")
+	}
+	presentValue := args[3].ValueNumber
+	futureValue := 0.0
+	if argsNum >= 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("PPMT requires future value to be number argument")
+		}
+		futureValue = args[4].ValueNumber
+	}
+	t := 0
+	if argsNum == 6 {
+		if args[5].Type != ResultTypeNumber {
+			return MakeErrorResult("PPMT requires type to be number argument")
+		}
+		t = int(args[5].ValueNumber)
+		if t != 0 {
+			t = 1
+		}
+	}
+	return MakeNumberResult(pmt(rate, nPer, presentValue, futureValue, t) - ipmt(rate, period, nPer, presentValue, futureValue, t))
 }

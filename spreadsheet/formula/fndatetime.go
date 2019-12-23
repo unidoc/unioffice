@@ -783,14 +783,18 @@ func YearFrac(ctx Context, ev Evaluator, args []Result) Result {
 	if err != nil {
 		return MakeErrorResult("incorrect end date")
 	}
-	return yearFracFromTime(startDate, endDate, basis)
+	yf, errResult := yearFracFromTime(startDate, endDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	return MakeNumberResult(yf)
 }
 
-func yearFrac(startDate, endDate float64, basis int) Result {
+func yearFrac(startDate, endDate float64, basis int) (float64, Result) {
 	return yearFracFromTime(dateFromDays(startDate), dateFromDays(endDate), basis)
 }
 
-func yearFracFromTime(startDate, endDate time.Time, basis int) Result {
+func yearFracFromTime(startDate, endDate time.Time, basis int) (float64, Result) {
 	startDateS := startDate.Unix()
 	endDateS := endDate.Unix()
 	sy, sm, sd := startDate.Date()
@@ -806,27 +810,27 @@ func yearFracFromTime(startDate, endDate time.Time, basis int) Result {
 		} else if sd == 30 && ed == 31 {
 			ed = 30
 		}
-		return MakeNumberResult(float64(((ed + int(em) * 30 + ey * 360) - (sd + int(sm) * 30 + sy * 360))) / 360)
+		return float64(((ed + int(em) * 30 + ey * 360) - (sd + int(sm) * 30 + sy * 360))) / 360, MakeEmptyResult()
 	case 1:
 		var ylength = 365.0
 		if (sy == ey || ((sy + 1) == ey) && ((sm > em) || ((sm == em) && (sd >= ed)))) {
 			if ((sy == ey && isLeapYear(sy)) || feb29Between(startDate, endDate) || (em == 1 && ed == 29)) {
 				ylength = 366.0
 			}
-			return MakeNumberResult(daysBetween(startDateS, endDateS) / ylength)
+			return daysBetween(startDateS, endDateS) / ylength, MakeEmptyResult()
 		}
 		var years = float64((ey - sy) + 1)
 		var days = float64((makeDateS(ey + 1, time.January, 1) - makeDateS(sy, time.January, 1)) / 86400)
 		var average = days / years
-		return MakeNumberResult(daysBetween(startDateS, endDateS) / average)
+		return daysBetween(startDateS, endDateS) / average, MakeEmptyResult()
 	case 2:
-		return MakeNumberResult(daysBetween(startDateS, endDateS) / 360.0)
+		return daysBetween(startDateS, endDateS) / 360.0, MakeEmptyResult()
 	case 3:
-		return MakeNumberResult(daysBetween(startDateS, endDateS) / 365.0)
+		return daysBetween(startDateS, endDateS) / 365.0, MakeEmptyResult()
 	case 4:
-		return MakeNumberResult(float64(((ed + int(em) * 30 + ey * 360) - (sd + int(sm) * 30 + sy * 360))) / 360.0)
+		return float64(((ed + int(em) * 30 + ey * 360) - (sd + int(sm) * 30 + sy * 360))) / 360.0, MakeEmptyResult()
 	}
-	return MakeErrorResultType(ErrorTypeValue, "")
+	return 0, MakeErrorResult("")
 }
 
 func getDaysInYear(year, basis int) int {
