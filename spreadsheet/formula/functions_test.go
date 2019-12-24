@@ -2231,3 +2231,25 @@ func TestPpmt(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestPricedisc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 2, 16, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 3, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(0.0525)
+	sheet.Cell("A4").SetNumber(100)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=PRICEDISC(A1,A2,A3,A4,0)`, `99.78125 ResultTypeNumber`},
+		{`=PRICEDISC(A1,A2,A3,A4,1)`, `99.7991803278 ResultTypeNumber`},
+		{`=PRICEDISC(A1,A2,A3,A4,2)`, `99.7958333333 ResultTypeNumber`},
+		{`=PRICEDISC(A1,A2,A3,A4,3)`, `99.7986301369 ResultTypeNumber`},
+		{`=PRICEDISC(A1,A2,A3,A4,4)`, `99.78125 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}

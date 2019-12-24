@@ -198,7 +198,7 @@ func parseSearchResults(fname string, args []Result) (*parsedSearchObject, Resul
 		findText,
 		text,
 		position,
-	}, MakeEmptyResult()
+	}, empty
 }
 
 // Find is an implementation of the Excel FIND().
@@ -543,7 +543,7 @@ func T(args []Result) Result {
 	if s.Type == ResultTypeError || s.Type == ResultTypeString {
 		return s
 	}
-	return MakeEmptyResult()
+	return empty
 }
 
 // Trim is an implementation of the Excel TRIM function that removes leading,
@@ -648,7 +648,7 @@ func parseReplaceResults(fname string, args []Result) (*parsedReplaceObject, Res
 		startPos,
 		length,
 		textToReplace,
-	}, MakeEmptyResult()
+	}, empty
 }
 
 // Replace is an implementation of the Excel REPLACE().

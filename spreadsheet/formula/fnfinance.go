@@ -47,7 +47,23 @@ func init() {
 	RegisterFunction("PDURATION", Pduration)
 	RegisterFunction("PMT", Pmt)
 	RegisterFunction("PPMT", Ppmt)
+	RegisterFunction("PRICEDISC", Pricedisc)
 	RegisterFunction("_xlfn.PDURATION", Pduration)
+}
+
+func getSettlementMaturity(settlementResult, maturityResult Result, funcName string) (float64, float64, Result) {
+	settlementDate, errResult := parseDate(settlementResult, "settlement date", funcName)
+	if errResult.Type == ResultTypeError {
+		return 0, 0, errResult
+	}
+	maturityDate, errResult := parseDate(maturityResult, "maturity date", funcName)
+	if errResult.Type == ResultTypeError {
+		return 0, 0, errResult
+	}
+	if settlementDate >= maturityDate {
+		return 0, 0, MakeErrorResultType(ErrorTypeNum, funcName + " requires maturity date to be later than settlement date")
+	}
+	return settlementDate, maturityDate, empty
 }
 
 // Duration implements the Excel DURATION function.
@@ -238,16 +254,9 @@ func parseCouponArgs(args []Result, funcName string) (*couponArgs, Result) {
 	if args[0].Type != ResultTypeNumber {
 		return nil, MakeErrorResult(funcName + " requires settlement date to be number argument")
 	}
-	settlementDate := args[0].ValueNumber
-	if settlementDate < 0 {
-		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires settlement date to be non negative")
-	}
-	if args[1].Type != ResultTypeNumber {
-		return nil, MakeErrorResult(funcName + " requires maturity date to be number argument")
-	}
-	maturityDate := args[1].ValueNumber
-	if maturityDate <= settlementDate {
-		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires maturity date to be later than settlement date")
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], funcName)
+	if errResult.Type == ResultTypeError {
+		return nil, errResult
 	}
 	if args[2].Type != ResultTypeNumber {
 		return nil, MakeErrorResult(funcName + " requires frequency to be number argument")
@@ -271,7 +280,7 @@ func parseCouponArgs(args []Result, funcName string) (*couponArgs, Result) {
 		maturityDate,
 		int(freq),
 		basis,
-	}, MakeEmptyResult()
+	}, empty
 }
 
 // couppcd finds last coupon date before settlement (can be equal to settlement).
@@ -295,7 +304,7 @@ func coupnum(settlementDateF, maturityDateF float64, freq, basis int) (float64, 
 	if maturityDate.After(settlementDate) {
 		aDate := couppcd(settlementDate, maturityDate, freq, basis)
 		months := (maturityDate.Year() - aDate.Year()) * 12 + int(maturityDate.Month()) - int(aDate.Month())
-		return float64(months * freq) / 12.0, MakeEmptyResult()
+		return float64(months * freq) / 12.0, empty
 	}
 	return 0, MakeErrorResultType(ErrorTypeNum, "Settlement date should be before maturity date")
 }
@@ -348,35 +357,9 @@ func parseDurationData(args []Result, funcName string) (*durationArgs, Result) {
 	if len(args) != 5 && len(args) != 6 {
 		return nil, MakeErrorResult(funcName + " requires five or six arguments")
 	}
-	var settlementDate, maturityDate float64
-	settlementResult := args[0]
-	switch settlementResult.Type {
-	case ResultTypeNumber:
-		settlementDate = float64(int(settlementResult.ValueNumber))
-	case ResultTypeString:
-		settlementFromString := DateValue([]Result{settlementResult})
-		if settlementFromString.Type == ResultTypeError {
-			return nil, MakeErrorResult("Incorrect settlement date for " + funcName)
-		}
-		settlementDate = settlementFromString.ValueNumber
-	default:
-		return nil, MakeErrorResult("Incorrect argument for " + funcName)
-	}
-	maturityResult := args[1]
-	switch maturityResult.Type {
-	case ResultTypeNumber:
-		maturityDate = float64(int(maturityResult.ValueNumber))
-	case ResultTypeString:
-		maturityFromString := DateValue([]Result{maturityResult})
-		if maturityFromString.Type == ResultTypeError {
-			return nil, MakeErrorResult("Incorrect maturity date for " + funcName)
-		}
-		maturityDate = maturityFromString.ValueNumber
-	default:
-		return nil, MakeErrorResult("Incorrect argument for " + funcName)
-	}
-	if settlementDate >= maturityDate {
-		return nil, MakeErrorResultType(ErrorTypeNum, "Settlement date should be before maturity date")
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], funcName)
+	if errResult.Type == ResultTypeError {
+		return nil, errResult
 	}
 	couponResult := args[2]
 	if couponResult.Type != ResultTypeNumber {
@@ -420,7 +403,7 @@ func parseDurationData(args []Result, funcName string) (*durationArgs, Result) {
 		yield,
 		freq,
 		basis,
-	}, MakeEmptyResult()
+	}, empty
 }
 
 func checkFreq(freq float64) bool {
@@ -437,16 +420,13 @@ func Accrintm(args []Result) Result {
 	if argsNum != 4 && argsNum != 5 {
 		return MakeErrorResult("ACCRINTM requires four or five arguments")
 	}
-	if args[0].Type != ResultTypeNumber {
-		return MakeErrorResult("ACCRINTM requires issue date to be number argument")
+	issueDate, errResult := parseDate(args[0], "issue date", "ACCRINTM")
+	if errResult.Type == ResultTypeError {
+		return errResult
 	}
-	issue := args[0].ValueNumber
-	if args[1].Type != ResultTypeNumber {
-		return MakeErrorResult("ACCRINTM requires settlement date to be number argument")
-	}
-	settlement := args[1].ValueNumber
-	if issue >= settlement {
-		return MakeErrorResultType(ErrorTypeNum, "ACCRINTM requires settlement date to be later than issue date")
+	settlementDate, errResult := parseDate(args[1], "settlement date", "ACCRINTM")
+	if errResult.Type == ResultTypeError {
+		return errResult
 	}
 	if args[2].Type != ResultTypeNumber {
 		return MakeErrorResult("ACCRINTM requires rate to be number argument")
@@ -472,7 +452,7 @@ func Accrintm(args []Result) Result {
 			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for ACCRINTM")
 		}
 	}
-	frac, errResult := yearFrac(issue, settlement, basis)
+	frac, errResult := yearFrac(issueDate, settlementDate, basis)
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
@@ -591,17 +571,14 @@ func parseAmorArgs(args []Result, funcName string) (*amorArgs, Result) {
 	if cost < 0 {
 		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires cost to be non negative")
 	}
-	if args[1].Type != ResultTypeNumber {
-		return nil, MakeErrorResult(funcName + " requires date purchased to be number argument")
+	datePurchased, errResult := parseDate(args[1], "date purchased", funcName)
+	if errResult.Type == ResultTypeError {
+		return nil, errResult
 	}
-	datePurchased := args[1].ValueNumber
-	if datePurchased < 0 {
-		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires date purchased to be non negative")
+	firstPeriod, errResult := parseDate(args[2], "first period", funcName)
+	if errResult.Type == ResultTypeError {
+		return nil, errResult
 	}
-	if args[2].Type != ResultTypeNumber {
-		return nil, MakeErrorResult(funcName + " requires first period to be number argument")
-	}
-	firstPeriod := args[2].ValueNumber
 	if firstPeriod < datePurchased {
 		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires first period to be later than date purchased")
 	}
@@ -644,7 +621,7 @@ func parseAmorArgs(args []Result, funcName string) (*amorArgs, Result) {
 		period,
 		rate,
 		basis,
-	}, MakeEmptyResult()
+	}, empty
 }
 
 func mathRound(x float64) float64 {
@@ -781,7 +758,7 @@ func parseCumulArgs(args []Result, funcName string) (*cumulArgs, Result) {
 		startPeriod,
 		endPeriod,
 		t,
-	}, MakeEmptyResult()
+	}, empty
 }
 
 func pmt(rate, periods, present, future float64, t int ) float64 {
@@ -968,16 +945,9 @@ func Disc(args []Result) Result {
 	if argsNum != 4 && argsNum != 5 {
 		return MakeErrorResult("DISC requires four or five arguments")
 	}
-	if args[0].Type != ResultTypeNumber {
-		return MakeErrorResult("DISC requires settlement date to be number argument")
-	}
-	settlement := args[0].ValueNumber
-	if args[1].Type != ResultTypeNumber {
-		return MakeErrorResult("DISC requires maturity date to be number argument")
-	}
-	maturity := args[1].ValueNumber
-	if settlement >= maturity {
-		return MakeErrorResultType(ErrorTypeNum, "DISC requires maturity date to be later than settlement date")
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "DISC")
+	if errResult.Type == ResultTypeError {
+		return errResult
 	}
 	if args[2].Type != ResultTypeNumber {
 		return MakeErrorResult("DISC requires pr to be number argument")
@@ -1003,7 +973,7 @@ func Disc(args []Result) Result {
 			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for DISC")
 		}
 	}
-	frac, errResult := yearFrac(settlement, maturity, basis)
+	frac, errResult := yearFrac(settlementDate, maturityDate, basis)
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
@@ -1091,7 +1061,7 @@ func parseDollarArgs(args []Result, funcName string) (float64, float64, Result) 
 	if fraction < 0 {
 		return 0, 0, MakeErrorResultType(ErrorTypeNum, funcName + " requires fraction to be non negative number")
 	}
-	return dollar, fraction, MakeEmptyResult()
+	return dollar, fraction, empty
 }
 
 // Effect implements the Excel EFFECT function.
@@ -1194,16 +1164,9 @@ func Intrate(args []Result) Result {
 	if argsNum != 4 && argsNum != 5 {
 		return MakeErrorResult("INTRATE requires four or five arguments")
 	}
-	if args[0].Type != ResultTypeNumber {
-		return MakeErrorResult("INTRATE requires settlement date to be number argument")
-	}
-	settlement := args[0].ValueNumber
-	if args[1].Type != ResultTypeNumber {
-		return MakeErrorResult("INTRATE requires maturity date to be number argument")
-	}
-	maturity := args[1].ValueNumber
-	if settlement >= maturity {
-		return MakeErrorResultType(ErrorTypeNum, "INTRATE requires maturity date to be later than settlement date")
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "INTRATE")
+	if errResult.Type == ResultTypeError {
+		return errResult
 	}
 	if args[2].Type != ResultTypeNumber {
 		return MakeErrorResult("INTRATE requires investment to be number argument")
@@ -1229,7 +1192,7 @@ func Intrate(args []Result) Result {
 			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for INTRATE")
 		}
 	}
-	frac, errResult := yearFrac(settlement, maturity, basis)
+	frac, errResult := yearFrac(settlementDate, maturityDate, basis)
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
@@ -1688,4 +1651,48 @@ func Ppmt(args []Result) Result {
 		}
 	}
 	return MakeNumberResult(pmt(rate, nPer, presentValue, futureValue, t) - ipmt(rate, period, nPer, presentValue, futureValue, t))
+}
+
+// Pricedisc implements the Excel PRICEDISC function.
+func Pricedisc(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("PRICEDISC requires four or five arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "PRICEDISC")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("PRICEDISC requires discount of type number")
+	}
+	discount := args[2].ValueNumber
+	if discount <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PRICEDISC requires discount to be positive")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("PRICEDISC requires redemption of type number")
+	}
+	redemption := args[3].ValueNumber
+	if redemption <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PRICEDISC requires redemption to be positive")
+	}
+	if args[4].Type != ResultTypeNumber {
+		return MakeErrorResult("PRICEDISC requires redemption to be number argument")
+	}
+	basis := 0
+	if argsNum == 5 {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("PRICEDISC requires basis to be number argument")
+		}
+		basis = int(args[4].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for PRICEDISC")
+		}
+	}
+	yf, errResult := yearFrac(settlementDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	return MakeNumberResult(redemption * (1 - discount * yf))
 }

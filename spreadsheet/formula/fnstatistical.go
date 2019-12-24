@@ -284,7 +284,7 @@ func checkIfsRanges(args []Result, sumRange bool, fnName string) Result {
 			i-- // after sumRange should go column 1, not 2
 		}
 	}
-	return MakeEmptyResult()
+	return empty
 }
 
 //getIfsMatch returns an array of indexes of cells which meets all *IFS criterias

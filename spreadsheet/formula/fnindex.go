@@ -547,7 +547,7 @@ func extractCol(arr Result) []Result {
 			if len(r) > 0 {
 				col = append(col, r[0])
 			} else {
-				col = append(col, MakeEmptyResult())
+				col = append(col, empty)
 			}
 		}
 	}
