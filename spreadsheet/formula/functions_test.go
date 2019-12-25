@@ -533,6 +533,7 @@ func TestMatch(t *testing.T) {
 	td := []testStruct{
 		{`MATCH("??ny",A1:A5)`, `2 ResultTypeNumber`},
 		{`MATCH("*nny",A1:A5)`, `4 ResultTypeNumber`},
+		{`MATCH("*nny",A1:A5,)`, `4 ResultTypeNumber`},
 		{`=MATCH(5,B1:B5,1)`, `2 ResultTypeNumber`},
 		{`=MATCH(5,C1:C5,-1)`, `3 ResultTypeNumber`},
 	}
@@ -947,6 +948,7 @@ func TestFind(t *testing.T) {
 
 	td := []testStruct{
 		{`FIND("",A1)`, `1 ResultTypeNumber`},
+		{`FIND("",A1,)`, `1 ResultTypeNumber`},
 		{`FIND(B1,A1)`, `2 ResultTypeNumber`},
 		{`FIND(B2,A1,3)`, `3 ResultTypeNumber`},
 		{`FIND(B2,A1,4)`, `#VALUE! ResultTypeError`},
@@ -975,6 +977,7 @@ func TestFindb(t *testing.T) {
 	td := []testStruct{
 		{`FINDB("",A1)`, `1 ResultTypeNumber`},
 		{`FINDB(B1,A1)`, `2 ResultTypeNumber`},
+		{`FINDB(B1,A1,)`, `2 ResultTypeNumber`},
 		{`FINDB(B2,A1,3)`, `3 ResultTypeNumber`},
 		{`FINDB(B2,A1,4)`, `#VALUE! ResultTypeError`},
 		{`FINDB(D1,C1)`, `1 ResultTypeNumber`},
@@ -1002,6 +1005,7 @@ func TestSearch(t *testing.T) {
 	td := []testStruct{
 		{`SEARCH("",A1)`, `1 ResultTypeNumber`},
 		{`SEARCH(B1,A1)`, `2 ResultTypeNumber`},
+		{`SEARCH(B1,A1,)`, `2 ResultTypeNumber`},
 		{`SEARCH(B2,A1,3)`, `3 ResultTypeNumber`},
 		{`SEARCH(B2,A1,4)`, `#VALUE! ResultTypeError`},
 		{`SEARCH(B3,A1,2)`, `2 ResultTypeNumber`},
@@ -1031,6 +1035,7 @@ func TestSearchb(t *testing.T) {
 	td := []testStruct{
 		{`SEARCHB("",A1)`, `1 ResultTypeNumber`},
 		{`SEARCHB(B1,A1)`, `2 ResultTypeNumber`},
+		{`SEARCHB(B1,A1,)`, `2 ResultTypeNumber`},
 		{`SEARCHB(B2,A1,3)`, `3 ResultTypeNumber`},
 		{`SEARCHB(B2,A1,4)`, `#VALUE! ResultTypeError`},
 		{`SEARCHB(D1,C1)`, `1 ResultTypeNumber`},
@@ -1096,6 +1101,7 @@ func TestYearFrac(t *testing.T) {
 		{`=YEARFRAC(A1,A2)`, `0.00277777777 ResultTypeNumber`},
 		{`=YEARFRAC(A3,A4)`, `0.16666666666 ResultTypeNumber`},
 		{`=YEARFRAC(A3,A5)`, `0.00277777777 ResultTypeNumber`},
+		{`=YEARFRAC(A3,A5,)`, `0.00277777777 ResultTypeNumber`},
 		{`=YEARFRAC(A1,A2,1)`, `0.00273972602 ResultTypeNumber`},
 		{`=YEARFRAC(A6,A7,1)`, `0.00273224043 ResultTypeNumber`},
 		{`=YEARFRAC(A6,A8,1)`, `1 ResultTypeNumber`},
@@ -1307,6 +1313,8 @@ func TestDuration(t *testing.T) {
 	sheet.Cell("A8").SetString("01/01/2048") // maturity date in string format
 
 	td := []testStruct{
+		{`=DURATION(A1,A2,A3,A4,A5)`, `10.9191452815 ResultTypeNumber`},
+		{`=DURATION(A1,A2,A3,A4,A5,)`, `10.9191452815 ResultTypeNumber`},
 		{`=DURATION(A1,A2,A3,A4,A5,A6)`, `10.9191452815 ResultTypeNumber`},
 		{`=DURATION(A7,A8,A3,A4,A5,A6)`, `10.9191452815 ResultTypeNumber`},
 		{`=DURATION(A1,A2,A3,A4,A5,5)`, `#NUM! ResultTypeError`},
@@ -1331,6 +1339,8 @@ func TestMduration(t *testing.T) {
 	sheet.Cell("A8").SetString("01/01/2016") // maturity date in string format
 
 	td := []testStruct{
+		{`=MDURATION(A1,A2,A3,A4,A5)`, `5.73566981391 ResultTypeNumber`},
+		{`=MDURATION(A1,A2,A3,A4,A5,)`, `5.73566981391 ResultTypeNumber`},
 		{`=MDURATION(A1,A2,A3,A4,A5,A6)`, `5.73566981391 ResultTypeNumber`},
 		{`=MDURATION(A7,A8,A3,A4,A5,A6)`, `5.73566981391 ResultTypeNumber`},
 		{`=MDURATION(A1,A2,A3,A4,A5,5)`, `#NUM! ResultTypeError`},
@@ -1424,6 +1434,7 @@ func TestVlookup(t *testing.T) {
 	td := []testStruct{
 		{`=VLOOKUP(150,A1:B4,2)`, `value1 ResultTypeString`},
 		{`=VLOOKUP(250,A1:B4,2)`, `value2 ResultTypeString`},
+		{`=VLOOKUP(250,A1:B4,2,)`, `value2 ResultTypeString`},
 		{`=VLOOKUP(250,A1:B4,2,FALSE)`, `#N/A ResultTypeError`},
 		{`=VLOOKUP(300,A1:B4,2,FALSE)`, `value3 ResultTypeString`},
 	}
@@ -1667,11 +1678,13 @@ func TestAccrintm(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
-		{`=ACCRINTM(39539,39614,0.1,1000,0))`, `20.5555555555 ResultTypeNumber`},
-		{`=ACCRINTM(39539,39614,0.1,1000,1))`, `20.4918032786 ResultTypeNumber`},
-		{`=ACCRINTM(39539,39614,0.1,1000,2))`, `20.8333333333 ResultTypeNumber`},
-		{`=ACCRINTM(39539,39614,0.1,1000,3))`, `20.5479452054 ResultTypeNumber`},
-		{`=ACCRINTM(39539,39614,0.1,1000,4))`, `20.5555555555 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000)`, `20.5555555555 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,)`, `20.5555555555 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,0)`, `20.5555555555 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,1)`, `20.4918032786 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,2)`, `20.8333333333 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,3)`, `20.5479452054 ResultTypeNumber`},
+		{`=ACCRINTM(39539,39614,0.1,1000,4)`, `20.5555555555 ResultTypeNumber`},
 	}
 
 	runTests(t, ctx, td)
@@ -1684,6 +1697,9 @@ func TestAmordegrc(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
+		{`=AMORDEGRC(2400,39679,39813,300,1,0.15)`, `776 ResultTypeNumber`},
+		{`=AMORDEGRC(2400,39679,39813,300,1,0.15,)`, `776 ResultTypeNumber`},
+		{`=AMORDEGRC(2400,39679,39813,300,1,0.15,0)`, `776 ResultTypeNumber`},
 		{`=AMORDEGRC(2400,39679,39813,300,1,0.15,1)`, `776 ResultTypeNumber`},
 		{`=AMORDEGRC(2400,39679,39813,300,1,0.15,2)`, `#NUM! ResultTypeError`},
 	}
@@ -1698,6 +1714,9 @@ func TestAmorlinc(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
+		{`=AMORLINC(2400,39679,39813,300,1,0.15)`, `360 ResultTypeNumber`},
+		{`=AMORLINC(2400,39679,39813,300,1,0.15,)`, `360 ResultTypeNumber`},
+		{`=AMORLINC(2400,39679,39813,300,1,0.15,0)`, `360 ResultTypeNumber`},
 		{`=AMORLINC(2400,39679,39813,300,1,0.15,1)`, `360 ResultTypeNumber`},
 		{`=AMORLINC(2400,39679,39813,300,1,0.15,2)`, `#NUM! ResultTypeError`},
 	}
@@ -1712,6 +1731,8 @@ func TestCoupdaybs(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
+		{`=COUPDAYBS(40568,40862,2)`, `70 ResultTypeNumber`},
+		{`=COUPDAYBS(40568,40862,2,)`, `70 ResultTypeNumber`},
 		{`=COUPDAYBS(40568,40862,2,0)`, `70 ResultTypeNumber`},
 		{`=COUPDAYBS(40568,40862,2,1)`, `71 ResultTypeNumber`},
 		{`=COUPDAYBS(40568,40862,2,2)`, `71 ResultTypeNumber`},
@@ -1740,6 +1761,8 @@ func TestCoupdays(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
+		{`=COUPDAYS(40964,41228,1)`, `360 ResultTypeNumber`},
+		{`=COUPDAYS(40964,41228,1,)`, `360 ResultTypeNumber`},
 		{`=COUPDAYS(40964,41228,1,0)`, `360 ResultTypeNumber`},
 		{`=COUPDAYS(40964,41228,1,1)`, `366 ResultTypeNumber`},
 		{`=COUPDAYS(40964,41228,1,2)`, `360 ResultTypeNumber`},
@@ -1768,6 +1791,8 @@ func TestCoupdaysnc(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
+		{`=COUPDAYSNC(40933,41228,1)`, `290 ResultTypeNumber`},
+		{`=COUPDAYSNC(40933,41228,1,)`, `290 ResultTypeNumber`},
 		{`=COUPDAYSNC(40933,41228,1,0)`, `290 ResultTypeNumber`},
 		{`=COUPDAYSNC(40933,41228,1,1)`, `295 ResultTypeNumber`},
 		{`=COUPDAYSNC(40933,41228,1,2)`, `295 ResultTypeNumber`},
@@ -1796,6 +1821,9 @@ func TestCoupncd(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
+		{`=COUPNCD(40568,40862,1)`, `40862 ResultTypeNumber`},
+		{`=COUPNCD(40568,40862,1,)`, `40862 ResultTypeNumber`},
+		{`=COUPNCD(40568,40862,1,0)`, `40862 ResultTypeNumber`},
 		{`=COUPNCD(40568,40862,1,1)`, `40862 ResultTypeNumber`},
 		{`=COUPNCD(40568,40862,2,1)`, `40678 ResultTypeNumber`},
 		{`=COUPNCD(40568,40862,4,1)`, `40589 ResultTypeNumber`},
@@ -1812,6 +1840,9 @@ func TestCouppcd(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
+		{`=COUPPCD(40568,40862,2)`, `40497 ResultTypeNumber`},
+		{`=COUPPCD(40568,40862,2,)`, `40497 ResultTypeNumber`},
+		{`=COUPPCD(40568,40862,2,0)`, `40497 ResultTypeNumber`},
 		{`=COUPPCD(40568,40862,2,1)`, `40497 ResultTypeNumber`},
 		{`=COUPPCD(40872,40568,2,1)`, `#NUM! ResultTypeError`},
 	}
@@ -1826,6 +1857,9 @@ func TestCoupnum(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
+		{`=COUPNUM(39107,39767,2)`, `4 ResultTypeNumber`},
+		{`=COUPNUM(39107,39767,2,)`, `4 ResultTypeNumber`},
+		{`=COUPNUM(39107,39767,2,0)`, `4 ResultTypeNumber`},
 		{`=COUPNUM(39107,39767,2,1)`, `4 ResultTypeNumber`},
 		{`=COUPNUM(39767,39107,2,1)`, `#NUM! ResultTypeError`},
 	}
@@ -1925,6 +1959,8 @@ func TestDisc(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
+		{`=DISC(A1,A2,A3,A4)`, `0.00068644067 ResultTypeNumber`},
+		{`=DISC(A1,A2,A3,A4,)`, `0.00068644067 ResultTypeNumber`},
 		{`=DISC(A1,A2,A3,A4,0)`, `0.00068644067 ResultTypeNumber`},
 		{`=DISC(A1,A2,A3,A4,1)`, `0.00068638416 ResultTypeNumber`},
 		{`=DISC(A1,A2,A3,A4,2)`, `0.00067650334 ResultTypeNumber`},
@@ -2028,6 +2064,8 @@ func TestIntrate(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
+		{`=INTRATE(A1,A2,A3,A4)`, `0.05768 ResultTypeNumber`},
+		{`=INTRATE(A1,A2,A3,A4,)`, `0.05768 ResultTypeNumber`},
 		{`=INTRATE(A1,A2,A3,A4,0)`, `0.05768 ResultTypeNumber`},
 		{`=INTRATE(A1,A2,A3,A4,1)`, `0.05864133333 ResultTypeNumber`},
 		{`=INTRATE(A1,A2,A3,A4,2)`, `0.05768 ResultTypeNumber`},
@@ -2165,7 +2203,12 @@ func TestNper(t *testing.T) {
 	td := []testStruct{
 		{`=NPER(A1/12,A2,A3,A4,1)`, `59.6738656742 ResultTypeNumber`},
 		{`=NPER(A1/12,A2,A3,A4)`, `60.0821228537 ResultTypeNumber`},
+		{`=NPER(A1/12,A2,A3,A4,)`, `60.0821228537 ResultTypeNumber`},
+		{`=NPER(A1/12,A2,A3,A4,0)`, `60.0821228537 ResultTypeNumber`},
 		{`=NPER(A1/12,A2,A3)`, `-9.5785940398 ResultTypeNumber`},
+		{`=NPER(A1/12,A2,A3,,)`, `-9.5785940398 ResultTypeNumber`},
+		{`=NPER(A1/12,A2,A3,0,)`, `-9.5785940398 ResultTypeNumber`},
+		{`=NPER(A1/12,A2,A3,,0)`, `-9.5785940398 ResultTypeNumber`},
 	}
 
 	runTests(t, ctx, td)
@@ -2208,6 +2251,8 @@ func TestPmt(t *testing.T) {
 
 	td := []testStruct{
 		{`=PMT(A1/12,A2,A3)`, `-1037.0320893 ResultTypeNumber`},
+		{`=PMT(A1/12,A2,A3,)`, `-1037.0320893 ResultTypeNumber`},
+		{`=PMT(A1/12,A2,A3,0)`, `-1037.0320893 ResultTypeNumber`},
 		{`=PMT(A1/12,A2,A3,1)`, `-1037.1291259 ResultTypeNumber`},
 		{`=PMT(A4/12,A5*12,0,A6)`, `-129.08116086 ResultTypeNumber`},
 		{`=PMT("A4/12",A5*12,0,A6)`, `#VALUE! ResultTypeError`},
@@ -2244,11 +2289,36 @@ func TestPricedisc(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
+		{`=PRICEDISC(A1,A2,A3,A4)`, `99.78125 ResultTypeNumber`},
+		{`=PRICEDISC(A1,A2,A3,A4,)`, `99.78125 ResultTypeNumber`},
 		{`=PRICEDISC(A1,A2,A3,A4,0)`, `99.78125 ResultTypeNumber`},
 		{`=PRICEDISC(A1,A2,A3,A4,1)`, `99.7991803278 ResultTypeNumber`},
 		{`=PRICEDISC(A1,A2,A3,A4,2)`, `99.7958333333 ResultTypeNumber`},
 		{`=PRICEDISC(A1,A2,A3,A4,3)`, `99.7986301369 ResultTypeNumber`},
 		{`=PRICEDISC(A1,A2,A3,A4,4)`, `99.78125 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestPv(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=PV(0.08/12,20*12,500)`, `-59777.145851 ResultTypeNumber`},
+		{`=PV(0.08/12,20*12,500,,)`, `-59777.145851 ResultTypeNumber`},
+		{`=PV(0.08/12,20*12,500,0,)`, `-59777.145851 ResultTypeNumber`},
+		{`=PV(0.08/12,20*12,500,,0)`, `-59777.145851 ResultTypeNumber`},
+		{`=PV(0.08/12,20*12,500,0,0)`, `-59777.145851 ResultTypeNumber`},
+		{`=PV(0.1/12,2*12,1000,10000)`, `-29864.950264 ResultTypeNumber`},
+		{`=PV(0.1/12,2*12,1000,10000,)`, `-29864.950264 ResultTypeNumber`},
+		{`=PV(0.1/12,2*12,1000,10000,0)`, `-29864.950264 ResultTypeNumber`},
+		{`=PV(0.1/12,2*12,1000,10000,1)`, `-30045.540721 ResultTypeNumber`},
+		{`=PV(0,2*12,1000,10000,1)`, `-34000 ResultTypeNumber`},
+		{`=PV("hello world",2*12,1000,10000,1)`, `#VALUE! ResultTypeError`},
 	}
 
 	runTests(t, ctx, td)

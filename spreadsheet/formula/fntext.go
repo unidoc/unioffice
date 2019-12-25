@@ -167,7 +167,8 @@ type parsedSearchObject struct {
 }
 
 func parseSearchResults(fname string, args []Result) (*parsedSearchObject, Result) {
-	if len(args) != 2 && len(args) != 3 {
+	argsNum := len(args)
+	if argsNum != 2 && argsNum != 3 {
 		return nil, MakeErrorResult(fname + " requires two or three arguments")
 	}
 	findTextResult := args[0]
@@ -181,7 +182,7 @@ func parseSearchResults(fname string, args []Result) (*parsedSearchObject, Resul
 	text := textResult.ValueString
 	findText := findTextResult.ValueString
 	position := 1
-	if len(args) == 3 {
+	if argsNum == 3 && args[2].Type != ResultTypeEmpty {
 		positionResult := args[2]
 		if positionResult.Type != ResultTypeNumber {
 			return nil, MakeErrorResult("Position should be a number")

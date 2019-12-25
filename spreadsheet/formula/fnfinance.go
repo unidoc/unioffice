@@ -48,6 +48,7 @@ func init() {
 	RegisterFunction("PMT", Pmt)
 	RegisterFunction("PPMT", Ppmt)
 	RegisterFunction("PRICEDISC", Pricedisc)
+	RegisterFunction("PV", Pv)
 	RegisterFunction("_xlfn.PDURATION", Pduration)
 }
 
@@ -266,7 +267,7 @@ func parseCouponArgs(args []Result, funcName string) (*couponArgs, Result) {
 		return nil, MakeErrorResult("Incorrect frequency for " + funcName)
 	}
 	basis := 0
-	if argsNum == 4 {
+	if argsNum == 4 && args[3].Type != ResultTypeEmpty {
 		if args[3].Type != ResultTypeNumber {
 			return nil, MakeErrorResult(funcName + " requires basis to be number argument")
 		}
@@ -354,7 +355,8 @@ type durationArgs struct {
 
 // validateDurationData returns settlement date, maturity date, coupon rate, yield rate, frequency of payments, day count basis and error result by parsing incoming arguments
 func parseDurationData(args []Result, funcName string) (*durationArgs, Result) {
-	if len(args) != 5 && len(args) != 6 {
+	argsNum := len(args)
+	if argsNum != 5 && argsNum != 6 {
 		return nil, MakeErrorResult(funcName + " requires five or six arguments")
 	}
 	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], funcName)
@@ -386,7 +388,7 @@ func parseDurationData(args []Result, funcName string) (*durationArgs, Result) {
 		return nil, MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
 	}
 	basis := 0
-	if len(args) == 6 {
+	if argsNum == 6 && args[5].Type != ResultTypeEmpty {
 		basisResult := args[5]
 		if basisResult.Type != ResultTypeNumber {
 			return nil, MakeErrorResult(funcName + " requires sixth argument of type number")
@@ -443,7 +445,7 @@ func Accrintm(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "ACCRINTM requires par to be positive number argument")
 	}
 	basis := 0
-	if argsNum == 5 {
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
 		if args[4].Type != ResultTypeNumber {
 			return MakeErrorResult("ACCRINTM requires basis to be number argument")
 		}
@@ -604,7 +606,7 @@ func parseAmorArgs(args []Result, funcName string) (*amorArgs, Result) {
 		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires rate to be more than 0 and less than 0.5")
 	}
 	basis := 0
-	if argsNum == 7 {
+	if argsNum == 7 && args[6].Type != ResultTypeEmpty {
 		if args[6].Type != ResultTypeNumber {
 			return nil, MakeErrorResult(funcName + " requires basis to be number argument")
 		}
@@ -829,7 +831,7 @@ func Db(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "Incorrect period for DB")
 	}
 	month := 12.0
-	if argsNum == 5 {
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
 		if args[4].Type != ResultTypeNumber {
 			return MakeErrorResult("DB requires month to be number argument")
 		}
@@ -904,7 +906,7 @@ func Ddb(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "Incorrect period for DDB")
 	}
 	factor := 2.0
-	if argsNum == 5 {
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
 		if args[4].Type != ResultTypeNumber {
 			return MakeErrorResult("DDB requires factor to be number argument")
 		}
@@ -964,7 +966,7 @@ func Disc(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "DISC requires redemption to be positive number argument")
 	}
 	basis := 0
-	if argsNum == 5 {
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
 		if args[4].Type != ResultTypeNumber {
 			return MakeErrorResult("DISC requires basis to be number argument")
 		}
@@ -1111,14 +1113,14 @@ func Fv(args []Result) Result {
 		return MakeErrorResult("FV requires payment to be number argument")
 	}
 	presentValue := 0.0
-	if argsNum >= 4 {
+	if argsNum >= 4 && args[3].Type != ResultTypeEmpty {
 		if args[3].Type != ResultTypeNumber {
 			return MakeErrorResult("FV requires present value to be number argument")
 		}
 		presentValue = args[3].ValueNumber
 	}
 	t := 0
-	if argsNum == 5 {
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
 		if args[4].Type != ResultTypeNumber {
 			return MakeErrorResult("FV requires type to be number argument")
 		}
@@ -1183,7 +1185,7 @@ func Intrate(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "INTRATE requires redemption to be positive number argument")
 	}
 	basis := 0
-	if argsNum == 5 {
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
 		if args[4].Type != ResultTypeNumber {
 			return MakeErrorResult("INTRATE requires basis to be number argument")
 		}
@@ -1228,14 +1230,14 @@ func Ipmt(args []Result) Result {
 	}
 	presentValue := args[3].ValueNumber
 	futureValue := 0.0
-	if argsNum > 4 {
+	if argsNum > 4 && args[4].Type != ResultTypeEmpty {
 		if args[4].Type != ResultTypeNumber {
 			return MakeErrorResult("IPMT requires future value to be number argument")
 		}
 		futureValue = args[4].ValueNumber
 	}
 	t := 0
-	if argsNum == 6 {
+	if argsNum == 6 && args[5].Type != ResultTypeEmpty {
 		if args[5].Type != ResultTypeNumber {
 			return MakeErrorResult("IPMT requires start period to be number argument")
 		}
@@ -1290,7 +1292,7 @@ func Irr(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "")
 	}
 	guess := 0.1
-	if argsNum == 2 {
+	if argsNum == 2 && args[1].Type != ResultTypeEmpty {
 		if args[1].Type != ResultTypeNumber {
 			return MakeErrorResult("IRR requires guess to be number argument")
 		}
@@ -1496,14 +1498,14 @@ func Nper(args []Result) Result {
 	}
 	presentValue := args[2].ValueNumber
 	futureValue := 0.0
-	if argsNum >= 4 {
+	if argsNum >= 4 && args[3].Type != ResultTypeEmpty {
 		if args[3].Type != ResultTypeNumber {
 			return MakeErrorResult("NPER requires future value to be number argument")
 		}
 		futureValue = args[3].ValueNumber
 	}
 	t := 0.0
-	if argsNum == 5 {
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
 		if args[4].Type != ResultTypeNumber {
 			return MakeErrorResult("NPER requires type to be number argument")
 		}
@@ -1575,14 +1577,14 @@ func Pmt(args []Result) Result {
 	}
 	presentValue := args[2].ValueNumber
 	futureValue := 0.0
-	if argsNum >= 4 {
+	if argsNum >= 4 && args[3].Type != ResultTypeEmpty {
 		if args[3].Type != ResultTypeNumber {
 			return MakeErrorResult("PMT requires future value to be number argument")
 		}
 		futureValue = args[3].ValueNumber
 	}
 	t := 0.0
-	if argsNum == 5 {
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
 		if args[4].Type != ResultTypeNumber {
 			return MakeErrorResult("PMT requires type to be number argument")
 		}
@@ -1634,14 +1636,14 @@ func Ppmt(args []Result) Result {
 	}
 	presentValue := args[3].ValueNumber
 	futureValue := 0.0
-	if argsNum >= 5 {
+	if argsNum >= 5 && args[4].Type != ResultTypeEmpty {
 		if args[4].Type != ResultTypeNumber {
 			return MakeErrorResult("PPMT requires future value to be number argument")
 		}
 		futureValue = args[4].ValueNumber
 	}
 	t := 0
-	if argsNum == 6 {
+	if argsNum == 6 && args[5].Type != ResultTypeEmpty {
 		if args[5].Type != ResultTypeNumber {
 			return MakeErrorResult("PPMT requires type to be number argument")
 		}
@@ -1677,11 +1679,8 @@ func Pricedisc(args []Result) Result {
 	if redemption <= 0 {
 		return MakeErrorResultType(ErrorTypeNum, "PRICEDISC requires redemption to be positive")
 	}
-	if args[4].Type != ResultTypeNumber {
-		return MakeErrorResult("PRICEDISC requires redemption to be number argument")
-	}
 	basis := 0
-	if argsNum == 5 {
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
 		if args[4].Type != ResultTypeNumber {
 			return MakeErrorResult("PRICEDISC requires basis to be number argument")
 		}
@@ -1695,4 +1694,49 @@ func Pricedisc(args []Result) Result {
 		return errResult
 	}
 	return MakeNumberResult(redemption * (1 - discount * yf))
+}
+
+// Pv implements the Excel PV function.
+func Pv(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 3 || argsNum > 5 {
+		return MakeErrorResult("PV requires number of arguments in range of 3 and 5")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("PV requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("PV requires number of periods to be number argument")
+	}
+	nPer := args[1].ValueNumber
+	if nPer != float64(int(nPer)) {
+		return MakeErrorResultType(ErrorTypeNum, "PV requires number of periods to be integer number argument")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("PV requires payment to be number argument")
+	}
+	pmt := args[2].ValueNumber
+	futureValue := 0.0
+	if argsNum >= 4 && args[3].Type != ResultTypeEmpty {
+		if args[3].Type != ResultTypeNumber {
+			return MakeErrorResult("PV requires future value to be number argument")
+		}
+		futureValue = args[3].ValueNumber
+	}
+	t := 0.0
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("PV requires type to be number argument")
+		}
+		t = args[4].ValueNumber
+		if t != 0 {
+			t = 1
+		}
+	}
+	if rate == 0 {
+		return MakeNumberResult(-pmt * nPer - futureValue)
+	} else {
+		return MakeNumberResult((((1 - math.Pow(1 + rate, nPer)) / rate) * pmt * (1 + rate * t) - futureValue) / math.Pow(1 + rate, nPer))
+	}
 }

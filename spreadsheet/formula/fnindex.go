@@ -98,7 +98,7 @@ func Index(args []Result) Result {
 	}
 	row := int(rowArg.ValueNumber) - 1
 	col := -1
-	if argsNum == 3 {
+	if argsNum == 3 && args[2].Type != ResultTypeEmpty {
 		colArg := args[2].AsNumber()
 		if colArg.Type != ResultTypeNumber {
 			return MakeErrorResult("INDEX requires numeric col argument")
@@ -192,7 +192,7 @@ func Match(args []Result) Result {
 	}
 
 	matchType := 1
-	if argsNum == 3 {
+	if argsNum == 3 && args[2].Type != ResultTypeEmpty {
 		if args[2].Type != ResultTypeNumber {
 			return MakeErrorResult("MATCH requires the third argument to be a number")
 		}
@@ -354,10 +354,11 @@ func Offset(ctx Context, ev Evaluator, args []Result) Result {
 // VLookup implements the VLOOKUP function that returns a matching value from a
 // column in an array.
 func VLookup(args []Result) Result {
-	if len(args) < 3 {
+	argsNum := len(args)
+	if argsNum < 3 {
 		return MakeErrorResult("VLOOKUP requires at least three arguments")
 	}
-	if len(args) > 4 {
+	if argsNum > 4 {
 		return MakeErrorResult("VLOOKUP requires at most four arguments")
 	}
 	lookupValue := args[0]
@@ -370,7 +371,7 @@ func VLookup(args []Result) Result {
 		return MakeErrorResult("VLOOKUP requires numeric col argument")
 	}
 	exactMatch := false
-	if len(args) == 4 {
+	if argsNum == 4 && args[3].Type != ResultTypeEmpty {
 		em := args[3].AsNumber()
 		if em.Type != ResultTypeNumber {
 			return MakeErrorResult("VLOOKUP requires numeric match argument")
