@@ -49,6 +49,7 @@ func init() {
 	RegisterFunction("PPMT", Ppmt)
 	RegisterFunction("PRICEDISC", Pricedisc)
 	RegisterFunction("PV", Pv)
+	RegisterFunction("RATE", Rate)
 	RegisterFunction("_xlfn.PDURATION", Pduration)
 }
 
@@ -1739,4 +1740,76 @@ func Pv(args []Result) Result {
 	} else {
 		return MakeNumberResult((((1 - math.Pow(1 + rate, nPer)) / rate) * pmt * (1 + rate * t) - futureValue) / math.Pow(1 + rate, nPer))
 	}
+}
+
+// Rate implements the Excel RATE function.
+func Rate(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 3 || argsNum > 6 {
+		return MakeErrorResult("RATE requires number of arguments in range of 3 and 5")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("RATE requires number of periods to be number argument")
+	}
+	nPer := args[0].ValueNumber
+	if nPer != float64(int(nPer)) {
+		return MakeErrorResultType(ErrorTypeNum, "RATE requires number of periods to be integer number argument")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("RATE requires payment to be number argument")
+	}
+	pmt := args[1].ValueNumber
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("RATE requires present value to be number argument")
+	}
+	presentValue := args[2].ValueNumber
+	futureValue := 0.0
+	if argsNum >= 4 && args[3].Type != ResultTypeEmpty {
+		if args[3].Type != ResultTypeNumber {
+			return MakeErrorResult("RATE requires future value to be number argument")
+		}
+		futureValue = args[3].ValueNumber
+	}
+	t := 0.0
+	if argsNum >= 5 && args[4].Type != ResultTypeEmpty {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("RATE requires type to be number argument")
+		}
+		t = args[4].ValueNumber
+		if t != 0 {
+			t = 1
+		}
+	}
+	guess := 0.1
+	if argsNum >= 6 && args[5].Type != ResultTypeEmpty {
+		if args[5].Type != ResultTypeNumber {
+			return MakeErrorResult("RATE requires guess to be number argument")
+		}
+		guess = args[5].ValueNumber
+	}
+
+	maxIter := 100
+	iter := 0
+	close := false
+	epsMax := 1e-6
+
+	rate := guess
+	for iter < maxIter && !close {
+		t1 := math.Pow(rate + 1, nPer)
+		t2 := math.Pow(rate + 1, nPer - 1)
+		rt := rate * t + 1
+		p0 := pmt * (t1 - 1)
+		f1 := futureValue + t1 * presentValue + p0 * rt / rate
+		f2 := nPer * t2 * presentValue - p0 * rt / math.Pow(rate, 2)
+		f3 := (nPer * pmt * t2 * rt + p0 * t) / rate
+
+		delta := f1 / (f2 + f3)
+		if math.Abs(delta) < epsMax {
+			close = true
+		}
+		iter++
+		rate -= delta
+	}
+
+	return MakeNumberResult(rate)
 }

@@ -2323,3 +2323,22 @@ func TestPv(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestRate(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=RATE(2*12,-1000,-10000,100000)`, `0.06517891177 ResultTypeNumber`},
+		{`=RATE(2*12,-1000,-10000,100000,)`, `0.06517891177 ResultTypeNumber`},
+		{`=RATE(2*12,-1000,-10000,100000,,)`, `0.06517891177 ResultTypeNumber`},
+		{`=RATE(2*12,-1000,-10000,100000,0,0.1)`, `0.06517891177 ResultTypeNumber`},
+		{`=RATE(2*12,-1000,-10000,100000,0,0.75)`, `0.06517891177 ResultTypeNumber`},
+		{`=RATE(2*12,-1000,-10000,100000,0,0.065)`, `0.06517891177 ResultTypeNumber`},
+		{`=RATE(2*12,-1000,-10000,100000,1,0.1)`, `0.06323958 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
