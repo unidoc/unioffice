@@ -2342,3 +2342,27 @@ func TestRate(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestReceived(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 2, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 5, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(1000000)
+	sheet.Cell("A4").SetNumber(0.0575)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=RECEIVED(A1,A2,A3,A4)`, `1014584.6544 ResultTypeNumber`},
+		{`=RECEIVED(A1,A2,A3,A4,)`, `1014584.6544 ResultTypeNumber`},
+		{`=RECEIVED(A1,A2,A3,A4,0)`, `1014584.6544 ResultTypeNumber`},
+		{`=RECEIVED(A1,A2,A3,A4,1)`, `1014342.13261 ResultTypeNumber`},
+		{`=RECEIVED(A1,A2,A3,A4,2)`, `1014584.6544 ResultTypeNumber`},
+		{`=RECEIVED(A1,A2,A3,A4,3)`, `1014381.99124 ResultTypeNumber`},
+		{`=RECEIVED(A1,A2,A3,A4,4)`, `1014584.6544 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}

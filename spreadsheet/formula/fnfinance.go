@@ -50,6 +50,7 @@ func init() {
 	RegisterFunction("PRICEDISC", Pricedisc)
 	RegisterFunction("PV", Pv)
 	RegisterFunction("RATE", Rate)
+	RegisterFunction("RECEIVED", Received)
 	RegisterFunction("_xlfn.PDURATION", Pduration)
 }
 
@@ -1812,4 +1813,45 @@ func Rate(args []Result) Result {
 	}
 
 	return MakeNumberResult(rate)
+}
+
+// Received implements the Excel RECEIVED function.
+func Received(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("RECEIVED requires four or five arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "RECEIVED")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("RECEIVED requires investment to be number argument")
+	}
+	investment := args[2].ValueNumber
+	if investment <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "RECEIVED requires investment to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("RECEIVED requires discount to be number argument")
+	}
+	discount := args[3].ValueNumber
+	if discount <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "RECEIVED requires discount to be positive number argument")
+	}
+	basis := 0
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("RECEIVED requires basis to be number argument")
+		}
+		basis = int(args[4].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for RECEIVED")
+		}
+	}
+	frac, errResult := yearFrac(settlementDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	return MakeNumberResult(investment / (1 - discount * frac))
 }
