@@ -2437,3 +2437,50 @@ func TestOddyield(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestPrice(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 2, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2017, 11, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(0.0575)
+	sheet.Cell("A4").SetNumber(0.065)
+	sheet.Cell("A5").SetNumber(100)
+	sheet.Cell("A6").SetNumber(2)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=PRICE(A1,A2,A3,A4,A5,A6,0)`, `94.6343616213 ResultTypeNumber`},
+		{`=PRICE(A1,A2,A3,A4,A5,A6,1)`, `94.6354492078 ResultTypeNumber`},
+		{`=PRICE(A1,A2,A3,A4,A5,A6,2)`, `94.6024171768 ResultTypeNumber`},
+		{`=PRICE(A1,A2,A3,A4,A5,A6,3)`, `94.6435945482 ResultTypeNumber`},
+		{`=PRICE(A1,A2,A3,A4,A5,A6,4)`, `94.6343616213 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestPricemat(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 2, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 4, 13, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetDate(time.Date(2007, 11, 11, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A4").SetNumber(0.061)
+	sheet.Cell("A5").SetNumber(0.061)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=PRICEMAT(A1,A2,A3,A4,A5,0)`, `99.9844988755 ResultTypeNumber`},
+		{`=PRICEMAT(A1,A2,A3,A4,A5,1)`, `99.9802978513 ResultTypeNumber`},
+		{`=PRICEMAT(A1,A2,A3,A4,A5,2)`, `99.9841690643 ResultTypeNumber`},
+		{`=PRICEMAT(A1,A2,A3,A4,A5,3)`, `99.9845977645 ResultTypeNumber`},
+		{`=PRICEMAT(A1,A2,A3,A4,A5,4)`, `99.9844988755 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}

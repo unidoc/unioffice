@@ -49,7 +49,9 @@ func init() {
 	RegisterFunction("PDURATION", Pduration)
 	RegisterFunction("PMT", Pmt)
 	RegisterFunction("PPMT", Ppmt)
+	RegisterFunction("PRICE", Price)
 	RegisterFunction("PRICEDISC", Pricedisc)
+	RegisterFunction("PRICEMAT", Pricemat)
 	RegisterFunction("PV", Pv)
 	RegisterFunction("RATE", Rate)
 	RegisterFunction("RECEIVED", Received)
@@ -1538,21 +1540,10 @@ func Oddlprice(args []Result) Result {
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
-	var lastInterestDate float64
-	lastInterestResult := args[2]
-	switch lastInterestResult.Type {
-	case ResultTypeNumber:
-		lastInterestDate = float64(int(lastInterestResult.ValueNumber))
-	case ResultTypeString:
-		lastInterestFromString := DateValue([]Result{lastInterestResult})
-		if lastInterestFromString.Type == ResultTypeError {
-			return MakeErrorResult("Incorrect first coupon date for ODDLPRICE")
-		}
-		lastInterestDate = lastInterestFromString.ValueNumber
-	default:
-		return MakeErrorResult("Incorrect argument for ODDLPRICE")
+	lastInterestDate, errResult := parseDate(args[2], "issue date", "ODDLPRICE")
+	if errResult.Type == ResultTypeError {
+		return errResult
 	}
-
 	if lastInterestDate >= settlementDate {
 		return MakeErrorResultType(ErrorTypeNum, "Last interest date should be before settlement date")
 	}
@@ -1632,21 +1623,10 @@ func Oddlyield(args []Result) Result {
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
-	var lastInterestDate float64
-	lastInterestResult := args[2]
-	switch lastInterestResult.Type {
-	case ResultTypeNumber:
-		lastInterestDate = float64(int(lastInterestResult.ValueNumber))
-	case ResultTypeString:
-		lastInterestFromString := DateValue([]Result{lastInterestResult})
-		if lastInterestFromString.Type == ResultTypeError {
-			return MakeErrorResult("Incorrect first coupon date for ODDLYIELD")
-		}
-		lastInterestDate = lastInterestFromString.ValueNumber
-	default:
-		return MakeErrorResult("Incorrect argument for ODDLYIELD")
+	lastInterestDate, errResult := parseDate(args[2], "issue date", "ODDLPRICE")
+	if errResult.Type == ResultTypeError {
+		return errResult
 	}
-
 	if lastInterestDate >= settlementDate {
 		return MakeErrorResultType(ErrorTypeNum, "Last interest date should be before settlement date")
 	}
@@ -1847,6 +1827,73 @@ func Ppmt(args []Result) Result {
 	return MakeNumberResult(pmt(rate, nPer, presentValue, futureValue, t) - ipmt(rate, period, nPer, presentValue, futureValue, t))
 }
 
+// Price implements the Excel PRICE function.
+func Price(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 6 && argsNum != 7 {
+		return MakeErrorResult("PRICE requires six or seven arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "PRICE")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("PRICE requires rate of type number")
+	}
+	rate := args[2].ValueNumber
+	if rate < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PRICE requires rate to not be negative")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("PRICE requires yield of type number")
+	}
+	yield := args[3].ValueNumber
+	if yield < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PRICE requires yield to not be negative")
+	}
+	if args[4].Type != ResultTypeNumber {
+		return MakeErrorResult("PRICE requires redemption to be number argument")
+	}
+	redemption := args[4].ValueNumber
+	if redemption <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PRICE requires redemption to be positive number argument")
+	}
+	freqResult := args[5]
+	if freqResult.Type != ResultTypeNumber {
+		return MakeErrorResult("PRICE requires fifth argument of type number")
+	}
+	freqF := freqResult.ValueNumber
+	if !checkFreq(freqF) {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
+	}
+	freq := int(freqF)
+	basis := 0
+	if argsNum == 7 {
+		if args[6].Type != ResultTypeNumber {
+			return MakeErrorResult("PRICE requires basis to be number argument")
+		}
+		basis = int(args[6].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for PRICE")
+		}
+	}
+	e := coupdays(settlementDate, maturityDate, freq, basis)
+	dsc := coupdaysnc(settlementDate, maturityDate, freq, basis) / e
+	n, errResult := coupnum(settlementDate, maturityDate, freq, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	a := coupdaybs(settlementDate, maturityDate, freq, basis)
+	ret := redemption / math.Pow(1 + yield / freqF, n - 1 + dsc)
+	ret -= 100 * rate / freqF * a / e
+	t1 := 100 * rate / freqF
+	t2 := 1 + yield / freqF
+	for k := 0.0; k < n; k++ {
+		ret += t1 / math.Pow(t2, k + dsc)
+	}
+	return MakeNumberResult(ret)
+}
+
 // Pricedisc implements the Excel PRICEDISC function.
 func Pricedisc(args []Result) Result {
 	argsNum := len(args)
@@ -1886,6 +1933,66 @@ func Pricedisc(args []Result) Result {
 		return errResult
 	}
 	return MakeNumberResult(redemption * (1 - discount * yf))
+}
+
+// Pricemat implements the Excel PRICEMAT function.
+func Pricemat(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 5 && argsNum != 6 {
+		return MakeErrorResult("PRICEMAT requires four or five arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "PRICEMAT")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	issueDate, errResult := parseDate(args[2], "issue date", "PRICEMAT")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	if issueDate >= settlementDate {
+		return MakeErrorResult("PRICEMAT requires issue date to be before settlement date")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("PRICEMAT requires rate of type number")
+	}
+	rate := args[3].ValueNumber
+	if rate < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PRICEMAT requires rate to be non negative")
+	}
+	if args[4].Type != ResultTypeNumber {
+		return MakeErrorResult("PRICEMAT requires yield of type number")
+	}
+	yield := args[4].ValueNumber
+	if yield < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PRICEMAT requires yield to be non negative")
+	}
+	basis := 0
+	if argsNum == 6 {
+		if args[5].Type != ResultTypeNumber {
+			return MakeErrorResult("PRICEMAT requires basis to be number argument")
+		}
+		basis = int(args[5].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for PRICEMAT")
+		}
+	}
+	dsmyf, errResult := yearFrac(settlementDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	dimyf, errResult := yearFrac(issueDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	ayf, errResult := yearFrac(issueDate, settlementDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+
+	num := 1 + dimyf * rate
+	den := 1 + dsmyf * yield
+
+	return MakeNumberResult((num / den - ayf * rate) * 100)
 }
 
 // Pv implements the Excel PV function.
