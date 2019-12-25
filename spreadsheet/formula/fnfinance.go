@@ -51,6 +51,8 @@ func init() {
 	RegisterFunction("PV", Pv)
 	RegisterFunction("RATE", Rate)
 	RegisterFunction("RECEIVED", Received)
+	RegisterFunction("RRI", Rri)
+	RegisterFunction("_xlfn.RRI", Rri)
 	RegisterFunction("_xlfn.PDURATION", Pduration)
 }
 
@@ -1854,4 +1856,34 @@ func Received(args []Result) Result {
 		return errResult
 	}
 	return MakeNumberResult(investment / (1 - discount * frac))
+}
+
+// Rri implements the Excel RRI function.
+func Rri(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("RRI requires six arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("RRI requires number of periods to be number argument")
+	}
+	nPer := args[0].ValueNumber
+	if nPer <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "RRI requires number of periods to be positive number argument")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("RRI requires present value to be number argument")
+	}
+	presentValue := args[1].ValueNumber
+	if presentValue <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "RRI requires present value to be positive number argument")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("RRI requires future value to be number argument")
+	}
+	futureValue := args[2].ValueNumber
+	if futureValue < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "RRI requires future value to be non negative number argument")
+	}
+
+	return MakeNumberResult(math.Pow(futureValue / presentValue, 1 / nPer) - 1)
 }

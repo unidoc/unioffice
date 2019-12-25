@@ -2366,3 +2366,20 @@ func TestReceived(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestRri(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=RRI(96,10000,11000)`, `0.00099330737 ResultTypeNumber`},
+		{`=RRI(8,10000,11000)`, `0.01198502414 ResultTypeNumber`},
+		{`=RRI(0,10000,11000)`, `#NUM! ResultTypeError`},
+		{`=RRI(8,0,11000)`, `#NUM! ResultTypeError`},
+		{`=RRI(8,10000,-0.000001)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
