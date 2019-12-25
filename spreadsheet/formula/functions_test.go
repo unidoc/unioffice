@@ -2383,3 +2383,57 @@ func TestRri(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestOddlprice(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 2, 7, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 6, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetDate(time.Date(2007, 10, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A4").SetNumber(0.0375)
+	sheet.Cell("A5").SetNumber(0.0405)
+	sheet.Cell("A6").SetNumber(100)
+	sheet.Cell("A7").SetNumber(2)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=ODDLPRICE(A1,A2,A3,A4,A5,A6,A7,0)`, `99.8782860147 ResultTypeNumber`},
+		{`=ODDLPRICE(A1,A2,A3,A4,A5,A6,A7,1)`, `99.8759395207 ResultTypeNumber`},
+		{`=ODDLPRICE(A1,A2,A3,A4,A5,A6,A7,2)`, `99.8769016984 ResultTypeNumber`},
+		{`=ODDLPRICE(A1,A2,A3,A4,A5,A6,A7,3)`, `99.8787957508 ResultTypeNumber`},
+		{`=ODDLPRICE(A1,A2,A3,A4,A5,A6,A7,4)`, `99.8782860147 ResultTypeNumber`},
+		{`=ODDLPRICE(A2,A1,A3,A4,A5,A6,A7,4)`, `#NUM! ResultTypeError`},
+		{`=ODDLPRICE(A1,A3,A2,A4,A5,A6,A7,4)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestOddyield(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 4, 20, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 6, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetDate(time.Date(2007, 12, 24, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A4").SetNumber(0.0375)
+	sheet.Cell("A5").SetNumber(99.875)
+	sheet.Cell("A6").SetNumber(100)
+	sheet.Cell("A7").SetNumber(2)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=ODDLYIELD(A1,A2,A3,A4,A5,A6,A7,0)`, `0.04519223562 ResultTypeNumber`},
+		{`=ODDLYIELD(A1,A2,A3,A4,A5,A6,A7,1)`, `0.04517988549 ResultTypeNumber`},
+		{`=ODDLYIELD(A1,A2,A3,A4,A5,A6,A7,2)`, `0.04503841511 ResultTypeNumber`},
+		{`=ODDLYIELD(A1,A2,A3,A4,A5,A6,A7,3)`, `0.04515632373 ResultTypeNumber`},
+		{`=ODDLYIELD(A1,A2,A3,A4,A5,A6,A7,4)`, `0.04519223562 ResultTypeNumber`},
+		{`=ODDLYIELD(A2,A1,A3,A4,A5,A6,A7,4)`, `#NUM! ResultTypeError`},
+		{`=ODDLYIELD(A1,A3,A2,A4,A5,A6,A7,4)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}

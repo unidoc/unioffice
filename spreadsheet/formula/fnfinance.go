@@ -44,6 +44,8 @@ func init() {
 	RegisterFunction("NOMINAL", Nominal)
 	RegisterFunction("NPER", Nper)
 	RegisterFunction("NPV", Npv)
+	RegisterFunction("ODDLPRICE", Oddlprice)
+	RegisterFunction("ODDLYIELD", Oddlyield)
 	RegisterFunction("PDURATION", Pduration)
 	RegisterFunction("PMT", Pmt)
 	RegisterFunction("PPMT", Ppmt)
@@ -69,72 +71,6 @@ func getSettlementMaturity(settlementResult, maturityResult Result, funcName str
 		return 0, 0, MakeErrorResultType(ErrorTypeNum, funcName + " requires maturity date to be later than settlement date")
 	}
 	return settlementDate, maturityDate, empty
-}
-
-// Duration implements the Excel DURATION function.
-func Duration(args []Result) Result {
-	parsedArgs, err := parseDurationData(args, "DURATION")
-	if err.Type == ResultTypeError {
-		return err
-	}
-	settlementDate := parsedArgs.settlementDate
-	maturityDate := parsedArgs.maturityDate
-	coupon := parsedArgs.coupon
-	yield := parsedArgs.yield
-	freq := parsedArgs.freq
-	basis := parsedArgs.basis
-
-	return getDuration(settlementDate, maturityDate, coupon, yield, freq, basis)
-}
-
-// Mduration implements the Excel MDURATION function.
-func Mduration(args []Result) Result {
-	parsedArgs, err := parseDurationData(args, "MDURATION")
-	if err.Type == ResultTypeError {
-		return err
-	}
-	settlementDate := parsedArgs.settlementDate
-	maturityDate := parsedArgs.maturityDate
-	coupon := parsedArgs.coupon
-	yield := parsedArgs.yield
-	freq := parsedArgs.freq
-	basis := parsedArgs.basis
-
-	duration := getDuration(settlementDate, maturityDate, coupon, yield, freq, basis)
-	if duration.Type == ResultTypeError {
-		return duration
-	}
-	mDuration := duration.ValueNumber / (1.0 + yield / freq)
-	return MakeNumberResult(mDuration)
-}
-
-// Pduration implements the Excel PDURATION function.
-func Pduration(args []Result) Result {
-	if len(args) != 3 {
-		return MakeErrorResult("PDURATION requires three number arguments")
-	}
-	if args[0].Type != ResultTypeNumber {
-		return MakeErrorResult("PDURATION requires rate to be number argument")
-	}
-	rate := args[0].ValueNumber
-	if rate <= 0 {
-		return MakeErrorResultType(ErrorTypeNum, "PDURATION requires rate to be positive")
-	}
-	if args[1].Type != ResultTypeNumber {
-		return MakeErrorResult("PDURATION requires current value to be number argument")
-	}
-	currentValue := args[1].ValueNumber
-	if currentValue <= 0 {
-		return MakeErrorResultType(ErrorTypeNum, "PDURATION requires current value to be positive")
-	}
-	if args[2].Type != ResultTypeNumber {
-		return MakeErrorResult("PDURATION requires specified value to be number argument")
-	}
-	specifiedValue := args[2].ValueNumber
-	if specifiedValue <= 0 {
-		return MakeErrorResultType(ErrorTypeNum, "PDURATION requires specified value to be positive")
-	}
-	return MakeNumberResult((math.Log10(specifiedValue) - math.Log10(currentValue)) / math.Log10(1 + rate))
 }
 
 type couponArgs struct {
@@ -255,9 +191,6 @@ func parseCouponArgs(args []Result, funcName string) (*couponArgs, Result) {
 	argsNum := len(args)
 	if argsNum != 3 && argsNum != 4 {
 		return nil, MakeErrorResult(funcName + " requires four arguments")
-	}
-	if args[0].Type != ResultTypeNumber {
-		return nil, MakeErrorResult(funcName + " requires settlement date to be number argument")
 	}
 	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], funcName)
 	if errResult.Type == ResultTypeError {
@@ -1070,6 +1003,22 @@ func parseDollarArgs(args []Result, funcName string) (float64, float64, Result) 
 	return dollar, fraction, empty
 }
 
+// Duration implements the Excel DURATION function.
+func Duration(args []Result) Result {
+	parsedArgs, err := parseDurationData(args, "DURATION")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	settlementDate := parsedArgs.settlementDate
+	maturityDate := parsedArgs.maturityDate
+	coupon := parsedArgs.coupon
+	yield := parsedArgs.yield
+	freq := parsedArgs.freq
+	basis := parsedArgs.basis
+
+	return getDuration(settlementDate, maturityDate, coupon, yield, freq, basis)
+}
+
 // Effect implements the Excel EFFECT function.
 func Effect(args []Result) Result {
 	if len(args) != 2 {
@@ -1405,6 +1354,27 @@ func Ispmt(args []Result) Result {
 	return MakeNumberResult(presentValue * rate * (period / nPer - 1))
 }
 
+// Mduration implements the Excel MDURATION function.
+func Mduration(args []Result) Result {
+	parsedArgs, err := parseDurationData(args, "MDURATION")
+	if err.Type == ResultTypeError {
+		return err
+	}
+	settlementDate := parsedArgs.settlementDate
+	maturityDate := parsedArgs.maturityDate
+	coupon := parsedArgs.coupon
+	yield := parsedArgs.yield
+	freq := parsedArgs.freq
+	basis := parsedArgs.basis
+
+	duration := getDuration(settlementDate, maturityDate, coupon, yield, freq, basis)
+	if duration.Type == ResultTypeError {
+		return duration
+	}
+	mDuration := duration.ValueNumber / (1.0 + yield / freq)
+	return MakeNumberResult(mDuration)
+}
+
 // Mirr implements the Excel MIRR function.
 func Mirr(args []Result) Result {
 	if len(args) != 3 {
@@ -1557,6 +1527,224 @@ func Npv(args []Result) Result {
 		npv += value / math.Pow(1 + rate, float64(i) + 1)
 	}
 	return MakeNumberResult(npv)
+}
+
+// Oddlprice implements the Excel ODDLPRICE function.
+func Oddlprice(args []Result) Result {
+	if len(args) != 8 && len(args) != 9 {
+		return MakeErrorResult("ODDLPRICE requires five or six arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "ODDLPRICE")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	var lastInterestDate float64
+	lastInterestResult := args[2]
+	switch lastInterestResult.Type {
+	case ResultTypeNumber:
+		lastInterestDate = float64(int(lastInterestResult.ValueNumber))
+	case ResultTypeString:
+		lastInterestFromString := DateValue([]Result{lastInterestResult})
+		if lastInterestFromString.Type == ResultTypeError {
+			return MakeErrorResult("Incorrect first coupon date for ODDLPRICE")
+		}
+		lastInterestDate = lastInterestFromString.ValueNumber
+	default:
+		return MakeErrorResult("Incorrect argument for ODDLPRICE")
+	}
+
+	if lastInterestDate >= settlementDate {
+		return MakeErrorResultType(ErrorTypeNum, "Last interest date should be before settlement date")
+	}
+	rateResult := args[3]
+	if rateResult.Type != ResultTypeNumber {
+		return MakeErrorResult("ODDLPRICE requires rate of type number")
+	}
+	rate := rateResult.ValueNumber
+	if rate < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "Rate should be non negative")
+	}
+	yieldResult := args[4]
+	if yieldResult.Type != ResultTypeNumber {
+		return MakeErrorResult("ODDLPRICE requires yield of type number")
+	}
+	yield := yieldResult.ValueNumber
+	if yield < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "Yield should be non negative")
+	}
+	redemptionResult := args[5]
+	if redemptionResult.Type != ResultTypeNumber {
+		return MakeErrorResult("ODDLPRICE requires redemption of type number")
+	}
+	redemption := redemptionResult.ValueNumber
+	if redemption < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "Yield should be non negative")
+	}
+	freqResult := args[6]
+	if freqResult.Type != ResultTypeNumber {
+		return MakeErrorResult("ODDLPRICE requires frequency of type number")
+	}
+	freq := float64(int(freqResult.ValueNumber))
+	if !checkFreq(freq) {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
+	}
+	basis := 0
+	if len(args) == 8 {
+		basisResult := args[7]
+		if basisResult.Type != ResultTypeNumber {
+			return MakeErrorResult("ODDLPRICE requires basis of type number")
+		}
+		basis = int(basisResult.ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis value for ODDLPRICE")
+		}
+	}
+
+	dc, errResult := yearFrac(lastInterestDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	dc *= freq
+	dsc, errResult := yearFrac(settlementDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	dsc *= freq
+	a, errResult := yearFrac(lastInterestDate, settlementDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	a *= freq
+
+	p := redemption + dc * 100 * rate / freq
+	p /= dsc * yield / freq + 1
+	p -= a * 100 * rate / freq
+
+	return MakeNumberResult(p)
+}
+
+// Oddlyield implements the Excel ODDLYIELD function.
+func Oddlyield(args []Result) Result {
+	if len(args) != 8 && len(args) != 9 {
+		return MakeErrorResult("ODDLYIELD requires five or six arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "ODDLYIELD")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	var lastInterestDate float64
+	lastInterestResult := args[2]
+	switch lastInterestResult.Type {
+	case ResultTypeNumber:
+		lastInterestDate = float64(int(lastInterestResult.ValueNumber))
+	case ResultTypeString:
+		lastInterestFromString := DateValue([]Result{lastInterestResult})
+		if lastInterestFromString.Type == ResultTypeError {
+			return MakeErrorResult("Incorrect first coupon date for ODDLYIELD")
+		}
+		lastInterestDate = lastInterestFromString.ValueNumber
+	default:
+		return MakeErrorResult("Incorrect argument for ODDLYIELD")
+	}
+
+	if lastInterestDate >= settlementDate {
+		return MakeErrorResultType(ErrorTypeNum, "Last interest date should be before settlement date")
+	}
+	rateResult := args[3]
+	if rateResult.Type != ResultTypeNumber {
+		return MakeErrorResult("ODDLYIELD requires rate of type number")
+	}
+	rate := rateResult.ValueNumber
+	if rate < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "Rate should be non negative")
+	}
+	prResult := args[4]
+	if prResult.Type != ResultTypeNumber {
+		return MakeErrorResult("ODDLYIELD requires present value of type number")
+	}
+	pr := prResult.ValueNumber
+	if pr <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "Present value should be positive")
+	}
+	redemptionResult := args[5]
+	if redemptionResult.Type != ResultTypeNumber {
+		return MakeErrorResult("ODDLYIELD requires redemption of type number")
+	}
+	redemption := redemptionResult.ValueNumber
+	if redemption < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "Yield should be non negative")
+	}
+	freqResult := args[6]
+	if freqResult.Type != ResultTypeNumber {
+		return MakeErrorResult("ODDLYIELD requires frequency of type number")
+	}
+	freq := float64(int(freqResult.ValueNumber))
+	if !checkFreq(freq) {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
+	}
+	basis := 0
+	if len(args) == 8 {
+		basisResult := args[7]
+		if basisResult.Type != ResultTypeNumber {
+			return MakeErrorResult("ODDLYIELD requires basis of type number")
+		}
+		basis = int(basisResult.ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis value for ODDLYIELD")
+		}
+	}
+
+	dc, errResult := yearFrac(lastInterestDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	dc *= freq
+	dsc, errResult := yearFrac(settlementDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	dsc *= freq
+	a, errResult := yearFrac(lastInterestDate, settlementDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	a *= freq
+
+	yield := redemption + dc * 100 * rate / freq
+	yield /= pr + a * 100 * rate / freq
+	yield--
+	yield *= freq / dsc
+
+	return MakeNumberResult(yield)
+}
+
+// Pduration implements the Excel PDURATION function.
+func Pduration(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("PDURATION requires three number arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("PDURATION requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if rate <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PDURATION requires rate to be positive")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("PDURATION requires current value to be number argument")
+	}
+	currentValue := args[1].ValueNumber
+	if currentValue <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PDURATION requires current value to be positive")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("PDURATION requires specified value to be number argument")
+	}
+	specifiedValue := args[2].ValueNumber
+	if specifiedValue <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "PDURATION requires specified value to be positive")
+	}
+	return MakeNumberResult((math.Log10(specifiedValue) - math.Log10(currentValue)) / math.Log10(1 + rate))
 }
 
 // Pmt implements the Excel PMT function.
