@@ -60,6 +60,9 @@ func init() {
 	RegisterFunction("_xlfn.RRI", Rri)
 	RegisterFunction("SLN", Sln)
 	RegisterFunction("SYD", Syd)
+	RegisterFunction("TBILLEQ", Tbilleq)
+	RegisterFunction("TBILLPRICE", Tbillprice)
+	RegisterFunction("TBILLYIELD", Tbillyield)
 }
 
 func getSettlementMaturity(settlementResult, maturityResult Result, funcName string) (float64, float64, Result) {
@@ -2236,4 +2239,75 @@ func Syd(args []Result) Result {
 	den := life * (life + 1)
 
 	return MakeNumberResult(num / den)
+}
+
+// Tbilleq implements the Excel TBILLEQ function.
+func Tbilleq(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("TBILLEQ requires three arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "TBILLEQ")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("TBILLEQ requires discount to be number argument")
+	}
+	dsm := maturityDate - settlementDate
+	if dsm > 365 {
+		return MakeErrorResultType(ErrorTypeNum, "TBILLEQ requires maturity to be not more than one year after settlement")
+	}
+	discount := args[2].ValueNumber
+	if discount <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "TBILLEQ requires discount to be positive number argument")
+	}
+	return MakeNumberResult((365 * discount) / (360 - discount * dsm))
+}
+
+// Tbillprice implements the Excel TBILLPRICE function.
+func Tbillprice(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("TBILLPRICE requires three arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "TBILLPRICE")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("TBILLPRICE requires discount to be number argument")
+	}
+	dsm := maturityDate - settlementDate
+	if dsm > 365 {
+		return MakeErrorResultType(ErrorTypeNum, "TBILLPRICE requires maturity to be not more than one year after settlement")
+	}
+	discount := args[2].ValueNumber
+	if discount <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "TBILLPRICE requires discount to be positive number argument")
+	}
+	return MakeNumberResult(100 * (1 - discount * dsm / 360))
+}
+
+// Tbillyield implements the Excel TBILLYIELD function.
+func Tbillyield(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("TBILLYIELD requires three arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "TBILLYIELD")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("TBILLYIELD requires discount to be number argument")
+	}
+	dsm := maturityDate - settlementDate
+	if dsm > 365 {
+		return MakeErrorResultType(ErrorTypeNum, "TBILLYIELD requires maturity to be not more than one year after settlement")
+	}
+	pr := args[2].ValueNumber
+	if pr <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "TBILLYIELD requires pr to be positive number argument")
+	}
+	m1 := (100 - pr) / pr
+	m2 := 360 /dsm
+	return MakeNumberResult(m1 * m2)
 }

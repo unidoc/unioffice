@@ -2517,3 +2517,69 @@ func TestSyd(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestTbilleq(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 3, 31, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 6, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(0.0914)
+	sheet.Cell("A4").SetDate(time.Date(2009, 4, 1, 0, 0, 0, 0, time.UTC))
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=TBILLEQ(A1,A2,A3)`, `0.09415149356 ResultTypeNumber`},
+		{`=TBILLEQ("A1",A2,A3)`, `#VALUE! ResultTypeError`},
+		{`=TBILLEQ(A1,A2,0)`, `#NUM! ResultTypeError`},
+		{`=TBILLEQ(A2,A1,A3)`, `#NUM! ResultTypeError`},
+		{`=TBILLEQ(A1,A4,A3)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestTbillprice(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 3, 31, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 6, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(0.09)
+	sheet.Cell("A4").SetDate(time.Date(2009, 4, 1, 0, 0, 0, 0, time.UTC))
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=TBILLPRICE(A1,A2,A3)`, `98.45 ResultTypeNumber`},
+		{`=TBILLPRICE("A1",A2,A3)`, `#VALUE! ResultTypeError`},
+		{`=TBILLPRICE(A1,A2,0)`, `#NUM! ResultTypeError`},
+		{`=TBILLPRICE(A2,A1,A3)`, `#NUM! ResultTypeError`},
+		{`=TBILLPRICE(A1,A4,A3)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestTbillyield(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 3, 31, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 6, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(98.45)
+	sheet.Cell("A4").SetDate(time.Date(2009, 4, 1, 0, 0, 0, 0, time.UTC))
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=TBILLYIELD(A1,A2,A3)`, `0.09141696292 ResultTypeNumber`},
+		{`=TBILLYIELD("A1",A2,A3)`, `#VALUE! ResultTypeError`},
+		{`=TBILLYIELD(A1,A2,0)`, `#NUM! ResultTypeError`},
+		{`=TBILLYIELD(A2,A1,A3)`, `#NUM! ResultTypeError`},
+		{`=TBILLYIELD(A1,A4,A3)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
