@@ -47,6 +47,7 @@ func init() {
 	RegisterFunction("ODDLPRICE", Oddlprice)
 	RegisterFunction("ODDLYIELD", Oddlyield)
 	RegisterFunction("PDURATION", Pduration)
+	RegisterFunction("_xlfn.PDURATION", Pduration)
 	RegisterFunction("PMT", Pmt)
 	RegisterFunction("PPMT", Ppmt)
 	RegisterFunction("PRICE", Price)
@@ -57,7 +58,7 @@ func init() {
 	RegisterFunction("RECEIVED", Received)
 	RegisterFunction("RRI", Rri)
 	RegisterFunction("_xlfn.RRI", Rri)
-	RegisterFunction("_xlfn.PDURATION", Pduration)
+	RegisterFunction("SLN", Sln)
 }
 
 func getSettlementMaturity(settlementResult, maturityResult Result, funcName string) (float64, float64, Result) {
@@ -192,7 +193,7 @@ func coupncd(settlementDate, maturityDate time.Time, freq int) time.Time {
 func parseCouponArgs(args []Result, funcName string) (*couponArgs, Result) {
 	argsNum := len(args)
 	if argsNum != 3 && argsNum != 4 {
-		return nil, MakeErrorResult(funcName + " requires four arguments")
+		return nil, MakeErrorResult(funcName + " requires three or four arguments")
 	}
 	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], funcName)
 	if errResult.Type == ResultTypeError {
@@ -304,7 +305,7 @@ func parseDurationData(args []Result, funcName string) (*durationArgs, Result) {
 	}
 	couponResult := args[2]
 	if couponResult.Type != ResultTypeNumber {
-		return nil, MakeErrorResult(funcName + " requires third argument of type number")
+		return nil, MakeErrorResult(funcName + " requires coupon rate of type number")
 	}
 	coupon := couponResult.ValueNumber
 	if coupon < 0 {
@@ -312,7 +313,7 @@ func parseDurationData(args []Result, funcName string) (*durationArgs, Result) {
 	}
 	yieldResult := args[3]
 	if yieldResult.Type != ResultTypeNumber {
-		return nil, MakeErrorResult(funcName + " requires fourth argument of type number")
+		return nil, MakeErrorResult(funcName + " requires yield rate of type number")
 	}
 	yield := yieldResult.ValueNumber
 	if yield < 0 {
@@ -320,7 +321,7 @@ func parseDurationData(args []Result, funcName string) (*durationArgs, Result) {
 	}
 	freqResult := args[4]
 	if freqResult.Type != ResultTypeNumber {
-		return nil, MakeErrorResult(funcName + " requires fifth argument of type number")
+		return nil, MakeErrorResult(funcName + " requires frequency of type number")
 	}
 	freq := float64(int(freqResult.ValueNumber))
 	if !checkFreq(freq) {
@@ -330,7 +331,7 @@ func parseDurationData(args []Result, funcName string) (*durationArgs, Result) {
 	if argsNum == 6 && args[5].Type != ResultTypeEmpty {
 		basisResult := args[5]
 		if basisResult.Type != ResultTypeNumber {
-			return nil, MakeErrorResult(funcName + " requires sixth argument of type number")
+			return nil, MakeErrorResult(funcName + " requires basis of type number")
 		}
 		basis = int(basisResult.ValueNumber)
 		if !checkBasis(basis) {
@@ -542,7 +543,7 @@ func parseAmorArgs(args []Result, funcName string) (*amorArgs, Result) {
 	}
 	rate := args[5].ValueNumber
 	if rate < 0 {
-		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires rate to be more than 0 and less than 0.5")
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires depreciation rate to be more than 0 and less than 0.5")
 	}
 	basis := 0
 	if argsNum == 7 && args[6].Type != ResultTypeEmpty {
@@ -686,7 +687,7 @@ func parseCumulArgs(args []Result, funcName string) (*cumulArgs, Result) {
 		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires end period to be later or equal to start period")
 	}
 	if endPeriod > nPer {
-		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires periods to be in number of periods range")
+		return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires periods to be in periods range")
 	}
 	t := int(args[5].ValueNumber)
 	if t != 0 && t != 1 {
@@ -839,7 +840,7 @@ func Ddb(args []Result) Result {
 	}
 	period := args[3].ValueNumber
 	if period < 1 {
-		return MakeErrorResultType(ErrorTypeNum, "DDB requires period to be positive")
+		return MakeErrorResultType(ErrorTypeNum, "DDB requires period to be not less than one")
 	}
 	if period > life {
 		return MakeErrorResultType(ErrorTypeNum, "Incorrect period for DDB")
@@ -1064,9 +1065,6 @@ func Fv(args []Result) Result {
 		return MakeErrorResult("FV requires payment to be number argument")
 	}
 	pmt := args[2].ValueNumber
-	if args[3].Type != ResultTypeNumber {
-		return MakeErrorResult("FV requires payment to be number argument")
-	}
 	presentValue := 0.0
 	if argsNum >= 4 && args[3].Type != ResultTypeEmpty {
 		if args[3].Type != ResultTypeNumber {
@@ -1111,7 +1109,7 @@ func Fvschedule(args []Result) Result {
 		}
 		return MakeNumberResult(principal)
 	default:
-		return MakeErrorResult("FVSCHEDULE requires schedule to be of array type")
+		return MakeErrorResult("FVSCHEDULE requires schedule to be of number or array type")
 	}
 }
 
@@ -1160,7 +1158,7 @@ func Intrate(args []Result) Result {
 func Ipmt(args []Result) Result {
 	argsNum := len(args)
 	if argsNum < 4 || argsNum > 6 {
-		return MakeErrorResult("IPMT requires six arguments")
+		return MakeErrorResult("IPMT requires number of arguments in range between four and six")
 	}
 	if args[0].Type != ResultTypeNumber {
 		return MakeErrorResult("IPMT requires rate to be number argument")
@@ -1194,7 +1192,7 @@ func Ipmt(args []Result) Result {
 	t := 0
 	if argsNum == 6 && args[5].Type != ResultTypeEmpty {
 		if args[5].Type != ResultTypeNumber {
-			return MakeErrorResult("IPMT requires start period to be number argument")
+			return MakeErrorResult("IPMT requires type to be number argument")
 		}
 		t = int(args[5].ValueNumber)
 		if t != 0 {
@@ -1231,7 +1229,7 @@ func Irr(args []Result) Result {
 		return MakeErrorResult("IRR requires one or two arguments")
 	}
 	if args[0].Type != ResultTypeList && args[0].Type != ResultTypeArray {
-		return MakeErrorResult("IRR requires values to be range argument")
+		return MakeErrorResult("IRR requires values to be of array type")
 	}
 	valuesR := arrayFromRange(args[0])
 	values := []float64{}
@@ -1331,7 +1329,7 @@ func irrResultDeriv(values, dates []float64, rate float64) float64 {
 // Ispmt implements the Excel ISPMT function.
 func Ispmt(args []Result) Result {
 	if len(args) != 4 {
-		return MakeErrorResult("ISPMT requires six arguments")
+		return MakeErrorResult("ISPMT requires four arguments")
 	}
 	if args[0].Type != ResultTypeNumber {
 		return MakeErrorResult("ISPMT requires rate to be number argument")
@@ -1383,7 +1381,7 @@ func Mirr(args []Result) Result {
 		return MakeErrorResult("MIRR requires three arguments")
 	}
 	if args[0].Type != ResultTypeList && args[0].Type != ResultTypeArray {
-		return MakeErrorResult("MIRR requires values to be range argument")
+		return MakeErrorResult("MIRR requires values to be of array type")
 	}
 	if args[1].Type != ResultTypeNumber {
 		return MakeErrorResult("MIRR requires finance rate to be number argument")
@@ -1443,7 +1441,7 @@ func Nominal(args []Result) Result {
 	}
 	effect := args[0].ValueNumber
 	if effect <= 0 {
-		return MakeErrorResultType(ErrorTypeNum, "NOMINAL requires effect interest rate to be positive number argument")
+		return MakeErrorResultType(ErrorTypeNum, "NOMINAL requires effect interest rate to be positive")
 	}
 	if args[1].Type != ResultTypeNumber {
 		return MakeErrorResult("NOMINAL requires number of compounding periods to be number argument")
@@ -1534,7 +1532,7 @@ func Npv(args []Result) Result {
 // Oddlprice implements the Excel ODDLPRICE function.
 func Oddlprice(args []Result) Result {
 	if len(args) != 8 && len(args) != 9 {
-		return MakeErrorResult("ODDLPRICE requires five or six arguments")
+		return MakeErrorResult("ODDLPRICE requires eight or nine arguments")
 	}
 	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "ODDLPRICE")
 	if errResult.Type == ResultTypeError {
@@ -1616,8 +1614,8 @@ func Oddlprice(args []Result) Result {
 
 // Oddlyield implements the Excel ODDLYIELD function.
 func Oddlyield(args []Result) Result {
-	if len(args) != 8 && len(args) != 9 {
-		return MakeErrorResult("ODDLYIELD requires five or six arguments")
+	if len(args) != 7 && len(args) != 8 {
+		return MakeErrorResult("ODDLYIELD requires seven or eight arguments")
 	}
 	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "ODDLYIELD")
 	if errResult.Type == ResultTypeError {
@@ -1630,45 +1628,40 @@ func Oddlyield(args []Result) Result {
 	if lastInterestDate >= settlementDate {
 		return MakeErrorResultType(ErrorTypeNum, "Last interest date should be before settlement date")
 	}
-	rateResult := args[3]
-	if rateResult.Type != ResultTypeNumber {
+	if args[3].Type != ResultTypeNumber {
 		return MakeErrorResult("ODDLYIELD requires rate of type number")
 	}
-	rate := rateResult.ValueNumber
+	rate := args[3].ValueNumber
 	if rate < 0 {
 		return MakeErrorResultType(ErrorTypeNum, "Rate should be non negative")
 	}
-	prResult := args[4]
-	if prResult.Type != ResultTypeNumber {
+	if args[4].Type != ResultTypeNumber {
 		return MakeErrorResult("ODDLYIELD requires present value of type number")
 	}
-	pr := prResult.ValueNumber
+	pr := args[4].ValueNumber
 	if pr <= 0 {
 		return MakeErrorResultType(ErrorTypeNum, "Present value should be positive")
 	}
-	redemptionResult := args[5]
-	if redemptionResult.Type != ResultTypeNumber {
+	if args[5].Type != ResultTypeNumber {
 		return MakeErrorResult("ODDLYIELD requires redemption of type number")
 	}
-	redemption := redemptionResult.ValueNumber
+	redemption := args[5].ValueNumber
 	if redemption < 0 {
 		return MakeErrorResultType(ErrorTypeNum, "Yield should be non negative")
 	}
-	freqResult := args[6]
-	if freqResult.Type != ResultTypeNumber {
+	if args[6].Type != ResultTypeNumber {
 		return MakeErrorResult("ODDLYIELD requires frequency of type number")
 	}
-	freq := float64(int(freqResult.ValueNumber))
+	freq := float64(int(args[6].ValueNumber))
 	if !checkFreq(freq) {
 		return MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
 	}
 	basis := 0
 	if len(args) == 8 {
-		basisResult := args[7]
-		if basisResult.Type != ResultTypeNumber {
+		if args[7].Type != ResultTypeNumber {
 			return MakeErrorResult("ODDLYIELD requires basis of type number")
 		}
-		basis = int(basisResult.ValueNumber)
+		basis = int(args[7].ValueNumber)
 		if !checkBasis(basis) {
 			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis value for ODDLYIELD")
 		}
@@ -1701,7 +1694,7 @@ func Oddlyield(args []Result) Result {
 // Pduration implements the Excel PDURATION function.
 func Pduration(args []Result) Result {
 	if len(args) != 3 {
-		return MakeErrorResult("PDURATION requires three number arguments")
+		return MakeErrorResult("PDURATION requires three arguments")
 	}
 	if args[0].Type != ResultTypeNumber {
 		return MakeErrorResult("PDURATION requires rate to be number argument")
@@ -1783,14 +1776,14 @@ func Pmt(args []Result) Result {
 func Ppmt(args []Result) Result {
 	argsNum := len(args)
 	if argsNum < 4 || argsNum > 6 {
-		return MakeErrorResult("PPMT requires number of arguments in range of 3 and 5")
+		return MakeErrorResult("PPMT requires number of arguments in range of four and six")
 	}
 	if args[0].Type != ResultTypeNumber {
 		return MakeErrorResult("PPMT requires rate to be number argument")
 	}
 	rate := args[0].ValueNumber
 	if args[1].Type != ResultTypeNumber {
-		return MakeErrorResult("PPMT requires number of periods to be number argument")
+		return MakeErrorResult("PPMT requires period to be number argument")
 	}
 	period := args[1].ValueNumber
 	if period <= 0 {
@@ -1860,7 +1853,7 @@ func Price(args []Result) Result {
 	}
 	freqResult := args[5]
 	if freqResult.Type != ResultTypeNumber {
-		return MakeErrorResult("PRICE requires fifth argument of type number")
+		return MakeErrorResult("PRICE requires frequency of type number")
 	}
 	freqF := freqResult.ValueNumber
 	if !checkFreq(freqF) {
@@ -1939,7 +1932,7 @@ func Pricedisc(args []Result) Result {
 func Pricemat(args []Result) Result {
 	argsNum := len(args)
 	if argsNum != 5 && argsNum != 6 {
-		return MakeErrorResult("PRICEMAT requires four or five arguments")
+		return MakeErrorResult("PRICEMAT requires five or six arguments")
 	}
 	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "PRICEMAT")
 	if errResult.Type == ResultTypeError {
@@ -2044,7 +2037,7 @@ func Pv(args []Result) Result {
 func Rate(args []Result) Result {
 	argsNum := len(args)
 	if argsNum < 3 || argsNum > 6 {
-		return MakeErrorResult("RATE requires number of arguments in range of 3 and 5")
+		return MakeErrorResult("RATE requires number of arguments in range of three and six")
 	}
 	if args[0].Type != ResultTypeNumber {
 		return MakeErrorResult("RATE requires number of periods to be number argument")
@@ -2156,29 +2149,53 @@ func Received(args []Result) Result {
 // Rri implements the Excel RRI function.
 func Rri(args []Result) Result {
 	if len(args) != 3 {
-		return MakeErrorResult("RRI requires six arguments")
+		return MakeErrorResult("RRI requires three arguments")
 	}
 	if args[0].Type != ResultTypeNumber {
 		return MakeErrorResult("RRI requires number of periods to be number argument")
 	}
 	nPer := args[0].ValueNumber
 	if nPer <= 0 {
-		return MakeErrorResultType(ErrorTypeNum, "RRI requires number of periods to be positive number argument")
+		return MakeErrorResultType(ErrorTypeNum, "RRI requires number of periods to be positive")
 	}
 	if args[1].Type != ResultTypeNumber {
 		return MakeErrorResult("RRI requires present value to be number argument")
 	}
 	presentValue := args[1].ValueNumber
 	if presentValue <= 0 {
-		return MakeErrorResultType(ErrorTypeNum, "RRI requires present value to be positive number argument")
+		return MakeErrorResultType(ErrorTypeNum, "RRI requires present value to be positive")
 	}
 	if args[2].Type != ResultTypeNumber {
 		return MakeErrorResult("RRI requires future value to be number argument")
 	}
 	futureValue := args[2].ValueNumber
 	if futureValue < 0 {
-		return MakeErrorResultType(ErrorTypeNum, "RRI requires future value to be non negative number argument")
+		return MakeErrorResultType(ErrorTypeNum, "RRI requires future value to be non negative")
 	}
 
 	return MakeNumberResult(math.Pow(futureValue / presentValue, 1 / nPer) - 1)
+}
+
+// Sln implements the Excel SLN function.
+func Sln(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("SLN requires three arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("SLN requires cost to be number argument")
+	}
+	cost := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("SLN requires salvage to be number argument")
+	}
+	salvage := args[1].ValueNumber
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("SLN requires life to be number argument")
+	}
+	life := args[2].ValueNumber
+	if life == 0 {
+		return MakeErrorResultType(ErrorTypeDivideByZero, "SLN requires life to be non zero")
+	}
+
+	return MakeNumberResult((cost - salvage ) / life)
 }

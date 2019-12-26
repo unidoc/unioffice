@@ -2484,3 +2484,18 @@ func TestPricemat(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestSln(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=SLN(30000,7500,10)`, `2250 ResultTypeNumber`},
+		{`=SLN(30000,7500,0)`, `#DIV/0! ResultTypeError`},
+		{`=SLN("hello world",7500,10)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
