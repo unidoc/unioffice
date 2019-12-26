@@ -2499,3 +2499,21 @@ func TestSln(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestSyd(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=SYD(30000,7500,10,1)`, `4090.9090909 ResultTypeNumber`},
+		{`=SYD(30000,7500,10,10)`, `409.09090909 ResultTypeNumber`},
+		{`=SYD(30000,7500,10,11)`, `#NUM! ResultTypeError`},
+		{`=SYD(30000,7500,0,0)`, `#NUM! ResultTypeError`},
+		{`=SYD(30000,7500,10,0)`, `#NUM! ResultTypeError`},
+		{`=SLN("hello world",7500,10,1)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}

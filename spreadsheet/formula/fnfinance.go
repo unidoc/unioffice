@@ -59,6 +59,7 @@ func init() {
 	RegisterFunction("RRI", Rri)
 	RegisterFunction("_xlfn.RRI", Rri)
 	RegisterFunction("SLN", Sln)
+	RegisterFunction("SYD", Syd)
 }
 
 func getSettlementMaturity(settlementResult, maturityResult Result, funcName string) (float64, float64, Result) {
@@ -2198,4 +2199,41 @@ func Sln(args []Result) Result {
 	}
 
 	return MakeNumberResult((cost - salvage ) / life)
+}
+
+// Syd implements the Excel SYD function.
+func Syd(args []Result) Result {
+	if len(args) != 4 {
+		return MakeErrorResult("SYD requires three arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("SYD requires cost to be number argument")
+	}
+	cost := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("SYD requires salvage to be number argument")
+	}
+	salvage := args[1].ValueNumber
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("SYD requires life to be number argument")
+	}
+	life := args[2].ValueNumber
+	if life <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "SYD requires life to be positive")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("SYD requires period to be number argument")
+	}
+	per := args[3].ValueNumber
+	if per <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "SYD requires period to be positive")
+	}
+	if per > life {
+		return MakeErrorResultType(ErrorTypeNum, "SYD requires period to be equal or less than life")
+	}
+
+	num := (cost - salvage) * (life - per + 1) * 2
+	den := life * (life + 1)
+
+	return MakeNumberResult(num / den)
 }
