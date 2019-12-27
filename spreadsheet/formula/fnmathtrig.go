@@ -1022,7 +1022,7 @@ func multinomial(args []Result) (float64, float64, Result) {
 			return 0, 0, arg
 		}
 	}
-	return num, denom, MakeEmptyResult()
+	return num, denom, empty
 }
 
 // Multinomial implements the excel MULTINOMIAL function.

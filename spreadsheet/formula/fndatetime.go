@@ -31,7 +31,7 @@ func init() {
 	RegisterFunction("TIMEVALUE", TimeValue)
 	RegisterFunction("TODAY", Today)
 	RegisterFunctionComplex("YEAR", Year)
-	RegisterFunctionComplex("YEARFRAC", YearFrac)
+	RegisterFunction("YEARFRAC", YearFrac)
 }
 
 var date1900 int64 = makeDateS(1900, time.January, 1)
@@ -106,6 +106,8 @@ func initRegexpTime() {
 		regexp.MustCompile(`^` + tfhhmmss + `$`),
 	}
 }
+
+var empty Result = MakeEmptyResult()
 
 // Day is an implementation of the Excel DAY() function.
 func Day(args []Result) Result {
@@ -406,7 +408,7 @@ func dateValue(dateString string) (int, int, int, bool, Result) {
 	if !validateDate(year, month, day) {
 		return 0, 0, 0, false, MakeErrorResultType(ErrorTypeValue, dvErrMsg)
 	}
-	return year, month, day, timeIsEmpty, MakeEmptyResult()
+	return year, month, day, timeIsEmpty, empty
 }
 
 func validateDate(year, month, day int) bool {
@@ -743,7 +745,7 @@ func timeValue(timeString string) (int, int, float64, bool, bool, Result) {
 	} else if hours >= 24 || seconds >= 10000 {
 		return 0, 0, 0, false, false, MakeErrorResultType(ErrorTypeValue, tvErrMsg)
 	}
-	return hours, minutes, seconds, pm, dateIsEmpty, MakeEmptyResult()
+	return hours, minutes, seconds, pm, dateIsEmpty, empty
 }
 
 // Year is an implementation of the Excel YEAR() function.
@@ -760,73 +762,104 @@ func Year(ctx Context, ev Evaluator, args []Result) Result {
 }
 
 // YearFrac is an implementation of the Excel YEARFRAC() function.
-func YearFrac(ctx Context, ev Evaluator, args []Result) Result {
+func YearFrac(args []Result) Result {
 	argsNum := len(args)
 	if (argsNum != 2 && argsNum != 3) || args[0].Type != ResultTypeNumber || args[1].Type != ResultTypeNumber {
 		return MakeErrorResult("YEARFRAC requires two or three number arguments")
 	}
 
 	basis := 0
-	if argsNum == 3 {
+	if argsNum == 3 && args[2].Type != ResultTypeEmpty {
 		if args[2].Type != ResultTypeNumber {
 			return MakeErrorResult("YEARFRAC requires two or three number arguments")
 		}
 		basis = int(args[2].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for YEARFRAC")
+		}
 	}
 
-	epoch := ctx.GetEpoch()
-	startDate, err := getValueAsTime(args[0].Value(), epoch)
-	if err != nil {
-		return MakeErrorResult("incorrect start date")
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("YEARFRAC requires start date to be number argument")
 	}
-	endDate, err := getValueAsTime(args[1].Value(), epoch)
-	if err != nil {
-		return MakeErrorResult("incorrect end date")
+	startDate := args[0].ValueNumber
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("YEARFRAC requires end date to be number argument")
 	}
-	return yearFracFromTime(startDate, endDate, basis)
+	endDate := args[1].ValueNumber
+	yf, errResult := yearFrac(startDate, endDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	return MakeNumberResult(yf)
 }
 
-func yearFrac(startDate, endDate float64, basis int) Result {
-	return yearFracFromTime(dateFromDays(startDate), dateFromDays(endDate), basis)
-}
-
-func yearFracFromTime(startDate, endDate time.Time, basis int) Result {
+// yearFrac returns float64 fraction of the year and Result value which can be of ResultTypeError type if an error occurs or ResultTypeEmpty if doesn't.
+func yearFrac(startDateF, endDateF float64, basis int) (float64, Result) {
+	startDate, endDate := dateFromDays(startDateF), dateFromDays(endDateF)
 	startDateS := startDate.Unix()
 	endDateS := endDate.Unix()
-	sy, sm, sd := startDate.Date()
-	ey, em, ed := endDate.Date()
-
+	if startDateS == endDateS {
+		return 0, empty
+	}
+	sy, smM, sd := startDate.Date()
+	ey, emM, ed := endDate.Date()
+	sm, em := int(smM), int(emM)
+	var dayDiff, daysInYear float64
 	switch basis {
 	case 0:
-		if sd == 31 && ed == 31 {
-			sd = 30
-			ed = 30
-		} else if sd == 31 {
-			sd = 30
-		} else if sd == 30 && ed == 31 {
-			ed = 30
+		if sd == 31 {
+			sd--
 		}
-		return MakeNumberResult(float64(((ed + int(em) * 30 + ey * 360) - (sd + int(sm) * 30 + sy * 360))) / 360)
-	case 1:
-		var ylength = 365.0
-		if (sy == ey || ((sy + 1) == ey) && ((sm > em) || ((sm == em) && (sd >= ed)))) {
-			if ((sy == ey && isLeapYear(sy)) || feb29Between(startDate, endDate) || (em == 1 && ed == 29)) {
-				ylength = 366.0
+		if sd == 30 && ed == 31 {
+			ed--
+		} else if leap := isLeapYear(sy); sm == 2 && ((leap && sd == 29) || (!leap && sd == 28)) {
+			sd = 30
+			if leap := isLeapYear(ey); em == 2 && ((leap && ed == 29) || (!leap && ed == 28)) {
+				ed = 30
 			}
-			return MakeNumberResult(daysBetween(startDateS, endDateS) / ylength)
 		}
-		var years = float64((ey - sy) + 1)
-		var days = float64((makeDateS(ey + 1, time.January, 1) - makeDateS(sy, time.January, 1)) / 86400)
-		var average = days / years
-		return MakeNumberResult(daysBetween(startDateS, endDateS) / average)
+		dayDiff = float64((ey - sy) * 360 + (em - sm) * 30 + (ed - sd))
+		daysInYear = 360
+	case 1:
+		dayDiff = endDateF - startDateF
+		isYearDifferent := sy != ey
+		if isYearDifferent && (ey != sy + 1 || sm < em || (sm == em && sd < ed)) {
+			dayCount := 0
+			for y := sy; y <= ey; y++ {
+				dayCount += getDaysInYear(y, 1)
+			}
+			daysInYear = float64(dayCount) / float64(ey - sy + 1)
+		} else {
+			if !isYearDifferent && isLeapYear(sy) {
+				daysInYear = 366
+			} else {
+				if isYearDifferent && ((isLeapYear(sy) && (sm < 2 || (sm == 2 && sd <= 29))) || (isLeapYear(ey) && (em > 2 || (em == 2 && ed == 29)))) {
+					daysInYear = 366
+				} else {
+					daysInYear = 365
+				}
+			}
+		}
 	case 2:
-		return MakeNumberResult(daysBetween(startDateS, endDateS) / 360.0)
+		dayDiff = endDateF - startDateF
+		daysInYear = 360
 	case 3:
-		return MakeNumberResult(daysBetween(startDateS, endDateS) / 365.0)
-	case 4:
-		return MakeNumberResult(float64(((ed + int(em) * 30 + ey * 360) - (sd + int(sm) * 30 + sy * 360))) / 360.0)
+		dayDiff = endDateF - startDateF
+		daysInYear = 365
+        case 4:
+		if sd == 31 {
+			sd--
+		}
+		if ed == 31 {
+			ed--
+		}
+		dayDiff = float64((ey - sy) * 360 + (em - sm) * 30 + (ed - sd))
+		daysInYear = 360
+	default:
+		return 0, MakeErrorResultType(ErrorTypeNum, "Incorrect basis for YearFrac")
 	}
-	return MakeErrorResultType(ErrorTypeValue, "")
+	return dayDiff / daysInYear, empty
 }
 
 func getDaysInYear(year, basis int) int {
@@ -978,4 +1011,24 @@ func getDaysInYearRange(from, to, basis int) int {
 
 func basis30(basis int) bool {
 	return basis == 0 || basis == 4
+}
+
+func parseDate(arg Result, dateName, funcName string) (float64, Result) {
+	var date float64
+	switch arg.Type {
+	case ResultTypeNumber:
+		date = float64(int(arg.ValueNumber))
+	case ResultTypeString:
+		dateFromString := DateValue([]Result{arg})
+		if dateFromString.Type == ResultTypeError {
+			return 0, MakeErrorResult("Incorrect " + dateName + " date for " + funcName)
+		}
+		date = dateFromString.ValueNumber
+	default:
+		return 0, MakeErrorResult("Incorrect argument for " + funcName)
+	}
+	if date < 0 {
+		return 0, MakeErrorResultType(ErrorTypeNum, dateName + " should be non negative")
+	}
+	return date, empty
 }
