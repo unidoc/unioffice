@@ -63,6 +63,7 @@ func init() {
 	RegisterFunction("TBILLEQ", Tbilleq)
 	RegisterFunction("TBILLPRICE", Tbillprice)
 	RegisterFunction("TBILLYIELD", Tbillyield)
+	RegisterFunction("VDB", Vdb)
 }
 
 func getSettlementMaturity(settlementResult, maturityResult Result, funcName string) (float64, float64, Result) {
@@ -860,29 +861,7 @@ func Ddb(args []Result) Result {
 		}
 	}
 
-	oldValue := 0.0
-	rate := factor / life
-	if rate >= 1 {
-		rate = 1
-		if period == 1 {
-			oldValue = cost
-		}
-	} else {
-		oldValue = cost * math.Pow(1 - rate, period - 1)
-	}
-	newValue := cost * math.Pow(1 - rate, period)
-
-	var ddb float64
-
-	if newValue < salvage {
-		ddb = oldValue - salvage
-	} else {
-		ddb = oldValue - newValue
-	}
-	if ddb < 0 {
-		ddb = 0
-	}
-	return MakeNumberResult(ddb)
+	return MakeNumberResult(getDDB(cost, salvage, life, period, factor))
 }
 
 // Disc implements the Excel DISC function.
@@ -2310,4 +2289,171 @@ func Tbillyield(args []Result) Result {
 	m1 := (100 - pr) / pr
 	m2 := 360 /dsm
 	return MakeNumberResult(m1 * m2)
+}
+
+// Vdb implements the Excel VDB function.
+func Vdb(args []Result) Result {
+	argsNum := len(args)
+	if argsNum < 5 || argsNum > 7 {
+		return MakeErrorResult("VDB requires number of arguments to be in range between five and seven")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("VDB requires cost to be number argument")
+	}
+	cost := args[0].ValueNumber
+	if cost < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "VDB requires cost to be non negative")
+	}
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("VDB requires salvage to be number argument")
+	}
+	salvage := args[1].ValueNumber
+	if salvage < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "VDB requires salvage to be non negative")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("VDB requires life to be number argument")
+	}
+	life := args[2].ValueNumber
+	if life == 0 {
+		return MakeErrorResultType(ErrorTypeDivideByZero, "VDB requires life to be positive")
+	}
+	if life < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "VDB requires life to be positive")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("VDB requires start period to be number argument")
+	}
+	startPeriod := args[3].ValueNumber
+	if startPeriod < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "VDB requires start period to be not less than one")
+	}
+	if args[4].Type != ResultTypeNumber {
+		return MakeErrorResult("VDB requires end period to be number argument")
+	}
+	endPeriod := args[4].ValueNumber
+	if startPeriod > endPeriod {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect start period for VDB")
+	}
+	if endPeriod > life {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect end period for VDB")
+	}
+	factor := 2.0
+	if argsNum > 5 {
+		if args[5].Type == ResultTypeEmpty {
+			factor = 0.0
+		} else {
+			if args[5].Type != ResultTypeNumber {
+				return MakeErrorResult("VDB requires factor to be number argument")
+			}
+			factor = args[5].ValueNumber
+			if factor < 0 {
+				return MakeErrorResultType(ErrorTypeNum, "VDB requires factor to be non negative")
+			}
+		}
+	}
+	noSwitch := false
+	if argsNum > 6 && args[6].Type != ResultTypeEmpty {
+		if args[6].Type != ResultTypeNumber {
+			return MakeErrorResult("VDB requires no_switch to be number argument")
+		}
+		noSwitch = args[6].ValueNumber != 0
+	}
+
+	vdb := 0.0
+	startInt := math.Floor(startPeriod)
+	endInt := math.Ceil(endPeriod)
+
+	if noSwitch {
+		for i := startInt + 1; i <= endInt; i++ {
+			term := getDDB(cost, salvage, life, i, factor)
+			if i == startInt + 1 {
+				term *= math.Min(endPeriod, startInt + 1) - startPeriod
+			} else if i == endInt {
+				term *= endPeriod + 1 - endInt
+			}
+			vdb += term
+		}
+	} else {
+		life1 := life
+		var part float64
+		if !approxEqual(startPeriod, math.Floor(startPeriod)) {
+			if factor == 1 {
+				l2 := life / 2
+				if startPeriod > l2 || approxEqual(startPeriod, l2) {
+					part = startPeriod - l2
+					startPeriod = l2
+					endPeriod -= part
+					life1++
+				}
+			}
+		}
+		if factor != 0 {
+			cost -= interVDB(cost, salvage, life, life1, startPeriod, factor)
+		}
+		vdb = interVDB(cost, salvage, life, life - startPeriod, endPeriod - startPeriod, factor)
+	}
+	return MakeNumberResult(vdb)
+}
+
+func interVDB(cost, salvage, life, life1, period, factor float64) float64 {
+	var ddb, term float64
+	vdb := 0.0
+	endInt := math.Ceil(period)
+	cs := cost - salvage
+	nowSln := false
+	sln := 0.0
+
+	for i := 1.0; i <= endInt; i++ {
+		if !nowSln {
+			ddb = getDDB(cost, salvage, life, i, factor)
+			sln = cs / (life - i + 1)
+			if sln > ddb {
+				term = sln
+				nowSln = true
+			} else {
+				term = ddb
+				cs -= ddb
+			}
+		} else {
+			term = sln
+		}
+		if i == endInt {
+			term *= period + 1 - endInt
+		}
+		vdb += term
+	}
+	return vdb
+}
+
+func getDDB(cost, salvage, life, period, factor float64) float64 {
+	var oldValue float64
+	rate := factor / life
+	if rate >= 1 {
+		rate = 1
+		if period == 1 {
+			oldValue = cost
+		} else {
+			oldValue = 0
+		}
+	} else {
+		oldValue = cost * math.Pow(1 - rate, period - 1)
+	}
+	newValue := cost * math.Pow(1 - rate, period)
+
+	var ddb float64
+
+	if newValue < salvage {
+		ddb = oldValue - salvage
+	} else {
+		ddb = oldValue - newValue
+	}
+	if ddb < 0 {
+		ddb = 0
+	}
+	return ddb
+}
+
+func approxEqual(a, b float64) bool {
+	return math.Abs(a - b) < 1.0e-6
 }

@@ -2583,3 +2583,29 @@ func TestTbillyield(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestVdb(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(2400)
+	sheet.Cell("A2").SetNumber(300)
+	sheet.Cell("A3").SetNumber(10)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=VDB(A1,A2,A3*365,0,1)`, `1.31506849315 ResultTypeNumber`},
+		{`=VDB(A1,A2,A3*12,0,1)`, `40 ResultTypeNumber`},
+		{`=VDB(A1,A2,A3,0,1)`, `480 ResultTypeNumber`},
+		{`=VDB(A1,A2,A3*12,6,18)`, `396.306053264 ResultTypeNumber`},
+		{`=VDB(A1,A2,A3*12,6,18,)`, `210 ResultTypeNumber`},
+		{`=VDB(A1,A2,A3*12,6,18,,1)`, `0 ResultTypeNumber`},
+		{`=VDB(A1,A2,A3*12,6,18,1.5)`, `311.808936658 ResultTypeNumber`},
+		{`=VDB(A1,A2,A3,0,0.875,1.5)`, `315 ResultTypeNumber`},
+		{`=VDB(A1,A2,A3,0,0.875,,)`, `183.75 ResultTypeNumber`},
+		{`=VDB(A1,A2,A3,0,0.875,,1)`, `0 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
