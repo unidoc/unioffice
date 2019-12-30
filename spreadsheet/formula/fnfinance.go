@@ -65,6 +65,7 @@ func init() {
 	RegisterFunction("TBILLYIELD", Tbillyield)
 	RegisterFunction("VDB", Vdb)
 	RegisterFunction("XIRR", Xirr)
+	RegisterFunction("XNPV", Xnpv)
 	RegisterFunction("YIELDDISC", Yielddisc)
 }
 
@@ -2517,45 +2518,12 @@ func Xirr(args []Result) Result {
 	if argsNum != 2 && argsNum != 3 {
 		return MakeErrorResult("XIRR requires two or three arguments")
 	}
-	if args[0].Type != ResultTypeList && args[0].Type != ResultTypeArray {
-		return MakeErrorResult("XIRR requires values to be of array type")
+	xStruct, errResult := getXargs(args[0], args[1], "XIRR")
+	if errResult.Type == ResultTypeError {
+		return errResult
 	}
-	valuesR := arrayFromRange(args[0])
-	values := []float64{}
-	for _, row := range valuesR {
-		for _, vR := range row {
-			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
-				values = append(values, vR.ValueNumber)
-			}
-		}
-	}
-	vlen := len(values)
-	if len(values) < 2 {
-		return MakeErrorResultType(ErrorTypeNum, "")
-	}
-	if args[1].Type != ResultTypeList && args[1].Type != ResultTypeArray {
-		return MakeErrorResult("XIRR requires dates to be of array type")
-	}
-	datesR := arrayFromRange(args[1])
-	dates := []float64{}
-	lastDate := 0.0
-	for _, row := range datesR {
-		for _, vR := range row {
-			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
-				newDate := vR.ValueNumber
-				if newDate < lastDate {
-					return MakeErrorResultType(ErrorTypeNum, "XIRR requires dates to be in ascending order")
-				}
-				dates = append(dates, newDate)
-				lastDate = newDate
-			} else {
-				return MakeErrorResult("Incorrect date format")
-			}
-		}
-	}
-	if len(dates) != vlen {
-		return MakeErrorResultType(ErrorTypeNum, "")
-	}
+	values := xStruct.values
+	dates := xStruct.dates
 	guess := 0.1
 	if argsNum == 3 && args[2].Type != ResultTypeEmpty {
 		if args[2].Type != ResultTypeNumber {
@@ -2567,4 +2535,78 @@ func Xirr(args []Result) Result {
 		}
 	}
 	return irr(values, dates, guess)
+}
+
+// Xnpv implements the Excel XNPV function.
+func Xnpv(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("XNPV requires three arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("XNPV requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if rate <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "XNPV requires rate to be positive")
+	}
+	xStruct, errResult := getXargs(args[1], args[2], "XIRR")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	values := xStruct.values
+	dates := xStruct.dates
+	xnpv := 0.0
+	firstDate := dates[0]
+	for i, value := range values {
+		xnpv += value / math.Pow(1 + rate, (dates[i] - firstDate) / 365)
+	}
+	return MakeNumberResult(xnpv)
+}
+
+type xargs struct {
+	values []float64
+	dates []float64
+}
+
+func getXargs(valuesR, datesR Result, funcName string) (*xargs, Result) {
+	if valuesR.Type != ResultTypeList && valuesR.Type != ResultTypeArray {
+		return nil, MakeErrorResult(funcName + " requires values to be of array type")
+	}
+	valuesArr := arrayFromRange(valuesR)
+	values := []float64{}
+	for _, row := range valuesArr {
+		for _, vR := range row {
+			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
+				values = append(values, vR.ValueNumber)
+			}
+		}
+	}
+	vlen := len(values)
+	if len(values) < 2 {
+		return nil, MakeErrorResultType(ErrorTypeNum, "")
+	}
+	if datesR.Type != ResultTypeList && datesR.Type != ResultTypeArray {
+		return nil, MakeErrorResult(funcName + " requires dates to be of array type")
+	}
+	datesArr := arrayFromRange(datesR)
+	dates := []float64{}
+	lastDate := 0.0
+	for _, row := range datesArr {
+		for _, vR := range row {
+			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
+				newDate := float64(int(vR.ValueNumber))
+				if newDate < lastDate {
+					return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires dates to be in ascending order")
+				}
+				dates = append(dates, newDate)
+				lastDate = newDate
+			} else {
+				return nil, MakeErrorResult("Incorrect date format")
+			}
+		}
+	}
+	if len(dates) != vlen {
+		return nil, MakeErrorResultType(ErrorTypeNum, "")
+	}
+	return &xargs{values, dates}, MakeEmptyResult()
 }

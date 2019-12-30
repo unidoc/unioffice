@@ -2657,3 +2657,29 @@ func TestXirr(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestXnpv(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(-10000)
+	sheet.Cell("A2").SetNumber(2750)
+	sheet.Cell("A3").SetNumber(4250)
+	sheet.Cell("A4").SetNumber(3250)
+	sheet.Cell("A5").SetNumber(2750)
+	sheet.Cell("B1").SetDate(time.Date(2008, 1, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B2").SetDate(time.Date(2008, 3, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B3").SetDate(time.Date(2008, 10, 30, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B4").SetDate(time.Date(2009, 2, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B5").SetDate(time.Date(2009, 4, 1, 0, 0, 0, 0, time.UTC))
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=XNPV(0.09,A1:A5,B1:B5)`, `2086.64760203 ResultTypeNumber`},
+		{`=XNPV(-0.01,A1:A5,B1:B5)`, `#NUM! ResultTypeError`},
+		{`=XNPV("hello world",A1:A5,B1:B5)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
