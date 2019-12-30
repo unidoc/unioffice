@@ -102,6 +102,7 @@ func Coupdaybs(args []Result) Result {
 	return MakeNumberResult(coupdaybs(parsedArgs.settlementDate, parsedArgs.maturityDate, parsedArgs.freq, parsedArgs.basis))
 }
 
+// coupdaybs returns the number of days from the beginning of the coupon period to the settlement date.
 func coupdaybs(settlementDateF, maturityDateF float64, freq, basis int) float64 {
 	settlementDate := dateFromDays(settlementDateF)
 	maturityDate := dateFromDays(maturityDateF)
@@ -118,6 +119,7 @@ func Coupdays(args []Result) Result {
 	return MakeNumberResult(coupdays(parsedArgs.settlementDate, parsedArgs.maturityDate, parsedArgs.freq, parsedArgs.basis))
 }
 
+// coupdays returns the number of days in the coupon period that contains the settlement date.
 func coupdays(settlementDateF, maturityDateF float64, freq, basis int) float64 {
 	settlementDate := dateFromDays(settlementDateF)
 	maturityDate := dateFromDays(maturityDateF)
@@ -138,6 +140,7 @@ func Coupdaysnc(args []Result) Result {
 	return MakeNumberResult(coupdaysnc(parsedArgs.settlementDate, parsedArgs.maturityDate, parsedArgs.freq, parsedArgs.basis))
 }
 
+// coupdaysnc returns the number of days from the settlement date to the next coupon date.
 func coupdaysnc(settlementDateF, maturityDateF float64, freq, basis int) float64 {
 	settlementDate := dateFromDays(settlementDateF)
 	maturityDate := dateFromDays(maturityDateF)
@@ -189,6 +192,7 @@ func Coupncd(args []Result) Result {
 	return MakeNumberResult(daysFromDate(y, int(m), d))
 }
 
+// coupncd finds next coupon date after settlement.
 func coupncd(settlementDate, maturityDate time.Time, freq int) time.Time {
 	ncd := time.Date(settlementDate.Year(), maturityDate.Month(), maturityDate.Day(), 0, 0, 0, 0, time.UTC)
 	if ncd.After(settlementDate) {
@@ -1255,7 +1259,7 @@ func Irr(args []Result) Result {
 	return irr(values, dates, guess)
 }
 
-//irr is used to calculate results for Irr and Xirr as method is the same
+// irr is used to calculate results for Irr and Xirr as method is the same
 func irr(values, dates []float64, guess float64) Result {
 
 	positive := false
@@ -1974,23 +1978,23 @@ func Pricemat(args []Result) Result {
 			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for PRICEMAT")
 		}
 	}
-	dsmyf, errResult := yearFrac(settlementDate, maturityDate, basis)
+	dsm, errResult := yearFrac(settlementDate, maturityDate, basis)
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
-	dimyf, errResult := yearFrac(issueDate, maturityDate, basis)
+	dim, errResult := yearFrac(issueDate, maturityDate, basis)
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
-	ayf, errResult := yearFrac(issueDate, settlementDate, basis)
+	dis, errResult := yearFrac(issueDate, settlementDate, basis)
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
 
-	num := 1 + dimyf * rate
-	den := 1 + dsmyf * yield
+	num := 1 + dim * rate
+	den := 1 + dsm * yield
 
-	return MakeNumberResult((num / den - ayf * rate) * 100)
+	return MakeNumberResult((num / den - dis * rate) * 100)
 }
 
 // Pv implements the Excel PV function.
@@ -2559,7 +2563,7 @@ func Xnpv(args []Result) Result {
 	if rate <= 0 {
 		return MakeErrorResultType(ErrorTypeNum, "XNPV requires rate to be positive")
 	}
-	xStruct, errResult := getXargs(args[1], args[2], "XIRR")
+	xStruct, errResult := getXargs(args[1], args[2], "XNPV")
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
@@ -2588,6 +2592,8 @@ func getXargs(valuesR, datesR Result, funcName string) (*xargs, Result) {
 		for _, vR := range row {
 			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
 				values = append(values, vR.ValueNumber)
+			} else {
+				return nil, MakeErrorResult(funcName + "requires values to be numbers")
 			}
 		}
 	}
@@ -2611,7 +2617,7 @@ func getXargs(valuesR, datesR Result, funcName string) (*xargs, Result) {
 				dates = append(dates, newDate)
 				lastDate = newDate
 			} else {
-				return nil, MakeErrorResult("Incorrect date format")
+				return nil, MakeErrorResult(funcName + "requires dates to be numbers")
 			}
 		}
 	}
@@ -2777,9 +2783,9 @@ func Yieldmat(args []Result) Result {
 	}
 
 	y := 1 + dim * rate
-	y *= math.Pow(pr / 100 + dis * rate, -1)
+	y /= pr / 100 + dis * rate
 	y--
-	y *= math.Pow(dsm, -1)
+	y /= dsm
 
 	return MakeNumberResult(y)
 }

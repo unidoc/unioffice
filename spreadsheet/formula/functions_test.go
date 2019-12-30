@@ -2622,6 +2622,8 @@ func TestYielddisc(t *testing.T) {
 	ctx := sheet.FormulaContext()
 
 	td := []testStruct{
+		{`=YIELDDISC(A1,A2,A3,A4)`, `0.04930106718 ResultTypeNumber`},
+		{`=YIELDDISC(A1,A2,A3,A4,)`, `0.04930106718 ResultTypeNumber`},
 		{`=YIELDDISC(A1,A2,A3,A4,0)`, `0.04930106718 ResultTypeNumber`},
 		{`=YIELDDISC(A1,A2,A3,A4,1)`, `0.05370294818 ResultTypeNumber`},
 		{`=YIELDDISC(A1,A2,A3,A4,2)`, `0.05282257198 ResultTypeNumber`},
