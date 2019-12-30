@@ -66,6 +66,7 @@ func init() {
 	RegisterFunction("VDB", Vdb)
 	RegisterFunction("XIRR", Xirr)
 	RegisterFunction("XNPV", Xnpv)
+	RegisterFunction("YIELD", Yield)
 	RegisterFunction("YIELDDISC", Yielddisc)
 }
 
@@ -1573,7 +1574,7 @@ func Oddlprice(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
 	}
 	basis := 0
-	if len(args) == 8 {
+	if len(args) == 8  && args[7].Type != ResultTypeEmpty {
 		basisResult := args[7]
 		if basisResult.Type != ResultTypeNumber {
 			return MakeErrorResult("ODDLPRICE requires basis of type number")
@@ -1652,7 +1653,7 @@ func Oddlyield(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
 	}
 	basis := 0
-	if len(args) == 8 {
+	if len(args) == 8 && args[7].Type != ResultTypeEmpty {
 		if args[7].Type != ResultTypeNumber {
 			return MakeErrorResult("ODDLYIELD requires basis of type number")
 		}
@@ -1850,13 +1851,12 @@ func Price(args []Result) Result {
 	if freqResult.Type != ResultTypeNumber {
 		return MakeErrorResult("PRICE requires frequency of type number")
 	}
-	freqF := freqResult.ValueNumber
-	if !checkFreq(freqF) {
+	freq := freqResult.ValueNumber
+	if !checkFreq(freq) {
 		return MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
 	}
-	freq := int(freqF)
 	basis := 0
-	if argsNum == 7 {
+	if argsNum == 7 && args[6].Type != ResultTypeEmpty {
 		if args[6].Type != ResultTypeNumber {
 			return MakeErrorResult("PRICE requires basis to be number argument")
 		}
@@ -1865,11 +1865,20 @@ func Price(args []Result) Result {
 			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for PRICE")
 		}
 	}
+	price, errResult := getPrice(settlementDate, maturityDate, rate, yield, redemption, freq, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	return MakeNumberResult(price)
+}
+
+func getPrice(settlementDate, maturityDate, rate, yield, redemption, freqF float64, basis int) (float64, Result) {
+	freq := int(freqF)
 	e := coupdays(settlementDate, maturityDate, freq, basis)
 	dsc := coupdaysnc(settlementDate, maturityDate, freq, basis) / e
 	n, errResult := coupnum(settlementDate, maturityDate, freq, basis)
 	if errResult.Type == ResultTypeError {
-		return errResult
+		return 0, errResult
 	}
 	a := coupdaybs(settlementDate, maturityDate, freq, basis)
 	ret := redemption / math.Pow(1 + yield / freqF, n - 1 + dsc)
@@ -1879,7 +1888,7 @@ func Price(args []Result) Result {
 	for k := 0.0; k < n; k++ {
 		ret += t1 / math.Pow(t2, k + dsc)
 	}
-	return MakeNumberResult(ret)
+	return ret, MakeEmptyResult()
 }
 
 // Pricedisc implements the Excel PRICEDISC function.
@@ -1955,7 +1964,7 @@ func Pricemat(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "PRICEMAT requires yield to be non negative")
 	}
 	basis := 0
-	if argsNum == 6 {
+	if argsNum == 6 && args[5].Type != ResultTypeEmpty {
 		if args[5].Type != ResultTypeNumber {
 			return MakeErrorResult("PRICEMAT requires basis to be number argument")
 		}
@@ -2198,7 +2207,7 @@ func Sln(args []Result) Result {
 // Syd implements the Excel SYD function.
 func Syd(args []Result) Result {
 	if len(args) != 4 {
-		return MakeErrorResult("SYD requires three arguments")
+		return MakeErrorResult("SYD requires four arguments")
 	}
 	if args[0].Type != ResultTypeNumber {
 		return MakeErrorResult("SYD requires cost to be number argument")
@@ -2609,4 +2618,105 @@ func getXargs(valuesR, datesR Result, funcName string) (*xargs, Result) {
 		return nil, MakeErrorResultType(ErrorTypeNum, "")
 	}
 	return &xargs{values, dates}, MakeEmptyResult()
+}
+
+// Yield implements the Excel YIELD function.
+func Yield(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 6 && argsNum != 7 {
+		return MakeErrorResult("YIELD requires six or seven arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "YIELD")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	rateResult := args[2]
+	if rateResult.Type != ResultTypeNumber {
+		return MakeErrorResult("YIELD requires rate of type number")
+	}
+	rate := rateResult.ValueNumber
+	if rate < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "Rate should be non negative")
+	}
+	prResult := args[3]
+	if prResult.Type != ResultTypeNumber {
+		return MakeErrorResult("YIELD requires pr of type number")
+	}
+	pr := prResult.ValueNumber
+	if pr <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "pr should be positive")
+	}
+	redemptionResult := args[4]
+	if redemptionResult.Type != ResultTypeNumber {
+		return MakeErrorResult("YIELD requires redemption of type number")
+	}
+	redemption := redemptionResult.ValueNumber
+	if redemption < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "Yield should be non negative")
+	}
+	freqResult := args[5]
+	if freqResult.Type != ResultTypeNumber {
+		return MakeErrorResult("YIELD requires frequency of type number")
+	}
+	freq := float64(int(freqResult.ValueNumber))
+	if !checkFreq(freq) {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
+	}
+	basis := 0
+	if argsNum == 7 && args[6].Type != ResultTypeEmpty {
+		basisResult := args[6]
+		if basisResult.Type != ResultTypeNumber {
+			return MakeErrorResult("YIELD requires basis of type number")
+		}
+		basis = int(basisResult.ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis value for YIELD")
+		}
+	}
+
+	priceN := 0.0
+	yield1 := 0.0
+	yield2 := 1.0
+	price1, errResult := getPrice(settlementDate, maturityDate, rate, yield1, redemption, freq, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	price2, errResult := getPrice(settlementDate, maturityDate, rate, yield2, redemption, freq, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+
+	yieldN := (yield2 - yield1) * 0.5
+
+	for iter := 0; iter < 100 && priceN != pr; iter++ {
+		priceN, errResult = getPrice(settlementDate, maturityDate, rate, yieldN, redemption, freq, basis)
+		if errResult.Type == ResultTypeError {
+			return errResult
+		}
+		if pr == price1 {
+			return MakeNumberResult(yield1)
+		} else if pr == price2 {
+			return MakeNumberResult(yield2)
+		} else if pr == priceN {
+			return MakeNumberResult(yieldN)
+		} else if pr < price2 {
+			yield2 *= 2.0
+			price2, errResult = getPrice(settlementDate, maturityDate, rate, yield2, redemption, freq, basis)
+			if errResult.Type == ResultTypeError {
+				return errResult
+			}
+			yieldN = (yield2 - yield1) * 0.5
+		} else {
+			if pr < priceN {
+				yield1 = yieldN
+				price1 = priceN
+			} else {
+				yield2 = yieldN
+				price2 = priceN
+			}
+			yieldN = yield2 - (yield2 - yield1) * ((pr - price2) / (price1 - price2))
+		}
+	}
+
+	return MakeNumberResult(yieldN)
 }
