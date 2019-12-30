@@ -64,6 +64,7 @@ func init() {
 	RegisterFunction("TBILLPRICE", Tbillprice)
 	RegisterFunction("TBILLYIELD", Tbillyield)
 	RegisterFunction("VDB", Vdb)
+	RegisterFunction("YIELDDISC", Yielddisc)
 }
 
 func getSettlementMaturity(settlementResult, maturityResult Result, funcName string) (float64, float64, Result) {
@@ -2452,6 +2453,48 @@ func getDDB(cost, salvage, life, period, factor float64) float64 {
 		ddb = 0
 	}
 	return ddb
+}
+
+// Yielddisc implements the Excel YIELDDISC function.
+func Yielddisc(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("YIELDDISC requires four or five arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "YIELDDISC")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("YIELDDISC requires pr to be number argument")
+	}
+	pr := args[2].ValueNumber
+	if pr <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "YIELDDISC requires pr to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("YIELDDISC requires redemption to be number argument")
+	}
+	redemption := args[3].ValueNumber
+	if redemption <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "YIELDDISC requires redemption to be positive number argument")
+	}
+	basis := 0
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("YIELDDISC requires basis to be number argument")
+		}
+		basis = int(args[4].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for YIELDDISC")
+		}
+	}
+	frac, errResult := yearFrac(settlementDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+
+	return MakeNumberResult((redemption / pr - 1) / frac)
 }
 
 func approxEqual(a, b float64) bool {

@@ -2609,3 +2609,25 @@ func TestVdb(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestYielddisc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 2, 16, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 3, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(99.795)
+	sheet.Cell("A4").SetNumber(100)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=YIELDDISC(A1,A2,A3,A4,0)`, `0.04930106718 ResultTypeNumber`},
+		{`=YIELDDISC(A1,A2,A3,A4,1)`, `0.05370294818 ResultTypeNumber`},
+		{`=YIELDDISC(A1,A2,A3,A4,2)`, `0.05282257198 ResultTypeNumber`},
+		{`=YIELDDISC(A1,A2,A3,A4,3)`, `0.05355621882 ResultTypeNumber`},
+		{`=YIELDDISC(A1,A2,A3,A4,4)`, `0.04930106718 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
