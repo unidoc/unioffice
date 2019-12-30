@@ -68,6 +68,7 @@ func init() {
 	RegisterFunction("XNPV", Xnpv)
 	RegisterFunction("YIELD", Yield)
 	RegisterFunction("YIELDDISC", Yielddisc)
+	RegisterFunction("YIELDMAT", Yieldmat)
 }
 
 func getSettlementMaturity(settlementResult, maturityResult Result, funcName string) (float64, float64, Result) {
@@ -2719,4 +2720,66 @@ func Yield(args []Result) Result {
 	}
 
 	return MakeNumberResult(yieldN)
+}
+
+// Yieldmat implements the Excel YIELDMAT function.
+func Yieldmat(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 5 && argsNum != 6 {
+		return MakeErrorResult("YIELDMAT requires five or six arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "YIELDMAT")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	issueDate, errResult := parseDate(args[2], "issue date", "YIELDMAT")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	if issueDate >= settlementDate {
+		return MakeErrorResult("YIELDMAT requires issue date to be before settlement date")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("YIELDMAT requires rate of type number")
+	}
+	rate := args[3].ValueNumber
+	if rate < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "YIELDMAT requires rate to be non negative")
+	}
+	if args[4].Type != ResultTypeNumber {
+		return MakeErrorResult("YIELDMAT requires yield of type number")
+	}
+	pr := args[4].ValueNumber
+	if pr <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "YIELDMAT requires pr to be positive")
+	}
+	basis := 0
+	if argsNum == 6 && args[5].Type != ResultTypeEmpty {
+		if args[5].Type != ResultTypeNumber {
+			return MakeErrorResult("YIELDMAT requires basis to be number argument")
+		}
+		basis = int(args[5].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for YIELDMAT")
+		}
+	}
+	dim, errResult := yearFrac(issueDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	dis, errResult := yearFrac(issueDate, settlementDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	dsm, errResult := yearFrac(settlementDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+
+	y := 1 + dim * rate
+	y *= math.Pow(pr / 100 + dis * rate, -1)
+	y--
+	y *= math.Pow(dsm, -1)
+
+	return MakeNumberResult(y)
 }
