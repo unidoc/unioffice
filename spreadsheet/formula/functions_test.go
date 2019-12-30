@@ -2631,3 +2631,29 @@ func TestYielddisc(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestXirr(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(-10000)
+	sheet.Cell("A2").SetNumber(2750)
+	sheet.Cell("A3").SetNumber(4250)
+	sheet.Cell("A4").SetNumber(3250)
+	sheet.Cell("A5").SetNumber(2750)
+	sheet.Cell("B1").SetDate(time.Date(2008, 1, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B2").SetDate(time.Date(2008, 3, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B3").SetDate(time.Date(2008, 10, 30, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B4").SetDate(time.Date(2009, 2, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B5").SetDate(time.Date(2009, 4, 1, 0, 0, 0, 0, time.UTC))
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=XIRR(A1:A5,B1:B5,0.1)`, `0.37336253351 ResultTypeNumber`},
+		{`=XIRR(A1:A5,B1:B5,"hello world")`, `#VALUE! ResultTypeError`},
+		{`=XIRR(A2:A5,B2:B5,0.1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}

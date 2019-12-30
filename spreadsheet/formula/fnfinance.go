@@ -64,6 +64,7 @@ func init() {
 	RegisterFunction("TBILLPRICE", Tbillprice)
 	RegisterFunction("TBILLYIELD", Tbillyield)
 	RegisterFunction("VDB", Vdb)
+	RegisterFunction("XIRR", Xirr)
 	RegisterFunction("YIELDDISC", Yielddisc)
 }
 
@@ -1240,8 +1241,6 @@ func Irr(args []Result) Result {
 	}
 
 	dates := []float64{}
-	positive := false
-	negative := false
 
 	for i := 0; i < vlen; i++ {
 		if i == 0 {
@@ -1249,6 +1248,17 @@ func Irr(args []Result) Result {
 		} else {
 			dates = append(dates, dates[i - 1] + 365)
 		}
+	}
+	return irr(values, dates, guess)
+}
+
+//irr is used to calculate results for Irr and Xirr as method is the same
+func irr(values, dates []float64, guess float64) Result {
+
+	positive := false
+	negative := false
+
+	for i := 0; i < len(values); i++ {
 		if values[i] > 0 {
 			positive = true
 		}
@@ -1273,7 +1283,7 @@ func Irr(args []Result) Result {
 		epsRate := math.Abs(newRate - resultRate)
 		resultRate = newRate
 		iter++
-		if iter > maxIter || epsRate <= epsMax || math.Abs(resultValue) <= epsMax {
+		if epsRate <= epsMax || math.Abs(resultValue) <= epsMax {
 			break
 		}
 		if iter > maxIter {
@@ -2499,4 +2509,62 @@ func Yielddisc(args []Result) Result {
 
 func approxEqual(a, b float64) bool {
 	return math.Abs(a - b) < 1.0e-6
+}
+
+// Xirr implements the Excel XIRR function.
+func Xirr(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 2 && argsNum != 3 {
+		return MakeErrorResult("XIRR requires two or three arguments")
+	}
+	if args[0].Type != ResultTypeList && args[0].Type != ResultTypeArray {
+		return MakeErrorResult("XIRR requires values to be of array type")
+	}
+	valuesR := arrayFromRange(args[0])
+	values := []float64{}
+	for _, row := range valuesR {
+		for _, vR := range row {
+			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
+				values = append(values, vR.ValueNumber)
+			}
+		}
+	}
+	vlen := len(values)
+	if len(values) < 2 {
+		return MakeErrorResultType(ErrorTypeNum, "")
+	}
+	if args[1].Type != ResultTypeList && args[1].Type != ResultTypeArray {
+		return MakeErrorResult("XIRR requires dates to be of array type")
+	}
+	datesR := arrayFromRange(args[1])
+	dates := []float64{}
+	lastDate := 0.0
+	for _, row := range datesR {
+		for _, vR := range row {
+			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
+				newDate := vR.ValueNumber
+				if newDate < lastDate {
+					return MakeErrorResultType(ErrorTypeNum, "XIRR requires dates to be in ascending order")
+				}
+				dates = append(dates, newDate)
+				lastDate = newDate
+			} else {
+				return MakeErrorResult("Incorrect date format")
+			}
+		}
+	}
+	if len(dates) != vlen {
+		return MakeErrorResultType(ErrorTypeNum, "")
+	}
+	guess := 0.1
+	if argsNum == 3 && args[2].Type != ResultTypeEmpty {
+		if args[2].Type != ResultTypeNumber {
+			return MakeErrorResult("XIRR requires guess to be number argument")
+		}
+		guess = args[2].ValueNumber
+		if guess <= -1 {
+			return MakeErrorResult("XIRR requires guess to be more than -1")
+		}
+	}
+	return irr(values, dates, guess)
 }
