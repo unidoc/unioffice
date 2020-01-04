@@ -2742,3 +2742,24 @@ func TestYieldmat(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestSubstitute(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetString("Hello Earth Earth Earth")
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=SUBSTITUTE(A1,"Earth","Krypton",1)`, `Hello Krypton Earth Earth ResultTypeString`},
+		{`=SUBSTITUTE(A1,"Earth","Krypton",2)`, `Hello Earth Krypton Earth ResultTypeString`},
+		{`=SUBSTITUTE(A1,"Earth","Krypton",3)`, `Hello Earth Earth Krypton ResultTypeString`},
+		{`=SUBSTITUTE(A1,"Earth","Krypton",4)`, `Hello Earth Earth Earth ResultTypeString`},
+		{`=SUBSTITUTE(A1,"Earth","Krypton")`, `Hello Krypton Krypton Krypton ResultTypeString`},
+		{`=SUBSTITUTE(A1,"World","Krypton")`, `Hello Earth Earth Earth ResultTypeString`},
+		{`=SUBSTITUTE(A1,"Earth","Krypton",0)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}

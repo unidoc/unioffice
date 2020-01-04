@@ -40,6 +40,7 @@ func init() {
 	RegisterFunction("RIGHTB", Right)
 	RegisterFunction("SEARCH", Search)
 	RegisterFunctionComplex("SEARCHB", Searchb)
+	RegisterFunction("SUBSTITUTE", Substitute)
 	RegisterFunction("T", T)
 	RegisterFunction("TEXT", Text)
 	RegisterFunction("TEXTJOIN", TextJoin)
@@ -628,28 +629,46 @@ func parseReplaceResults(fname string, args []Result) (*parsedReplaceObject, Res
 	if len(args) != 4 {
 		return nil, MakeErrorResult(fname + " requires four arguments")
 	}
-	if args[0].Type != ResultTypeString {
-		return nil, MakeErrorResult(fname + " requires first argument to be a string")
+	text, errResult := getString(args[0], fname, "text")
+	if errResult.Type == ResultTypeError {
+		return nil, errResult
 	}
-	text := args[0].ValueString
-	if args[1].Type != ResultTypeNumber {
-		return nil, MakeErrorResult(fname + " requires second argument to be a number")
+	startPos, errResult := getNumber(args[1], fname, "start position")
+	if errResult.Type == ResultTypeError {
+		return nil, errResult
 	}
-	startPos := int(args[1].ValueNumber) - 1
-	if args[2].Type != ResultTypeNumber {
-		return nil, MakeErrorResult(fname + " requires third argument to be a number")
+	startPos--
+	length, errResult := getNumber(args[2], fname, "length")
+	if errResult.Type == ResultTypeError {
+		return nil, errResult
 	}
-	length := int(args[2].ValueNumber)
-	if args[3].Type != ResultTypeString {
-		return nil, MakeErrorResult(fname + " requires fourth argument to be a string")
+	textToReplace, errResult := getString(args[3], fname, "text to replace")
+	if errResult.Type == ResultTypeError {
+		return nil, errResult
 	}
-	textToReplace := args[3].ValueString
 	return &parsedReplaceObject{
 		text,
 		startPos,
 		length,
 		textToReplace,
 	}, empty
+}
+
+func getNumber(arg Result, funcName, argName string) (int, Result) {
+	switch arg.Type {
+	case ResultTypeEmpty:
+		return 0, empty
+	case ResultTypeNumber:
+		return int(arg.ValueNumber), empty
+	case ResultTypeString:
+			f, err := strconv.ParseFloat(arg.ValueString, 64)
+			if err != nil {
+				return 0, MakeErrorResult(argName + " should be a number for " + funcName)
+			}
+			return int(f), empty
+	default:
+		return 0, MakeErrorResult(funcName + " requires " + argName + " to be a number or empty")
+	}
 }
 
 // Replace is an implementation of the Excel REPLACE().
@@ -672,6 +691,78 @@ func Replace(args []Result) Result {
 	}
 	newText := text[0:startPos] + textToReplace + text[endPos:]
 	return MakeStringResult(newText)
+}
+
+func getString(arg Result, funcName, argName string) (string, Result) {
+	switch arg.Type {
+	case ResultTypeString, ResultTypeNumber, ResultTypeEmpty:
+		return arg.Value(), empty
+	default:
+		return "", MakeErrorResult(funcName + " requires " + argName + " to be a number or string")
+	}
+}
+
+// Substitute is an implementation of the Excel SUBSTITUTE function.
+func Substitute(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 3 && argsNum != 4 {
+		return MakeErrorResult("SUBSTITUTE requires three or four arguments")
+	}
+	text, errResult := getString(args[0], "SUBSTITUTE", "text")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	oldText, errResult := getString(args[1], "SUBSTITUTE", "old text")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	newText, errResult := getString(args[2], "SUBSTITUTE", "new text")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	instanceNum := 0
+	if argsNum == 4 {
+		var errResult Result
+		instanceNum, errResult = getNumber(args[3], "SUBSTITUTE", "instance_num")
+		if errResult.Type == ResultTypeError {
+			return errResult
+		}
+		if instanceNum < 1 {
+			return MakeErrorResult("instance_num should be more than zero")
+		}
+	}
+	if instanceNum == 0 {
+		return MakeStringResult(strings.Replace(text, oldText, newText, -1))
+	} else {
+		textCopy := text
+		countdown := instanceNum
+		pos := -1
+		l := len(oldText)
+		thrownTotal := 0
+		for {
+			countdown--
+			index := strings.Index(textCopy, oldText)
+			if index == -1 {
+				pos = -1
+				break
+			} else {
+				pos = index + thrownTotal
+				if countdown == 0 {
+					break
+				}
+				thrown := l + index
+				thrownTotal += thrown
+				textCopy = textCopy[thrown:]
+			}
+		}
+		if pos == -1 {
+			return MakeStringResult(text)
+		} else {
+			pre := text[:pos]
+			post := text[pos+l:]
+			return MakeStringResult(pre + newText + post)
+		}
+	}
 }
 
 // TextJoin is an implementation of the Excel TEXTJOIN function.
