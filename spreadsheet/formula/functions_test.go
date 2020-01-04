@@ -2872,6 +2872,7 @@ func TestRound(t *testing.T) {
 		{`=ROUND(-55.5,-1)`, `-60 ResultTypeNumber`},
 		{`=ROUND(-55.5,-2)`, `-100 ResultTypeNumber`},
 		{`=ROUND(-55.5,0)`, `-56 ResultTypeNumber`},
+		{`=ROUND(-55.4,)`, `-55 ResultTypeNumber`},
 		{`=ROUND(-55.4)`, `#VALUE! ResultTypeError`},
 	}
 
