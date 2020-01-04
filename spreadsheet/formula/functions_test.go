@@ -2609,3 +2609,136 @@ func TestVdb(t *testing.T) {
 
 	runTests(t, ctx, td)
 }
+
+func TestYielddisc(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 2, 16, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 3, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(99.795)
+	sheet.Cell("A4").SetNumber(100)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=YIELDDISC(A1,A2,A3,A4)`, `0.04930106718 ResultTypeNumber`},
+		{`=YIELDDISC(A1,A2,A3,A4,)`, `0.04930106718 ResultTypeNumber`},
+		{`=YIELDDISC(A1,A2,A3,A4,0)`, `0.04930106718 ResultTypeNumber`},
+		{`=YIELDDISC(A1,A2,A3,A4,1)`, `0.05370294818 ResultTypeNumber`},
+		{`=YIELDDISC(A1,A2,A3,A4,2)`, `0.05282257198 ResultTypeNumber`},
+		{`=YIELDDISC(A1,A2,A3,A4,3)`, `0.05355621882 ResultTypeNumber`},
+		{`=YIELDDISC(A1,A2,A3,A4,4)`, `0.04930106718 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestXirr(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(-10000)
+	sheet.Cell("A2").SetNumber(2750)
+	sheet.Cell("A3").SetNumber(4250)
+	sheet.Cell("A4").SetNumber(3250)
+	sheet.Cell("A5").SetNumber(2750)
+	sheet.Cell("B1").SetDate(time.Date(2008, 1, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B2").SetDate(time.Date(2008, 3, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B3").SetDate(time.Date(2008, 10, 30, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B4").SetDate(time.Date(2009, 2, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B5").SetDate(time.Date(2009, 4, 1, 0, 0, 0, 0, time.UTC))
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=XIRR(A1:A5,B1:B5,0.1)`, `0.37336253351 ResultTypeNumber`},
+		{`=XIRR(A1:A5,B1:B5,"hello world")`, `#VALUE! ResultTypeError`},
+		{`=XIRR(A2:A5,B2:B5,0.1)`, `#NUM! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestXnpv(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(-10000)
+	sheet.Cell("A2").SetNumber(2750)
+	sheet.Cell("A3").SetNumber(4250)
+	sheet.Cell("A4").SetNumber(3250)
+	sheet.Cell("A5").SetNumber(2750)
+	sheet.Cell("B1").SetDate(time.Date(2008, 1, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B2").SetDate(time.Date(2008, 3, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B3").SetDate(time.Date(2008, 10, 30, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B4").SetDate(time.Date(2009, 2, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("B5").SetDate(time.Date(2009, 4, 1, 0, 0, 0, 0, time.UTC))
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=XNPV(0.09,A1:A5,B1:B5)`, `2086.64760203 ResultTypeNumber`},
+		{`=XNPV(-0.01,A1:A5,B1:B5)`, `#NUM! ResultTypeError`},
+		{`=XNPV("hello world",A1:A5,B1:B5)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestYield(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 2, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2016, 11, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetNumber(0.0575)
+	sheet.Cell("A4").SetNumber(95.04287)
+	sheet.Cell("A5").SetNumber(100)
+	sheet.Cell("A6").SetNumber(2)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=YIELD(A1,A2,A3,A4,A5,A6)`, `0.06500000688 ResultTypeNumber`},
+		{`=YIELD(A1,A2,A3,A4,A5,A6,)`, `0.06500000688 ResultTypeNumber`},
+		{`=YIELD(A1,A2,A3,A4,A5,A6,0)`, `0.06500000688 ResultTypeNumber`},
+		{`=YIELD(A1,A2,A3,A4,A5,A6,1)`, `0.0650018206 ResultTypeNumber`},
+		{`=YIELD(A1,A2,A3,A4,A5,A6,2)`, `0.06495005528 ResultTypeNumber`},
+		{`=YIELD(A1,A2,A3,A4,A5,A6,3)`, `0.06501459236 ResultTypeNumber`},
+		{`=YIELD(A1,A2,A3,A4,A5,A6,4)`, `0.06500000688 ResultTypeNumber`},
+		{`=YIELD(A2,A1,A3,A4,A5,A6,4)`, `#NUM! ResultTypeError`},
+		{`=YIELD(A1,A2,A3,A4,A5,A6,5)`, `#NUM! ResultTypeError`},
+		{`=YIELD("hello world",A2,A3,A4,A5,A6,4)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestYieldmat(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetDate(time.Date(2008, 3, 15, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A2").SetDate(time.Date(2008, 11, 3, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A3").SetDate(time.Date(2007, 11, 8, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A4").SetNumber(0.0625)
+	sheet.Cell("A5").SetNumber(100.0123)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=YIELDMAT(A1,A2,A3,A4,A5)`, `0.06095433369 ResultTypeNumber`},
+		{`=YIELDMAT(A1,A2,A3,A4,A5,)`, `0.06095433369 ResultTypeNumber`},
+		{`=YIELDMAT(A1,A2,A3,A4,A5,0)`, `0.06095433369 ResultTypeNumber`},
+		{`=YIELDMAT(A1,A2,A3,A4,A5,1)`, `0.06096668564 ResultTypeNumber`},
+		{`=YIELDMAT(A1,A2,A3,A4,A5,2)`, `0.06094805915 ResultTypeNumber`},
+		{`=YIELDMAT(A1,A2,A3,A4,A5,3)`, `0.06096362992 ResultTypeNumber`},
+		{`=YIELDMAT(A1,A2,A3,A4,A5,4)`, `0.06095433369 ResultTypeNumber`},
+		{`=YIELDMAT(A2,A1,A3,A4,A5,4)`, `#NUM! ResultTypeError`},
+		{`=YIELDMAT(A1,A2,A3,A4,A5,5)`, `#NUM! ResultTypeError`},
+		{`=YIELDMAT("hello world",A2,A3,A4,A5,4)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}

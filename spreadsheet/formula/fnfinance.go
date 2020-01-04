@@ -64,6 +64,11 @@ func init() {
 	RegisterFunction("TBILLPRICE", Tbillprice)
 	RegisterFunction("TBILLYIELD", Tbillyield)
 	RegisterFunction("VDB", Vdb)
+	RegisterFunction("XIRR", Xirr)
+	RegisterFunction("XNPV", Xnpv)
+	RegisterFunction("YIELD", Yield)
+	RegisterFunction("YIELDDISC", Yielddisc)
+	RegisterFunction("YIELDMAT", Yieldmat)
 }
 
 func getSettlementMaturity(settlementResult, maturityResult Result, funcName string) (float64, float64, Result) {
@@ -97,6 +102,7 @@ func Coupdaybs(args []Result) Result {
 	return MakeNumberResult(coupdaybs(parsedArgs.settlementDate, parsedArgs.maturityDate, parsedArgs.freq, parsedArgs.basis))
 }
 
+// coupdaybs returns the number of days from the beginning of the coupon period to the settlement date.
 func coupdaybs(settlementDateF, maturityDateF float64, freq, basis int) float64 {
 	settlementDate := dateFromDays(settlementDateF)
 	maturityDate := dateFromDays(maturityDateF)
@@ -113,6 +119,7 @@ func Coupdays(args []Result) Result {
 	return MakeNumberResult(coupdays(parsedArgs.settlementDate, parsedArgs.maturityDate, parsedArgs.freq, parsedArgs.basis))
 }
 
+// coupdays returns the number of days in the coupon period that contains the settlement date.
 func coupdays(settlementDateF, maturityDateF float64, freq, basis int) float64 {
 	settlementDate := dateFromDays(settlementDateF)
 	maturityDate := dateFromDays(maturityDateF)
@@ -133,6 +140,7 @@ func Coupdaysnc(args []Result) Result {
 	return MakeNumberResult(coupdaysnc(parsedArgs.settlementDate, parsedArgs.maturityDate, parsedArgs.freq, parsedArgs.basis))
 }
 
+// coupdaysnc returns the number of days from the settlement date to the next coupon date.
 func coupdaysnc(settlementDateF, maturityDateF float64, freq, basis int) float64 {
 	settlementDate := dateFromDays(settlementDateF)
 	maturityDate := dateFromDays(maturityDateF)
@@ -184,6 +192,7 @@ func Coupncd(args []Result) Result {
 	return MakeNumberResult(daysFromDate(y, int(m), d))
 }
 
+// coupncd finds next coupon date after settlement.
 func coupncd(settlementDate, maturityDate time.Time, freq int) time.Time {
 	ncd := time.Date(settlementDate.Year(), maturityDate.Month(), maturityDate.Day(), 0, 0, 0, 0, time.UTC)
 	if ncd.After(settlementDate) {
@@ -1239,8 +1248,6 @@ func Irr(args []Result) Result {
 	}
 
 	dates := []float64{}
-	positive := false
-	negative := false
 
 	for i := 0; i < vlen; i++ {
 		if i == 0 {
@@ -1248,6 +1255,17 @@ func Irr(args []Result) Result {
 		} else {
 			dates = append(dates, dates[i - 1] + 365)
 		}
+	}
+	return irr(values, dates, guess)
+}
+
+// irr is used to calculate results for Irr and Xirr as method is the same
+func irr(values, dates []float64, guess float64) Result {
+
+	positive := false
+	negative := false
+
+	for i := 0; i < len(values); i++ {
 		if values[i] > 0 {
 			positive = true
 		}
@@ -1272,7 +1290,7 @@ func Irr(args []Result) Result {
 		epsRate := math.Abs(newRate - resultRate)
 		resultRate = newRate
 		iter++
-		if iter > maxIter || epsRate <= epsMax || math.Abs(resultValue) <= epsMax {
+		if epsRate <= epsMax || math.Abs(resultValue) <= epsMax {
 			break
 		}
 		if iter > maxIter {
@@ -1561,7 +1579,7 @@ func Oddlprice(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
 	}
 	basis := 0
-	if len(args) == 8 {
+	if len(args) == 8  && args[7].Type != ResultTypeEmpty {
 		basisResult := args[7]
 		if basisResult.Type != ResultTypeNumber {
 			return MakeErrorResult("ODDLPRICE requires basis of type number")
@@ -1640,7 +1658,7 @@ func Oddlyield(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
 	}
 	basis := 0
-	if len(args) == 8 {
+	if len(args) == 8 && args[7].Type != ResultTypeEmpty {
 		if args[7].Type != ResultTypeNumber {
 			return MakeErrorResult("ODDLYIELD requires basis of type number")
 		}
@@ -1838,13 +1856,12 @@ func Price(args []Result) Result {
 	if freqResult.Type != ResultTypeNumber {
 		return MakeErrorResult("PRICE requires frequency of type number")
 	}
-	freqF := freqResult.ValueNumber
-	if !checkFreq(freqF) {
+	freq := freqResult.ValueNumber
+	if !checkFreq(freq) {
 		return MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
 	}
-	freq := int(freqF)
 	basis := 0
-	if argsNum == 7 {
+	if argsNum == 7 && args[6].Type != ResultTypeEmpty {
 		if args[6].Type != ResultTypeNumber {
 			return MakeErrorResult("PRICE requires basis to be number argument")
 		}
@@ -1853,11 +1870,20 @@ func Price(args []Result) Result {
 			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for PRICE")
 		}
 	}
+	price, errResult := getPrice(settlementDate, maturityDate, rate, yield, redemption, freq, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	return MakeNumberResult(price)
+}
+
+func getPrice(settlementDate, maturityDate, rate, yield, redemption, freqF float64, basis int) (float64, Result) {
+	freq := int(freqF)
 	e := coupdays(settlementDate, maturityDate, freq, basis)
 	dsc := coupdaysnc(settlementDate, maturityDate, freq, basis) / e
 	n, errResult := coupnum(settlementDate, maturityDate, freq, basis)
 	if errResult.Type == ResultTypeError {
-		return errResult
+		return 0, errResult
 	}
 	a := coupdaybs(settlementDate, maturityDate, freq, basis)
 	ret := redemption / math.Pow(1 + yield / freqF, n - 1 + dsc)
@@ -1867,7 +1893,7 @@ func Price(args []Result) Result {
 	for k := 0.0; k < n; k++ {
 		ret += t1 / math.Pow(t2, k + dsc)
 	}
-	return MakeNumberResult(ret)
+	return ret, MakeEmptyResult()
 }
 
 // Pricedisc implements the Excel PRICEDISC function.
@@ -1943,7 +1969,7 @@ func Pricemat(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeNum, "PRICEMAT requires yield to be non negative")
 	}
 	basis := 0
-	if argsNum == 6 {
+	if argsNum == 6 && args[5].Type != ResultTypeEmpty {
 		if args[5].Type != ResultTypeNumber {
 			return MakeErrorResult("PRICEMAT requires basis to be number argument")
 		}
@@ -1952,23 +1978,23 @@ func Pricemat(args []Result) Result {
 			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for PRICEMAT")
 		}
 	}
-	dsmyf, errResult := yearFrac(settlementDate, maturityDate, basis)
+	dsm, errResult := yearFrac(settlementDate, maturityDate, basis)
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
-	dimyf, errResult := yearFrac(issueDate, maturityDate, basis)
+	dim, errResult := yearFrac(issueDate, maturityDate, basis)
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
-	ayf, errResult := yearFrac(issueDate, settlementDate, basis)
+	dis, errResult := yearFrac(issueDate, settlementDate, basis)
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
 
-	num := 1 + dimyf * rate
-	den := 1 + dsmyf * yield
+	num := 1 + dim * rate
+	den := 1 + dsm * yield
 
-	return MakeNumberResult((num / den - ayf * rate) * 100)
+	return MakeNumberResult((num / den - dis * rate) * 100)
 }
 
 // Pv implements the Excel PV function.
@@ -2186,7 +2212,7 @@ func Sln(args []Result) Result {
 // Syd implements the Excel SYD function.
 func Syd(args []Result) Result {
 	if len(args) != 4 {
-		return MakeErrorResult("SYD requires three arguments")
+		return MakeErrorResult("SYD requires four arguments")
 	}
 	if args[0].Type != ResultTypeNumber {
 		return MakeErrorResult("SYD requires cost to be number argument")
@@ -2454,6 +2480,312 @@ func getDDB(cost, salvage, life, period, factor float64) float64 {
 	return ddb
 }
 
+// Yielddisc implements the Excel YIELDDISC function.
+func Yielddisc(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 4 && argsNum != 5 {
+		return MakeErrorResult("YIELDDISC requires four or five arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "YIELDDISC")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("YIELDDISC requires pr to be number argument")
+	}
+	pr := args[2].ValueNumber
+	if pr <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "YIELDDISC requires pr to be positive number argument")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("YIELDDISC requires redemption to be number argument")
+	}
+	redemption := args[3].ValueNumber
+	if redemption <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "YIELDDISC requires redemption to be positive number argument")
+	}
+	basis := 0
+	if argsNum == 5 && args[4].Type != ResultTypeEmpty {
+		if args[4].Type != ResultTypeNumber {
+			return MakeErrorResult("YIELDDISC requires basis to be number argument")
+		}
+		basis = int(args[4].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for YIELDDISC")
+		}
+	}
+	frac, errResult := yearFrac(settlementDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+
+	return MakeNumberResult((redemption / pr - 1) / frac)
+}
+
 func approxEqual(a, b float64) bool {
 	return math.Abs(a - b) < 1.0e-6
+}
+
+// Xirr implements the Excel XIRR function.
+func Xirr(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 2 && argsNum != 3 {
+		return MakeErrorResult("XIRR requires two or three arguments")
+	}
+	xStruct, errResult := getXargs(args[0], args[1], "XIRR")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	values := xStruct.values
+	dates := xStruct.dates
+	guess := 0.1
+	if argsNum == 3 && args[2].Type != ResultTypeEmpty {
+		if args[2].Type != ResultTypeNumber {
+			return MakeErrorResult("XIRR requires guess to be number argument")
+		}
+		guess = args[2].ValueNumber
+		if guess <= -1 {
+			return MakeErrorResult("XIRR requires guess to be more than -1")
+		}
+	}
+	return irr(values, dates, guess)
+}
+
+// Xnpv implements the Excel XNPV function.
+func Xnpv(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("XNPV requires three arguments")
+	}
+	if args[0].Type != ResultTypeNumber {
+		return MakeErrorResult("XNPV requires rate to be number argument")
+	}
+	rate := args[0].ValueNumber
+	if rate <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "XNPV requires rate to be positive")
+	}
+	xStruct, errResult := getXargs(args[1], args[2], "XNPV")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	values := xStruct.values
+	dates := xStruct.dates
+	xnpv := 0.0
+	firstDate := dates[0]
+	for i, value := range values {
+		xnpv += value / math.Pow(1 + rate, (dates[i] - firstDate) / 365)
+	}
+	return MakeNumberResult(xnpv)
+}
+
+type xargs struct {
+	values []float64
+	dates []float64
+}
+
+func getXargs(valuesR, datesR Result, funcName string) (*xargs, Result) {
+	if valuesR.Type != ResultTypeList && valuesR.Type != ResultTypeArray {
+		return nil, MakeErrorResult(funcName + " requires values to be of array type")
+	}
+	valuesArr := arrayFromRange(valuesR)
+	values := []float64{}
+	for _, row := range valuesArr {
+		for _, vR := range row {
+			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
+				values = append(values, vR.ValueNumber)
+			} else {
+				return nil, MakeErrorResult(funcName + "requires values to be numbers")
+			}
+		}
+	}
+	vlen := len(values)
+	if len(values) < 2 {
+		return nil, MakeErrorResultType(ErrorTypeNum, "")
+	}
+	if datesR.Type != ResultTypeList && datesR.Type != ResultTypeArray {
+		return nil, MakeErrorResult(funcName + " requires dates to be of array type")
+	}
+	datesArr := arrayFromRange(datesR)
+	dates := []float64{}
+	lastDate := 0.0
+	for _, row := range datesArr {
+		for _, vR := range row {
+			if vR.Type == ResultTypeNumber && !vR.IsBoolean {
+				newDate := float64(int(vR.ValueNumber))
+				if newDate < lastDate {
+					return nil, MakeErrorResultType(ErrorTypeNum, funcName + " requires dates to be in ascending order")
+				}
+				dates = append(dates, newDate)
+				lastDate = newDate
+			} else {
+				return nil, MakeErrorResult(funcName + "requires dates to be numbers")
+			}
+		}
+	}
+	if len(dates) != vlen {
+		return nil, MakeErrorResultType(ErrorTypeNum, "")
+	}
+	return &xargs{values, dates}, MakeEmptyResult()
+}
+
+// Yield implements the Excel YIELD function.
+func Yield(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 6 && argsNum != 7 {
+		return MakeErrorResult("YIELD requires six or seven arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "YIELD")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	rateResult := args[2]
+	if rateResult.Type != ResultTypeNumber {
+		return MakeErrorResult("YIELD requires rate of type number")
+	}
+	rate := rateResult.ValueNumber
+	if rate < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "Rate should be non negative")
+	}
+	prResult := args[3]
+	if prResult.Type != ResultTypeNumber {
+		return MakeErrorResult("YIELD requires pr of type number")
+	}
+	pr := prResult.ValueNumber
+	if pr <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "pr should be positive")
+	}
+	redemptionResult := args[4]
+	if redemptionResult.Type != ResultTypeNumber {
+		return MakeErrorResult("YIELD requires redemption of type number")
+	}
+	redemption := redemptionResult.ValueNumber
+	if redemption < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "Yield should be non negative")
+	}
+	freqResult := args[5]
+	if freqResult.Type != ResultTypeNumber {
+		return MakeErrorResult("YIELD requires frequency of type number")
+	}
+	freq := float64(int(freqResult.ValueNumber))
+	if !checkFreq(freq) {
+		return MakeErrorResultType(ErrorTypeNum, "Incorrect frequence value")
+	}
+	basis := 0
+	if argsNum == 7 && args[6].Type != ResultTypeEmpty {
+		basisResult := args[6]
+		if basisResult.Type != ResultTypeNumber {
+			return MakeErrorResult("YIELD requires basis of type number")
+		}
+		basis = int(basisResult.ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis value for YIELD")
+		}
+	}
+
+	priceN := 0.0
+	yield1 := 0.0
+	yield2 := 1.0
+	price1, errResult := getPrice(settlementDate, maturityDate, rate, yield1, redemption, freq, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	price2, errResult := getPrice(settlementDate, maturityDate, rate, yield2, redemption, freq, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+
+	yieldN := (yield2 - yield1) * 0.5
+
+	for iter := 0; iter < 100 && priceN != pr; iter++ {
+		priceN, errResult = getPrice(settlementDate, maturityDate, rate, yieldN, redemption, freq, basis)
+		if errResult.Type == ResultTypeError {
+			return errResult
+		}
+		if pr == price1 {
+			return MakeNumberResult(yield1)
+		} else if pr == price2 {
+			return MakeNumberResult(yield2)
+		} else if pr == priceN {
+			return MakeNumberResult(yieldN)
+		} else if pr < price2 {
+			yield2 *= 2.0
+			price2, errResult = getPrice(settlementDate, maturityDate, rate, yield2, redemption, freq, basis)
+			if errResult.Type == ResultTypeError {
+				return errResult
+			}
+			yieldN = (yield2 - yield1) * 0.5
+		} else {
+			if pr < priceN {
+				yield1 = yieldN
+				price1 = priceN
+			} else {
+				yield2 = yieldN
+				price2 = priceN
+			}
+			yieldN = yield2 - (yield2 - yield1) * ((pr - price2) / (price1 - price2))
+		}
+	}
+
+	return MakeNumberResult(yieldN)
+}
+
+// Yieldmat implements the Excel YIELDMAT function.
+func Yieldmat(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 5 && argsNum != 6 {
+		return MakeErrorResult("YIELDMAT requires five or six arguments")
+	}
+	settlementDate, maturityDate, errResult := getSettlementMaturity(args[0], args[1], "YIELDMAT")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	issueDate, errResult := parseDate(args[2], "issue date", "YIELDMAT")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	if issueDate >= settlementDate {
+		return MakeErrorResult("YIELDMAT requires issue date to be before settlement date")
+	}
+	if args[3].Type != ResultTypeNumber {
+		return MakeErrorResult("YIELDMAT requires rate of type number")
+	}
+	rate := args[3].ValueNumber
+	if rate < 0 {
+		return MakeErrorResultType(ErrorTypeNum, "YIELDMAT requires rate to be non negative")
+	}
+	if args[4].Type != ResultTypeNumber {
+		return MakeErrorResult("YIELDMAT requires yield of type number")
+	}
+	pr := args[4].ValueNumber
+	if pr <= 0 {
+		return MakeErrorResultType(ErrorTypeNum, "YIELDMAT requires pr to be positive")
+	}
+	basis := 0
+	if argsNum == 6 && args[5].Type != ResultTypeEmpty {
+		if args[5].Type != ResultTypeNumber {
+			return MakeErrorResult("YIELDMAT requires basis to be number argument")
+		}
+		basis = int(args[5].ValueNumber)
+		if !checkBasis(basis) {
+			return MakeErrorResultType(ErrorTypeNum, "Incorrect basis argument for YIELDMAT")
+		}
+	}
+	dim, errResult := yearFrac(issueDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	dis, errResult := yearFrac(issueDate, settlementDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	dsm, errResult := yearFrac(settlementDate, maturityDate, basis)
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+
+	y := 1 + dim * rate
+	y /= pr / 100 + dis * rate
+	y--
+	y /= dsm
+
+	return MakeNumberResult(y)
 }
