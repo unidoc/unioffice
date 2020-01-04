@@ -564,6 +564,29 @@ func TestMatch(t *testing.T) {
 	runTests(t, ctx, td)
 }
 
+func TestMax(t *testing.T) {
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("B1").SetNumber(0.2)
+
+	sheet.Cell("A2").SetNumber(0.4)
+	sheet.Cell("B2").SetNumber(0.8)
+
+	sheet.Cell("A3").SetBool(true)
+	sheet.Cell("B3").SetBool(false)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`MAX(A1:B3)`, `0.8 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
 func TestMaxA(t *testing.T) {
 
 	ss := spreadsheet.New()
@@ -582,6 +605,29 @@ func TestMaxA(t *testing.T) {
 
 	td := []testStruct{
 		{`MAXA(A1:B3)`, `1 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestMin(t *testing.T) {
+
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("B1").SetNumber(0.2)
+
+	sheet.Cell("A2").SetNumber(0.4)
+	sheet.Cell("B2").SetNumber(0.8)
+
+	sheet.Cell("A3").SetBool(true)
+	sheet.Cell("B3").SetBool(false)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`MIN(A1:B3)`, `0.1 ResultTypeNumber`},
 	}
 
 	runTests(t, ctx, td)
@@ -2759,6 +2805,74 @@ func TestSubstitute(t *testing.T) {
 		{`=SUBSTITUTE(A1,"Earth","Krypton")`, `Hello Krypton Krypton Krypton ResultTypeString`},
 		{`=SUBSTITUTE(A1,"World","Krypton")`, `Hello Earth Earth Earth ResultTypeString`},
 		{`=SUBSTITUTE(A1,"Earth","Krypton",0)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestAnd(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=AND(FALSE,FALSE)`, `0 ResultTypeNumber`},
+		{`=AND(TRUE,FALSE)`, `0 ResultTypeNumber`},
+		{`=AND(FALSE,TRUE)`, `0 ResultTypeNumber`},
+		{`=AND(TRUE,TRUE)`, `1 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIferror(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=IFERROR("No error","ERROR")`, `No error ResultTypeString`},
+		{`=IFERROR(1/0,"ERROR")`, `ERROR ResultTypeString`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestChar(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=CHAR(65)`, `A ResultTypeString`},
+		{`=CHAR(255)`, `ÿ ResultTypeString`},
+		{`=CHAR(1000)`, `#VALUE! ResultTypeError`},
+		{`=CHAR("invalid")`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestRound(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=ROUND(2.14,1)`, `2.1 ResultTypeNumber`},
+		{`=ROUND(2.16,1)`, `2.2 ResultTypeNumber`},
+		{`=ROUND(-2.14,1)`, `-2.1 ResultTypeNumber`},
+		{`=ROUND(-2.16,1)`, `-2.2 ResultTypeNumber`},
+		{`=ROUND(21.5,-1)`, `20 ResultTypeNumber`},
+		{`=ROUND(21.5,-2)`, `0 ResultTypeNumber`},
+		{`=ROUND(-55.5,-1)`, `-60 ResultTypeNumber`},
+		{`=ROUND(-55.5,-2)`, `-100 ResultTypeNumber`},
+		{`=ROUND(-55.5,0)`, `-56 ResultTypeNumber`},
+		{`=ROUND(-55.4)`, `#VALUE! ResultTypeError`},
 	}
 
 	runTests(t, ctx, td)

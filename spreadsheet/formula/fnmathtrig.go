@@ -1376,8 +1376,8 @@ const (
 // Round is an implementation of the Excel ROUND function that rounds a number
 // to a specified number of digits.
 func round(args []Result, mode rmode) Result {
-	if len(args) == 0 {
-		return MakeErrorResult("ROUND() requires at least one numeric arguments")
+	if len(args) != 2 {
+		return MakeErrorResult("ROUND() requires two numeric arguments")
 	}
 	// number to round
 	number := args[0].AsNumber()
@@ -1385,14 +1385,11 @@ func round(args []Result, mode rmode) Result {
 		return MakeErrorResult("first argument to ROUND() must be a number")
 	}
 
-	digits := float64(0)
-	if len(args) > 1 {
-		digitArg := args[1].AsNumber()
-		if digitArg.Type != ResultTypeNumber {
-			return MakeErrorResult("second argument to ROUND() must be a number")
-		}
-		digits = digitArg.ValueNumber
+	digitArg := args[1].AsNumber()
+	if digitArg.Type != ResultTypeNumber {
+		return MakeErrorResult("second argument to ROUND() must be a number")
 	}
+	digits := digitArg.ValueNumber
 
 	v := number.ValueNumber
 
