@@ -633,15 +633,17 @@ func parseReplaceResults(fname string, args []Result) (*parsedReplaceObject, Res
 	if errResult.Type == ResultTypeError {
 		return nil, errResult
 	}
-	startPos, errResult := getNumber(args[1], fname, "start position")
+	startPosF, errResult := getNumber(args[1], fname, "start position")
 	if errResult.Type == ResultTypeError {
 		return nil, errResult
 	}
+	startPos := int(startPosF)
 	startPos--
-	length, errResult := getNumber(args[2], fname, "length")
+	lengthF, errResult := getNumber(args[2], fname, "length")
 	if errResult.Type == ResultTypeError {
 		return nil, errResult
 	}
+	length := int(lengthF)
 	textToReplace, errResult := getString(args[3], fname, "text to replace")
 	if errResult.Type == ResultTypeError {
 		return nil, errResult
@@ -654,18 +656,18 @@ func parseReplaceResults(fname string, args []Result) (*parsedReplaceObject, Res
 	}, empty
 }
 
-func getNumber(arg Result, funcName, argName string) (int, Result) {
+func getNumber(arg Result, funcName, argName string) (float64, Result) {
 	switch arg.Type {
 	case ResultTypeEmpty:
 		return 0, empty
 	case ResultTypeNumber:
-		return int(arg.ValueNumber), empty
+		return arg.ValueNumber, empty
 	case ResultTypeString:
 			f, err := strconv.ParseFloat(arg.ValueString, 64)
 			if err != nil {
 				return 0, MakeErrorResult(argName + " should be a number for " + funcName)
 			}
-			return int(f), empty
+			return f, empty
 	default:
 		return 0, MakeErrorResult(funcName + " requires " + argName + " to be a number or empty")
 	}
@@ -721,19 +723,17 @@ func Substitute(args []Result) Result {
 		return errResult
 	}
 	instanceNum := 0
-	if argsNum == 4 {
-		var errResult Result
-		instanceNum, errResult = getNumber(args[3], "SUBSTITUTE", "instance_num")
+	if argsNum == 3 {
+		return MakeStringResult(strings.Replace(text, oldText, newText, -1))
+	} else {
+		instanceNumF, errResult := getNumber(args[3], "SUBSTITUTE", "instance_num")
 		if errResult.Type == ResultTypeError {
 			return errResult
 		}
+		instanceNum = int(instanceNumF)
 		if instanceNum < 1 {
 			return MakeErrorResult("instance_num should be more than zero")
 		}
-	}
-	if instanceNum == 0 {
-		return MakeStringResult(strings.Replace(text, oldText, newText, -1))
-	} else {
 		textCopy := text
 		countdown := instanceNum
 		pos := -1
