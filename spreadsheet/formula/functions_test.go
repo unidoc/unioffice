@@ -2789,6 +2789,24 @@ func TestYieldmat(t *testing.T) {
 	runTests(t, ctx, td)
 }
 
+func TestMid(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=MID("Fluid Flow",1,5)`, `Fluid ResultTypeString`},
+		{`=MID("Fluid Flow",7,20)`, `Flow ResultTypeString`},
+		{`=MID("Fluid Flow",20,5)`, ` ResultTypeString`},
+		{`=MID("Fluid Flow",1,0)`, ` ResultTypeString`},
+		{`=MID("Fluid Flow",0,5)`, `#VALUE! ResultTypeError`},
+		{`=MID("Fluid Flow",7,-20)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
 func TestSubstitute(t *testing.T) {
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
