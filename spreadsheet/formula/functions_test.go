@@ -565,7 +565,6 @@ func TestMatch(t *testing.T) {
 }
 
 func TestMax(t *testing.T) {
-
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
@@ -588,7 +587,6 @@ func TestMax(t *testing.T) {
 }
 
 func TestMaxA(t *testing.T) {
-
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
@@ -611,7 +609,6 @@ func TestMaxA(t *testing.T) {
 }
 
 func TestMin(t *testing.T) {
-
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
@@ -634,7 +631,6 @@ func TestMin(t *testing.T) {
 }
 
 func TestMinA(t *testing.T) {
-
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
@@ -657,7 +653,6 @@ func TestMinA(t *testing.T) {
 }
 
 func TestIfs(t *testing.T) {
-
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
