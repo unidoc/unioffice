@@ -384,6 +384,9 @@ func Accrintm(args []Result) Result {
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
+	if issueDate >= settlementDate {
+		return MakeErrorResultType(ErrorTypeNum, "Issue date should be earlier than settlement date")
+	}
 	if args[2].Type != ResultTypeNumber {
 		return MakeErrorResult("ACCRINTM requires rate to be number argument")
 	}

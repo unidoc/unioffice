@@ -33,6 +33,7 @@ func init() {
 	RegisterFunction("LEN", Len)
 	RegisterFunction("LENB", Len)
 	RegisterFunction("LOWER", Lower)
+	RegisterFunction("MID", Mid)
 	RegisterFunction("PROPER", Proper)
 	RegisterFunction("REPLACE", Replace)
 	RegisterFunction("REPT", Rept)
@@ -40,6 +41,7 @@ func init() {
 	RegisterFunction("RIGHTB", Right)
 	RegisterFunction("SEARCH", Search)
 	RegisterFunctionComplex("SEARCHB", Searchb)
+	RegisterFunction("SUBSTITUTE", Substitute)
 	RegisterFunction("T", T)
 	RegisterFunction("TEXT", Text)
 	RegisterFunction("TEXTJOIN", TextJoin)
@@ -380,6 +382,43 @@ func lower(arg Result) Result {
 	}
 }
 
+// Mid is an implementation of the Excel MID function that returns a copy
+// of the string with each word capitalized.
+func Mid(args []Result) Result {
+	if len(args) != 3 {
+		return MakeErrorResult("MID requires three arguments")
+	}
+	if args[0].Type != ResultTypeString {
+		return MakeErrorResult("MID requires text to be a string")
+	}
+	text := args[0].ValueString
+	if args[1].Type != ResultTypeNumber {
+		return MakeErrorResult("MID requires start_num to be a number")
+	}
+	startNum := int(args[1].ValueNumber)
+	if startNum < 1 {
+		return MakeErrorResult("MID requires start_num to be more than 0")
+	}
+	if args[2].Type != ResultTypeNumber {
+		return MakeErrorResult("MID requires num_chars to be a number")
+	}
+	numChars := int(args[2].ValueNumber)
+	if numChars < 0 {
+		return MakeErrorResult("MID requires num_chars to be non negative")
+	}
+	l := len(text)
+	if startNum > l {
+		return MakeStringResult("")
+	}
+	startNum--
+	endNum := startNum + numChars
+	if endNum > l + 1 {
+		return MakeStringResult(text[startNum:])
+	} else {
+		return MakeStringResult(text[startNum:endNum])
+	}
+}
+
 // Proper is an implementation of the Excel PROPER function that returns a copy
 // of the string with each word capitalized.
 func Proper(args []Result) Result {
@@ -532,6 +571,67 @@ func Searchb(ctx Context, ev Evaluator, args []Result) Result {
 		lastIndex = i
 	}
 	return MakeErrorResultType(ErrorTypeValue, "Not found")
+}
+
+// Substitute is an implementation of the Excel SUBSTITUTE function.
+func Substitute(args []Result) Result {
+	argsNum := len(args)
+	if argsNum != 3 && argsNum != 4 {
+		return MakeErrorResult("SUBSTITUTE requires three or four arguments")
+	}
+	text, errResult := getString(args[0], "SUBSTITUTE", "text")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	oldText, errResult := getString(args[1], "SUBSTITUTE", "old text")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	newText, errResult := getString(args[2], "SUBSTITUTE", "new text")
+	if errResult.Type == ResultTypeError {
+		return errResult
+	}
+	instanceNum := 0
+	if argsNum == 3 {
+		return MakeStringResult(strings.Replace(text, oldText, newText, -1))
+	} else {
+		instanceNumF, errResult := getNumber(args[3], "SUBSTITUTE", "instance_num")
+		if errResult.Type == ResultTypeError {
+			return errResult
+		}
+		instanceNum = int(instanceNumF)
+		if instanceNum < 1 {
+			return MakeErrorResult("instance_num should be more than zero")
+		}
+		textCopy := text
+		countdown := instanceNum
+		pos := -1
+		l := len(oldText)
+		thrownTotal := 0
+		for {
+			countdown--
+			index := strings.Index(textCopy, oldText)
+			if index == -1 {
+				pos = -1
+				break
+			} else {
+				pos = index + thrownTotal
+				if countdown == 0 {
+					break
+				}
+				thrown := l + index
+				thrownTotal += thrown
+				textCopy = textCopy[thrown:]
+			}
+		}
+		if pos == -1 {
+			return MakeStringResult(text)
+		} else {
+			pre := text[:pos]
+			post := text[pos+l:]
+			return MakeStringResult(pre + newText + post)
+		}
+	}
 }
 
 // T is an implementation of the Excel T function that returns whether the
@@ -750,5 +850,31 @@ func Text(args []Result) Result {
 		return MakeErrorResultType(ErrorTypeSpill, "TEXT doesn't work with arrays")
 	default:
 		return MakeErrorResult("Incorrect argument for TEXT")
+	}
+}
+
+func getString(arg Result, funcName, argName string) (string, Result) {
+	switch arg.Type {
+	case ResultTypeString, ResultTypeNumber, ResultTypeEmpty:
+		return arg.Value(), empty
+	default:
+		return "", MakeErrorResult(funcName + " requires " + argName + " to be a number or string")
+	}
+}
+
+func getNumber(arg Result, funcName, argName string) (float64, Result) {
+	switch arg.Type {
+	case ResultTypeEmpty:
+		return 0, empty
+	case ResultTypeNumber:
+		return arg.ValueNumber, empty
+	case ResultTypeString:
+			f, err := strconv.ParseFloat(arg.ValueString, 64)
+			if err != nil {
+				return 0, MakeErrorResult(argName + " should be a number for " + funcName)
+			}
+			return f, empty
+	default:
+		return 0, MakeErrorResult(funcName + " requires " + argName + " to be a number or empty")
 	}
 }

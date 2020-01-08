@@ -564,8 +564,29 @@ func TestMatch(t *testing.T) {
 	runTests(t, ctx, td)
 }
 
-func TestMaxA(t *testing.T) {
+func TestMax(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
 
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("B1").SetNumber(0.2)
+
+	sheet.Cell("A2").SetNumber(0.4)
+	sheet.Cell("B2").SetNumber(0.8)
+
+	sheet.Cell("A3").SetBool(true)
+	sheet.Cell("B3").SetBool(false)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`MAX(A1:B3)`, `0.8 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestMaxA(t *testing.T) {
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
@@ -587,8 +608,29 @@ func TestMaxA(t *testing.T) {
 	runTests(t, ctx, td)
 }
 
-func TestMinA(t *testing.T) {
+func TestMin(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
 
+	sheet.Cell("A1").SetNumber(0.1)
+	sheet.Cell("B1").SetNumber(0.2)
+
+	sheet.Cell("A2").SetNumber(0.4)
+	sheet.Cell("B2").SetNumber(0.8)
+
+	sheet.Cell("A3").SetBool(true)
+	sheet.Cell("B3").SetBool(false)
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`MIN(A1:B3)`, `0.1 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestMinA(t *testing.T) {
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
@@ -611,7 +653,6 @@ func TestMinA(t *testing.T) {
 }
 
 func TestIfs(t *testing.T) {
-
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
@@ -2738,6 +2779,114 @@ func TestYieldmat(t *testing.T) {
 		{`=YIELDMAT(A2,A1,A3,A4,A5,4)`, `#NUM! ResultTypeError`},
 		{`=YIELDMAT(A1,A2,A3,A4,A5,5)`, `#NUM! ResultTypeError`},
 		{`=YIELDMAT("hello world",A2,A3,A4,A5,4)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestMid(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=MID("Fluid Flow",1,5)`, `Fluid ResultTypeString`},
+		{`=MID("Fluid Flow",7,20)`, `Flow ResultTypeString`},
+		{`=MID("Fluid Flow",20,5)`, ` ResultTypeString`},
+		{`=MID("Fluid Flow",1,0)`, ` ResultTypeString`},
+		{`=MID("Fluid Flow",0,5)`, `#VALUE! ResultTypeError`},
+		{`=MID("Fluid Flow",7,-20)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestSubstitute(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	sheet.Cell("A1").SetString("Hello Earth Earth Earth")
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=SUBSTITUTE(A1,"Earth","Krypton",1)`, `Hello Krypton Earth Earth ResultTypeString`},
+		{`=SUBSTITUTE(A1,"Earth","Krypton",2)`, `Hello Earth Krypton Earth ResultTypeString`},
+		{`=SUBSTITUTE(A1,"Earth","Krypton",3)`, `Hello Earth Earth Krypton ResultTypeString`},
+		{`=SUBSTITUTE(A1,"Earth","Krypton",4)`, `Hello Earth Earth Earth ResultTypeString`},
+		{`=SUBSTITUTE(A1,"Earth","Krypton")`, `Hello Krypton Krypton Krypton ResultTypeString`},
+		{`=SUBSTITUTE(A1,"World","Krypton")`, `Hello Earth Earth Earth ResultTypeString`},
+		{`=SUBSTITUTE(A1,"Earth","Krypton",0)`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestAnd(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=AND(FALSE,FALSE)`, `0 ResultTypeNumber`},
+		{`=AND(TRUE,FALSE)`, `0 ResultTypeNumber`},
+		{`=AND(FALSE,TRUE)`, `0 ResultTypeNumber`},
+		{`=AND(TRUE,TRUE)`, `1 ResultTypeNumber`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestIferror(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=IFERROR("No error","ERROR")`, `No error ResultTypeString`},
+		{`=IFERROR(1/0,"ERROR")`, `ERROR ResultTypeString`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestChar(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=CHAR(65)`, `A ResultTypeString`},
+		{`=CHAR(255)`, `ÿ ResultTypeString`},
+		{`=CHAR(1000)`, `#VALUE! ResultTypeError`},
+		{`=CHAR("invalid")`, `#VALUE! ResultTypeError`},
+	}
+
+	runTests(t, ctx, td)
+}
+
+func TestRound(t *testing.T) {
+	ss := spreadsheet.New()
+	sheet := ss.AddSheet()
+
+	ctx := sheet.FormulaContext()
+
+	td := []testStruct{
+		{`=ROUND(2.14,1)`, `2.1 ResultTypeNumber`},
+		{`=ROUND(2.16,1)`, `2.2 ResultTypeNumber`},
+		{`=ROUND(-2.14,1)`, `-2.1 ResultTypeNumber`},
+		{`=ROUND(-2.16,1)`, `-2.2 ResultTypeNumber`},
+		{`=ROUND(21.5,-1)`, `20 ResultTypeNumber`},
+		{`=ROUND(21.5,-2)`, `0 ResultTypeNumber`},
+		{`=ROUND(-55.5,-1)`, `-60 ResultTypeNumber`},
+		{`=ROUND(-55.5,-2)`, `-100 ResultTypeNumber`},
+		{`=ROUND(-55.5,0)`, `-56 ResultTypeNumber`},
+		{`=ROUND(-55.4,)`, `-55 ResultTypeNumber`},
+		{`=ROUND(-55.4)`, `#VALUE! ResultTypeError`},
 	}
 
 	runTests(t, ctx, td)
