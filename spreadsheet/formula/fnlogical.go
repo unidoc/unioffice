@@ -19,7 +19,6 @@ func init() {
 	RegisterFunction("OR", Or)
 	RegisterFunction("TRUE", True)
 	RegisterFunction("_xlfn.XOR", Xor)
-
 }
 
 // And is an implementation of the Excel AND() function.
@@ -91,36 +90,63 @@ func If(args []Result) Result {
 		// false case
 		if len(args) == 3 {
 			return args[2]
+		} else {
+			return MakeBoolResult(false)
 		}
 	case ResultTypeList:
-		return MakeListResult(ifList(args))
+		return ifList(args)
 	case ResultTypeArray:
 		return ifArray(args)
 
 	default:
 		return MakeErrorResult("IF initial argument must be numeric or array")
 	}
-	return MakeBoolResult(false)
 }
 
 func fillArray(arg Result, rows, cols int) [][]Result {
-	array := [][]Result{}
+	result := [][]Result{}
 	switch arg.Type {
 	case ResultTypeArray:
-		return arg.ValueArray
-	case ResultTypeNumber, ResultTypeString:
-		for r := 0; r < rows; r++ {
-			list := []Result{}
-			for c := 0; c < cols; c++ {
-				list = append(list, arg)
+		for ir, row := range arg.ValueArray {
+			if ir < rows {
+				result = append(result, fillList(MakeListResult(row), cols))
+			} else {
+				result = append(result, fillList(MakeErrorResultType(ErrorTypeNA, ""), cols))
 			}
-			array = append(array, list)
 		}
-		return array
 	case ResultTypeList:
-		return [][]Result{arg.ValueList}
+		list := fillList(arg, cols)
+		for r := 0; r < rows; r++ {
+			result = append(result, list)
+		}
+	case ResultTypeNumber, ResultTypeString, ResultTypeError, ResultTypeEmpty:
+		for r := 0; r < rows; r++ {
+			list := fillList(arg, cols)
+			result = append(result, list)
+		}
 	}
-	return [][]Result{}
+	return result
+}
+
+func fillList(arg Result, cols int) []Result {
+	list := []Result{}
+	switch arg.Type {
+	case ResultTypeList:
+		valueList := arg.ValueList
+		maxCols := len(valueList)
+		for ic := 0; ic < cols; ic++ {
+			if ic < maxCols {
+				list = append(list, valueList[ic])
+			} else {
+				list = append(list, MakeErrorResultType(ErrorTypeNA, ""))
+			}
+		}
+	case ResultTypeNumber, ResultTypeString, ResultTypeError, ResultTypeEmpty:
+		for ic := 0; ic < cols; ic++ {
+			list = append(list, arg)
+		}
+	}
+	return list
 }
 
 func ifArray(args []Result) Result {
@@ -129,7 +155,7 @@ func ifArray(args []Result) Result {
 	if len(args) == 1 {
 		result := [][]Result{}
 		for _, v := range condArray {
-			result = append(result, ifList([]Result{MakeListResult(v)}))
+			result = append(result, ifList([]Result{MakeListResult(v)}).ValueList)
 		}
 		return MakeArrayResult(result)
 	} else if len(args) == 2 {
@@ -143,12 +169,9 @@ func ifArray(args []Result) Result {
 			if i < tl {
 				truesList = truesArray[i]
 			} else {
-				truesList = []Result{}
-				for j := 0; j < cols; j++ {
-					truesList = append(truesList, MakeErrorResultType(ErrorTypeValue, ""))
-				}
+				truesList = fillList(MakeErrorResultType(ErrorTypeNA, ""), cols)
 			}
-			result = append(result, ifList([]Result{MakeListResult(v), MakeListResult(truesList)}))
+			result = append(result, ifList([]Result{MakeListResult(v), MakeListResult(truesList)}).ValueList)
 		}
 		return MakeArrayResult(result)
 	} else if len(args) == 3 {
@@ -164,85 +187,141 @@ func ifArray(args []Result) Result {
 			if i < tl {
 				truesList = truesArray[i]
 			} else {
-				truesList = []Result{}
-				for j := 0; j < cols; j++ {
-					truesList = append(truesList, MakeErrorResultType(ErrorTypeValue, ""))
-				}
+				truesList = fillList(MakeErrorResultType(ErrorTypeNA, ""), cols)
 			}
 			if i < fl {
 				falsesList = falsesArray[i]
 			} else {
-				falsesList = []Result{}
-				for j := 0; j < cols; j++ {
-					falsesList = append(falsesList, MakeErrorResultType(ErrorTypeValue, ""))
-				}
+				falsesList = fillList(MakeErrorResultType(ErrorTypeNA, ""), cols)
 			}
-			result = append(result, ifList([]Result{MakeListResult(v), MakeListResult(truesList), MakeListResult(falsesList)}))
+			result = append(result, ifList([]Result{MakeListResult(v), MakeListResult(truesList), MakeListResult(falsesList)}).ValueList)
 		}
 		return MakeArrayResult(result)
 	}
 	return MakeErrorResultType(ErrorTypeValue, "")
 }
 
-func ifList(args []Result) []Result {
+func ifList(args []Result) Result {
 	condList := args[0].ValueList
+	cols := len(condList)
+	switch len(args) {
 	// single argument returns list of contitions
-	if len(args) == 1 {
+	case 1:
 		result := []Result{}
 		for _, v := range condList {
 			result = append(result, MakeBoolResult(v.ValueNumber != 0))
 		}
-		return result
-	}
-
+		return MakeListResult(result)
 	// two arguments case
-	if len(args) == 2 {
-		trues := args[1].ValueList
-		tl := len(trues)
-		result := []Result{}
-		for i, v := range condList {
-			var newValue Result
-			if v.ValueNumber == 0 {
-				newValue = MakeBoolResult(false)
-			} else {
-				if i < tl {
-					newValue = trues[i]
+	case 2:
+		trues := args[1]
+		switch trues.Type {
+		case ResultTypeNumber, ResultTypeString, ResultTypeEmpty:
+			result := []Result{}
+			for _, v := range condList {
+				var newValue Result
+				if v.ValueNumber == 0 {
+					newValue = MakeBoolResult(false)
 				} else {
-					newValue = MakeErrorResultType(ErrorTypeValue, "")
+					newValue = trues
 				}
+				result = append(result, newValue)
 			}
-			result = append(result, newValue)
+			return MakeListResult(result)
+		case ResultTypeList:
+			truesList := fillList(trues, cols)
+			result := []Result{}
+			for i, v := range condList {
+				var newValue Result
+				if v.ValueNumber == 0 {
+					newValue = MakeBoolResult(false)
+				} else {
+					newValue = truesList[i]
+				}
+				result = append(result, newValue)
+			}
+			return MakeListResult(result)
+		case ResultTypeArray:
+			truesArray := fillArray(trues, len(trues.ValueArray), cols)
+			result := [][]Result{}
+			for _, row := range truesArray {
+				rowResult := []Result{}
+				for ic, v := range condList {
+					var newValue Result
+					if v.ValueNumber == 0 {
+						newValue = MakeBoolResult(false)
+					} else {
+						newValue = row[ic]
+					}
+					rowResult = append(rowResult, newValue)
+				}
+				result = append(result, rowResult)
+			}
+			return MakeArrayResult(result)
 		}
-		return result
-	}
-
 	// false case
-	if len(args) == 3 {
-		trues := args[1].ValueList
-		falses := args[2].ValueList
-		tl := len(trues)
-		tf := len(falses)
-		result := []Result{}
-		for i, v := range condList {
-			var newValue Result
-			if v.ValueNumber != 0 {
-				if i < tl {
-					newValue = trues[i]
+	case 3:
+		trues := args[1]
+		falses := args[2]
+		truesSingleValue := checkSingleValue(trues)
+		falsesSingleValue := checkSingleValue(falses)
+		if truesSingleValue && falsesSingleValue {
+			result := []Result{}
+			for _, v := range condList {
+				var newValue Result
+				if v.ValueNumber == 0 {
+					newValue = falses
 				} else {
-					newValue = MakeErrorResultType(ErrorTypeValue, "")
+					newValue = trues
 				}
-			} else {
-				if i < tf {
-					newValue = falses[i]
-				} else {
-					newValue = MakeErrorResultType(ErrorTypeValue, "")
-				}
+				result = append(result, newValue)
 			}
-			result = append(result, newValue)
+			return MakeListResult(result)
 		}
-		return result
+
+		if trues.Type != ResultTypeArray && falses.Type != ResultTypeArray {
+			truesList := fillList(trues, cols)
+			falsesList := fillList(falses, cols)
+			result := []Result{}
+			for i, v := range condList {
+				var newValue Result
+				if v.ValueNumber == 0 {
+					newValue = falsesList[i]
+				} else {
+					newValue = truesList[i]
+				}
+				result = append(result, newValue)
+			}
+			return MakeListResult(result)
+		}
+		maxRows := len(trues.ValueArray)
+		if len(falses.ValueArray) > maxRows {
+			maxRows = len(falses.ValueArray)
+		}
+		truesArray := fillArray(trues, maxRows, cols)
+		falsesArray := fillArray(falses, maxRows, cols)
+		result := [][]Result{}
+		for ir := 0; ir < maxRows; ir++ {
+			rowResult := []Result{}
+			for ic, v := range condList {
+				var newValue Result
+				if v.ValueNumber == 0 {
+					newValue = falsesArray[ir][ic]
+				} else {
+					newValue = truesArray[ir][ic]
+				}
+				rowResult = append(rowResult, newValue)
+			}
+			result = append(result, rowResult)
+		}
+		return MakeArrayResult(result)
 	}
-	return []Result{}
+	return MakeErrorResult("")
+}
+
+func checkSingleValue(result Result) bool {
+	t := result.Type
+	return t != ResultTypeArray && t != ResultTypeList
 }
 
 // IfError is an implementation of the Excel IFERROR() function. It takes two arguments.

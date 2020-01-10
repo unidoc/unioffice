@@ -771,7 +771,7 @@ func YearFrac(args []Result) Result {
 	basis := 0
 	if argsNum == 3 && args[2].Type != ResultTypeEmpty {
 		if args[2].Type != ResultTypeNumber {
-			return MakeErrorResult("YEARFRAC requires two or three number arguments")
+			return MakeErrorResult("YEARFRAC requires basis argument to be a number")
 		}
 		basis = int(args[2].ValueNumber)
 		if !checkBasis(basis) {

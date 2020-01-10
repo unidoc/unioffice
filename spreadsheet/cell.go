@@ -293,6 +293,13 @@ func (c Cell) SetBool(v bool) {
 	c.x.TAttr = sml.ST_CellTypeB
 }
 
+// SetError sets the cell type to error and the value to the given error message.
+func (c Cell) SetError(msg string) {
+	c.clearValue()
+	c.x.V = unioffice.String(msg)
+	c.x.TAttr = sml.ST_CellTypeE
+}
+
 // GetValueAsBool retrieves the cell's value as a boolean
 func (c Cell) GetValueAsBool() (bool, error) {
 	if c.x.TAttr != sml.ST_CellTypeB {

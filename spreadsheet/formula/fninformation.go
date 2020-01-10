@@ -295,7 +295,7 @@ func IsLogical(ctx Context, ev Evaluator, args []Result) Result {
 		return MakeErrorResult("ISLOGICAL requires the first argument to be of type reference")
 	}
 
-	return MakeBoolResult(ctx.IsBool(ref.Value))
+	return MakeBoolResult(ctx.Cell(ref.Value, ev).IsBoolean)
 }
 
 // IsNA is an implementation of the Excel ISNA() function.
