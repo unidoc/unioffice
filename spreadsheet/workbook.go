@@ -105,6 +105,7 @@ func (wb *Workbook) AddSheet() Sheet {
 var sstAbsTargetAttr = unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.SharedStringsType, 0)
 var sstRelTargetAttr = unioffice.RelativeFilename(unioffice.DocTypeSpreadsheet, unioffice.OfficeDocumentType, unioffice.SharedStringsType, 0)
 
+// ensureSharedStringsRelationships checks if relationships and content types related to shared strings are already exist and add them in the case of absence.
 func (wb *Workbook) ensureSharedStringsRelationships() {
 	foundSharedStringContentType := false
 	for _, o := range wb.ContentTypes.X().Override {
