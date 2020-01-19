@@ -920,12 +920,14 @@ func TestIsLogical(t *testing.T) {
 	sheet.Cell("A2").SetBool(false)
 	sheet.Cell("A3").SetNumber(0)
 	sheet.Cell("A4").SetString("FALSE")
+	sheet.Cell("A5").SetFormulaRaw("=1=2")
 
 	td := []testStruct{
 		{`=ISLOGICAL(A1)`, `1 ResultTypeNumber`},
 		{`=ISLOGICAL(A2)`, `1 ResultTypeNumber`},
 		{`=ISLOGICAL(A3)`, `0 ResultTypeNumber`},
 		{`=ISLOGICAL(A4)`, `0 ResultTypeNumber`},
+		{`=ISLOGICAL(A5)`, `1 ResultTypeNumber`},
 	}
 
 	ctx := sheet.FormulaContext()

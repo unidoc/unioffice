@@ -15,11 +15,21 @@ import (
 // ParseRangeReference splits a range reference of the form "A1:B5" into its
 // components.
 func ParseRangeReference(s string) (from, to CellReference, err error) {
+	sheetName := ""
+	sp0 := strings.Split(s, "!")
+	if len(sp0) == 2 {
+		sheetName = sp0[0]
+		s = sp0[1]
+	}
 	sp := strings.Split(s, ":")
 	if len(sp) != 2 {
 		return CellReference{}, CellReference{}, errors.New("invalid range format")
 	}
 
+	if sheetName != "" {
+		sp[0] = sheetName + "!" + sp[0]
+		sp[1] = sheetName + "!" + sp[1]
+	}
 	fromRef, err := ParseCellReference(sp[0])
 	if err != nil {
 		return CellReference{}, CellReference{}, err

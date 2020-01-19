@@ -293,7 +293,7 @@ func Offset(ctx Context, ev Evaluator, args []Result) Result {
 		return MakeErrorResult(fmt.Sprintf("Invalid range in OFFSET(): %s", ref.Type))
 	}
 
-	col, rowIdx, err := ParseCellReference(origin)
+	col, rowIdx, sheetName, err := ParseCellReference(origin)
 	if err != nil {
 		return MakeErrorResult(fmt.Sprintf("parse origin error OFFSET(): %s", err))
 	}
@@ -348,7 +348,11 @@ func Offset(ctx Context, ev Evaluator, args []Result) Result {
 
 	beg := fmt.Sprintf("%s%d", reference.IndexToColumn(origCol), origRow)
 	end := fmt.Sprintf("%s%d", reference.IndexToColumn(endCol), endRow)
-	return resultFromCellRange(ctx, ev, beg, end)
+	if sheetName == "" {
+		return resultFromCellRange(ctx, ev, beg, end)
+	} else {
+		return resultFromCellRange(ctx.Sheet(sheetName), ev, beg, end)
+	}
 }
 
 // VLookup implements the VLOOKUP function that returns a matching value from a

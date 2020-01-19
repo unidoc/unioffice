@@ -30,5 +30,10 @@ func (p PrefixExpr) Eval(ctx Context, ev Evaluator) Result {
 }
 
 func (p PrefixExpr) Reference(ctx Context, ev Evaluator) Reference {
+	pfx := p.pfx.Reference(ctx, ev)
+	exp := p.exp.Reference(ctx, ev)
+	if pfx.Type == ReferenceTypeSheet && exp.Type == ReferenceTypeCell {
+		return Reference{Type: ReferenceTypeCell, Value: pfx.Value + "!" + exp.Value}
+	}
 	return ReferenceInvalid
 }

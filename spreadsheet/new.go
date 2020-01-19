@@ -40,8 +40,8 @@ func New() *Workbook {
 	wb.ContentTypes.AddOverride(unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.StylesType, 0), unioffice.SMLStyleSheetContentType)
 
 	wb.SharedStrings = NewSharedStrings()
-	wb.ContentTypes.AddOverride(unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.SharedStingsType, 0), unioffice.SharedStringsContentType)
-	wb.wbRels.AddRelationship(unioffice.RelativeFilename(unioffice.DocTypeSpreadsheet, unioffice.OfficeDocumentType, unioffice.SharedStingsType, 0), unioffice.SharedStingsType)
+	wb.ContentTypes.AddOverride(unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.SharedStringsType, 0), unioffice.SharedStringsContentType)
+	wb.wbRels.AddRelationship(unioffice.RelativeFilename(unioffice.DocTypeSpreadsheet, unioffice.OfficeDocumentType, unioffice.SharedStringsType, 0), unioffice.SharedStringsType)
 
 	return wb
 }

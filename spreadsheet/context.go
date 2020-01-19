@@ -66,6 +66,12 @@ func (e *evalContext) Cell(ref string, ev formula.Evaluator) formula.Result {
 	}
 
 	v, _ := c.GetRawValue()
+
+	if c.IsError() {
+		errRes := formula.MakeErrorResult("")
+		errRes.ValueString = v
+		return errRes
+	}
 	return formula.MakeStringResult(v)
 }
 

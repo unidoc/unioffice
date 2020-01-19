@@ -45,8 +45,13 @@ func (r Range) Reference(ctx Context, ev Evaluator) Reference {
 }
 
 // TODO: move these somewhere to remove duplication
-func ParseCellReference(s string) (col string, row uint32, err error) {
+func ParseCellReference(s string) (col string, row uint32, sheetName string, err error) {
+	sheetName = ""
 	s = strings.Replace(s, "$", "", -1)
+	sl := strings.Split(s, "!")
+	if len(sl) == 2 {
+		sheetName, s = sl[0], sl[1]
+	}
 	split := -1
 lfor:
 	for i := 0; i < len(s); i++ {
@@ -58,20 +63,20 @@ lfor:
 	}
 	switch split {
 	case 0:
-		return col, row, fmt.Errorf("no letter prefix in %s", s)
+		return col, row, sheetName, fmt.Errorf("no letter prefix in %s", s)
 	case -1:
-		return col, row, fmt.Errorf("no digits in %s", s)
+		return col, row, sheetName, fmt.Errorf("no digits in %s", s)
 	}
 
 	col = s[0:split]
 	r64, err := strconv.ParseUint(s[split:], 10, 32)
 	row = uint32(r64)
-	return col, row, err
+	return col, row, sheetName, err
 }
 
 func resultFromCellRange(ctx Context, ev Evaluator, from, to string) Result {
-	fc, fr, fe := ParseCellReference(from)
-	tc, tr, te := ParseCellReference(to)
+	fc, fr, _, fe := ParseCellReference(from)
+	tc, tr, _, te := ParseCellReference(to)
 	if fe != nil {
 		return MakeErrorResult("unable to parse range " + from)
 	}

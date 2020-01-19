@@ -79,6 +79,7 @@ constArrayCols:
 reference: 
 	  referenceItem
     | prefix referenceItem { $$ = NewPrefixExpr($1,$2)}
+    | prefix referenceItem tokenColon referenceItem { $$ = NewPrefixRangeExpr($1,$2,$4)}
 	| refFunctionCall;
 
 prefix: tokenSheet { $$ = NewSheetPrefixExpr($1.val) };

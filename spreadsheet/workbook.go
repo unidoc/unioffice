@@ -102,6 +102,32 @@ func (wb *Workbook) AddSheet() Sheet {
 	return Sheet{wb, rs, ws}
 }
 
+var sstAbsTargetAttr = unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.SharedStringsType, 0)
+var sstRelTargetAttr = unioffice.RelativeFilename(unioffice.DocTypeSpreadsheet, unioffice.OfficeDocumentType, unioffice.SharedStringsType, 0)
+
+func (wb *Workbook) ensureSharedStringsRelationships() {
+	foundSharedStringContentType := false
+	for _, o := range wb.ContentTypes.X().Override {
+		if o.ContentTypeAttr == unioffice.SharedStringsContentType {
+			foundSharedStringContentType = true
+			break
+		}
+	}
+	if !foundSharedStringContentType {
+		wb.ContentTypes.AddOverride(sstAbsTargetAttr, unioffice.SharedStringsContentType)
+	}
+	foundSharedStringRel := false
+	for _, rel := range wb.wbRels.Relationships() {
+		if rel.X().TargetAttr == sstRelTargetAttr {
+			foundSharedStringRel = true
+			break
+		}
+	}
+	if !foundSharedStringRel {
+		wb.wbRels.AddRelationship(sstRelTargetAttr, unioffice.SharedStringsType)
+	}
+}
+
 // RemoveSheet removes the sheet with the given index from the workbook.
 func (wb *Workbook) RemoveSheet(ind int) error {
 	if wb.SheetCount() <= ind {
@@ -314,7 +340,7 @@ func (wb *Workbook) Save(w io.Writer) error {
 		zippkg.MarshalXML(z, fn, sheet)
 		zippkg.MarshalXML(z, zippkg.RelationsPathFor(fn), wb.xwsRels[i].X())
 	}
-	if err := zippkg.MarshalXMLByType(z, dt, unioffice.SharedStingsType, wb.SharedStrings.X()); err != nil {
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.SharedStringsType, wb.SharedStrings.X()); err != nil {
 		return err
 	}
 
@@ -470,7 +496,7 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		decMap.AddTarget(target, thm, typ, 0)
 		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(wb.themes))
 
-	case unioffice.SharedStingsType:
+	case unioffice.SharedStringsType:
 		wb.SharedStrings = NewSharedStrings()
 		decMap.AddTarget(target, wb.SharedStrings.X(), typ, 0)
 		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)

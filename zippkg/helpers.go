@@ -78,8 +78,8 @@ func Decode(f *zip.File, dest interface{}) error {
 			// SML
 			case unioffice.WorksheetTypeStrict:
 				ds.Relationship[i].TypeAttr = unioffice.WorksheetType
-			case unioffice.SharedStingsTypeStrict:
-				ds.Relationship[i].TypeAttr = unioffice.SharedStingsType
+			case unioffice.SharedStringsTypeStrict:
+				ds.Relationship[i].TypeAttr = unioffice.SharedStringsType
 			case unioffice.TableTypeStrict:
 				ds.Relationship[i].TypeAttr = unioffice.TableType
 

@@ -22,6 +22,7 @@ type CellReference struct {
 	Column         string
 	AbsoluteColumn bool
 	AbsoluteRow    bool
+	SheetName      string
 }
 
 func (c CellReference) String() string {
@@ -44,8 +45,13 @@ func ParseCellReference(s string) (CellReference, error) {
 	if len(s) < 2 {
 		return CellReference{}, errors.New("cell reference must have at least two characters")
 	}
-	r := CellReference{}
 
+	r := CellReference{}
+	sl := strings.Split(s, "!")
+	if len(sl) == 2 {
+		r.SheetName = sl[0]
+		s = sl[1]
+	}
 	// check for absolute column
 	if s[0] == '$' {
 		r.AbsoluteColumn = true
