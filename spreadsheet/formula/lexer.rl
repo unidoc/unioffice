@@ -37,7 +37,7 @@ import (
   builtinFunction = [A-Z] [A-Z0-9.]*  '(';
   excelFn = '_xlfn.' [A-Z_] [A-Z0-9.]* '(';  
 
-  sheetChar = ^['%\[\]\\:/?();{}#"=<>&+\-*/^%,_!];
+  sheetChar = ^['%\[\]\\:/?();{}#"=<>&+\-*/^%,!];
   enclosedSheetChar = ^['*\[\]\\:\/?];
 
   number = [0-9]+ '.'? [0-9]* ('e' [0-9]+)?;
