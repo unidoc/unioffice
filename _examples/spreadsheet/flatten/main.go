@@ -18,7 +18,7 @@ func main() {
 	sheets := ss.Sheets()
 
 	for _, sheet := range sheets {
-		sheet.RecalculateFormulas()
+		log.Println("Flattening sheet:", sheet.Name())
 		ctx := sheet.FormulaContext()
 		formEv := formula.NewEvaluator()
 		for _, row := range sheet.Rows() {
