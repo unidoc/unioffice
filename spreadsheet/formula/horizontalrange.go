@@ -18,7 +18,7 @@ type HorizontalRange struct {
 	rowFrom, rowTo int
 }
 
-// NewHorizontalRange constructs a new full row range.
+// NewHorizontalRange constructs a new full rows range.
 func NewHorizontalRange(v string) Expression {
 	sl := strings.Split(v, ":")
 	if len(sl) != 2 {
@@ -31,16 +31,17 @@ func NewHorizontalRange(v string) Expression {
 
 // Eval evaluates the range returning a list of results or an error.
 func (r HorizontalRange) Eval(ctx Context, ev Evaluator) Result {
-	rowFrom := r.rowFrom
-	rowTo := r.rowTo
-
-	from := "A" + strconv.Itoa(rowFrom)
-	lastColumn := ctx.LastColumn(rowFrom, rowTo)
-	to := lastColumn + strconv.Itoa(rowTo)
-	
+	from, to := cellRefsFromHorizontalRange(ctx, r.rowFrom, r.rowTo)
 	return resultFromCellRange(ctx, ev, from, to)
 }
 
 func (r HorizontalRange) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeHorizontalRange, Value: fmt.Sprintf("%d:%d", r.rowFrom, r.rowTo)}
+}
+
+func cellRefsFromHorizontalRange(ctx Context, rowFrom, rowTo int) (string, string) {
+	from := "A" + strconv.Itoa(rowFrom)
+	lastColumn := ctx.LastColumn(rowFrom, rowTo)
+	to := lastColumn + strconv.Itoa(rowTo)
+	return from, to
 }

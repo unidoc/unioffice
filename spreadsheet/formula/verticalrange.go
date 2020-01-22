@@ -18,7 +18,7 @@ type VerticalRange struct {
 	colFrom, colTo string
 }
 
-// NewVerticalRange constructs a new full row range.
+// NewVerticalRange constructs a new full columns range.
 func NewVerticalRange(v string) Expression {
 	sl := strings.Split(v, ":")
 	if len(sl) != 2 {
@@ -29,16 +29,17 @@ func NewVerticalRange(v string) Expression {
 
 // Eval evaluates the range returning a list of results or an error.
 func (r VerticalRange) Eval(ctx Context, ev Evaluator) Result {
-	colFrom := r.colFrom
-	colTo := r.colTo
-
-	from := colFrom + "1"
-	lastRow := ctx.LastRow(colFrom)
-	to := colTo + strconv.Itoa(lastRow)
-	
+	from, to := cellRefsFromVerticalRange(ctx, r.colFrom, r.colTo)
 	return resultFromCellRange(ctx, ev, from, to)
 }
 
 func (r VerticalRange) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeVerticalRange, Value: fmt.Sprintf("%s:%s", r.colFrom, r.colTo)}
+}
+
+func cellRefsFromVerticalRange(ctx Context, colFrom, colTo string) (string, string) {
+	from := colFrom + "1"
+	lastRow := ctx.LastRow(colFrom)
+	to := colTo + strconv.Itoa(lastRow)
+	return from, to
 }

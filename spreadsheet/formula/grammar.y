@@ -92,7 +92,9 @@ refFunctionCall:
 	  referenceItem tokenColon referenceItem { $$ = NewRange($1,$3) }
 	| prefix referenceItem tokenColon referenceItem { $$ = NewPrefixRangeExpr($1,$2,$4)}
 	| tokenHorizontalRange { $$ = NewHorizontalRange($1.val) }
-	| tokenVerticalRange { $$ = NewVerticalRange($1.val) };
+	| tokenVerticalRange { $$ = NewVerticalRange($1.val) }
+	| prefix tokenHorizontalRange { $$ = NewPrefixHorizontalRange($1,$2.val) }
+	| prefix tokenVerticalRange { $$ = NewPrefixVerticalRange($1,$2.val) };
 
            
 binOp: 
