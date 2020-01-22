@@ -46,6 +46,12 @@ type Context interface {
 	// IsDBCS returns if workbook default language is among DBCS.
 	IsDBCS() bool
 
+	// LastColumn returns the name of last column which contains data in range of context sheet's given rows.
+	LastColumn(rowFrom, rowTo int) string
+
+	// LastRow returns the name of last row which contains data in range of context sheet's given columns.
+	LastRow(colFrom string) int
+
 	// SetLocked returns sets cell's protected attribute.
 	SetLocked(cellRef string, locked bool)
 

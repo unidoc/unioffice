@@ -179,3 +179,33 @@ func (e *evalContext) IsDBCS() bool {
 	}
 	return false
 }
+
+// LastColumn returns the name of last column which contains data in range of context sheet's given rows.
+func (e *evalContext) LastColumn(rowFrom, rowTo int) string {
+	sheet := e.s
+	max := 1
+	for row := rowFrom; row <= rowTo; row++ {
+		l := len(sheet.Row(uint32(row)).Cells())
+		if l > max {
+			max = l
+		}
+	}
+	return reference.IndexToColumn(uint32(max-1))
+}
+
+// LastRow returns the name of last row which contains data in range of context sheet's given columns.
+func (e *evalContext) LastRow(col string) int {
+	sheet := e.s
+	colIdx := int(reference.ColumnToIndex(col))
+	max := 1
+	for _, r := range sheet.x.SheetData.Row {
+		if r.RAttr != nil {
+			row := Row{sheet.w, sheet.x, r}
+			l := len(row.Cells())
+			if l > colIdx {
+				max = int(row.RowNumber())
+			}
+		}
+	}
+	return max
+}

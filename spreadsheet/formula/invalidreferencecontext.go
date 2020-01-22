@@ -82,3 +82,13 @@ func (i *ivr) IsBool(cellRef string) bool {
 func (i *ivr) IsDBCS() bool {
 	return false
 }
+
+// LastColumn returns empty string for the invalid reference context.
+func (i *ivr) LastColumn(rowFrom, rowTo int) string {
+	return ""
+}
+
+// LastRow returns 0 for the invalid reference context.
+func (i *ivr) LastRow(colFrom string) int {
+	return 0
+}

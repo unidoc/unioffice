@@ -23,7 +23,7 @@ package formula
 %type <rows> constArrayRows
 %type <args> arguments  constArrayCols
 
-%token <node> tokenHorizontalRange tokenReservedName tokenDDECall  tokenLexError tokenNamedRange
+%token <node> tokenHorizontalRange tokenVerticalRange tokenReservedName tokenDDECall  tokenLexError tokenNamedRange
 %token <node> tokenBool tokenNumber tokenString tokenError tokenErrorRef  tokenSheet tokenCell
 %token <node> tokenFunctionBuiltin 
 
@@ -78,8 +78,7 @@ constArrayCols:
 
 reference: 
 	  referenceItem
-    | prefix referenceItem { $$ = NewPrefixExpr($1,$2)}
-    | prefix referenceItem tokenColon referenceItem { $$ = NewPrefixRangeExpr($1,$2,$4)}
+	| prefix referenceItem { $$ = NewPrefixExpr($1,$2)}
 	| refFunctionCall;
 
 prefix: tokenSheet { $$ = NewSheetPrefixExpr($1.val) };
@@ -90,7 +89,10 @@ referenceItem:
 	;
 
 refFunctionCall:
-	  referenceItem tokenColon referenceItem { $$ = NewRange($1,$3) };
+	  referenceItem tokenColon referenceItem { $$ = NewRange($1,$3) }
+	| prefix referenceItem tokenColon referenceItem { $$ = NewPrefixRangeExpr($1,$2,$4)}
+	| tokenHorizontalRange { $$ = NewHorizontalRange($1.val) }
+	| tokenVerticalRange { $$ = NewVerticalRange($1.val) };
 
            
 binOp: 

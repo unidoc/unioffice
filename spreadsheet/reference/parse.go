@@ -22,7 +22,7 @@ func ColumnToIndex(col string) uint32 {
 	return res - 1
 }
 
-// IndexToColumn maps a column number to a coumn name (e.g. 0 = A, 1 = B, 26 = AA)
+// IndexToColumn maps a column number to a column name (e.g. 0 = A, 1 = B, 26 = AA)
 func IndexToColumn(col uint32) string {
 	var a [64 + 1]byte
 	i := len(a)
