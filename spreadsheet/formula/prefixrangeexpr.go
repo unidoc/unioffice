@@ -25,13 +25,24 @@ func (p PrefixRangeExpr) Eval(ctx Context, ev Evaluator) Result {
 	to := p.to.Reference(ctx, ev)
 	switch pfx.Type {
 	case ReferenceTypeSheet:
+		ref := prefixRangeReference(pfx, from, to)
 		if from.Type == ReferenceTypeCell && to.Type == ReferenceTypeCell {
-			return resultFromCellRange(ctx.Sheet(pfx.Value), ev, from.Value, to.Value)
+			if cached, found := ev.GetFromCache(ref); found {
+				return cached
+			} else {
+				result := resultFromCellRange(ctx.Sheet(pfx.Value), ev, from.Value, to.Value)
+				ev.SetCache(ref, result)
+				return result
+			}
 		}
-		return MakeErrorResult("invalid range " + from.Value + " to " + to.Value)
+		return MakeErrorResult("invalid range " + ref)
 	default:
 		return MakeErrorResult(fmt.Sprintf("no support for reference type %s", pfx.Type))
 	}
+}
+
+func prefixRangeReference(pfx, from, to Reference) string {
+	return fmt.Sprintf("%s!%s:%s", pfx.Value, from.Value, to.Value)
 }
 
 func (p PrefixRangeExpr) Reference(ctx Context, ev Evaluator) Reference {
@@ -39,7 +50,7 @@ func (p PrefixRangeExpr) Reference(ctx Context, ev Evaluator) Reference {
 	from := p.from.Reference(ctx, ev)
 	to := p.to.Reference(ctx, ev)
 	if pfx.Type == ReferenceTypeSheet && from.Type == ReferenceTypeCell && to.Type == ReferenceTypeCell {
-		return MakeRangeReference(pfx.Value + "!" + from.Value + ":" + to.Value)
+		return MakeRangeReference(prefixRangeReference(pfx, from, to))
 	}
 	return ReferenceInvalid
 }

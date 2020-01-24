@@ -35,15 +35,25 @@ func (r PrefixHorizontalRange) Eval(ctx Context, ev Evaluator) Result {
 	pfx := r.pfx.Reference(ctx, ev)
 	switch pfx.Type {
 	case ReferenceTypeSheet:
+		ref := r.horizontalRangeReference(pfx.Value)
+		if cached, found := ev.GetFromCache(ref); found {
+			return cached
+		}
 		c := ctx.Sheet(pfx.Value)
 		from, to := cellRefsFromHorizontalRange(c, r.rowFrom, r.rowTo)
-		return resultFromCellRange(c, ev, from, to)
+		result := resultFromCellRange(c, ev, from, to)
+		ev.SetCache(ref, result)
+		return result
 	default:
 		return MakeErrorResult(fmt.Sprintf("no support for reference type %s", pfx.Type))
 	}
 }
 
+func (r PrefixHorizontalRange) horizontalRangeReference(sheetName string) string {
+	return fmt.Sprintf("%s!%d:%d", sheetName, r.rowFrom, r.rowTo)
+}
+
 func (r PrefixHorizontalRange) Reference(ctx Context, ev Evaluator) Reference {
 	pfx := r.pfx.Reference(ctx, ev)
-	return Reference{Type: ReferenceTypeHorizontalRange, Value: fmt.Sprintf("%s!%d:%d", pfx.Value, r.rowFrom, r.rowTo)}
+	return Reference{Type: ReferenceTypeHorizontalRange, Value: r.horizontalRangeReference(pfx.Value)}
 }

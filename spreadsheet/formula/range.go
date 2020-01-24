@@ -29,17 +29,28 @@ func NewRange(from, to Expression) Expression {
 func (r Range) Eval(ctx Context, ev Evaluator) Result {
 	from := r.from.Reference(ctx, ev)
 	to := r.to.Reference(ctx, ev)
+	ref := rangeReference(from, to)
 	if from.Type == ReferenceTypeCell && to.Type == ReferenceTypeCell {
-		return resultFromCellRange(ctx, ev, from.Value, to.Value)
+		if cached, found := ev.GetFromCache(ref); found {
+			return cached
+		} else {
+			result := resultFromCellRange(ctx, ev, from.Value, to.Value)
+			ev.SetCache(ref, result)
+			return result
+		}
 	}
-	return MakeErrorResult("invalid range " + from.Value + " to " + to.Value)
+	return MakeErrorResult("invalid range " + ref)
+}
+
+func rangeReference(from, to Reference) string {
+	return fmt.Sprintf("%s:%s", from.Value, to.Value)
 }
 
 func (r Range) Reference(ctx Context, ev Evaluator) Reference {
 	from := r.from.Reference(ctx, ev)
 	to := r.to.Reference(ctx, ev)
 	if from.Type == ReferenceTypeCell && to.Type == ReferenceTypeCell {
-		return MakeRangeReference(from.Value + ":" + to.Value)
+		return MakeRangeReference(rangeReference(from, to))
 	}
 	return ReferenceInvalid
 }

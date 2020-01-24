@@ -26,6 +26,10 @@ type evalContext struct {
 }
 
 func (e *evalContext) Cell(ref string, ev formula.Evaluator) formula.Result {
+	fullRef := e.s.Name() + "!" + ref
+	if cached, found := ev.GetFromCache(fullRef); found {
+		return cached
+	}
 	cr, err := reference.ParseCellReference(ref)
 	if err != nil {
 		return formula.MakeErrorResult(fmt.Sprintf("error parsing %s: %s", ref, err))
@@ -52,17 +56,24 @@ func (e *evalContext) Cell(ref string, ev formula.Evaluator) formula.Result {
 		e.evaluating[ref] = struct{}{}
 		res := ev.Eval(e, c.GetFormula())
 		delete(e.evaluating, ref)
+		ev.SetCache(fullRef, res)
 		return res
 	}
 
 	if c.IsEmpty() {
-		return formula.MakeEmptyResult()
+		res := formula.MakeEmptyResult()
+		ev.SetCache(fullRef, res)
+		return res
 	} else if c.IsNumber() {
 		v, _ := c.GetValueAsNumber()
-		return formula.MakeNumberResult(v)
+		res := formula.MakeNumberResult(v)
+		ev.SetCache(fullRef, res)
+		return res
 	} else if c.IsBool() {
 		v, _ := c.GetValueAsBool()
-		return formula.MakeBoolResult(v)
+		res := formula.MakeBoolResult(v)
+		ev.SetCache(fullRef, res)
+		return res
 	}
 
 	v, _ := c.GetRawValue()
@@ -70,9 +81,12 @@ func (e *evalContext) Cell(ref string, ev formula.Evaluator) formula.Result {
 	if c.IsError() {
 		errRes := formula.MakeErrorResult("")
 		errRes.ValueString = v
+		ev.SetCache(fullRef, errRes)
 		return errRes
 	}
-	return formula.MakeStringResult(v)
+	res := formula.MakeStringResult(v)
+	ev.SetCache(fullRef, res)
+	return res
 }
 
 func (e *evalContext) Sheet(name string) formula.Context {

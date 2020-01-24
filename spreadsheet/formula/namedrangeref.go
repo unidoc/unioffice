@@ -25,18 +25,28 @@ func NewNamedRangeRef(v string) Expression {
 // Eval evaluates and returns the result of the NamedRangeRef reference.
 func (n NamedRangeRef) Eval(ctx Context, ev Evaluator) Result {
 	ref := ctx.NamedRange(n.s)
-	switch ref.Type {
-	case ReferenceTypeCell:
-		return ev.Eval(ctx, ref.Value)
-	case ReferenceTypeRange:
-		// should look like "A2:C5"
-		sp := strings.Split(ref.Value, ":")
-		if len(sp) == 2 {
-			return resultFromCellRange(ctx, ev, sp[0], sp[1])
-		}
-		return MakeErrorResult(fmt.Sprintf("unsuppported named range value %s", ref.Value))
+	refValue := ref.Value
+	if cached, found := ev.GetFromCache(refValue); found {
+		return cached
 	}
-	return MakeErrorResult(fmt.Sprintf("unsuppported reference type %s", ref.Type))
+	sl := strings.Split(refValue, "!")
+	if len(sl) != 2 {
+		return MakeErrorResult(fmt.Sprintf("unsupported named range value %s", refValue))
+	}
+	sheetCtx := ctx.Sheet(sl[0])
+	sp := strings.Split(sl[1], ":")
+	switch len(sp) {
+	case 1:
+		result := ev.Eval(sheetCtx, sp[0])
+		ev.SetCache(refValue, result)
+		return result
+	case 2:
+		// should look like "A2:C5"
+		result := resultFromCellRange(sheetCtx, ev, sp[0], sp[1])
+		ev.SetCache(refValue, result)
+		return result
+	}
+	return MakeErrorResult(fmt.Sprintf("unsupported reference type %s", ref.Type))
 }
 
 func (n NamedRangeRef) Reference(ctx Context, ev Evaluator) Reference {

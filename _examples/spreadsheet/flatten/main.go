@@ -4,6 +4,8 @@ package main
 
 import (
 	"log"
+	"fmt"
+	"time"
 
 	"github.com/unidoc/unioffice/spreadsheet"
 	"github.com/unidoc/unioffice/spreadsheet/formula"
@@ -17,10 +19,11 @@ func main() {
 
 	sheets := ss.Sheets()
 
+	start := time.Now().UnixNano()
+	formEv := formula.NewEvaluator()
 	for _, sheet := range sheets {
-		log.Println("Flattening sheet:", sheet.Name())
+		fmt.Println("Sheet name:", sheet.Name())
 		ctx := sheet.FormulaContext()
-		formEv := formula.NewEvaluator()
 		for _, row := range sheet.Rows() {
 			for _, cell := range row.Cells() {
 				c := ctx.Cell(cell.Reference(), formEv)
@@ -33,6 +36,8 @@ func main() {
 			}
 		}
 	}
+	finish := time.Now().UnixNano()
+	fmt.Printf("total: %d ns\n", finish - start)
 
 	ss.SaveToFile("values.xlsx")
 }

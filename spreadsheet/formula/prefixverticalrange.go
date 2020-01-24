@@ -32,15 +32,25 @@ func (r PrefixVerticalRange) Eval(ctx Context, ev Evaluator) Result {
 	pfx := r.pfx.Reference(ctx, ev)
 	switch pfx.Type {
 	case ReferenceTypeSheet:
+		ref := r.verticalRangeReference(pfx.Value)
+		if cached, found := ev.GetFromCache(ref); found {
+			return cached
+		}
 		c := ctx.Sheet(pfx.Value)
 		from, to := cellRefsFromVerticalRange(c, r.colFrom, r.colTo)
-		return resultFromCellRange(c, ev, from, to)
+		result := resultFromCellRange(c, ev, from, to)
+		ev.SetCache(ref, result)
+		return result
 	default:
 		return MakeErrorResult(fmt.Sprintf("no support for reference type %s", pfx.Type))
 	}
 }
 
+func (r PrefixVerticalRange) verticalRangeReference(sheetName string) string {
+	return fmt.Sprintf("%s!%s:%s", sheetName, r.colFrom, r.colTo)
+}
+
 func (r PrefixVerticalRange) Reference(ctx Context, ev Evaluator) Reference {
 	pfx := r.pfx.Reference(ctx, ev)
-	return Reference{Type: ReferenceTypeVerticalRange, Value: fmt.Sprintf("%s!%s:%s", pfx.Value, r.colFrom, r.colTo)}
+	return Reference{Type: ReferenceTypeVerticalRange, Value: r.verticalRangeReference(pfx.Value)}
 }

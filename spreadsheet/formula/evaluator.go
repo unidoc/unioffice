@@ -19,13 +19,18 @@ import (
 // the results.
 type Evaluator interface {
 	Eval(ctx Context, formula string) Result
+	SetCache(key string, value Result)
+	GetFromCache(key string) (Result, bool)
 }
 
 func NewEvaluator() Evaluator {
-	return &defEval{}
+	ev := &defEval{}
+	ev.evCache = newEvCache()
+	return ev
 }
 
 type defEval struct {
+	evCache
 	isRef bool
 }
 
@@ -38,7 +43,7 @@ func (d *defEval) Eval(ctx Context, formula string) Result {
 	return MakeErrorResult(fmt.Sprintf("unable to parse formula %s", formula))
 }
 
-// addInfo adds information which is needed for some functions but is lost after evaluation. E.g. which zeroes and ones were actually booleans before evaluation and which arguments are actually references.
+// addInfo adds information which is needed for some functions but is lost after evaluation. E.g. which arguments are actually references.
 func (d *defEval) addInfo(ctx Context, expr Expression) {
 	switch expr.(type) {
 	case FunctionCall:

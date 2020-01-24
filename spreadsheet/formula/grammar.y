@@ -85,12 +85,12 @@ prefix: tokenSheet { $$ = NewSheetPrefixExpr($1.val) };
 
 referenceItem: 
 	  tokenCell { $$ = NewCellRef($1.val)}
-	| tokenNamedRange { $$ = NewNamedRangeRef($1.val)}
 	;
 
 refFunctionCall:
 	  referenceItem tokenColon referenceItem { $$ = NewRange($1,$3) }
 	| prefix referenceItem tokenColon referenceItem { $$ = NewPrefixRangeExpr($1,$2,$4)}
+	| tokenNamedRange { $$ = NewNamedRangeRef($1.val)}
 	| tokenHorizontalRange { $$ = NewHorizontalRange($1.val) }
 	| tokenVerticalRange { $$ = NewVerticalRange($1.val) }
 	| prefix tokenHorizontalRange { $$ = NewPrefixHorizontalRange($1,$2.val) }

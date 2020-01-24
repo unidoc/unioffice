@@ -45,7 +45,7 @@ import (
   sheet = sheetChar+ '!';
   quotedSheet = (sheetChar+ | squote (enclosedSheetChar  | dquote)+ squote) '!';
 
-  namedRange = [A-Z_\\][A-Za-z0-9\\_.]+;
+  namedRange = [A-Za-z_\\][A-Za-z0-9\\_.]+;
 
   reservedName = '_xlnm.' [A-Z_]+;
   

@@ -31,12 +31,22 @@ func NewHorizontalRange(v string) Expression {
 
 // Eval evaluates the range returning a list of results or an error.
 func (r HorizontalRange) Eval(ctx Context, ev Evaluator) Result {
+	key := r.horizontalRangeReference()
+	if cached, found := ev.GetFromCache(key); found {
+		return cached
+	}
 	from, to := cellRefsFromHorizontalRange(ctx, r.rowFrom, r.rowTo)
-	return resultFromCellRange(ctx, ev, from, to)
+	res := resultFromCellRange(ctx, ev, from, to)
+	ev.SetCache(key, res)
+	return res
+}
+
+func (r HorizontalRange) horizontalRangeReference() string {
+	return fmt.Sprintf("%d:%d", r.rowFrom, r.rowTo)
 }
 
 func (r HorizontalRange) Reference(ctx Context, ev Evaluator) Reference {
-	return Reference{Type: ReferenceTypeHorizontalRange, Value: fmt.Sprintf("%d:%d", r.rowFrom, r.rowTo)}
+	return Reference{Type: ReferenceTypeHorizontalRange, Value: r.horizontalRangeReference()}
 }
 
 func cellRefsFromHorizontalRange(ctx Context, rowFrom, rowTo int) (string, string) {

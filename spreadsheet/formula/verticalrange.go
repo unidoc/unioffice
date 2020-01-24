@@ -29,12 +29,22 @@ func NewVerticalRange(v string) Expression {
 
 // Eval evaluates the range returning a list of results or an error.
 func (r VerticalRange) Eval(ctx Context, ev Evaluator) Result {
+	key := r.verticalRangeReference()
+	if cached, found := ev.GetFromCache(key); found {
+		return cached
+	}
 	from, to := cellRefsFromVerticalRange(ctx, r.colFrom, r.colTo)
-	return resultFromCellRange(ctx, ev, from, to)
+	res := resultFromCellRange(ctx, ev, from, to)
+	ev.SetCache(key, res)
+	return res
+}
+
+func (r VerticalRange) verticalRangeReference() string {
+	return fmt.Sprintf("%s:%s", r.colFrom, r.colTo)
 }
 
 func (r VerticalRange) Reference(ctx Context, ev Evaluator) Reference {
-	return Reference{Type: ReferenceTypeVerticalRange, Value: fmt.Sprintf("%s:%s", r.colFrom, r.colTo)}
+	return Reference{Type: ReferenceTypeVerticalRange, Value: r.verticalRangeReference()}
 }
 
 func cellRefsFromVerticalRange(ctx Context, colFrom, colTo string) (string, string) {
