@@ -5,6 +5,7 @@ package main
 import (
 	"log"
 	"fmt"
+	"runtime"
 	"time"
 
 	"github.com/unidoc/unioffice/spreadsheet"
@@ -37,7 +38,8 @@ func main() {
 		}
 	}
 	finish := time.Now().UnixNano()
-	fmt.Printf("total: %d ns\n", finish - start)
+	fmt.Printf("total time: %d ns\n", finish - start)
+	PrintMemUsage()
 
 	ss.SaveToFile("values.xlsx")
 }
@@ -59,4 +61,19 @@ func setValue(cell spreadsheet.Cell, c formula.Result, value string) {
 	case formula.ResultTypeError:
 		cell.SetError(c.ValueString)
 	}
+}
+
+func PrintMemUsage() {
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+	// For info on each, see: https://golang.org/pkg/runtime/#MemStats
+	fmt.Println("Memory usage:")
+	fmt.Printf("Alloc = %v MiB", bToMb(m.Alloc))
+	fmt.Printf("\tTotalAlloc = %v MiB", bToMb(m.TotalAlloc))
+	fmt.Printf("\tSys = %v MiB", bToMb(m.Sys))
+	fmt.Printf("\tNumGC = %v\n", m.NumGC)
+}
+
+func bToMb(b uint64) uint64 {
+	return b / 1024 / 1024
 }
