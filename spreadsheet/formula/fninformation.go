@@ -349,7 +349,7 @@ func IsRef(ctx Context, ev Evaluator, args []Result) Result {
 	if len(args) != 1 {
 		MakeErrorResult("ISREF() accepts a single argument")
 	}
-	return MakeBoolResult(ev.(*defEval).isRef)
+	return MakeBoolResult(ev.LastEvalIsRef())
 }
 
 // ISTEXT is an implementation of the Excel ISTEXT() function.

@@ -21,6 +21,7 @@ type Evaluator interface {
 	Eval(ctx Context, formula string) Result
 	SetCache(key string, value Result)
 	GetFromCache(key string) (Result, bool)
+	LastEvalIsRef() bool
 }
 
 func NewEvaluator() Evaluator {
@@ -31,7 +32,7 @@ func NewEvaluator() Evaluator {
 
 type defEval struct {
 	evCache
-	isRef bool
+	lastEvalIsRef bool
 }
 
 func (d *defEval) Eval(ctx Context, formula string) Result {
@@ -43,6 +44,10 @@ func (d *defEval) Eval(ctx Context, formula string) Result {
 	return MakeErrorResult(fmt.Sprintf("unable to parse formula %s", formula))
 }
 
+func (d *defEval) LastEvalIsRef() bool {
+	return d.lastEvalIsRef
+}
+
 // addInfo adds information which is needed for some functions but is lost after evaluation. E.g. which arguments are actually references.
 func (d *defEval) addInfo(ctx Context, expr Expression) {
 	switch expr.(type) {
@@ -52,19 +57,21 @@ func (d *defEval) addInfo(ctx Context, expr Expression) {
 			for _, arg := range expr.(FunctionCall).args {
 				switch arg.(type) {
 				case CellRef:
-					d.isRef = validateRef(arg.(CellRef))
+					d.lastEvalIsRef = validateRef(arg.(CellRef))
 					return
 				case Range:
 					switch arg.(Range).from.(type) {
 					case CellRef:
-						d.isRef = validateRef(arg.(Range).from.(CellRef))
+						d.lastEvalIsRef = validateRef(arg.(Range).from.(CellRef))
 						return
 					}
 					switch arg.(Range).to.(type) {
 					case CellRef:
-						d.isRef = validateRef(arg.(Range).to.(CellRef))
+						d.lastEvalIsRef = validateRef(arg.(Range).to.(CellRef))
 						return
 					}
+				default:
+					d.lastEvalIsRef = false
 				}
 			}
 		}

@@ -106,7 +106,7 @@ func (e *evalContext) NamedRange(ref string) formula.Reference {
 	}
 	for _, tbl := range e.s.w.Tables() {
 		if tbl.Name() == ref {
-			return formula.MakeRangeReference(tbl.Reference())
+			return formula.MakeRangeReference(fmt.Sprintf("%s!%s", e.s.Name(), tbl.Reference()))
 		}
 	}
 	return formula.ReferenceInvalid
