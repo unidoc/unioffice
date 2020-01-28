@@ -293,10 +293,11 @@ func Offset(ctx Context, ev Evaluator, args []Result) Result {
 		return MakeErrorResult(fmt.Sprintf("Invalid range in OFFSET(): %s", ref.Type))
 	}
 
-	col, rowIdx, sheetName, err := ParseCellReference(origin)
-	if err != nil {
-		return MakeErrorResult(fmt.Sprintf("parse origin error OFFSET(): %s", err))
+	parsedRef, parseErr := reference.ParseCellReference(origin)
+	if parseErr != nil {
+		return MakeErrorResult(fmt.Sprintf("parse origin error OFFSET(): %s", parseErr.Error()))
 	}
+	col, rowIdx, sheetName := parsedRef.Column, parsedRef.RowIdx, parsedRef.SheetName
 
 	rOff := args[1].AsNumber()
 	if rOff.Type != ResultTypeNumber {

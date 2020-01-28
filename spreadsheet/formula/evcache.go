@@ -5,12 +5,11 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased on https://unidoc.io.
 
-// evCache is a struct with collection of caching methods intended for add cache support to evaluators.
-
 package formula
 
 import "sync"
 
+// evCache is a struct with collection of caching methods intended for add cache support to evaluators.
 type evCache struct {
 	cache map[string]Result 
 	lock *sync.Mutex
