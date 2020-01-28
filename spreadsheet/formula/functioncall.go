@@ -39,6 +39,7 @@ func (f FunctionCall) Eval(ctx Context, ev Evaluator) Result {
 	return MakeErrorResult("unknown function " + f.name)
 }
 
+// Reference returns an invalid reference for FunctionCall.
 func (f FunctionCall) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }

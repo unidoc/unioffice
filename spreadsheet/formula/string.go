@@ -23,6 +23,7 @@ func (s String) Eval(ctx Context, ev Evaluator) Result {
 	return MakeStringResult(s.s)
 }
 
+// Reference returns an invalid reference for String.
 func (s String) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }

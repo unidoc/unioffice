@@ -27,6 +27,7 @@ func (c ConstArrayExpr) Eval(ctx Context, ev Evaluator) Result {
 	return MakeArrayResult(res)
 }
 
+// Reference returns an invalid reference for ConstArrayExpr.
 func (c ConstArrayExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }

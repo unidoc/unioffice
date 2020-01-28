@@ -19,6 +19,7 @@ func (s SheetPrefixExpr) Eval(ctx Context, ev Evaluator) Result {
 	return MakeErrorResult("sheet prefix should never be evaluated")
 }
 
+// Reference returns a string reference value to a sheet.
 func (s SheetPrefixExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeSheet, Value: s.sheet}
 }

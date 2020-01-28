@@ -23,6 +23,7 @@ func (n Negate) Eval(ctx Context, ev Evaluator) Result {
 	return MakeErrorResult("NEGATE expected number argument")
 }
 
+// Reference returns an invalid reference for Negate.
 func (n Negate) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }

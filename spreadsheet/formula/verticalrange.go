@@ -43,6 +43,7 @@ func (r VerticalRange) verticalRangeReference() string {
 	return fmt.Sprintf("%s:%s", r.colFrom, r.colTo)
 }
 
+// Reference returns a string reference value to a vertical range.
 func (r VerticalRange) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeVerticalRange, Value: r.verticalRangeReference()}
 }

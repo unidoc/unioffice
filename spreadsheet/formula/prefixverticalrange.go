@@ -50,6 +50,7 @@ func (r PrefixVerticalRange) verticalRangeReference(sheetName string) string {
 	return fmt.Sprintf("%s!%s:%s", sheetName, r.colFrom, r.colTo)
 }
 
+// Reference returns a string reference value to a vertical range with prefix.
 func (r PrefixVerticalRange) Reference(ctx Context, ev Evaluator) Reference {
 	pfx := r.pfx.Reference(ctx, ev)
 	return Reference{Type: ReferenceTypeVerticalRange, Value: r.verticalRangeReference(pfx.Value)}

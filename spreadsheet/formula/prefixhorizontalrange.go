@@ -53,6 +53,7 @@ func (r PrefixHorizontalRange) horizontalRangeReference(sheetName string) string
 	return fmt.Sprintf("%s!%d:%d", sheetName, r.rowFrom, r.rowTo)
 }
 
+// Reference returns a string reference value to a horizontal range with prefix.
 func (r PrefixHorizontalRange) Reference(ctx Context, ev Evaluator) Reference {
 	pfx := r.pfx.Reference(ctx, ev)
 	return Reference{Type: ReferenceTypeHorizontalRange, Value: r.horizontalRangeReference(pfx.Value)}

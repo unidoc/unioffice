@@ -22,6 +22,7 @@ func (c CellRef) Eval(ctx Context, ev Evaluator) Result {
 	return ctx.Cell(c.s, ev)
 }
 
+// Reference returns a string reference value to a cell.
 func (c CellRef) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeCell, Value: c.s}
 }

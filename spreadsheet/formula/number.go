@@ -29,6 +29,7 @@ func (n Number) Eval(ctx Context, ev Evaluator) Result {
 	return MakeNumberResult(n.v)
 }
 
+// Reference returns an invalid reference for Number.
 func (n Number) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }

@@ -49,6 +49,7 @@ func (n NamedRangeRef) Eval(ctx Context, ev Evaluator) Result {
 	return MakeErrorResult(fmt.Sprintf("unsupported reference type %s", ref.Type))
 }
 
+// Reference returns a string reference value to a named range.
 func (n NamedRangeRef) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeNamedRange, Value: n.s}
 }

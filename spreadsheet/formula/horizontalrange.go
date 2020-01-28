@@ -45,6 +45,7 @@ func (r HorizontalRange) horizontalRangeReference() string {
 	return fmt.Sprintf("%d:%d", r.rowFrom, r.rowTo)
 }
 
+// Reference returns a string reference value to a horizontal range.
 func (r HorizontalRange) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeHorizontalRange, Value: r.horizontalRangeReference()}
 }

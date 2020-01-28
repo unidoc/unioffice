@@ -44,6 +44,7 @@ func rangeReference(from, to Reference) string {
 	return fmt.Sprintf("%s:%s", from.Value, to.Value)
 }
 
+// Reference returns a string reference value to a range.
 func (r Range) Reference(ctx Context, ev Evaluator) Reference {
 	from := r.from.Reference(ctx, ev)
 	to := r.to.Reference(ctx, ev)

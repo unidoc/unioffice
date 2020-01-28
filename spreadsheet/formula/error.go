@@ -19,6 +19,7 @@ func (e Error) Eval(ctx Context, ev Evaluator) Result {
 	return MakeErrorResult(e.s)
 }
 
+// Reference returns an invalid reference for Error.
 func (e Error) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }

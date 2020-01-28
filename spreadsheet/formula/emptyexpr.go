@@ -18,6 +18,7 @@ func (e EmptyExpr) Eval(ctx Context, ev Evaluator) Result {
 	return MakeEmptyResult()
 }
 
+// Reference returns an invalid reference for EmptyExpr.
 func (e EmptyExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }

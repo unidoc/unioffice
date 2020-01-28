@@ -241,6 +241,7 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 	return MakeErrorResult("unsupported binary op")
 }
 
+// Reference returns an invalid reference for BinaryExpr.
 func (b BinaryExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }

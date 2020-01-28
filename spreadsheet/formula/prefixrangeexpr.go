@@ -45,6 +45,7 @@ func prefixRangeReference(pfx, from, to Reference) string {
 	return fmt.Sprintf("%s!%s:%s", pfx.Value, from.Value, to.Value)
 }
 
+// Reference returns a string reference value to a range with prefix.
 func (p PrefixRangeExpr) Reference(ctx Context, ev Evaluator) Reference {
 	pfx := p.pfx.Reference(ctx, ev)
 	from := p.from.Reference(ctx, ev)

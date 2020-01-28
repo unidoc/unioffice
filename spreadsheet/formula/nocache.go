@@ -5,10 +5,9 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased on https://unidoc.io.
 
-// noCache is a struct with collection of caching methods stubs intended for evaluators without cache.
-
 package formula
 
+// noCache is a struct with collection of caching methods stubs intended for evaluators without cache.
 type noCache struct {}
 
 func (nc *noCache) SetCache(key string, value Result) {}

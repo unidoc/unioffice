@@ -29,6 +29,7 @@ func (b Bool) Eval(ctx Context, ev Evaluator) Result {
 	return MakeBoolResult(b.b)
 }
 
+// Reference returns an invalid reference for Bool.
 func (b Bool) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
