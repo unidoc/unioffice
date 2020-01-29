@@ -15,7 +15,7 @@ type defEval struct {
 	lastEvalIsRef bool
 }
 
-// 
+// Eval evaluates and returns the result of a formula.
 func (d *defEval) Eval(ctx Context, formula string) Result {
 	expr := ParseString(formula)
 	if expr != nil {
