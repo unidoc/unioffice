@@ -13,10 +13,12 @@ import (
 	"github.com/unidoc/unioffice"
 )
 
+// Number is a nubmer expression.
 type Number struct {
 	v float64
 }
 
+// NewNumber constructs a new number expression.
 func NewNumber(v string) Expression {
 	f, err := strconv.ParseFloat(v, 64)
 	if err != nil {
@@ -25,6 +27,7 @@ func NewNumber(v string) Expression {
 	return Number{f}
 }
 
+// Eval evaluates and returns a number.
 func (n Number) Eval(ctx Context, ev Evaluator) Result {
 	return MakeNumberResult(n.v)
 }

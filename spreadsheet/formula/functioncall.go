@@ -7,15 +7,18 @@
 
 package formula
 
+// FunctionCall is a function call expression.
 type FunctionCall struct {
 	name string
 	args []Expression
 }
 
+// NewFunction constructs a new function call expression.
 func NewFunction(name string, args []Expression) Expression {
 	return FunctionCall{name, args}
 }
 
+// Eval evaluates and returns the result of a function call.
 func (f FunctionCall) Eval(ctx Context, ev Evaluator) Result {
 	fn := LookupFunction(f.name)
 	if fn != nil {

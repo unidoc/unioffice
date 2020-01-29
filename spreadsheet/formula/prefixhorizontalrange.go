@@ -30,7 +30,7 @@ func NewPrefixHorizontalRange(pfx Expression, v string) Expression {
 	return PrefixHorizontalRange{pfx, from, to}
 }
 
-// Eval evaluates the range returning a list of results or an error.
+// Eval evaluates a horizontal range with prefix returning a list of results or an error.
 func (r PrefixHorizontalRange) Eval(ctx Context, ev Evaluator) Result {
 	pfx := r.pfx.Reference(ctx, ev)
 	switch pfx.Type {

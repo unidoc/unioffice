@@ -29,7 +29,7 @@ func NewHorizontalRange(v string) Expression {
 	return HorizontalRange{from, to}
 }
 
-// Eval evaluates the range returning a list of results or an error.
+// Eval evaluates a horizontal range returning a list of results or an error.
 func (r HorizontalRange) Eval(ctx Context, ev Evaluator) Result {
 	key := r.horizontalRangeReference()
 	if cached, found := ev.GetFromCache(key); found {

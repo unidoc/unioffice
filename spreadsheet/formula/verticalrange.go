@@ -27,7 +27,7 @@ func NewVerticalRange(v string) Expression {
 	return VerticalRange{sl[0], sl[1]}
 }
 
-// Eval evaluates the range returning a list of results or an error.
+// Eval evaluates a vertical range returning a list of results or an error.
 func (r VerticalRange) Eval(ctx Context, ev Evaluator) Result {
 	key := r.verticalRangeReference()
 	if cached, found := ev.GetFromCache(key); found {

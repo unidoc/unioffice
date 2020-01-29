@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-// NamedRangeRef is a reference to a named range
+// NamedRangeRef is a reference to a named range.
 type NamedRangeRef struct {
 	s string
 }

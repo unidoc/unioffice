@@ -23,7 +23,7 @@ func NewRange(from, to Expression) Expression {
 	return Range{from, to}
 }
 
-// Eval evaluates the range returning a list of results or an error.
+// Eval evaluates a range returning a list of results or an error.
 func (r Range) Eval(ctx Context, ev Evaluator) Result {
 	from := r.from.Reference(ctx, ev)
 	to := r.to.Reference(ctx, ev)

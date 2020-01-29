@@ -27,7 +27,7 @@ func NewPrefixVerticalRange(pfx Expression, v string) Expression {
 	return PrefixVerticalRange{pfx, sl[0], sl[1]}
 }
 
-// Eval evaluates the range returning a list of results or an error.
+// Eval evaluates a vertical range with prefix returning a list of results or an error.
 func (r PrefixVerticalRange) Eval(ctx Context, ev Evaluator) Result {
 	pfx := r.pfx.Reference(ctx, ev)
 	switch pfx.Type {

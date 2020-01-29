@@ -9,16 +9,17 @@ package formula
 
 import "fmt"
 
-// Range is a range expression that when evaluated returns a list of Results.
+// PrefixRangeExpr is a range expression that when evaluated returns a list of Results from a given sheet like Sheet1!A1:B4 (all cells from A1 to B4 from a sheet 'Sheet1').
 type PrefixRangeExpr struct {
 	pfx, from, to Expression
 }
 
-// NewRange constructs a new range.
+// NewPrefixRangeExpr constructs a new range with prefix.
 func NewPrefixRangeExpr(pfx, from, to Expression) Expression {
 	return PrefixRangeExpr{pfx, from, to}
 }
 
+// Eval evaluates a range with prefix returning a list of results or an error.
 func (p PrefixRangeExpr) Eval(ctx Context, ev Evaluator) Result {
 	pfx := p.pfx.Reference(ctx, ev)
 	from := p.from.Reference(ctx, ev)

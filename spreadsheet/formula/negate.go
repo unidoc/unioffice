@@ -7,14 +7,17 @@
 
 package formula
 
+// Negate is a negate expression like -A1.
 type Negate struct {
 	e Expression
 }
 
+// NewNegate constructs a new negate expression.
 func NewNegate(e Expression) Expression {
 	return Negate{e}
 }
 
+// Eval evaluates and returns the result of a Negate expression.
 func (n Negate) Eval(ctx Context, ev Evaluator) Result {
 	r := n.e.Eval(ctx, ev)
 	if r.Type == ResultTypeNumber {
