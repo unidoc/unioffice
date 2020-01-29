@@ -962,8 +962,11 @@ func TestIsRef(t *testing.T) {
 	sheet.Cell("A3").SetFormulaRaw("=ISREF(A1048577)")
 	sheet.Cell("A4").SetFormulaRaw("=ISREF(ZZA0)")
 	sheet.Cell("A5").SetFormulaRaw("=ISREF(ZZ0)")
-	sheet.Cell("A6").SetFormulaRaw("=ISREF(0)")
-	sheet.Cell("A7").SetString("A1")
+	sheet.Cell("A6").SetFormulaRaw("=ISREF(AA:ZZ)")
+	sheet.Cell("A7").SetFormulaRaw("=ISREF(1:4)")
+	sheet.Cell("A8").SetFormulaRaw("=4/0")
+	sheet.Cell("A9").SetFormulaRaw("=ISREF(A7)")
+	sheet.Cell("A10").SetString("A1")
 
 	td := []testStruct{
 		{`A1`, `1 ResultTypeNumber`},
@@ -971,8 +974,11 @@ func TestIsRef(t *testing.T) {
 		{`A3`, `0 ResultTypeNumber`},
 		{`A4`, `0 ResultTypeNumber`},
 		{`A5`, `1 ResultTypeNumber`},
-		{`A6`, `0 ResultTypeNumber`},
-		{`A7`, `A1 ResultTypeString`},
+		{`A6`, `1 ResultTypeNumber`},
+		{`A7`, `1 ResultTypeNumber`},
+		{`A8`, `#DIV/0! ResultTypeError`},
+		{`A9`, `1 ResultTypeNumber`},
+		{`A10`, `A1 ResultTypeString`},
 	}
 
 	ctx := sheet.FormulaContext()

@@ -10,6 +10,9 @@ package spreadsheet
 import (
 	"fmt"
 	"time"
+	"regexp"
+	"strconv"
+	"strings"
 
 	"github.com/unidoc/unioffice/spreadsheet/formula"
 	"github.com/unidoc/unioffice/spreadsheet/reference"
@@ -26,6 +29,9 @@ type evalContext struct {
 }
 
 func (e *evalContext) Cell(ref string, ev formula.Evaluator) formula.Result {
+	if !validateRef(ref) {
+		return formula.MakeErrorResultType(formula.ErrorTypeName, "")
+	}
 	fullRef := e.s.Name() + "!" + ref
 	if cached, found := ev.GetFromCache(fullRef); found {
 		return cached
@@ -222,4 +228,18 @@ func (e *evalContext) LastRow(col string) int {
 		}
 	}
 	return max
+}
+
+var refRegexp *regexp.Regexp = regexp.MustCompile(`^([a-z]+)([0-9]+)$`)
+
+func validateRef(cr string) bool {
+	if submatch := refRegexp.FindStringSubmatch(strings.ToLower(cr)); len(submatch) > 2 {
+		col := submatch[1]
+		row, err := strconv.Atoi(submatch[2])
+		if err != nil { // for the case if the row number is bigger then int capacity
+			return false
+		}
+		return row <= 1048576 && col <= "zz"
+	}
+	return false
 }
