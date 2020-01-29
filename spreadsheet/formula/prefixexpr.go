@@ -9,15 +9,18 @@ package formula
 
 import "fmt"
 
+// PrefixExpr is an expression containing reference to another sheet like Sheet1!A1 (the value of the cell A1 from sheet 'Sheet1').
 type PrefixExpr struct {
 	pfx Expression
 	exp Expression
 }
 
+// NewPrefixExpr constructs an expression with prefix.
 func NewPrefixExpr(pfx, exp Expression) Expression {
 	return &PrefixExpr{pfx, exp}
 }
 
+// Eval evaluates and returns an expression with prefix.
 func (p PrefixExpr) Eval(ctx Context, ev Evaluator) Result {
 	ref := p.pfx.Reference(ctx, ev)
 	switch ref.Type {
@@ -29,6 +32,12 @@ func (p PrefixExpr) Eval(ctx Context, ev Evaluator) Result {
 	}
 }
 
+// Reference returns a string reference value to an expression with prefix.
 func (p PrefixExpr) Reference(ctx Context, ev Evaluator) Reference {
+	pfx := p.pfx.Reference(ctx, ev)
+	exp := p.exp.Reference(ctx, ev)
+	if pfx.Type == ReferenceTypeSheet && exp.Type == ReferenceTypeCell {
+		return Reference{Type: ReferenceTypeCell, Value: pfx.Value + "!" + exp.Value}
+	}
 	return ReferenceInvalid
 }

@@ -58,7 +58,7 @@ func TestSMLFilenames(t *testing.T) {
 		{2, unioffice.CommentsType, "xl/comments2.xml"},
 		{15, unioffice.WorksheetType, "xl/worksheets/sheet15.xml"},
 		{2, unioffice.VMLDrawingType, "xl/drawings/vmlDrawing2.vml"},
-		{0, unioffice.SharedStingsType, "xl/sharedStrings.xml"},
+		{0, unioffice.SharedStringsType, "xl/sharedStrings.xml"},
 		{1, unioffice.ThemeType, "xl/theme/theme1.xml"},
 		{2, unioffice.ImageType, "xl/media/image2.png"},
 	}

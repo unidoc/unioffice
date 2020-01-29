@@ -174,15 +174,21 @@ func parseSearchResults(fname string, args []Result) (*parsedSearchObject, Resul
 		return nil, MakeErrorResult(fname + " requires two or three arguments")
 	}
 	findTextResult := args[0]
-	if findTextResult.Type != ResultTypeString {
+	if findTextResult.Type == ResultTypeError {
+		return nil, findTextResult
+	}
+	if findTextResult.Type != ResultTypeString && findTextResult.Type != ResultTypeNumber {
 		return nil, MakeErrorResult("The first argument should be a string")
 	}
 	textResult := args[1]
-	if textResult.Type != ResultTypeString {
+	if textResult.Type == ResultTypeError {
+		return nil, textResult
+	}
+	if textResult.Type != ResultTypeString && textResult.Type != ResultTypeNumber {
 		return nil, MakeErrorResult("The second argument should be a string")
 	}
-	text := textResult.ValueString
-	findText := findTextResult.ValueString
+	text := textResult.Value()
+	findText := findTextResult.Value()
 	position := 1
 	if argsNum == 3 && args[2].Type != ResultTypeEmpty {
 		positionResult := args[2]
@@ -388,10 +394,14 @@ func Mid(args []Result) Result {
 	if len(args) != 3 {
 		return MakeErrorResult("MID requires three arguments")
 	}
-	if args[0].Type != ResultTypeString {
+	textArg := args[0]
+	if textArg.Type == ResultTypeError {
+		return textArg
+	}
+	if textArg.Type != ResultTypeString && textArg.Type != ResultTypeNumber && textArg.Type != ResultTypeEmpty {
 		return MakeErrorResult("MID requires text to be a string")
 	}
-	text := args[0].ValueString
+	text := args[0].Value()
 	if args[1].Type != ResultTypeNumber {
 		return MakeErrorResult("MID requires start_num to be a number")
 	}

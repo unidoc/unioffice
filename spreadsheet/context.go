@@ -10,6 +10,9 @@ package spreadsheet
 import (
 	"fmt"
 	"time"
+	"regexp"
+	"strconv"
+	"strings"
 
 	"github.com/unidoc/unioffice/spreadsheet/formula"
 	"github.com/unidoc/unioffice/spreadsheet/reference"
@@ -26,6 +29,13 @@ type evalContext struct {
 }
 
 func (e *evalContext) Cell(ref string, ev formula.Evaluator) formula.Result {
+	if !validateRef(ref) {
+		return formula.MakeErrorResultType(formula.ErrorTypeName, "")
+	}
+	fullRef := e.s.Name() + "!" + ref
+	if cached, found := ev.GetFromCache(fullRef); found {
+		return cached
+	}
 	cr, err := reference.ParseCellReference(ref)
 	if err != nil {
 		return formula.MakeErrorResult(fmt.Sprintf("error parsing %s: %s", ref, err))
@@ -52,21 +62,37 @@ func (e *evalContext) Cell(ref string, ev formula.Evaluator) formula.Result {
 		e.evaluating[ref] = struct{}{}
 		res := ev.Eval(e, c.GetFormula())
 		delete(e.evaluating, ref)
+		ev.SetCache(fullRef, res)
 		return res
 	}
 
 	if c.IsEmpty() {
-		return formula.MakeEmptyResult()
+		res := formula.MakeEmptyResult()
+		ev.SetCache(fullRef, res)
+		return res
 	} else if c.IsNumber() {
 		v, _ := c.GetValueAsNumber()
-		return formula.MakeNumberResult(v)
+		res := formula.MakeNumberResult(v)
+		ev.SetCache(fullRef, res)
+		return res
 	} else if c.IsBool() {
 		v, _ := c.GetValueAsBool()
-		return formula.MakeBoolResult(v)
+		res := formula.MakeBoolResult(v)
+		ev.SetCache(fullRef, res)
+		return res
 	}
 
 	v, _ := c.GetRawValue()
-	return formula.MakeStringResult(v)
+
+	if c.IsError() {
+		errRes := formula.MakeErrorResult("")
+		errRes.ValueString = v
+		ev.SetCache(fullRef, errRes)
+		return errRes
+	}
+	res := formula.MakeStringResult(v)
+	ev.SetCache(fullRef, res)
+	return res
 }
 
 func (e *evalContext) Sheet(name string) formula.Context {
@@ -86,7 +112,7 @@ func (e *evalContext) NamedRange(ref string) formula.Reference {
 	}
 	for _, tbl := range e.s.w.Tables() {
 		if tbl.Name() == ref {
-			return formula.MakeRangeReference(tbl.Reference())
+			return formula.MakeRangeReference(fmt.Sprintf("%s!%s", e.s.Name(), tbl.Reference()))
 		}
 	}
 	return formula.ReferenceInvalid
@@ -170,6 +196,50 @@ func (e *evalContext) IsDBCS() bool {
 		if defaultLanguage == lang {
 			return true
 		}
+	}
+	return false
+}
+
+// LastColumn returns the name of last column which contains data in range of context sheet's given rows.
+func (e *evalContext) LastColumn(rowFrom, rowTo int) string {
+	sheet := e.s
+	max := 1
+	for row := rowFrom; row <= rowTo; row++ {
+		l := len(sheet.Row(uint32(row)).Cells())
+		if l > max {
+			max = l
+		}
+	}
+	return reference.IndexToColumn(uint32(max-1))
+}
+
+// LastRow returns the name of last row which contains data in range of context sheet's given columns.
+func (e *evalContext) LastRow(col string) int {
+	sheet := e.s
+	colIdx := int(reference.ColumnToIndex(col))
+	max := 1
+	for _, r := range sheet.x.SheetData.Row {
+		if r.RAttr != nil {
+			row := Row{sheet.w, sheet.x, r}
+			l := len(row.Cells())
+			if l > colIdx {
+				max = int(row.RowNumber())
+			}
+		}
+	}
+	return max
+}
+
+var refRegexp *regexp.Regexp = regexp.MustCompile(`^([a-z]+)([0-9]+)$`)
+
+func validateRef(cr string) bool {
+	if submatch := refRegexp.FindStringSubmatch(strings.ToLower(cr)); len(submatch) > 2 {
+		col := submatch[1]
+		row, err := strconv.Atoi(submatch[2])
+		if err != nil { // for the case if the row number is bigger then int capacity
+			return false
+		}
+		return row <= 1048576 && col <= "zz"
 	}
 	return false
 }

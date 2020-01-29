@@ -88,6 +88,9 @@ func Cell(ctx Context, ev Evaluator, args []Result) Result {
 			return MakeErrorResult("Incorrect reference: " + refStr)
 		}
 		address := "$"+cr.Column+"$"+strconv.Itoa(int(cr.RowIdx))
+		if cr.SheetName != "" {
+			address = cr.SheetName + "!" + address
+		}
 		return MakeStringResult(address)
 	case "col":
 		cr, err := reference.ParseCellReference(refStr)
@@ -189,7 +192,11 @@ func Cell(ctx Context, ev Evaluator, args []Result) Result {
 		if err != nil {
 			return MakeErrorResult("Incorrect reference: " + refStr)
 		}
-		return MakeNumberResult(ctx.GetWidth(int(cr.ColumnIdx)))
+		if cr.SheetName == "" {
+			return MakeNumberResult(ctx.GetWidth(int(cr.ColumnIdx)))
+		} else {
+			return MakeNumberResult(ctx.Sheet(cr.SheetName).GetWidth(int(cr.ColumnIdx)))
+		}
 	}
 	return MakeErrorResult("Incorrect first argument of CELL: "+typ.ValueString)
 }
@@ -295,7 +302,7 @@ func IsLogical(ctx Context, ev Evaluator, args []Result) Result {
 		return MakeErrorResult("ISLOGICAL requires the first argument to be of type reference")
 	}
 
-	return MakeBoolResult(ctx.IsBool(ref.Value))
+	return MakeBoolResult(ctx.Cell(ref.Value, ev).IsBoolean)
 }
 
 // IsNA is an implementation of the Excel ISNA() function.
@@ -342,7 +349,7 @@ func IsRef(ctx Context, ev Evaluator, args []Result) Result {
 	if len(args) != 1 {
 		MakeErrorResult("ISREF() accepts a single argument")
 	}
-	return MakeBoolResult(ev.(*defEval).isRef)
+	return MakeBoolResult(ev.LastEvalIsRef())
 }
 
 // ISTEXT is an implementation of the Excel ISTEXT() function.

@@ -142,6 +142,7 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 // returning an ID from the shared strings table. To reuse a string, call
 // SetStringByID with the ID returned.
 func (c Cell) SetString(s string) int {
+	c.w.ensureSharedStringsRelationships()
 	c.clearValue()
 	id := c.w.SharedStrings.AddString(s)
 	c.x.V = unioffice.String(strconv.Itoa(id))
@@ -152,6 +153,7 @@ func (c Cell) SetString(s string) int {
 // SetStringByID sets the cell type to string, and the value a string in the
 // shared strings table.
 func (c Cell) SetStringByID(id int) {
+	c.w.ensureSharedStringsRelationships()
 	c.clearValue()
 	c.x.V = unioffice.String(strconv.Itoa(id))
 	c.x.TAttr = sml.ST_CellTypeS
@@ -291,6 +293,13 @@ func (c Cell) SetBool(v bool) {
 	c.clearValue()
 	c.x.V = unioffice.String(strconv.Itoa(b2i(v)))
 	c.x.TAttr = sml.ST_CellTypeB
+}
+
+// SetError sets the cell type to error and the value to the given error message.
+func (c Cell) SetError(msg string) {
+	c.clearValue()
+	c.x.V = unioffice.String(msg)
+	c.x.TAttr = sml.ST_CellTypeE
 }
 
 // GetValueAsBool retrieves the cell's value as a boolean
@@ -537,6 +546,11 @@ func (c Cell) IsEmpty() bool {
 // IsBool returns true if the cell is a boolean type cell.
 func (c Cell) IsBool() bool {
 	return c.x.TAttr == sml.ST_CellTypeB
+}
+
+// IsError returns true if the cell is an error type cell.
+func (c Cell) IsError() bool {
+	return c.x.TAttr == sml.ST_CellTypeE
 }
 
 // HasFormula returns true if the cell has an asoociated formula.

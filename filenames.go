@@ -161,7 +161,7 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 	// SML
 	case WorksheetType, WorksheetTypeStrict, WorksheetContentType:
 		return fmt.Sprintf("xl/worksheets/sheet%d.xml", index)
-	case SharedStingsType, SharedStingsTypeStrict, SharedStringsContentType:
+	case SharedStringsType, SharedStringsTypeStrict, SharedStringsContentType:
 		return "xl/sharedStrings.xml"
 
 	// WML

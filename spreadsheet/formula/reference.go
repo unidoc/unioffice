@@ -14,6 +14,8 @@ type ReferenceType byte
 const (
 	ReferenceTypeInvalid ReferenceType = iota
 	ReferenceTypeCell
+	ReferenceTypeHorizontalRange
+	ReferenceTypeVerticalRange
 	ReferenceTypeNamedRange
 	ReferenceTypeRange
 	ReferenceTypeSheet

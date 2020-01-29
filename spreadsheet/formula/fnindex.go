@@ -293,10 +293,11 @@ func Offset(ctx Context, ev Evaluator, args []Result) Result {
 		return MakeErrorResult(fmt.Sprintf("Invalid range in OFFSET(): %s", ref.Type))
 	}
 
-	col, rowIdx, err := ParseCellReference(origin)
-	if err != nil {
-		return MakeErrorResult(fmt.Sprintf("parse origin error OFFSET(): %s", err))
+	parsedRef, parseErr := reference.ParseCellReference(origin)
+	if parseErr != nil {
+		return MakeErrorResult(fmt.Sprintf("parse origin error OFFSET(): %s", parseErr.Error()))
 	}
+	col, rowIdx, sheetName := parsedRef.Column, parsedRef.RowIdx, parsedRef.SheetName
 
 	rOff := args[1].AsNumber()
 	if rOff.Type != ResultTypeNumber {
@@ -348,7 +349,11 @@ func Offset(ctx Context, ev Evaluator, args []Result) Result {
 
 	beg := fmt.Sprintf("%s%d", reference.IndexToColumn(origCol), origRow)
 	end := fmt.Sprintf("%s%d", reference.IndexToColumn(endCol), endRow)
-	return resultFromCellRange(ctx, ev, beg, end)
+	if sheetName == "" {
+		return resultFromCellRange(ctx, ev, beg, end)
+	} else {
+		return resultFromCellRange(ctx.Sheet(sheetName), ev, beg, end)
+	}
 }
 
 // VLookup implements the VLOOKUP function that returns a matching value from a
@@ -392,7 +397,7 @@ lfor:
 			continue
 		}
 		rval := row[0]
-		switch compareResults(rval, lookupValue, false) {
+		switch compareResults(rval, lookupValue, false, exactMatch) {
 		case cmpResultLess:
 			// less than
 			matchIdx = i
@@ -425,7 +430,7 @@ const (
 	cmpResultInvalid cmpResult = 2
 )
 
-func compareResults(lhs, rhs Result, caseSensitive bool) cmpResult {
+func compareResults(lhs, rhs Result, caseSensitive, exactMatch bool) cmpResult {
 	lhs = lhs.AsNumber()
 	rhs = rhs.AsNumber()
 	// differing types
@@ -446,11 +451,21 @@ func compareResults(lhs, rhs Result, caseSensitive bool) cmpResult {
 
 	// both strings
 	if lhs.Type == ResultTypeString {
+		ls := lhs.ValueString
+		rs := rhs.ValueString
 		if !caseSensitive {
-			return cmpResult(strings.Compare(strings.ToLower(lhs.ValueString),
-				strings.ToLower(rhs.ValueString)))
+			ls = strings.ToLower(ls)
+			rs = strings.ToLower(rs)
 		}
-		return cmpResult(strings.Compare(lhs.ValueString, rhs.ValueString))
+		if exactMatch {
+			match := wildcard.Match(rs, ls)
+			if match {
+				return cmpResultEqual
+			} else {
+				return cmpResultGreater
+			}
+		}
+		return cmpResult(strings.Compare(ls, rs))
 	}
 
 	// empty cells are equal
@@ -467,7 +482,7 @@ func compareResults(lhs, rhs Result, caseSensitive bool) cmpResult {
 			return cmpResultGreater
 		}
 		for i := range lhs.ValueList {
-			cmp := compareResults(lhs.ValueList[i], rhs.ValueList[i], caseSensitive)
+			cmp := compareResults(lhs.ValueList[i], rhs.ValueList[i], caseSensitive, exactMatch)
 			if cmp != cmpResultEqual {
 				return cmp
 			}
@@ -493,7 +508,7 @@ func compareResults(lhs, rhs Result, caseSensitive bool) cmpResult {
 				return cmpResultGreater
 			}
 			for c := range lrow {
-				cmp := compareResults(lrow[c], rrow[c], caseSensitive)
+				cmp := compareResults(lrow[c], rrow[c], caseSensitive, exactMatch)
 				if cmp != cmpResultEqual {
 					return cmp
 				}
@@ -523,7 +538,7 @@ func Lookup(args []Result) Result {
 
 	idx := -1
 	for i, v := range col {
-		if compareResults(lookupValue, v, false) == cmpResultEqual {
+		if compareResults(lookupValue, v, false, false) == cmpResultEqual {
 			idx = i
 		}
 	}
@@ -592,7 +607,7 @@ func HLookup(args []Result) Result {
 	row := arr.ValueArray[0]
 lfor:
 	for i, val := range row {
-		switch compareResults(val, lookupValue, false) {
+		switch compareResults(val, lookupValue, false, exactMatch) {
 		case cmpResultLess:
 			// less than
 			matchIdx = i

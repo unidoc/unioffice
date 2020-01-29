@@ -648,7 +648,6 @@ func (s *Sheet) RecalculateFormulas() {
 				if c.X().F.TAttr == sml.ST_CellFormulaTypeShared && len(formStr) == 0 {
 					continue
 				}
-
 				res := ev.Eval(ctx, formStr).AsString()
 				if res.Type == formula.ResultTypeError {
 					unioffice.Log("error evaulating formula %s: %s", formStr, res.ErrorMessage)
@@ -663,8 +662,12 @@ func (s *Sheet) RecalculateFormulas() {
 
 					// the formula is of type array, so if the result is also an
 					// array we need to expand the array out into cells
-					if c.X().F.TAttr == sml.ST_CellFormulaTypeArray && res.Type == formula.ResultTypeArray {
-						s.setArray(c.Reference(), res)
+					if c.X().F.TAttr == sml.ST_CellFormulaTypeArray {
+						if res.Type == formula.ResultTypeArray {
+							s.setArray(c.Reference(), res)
+						} else if res.Type == formula.ResultTypeList {
+							s.setList(c.Reference(), res)
+						}
 					} else if c.X().F.TAttr == sml.ST_CellFormulaTypeShared && c.X().F.RefAttr != nil {
 						from, to, err := reference.ParseRangeReference(*c.X().F.RefAttr)
 						if err != nil {
@@ -720,6 +723,32 @@ func (s *Sheet) setArray(origin string, arr formula.Result) error {
 		for ic, val := range row {
 			cell := sr.Cell(reference.IndexToColumn(cref.ColumnIdx + uint32(ic)))
 			if val.Type != formula.ResultTypeEmpty  {
+				if val.IsBoolean {
+					cell.SetBool(val.ValueNumber != 0)
+				} else {
+					cell.SetCachedFormulaResult(val.String())
+				}
+			}
+		}
+	}
+	return nil
+}
+
+// setList expands an array into cached values starting at the origin which
+// should be a cell reference of the type "A1". This is used when evaluating
+// list type formulas.
+func (s *Sheet) setList(origin string, list formula.Result) error {
+	cref, err := reference.ParseCellReference(origin)
+	if err != nil {
+		return err
+	}
+	sr := s.Row(cref.RowIdx)
+	for ic, val := range list.ValueList {
+		cell := sr.Cell(reference.IndexToColumn(cref.ColumnIdx + uint32(ic)))
+		if val.Type != formula.ResultTypeEmpty  {
+			if val.IsBoolean {
+				cell.SetBool(val.ValueNumber != 0)
+			} else {
 				cell.SetCachedFormulaResult(val.String())
 			}
 		}

@@ -32,19 +32,20 @@ import (
   fnName = 'TODO';
   file = 'TODO';
   horizontalRange = '$'? [0-9]+ ':' '$'? [0-9]+;
+  verticalRange = '$'? [A-Z]+ ':' '$'? [A-Z]+;
 
   # there is a function list at https://msdn.microsoft.com/en-us/library/dd906358(v=office.12).aspx
   builtinFunction = [A-Z] [A-Z0-9.]*  '(';
   excelFn = '_xlfn.' [A-Z_] [A-Z0-9.]* '(';  
 
-  sheetChar = ^['%\[\]\\:/?();{}#"=<>&+\-*/^%,_!];
+  sheetChar = ^['%\[\]\\:/?();{}#"=<>&+\-*/^%,!];
   enclosedSheetChar = ^['*\[\]\\:\/?];
 
   number = [0-9]+ '.'? [0-9]* ('e' [0-9]+)?;
   sheet = sheetChar+ '!';
   quotedSheet = (sheetChar+ | squote (enclosedSheetChar  | dquote)+ squote) '!';
 
-  namedRange = [A-Z_\\][A-Za-z0-9\\_.]+;
+  namedRange = [A-Za-z_\\][A-Za-z0-9\\_.]+;
 
   reservedName = '_xlnm.' [A-Z_]+;
   
@@ -59,6 +60,7 @@ import (
   errorLiteral => {l.emit(tokenError, data[ts:te])}; 
   errorRef => {l.emit(tokenErrorRef, data[ts:te])}; 
   horizontalRange => {l.emit(tokenHorizontalRange, data[ts:te])}; 
+  verticalRange => {l.emit(tokenVerticalRange, data[ts:te])}; 
   sheet  =>  {l.emit(tokenSheet, data[ts:te-1])};  # chop '!'
   quotedSheet  =>  {l.emit(tokenSheet, data[ts+1:te-2])};  # chop leading quote and trailing quote & !
   reservedName => {l.emit(tokenReservedName, data[ts:te])};

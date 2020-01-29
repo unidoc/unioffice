@@ -9,20 +9,24 @@ package formula
 
 import "strings"
 
+// String is a string expression.
 type String struct {
 	s string
 }
 
+// NewString constructs a new string expression.
 func NewString(v string) Expression {
 	// Excel escapes quotes within a string by repeating them
 	v = strings.Replace(v, `""`, `"`, -1)
 	return String{v}
 }
 
+// Eval evaluates and returns a string.
 func (s String) Eval(ctx Context, ev Evaluator) Result {
 	return MakeStringResult(s.s)
 }
 
+// Reference returns an invalid reference for String.
 func (s String) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }

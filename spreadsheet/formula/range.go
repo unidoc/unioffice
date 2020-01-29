@@ -9,8 +9,6 @@ package formula
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 
 	"github.com/unidoc/unioffice/spreadsheet/reference"
 )
@@ -25,65 +23,54 @@ func NewRange(from, to Expression) Expression {
 	return Range{from, to}
 }
 
-// Eval evaluates the range returning a list of results or an error.
+// Eval evaluates a range returning a list of results or an error.
 func (r Range) Eval(ctx Context, ev Evaluator) Result {
 	from := r.from.Reference(ctx, ev)
 	to := r.to.Reference(ctx, ev)
+	ref := rangeReference(from, to)
 	if from.Type == ReferenceTypeCell && to.Type == ReferenceTypeCell {
-		return resultFromCellRange(ctx, ev, from.Value, to.Value)
+		if cached, found := ev.GetFromCache(ref); found {
+			return cached
+		} else {
+			result := resultFromCellRange(ctx, ev, from.Value, to.Value)
+			ev.SetCache(ref, result)
+			return result
+		}
 	}
-	return MakeErrorResult("invalid range " + from.Value + " to " + to.Value)
+	return MakeErrorResult("invalid range " + ref)
 }
 
+func rangeReference(from, to Reference) string {
+	return fmt.Sprintf("%s:%s", from.Value, to.Value)
+}
+
+// Reference returns a string reference value to a range.
 func (r Range) Reference(ctx Context, ev Evaluator) Reference {
 	from := r.from.Reference(ctx, ev)
 	to := r.to.Reference(ctx, ev)
 	if from.Type == ReferenceTypeCell && to.Type == ReferenceTypeCell {
-		return MakeRangeReference(from.Value + ":" + to.Value)
+		return MakeRangeReference(rangeReference(from, to))
 	}
 	return ReferenceInvalid
 }
 
-// TODO: move these somewhere to remove duplication
-func ParseCellReference(s string) (col string, row uint32, err error) {
-	s = strings.Replace(s, "$", "", -1)
-	split := -1
-lfor:
-	for i := 0; i < len(s); i++ {
-		switch {
-		case s[i] >= '0' && s[i] <= '9':
-			split = i
-			break lfor
-		}
-	}
-	switch split {
-	case 0:
-		return col, row, fmt.Errorf("no letter prefix in %s", s)
-	case -1:
-		return col, row, fmt.Errorf("no digits in %s", s)
-	}
-
-	col = s[0:split]
-	r64, err := strconv.ParseUint(s[split:], 10, 32)
-	row = uint32(r64)
-	return col, row, err
-}
-
 func resultFromCellRange(ctx Context, ev Evaluator, from, to string) Result {
-	fc, fr, fe := ParseCellReference(from)
-	tc, tr, te := ParseCellReference(to)
+	fromRef, fe := reference.ParseCellReference(from)
 	if fe != nil {
-		return MakeErrorResult("unable to parse range " + from)
+		return MakeErrorResult(fmt.Sprintf("unable to parse range %s: error %s", from, fe.Error()))
 	}
+	fc, fr := fromRef.ColumnIdx, fromRef.RowIdx
+
+	toRef, te := reference.ParseCellReference(to)
 	if te != nil {
-		return MakeErrorResult("unable to parse range " + to)
+		return MakeErrorResult(fmt.Sprintf("unable to parse range %s: error %s", to, te.Error()))
 	}
-	bc := reference.ColumnToIndex(fc)
-	ec := reference.ColumnToIndex(tc)
+	tc, tr := toRef.ColumnIdx, toRef.RowIdx
+
 	arr := [][]Result{}
 	for r := fr; r <= tr; r++ {
 		args := []Result{}
-		for c := bc; c <= ec; c++ {
+		for c := fc; c <= tc; c++ {
 			res := ctx.Cell(fmt.Sprintf("%s%d", reference.IndexToColumn(c), r), ev)
 			args = append(args, res)
 		}

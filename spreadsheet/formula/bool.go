@@ -13,10 +13,12 @@ import (
 	"github.com/unidoc/unioffice"
 )
 
+// Bool is a boolean expression.
 type Bool struct {
 	b bool
 }
 
+// NewBool constructs a new boolean expression.
 func NewBool(v string) Expression {
 	b, err := strconv.ParseBool(v)
 	if err != nil {
@@ -25,10 +27,12 @@ func NewBool(v string) Expression {
 	return Bool{b}
 }
 
+// Eval evaluates and returns a boolean.
 func (b Bool) Eval(ctx Context, ev Evaluator) Result {
 	return MakeBoolResult(b.b)
 }
 
+// Reference returns an invalid reference for Bool.
 func (b Bool) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }

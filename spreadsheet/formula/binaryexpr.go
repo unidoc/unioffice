@@ -44,10 +44,23 @@ func NewBinaryExpr(lhs Expression, op BinOpType, rhs Expression) Expression {
 	return BinaryExpr{lhs, rhs, op}
 }
 
+func equalsToEmpty(res Result) bool {
+	if res.Type == ResultTypeString {
+		return res.ValueString == ""
+	}
+	return res.ValueNumber == 0
+}
+
 // Eval evaluates the binary expression using the context given.
 func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 	lhs := b.lhs.Eval(ctx, ev)
+	if lhs.Type == ResultTypeError {
+		return lhs
+	}
 	rhs := b.rhs.Eval(ctx, ev)
+	if rhs.Type == ResultTypeError {
+		return rhs
+	}
 
 	// peel off array/list ops first
 	if lhs.Type == rhs.Type {
@@ -112,6 +125,17 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 			if lhs.Type == ResultTypeString {
 				return MakeBoolResult(lhs.ValueString < rhs.ValueString)
 			}
+			if lhs.Type == ResultTypeEmpty { // empty always equals to empty but always less than string or number
+				return MakeBoolResult(false)
+			}
+		} else if lhs.Type == ResultTypeString && rhs.Type == ResultTypeNumber { // when comparing string to number, string is always greater than number
+			return MakeBoolResult(false)
+		} else if lhs.Type == ResultTypeNumber && rhs.Type == ResultTypeString {
+			return MakeBoolResult(true)
+		} else if lhs.Type == ResultTypeEmpty && (rhs.Type == ResultTypeNumber || rhs.Type == ResultTypeString) {
+			return MakeBoolResult(true)
+		} else if (lhs.Type == ResultTypeNumber || lhs.Type == ResultTypeString) && rhs.Type == ResultTypeEmpty {
+			return MakeBoolResult(false)
 		}
 	case BinOpTypeGT:
 		if lhs.Type == rhs.Type {
@@ -121,6 +145,17 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 			if lhs.Type == ResultTypeString {
 				return MakeBoolResult(lhs.ValueString > rhs.ValueString)
 			}
+			if lhs.Type == ResultTypeEmpty {
+				return MakeBoolResult(false)
+			}
+		} else if lhs.Type == ResultTypeString && rhs.Type == ResultTypeNumber {
+			return MakeBoolResult(true)
+		} else if lhs.Type == ResultTypeNumber && rhs.Type == ResultTypeString {
+			return MakeBoolResult(false)
+		} else if lhs.Type == ResultTypeEmpty && (rhs.Type == ResultTypeNumber || rhs.Type == ResultTypeString) {
+			return MakeBoolResult(false)
+		} else if (lhs.Type == ResultTypeNumber || lhs.Type == ResultTypeString) && rhs.Type == ResultTypeEmpty {
+			return MakeBoolResult(true)
 		}
 	case BinOpTypeEQ:
 		if lhs.Type == rhs.Type {
@@ -131,6 +166,15 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 			if lhs.Type == ResultTypeString {
 				return MakeBoolResult(lhs.ValueString == rhs.ValueString)
 			}
+			if lhs.Type == ResultTypeEmpty {
+				return MakeBoolResult(true)
+			}
+		} else if (lhs.Type == ResultTypeString && rhs.Type == ResultTypeNumber) || (lhs.Type == ResultTypeNumber && rhs.Type == ResultTypeString) { // string never equals to number
+			return MakeBoolResult(false)
+		} else if lhs.Type == ResultTypeEmpty && (rhs.Type == ResultTypeNumber || rhs.Type == ResultTypeString) {
+			return MakeBoolResult(equalsToEmpty(rhs))
+		} else if (lhs.Type == ResultTypeNumber || lhs.Type == ResultTypeString) && rhs.Type == ResultTypeEmpty {
+			return MakeBoolResult(equalsToEmpty(lhs))
 		}
 	case BinOpTypeNE:
 		if lhs.Type == rhs.Type {
@@ -140,6 +184,15 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 			if lhs.Type == ResultTypeString {
 				return MakeBoolResult(lhs.ValueString != rhs.ValueString)
 			}
+			if lhs.Type == ResultTypeEmpty {
+				return MakeBoolResult(false)
+			}
+		} else if (lhs.Type == ResultTypeString && rhs.Type == ResultTypeNumber) || (lhs.Type == ResultTypeNumber && rhs.Type == ResultTypeString) {
+			return MakeBoolResult(true)
+		} else if lhs.Type == ResultTypeEmpty && (rhs.Type == ResultTypeNumber || rhs.Type == ResultTypeString) {
+			return MakeBoolResult(!equalsToEmpty(rhs))
+		} else if (lhs.Type == ResultTypeNumber || lhs.Type == ResultTypeString) && rhs.Type == ResultTypeEmpty {
+			return MakeBoolResult(!equalsToEmpty(lhs))
 		}
 	case BinOpTypeLEQ:
 		if lhs.Type == rhs.Type {
@@ -149,6 +202,17 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 			if lhs.Type == ResultTypeString {
 				return MakeBoolResult(lhs.ValueString <= rhs.ValueString)
 			}
+			if lhs.Type == ResultTypeEmpty {
+				return MakeBoolResult(true)
+			}
+		} else if lhs.Type == ResultTypeString && rhs.Type == ResultTypeNumber {
+			return MakeBoolResult(false)
+		} else if lhs.Type == ResultTypeNumber && rhs.Type == ResultTypeString {
+			return MakeBoolResult(true)
+		} else if lhs.Type == ResultTypeEmpty && (rhs.Type == ResultTypeNumber || rhs.Type == ResultTypeString) {
+			return MakeBoolResult(equalsToEmpty(rhs))
+		} else if (lhs.Type == ResultTypeNumber || lhs.Type == ResultTypeString) && rhs.Type == ResultTypeEmpty {
+			return MakeBoolResult(equalsToEmpty(lhs))
 		}
 	case BinOpTypeGEQ:
 		if lhs.Type == rhs.Type {
@@ -158,6 +222,17 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 			if lhs.Type == ResultTypeString {
 				return MakeBoolResult(lhs.ValueString >= rhs.ValueString)
 			}
+			if lhs.Type == ResultTypeEmpty {
+				return MakeBoolResult(true)
+			}
+		} else if lhs.Type == ResultTypeString && rhs.Type == ResultTypeNumber {
+			return MakeBoolResult(true)
+		} else if lhs.Type == ResultTypeNumber && rhs.Type == ResultTypeString {
+			return MakeBoolResult(false)
+		} else if lhs.Type == ResultTypeEmpty && (rhs.Type == ResultTypeNumber || rhs.Type == ResultTypeString) {
+			return MakeBoolResult(equalsToEmpty(rhs))
+		} else if (lhs.Type == ResultTypeNumber || lhs.Type == ResultTypeString) && rhs.Type == ResultTypeEmpty {
+			return MakeBoolResult(equalsToEmpty(lhs))
 		}
 	case BinOpTypeConcat:
 		return MakeStringResult(lhs.Value() + rhs.Value())
@@ -166,6 +241,7 @@ func (b BinaryExpr) Eval(ctx Context, ev Evaluator) Result {
 	return MakeErrorResult("unsupported binary op")
 }
 
+// Reference returns an invalid reference for BinaryExpr.
 func (b BinaryExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }

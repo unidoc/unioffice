@@ -7,14 +7,17 @@
 
 package formula
 
+// ConstArrayExpr is a constant array expression.
 type ConstArrayExpr struct {
 	data [][]Expression
 }
 
+// NewConstArrayExpr constructs a new constant array expression with a given data.
 func NewConstArrayExpr(data [][]Expression) Expression {
 	return &ConstArrayExpr{data}
 }
 
+// Eval evaluates and returns the result of a constant array expression.
 func (c ConstArrayExpr) Eval(ctx Context, ev Evaluator) Result {
 	res := [][]Result{}
 	for _, row := range c.data {
@@ -27,6 +30,7 @@ func (c ConstArrayExpr) Eval(ctx Context, ev Evaluator) Result {
 	return MakeArrayResult(res)
 }
 
+// Reference returns an invalid reference for ConstArrayExpr.
 func (c ConstArrayExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }

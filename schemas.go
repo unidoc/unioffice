@@ -23,9 +23,11 @@ const (
 	CustomXMLTypeStrict          = "http://purl.oclc.org/ooxml/officeDocument/relationships/customXml"
 
 	// SML strict
-	WorksheetTypeStrict    = "http://purl.oclc.org/ooxml/officeDocument/relationships/worksheet"
-	SharedStingsTypeStrict = "http://purl.oclc.org/ooxml/officeDocument/relationships/sharedStrings"
-	TableTypeStrict        = "http://purl.oclc.org/ooxml/officeDocument/relationships/table"
+	WorksheetTypeStrict     = "http://purl.oclc.org/ooxml/officeDocument/relationships/worksheet"
+	SharedStringsTypeStrict = "http://purl.oclc.org/ooxml/officeDocument/relationships/sharedStrings"
+        // Deprecated: Renamed to SharedStringsTypeStrict, will be removed in next major version.
+	SharedStingsTypeStrict  = SharedStringsTypeStrict
+	TableTypeStrict         = "http://purl.oclc.org/ooxml/officeDocument/relationships/table"
 
 	// WML strict
 	HeaderTypeStrict      = "http://purl.oclc.org/ooxml/officeDocument/relationships/header"
@@ -65,7 +67,9 @@ const (
 	// SML
 	WorksheetType            = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
 	WorksheetContentType     = "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
-	SharedStingsType         = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings"
+	SharedStringsType        = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings"
+        // Deprecated: Renamed to SharedStringsType, will be removed in next major version.
+	SharedStingsType         = SharedStringsType
 	SharedStringsContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"
 	SMLStyleSheetContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"
 	TableType                = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table"
