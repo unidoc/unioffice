@@ -24,12 +24,14 @@ type Evaluator interface {
 	LastEvalIsRef() bool
 }
 
+// NewEvaluator constructs a new defEval object which is the default formula evaluator.
 func NewEvaluator() Evaluator {
 	ev := &defEval{}
 	ev.evCache = newEvCache()
 	return ev
 }
 
+// defEval is the default formula evaluator which implements the Evaluator interface.
 type defEval struct {
 	evCache
 	lastEvalIsRef bool
