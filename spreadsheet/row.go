@@ -127,9 +127,26 @@ func (r Row) Cells() []Cell {
 // invaild spreadsheet.
 func (r Row) AddNamedCell(col string) Cell {
 	c := sml.NewCT_Cell()
-
-	r.x.C = append(r.x.C, c)
 	c.RAttr = unioffice.Stringf("%s%d", col, r.RowNumber())
+
+	indexToInsert := -1
+	colIdx := reference.ColumnToIndex(col)
+	for i, cell := range r.x.C {
+		cr, err := reference.ParseCellReference(*cell.RAttr)
+		if err != nil {
+			return Cell{}
+		}
+		if colIdx < cr.ColumnIdx {
+			indexToInsert = i
+			break
+		}
+	}
+	if indexToInsert == -1 {
+		r.x.C = append(r.x.C, c)
+	} else {
+		r.x.C = append(r.x.C[:indexToInsert], append([]*sml.CT_Cell{c}, r.x.C[indexToInsert:]...)...)
+	}
+
 	return Cell{r.w, r.s, r.x, c}
 }
 

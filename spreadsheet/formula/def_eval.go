@@ -21,9 +21,6 @@ func (d *defEval) Eval(ctx Context, formula string) Result {
 	if expr != nil {
 		d.checkLastEvalIsRef(ctx, expr)
 		result := expr.Eval(ctx, d)
-		if result.Type == ResultTypeError {
-			d.lastEvalIsRef = false
-		}
 		return result
 	}
 	return MakeErrorResult(fmt.Sprintf("unable to parse formula %s", formula))
