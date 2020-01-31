@@ -233,6 +233,7 @@ func (e *evalContext) LastRow(col string) int {
 var refRegexp *regexp.Regexp = regexp.MustCompile(`^([a-z]+)([0-9]+)$`)
 
 func validateRef(cr string) bool {
+	cr = strings.Replace(cr, "$", "", -1)
 	if submatch := refRegexp.FindStringSubmatch(strings.ToLower(cr)); len(submatch) > 2 {
 		col := submatch[1]
 		row, err := strconv.Atoi(submatch[2])
