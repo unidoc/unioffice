@@ -112,7 +112,7 @@ func (r Row) Cells() []Cell {
 		currentIndex := int(ref.ColumnIdx)
 		if currentIndex - lastIndex > 1 {
 			for col := lastIndex + 1; col < currentIndex;  col++ {
-				ret = append(ret, r.AddNamedCell(reference.IndexToColumn(uint32(col))))
+				ret = append(ret, r.Cell(reference.IndexToColumn(uint32(col))))
 			}
 		}
 		lastIndex = currentIndex
