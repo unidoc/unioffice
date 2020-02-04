@@ -872,6 +872,7 @@ func (s *Sheet) Sort(column string, firstRow uint32, order SortOrder) {
 	}
 }
 
+// RemoveColumn removes column from the sheet and moves all columns to the right of the removed column one step left.
 func (s *Sheet) RemoveColumn(column string) error {
 	columnIdx := reference.ColumnToIndex(column)
 	for _, row := range s.Rows() {
