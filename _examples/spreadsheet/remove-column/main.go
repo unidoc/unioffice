@@ -21,7 +21,7 @@ func main() {
 
 	err = sheet0.RemoveColumn("D")
 	if err != nil {
-		log.Fatalf("error removeing column: %s", err)
+		log.Fatalf("error removing column: %s", err)
 	}
 
 	sheet1, err := ss.GetSheet("MergedCells")
@@ -31,7 +31,7 @@ func main() {
 
 	err = sheet1.RemoveColumn("C")
 	if err != nil {
-		log.Fatalf("error removeing column: %s", err)
+		log.Fatalf("error removing column: %s", err)
 	}
 
 	ss.SaveToFile("removed.xlsx")
