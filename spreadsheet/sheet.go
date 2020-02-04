@@ -874,7 +874,17 @@ func (s *Sheet) Sort(column string, firstRow uint32, order SortOrder) {
 
 // RemoveColumn removes column from the sheet and moves all columns to the right of the removed column one step left.
 func (s *Sheet) RemoveColumn(column string) error {
+	cellsInFormulaArrays, err := s.getAllCellsInFormulaArraysForColumn()
+	if err != nil {
+		return err
+	}
 	columnIdx := reference.ColumnToIndex(column)
+	for _, row := range s.Rows() {
+		ref := fmt.Sprintf("%s%d", column, *row.X().RAttr)
+		if _, ok := cellsInFormulaArrays[ref]; ok {
+			return nil
+		}
+	}
 	for _, row := range s.Rows() {
 		cells := row.x.C
 		for ic, cell := range cells {
@@ -944,4 +954,59 @@ func moveLeft(colIdx, rowIdx uint32) string {
 	newColIdx := colIdx - 1
 	newCol := reference.IndexToColumn(newColIdx)
 	return fmt.Sprintf("%s%d", newCol, rowIdx)
+}
+
+func (s *Sheet) getAllCellsInFormulaArraysForColumn() (map[string]bool, error) {
+	return s.getAllCellsInFormulaArrays(false)
+}
+
+// getAllCellsInFormulaArrays returns all cells of the sheet that are covered by formula arrays. It is a helper for checking when removing rows and columns and skips all arrays of length 1 column when removing columns and all arrays of length 1 row when removing rows.
+func (s *Sheet) getAllCellsInFormulaArrays(isRow bool) (map[string]bool, error) {
+	ev := formula.NewEvaluator()
+	ctx := s.FormulaContext()
+	cellsInFormulaArrays := map[string]bool{}
+	for _, r := range s.Rows() {
+		for _, c := range r.Cells() {
+			if c.X().F != nil {
+				formStr := c.X().F.Content
+				if c.X().F.TAttr == sml.ST_CellFormulaTypeArray {
+					res := ev.Eval(ctx, formStr).AsString()
+					if res.Type == formula.ResultTypeError {
+						unioffice.Log("error evaulating formula %s: %s", formStr, res.ErrorMessage)
+						c.X().V = nil
+					}
+					if res.Type == formula.ResultTypeArray {
+						cref, err := reference.ParseCellReference(c.Reference())
+						if err != nil {
+							return map[string]bool{}, err
+						}
+						if (isRow && len(res.ValueArray) == 1) || (!isRow && len(res.ValueArray[0]) == 1) {
+							continue
+						}
+						for ir, row := range res.ValueArray {
+							rowIdx := cref.RowIdx + uint32(ir)
+							for ic := range row {
+								column := reference.IndexToColumn(cref.ColumnIdx + uint32(ic))
+								cellsInFormulaArrays[fmt.Sprintf("%s%d", column, rowIdx)] = true
+							}
+						}
+					} else if res.Type == formula.ResultTypeList {
+						cref, err := reference.ParseCellReference(c.Reference())
+						if err != nil {
+							return map[string]bool{}, err
+						}
+						if isRow || len(res.ValueList) == 1 {
+							continue
+						}
+						rowIdx := cref.RowIdx
+						for ic := range res.ValueList {
+							column := reference.IndexToColumn(cref.ColumnIdx + uint32(ic))
+							cellsInFormulaArrays[fmt.Sprintf("%s%d", column, rowIdx)] = true
+						}
+					}
+				}
+			}
+		}
+	}
+	return cellsInFormulaArrays, nil
 }
