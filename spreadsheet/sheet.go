@@ -871,3 +871,76 @@ func (s *Sheet) Sort(column string, firstRow uint32, order SortOrder) {
 		}
 	}
 }
+
+func (s *Sheet) RemoveColumn(column string) error {
+	columnIdx := reference.ColumnToIndex(column)
+	for _, row := range s.Rows() {
+		cells := row.x.C
+		for ic, cell := range cells {
+			ref, err := reference.ParseCellReference(*cell.RAttr)
+			if err != nil {
+				return err
+			}
+			if ref.ColumnIdx == columnIdx {
+				row.x.C = append(cells[:ic], s.slideCellsLeft(cells[ic+1:])...)
+				break
+			} else if ref.ColumnIdx > columnIdx {
+				row.x.C = append(cells[:ic], s.slideCellsLeft(cells[ic:])...)
+				break
+			}
+		}
+	}
+	return s.removeColumnFromMergedCells(columnIdx)
+}
+
+func (s *Sheet) slideCellsLeft(cells []*sml.CT_Cell) []*sml.CT_Cell {
+	for _, cell := range cells {
+		ref, err := reference.ParseCellReference(*cell.RAttr)
+		if err != nil {
+			return cells
+		}
+		newColumnIdx := ref.ColumnIdx - 1
+		newRefStr := reference.IndexToColumn(newColumnIdx) + fmt.Sprintf("%d", ref.RowIdx)
+		cell.RAttr = &newRefStr
+	}
+	return cells
+}
+
+func (s *Sheet) removeColumnFromMergedCells(columnIdx uint32) error {
+	if s.x.MergeCells == nil || s.x.MergeCells.MergeCell == nil {
+		return nil
+	}
+	newMergedCells := []*sml.CT_MergeCell{}
+	for _, mc := range s.MergedCells() {
+		from, to, err := reference.ParseRangeReference(mc.Reference())
+		if err != nil {
+			return err
+		}
+		add := true
+		fromColIdx, toColIdx := from.ColumnIdx, to.ColumnIdx
+		if columnIdx >= fromColIdx && columnIdx <= toColIdx {
+			if fromColIdx == toColIdx {
+				add = false
+			} else {
+				fromStr := fmt.Sprintf("%s%d", from.Column, from.RowIdx)
+				newToStr := moveLeft(toColIdx, to.RowIdx)
+				mc.SetReference(fmt.Sprintf("%s:%s", fromStr, newToStr))
+			}
+		} else {
+			newFromStr := moveLeft(fromColIdx, from.RowIdx)
+			newToStr := moveLeft(toColIdx, to.RowIdx)
+			mc.SetReference(fmt.Sprintf("%s:%s", newFromStr, newToStr))
+		}
+		if add {
+			newMergedCells = append(newMergedCells, mc.X())
+		}
+	}
+	s.x.MergeCells.MergeCell = newMergedCells
+	return nil
+}
+
+func moveLeft(colIdx, rowIdx uint32) string {
+	newColIdx := colIdx - 1
+	newCol := reference.IndexToColumn(newColIdx)
+	return fmt.Sprintf("%s%d", newCol, rowIdx)
+}

@@ -15,6 +15,7 @@ import (
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/spreadsheet"
+	"github.com/unidoc/unioffice/spreadsheet/reference"
 )
 
 func TestRowNumIncreases(t *testing.T) {
@@ -159,6 +160,16 @@ func TestMergedCell(t *testing.T) {
 	}
 
 	if mc.Cell().GetString() != expContent {
+		t.Errorf("expected merged cell content to be '%s', got '%s'", expContent, mc.Cell().GetString())
+	}
+
+	sheet.RemoveColumn("B")
+	if mc.Cell().GetString() != expContent {
+		t.Errorf("expected merged cell content to be '%s', got '%s'", expContent, mc.Cell().GetString())
+	}
+
+	sheet.RemoveColumn("A")
+	if mc.Cell().GetString() != "" {
 		t.Errorf("expected merged cell content to be '%s', got '%s'", expContent, mc.Cell().GetString())
 	}
 
@@ -331,6 +342,30 @@ func TestSortStrings(t *testing.T) {
 		got := sheet.Cell(ref).GetString()
 		if got != exp {
 			t.Errorf("expected %s in %s, got %s", exp, ref, got)
+		}
+	}
+}
+
+func TestRemoveColumn(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	sheet.Cell("A1").SetNumber(5)
+	sheet.Cell("B1").SetNumber(4)
+	sheet.Cell("C1").SetNumber(3)
+	sheet.Cell("D1").SetNumber(2)
+	sheet.Cell("E1").SetNumber(1)
+
+	sheet.RemoveColumn("C")
+
+	expected := []float64{5,4,2,1,0}
+
+	for i := 0; i <= 4; i++ {
+		column := reference.IndexToColumn(uint32(i))
+		ref := fmt.Sprintf("%s1", column)
+		got, _ := sheet.Cell(ref).GetValueAsNumber()
+		exp := expected[i]
+		if got != exp {
+			t.Errorf("expected %f in %s, got %f", exp, ref, got)
 		}
 	}
 }
