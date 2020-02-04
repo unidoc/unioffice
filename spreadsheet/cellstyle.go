@@ -20,6 +20,11 @@ type CellStyle struct {
 	xfs *sml.CT_CellXfs
 }
 
+// IsEmpty checks if the cell style contains nothing.
+func (cs CellStyle) IsEmpty() bool {
+	return cs.wb == nil || cs.xf == nil || cs.xfs == nil || cs.xfs.Xf == nil
+}
+
 // HasNumberFormat returns true if the cell style has a number format applied.
 func (cs CellStyle) HasNumberFormat() bool {
 	return cs.xf.NumFmtIdAttr != nil && cs.xf.ApplyNumberFormatAttr != nil &&
