@@ -8,6 +8,7 @@
 package spreadsheet
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"sort"
@@ -901,6 +902,11 @@ func (s *Sheet) RemoveColumn(column string) error {
 			}
 		}
 	}
+
+	err = s.removeColumnFromNamedRanges(columnIdx)
+	if err != nil {
+		return err
+	}
 	return s.removeColumnFromMergedCells(columnIdx)
 }
 
@@ -923,26 +929,9 @@ func (s *Sheet) removeColumnFromMergedCells(columnIdx uint32) error {
 	}
 	newMergedCells := []*sml.CT_MergeCell{}
 	for _, mc := range s.MergedCells() {
-		from, to, err := reference.ParseRangeReference(mc.Reference())
-		if err != nil {
-			return err
-		}
-		add := true
-		fromColIdx, toColIdx := from.ColumnIdx, to.ColumnIdx
-		if columnIdx >= fromColIdx && columnIdx <= toColIdx {
-			if fromColIdx == toColIdx {
-				add = false
-			} else {
-				fromStr := fmt.Sprintf("%s%d", from.Column, from.RowIdx)
-				newToStr := moveLeft(toColIdx, to.RowIdx)
-				mc.SetReference(fmt.Sprintf("%s:%s", fromStr, newToStr))
-			}
-		} else {
-			newFromStr := moveLeft(fromColIdx, from.RowIdx)
-			newToStr := moveLeft(toColIdx, to.RowIdx)
-			mc.SetReference(fmt.Sprintf("%s:%s", newFromStr, newToStr))
-		}
-		if add {
+		newRefStr := moveRangeLeft(mc.Reference(), columnIdx, true)
+		if newRefStr != "" {
+			mc.SetReference(newRefStr)
 			newMergedCells = append(newMergedCells, mc.X())
 		}
 	}
@@ -950,10 +939,97 @@ func (s *Sheet) removeColumnFromMergedCells(columnIdx uint32) error {
 	return nil
 }
 
-func moveLeft(colIdx, rowIdx uint32) string {
-	newColIdx := colIdx - 1
-	newCol := reference.IndexToColumn(newColIdx)
-	return fmt.Sprintf("%s%d", newCol, rowIdx)
+func (s *Sheet) removeColumnFromNamedRanges(columnIdx uint32) error {
+	for _, dn := range s.w.DefinedNames() {
+		name := dn.Name()
+		content := dn.Content()
+		sp := strings.Split(content, "!")
+		if len(sp) != 2 {
+			return errors.New("Incorrect named range:" + content)
+		}
+		sheetName := sp[0]
+		if s.Name() == sheetName {
+			err := s.w.RemoveDefinedName(dn)
+			if err != nil {
+				return err
+			}
+			newRefStr := moveRangeLeft(sp[1], columnIdx, true)
+			if newRefStr != "" {
+				newContent := sheetName + "!" + newRefStr
+				s.w.AddDefinedName(name, newContent)
+			}
+		}
+	}
+	numTables := 0
+	if s.x.TableParts != nil && s.x.TableParts.TablePart != nil {
+		numTables = len(s.x.TableParts.TablePart)
+	}
+	if numTables != 0 {
+		startFromTable := 0
+		for _, sheet := range s.w.Sheets() {
+			if sheet.Name() == s.Name() {
+				break
+			} else {
+				if sheet.x.TableParts != nil && sheet.x.TableParts.TablePart != nil {
+					startFromTable += len(sheet.x.TableParts.TablePart)
+				}
+			}
+		}
+		sheetTables := s.w.tables[startFromTable:startFromTable + numTables]
+		for tblIndex, tbl := range sheetTables {
+			newTable := tbl
+			ref := tbl.RefAttr
+			newTable.RefAttr = moveRangeLeft(ref, columnIdx, false)
+			s.w.tables[startFromTable + tblIndex] = newTable
+		}
+	}
+	return nil
+}
+
+func moveRangeLeft(ref string, columnIdx uint32, remove bool) string {
+	fromCell, toCell, err := reference.ParseRangeReference(ref)
+	if err == nil {
+		fromColIdx, toColIdx := fromCell.ColumnIdx, toCell.ColumnIdx
+		if columnIdx >= fromColIdx && columnIdx <= toColIdx {
+			if fromColIdx == toColIdx {
+				if remove {
+					return ""
+				} else {
+					return ref
+				}
+			} else {
+				newTo := toCell.MoveLeft()
+				return fmt.Sprintf("%s:%s", fromCell.String(), newTo.String())
+			}
+		} else if columnIdx < fromColIdx {
+			newFrom := fromCell.MoveLeft()
+			newTo := toCell.MoveLeft()
+			return fmt.Sprintf("%s:%s", newFrom.String(), newTo.String())
+		}
+	} else {
+		fromColumn, toColumn, err := reference.ParseColumnRangeReference(ref)
+		if err != nil {
+			return ""
+		}
+		fromColIdx, toColIdx := fromColumn.ColumnIdx, toColumn.ColumnIdx
+		if columnIdx >= fromColIdx && columnIdx <= toColIdx {
+			if fromColIdx == toColIdx {
+				if remove {
+					return ""
+				} else {
+					return ref
+				}
+			} else {
+				newTo := toColumn.MoveLeft()
+				return fmt.Sprintf("%s:%s", fromColumn.String(), newTo.String())
+			}
+		} else if columnIdx < fromColIdx {
+			newFrom := fromColumn.MoveLeft()
+			newTo := toColumn.MoveLeft()
+			return fmt.Sprintf("%s:%s", newFrom.String(), newTo.String())
+		}
+	}
+	return ""
 }
 
 func (s *Sheet) getAllCellsInFormulaArraysForColumn() (map[string]bool, error) {

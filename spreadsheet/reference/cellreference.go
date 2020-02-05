@@ -90,3 +90,10 @@ lfor:
 
 	return r, nil
 }
+
+func (ref *CellReference) MoveLeft() *CellReference {
+	newRef := ref
+	newRef.ColumnIdx = ref.ColumnIdx - 1
+	newRef.Column = IndexToColumn(newRef.ColumnIdx)
+	return newRef
+}
