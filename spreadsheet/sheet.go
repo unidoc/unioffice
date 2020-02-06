@@ -931,7 +931,7 @@ func (s *Sheet) moveLeftFormulasArgs(columnIdx uint32) error {
 		SheetToMove: ownSheetName,
 	}
 	for _, sheet := range s.w.Sheets() {
-		q.MoveCurrentSheet = ownSheetName == sheet.Name(),
+		q.MoveCurrentSheet = ownSheetName == sheet.Name()
 		for _, r := range sheet.Rows() {
 			for _, c := range r.Cells() {
 				if c.X().F != nil {
