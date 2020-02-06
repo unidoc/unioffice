@@ -46,3 +46,29 @@ func (f FunctionCall) Eval(ctx Context, ev Evaluator) Result {
 func (f FunctionCall) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
+
+func (f FunctionCall) ToString() string {
+	str := f.name + "("
+	lastArgIndex := len(f.args) - 1
+	for argIndex, arg := range f.args {
+		str += arg.ToString()
+		if argIndex != lastArgIndex {
+			str += ","
+		}
+	}
+	str += ")"
+	return str
+}
+
+// MoveLeft makes the FunctionCall moved left after removing a column.
+func (f FunctionCall) MoveLeft(q *MoveQuery) Expression {
+	newArgs := []Expression{}
+	for _, arg := range f.args {
+		newArg := arg.MoveLeft(q)
+		newArgs = append(newArgs, newArg)
+	}
+	return FunctionCall{
+		name: f.name,
+		args: newArgs,
+	}
+}

@@ -403,3 +403,31 @@ func listValueOp(op BinOpType, lhs []Result, rhs Result) Result {
 	}
 	return MakeListResult(res)
 }
+
+// Eval evaluates the binary expression using the context given.
+func (b BinaryExpr) ToString() string {
+	opStr := ""
+	switch b.op {
+		case BinOpTypePlus: opStr = "+"
+		case BinOpTypeMinus: opStr = "-"
+		case BinOpTypeMult: opStr = "*"
+		case BinOpTypeDiv: opStr = "/"
+		case BinOpTypeExp: opStr = "^"
+		case BinOpTypeLT: opStr = "<"
+		case BinOpTypeGT: opStr = ">"
+		case BinOpTypeEQ: opStr = "="
+		case BinOpTypeLEQ: opStr = "<="
+		case BinOpTypeGEQ: opStr = ">="
+		case BinOpTypeNE: opStr = "<>"
+		case BinOpTypeConcat: opStr = "&"
+	}
+	return b.lhs.ToString() + opStr + b.rhs.ToString()
+}
+
+// MoveLeft makes the BinaryExpr moved left after removing a column.
+func (b BinaryExpr) MoveLeft(q *MoveQuery) Expression {
+	new := b
+	new.lhs = b.lhs.MoveLeft(q)
+	new.rhs = b.rhs.MoveLeft(q)
+	return new
+}

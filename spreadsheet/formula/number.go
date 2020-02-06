@@ -36,3 +36,13 @@ func (n Number) Eval(ctx Context, ev Evaluator) Result {
 func (n Number) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
+
+// ToString returns a string representation of Number.
+func (n Number) ToString() string {
+	return strconv.FormatFloat(n.v, 'f', -1, 64)
+}
+
+// MoveLeft returns the same object as moving ranges to left does not affect Number.
+func (n Number) MoveLeft(q *MoveQuery) Expression {
+	return n
+}

@@ -87,3 +87,18 @@ func resultFromCellRange(ctx Context, ev Evaluator, from, to string) Result {
 
 	return MakeArrayResult(arr)
 }
+
+// ToString returns a string of a range.
+func (r Range) ToString() string {
+	return fmt.Sprintf("%s:%s", r.from.ToString(), r.to.ToString())
+}
+
+// MoveLeft makes the Range left after removing a column.
+func (r Range) MoveLeft(q *MoveQuery) Expression {
+	new := r
+	if q.MoveCurrentSheet {
+		new.from = r.from.MoveLeft(q)
+		new.to = r.to.MoveLeft(q)
+	}
+	return new
+}

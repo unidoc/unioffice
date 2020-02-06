@@ -36,3 +36,17 @@ func (b Bool) Eval(ctx Context, ev Evaluator) Result {
 func (b Bool) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
+
+// ToString returns a string representation for Bool.
+func (b Bool) ToString() string {
+	if b.b {
+		return "TRUE"
+	} else {
+		return "FALSE"
+	}
+}
+
+// MoveLeft returns the same object as moving ranges to left does not affect Bool.
+func (b Bool) MoveLeft(q *MoveQuery) Expression {
+	return b
+}

@@ -56,3 +56,13 @@ func cellRefsFromHorizontalRange(ctx Context, rowFrom, rowTo int) (string, strin
 	to := lastColumn + strconv.Itoa(rowTo)
 	return from, to
 }
+
+// ToString returns a string representation of a horizontal range.
+func (r HorizontalRange) ToString() string {
+	return r.horizontalRangeReference()
+}
+
+// MoveLeft returns the same object as moving ranges to left does not affect horizontal ranges.
+func (r HorizontalRange) MoveLeft(q *MoveQuery) Expression {
+	return r
+}

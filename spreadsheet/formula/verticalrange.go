@@ -54,3 +54,19 @@ func cellRefsFromVerticalRange(ctx Context, colFrom, colTo string) (string, stri
 	to := colTo + strconv.Itoa(lastRow)
 	return from, to
 }
+
+// ToString returns a string representation of a vertical range.
+func (r VerticalRange) ToString() string {
+	return r.verticalRangeReference()
+}
+
+// MoveLeft makes the VerticalRange left after removing a column.
+func (r VerticalRange) MoveLeft(q *MoveQuery) Expression {
+	new := r
+	if q.MoveCurrentSheet {
+		columnIdx := q.ColumnIdx
+		new.colFrom = moveColumnLeft(r.colFrom, columnIdx)
+		new.colTo = moveColumnLeft(r.colTo, columnIdx)
+	}
+	return new
+}

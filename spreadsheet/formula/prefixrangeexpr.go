@@ -56,3 +56,21 @@ func (p PrefixRangeExpr) Reference(ctx Context, ev Evaluator) Reference {
 	}
 	return ReferenceInvalid
 }
+
+// ToString returns a string representation of a range with prefix.
+func (r PrefixRangeExpr) ToString() string {
+	return fmt.Sprintf("%s!%s:%s", r.pfx.ToString(), r.from.ToString(), r.to.ToString())
+}
+
+// MoveLeft makes the PrefixRangeExpr  left after removing a column.
+func (r PrefixRangeExpr) MoveLeft(q *MoveQuery) Expression {
+	new := r
+	sheetName := r.pfx.ToString()
+	if sheetName == q.SheetToMove {
+		newQ := *q
+		newQ.MoveCurrentSheet = true
+		new.from = r.from.MoveLeft(&newQ)
+		new.to = r.to.MoveLeft(&newQ)
+	}
+	return new
+}

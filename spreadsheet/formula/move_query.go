@@ -7,9 +7,9 @@
 
 package formula
 
-type Expression interface {
-	Eval(ctx Context, ev Evaluator) Result
-	Reference(ctx Context, ev Evaluator) Reference
-	ToString() string
-	MoveLeft(moveQuery *MoveQuery) Expression
+type MoveQuery struct {
+	ColumnIdx uint32
+	RowIdx uint32
+	SheetToMove string
+	MoveCurrentSheet bool
 }

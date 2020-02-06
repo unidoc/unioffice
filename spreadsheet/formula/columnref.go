@@ -7,9 +7,15 @@
 
 package formula
 
-type Expression interface {
-	Eval(ctx Context, ev Evaluator) Result
-	Reference(ctx Context, ev Evaluator) Reference
-	ToString() string
-	MoveLeft(moveQuery *MoveQuery) Expression
+import "github.com/unidoc/unioffice/spreadsheet/reference"
+
+func moveColumnLeft(column string, colIdxToRemove uint32) string {
+	colIdx := reference.ColumnToIndex(column)
+	if colIdx == colIdxToRemove {
+		return "#REF!"
+	} else if colIdx > colIdxToRemove {
+		return reference.IndexToColumn(colIdx - 1)
+	} else {
+		return column
+	}
 }

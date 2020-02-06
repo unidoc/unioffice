@@ -30,3 +30,13 @@ func (n Negate) Eval(ctx Context, ev Evaluator) Result {
 func (n Negate) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
+
+// ToString returns a string representation for Negate.
+func (n Negate) ToString() string {
+	return "-" + n.e.ToString()
+}
+
+// MoveLeft makes the Negate moved left after removing a column.
+func (n Negate) MoveLeft(q *MoveQuery) Expression {
+	return Negate{n.e.MoveLeft(q)}
+}

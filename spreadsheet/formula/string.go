@@ -30,3 +30,13 @@ func (s String) Eval(ctx Context, ev Evaluator) Result {
 func (s String) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
+
+// ToString returns a string representation of String.
+func (s String) ToString() string {
+	return `"` + s.s + `"`
+}
+
+// MoveLeft returns the same object as moving ranges to left does not affect String.
+func (s String) MoveLeft(q *MoveQuery) Expression {
+	return s
+}

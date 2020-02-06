@@ -34,3 +34,13 @@ func (c ConstArrayExpr) Eval(ctx Context, ev Evaluator) Result {
 func (c ConstArrayExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
+
+// ToString returns a string representation of ConstArrayExpr.
+func (c ConstArrayExpr) ToString() string {
+	return "" // to do
+}
+
+// MoveLeft returns the same object as moving ranges to left does not affect ConstArrayExpr.
+func (c ConstArrayExpr) MoveLeft(q *MoveQuery) Expression {
+	return c
+}

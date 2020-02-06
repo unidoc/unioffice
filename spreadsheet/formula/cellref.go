@@ -7,6 +7,8 @@
 
 package formula
 
+import "github.com/unidoc/unioffice/spreadsheet/reference"
+
 // CellRef is a reference to a single cell
 type CellRef struct {
 	s string
@@ -25,4 +27,32 @@ func (c CellRef) Eval(ctx Context, ev Evaluator) Result {
 // Reference returns a string reference value to a cell.
 func (c CellRef) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeCell, Value: c.s}
+}
+
+// ToString returns a string representation of CellRef.
+func (c CellRef) ToString() string {
+	return c.s
+}
+
+// MoveLeft makes a reference to point to a cell which one step left from the original one after removing a column.
+func (c CellRef) MoveLeft(q *MoveQuery) Expression {
+	if q.MoveCurrentSheet {
+		c.s = moveCellLeft(c.s, q.ColumnIdx)
+	}
+	return c
+}
+
+func moveCellLeft(refStr string, columnIdxToRemove uint32) string {
+	ref, err := reference.ParseCellReference(refStr)
+	if err != nil {
+		return "#REF!"
+	}
+	columnIdx := ref.ColumnIdx
+	if columnIdx < columnIdxToRemove {
+		return refStr
+	} else if columnIdx == columnIdxToRemove {
+		return "#REF!"
+	} else {
+		return ref.MoveLeft().String()
+	}
 }

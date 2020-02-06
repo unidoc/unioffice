@@ -25,3 +25,13 @@ func (e EmptyExpr) Eval(ctx Context, ev Evaluator) Result {
 func (e EmptyExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
+
+// ToString returns an empty string for EmptyExpr.
+func (e EmptyExpr) ToString() string {
+	return ""
+}
+
+// MoveLeft returns the same object as moving ranges to left does not affect EmptyExpr.
+func (e EmptyExpr) MoveLeft(q *MoveQuery) Expression {
+	return e
+}

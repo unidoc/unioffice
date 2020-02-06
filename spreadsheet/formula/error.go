@@ -26,3 +26,13 @@ func (e Error) Eval(ctx Context, ev Evaluator) Result {
 func (e Error) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
+
+// ToString returns an empty string for Error.
+func (e Error) ToString() string {
+	return ""
+}
+
+// MoveLeft returns the same object as moving ranges to left does not affect Error.
+func (e Error) MoveLeft(q *MoveQuery) Expression {
+	return e
+}

@@ -903,11 +903,51 @@ func (s *Sheet) RemoveColumn(column string) error {
 		}
 	}
 
+	err = s.moveLeftFormulasArgs(columnIdx)
+	if err != nil {
+		return err
+	}
+
 	err = s.removeColumnFromNamedRanges(columnIdx)
 	if err != nil {
 		return err
 	}
-	return s.removeColumnFromMergedCells(columnIdx)
+
+	err = s.removeColumnFromMergedCells(columnIdx)
+	if err != nil {
+		return err
+	}
+
+	for _, sheet := range s.w.Sheets() {
+		sheet.RecalculateFormulas()
+	}
+	return nil
+}
+
+func (s *Sheet) moveLeftFormulasArgs(columnIdx uint32) error {
+	ownSheetName := s.Name()
+	q := &formula.MoveQuery{
+		ColumnIdx: columnIdx,
+		SheetToMove: ownSheetName,
+	}
+	for _, sheet := range s.w.Sheets() {
+		q.MoveCurrentSheet = ownSheetName == sheet.Name(),
+		for _, r := range sheet.Rows() {
+			for _, c := range r.Cells() {
+				if c.X().F != nil {
+					formStr := c.X().F.Content
+					expr := formula.ParseString(formStr)
+					if expr == nil {
+						c.SetError("#REF!")
+					} else {
+						newExpr := expr.MoveLeft(q)
+						c.X().F.Content = fmt.Sprintf("=%s", newExpr.ToString())
+					}
+				}
+			}
+		}
+	}
+	return nil
 }
 
 func (s *Sheet) slideCellsLeft(cells []*sml.CT_Cell) []*sml.CT_Cell {
@@ -978,8 +1018,7 @@ func (s *Sheet) removeColumnFromNamedRanges(columnIdx uint32) error {
 		sheetTables := s.w.tables[startFromTable:startFromTable + numTables]
 		for tblIndex, tbl := range sheetTables {
 			newTable := tbl
-			ref := tbl.RefAttr
-			newTable.RefAttr = moveRangeLeft(ref, columnIdx, false)
+			newTable.RefAttr = moveRangeLeft(newTable.RefAttr, columnIdx, false)
 			s.w.tables[startFromTable + tblIndex] = newTable
 		}
 	}

@@ -41,3 +41,20 @@ func (p PrefixExpr) Reference(ctx Context, ev Evaluator) Reference {
 	}
 	return ReferenceInvalid
 }
+
+// ToString returns a string representation of PrefixExpr.
+func (p PrefixExpr) ToString() string {
+	return fmt.Sprintf("%s!%s", p.pfx.ToString(), p.exp.ToString())
+}
+
+// MoveLeft makes the PrefixExpr moved left after removing a column.
+func (p PrefixExpr) MoveLeft(q *MoveQuery) Expression {
+	new := p
+	sheetName := p.pfx.ToString()
+	if sheetName == q.SheetToMove {
+		newQ := *q
+		newQ.MoveCurrentSheet = true
+		new.exp = p.exp.MoveLeft(&newQ)
+	}
+	return new
+}
