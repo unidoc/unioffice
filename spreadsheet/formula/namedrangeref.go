@@ -54,8 +54,8 @@ func (n NamedRangeRef) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeNamedRange, Value: n.s}
 }
 
-// ToString returns a string representation of a named range.
-func (n NamedRangeRef) ToString() string {
+// String returns a string representation of a named range.
+func (n NamedRangeRef) String() string {
 	return n.s
 }
 

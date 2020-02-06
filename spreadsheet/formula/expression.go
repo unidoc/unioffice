@@ -10,6 +10,6 @@ package formula
 type Expression interface {
 	Eval(ctx Context, ev Evaluator) Result
 	Reference(ctx Context, ev Evaluator) Reference
-	ToString() string
+	String() string
 	MoveLeft(moveQuery *MoveQuery) Expression
 }

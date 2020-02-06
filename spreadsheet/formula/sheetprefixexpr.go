@@ -27,12 +27,12 @@ func (s SheetPrefixExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeSheet, Value: s.sheet}
 }
 
-// ToString returns a string representation of SheetPrefixExpr.
-func (s SheetPrefixExpr) ToString() string {
+// String returns a string representation of SheetPrefixExpr.
+func (s SheetPrefixExpr) String() string {
 	return s.sheet
 }
 
-// MoveLeft returns the same object as moving ranges to left does not affect SheetPrefixExpr.
+// MoveLeft returns the same object as moving sheet parts to the left does not affect SheetPrefixExpr.
 func (s SheetPrefixExpr) MoveLeft(q *MoveQuery) Expression {
 	return s
 }

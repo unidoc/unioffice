@@ -37,12 +37,12 @@ func (n Number) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
 
-// ToString returns a string representation of Number.
-func (n Number) ToString() string {
+// String returns a string representation of Number.
+func (n Number) String() string {
 	return strconv.FormatFloat(n.v, 'f', -1, 64)
 }
 
-// MoveLeft returns the same object as moving ranges to left does not affect Number.
+// MoveLeft returns the same object as moving sheet parts to the left does not affect Number.
 func (n Number) MoveLeft(q *MoveQuery) Expression {
 	return n
 }

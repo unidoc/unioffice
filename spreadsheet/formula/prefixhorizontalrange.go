@@ -59,12 +59,12 @@ func (r PrefixHorizontalRange) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeHorizontalRange, Value: r.horizontalRangeReference(pfx.Value)}
 }
 
-// ToString returns a string representation of a horizontal range with prefix.
-func (r PrefixHorizontalRange) ToString() string {
-	return fmt.Sprintf("%s!%d:%d", r.pfx.ToString(), r.rowFrom, r.rowTo)
+// String returns a string representation of a horizontal range with prefix.
+func (r PrefixHorizontalRange) String() string {
+	return fmt.Sprintf("%s!%d:%d", r.pfx.String(), r.rowFrom, r.rowTo)
 }
 
-// MoveLeft returns the same object as moving ranges to left does not affect horizontal ranges.
+// MoveLeft returns the same object as moving sheet parts to the left does not affect horizontal ranges.
 func (r PrefixHorizontalRange) MoveLeft(q *MoveQuery) Expression {
 	return r
 }

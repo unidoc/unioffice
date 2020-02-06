@@ -57,12 +57,12 @@ func cellRefsFromHorizontalRange(ctx Context, rowFrom, rowTo int) (string, strin
 	return from, to
 }
 
-// ToString returns a string representation of a horizontal range.
-func (r HorizontalRange) ToString() string {
+// String returns a string representation of a horizontal range.
+func (r HorizontalRange) String() string {
 	return r.horizontalRangeReference()
 }
 
-// MoveLeft returns the same object as moving ranges to left does not affect horizontal ranges.
+// MoveLeft returns the same object as moving sheet parts to the left does not affect horizontal ranges.
 func (r HorizontalRange) MoveLeft(q *MoveQuery) Expression {
 	return r
 }

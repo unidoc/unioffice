@@ -37,8 +37,8 @@ func (b Bool) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
 
-// ToString returns a string representation for Bool.
-func (b Bool) ToString() string {
+// String returns a string representation for Bool.
+func (b Bool) String() string {
 	if b.b {
 		return "TRUE"
 	} else {
@@ -46,7 +46,7 @@ func (b Bool) ToString() string {
 	}
 }
 
-// MoveLeft returns the same object as moving ranges to left does not affect Bool.
+// MoveLeft returns the same object as moving sheet parts to the left does not affect Bool.
 func (b Bool) MoveLeft(q *MoveQuery) Expression {
 	return b
 }

@@ -55,8 +55,8 @@ func cellRefsFromVerticalRange(ctx Context, colFrom, colTo string) (string, stri
 	return from, to
 }
 
-// ToString returns a string representation of a vertical range.
-func (r VerticalRange) ToString() string {
+// String returns a string representation of a vertical range.
+func (r VerticalRange) String() string {
 	return r.verticalRangeReference()
 }
 

@@ -405,7 +405,7 @@ func listValueOp(op BinOpType, lhs []Result, rhs Result) Result {
 }
 
 // Eval evaluates the binary expression using the context given.
-func (b BinaryExpr) ToString() string {
+func (b BinaryExpr) String() string {
 	opStr := ""
 	switch b.op {
 		case BinOpTypePlus: opStr = "+"
@@ -421,7 +421,7 @@ func (b BinaryExpr) ToString() string {
 		case BinOpTypeNE: opStr = "<>"
 		case BinOpTypeConcat: opStr = "&"
 	}
-	return b.lhs.ToString() + opStr + b.rhs.ToString()
+	return b.lhs.String() + opStr + b.rhs.String()
 }
 
 // MoveLeft makes the BinaryExpr moved left after removing a column.

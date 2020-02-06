@@ -47,11 +47,11 @@ func (f FunctionCall) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
 
-func (f FunctionCall) ToString() string {
+func (f FunctionCall) String() string {
 	str := f.name + "("
 	lastArgIndex := len(f.args) - 1
 	for argIndex, arg := range f.args {
-		str += arg.ToString()
+		str += arg.String()
 		if argIndex != lastArgIndex {
 			str += ","
 		}

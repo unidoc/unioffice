@@ -56,15 +56,15 @@ func (r PrefixVerticalRange) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeVerticalRange, Value: r.verticalRangeReference(pfx.Value)}
 }
 
-// ToString returns a string representation of a vertical range with prefix.
-func (r PrefixVerticalRange) ToString() string {
-	return fmt.Sprintf("%s!%s:%s", r.pfx.ToString(), r.colFrom, r.colTo)
+// String returns a string representation of a vertical range with prefix.
+func (r PrefixVerticalRange) String() string {
+	return fmt.Sprintf("%s!%s:%s", r.pfx.String(), r.colFrom, r.colTo)
 }
 
 // MoveLeft makes the PrefixVerticalRange left after removing a column.
 func (r PrefixVerticalRange) MoveLeft(q *MoveQuery) Expression {
 	new := r
-	sheetName := r.pfx.ToString()
+	sheetName := r.pfx.String()
 	if sheetName == q.SheetToMove {
 		columnIdx := q.ColumnIdx
 		new.colFrom = moveColumnLeft(r.colFrom, columnIdx)

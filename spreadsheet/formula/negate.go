@@ -31,9 +31,9 @@ func (n Negate) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
 
-// ToString returns a string representation for Negate.
-func (n Negate) ToString() string {
-	return "-" + n.e.ToString()
+// String returns a string representation for Negate.
+func (n Negate) String() string {
+	return "-" + n.e.String()
 }
 
 // MoveLeft makes the Negate moved left after removing a column.

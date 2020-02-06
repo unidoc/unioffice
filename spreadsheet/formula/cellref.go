@@ -29,8 +29,8 @@ func (c CellRef) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeCell, Value: c.s}
 }
 
-// ToString returns a string representation of CellRef.
-func (c CellRef) ToString() string {
+// String returns a string representation of CellRef.
+func (c CellRef) String() string {
 	return c.s
 }
 

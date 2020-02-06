@@ -941,7 +941,7 @@ func (s *Sheet) moveLeftFormulasArgs(columnIdx uint32) error {
 						c.SetError("#REF!")
 					} else {
 						newExpr := expr.MoveLeft(q)
-						c.X().F.Content = fmt.Sprintf("=%s", newExpr.ToString())
+						c.X().F.Content = fmt.Sprintf("=%s", newExpr.String())
 					}
 				}
 			}

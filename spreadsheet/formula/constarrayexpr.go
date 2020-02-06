@@ -35,12 +35,12 @@ func (c ConstArrayExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
 
-// ToString returns a string representation of ConstArrayExpr.
-func (c ConstArrayExpr) ToString() string {
+// String returns a string representation of ConstArrayExpr.
+func (c ConstArrayExpr) String() string {
 	return "" // to do
 }
 
-// MoveLeft returns the same object as moving ranges to left does not affect ConstArrayExpr.
+// MoveLeft returns the same object as moving sheet parts to the left does not affect ConstArrayExpr.
 func (c ConstArrayExpr) MoveLeft(q *MoveQuery) Expression {
 	return c
 }
