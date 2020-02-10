@@ -904,7 +904,7 @@ func (s *Sheet) RemoveColumn(column string) error {
 		}
 	}
 
-	err = s.updateAfterRemove(columnIdx, REMOVE_COLUMN)
+	err = s.updateAfterRemove(columnIdx, update.REMOVE_COLUMN)
 	if err != nil {
 		return err
 	}
@@ -927,7 +927,7 @@ func (s *Sheet) RemoveColumn(column string) error {
 
 func (s *Sheet) updateAfterRemove(columnIdx uint32, updateType byte) error {
 	ownSheetName := s.Name()
-	q := &UpdateQuery{
+	q := &update.UpdateQuery{
 		UpdateType: updateType,
 		ColumnIdx: columnIdx,
 		SheetToUpdate: ownSheetName,

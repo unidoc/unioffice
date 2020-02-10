@@ -45,6 +45,7 @@ func (c CellRef) Update(q *update.UpdateQuery) Expression {
 	return c
 }
 
+// updateRefStr gets reference string representation like C1, parses it and makes a string representation of a new reference with respect to the update type (e.g. B1 if a column to the left of this reference was removed).
 func updateRefStr(refStr string, q *update.UpdateQuery) string {
 	ref, err := reference.ParseCellReference(refStr)
 	if err != nil {

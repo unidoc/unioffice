@@ -54,17 +54,17 @@ func (f FunctionCall) Reference(ctx Context, ev Evaluator) Reference {
 
 func (f FunctionCall) String() string {
 	buf := bytes.Buffer{}
-	buf.WriteString(f.Name)
+	buf.WriteString(f.name)
 	buf.WriteString("(")
 	lastArgIndex := len(f.args) - 1
 	for argIndex, arg := range f.args {
 		buf.WriteString(arg.String())
 		if argIndex != lastArgIndex {
-			but.WriteString(",")
+			buf.WriteString(",")
 		}
 	}
 	buf.WriteString(")")
-	return str
+	return buf.String()
 }
 
 // Update updates the FunctionCall references after removing a row/column.
