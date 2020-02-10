@@ -5,17 +5,19 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased on https://unidoc.io.
 
-package formula
+package update
 
-import "github.com/unidoc/unioffice/spreadsheet/reference"
+// UpdateToLeft updates reference to point one cell left.
+// Update types constants.
+const (
+	REMOVE_COLUMN byte = iota
+	REMOVE_ROW
+)
 
-func updateColumnToLeft(column string, colIdxToRemove uint32) string {
-	colIdx := reference.ColumnToIndex(column)
-	if colIdx == colIdxToRemove {
-		return "#REF!"
-	} else if colIdx > colIdxToRemove {
-		return reference.IndexToColumn(colIdx - 1)
-	} else {
-		return column
-	}
+type UpdateQuery struct {
+	UpdateType byte
+	ColumnIdx uint32
+	RowIdx uint32
+	SheetToUpdate string
+	UpdateCurrentSheet bool
 }

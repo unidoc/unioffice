@@ -11,6 +11,7 @@ import (
 	"strconv"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // Number is a nubmer expression.
@@ -42,7 +43,7 @@ func (n Number) String() string {
 	return strconv.FormatFloat(n.v, 'f', -1, 64)
 }
 
-// MoveLeft returns the same object as moving sheet parts to the left does not affect Number.
-func (n Number) MoveLeft(q *MoveQuery) Expression {
+// Update returns the same object as updating sheet references does not affect Number.
+func (n Number) Update(q *update.UpdateQuery) Expression {
 	return n
 }

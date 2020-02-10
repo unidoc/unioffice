@@ -11,6 +11,7 @@ import (
 	"strconv"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // Bool is a boolean expression.
@@ -46,7 +47,7 @@ func (b Bool) String() string {
 	}
 }
 
-// MoveLeft returns the same object as moving sheet parts to the left does not affect Bool.
-func (b Bool) MoveLeft(q *MoveQuery) Expression {
+// Update returns the same object as updating sheet references does not affect Bool.
+func (b Bool) Update(q *update.UpdateQuery) Expression {
 	return b
 }

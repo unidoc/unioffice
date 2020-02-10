@@ -7,9 +7,11 @@
 
 package formula
 
+import "github.com/unidoc/unioffice/spreadsheet/update"
+
 type Expression interface {
 	Eval(ctx Context, ev Evaluator) Result
 	Reference(ctx Context, ev Evaluator) Reference
 	String() string
-	MoveLeft(moveQuery *MoveQuery) Expression
+	Update(updateQuery *update.UpdateQuery) Expression
 }

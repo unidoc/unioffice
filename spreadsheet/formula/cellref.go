@@ -7,7 +7,10 @@
 
 package formula
 
-import "github.com/unidoc/unioffice/spreadsheet/reference"
+import (
+	"github.com/unidoc/unioffice/spreadsheet/reference"
+	"github.com/unidoc/unioffice/spreadsheet/update"
+)
 
 // CellRef is a reference to a single cell
 type CellRef struct {
@@ -34,25 +37,32 @@ func (c CellRef) String() string {
 	return c.s
 }
 
-// MoveLeft makes a reference to point to a cell which one step left from the original one after removing a column.
-func (c CellRef) MoveLeft(q *MoveQuery) Expression {
-	if q.MoveCurrentSheet {
-		c.s = moveCellLeft(c.s, q.ColumnIdx)
+// Update makes a reference to point to one of the neighboring cells after removing a row/column with respect to the update type.
+func (c CellRef) Update(q *update.UpdateQuery) Expression {
+	if q.UpdateCurrentSheet {
+		c.s = updateRefStr(c.s, q)
 	}
 	return c
 }
 
-func moveCellLeft(refStr string, columnIdxToRemove uint32) string {
+func updateRefStr(refStr string, q *update.UpdateQuery) string {
 	ref, err := reference.ParseCellReference(refStr)
 	if err != nil {
 		return "#REF!"
 	}
-	columnIdx := ref.ColumnIdx
-	if columnIdx < columnIdxToRemove {
-		return refStr
-	} else if columnIdx == columnIdxToRemove {
-		return "#REF!"
-	} else {
-		return ref.MoveLeft().String()
+	switch q.UpdateType {
+	case update.REMOVE_COLUMN:
+		columnIdxToRemove := q.ColumnIdx
+		columnIdx := ref.ColumnIdx
+		if columnIdx < columnIdxToRemove {
+			return refStr
+		} else if columnIdx == columnIdxToRemove {
+			return "#REF!"
+		} else {
+			return ref.Update(update.REMOVE_COLUMN).String()
+		}
+	case update.REMOVE_ROW:
+		// add update when needed
 	}
+	return refStr
 }

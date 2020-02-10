@@ -11,6 +11,8 @@ import (
 	"errors"
 	"regexp"
 	"strings"
+
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // ColumnReference is a parsed reference to a column.  Input is of the form 'A',
@@ -63,9 +65,15 @@ func ParseColumnReference(s string) (ColumnReference, error) {
 	return r, nil
 }
 
-func (ref *ColumnReference) MoveLeft() *ColumnReference {
-	newRef := ref
-	newRef.ColumnIdx = ref.ColumnIdx - 1
-	newRef.Column = IndexToColumn(newRef.ColumnIdx)
-	return newRef
+// Update updates reference to point one of the neighboring columns with respect to the update type after removing a row/column.
+func (ref *ColumnReference) Update(updateType byte) *ColumnReference {
+	switch updateType {
+	case update.REMOVE_COLUMN:
+		newRef := ref
+		newRef.ColumnIdx = ref.ColumnIdx - 1
+		newRef.Column = IndexToColumn(newRef.ColumnIdx)
+		return newRef
+	default:
+		return ref
+	}
 }

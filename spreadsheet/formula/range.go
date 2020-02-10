@@ -11,6 +11,7 @@ import (
 	"fmt"
 
 	"github.com/unidoc/unioffice/spreadsheet/reference"
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // Range is a range expression that when evaluated returns a list of Results.
@@ -93,12 +94,12 @@ func (r Range) String() string {
 	return fmt.Sprintf("%s:%s", r.from.String(), r.to.String())
 }
 
-// MoveLeft makes the Range left after removing a column.
-func (r Range) MoveLeft(q *MoveQuery) Expression {
+// Update updates references in the Range after removing a row/column.
+func (r Range) Update(q *update.UpdateQuery) Expression {
 	new := r
-	if q.MoveCurrentSheet {
-		new.from = r.from.MoveLeft(q)
-		new.to = r.to.MoveLeft(q)
+	if q.UpdateCurrentSheet {
+		new.from = r.from.Update(q)
+		new.to = r.to.Update(q)
 	}
 	return new
 }

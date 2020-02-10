@@ -7,6 +7,8 @@
 
 package formula
 
+import "github.com/unidoc/unioffice/spreadsheet/update"
+
 // FunctionCall is a function call expression.
 type FunctionCall struct {
 	name string
@@ -60,11 +62,11 @@ func (f FunctionCall) String() string {
 	return str
 }
 
-// MoveLeft makes the FunctionCall moved left after removing a column.
-func (f FunctionCall) MoveLeft(q *MoveQuery) Expression {
+// Update updates the FunctionCall references after removing a row/column.
+func (f FunctionCall) Update(q *update.UpdateQuery) Expression {
 	newArgs := []Expression{}
 	for _, arg := range f.args {
-		newArg := arg.MoveLeft(q)
+		newArg := arg.Update(q)
 		newArgs = append(newArgs, newArg)
 	}
 	return FunctionCall{

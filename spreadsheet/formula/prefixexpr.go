@@ -7,7 +7,11 @@
 
 package formula
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/unidoc/unioffice/spreadsheet/update"
+)
 
 // PrefixExpr is an expression containing reference to another sheet like Sheet1!A1 (the value of the cell A1 from sheet 'Sheet1').
 type PrefixExpr struct {
@@ -47,14 +51,14 @@ func (p PrefixExpr) String() string {
 	return fmt.Sprintf("%s!%s", p.pfx.String(), p.exp.String())
 }
 
-// MoveLeft makes the PrefixExpr moved left after removing a column.
-func (p PrefixExpr) MoveLeft(q *MoveQuery) Expression {
+// Update updates references in the PrefixExpr after removing a row/column.
+func (p PrefixExpr) Update(q *update.UpdateQuery) Expression {
 	new := p
 	sheetName := p.pfx.String()
-	if sheetName == q.SheetToMove {
+	if sheetName == q.SheetToUpdate {
 		newQ := *q
-		newQ.MoveCurrentSheet = true
-		new.exp = p.exp.MoveLeft(&newQ)
+		newQ.UpdateCurrentSheet = true
+		new.exp = p.exp.Update(&newQ)
 	}
 	return new
 }

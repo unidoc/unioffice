@@ -7,6 +7,8 @@
 
 package formula
 
+import "github.com/unidoc/unioffice/spreadsheet/update"
+
 import (
 	"fmt"
 	"strconv"
@@ -62,7 +64,13 @@ func (r HorizontalRange) String() string {
 	return r.horizontalRangeReference()
 }
 
-// MoveLeft returns the same object as moving sheet parts to the left does not affect horizontal ranges.
-func (r HorizontalRange) MoveLeft(q *MoveQuery) Expression {
-	return r
+// Update updates the horizontal range references after removing a row/column.
+func (r HorizontalRange) Update(q *update.UpdateQuery) Expression {
+	switch q.UpdateType {
+	case update.REMOVE_ROW:
+		// apply when needed
+		return r
+	default:
+		return r
+	}
 }

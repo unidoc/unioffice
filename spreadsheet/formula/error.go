@@ -7,6 +7,8 @@
 
 package formula
 
+import "github.com/unidoc/unioffice/spreadsheet/update"
+
 // Error is an error expression.
 type Error struct {
 	s string
@@ -32,7 +34,7 @@ func (e Error) String() string {
 	return ""
 }
 
-// MoveLeft returns the same object as moving sheet parts to the left does not affect Error.
-func (e Error) MoveLeft(q *MoveQuery) Expression {
+// Update returns the same object as updating sheet references does not affect Error.
+func (e Error) Update(q *update.UpdateQuery) Expression {
 	return e
 }

@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // CellReference is a parsed reference to a cell.  Input is of the form 'A1',
@@ -91,9 +93,15 @@ lfor:
 	return r, nil
 }
 
-func (ref *CellReference) MoveLeft() *CellReference {
-	newRef := ref
-	newRef.ColumnIdx = ref.ColumnIdx - 1
-	newRef.Column = IndexToColumn(newRef.ColumnIdx)
-	return newRef
+// Update updates reference to point one of the neighboring cells with respect to the update type after removing a row/column.
+func (ref *CellReference) Update(updateType byte) *CellReference {
+	switch updateType {
+	case update.REMOVE_COLUMN:
+		newRef := ref
+		newRef.ColumnIdx = ref.ColumnIdx - 1
+		newRef.Column = IndexToColumn(newRef.ColumnIdx)
+		return newRef
+	default:
+		return ref
+	}
 }

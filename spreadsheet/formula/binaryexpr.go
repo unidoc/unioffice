@@ -10,6 +10,8 @@ package formula
 import (
 	"fmt"
 	"math"
+
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // BinOpType is the binary operation operator type
@@ -424,10 +426,10 @@ func (b BinaryExpr) String() string {
 	return b.lhs.String() + opStr + b.rhs.String()
 }
 
-// MoveLeft makes the BinaryExpr moved left after removing a column.
-func (b BinaryExpr) MoveLeft(q *MoveQuery) Expression {
+// Update updates references in the BinaryExpr after removing a row/column.
+func (b BinaryExpr) Update(q *update.UpdateQuery) Expression {
 	new := b
-	new.lhs = b.lhs.MoveLeft(q)
-	new.rhs = b.rhs.MoveLeft(q)
+	new.lhs = b.lhs.Update(q)
+	new.rhs = b.rhs.Update(q)
 	return new
 }

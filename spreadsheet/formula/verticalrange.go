@@ -11,6 +11,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // VerticalRange is a range expression that when evaluated returns a list of Results from references like AA:IJ (all cells from columns AA to IJ).
@@ -60,13 +62,18 @@ func (r VerticalRange) String() string {
 	return r.verticalRangeReference()
 }
 
-// MoveLeft makes the VerticalRange left after removing a column.
-func (r VerticalRange) MoveLeft(q *MoveQuery) Expression {
-	new := r
-	if q.MoveCurrentSheet {
-		columnIdx := q.ColumnIdx
-		new.colFrom = moveColumnLeft(r.colFrom, columnIdx)
-		new.colTo = moveColumnLeft(r.colTo, columnIdx)
+// Update updates references in the VerticalRange after removing a row/column.
+func (r VerticalRange) Update(q *update.UpdateQuery) Expression {
+	switch q.UpdateType {
+	case update.REMOVE_COLUMN:
+		new := r
+		if q.UpdateCurrentSheet {
+			columnIdx := q.ColumnIdx
+			new.colFrom = updateColumnToLeft(r.colFrom, columnIdx)
+			new.colTo = updateColumnToLeft(r.colTo, columnIdx)
+		}
+		return new
+	default:
+		return r
 	}
-	return new
 }

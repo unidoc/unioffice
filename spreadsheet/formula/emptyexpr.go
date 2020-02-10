@@ -7,6 +7,8 @@
 
 package formula
 
+import "github.com/unidoc/unioffice/spreadsheet/update"
+
 // EmptyExpr is an empty expression.
 type EmptyExpr struct {
 }
@@ -31,7 +33,7 @@ func (e EmptyExpr) String() string {
 	return ""
 }
 
-// MoveLeft returns the same object as moving sheet parts to the left does not affect EmptyExpr.
-func (e EmptyExpr) MoveLeft(q *MoveQuery) Expression {
+// Update returns the same object as updating sheet references does not affect EmptyExpr.
+func (e EmptyExpr) Update(q *update.UpdateQuery) Expression {
 	return e
 }

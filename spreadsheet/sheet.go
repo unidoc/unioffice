@@ -16,6 +16,7 @@ import (
 
 	"github.com/unidoc/unioffice/spreadsheet/formula"
 	"github.com/unidoc/unioffice/spreadsheet/reference"
+	"github.com/unidoc/unioffice/spreadsheet/update"
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/common"
@@ -903,7 +904,7 @@ func (s *Sheet) RemoveColumn(column string) error {
 		}
 	}
 
-	err = s.moveLeftFormulasArgs(columnIdx)
+	err = s.updateAfterRemove(columnIdx, REMOVE_COLUMN)
 	if err != nil {
 		return err
 	}
@@ -924,14 +925,15 @@ func (s *Sheet) RemoveColumn(column string) error {
 	return nil
 }
 
-func (s *Sheet) moveLeftFormulasArgs(columnIdx uint32) error {
+func (s *Sheet) updateAfterRemove(columnIdx uint32, updateType byte) error {
 	ownSheetName := s.Name()
-	q := &formula.MoveQuery{
+	q := &UpdateQuery{
+		UpdateType: updateType,
 		ColumnIdx: columnIdx,
-		SheetToMove: ownSheetName,
+		SheetToUpdate: ownSheetName,
 	}
 	for _, sheet := range s.w.Sheets() {
-		q.MoveCurrentSheet = ownSheetName == sheet.Name()
+		q.UpdateCurrentSheet = ownSheetName == sheet.Name()
 		for _, r := range sheet.Rows() {
 			for _, c := range r.Cells() {
 				if c.X().F != nil {
@@ -940,7 +942,7 @@ func (s *Sheet) moveLeftFormulasArgs(columnIdx uint32) error {
 					if expr == nil {
 						c.SetError("#REF!")
 					} else {
-						newExpr := expr.MoveLeft(q)
+						newExpr := expr.Update(q)
 						c.X().F.Content = fmt.Sprintf("=%s", newExpr.String())
 					}
 				}
@@ -1037,12 +1039,12 @@ func moveRangeLeft(ref string, columnIdx uint32, remove bool) string {
 					return ref
 				}
 			} else {
-				newTo := toCell.MoveLeft()
+				newTo := toCell.Update(update.REMOVE_COLUMN)
 				return fmt.Sprintf("%s:%s", fromCell.String(), newTo.String())
 			}
 		} else if columnIdx < fromColIdx {
-			newFrom := fromCell.MoveLeft()
-			newTo := toCell.MoveLeft()
+			newFrom := fromCell.Update(update.REMOVE_COLUMN)
+			newTo := toCell.Update(update.REMOVE_COLUMN)
 			return fmt.Sprintf("%s:%s", newFrom.String(), newTo.String())
 		}
 	} else {
@@ -1059,12 +1061,12 @@ func moveRangeLeft(ref string, columnIdx uint32, remove bool) string {
 					return ref
 				}
 			} else {
-				newTo := toColumn.MoveLeft()
+				newTo := toColumn.Update(update.REMOVE_COLUMN)
 				return fmt.Sprintf("%s:%s", fromColumn.String(), newTo.String())
 			}
 		} else if columnIdx < fromColIdx {
-			newFrom := fromColumn.MoveLeft()
-			newTo := toColumn.MoveLeft()
+			newFrom := fromColumn.Update(update.REMOVE_COLUMN)
+			newTo := toColumn.Update(update.REMOVE_COLUMN)
 			return fmt.Sprintf("%s:%s", newFrom.String(), newTo.String())
 		}
 	}
