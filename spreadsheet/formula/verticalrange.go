@@ -64,7 +64,7 @@ func (r VerticalRange) String() string {
 
 // Update updates references in the VerticalRange after removing a row/column.
 func (r VerticalRange) Update(q *update.UpdateQuery) Expression {
-	if q.UpdateType == update.REMOVE_COLUMN {
+	if q.UpdateType == update.UpdateActionRemoveColumn {
 		new := r
 		if q.UpdateCurrentSheet {
 			columnIdx := q.ColumnIdx

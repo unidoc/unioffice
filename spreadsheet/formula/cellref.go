@@ -51,7 +51,7 @@ func updateRefStr(refStr string, q *update.UpdateQuery) string {
 	if err != nil {
 		return "#REF!"
 	}
-	if q.UpdateType == update.REMOVE_COLUMN {
+	if q.UpdateType == update.UpdateActionRemoveColumn {
 		columnIdxToRemove := q.ColumnIdx
 		columnIdx := ref.ColumnIdx
 		if columnIdx < columnIdxToRemove {
@@ -59,7 +59,7 @@ func updateRefStr(refStr string, q *update.UpdateQuery) string {
 		} else if columnIdx == columnIdxToRemove {
 			return "#REF!"
 		} else {
-			return ref.Update(update.REMOVE_COLUMN).String()
+			return ref.Update(update.UpdateActionRemoveColumn).String()
 		}
 	}
 	return refStr

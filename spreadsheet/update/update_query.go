@@ -10,14 +10,15 @@
 package update
 
 // Update types constants.
+type UpdateAction byte
 const (
-	REMOVE_COLUMN byte = iota
+	UpdateActionRemoveColumn UpdateAction = iota
 )
 
 // UpdateQuery contains terms of how to update references after removing row/column.
 type UpdateQuery struct {
-	// UpdateType is one of the update types like REMOVE_COLUMN.
-	UpdateType byte
+	// UpdateType is one of the update types like UpdateActionRemoveColumn.
+	UpdateType UpdateAction
 
 	// ColumnIdx is the index of the column removed.
 	ColumnIdx uint32

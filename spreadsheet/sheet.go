@@ -904,7 +904,7 @@ func (s *Sheet) RemoveColumn(column string) error {
 		}
 	}
 
-	err = s.updateAfterRemove(columnIdx, update.REMOVE_COLUMN)
+	err = s.updateAfterRemove(columnIdx, update.UpdateActionRemoveColumn)
 	if err != nil {
 		return err
 	}
@@ -925,7 +925,7 @@ func (s *Sheet) RemoveColumn(column string) error {
 	return nil
 }
 
-func (s *Sheet) updateAfterRemove(columnIdx uint32, updateType byte) error {
+func (s *Sheet) updateAfterRemove(columnIdx uint32, updateType update.UpdateAction) error {
 	ownSheetName := s.Name()
 	q := &update.UpdateQuery{
 		UpdateType: updateType,
@@ -1039,12 +1039,12 @@ func moveRangeLeft(ref string, columnIdx uint32, remove bool) string {
 					return ref
 				}
 			} else {
-				newTo := toCell.Update(update.REMOVE_COLUMN)
+				newTo := toCell.Update(update.UpdateActionRemoveColumn)
 				return fmt.Sprintf("%s:%s", fromCell.String(), newTo.String())
 			}
 		} else if columnIdx < fromColIdx {
-			newFrom := fromCell.Update(update.REMOVE_COLUMN)
-			newTo := toCell.Update(update.REMOVE_COLUMN)
+			newFrom := fromCell.Update(update.UpdateActionRemoveColumn)
+			newTo := toCell.Update(update.UpdateActionRemoveColumn)
 			return fmt.Sprintf("%s:%s", newFrom.String(), newTo.String())
 		}
 	} else {
@@ -1061,12 +1061,12 @@ func moveRangeLeft(ref string, columnIdx uint32, remove bool) string {
 					return ref
 				}
 			} else {
-				newTo := toColumn.Update(update.REMOVE_COLUMN)
+				newTo := toColumn.Update(update.UpdateActionRemoveColumn)
 				return fmt.Sprintf("%s:%s", fromColumn.String(), newTo.String())
 			}
 		} else if columnIdx < fromColIdx {
-			newFrom := fromColumn.Update(update.REMOVE_COLUMN)
-			newTo := toColumn.Update(update.REMOVE_COLUMN)
+			newFrom := fromColumn.Update(update.UpdateActionRemoveColumn)
+			newTo := toColumn.Update(update.UpdateActionRemoveColumn)
 			return fmt.Sprintf("%s:%s", newFrom.String(), newTo.String())
 		}
 	}

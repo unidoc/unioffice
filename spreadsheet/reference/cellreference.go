@@ -95,9 +95,9 @@ lfor:
 }
 
 // Update updates reference to point one of the neighboring cells with respect to the update type after removing a row/column.
-func (ref *CellReference) Update(updateType byte) *CellReference {
+func (ref *CellReference) Update(updateType update.UpdateAction) *CellReference {
 	switch updateType {
-	case update.REMOVE_COLUMN:
+	case update.UpdateActionRemoveColumn:
 		newRef := ref
 		newRef.ColumnIdx = ref.ColumnIdx - 1
 		newRef.Column = IndexToColumn(newRef.ColumnIdx)
