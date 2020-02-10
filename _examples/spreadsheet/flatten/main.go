@@ -27,6 +27,15 @@ func main() {
 		ctx := sheet.FormulaContext()
 		for _, row := range sheet.Rows() {
 			for _, cell := range row.Cells() {
+				// copying cell style
+				cellStyle := spreadsheet.CellStyle{}
+				x := cell.X()
+				if x.SAttr != nil {
+					sid := *x.SAttr
+					cellStyle = ss.StyleSheet.GetCellStyle(sid)
+				}
+
+				// copying value
 				c := ctx.Cell(cell.Reference(), formEv)
 				value := ""
 				if cell.X().V != nil {
@@ -34,6 +43,11 @@ func main() {
 				}
 				cell.Clear()
 				setValue(cell, c, value)
+
+				// setting cell style
+				if !cellStyle.IsEmpty() {
+					cell.SetStyle(cellStyle)
+				}
 			}
 		}
 	}
