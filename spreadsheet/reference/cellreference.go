@@ -27,6 +27,7 @@ type CellReference struct {
 	SheetName      string
 }
 
+// String returns a string representation of CellReference.
 func (c CellReference) String() string {
 	buf := make([]byte, 0, 4)
 	if c.AbsoluteColumn {

@@ -66,11 +66,5 @@ func (r HorizontalRange) String() string {
 
 // Update updates the horizontal range references after removing a row/column.
 func (r HorizontalRange) Update(q *update.UpdateQuery) Expression {
-	switch q.UpdateType {
-	case update.REMOVE_ROW:
-		// apply when needed
-		return r
-	default:
-		return r
-	}
+	return r
 }

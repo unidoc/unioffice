@@ -65,8 +65,7 @@ func (r PrefixVerticalRange) String() string {
 
 // Update updates references in the PrefixVerticalRange after removing a row/column.
 func (r PrefixVerticalRange) Update(q *update.UpdateQuery) Expression {
-	switch q.UpdateType {
-	case update.REMOVE_COLUMN:
+	if q.UpdateType == update.REMOVE_COLUMN {
 		new := r
 		sheetName := r.pfx.String()
 		if sheetName == q.SheetToUpdate {
@@ -75,7 +74,6 @@ func (r PrefixVerticalRange) Update(q *update.UpdateQuery) Expression {
 			new.colTo = updateColumnToLeft(r.colTo, columnIdx)
 		}
 		return new
-	default:
-		return r
 	}
+	return r
 }

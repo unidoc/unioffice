@@ -52,6 +52,7 @@ func (f FunctionCall) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
 }
 
+// String returns a string representation of FunctionCall expression.
 func (f FunctionCall) String() string {
 	buf := bytes.Buffer{}
 	buf.WriteString(f.name)

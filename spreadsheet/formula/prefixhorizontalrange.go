@@ -68,11 +68,5 @@ func (r PrefixHorizontalRange) String() string {
 
 // Update updates references in the PrefixHorizontalRange after removing a row/column.
 func (r PrefixHorizontalRange) Update(q *update.UpdateQuery) Expression {
-	switch q.UpdateType {
-	case update.REMOVE_ROW:
-		// apply when needed
-		return r
-	default:
-		return r
-	}
+	return r
 }
