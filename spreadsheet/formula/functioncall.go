@@ -7,7 +7,10 @@
 
 package formula
 
-import "github.com/unidoc/unioffice/spreadsheet/update"
+import (
+	"bytes"
+	"github.com/unidoc/unioffice/spreadsheet/update"
+)
 
 // FunctionCall is a function call expression.
 type FunctionCall struct {
@@ -50,15 +53,17 @@ func (f FunctionCall) Reference(ctx Context, ev Evaluator) Reference {
 }
 
 func (f FunctionCall) String() string {
-	str := f.name + "("
+	buf := bytes.Buffer{}
+	buf.WriteString(f.Name)
+	buf.WriteString("(")
 	lastArgIndex := len(f.args) - 1
 	for argIndex, arg := range f.args {
-		str += arg.String()
+		buf.WriteString(arg.String())
 		if argIndex != lastArgIndex {
-			str += ","
+			but.WriteString(",")
 		}
 	}
-	str += ")"
+	buf.WriteString(")")
 	return str
 }
 

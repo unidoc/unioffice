@@ -410,18 +410,30 @@ func listValueOp(op BinOpType, lhs []Result, rhs Result) Result {
 func (b BinaryExpr) String() string {
 	opStr := ""
 	switch b.op {
-		case BinOpTypePlus: opStr = "+"
-		case BinOpTypeMinus: opStr = "-"
-		case BinOpTypeMult: opStr = "*"
-		case BinOpTypeDiv: opStr = "/"
-		case BinOpTypeExp: opStr = "^"
-		case BinOpTypeLT: opStr = "<"
-		case BinOpTypeGT: opStr = ">"
-		case BinOpTypeEQ: opStr = "="
-		case BinOpTypeLEQ: opStr = "<="
-		case BinOpTypeGEQ: opStr = ">="
-		case BinOpTypeNE: opStr = "<>"
-		case BinOpTypeConcat: opStr = "&"
+		case BinOpTypePlus:
+			opStr = "+"
+		case BinOpTypeMinus:
+			opStr = "-"
+		case BinOpTypeMult:
+			opStr = "*"
+		case BinOpTypeDiv:
+			opStr = "/"
+		case BinOpTypeExp:
+			opStr = "^"
+		case BinOpTypeLT:
+			opStr = "<"
+		case BinOpTypeGT:
+			opStr = ">"
+		case BinOpTypeEQ:
+			opStr = "="
+		case BinOpTypeLEQ:
+			opStr = "<="
+		case BinOpTypeGEQ:
+			opStr = ">="
+		case BinOpTypeNE:
+			opStr = "<>"
+		case BinOpTypeConcat:
+			opStr = "&"
 	}
 	return b.lhs.String() + opStr + b.rhs.String()
 }

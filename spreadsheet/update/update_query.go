@@ -7,13 +7,18 @@
 
 package update
 
-// UpdateToLeft updates reference to point one cell left.
 // Update types constants.
 const (
 	REMOVE_COLUMN byte = iota
 	REMOVE_ROW
 )
 
+// UpdateQuery contains terms of how to update references after removing row/column.
+// UpdateType is one of the update types like REMOVE_COLUMN or REMOVE_ROW.
+// ColumnIdx is the index of the column removed.
+// RowIdx is the index of the row removed.
+// SheetToUpdate contains the name of the sheet on which removing happened.
+// UpdateCurrentSheet is true if references without sheet prefix should be updated as well.
 type UpdateQuery struct {
 	UpdateType byte
 	ColumnIdx uint32
