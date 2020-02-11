@@ -11,6 +11,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // PrefixHorizontalRange is a range expression that when evaluated returns a list of Results from references like Sheet1!1:4 (all cells from rows 1 to 4 of sheet 'Sheet1').
@@ -57,4 +59,14 @@ func (r PrefixHorizontalRange) horizontalRangeReference(sheetName string) string
 func (r PrefixHorizontalRange) Reference(ctx Context, ev Evaluator) Reference {
 	pfx := r.pfx.Reference(ctx, ev)
 	return Reference{Type: ReferenceTypeHorizontalRange, Value: r.horizontalRangeReference(pfx.Value)}
+}
+
+// String returns a string representation of a horizontal range with prefix.
+func (r PrefixHorizontalRange) String() string {
+	return fmt.Sprintf("%s!%d:%d", r.pfx.String(), r.rowFrom, r.rowTo)
+}
+
+// Update updates references in the PrefixHorizontalRange after removing a row/column.
+func (r PrefixHorizontalRange) Update(q *update.UpdateQuery) Expression {
+	return r
 }

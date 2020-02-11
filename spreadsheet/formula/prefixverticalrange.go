@@ -10,6 +10,8 @@ package formula
 import (
 	"fmt"
 	"strings"
+
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // PrefixVerticalRange is a range expression that when evaluated returns a list of Results from references like Sheet1!AA:IJ (all cells from columns AA to IJ of sheet 'Sheet1').
@@ -54,4 +56,24 @@ func (r PrefixVerticalRange) verticalRangeReference(sheetName string) string {
 func (r PrefixVerticalRange) Reference(ctx Context, ev Evaluator) Reference {
 	pfx := r.pfx.Reference(ctx, ev)
 	return Reference{Type: ReferenceTypeVerticalRange, Value: r.verticalRangeReference(pfx.Value)}
+}
+
+// String returns a string representation of a vertical range with prefix.
+func (r PrefixVerticalRange) String() string {
+	return fmt.Sprintf("%s!%s:%s", r.pfx.String(), r.colFrom, r.colTo)
+}
+
+// Update updates references in the PrefixVerticalRange after removing a row/column.
+func (r PrefixVerticalRange) Update(q *update.UpdateQuery) Expression {
+	if q.UpdateType == update.UpdateActionRemoveColumn {
+		new := r
+		sheetName := r.pfx.String()
+		if sheetName == q.SheetToUpdate {
+			columnIdx := q.ColumnIdx
+			new.colFrom = updateColumnToLeft(r.colFrom, columnIdx)
+			new.colTo = updateColumnToLeft(r.colTo, columnIdx)
+		}
+		return new
+	}
+	return r
 }

@@ -10,6 +10,8 @@ package formula
 import (
 	"fmt"
 	"strings"
+
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // NamedRangeRef is a reference to a named range.
@@ -52,4 +54,14 @@ func (n NamedRangeRef) Eval(ctx Context, ev Evaluator) Result {
 // Reference returns a string reference value to a named range.
 func (n NamedRangeRef) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeNamedRange, Value: n.s}
+}
+
+// String returns a string representation of a named range.
+func (n NamedRangeRef) String() string {
+	return n.s
+}
+
+// Update returns the same object as updating sheet references does not affect named ranges.
+func (n NamedRangeRef) Update(q *update.UpdateQuery) Expression {
+	return n
 }

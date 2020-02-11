@@ -8,6 +8,7 @@
 package spreadsheet
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"sort"
@@ -15,6 +16,7 @@ import (
 
 	"github.com/unidoc/unioffice/spreadsheet/formula"
 	"github.com/unidoc/unioffice/spreadsheet/reference"
+	"github.com/unidoc/unioffice/spreadsheet/update"
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/common"
@@ -870,4 +872,258 @@ func (s *Sheet) Sort(column string, firstRow uint32, order SortOrder) {
 			r.renumberAs(correctRowNumber)
 		}
 	}
+}
+
+// RemoveColumn removes column from the sheet and moves all columns to the right of the removed column one step left.
+func (s *Sheet) RemoveColumn(column string) error {
+	cellsInFormulaArrays, err := s.getAllCellsInFormulaArraysForColumn()
+	if err != nil {
+		return err
+	}
+	columnIdx := reference.ColumnToIndex(column)
+	for _, row := range s.Rows() {
+		ref := fmt.Sprintf("%s%d", column, *row.X().RAttr)
+		if _, ok := cellsInFormulaArrays[ref]; ok {
+			return nil
+		}
+	}
+	for _, row := range s.Rows() {
+		cells := row.x.C
+		for ic, cell := range cells {
+			ref, err := reference.ParseCellReference(*cell.RAttr)
+			if err != nil {
+				return err
+			}
+			if ref.ColumnIdx == columnIdx {
+				row.x.C = append(cells[:ic], s.slideCellsLeft(cells[ic+1:])...)
+				break
+			} else if ref.ColumnIdx > columnIdx {
+				row.x.C = append(cells[:ic], s.slideCellsLeft(cells[ic:])...)
+				break
+			}
+		}
+	}
+
+	err = s.updateAfterRemove(columnIdx, update.UpdateActionRemoveColumn)
+	if err != nil {
+		return err
+	}
+
+	err = s.removeColumnFromNamedRanges(columnIdx)
+	if err != nil {
+		return err
+	}
+
+	err = s.removeColumnFromMergedCells(columnIdx)
+	if err != nil {
+		return err
+	}
+
+	for _, sheet := range s.w.Sheets() {
+		sheet.RecalculateFormulas()
+	}
+	return nil
+}
+
+func (s *Sheet) updateAfterRemove(columnIdx uint32, updateType update.UpdateAction) error {
+	ownSheetName := s.Name()
+	q := &update.UpdateQuery{
+		UpdateType: updateType,
+		ColumnIdx: columnIdx,
+		SheetToUpdate: ownSheetName,
+	}
+	for _, sheet := range s.w.Sheets() {
+		q.UpdateCurrentSheet = ownSheetName == sheet.Name()
+		for _, r := range sheet.Rows() {
+			for _, c := range r.Cells() {
+				if c.X().F != nil {
+					formStr := c.X().F.Content
+					expr := formula.ParseString(formStr)
+					if expr == nil {
+						c.SetError("#REF!")
+					} else {
+						newExpr := expr.Update(q)
+						c.X().F.Content = fmt.Sprintf("=%s", newExpr.String())
+					}
+				}
+			}
+		}
+	}
+	return nil
+}
+
+func (s *Sheet) slideCellsLeft(cells []*sml.CT_Cell) []*sml.CT_Cell {
+	for _, cell := range cells {
+		ref, err := reference.ParseCellReference(*cell.RAttr)
+		if err != nil {
+			return cells
+		}
+		newColumnIdx := ref.ColumnIdx - 1
+		newRefStr := reference.IndexToColumn(newColumnIdx) + fmt.Sprintf("%d", ref.RowIdx)
+		cell.RAttr = &newRefStr
+	}
+	return cells
+}
+
+func (s *Sheet) removeColumnFromMergedCells(columnIdx uint32) error {
+	if s.x.MergeCells == nil || s.x.MergeCells.MergeCell == nil {
+		return nil
+	}
+	newMergedCells := []*sml.CT_MergeCell{}
+	for _, mc := range s.MergedCells() {
+		newRefStr := moveRangeLeft(mc.Reference(), columnIdx, true)
+		if newRefStr != "" {
+			mc.SetReference(newRefStr)
+			newMergedCells = append(newMergedCells, mc.X())
+		}
+	}
+	s.x.MergeCells.MergeCell = newMergedCells
+	return nil
+}
+
+func (s *Sheet) removeColumnFromNamedRanges(columnIdx uint32) error {
+	for _, dn := range s.w.DefinedNames() {
+		name := dn.Name()
+		content := dn.Content()
+		sp := strings.Split(content, "!")
+		if len(sp) != 2 {
+			return errors.New("Incorrect named range:" + content)
+		}
+		sheetName := sp[0]
+		if s.Name() == sheetName {
+			err := s.w.RemoveDefinedName(dn)
+			if err != nil {
+				return err
+			}
+			newRefStr := moveRangeLeft(sp[1], columnIdx, true)
+			if newRefStr != "" {
+				newContent := sheetName + "!" + newRefStr
+				s.w.AddDefinedName(name, newContent)
+			}
+		}
+	}
+	numTables := 0
+	if s.x.TableParts != nil && s.x.TableParts.TablePart != nil {
+		numTables = len(s.x.TableParts.TablePart)
+	}
+	if numTables != 0 {
+		startFromTable := 0
+		for _, sheet := range s.w.Sheets() {
+			if sheet.Name() == s.Name() {
+				break
+			} else {
+				if sheet.x.TableParts != nil && sheet.x.TableParts.TablePart != nil {
+					startFromTable += len(sheet.x.TableParts.TablePart)
+				}
+			}
+		}
+		sheetTables := s.w.tables[startFromTable:startFromTable + numTables]
+		for tblIndex, tbl := range sheetTables {
+			newTable := tbl
+			newTable.RefAttr = moveRangeLeft(newTable.RefAttr, columnIdx, false)
+			s.w.tables[startFromTable + tblIndex] = newTable
+		}
+	}
+	return nil
+}
+
+func moveRangeLeft(ref string, columnIdx uint32, remove bool) string {
+	fromCell, toCell, err := reference.ParseRangeReference(ref)
+	if err == nil {
+		fromColIdx, toColIdx := fromCell.ColumnIdx, toCell.ColumnIdx
+		if columnIdx >= fromColIdx && columnIdx <= toColIdx {
+			if fromColIdx == toColIdx {
+				if remove {
+					return ""
+				} else {
+					return ref
+				}
+			} else {
+				newTo := toCell.Update(update.UpdateActionRemoveColumn)
+				return fmt.Sprintf("%s:%s", fromCell.String(), newTo.String())
+			}
+		} else if columnIdx < fromColIdx {
+			newFrom := fromCell.Update(update.UpdateActionRemoveColumn)
+			newTo := toCell.Update(update.UpdateActionRemoveColumn)
+			return fmt.Sprintf("%s:%s", newFrom.String(), newTo.String())
+		}
+	} else {
+		fromColumn, toColumn, err := reference.ParseColumnRangeReference(ref)
+		if err != nil {
+			return ""
+		}
+		fromColIdx, toColIdx := fromColumn.ColumnIdx, toColumn.ColumnIdx
+		if columnIdx >= fromColIdx && columnIdx <= toColIdx {
+			if fromColIdx == toColIdx {
+				if remove {
+					return ""
+				} else {
+					return ref
+				}
+			} else {
+				newTo := toColumn.Update(update.UpdateActionRemoveColumn)
+				return fmt.Sprintf("%s:%s", fromColumn.String(), newTo.String())
+			}
+		} else if columnIdx < fromColIdx {
+			newFrom := fromColumn.Update(update.UpdateActionRemoveColumn)
+			newTo := toColumn.Update(update.UpdateActionRemoveColumn)
+			return fmt.Sprintf("%s:%s", newFrom.String(), newTo.String())
+		}
+	}
+	return ""
+}
+
+func (s *Sheet) getAllCellsInFormulaArraysForColumn() (map[string]bool, error) {
+	return s.getAllCellsInFormulaArrays(false)
+}
+
+// getAllCellsInFormulaArrays returns all cells of the sheet that are covered by formula arrays. It is a helper for checking when removing rows and columns and skips all arrays of length 1 column when removing columns and all arrays of length 1 row when removing rows.
+func (s *Sheet) getAllCellsInFormulaArrays(isRow bool) (map[string]bool, error) {
+	ev := formula.NewEvaluator()
+	ctx := s.FormulaContext()
+	cellsInFormulaArrays := map[string]bool{}
+	for _, r := range s.Rows() {
+		for _, c := range r.Cells() {
+			if c.X().F != nil {
+				formStr := c.X().F.Content
+				if c.X().F.TAttr == sml.ST_CellFormulaTypeArray {
+					res := ev.Eval(ctx, formStr).AsString()
+					if res.Type == formula.ResultTypeError {
+						unioffice.Log("error evaulating formula %s: %s", formStr, res.ErrorMessage)
+						c.X().V = nil
+					}
+					if res.Type == formula.ResultTypeArray {
+						cref, err := reference.ParseCellReference(c.Reference())
+						if err != nil {
+							return map[string]bool{}, err
+						}
+						if (isRow && len(res.ValueArray) == 1) || (!isRow && len(res.ValueArray[0]) == 1) {
+							continue
+						}
+						for ir, row := range res.ValueArray {
+							rowIdx := cref.RowIdx + uint32(ir)
+							for ic := range row {
+								column := reference.IndexToColumn(cref.ColumnIdx + uint32(ic))
+								cellsInFormulaArrays[fmt.Sprintf("%s%d", column, rowIdx)] = true
+							}
+						}
+					} else if res.Type == formula.ResultTypeList {
+						cref, err := reference.ParseCellReference(c.Reference())
+						if err != nil {
+							return map[string]bool{}, err
+						}
+						if isRow || len(res.ValueList) == 1 {
+							continue
+						}
+						rowIdx := cref.RowIdx
+						for ic := range res.ValueList {
+							column := reference.IndexToColumn(cref.ColumnIdx + uint32(ic))
+							cellsInFormulaArrays[fmt.Sprintf("%s%d", column, rowIdx)] = true
+						}
+					}
+				}
+			}
+		}
+	}
+	return cellsInFormulaArrays, nil
 }

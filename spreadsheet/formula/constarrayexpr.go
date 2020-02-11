@@ -7,6 +7,8 @@
 
 package formula
 
+import "github.com/unidoc/unioffice/spreadsheet/update"
+
 // ConstArrayExpr is a constant array expression.
 type ConstArrayExpr struct {
 	data [][]Expression
@@ -33,4 +35,14 @@ func (c ConstArrayExpr) Eval(ctx Context, ev Evaluator) Result {
 // Reference returns an invalid reference for ConstArrayExpr.
 func (c ConstArrayExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
+}
+
+// String returns a string representation of ConstArrayExpr.
+func (c ConstArrayExpr) String() string {
+	return "" // to do
+}
+
+// Update returns the same object as updating sheet references does not affect ConstArrayExpr.
+func (c ConstArrayExpr) Update(q *update.UpdateQuery) Expression {
+	return c
 }

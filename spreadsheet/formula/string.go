@@ -7,7 +7,11 @@
 
 package formula
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/unidoc/unioffice/spreadsheet/update"
+)
 
 // String is a string expression.
 type String struct {
@@ -29,4 +33,14 @@ func (s String) Eval(ctx Context, ev Evaluator) Result {
 // Reference returns an invalid reference for String.
 func (s String) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
+}
+
+// String returns a string representation of String.
+func (s String) String() string {
+	return `"` + s.s + `"`
+}
+
+// Update returns the same object as updating sheet references does not affect String.
+func (s String) Update(q *update.UpdateQuery) Expression {
+	return s
 }

@@ -7,7 +7,11 @@
 
 package formula
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/unidoc/unioffice/spreadsheet/update"
+)
 
 // PrefixRangeExpr is a range expression that when evaluated returns a list of Results from a given sheet like Sheet1!A1:B4 (all cells from A1 to B4 from a sheet 'Sheet1').
 type PrefixRangeExpr struct {
@@ -55,4 +59,22 @@ func (p PrefixRangeExpr) Reference(ctx Context, ev Evaluator) Reference {
 		return MakeRangeReference(prefixRangeReference(pfx, from, to))
 	}
 	return ReferenceInvalid
+}
+
+// String returns a string representation of a range with prefix.
+func (r PrefixRangeExpr) String() string {
+	return fmt.Sprintf("%s!%s:%s", r.pfx.String(), r.from.String(), r.to.String())
+}
+
+// Update updates references in the PrefixRangeExpr after removing a row/column.
+func (r PrefixRangeExpr) Update(q *update.UpdateQuery) Expression {
+	new := r
+	sheetName := r.pfx.String()
+	if sheetName == q.SheetToUpdate {
+		newQ := *q
+		newQ.UpdateCurrentSheet = true
+		new.from = r.from.Update(&newQ)
+		new.to = r.to.Update(&newQ)
+	}
+	return new
 }

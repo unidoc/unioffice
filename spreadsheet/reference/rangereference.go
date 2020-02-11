@@ -41,3 +41,33 @@ func ParseRangeReference(s string) (from, to CellReference, err error) {
 	}
 	return fromRef, toRef, nil
 }
+
+// ParseColumnRangeReference splits a range reference of the form "A:B" into its
+// components.
+func ParseColumnRangeReference(s string) (from, to ColumnReference, err error) {
+	sheetName := ""
+	sp0 := strings.Split(s, "!")
+	if len(sp0) == 2 {
+		sheetName = sp0[0]
+		s = sp0[1]
+	}
+	sp := strings.Split(s, ":")
+	if len(sp) != 2 {
+		return ColumnReference{}, ColumnReference{}, errors.New("invalid range format")
+	}
+
+	if sheetName != "" {
+		sp[0] = sheetName + "!" + sp[0]
+		sp[1] = sheetName + "!" + sp[1]
+	}
+	fromRef, err := ParseColumnReference(sp[0])
+	if err != nil {
+		return ColumnReference{}, ColumnReference{}, err
+	}
+
+	toRef, err := ParseColumnReference(sp[1])
+	if err != nil {
+		return ColumnReference{}, ColumnReference{}, err
+	}
+	return fromRef, toRef, nil
+}

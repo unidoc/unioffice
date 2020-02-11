@@ -7,6 +7,8 @@
 
 package formula
 
+import "github.com/unidoc/unioffice/spreadsheet/update"
+
 // SheetPrefixExpr is a reference to a sheet like Sheet1! (reference to sheet 'Sheet1').
 type SheetPrefixExpr struct {
 	sheet string
@@ -25,4 +27,14 @@ func (s SheetPrefixExpr) Eval(ctx Context, ev Evaluator) Result {
 // Reference returns a string reference value to a sheet.
 func (s SheetPrefixExpr) Reference(ctx Context, ev Evaluator) Reference {
 	return Reference{Type: ReferenceTypeSheet, Value: s.sheet}
+}
+
+// String returns a string representation of SheetPrefixExpr.
+func (s SheetPrefixExpr) String() string {
+	return s.sheet
+}
+
+// Update returns the same object as updating sheet references does not affect SheetPrefixExpr.
+func (s SheetPrefixExpr) Update(q *update.UpdateQuery) Expression {
+	return s
 }

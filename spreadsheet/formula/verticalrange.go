@@ -11,6 +11,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // VerticalRange is a range expression that when evaluated returns a list of Results from references like AA:IJ (all cells from columns AA to IJ).
@@ -53,4 +55,23 @@ func cellRefsFromVerticalRange(ctx Context, colFrom, colTo string) (string, stri
 	lastRow := ctx.LastRow(colFrom)
 	to := colTo + strconv.Itoa(lastRow)
 	return from, to
+}
+
+// String returns a string representation of a vertical range.
+func (r VerticalRange) String() string {
+	return r.verticalRangeReference()
+}
+
+// Update updates references in the VerticalRange after removing a row/column.
+func (r VerticalRange) Update(q *update.UpdateQuery) Expression {
+	if q.UpdateType == update.UpdateActionRemoveColumn {
+		new := r
+		if q.UpdateCurrentSheet {
+			columnIdx := q.ColumnIdx
+			new.colFrom = updateColumnToLeft(r.colFrom, columnIdx)
+			new.colTo = updateColumnToLeft(r.colTo, columnIdx)
+		}
+		return new
+	}
+	return r
 }

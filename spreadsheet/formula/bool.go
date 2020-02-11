@@ -11,6 +11,7 @@ import (
 	"strconv"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // Bool is a boolean expression.
@@ -35,4 +36,18 @@ func (b Bool) Eval(ctx Context, ev Evaluator) Result {
 // Reference returns an invalid reference for Bool.
 func (b Bool) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
+}
+
+// String returns a string representation for Bool.
+func (b Bool) String() string {
+	if b.b {
+		return "TRUE"
+	} else {
+		return "FALSE"
+	}
+}
+
+// Update returns the same object as updating sheet references does not affect Bool.
+func (b Bool) Update(q *update.UpdateQuery) Expression {
+	return b
 }

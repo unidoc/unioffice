@@ -7,6 +7,8 @@
 
 package formula
 
+import "github.com/unidoc/unioffice/spreadsheet/update"
+
 // Negate is a negate expression like -A1.
 type Negate struct {
 	e Expression
@@ -29,4 +31,14 @@ func (n Negate) Eval(ctx Context, ev Evaluator) Result {
 // Reference returns an invalid reference for Negate.
 func (n Negate) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
+}
+
+// String returns a string representation for Negate.
+func (n Negate) String() string {
+	return "-" + n.e.String()
+}
+
+// Update updates references in the Negate after removing a row/column.
+func (n Negate) Update(q *update.UpdateQuery) Expression {
+	return Negate{n.e.Update(q)}
 }

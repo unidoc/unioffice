@@ -11,6 +11,7 @@ import (
 	"strconv"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // Number is a nubmer expression.
@@ -35,4 +36,14 @@ func (n Number) Eval(ctx Context, ev Evaluator) Result {
 // Reference returns an invalid reference for Number.
 func (n Number) Reference(ctx Context, ev Evaluator) Reference {
 	return ReferenceInvalid
+}
+
+// String returns a string representation of Number.
+func (n Number) String() string {
+	return strconv.FormatFloat(n.v, 'f', -1, 64)
+}
+
+// Update returns the same object as updating sheet references does not affect Number.
+func (n Number) Update(q *update.UpdateQuery) Expression {
+	return n
 }

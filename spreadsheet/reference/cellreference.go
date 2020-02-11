@@ -12,6 +12,8 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // CellReference is a parsed reference to a cell.  Input is of the form 'A1',
@@ -25,6 +27,7 @@ type CellReference struct {
 	SheetName      string
 }
 
+// String returns a string representation of CellReference.
 func (c CellReference) String() string {
 	buf := make([]byte, 0, 4)
 	if c.AbsoluteColumn {
@@ -89,4 +92,17 @@ lfor:
 	r.RowIdx = uint32(r64)
 
 	return r, nil
+}
+
+// Update updates reference to point one of the neighboring cells with respect to the update type after removing a row/column.
+func (ref *CellReference) Update(updateType update.UpdateAction) *CellReference {
+	switch updateType {
+	case update.UpdateActionRemoveColumn:
+		newRef := ref
+		newRef.ColumnIdx = ref.ColumnIdx - 1
+		newRef.Column = IndexToColumn(newRef.ColumnIdx)
+		return newRef
+	default:
+		return ref
+	}
 }

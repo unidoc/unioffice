@@ -11,6 +11,7 @@ import (
 	"fmt"
 
 	"github.com/unidoc/unioffice/spreadsheet/reference"
+	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
 // Range is a range expression that when evaluated returns a list of Results.
@@ -86,4 +87,19 @@ func resultFromCellRange(ctx Context, ev Evaluator, from, to string) Result {
 	}
 
 	return MakeArrayResult(arr)
+}
+
+// String returns a string of a range.
+func (r Range) String() string {
+	return fmt.Sprintf("%s:%s", r.from.String(), r.to.String())
+}
+
+// Update updates references in the Range after removing a row/column.
+func (r Range) Update(q *update.UpdateQuery) Expression {
+	new := r
+	if q.UpdateCurrentSheet {
+		new.from = r.from.Update(q)
+		new.to = r.to.Update(q)
+	}
+	return new
 }

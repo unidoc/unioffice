@@ -7,6 +7,8 @@
 
 package formula
 
+import "github.com/unidoc/unioffice/spreadsheet/update"
+
 import (
 	"fmt"
 	"strconv"
@@ -55,4 +57,14 @@ func cellRefsFromHorizontalRange(ctx Context, rowFrom, rowTo int) (string, strin
 	lastColumn := ctx.LastColumn(rowFrom, rowTo)
 	to := lastColumn + strconv.Itoa(rowTo)
 	return from, to
+}
+
+// String returns a string representation of a horizontal range.
+func (r HorizontalRange) String() string {
+	return r.horizontalRangeReference()
+}
+
+// Update updates the horizontal range references after removing a row/column.
+func (r HorizontalRange) Update(q *update.UpdateQuery) Expression {
+	return r
 }
