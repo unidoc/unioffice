@@ -1,5 +1,3 @@
-// package update contains definitions needed for updating references after removing rows/columns.
-//
 // Copyright 2017 FoxyUtils ehf. All rights reserved.
 //
 // Use of this source code is governed by the terms of the Affero GNU General
@@ -7,6 +5,7 @@
 // appearing in the file LICENSE included in the packaging of this file. A
 // commercial license can be purchased on https://unidoc.io.
 
+// Package update contains definitions needed for updating references after removing rows/columns.
 package update
 
 // UpdateAction is the type for update types constants.
