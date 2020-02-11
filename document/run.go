@@ -281,3 +281,38 @@ func (r Run) AddDrawingInline(img common.ImageRef) (InlineDrawing, error) {
 
 	return inline, nil
 }
+
+func (r Run) DrawingInline() []InlineDrawing {
+	var ret []InlineDrawing
+	for _, ic := range r.x.EG_RunInnerContent {
+		if ic.Drawing == nil {
+			continue
+		}
+
+		for _, inl := range ic.Drawing.Inline {
+			ret = append(ret, InlineDrawing{r.d, inl})
+		}
+	}
+	return ret
+}
+
+func (r Run) OleObjects() []OleObject {
+	var ret []OleObject
+	for _, ic := range r.x.EG_RunInnerContent {
+		if ic.Object == nil {
+			continue
+		}
+
+		//读取对象
+		oleObject := ic.Object.OleObject
+		shape := ic.Object.Shape
+
+		if oleObject == nil || shape == nil {
+			continue
+		}
+
+		ret = append(ret, OleObject{oleobject: oleObject, shape: shape})
+	}
+
+	return ret
+}

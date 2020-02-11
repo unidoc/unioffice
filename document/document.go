@@ -56,6 +56,9 @@ type Document struct {
 	fontTable   *wml.Fonts
 	endNotes    *wml.Endnotes
 	footNotes   *wml.Footnotes
+
+	OleObjectPaths   []OleObjectPath
+	OleObjectWmfPath []OleObjectWmfPath
 }
 
 // New constructs an empty document that content can be added to.
@@ -858,16 +861,30 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 			if f == nil {
 				continue
 			}
+
 			if f.Name == target {
 				path, err := zippkg.ExtractToDiskTmp(f, d.TmpPath)
 				if err != nil {
 					return err
 				}
+
+				if strings.Contains(rel.TargetAttr, ".wmf") {
+					d.OleObjectWmfPath = append(d.OleObjectWmfPath, OleObjectWmfPath{
+						rid:  rel.IdAttr,
+						path: path,
+					})
+
+					continue
+				}
+
 				img, err := common.ImageFromFile(path)
 				if err != nil {
 					return err
 				}
+
 				iref = common.MakeImageRef(img, &d.DocBase, d.docRels)
+				iref.SetRelID(rel.IdAttr)
+
 				d.Images = append(d.Images, iref)
 				files[i] = nil
 			}
@@ -880,6 +897,24 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 			rel.TargetAttr = rel.TargetAttr[0:len(rel.TargetAttr)-len(newExt)] + ext
 		}
 
+	case unioffice.OleObjectType:
+		for _, f := range files {
+			if f == nil {
+				continue
+			}
+
+			if f.Name == target {
+				path, err := zippkg.ExtractToDiskTmp(f, d.TmpPath)
+				if err != nil {
+					return err
+				}
+
+				d.OleObjectPaths = append(d.OleObjectPaths, OleObjectPath{
+					rid:  rel.IdAttr,
+					path: path,
+				})
+			}
+		}
 	default:
 		unioffice.Log("unsupported relationship type: %s tgt: %s", typ, target)
 	}

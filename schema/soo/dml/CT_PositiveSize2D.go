@@ -93,3 +93,26 @@ func (m *CT_PositiveSize2D) ValidateWithPath(path string) error {
 	}
 	return nil
 }
+
+//calculate image width and height
+//convention: https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.drawing.wordprocessing.extent?view=openxml-2.8.1
+type EmuSize struct {
+	Width  string
+	Height string
+}
+
+const (
+	mm = 36000
+	cm = 360000
+	in = 914400
+	pt = 12700
+	pc = 152400
+	pi = 152400
+)
+
+//return width and height by using pt
+func (m *CT_PositiveSize2D) Size() EmuSize {
+	return EmuSize{
+		Width:  fmt.Sprintf("%spt", strconv.FormatInt(m.CxAttr/pt, 10)),
+		Height: fmt.Sprintf("%spt", strconv.FormatInt(m.CyAttr/pt, 10))}
+}

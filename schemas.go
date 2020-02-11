@@ -63,6 +63,7 @@ const (
 	CorePropertiesType     = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"
 	CustomPropertiesType   = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties"
 	CustomXMLType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml"
+	OleObjectType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/oleObject"
 
 	// SML
 	WorksheetType            = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
