@@ -193,6 +193,146 @@ func (p Paragraph) AddBookmark(name string) Bookmark {
 	return bm
 }
 
+// AddFootnote will create a new footnote and attach it to the Paragraph in the
+// location at the end of the previous run (footnotes create their own run within
+// the paragraph. The text given to the function is simply a convenience helper,
+// paragraphs and runs can always be added to the text of the footnote later.
+func (p Paragraph) AddFootnote(text string) Footnote {
+	// ensure we use a proper IdAttr for the new footnote
+	var fnIDHeight int64
+	for _, f := range p.d.Footnotes() {
+		if f.id() > fnIDHeight {
+			fnIDHeight = f.id()
+		}
+	}
+	fnIDHeight++
+
+	// create a new footnote and footnote reference
+	fn := wml.NewCT_FtnEdn()       // doc.footNotes.CT_Footnotes.Footnote[0]
+	fnRef := wml.NewCT_FtnEdnRef() // p.Runs()[0].X().EG_RunInnerContent[0].FootnoteReference
+	fnRef.IdAttr = fnIDHeight
+
+	// add new footnote to document
+	p.d.footNotes.CT_Footnotes.Footnote = append(p.d.footNotes.CT_Footnotes.Footnote, fn)
+
+	// Add the newly created footnote reference to a new run on the parent paragraph
+	run := p.AddRun()
+	runP := run.Properties()
+	runP.SetStyle("FootnoteAnchor")
+	run.x.EG_RunInnerContent = []*wml.EG_RunInnerContent{wml.NewEG_RunInnerContent()}
+	run.x.EG_RunInnerContent[0].FootnoteReference = fnRef
+
+	// formulate the new fnobject's inners
+	fnObj := Footnote{p.d, fn}
+	fnObj.x.IdAttr = fnIDHeight
+	fnObj.x.EG_BlockLevelElts = []*wml.EG_BlockLevelElts{wml.NewEG_BlockLevelElts()}
+	paraInner := fnObj.AddParagraph()
+	paraInner.Properties().SetStyle("Footnote")
+	paraInner.x.PPr.RPr = wml.NewCT_ParaRPr()
+
+	runInner := paraInner.AddRun()
+	runInner.AddTab()
+	runInner.AddText(text)
+
+	return fnObj
+}
+
+// RemoveFootnote removes a footnote from both the paragraph and the document
+// the requested footnote must be anchored on the paragraph being referenced
+func (p Paragraph) RemoveFootnote(id int64) {
+	fns := p.d.footNotes
+	var i int
+	for i1, fn := range fns.CT_Footnotes.Footnote {
+		if fn.IdAttr == id {
+			i = i1
+		}
+	}
+	i = 0
+	fns.CT_Footnotes.Footnote[i] = nil
+	fns.CT_Footnotes.Footnote[i] = fns.CT_Footnotes.Footnote[len(fns.CT_Footnotes.Footnote)-1]
+	fns.CT_Footnotes.Footnote = fns.CT_Footnotes.Footnote[:len(fns.CT_Footnotes.Footnote)-1]
+
+	var r Run
+	for _, r1 := range p.Runs() {
+		if ok, fnID := r1.IsFootnote(); ok {
+			if fnID == id {
+				r = r1
+			}
+		}
+	}
+	p.RemoveRun(r)
+}
+
+// AddEndnote will create a new footnote and attach it to the Paragraph in the
+// location at the end of the previous run (footnotes create their own run within
+// the paragraph. The text given to the function is simply a convenience helper,
+// paragraphs and runs can always be added to the text of the footnote later.
+func (p Paragraph) AddEndnote(text string) Endnote {
+	// ensure we use a proper IdAttr for the new footnote
+	var enIDHeight int64
+	for _, f := range p.d.Endnotes() {
+		if f.id() > enIDHeight {
+			enIDHeight = f.id()
+		}
+	}
+	enIDHeight++
+
+	// create a new footnote and footnote reference
+	en := wml.NewCT_FtnEdn()       // doc.endNotes.CT_Endnotes.Endnote[0]
+	enRef := wml.NewCT_FtnEdnRef() // p.Runs()[0].X().EG_RunInnerContent[0].EndnoteReference
+	enRef.IdAttr = enIDHeight
+
+	// add new footnote to document
+	p.d.endNotes.CT_Endnotes.Endnote = append(p.d.endNotes.CT_Endnotes.Endnote, en)
+
+	// Add the newly created footnote reference to a new run on the parent paragraph
+	run := p.AddRun()
+	runP := run.Properties()
+	runP.SetStyle("EndnoteAnchor")
+	run.x.EG_RunInnerContent = []*wml.EG_RunInnerContent{wml.NewEG_RunInnerContent()}
+	run.x.EG_RunInnerContent[0].EndnoteReference = enRef
+
+	// formulate the new enobject's inners
+	enObj := Endnote{p.d, en}
+	enObj.x.IdAttr = enIDHeight
+	enObj.x.EG_BlockLevelElts = []*wml.EG_BlockLevelElts{wml.NewEG_BlockLevelElts()}
+	paraInner := enObj.AddParagraph()
+	paraInner.Properties().SetStyle("Endnote")
+	paraInner.x.PPr.RPr = wml.NewCT_ParaRPr()
+
+	runInner := paraInner.AddRun()
+	runInner.AddTab()
+	runInner.AddText(text)
+
+	return enObj
+}
+
+// RemoveEndnote removes a endnote from both the paragraph and the document
+// the requested endnote must be anchored on the paragraph being referenced
+func (p Paragraph) RemoveEndnote(id int64) {
+	ens := p.d.endNotes
+	var i int
+	for i1, en := range ens.CT_Endnotes.Endnote {
+		if en.IdAttr == id {
+			i = i1
+		}
+	}
+	i = 0
+	ens.CT_Endnotes.Endnote[i] = nil
+	ens.CT_Endnotes.Endnote[i] = ens.CT_Endnotes.Endnote[len(ens.CT_Endnotes.Endnote)-1]
+	ens.CT_Endnotes.Endnote = ens.CT_Endnotes.Endnote[:len(ens.CT_Endnotes.Endnote)-1]
+
+	var r Run
+	for _, r1 := range p.Runs() {
+		if ok, enID := r1.IsEndnote(); ok {
+			if enID == id {
+				r = r1
+			}
+		}
+	}
+	p.RemoveRun(r)
+}
+
 // SetNumberingLevel sets the numbering level of a paragraph.  If used, then the
 // NumberingDefinition must also be set via SetNumberingDefinition or
 // SetNumberingDefinitionByID.
