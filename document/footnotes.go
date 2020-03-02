@@ -66,7 +66,7 @@ func (f Footnote) RemoveParagraph(p Paragraph) {
 	}
 }
 
-// helper function to get at the content of a footnote
+// helper function to get at the content of a footnote.
 func (f Footnote) content() []*wml.EG_ContentBlockContent {
 	var ret []*wml.EG_ContentBlockContent
 	for _, fc := range f.x.EG_BlockLevelElts {
@@ -75,7 +75,7 @@ func (f Footnote) content() []*wml.EG_ContentBlockContent {
 	return ret
 }
 
-// helper function to get the IDAttr of a footnote object
+// helper function to get the IDAttr of a footnote object.
 func (f Footnote) id() int64 {
 	return f.x.IdAttr
 }

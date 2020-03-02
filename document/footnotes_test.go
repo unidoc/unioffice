@@ -24,11 +24,11 @@ func TestHasFootnotes(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
-	if doc.HasFootnotes() == false {
+	if !doc.HasFootnotes() {
 		t.Error("document should contain footnotes")
 	}
 	doc = document.New()
-	if doc.HasFootnotes() == true {
+	if doc.HasFootnotes() {
 		t.Error("document should not contain footnotes")
 	}
 }
@@ -148,7 +148,7 @@ func TestFootnotesClearContent(t *testing.T) {
 }
 
 func TestFootnotesSimplifyContent(t *testing.T) {
-	newTxt := "This be shortened."
+	newTxt := "This will be shortened."
 	doc := loadTestData(t)
 	if doc == nil {
 		t.Fatal("could not read test document")
@@ -182,7 +182,7 @@ func TestFootnotesSimplifyContent(t *testing.T) {
 }
 
 func TestFootnotesExpandContent(t *testing.T) {
-	newTxt := "This be expanded."
+	newTxt := "This will be expanded."
 	doc := loadTestData(t)
 	if doc == nil {
 		t.Fatal("could not read test document")

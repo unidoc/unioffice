@@ -21,11 +21,11 @@ func TestHasEndnotes(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
-	if doc.HasEndnotes() == false {
+	if !doc.HasEndnotes() {
 		t.Error("document should contain endnotes")
 	}
 	doc = document.New()
-	if doc.HasEndnotes() == true {
+	if doc.HasEndnotes() {
 		t.Error("document should not contain endnotes")
 	}
 }
@@ -145,7 +145,7 @@ func TestEndnotesClearContent(t *testing.T) {
 }
 
 func TestEndnotesSimplifyContent(t *testing.T) {
-	newTxt := "This be shortened."
+	newTxt := "This will be shortened."
 	doc := loadTestData(t)
 	if doc == nil {
 		t.Fatal("could not read test document")
@@ -179,7 +179,7 @@ func TestEndnotesSimplifyContent(t *testing.T) {
 }
 
 func TestEndnotesExpandContent(t *testing.T) {
-	newTxt := "This be expanded."
+	newTxt := "This will be expanded."
 	doc := loadTestData(t)
 	if doc == nil {
 		t.Fatal("could not read test document")

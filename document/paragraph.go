@@ -238,7 +238,7 @@ func (p Paragraph) AddFootnote(text string) Footnote {
 }
 
 // RemoveFootnote removes a footnote from both the paragraph and the document
-// the requested footnote must be anchored on the paragraph being referenced
+// the requested footnote must be anchored on the paragraph being referenced.
 func (p Paragraph) RemoveFootnote(id int64) {
 	fns := p.d.footNotes
 	var i int
@@ -308,7 +308,7 @@ func (p Paragraph) AddEndnote(text string) Endnote {
 }
 
 // RemoveEndnote removes a endnote from both the paragraph and the document
-// the requested endnote must be anchored on the paragraph being referenced
+// the requested endnote must be anchored on the paragraph being referenced.
 func (p Paragraph) RemoveEndnote(id int64) {
 	ens := p.d.endNotes
 	var i int

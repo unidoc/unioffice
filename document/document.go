@@ -488,15 +488,12 @@ func (d *Document) Paragraphs() []Paragraph {
 }
 
 // HasFootnotes returns a bool based on the presence or abscence of footnotes within
-// the document
+// the document.
 func (d *Document) HasFootnotes() bool {
-	if d.footNotes == nil {
-		return false
-	}
-	return true
+	return d.footNotes != nil
 }
 
-// Footnotes returns the footnotes defined in the document
+// Footnotes returns the footnotes defined in the document.
 func (d *Document) Footnotes() []Footnote {
 	ret := []Footnote{}
 	for _, f := range d.footNotes.CT_Footnotes.Footnote {
@@ -506,7 +503,7 @@ func (d *Document) Footnotes() []Footnote {
 }
 
 // Footnote returns the footnote based on the ID; this can be used nicely with
-// the run.IsFootnote() functionality
+// the run.IsFootnote() functionality.
 func (d *Document) Footnote(id int64) Footnote {
 	for _, f := range d.Footnotes() {
 		if f.id() == id {
@@ -516,16 +513,13 @@ func (d *Document) Footnote(id int64) Footnote {
 	return Footnote{}
 }
 
-// HasEndnotes returns a bool based on the presence or abscence of footnotes within
-// the document
+// HasEndnotes returns a bool based on the presence or abscence of endnotes within
+// the document.
 func (d *Document) HasEndnotes() bool {
-	if d.footNotes == nil {
-		return false
-	}
-	return true
+	return d.endNotes != nil
 }
 
-// Endnotes returns the footnotes defined in the document
+// Endnotes returns the endnotes defined in the document.
 func (d *Document) Endnotes() []Endnote {
 	ret := []Endnote{}
 	for _, f := range d.endNotes.CT_Endnotes.Endnote {
@@ -534,8 +528,8 @@ func (d *Document) Endnotes() []Endnote {
 	return ret
 }
 
-// Endnote returns the footnote based on the ID; this can be used nicely with
-// the run.IsEndnote() functionality
+// Endnote returns the endnote based on the ID; this can be used nicely with
+// the run.IsEndnote() functionality.
 func (d *Document) Endnote(id int64) Endnote {
 	for _, f := range d.Endnotes() {
 		if f.id() == id {
