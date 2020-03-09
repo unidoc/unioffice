@@ -369,3 +369,16 @@ func TestRemoveColumn(t *testing.T) {
 		}
 	}
 }
+
+func TestCellsWithEmpty(t *testing.T) {
+	wb := spreadsheet.New()
+	sheet := wb.AddSheet()
+	sheet.Cell("A1").SetNumber(1)
+	sheet.Cell("F2").SetNumber(1)
+	rows := sheet.Rows()
+	exp := 6
+	got := len(rows[0].CellsWithEmpty())
+	if got != exp {
+		t.Errorf("expected %d cells in row, got %d", exp, got)
+	}
+}

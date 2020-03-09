@@ -121,6 +121,31 @@ func (r Row) Cells() []Cell {
 	return ret
 }
 
+// CellsWithEmpty returns a slice of cells including empty ones from the first column to the last one used in the sheet.
+// The cells can be manipulated, but appending to the slice will have no effect.
+func (r Row) CellsWithEmpty() []Cell {
+	maxColumnIdx := uint32(0)
+	for _, r := range r.s.SheetData.Row {
+		cells := r.C
+		if len(cells) > 0 {
+			lastCell := cells[len(cells) - 1]
+			ref, err := reference.ParseCellReference(*lastCell.RAttr)
+			if err != nil {
+				return []Cell{}
+			}
+			if maxColumnIdx < ref.ColumnIdx {
+				maxColumnIdx = ref.ColumnIdx
+			}
+		}
+	}
+	ret := []Cell{}
+	for columnIdx := uint32(0); columnIdx <= maxColumnIdx; columnIdx++ {
+		c := r.Cell(reference.IndexToColumn(columnIdx))
+		ret = append(ret, c)
+	}
+	return ret
+}
+
 // AddNamedCell adds a new named cell to a row and returns it. You should
 // normally prefer Cell() as it will return the existing cell if the cell
 // already exists, while AddNamedCell will duplicate the cell creating an
