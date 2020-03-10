@@ -1,6 +1,6 @@
 // Copyright 2017 FoxyUtils ehf. All rights reserved.
 package main
-// This example demonstrates flattening all formulas from an input Excel file and outputs the flattened values to a new xlsx.
+// This example demonstrates outputing all cells in a row of an excel spreadsheet, including empty cells.
 
 import (
 	"log"
