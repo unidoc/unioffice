@@ -16,8 +16,19 @@ func main() {
 	}
 
 	s := ss.Sheets()[0]
-	for _,row := range s.Rows(){
-		for _,cell := range row.CellsWithEmpty(){
+
+	maxColumnIdx := s.MaxColumnIdx()
+	for _, row := range s.Rows(){
+		for _,cell := range row.CellsWithEmpty(maxColumnIdx){
+			fmt.Println(cell.Reference(),":", cell.GetFormattedValue())
+		}
+	}
+	fmt.Print("\n\n\n")
+
+	s.Cell("F4").SetString("Hello world")
+	maxColumnIdx = s.MaxColumnIdx()
+	for _, row := range s.Rows(){
+		for _,cell := range row.CellsWithEmpty(maxColumnIdx){
 			fmt.Println(cell.Reference(),":", cell.GetFormattedValue())
 		}
 	}

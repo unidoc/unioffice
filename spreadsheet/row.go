@@ -19,7 +19,7 @@ import (
 // Row is a row within a spreadsheet.
 type Row struct {
 	w *Workbook
-	s *sml.Worksheet
+	sheet *Sheet
 	x *sml.CT_Row
 }
 
@@ -91,7 +91,7 @@ func (r Row) AddCell() Cell {
 		nextCellID = unioffice.Stringf("%s%d", reference.IndexToColumn(nextIdx), r.RowNumber())
 	}
 	c.RAttr = nextCellID
-	return Cell{r.w, r.s, r.x, c}
+	return Cell{r.w, r.sheet, r.x, c}
 }
 
 // Cells returns a slice of cells.  The cells can be manipulated, but appending
@@ -116,30 +116,16 @@ func (r Row) Cells() []Cell {
 			}
 		}
 		lastIndex = currentIndex
-		ret = append(ret, Cell{r.w, r.s, r.x, c})
+		ret = append(ret, Cell{r.w, r.sheet, r.x, c})
 	}
 	return ret
 }
 
 // CellsWithEmpty returns a slice of cells including empty ones from the first column to the last one used in the sheet.
 // The cells can be manipulated, but appending to the slice will have no effect.
-func (r Row) CellsWithEmpty() []Cell {
-	maxColumnIdx := uint32(0)
-	for _, r := range r.s.SheetData.Row {
-		cells := r.C
-		if len(cells) > 0 {
-			lastCell := cells[len(cells) - 1]
-			ref, err := reference.ParseCellReference(*lastCell.RAttr)
-			if err != nil {
-				return []Cell{}
-			}
-			if maxColumnIdx < ref.ColumnIdx {
-				maxColumnIdx = ref.ColumnIdx
-			}
-		}
-	}
+func (r Row) CellsWithEmpty(lastColIdx uint32) []Cell {
 	ret := []Cell{}
-	for columnIdx := uint32(0); columnIdx <= maxColumnIdx; columnIdx++ {
+	for columnIdx := uint32(0); columnIdx <= lastColIdx; columnIdx++ {
 		c := r.Cell(reference.IndexToColumn(columnIdx))
 		ret = append(ret, c)
 	}
@@ -172,7 +158,7 @@ func (r Row) AddNamedCell(col string) Cell {
 		r.x.C = append(r.x.C[:indexToInsert], append([]*sml.CT_Cell{c}, r.x.C[indexToInsert:]...)...)
 	}
 
-	return Cell{r.w, r.s, r.x, c}
+	return Cell{r.w, r.sheet, r.x, c}
 }
 
 // Cell retrieves or adds a new cell to a row. Col is the column (e.g. 'A', 'B')
@@ -180,7 +166,7 @@ func (r Row) Cell(col string) Cell {
 	name := fmt.Sprintf("%s%d", col, r.RowNumber())
 	for _, c := range r.x.C {
 		if c.RAttr != nil && *c.RAttr == name {
-			return Cell{r.w, r.s, r.x, c}
+			return Cell{r.w, r.sheet, r.x, c}
 		}
 	}
 	return r.AddNamedCell(col)

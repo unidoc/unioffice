@@ -220,7 +220,7 @@ func (e *evalContext) LastRow(col string) int {
 	max := 1
 	for _, r := range sheet.x.SheetData.Row {
 		if r.RAttr != nil {
-			row := Row{sheet.w, sheet.x, r}
+			row := Row{sheet.w, sheet, r}
 			l := len(row.Cells())
 			if l > colIdx {
 				max = int(row.RowNumber())

@@ -377,7 +377,7 @@ func TestCellsWithEmpty(t *testing.T) {
 	sheet.Cell("F2").SetNumber(1)
 	rows := sheet.Rows()
 	exp := 6
-	got := len(rows[0].CellsWithEmpty())
+	got := len(rows[0].CellsWithEmpty(sheet.MaxColumnIdx()))
 	if got != exp {
 		t.Errorf("expected %d cells in row, got %d", exp, got)
 	}
