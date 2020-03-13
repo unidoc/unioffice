@@ -487,6 +487,58 @@ func (d *Document) Paragraphs() []Paragraph {
 	return ret
 }
 
+// HasFootnotes returns a bool based on the presence or abscence of footnotes within
+// the document.
+func (d *Document) HasFootnotes() bool {
+	return d.footNotes != nil
+}
+
+// Footnotes returns the footnotes defined in the document.
+func (d *Document) Footnotes() []Footnote {
+	ret := []Footnote{}
+	for _, f := range d.footNotes.CT_Footnotes.Footnote {
+		ret = append(ret, Footnote{d, f})
+	}
+	return ret
+}
+
+// Footnote returns the footnote based on the ID; this can be used nicely with
+// the run.IsFootnote() functionality.
+func (d *Document) Footnote(id int64) Footnote {
+	for _, f := range d.Footnotes() {
+		if f.id() == id {
+			return f
+		}
+	}
+	return Footnote{}
+}
+
+// HasEndnotes returns a bool based on the presence or abscence of endnotes within
+// the document.
+func (d *Document) HasEndnotes() bool {
+	return d.endNotes != nil
+}
+
+// Endnotes returns the endnotes defined in the document.
+func (d *Document) Endnotes() []Endnote {
+	ret := []Endnote{}
+	for _, f := range d.endNotes.CT_Endnotes.Endnote {
+		ret = append(ret, Endnote{d, f})
+	}
+	return ret
+}
+
+// Endnote returns the endnote based on the ID; this can be used nicely with
+// the run.IsEndnote() functionality.
+func (d *Document) Endnote(id int64) Endnote {
+	for _, f := range d.Endnotes() {
+		if f.id() == id {
+			return f
+		}
+	}
+	return Endnote{}
+}
+
 // SaveToFile writes the document out to a file.
 func (d *Document) SaveToFile(path string) error {
 	f, err := os.Create(path)
@@ -906,7 +958,7 @@ func (d *Document) insertParagraph(relativeTo Paragraph, before bool) Paragraph 
 	for _, ble := range d.x.Body.EG_BlockLevelElts {
 		for _, c := range ble.EG_ContentBlockContent {
 			for i, p := range c.P {
-				// foudn the paragraph
+				// found the paragraph
 				if p == relativeTo.X() {
 					p := wml.NewCT_P()
 					c.P = append(c.P, nil)
