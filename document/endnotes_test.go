@@ -1,3 +1,10 @@
+// Copyright 2017 FoxyUtils ehf. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
 package document_test
 
 import (
@@ -36,10 +43,10 @@ func TestEndnotesListEndnotes(t *testing.T) {
 		t.Fatal("could not read test document")
 	}
 	if len(doc.Endnotes()) == 0 {
-		t.Error("document should contain footnotes")
+		t.Error("document should contain endnotes")
 	}
 	if len(doc.Endnotes()) <= 2 {
-		t.Error("document should contain footnotes array that includes 2 added by the system")
+		t.Error("document should contain endnotes array that includes 2 added by the system")
 	}
 	saveTestData(t, doc)
 }
@@ -51,7 +58,7 @@ func TestEndnotesPullByID(t *testing.T) {
 	}
 	fn := doc.Endnote(2)
 	if fn.X().IdAttr != 2 {
-		t.Error("test did not retrieve the proper footnote")
+		t.Error("test did not retrieve the proper endnote")
 	}
 	saveTestData(t, doc)
 }
@@ -82,7 +89,7 @@ func TestEndnotesLinkedToRuns(t *testing.T) {
 		}
 	}
 	if linkedRuns == 0 {
-		t.Error("document not properly linked to footnotes")
+		t.Error("document not properly linked to endnotes")
 	}
 	saveTestData(t, doc)
 }
@@ -101,7 +108,7 @@ func TestEndnotesLinkedToRunsProperly(t *testing.T) {
 		}
 	}
 	if len(linkedEnds) == 0 {
-		t.Error("document not properly linked to footnotes")
+		t.Error("document not properly linked to endnotes")
 	}
 	saveTestData(t, doc)
 }
@@ -119,7 +126,7 @@ func TestEndnotesHaveText(t *testing.T) {
 		}
 	}
 	if buff.String() == "" {
-		t.Error("content not accessible from footnote")
+		t.Error("content not accessible from endnote")
 	}
 	saveTestData(t, doc)
 }
@@ -139,7 +146,7 @@ func TestEndnotesClearContent(t *testing.T) {
 	}
 	output := buff.String()
 	if output != "" {
-		t.Errorf("content not cleared from footnote: %s", output)
+		t.Errorf("content not cleared from endnote: %s", output)
 	}
 	saveTestData(t, doc)
 }
@@ -173,7 +180,7 @@ func TestEndnotesSimplifyContent(t *testing.T) {
 		t.Errorf("wrong number of runs: expect %d, got %d", 1, len(en2.Paragraphs()[0].Runs()))
 	}
 	if en2.Paragraphs()[0].Runs()[0].Text() != newTxt {
-		t.Error("incorrect modification to footnote text")
+		t.Error("incorrect modification to endnote text")
 	}
 	saveTestData(t, doc)
 }
@@ -198,7 +205,7 @@ func TestEndnotesExpandContent(t *testing.T) {
 		t.Errorf("wrong number of runs: expect %d, got %d", 1, len(en2.Paragraphs()[0].Runs()))
 	}
 	if en2.Paragraphs()[1].Runs()[0].Text() != newTxt {
-		t.Error("incorrect modification to footnote text")
+		t.Error("incorrect modification to endnote text")
 	}
 	saveTestData(t, doc)
 }
@@ -225,11 +232,11 @@ func TestEndnotesRemoveEndnote(t *testing.T) {
 
 	if len(doc.Endnotes()) == enB4 {
 		fmt.Println(doc.Endnotes())
-		t.Fatal("did not properly remove footnote")
+		t.Fatal("did not properly remove endnote")
 	}
 
 	if len(p.Runs()) >= runsInP {
-		t.Fatal("did not properly remove footnote")
+		t.Fatal("did not properly remove endnote")
 	}
 }
 
@@ -254,7 +261,7 @@ func TestEndnotesAddEndnote(t *testing.T) {
 	en := p.AddEndnote("testing")
 
 	if len(doc.Endnotes()) == enB4 {
-		t.Fatal("did not properly add footnote")
+		t.Fatal("did not properly add endnote")
 	}
 
 	var enInP int
@@ -265,7 +272,7 @@ func TestEndnotesAddEndnote(t *testing.T) {
 	}
 
 	if enInP <= enB4InP {
-		t.Error("footnotes not properly added to run")
+		t.Error("endnotes not properly added to run")
 	}
 
 	pinner := en.AddParagraph()
@@ -273,7 +280,7 @@ func TestEndnotesAddEndnote(t *testing.T) {
 	rinner.AddText("more test goes in this paragraph")
 
 	if len(en.Paragraphs()) != 2 {
-		t.Error("wrong number of paragraphs in footnote")
+		t.Error("wrong number of paragraphs in endnote")
 	}
 	for _, p := range en.Paragraphs() {
 		if p.Properties().Style() != "Endnote" {

@@ -195,17 +195,24 @@ func (p Paragraph) AddBookmark(name string) Bookmark {
 
 // AddFootnote will create a new footnote and attach it to the Paragraph in the
 // location at the end of the previous run (footnotes create their own run within
-// the paragraph. The text given to the function is simply a convenience helper,
+// the paragraph). The text given to the function is simply a convenience helper,
 // paragraphs and runs can always be added to the text of the footnote later.
 func (p Paragraph) AddFootnote(text string) Footnote {
 	// ensure we use a proper IdAttr for the new footnote
 	var fnIDHeight int64
-	for _, f := range p.d.Footnotes() {
-		if f.id() > fnIDHeight {
-			fnIDHeight = f.id()
+	if p.d.HasFootnotes() {
+		for _, f := range p.d.Footnotes() {
+			if f.id() > fnIDHeight {
+				fnIDHeight = f.id()
+			}
 		}
+		fnIDHeight++
+	} else {
+		fnIDHeight = 0
+		p.d.footNotes = &wml.Footnotes{}
+		p.d.footNotes.CT_Footnotes = wml.CT_Footnotes{}
+		p.d.footNotes.Footnote = make([]*wml.CT_FtnEdn, 0)
 	}
-	fnIDHeight++
 
 	// create a new footnote and footnote reference
 	fn := wml.NewCT_FtnEdn()       // doc.footNotes.CT_Footnotes.Footnote[0]
@@ -263,29 +270,34 @@ func (p Paragraph) RemoveFootnote(id int64) {
 	p.RemoveRun(r)
 }
 
-// AddEndnote will create a new footnote and attach it to the Paragraph in the
-// location at the end of the previous run (footnotes create their own run within
+// AddEndnote will create a new endnote and attach it to the Paragraph in the
+// location at the end of the previous run (endnotes create their own run within
 // the paragraph. The text given to the function is simply a convenience helper,
-// paragraphs and runs can always be added to the text of the footnote later.
+// paragraphs and runs can always be added to the text of the endnote later.
 func (p Paragraph) AddEndnote(text string) Endnote {
-	// ensure we use a proper IdAttr for the new footnote
+	// ensure we use a proper IdAttr for the new endnote
 	var enIDHeight int64
-	for _, f := range p.d.Endnotes() {
-		if f.id() > enIDHeight {
-			enIDHeight = f.id()
+	if p.d.HasEndnotes() {
+		for _, f := range p.d.Endnotes() {
+			if f.id() > enIDHeight {
+				enIDHeight = f.id()
+			}
 		}
+		enIDHeight++
+	} else {
+		enIDHeight = 0
+		p.d.endNotes = &wml.Endnotes{}
 	}
-	enIDHeight++
 
-	// create a new footnote and footnote reference
+	// create a new endnote and endnote reference
 	en := wml.NewCT_FtnEdn()       // doc.endNotes.CT_Endnotes.Endnote[0]
 	enRef := wml.NewCT_FtnEdnRef() // p.Runs()[0].X().EG_RunInnerContent[0].EndnoteReference
 	enRef.IdAttr = enIDHeight
 
-	// add new footnote to document
+	// add new endnote to document
 	p.d.endNotes.CT_Endnotes.Endnote = append(p.d.endNotes.CT_Endnotes.Endnote, en)
 
-	// Add the newly created footnote reference to a new run on the parent paragraph
+	// Add the newly created endnote reference to a new run on the parent paragraph
 	run := p.AddRun()
 	runP := run.Properties()
 	runP.SetStyle("EndnoteAnchor")

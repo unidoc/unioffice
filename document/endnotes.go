@@ -1,10 +1,17 @@
+// Copyright 2017 FoxyUtils ehf. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased by contacting sales@baliance.com.
+
 package document
 
 import (
 	"github.com/unidoc/unioffice/schema/soo/wml"
 )
 
-// Endnote is an individual footnote reference within the document.
+// Endnote is an individual endnote reference within the document.
 type Endnote struct {
 	d *Document
 	x *wml.CT_FtnEdn
@@ -15,7 +22,7 @@ func (e Endnote) X() *wml.CT_FtnEdn {
 	return e.x
 }
 
-// Paragraphs returns the paragraphs defined in a footnote.
+// Paragraphs returns the paragraphs defined in an endnote.
 func (e Endnote) Paragraphs() []Paragraph {
 	ret := []Paragraph{}
 	for _, a := range e.content() {
@@ -26,7 +33,7 @@ func (e Endnote) Paragraphs() []Paragraph {
 	return ret
 }
 
-// AddParagraph adds a paragraph to the footnote.
+// AddParagraph adds a paragraph to the endnote.
 func (e Endnote) AddParagraph() Paragraph {
 	bc := wml.NewEG_ContentBlockContent()
 	cbcB4 := len(e.x.EG_BlockLevelElts[0].EG_ContentBlockContent)
@@ -52,7 +59,7 @@ func (e Endnote) AddParagraph() Paragraph {
 	return newPara
 }
 
-// RemoveParagraph removes a paragraph from the footnote.
+// RemoveParagraph removes a paragraph from the endnote.
 func (e Endnote) RemoveParagraph(p Paragraph) {
 	for _, ec := range e.content() {
 		for i, pa := range ec.P {
@@ -66,7 +73,7 @@ func (e Endnote) RemoveParagraph(p Paragraph) {
 	}
 }
 
-// helper function to get at the content of a footnote.
+// helper function to get at the content of an endnote.
 func (e Endnote) content() []*wml.EG_ContentBlockContent {
 	var ret []*wml.EG_ContentBlockContent
 	for _, ec := range e.x.EG_BlockLevelElts {
@@ -75,7 +82,7 @@ func (e Endnote) content() []*wml.EG_ContentBlockContent {
 	return ret
 }
 
-// helper function to get the IDAttr of a footnote object.
+// helper function to get the IDAttr of an endnote object.
 func (e Endnote) id() int64 {
 	return e.x.IdAttr
 }
