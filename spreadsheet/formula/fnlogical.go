@@ -358,7 +358,7 @@ func Ifs(args []Result) Result {
 	if len(args) < 2 {
 		return MakeErrorResult("IFS requires at least two arguments")
 	}
-	for i := 0; i < len(args)-1; i+=2 {
+	for i := 0; i < len(args)-1; i += 2 {
 		if args[i].ValueNumber == 1 {
 			return args[i+1]
 		}

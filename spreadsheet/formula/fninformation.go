@@ -40,21 +40,21 @@ var bs string = string([]byte{92})
 var integer, finance, intSep, intPar, decimal, decJust, decPar, par, percent, intCur, cur, curLabel, mdy, dmy, sci *regexp.Regexp
 
 func initRegexpInformation() {
-	integer = regexp.MustCompile(`^0+$`) // 12345
-	intSep = regexp.MustCompile("^((#|0)+,)+(#|0)+(;|$)") // 123,456,789
-	intPar = regexp.MustCompile("^(#|0|,)*_\\);") // (123,456,789)
-	finance = regexp.MustCompile("^0+\\.(0+)$") // 1.23
-	decimal = regexp.MustCompile("^((#|0)+,)+(#|0)+\\.(0+).*(;|$)") // 1.234
-	decJust = regexp.MustCompile("^(_|-| )+\\* #+,#+0\\.(0+).*;") // 1.234 with justified horizontal alignment
-	decPar = regexp.MustCompile("^((#|0)+,)+(#|0)+\\.((#|0)+)_\\).*;")  // (1.234)
-	percent = regexp.MustCompile("^(#|0)+\\.((#|0)+)%$") // 12.34%
-	intCur = regexp.MustCompile("\\[\\$\\$-.+\\](\\* )?(#|0)+,(#|0)+;") // $1,234
-	cur = regexp.MustCompile("\\[\\$\\$-.+\\](\\* )?(#|0)+,(#|0)+\\.((#|0|-)+).*;") // $1,234.56
-	curLabel = regexp.MustCompile("^((#|0)+,)+(#|0)+(\\.((#|0|-)+))?.+\\[\\$.+\\].*;") // 1,234.56 USD
-	mdy = regexp.MustCompile("^M+(/| |,|\"|" + bs + bs + ")+D+(/| |,|\"|" + bs + bs + ")+Y+$") // 01/21/2019
+	integer = regexp.MustCompile(`^0+$`)                                                           // 12345
+	intSep = regexp.MustCompile("^((#|0)+,)+(#|0)+(;|$)")                                          // 123,456,789
+	intPar = regexp.MustCompile("^(#|0|,)*_\\);")                                                  // (123,456,789)
+	finance = regexp.MustCompile("^0+\\.(0+)$")                                                    // 1.23
+	decimal = regexp.MustCompile("^((#|0)+,)+(#|0)+\\.(0+).*(;|$)")                                // 1.234
+	decJust = regexp.MustCompile("^(_|-| )+\\* #+,#+0\\.(0+).*;")                                  // 1.234 with justified horizontal alignment
+	decPar = regexp.MustCompile("^((#|0)+,)+(#|0)+\\.((#|0)+)_\\).*;")                             // (1.234)
+	percent = regexp.MustCompile("^(#|0)+\\.((#|0)+)%$")                                           // 12.34%
+	intCur = regexp.MustCompile("\\[\\$\\$-.+\\](\\* )?(#|0)+,(#|0)+;")                            // $1,234
+	cur = regexp.MustCompile("\\[\\$\\$-.+\\](\\* )?(#|0)+,(#|0)+\\.((#|0|-)+).*;")                // $1,234.56
+	curLabel = regexp.MustCompile("^((#|0)+,)+(#|0)+(\\.((#|0|-)+))?.+\\[\\$.+\\].*;")             // 1,234.56 USD
+	mdy = regexp.MustCompile("^M+(/| |,|\"|" + bs + bs + ")+D+(/| |,|\"|" + bs + bs + ")+Y+$")     // 01/21/2019
 	dmy = regexp.MustCompile("^D+(/| |\\.|\"|" + bs + bs + ")+M+(/| |\\.|\"|" + bs + bs + ")+Y+$") // 21. Jan. 2019
-	sci = regexp.MustCompile("^(#|0)+\\.((#|0)*)E\\+(#|0)+(;|$)") // 1.02E+002
-	par = regexp.MustCompile("^.*_\\).*;") // (anything in parentheses)
+	sci = regexp.MustCompile("^(#|0)+\\.((#|0)*)E\\+(#|0)+(;|$)")                                  // 1.02E+002
+	par = regexp.MustCompile("^.*_\\).*;")                                                         // (anything in parentheses)
 }
 
 // NA is an implementation of the Excel NA() function that just returns the #N/A! error.
@@ -87,7 +87,7 @@ func Cell(ctx Context, ev Evaluator, args []Result) Result {
 		if err != nil {
 			return MakeErrorResult("Incorrect reference: " + refStr)
 		}
-		address := "$"+cr.Column+"$"+strconv.Itoa(int(cr.RowIdx))
+		address := "$" + cr.Column + "$" + strconv.Itoa(int(cr.RowIdx))
 		if cr.SheetName != "" {
 			address = cr.SheetName + "!" + address
 		}
@@ -97,7 +97,7 @@ func Cell(ctx Context, ev Evaluator, args []Result) Result {
 		if err != nil {
 			return MakeErrorResult("Incorrect reference: " + refStr)
 		}
-		return MakeNumberResult(float64(cr.ColumnIdx+1))
+		return MakeNumberResult(float64(cr.ColumnIdx + 1))
 	case "color":
 		red := strings.Contains(ctx.GetFormat(refStr), "[RED]")
 		return MakeBoolResult(red)
@@ -198,7 +198,7 @@ func Cell(ctx Context, ev Evaluator, args []Result) Result {
 			return MakeNumberResult(ctx.Sheet(cr.SheetName).GetWidth(int(cr.ColumnIdx)))
 		}
 	}
-	return MakeErrorResult("Incorrect first argument of CELL: "+typ.ValueString)
+	return MakeErrorResult("Incorrect first argument of CELL: " + typ.ValueString)
 }
 
 func itemFromEndLength(submatch []string, additionalShift int) string {
@@ -240,7 +240,7 @@ func IsEven(args []Result) Result {
 	if args[0].Type != ResultTypeNumber {
 		return MakeErrorResult("ISEVEN accepts a numeric argument")
 	}
-	value:= int(args[0].ValueNumber)
+	value := int(args[0].ValueNumber)
 
 	return MakeBoolResult(value == value/2*2)
 }
@@ -339,7 +339,7 @@ func IsOdd(args []Result) Result {
 	if args[0].Type != ResultTypeNumber {
 		return MakeErrorResult("ISODD accepts a numeric argument")
 	}
-	value:= int(args[0].ValueNumber)
+	value := int(args[0].ValueNumber)
 
 	return MakeBoolResult(value != value/2*2)
 }

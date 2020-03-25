@@ -11,8 +11,8 @@ import "sync"
 
 // evCache is a struct with collection of caching methods intended for add cache support to evaluators.
 type evCache struct {
-	cache map[string]Result 
-	lock *sync.Mutex
+	cache map[string]Result
+	lock  *sync.Mutex
 }
 
 func newEvCache() evCache {

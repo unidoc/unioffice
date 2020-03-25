@@ -22,7 +22,7 @@ import (
 // Input is an input formula string.
 // Expected is the expected output of the formula as a string of format: "value type". It depends on Input and workbook that is being worked with.
 type testStruct struct {
-	Input string
+	Input    string
 	Expected string
 }
 
@@ -96,7 +96,7 @@ func TestCell(t *testing.T) {
 
 	// cells with number, needed for testing different formats
 	for i := 1; i <= 25; i++ {
-		sheet.Cell("A"+strconv.Itoa(i)).SetNumber(-12345.6789)
+		sheet.Cell("A" + strconv.Itoa(i)).SetNumber(-12345.6789)
 	}
 
 	// cells with string values, needed for testing different alignments
@@ -365,7 +365,6 @@ func TestCountIfs(t *testing.T) {
 	sheet.Cell("A9").SetNumber(1)
 	sheet.Cell("B9").SetNumber(2)
 	sheet.Cell("B10").SetNumber(1)
-
 
 	ctx := sheet.FormulaContext()
 
@@ -1354,14 +1353,14 @@ func TestDuration(t *testing.T) {
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
-	sheet.Cell("A1").SetTime(time.Date(2018, time.July, 1, 0, 0, 0, 0, time.UTC)) // settlement date
+	sheet.Cell("A1").SetTime(time.Date(2018, time.July, 1, 0, 0, 0, 0, time.UTC))    // settlement date
 	sheet.Cell("A2").SetTime(time.Date(2048, time.January, 1, 0, 0, 0, 0, time.UTC)) // maturity date
-	sheet.Cell("A3").SetNumber(0.08) // coupon rate
-	sheet.Cell("A4").SetNumber(0.09) // yield rate
-	sheet.Cell("A5").SetNumber(2) // frequency of payments
-	sheet.Cell("A6").SetNumber(0) // basis
-	sheet.Cell("A7").SetString("07/01/2018") // settlement date in string format
-	sheet.Cell("A8").SetString("01/01/2048") // maturity date in string format
+	sheet.Cell("A3").SetNumber(0.08)                                                 // coupon rate
+	sheet.Cell("A4").SetNumber(0.09)                                                 // yield rate
+	sheet.Cell("A5").SetNumber(2)                                                    // frequency of payments
+	sheet.Cell("A6").SetNumber(0)                                                    // basis
+	sheet.Cell("A7").SetString("07/01/2018")                                         // settlement date in string format
+	sheet.Cell("A8").SetString("01/01/2048")                                         // maturity date in string format
 
 	td := []testStruct{
 		{`=DURATION(A1,A2,A3,A4,A5)`, `10.9191452815 ResultTypeNumber`},
@@ -1382,12 +1381,12 @@ func TestMduration(t *testing.T) {
 
 	sheet.Cell("A1").SetTime(time.Date(2008, time.January, 1, 0, 0, 0, 0, time.UTC)) // settlement date
 	sheet.Cell("A2").SetTime(time.Date(2016, time.January, 1, 0, 0, 0, 0, time.UTC)) // maturity date
-	sheet.Cell("A3").SetNumber(0.08) // coupon rate
-	sheet.Cell("A4").SetNumber(0.09) // yield rate
-	sheet.Cell("A5").SetNumber(2) // frequency of payments
-	sheet.Cell("A6").SetNumber(0) // basis
-	sheet.Cell("A7").SetString("01/01/2008") // settlement date in string format
-	sheet.Cell("A8").SetString("01/01/2016") // maturity date in string format
+	sheet.Cell("A3").SetNumber(0.08)                                                 // coupon rate
+	sheet.Cell("A4").SetNumber(0.09)                                                 // yield rate
+	sheet.Cell("A5").SetNumber(2)                                                    // frequency of payments
+	sheet.Cell("A6").SetNumber(0)                                                    // basis
+	sheet.Cell("A7").SetString("01/01/2008")                                         // settlement date in string format
+	sheet.Cell("A8").SetString("01/01/2016")                                         // maturity date in string format
 
 	td := []testStruct{
 		{`=MDURATION(A1,A2,A3,A4,A5)`, `5.73566981391 ResultTypeNumber`},

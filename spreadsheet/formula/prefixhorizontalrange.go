@@ -17,7 +17,7 @@ import (
 
 // PrefixHorizontalRange is a range expression that when evaluated returns a list of Results from references like Sheet1!1:4 (all cells from rows 1 to 4 of sheet 'Sheet1').
 type PrefixHorizontalRange struct {
-	pfx Expression
+	pfx            Expression
 	rowFrom, rowTo int
 }
 

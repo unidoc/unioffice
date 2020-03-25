@@ -237,7 +237,8 @@ func (wb *Workbook) CopySheet(ind int, copiedSheetName string) (Sheet, error) {
 		wb.comments = append(wb.comments, &copiedComments)
 	}
 
-	return Sheet{wb, &copiedSheet, &copiedWs}, nil
+	sheet := Sheet{wb, &copiedSheet, &copiedWs}
+	return sheet, nil
 }
 
 // CopySheetByName copies the existing sheet with the name `name` and puts its copy with the name `copiedSheetName`.
@@ -438,7 +439,8 @@ func (wb *Workbook) Sheets() []Sheet {
 	ret := []Sheet{}
 	for i, wks := range wb.xws {
 		r := wb.x.Sheets.Sheet[i]
-		ret = append(ret, Sheet{wb, r, wks})
+		sheet := Sheet{wb, r, wks}
+		ret = append(ret, sheet)
 	}
 	return ret
 }

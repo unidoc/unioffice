@@ -9,10 +9,10 @@ package spreadsheet
 
 import (
 	"fmt"
-	"time"
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/unidoc/unioffice/spreadsheet/formula"
 	"github.com/unidoc/unioffice/spreadsheet/reference"
@@ -210,7 +210,7 @@ func (e *evalContext) LastColumn(rowFrom, rowTo int) string {
 			max = l
 		}
 	}
-	return reference.IndexToColumn(uint32(max-1))
+	return reference.IndexToColumn(uint32(max - 1))
 }
 
 // LastRow returns the name of last row which contains data in range of context sheet's given columns.
@@ -220,7 +220,7 @@ func (e *evalContext) LastRow(col string) int {
 	max := 1
 	for _, r := range sheet.x.SheetData.Row {
 		if r.RAttr != nil {
-			row := Row{sheet.w, sheet.x, r}
+			row := Row{sheet.w, sheet, r}
 			l := len(row.Cells())
 			if l > colIdx {
 				max = int(row.RowNumber())

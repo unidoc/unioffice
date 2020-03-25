@@ -11,9 +11,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/unidoc/unioffice/internal/mergesort"
 	"github.com/unidoc/unioffice/internal/wildcard"
 	"github.com/unidoc/unioffice/spreadsheet/reference"
-	"github.com/unidoc/unioffice/internal/mergesort"
 )
 
 func init() {
@@ -63,7 +63,7 @@ func Column(args []Result) Result {
 	if err != nil {
 		return MakeErrorResult("Incorrect reference: " + ref.Value)
 	}
-	return MakeNumberResult(float64(cr.ColumnIdx+1))
+	return MakeNumberResult(float64(cr.ColumnIdx + 1))
 }
 
 // Columns implements the Excel COLUMNS function.
@@ -226,13 +226,13 @@ func Match(args []Result) Result {
 	case 0:
 		for i, value := range values {
 			if compareForMatch(value, criteria) {
-				return MakeNumberResult(float64(i+1))
+				return MakeNumberResult(float64(i + 1))
 			}
 		}
 	case -1:
 		for i := 0; i < len(values); i++ {
 			if compareForMatch(values[i], criteria) {
-				return MakeNumberResult(float64(i+1))
+				return MakeNumberResult(float64(i + 1))
 			}
 			if criteria.isNumber && (values[i].ValueNumber < criteria.cNum) {
 				if i == 0 {
@@ -244,7 +244,7 @@ func Match(args []Result) Result {
 	case 1:
 		for i := 0; i < len(values); i++ {
 			if compareForMatch(values[i], criteria) {
-				return MakeNumberResult(float64(i+1))
+				return MakeNumberResult(float64(i + 1))
 			}
 			if criteria.isNumber && (values[i].ValueNumber > criteria.cNum) {
 				if i == 0 {
@@ -738,11 +738,11 @@ func kth(args []Result, large bool) Result {
 	}
 	kfloat := args[1].ValueNumber
 	if kfloat < 1 {
-		return MakeErrorResultType(ErrorTypeNum, funcName + " requires second argument of type number more than 0")
+		return MakeErrorResultType(ErrorTypeNum, funcName+" requires second argument of type number more than 0")
 	}
 	k := int(kfloat)
 	if float64(k) != kfloat {
-		return MakeErrorResultType(ErrorTypeNum, funcName + " requires second argument of type number more than 0")
+		return MakeErrorResultType(ErrorTypeNum, funcName+" requires second argument of type number more than 0")
 	}
 	unsorted := []float64{}
 	for _, row := range arr {
@@ -753,12 +753,12 @@ func kth(args []Result, large bool) Result {
 		}
 	}
 	if k > len(unsorted) {
-		return MakeErrorResultType(ErrorTypeNum, funcName + " requires second argument of type number less or equal than the number of numbers in the array")
+		return MakeErrorResultType(ErrorTypeNum, funcName+" requires second argument of type number less or equal than the number of numbers in the array")
 	}
 	sorted := mergesort.MergeSort(unsorted)
 	if large {
-		return MakeNumberResult(sorted[len(sorted) - k])
+		return MakeNumberResult(sorted[len(sorted)-k])
 	} else {
-		return MakeNumberResult(sorted[k - 1])
+		return MakeNumberResult(sorted[k-1])
 	}
 }

@@ -12,8 +12,8 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"path/filepath"
 	"os"
+	"path/filepath"
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/zippkg"

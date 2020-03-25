@@ -31,6 +31,22 @@ type Sheet struct {
 	x   *sml.Worksheet
 }
 
+// MaxColumnIdx returns the max used column of the sheet.
+func (s Sheet) MaxColumnIdx() uint32 {
+	maxColumnIdx := uint32(0)
+	for _, r := range s.Rows() {
+		cells := r.x.C
+		if len(cells) > 0 {
+			lastCell := cells[len(cells)-1]
+			ref, _ := reference.ParseCellReference(*lastCell.RAttr)
+			if maxColumnIdx < ref.ColumnIdx {
+				maxColumnIdx = ref.ColumnIdx
+			}
+		}
+	}
+	return maxColumnIdx
+}
+
 func (s Sheet) IsValid() bool {
 	return s.x != nil
 }
@@ -42,11 +58,11 @@ func (s Sheet) X() *sml.Worksheet {
 
 // Row will return a row with a given row number, creating a new row if
 // necessary.
-func (s Sheet) Row(rowNum uint32) Row {
+func (s *Sheet) Row(rowNum uint32) Row {
 	// see if the row exists
 	for _, r := range s.x.SheetData.Row {
 		if r.RAttr != nil && *r.RAttr == rowNum {
-			return Row{s.w, s.x, r}
+			return Row{s.w, s, r}
 		}
 	}
 	// create a new row
@@ -54,7 +70,7 @@ func (s Sheet) Row(rowNum uint32) Row {
 }
 
 // Cell creates or returns a cell given a cell reference of the form 'A10'
-func (s Sheet) Cell(cellRef string) Cell {
+func (s *Sheet) Cell(cellRef string) Cell {
 	cref, err := reference.ParseCellReference(cellRef)
 	if err != nil {
 		unioffice.Log("error parsing cell reference: %s", err)
@@ -66,7 +82,7 @@ func (s Sheet) Cell(cellRef string) Cell {
 // AddNumberedRow adds a row with a given row number.  If you reuse a row number
 // the resulting file will fail validation and fail to open in Office programs. Use
 // Row instead which creates a new row or returns an existing row.
-func (s Sheet) AddNumberedRow(rowNum uint32) Row {
+func (s *Sheet) AddNumberedRow(rowNum uint32) Row {
 	r := sml.NewCT_Row()
 	r.RAttr = unioffice.Uint32(rowNum)
 	s.x.SheetData.Row = append(s.x.SheetData.Row, r)
@@ -84,22 +100,22 @@ func (s Sheet) AddNumberedRow(rowNum uint32) Row {
 		return *l < *r
 	})
 
-	return Row{s.w, s.x, r}
+	return Row{s.w, s, r}
 }
 
 // addNumberedRowFast is a fast path that can be used when adding consecutive
 // rows and not skipping any.
-func (s Sheet) addNumberedRowFast(rowNum uint32) Row {
+func (s *Sheet) addNumberedRowFast(rowNum uint32) Row {
 	r := sml.NewCT_Row()
 	r.RAttr = unioffice.Uint32(rowNum)
 	s.x.SheetData.Row = append(s.x.SheetData.Row, r)
-	return Row{s.w, s.x, r}
+	return Row{s.w, s, r}
 }
 
 // AddRow adds a new row to a sheet.  You can mix this with numbered rows,
 // however it will get confusing. You should prefer to use either automatically
 // numbered rows with AddRow or manually numbered rows with Row/AddNumberedRow
-func (s Sheet) AddRow() Row {
+func (s *Sheet) AddRow() Row {
 	maxRowID := uint32(0)
 
 	numRows := uint32(len(s.x.SheetData.Row))
@@ -120,7 +136,7 @@ func (s Sheet) AddRow() Row {
 
 // InsertRow inserts a new row into a spreadsheet at a particular row number.  This
 // row will now be the row number specified, and any rows after it will be renumbed.
-func (s Sheet) InsertRow(rowNum int) Row {
+func (s *Sheet) InsertRow(rowNum int) Row {
 	rIdx := uint32(rowNum)
 
 	// Renumber every row after the row we're inserting
@@ -166,7 +182,7 @@ func (s Sheet) Name() string {
 }
 
 // SetName sets the sheet name.
-func (s Sheet) SetName(name string) {
+func (s *Sheet) SetName(name string) {
 	s.cts.NameAttr = name
 }
 
@@ -182,7 +198,7 @@ func (s Sheet) Validate() error {
 			return err
 		}
 	}
-	if err := s.cts.Validate(); err != nil {
+	if err := s.x.Validate(); err != nil {
 		return err
 	}
 	return s.x.Validate()
@@ -249,21 +265,21 @@ func (s Sheet) validateMergedCells() error {
 // ValidateWithPath validates the sheet passing path informaton for a better
 // error message
 func (s Sheet) ValidateWithPath(path string) error {
-	return s.cts.ValidateWithPath(path)
+	return s.x.ValidateWithPath(path)
 }
 
 // Rows returns all of the rows in a sheet.
-func (s Sheet) Rows() []Row {
+func (s *Sheet) Rows() []Row {
 	ret := []Row{}
 	for _, r := range s.x.SheetData.Row {
-		ret = append(ret, Row{s.w, s.x, r})
+		ret = append(ret, Row{s.w, s, r})
 	}
 	return ret
 }
 
 // SetDrawing sets the worksheet drawing.  A worksheet can have a reference to a
 // single drawing, but the drawing can have many charts.
-func (s Sheet) SetDrawing(d Drawing) {
+func (s *Sheet) SetDrawing(d Drawing) {
 	var rel common.Relationships
 	for i, wks := range s.w.xws {
 		if wks == s.x {
@@ -288,7 +304,7 @@ func (s Sheet) SetDrawing(d Drawing) {
 // AddHyperlink adds a hyperlink to a sheet. Adding the hyperlink to the sheet
 // and setting it on a cell is more efficient than setting hyperlinks directly
 // on a cell.
-func (s Sheet) AddHyperlink(url string) common.Hyperlink {
+func (s *Sheet) AddHyperlink(url string) common.Hyperlink {
 	// store the relationships so we don't need to do a lookup here?
 	for i, ws := range s.w.xws {
 		if ws == s.x {
@@ -318,7 +334,7 @@ func (s Sheet) RangeReference(n string) string {
 const autoFilterName = "_xlnm._FilterDatabase"
 
 // ClearAutoFilter removes the autofilters from the sheet.
-func (s Sheet) ClearAutoFilter() {
+func (s *Sheet) ClearAutoFilter() {
 	s.x.AutoFilter = nil
 	sn := "'" + s.Name() + "'!"
 	// see if we have a defined auto filter name for the sheet
@@ -336,7 +352,7 @@ func (s Sheet) ClearAutoFilter() {
 // filters that are common for a header row.  The RangeRef should be of the form
 // "A1:C5" and cover the entire range of cells to be filtered, not just the
 // header. SetAutoFilter replaces any existing auto filter on the sheet.
-func (s Sheet) SetAutoFilter(rangeRef string) {
+func (s *Sheet) SetAutoFilter(rangeRef string) {
 	// this should have no $ in it
 	rangeRef = strings.Replace(rangeRef, "$", "", -1)
 
@@ -369,7 +385,7 @@ func (s Sheet) SetAutoFilter(rangeRef string) {
 }
 
 // AddMergedCells merges cells within a sheet.
-func (s Sheet) AddMergedCells(fromRef, toRef string) MergedCell {
+func (s *Sheet) AddMergedCells(fromRef, toRef string) MergedCell {
 	// TODO: we might need to actually create the merged cells if they don't
 	// exist, but it appears to work fine on both Excel and LibreOffice just
 	// creating the merged region
@@ -383,24 +399,24 @@ func (s Sheet) AddMergedCells(fromRef, toRef string) MergedCell {
 
 	s.x.MergeCells.MergeCell = append(s.x.MergeCells.MergeCell, merge)
 	s.x.MergeCells.CountAttr = unioffice.Uint32(uint32(len(s.x.MergeCells.MergeCell)))
-	return MergedCell{s.w, s.x, merge}
+	return MergedCell{s.w, s, merge}
 }
 
 // MergedCells returns the merged cell regions within the sheet.
-func (s Sheet) MergedCells() []MergedCell {
+func (s *Sheet) MergedCells() []MergedCell {
 	if s.x.MergeCells == nil {
 		return nil
 	}
 	ret := []MergedCell{}
 	for _, c := range s.x.MergeCells.MergeCell {
-		ret = append(ret, MergedCell{s.w, s.x, c})
+		ret = append(ret, MergedCell{s.w, s, c})
 	}
 	return ret
 }
 
 // RemoveMergedCell removes merging from a cell range within a sheet.  The cells
 // that made up the merged cell remain, but are no lon merged.
-func (s Sheet) RemoveMergedCell(mc MergedCell) {
+func (s *Sheet) RemoveMergedCell(mc MergedCell) {
 	for i, c := range s.x.MergeCells.MergeCell {
 		if c == mc.X() {
 			copy(s.x.MergeCells.MergeCell[i:], s.x.MergeCells.MergeCell[i+1:])
@@ -443,7 +459,7 @@ func (s Sheet) Extents() string {
 }
 
 // AddConditionalFormatting adds conditional formatting to the sheet.
-func (s Sheet) AddConditionalFormatting(cellRanges []string) ConditionalFormatting {
+func (s *Sheet) AddConditionalFormatting(cellRanges []string) ConditionalFormatting {
 	cfmt := sml.NewCT_ConditionalFormatting()
 	s.x.ConditionalFormatting = append(s.x.ConditionalFormatting, cfmt)
 
@@ -460,7 +476,7 @@ func (s Sheet) AddConditionalFormatting(cellRanges []string) ConditionalFormatti
 // can span multiple column indices, this method will return the column that
 // applies to a column index if it exists or create a new column that only
 // applies to the index passed in otherwise.
-func (s Sheet) Column(idx uint32) Column {
+func (s *Sheet) Column(idx uint32) Column {
 	// scan for any existing column that covers this index
 	for _, colSet := range s.x.Cols {
 		for _, col := range colSet.Col {
@@ -487,7 +503,7 @@ func (s Sheet) Column(idx uint32) Column {
 }
 
 // Comments returns the comments for a sheet.
-func (s Sheet) Comments() Comments {
+func (s *Sheet) Comments() Comments {
 	for i, wks := range s.w.xws {
 		if wks == s.x {
 			if s.w.comments[i] == nil {
@@ -518,7 +534,7 @@ func (s Sheet) Comments() Comments {
 // the cells on the top,left,right,bottom and four corners.  This function
 // breaks apart a single border into its components and applies it to cells as
 // needed to give the effect of a border applying to multiple cells.
-func (s Sheet) SetBorder(cellRange string, border Border) error {
+func (s *Sheet) SetBorder(cellRange string, border Border) error {
 	from, to, err := reference.ParseRangeReference(cellRange)
 	if err != nil {
 		return err
@@ -605,7 +621,7 @@ func (s Sheet) SetBorder(cellRange string, border Border) error {
 }
 
 // AddDataValidation adds a data validation rule to a sheet.
-func (s Sheet) AddDataValidation() DataValidation {
+func (s *Sheet) AddDataValidation() DataValidation {
 	if s.x.DataValidations == nil {
 		s.x.DataValidations = sml.NewCT_DataValidations()
 	}
@@ -724,7 +740,7 @@ func (s *Sheet) setArray(origin string, arr formula.Result) error {
 		sr := s.Row(cref.RowIdx + uint32(ir))
 		for ic, val := range row {
 			cell := sr.Cell(reference.IndexToColumn(cref.ColumnIdx + uint32(ic)))
-			if val.Type != formula.ResultTypeEmpty  {
+			if val.Type != formula.ResultTypeEmpty {
 				if val.IsBoolean {
 					cell.SetBool(val.ValueNumber != 0)
 				} else {
@@ -747,7 +763,7 @@ func (s *Sheet) setList(origin string, list formula.Result) error {
 	sr := s.Row(cref.RowIdx)
 	for ic, val := range list.ValueList {
 		cell := sr.Cell(reference.IndexToColumn(cref.ColumnIdx + uint32(ic)))
-		if val.Type != formula.ResultTypeEmpty  {
+		if val.Type != formula.ResultTypeEmpty {
 			if val.IsBoolean {
 				cell.SetBool(val.ValueNumber != 0)
 			} else {
@@ -860,8 +876,8 @@ func (s *Sheet) Sort(column string, firstRow uint32, order SortOrder) {
 	cmp := Comparer{Order: order}
 	sort.Slice(sheetData, func(i, j int) bool {
 		return cmp.LessRows(column,
-			Row{s.w, s.x, sheetData[i]},
-			Row{s.w, s.x, sheetData[j]})
+			Row{s.w, s, sheetData[i]},
+			Row{s.w, s, sheetData[j]})
 	})
 
 	// since we probably moved some rows, we need to go and fix up their row
@@ -928,8 +944,8 @@ func (s *Sheet) RemoveColumn(column string) error {
 func (s *Sheet) updateAfterRemove(columnIdx uint32, updateType update.UpdateAction) error {
 	ownSheetName := s.Name()
 	q := &update.UpdateQuery{
-		UpdateType: updateType,
-		ColumnIdx: columnIdx,
+		UpdateType:    updateType,
+		ColumnIdx:     columnIdx,
 		SheetToUpdate: ownSheetName,
 	}
 	for _, sheet := range s.w.Sheets() {
@@ -1017,11 +1033,11 @@ func (s *Sheet) removeColumnFromNamedRanges(columnIdx uint32) error {
 				}
 			}
 		}
-		sheetTables := s.w.tables[startFromTable:startFromTable + numTables]
+		sheetTables := s.w.tables[startFromTable : startFromTable+numTables]
 		for tblIndex, tbl := range sheetTables {
 			newTable := tbl
 			newTable.RefAttr = moveRangeLeft(newTable.RefAttr, columnIdx, false)
-			s.w.tables[startFromTable + tblIndex] = newTable
+			s.w.tables[startFromTable+tblIndex] = newTable
 		}
 	}
 	return nil

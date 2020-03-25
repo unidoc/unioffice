@@ -16,7 +16,7 @@ import (
 
 // PrefixVerticalRange is a range expression that when evaluated returns a list of Results from references like Sheet1!AA:IJ (all cells from columns AA to IJ of sheet 'Sheet1').
 type PrefixVerticalRange struct {
-	pfx Expression
+	pfx            Expression
 	colFrom, colTo string
 }
 

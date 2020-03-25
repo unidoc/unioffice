@@ -26,10 +26,10 @@ const iso8601Format = "2006-01-02T15:04:05Z07:00"
 
 // Cell is a single cell within a sheet.
 type Cell struct {
-	w *Workbook
-	s *sml.Worksheet
-	r *sml.CT_Row
-	x *sml.CT_Cell
+	w     *Workbook
+	sheet *Sheet
+	r     *sml.CT_Row
+	x     *sml.CT_Cell
 }
 
 // X returns the inner wrapped XML type.
@@ -110,8 +110,8 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 	}
 
 	sid := uint32(0)
-	for _, r := range c.s.SheetData.Row {
-		for _, c := range r.C {
+	for _, r := range c.sheet.Rows() {
+		for _, c := range r.x.C {
 			if c.F != nil && c.F.SiAttr != nil && *c.F.SiAttr >= sid {
 				sid = *c.F.SiAttr
 			}
@@ -122,7 +122,7 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 	ref := fmt.Sprintf("%s%d:%s%d", cref.Column, cref.RowIdx, reference.IndexToColumn(cref.ColumnIdx+cols), cref.RowIdx+rows)
 	c.x.F.RefAttr = unioffice.String(ref)
 	c.x.F.SiAttr = unioffice.Uint32(sid)
-	sheet := Sheet{c.w, nil, c.s}
+	sheet := Sheet{c.w, c.sheet.cts, c.sheet.x}
 	for row := cref.RowIdx; row <= cref.RowIdx+rows; row++ {
 		for col := cref.ColumnIdx; col <= cref.ColumnIdx+cols; col++ {
 			if row == cref.RowIdx && col == cref.ColumnIdx {
@@ -200,11 +200,16 @@ func (c Cell) getLabelPrefix() string {
 	sid := *c.x.SAttr
 	cs := c.w.StyleSheet.GetCellStyle(sid)
 	switch cs.xf.Alignment.HorizontalAttr {
-	case sml.ST_HorizontalAlignmentLeft: return "'"
-	case sml.ST_HorizontalAlignmentRight: return "\""
-	case sml.ST_HorizontalAlignmentCenter: return "^"
-	case sml.ST_HorizontalAlignmentFill: return "\\"
-	default: return ""
+	case sml.ST_HorizontalAlignmentLeft:
+		return "'"
+	case sml.ST_HorizontalAlignmentRight:
+		return "\""
+	case sml.ST_HorizontalAlignmentCenter:
+		return "^"
+	case sml.ST_HorizontalAlignmentFill:
+		return "\\"
+	default:
+		return ""
 	}
 }
 
@@ -504,22 +509,23 @@ func (c Cell) GetRawValue() (string, error) {
 
 // SetHyperlink sets a hyperlink on a cell.
 func (c Cell) SetHyperlink(hl common.Hyperlink) {
-	if c.s.Hyperlinks == nil {
-		c.s.Hyperlinks = sml.NewCT_Hyperlinks()
+	ws := c.sheet.x
+	if ws.Hyperlinks == nil {
+		ws.Hyperlinks = sml.NewCT_Hyperlinks()
 	}
 	rel := common.Relationship(hl)
 
 	hle := sml.NewCT_Hyperlink()
 	hle.RefAttr = c.Reference()
 	hle.IdAttr = unioffice.String(rel.ID())
-	c.s.Hyperlinks.Hyperlink = append(c.s.Hyperlinks.Hyperlink, hle)
+	ws.Hyperlinks.Hyperlink = append(ws.Hyperlinks.Hyperlink, hle)
 }
 
 // AddHyperlink creates and sets a hyperlink on a cell.
 func (c Cell) AddHyperlink(url string) {
 	// store the relationships so we don't need to do a lookup here?
 	for i, ws := range c.w.xws {
-		if ws == c.s {
+		if ws == c.sheet.x {
 			// add a hyperlink relationship in the worksheet relationships file
 			c.SetHyperlink(c.w.xwsRels[i].AddHyperlink(url))
 			return

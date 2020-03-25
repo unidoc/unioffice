@@ -14,9 +14,9 @@ import (
 )
 
 type MergedCell struct {
-	wb *Workbook
-	ws *sml.Worksheet
-	x  *sml.CT_MergeCell
+	wb    *Workbook
+	sheet *Sheet
+	x     *sml.CT_MergeCell
 }
 
 // X returns the inner wrapped XML type.
@@ -39,7 +39,7 @@ func (s MergedCell) Cell() Cell {
 	ref := s.Reference()
 	if idx := strings.Index(s.Reference(), ":"); idx != -1 {
 		ref = ref[0:idx]
-		return Sheet{w: s.wb, x: s.ws}.Cell(ref)
+		return s.sheet.Cell(ref)
 	}
 	// couldn't find it, log an error?
 	return Cell{}

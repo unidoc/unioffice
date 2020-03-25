@@ -9,6 +9,7 @@ package formula
 
 import (
 	"bytes"
+
 	"github.com/unidoc/unioffice/spreadsheet/update"
 )
 
