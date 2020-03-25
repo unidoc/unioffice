@@ -99,7 +99,7 @@ func (wb *Workbook) AddSheet() Sheet {
 	wb.ContentTypes.AddOverride(unioffice.AbsoluteFilename(dt, unioffice.WorksheetContentType, len(wb.x.Sheets.Sheet)),
 		unioffice.WorksheetContentType)
 
-	return Sheet{wb, rs, ws, 0}
+	return Sheet{wb, rs, ws}
 }
 
 var sstAbsTargetAttr = unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.SharedStringsType, 0)
@@ -237,8 +237,7 @@ func (wb *Workbook) CopySheet(ind int, copiedSheetName string) (Sheet, error) {
 		wb.comments = append(wb.comments, &copiedComments)
 	}
 
-	sheet := Sheet{wb, &copiedSheet, &copiedWs, 0}
-	sheet.findAndSetMaxColumn()
+	sheet := Sheet{wb, &copiedSheet, &copiedWs}
 	return sheet, nil
 }
 
@@ -337,7 +336,7 @@ func (wb *Workbook) Save(w io.Writer) error {
 	}
 	for i, sheet := range wb.xws {
 		// recalculate sheet dimensions
-		sheet.Dimension.RefAttr = Sheet{wb, nil, sheet, 0}.Extents()
+		sheet.Dimension.RefAttr = Sheet{wb, nil, sheet}.Extents()
 
 		fn := unioffice.AbsoluteFilename(dt, unioffice.WorksheetType, i+1)
 		zippkg.MarshalXML(z, fn, sheet)
@@ -419,7 +418,7 @@ func (wb *Workbook) Validate() error {
 	// Excel doesn't like reused sheet names
 	usedNames := map[string]struct{}{}
 	for i, s := range wb.x.Sheets.Sheet {
-		sw := Sheet{wb, s, wb.xws[i], 0}
+		sw := Sheet{wb, s, wb.xws[i]}
 		if _, ok := usedNames[sw.Name()]; ok {
 			return fmt.Errorf("workbook/Sheet[%d] has duplicate name '%s'", i, sw.Name())
 		}
@@ -440,8 +439,7 @@ func (wb *Workbook) Sheets() []Sheet {
 	ret := []Sheet{}
 	for i, wks := range wb.xws {
 		r := wb.x.Sheets.Sheet[i]
-		sheet := Sheet{wb, r, wks, 0}
-		sheet.findAndSetMaxColumn()
+		sheet := Sheet{wb, r, wks}
 		ret = append(ret, sheet)
 	}
 	return ret

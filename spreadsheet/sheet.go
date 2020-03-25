@@ -29,12 +29,22 @@ type Sheet struct {
 	w   *Workbook
 	cts *sml.CT_Sheet
 	x   *sml.Worksheet
-	maxColumnIdx uint32
 }
 
 // MaxColumnIdx returns the max used column of the sheet.
 func (s Sheet) MaxColumnIdx() uint32 {
-	return s.maxColumnIdx
+	maxColumnIdx := uint32(0)
+	for _, r := range s.Rows() {
+		cells := r.x.C
+		if len(cells) > 0 {
+			lastCell := cells[len(cells) - 1]
+			ref, _ := reference.ParseCellReference(*lastCell.RAttr)
+			if maxColumnIdx < ref.ColumnIdx {
+				maxColumnIdx = ref.ColumnIdx
+			}
+		}
+	}
+	return maxColumnIdx
 }
 
 func (s Sheet) IsValid() bool {
@@ -1132,25 +1142,4 @@ func (s *Sheet) getAllCellsInFormulaArrays(isRow bool) (map[string]bool, error) 
 		}
 	}
 	return cellsInFormulaArrays, nil
-}
-
-func (s *Sheet) setMaxColumn(columnIdx uint32) {
-	if s.maxColumnIdx < columnIdx {
-		s.maxColumnIdx = columnIdx
-	}
-}
-
-func (s *Sheet) findAndSetMaxColumn() {
-	maxColumnIdx := uint32(0)
-	for _, r := range s.Rows() {
-		cells := r.x.C
-		if len(cells) > 0 {
-			lastCell := cells[len(cells) - 1]
-			ref, _ := reference.ParseCellReference(*lastCell.RAttr)
-			if maxColumnIdx < ref.ColumnIdx {
-				maxColumnIdx = ref.ColumnIdx
-			}
-		}
-	}
-	s.maxColumnIdx = maxColumnIdx
 }

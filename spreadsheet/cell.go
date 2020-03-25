@@ -50,7 +50,6 @@ func (c Cell) Reference() string {
 func (c Cell) Clear() {
 	c.clearValue()
 	c.x.TAttr = sml.ST_CellTypeUnset
-	c.sheet.findAndSetMaxColumn()
 }
 
 func (c Cell) clearValue() {
@@ -66,7 +65,6 @@ func (c Cell) SetInlineString(s string) {
 	c.x.Is = sml.NewCT_Rst()
 	c.x.Is.T = unioffice.String(s)
 	c.x.TAttr = sml.ST_CellTypeInlineStr
-	setMaxColumn(c)
 }
 
 // SetRichTextString sets the cell to rich string mode and returns a struct that
@@ -75,7 +73,6 @@ func (c Cell) SetRichTextString() RichText {
 	c.clearValue()
 	c.x.Is = sml.NewCT_Rst()
 	c.x.TAttr = sml.ST_CellTypeInlineStr
-	setMaxColumn(c)
 	return RichText{c.x.Is}
 }
 
@@ -85,7 +82,6 @@ func (c Cell) SetFormulaRaw(s string) {
 	c.x.TAttr = sml.ST_CellTypeStr
 	c.x.F = sml.NewCT_CellFormula()
 	c.x.F.Content = s
-	setMaxColumn(c)
 }
 
 // SetFormulaArray sets the cell type to formula array, and the raw formula to
@@ -97,7 +93,6 @@ func (c Cell) SetFormulaArray(s string) {
 	c.x.F = sml.NewCT_CellFormula()
 	c.x.F.TAttr = sml.ST_CellFormulaTypeArray
 	c.x.F.Content = s
-	setMaxColumn(c)
 }
 
 // SetFormulaShared sets the cell type to formula shared, and the raw formula to
@@ -127,7 +122,7 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 	ref := fmt.Sprintf("%s%d:%s%d", cref.Column, cref.RowIdx, reference.IndexToColumn(cref.ColumnIdx+cols), cref.RowIdx+rows)
 	c.x.F.RefAttr = unioffice.String(ref)
 	c.x.F.SiAttr = unioffice.Uint32(sid)
-	sheet := Sheet{c.w, c.sheet.cts, c.sheet.x, 0}
+	sheet := Sheet{c.w, c.sheet.cts, c.sheet.x}
 	for row := cref.RowIdx; row <= cref.RowIdx+rows; row++ {
 		for col := cref.ColumnIdx; col <= cref.ColumnIdx+cols; col++ {
 			if row == cref.RowIdx && col == cref.ColumnIdx {
@@ -140,7 +135,6 @@ func (c Cell) SetFormulaShared(formula string, rows, cols uint32) error {
 			sheet.Cell(ref).X().F.SiAttr = unioffice.Uint32(sid)
 		}
 	}
-	c.sheet.setMaxColumn(cref.ColumnIdx + cols - 1)
 	return nil
 }
 
@@ -153,7 +147,6 @@ func (c Cell) SetString(s string) int {
 	id := c.w.SharedStrings.AddString(s)
 	c.x.V = unioffice.String(strconv.Itoa(id))
 	c.x.TAttr = sml.ST_CellTypeS
-	setMaxColumn(c)
 	return id
 }
 
@@ -164,7 +157,6 @@ func (c Cell) SetStringByID(id int) {
 	c.clearValue()
 	c.x.V = unioffice.String(strconv.Itoa(id))
 	c.x.TAttr = sml.ST_CellTypeS
-	setMaxColumn(c)
 }
 
 // SetNumber sets the cell type to number, and the value to the given number
@@ -180,7 +172,6 @@ func (c Cell) SetNumber(v float64) {
 	// cell type number
 	c.x.TAttr = sml.ST_CellTypeN
 	c.x.V = unioffice.String(strconv.FormatFloat(v, 'f', -1, 64))
-	setMaxColumn(c)
 }
 
 // Column returns the cell column
@@ -294,7 +285,6 @@ func (c Cell) GetValueAsNumber() (float64, error) {
 func (c Cell) SetNumberWithStyle(v float64, f StandardFormat) {
 	c.SetNumber(v)
 	c.SetStyle(c.w.StyleSheet.GetOrCreateStandardNumberFormat(f))
-	setMaxColumn(c)
 }
 
 // SetBool sets the cell type to boolean and the value to the given boolean
@@ -303,7 +293,6 @@ func (c Cell) SetBool(v bool) {
 	c.clearValue()
 	c.x.V = unioffice.String(strconv.Itoa(b2i(v)))
 	c.x.TAttr = sml.ST_CellTypeB
-	setMaxColumn(c)
 }
 
 // SetError sets the cell type to error and the value to the given error message.
@@ -311,7 +300,6 @@ func (c Cell) SetError(msg string) {
 	c.clearValue()
 	c.x.V = unioffice.String(msg)
 	c.x.TAttr = sml.ST_CellTypeE
-	setMaxColumn(c)
 }
 
 // GetValueAsBool retrieves the cell's value as a boolean
@@ -370,7 +358,6 @@ func (c Cell) SetTime(d time.Time) {
 	result.Quo(deltaNs, nsPerDay)
 
 	c.x.V = unioffice.String(result.Text('g', 20))
-	setMaxColumn(c)
 }
 
 // SetDate sets the cell value to a date. It's stored as the number of days past
@@ -403,7 +390,6 @@ func (c Cell) SetDate(d time.Time) {
 	hrs, _ := result.Uint64()
 
 	c.x.V = unioffice.Stringf("%d", hrs)
-	setMaxColumn(c)
 }
 
 // GetValueAsTime retrieves the cell's value as a time.  There is no difference
@@ -444,7 +430,6 @@ func (c Cell) SetDateWithStyle(d time.Time) {
 	cs := c.w.StyleSheet.AddCellStyle()
 	cs.SetNumberFormatStandard(StandardFormatDate)
 	c.SetStyle(cs)
-	setMaxColumn(c)
 }
 
 // SetStyle applies a style to the cell.  This style is referenced in the
@@ -529,7 +514,6 @@ func (c Cell) SetHyperlink(hl common.Hyperlink) {
 	hle.RefAttr = c.Reference()
 	hle.IdAttr = unioffice.String(rel.ID())
 	ws.Hyperlinks.Hyperlink = append(ws.Hyperlinks.Hyperlink, hle)
-	setMaxColumn(c)
 }
 
 // AddHyperlink creates and sets a hyperlink on a cell.
@@ -539,7 +523,6 @@ func (c Cell) AddHyperlink(url string) {
 		if ws == c.sheet.x {
 			// add a hyperlink relationship in the worksheet relationships file
 			c.SetHyperlink(c.w.xwsRels[i].AddHyperlink(url))
-			setMaxColumn(c)
 			return
 		}
 	}
@@ -607,7 +590,6 @@ func (c Cell) getRawSortValue() (string, bool) {
 // not needed but is used internally when expanding an array formula.
 func (c Cell) SetCachedFormulaResult(s string) {
 	c.x.V = &s
-	setMaxColumn(c)
 }
 
 func (c Cell) setLocked(locked bool) {
@@ -626,9 +608,4 @@ func b2i(v bool) int {
 		return 1
 	}
 	return 0
-}
-
-func setMaxColumn(c Cell) {
-	ref, _ := reference.ParseCellReference(*c.x.RAttr)
-	c.sheet.setMaxColumn(ref.ColumnIdx)
 }
