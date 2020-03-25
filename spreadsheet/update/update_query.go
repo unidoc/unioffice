@@ -10,6 +10,7 @@ package update
 
 // UpdateAction is the type for update types constants.
 type UpdateAction byte
+
 const (
 	// UpdateActionRemoveColumn means updating references after removing a column.
 	UpdateActionRemoveColumn UpdateAction = iota

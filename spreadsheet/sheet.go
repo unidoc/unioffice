@@ -37,7 +37,7 @@ func (s Sheet) MaxColumnIdx() uint32 {
 	for _, r := range s.Rows() {
 		cells := r.x.C
 		if len(cells) > 0 {
-			lastCell := cells[len(cells) - 1]
+			lastCell := cells[len(cells)-1]
 			ref, _ := reference.ParseCellReference(*lastCell.RAttr)
 			if maxColumnIdx < ref.ColumnIdx {
 				maxColumnIdx = ref.ColumnIdx
@@ -740,7 +740,7 @@ func (s *Sheet) setArray(origin string, arr formula.Result) error {
 		sr := s.Row(cref.RowIdx + uint32(ir))
 		for ic, val := range row {
 			cell := sr.Cell(reference.IndexToColumn(cref.ColumnIdx + uint32(ic)))
-			if val.Type != formula.ResultTypeEmpty  {
+			if val.Type != formula.ResultTypeEmpty {
 				if val.IsBoolean {
 					cell.SetBool(val.ValueNumber != 0)
 				} else {
@@ -763,7 +763,7 @@ func (s *Sheet) setList(origin string, list formula.Result) error {
 	sr := s.Row(cref.RowIdx)
 	for ic, val := range list.ValueList {
 		cell := sr.Cell(reference.IndexToColumn(cref.ColumnIdx + uint32(ic)))
-		if val.Type != formula.ResultTypeEmpty  {
+		if val.Type != formula.ResultTypeEmpty {
 			if val.IsBoolean {
 				cell.SetBool(val.ValueNumber != 0)
 			} else {
@@ -944,8 +944,8 @@ func (s *Sheet) RemoveColumn(column string) error {
 func (s *Sheet) updateAfterRemove(columnIdx uint32, updateType update.UpdateAction) error {
 	ownSheetName := s.Name()
 	q := &update.UpdateQuery{
-		UpdateType: updateType,
-		ColumnIdx: columnIdx,
+		UpdateType:    updateType,
+		ColumnIdx:     columnIdx,
 		SheetToUpdate: ownSheetName,
 	}
 	for _, sheet := range s.w.Sheets() {
@@ -1033,11 +1033,11 @@ func (s *Sheet) removeColumnFromNamedRanges(columnIdx uint32) error {
 				}
 			}
 		}
-		sheetTables := s.w.tables[startFromTable:startFromTable + numTables]
+		sheetTables := s.w.tables[startFromTable : startFromTable+numTables]
 		for tblIndex, tbl := range sheetTables {
 			newTable := tbl
 			newTable.RefAttr = moveRangeLeft(newTable.RefAttr, columnIdx, false)
-			s.w.tables[startFromTable + tblIndex] = newTable
+			s.w.tables[startFromTable+tblIndex] = newTable
 		}
 	}
 	return nil

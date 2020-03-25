@@ -14,9 +14,9 @@ import (
 )
 
 type MergedCell struct {
-	wb *Workbook
+	wb    *Workbook
 	sheet *Sheet
-	x  *sml.CT_MergeCell
+	x     *sml.CT_MergeCell
 }
 
 // X returns the inner wrapped XML type.

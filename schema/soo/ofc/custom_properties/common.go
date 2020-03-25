@@ -8,6 +8,7 @@
 // commercial license can be purchased via https://unidoc.io website.
 
 package custom_properties
+
 import "github.com/unidoc/unioffice"
 
 // init registers constructor functions for dynamically creating elements based off the XML namespace and name

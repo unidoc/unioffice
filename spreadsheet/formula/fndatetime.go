@@ -40,29 +40,29 @@ var daysTo1970 float64 = 25569.0
 var daysInMonth = []int{31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
 
 var month2num = map[string]int{
-	"january": 1,
-	"february": 2,
-	"march": 3,
-	"april": 4,
-	"may": 5,
-	"june": 6,
-	"july": 7,
-	"august": 8,
+	"january":   1,
+	"february":  2,
+	"march":     3,
+	"april":     4,
+	"may":       5,
+	"june":      6,
+	"july":      7,
+	"august":    8,
 	"septemper": 9,
-	"october": 10,
-	"november": 11,
-	"december": 12,
-	"jan": 1,
-	"feb": 2,
-	"mar": 3,
-	"apr": 4,
-	"jun": 6,
-	"jul": 7,
-	"aug": 8,
-	"sep": 9,
-	"oct": 10,
-	"nov": 11,
-	"dec": 12,
+	"october":   10,
+	"november":  11,
+	"december":  12,
+	"jan":       1,
+	"feb":       2,
+	"mar":       3,
+	"apr":       4,
+	"jun":       6,
+	"jul":       7,
+	"aug":       8,
+	"sep":       9,
+	"oct":       10,
+	"nov":       11,
+	"dec":       12,
 }
 
 var dateFormats = map[string]*regexp.Regexp{}
@@ -208,8 +208,8 @@ func dateFromDays(days float64) time.Time {
 	return time.Unix(0, unix)
 }
 
-func daysFromDate(y,m,d int) float64 {
-	return float64(makeDateS(y, time.Month(m), d) / 86400) + daysTo1970
+func daysFromDate(y, m, d int) float64 {
+	return float64(makeDateS(y, time.Month(m), d)/86400) + daysTo1970
 }
 
 // DateDif is an implementation of the Excel DATEDIF() function.
@@ -588,7 +588,7 @@ func Now(args []Result) Result {
 	}
 	now := time.Now()
 	_, offset := now.Zone()
-	nowS := daysTo1970 + float64(now.Unix() + int64(offset))/86400
+	nowS := daysTo1970 + float64(now.Unix()+int64(offset))/86400
 	return MakeNumberResult(nowS)
 }
 
@@ -599,12 +599,12 @@ func Today(args []Result) Result {
 	}
 	now := time.Now()
 	_, offset := now.Zone()
-	nowS := daysBetween(date1900, now.Unix() + int64(offset)) + 1
+	nowS := daysBetween(date1900, now.Unix()+int64(offset)) + 1
 	return MakeNumberResult(nowS)
 }
 
 func daysFromTime(hours, minutes, seconds float64) float64 {
-	return (hours * 3600 + minutes * 60 + seconds) / 86400
+	return (hours*3600 + minutes*60 + seconds) / 86400
 }
 
 // Time is an implementation of the Excel TIME() function.
@@ -819,17 +819,17 @@ func yearFrac(startDateF, endDateF float64, basis int) (float64, Result) {
 				ed = 30
 			}
 		}
-		dayDiff = float64((ey - sy) * 360 + (em - sm) * 30 + (ed - sd))
+		dayDiff = float64((ey-sy)*360 + (em-sm)*30 + (ed - sd))
 		daysInYear = 360
 	case 1:
 		dayDiff = endDateF - startDateF
 		isYearDifferent := sy != ey
-		if isYearDifferent && (ey != sy + 1 || sm < em || (sm == em && sd < ed)) {
+		if isYearDifferent && (ey != sy+1 || sm < em || (sm == em && sd < ed)) {
 			dayCount := 0
 			for y := sy; y <= ey; y++ {
 				dayCount += getDaysInYear(y, 1)
 			}
-			daysInYear = float64(dayCount) / float64(ey - sy + 1)
+			daysInYear = float64(dayCount) / float64(ey-sy+1)
 		} else {
 			if !isYearDifferent && isLeapYear(sy) {
 				daysInYear = 366
@@ -847,14 +847,14 @@ func yearFrac(startDateF, endDateF float64, basis int) (float64, Result) {
 	case 3:
 		dayDiff = endDateF - startDateF
 		daysInYear = 365
-        case 4:
+	case 4:
 		if sd == 31 {
 			sd--
 		}
 		if ed == 31 {
 			ed--
 		}
-		dayDiff = float64((ey - sy) * 360 + (em - sm) * 30 + (ed - sd))
+		dayDiff = float64((ey-sy)*360 + (em-sm)*30 + (ed - sd))
 		daysInYear = 360
 	default:
 		return 0, MakeErrorResultType(ErrorTypeNum, "Incorrect basis for YearFrac")
@@ -896,7 +896,7 @@ func isLeapYear(year int) bool {
 }
 
 func daysBetween(startDate, endDate int64) float64 {
-	return float64(int(0.5 + float64((endDate - startDate) / 86400)))
+	return float64(int(0.5 + float64((endDate-startDate)/86400)))
 }
 
 func feb29Between(date1, date2 time.Time) bool {
@@ -904,7 +904,7 @@ func feb29Between(date1, date2 time.Time) bool {
 	date2S := date2.Unix()
 	year1 := date1.Year()
 	mar1year1 := makeDateS(year1, time.March, 1)
-	if (isLeapYear(year1) && date1S < mar1year1 && date2S >= mar1year1) {
+	if isLeapYear(year1) && date1S < mar1year1 && date2S >= mar1year1 {
 		return true
 	}
 	var year2 = date2.Year()
@@ -929,7 +929,7 @@ func getDiff(from, to time.Time, basis int) float64 {
 	}
 
 	if basis == 0 {
-		if (mFrom == 2 || dFrom < 30 ) && dToOrig == 31 {
+		if (mFrom == 2 || dFrom < 30) && dToOrig == 31 {
 			dTo = 31
 		} else if mTo == 2 && dTo == getDaysInMonth(yTo, mTo) {
 			dTo = getDaysInMonth(yTo, 2)
@@ -947,14 +947,14 @@ func getDiff(from, to time.Time, basis int) float64 {
 		diff = 30 - dFrom + 1
 		dFromOrig = 1
 		dFrom = 1
-		fromNew := time.Date(yFrom, time.Month(mFrom), dFromOrig, 0, 0, 0, 0, time.UTC).AddDate(0,1,0)
+		fromNew := time.Date(yFrom, time.Month(mFrom), dFromOrig, 0, 0, 0, 0, time.UTC).AddDate(0, 1, 0)
 		if fromNew.Year() < yTo {
 			diff += getDaysInMonthRange(fromNew.Year(), int(fromNew.Month()), 12, basis)
-			fromNew = fromNew.AddDate(0, 13 - int(fromNew.Month()), 0)
-			diff += getDaysInYearRange(fromNew.Year(), yTo - 1, basis)
+			fromNew = fromNew.AddDate(0, 13-int(fromNew.Month()), 0)
+			diff += getDaysInYearRange(fromNew.Year(), yTo-1, basis)
 		}
-		diff += getDaysInMonthRange(yTo, int(fromNew.Month()), mTo - 1, basis)
-		fromNew = fromNew.AddDate(0, mTo - int(fromNew.Month()), 0)
+		diff += getDaysInMonthRange(yTo, int(fromNew.Month()), mTo-1, basis)
+		fromNew = fromNew.AddDate(0, mTo-int(fromNew.Month()), 0)
 		mFrom = fromNew.Day()
 	}
 	diff += dTo - dFrom
@@ -1028,7 +1028,7 @@ func parseDate(arg Result, dateName, funcName string) (float64, Result) {
 		return 0, MakeErrorResult("Incorrect argument for " + funcName)
 	}
 	if date < 0 {
-		return 0, MakeErrorResultType(ErrorTypeNum, dateName + " should be non negative")
+		return 0, MakeErrorResultType(ErrorTypeNum, dateName+" should be non negative")
 	}
 	return date, empty
 }

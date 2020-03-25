@@ -164,7 +164,7 @@ func Exact(args []Result) Result {
 
 type parsedSearchObject struct {
 	findText string
-	text string
+	text     string
 	position int
 }
 
@@ -257,7 +257,7 @@ func Findb(ctx Context, ev Evaluator, args []Result) Result {
 	for i := range text {
 		if i != 0 {
 			add := 1
-			if i - lastIndex > 1 {
+			if i-lastIndex > 1 {
 				add = 2
 			}
 			stepsCounter += add
@@ -422,7 +422,7 @@ func Mid(args []Result) Result {
 	}
 	startNum--
 	endNum := startNum + numChars
-	if endNum > l + 1 {
+	if endNum > l+1 {
 		return MakeStringResult(text[startNum:])
 	} else {
 		return MakeStringResult(text[startNum:endNum])
@@ -567,7 +567,7 @@ func Searchb(ctx Context, ev Evaluator, args []Result) Result {
 	for i := range text {
 		if i != 0 {
 			add := 1
-			if i - lastIndex > 1 {
+			if i-lastIndex > 1 {
 				add = 2
 			}
 			stepsCounter += add
@@ -728,9 +728,9 @@ func Value(args []Result) Result {
 }
 
 type parsedReplaceObject struct {
-	text string
-	startPos int
-	length int
+	text          string
+	startPos      int
+	length        int
 	textToReplace string
 }
 
@@ -879,11 +879,11 @@ func getNumber(arg Result, funcName, argName string) (float64, Result) {
 	case ResultTypeNumber:
 		return arg.ValueNumber, empty
 	case ResultTypeString:
-			f, err := strconv.ParseFloat(arg.ValueString, 64)
-			if err != nil {
-				return 0, MakeErrorResult(argName + " should be a number for " + funcName)
-			}
-			return f, empty
+		f, err := strconv.ParseFloat(arg.ValueString, 64)
+		if err != nil {
+			return 0, MakeErrorResult(argName + " should be a number for " + funcName)
+		}
+		return f, empty
 	default:
 		return 0, MakeErrorResult(funcName + " requires " + argName + " to be a number or empty")
 	}

@@ -357,7 +357,7 @@ func TestRemoveColumn(t *testing.T) {
 
 	sheet.RemoveColumn("C")
 
-	expected := []float64{5,4,2,1,0}
+	expected := []float64{5, 4, 2, 1, 0}
 
 	for i := 0; i <= 4; i++ {
 		column := reference.IndexToColumn(uint32(i))

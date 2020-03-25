@@ -26,10 +26,10 @@ const iso8601Format = "2006-01-02T15:04:05Z07:00"
 
 // Cell is a single cell within a sheet.
 type Cell struct {
-	w *Workbook
+	w     *Workbook
 	sheet *Sheet
-	r *sml.CT_Row
-	x *sml.CT_Cell
+	r     *sml.CT_Row
+	x     *sml.CT_Cell
 }
 
 // X returns the inner wrapped XML type.
@@ -200,11 +200,16 @@ func (c Cell) getLabelPrefix() string {
 	sid := *c.x.SAttr
 	cs := c.w.StyleSheet.GetCellStyle(sid)
 	switch cs.xf.Alignment.HorizontalAttr {
-	case sml.ST_HorizontalAlignmentLeft: return "'"
-	case sml.ST_HorizontalAlignmentRight: return "\""
-	case sml.ST_HorizontalAlignmentCenter: return "^"
-	case sml.ST_HorizontalAlignmentFill: return "\\"
-	default: return ""
+	case sml.ST_HorizontalAlignmentLeft:
+		return "'"
+	case sml.ST_HorizontalAlignmentRight:
+		return "\""
+	case sml.ST_HorizontalAlignmentCenter:
+		return "^"
+	case sml.ST_HorizontalAlignmentFill:
+		return "\\"
+	default:
+		return ""
 	}
 }
 

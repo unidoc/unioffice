@@ -395,7 +395,6 @@ func (p *Presentation) Save(w io.Writer) error {
 		r.Properties().SetSolidFill(color.Red)
 	}
 
-
 	dt := unioffice.DocTypePresentation
 
 	z := zip.NewWriter(w)

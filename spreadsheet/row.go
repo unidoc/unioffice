@@ -18,9 +18,9 @@ import (
 
 // Row is a row within a spreadsheet.
 type Row struct {
-	w *Workbook
+	w     *Workbook
 	sheet *Sheet
-	x *sml.CT_Row
+	x     *sml.CT_Row
 }
 
 // X returns the inner wrapped XML type.
@@ -110,8 +110,8 @@ func (r Row) Cells() []Cell {
 			continue
 		}
 		currentIndex := int(ref.ColumnIdx)
-		if currentIndex - lastIndex > 1 {
-			for col := lastIndex + 1; col < currentIndex;  col++ {
+		if currentIndex-lastIndex > 1 {
+			for col := lastIndex + 1; col < currentIndex; col++ {
 				ret = append(ret, r.Cell(reference.IndexToColumn(uint32(col))))
 			}
 		}

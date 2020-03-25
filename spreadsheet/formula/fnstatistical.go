@@ -42,9 +42,9 @@ var number, eq, g, l, ge, le *regexp.Regexp
 
 func initRegexpStatistical() {
 	number = regexp.MustCompile(`^([0-9]+)$`)
-	eq = regexp.MustCompile(`^=(.*)$`) // =-12345.67, =A6
-	l = regexp.MustCompile(`^<(.*)$`) // <-12345.67, <A6
-	g = regexp.MustCompile(`^>(.*)$`) // >-12345.67, >A6
+	eq = regexp.MustCompile(`^=(.*)$`)  // =-12345.67, =A6
+	l = regexp.MustCompile(`^<(.*)$`)   // <-12345.67, <A6
+	g = regexp.MustCompile(`^>(.*)$`)   // >-12345.67, >A6
 	le = regexp.MustCompile(`^<=(.*)$`) // <=-12345.67, <=A6
 	ge = regexp.MustCompile(`^>=(.*)$`) // >=-12345.67, >=A6
 }
@@ -149,9 +149,9 @@ func CountBlank(args []Result) Result {
 
 type criteriaParsed struct {
 	isNumber bool
-	cNum float64
-	cStr string
-	cRegex *criteriaRegex
+	cNum     float64
+	cStr     string
+	cRegex   *criteriaRegex
 }
 
 const (
@@ -164,8 +164,8 @@ const (
 )
 
 type criteriaRegex struct {
-	regexType byte		// type of condition
-	compareWith string	// value to apply condition to
+	regexType   byte   // type of condition
+	compareWith string // value to apply condition to
 }
 
 func parseCriteria(criteria Result) *criteriaParsed {
@@ -268,7 +268,7 @@ func checkIfsRanges(args []Result, sumRange bool, fnName string) Result {
 
 	rangeWidth := -1
 	rangeHeight := -1
-	for i := 0; i < argsNum; i+=2 {
+	for i := 0; i < argsNum; i += 2 {
 		arrResult := args[i]
 		if arrResult.Type != ResultTypeArray && arrResult.Type != ResultTypeList {
 			return MakeErrorResult(fnName + " requires ranges of type list or array")
@@ -291,7 +291,7 @@ func checkIfsRanges(args []Result, sumRange bool, fnName string) Result {
 func getIfsMatch(args []Result) []rangeIndex {
 	toLook := []rangeIndex{}
 	argsNum := len(args)
-	for i := 0; i < argsNum-1; i+=2 {
+	for i := 0; i < argsNum-1; i += 2 {
 		found := []rangeIndex{}
 		arr := arrayFromRange(args[i])
 		criteria := parseCriteria(args[i+1])
@@ -403,7 +403,7 @@ func max(args []Result, isMaxA bool) Result {
 				v = crit
 			}
 		default:
-			unioffice.Log("unhandled " + fName + "() argument type %s", a.Type)
+			unioffice.Log("unhandled "+fName+"() argument type %s", a.Type)
 		}
 	}
 	if v == -math.MaxFloat64 {
@@ -454,7 +454,7 @@ func min(args []Result, isMinA bool) Result {
 				v = crit
 			}
 		default:
-			unioffice.Log("unhandled " + fName + "() argument type %s", a.Type)
+			unioffice.Log("unhandled "+fName+"() argument type %s", a.Type)
 		}
 	}
 	if v == math.MaxFloat64 {
