@@ -281,3 +281,27 @@ func (r Run) AddDrawingInline(img common.ImageRef) (InlineDrawing, error) {
 
 	return inline, nil
 }
+
+// IsFootnote returns a bool based on whether the run has a
+// footnote or not. Returns both a bool as to whether it has
+// a footnote as well as the ID of the footnote.
+func (r Run) IsFootnote() (bool, int64) {
+	if r.x.EG_RunInnerContent != nil {
+		if r.x.EG_RunInnerContent[0].FootnoteReference != nil {
+			return true, r.x.EG_RunInnerContent[0].FootnoteReference.IdAttr
+		}
+	}
+	return false, 0
+}
+
+// IsEndnote returns a bool based on whether the run has a
+// footnote or not. Returns both a bool as to whether it has
+// a footnote as well as the ID of the footnote.
+func (r Run) IsEndnote() (bool, int64) {
+	if r.x.EG_RunInnerContent != nil {
+		if r.x.EG_RunInnerContent[0].EndnoteReference != nil {
+			return true, r.x.EG_RunInnerContent[0].EndnoteReference.IdAttr
+		}
+	}
+	return false, 0
+}
