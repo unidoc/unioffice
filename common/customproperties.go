@@ -37,10 +37,18 @@ func (c CustomProperties) PropertiesList() []*custom_properties.CT_Property {
 }
 
 func (c CustomProperties) GetPropertyByName(name string) CustomProperty {
+	property := c.getPropertyByName(name)
+	if property == nil {
+		return nil
+	}
+	return CustomProperty(property)
+}
+
+func (c CustomProperties) getPropertyByName(name string) *custom_properties.CT_Property {
 	propsList := c.x.Property
 	for _, property := range propsList {
 		if *property.NameAttr == name {
-			return CustomProperty(property)
+			return property
 		}
 	}
 	return nil
@@ -61,7 +69,7 @@ func (c CustomProperties) getNewProperty(name string) *custom_properties.CT_Prop
 }
 
 func (c CustomProperties) setProperty(newProperty *custom_properties.CT_Property) {
-	existingProperty := c.GetPropertyByName(*newProperty.NameAttr)
+	existingProperty := c.getPropertyByName(*newProperty.NameAttr)
 	if existingProperty == nil {
 		c.x.Property = append(c.x.Property, newProperty)
 	} else {
