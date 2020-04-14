@@ -15,7 +15,6 @@ import (
 	"image"
 	"image/jpeg"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -24,6 +23,8 @@ import (
 	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/common/license"
+	"github.com/unidoc/unioffice/internal/storage"
+	img_st "github.com/unidoc/unioffice/internal/storage/image"
 	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/zippkg"
 
@@ -584,11 +585,7 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	// numbering is not required
 	doc.Numbering.x = nil
 
-	td, err := ioutil.TempDir("", "gooxml-docx")
-	if err != nil {
-		return nil, err
-	}
-	doc.TmpPath = td
+	doc.TmpPath = storage.TempDir("gooxml-docx")
 
 	zr, err := zip.NewReader(r, size)
 	if err != nil {
@@ -721,6 +718,12 @@ func (d *Document) AddImage(i common.Image) (common.ImageRef, error) {
 	}
 	if i.Size.X == 0 || i.Size.Y == 0 {
 		return r, errors.New("image must have a valid size")
+	}
+	if i.Path != "" {
+		err := storage.Add(i.Path)
+		if err != nil {
+			return r, err
+		}
 	}
 
 	d.Images = append(d.Images, r)
@@ -915,7 +918,7 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 				if err != nil {
 					return err
 				}
-				img, err := common.ImageFromFile(path)
+				img, err := img_st.ImageFromStorage(path)
 				if err != nil {
 					return err
 				}

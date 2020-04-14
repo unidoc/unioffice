@@ -13,14 +13,13 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
-	"io/ioutil"
-	"os"
 	"sort"
 	"strings"
 
 	"github.com/unidoc/unioffice"
 
 	"github.com/unidoc/unioffice/algo"
+	"github.com/unidoc/unioffice/internal/storage"
 	"github.com/unidoc/unioffice/schema/soo/pkg/relationships"
 )
 
@@ -118,15 +117,15 @@ func Decode(f *zip.File, dest interface{}) error {
 	return nil
 }
 
-// AddFileFromDisk reads a file from disk and adds it at a given path to a zip file.
-func AddFileFromDisk(z *zip.Writer, zipPath, diskPath string) error {
+// AddFileFromStorage reads a file from internal storage and adds it at a given path to a zip file.
+func AddFileFromStorage(z *zip.Writer, zipPath, storagePath string) error {
 	w, err := z.Create(zipPath)
 	if err != nil {
 		return fmt.Errorf("error creating %s: %s", zipPath, err)
 	}
-	f, err := os.Open(diskPath)
+	f, err := storage.Open(storagePath)
 	if err != nil {
-		return fmt.Errorf("error opening %s: %s", diskPath, err)
+		return fmt.Errorf("error opening %s: %s", storagePath, err)
 	}
 	_, err = io.Copy(w, f)
 	return err
@@ -145,11 +144,10 @@ func AddFileFromBytes(z *zip.Writer, zipPath string, data []byte) error {
 // ExtractToDiskTmp extracts a zip file to a temporary file in a given path,
 // returning the name of the file.
 func ExtractToDiskTmp(f *zip.File, path string) (string, error) {
-	tmpFile, err := ioutil.TempFile(path, "zz")
+	tmpFile, err := storage.TempFile(path, "zz")
 	if err != nil {
 		return "", err
 	}
-	defer tmpFile.Close()
 	rc, err := f.Open()
 	if err != nil {
 		return "", err

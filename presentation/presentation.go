@@ -25,6 +25,8 @@ import (
 	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/common/license"
+	"github.com/unidoc/unioffice/internal/storage"
+	img_st "github.com/unidoc/unioffice/internal/storage/image"
 	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/schema/soo/dml"
 	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
@@ -626,7 +628,7 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 				if err != nil {
 					return err
 				}
-				img, err := common.ImageFromFile(path)
+				img, err := img_st.ImageFromStorage(path)
 				if err != nil {
 					return err
 				}
@@ -711,6 +713,12 @@ func (p *Presentation) AddImage(i common.Image) (common.ImageRef, error) {
 	}
 	if i.Size.X == 0 || i.Size.Y == 0 {
 		return r, errors.New("image must have a valid size")
+	}
+	if i.Path != "" {
+		err := storage.Add(i.Path)
+		if err != nil {
+			return r, err
+		}
 	}
 
 	p.Images = append(p.Images, r)

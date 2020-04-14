@@ -40,8 +40,8 @@ func (d *DocBase) AddExtraFileFromZip(f *zip.File) error {
 		return fmt.Errorf("error extracting unsupported file: %s", err)
 	}
 	d.ExtraFiles = append(d.ExtraFiles, ExtraFile{
-		ZipPath:  f.Name,
-		DiskPath: path,
+		ZipPath:     f.Name,
+		StoragePath: path,
 	})
 	return nil
 }
@@ -49,7 +49,7 @@ func (d *DocBase) AddExtraFileFromZip(f *zip.File) error {
 // WriteExtraFiles writes the extra files to the zip package.
 func (d *DocBase) WriteExtraFiles(z *zip.Writer) error {
 	for _, ef := range d.ExtraFiles {
-		if err := zippkg.AddFileFromDisk(z, ef.ZipPath, ef.DiskPath); err != nil {
+		if err := zippkg.AddFileFromStorage(z, ef.ZipPath, ef.StoragePath); err != nil {
 			return err
 		}
 	}
@@ -59,6 +59,6 @@ func (d *DocBase) WriteExtraFiles(z *zip.Writer) error {
 // ExtraFile is an unsupported file type extracted from, or to be written to a
 // zip package
 type ExtraFile struct {
-	ZipPath  string
-	DiskPath string
+	ZipPath     string
+	StoragePath string
 }

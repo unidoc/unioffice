@@ -11,22 +11,18 @@ import (
 	"archive/zip"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/internal/storage"
 	"github.com/unidoc/unioffice/zippkg"
 )
 
 // Read reads a workbook from an io.Reader(.xlsx).
 func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 	wb := New()
-	td, err := ioutil.TempDir("", "gooxml-xlsx")
-	if err != nil {
-		return nil, err
-	}
-	wb.TmpPath = td
+	wb.TmpPath = storage.TempDir("gooxml-xlsx")
 
 	zr, err := zip.NewReader(r, size)
 	if err != nil {

@@ -16,13 +16,14 @@ import (
 	"image/jpeg"
 	"io"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/common/license"
+	"github.com/unidoc/unioffice/internal/storage"
+	img_st "github.com/unidoc/unioffice/internal/storage/image"
 	"github.com/unidoc/unioffice/vmldrawing"
 	"github.com/unidoc/unioffice/zippkg"
 
@@ -534,7 +535,7 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 				if err != nil {
 					return err
 				}
-				img, err := common.ImageFromFile(path)
+				img, err := img_st.ImageFromStorage(path)
 				if err != nil {
 					return err
 				}
@@ -673,6 +674,12 @@ func (wb *Workbook) AddImage(i common.Image) (common.ImageRef, error) {
 	if i.Size.X == 0 || i.Size.Y == 0 {
 		return r, errors.New("image must have a valid size")
 	}
+	if i.Path != "" {
+		err := storage.Add(i.Path)
+		if err != nil {
+			return r, err
+		}
+	}
 
 	wb.Images = append(wb.Images, r)
 	fn := fmt.Sprintf("media/image%d.%s", len(wb.Images), i.Format)
@@ -746,8 +753,8 @@ func workbookFinalizer(wb *Workbook) {
 // Close closes the workbook, removing any temporary files that might have been
 // created when opening a document.
 func (wb *Workbook) Close() error {
-	if wb.TmpPath != "" && strings.HasPrefix(wb.TmpPath, os.TempDir()) {
-		return os.RemoveAll(wb.TmpPath)
+	if wb.TmpPath != "" {
+		return storage.RemoveAll(wb.TmpPath)
 	}
 	return nil
 }
