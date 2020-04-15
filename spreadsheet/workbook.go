@@ -346,6 +346,11 @@ func (wb *Workbook) Save(w io.Writer) error {
 	if err := zippkg.MarshalXMLByType(z, dt, unioffice.SharedStringsType, wb.SharedStrings.X()); err != nil {
 		return err
 	}
+	if wb.CustomProperties.X() != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, unioffice.CustomPropertiesType, wb.CustomProperties.X()); err != nil {
+			return err
+		}
+	}
 
 	if wb.Thumbnail != nil {
 		fn := unioffice.AbsoluteFilename(dt, unioffice.ThumbnailType, 0)
@@ -465,6 +470,10 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 
 	case unioffice.CorePropertiesType:
 		decMap.AddTarget(target, wb.CoreProperties.X(), typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
+
+	case unioffice.CustomPropertiesType:
+		decMap.AddTarget(target, wb.CustomProperties.X(), typ, 0)
 		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case unioffice.ExtendedPropertiesType:
@@ -787,4 +796,22 @@ func (wb *Workbook) RemoveCalcChain() {
 // GetFilename returns the name of file from which workbook was opened with full path to it
 func (wb *Workbook) GetFilename() string {
 	return wb.filename
+}
+
+// GetOrCreateCustomProperties returns the custom properties of the document (and if they not exist yet, creating them first)
+func (wb *Workbook) GetOrCreateCustomProperties() common.CustomProperties {
+	if wb.CustomProperties.X() == nil {
+		 wb.createCustomProperties()
+	}
+	return wb.CustomProperties
+}
+
+func (wb *Workbook) createCustomProperties() {
+	wb.CustomProperties = common.NewCustomProperties()
+	wb.addCustomRelationships()
+}
+
+func (wb *Workbook) addCustomRelationships() {
+	wb.ContentTypes.AddOverride("/docProps/custom.xml", "application/vnd.openxmlformats-officedocument.custom-properties+xml")
+	wb.Rels.AddRelationship("docProps/custom.xml", unioffice.CustomPropertiesType)
 }

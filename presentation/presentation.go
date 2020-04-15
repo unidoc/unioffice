@@ -410,6 +410,11 @@ func (p *Presentation) Save(w io.Writer) error {
 	if err := zippkg.MarshalXMLByType(z, dt, unioffice.CorePropertiesType, p.CoreProperties.X()); err != nil {
 		return err
 	}
+	if p.CustomProperties.X() != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, unioffice.CustomPropertiesType, p.CustomProperties.X()); err != nil {
+			return err
+		}
+	}
 	if p.Thumbnail != nil {
 		tn, err := z.Create("docProps/thumbnail.jpeg")
 		if err != nil {
@@ -540,6 +545,10 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 
 	case unioffice.CorePropertiesType:
 		decMap.AddTarget(target, p.CoreProperties.X(), typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
+
+	case unioffice.CustomPropertiesType:
+		decMap.AddTarget(target, p.CustomProperties.X(), typ, 0)
 		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
 	case unioffice.ExtendedPropertiesType:
@@ -736,4 +745,22 @@ func (p *Presentation) GetImageByRelID(relID string) (common.ImageRef, bool) {
 		}
 	}
 	return common.ImageRef{}, false
+}
+
+// GetOrCreateCustomProperties returns the custom properties of the document (and if they not exist yet, creating them first)
+func (p *Presentation) GetOrCreateCustomProperties() common.CustomProperties {
+	if p.CustomProperties.X() == nil {
+		 p.createCustomProperties()
+	}
+	return p.CustomProperties
+}
+
+func (p *Presentation) createCustomProperties() {
+	p.CustomProperties = common.NewCustomProperties()
+	p.addCustomRelationships()
+}
+
+func (p *Presentation) addCustomRelationships() {
+	p.ContentTypes.AddOverride("/docProps/custom.xml", "application/vnd.openxmlformats-officedocument.custom-properties+xml")
+	p.Rels.AddRelationship("docProps/custom.xml", unioffice.CustomPropertiesType)
 }
