@@ -11,15 +11,21 @@ import (
 )
 
 type tempStorage struct {
-	m    map[string]*tempStorageItem
+	m    map[string]*storageFile
 	lock *sync.Mutex
+}
+
+type storageFile struct {
+	name string
+	data []byte
+	size int64
 }
 
 var ts tempStorage
 
 func init() {
 	ts = tempStorage{
-		m:    map[string]*tempStorageItem{},
+		m:    map[string]*storageFile{},
 		lock: &sync.Mutex{},
 	}
 }
@@ -27,21 +33,27 @@ func init() {
 func Open(path string) (*tempStorageItem, error) {
 	ts.lock.Lock()
 	defer ts.lock.Unlock()
-	tsi, exists := ts.m[path]
+	file, exists := ts.m[path]
 	if !exists {
 		return nil, errors.New(fmt.Sprintf("Cannot open the file %s", path))
 	}
-	return tsi, nil
+	return &tempStorageItem{
+		file:      file,
+	}, nil
 }
 
 func TempFile(dir, pattern string) (*tempStorageItem, error) {
 	path := dir + "/" + getNameFromPattern(pattern)
-	newTSI := &tempStorageItem{
+	newFile := &storageFile {
 		name: path,
+		data: []byte{},
+	}
+	newTSI := &tempStorageItem{
+		file: newFile,
 	}
 	ts.lock.Lock()
 	defer ts.lock.Unlock()
-	ts.m[path] = newTSI
+	ts.m[path] = newFile
 	return newTSI, nil
 }
 
@@ -52,9 +64,9 @@ func TempDir(pattern string) string {
 func RemoveAll(dir string) error {
 	ts.lock.Lock()
 	defer ts.lock.Unlock()
-	for path := range ts.m {
-		if strings.HasPrefix(path, dir) {
-			delete(ts.m, path)
+	for filename := range ts.m {
+		if strings.HasPrefix(filename, dir) {
+			delete(ts.m, filename)
 		}
 	}
 	return nil
@@ -67,13 +79,7 @@ func Add(path string) error {
 	}
 	ts.lock.Lock()
 	defer ts.lock.Unlock()
-	newTSI := &tempStorageItem{
-		name:       path,
-		size:       int64(len(data)),
-		bytes:      data,
-		readOffset: 0,
-	}
-	ts.m[path] = newTSI
+	ts.m[path] = &storageFile{name: path, data: data}
 	return nil
 }
 

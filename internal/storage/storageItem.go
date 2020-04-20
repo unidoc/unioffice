@@ -1,18 +1,18 @@
 package storage
 
-import "io"
+import (
+	"io"
+)
 
 type tempStorageItem struct {
-	name       string
-	size       int64
-	bytes      []byte
+	file       *storageFile
 	readOffset int64
 }
 
-// Read reads from tempStorageItem.bytes in order to implement Reader interface
+// Read reads from tempStorageItem.file in order to implement Reader interface
 func (tsi *tempStorageItem) Read(p []byte) (int, error) {
 	readOffset := tsi.readOffset
-	size := tsi.size
+	size := tsi.file.size
 	incomingLength := int64(len(p))
 	if incomingLength > size {
 		incomingLength = size
@@ -25,18 +25,19 @@ func (tsi *tempStorageItem) Read(p []byte) (int, error) {
 	if newOffset >= size {
 		newOffset = size
 	}
-	n := copy(p, tsi.bytes[readOffset:newOffset])
+	n := copy(p, tsi.file.data[readOffset:newOffset])
 	tsi.readOffset = newOffset
 	return n, nil
 }
 
-// Write writes to the end of tempStorageItem.bytes in order to implement Writer interface
+// Write writes to the end of tempStorageItem.file in order to implement Writer interface
 func (tsi *tempStorageItem) Write(p []byte) (int, error) {
-	tsi.bytes = append(tsi.bytes, p...)
+	tsi.file.data = append(tsi.file.data, p...)
+	tsi.file.size += int64(len(p))
 	return len(p), nil
 }
 
 // Name returns the filename of the storage item
 func (tsi *tempStorageItem) Name() string {
-	return tsi.name
+	return tsi.file.name
 }
