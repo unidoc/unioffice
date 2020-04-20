@@ -64,9 +64,9 @@ func TempDir(pattern string) string {
 func RemoveAll(dir string) error {
 	ts.lock.Lock()
 	defer ts.lock.Unlock()
-	for filename := range ts.m {
-		if strings.HasPrefix(filename, dir) {
-			delete(ts.m, filename)
+	for path := range ts.m {
+		if strings.HasPrefix(path, dir) {
+			delete(ts.m, path)
 		}
 	}
 	return nil
