@@ -15,14 +15,19 @@ import (
 	"path/filepath"
 
 	"github.com/unidoc/unioffice"
-	"github.com/unidoc/unioffice/internal/storage"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/zippkg"
 )
 
 // Read reads a workbook from an io.Reader(.xlsx).
 func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 	wb := New()
-	wb.TmpPath = storage.TempDir("gooxml-xlsx")
+
+	tmpPath, err := tempstorage.TempDir("gooxml-xlsx")
+	if err != nil {
+		return nil, fmt.Errorf("creating zip: %s", err)
+	}
+	wb.TmpPath = tmpPath
 
 	zr, err := zip.NewReader(r, size)
 	if err != nil {

@@ -23,8 +23,7 @@ import (
 	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/common/license"
-	"github.com/unidoc/unioffice/internal/storage"
-	img_st "github.com/unidoc/unioffice/internal/storage/image"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/zippkg"
 
@@ -585,7 +584,11 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	// numbering is not required
 	doc.Numbering.x = nil
 
-	doc.TmpPath = storage.TempDir("gooxml-docx")
+	tmpPath, err := tempstorage.TempDir("gooxml-docx")
+	if err != nil {
+		return nil, fmt.Errorf("creating zip: %s", err)
+	}
+	doc.TmpPath = tmpPath
 
 	zr, err := zip.NewReader(r, size)
 	if err != nil {
@@ -720,7 +723,7 @@ func (d *Document) AddImage(i common.Image) (common.ImageRef, error) {
 		return r, errors.New("image must have a valid size")
 	}
 	if i.Path != "" {
-		err := storage.Add(i.Path)
+		err := tempstorage.Add(i.Path)
 		if err != nil {
 			return r, err
 		}
@@ -918,7 +921,7 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 				if err != nil {
 					return err
 				}
-				img, err := img_st.ImageFromStorage(path)
+				img, err := common.ImageFromStorage(path)
 				if err != nil {
 					return err
 				}

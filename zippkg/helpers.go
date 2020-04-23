@@ -19,7 +19,7 @@ import (
 	"github.com/unidoc/unioffice"
 
 	"github.com/unidoc/unioffice/algo"
-	"github.com/unidoc/unioffice/internal/storage"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/schema/soo/pkg/relationships"
 )
 
@@ -123,7 +123,7 @@ func AddFileFromStorage(z *zip.Writer, zipPath, storagePath string) error {
 	if err != nil {
 		return fmt.Errorf("error creating %s: %s", zipPath, err)
 	}
-	f, err := storage.Open(storagePath)
+	f, err := tempstorage.Open(storagePath)
 	if err != nil {
 		return fmt.Errorf("error opening %s: %s", storagePath, err)
 	}
@@ -144,10 +144,11 @@ func AddFileFromBytes(z *zip.Writer, zipPath string, data []byte) error {
 // ExtractToDiskTmp extracts a zip file to a temporary file in a given path,
 // returning the name of the file.
 func ExtractToDiskTmp(f *zip.File, path string) (string, error) {
-	tmpFile, err := storage.TempFile(path, "zz")
+	tmpFile, err := tempstorage.TempFile(path, "zz")
 	if err != nil {
 		return "", err
 	}
+	defer tmpFile.Close()
 	rc, err := f.Open()
 	if err != nil {
 		return "", err

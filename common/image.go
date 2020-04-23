@@ -14,6 +14,7 @@ import (
 	"os"
 
 	"github.com/unidoc/unioffice/measurement"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	// Add image format support
 	_ "image/gif"
 	_ "image/jpeg"
@@ -121,6 +122,24 @@ func ImageFromBytes(data []byte) (Image, error) {
 	}
 
 	r.Data = &data
+	r.Format = ifmt
+	r.Size = imgDec.Bounds().Size()
+	return r, nil
+}
+
+func ImageFromStorage(path string) (Image, error) {
+	r := Image{}
+	f, err := tempstorage.Open(path)
+	if err != nil {
+		return r, fmt.Errorf("error reading image: %s", err)
+	}
+	defer f.Close()
+	imgDec, ifmt, err := image.Decode(f)
+	if err != nil {
+		return r, fmt.Errorf("unable to parse image: %s", err)
+	}
+
+	r.Path = path
 	r.Format = ifmt
 	r.Size = imgDec.Bounds().Size()
 	return r, nil

@@ -22,8 +22,7 @@ import (
 	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/common/license"
-	"github.com/unidoc/unioffice/internal/storage"
-	img_st "github.com/unidoc/unioffice/internal/storage/image"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/vmldrawing"
 	"github.com/unidoc/unioffice/zippkg"
 
@@ -544,7 +543,7 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 				if err != nil {
 					return err
 				}
-				img, err := img_st.ImageFromStorage(path)
+				img, err := common.ImageFromStorage(path)
 				if err != nil {
 					return err
 				}
@@ -684,7 +683,7 @@ func (wb *Workbook) AddImage(i common.Image) (common.ImageRef, error) {
 		return r, errors.New("image must have a valid size")
 	}
 	if i.Path != "" {
-		err := storage.Add(i.Path)
+		err := tempstorage.Add(i.Path)
 		if err != nil {
 			return r, err
 		}
@@ -763,7 +762,7 @@ func workbookFinalizer(wb *Workbook) {
 // created when opening a document.
 func (wb *Workbook) Close() error {
 	if wb.TmpPath != "" {
-		return storage.RemoveAll(wb.TmpPath)
+		return tempstorage.RemoveAll(wb.TmpPath)
 	}
 	return nil
 }
