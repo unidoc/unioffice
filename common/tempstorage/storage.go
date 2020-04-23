@@ -1,5 +1,7 @@
 package tempstorage
 
+import "io"
+
 type storage interface {
 	Open(path string) (File, error)
 	TempFile(dir, pattern string) (File, error)
@@ -9,9 +11,9 @@ type storage interface {
 }
 
 type File interface {
-	Read(p []byte) (int, error)
-	Write(p []byte) (int, error)
-	Close() error
+	io.Reader
+	io.Writer
+	io.Closer
 	Name() string
 }
 
