@@ -12,6 +12,8 @@ package diskstore
 import (
 	"io/ioutil"
 	"os"
+	"strings"
+
 	"github.com/unidoc/unioffice/common/tempstorage"
 )
 
@@ -40,7 +42,10 @@ func (d diskStorage) TempDir(pattern string) (string, error) {
 
 // RemoveAll removes all files in the directory
 func (d diskStorage) RemoveAll(dir string) error {
-	return os.RemoveAll(dir)
+	if strings.HasPrefix(dir, os.TempDir()) {
+		return os.RemoveAll(dir)
+	}
+	return nil
 }
 
 // Add is not applicable in the diskstore implementation
