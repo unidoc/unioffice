@@ -15,8 +15,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math/rand"
-	"strings"
 	"sync"
+
 	"github.com/unidoc/unioffice/common/tempstorage"
 )
 
@@ -81,9 +81,7 @@ func (ts *memStorage) RemoveAll(dir string) error {
 	ts.lock.Lock()
 	defer ts.lock.Unlock()
 	for path := range ts.m {
-		if strings.HasPrefix(path, dir) {
-			delete(ts.m, path)
-		}
+		delete(ts.m, path)
 	}
 	return nil
 }

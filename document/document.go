@@ -17,6 +17,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	"github.com/unidoc/unioffice"
@@ -61,6 +62,8 @@ type Document struct {
 // New constructs an empty document that content can be added to.
 func New() *Document {
 	d := &Document{x: wml.NewDocument()}
+	runtime.SetFinalizer(d, documentFinalizer)
+
 	d.ContentTypes = common.NewContentTypes()
 	d.x.Body = wml.NewCT_Body()
 	d.x.ConformanceAttr = st.ST_ConformanceClassTransitional
@@ -1067,4 +1070,17 @@ func (d Document) Bookmarks() []Bookmark {
 		}
 	}
 	return ret
+}
+
+func documentFinalizer(d *Document) {
+	d.Close()
+}
+
+// Close closes the document, removing any temporary files that might have been
+// created when opening a document.
+func (d *Document) Close() error {
+	if d.TmpPath != "" {
+		return tempstorage.RemoveAll(d.TmpPath)
+	}
+	return nil
 }
