@@ -117,8 +117,10 @@ func Decode(f *zip.File, dest interface{}) error {
 	return nil
 }
 
-// AddFileFromStorage reads a file from internal storage and adds it at a given path to a zip file.
-func AddFileFromStorage(z *zip.Writer, zipPath, storagePath string) error {
+// AddFileFromDisk reads a file from internal storage and adds it at a given path to a zip file.
+// TODO: Rename to AddFileFromStorage in next major version release (v2).
+// NOTE: If disk storage cannot be used, memory storage can be used instead by calling memstore.SetAsStorage().
+func AddFileFromDisk(z *zip.Writer, zipPath, storagePath string) error {
 	w, err := z.Create(zipPath)
 	if err != nil {
 		return fmt.Errorf("error creating %s: %s", zipPath, err)

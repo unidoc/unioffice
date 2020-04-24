@@ -41,7 +41,7 @@ func (d *DocBase) AddExtraFileFromZip(f *zip.File) error {
 	}
 	d.ExtraFiles = append(d.ExtraFiles, ExtraFile{
 		ZipPath:     f.Name,
-		StoragePath: path,
+		DiskPath: path,
 	})
 	return nil
 }
@@ -49,7 +49,7 @@ func (d *DocBase) AddExtraFileFromZip(f *zip.File) error {
 // WriteExtraFiles writes the extra files to the zip package.
 func (d *DocBase) WriteExtraFiles(z *zip.Writer) error {
 	for _, ef := range d.ExtraFiles {
-		if err := zippkg.AddFileFromStorage(z, ef.ZipPath, ef.StoragePath); err != nil {
+		if err := zippkg.AddFileFromDisk(z, ef.ZipPath, ef.DiskPath); err != nil {
 			return err
 		}
 	}
@@ -60,5 +60,5 @@ func (d *DocBase) WriteExtraFiles(z *zip.Writer) error {
 // zip package
 type ExtraFile struct {
 	ZipPath     string
-	StoragePath string
+	DiskPath    string // TODO: Change to "StoragePath" in next major version (v2).
 }

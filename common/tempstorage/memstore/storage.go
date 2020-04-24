@@ -1,3 +1,10 @@
+// Copyright 2017 FoxyUtils ehf. All rights reserved.
+//
+// Use of this source code is governed by the terms of the Affero GNU General
+// Public License version 3.0 as published by the Free Software Foundation and
+// appearing in the file LICENSE included in the packaging of this file. A
+// commercial license can be purchased on https://unidoc.io.
+
 // Package memstore implements tempStorage interface
 // by using memory as a storage
 package memstore
@@ -32,7 +39,7 @@ func SetAsStorage() {
 		m:    map[string]*memDataCell{},
 		lock: &sync.Mutex{},
 	}
-	tempstorage.New(&ts)
+	tempstorage.SetAsStorage(&ts)
 }
 
 // Open returns tempstorage File object by name
@@ -48,7 +55,7 @@ func (ts *memStorage) Open(path string) (tempstorage.File, error) {
 	}, nil
 }
 
-// TempFile creates new empty file in the storage and returns it
+// TempFile creates a new empty file in the storage and returns it
 func (ts *memStorage) TempFile(dir, pattern string) (tempstorage.File, error) {
 	path := dir + "/" + getNameFromPattern(pattern)
 	newDataCell := &memDataCell {
@@ -64,7 +71,7 @@ func (ts *memStorage) TempFile(dir, pattern string) (tempstorage.File, error) {
 	return newFile, nil
 }
 
-// TempFile creates a name for a new temp directory using a pattern argument
+// TempDir creates a name for a new temp directory using a pattern argument
 func (ts *memStorage) TempDir(pattern string) (string, error) {
 	return getNameFromPattern(pattern), nil
 }

@@ -17,7 +17,7 @@ func AddImageToZip(z *zip.Writer, img ImageRef, imageNum int, dt unioffice.DocTy
 			return err
 		}
 	} else if img.Path() != "" {
-		if err := zippkg.AddFileFromStorage(z, filename, img.Path()); err != nil {
+		if err := zippkg.AddFileFromDisk(z, filename, img.Path()); err != nil {
 			return err
 		}
 	} else {
