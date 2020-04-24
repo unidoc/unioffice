@@ -11,9 +11,9 @@ import (
 	"archive/zip"
 	"fmt"
 	"io"
-	"io/ioutil"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/zippkg"
 )
 
@@ -21,11 +21,11 @@ import (
 func Read(r io.ReaderAt, size int64) (*Presentation, error) {
 	doc := newEmpty()
 
-	td, err := ioutil.TempDir("", "gooxml-pptx")
+	tmpPath, err := tempstorage.TempDir("gooxml-pptx")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("creating zip: %s", err)
 	}
-	doc.TmpPath = td
+	doc.TmpPath = tmpPath
 
 	zr, err := zip.NewReader(r, size)
 	if err != nil {
@@ -34,6 +34,17 @@ func Read(r io.ReaderAt, size int64) (*Presentation, error) {
 
 	files := []*zip.File{}
 	files = append(files, zr.File...)
+
+	addCustom := false
+	for _, f := range files {
+		if f.FileHeader.Name == "docProps/custom.xml" {
+			addCustom = true
+			break
+		}
+	}
+	if addCustom {
+		doc.createCustomProperties()
+	}
 
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(doc.onNewRelationship)
@@ -52,5 +63,19 @@ func Read(r io.ReaderAt, size int64) (*Presentation, error) {
 			return nil, err
 		}
 	}
+
+	if addCustom {
+		customPropertiesExist := false
+		for _, rel := range doc.Rels.X().Relationship {
+			if rel.TargetAttr == "docProps/custom.xml" {
+				customPropertiesExist = true
+				break
+			}
+		}
+		if !customPropertiesExist {
+			doc.addCustomRelationships()
+		}
+	}
+
 	return doc, nil
 }

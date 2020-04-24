@@ -11,22 +11,23 @@ import (
 	"archive/zip"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/zippkg"
 )
 
 // Read reads a workbook from an io.Reader(.xlsx).
 func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 	wb := New()
-	td, err := ioutil.TempDir("", "gooxml-xlsx")
+
+	tmpPath, err := tempstorage.TempDir("gooxml-xlsx")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("creating zip: %s", err)
 	}
-	wb.TmpPath = td
+	wb.TmpPath = tmpPath
 
 	zr, err := zip.NewReader(r, size)
 	if err != nil {
@@ -35,6 +36,18 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 
 	files := []*zip.File{}
 	files = append(files, zr.File...)
+
+	addCustom := false
+	for _, f := range files {
+		if f.FileHeader.Name == "docProps/custom.xml" {
+			addCustom = true
+			break
+		}
+	}
+	if addCustom {
+		wb.createCustomProperties()
+	}
+
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(wb.onNewRelationship)
 	// we should discover all contents by starting with these two files
@@ -54,6 +67,20 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 			return nil, err
 		}
 	}
+
+	if addCustom {
+		customPropertiesExist := false
+		for _, rel := range wb.Rels.X().Relationship {
+			if rel.TargetAttr == "docProps/custom.xml" {
+				customPropertiesExist = true
+				break
+			}
+		}
+		if !customPropertiesExist {
+			wb.addCustomRelationships()
+		}
+	}
+
 	return wb, nil
 }
 

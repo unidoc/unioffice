@@ -20,11 +20,13 @@ import (
 	"log"
 	"os"
 	"path"
+	"runtime"
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/common/license"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/schema/soo/dml"
 	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
@@ -63,6 +65,7 @@ func newEmpty() *Presentation {
 // New initializes and reurns a new presentation
 func New() *Presentation {
 	p := newEmpty()
+	runtime.SetFinalizer(p, presentationFinalizer)
 
 	p.ContentTypes.AddOverride("/ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml")
 
@@ -408,6 +411,11 @@ func (p *Presentation) Save(w io.Writer) error {
 	if err := zippkg.MarshalXMLByType(z, dt, unioffice.CorePropertiesType, p.CoreProperties.X()); err != nil {
 		return err
 	}
+	if p.CustomProperties.X() != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, unioffice.CustomPropertiesType, p.CustomProperties.X()); err != nil {
+			return err
+		}
+	}
 	if p.Thumbnail != nil {
 		tn, err := z.Create("docProps/thumbnail.jpeg")
 		if err != nil {
@@ -540,6 +548,10 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 		decMap.AddTarget(target, p.CoreProperties.X(), typ, 0)
 		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
+	case unioffice.CustomPropertiesType:
+		decMap.AddTarget(target, p.CustomProperties.X(), typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
+
 	case unioffice.ExtendedPropertiesType:
 		decMap.AddTarget(target, p.AppProperties.X(), typ, 0)
 		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
@@ -626,7 +638,7 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 				if err != nil {
 					return err
 				}
-				img, err := common.ImageFromFile(path)
+				img, err := common.ImageFromStorage(path)
 				if err != nil {
 					return err
 				}
@@ -712,6 +724,12 @@ func (p *Presentation) AddImage(i common.Image) (common.ImageRef, error) {
 	if i.Size.X == 0 || i.Size.Y == 0 {
 		return r, errors.New("image must have a valid size")
 	}
+	if i.Path != "" {
+		err := tempstorage.Add(i.Path)
+		if err != nil {
+			return r, err
+		}
+	}
 
 	p.Images = append(p.Images, r)
 	fn := fmt.Sprintf("media/image%d.%s", len(p.Images), i.Format)
@@ -728,4 +746,35 @@ func (p *Presentation) GetImageByRelID(relID string) (common.ImageRef, bool) {
 		}
 	}
 	return common.ImageRef{}, false
+}
+
+// GetOrCreateCustomProperties returns the custom properties of the document (and if they not exist yet, creating them first)
+func (p *Presentation) GetOrCreateCustomProperties() common.CustomProperties {
+	if p.CustomProperties.X() == nil {
+		 p.createCustomProperties()
+	}
+	return p.CustomProperties
+}
+
+func (p *Presentation) createCustomProperties() {
+	p.CustomProperties = common.NewCustomProperties()
+	p.addCustomRelationships()
+}
+
+func (p *Presentation) addCustomRelationships() {
+	p.ContentTypes.AddOverride("/docProps/custom.xml", "application/vnd.openxmlformats-officedocument.custom-properties+xml")
+	p.Rels.AddRelationship("docProps/custom.xml", unioffice.CustomPropertiesType)
+}
+
+func presentationFinalizer(p *Presentation) {
+	p.Close()
+}
+
+// Close closes the presentation, removing any temporary files that might have been
+// created when opening a document.
+func (p *Presentation) Close() error {
+	if p.TmpPath != "" {
+		return tempstorage.RemoveAll(p.TmpPath)
+	}
+	return nil
 }
