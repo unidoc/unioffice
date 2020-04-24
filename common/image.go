@@ -94,6 +94,7 @@ func (i ImageRef) RelativeWidth(h measurement.Distance) measurement.Distance {
 // ImageFromFile reads an image from a file on disk. It doesn't keep the image
 // in memory and only reads it to determine the format and size. You can also
 // construct an Image directly if the file and size are known.
+// NOTE: See also ImageFromStorage.
 func ImageFromFile(path string) (Image, error) {
 	f, err := os.Open(path)
 	r := Image{}
