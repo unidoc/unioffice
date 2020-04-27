@@ -103,18 +103,24 @@ func (n Numbering) Definitions() []NumberingDefinition {
 func (n Numbering) AddDefinition() NumberingDefinition {
 	nx := wml.NewCT_Num()
 
-	nextID := int64(1)
+	nextAbstractNumID := int64(1)
 	for _, nd := range n.Definitions() {
-		if nd.AbstractNumberID() >= nextID {
-			nextID = nd.AbstractNumberID() + 1
+		if nd.AbstractNumberID() >= nextAbstractNumID {
+			nextAbstractNumID = nd.AbstractNumberID() + 1
 		}
 	}
-	nx.NumIdAttr = nextID
+	nextNumID := int64(1)
+	for _, n := range n.X().Num {
+		if n.NumIdAttr >= nextNumID {
+			nextNumID = n.NumIdAttr + 1
+		}
+	}
+	nx.NumIdAttr = nextNumID
 	nx.AbstractNumId = wml.NewCT_DecimalNumber()
-	nx.AbstractNumId.ValAttr = nextID
+	nx.AbstractNumId.ValAttr = nextAbstractNumID
 
 	an := wml.NewCT_AbstractNum()
-	an.AbstractNumIdAttr = nextID
+	an.AbstractNumIdAttr = nextAbstractNumID
 
 	n.x.AbstractNum = append(n.x.AbstractNum, an)
 	n.x.Num = append(n.x.Num, nx)
