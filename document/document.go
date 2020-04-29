@@ -955,11 +955,13 @@ func (d *Document) insertParagraph(relativeTo Paragraph, before bool) Paragraph 
 		return d.AddParagraph()
 	}
 
+	relX := relativeTo.X()
+
 	for _, ble := range d.x.Body.EG_BlockLevelElts {
 		for _, c := range ble.EG_ContentBlockContent {
 			for i, p := range c.P {
 				// found the paragraph
-				if p == relativeTo.X() {
+				if p == relX {
 					p := wml.NewCT_P()
 					c.P = append(c.P, nil)
 					if before {
@@ -973,9 +975,38 @@ func (d *Document) insertParagraph(relativeTo Paragraph, before bool) Paragraph 
 				}
 			}
 
+			for _, tbl := range c.Tbl {
+				for _, crc := range tbl.EG_ContentRowContent {
+					for _, tr := range crc.Tr {
+						for _, ccc := range tr.EG_ContentCellContent {
+							for _, tc := range ccc.Tc {
+								for _, ble := range tc.EG_BlockLevelElts {
+									for _, cbc := range ble.EG_ContentBlockContent {
+										for i, p := range cbc.P {
+											if p == relX {
+												p := wml.NewCT_P()
+												cbc.P = append(cbc.P, nil)
+												if before {
+													copy(cbc.P[i+1:], cbc.P[i:])
+													cbc.P[i] = p
+												} else {
+													copy(cbc.P[i+2:], cbc.P[i+1:])
+													cbc.P[i+1] = p
+												}
+												return Paragraph{d, p}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
 			if c.Sdt != nil && c.Sdt.SdtContent != nil && c.Sdt.SdtContent.P != nil {
 				for i, p := range c.Sdt.SdtContent.P {
-					if p == relativeTo.X() {
+					if p == relX {
 						p := wml.NewCT_P()
 						c.Sdt.SdtContent.P = append(c.Sdt.SdtContent.P, nil)
 						if before {
