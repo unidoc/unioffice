@@ -387,3 +387,53 @@ func TestGetTables(t *testing.T) {
 		t.Errorf("nested table not enumerated. found %d, expected 2", len(tables))
 	}
 }
+
+func TestInsertParagraphInTable(t *testing.T) {
+	doc := document.New()
+
+	paraBeforeTable := doc.AddParagraph()
+	paraBeforeTable.AddRun().AddText("before table")
+
+	table := doc.InsertTableAfter(paraBeforeTable)
+	tablePara1 := table.AddRow().AddCell().AddParagraph()
+	tablePara1.AddRun().AddText("table paragraph 1")
+
+	paraAfterTable := doc.AddParagraph()
+	paraAfterTable.AddRun().AddText("after table")
+
+	tablePara2 := doc.InsertParagraphBefore(tablePara1)
+	tablePara2.AddRun().AddText("table paragraph before table paragraph 1")
+
+	tablePara3 := doc.InsertParagraphAfter(tablePara1)
+	tablePara3.AddRun().AddText("table paragraph after table paragraph 1")
+
+	bles := doc.X().Body.EG_BlockLevelElts
+
+	if len(bles) != 3 {
+		t.Errorf("expected 3 block level elements, got %d", len(bles))
+	}
+	if len(bles[0].EG_ContentBlockContent[0].P) != 1 {
+		t.Errorf("expected 1 paragraph in the first block level element, got %d", len(bles[0].EG_ContentBlockContent[0].P))
+	}
+	if len(bles[1].EG_ContentBlockContent[0].P) != 0 {
+		t.Errorf("expected no paragraphs in the second block level element, got %d", len(bles[1].EG_ContentBlockContent[0].P))
+	}
+	if len(bles[1].EG_ContentBlockContent[0].Tbl) != 1 {
+		t.Errorf("expected 1 table in the second block level element, got %d", len(bles[1].EG_ContentBlockContent[0].Tbl))
+	}
+	if len(bles[2].EG_ContentBlockContent[0].P) != 1 {
+		t.Errorf("expected 1 paragraph in the third block level element, got %d", len(bles[2].EG_ContentBlockContent[0].P))
+	}
+
+	cbc := bles[1].EG_ContentBlockContent[0].Tbl[0].EG_ContentRowContent[0].Tr[0].EG_ContentCellContent[0].Tc[0].EG_BlockLevelElts[0].EG_ContentBlockContent[0]
+	if len(cbc.P) != 3 {
+		t.Errorf("expected 3 paragraphs in the table, got %d", len(cbc.P))
+	}
+	expected := []string{"table paragraph before table paragraph 1", "table paragraph 1", "table paragraph after table paragraph 1"}
+	for i, p := range cbc.P {
+		got := p.EG_PContent[0].EG_ContentRunContent[0].R.EG_RunInnerContent[0].T.Content
+		if got != expected[i] {
+			t.Errorf("expected %s in %d table paragraph, got %s", expected[i], i, got)
+		}
+	}
+}
