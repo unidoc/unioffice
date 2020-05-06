@@ -1062,3 +1062,33 @@ func (d Document) Bookmarks() []Bookmark {
 	}
 	return ret
 }
+
+// RemoveTable removes a table from a document.
+func (d *Document) RemoveTable(tbl Table) {
+	if d.x.Body == nil {
+		return
+	}
+
+	for _, ble := range d.x.Body.EG_BlockLevelElts {
+		for _, c := range ble.EG_ContentBlockContent {
+			for i, t := range c.Tbl {
+				// do we need to remove this paragraph
+				if t == tbl.x {
+					copy(c.Tbl[i:], c.Tbl[i+1:])
+					c.Tbl = c.Tbl[0 : len(c.Tbl)-1]
+					return
+				}
+			}
+
+			if c.Sdt != nil && c.Sdt.SdtContent != nil && c.Sdt.SdtContent.Tbl != nil {
+				for i, t := range c.Sdt.SdtContent.Tbl {
+					if t == tbl.x {
+						copy(c.Tbl[i:], c.Tbl[i+1:])
+						c.Tbl = c.Tbl[0 : len(c.Tbl)-1]
+						return
+					}
+				}
+			}
+		}
+	}
+}

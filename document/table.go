@@ -89,3 +89,13 @@ func (t Table) Rows() []Row {
 	}
 	return ret
 }
+
+// MergeWith merges table with another table to the bottom.
+func (t Table) MergeWith(t1 Table) {
+	for _, crc := range t1.x.EG_ContentRowContent {
+		t.x.EG_ContentRowContent = append(t.x.EG_ContentRowContent, crc)
+	}
+	for _, rme := range t1.x.EG_RangeMarkupElements {
+		t.x.EG_RangeMarkupElements = append(t.x.EG_RangeMarkupElements, rme)
+	}
+}
