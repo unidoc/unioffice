@@ -244,3 +244,164 @@ func (r RunProperties) SetVerticalAlignment(v sharedTypes.ST_VerticalAlignRun) {
 		r.x.VertAlign.ValAttr = v
 	}
 }
+
+func (r RunProperties) Bold() bool {
+	x := r.x
+	return getBool(x.B) || getBool(x.BCs)
+}
+
+func (r RunProperties) Italic() bool {
+	x := r.x
+	return getBool(x.I) || getBool(x.ICs)
+}
+
+func (r RunProperties) Caps() bool {
+	return getBool(r.x.Caps)
+}
+
+func (r RunProperties) Strike() bool {
+	return getBool(r.x.Strike)
+}
+
+func (r RunProperties) DoubleStrike() bool {
+	return getBool(r.x.Dstrike)
+}
+
+func (r RunProperties) Outline() bool {
+	return getBool(r.x.Outline)
+}
+
+func (r RunProperties) Shadow() bool {
+	return getBool(r.x.Shadow)
+}
+
+func (r RunProperties) Emboss() bool {
+	return getBool(r.x.Emboss)
+}
+
+func (r RunProperties) RightToLeft() bool {
+	return getBool(r.x.Rtl)
+}
+
+func (r RunProperties) RStyle() string {
+	if r.x.RStyle != nil {
+		return r.x.RStyle.ValAttr
+	}
+	return ""
+}
+
+func (r RunProperties) Font() string {
+	if fonts := r.x.RFonts; fonts != nil {
+		if fonts.AsciiAttr != nil {
+			return *fonts.AsciiAttr
+		} else if fonts.HAnsiAttr != nil {
+			return *fonts.HAnsiAttr
+		} else if fonts.CsAttr != nil {
+			return *fonts.CsAttr
+		}
+	}
+	return ""
+}
+
+func (r RunProperties) EastAsiaFont() string {
+	if fonts := r.x.RFonts; fonts != nil {
+		if fonts.EastAsiaAttr != nil {
+			return *fonts.EastAsiaAttr
+		}
+	}
+	return ""
+}
+
+func (r RunProperties) ColorStr() string {
+	if color := r.x.Color; color != nil {
+		valAttr := color.ValAttr
+		if valAttr.ST_HexColorRGB != nil {
+			return *valAttr.ST_HexColorRGB
+		}
+	}
+	return ""
+}
+
+func (r RunProperties) SpacingValue() int64 {
+	if spacing := r.x.Spacing; spacing != nil {
+		valAttr := spacing.ValAttr
+		if valAttr.Int64 != nil {
+			return *valAttr.Int64
+		}
+	}
+	return int64(0)
+}
+
+func (r RunProperties) SpacingMeasure() string {
+	if spacing := r.x.Spacing; spacing != nil {
+		valAttr := spacing.ValAttr
+		if valAttr.ST_UniversalMeasure != nil {
+			return *valAttr.ST_UniversalMeasure
+		}
+	}
+	return ""
+}
+
+func (r RunProperties) SizeValue() uint64 {
+	if sz := r.x.Sz; sz != nil {
+		valAttr := sz.ValAttr
+		if valAttr.ST_UnsignedDecimalNumber != nil {
+			return *valAttr.ST_UnsignedDecimalNumber
+		}
+	}
+	return uint64(0)
+}
+
+func (r RunProperties) SizeMeasure() string {
+	if sz := r.x.Sz; sz != nil {
+		valAttr := sz.ValAttr
+		if valAttr.ST_PositiveUniversalMeasure != nil {
+			return *valAttr.ST_PositiveUniversalMeasure
+		}
+	}
+	return ""
+}
+
+func (r RunProperties) ComplexSizeValue() uint64 {
+	if szCs := r.x.SzCs; szCs != nil {
+		valAttr := szCs.ValAttr
+		if valAttr.ST_UnsignedDecimalNumber != nil {
+			return *valAttr.ST_UnsignedDecimalNumber
+		}
+	}
+	return uint64(0)
+}
+
+func (r RunProperties) ComplexSizeMeasure() string {
+	if szCs := r.x.SzCs; szCs != nil {
+		valAttr := szCs.ValAttr
+		if valAttr.ST_PositiveUniversalMeasure != nil {
+			return *valAttr.ST_PositiveUniversalMeasure
+		}
+	}
+	return ""
+}
+
+func (r RunProperties) UnderlineType() wml.ST_Underline {
+	if underline := r.x.U; underline != nil {
+		return underline.ValAttr
+	}
+	return 0
+}
+
+func (r RunProperties) UnderlineColor() string {
+	if underline := r.x.U; underline != nil {
+		color := underline.ColorAttr
+		if color.ST_HexColorRGB != nil {
+			return *color.ST_HexColorRGB
+		}
+	}
+	return ""
+}
+
+func (r RunProperties) VertAlign() sharedTypes.ST_VerticalAlignRun {
+	if vertAlign := r.x.VertAlign; vertAlign != nil {
+		return vertAlign.ValAttr
+	}
+	return 0
+}

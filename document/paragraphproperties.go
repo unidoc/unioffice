@@ -199,3 +199,164 @@ func (p ParagraphProperties) SetHangingIndent(m measurement.Distance) {
 		p.x.Ind.HangingAttr.ST_UnsignedDecimalNumber = unioffice.Uint64(uint64(m / measurement.Twips))
 	}
 }
+
+func (p ParagraphProperties) Bold() bool {
+	x := p.x.RPr
+	return getBool(x.B) || getBool(x.BCs)
+}
+
+func (p ParagraphProperties) Italic() bool {
+	x := p.x.RPr
+	return getBool(x.I) || getBool(x.ICs)
+}
+
+func (p ParagraphProperties) Caps() bool {
+	return getBool(p.x.RPr.Caps)
+}
+
+func (p ParagraphProperties) Strike() bool {
+	return getBool(p.x.RPr.Strike)
+}
+
+func (p ParagraphProperties) DoubleStrike() bool {
+	return getBool(p.x.RPr.Dstrike)
+}
+
+func (p ParagraphProperties) Outline() bool {
+	return getBool(p.x.RPr.Outline)
+}
+
+func (p ParagraphProperties) Shadow() bool {
+	return getBool(p.x.RPr.Shadow)
+}
+
+func (p ParagraphProperties) Emboss() bool {
+	return getBool(p.x.RPr.Emboss)
+}
+
+func (p ParagraphProperties) RightToLeft() bool {
+	return getBool(p.x.RPr.Rtl)
+}
+
+func (p ParagraphProperties) RStyle() string {
+	if p.x.RPr.RStyle != nil {
+		return p.x.RPr.RStyle.ValAttr
+	}
+	return ""
+}
+
+func (p ParagraphProperties) Font() string {
+	if fonts := p.x.RPr.RFonts; fonts != nil {
+		if fonts.AsciiAttr != nil {
+			return *fonts.AsciiAttr
+		} else if fonts.HAnsiAttr != nil {
+			return *fonts.HAnsiAttr
+		} else if fonts.CsAttr != nil {
+			return *fonts.CsAttr
+		}
+	}
+	return ""
+}
+
+func (p ParagraphProperties) EastAsiaFont() string {
+	if fonts := p.x.RPr.RFonts; fonts != nil {
+		if fonts.EastAsiaAttr != nil {
+			return *fonts.EastAsiaAttr
+		}
+	}
+	return ""
+}
+
+func (p ParagraphProperties) ColorStr() string {
+	if color := p.x.RPr.Color; color != nil {
+		valAttr := color.ValAttr
+		if valAttr.ST_HexColorRGB != nil {
+			return *valAttr.ST_HexColorRGB
+		}
+	}
+	return ""
+}
+
+func (p ParagraphProperties) SpacingValue() int64 {
+	if spacing := p.x.RPr.Spacing; spacing != nil {
+		valAttr := spacing.ValAttr
+		if valAttr.Int64 != nil {
+			return *valAttr.Int64
+		}
+	}
+	return int64(0)
+}
+
+func (p ParagraphProperties) SpacingMeasure() string {
+	if spacing := p.x.RPr.Spacing; spacing != nil {
+		valAttr := spacing.ValAttr
+		if valAttr.ST_UniversalMeasure != nil {
+			return *valAttr.ST_UniversalMeasure
+		}
+	}
+	return ""
+}
+
+func (p ParagraphProperties) SizeValue() uint64 {
+	if sz := p.x.RPr.Sz; sz != nil {
+		valAttr := sz.ValAttr
+		if valAttr.ST_UnsignedDecimalNumber != nil {
+			return *valAttr.ST_UnsignedDecimalNumber
+		}
+	}
+	return uint64(0)
+}
+
+func (p ParagraphProperties) SizeMeasure() string {
+	if sz := p.x.RPr.Sz; sz != nil {
+		valAttr := sz.ValAttr
+		if valAttr.ST_PositiveUniversalMeasure != nil {
+			return *valAttr.ST_PositiveUniversalMeasure
+		}
+	}
+	return ""
+}
+
+func (p ParagraphProperties) ComplexSizeValue() uint64 {
+	if szCs := p.x.RPr.SzCs; szCs != nil {
+		valAttr := szCs.ValAttr
+		if valAttr.ST_UnsignedDecimalNumber != nil {
+			return *valAttr.ST_UnsignedDecimalNumber
+		}
+	}
+	return uint64(0)
+}
+
+func (p ParagraphProperties) ComplexSizeMeasure() string {
+	if szCs := p.x.RPr.SzCs; szCs != nil {
+		valAttr := szCs.ValAttr
+		if valAttr.ST_PositiveUniversalMeasure != nil {
+			return *valAttr.ST_PositiveUniversalMeasure
+		}
+	}
+	return ""
+}
+
+func (p ParagraphProperties) UnderlineType() wml.ST_Underline {
+	if underline := p.x.RPr.U; underline != nil {
+		return underline.ValAttr
+	}
+	return 0
+}
+
+func (p ParagraphProperties) UnderlineColor() string {
+	if underline := p.x.RPr.U; underline != nil {
+		color := underline.ColorAttr
+		if color.ST_HexColorRGB != nil {
+			return *color.ST_HexColorRGB
+		}
+	}
+	return ""
+}
+
+func (p ParagraphProperties) VertAlign() sharedTypes.ST_VerticalAlignRun {
+	if vertAlign := p.x.RPr.VertAlign; vertAlign != nil {
+		return vertAlign.ValAttr
+	}
+	return 0
+}
