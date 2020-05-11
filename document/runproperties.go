@@ -245,44 +245,55 @@ func (r RunProperties) SetVerticalAlignment(v sharedTypes.ST_VerticalAlignRun) {
 	}
 }
 
+
+// Bold returns true if run font is bold.
 func (r RunProperties) Bold() bool {
 	x := r.x
 	return getBool(x.B) || getBool(x.BCs)
 }
 
+// Italic returns true if run font is italic.
 func (r RunProperties) Italic() bool {
 	x := r.x
 	return getBool(x.I) || getBool(x.ICs)
 }
 
+// Caps returns true if run font is capitalized.
 func (r RunProperties) Caps() bool {
 	return getBool(r.x.Caps)
 }
 
+// Strike returns true if run is striked.
 func (r RunProperties) Strike() bool {
 	return getBool(r.x.Strike)
 }
 
+// DoubleStrike returns true if run is double striked.
 func (r RunProperties) DoubleStrike() bool {
 	return getBool(r.x.Dstrike)
 }
 
+// Outline returns true if run outline is on.
 func (r RunProperties) Outline() bool {
 	return getBool(r.x.Outline)
 }
 
+// Shadow returns true if run shadow is on.
 func (r RunProperties) Shadow() bool {
 	return getBool(r.x.Shadow)
 }
 
+// Emboss returns true if run emboss is on.
 func (r RunProperties) Emboss() bool {
 	return getBool(r.x.Emboss)
 }
 
+// RightToLeft returns true if run text goes from right to left.
 func (r RunProperties) RightToLeft() bool {
 	return getBool(r.x.Rtl)
 }
 
+// RStyle returns the name of run style.
 func (r RunProperties) RStyle() string {
 	if r.x.RStyle != nil {
 		return r.x.RStyle.ValAttr
@@ -290,6 +301,7 @@ func (r RunProperties) RStyle() string {
 	return ""
 }
 
+// Font returns the name of run font family.
 func (r RunProperties) Font() string {
 	if fonts := r.x.RFonts; fonts != nil {
 		if fonts.AsciiAttr != nil {
@@ -303,6 +315,7 @@ func (r RunProperties) Font() string {
 	return ""
 }
 
+// EastAsiaFont returns the name of run font family for East Asia.
 func (r RunProperties) EastAsiaFont() string {
 	if fonts := r.x.RFonts; fonts != nil {
 		if fonts.EastAsiaAttr != nil {
@@ -312,6 +325,7 @@ func (r RunProperties) EastAsiaFont() string {
 	return ""
 }
 
+// ColorStr returns the hex value of run color.
 func (r RunProperties) ColorStr() string {
 	if color := r.x.Color; color != nil {
 		valAttr := color.ValAttr
@@ -322,6 +336,7 @@ func (r RunProperties) ColorStr() string {
 	return ""
 }
 
+// SpacingValue returns the value of run spacing.
 func (r RunProperties) SpacingValue() int64 {
 	if spacing := r.x.Spacing; spacing != nil {
 		valAttr := spacing.ValAttr
@@ -332,6 +347,7 @@ func (r RunProperties) SpacingValue() int64 {
 	return int64(0)
 }
 
+// SpacingMeasure returns the measure of run spacing.
 func (r RunProperties) SpacingMeasure() string {
 	if spacing := r.x.Spacing; spacing != nil {
 		valAttr := spacing.ValAttr
@@ -342,16 +358,18 @@ func (r RunProperties) SpacingMeasure() string {
 	return ""
 }
 
-func (r RunProperties) SizeValue() uint64 {
+// SizeValue returns the value of run font size.
+func (r RunProperties) SizeValue() float64 {
 	if sz := r.x.Sz; sz != nil {
 		valAttr := sz.ValAttr
 		if valAttr.ST_UnsignedDecimalNumber != nil {
-			return *valAttr.ST_UnsignedDecimalNumber
+			return float64(*valAttr.ST_UnsignedDecimalNumber) / 2
 		}
 	}
-	return uint64(0)
+	return 0.0
 }
 
+// SizeMeasure returns the measure of run font size.
 func (r RunProperties) SizeMeasure() string {
 	if sz := r.x.Sz; sz != nil {
 		valAttr := sz.ValAttr
@@ -362,16 +380,18 @@ func (r RunProperties) SizeMeasure() string {
 	return ""
 }
 
-func (r RunProperties) ComplexSizeValue() uint64 {
+// ComplexSizeValue returns the value of run font size for complex fonts.
+func (r RunProperties) ComplexSizeValue() float64 {
 	if szCs := r.x.SzCs; szCs != nil {
 		valAttr := szCs.ValAttr
 		if valAttr.ST_UnsignedDecimalNumber != nil {
-			return *valAttr.ST_UnsignedDecimalNumber
+			return float64(*valAttr.ST_UnsignedDecimalNumber) / 2
 		}
 	}
-	return uint64(0)
+	return 0.0
 }
 
+// ComplexSizeMeasure returns the measure of run font size for complex fonts.
 func (r RunProperties) ComplexSizeMeasure() string {
 	if szCs := r.x.SzCs; szCs != nil {
 		valAttr := szCs.ValAttr
@@ -382,6 +402,7 @@ func (r RunProperties) ComplexSizeMeasure() string {
 	return ""
 }
 
+// UnderlineType returns the type of run underline.
 func (r RunProperties) UnderlineType() wml.ST_Underline {
 	if underline := r.x.U; underline != nil {
 		return underline.ValAttr
@@ -389,6 +410,7 @@ func (r RunProperties) UnderlineType() wml.ST_Underline {
 	return 0
 }
 
+// UnderlineColor returns the hex color value of run underline.
 func (r RunProperties) UnderlineColor() string {
 	if underline := r.x.U; underline != nil {
 		color := underline.ColorAttr
@@ -399,6 +421,7 @@ func (r RunProperties) UnderlineColor() string {
 	return ""
 }
 
+// VertAlign returns the value of run vertical align.
 func (r RunProperties) VertAlign() sharedTypes.ST_VerticalAlignRun {
 	if vertAlign := r.x.VertAlign; vertAlign != nil {
 		return vertAlign.ValAttr
