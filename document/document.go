@@ -1149,3 +1149,7 @@ func (d Document) Bookmarks() []Bookmark {
 	}
 	return ret
 }
+
+func getBool(onOff *wml.CT_OnOff) bool {
+	return onOff != nil
+}
