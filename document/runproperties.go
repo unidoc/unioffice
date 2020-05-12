@@ -326,19 +326,19 @@ func (r RunProperties) EastAsiaFont() string {
 	return ""
 }
 
-// HexColor returns the hex value of run color.
-func (r RunProperties) HexColor() string {
-	if color := r.x.Color; color != nil {
-		valAttr := color.ValAttr
+// GetColor returns the color.Color object representing the run color.
+func (r RunProperties) GetColor() color.Color {
+	if c := r.x.Color; c != nil {
+		valAttr := c.ValAttr
 		if valAttr.ST_HexColorRGB != nil {
-			return *valAttr.ST_HexColorRGB
+			return color.FromHex(*valAttr.ST_HexColorRGB)
 		}
 	}
-	return ""
+	return color.Color{}
 }
 
-// SpacingValue returns the value of run spacing.
-func (r RunProperties) SpacingValue() int64 {
+// CharacterSpacingValue returns the value of run's characters spacing in twips (1/20 of point).
+func (r RunProperties) CharacterSpacingValue() int64 {
 	if spacing := r.x.Spacing; spacing != nil {
 		valAttr := spacing.ValAttr
 		if valAttr.Int64 != nil {
@@ -348,8 +348,8 @@ func (r RunProperties) SpacingValue() int64 {
 	return int64(0)
 }
 
-// SpacingMeasure returns the measure of run spacing.
-func (r RunProperties) SpacingMeasure() string {
+// CharacterSpacingMeasure returns paragraph characters spacing with its measure which can be mm, cm, in, pt, pc or pi.
+func (r RunProperties) CharacterSpacingMeasure() string {
 	if spacing := r.x.Spacing; spacing != nil {
 		valAttr := spacing.ValAttr
 		if valAttr.ST_UniversalMeasure != nil {
@@ -359,7 +359,7 @@ func (r RunProperties) SpacingMeasure() string {
 	return ""
 }
 
-// SizeValue returns the value of run font size.
+// SizeValue returns the value of run font size in points.
 func (r RunProperties) SizeValue() float64 {
 	if sz := r.x.Sz; sz != nil {
 		valAttr := sz.ValAttr
@@ -370,7 +370,7 @@ func (r RunProperties) SizeValue() float64 {
 	return 0.0
 }
 
-// SizeMeasure returns the measure of run font size.
+// SizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
 func (r RunProperties) SizeMeasure() string {
 	if sz := r.x.Sz; sz != nil {
 		valAttr := sz.ValAttr
@@ -381,7 +381,7 @@ func (r RunProperties) SizeMeasure() string {
 	return ""
 }
 
-// ComplexSizeValue returns the value of run font size for complex fonts.
+// ComplexSizeValue returns the value of run font size for complex fonts in points.
 func (r RunProperties) ComplexSizeValue() float64 {
 	if szCs := r.x.SzCs; szCs != nil {
 		valAttr := szCs.ValAttr
@@ -392,7 +392,7 @@ func (r RunProperties) ComplexSizeValue() float64 {
 	return 0.0
 }
 
-// ComplexSizeMeasure returns the measure of run font size for complex fonts.
+// ComplexSizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
 func (r RunProperties) ComplexSizeMeasure() string {
 	if szCs := r.x.SzCs; szCs != nil {
 		valAttr := szCs.ValAttr
@@ -403,8 +403,8 @@ func (r RunProperties) ComplexSizeMeasure() string {
 	return ""
 }
 
-// UnderlineType returns the type of run underline.
-func (r RunProperties) UnderlineType() wml.ST_Underline {
+// Underline returns the type of run underline.
+func (r RunProperties) Underline() wml.ST_Underline {
 	if underline := r.x.U; underline != nil {
 		return underline.ValAttr
 	}

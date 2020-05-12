@@ -11,6 +11,7 @@ import (
 	"fmt"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
 	"github.com/unidoc/unioffice/schema/soo/wml"
@@ -280,19 +281,19 @@ func (p ParagraphProperties) EastAsiaFont() string {
 	return ""
 }
 
-// HexColor returns the hex value of paragraph color.
-func (p ParagraphProperties) HexColor() string {
-	if color := p.x.RPr.Color; color != nil {
-		valAttr := color.ValAttr
+// GetColor returns the color.Color object representing the run color.
+func (p ParagraphProperties) GetColor() color.Color {
+	if c := p.x.RPr.Color; c != nil {
+		valAttr := c.ValAttr
 		if valAttr.ST_HexColorRGB != nil {
-			return *valAttr.ST_HexColorRGB
+			return color.FromHex(*valAttr.ST_HexColorRGB)
 		}
 	}
-	return ""
+	return color.Color{}
 }
 
-// SpacingValue returns the value of paragraph spacing.
-func (p ParagraphProperties) SpacingValue() int64 {
+// CharacterSpacingValue returns the value of characters spacing in twips (1/20 of point).
+func (p ParagraphProperties) CharacterSpacingValue() int64 {
 	if spacing := p.x.RPr.Spacing; spacing != nil {
 		valAttr := spacing.ValAttr
 		if valAttr.Int64 != nil {
@@ -302,8 +303,8 @@ func (p ParagraphProperties) SpacingValue() int64 {
 	return int64(0)
 }
 
-// SpacingMeasure returns the measure of paragraph spacing.
-func (p ParagraphProperties) SpacingMeasure() string {
+// CharacterSpacingMeasure returns paragraph characters spacing with its measure which can be mm, cm, in, pt, pc or pi.
+func (p ParagraphProperties) CharacterSpacingMeasure() string {
 	if spacing := p.x.RPr.Spacing; spacing != nil {
 		valAttr := spacing.ValAttr
 		if valAttr.ST_UniversalMeasure != nil {
@@ -313,7 +314,7 @@ func (p ParagraphProperties) SpacingMeasure() string {
 	return ""
 }
 
-// SizeValue returns the value of paragraph font size.
+// SizeValue returns the value of paragraph font size in points.
 func (p ParagraphProperties) SizeValue() float64 {
 	if sz := p.x.RPr.Sz; sz != nil {
 		valAttr := sz.ValAttr
@@ -324,7 +325,7 @@ func (p ParagraphProperties) SizeValue() float64 {
 	return 0.0
 }
 
-// SizeMeasure returns the measure of paragraph font size.
+// SizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
 func (p ParagraphProperties) SizeMeasure() string {
 	if sz := p.x.RPr.Sz; sz != nil {
 		valAttr := sz.ValAttr
@@ -335,7 +336,7 @@ func (p ParagraphProperties) SizeMeasure() string {
 	return ""
 }
 
-// ComplexSizeValue returns the value of paragraph font size for complex fonts.
+// ComplexSizeValue returns the value of paragraph font size for complex fonts in points.
 func (p ParagraphProperties) ComplexSizeValue() float64 {
 	if szCs := p.x.RPr.SzCs; szCs != nil {
 		valAttr := szCs.ValAttr
@@ -346,7 +347,7 @@ func (p ParagraphProperties) ComplexSizeValue() float64 {
 	return 0.0
 }
 
-// ComplexSizeMeasure returns the measure of paragraph font size for complex fonts.
+// ComplexSizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
 func (p ParagraphProperties) ComplexSizeMeasure() string {
 	if szCs := p.x.RPr.SzCs; szCs != nil {
 		valAttr := szCs.ValAttr
@@ -357,8 +358,8 @@ func (p ParagraphProperties) ComplexSizeMeasure() string {
 	return ""
 }
 
-// UnderlineType returns the type of paragraph underline.
-func (p ParagraphProperties) UnderlineType() wml.ST_Underline {
+// Underline returns the type of paragraph underline.
+func (p ParagraphProperties) Underline() wml.ST_Underline {
 	if underline := p.x.RPr.U; underline != nil {
 		return underline.ValAttr
 	}
