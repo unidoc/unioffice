@@ -11,6 +11,7 @@ import (
 	"fmt"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
 	"github.com/unidoc/unioffice/schema/soo/wml"
@@ -198,4 +199,188 @@ func (p ParagraphProperties) SetHangingIndent(m measurement.Distance) {
 		p.x.Ind.HangingAttr = &sharedTypes.ST_TwipsMeasure{}
 		p.x.Ind.HangingAttr.ST_UnsignedDecimalNumber = unioffice.Uint64(uint64(m / measurement.Twips))
 	}
+}
+
+// Bold returns true if paragraph font is bold.
+func (p ParagraphProperties) Bold() bool {
+	x := p.x.RPr
+	return getBool(x.B) || getBool(x.BCs)
+}
+
+// Italic returns true if paragraph font is italic.
+func (p ParagraphProperties) Italic() bool {
+	x := p.x.RPr
+	return getBool(x.I) || getBool(x.ICs)
+}
+
+// Caps returns true if paragraph font is capitalized.
+func (p ParagraphProperties) Caps() bool {
+	return getBool(p.x.RPr.Caps)
+}
+
+// Strike returns true if paragraph is striked.
+func (p ParagraphProperties) Strike() bool {
+	return getBool(p.x.RPr.Strike)
+}
+
+// DoubleStrike returns true if paragraph is double striked.
+func (p ParagraphProperties) DoubleStrike() bool {
+	return getBool(p.x.RPr.Dstrike)
+}
+
+// Outline returns true if paragraph outline is on.
+func (p ParagraphProperties) Outline() bool {
+	return getBool(p.x.RPr.Outline)
+}
+
+// Shadow returns true if paragraph shadow is on.
+func (p ParagraphProperties) Shadow() bool {
+	return getBool(p.x.RPr.Shadow)
+}
+
+// Emboss returns true if paragraph emboss is on.
+func (p ParagraphProperties) Emboss() bool {
+	return getBool(p.x.RPr.Emboss)
+}
+
+// RightToLeft returns true if paragraph text goes from right to left.
+func (p ParagraphProperties) RightToLeft() bool {
+	return getBool(p.x.RPr.Rtl)
+}
+
+// RStyle returns the name of character style.
+// It is defined here http://officeopenxml.com/WPstyleCharStyles.php
+func (p ParagraphProperties) RStyle() string {
+	if p.x.RPr.RStyle != nil {
+		return p.x.RPr.RStyle.ValAttr
+	}
+	return ""
+}
+
+// Font returns the name of paragraph font family.
+func (p ParagraphProperties) Font() string {
+	if fonts := p.x.RPr.RFonts; fonts != nil {
+		if fonts.AsciiAttr != nil {
+			return *fonts.AsciiAttr
+		} else if fonts.HAnsiAttr != nil {
+			return *fonts.HAnsiAttr
+		} else if fonts.CsAttr != nil {
+			return *fonts.CsAttr
+		}
+	}
+	return ""
+}
+
+// EastAsiaFont returns the name of paragraph font family for East Asia.
+func (p ParagraphProperties) EastAsiaFont() string {
+	if fonts := p.x.RPr.RFonts; fonts != nil {
+		if fonts.EastAsiaAttr != nil {
+			return *fonts.EastAsiaAttr
+		}
+	}
+	return ""
+}
+
+// GetColor returns the color.Color object representing the run color.
+func (p ParagraphProperties) GetColor() color.Color {
+	if c := p.x.RPr.Color; c != nil {
+		valAttr := c.ValAttr
+		if valAttr.ST_HexColorRGB != nil {
+			return color.FromHex(*valAttr.ST_HexColorRGB)
+		}
+	}
+	return color.Color{}
+}
+
+// CharacterSpacingValue returns the value of characters spacing in twips (1/20 of point).
+func (p ParagraphProperties) CharacterSpacingValue() int64 {
+	if spacing := p.x.RPr.Spacing; spacing != nil {
+		valAttr := spacing.ValAttr
+		if valAttr.Int64 != nil {
+			return *valAttr.Int64
+		}
+	}
+	return int64(0)
+}
+
+// CharacterSpacingMeasure returns paragraph characters spacing with its measure which can be mm, cm, in, pt, pc or pi.
+func (p ParagraphProperties) CharacterSpacingMeasure() string {
+	if spacing := p.x.RPr.Spacing; spacing != nil {
+		valAttr := spacing.ValAttr
+		if valAttr.ST_UniversalMeasure != nil {
+			return *valAttr.ST_UniversalMeasure
+		}
+	}
+	return ""
+}
+
+// SizeValue returns the value of paragraph font size in points.
+func (p ParagraphProperties) SizeValue() float64 {
+	if sz := p.x.RPr.Sz; sz != nil {
+		valAttr := sz.ValAttr
+		if valAttr.ST_UnsignedDecimalNumber != nil {
+			return float64(*valAttr.ST_UnsignedDecimalNumber) / 2
+		}
+	}
+	return 0.0
+}
+
+// SizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
+func (p ParagraphProperties) SizeMeasure() string {
+	if sz := p.x.RPr.Sz; sz != nil {
+		valAttr := sz.ValAttr
+		if valAttr.ST_PositiveUniversalMeasure != nil {
+			return *valAttr.ST_PositiveUniversalMeasure
+		}
+	}
+	return ""
+}
+
+// ComplexSizeValue returns the value of paragraph font size for complex fonts in points.
+func (p ParagraphProperties) ComplexSizeValue() float64 {
+	if szCs := p.x.RPr.SzCs; szCs != nil {
+		valAttr := szCs.ValAttr
+		if valAttr.ST_UnsignedDecimalNumber != nil {
+			return float64(*valAttr.ST_UnsignedDecimalNumber) / 2
+		}
+	}
+	return 0.0
+}
+
+// ComplexSizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
+func (p ParagraphProperties) ComplexSizeMeasure() string {
+	if szCs := p.x.RPr.SzCs; szCs != nil {
+		valAttr := szCs.ValAttr
+		if valAttr.ST_PositiveUniversalMeasure != nil {
+			return *valAttr.ST_PositiveUniversalMeasure
+		}
+	}
+	return ""
+}
+
+// Underline returns the type of paragraph underline.
+func (p ParagraphProperties) Underline() wml.ST_Underline {
+	if underline := p.x.RPr.U; underline != nil {
+		return underline.ValAttr
+	}
+	return 0
+}
+
+// UnderlineColor returns the hex color value of paragraph underline.
+func (p ParagraphProperties) UnderlineColor() string {
+	if underline := p.x.RPr.U; underline != nil {
+		color := underline.ColorAttr
+		if color.ST_HexColorRGB != nil {
+			return *color.ST_HexColorRGB
+		}
+	}
+	return ""
+}
+
+// VerticalAlign returns the value of paragraph vertical align.
+func (p ParagraphProperties) VerticalAlignment() sharedTypes.ST_VerticalAlignRun {
+	if vertAlign := p.x.RPr.VertAlign; vertAlign != nil {
+		return vertAlign.ValAttr
+	}
+	return 0
 }

@@ -244,3 +244,188 @@ func (r RunProperties) SetVerticalAlignment(v sharedTypes.ST_VerticalAlignRun) {
 		r.x.VertAlign.ValAttr = v
 	}
 }
+
+
+// Bold returns true if run font is bold.
+func (r RunProperties) Bold() bool {
+	x := r.x
+	return getBool(x.B) || getBool(x.BCs)
+}
+
+// Italic returns true if run font is italic.
+func (r RunProperties) Italic() bool {
+	x := r.x
+	return getBool(x.I) || getBool(x.ICs)
+}
+
+// Caps returns true if run font is capitalized.
+func (r RunProperties) Caps() bool {
+	return getBool(r.x.Caps)
+}
+
+// Strike returns true if run is striked.
+func (r RunProperties) Strike() bool {
+	return getBool(r.x.Strike)
+}
+
+// DoubleStrike returns true if run is double striked.
+func (r RunProperties) DoubleStrike() bool {
+	return getBool(r.x.Dstrike)
+}
+
+// Outline returns true if run outline is on.
+func (r RunProperties) Outline() bool {
+	return getBool(r.x.Outline)
+}
+
+// Shadow returns true if run shadow is on.
+func (r RunProperties) Shadow() bool {
+	return getBool(r.x.Shadow)
+}
+
+// Emboss returns true if run emboss is on.
+func (r RunProperties) Emboss() bool {
+	return getBool(r.x.Emboss)
+}
+
+// RightToLeft returns true if run text goes from right to left.
+func (r RunProperties) RightToLeft() bool {
+	return getBool(r.x.Rtl)
+}
+
+// RStyle returns the name of character style.
+// It is defined here http://officeopenxml.com/WPstyleCharStyles.php
+func (r RunProperties) RStyle() string {
+	if r.x.RStyle != nil {
+		return r.x.RStyle.ValAttr
+	}
+	return ""
+}
+
+// Font returns the name of run font family.
+func (r RunProperties) Font() string {
+	if fonts := r.x.RFonts; fonts != nil {
+		if fonts.AsciiAttr != nil {
+			return *fonts.AsciiAttr
+		} else if fonts.HAnsiAttr != nil {
+			return *fonts.HAnsiAttr
+		} else if fonts.CsAttr != nil {
+			return *fonts.CsAttr
+		}
+	}
+	return ""
+}
+
+// EastAsiaFont returns the name of run font family for East Asia.
+func (r RunProperties) EastAsiaFont() string {
+	if fonts := r.x.RFonts; fonts != nil {
+		if fonts.EastAsiaAttr != nil {
+			return *fonts.EastAsiaAttr
+		}
+	}
+	return ""
+}
+
+// GetColor returns the color.Color object representing the run color.
+func (r RunProperties) GetColor() color.Color {
+	if c := r.x.Color; c != nil {
+		valAttr := c.ValAttr
+		if valAttr.ST_HexColorRGB != nil {
+			return color.FromHex(*valAttr.ST_HexColorRGB)
+		}
+	}
+	return color.Color{}
+}
+
+// CharacterSpacingValue returns the value of run's characters spacing in twips (1/20 of point).
+func (r RunProperties) CharacterSpacingValue() int64 {
+	if spacing := r.x.Spacing; spacing != nil {
+		valAttr := spacing.ValAttr
+		if valAttr.Int64 != nil {
+			return *valAttr.Int64
+		}
+	}
+	return int64(0)
+}
+
+// CharacterSpacingMeasure returns paragraph characters spacing with its measure which can be mm, cm, in, pt, pc or pi.
+func (r RunProperties) CharacterSpacingMeasure() string {
+	if spacing := r.x.Spacing; spacing != nil {
+		valAttr := spacing.ValAttr
+		if valAttr.ST_UniversalMeasure != nil {
+			return *valAttr.ST_UniversalMeasure
+		}
+	}
+	return ""
+}
+
+// SizeValue returns the value of run font size in points.
+func (r RunProperties) SizeValue() float64 {
+	if sz := r.x.Sz; sz != nil {
+		valAttr := sz.ValAttr
+		if valAttr.ST_UnsignedDecimalNumber != nil {
+			return float64(*valAttr.ST_UnsignedDecimalNumber) / 2
+		}
+	}
+	return 0.0
+}
+
+// SizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
+func (r RunProperties) SizeMeasure() string {
+	if sz := r.x.Sz; sz != nil {
+		valAttr := sz.ValAttr
+		if valAttr.ST_PositiveUniversalMeasure != nil {
+			return *valAttr.ST_PositiveUniversalMeasure
+		}
+	}
+	return ""
+}
+
+// ComplexSizeValue returns the value of run font size for complex fonts in points.
+func (r RunProperties) ComplexSizeValue() float64 {
+	if szCs := r.x.SzCs; szCs != nil {
+		valAttr := szCs.ValAttr
+		if valAttr.ST_UnsignedDecimalNumber != nil {
+			return float64(*valAttr.ST_UnsignedDecimalNumber) / 2
+		}
+	}
+	return 0.0
+}
+
+// ComplexSizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
+func (r RunProperties) ComplexSizeMeasure() string {
+	if szCs := r.x.SzCs; szCs != nil {
+		valAttr := szCs.ValAttr
+		if valAttr.ST_PositiveUniversalMeasure != nil {
+			return *valAttr.ST_PositiveUniversalMeasure
+		}
+	}
+	return ""
+}
+
+// Underline returns the type of run underline.
+func (r RunProperties) Underline() wml.ST_Underline {
+	if underline := r.x.U; underline != nil {
+		return underline.ValAttr
+	}
+	return 0
+}
+
+// UnderlineColor returns the hex color value of run underline.
+func (r RunProperties) UnderlineColor() string {
+	if underline := r.x.U; underline != nil {
+		color := underline.ColorAttr
+		if color.ST_HexColorRGB != nil {
+			return *color.ST_HexColorRGB
+		}
+	}
+	return ""
+}
+
+// VerticalAlign returns the value of run vertical align.
+func (r RunProperties) VerticalAlignment() sharedTypes.ST_VerticalAlignRun {
+	if vertAlign := r.x.VertAlign; vertAlign != nil {
+		return vertAlign.ValAttr
+	}
+	return 0
+}
