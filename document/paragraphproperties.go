@@ -247,7 +247,8 @@ func (p ParagraphProperties) RightToLeft() bool {
 	return getBool(p.x.RPr.Rtl)
 }
 
-// RStyle returns the name of paragraph runs style.
+// RStyle returns the name of character style.
+// It is defined here http://officeopenxml.com/WPstyleCharStyles.php
 func (p ParagraphProperties) RStyle() string {
 	if p.x.RPr.RStyle != nil {
 		return p.x.RPr.RStyle.ValAttr

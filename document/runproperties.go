@@ -293,7 +293,8 @@ func (r RunProperties) RightToLeft() bool {
 	return getBool(r.x.Rtl)
 }
 
-// RStyle returns the name of run style.
+// RStyle returns the name of character style.
+// It is defined here http://officeopenxml.com/WPstyleCharStyles.php
 func (r RunProperties) RStyle() string {
 	if r.x.RStyle != nil {
 		return r.x.RStyle.ValAttr
