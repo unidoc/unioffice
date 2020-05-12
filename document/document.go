@@ -1084,3 +1084,7 @@ func (d *Document) Close() error {
 	}
 	return nil
 }
+
+func getBool(onOff *wml.CT_OnOff) bool {
+	return onOff != nil
+}
