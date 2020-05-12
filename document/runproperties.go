@@ -325,8 +325,8 @@ func (r RunProperties) EastAsiaFont() string {
 	return ""
 }
 
-// ColorStr returns the hex value of run color.
-func (r RunProperties) ColorStr() string {
+// HexColor returns the hex value of run color.
+func (r RunProperties) HexColor() string {
 	if color := r.x.Color; color != nil {
 		valAttr := color.ValAttr
 		if valAttr.ST_HexColorRGB != nil {

@@ -279,8 +279,8 @@ func (p ParagraphProperties) EastAsiaFont() string {
 	return ""
 }
 
-// ColorStr returns the hex value of paragraph color.
-func (p ParagraphProperties) ColorStr() string {
+// HexColor returns the hex value of paragraph color.
+func (p ParagraphProperties) HexColor() string {
 	if color := p.x.RPr.Color; color != nil {
 		valAttr := color.ValAttr
 		if valAttr.ST_HexColorRGB != nil {
