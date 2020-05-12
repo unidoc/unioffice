@@ -375,8 +375,8 @@ func (p ParagraphProperties) UnderlineColor() string {
 	return ""
 }
 
-// VertAlign returns the value of paragraph vertical align.
-func (p ParagraphProperties) VertAlign() sharedTypes.ST_VerticalAlignRun {
+// VerticalAlign returns the value of paragraph vertical align.
+func (p ParagraphProperties) VerticalAlignment() sharedTypes.ST_VerticalAlignRun {
 	if vertAlign := p.x.RPr.VertAlign; vertAlign != nil {
 		return vertAlign.ValAttr
 	}

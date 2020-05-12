@@ -421,8 +421,8 @@ func (r RunProperties) UnderlineColor() string {
 	return ""
 }
 
-// VertAlign returns the value of run vertical align.
-func (r RunProperties) VertAlign() sharedTypes.ST_VerticalAlignRun {
+// VerticalAlign returns the value of run vertical align.
+func (r RunProperties) VerticalAlignment() sharedTypes.ST_VerticalAlignRun {
 	if vertAlign := r.x.VertAlign; vertAlign != nil {
 		return vertAlign.ValAttr
 	}
