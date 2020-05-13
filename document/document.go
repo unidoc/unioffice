@@ -183,7 +183,7 @@ func (d *Document) Save(w io.Writer) error {
 	}
 	dt := unioffice.DocTypeDocument
 
-	if !license.GetLicenseKey().IsLicensed() && flag.Lookup("test.v") == nil {
+	if !license.GetLicenseKey().IsLicensed() && (flag.Lookup("test.v") == nil || os.Getenv("IS_PG") == "true") {
 		fmt.Println("Unlicensed version of UniOffice")
 		fmt.Println("- Get a license on https://unidoc.io")
 		hdr := d.AddHeader()

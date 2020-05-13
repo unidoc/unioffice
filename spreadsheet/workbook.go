@@ -287,13 +287,17 @@ func (wb *Workbook) Epoch() time.Time {
 
 // Save writes the workbook out to a writer in the zipped xlsx format.
 func (wb *Workbook) Save(w io.Writer) error {
-	if !license.GetLicenseKey().IsLicensed() && flag.Lookup("test.v") == nil {
+	if !license.GetLicenseKey().IsLicensed() && (flag.Lookup("test.v") == nil || os.Getenv("IS_PG") == "true") {
 		fmt.Println("Unlicensed version of UniOffice")
 		fmt.Println("- Get a license on https://unidoc.io")
 		for _, sheet := range wb.Sheets() {
+			sheet.AddMergedCells("A1", "H1")
 			row1 := sheet.Row(1)
 			row1.SetHeight(50)
 			a1 := row1.Cell("A")
+			leftAlign := wb.StyleSheet.AddCellStyle()
+			leftAlign.SetHorizontalAlignment(sml.ST_HorizontalAlignmentLeft)
+			a1.SetStyle(leftAlign)
 
 			rt := a1.SetRichTextString()
 			run := rt.AddRun()
