@@ -35,6 +35,17 @@ func Read(r io.ReaderAt, size int64) (*Presentation, error) {
 	files := []*zip.File{}
 	files = append(files, zr.File...)
 
+	addCustom := false
+	for _, f := range files {
+		if f.FileHeader.Name == "docProps/custom.xml" {
+			addCustom = true
+			break
+		}
+	}
+	if addCustom {
+		doc.createCustomProperties()
+	}
+
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(doc.onNewRelationship)
 	// we should discover all contents by starting with these two files
@@ -52,5 +63,19 @@ func Read(r io.ReaderAt, size int64) (*Presentation, error) {
 			return nil, err
 		}
 	}
+
+	if addCustom {
+		customPropertiesExist := false
+		for _, rel := range doc.Rels.X().Relationship {
+			if rel.TargetAttr == "docProps/custom.xml" {
+				customPropertiesExist = true
+				break
+			}
+		}
+		if !customPropertiesExist {
+			doc.addCustomRelationships()
+		}
+	}
+
 	return doc, nil
 }

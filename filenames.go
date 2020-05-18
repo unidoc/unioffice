@@ -76,6 +76,33 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		return "docProps/app.xml"
 	case ThumbnailType, ThumbnailTypeStrict:
 		return "docProps/thumbnail.jpeg"
+	case CustomXMLType:
+		return fmt.Sprintf("customXml/item%d.xml", index)
+	case PresentationPropertiesType:
+		return "ppt/presProps.xml"
+
+	case ViewPropertiesType:
+		switch dt {
+		case DocTypePresentation:
+			return "ppt/viewProps.xml"
+		case DocTypeSpreadsheet:
+			return "xl/viewProps.xml"
+		case DocTypeDocument:
+			return "word/viewProps.xml"
+		}
+	case TableStylesType:
+		switch dt {
+		case DocTypePresentation:
+			return "ppt/tableStyles.xml"
+		case DocTypeSpreadsheet:
+			return "xl/tableStyles.xml"
+		case DocTypeDocument:
+			return "word/tableStyles.xml"
+		}
+	case HyperLinkType:
+		return ""
+	}
+
 
 	case OfficeDocumentType, OfficeDocumentTypeStrict:
 		switch dt {
@@ -117,6 +144,10 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		switch dt {
 		case DocTypeSpreadsheet:
 			return fmt.Sprintf("xl/charts/chart%d.xml", index)
+		case DocTypeDocument:
+			return fmt.Sprintf("word/charts/chart%d.xml", index)
+		case DocTypePresentation:
+			return fmt.Sprintf("ppt/charts/chart%d.xml", index)
 		default:
 			Log("unsupported type %s pair and %v", typ, dt)
 		}
@@ -189,6 +220,10 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		return fmt.Sprintf("ppt/slideLayouts/slideLayout%d.xml", index)
 	case SlideMasterType:
 		return fmt.Sprintf("ppt/slideMasters/slideMaster%d.xml", index)
+	case HandoutMasterType:
+		return fmt.Sprintf("ppt/handoutMasters/handoutMaster%d.xml", index)
+	case NotesMasterType:
+		return fmt.Sprintf("ppt/notesMasters/notesMaster%d.xml", index)
 
 	default:
 		Log("unsupported type %s", typ)

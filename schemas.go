@@ -63,6 +63,8 @@ const (
 	CorePropertiesType     = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"
 	CustomPropertiesType   = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties"
 	CustomXMLType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml"
+	TableStylesType        = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableStyles"
+	ViewPropertiesType     = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/viewProps"
 
 	// SML
 	WorksheetType            = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
@@ -74,8 +76,6 @@ const (
 	SMLStyleSheetContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"
 	TableType                = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table"
 	TableContentType         = "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"
-	ViewPropertiesType       = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/viewProps"
-	TableStylesType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableStyles"
 
 	// WML
 	HeaderType      = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header"
@@ -94,6 +94,8 @@ const (
 	SlideLayoutType            = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout"
 	SlideLayoutContentType     = "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml"
 	PresentationPropertiesType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/presProps"
+	HandoutMasterType          = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/handoutMaster"
+	NotesMasterType            = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/notesMaster"
 
 	// VML
 	VMLDrawingType        = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/vmlDrawing"
