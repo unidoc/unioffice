@@ -101,8 +101,6 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 		}
 	case HyperLinkType:
 		return ""
-	}
-
 
 	case OfficeDocumentType, OfficeDocumentTypeStrict:
 		switch dt {
