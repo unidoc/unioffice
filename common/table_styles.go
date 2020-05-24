@@ -13,16 +13,16 @@ import (
 
 // TableStyles contains document specific properties.
 type TableStyles struct {
-	x *dml.CT_TableStyleList
+	x *dml.TblStyleLst
 }
 
 // NewTableStyles constructs a new TableStyles.
 func NewTableStyles() TableStyles {
-	return TableStyles{x: dml.NewCT_TableStyleList()}
+	return TableStyles{x: dml.NewTblStyleLst()}
 }
 
 // X returns the inner wrapped XML type.
-func (t TableStyles) X() *dml.CT_TableStyleList {
+func (t TableStyles) X() *dml.TblStyleLst {
 	return t.x
 }
 
