@@ -17,8 +17,8 @@ import (
 	"time"
 
 	"github.com/unidoc/unioffice"
-	"github.com/unidoc/unioffice/schema/soo/dml"
 	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
+	"github.com/unidoc/unioffice/schema/soo/dml"
 )
 
 const ST_TextScalePercentPattern = `0*(600|([0-5]?[0-9]?[0-9]))%`

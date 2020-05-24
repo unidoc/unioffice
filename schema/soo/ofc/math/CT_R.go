@@ -14,13 +14,10 @@ import (
 	"fmt"
 
 	"github.com/unidoc/unioffice"
-	"github.com/unidoc/unioffice/schema/soo/wml"
 )
 
 type CT_R struct {
-	RPr *CT_RPR
-	// Run Properties
-	CRPr   *wml.CT_RPr
+	RPr    *CT_RPR
 	Choice []*CT_RChoice
 }
 
@@ -34,10 +31,6 @@ func (m *CT_R) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if m.RPr != nil {
 		serPr := xml.StartElement{Name: xml.Name{Local: "m:rPr"}}
 		e.EncodeElement(m.RPr, serPr)
-	}
-	if m.CRPr != nil {
-		serPr := xml.StartElement{Name: xml.Name{Local: "m:rPr"}}
-		e.EncodeElement(m.CRPr, serPr)
 	}
 	if m.Choice != nil {
 		for _, c := range m.Choice {
@@ -65,23 +58,10 @@ lCT_R:
 				if err := d.DecodeElement(m.RPr, &el); err != nil {
 					return err
 				}
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "rPr"},
-				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "rPr"}:
-				m.CRPr = wml.NewCT_RPr()
-				if err := d.DecodeElement(m.CRPr, &el); err != nil {
-					return err
-				}
 			case xml.Name{Space: "http://schemas.openxmlformats.org/officeDocument/2006/math", Local: "t"},
 				xml.Name{Space: "http://purl.oclc.org/ooxml/officeDocument/math", Local: "t"}:
 				tmp := NewCT_RChoice()
 				if err := d.DecodeElement(&tmp.T, &el); err != nil {
-					return err
-				}
-				m.Choice = append(m.Choice, tmp)
-			case xml.Name{Space: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", Local: "EG_RunInnerContent"},
-				xml.Name{Space: "http://purl.oclc.org/ooxml/wordprocessingml/main", Local: "EG_RunInnerContent"}:
-				tmp := NewCT_RChoice()
-				if err := d.DecodeElement(&tmp.EG_RunInnerContent, &el); err != nil {
 					return err
 				}
 				m.Choice = append(m.Choice, tmp)
@@ -108,11 +88,6 @@ func (m *CT_R) Validate() error {
 func (m *CT_R) ValidateWithPath(path string) error {
 	if m.RPr != nil {
 		if err := m.RPr.ValidateWithPath(path + "/RPr"); err != nil {
-			return err
-		}
-	}
-	if m.CRPr != nil {
-		if err := m.CRPr.ValidateWithPath(path + "/CRPr"); err != nil {
 			return err
 		}
 	}

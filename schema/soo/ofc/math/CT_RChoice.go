@@ -14,12 +14,10 @@ import (
 	"fmt"
 
 	"github.com/unidoc/unioffice"
-	"github.com/unidoc/unioffice/schema/soo/wml"
 )
 
 type CT_RChoice struct {
-	T                  []*CT_Text
-	EG_RunInnerContent []*wml.EG_RunInnerContent
+	T []*CT_Text
 }
 
 func NewCT_RChoice() *CT_RChoice {
@@ -32,11 +30,6 @@ func (m *CT_RChoice) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 		set := xml.StartElement{Name: xml.Name{Local: "m:t"}}
 		for _, c := range m.T {
 			e.EncodeElement(c, set)
-		}
-	}
-	if m.EG_RunInnerContent != nil {
-		for _, c := range m.EG_RunInnerContent {
-			c.MarshalXML(e, xml.StartElement{})
 		}
 	}
 	return nil
@@ -83,11 +76,6 @@ func (m *CT_RChoice) Validate() error {
 func (m *CT_RChoice) ValidateWithPath(path string) error {
 	for i, v := range m.T {
 		if err := v.ValidateWithPath(fmt.Sprintf("%s/T[%d]", path, i)); err != nil {
-			return err
-		}
-	}
-	for i, v := range m.EG_RunInnerContent {
-		if err := v.ValidateWithPath(fmt.Sprintf("%s/EG_RunInnerContent[%d]", path, i)); err != nil {
 			return err
 		}
 	}
