@@ -17,7 +17,7 @@ import (
 	"time"
 
 	"github.com/unidoc/unioffice"
-	"github.com/unidoc/unioffice/s2/soo/dml"
+	"github.com/unidoc/unioffice/schema/soo/dml"
 	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
 )
 
