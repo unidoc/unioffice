@@ -190,7 +190,13 @@ func convertToNodes(xn []*XSDAny) []*any {
 	for _, x := range xn {
 		a := &any{}
 		a.XMLName = x.XMLName
-		a.Attrs = x.Attrs
+		attrs := []xml.Attr{}
+		for _, attr := range x.Attrs {
+			if attr.Name.Local != "xmlns" {
+				attrs = append(attrs, attr)
+			}
+		}
+		a.Attrs = attrs
 		a.Data = x.Data
 		a.Nodes = convertToNodes(x.Nodes)
 		ret = append(ret, a)
