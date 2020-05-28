@@ -27,35 +27,35 @@ import (
 	"github.com/unidoc/unioffice/common/license"
 	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/schema/soo/dml"
+	crt "github.com/unidoc/unioffice/schema/soo/dml/chart"
 	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
 	"github.com/unidoc/unioffice/schema/soo/pkg/relationships"
 	"github.com/unidoc/unioffice/schema/soo/pml"
 	"github.com/unidoc/unioffice/zippkg"
-	crt "github.com/unidoc/unioffice/schema/soo/dml/chart"
 )
 
 // Presentation is the a presentation base document.
 type Presentation struct {
 	common.DocBase
-	x          *pml.Presentation
-	prels      common.Relationships
-	slides     []*pml.Sld
-	slideRels  []common.Relationships
-	masters    []*pml.SldMaster
-	masterRels []common.Relationships
-	layouts    []*pml.SldLayout
-	layoutRels []common.Relationships
-	themes     []*dml.Theme
-	themeRels  []common.Relationships
-	tableStyles common.TableStyles
+	x                      *pml.Presentation
+	prels                  common.Relationships
+	slides                 []*pml.Sld
+	slideRels              []common.Relationships
+	masters                []*pml.SldMaster
+	masterRels             []common.Relationships
+	layouts                []*pml.SldLayout
+	layoutRels             []common.Relationships
+	themes                 []*dml.Theme
+	themeRels              []common.Relationships
+	tableStyles            common.TableStyles
 	presentationProperties PresentationProperties
-	viewProperties ViewProperties
-	hyperlinks []*dml.CT_Hyperlink
-	charts     []*crt.ChartSpace
-	handoutMaster     []*pml.HandoutMaster
-	notesMaster     []*pml.NotesMaster
-	customXML     []*unioffice.XSDAny
-	imagesMap     map[string]string // mapping input images paths to output ones
+	viewProperties         ViewProperties
+	hyperlinks             []*dml.CT_Hyperlink
+	charts                 []*crt.ChartSpace
+	handoutMaster          []*pml.HandoutMaster
+	notesMaster            []*pml.NotesMaster
+	customXML              []*unioffice.XSDAny
+	imagesMap              map[string]string // mapping input images paths to output ones
 }
 
 func newEmpty() *Presentation {
@@ -351,7 +351,7 @@ func (p *Presentation) AddSlideWithLayout(l SlideLayout) (Slide, error) {
 
 	srel := common.NewRelationships()
 	p.slideRels = append(p.slideRels, srel)
-	slrLen := len(p.slideRels)-1
+	slrLen := len(p.slideRels) - 1
 	for i, lout := range p.layouts {
 		if lout == l.X() {
 			lrels := p.layoutRels[i]

@@ -494,6 +494,6 @@ func TestInsertTableInTable(t *testing.T) {
 	expected := "table inside table after paragraph 1"
 	got := cbc2.Tbl[0].EG_ContentRowContent[0].Tr[0].EG_ContentCellContent[0].Tc[0].EG_BlockLevelElts[0].EG_ContentBlockContent[0].P[0].EG_PContent[0].EG_ContentRunContent[0].R.EG_RunInnerContent[0].T.Content
 	if expected != got {
-			t.Errorf("expected %s in the second inner table paragraph, got %s", expected, got)
+		t.Errorf("expected %s in the second inner table paragraph, got %s", expected, got)
 	}
 }
