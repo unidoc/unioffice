@@ -498,10 +498,6 @@ func (p *Presentation) Save(w io.Writer) error {
 		fn := unioffice.AbsoluteFilename(dt, unioffice.ChartType, i+1)
 		zippkg.MarshalXML(z, fn, chart)
 	}
-	for i, hl := range p.hyperlinks {
-		fn := unioffice.AbsoluteFilename(dt, unioffice.HyperLinkType, i+1)
-		zippkg.MarshalXML(z, fn, hl)
-	}
 	for i, hm := range p.handoutMaster {
 		fn := unioffice.AbsoluteFilename(dt, unioffice.HandoutMasterType, i+1)
 		zippkg.MarshalXML(z, fn, hm)
