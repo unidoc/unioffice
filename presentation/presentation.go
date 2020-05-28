@@ -55,6 +55,7 @@ type Presentation struct {
 	handoutMaster     []*pml.HandoutMaster
 	notesMaster     []*pml.NotesMaster
 	customXML     []*unioffice.XSDAny
+	imagesMap     map[string]string // mapping input images paths to output ones
 }
 
 func newEmpty() *Presentation {
@@ -69,6 +70,7 @@ func newEmpty() *Presentation {
 	p.prels = common.NewRelationships()
 	p.presentationProperties = NewPresentationProperties()
 	p.viewProperties = NewViewProperties()
+	p.imagesMap = map[string]string{}
 	return p
 }
 
@@ -519,6 +521,10 @@ func (p *Presentation) Save(w io.Writer) error {
 		}
 	}
 
+	p.ContentTypes.EnsureDefault("png", "image/png")
+	p.ContentTypes.EnsureDefault("jpeg", "image/jpeg")
+	p.ContentTypes.EnsureDefault("jpg", "image/jpeg")
+	p.ContentTypes.EnsureDefault("wmf", "image/x-wmf")
 	if err := zippkg.MarshalXML(z, unioffice.ContentTypesFilename, p.ContentTypes.X()); err != nil {
 		return err
 	}
@@ -721,6 +727,11 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 		// we use path.Clean instead of filepath.Clean to ensure we
 		// end up with forward separators
 		target = path.Clean(target)
+		if targetAttr, ok := p.imagesMap[target]; ok {
+			rel.TargetAttr = targetAttr
+			return nil
+		}
+		format := ""
 		for i, f := range files {
 			if f == nil {
 				continue
@@ -734,6 +745,7 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 				if err != nil {
 					return err
 				}
+				format = img.Format
 				iref := common.MakeImageRef(img, &p.DocBase, p.prels)
 				p.Images = append(p.Images, iref)
 				files[i] = nil
@@ -742,7 +754,8 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 			}
 		}
 		idx := decMap.IndexFor(target)
-		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, idx)
+		rel.TargetAttr = unioffice.RelativeImageFilename(dt, src.Typ, typ, idx, format)
+		p.imagesMap[target] = rel.TargetAttr
 
 	default:
 		unioffice.Log("unsupported relationship type: %s tgt: %s", typ, target)

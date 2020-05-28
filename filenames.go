@@ -229,6 +229,15 @@ func AbsoluteFilename(dt DocType, typ string, index int) string {
 	return ""
 }
 
+// RelativeImageFilename returns an image filename relative to the source file referenced
+// from a relationships file. It is identical to RelativeFilename but is used particularly for images
+// in order to handle different image formats.
+func RelativeImageFilename(dt DocType, relToTyp, typ string, index int, fileExtension string) string {
+	filename := RelativeFilename(dt, relToTyp, typ, index)
+	// replace "png" with the actual file extension
+	return filename[0:len(filename)-3] + fileExtension
+}
+
 // AbsoluteImageFilename returns the full path to an image from the root of the
 // zip container.
 func AbsoluteImageFilename(dt DocType, index int, fileExtension string) string {
