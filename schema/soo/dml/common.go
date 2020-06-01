@@ -12162,7 +12162,6 @@ func init() {
 	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/main", "CT_TextField", NewCT_TextField)
 	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/main", "CT_RegularTextRun", NewCT_RegularTextRun)
 	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/main", "videoFile", NewVideoFile)
-	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/main", "scale", NewScale)
 	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/main", "graphic", NewGraphic)
 	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/main", "blip", NewBlip)
 	unioffice.RegisterConstructor("http://schemas.openxmlformats.org/drawingml/2006/main", "theme", NewTheme)
