@@ -12,7 +12,7 @@ import (
 	"github.com/unidoc/unioffice/schema/soo/pml"
 )
 
-// ViewProperties contains document specific properties.
+// ViewProperties contains presentation specific properties.
 type ViewProperties struct {
 	x *pml.ViewPr
 }
@@ -38,7 +38,7 @@ func (p ViewProperties) ShowCommentsAttr() *bool {
 }
 
 // NormalViewPr returns the NormalViewPr property.
-func (p ViewProperties) PrnPr() *pml.CT_NormalViewProperties {
+func (p ViewProperties) NormalViewPr() *pml.CT_NormalViewProperties {
 	return p.x.NormalViewPr
 }
 

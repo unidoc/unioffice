@@ -34,7 +34,7 @@ import (
 	"github.com/unidoc/unioffice/zippkg"
 )
 
-// Presentation is the a presentation base document.
+// Presentation is a presentation base document.
 type Presentation struct {
 	common.DocBase
 	x                      *pml.Presentation
@@ -540,6 +540,8 @@ func (p *Presentation) SaveToFile(path string) error {
 	return p.Save(f)
 }
 
+
+// Validate validates the presentation with slides, slide masters and slide layouts.
 func (p *Presentation) Validate() error {
 	if err := p.x.Validate(); err != nil {
 		return err

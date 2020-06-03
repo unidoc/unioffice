@@ -59,6 +59,7 @@ func (s PlaceHolder) Clear() {
 	para.EndParaRPr.LangAttr = unioffice.String("en-US")
 }
 
+// Remove removes a placeholder from a presentation.
 func (s PlaceHolder) Remove() error {
 	for i, spChc := range s.sld.CSld.SpTree.Choice {
 		for _, sp := range spChc.Sp {

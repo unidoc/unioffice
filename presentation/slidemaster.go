@@ -27,6 +27,7 @@ func (s SlideMaster) X() *pml.SldMaster {
 	return s.x
 }
 
+// SlideLayouts returns a slice of all layouts in SlideMaster.
 func (s SlideMaster) SlideLayouts() []SlideLayout {
 	nameToLayoutIdx := map[string]int{}
 	layouts := []SlideLayout{}

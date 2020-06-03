@@ -20,6 +20,7 @@ import (
 	"github.com/unidoc/unioffice/schema/soo/pml"
 )
 
+// Slide represents a slide of a presentation.
 type Slide struct {
 	sid *pml.CT_SlideIdListEntry
 	x   *pml.Sld
@@ -78,7 +79,7 @@ func (s Slide) GetPlaceholderByIndex(idx uint32) (PlaceHolder, error) {
 }
 
 // ValidateWithPath validates the slide passing path informaton for a better
-// error message
+// error message.
 func (s Slide) ValidateWithPath(path string) error {
 	// schema checks
 	if err := s.x.ValidateWithPath(path); err != nil {
