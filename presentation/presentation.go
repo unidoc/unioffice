@@ -683,8 +683,8 @@ func (p *Presentation) RemoveSlide(s Slide) error {
 	}
 
 	// remove it from content types
-	fn := unioffice.AbsoluteFilename(unioffice.DocTypePresentation, unioffice.SlideType, slideIdx+1)
-	p.ContentTypes.RemoveOverride(fn)
+	fn := unioffice.AbsoluteFilename(unioffice.DocTypePresentation, unioffice.SlideType, 0)
+	p.ContentTypes.RemoveOverrideByIndex(fn, slideIdx)
 	return nil
 }
 
