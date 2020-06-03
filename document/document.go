@@ -1150,6 +1150,13 @@ func (d Document) Bookmarks() []Bookmark {
 	return ret
 }
 
+// SetConformance sets conformance attribute of the document
+// as one of these values from github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes:
+// ST_ConformanceClassUnset, ST_ConformanceClassStrict or ST_ConformanceClassTransitional.
+func (d Document) SetConformance(conformanceAttr st.ST_ConformanceClass) {
+	d.x.ConformanceAttr = conformanceAttr
+}
+
 func getBool(onOff *wml.CT_OnOff) bool {
 	return onOff != nil
 }
