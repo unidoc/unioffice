@@ -34,7 +34,7 @@ import (
 	"github.com/unidoc/unioffice/zippkg"
 )
 
-// Presentation is a presentation base document.
+// Presentation is the a presentation base document.
 type Presentation struct {
 	common.DocBase
 	x                      *pml.Presentation
@@ -540,8 +540,6 @@ func (p *Presentation) SaveToFile(path string) error {
 	return p.Save(f)
 }
 
-
-// Validate validates the presentation with slides, slide masters and slide layouts.
 func (p *Presentation) Validate() error {
 	if err := p.x.Validate(); err != nil {
 		return err
@@ -798,8 +796,8 @@ func (p *Presentation) RemoveSlide(s Slide) error {
 	}
 
 	// remove it from content types
-	fn := unioffice.AbsoluteFilename(unioffice.DocTypePresentation, unioffice.SlideType, slideIdx+1)
-	p.ContentTypes.RemoveOverride(fn)
+	fn := unioffice.AbsoluteFilename(unioffice.DocTypePresentation, unioffice.SlideType, 0)
+	p.ContentTypes.RemoveOverrideByIndex(fn, slideIdx)
 	return nil
 }
 
