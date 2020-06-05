@@ -112,35 +112,6 @@ func (c ContentTypes) RemoveOverride(path string) {
 	}
 }
 
-// RemoveOverrideByIndex removes an override given a path and override index.
-func (c ContentTypes) RemoveOverrideByIndex(path string, indexToFind int) {
-	pathPrefix := path[0:len(path)-5] // cut off '0.xml' from the end
-	if !strings.HasPrefix(pathPrefix, "/") {
-		pathPrefix = "/" + pathPrefix
-	}
-
-	re := regexp.MustCompile(pathPrefix + "([0-9]+).xml")
-	index := 0
-	indexToRemove := -1
-
-	for i, ovr := range c.x.Override {
-		if submatch := re.FindStringSubmatch(ovr.PartNameAttr); len(submatch) > 1 {
-			if index == indexToFind {
-				indexToRemove = i
-			} else if index > indexToFind {
-				newId, _ := strconv.Atoi(submatch[1])
-				newId--
-				ovr.PartNameAttr = fmt.Sprintf("%s%d.xml", pathPrefix, newId)
-			}
-			index++
-		}
-	}
-	if indexToRemove > -1 {
-		copy(c.x.Override[indexToRemove:], c.x.Override[indexToRemove+1:])
-		c.x.Override = c.x.Override[0 : len(c.x.Override)-1]
-	}
-}
-
 // CopyOverride copies override content type for a given `path` and puts it with a path `newPath`.
 func (c ContentTypes) CopyOverride(path, newPath string) {
 	if !strings.HasPrefix(path, "/") {
