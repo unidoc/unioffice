@@ -684,8 +684,7 @@ func (p *Presentation) RemoveSlide(s Slide) error {
 
 	// remove it from content types
 	fn := unioffice.AbsoluteFilename(unioffice.DocTypePresentation, unioffice.SlideType, 0)
-	p.ContentTypes.RemoveOverrideByIndex(fn, slideIdx)
-	return nil
+	return p.ContentTypes.RemoveOverrideByIndex(fn, slideIdx)
 }
 
 // GetLayoutByName retrieves a slide layout given a layout name.
