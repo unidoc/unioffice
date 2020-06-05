@@ -8,10 +8,7 @@
 package common
 
 import (
-	"fmt"
 	"strings"
-	"strconv"
-	"regexp"
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/schema/soo/pkg/content_types"
