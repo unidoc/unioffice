@@ -665,6 +665,7 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 		doc.createCustomProperties()
 	}
 
+	ca := d.x.ConformanceAttr
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(doc.onNewRelationship)
 	// we should discover all contents by starting with these two files
@@ -673,6 +674,7 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	if err := decMap.Decode(files); err != nil {
 		return nil, err
 	}
+	d.x.ConformanceAttr = ca
 
 	for _, f := range files {
 		if f == nil {
