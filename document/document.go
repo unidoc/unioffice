@@ -665,6 +665,7 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 		doc.createCustomProperties()
 	}
 
+	ca := doc.x.ConformanceAttr
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(doc.onNewRelationship)
 	// we should discover all contents by starting with these two files
@@ -673,6 +674,7 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	if err := decMap.Decode(files); err != nil {
 		return nil, err
 	}
+	doc.x.ConformanceAttr = ca
 
 	for _, f := range files {
 		if f == nil {
@@ -1148,6 +1150,24 @@ func (d Document) Bookmarks() []Bookmark {
 		}
 	}
 	return ret
+}
+
+// SetConformance sets conformance attribute of the document
+// as one of these values from github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes:
+// ST_ConformanceClassUnset, ST_ConformanceClassStrict or ST_ConformanceClassTransitional.
+func (d Document) SetConformance(conformanceAttr st.ST_ConformanceClass) {
+	d.x.ConformanceAttr = conformanceAttr
+}
+
+// SetStrict is a shortcut for document.SetConformance,
+// as one of these values from github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes:
+// ST_ConformanceClassUnset, ST_ConformanceClassStrict or ST_ConformanceClassTransitional.
+func (d Document) SetStrict(strict bool) {
+	if strict {
+		d.x.ConformanceAttr = st.ST_ConformanceClassStrict
+	} else {
+		d.x.ConformanceAttr = st.ST_ConformanceClassTransitional
+	}
 }
 
 func getBool(onOff *wml.CT_OnOff) bool {
