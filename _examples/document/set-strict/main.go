@@ -1,4 +1,4 @@
-// Copyright 2017 FoxyUtils ehf. All rights reserved.
+// Copyright 2020 FoxyUtils ehf. All rights reserved.
 
 package main
 
