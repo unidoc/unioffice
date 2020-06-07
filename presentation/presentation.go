@@ -398,6 +398,15 @@ func (p *Presentation) AddDefaultSlideWithLayout(l SlideLayout) (Slide, error) {
 
 // Save writes the presentation out to a writer in the Zip package format
 func (p *Presentation) Save(w io.Writer) error {
+	return p.save(w, false)
+}
+
+// SaveAsTemplate writes the presentation out to a writer in the Zip package format as a template
+func (p *Presentation) SaveAsTemplate(w io.Writer) error {
+	return p.save(w, true)
+}
+
+func (p *Presentation) save(w io.Writer, isTemplate bool) error {
 	if err := p.x.Validate(); err != nil {
 		log.Printf("validation error in document: %s", err)
 	}
@@ -415,6 +424,14 @@ func (p *Presentation) Save(w io.Writer) error {
 		r.Properties().SetSize(12 * measurement.Point)
 		r.Properties().SetBold(true)
 		r.Properties().SetSolidFill(color.Red)
+	}
+
+	if isTemplate {
+		p.ContentTypes.RemoveOverride("application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml")
+		p.ContentTypes.EnsureOverride("/ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.template.main+xml")
+	} else {
+		p.ContentTypes.RemoveOverride("application/vnd.openxmlformats-officedocument.presentationml.template.main+xml")
+		p.ContentTypes.EnsureOverride("/ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml")
 	}
 
 	dt := unioffice.DocTypePresentation
@@ -532,12 +549,21 @@ func (p *Presentation) Save(w io.Writer) error {
 
 // SaveToFile writes the Presentation out to a file.
 func (p *Presentation) SaveToFile(path string) error {
+	return p.saveToFile(path, false)
+}
+
+// SaveToFileAsTemplate writes the Presentation out to a file as a template.
+func (p *Presentation) SaveToFileAsTemplate(path string) error {
+	return p.saveToFile(path, true)
+}
+
+func (p *Presentation) saveToFile(path string, isTemplate bool) error {
 	f, err := os.Create(path)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
-	return p.Save(f)
+	return p.save(f, isTemplate)
 }
 
 func (p *Presentation) Validate() error {
@@ -796,9 +822,8 @@ func (p *Presentation) RemoveSlide(s Slide) error {
 	}
 
 	// remove it from content types
-	fn := unioffice.AbsoluteFilename(unioffice.DocTypePresentation, unioffice.SlideType, slideIdx + 1)
-	p.ContentTypes.RemoveOverride(fn)
-	return nil
+	fn := unioffice.AbsoluteFilename(unioffice.DocTypePresentation, unioffice.SlideType, 0)
+	return p.ContentTypes.RemoveOverrideByIndex(fn, slideIdx)
 }
 
 // GetLayoutByName retrieves a slide layout given a layout name.
