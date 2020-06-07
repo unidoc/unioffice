@@ -245,7 +245,6 @@ func (r RunProperties) SetVerticalAlignment(v sharedTypes.ST_VerticalAlignRun) {
 	}
 }
 
-
 // Bold returns true if run font is bold.
 func (r RunProperties) Bold() bool {
 	x := r.x

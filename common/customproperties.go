@@ -259,6 +259,7 @@ func (c CustomProperties) SetPropertyAsClsid(name string, clsid string) {
 }
 
 func (c CustomProperties) SetPropertyAsDate(name string, date time.Time) {
+	date = date.UTC() // Office 365 shows errors for local time
 	property := c.getNewProperty(name)
 	property.Date = &date
 	c.setProperty(property)
