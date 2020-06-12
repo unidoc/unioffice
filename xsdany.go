@@ -245,9 +245,9 @@ func (x *XSDAny) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 	// add our prefixes and namespaces to root element
 	for _, pfx := range ns.prefixes {
-	if _, ok := ignorables[pfx]; ok {
-		attrsToIgnore = append(attrsToIgnore, pfx)
-	}
+		if _, ok := ignorables[pfx]; ok {
+			attrsToIgnore = append(attrsToIgnore, pfx)
+		}
 		ns := ns.prefixToURL[pfx]
 		a.Attrs = append(a.Attrs, xml.Attr{
 			Name:  xml.Name{Local: "xmlns:" + pfx},
