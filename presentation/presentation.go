@@ -851,7 +851,7 @@ func (p *Presentation) AddImage(i common.Image) (common.ImageRef, error) {
 		return r, errors.New("image must have a valid size")
 	}
 
-	fn := fmt.Sprintf("../media/image%d.%s", len(p.Images)+1, i.Format)
+	fn := fmt.Sprintf("media/image%d.%s", len(p.Images)+1, i.Format)
 	rel := p.prels.AddRelationship(fn, unioffice.ImageType)
 	r.SetRelID(rel.X().IdAttr)
 	p.Images = append(p.Images, r)

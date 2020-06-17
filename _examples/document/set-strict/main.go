@@ -16,6 +16,4 @@ func main() {
 	doc.SaveToFile("conformance_transitional.docx")
 	doc.SetStrict(true) // document will be saved in the Strict mode
 	doc.SaveToFile("conformance_strict.docx")
-	doc.SetConformance(st.ST_ConformanceClassUnset) // Conformance attribute will be unset, which also leads to saving as Word document
-	doc.SaveToFile("conformance_unset.docx")
 }

@@ -46,7 +46,8 @@ func (r RichTextRun) SetBold(b bool) {
 func (r RichTextRun) SetColor(c color.Color) {
 	r.ensureRpr()
 	r.x.RPr.Color = sml.NewCT_Color()
-	r.x.RPr.Color.RgbAttr = c.AsRGBString()
+	rgbAttr := "ff" + *c.AsRGBString()
+	r.x.RPr.Color.RgbAttr = &rgbAttr
 }
 
 // SetItalic causes the text to be displayed in italic.
