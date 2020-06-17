@@ -9,18 +9,18 @@ install:
         - mkdir -p $HOME/gopath/src/unidoc/
         - ln -s $HOME/gopath/src/github.com/unidoc/unioffice $HOME/gopath/src/github.com/unidoc/unioffice
         - mkdir -p $HOME/dotnet
-        - cd $HOME/gopath/src/github.com/unidoc/unioffice
-        - mv aspnetcore.tar.gz $HOME/dotnet
         - cd $HOME/dotnet
-        - tar -xf aspnetcore.tar.gz
-        - export PATH=$PATH:$HOME/dotnet
-        - cd $HOME/gopath/src/github.com/unidoc/unioffice
+		- wget https://download.visualstudio.microsoft.com/download/pr/8db2b522-7fa2-4903-97ec-d6d04d297a01/f467006b9098c2de256e40d2e2f36fea/dotnet-sdk-3.1.301-linux-x64.tar.gz
+        - tar -xf dotnet-sdk-3.1.301-linux-x64.tar.gz
+        - cd $GOPATH/src/github.com/unidoc/unioffice/.travis
         - unzip validator.zip
         - cd openxml-validator
-        - dotnet build
+        - $HOME/dotnet/dotnet build
 
 script:
         - cd $HOME/gopath/src/github.com/unidoc/unioffice
+        - ./build-examples.sh
+        - cd .travis
         - ./validate.sh
         - go vet ./...
         - go test ./...
