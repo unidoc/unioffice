@@ -10,7 +10,7 @@ install:
         - ln -s $HOME/gopath/src/github.com/unidoc/unioffice $HOME/gopath/src/github.com/unidoc/unioffice
         - mkdir -p $HOME/dotnet
         - cd $HOME/dotnet
-		- wget https://download.visualstudio.microsoft.com/download/pr/8db2b522-7fa2-4903-97ec-d6d04d297a01/f467006b9098c2de256e40d2e2f36fea/dotnet-sdk-3.1.301-linux-x64.tar.gz
+	- wget https://download.visualstudio.microsoft.com/download/pr/8db2b522-7fa2-4903-97ec-d6d04d297a01/f467006b9098c2de256e40d2e2f36fea/dotnet-sdk-3.1.301-linux-x64.tar.gz
         - tar -xf dotnet-sdk-3.1.301-linux-x64.tar.gz
         - cd $GOPATH/src/github.com/unidoc/unioffice/.travis
         - unzip validator.zip
@@ -20,8 +20,7 @@ install:
 script:
         - cd $HOME/gopath/src/github.com/unidoc/unioffice
         - ./build-examples.sh
-        - cd .travis
-        - ./validate.sh
+        - ./.travis/validate.sh
         - go vet ./...
         - go test ./...
 
