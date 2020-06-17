@@ -20,7 +20,9 @@ install:
 script:
         - cd $HOME/gopath/src/github.com/unidoc/unioffice
         - ./build-examples.sh
-        - ./.travis/validate.sh
+        - cd .travis
+        - ./validate-examples.sh
+        - cd $HOME/gopath/src/github.com/unidoc/unioffice
         - go vet ./...
         - go test ./...
 
