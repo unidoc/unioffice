@@ -1,9 +1,9 @@
 language: go
 go:
-        - 1.8.x
-        - 1.9.x
-        - 1.10.x
-        - 1.11
+        - 1.11.x
+        - 1.12.x
+        - 1.13.x
+        - 1.14
 
 install:
         - mkdir -p $HOME/gopath/src/unidoc/
@@ -20,7 +20,9 @@ install:
 script:
         - cd $HOME/gopath/src/github.com/unidoc/unioffice
         - ./build-examples.sh
-        - ./.travis/validate.sh
+        - cd .travis
+        - ./validate-examples.sh
+        - cd $HOME/gopath/src/github.com/unidoc/unioffice
         - go vet ./...
         - go test ./...
 
