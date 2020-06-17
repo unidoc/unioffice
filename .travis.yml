@@ -10,14 +10,14 @@ install:
         - ln -s $HOME/gopath/src/github.com/unidoc/unioffice $HOME/gopath/src/github.com/unidoc/unioffice
         - mkdir -p $HOME/dotnet
         - cd $HOME/gopath/src/github.com/unidoc/unioffice
-		- mv aspnetcore.tar.gz $HOME/dotnet
-		- cd $HOME/dotnet
-		- tar -xf aspnetcore.tar.gz
-		- export PATH=$PATH:$HOME/dotnet
+        - mv aspnetcore.tar.gz $HOME/dotnet
+        - cd $HOME/dotnet
+        - tar -xf aspnetcore.tar.gz
+        - export PATH=$PATH:$HOME/dotnet
         - cd $HOME/gopath/src/github.com/unidoc/unioffice
-		- unzip validator.zip
-		- cd openxml-validator
-		- dotnet build
+        - unzip validator.zip
+        - cd openxml-validator
+        - dotnet build
 
 script:
         - cd $HOME/gopath/src/github.com/unidoc/unioffice
