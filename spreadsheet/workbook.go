@@ -675,8 +675,6 @@ func (wb *Workbook) AddImage(i common.Image) (common.ImageRef, error) {
 	}
 
 	wb.Images = append(wb.Images, r)
-	fn := fmt.Sprintf("media/image%d.%s", len(wb.Images), i.Format)
-	wb.wbRels.AddRelationship(fn, unioffice.ImageType)
 	return r, nil
 }
 

@@ -84,7 +84,7 @@ func (d Drawing) AddChart(at AnchorType) (chart.Chart, Anchor) {
 
 	// required by Mac Excel
 	gf.NvGraphicFramePr = sd.NewCT_GraphicalObjectFrameNonVisual()
-	gf.NvGraphicFramePr.CNvPr.IdAttr = 2
+	gf.NvGraphicFramePr.CNvPr.IdAttr = uint32(len(d.x.EG_Anchor))
 	gf.NvGraphicFramePr.CNvPr.NameAttr = "Chart"
 
 	gf.Graphic = dml.NewGraphic()
@@ -149,7 +149,7 @@ func (d Drawing) AddImage(img common.ImageRef, at AnchorType) Anchor {
 		anc = TwoCellAnchor{tca}
 	}
 
-	pic.NvPicPr.CNvPr.IdAttr = 0
+	pic.NvPicPr.CNvPr.IdAttr = uint32(len(d.x.EG_Anchor))
 	pic.NvPicPr.CNvPr.NameAttr = "Image"
 	pic.BlipFill.Blip = dml.NewCT_Blip()
 	pic.BlipFill.Blip.EmbedAttr = unioffice.String(imgID)
