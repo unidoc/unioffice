@@ -83,7 +83,7 @@ func main() {
 		fmt.Println("ppt.Validate err ", err)
 	}
 
-	if err := ppt.SaveToFile("success.pptx"); err != nil {
+	if err := ppt.SaveToFile("mod.pptx"); err != nil {
 		fmt.Println("ppt.SaveToFile err ", err)
 	}
 

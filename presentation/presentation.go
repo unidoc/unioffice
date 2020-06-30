@@ -356,7 +356,9 @@ func (p *Presentation) AddSlideWithLayout(l SlideLayout) (Slide, error) {
 		if lout == l.X() {
 			lrels := p.layoutRels[i]
 			for _, lrel := range lrels.X().Relationship {
-				p.slideRels[slrLen].X().Relationship = append(p.slideRels[slrLen].X().Relationship, lrel)
+				if lrel.TypeAttr != unioffice.SlideMasterType {
+					p.slideRels[slrLen].X().Relationship = append(p.slideRels[slrLen].X().Relationship, lrel)
+				}
 			}
 			srel.AddAutoRelationship(unioffice.DocTypePresentation, unioffice.SlideType,
 				i+1, unioffice.SlideLayoutType)
@@ -851,9 +853,6 @@ func (p *Presentation) AddImage(i common.Image) (common.ImageRef, error) {
 		return r, errors.New("image must have a valid size")
 	}
 
-	fn := fmt.Sprintf("media/image%d.%s", len(p.Images)+1, i.Format)
-	rel := p.prels.AddRelationship(fn, unioffice.ImageType)
-	r.SetRelID(rel.X().IdAttr)
 	p.Images = append(p.Images, r)
 	p.ContentTypes.EnsureDefault("png", "image/png")
 	p.ContentTypes.EnsureDefault("jpeg", "image/jpeg")

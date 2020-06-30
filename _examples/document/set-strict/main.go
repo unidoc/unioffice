@@ -4,7 +4,6 @@ package main
 
 import (
 	"github.com/unidoc/unioffice/document"
-	st "github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
 )
 
 func main() {
