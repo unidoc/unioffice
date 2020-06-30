@@ -29,7 +29,6 @@ func NewEG_Media() *EG_Media {
 }
 
 func (m *EG_Media) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	start.Name.Local = "a:EG_Media"
 	if m.AudioCd != nil {
 		seaudioCd := xml.StartElement{Name: xml.Name{Local: "a:audioCd"}}
 		e.EncodeElement(m.AudioCd, seaudioCd)
