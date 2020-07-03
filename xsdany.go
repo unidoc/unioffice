@@ -44,6 +44,7 @@ var wellKnownSchemas = map[string]string{
 	"w16cid":  "http://schemas.microsoft.com/office/word/2016/wordml/cid",
 	"w16":     "http://schemas.microsoft.com/office/word/2018/wordml",
 	"w16cex":  "http://schemas.microsoft.com/office/word/2018/wordml/cex",
+	"xml":     "http://www.w3.org/XML/1998/namespace",
 }
 
 var wellKnownSchemasInv = func() map[string]string {
