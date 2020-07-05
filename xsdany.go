@@ -40,6 +40,11 @@ var wellKnownSchemas = map[string]string{
 	"wps":     "http://schemas.microsoft.com/office/word/2010/wordprocessingShape",
 	"xsi":     "http://www.w3.org/2001/XMLSchema-instance",
 	"x15ac":   "http://schemas.microsoft.com/office/spreadsheetml/2010/11/ac",
+	"w16se":   "http://schemas.microsoft.com/office/word/2015/wordml/symex",
+	"w16cid":  "http://schemas.microsoft.com/office/word/2016/wordml/cid",
+	"w16":     "http://schemas.microsoft.com/office/word/2018/wordml",
+	"w16cex":  "http://schemas.microsoft.com/office/word/2018/wordml/cex",
+	"xml":     "http://www.w3.org/XML/1998/namespace",
 }
 
 var wellKnownSchemasInv = func() map[string]string {
@@ -132,6 +137,18 @@ func (n *nsSet) getPrefix(ns string) string {
 	}
 }
 
+var ignorables = map[string]bool{
+	"w10":    true,
+	"w14":    true,
+	"wp14":   true,
+	"w15":    true,
+	"x15ac":  true,
+	"w16se":  true,
+	"w16cid": true,
+	"w16":    true,
+	"w16cex": true,
+}
+
 func (n nsSet) applyToNode(a *any) {
 	if a.XMLName.Space == "" {
 		return
@@ -190,7 +207,13 @@ func convertToNodes(xn []*XSDAny) []*any {
 	for _, x := range xn {
 		a := &any{}
 		a.XMLName = x.XMLName
-		a.Attrs = x.Attrs
+		attrs := []xml.Attr{}
+		for _, attr := range x.Attrs {
+			if attr.Name.Local != "xmlns" {
+				attrs = append(attrs, attr)
+			}
+		}
+		a.Attrs = attrs
 		a.Data = x.Data
 		a.Nodes = convertToNodes(x.Nodes)
 		ret = append(ret, a)
@@ -207,6 +230,8 @@ func (x *XSDAny) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	a.Attrs = x.Attrs
 	a.Data = x.Data
 	a.Nodes = convertToNodes(x.Nodes)
+	attrsToIgnore := []string{}
+	includeIgnorable := false
 
 	ns := nsSet{
 		urlToPrefix: map[string]string{},
@@ -221,10 +246,22 @@ func (x *XSDAny) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
 	// add our prefixes and namespaces to root element
 	for _, pfx := range ns.prefixes {
+		if _, ok := ignorables[pfx]; ok {
+			attrsToIgnore = append(attrsToIgnore, pfx)
+		}
 		ns := ns.prefixToURL[pfx]
 		a.Attrs = append(a.Attrs, xml.Attr{
 			Name:  xml.Name{Local: "xmlns:" + pfx},
 			Value: ns,
+		})
+		if pfx == "mc" {
+			includeIgnorable = true
+		}
+	}
+	if includeIgnorable && len(attrsToIgnore) > 0 {
+		a.Attrs = append(a.Attrs, xml.Attr{
+			Name: xml.Name{Local: "mc:Ignorable"},
+			Value: strings.Join(attrsToIgnore, " "),
 		})
 	}
 
