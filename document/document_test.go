@@ -528,10 +528,15 @@ func TestTmpFiles(t *testing.T) {
 		t.Errorf("should be %d files in the temp dir, found %d", expected, got)
 	}
 	doc.Close()
-	files, err = ioutil.ReadDir(doc.TmpPath)
-	expected = 0
-	got = len(files)
-	if got != expected {
-		t.Errorf("should be %d files in the temp dir, found %d", expected, got)
+	if _, err := os.Stat(doc.TmpPath); err == nil {
+		files, err := ioutil.ReadDir(doc.TmpPath)
+		if err != nil {
+			t.Errorf("cannot open a workbook: %s", err)
+		}
+		expected := 0
+		got = len(files)
+		if got != expected {
+			t.Errorf("should be %d files in the temp dir, found %d", expected, got)
+		}
 	}
 }

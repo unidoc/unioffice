@@ -2,6 +2,7 @@ package presentation
 
 import (
 	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/unidoc/unioffice/common"
@@ -165,14 +166,24 @@ func TestTmpFiles(t *testing.T) {
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
-	ppt.Close()
 	files, err := ioutil.ReadDir(ppt.TmpPath)
 	if err != nil {
 		t.Errorf("cannot open a workbook: %s", err)
 	}
-	expected := 0
 	got := len(files)
-	if got != expected {
-		t.Errorf("should be %d files in the temp dir, found %d", expected, got)
+	if got == 0 {
+		t.Errorf("should be more than %d files in the temp dir, found %d", got, got)
+	}
+	ppt.Close()
+	if _, err := os.Stat(ppt.TmpPath); err == nil {
+		files, err := ioutil.ReadDir(ppt.TmpPath)
+		if err != nil {
+			t.Errorf("cannot open a workbook: %s", err)
+		}
+		expected := 0
+		got = len(files)
+		if got != expected {
+			t.Errorf("should be %d files in the temp dir, found %d", expected, got)
+		}
 	}
 }
