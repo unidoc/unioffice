@@ -11,7 +11,7 @@ import (
 	"github.com/unidoc/unioffice/schema/soo/pml"
 )
 
-// SlideLayout
+// SlideLayout is a layout from which slides can be created.
 type SlideLayout struct {
 	x *pml.SldLayout
 }
