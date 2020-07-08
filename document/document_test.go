@@ -36,17 +36,17 @@ func TestSimpleDoc(t *testing.T) {
 }
 
 func TestOpen(t *testing.T) {
-	wb, err := document.Open("testdata/simple-1.docx")
+	doc, err := document.Open("testdata/simple-1.docx")
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
-	defer wb.Close()
+	defer doc.Close()
 
 	got := bytes.Buffer{}
-	if err := wb.Validate(); err != nil {
+	if err := doc.Validate(); err != nil {
 		t.Errorf("created an invalid document: %s", err)
 	}
-	wb.Save(&got)
+	doc.Save(&got)
 	testhelper.CompareZip(t, "simple-1.docx", got.Bytes(), true)
 }
 
@@ -82,17 +82,17 @@ func TestOpenStrict(t *testing.T) {
 }
 
 func TestOpenHeaderFooter(t *testing.T) {
-	wb, err := document.Open("testdata/header-footer-multiple.docx")
+	doc, err := document.Open("testdata/header-footer-multiple.docx")
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
-	defer wb.Close()
+	defer doc.Close()
 
 	got := bytes.Buffer{}
-	if err := wb.Validate(); err != nil {
+	if err := doc.Validate(); err != nil {
 		t.Errorf("created an invalid document: %s", err)
 	}
-	wb.Save(&got)
+	doc.Save(&got)
 	testhelper.CompareGoldenZip(t, "header-footer-multiple.docx", got.Bytes())
 }
 
@@ -400,5 +400,28 @@ func TestGetTables(t *testing.T) {
 	tables = doc.Tables()
 	if len(tables) < 2 {
 		t.Errorf("nested table not enumerated. found %d, expected 2", len(tables))
+	}
+}
+
+func TestTmpFiles(t *testing.T) {
+	doc, err := document.Open("testdata/image.docx")
+	if err != nil {
+		t.Errorf("error opening document: %s", err)
+	}
+	files, err := ioutil.ReadDir(doc.TmpPath)
+	if err != nil {
+		t.Errorf("cannot open a document: %s", err)
+	}
+	expected := 2
+	got := len(files)
+	if got != expected {
+		t.Errorf("should be %d files in the temp dir, found %d", expected, got)
+	}
+	doc.Close()
+	files, err = ioutil.ReadDir(doc.TmpPath)
+	expected = 0
+	got = len(files)
+	if got != expected {
+		t.Errorf("should be %d files in the temp dir, found %d", expected, got)
 	}
 }

@@ -10,6 +10,7 @@ import (
 	"bytes"
 	"encoding/xml"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"testing"
@@ -408,5 +409,28 @@ func TestCopySheetByName(t *testing.T) {
 
 	if wb.SheetCount() != (wasCount + 1) {
 		t.Fatalf("expected sheets count %d, got %d", wasCount+1, wb.SheetCount())
+	}
+}
+
+func TestTmpFiles(t *testing.T) {
+	wb, err := spreadsheet.Open("testdata/image.xlsx")
+	if err != nil {
+		t.Errorf("error opening document: %s", err)
+	}
+	files, err := ioutil.ReadDir(wb.TmpPath)
+	if err != nil {
+		t.Errorf("cannot open a workbook: %s", err)
+	}
+	expected := 2
+	got := len(files)
+	if got != expected {
+		t.Errorf("should be %d files in the temp dir, found %d", expected, got)
+	}
+	wb.Close()
+	files, err = ioutil.ReadDir(wb.TmpPath)
+	expected = 0
+	got = len(files)
+	if got != expected {
+		t.Errorf("should be %d files in the temp dir, found %d", expected, got)
 	}
 }
