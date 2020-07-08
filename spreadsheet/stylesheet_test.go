@@ -56,5 +56,4 @@ func TestStyleSheetFonts(t *testing.T) {
 	if err := ss.RemoveFont(ft); err == nil {
 		t.Errorf("expected an errors removing non-existent font, got none")
 	}
-
 }

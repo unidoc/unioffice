@@ -22,8 +22,7 @@ import (
 
 // memStorage contains and manages memdataCell items as operating system manages files
 type memStorage struct {
-	m    map[string]*memDataCell
-	lock *sync.Mutex
+	m    sync.Map
 }
 
 // memDataCell is an imitation of file on disk
@@ -36,22 +35,19 @@ type memDataCell struct {
 // SetAsStorage sets temp storage as a memory storage
 func SetAsStorage() {
 	ts := memStorage{
-		m:    map[string]*memDataCell{},
-		lock: &sync.Mutex{},
+		m:    sync.Map{},
 	}
 	tempstorage.SetAsStorage(&ts)
 }
 
 // Open returns tempstorage File object by name
 func (ts *memStorage) Open(path string) (tempstorage.File, error) {
-	ts.lock.Lock()
-	defer ts.lock.Unlock()
-	file, exists := ts.m[path]
+	file, exists := ts.m.Load(path)
 	if !exists {
 		return nil, errors.New(fmt.Sprintf("Cannot open the file %s", path))
 	}
 	return &memFile{
-		file:      file,
+		file:      file.(*memDataCell),
 	}, nil
 }
 
@@ -65,9 +61,7 @@ func (ts *memStorage) TempFile(dir, pattern string) (tempstorage.File, error) {
 	newFile := &memFile{
 		file: newDataCell,
 	}
-	ts.lock.Lock()
-	defer ts.lock.Unlock()
-	ts.m[path] = newDataCell
+	ts.m.Store(path, newDataCell)
 	return newFile, nil
 }
 
@@ -78,11 +72,10 @@ func (ts *memStorage) TempDir(pattern string) (string, error) {
 
 // RemoveAll removes all files according to the dir argument prefix
 func (ts *memStorage) RemoveAll(dir string) error {
-	ts.lock.Lock()
-	defer ts.lock.Unlock()
-	for path := range ts.m {
-		delete(ts.m, path)
-	}
+	ts.m.Range(func(path, value interface{}) bool {
+		ts.m.Delete(path)
+		return true
+	})
 	return nil
 }
 
@@ -92,9 +85,7 @@ func (ts *memStorage) Add(path string) error {
 	if err != nil {
 		return err
 	}
-	ts.lock.Lock()
-	defer ts.lock.Unlock()
-	ts.m[path] = &memDataCell{name: path, data: data}
+	ts.m.Store(path, &memDataCell{name: path, data: data})
 	return nil
 }
 

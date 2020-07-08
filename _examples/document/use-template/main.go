@@ -21,6 +21,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("error opening Windows Word 2016 document: %s", err)
 	}
+	defer doc.Close()
 
 	// We can now print out all styles in the document, verifying that they
 	// exist.

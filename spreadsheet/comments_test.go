@@ -15,6 +15,7 @@ import (
 
 func TestComments(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	c := sheet.Comments()
 
@@ -49,6 +50,7 @@ func TestComments(t *testing.T) {
 
 func TestCommentsReusesAuthorIDs(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	c := sheet.Comments()
 
@@ -75,5 +77,4 @@ func TestCommentsReusesAuthorIDs(t *testing.T) {
 	if len(c.X().Authors.Author) != 2 {
 		t.Errorf("expected two authors, got %v", c.X().Authors.Author)
 	}
-
 }

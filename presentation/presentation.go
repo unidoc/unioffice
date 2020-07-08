@@ -59,6 +59,11 @@ func newEmpty() *Presentation {
 	p.ContentTypes = common.NewContentTypes()
 	p.Rels = common.NewRelationships()
 	p.prels = common.NewRelationships()
+	tmpPath, err := tempstorage.TempDir("unioffice-pptx")
+	if err != nil {
+		log.Fatalf("creating zip: %s", err)
+	}
+	p.TmpPath = tmpPath
 	return p
 }
 
@@ -123,7 +128,7 @@ func New() *Presentation {
 
 	thm := dml.NewTheme()
 
-	thm.NameAttr = unioffice.String("gooxml Theme")
+	thm.NameAttr = unioffice.String("unioffice Theme")
 	thm.ThemeElements.ClrScheme.NameAttr = "Office"
 	thm.ThemeElements.ClrScheme.Dk1.SysClr = dml.NewCT_SystemColor()
 	thm.ThemeElements.ClrScheme.Dk1.SysClr.LastClrAttr = unioffice.String("000000")

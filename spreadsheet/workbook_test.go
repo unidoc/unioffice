@@ -130,10 +130,10 @@ func TestOpenExcel2016(t *testing.T) {
 
 func TestSheetCount(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	if err := wb.Validate(); err != nil {
 		t.Errorf("created an invalid spreadsheet: %s", err)
 	}
-	defer wb.Close()
 	if wb.SheetCount() != 0 {
 		t.Errorf("expected 0 sheets, got %d", wb.SheetCount())
 	}
@@ -155,6 +155,7 @@ func TestSheetCount(t *testing.T) {
 
 func TestPreserveSpace(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 	row := sheet.AddRow()
 	values := []string{"  foo  ", " bar \t", "foo\r\nbar", "\t\r\nfoo\t123\r\n"}
@@ -177,6 +178,7 @@ func TestPreserveSpace(t *testing.T) {
 	if err != nil {
 		log.Fatalf("error loading saved spreadsheet: %s", err)
 	}
+	defer op.Close()
 	sheets := op.Sheets()
 	if len(sheets) != 1 {
 		t.Errorf("expected 1 sheet, got %d", len(sheets))
@@ -232,10 +234,10 @@ func ExampleWorkbook_AddDefinedName() {
 
 func TestOpenComments(t *testing.T) {
 	wb, err := spreadsheet.Open("./testdata/comments.xlsx")
-	defer wb.Close()
 	if err != nil {
 		t.Fatalf("error opening workbook: %s", err)
 	}
+	defer wb.Close()
 
 	sheet := wb.Sheets()[0]
 	if len(sheet.Comments().Comments()) != 1 {
@@ -277,10 +279,10 @@ func TestSheetGetName(t *testing.T) {
 // TestOpenOrderedSheets test for issue #154 where sheet title didn't match sheet content.
 func TestOpenOrderedSheets(t *testing.T) {
 	wb, err := spreadsheet.Open("./testdata/ordered-sheets.xlsx")
-	defer wb.Close()
 	if err != nil {
 		t.Fatalf("error opening workbook: %s", err)
 	}
+	defer wb.Close()
 
 	for i, sheet := range wb.Sheets() {
 		expContent := fmt.Sprintf("%d", i+1)
@@ -297,10 +299,10 @@ func TestOpenOrderedSheets(t *testing.T) {
 
 func TestRemoveSheet(t *testing.T) {
 	wb, err := spreadsheet.Open("./testdata/sheets.xlsx")
-	defer wb.Close()
 	if err != nil {
 		t.Fatalf("error opening workbook: %s", err)
 	}
+	defer wb.Close()
 
 	wasCount := wb.SheetCount()
 
@@ -323,10 +325,10 @@ func TestRemoveSheet(t *testing.T) {
 
 func TestRemoveSheetByName(t *testing.T) {
 	wb, err := spreadsheet.Open("./testdata/sheets.xlsx")
-	defer wb.Close()
 	if err != nil {
 		t.Fatalf("error opening workbook: %s", err)
 	}
+	defer wb.Close()
 
 	wasCount := wb.SheetCount()
 
@@ -349,10 +351,10 @@ func TestRemoveSheetByName(t *testing.T) {
 
 func TestCopySheet(t *testing.T) {
 	wb, err := spreadsheet.Open("./testdata/sheets.xlsx")
-	defer wb.Close()
 	if err != nil {
 		t.Fatalf("error opening workbook: %s", err)
 	}
+	defer wb.Close()
 
 	wasCount := wb.SheetCount()
 
@@ -380,10 +382,10 @@ func TestCopySheet(t *testing.T) {
 
 func TestCopySheetByName(t *testing.T) {
 	wb, err := spreadsheet.Open("./testdata/sheets.xlsx")
-	defer wb.Close()
 	if err != nil {
 		t.Fatalf("error opening workbook: %s", err)
 	}
+	defer wb.Close()
 
 	wasCount := wb.SheetCount()
 

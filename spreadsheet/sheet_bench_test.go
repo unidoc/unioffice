@@ -8,6 +8,7 @@ import (
 
 func BenchmarkAddRow(b *testing.B) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 	for r := 0; r < b.N; r++ {
 		sheet.AddRow()
@@ -16,6 +17,7 @@ func BenchmarkAddRow(b *testing.B) {
 
 func BenchmarkAddCell(b *testing.B) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 	row := sheet.AddRow()
 

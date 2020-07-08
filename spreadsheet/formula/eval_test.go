@@ -51,6 +51,7 @@ func TestEval(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 	sheet.Cell("A1").SetNumber(1.23)
 	sheet.Cell("B1").SetNumber(1)
@@ -89,6 +90,7 @@ func testSheet(fn string, t *testing.T) {
 	if err != nil {
 		t.Fatalf("error opening reference sheet: %s", err)
 	}
+	defer wb.Close()
 
 	formulaCount := 0
 	for _, sheet := range wb.Sheets() {
@@ -136,6 +138,7 @@ func cmpValue(l, r string) bool {
 
 func TestArrayFormula(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	_ = sheet
 	sheet.Cell("A1").SetNumber(1)

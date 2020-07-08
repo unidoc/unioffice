@@ -11,6 +11,7 @@ var lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lobo
 
 func main() {
 	doc := document.New()
+	defer doc.Close()
 
 	// Force the TOC to update upon opening the document
 	doc.Settings.SetUpdateFieldsOnOpen(true)

@@ -11,6 +11,7 @@ var lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lobo
 
 func main() {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	// add a single sheet
 	sheet := ss.AddSheet()
 

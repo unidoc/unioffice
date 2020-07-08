@@ -16,6 +16,7 @@ import (
 
 func main() {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	hdrStyle := ss.StyleSheet.AddCellStyle()

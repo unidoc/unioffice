@@ -27,6 +27,7 @@ func main() {
 
 	start := time.Now()
 	ss := spreadsheet.New()
+	defer ss.Close()
 	nRows := 30000
 	nCols := 100
 	sheet := ss.AddSheet()
@@ -52,7 +53,8 @@ func main() {
 	fmt.Printf("saving took %s\n", time.Now().Sub(start))
 
 	start = time.Now()
-	_, err := spreadsheet.Open("lots-of-rows.xlsx")
+	ssSaved, err := spreadsheet.Open("lots-of-rows.xlsx")
+	defer ssSaved.Close()
 	if err != nil {
 		log.Fatalf("error opening sheet: %s", err)
 	}

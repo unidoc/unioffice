@@ -23,6 +23,7 @@ func TestFootnotesLoad(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	saveTestData(t, doc)
 }
 
@@ -31,6 +32,7 @@ func TestHasFootnotes(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	if !doc.HasFootnotes() {
 		t.Error("document should contain footnotes")
 	}
@@ -45,6 +47,7 @@ func TestFootnotesListFootnotes(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	if len(doc.Footnotes()) == 0 {
 		t.Error("document should contain footnotes")
 	}
@@ -59,6 +62,7 @@ func TestFootnotesPullByID(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	fn := doc.Footnote(2)
 	if fn.X().IdAttr != 2 {
 		t.Error("test did not retrieve the proper footnote")
@@ -71,6 +75,7 @@ func TestFootnotesPullParagraphs(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	fn := doc.Footnote(2)
 	if len(fn.Paragraphs()) == 0 {
 		t.Error("test did not retrieve the paragraphs properly")
@@ -83,6 +88,7 @@ func TestFootnotesLinkedToRuns(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	var linkedRuns int = 0
 	for _, p := range doc.Paragraphs() {
 		for _, r := range p.Runs() {
@@ -102,6 +108,7 @@ func TestFootnotesLinkedToRunsProperly(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	linkedFns := make([]document.Footnote, 0)
 	for _, p := range doc.Paragraphs() {
 		for _, r := range p.Runs() {
@@ -121,6 +128,7 @@ func TestFootnotesHaveText(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	fn := doc.Footnote(2)
 	var buff bytes.Buffer
 	for _, p1 := range fn.Paragraphs() {
@@ -139,6 +147,7 @@ func TestFootnotesClearContent(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	fn := doc.Footnote(2)
 	var buff bytes.Buffer
 	for _, p1 := range fn.Paragraphs() {
@@ -160,6 +169,7 @@ func TestFootnotesSimplifyContent(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 
 	fn := doc.Footnote(2)
 	for i, p := range fn.Paragraphs() {
@@ -194,6 +204,8 @@ func TestFootnotesExpandContent(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
+
 	fn := doc.Footnote(3)
 
 	para := fn.AddParagraph()
@@ -218,6 +230,7 @@ func TestFootnotesAddFootnote(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	fnB4 := len(doc.Footnotes())
 	var fnB4InP int
 	var p document.Paragraph
@@ -269,6 +282,7 @@ func TestFootnotesRemoveFootnote(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	fnB4 := len(doc.Footnotes())
 	var runsInP int
 	var p document.Paragraph

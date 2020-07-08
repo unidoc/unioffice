@@ -10,6 +10,7 @@ import (
 	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/schema/soo/wml"
 
+	ole "github.com/go-ole/go-ole"
 	"github.com/go-ole/go-ole/oleutil"
 )
 
@@ -19,6 +20,7 @@ var lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lobo
 
 func main() {
 	doc := document.New()
+	defer doc.Close()
 
 	// Force the TOC to update upon opening the document
 	doc.Settings.SetUpdateFieldsOnOpen(true)
@@ -66,17 +68,20 @@ func main() {
 	doc.SaveToFile("toc.docx")
 
 	cwd, _ := os.Getwd()
-	UpdateFields(filepath.Join(cwd, "toc.docx"))
+	err := UpdateFields(filepath.Join(cwd, "toc.docx"))
+	if err != nil {
+		log.Printf("error creating Word object: %s", err)
+	}
 }
 
 // UpdateFields uses go-ole to convert a docx to a PDF using the Word application
-func UpdateFields(source string) {
+func UpdateFields(source string) error {
 	ole.CoInitialize(0)
 	defer ole.CoUninitialize()
 
 	iunk, err := oleutil.CreateObject("Word.Application")
 	if err != nil {
-		log.Fatalf("error creating Word object: %s", err)
+		return err
 	}
 	defer iunk.Release()
 
@@ -92,4 +97,5 @@ func UpdateFields(source string) {
 	oleutil.MustCallMethod(wordDoc, "SaveAs2", source, wdFormatXMLDocument)
 	oleutil.MustCallMethod(wordDoc, "Close")
 	oleutil.MustCallMethod(word, "Quit")
+	return nil
 }

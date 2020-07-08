@@ -12,6 +12,7 @@ import (
 
 func main() {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetString("Hello World!")

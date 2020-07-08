@@ -21,6 +21,7 @@ import (
 
 func TestSimpleDoc(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	testVersion := "00.8000"
 	doc.AppProperties.X().AppVersion = &testVersion
 	para := doc.AddParagraph()
@@ -39,6 +40,7 @@ func TestOpen(t *testing.T) {
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
+	defer wb.Close()
 
 	got := bytes.Buffer{}
 	if err := wb.Validate(); err != nil {
@@ -53,6 +55,7 @@ func TestOpenStrict(t *testing.T) {
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
+	defer strict.Close()
 
 	gotStrict := bytes.Buffer{}
 	if err := strict.Validate(); err != nil {
@@ -66,6 +69,7 @@ func TestOpenStrict(t *testing.T) {
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
+	defer nonStrict.Close()
 
 	gotNonStrict := bytes.Buffer{}
 	if err := nonStrict.Validate(); err != nil {
@@ -82,6 +86,7 @@ func TestOpenHeaderFooter(t *testing.T) {
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
+	defer wb.Close()
 
 	got := bytes.Buffer{}
 	if err := wb.Validate(); err != nil {
@@ -96,6 +101,7 @@ func TestAddParagraph(t *testing.T) {
 	if len(doc.Paragraphs()) != 0 {
 		t.Errorf("expected 0 paragraphs, got %d", len(doc.Paragraphs()))
 	}
+	defer doc.Close()
 	doc.AddParagraph()
 	if len(doc.Paragraphs()) != 1 {
 		t.Errorf("expected 1 paragraphs, got %d", len(doc.Paragraphs()))
@@ -111,6 +117,7 @@ func TestOpenWord2016(t *testing.T) {
 	if err != nil {
 		t.Errorf("error opening Windows Word 2016 document: %s", err)
 	}
+	defer doc.Close()
 	got := bytes.Buffer{}
 	if err := doc.Save(&got); err != nil {
 		t.Errorf("error saving W216 file: %s", err)
@@ -120,6 +127,7 @@ func TestOpenWord2016(t *testing.T) {
 
 func TestInsertParagraph(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	if len(doc.Paragraphs()) != 0 {
 		t.Errorf("expected 0 paragraphs, got %d", len(doc.Paragraphs()))
 	}
@@ -139,6 +147,7 @@ func TestInsertParagraph(t *testing.T) {
 
 func TestInsertTable(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	if len(doc.Paragraphs()) != 0 {
 		t.Errorf("expected 0 paragraphs, got %d", len(doc.Paragraphs()))
 	}
@@ -167,6 +176,7 @@ func TestInsertTable(t *testing.T) {
 
 func TestInsertRun(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	if len(doc.Paragraphs()) != 0 {
 		t.Errorf("expected 0 paragraphs, got %d", len(doc.Paragraphs()))
 	}
@@ -208,6 +218,7 @@ func TestInsertRun(t *testing.T) {
 
 func TestInsertBookmarks(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	if len(doc.Bookmarks()) != 0 {
 		t.Errorf("expected 0 bookmarks, got %d", len(doc.Bookmarks()))
 	}
@@ -223,6 +234,7 @@ func TestInsertBookmarks(t *testing.T) {
 
 func TestDuplicateBookmarks(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	if len(doc.Bookmarks()) != 0 {
 		t.Errorf("expected 0 bookmarks, got %d", len(doc.Bookmarks()))
 	}
@@ -242,6 +254,7 @@ func TestDuplicateBookmarks(t *testing.T) {
 
 func TestHeaderAndFooterImages(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	img1, err := common.ImageFromFile("testdata/gopher.png")
 	if err != nil {
 		t.Fatalf("unable to create image: %s", err)
@@ -353,6 +366,7 @@ func TestIssue198(t *testing.T) {
 		t.Errorf("error reading %s: %s", fn, err)
 		return
 	}
+	defer doc.Close()
 	got := bytes.Buffer{}
 	doc.Save(&got)
 	testhelper.CompareGoldenZip(t, fn+".golden", got.Bytes())
@@ -360,6 +374,7 @@ func TestIssue198(t *testing.T) {
 
 func TestGetTables(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	table := doc.AddTable()
 	tables := doc.Tables()
 

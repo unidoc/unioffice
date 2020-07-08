@@ -20,6 +20,7 @@ func TestEndnotesLoad(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	saveTestData(t, doc)
 }
 
@@ -28,6 +29,7 @@ func TestHasEndnotes(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	if !doc.HasEndnotes() {
 		t.Error("document should contain endnotes")
 	}
@@ -42,6 +44,7 @@ func TestEndnotesListEndnotes(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	if len(doc.Endnotes()) == 0 {
 		t.Error("document should contain endnotes")
 	}
@@ -56,6 +59,7 @@ func TestEndnotesPullByID(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	fn := doc.Endnote(2)
 	if fn.X().IdAttr != 2 {
 		t.Error("test did not retrieve the proper endnote")
@@ -68,6 +72,7 @@ func TestEndnotesPullParagraphs(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	fn := doc.Endnote(2)
 	if len(fn.Paragraphs()) == 0 {
 		t.Error("test did not retrieve the paragraphs properly")
@@ -80,6 +85,7 @@ func TestEndnotesLinkedToRuns(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	var linkedRuns int
 	for _, p := range doc.Paragraphs() {
 		for _, r := range p.Runs() {
@@ -99,6 +105,7 @@ func TestEndnotesLinkedToRunsProperly(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	linkedEnds := make([]document.Endnote, 0)
 	for _, p := range doc.Paragraphs() {
 		for _, r := range p.Runs() {
@@ -118,6 +125,7 @@ func TestEndnotesHaveText(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	fn := doc.Endnote(2)
 	var buff bytes.Buffer
 	for _, p1 := range fn.Paragraphs() {
@@ -136,6 +144,7 @@ func TestEndnotesClearContent(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	fn := doc.Endnote(2)
 	var buff bytes.Buffer
 	for _, p1 := range fn.Paragraphs() {
@@ -157,6 +166,7 @@ func TestEndnotesSimplifyContent(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 
 	en := doc.Endnote(2)
 	for i, p := range en.Paragraphs() {
@@ -191,6 +201,8 @@ func TestEndnotesExpandContent(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
+
 	en := doc.Endnote(2)
 
 	para := en.AddParagraph()
@@ -215,6 +227,7 @@ func TestEndnotesRemoveEndnote(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	enB4 := len(doc.Endnotes())
 	var runsInP int
 	var p document.Paragraph
@@ -245,6 +258,7 @@ func TestEndnotesAddEndnote(t *testing.T) {
 	if doc == nil {
 		t.Fatal("could not read test document")
 	}
+	defer doc.Close()
 	enB4 := len(doc.Endnotes())
 	var enB4InP int
 	var p document.Paragraph

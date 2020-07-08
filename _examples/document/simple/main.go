@@ -12,6 +12,7 @@ import (
 
 func main() {
 	doc := document.New()
+	defer doc.Close()
 
 	para := doc.AddParagraph()
 	run := para.AddRun()

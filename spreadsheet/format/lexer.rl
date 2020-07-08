@@ -141,6 +141,6 @@ for !done {
   }
   _ = eof
   if cs == format_error {
-     gooxml.Log("format parse error")
+     unioffice.Log("format parse error")
   }
 }

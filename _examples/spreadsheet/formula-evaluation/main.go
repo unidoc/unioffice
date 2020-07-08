@@ -12,6 +12,7 @@ func main() {
 	fmt.Println("Currently support", len(formula.SupportedFunctions()), "functions")
 	fmt.Println(formula.SupportedFunctions())
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 	sheet.Cell("A1").SetNumber(1.2)
 	sheet.Cell("A2").SetNumber(2.3)

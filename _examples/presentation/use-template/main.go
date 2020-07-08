@@ -12,6 +12,10 @@ import (
 
 func main() {
 	ppt, err := presentation.OpenTemplate("template.pptx")
+	if err != nil {
+		log.Fatalf("unable to open template: %s", err)
+	}
+	defer ppt.Close()
 	for i, layout := range ppt.SlideLayouts() {
 		fmt.Println(i, " LL ", layout.Name(), "/", layout.Type())
 	}

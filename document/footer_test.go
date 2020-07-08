@@ -15,6 +15,7 @@ import (
 
 func TestFooterRemoveParagraph(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	for i := 0; i < 5; i++ {
 		hdr := doc.AddFooter()
 		for j := 0; j < i; j++ {
@@ -36,5 +37,4 @@ func TestFooterRemoveParagraph(t *testing.T) {
 			t.Errorf("expected no paragraphs, found %d", len(hdr.Paragraphs()))
 		}
 	}
-
 }

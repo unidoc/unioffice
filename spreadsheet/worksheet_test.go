@@ -43,6 +43,7 @@ func TestWorksheetUnmarshal(t *testing.T) {
 // Issue #212
 func TestInsertMergedCells(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	sheet.AddMergedCells("A1", "C1")
 	sheet.AddMergedCells("A2", "C2")

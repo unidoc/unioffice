@@ -15,9 +15,9 @@ import (
 	"image"
 	"image/jpeg"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 
 	"github.com/unidoc/unioffice"
@@ -62,7 +62,6 @@ type Document struct {
 // New constructs an empty document that content can be added to.
 func New() *Document {
 	d := &Document{x: wml.NewDocument()}
-	runtime.SetFinalizer(d, documentFinalizer)
 
 	d.ContentTypes = common.NewContentTypes()
 	d.x.Body = wml.NewCT_Body()
@@ -94,6 +93,11 @@ func New() *Document {
 	d.docRels.AddRelationship("styles.xml", unioffice.StylesType)
 
 	d.x.Body = wml.NewCT_Body()
+	tmpPath, err := tempstorage.TempDir("unioffice-docx")
+	if err != nil {
+		log.Fatalf("creating zip: %s", err)
+	}
+	d.TmpPath = tmpPath
 	return d
 }
 
@@ -587,12 +591,6 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	// numbering is not required
 	doc.Numbering.x = nil
 
-	tmpPath, err := tempstorage.TempDir("gooxml-docx")
-	if err != nil {
-		return nil, fmt.Errorf("creating zip: %s", err)
-	}
-	doc.TmpPath = tmpPath
-
 	zr, err := zip.NewReader(r, size)
 	if err != nil {
 		return nil, fmt.Errorf("parsing zip: %s", err)
@@ -1070,10 +1068,6 @@ func (d Document) Bookmarks() []Bookmark {
 		}
 	}
 	return ret
-}
-
-func documentFinalizer(d *Document) {
-	d.Close()
 }
 
 // Close closes the document, removing any temporary files that might have been

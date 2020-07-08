@@ -92,6 +92,7 @@ func TestCell(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	// cells with number, needed for testing different formats
@@ -252,6 +253,7 @@ func TestChoose(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(1)
@@ -275,6 +277,7 @@ func TestColumn(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -289,6 +292,7 @@ func TestColumns(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -303,6 +307,7 @@ func TestCountIf(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(1234.4321)
@@ -335,6 +340,7 @@ func TestCountIfs(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(1)
@@ -378,6 +384,7 @@ func TestSumIf(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(1)
@@ -410,6 +417,7 @@ func TestSumIfs(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(5)
@@ -445,6 +453,7 @@ func TestMinIfs(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(5)
@@ -480,6 +489,7 @@ func TestMaxIfs(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(5)
@@ -515,6 +525,7 @@ func TestValue(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(5000)
@@ -538,6 +549,7 @@ func TestMatch(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetString("John")
@@ -565,6 +577,7 @@ func TestMatch(t *testing.T) {
 
 func TestMax(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0.1)
@@ -587,6 +600,7 @@ func TestMax(t *testing.T) {
 
 func TestMaxA(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0.1)
@@ -609,6 +623,7 @@ func TestMaxA(t *testing.T) {
 
 func TestMin(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0.1)
@@ -631,6 +646,7 @@ func TestMin(t *testing.T) {
 
 func TestMinA(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0.1)
@@ -653,6 +669,7 @@ func TestMinA(t *testing.T) {
 
 func TestIfs(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("B1").SetNumber(1)
@@ -679,6 +696,7 @@ func TestIfs(t *testing.T) {
 
 func TestOffset(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("B1").SetNumber(1)
@@ -708,6 +726,7 @@ func TestOffset(t *testing.T) {
 
 func TestIsBlank(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("B1").SetString(" ")
@@ -724,6 +743,7 @@ func TestIsBlank(t *testing.T) {
 
 func TestIsErr(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(-1)
@@ -751,6 +771,7 @@ func TestIsErr(t *testing.T) {
 
 func TestIsError(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(-1)
@@ -778,6 +799,7 @@ func TestIsError(t *testing.T) {
 
 func TestIsEven(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("B1").SetNumber(0)
@@ -798,6 +820,7 @@ func TestIsEven(t *testing.T) {
 
 func TestIsFormula(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0)
@@ -816,6 +839,7 @@ func TestIsFormula(t *testing.T) {
 
 func TestIsLeapYear(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2016, 1, 1, 0, 0, 0, 0, time.UTC))
@@ -836,6 +860,7 @@ func TestIsLeapYear(t *testing.T) {
 
 func TestIsNonText(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("B2").SetString(" ")
@@ -855,6 +880,7 @@ func TestIsNonText(t *testing.T) {
 
 func TestIsNumber(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("B2").SetString(" ")
@@ -874,6 +900,7 @@ func TestIsNumber(t *testing.T) {
 
 func TestIsOdd(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("B1").SetNumber(0)
@@ -894,6 +921,7 @@ func TestIsOdd(t *testing.T) {
 
 func TestIsText(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("B2").SetString(" ")
@@ -913,6 +941,7 @@ func TestIsText(t *testing.T) {
 
 func TestIsLogical(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetBool(true)
@@ -935,6 +964,7 @@ func TestIsLogical(t *testing.T) {
 
 func TestIsNA(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetFormulaRaw("MATCH(1,B1:B5)")
@@ -954,6 +984,7 @@ func TestIsNA(t *testing.T) {
 
 func TestIsRef(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetFormulaRaw("=ISREF(B1)")
@@ -986,6 +1017,7 @@ func TestIsRef(t *testing.T) {
 
 func TestFind(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetString("abcde")
@@ -1013,6 +1045,7 @@ func TestFind(t *testing.T) {
 
 func TestFindb(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	ss.CoreProperties.SetLanguage("zh-TW") // set DBCS language
 	sheet := ss.AddSheet()
 
@@ -1041,6 +1074,7 @@ func TestFindb(t *testing.T) {
 
 func TestSearch(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetString("ABCDE")
@@ -1070,6 +1104,7 @@ func TestSearch(t *testing.T) {
 
 func TestSearchb(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	ss.CoreProperties.SetLanguage("zh-TW") // set DBCS language
 	sheet := ss.AddSheet()
 
@@ -1099,6 +1134,7 @@ func TestSearchb(t *testing.T) {
 
 func TestConcat(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetBool(true)
@@ -1123,6 +1159,7 @@ func TestYear(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetTime(time.Date(2019, time.November, 4, 16, 0, 0, 0, time.UTC))
@@ -1134,6 +1171,7 @@ func TestYear(t *testing.T) {
 
 func TestYearFrac(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetTime(time.Date(1900, time.January, 1, 0, 0, 0, 0, time.UTC))
@@ -1168,6 +1206,7 @@ func TestYearFrac(t *testing.T) {
 
 func TestTime(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	td := []testStruct{
@@ -1184,6 +1223,7 @@ func TestTime(t *testing.T) {
 
 func TestTimeValue(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	td := []testStruct{
@@ -1200,6 +1240,7 @@ func TestTimeValue(t *testing.T) {
 
 func TestDay(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	td := []testStruct{
@@ -1215,6 +1256,7 @@ func TestDay(t *testing.T) {
 
 func TestDays(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetTime(time.Date(2021, time.February, 28, 0, 0, 0, 0, time.UTC))
@@ -1234,6 +1276,7 @@ func TestDays(t *testing.T) {
 
 func TestDate(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	td := []testStruct{
@@ -1248,6 +1291,7 @@ func TestDate(t *testing.T) {
 
 func TestDateValue(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	td := []testStruct{
@@ -1266,6 +1310,7 @@ func TestDateValue(t *testing.T) {
 
 func TestDateDif(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetTime(time.Date(2019, time.February, 7, 0, 0, 0, 0, time.UTC))
@@ -1288,6 +1333,7 @@ func TestDateDif(t *testing.T) {
 
 func TestMinute(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	td := []testStruct{
@@ -1303,6 +1349,7 @@ func TestMinute(t *testing.T) {
 
 func TestMonth(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	td := []testStruct{
@@ -1319,6 +1366,7 @@ func TestMonth(t *testing.T) {
 
 func TestEdate(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	td := []testStruct{
@@ -1335,6 +1383,7 @@ func TestEdate(t *testing.T) {
 
 func TestEomonth(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	td := []testStruct{
@@ -1351,6 +1400,7 @@ func TestEomonth(t *testing.T) {
 
 func TestDuration(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetTime(time.Date(2018, time.July, 1, 0, 0, 0, 0, time.UTC))    // settlement date
@@ -1377,6 +1427,7 @@ func TestDuration(t *testing.T) {
 
 func TestMduration(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetTime(time.Date(2008, time.January, 1, 0, 0, 0, 0, time.UTC)) // settlement date
@@ -1403,6 +1454,7 @@ func TestMduration(t *testing.T) {
 
 func TestPduration(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	td := []testStruct{
@@ -1423,6 +1475,7 @@ func TestRow(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -1437,6 +1490,7 @@ func TestRows(t *testing.T) {
 	}
 
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -1446,6 +1500,7 @@ func TestRows(t *testing.T) {
 
 func TestLookup(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(1)
@@ -1469,6 +1524,7 @@ func TestLookup(t *testing.T) {
 
 func TestVlookup(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(100)
@@ -1496,6 +1552,7 @@ func TestVlookup(t *testing.T) {
 
 func TestLarge(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(400)
@@ -1523,6 +1580,7 @@ func TestLarge(t *testing.T) {
 
 func TestSmall(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(400)
@@ -1550,6 +1608,7 @@ func TestSmall(t *testing.T) {
 
 func TestLower(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(400)
@@ -1573,6 +1632,7 @@ func TestLower(t *testing.T) {
 
 func TestReplace(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(400)
@@ -1596,6 +1656,7 @@ func TestReplace(t *testing.T) {
 
 func TestTextJoin(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(1)
@@ -1622,6 +1683,7 @@ func TestTextJoin(t *testing.T) {
 
 func TestIndex(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(1)
@@ -1655,6 +1717,7 @@ func TestIndex(t *testing.T) {
 
 func TestText(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	td := []testStruct{
@@ -1672,6 +1735,7 @@ func TestText(t *testing.T) {
 
 func TestSum(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(1)
@@ -1698,6 +1762,7 @@ func TestSum(t *testing.T) {
 
 func TestIf(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(1)
@@ -1723,6 +1788,7 @@ func TestIf(t *testing.T) {
 
 func TestAccrintm(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -1742,6 +1808,7 @@ func TestAccrintm(t *testing.T) {
 
 func TestAmordegrc(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -1759,6 +1826,7 @@ func TestAmordegrc(t *testing.T) {
 
 func TestAmorlinc(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -1776,6 +1844,7 @@ func TestAmorlinc(t *testing.T) {
 
 func TestCoupdaybs(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -1806,6 +1875,7 @@ func TestCoupdaybs(t *testing.T) {
 
 func TestCoupdays(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -1836,6 +1906,7 @@ func TestCoupdays(t *testing.T) {
 
 func TestCoupdaysnc(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -1866,6 +1937,7 @@ func TestCoupdaysnc(t *testing.T) {
 
 func TestCoupncd(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -1885,6 +1957,7 @@ func TestCoupncd(t *testing.T) {
 
 func TestCouppcd(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -1902,6 +1975,7 @@ func TestCouppcd(t *testing.T) {
 
 func TestCoupnum(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -1919,6 +1993,7 @@ func TestCoupnum(t *testing.T) {
 
 func TestCumipmt(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0.09)
@@ -1937,6 +2012,7 @@ func TestCumipmt(t *testing.T) {
 
 func TestCumprinc(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0.09)
@@ -1955,6 +2031,7 @@ func TestCumprinc(t *testing.T) {
 
 func TestDb(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(1000000)
@@ -1978,6 +2055,7 @@ func TestDb(t *testing.T) {
 
 func TestDdb(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(2400)
@@ -1999,6 +2077,7 @@ func TestDdb(t *testing.T) {
 
 func TestDisc(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2018, 7, 1, 0, 0, 0, 0, time.UTC))
@@ -2023,6 +2102,7 @@ func TestDisc(t *testing.T) {
 
 func TestDollarde(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2038,6 +2118,7 @@ func TestDollarde(t *testing.T) {
 
 func TestDollarfr(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2053,6 +2134,7 @@ func TestDollarfr(t *testing.T) {
 
 func TestEffect(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2071,6 +2153,7 @@ func TestEffect(t *testing.T) {
 
 func TestFv(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2085,6 +2168,7 @@ func TestFv(t *testing.T) {
 
 func TestFvschedule(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0.09)
@@ -2104,6 +2188,7 @@ func TestFvschedule(t *testing.T) {
 
 func TestIntrate(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 2, 15, 0, 0, 0, 0, time.UTC))
@@ -2128,6 +2213,7 @@ func TestIntrate(t *testing.T) {
 
 func TestIpmt(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0.1)
@@ -2151,6 +2237,7 @@ func TestIpmt(t *testing.T) {
 
 func TestIrr(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(-70000)
@@ -2174,6 +2261,7 @@ func TestIrr(t *testing.T) {
 
 func TestIspmt(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0.1)
@@ -2195,6 +2283,7 @@ func TestIspmt(t *testing.T) {
 
 func TestMirr(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(-120000)
@@ -2223,6 +2312,7 @@ func TestMirr(t *testing.T) {
 
 func TestNominal(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2241,6 +2331,7 @@ func TestNominal(t *testing.T) {
 
 func TestNper(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0.12)
@@ -2266,6 +2357,7 @@ func TestNper(t *testing.T) {
 
 func TestNpv(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0.1)
@@ -2288,6 +2380,7 @@ func TestNpv(t *testing.T) {
 
 func TestPmt(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(0.08)
@@ -2313,6 +2406,7 @@ func TestPmt(t *testing.T) {
 
 func TestPpmt(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2329,6 +2423,7 @@ func TestPpmt(t *testing.T) {
 
 func TestPricedisc(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 2, 16, 0, 0, 0, 0, time.UTC))
@@ -2353,6 +2448,7 @@ func TestPricedisc(t *testing.T) {
 
 func TestPv(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2376,6 +2472,7 @@ func TestPv(t *testing.T) {
 
 func TestRate(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2395,6 +2492,7 @@ func TestRate(t *testing.T) {
 
 func TestReceived(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 2, 15, 0, 0, 0, 0, time.UTC))
@@ -2419,6 +2517,7 @@ func TestReceived(t *testing.T) {
 
 func TestRri(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2436,6 +2535,7 @@ func TestRri(t *testing.T) {
 
 func TestOddlprice(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 2, 7, 0, 0, 0, 0, time.UTC))
@@ -2463,6 +2563,7 @@ func TestOddlprice(t *testing.T) {
 
 func TestOddyield(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 4, 20, 0, 0, 0, 0, time.UTC))
@@ -2490,6 +2591,7 @@ func TestOddyield(t *testing.T) {
 
 func TestPrice(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 2, 15, 0, 0, 0, 0, time.UTC))
@@ -2514,6 +2616,7 @@ func TestPrice(t *testing.T) {
 
 func TestPricemat(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 2, 15, 0, 0, 0, 0, time.UTC))
@@ -2537,6 +2640,7 @@ func TestPricemat(t *testing.T) {
 
 func TestSln(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2552,6 +2656,7 @@ func TestSln(t *testing.T) {
 
 func TestSyd(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2570,6 +2675,7 @@ func TestSyd(t *testing.T) {
 
 func TestTbilleq(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 3, 31, 0, 0, 0, 0, time.UTC))
@@ -2592,6 +2698,7 @@ func TestTbilleq(t *testing.T) {
 
 func TestTbillprice(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 3, 31, 0, 0, 0, 0, time.UTC))
@@ -2614,6 +2721,7 @@ func TestTbillprice(t *testing.T) {
 
 func TestTbillyield(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 3, 31, 0, 0, 0, 0, time.UTC))
@@ -2636,6 +2744,7 @@ func TestTbillyield(t *testing.T) {
 
 func TestVdb(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(2400)
@@ -2662,6 +2771,7 @@ func TestVdb(t *testing.T) {
 
 func TestYielddisc(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 2, 16, 0, 0, 0, 0, time.UTC))
@@ -2686,6 +2796,7 @@ func TestYielddisc(t *testing.T) {
 
 func TestXirr(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(-10000)
@@ -2712,6 +2823,7 @@ func TestXirr(t *testing.T) {
 
 func TestXnpv(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetNumber(-10000)
@@ -2738,6 +2850,7 @@ func TestXnpv(t *testing.T) {
 
 func TestYield(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 2, 15, 0, 0, 0, 0, time.UTC))
@@ -2767,6 +2880,7 @@ func TestYield(t *testing.T) {
 
 func TestYieldmat(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetDate(time.Date(2008, 3, 15, 0, 0, 0, 0, time.UTC))
@@ -2795,6 +2909,7 @@ func TestYieldmat(t *testing.T) {
 
 func TestMid(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2813,6 +2928,7 @@ func TestMid(t *testing.T) {
 
 func TestSubstitute(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	sheet.Cell("A1").SetString("Hello Earth Earth Earth")
@@ -2834,6 +2950,7 @@ func TestSubstitute(t *testing.T) {
 
 func TestAnd(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2850,6 +2967,7 @@ func TestAnd(t *testing.T) {
 
 func TestIferror(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2864,6 +2982,7 @@ func TestIferror(t *testing.T) {
 
 func TestChar(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()
@@ -2880,6 +2999,7 @@ func TestChar(t *testing.T) {
 
 func TestRound(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	ctx := sheet.FormulaContext()

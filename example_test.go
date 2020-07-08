@@ -9,6 +9,7 @@ func Example_document() {
 	// see the github.com/unidoc/unioffice/document documentation or _examples/document
 	// for more examples
 	doc := document.New()
+	defer doc.Close()
 	doc.AddParagraph().AddRun().AddText("Hello World!")
 	doc.SaveToFile("document.docx")
 }
@@ -17,6 +18,7 @@ func Example_spreadsheeet() {
 	// see the github.com/unidoc/unioffice/spreadsheet documentation or _examples/spreadsheet
 	// for more examples
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 	sheet.AddRow().AddCell().SetString("Hello")
 	sheet.Cell("B1").SetString("World!")

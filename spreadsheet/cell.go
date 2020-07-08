@@ -38,7 +38,7 @@ func (c Cell) X() *sml.CT_Cell {
 }
 
 // Reference returns the cell reference (e.g. "A4"). This is not required,
-// however both gooxml and Excel will always set it.
+// however both unioffice and Excel will always set it.
 func (c Cell) Reference() string {
 	if c.x.RAttr != nil {
 		return *c.x.RAttr

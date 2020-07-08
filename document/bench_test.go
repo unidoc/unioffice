@@ -9,6 +9,7 @@ import (
 
 func BenchmarkAddPara(b *testing.B) {
 	doc := document.New()
+	defer doc.Close()
 	for i := 0; i < b.N; i++ {
 		doc.AddParagraph()
 	}
@@ -16,6 +17,7 @@ func BenchmarkAddPara(b *testing.B) {
 
 func BenchmarkAddRuns(b *testing.B) {
 	doc := document.New()
+	defer doc.Close()
 	para := doc.AddParagraph()
 	for i := 0; i < b.N; i++ {
 		run := para.AddRun()
@@ -25,6 +27,7 @@ func BenchmarkAddRuns(b *testing.B) {
 
 func BenchmarkSave(b *testing.B) {
 	doc := document.New()
+	defer doc.Close()
 	for i := 0; i < 100; i++ {
 		para := doc.AddParagraph()
 		run := para.AddRun()
@@ -39,6 +42,7 @@ func BenchmarkSave(b *testing.B) {
 
 func BenchmarkOpen(b *testing.B) {
 	doc := document.New()
+	defer doc.Close()
 	for i := 0; i < 100; i++ {
 		para := doc.AddParagraph()
 		run := para.AddRun()

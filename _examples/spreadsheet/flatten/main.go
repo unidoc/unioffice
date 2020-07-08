@@ -17,6 +17,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("error opening document: %s", err)
 	}
+	defer ss.Close()
 
 	sheets := ss.Sheets()
 

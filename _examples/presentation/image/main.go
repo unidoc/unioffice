@@ -13,6 +13,7 @@ import (
 
 func main() {
 	ppt := presentation.New()
+	defer ppt.Close()
 	imgColor, err := common.ImageFromFile("gophercolor.png")
 	if err != nil {
 		log.Fatalf("unable to create image: %s", err)

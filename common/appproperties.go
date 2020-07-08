@@ -36,7 +36,7 @@ func NewAppProperties() AppProperties {
 }
 
 // Application returns the name of the application that created the document.
-// For gooxml created documents, it defaults to github.com/unidoc/unioffice
+// For unioffice created documents, it defaults to github.com/unidoc/unioffice
 func (a AppProperties) Application() string {
 	if a.x.Application != nil {
 		return *a.x.Application
@@ -80,7 +80,7 @@ func (a AppProperties) X() *extended_properties.Properties {
 }
 
 // Company returns the name of the company that created the document.
-// For gooxml created documents, it defaults to github.com/unidoc/unioffice
+// For unioffice created documents, it defaults to github.com/unidoc/unioffice
 func (a AppProperties) Company() string {
 	if a.x.Company != nil {
 		return *a.x.Company

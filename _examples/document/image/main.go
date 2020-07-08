@@ -16,6 +16,7 @@ var lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lobo
 
 func main() {
 	doc := document.New()
+	defer doc.Close()
 
 	img1, err := common.ImageFromFile("gophercolor.png")
 	if err != nil {

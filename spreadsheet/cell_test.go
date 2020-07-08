@@ -19,6 +19,7 @@ import (
 
 func TestCell(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()
@@ -55,6 +56,7 @@ func TestCell(t *testing.T) {
 
 func TestCellGetNumber(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()
@@ -71,6 +73,7 @@ func TestCellGetNumber(t *testing.T) {
 
 func TestCellGetNumberFromText(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()
@@ -84,6 +87,7 @@ func TestCellGetNumberFromText(t *testing.T) {
 
 func TestCellGetBool(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()
@@ -100,6 +104,7 @@ func TestCellGetBool(t *testing.T) {
 
 func TestCellGetDate(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()
@@ -121,6 +126,7 @@ func TestCellGetDate(t *testing.T) {
 
 func TestCellGetTime(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()
@@ -138,6 +144,7 @@ func TestCellGetTime(t *testing.T) {
 
 func TestCellClear(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()
@@ -172,6 +179,7 @@ func TestCellClear(t *testing.T) {
 
 func TestCellRichTextString(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()
@@ -183,6 +191,7 @@ func TestCellRichTextString(t *testing.T) {
 
 func TestCellStringByID(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()
@@ -198,6 +207,7 @@ func TestCellStringByID(t *testing.T) {
 
 func TestCellReference(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	for r := 1; r <= 5; r++ {
 		row := sheet.AddRow()
@@ -213,6 +223,7 @@ func TestCellReference(t *testing.T) {
 
 func TestCellTimeFormat(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	exp := time.Date(2100, 5, 4, 3, 2, 1, 123456789, time.Local)
 	sheet.Cell("A1").SetTime(exp)
@@ -231,6 +242,7 @@ func TestCellTimeFormat(t *testing.T) {
 
 func TestCellDateFormat(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	exp := time.Date(2100, 5, 4, 0, 0, 0, 0, time.Local)
 	sheet.Cell("A1").SetDate(exp)
