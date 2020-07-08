@@ -29,6 +29,7 @@ import (
 	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/schema/soo/dml"
+	crt "github.com/unidoc/unioffice/schema/soo/dml/chart"
 	"github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes"
 	"github.com/unidoc/unioffice/schema/soo/pkg/relationships"
 	"github.com/unidoc/unioffice/schema/soo/pml"
@@ -38,16 +39,25 @@ import (
 // Presentation is the a presentation base document.
 type Presentation struct {
 	common.DocBase
-	x          *pml.Presentation
-	prels      common.Relationships
-	slides     []*pml.Sld
-	slideRels  []common.Relationships
-	masters    []*pml.SldMaster
-	masterRels []common.Relationships
-	layouts    []*pml.SldLayout
-	layoutRels []common.Relationships
-	themes     []*dml.Theme
-	themeRels  []common.Relationships
+	x                      *pml.Presentation
+	prels                  common.Relationships
+	slides                 []*pml.Sld
+	slideRels              []common.Relationships
+	masters                []*pml.SldMaster
+	masterRels             []common.Relationships
+	layouts                []*pml.SldLayout
+	layoutRels             []common.Relationships
+	themes                 []*dml.Theme
+	themeRels              []common.Relationships
+	tableStyles            common.TableStyles
+	presentationProperties PresentationProperties
+	viewProperties         ViewProperties
+	hyperlinks             []*dml.CT_Hyperlink
+	charts                 []*crt.ChartSpace
+	handoutMaster          []*pml.HandoutMaster
+	notesMaster            []*pml.NotesMaster
+	customXML              []*unioffice.XSDAny
+	imagesMap              map[string]string // mapping input images paths to output ones
 }
 
 func newEmpty() *Presentation {
@@ -56,9 +66,13 @@ func newEmpty() *Presentation {
 	p.x.ConformanceAttr = sharedTypes.ST_ConformanceClassTransitional
 	p.AppProperties = common.NewAppProperties()
 	p.CoreProperties = common.NewCoreProperties()
+	p.tableStyles = common.NewTableStyles()
 	p.ContentTypes = common.NewContentTypes()
 	p.Rels = common.NewRelationships()
 	p.prels = common.NewRelationships()
+	p.presentationProperties = NewPresentationProperties()
+	p.viewProperties = NewViewProperties()
+	p.imagesMap = map[string]string{}
 	tmpPath, err := tempstorage.TempDir("unioffice-pptx")
 	if err != nil {
 		log.Fatalf("creating zip: %s", err)
@@ -77,6 +91,9 @@ func New() *Presentation {
 	p.Rels.AddRelationship("docProps/core.xml", "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties")
 	p.Rels.AddRelationship("docProps/app.xml", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties")
 	p.Rels.AddRelationship("ppt/presentation.xml", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument")
+	p.Rels.AddRelationship("ppt/presProps.xml", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/presProps")
+	p.Rels.AddRelationship("ppt/viewProps.xml", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/viewProps")
+	p.Rels.AddRelationship("ppt/tableStyles.xml", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableStyles")
 
 	p.x.SldMasterIdLst = pml.NewCT_SlideMasterIdList()
 	m := pml.NewSldMaster()
@@ -342,8 +359,15 @@ func (p *Presentation) AddSlideWithLayout(l SlideLayout) (Slide, error) {
 
 	srel := common.NewRelationships()
 	p.slideRels = append(p.slideRels, srel)
+	slrLen := len(p.slideRels) - 1
 	for i, lout := range p.layouts {
 		if lout == l.X() {
+			lrels := p.layoutRels[i]
+			for _, lrel := range lrels.X().Relationship {
+				if lrel.TypeAttr != unioffice.SlideMasterType {
+					p.slideRels[slrLen].X().Relationship = append(p.slideRels[slrLen].X().Relationship, lrel)
+				}
+			}
 			srel.AddAutoRelationship(unioffice.DocTypePresentation, unioffice.SlideType,
 				i+1, unioffice.SlideLayoutType)
 		}
@@ -384,6 +408,15 @@ func (p *Presentation) AddDefaultSlideWithLayout(l SlideLayout) (Slide, error) {
 
 // Save writes the presentation out to a writer in the Zip package format
 func (p *Presentation) Save(w io.Writer) error {
+	return p.save(w, false)
+}
+
+// SaveAsTemplate writes the presentation out to a writer in the Zip package format as a template
+func (p *Presentation) SaveAsTemplate(w io.Writer) error {
+	return p.save(w, true)
+}
+
+func (p *Presentation) save(w io.Writer, isTemplate bool) error {
 	if err := p.x.Validate(); err != nil {
 		log.Printf("validation error in document: %s", err)
 	}
@@ -403,6 +436,14 @@ func (p *Presentation) Save(w io.Writer) error {
 		r.Properties().SetSolidFill(color.Red)
 	}
 
+	if isTemplate {
+		p.ContentTypes.RemoveOverride("application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml")
+		p.ContentTypes.EnsureOverride("/ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.template.main+xml")
+	} else {
+		p.ContentTypes.RemoveOverride("application/vnd.openxmlformats-officedocument.presentationml.template.main+xml")
+		p.ContentTypes.EnsureOverride("/ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml")
+	}
+
 	dt := unioffice.DocTypePresentation
 
 	z := zip.NewWriter(w)
@@ -414,6 +455,15 @@ func (p *Presentation) Save(w io.Writer) error {
 		return err
 	}
 	if err := zippkg.MarshalXMLByType(z, dt, unioffice.CorePropertiesType, p.CoreProperties.X()); err != nil {
+		return err
+	}
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.PresentationPropertiesType, p.presentationProperties.X()); err != nil {
+		return err
+	}
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.ViewPropertiesType, p.viewProperties.X()); err != nil {
+		return err
+	}
+	if err := zippkg.MarshalXMLByType(z, dt, unioffice.TableStylesType, p.tableStyles.X()); err != nil {
 		return err
 	}
 	if p.CustomProperties.X() != nil {
@@ -471,6 +521,22 @@ func (p *Presentation) Save(w io.Writer) error {
 			zippkg.MarshalXML(z, rpath, p.themeRels[i].X())
 		}
 	}
+	for i, chart := range p.charts {
+		fn := unioffice.AbsoluteFilename(dt, unioffice.ChartType, i+1)
+		zippkg.MarshalXML(z, fn, chart)
+	}
+	for i, hm := range p.handoutMaster {
+		fn := unioffice.AbsoluteFilename(dt, unioffice.HandoutMasterType, i+1)
+		zippkg.MarshalXML(z, fn, hm)
+	}
+	for i, nm := range p.notesMaster {
+		fn := unioffice.AbsoluteFilename(dt, unioffice.NotesMasterType, i+1)
+		zippkg.MarshalXML(z, fn, nm)
+	}
+	for i, cx := range p.customXML {
+		fn := unioffice.AbsoluteFilename(dt, unioffice.CustomXMLType, i+1)
+		zippkg.MarshalXML(z, fn, cx)
+	}
 
 	for i, img := range p.Images {
 		if err := common.AddImageToZip(z, img, i+1, unioffice.DocTypePresentation); err != nil {
@@ -478,6 +544,10 @@ func (p *Presentation) Save(w io.Writer) error {
 		}
 	}
 
+	p.ContentTypes.EnsureDefault("png", "image/png")
+	p.ContentTypes.EnsureDefault("jpeg", "image/jpeg")
+	p.ContentTypes.EnsureDefault("jpg", "image/jpeg")
+	p.ContentTypes.EnsureDefault("wmf", "image/x-wmf")
 	if err := zippkg.MarshalXML(z, unioffice.ContentTypesFilename, p.ContentTypes.X()); err != nil {
 		return err
 	}
@@ -489,12 +559,21 @@ func (p *Presentation) Save(w io.Writer) error {
 
 // SaveToFile writes the Presentation out to a file.
 func (p *Presentation) SaveToFile(path string) error {
+	return p.saveToFile(path, false)
+}
+
+// SaveToFileAsTemplate writes the Presentation out to a file as a template.
+func (p *Presentation) SaveToFileAsTemplate(path string) error {
+	return p.saveToFile(path, true)
+}
+
+func (p *Presentation) saveToFile(path string, isTemplate bool) error {
 	f, err := os.Create(path)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
-	return p.Save(f)
+	return p.save(f, isTemplate)
 }
 
 func (p *Presentation) Validate() error {
@@ -556,6 +635,52 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 	case unioffice.CustomPropertiesType:
 		decMap.AddTarget(target, p.CustomProperties.X(), typ, 0)
 		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
+
+	case unioffice.PresentationPropertiesType:
+		decMap.AddTarget(target, p.presentationProperties.X(), typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
+
+	case unioffice.ViewPropertiesType:
+		decMap.AddTarget(target, p.viewProperties.X(), typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
+
+	case unioffice.TableStylesType:
+		decMap.AddTarget(target, p.tableStyles.X(), typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
+
+	case unioffice.HyperLinkType:
+		hl := dml.NewCT_Hyperlink()
+		idx := uint32(len(p.hyperlinks))
+		decMap.AddTarget(target, hl, typ, idx)
+		p.hyperlinks = append(p.hyperlinks, hl)
+
+	case unioffice.CustomXMLType:
+		cx := &unioffice.XSDAny{}
+		idx := uint32(len(p.customXML))
+		decMap.AddTarget(target, cx, typ, idx)
+		p.customXML = append(p.customXML, cx)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(p.customXML))
+
+	case unioffice.ChartType:
+		chart := crt.NewChartSpace()
+		idx := uint32(len(p.charts))
+		decMap.AddTarget(target, chart, typ, idx)
+		p.charts = append(p.charts, chart)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(p.charts))
+
+	case unioffice.HandoutMasterType:
+		nm := pml.NewHandoutMaster()
+		idx := uint32(len(p.handoutMaster))
+		decMap.AddTarget(target, nm, typ, idx)
+		p.handoutMaster = append(p.handoutMaster, nm)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(p.handoutMaster))
+
+	case unioffice.NotesMasterType:
+		nm := pml.NewNotesMaster()
+		idx := uint32(len(p.notesMaster))
+		decMap.AddTarget(target, nm, typ, idx)
+		p.notesMaster = append(p.notesMaster, nm)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, len(p.notesMaster))
 
 	case unioffice.ExtendedPropertiesType:
 		decMap.AddTarget(target, p.AppProperties.X(), typ, 0)
@@ -634,6 +759,11 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 		// we use path.Clean instead of filepath.Clean to ensure we
 		// end up with forward separators
 		target = path.Clean(target)
+		if targetAttr, ok := p.imagesMap[target]; ok {
+			rel.TargetAttr = targetAttr
+			return nil
+		}
+		format := ""
 		for i, f := range files {
 			if f == nil {
 				continue
@@ -647,6 +777,7 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 				if err != nil {
 					return err
 				}
+				format = img.Format
 				iref := common.MakeImageRef(img, &p.DocBase, p.prels)
 				p.Images = append(p.Images, iref)
 				files[i] = nil
@@ -655,7 +786,8 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 			}
 		}
 		idx := decMap.IndexFor(target)
-		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, idx)
+		rel.TargetAttr = unioffice.RelativeImageFilename(dt, src.Typ, typ, idx, format)
+		p.imagesMap[target] = rel.TargetAttr
 
 	default:
 		unioffice.Log("unsupported relationship type: %s tgt: %s", typ, target)
@@ -700,9 +832,8 @@ func (p *Presentation) RemoveSlide(s Slide) error {
 	}
 
 	// remove it from content types
-	fn := unioffice.AbsoluteFilename(unioffice.DocTypePresentation, unioffice.SlideType, slideIdx+1)
-	p.ContentTypes.RemoveOverride(fn)
-	return nil
+	fn := unioffice.AbsoluteFilename(unioffice.DocTypePresentation, unioffice.SlideType, 0)
+	return p.ContentTypes.RemoveOverrideByIndex(fn, slideIdx)
 }
 
 // GetLayoutByName retrieves a slide layout given a layout name.
@@ -737,8 +868,11 @@ func (p *Presentation) AddImage(i common.Image) (common.ImageRef, error) {
 	}
 
 	p.Images = append(p.Images, r)
-	fn := fmt.Sprintf("media/image%d.%s", len(p.Images), i.Format)
-	p.prels.AddRelationship(fn, unioffice.ImageType)
+	p.ContentTypes.EnsureDefault("png", "image/png")
+	p.ContentTypes.EnsureDefault("jpeg", "image/jpeg")
+	p.ContentTypes.EnsureDefault("jpg", "image/jpeg")
+	p.ContentTypes.EnsureDefault("wmf", "image/x-wmf")
+	p.ContentTypes.EnsureDefault(i.Format, "image/"+i.Format)
 	return r, nil
 }
 
@@ -756,7 +890,7 @@ func (p *Presentation) GetImageByRelID(relID string) (common.ImageRef, bool) {
 // GetOrCreateCustomProperties returns the custom properties of the document (and if they not exist yet, creating them first)
 func (p *Presentation) GetOrCreateCustomProperties() common.CustomProperties {
 	if p.CustomProperties.X() == nil {
-		 p.createCustomProperties()
+		p.createCustomProperties()
 	}
 	return p.CustomProperties
 }
@@ -769,10 +903,6 @@ func (p *Presentation) createCustomProperties() {
 func (p *Presentation) addCustomRelationships() {
 	p.ContentTypes.AddOverride("/docProps/custom.xml", "application/vnd.openxmlformats-officedocument.custom-properties+xml")
 	p.Rels.AddRelationship("docProps/custom.xml", unioffice.CustomPropertiesType)
-}
-
-func presentationFinalizer(p *Presentation) {
-	p.Close()
 }
 
 // Close closes the presentation, removing any temporary files that might have been

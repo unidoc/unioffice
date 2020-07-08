@@ -1070,6 +1070,24 @@ func (d Document) Bookmarks() []Bookmark {
 	return ret
 }
 
+// SetConformance sets conformance attribute of the document
+// as one of these values from github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes:
+// ST_ConformanceClassUnset, ST_ConformanceClassStrict or ST_ConformanceClassTransitional.
+func (d Document) SetConformance(conformanceAttr st.ST_ConformanceClass) {
+	d.x.ConformanceAttr = conformanceAttr
+}
+
+// SetStrict is a shortcut for document.SetConformance,
+// as one of these values from github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes:
+// ST_ConformanceClassUnset, ST_ConformanceClassStrict or ST_ConformanceClassTransitional.
+func (d Document) SetStrict(strict bool) {
+	if strict {
+		d.x.ConformanceAttr = st.ST_ConformanceClassStrict
+	} else {
+		d.x.ConformanceAttr = st.ST_ConformanceClassTransitional
+	}
+}
+
 // Close closes the document, removing any temporary files that might have been
 // created when opening a document.
 func (d *Document) Close() error {

@@ -370,7 +370,7 @@ func (p ParagraphProperties) Underline() wml.ST_Underline {
 func (p ParagraphProperties) UnderlineColor() string {
 	if underline := p.x.RPr.U; underline != nil {
 		color := underline.ColorAttr
-		if color.ST_HexColorRGB != nil {
+		if color != nil && color.ST_HexColorRGB != nil {
 			return *color.ST_HexColorRGB
 		}
 	}
