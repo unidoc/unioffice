@@ -165,11 +165,11 @@ func TestTmpFiles(t *testing.T) {
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
+	ppt.Close()
 	files, err := ioutil.ReadDir(ppt.TmpPath)
 	if err != nil {
 		t.Errorf("cannot open a workbook: %s", err)
 	}
-	ppt.Close()
 	expected := 0
 	got := len(files)
 	if got != expected {
