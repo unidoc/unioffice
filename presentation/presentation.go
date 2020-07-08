@@ -20,7 +20,6 @@ import (
 	"log"
 	"os"
 	"path"
-	"runtime"
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/color"
@@ -84,7 +83,6 @@ func newEmpty() *Presentation {
 // New initializes and reurns a new presentation
 func New() *Presentation {
 	p := newEmpty()
-	runtime.SetFinalizer(p, presentationFinalizer)
 
 	p.ContentTypes.AddOverride("/ppt/presentation.xml", "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml")
 
