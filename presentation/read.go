@@ -13,19 +13,12 @@ import (
 	"io"
 
 	"github.com/unidoc/unioffice"
-	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/zippkg"
 )
 
 // Read reads a document from an io.Reader.
 func Read(r io.ReaderAt, size int64) (*Presentation, error) {
 	doc := newEmpty()
-
-	tmpPath, err := tempstorage.TempDir("gooxml-pptx")
-	if err != nil {
-		return nil, fmt.Errorf("creating zip: %s", err)
-	}
-	doc.TmpPath = tmpPath
 
 	zr, err := zip.NewReader(r, size)
 	if err != nil {

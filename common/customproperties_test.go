@@ -170,6 +170,7 @@ func TestCustomPropertiesSettersVstream(t *testing.T) {
 
 func ExampleCustomProperties() {
 	doc, _ := document.Open("document.docx")
+	doc.Close()
 
 	cp := doc.CustomProperties
 	// You can read properties from the document

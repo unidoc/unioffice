@@ -13,6 +13,7 @@ import (
 
 func main() {
 	doc := document.New()
+	defer doc.Close()
 
 	img, err := common.ImageFromFile("gophercolor.png")
 	if err != nil {

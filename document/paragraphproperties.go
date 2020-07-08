@@ -100,7 +100,7 @@ func (p ParagraphProperties) AddSection(t wml.ST_SectionMark) Section {
 }
 
 // SetHeadingLevel sets a heading level and style based on the level to a
-// paragraph.  The default styles for a new gooxml document support headings
+// paragraph.  The default styles for a new unioffice document support headings
 // from level 1 to 8.
 func (p ParagraphProperties) SetHeadingLevel(idx int) {
 	p.SetStyle(fmt.Sprintf("Heading%d", idx))
@@ -370,7 +370,7 @@ func (p ParagraphProperties) Underline() wml.ST_Underline {
 func (p ParagraphProperties) UnderlineColor() string {
 	if underline := p.x.RPr.U; underline != nil {
 		color := underline.ColorAttr
-		if color.ST_HexColorRGB != nil {
+		if color != nil && color.ST_HexColorRGB != nil {
 			return *color.ST_HexColorRGB
 		}
 	}

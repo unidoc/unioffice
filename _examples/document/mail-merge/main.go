@@ -11,6 +11,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("error opening document: %s", err)
 	}
+	defer d.Close()
 	for _, v := range d.MergeFields() {
 		log.Println("replacing", v)
 	}

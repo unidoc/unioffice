@@ -10,6 +10,7 @@ import (
 
 func main() {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	// Create all of our data

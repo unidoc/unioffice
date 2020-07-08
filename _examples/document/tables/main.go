@@ -14,6 +14,7 @@ import (
 
 func main() {
 	doc := document.New()
+	defer doc.Close()
 
 	// First Table
 	{

@@ -20,6 +20,7 @@ import (
 
 func TestRowNumIncreases(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	if len(sheet.Rows()) != 0 {
 		t.Errorf("new sheet must have zero rows, had %d", len(sheet.Rows()))
@@ -36,6 +37,7 @@ func TestRowNumIncreases(t *testing.T) {
 
 func TestAddNumberedRow(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	for i := 1; i < 5; i++ {
 		sheet.AddRow()
@@ -62,6 +64,7 @@ func TestAddNumberedRow(t *testing.T) {
 
 func TestEnsureRow(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 
 	r101 := sheet.Row(10)
@@ -80,6 +83,7 @@ func TestEnsureRow(t *testing.T) {
 
 func TestRowNumberValidation(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	sheet.AddNumberedRow(2)
 	sheet.AddNumberedRow(2)
@@ -90,6 +94,7 @@ func TestRowNumberValidation(t *testing.T) {
 
 func TestAutoFilter(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	if len(wb.DefinedNames()) != 0 {
 		t.Errorf("expected no defined names for new workbook")
@@ -128,6 +133,7 @@ func TestAutoFilter(t *testing.T) {
 
 func TestSheetNameLength(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	if err := sheet.Validate(); err != nil {
 		t.Errorf("expected no validaton error on new sheet, got %s:", err)
@@ -140,6 +146,7 @@ func TestSheetNameLength(t *testing.T) {
 
 func TestMergedCell(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 
 	expContent := "testing 123"
@@ -181,6 +188,7 @@ func TestMergedCell(t *testing.T) {
 
 func TestSheetExtents(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 	if sheet.Extents() != "A1:A1" {
 		t.Errorf("expected 'A1:A1' for empty sheet, got %s", sheet.Extents())
@@ -203,6 +211,7 @@ func TestSheetExtents(t *testing.T) {
 
 func TestSheetClearCachedFormula(t *testing.T) {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 	cell := sheet.Cell("A1")
 	cell.SetFormulaRaw("foo")
@@ -218,6 +227,7 @@ func TestFormattedCell(t *testing.T) {
 	if err != nil {
 		t.Fatalf("error reading fmt.xlsx: %s", err)
 	}
+	defer wb.Close()
 	// these cells all have the same value with different formatting applied
 	td := []struct {
 		Cell string
@@ -244,6 +254,7 @@ func TestFormattedCell(t *testing.T) {
 
 func TestInfNan(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	sheet.Cell("A1").SetNumber(math.NaN())
 
@@ -267,6 +278,7 @@ func TestInfNan(t *testing.T) {
 
 func TestMergedCellValidation(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	sheet.AddMergedCells("A1", "B5")
 	sheet.AddMergedCells("A3", "B9")
@@ -277,6 +289,7 @@ func TestMergedCellValidation(t *testing.T) {
 
 func TestSortNumbers(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	sheet.Cell("C1").SetNumber(5)
 	sheet.Cell("C2").SetNumber(4)
@@ -298,6 +311,7 @@ func TestSortNumbers(t *testing.T) {
 
 func TestSortNumbersAndStrings(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	sheet.Cell("C1").SetNumber(1)
 	sheet.Cell("C2").SetNumber(4)
@@ -327,6 +341,7 @@ func TestSortNumbersAndStrings(t *testing.T) {
 
 func TestSortStrings(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	sheet.Cell("C1").SetString("e")
 	sheet.Cell("C2").SetString("d")
@@ -348,6 +363,7 @@ func TestSortStrings(t *testing.T) {
 
 func TestRemoveColumn(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	sheet.Cell("A1").SetNumber(5)
 	sheet.Cell("B1").SetNumber(4)
@@ -372,6 +388,7 @@ func TestRemoveColumn(t *testing.T) {
 
 func TestCellsWithEmpty(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	sheet.Cell("A1").SetNumber(1)
 	sheet.Cell("F2").SetNumber(1)

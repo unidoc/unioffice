@@ -11,6 +11,7 @@ var lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lobo
 
 func main() {
 	doc := document.New()
+	defer doc.Close()
 
 	ftr := doc.AddFooter()
 	para := ftr.AddParagraph()

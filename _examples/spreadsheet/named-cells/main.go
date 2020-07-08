@@ -10,6 +10,7 @@ import (
 
 func main() {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	sheet := ss.AddSheet()
 
 	for r := 0; r < 5; r++ {

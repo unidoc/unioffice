@@ -15,9 +15,9 @@ import (
 	"image"
 	"image/jpeg"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 
 	"github.com/unidoc/unioffice"
@@ -62,7 +62,6 @@ type Document struct {
 // New constructs an empty document that content can be added to.
 func New() *Document {
 	d := &Document{x: wml.NewDocument()}
-	runtime.SetFinalizer(d, documentFinalizer)
 
 	d.ContentTypes = common.NewContentTypes()
 	d.x.Body = wml.NewCT_Body()
@@ -94,6 +93,11 @@ func New() *Document {
 	d.docRels.AddRelationship("styles.xml", unioffice.StylesType)
 
 	d.x.Body = wml.NewCT_Body()
+	tmpPath, err := tempstorage.TempDir("unioffice-docx")
+	if err != nil {
+		log.Fatalf("creating zip: %s", err)
+	}
+	d.TmpPath = tmpPath
 	return d
 }
 
@@ -322,50 +326,106 @@ func (d *Document) InsertTableBefore(relativeTo Paragraph) Table {
 }
 
 func (d *Document) insertTable(relativeTo Paragraph, before bool) Table {
-	if d.x.Body == nil {
+	body := d.x.Body
+	if body == nil {
 		return d.AddTable()
 	}
-	for i, ble := range d.x.Body.EG_BlockLevelElts {
+	relX := relativeTo.X()
+	for i, ble := range body.EG_BlockLevelElts {
 		for _, c := range ble.EG_ContentBlockContent {
 			for j, p := range c.P {
 				// found the paragraph
-				if p == relativeTo.X() {
+				if p == relX {
 					tbl := wml.NewCT_Tbl()
 					elts := wml.NewEG_BlockLevelElts()
 					cbc := wml.NewEG_ContentBlockContent()
 					elts.EG_ContentBlockContent = append(elts.EG_ContentBlockContent, cbc)
 					cbc.Tbl = append(cbc.Tbl, tbl)
-					d.x.Body.EG_BlockLevelElts = append(d.x.Body.EG_BlockLevelElts, nil)
+					body.EG_BlockLevelElts = append(body.EG_BlockLevelElts, nil)
 					if before {
-						copy(d.x.Body.EG_BlockLevelElts[i+1:], d.x.Body.EG_BlockLevelElts[i:])
-						d.x.Body.EG_BlockLevelElts[i] = elts
+						copy(body.EG_BlockLevelElts[i+1:], body.EG_BlockLevelElts[i:])
+						body.EG_BlockLevelElts[i] = elts
 						if j != 0 {
 							elts := wml.NewEG_BlockLevelElts()
 							cbc := wml.NewEG_ContentBlockContent()
 							elts.EG_ContentBlockContent = append(elts.EG_ContentBlockContent, cbc)
 							cbc.P = c.P[:j]
-							d.x.Body.EG_BlockLevelElts = append(d.x.Body.EG_BlockLevelElts, nil)
-							copy(d.x.Body.EG_BlockLevelElts[i+1:], d.x.Body.EG_BlockLevelElts[i:])
-							d.x.Body.EG_BlockLevelElts[i] = elts
+							body.EG_BlockLevelElts = append(body.EG_BlockLevelElts, nil)
+							copy(body.EG_BlockLevelElts[i+1:], body.EG_BlockLevelElts[i:])
+							body.EG_BlockLevelElts[i] = elts
 						}
 						c.P = c.P[j:]
 					} else {
-						copy(d.x.Body.EG_BlockLevelElts[i+2:], d.x.Body.EG_BlockLevelElts[i+1:])
-						d.x.Body.EG_BlockLevelElts[i+1] = elts
+						copy(body.EG_BlockLevelElts[i+2:], body.EG_BlockLevelElts[i+1:])
+						body.EG_BlockLevelElts[i+1] = elts
 						if j != len(c.P)-1 {
 							elts := wml.NewEG_BlockLevelElts()
 							cbc := wml.NewEG_ContentBlockContent()
 							elts.EG_ContentBlockContent = append(elts.EG_ContentBlockContent, cbc)
 							cbc.P = c.P[j+1:]
-							d.x.Body.EG_BlockLevelElts = append(d.x.Body.EG_BlockLevelElts, nil)
-							copy(d.x.Body.EG_BlockLevelElts[i+3:], d.x.Body.EG_BlockLevelElts[i+2:])
-							d.x.Body.EG_BlockLevelElts[i+2] = elts
+							body.EG_BlockLevelElts = append(body.EG_BlockLevelElts, nil)
+							copy(body.EG_BlockLevelElts[i+3:], body.EG_BlockLevelElts[i+2:])
+							body.EG_BlockLevelElts[i+2] = elts
 						}
 						c.P = c.P[:j+1]
 					}
 					return Table{d, tbl}
 				}
 			}
+
+			for _, tbl := range c.Tbl {
+				for _, crc := range tbl.EG_ContentRowContent {
+					for _, tr := range crc.Tr {
+						for _, ccc := range tr.EG_ContentCellContent {
+							for _, tc := range ccc.Tc {
+								for i, ble := range tc.EG_BlockLevelElts {
+									for _, cbcOuter := range ble.EG_ContentBlockContent {
+										for j, p := range cbcOuter.P {
+											if p == relX {
+												elts := wml.NewEG_BlockLevelElts()
+												cbcInner := wml.NewEG_ContentBlockContent()
+												elts.EG_ContentBlockContent = append(elts.EG_ContentBlockContent, cbcInner)
+												tbl := wml.NewCT_Tbl()
+												cbcInner.Tbl = append(cbcInner.Tbl, tbl)
+												tc.EG_BlockLevelElts = append(tc.EG_BlockLevelElts, nil)
+												if before {
+													copy(tc.EG_BlockLevelElts[i+1:], tc.EG_BlockLevelElts[i:])
+													tc.EG_BlockLevelElts[i] = elts
+													if j != 0 {
+														elts := wml.NewEG_BlockLevelElts()
+														cbc := wml.NewEG_ContentBlockContent()
+														elts.EG_ContentBlockContent = append(elts.EG_ContentBlockContent, cbc)
+														cbc.P = cbcOuter.P[:j]
+														tc.EG_BlockLevelElts = append(tc.EG_BlockLevelElts, nil)
+														copy(tc.EG_BlockLevelElts[i+1:], tc.EG_BlockLevelElts[i:])
+														tc.EG_BlockLevelElts[i] = elts
+													}
+													cbcOuter.P = cbcOuter.P[j:]
+												} else {
+													copy(tc.EG_BlockLevelElts[i+2:], tc.EG_BlockLevelElts[i+1:])
+													tc.EG_BlockLevelElts[i+1] = elts
+													if j != len(c.P)-1 {
+														elts := wml.NewEG_BlockLevelElts()
+														cbc := wml.NewEG_ContentBlockContent()
+														elts.EG_ContentBlockContent = append(elts.EG_ContentBlockContent, cbc)
+														cbc.P = cbcOuter.P[j+1:]
+														tc.EG_BlockLevelElts = append(tc.EG_BlockLevelElts, nil)
+														copy(tc.EG_BlockLevelElts[i+3:], tc.EG_BlockLevelElts[i+2:])
+														tc.EG_BlockLevelElts[i+2] = elts
+													}
+													cbcOuter.P = cbcOuter.P[:j+1]
+												}
+												return Table{d, tbl}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
 		}
 	}
 	return d.AddTable()
@@ -587,12 +647,6 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	// numbering is not required
 	doc.Numbering.x = nil
 
-	tmpPath, err := tempstorage.TempDir("gooxml-docx")
-	if err != nil {
-		return nil, fmt.Errorf("creating zip: %s", err)
-	}
-	doc.TmpPath = tmpPath
-
 	zr, err := zip.NewReader(r, size)
 	if err != nil {
 		return nil, fmt.Errorf("parsing zip: %s", err)
@@ -612,6 +666,7 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 		doc.createCustomProperties()
 	}
 
+	ca := doc.x.ConformanceAttr
 	decMap := zippkg.DecodeMap{}
 	decMap.SetOnNewRelationshipFunc(doc.onNewRelationship)
 	// we should discover all contents by starting with these two files
@@ -620,6 +675,7 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	if err := decMap.Decode(files); err != nil {
 		return nil, err
 	}
+	doc.x.ConformanceAttr = ca
 
 	for _, f := range files {
 		if f == nil {
@@ -964,11 +1020,13 @@ func (d *Document) insertParagraph(relativeTo Paragraph, before bool) Paragraph 
 		return d.AddParagraph()
 	}
 
+	relX := relativeTo.X()
+
 	for _, ble := range d.x.Body.EG_BlockLevelElts {
 		for _, c := range ble.EG_ContentBlockContent {
 			for i, p := range c.P {
 				// found the paragraph
-				if p == relativeTo.X() {
+				if p == relX {
 					p := wml.NewCT_P()
 					c.P = append(c.P, nil)
 					if before {
@@ -982,9 +1040,38 @@ func (d *Document) insertParagraph(relativeTo Paragraph, before bool) Paragraph 
 				}
 			}
 
+			for _, tbl := range c.Tbl {
+				for _, crc := range tbl.EG_ContentRowContent {
+					for _, tr := range crc.Tr {
+						for _, ccc := range tr.EG_ContentCellContent {
+							for _, tc := range ccc.Tc {
+								for _, ble := range tc.EG_BlockLevelElts {
+									for _, cbc := range ble.EG_ContentBlockContent {
+										for i, p := range cbc.P {
+											if p == relX {
+												p := wml.NewCT_P()
+												cbc.P = append(cbc.P, nil)
+												if before {
+													copy(cbc.P[i+1:], cbc.P[i:])
+													cbc.P[i] = p
+												} else {
+													copy(cbc.P[i+2:], cbc.P[i+1:])
+													cbc.P[i+1] = p
+												}
+												return Paragraph{d, p}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
 			if c.Sdt != nil && c.Sdt.SdtContent != nil && c.Sdt.SdtContent.P != nil {
 				for i, p := range c.Sdt.SdtContent.P {
-					if p == relativeTo.X() {
+					if p == relX {
 						p := wml.NewCT_P()
 						c.Sdt.SdtContent.P = append(c.Sdt.SdtContent.P, nil)
 						if before {
@@ -1072,8 +1159,22 @@ func (d Document) Bookmarks() []Bookmark {
 	return ret
 }
 
-func documentFinalizer(d *Document) {
-	d.Close()
+// SetConformance sets conformance attribute of the document
+// as one of these values from github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes:
+// ST_ConformanceClassUnset, ST_ConformanceClassStrict or ST_ConformanceClassTransitional.
+func (d Document) SetConformance(conformanceAttr st.ST_ConformanceClass) {
+	d.x.ConformanceAttr = conformanceAttr
+}
+
+// SetStrict is a shortcut for document.SetConformance,
+// as one of these values from github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes:
+// ST_ConformanceClassUnset, ST_ConformanceClassStrict or ST_ConformanceClassTransitional.
+func (d Document) SetStrict(strict bool) {
+	if strict {
+		d.x.ConformanceAttr = st.ST_ConformanceClassStrict
+	} else {
+		d.x.ConformanceAttr = st.ST_ConformanceClassTransitional
+	}
 }
 
 // Close closes the document, removing any temporary files that might have been

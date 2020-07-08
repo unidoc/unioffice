@@ -13,6 +13,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("error opening form: %s", err)
 	}
+	defer doc.Close()
 
 	// FindAllFields is a helper function that traverses the document
 	// identifying fields

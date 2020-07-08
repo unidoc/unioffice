@@ -21,6 +21,7 @@ import (
 
 func TestSimpleDoc(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	testVersion := "00.8000"
 	doc.AppProperties.X().AppVersion = &testVersion
 	para := doc.AddParagraph()
@@ -35,16 +36,17 @@ func TestSimpleDoc(t *testing.T) {
 }
 
 func TestOpen(t *testing.T) {
-	wb, err := document.Open("testdata/simple-1.docx")
+	doc, err := document.Open("testdata/simple-1.docx")
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
+	defer doc.Close()
 
 	got := bytes.Buffer{}
-	if err := wb.Validate(); err != nil {
+	if err := doc.Validate(); err != nil {
 		t.Errorf("created an invalid document: %s", err)
 	}
-	wb.Save(&got)
+	doc.Save(&got)
 	testhelper.CompareZip(t, "simple-1.docx", got.Bytes(), true)
 }
 
@@ -53,6 +55,7 @@ func TestOpenStrict(t *testing.T) {
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
+	defer strict.Close()
 
 	gotStrict := bytes.Buffer{}
 	if err := strict.Validate(); err != nil {
@@ -66,6 +69,7 @@ func TestOpenStrict(t *testing.T) {
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
+	defer nonStrict.Close()
 
 	gotNonStrict := bytes.Buffer{}
 	if err := nonStrict.Validate(); err != nil {
@@ -78,16 +82,17 @@ func TestOpenStrict(t *testing.T) {
 }
 
 func TestOpenHeaderFooter(t *testing.T) {
-	wb, err := document.Open("testdata/header-footer-multiple.docx")
+	doc, err := document.Open("testdata/header-footer-multiple.docx")
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
+	defer doc.Close()
 
 	got := bytes.Buffer{}
-	if err := wb.Validate(); err != nil {
+	if err := doc.Validate(); err != nil {
 		t.Errorf("created an invalid document: %s", err)
 	}
-	wb.Save(&got)
+	doc.Save(&got)
 	testhelper.CompareGoldenZip(t, "header-footer-multiple.docx", got.Bytes())
 }
 
@@ -96,6 +101,7 @@ func TestAddParagraph(t *testing.T) {
 	if len(doc.Paragraphs()) != 0 {
 		t.Errorf("expected 0 paragraphs, got %d", len(doc.Paragraphs()))
 	}
+	defer doc.Close()
 	doc.AddParagraph()
 	if len(doc.Paragraphs()) != 1 {
 		t.Errorf("expected 1 paragraphs, got %d", len(doc.Paragraphs()))
@@ -111,6 +117,7 @@ func TestOpenWord2016(t *testing.T) {
 	if err != nil {
 		t.Errorf("error opening Windows Word 2016 document: %s", err)
 	}
+	defer doc.Close()
 	got := bytes.Buffer{}
 	if err := doc.Save(&got); err != nil {
 		t.Errorf("error saving W216 file: %s", err)
@@ -120,6 +127,7 @@ func TestOpenWord2016(t *testing.T) {
 
 func TestInsertParagraph(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	if len(doc.Paragraphs()) != 0 {
 		t.Errorf("expected 0 paragraphs, got %d", len(doc.Paragraphs()))
 	}
@@ -139,6 +147,7 @@ func TestInsertParagraph(t *testing.T) {
 
 func TestInsertTable(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	if len(doc.Paragraphs()) != 0 {
 		t.Errorf("expected 0 paragraphs, got %d", len(doc.Paragraphs()))
 	}
@@ -167,6 +176,7 @@ func TestInsertTable(t *testing.T) {
 
 func TestInsertRun(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	if len(doc.Paragraphs()) != 0 {
 		t.Errorf("expected 0 paragraphs, got %d", len(doc.Paragraphs()))
 	}
@@ -208,6 +218,7 @@ func TestInsertRun(t *testing.T) {
 
 func TestInsertBookmarks(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	if len(doc.Bookmarks()) != 0 {
 		t.Errorf("expected 0 bookmarks, got %d", len(doc.Bookmarks()))
 	}
@@ -223,6 +234,7 @@ func TestInsertBookmarks(t *testing.T) {
 
 func TestDuplicateBookmarks(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	if len(doc.Bookmarks()) != 0 {
 		t.Errorf("expected 0 bookmarks, got %d", len(doc.Bookmarks()))
 	}
@@ -242,6 +254,7 @@ func TestDuplicateBookmarks(t *testing.T) {
 
 func TestHeaderAndFooterImages(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	img1, err := common.ImageFromFile("testdata/gopher.png")
 	if err != nil {
 		t.Fatalf("unable to create image: %s", err)
@@ -353,6 +366,7 @@ func TestIssue198(t *testing.T) {
 		t.Errorf("error reading %s: %s", fn, err)
 		return
 	}
+	defer doc.Close()
 	got := bytes.Buffer{}
 	doc.Save(&got)
 	testhelper.CompareGoldenZip(t, fn+".golden", got.Bytes())
@@ -360,6 +374,7 @@ func TestIssue198(t *testing.T) {
 
 func TestGetTables(t *testing.T) {
 	doc := document.New()
+	defer doc.Close()
 	table := doc.AddTable()
 	tables := doc.Tables()
 
@@ -385,5 +400,138 @@ func TestGetTables(t *testing.T) {
 	tables = doc.Tables()
 	if len(tables) < 2 {
 		t.Errorf("nested table not enumerated. found %d, expected 2", len(tables))
+	}
+}
+
+func TestInsertParagraphInTable(t *testing.T) {
+	doc := document.New()
+
+	paraBeforeTable := doc.AddParagraph()
+	paraBeforeTable.AddRun().AddText("before table")
+
+	table := doc.InsertTableAfter(paraBeforeTable)
+	tablePara1 := table.AddRow().AddCell().AddParagraph()
+	tablePara1.AddRun().AddText("table paragraph 1")
+
+	paraAfterTable := doc.AddParagraph()
+	paraAfterTable.AddRun().AddText("after table")
+
+	tablePara2 := doc.InsertParagraphBefore(tablePara1)
+	tablePara2.AddRun().AddText("table paragraph before table paragraph 1")
+
+	tablePara3 := doc.InsertParagraphAfter(tablePara1)
+	tablePara3.AddRun().AddText("table paragraph after table paragraph 1")
+
+	bles := doc.X().Body.EG_BlockLevelElts
+
+	if len(bles) != 3 {
+		t.Errorf("expected 3 block level elements, got %d", len(bles))
+	}
+	if len(bles[0].EG_ContentBlockContent[0].P) != 1 {
+		t.Errorf("expected 1 paragraph in the first block level element, got %d", len(bles[0].EG_ContentBlockContent[0].P))
+	}
+	if len(bles[1].EG_ContentBlockContent[0].P) != 0 {
+		t.Errorf("expected no paragraphs in the second block level element, got %d", len(bles[1].EG_ContentBlockContent[0].P))
+	}
+	if len(bles[1].EG_ContentBlockContent[0].Tbl) != 1 {
+		t.Errorf("expected 1 table in the second block level element, got %d", len(bles[1].EG_ContentBlockContent[0].Tbl))
+	}
+	if len(bles[2].EG_ContentBlockContent[0].P) != 1 {
+		t.Errorf("expected 1 paragraph in the third block level element, got %d", len(bles[2].EG_ContentBlockContent[0].P))
+	}
+
+	cbc := bles[1].EG_ContentBlockContent[0].Tbl[0].EG_ContentRowContent[0].Tr[0].EG_ContentCellContent[0].Tc[0].EG_BlockLevelElts[0].EG_ContentBlockContent[0]
+	if len(cbc.P) != 3 {
+		t.Errorf("expected 3 paragraphs in the table, got %d", len(cbc.P))
+	}
+	expected := []string{"table paragraph before table paragraph 1", "table paragraph 1", "table paragraph after table paragraph 1"}
+	for i, p := range cbc.P {
+		got := p.EG_PContent[0].EG_ContentRunContent[0].R.EG_RunInnerContent[0].T.Content
+		if got != expected[i] {
+			t.Errorf("expected %s in %d table paragraph, got %s", expected[i], i, got)
+		}
+	}
+}
+
+func TestInsertTableInTable(t *testing.T) {
+	doc := document.New()
+
+	paraBeforeTable := doc.AddParagraph()
+	paraBeforeTable.AddRun().AddText("before table")
+
+	table := doc.InsertTableAfter(paraBeforeTable)
+	row := table.AddRow()
+	tablePara1 := row.AddCell().AddParagraph()
+	tablePara1.AddRun().AddText("table paragraph 1")
+
+	paraAfterTable := doc.AddParagraph()
+	paraAfterTable.AddRun().AddText("after table")
+
+	tableInTable1 := doc.InsertTableBefore(tablePara1)
+	ttPara1 := tableInTable1.AddRow().AddCell().AddParagraph()
+	ttPara1.AddRun().AddText("table inside table before paragraph 1")
+
+	tableInTable2 := doc.InsertTableAfter(tablePara1)
+	ttPara2 := tableInTable2.AddRow().AddCell().AddParagraph()
+	ttPara2.AddRun().AddText("table inside table after paragraph 1")
+
+	bles := doc.X().Body.EG_BlockLevelElts
+
+	if len(bles) != 3 {
+		t.Errorf("expected 3 block level elements, got %d", len(bles))
+	}
+	if len(bles[0].EG_ContentBlockContent[0].P) != 1 {
+		t.Errorf("expected 1 paragraph in the first block level element, got %d", len(bles[0].EG_ContentBlockContent[0].P))
+	}
+	if len(bles[1].EG_ContentBlockContent[0].P) != 0 {
+		t.Errorf("expected no paragraphs in the second block level element, got %d", len(bles[1].EG_ContentBlockContent[0].P))
+	}
+	if len(bles[1].EG_ContentBlockContent[0].Tbl) != 1 {
+		t.Errorf("expected 1 table in the second block level element, got %d", len(bles[1].EG_ContentBlockContent[0].Tbl))
+	}
+	if len(bles[2].EG_ContentBlockContent[0].P) != 1 {
+		t.Errorf("expected 1 paragraph in the third block level element, got %d", len(bles[2].EG_ContentBlockContent[0].P))
+	}
+
+	elts := bles[1].EG_ContentBlockContent[0].Tbl[0].EG_ContentRowContent[0].Tr[0].EG_ContentCellContent[0].Tc[0].EG_BlockLevelElts
+	cbc0 := elts[0].EG_ContentBlockContent[0]
+	if len(cbc0.Tbl) != 1 {
+		t.Errorf("expected 1 table as the first element of table, got %d", len(cbc0.Tbl))
+	}
+	cbc1 := elts[1].EG_ContentBlockContent[0]
+	if len(cbc1.P) != 1 {
+		t.Errorf("expected 1 paragraph as the second element of table, got %d", len(cbc1.P))
+	}
+	cbc2 := elts[2].EG_ContentBlockContent[0]
+	if len(cbc2.Tbl) != 1 {
+		t.Errorf("expected 1 table as the third element of table, got %d", len(cbc2.Tbl))
+	}
+	expected := "table inside table after paragraph 1"
+	got := cbc2.Tbl[0].EG_ContentRowContent[0].Tr[0].EG_ContentCellContent[0].Tc[0].EG_BlockLevelElts[0].EG_ContentBlockContent[0].P[0].EG_PContent[0].EG_ContentRunContent[0].R.EG_RunInnerContent[0].T.Content
+	if expected != got {
+		t.Errorf("expected %s in the second inner table paragraph, got %s", expected, got)
+	}
+}
+
+func TestTmpFiles(t *testing.T) {
+	doc, err := document.Open("testdata/image.docx")
+	if err != nil {
+		t.Errorf("error opening document: %s", err)
+	}
+	files, err := ioutil.ReadDir(doc.TmpPath)
+	if err != nil {
+		t.Errorf("cannot open a document: %s", err)
+	}
+	expected := 2
+	got := len(files)
+	if got != expected {
+		t.Errorf("should be %d files in the temp dir, found %d", expected, got)
+	}
+	doc.Close()
+	files, err = ioutil.ReadDir(doc.TmpPath)
+	expected = 0
+	got = len(files)
+	if got != expected {
+		t.Errorf("should be %d files in the temp dir, found %d", expected, got)
 	}
 }

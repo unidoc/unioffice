@@ -15,6 +15,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("error opening document: %s", err)
 	}
+	defer doc.Close()
 
 	cp := doc.CoreProperties
 	// You can read properties from the document

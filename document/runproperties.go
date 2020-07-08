@@ -245,7 +245,6 @@ func (r RunProperties) SetVerticalAlignment(v sharedTypes.ST_VerticalAlignRun) {
 	}
 }
 
-
 // Bold returns true if run font is bold.
 func (r RunProperties) Bold() bool {
 	x := r.x
@@ -415,7 +414,7 @@ func (r RunProperties) Underline() wml.ST_Underline {
 func (r RunProperties) UnderlineColor() string {
 	if underline := r.x.U; underline != nil {
 		color := underline.ColorAttr
-		if color.ST_HexColorRGB != nil {
+		if color != nil && color.ST_HexColorRGB != nil {
 			return *color.ST_HexColorRGB
 		}
 	}

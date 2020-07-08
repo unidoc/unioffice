@@ -77,7 +77,7 @@ func sumCount(args []Result, countText bool) (float64, float64) {
 // Average implements the AVERAGE function. It differs slightly from Excel (and
 // agrees with LibreOffice) in that boolean values are counted. As an example,
 // AVERAGE of two cells containing TRUE & FALSE is 0.5 in LibreOffice and
-// #DIV/0! in Excel. gooxml will return 0.5 in this case.
+// #DIV/0! in Excel. unioffice will return 0.5 in this case.
 func Average(args []Result) Result {
 	sum, cnt := sumCount(args, false)
 	if cnt == 0 {

@@ -15,6 +15,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("error opening document: %s", err)
 	}
+	defer doc.Close()
 
 	cp := doc.GetOrCreateCustomProperties()
 
@@ -39,6 +40,7 @@ func main() {
 
 	// For new documents all is the same
 	docNew := document.New()
+	defer docNew.Close()
 
 	cpNew := docNew.GetOrCreateCustomProperties()
 	cpNew.SetPropertyAsLpwstr("Another text property", "My text value") // text

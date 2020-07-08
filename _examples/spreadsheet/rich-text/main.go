@@ -11,6 +11,7 @@ import (
 
 func main() {
 	ss := spreadsheet.New()
+	defer ss.Close()
 	// add a single sheet
 	sheet := ss.AddSheet()
 

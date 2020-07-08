@@ -658,8 +658,8 @@ func (wb *Workbook) ClearCachedFormulaResults() {
 }
 
 // RecalculateFormulas re-computes any computed formula values that are stored
-// in the sheet. As gooxml formula support is still new and not all functins are
-// supported,  if formula execution fails either due to a parse error or missing
+// in the sheet. As unioffice formula support is still new and not all functins are
+// supported, if formula execution fails either due to a parse error or missing
 // function, or erorr in the result (even if expected) the cached value will be
 // left empty allowing Excel to recompute it on load.
 func (wb *Workbook) RecalculateFormulas() {
@@ -752,10 +752,6 @@ func (wb *Workbook) GetSheet(name string) (Sheet, error) {
 		}
 	}
 	return Sheet{}, ErrorNotFound
-}
-
-func workbookFinalizer(wb *Workbook) {
-	wb.Close()
 }
 
 // Close closes the workbook, removing any temporary files that might have been
