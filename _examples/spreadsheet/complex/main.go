@@ -138,11 +138,12 @@ func addLineChart(chrt chart.Chart) {
 	totalSeries.SetText("Total")
 	totalSeries.Values().SetReference(`'Sheet 1'!D2:D6`)
 
-	// the line chart accepts up to two axes
+	// the 3d line chart accepts three axes
 	ca := chrt.AddCategoryAxis()
 	va := chrt.AddValueAxis()
 	lc.AddAxis(ca)
 	lc.AddAxis(va)
+	lc.AddAxis(chart.NullAxis)
 
 	ca.SetCrosses(va)
 	va.SetCrosses(ca)

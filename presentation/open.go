@@ -12,6 +12,7 @@ import (
 	"os"
 )
 
+// OpenTemplate opens a template file.
 func OpenTemplate(fn string) (*Presentation, error) {
 	p, err := Open(fn)
 	if err != nil {

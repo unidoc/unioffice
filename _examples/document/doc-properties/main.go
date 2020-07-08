@@ -36,5 +36,5 @@ func main() {
 	cp.SetLastModifiedBy("Jane Smith")
 	cp.SetCreated(time.Now())
 	cp.SetModified(time.Now())
-	doc.SaveToFile("document.docx")
+	doc.SaveToFile("document_modified.docx")
 }

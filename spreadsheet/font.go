@@ -57,6 +57,7 @@ func (f Font) SetSize(size float64) {
 
 func (f Font) SetColor(c color.Color) {
 	clr := sml.NewCT_Color()
-	clr.RgbAttr = c.AsRGBString()
+	rgbAttr := "ff" + *c.AsRGBString()
+	clr.RgbAttr = &rgbAttr
 	f.font.Color = []*sml.CT_Color{clr}
 }

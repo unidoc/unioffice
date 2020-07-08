@@ -20,6 +20,7 @@ import (
 	"github.com/unidoc/unioffice/schema/soo/pml"
 )
 
+// Slide represents a slide of a presentation.
 type Slide struct {
 	sid *pml.CT_SlideIdListEntry
 	x   *pml.Sld
@@ -78,7 +79,7 @@ func (s Slide) GetPlaceholderByIndex(idx uint32) (PlaceHolder, error) {
 }
 
 // ValidateWithPath validates the slide passing path informaton for a better
-// error message
+// error message.
 func (s Slide) ValidateWithPath(path string) error {
 	// schema checks
 	if err := s.x.ValidateWithPath(path); err != nil {
@@ -137,6 +138,26 @@ func (s Slide) AddImage(img common.ImageRef) Image {
 
 	pic.BlipFill.Blip = dml.NewCT_Blip()
 
+	imgID := s.AddImageToRels(img)
+	pic.BlipFill.Blip.EmbedAttr = unioffice.String(imgID)
+
+	pic.BlipFill.Stretch = dml.NewCT_StretchInfoProperties()
+	pic.BlipFill.Stretch.FillRect = dml.NewCT_RelativeRect()
+
+	pic.SpPr = dml.NewCT_ShapeProperties()
+	pic.SpPr.PrstGeom = dml.NewCT_PresetGeometry2D()
+	pic.SpPr.PrstGeom.PrstAttr = dml.ST_ShapeTypeRect
+
+	ir := Image{pic}
+	sz := img.Size()
+	ir.Properties().SetWidth(measurement.Distance(sz.X) * measurement.Pixel72)
+	ir.Properties().SetHeight(measurement.Distance(sz.Y) * measurement.Pixel72)
+	ir.Properties().SetPosition(0, 0)
+	return ir
+}
+
+// AddImageToRels adds an image relationship to a slide without putting image on the slide.
+func (s Slide) AddImageToRels(img common.ImageRef) string {
 	imgIdx := 0
 	for i, ig := range s.p.Images {
 		if ig == img {
@@ -153,19 +174,6 @@ func (s Slide) AddImage(img common.ImageRef) Image {
 			imgID = rel.ID()
 		}
 	}
-	pic.BlipFill.Blip.EmbedAttr = unioffice.String(imgID)
 
-	pic.BlipFill.Stretch = dml.NewCT_StretchInfoProperties()
-	pic.BlipFill.Stretch.FillRect = dml.NewCT_RelativeRect()
-
-	pic.SpPr = dml.NewCT_ShapeProperties()
-	pic.SpPr.PrstGeom = dml.NewCT_PresetGeometry2D()
-	pic.SpPr.PrstGeom.PrstAttr = dml.ST_ShapeTypeRect
-
-	ir := Image{pic}
-	sz := img.Size()
-	ir.Properties().SetWidth(measurement.Distance(sz.X) * measurement.Pixel72)
-	ir.Properties().SetHeight(measurement.Distance(sz.Y) * measurement.Pixel72)
-	ir.Properties().SetPosition(0, 0)
-	return ir
+	return imgID
 }
