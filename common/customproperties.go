@@ -19,6 +19,9 @@ type CustomProperties struct {
 	x *custom_properties.Properties
 }
 
+// Using of this type is deprecated.
+type CustomProperty *custom_properties.CT_Property
+
 // NewCustomProperties constructs a new CustomProperties.
 func NewCustomProperties() CustomProperties {
 	return CustomProperties{x: custom_properties.NewProperties()}
@@ -29,15 +32,29 @@ func (c CustomProperties) X() *custom_properties.Properties {
 	return c.x
 }
 
+// PropertiesList returns the list of all custom properties of the document.
 func (c CustomProperties) PropertiesList() []*custom_properties.CT_Property {
 	return c.x.Property
 }
 
-func (c CustomProperties) GetPropertyByName(name string) *custom_properties.CT_Property {
+// GetCTPropertyByName returns a custom property selected by it's name.
+func (c CustomProperties) GetCTPropertyByName(name string) *custom_properties.CT_Property {
 	propsList := c.x.Property
 	for _, property := range propsList {
 		if *property.NameAttr == name {
 			return property
+		}
+	}
+	return nil
+}
+
+// GetPropertyByName returns a custom property selected by it's name.
+// This method is deprecated and will be removed in the future.
+func (c CustomProperties) GetPropertyByName(name string) CustomProperty {
+	propsList := c.x.Property
+	for _, property := range propsList {
+		if *property.NameAttr == name {
+			return CustomProperty(property)
 		}
 	}
 	return nil
