@@ -44,7 +44,7 @@ func (t Table) InsertRowAfter(r Row) Row {
 	for i, rc := range t.x.EG_ContentRowContent {
 		if len(rc.Tr) > 0 && r.X() == rc.Tr[0] {
 			c := wml.NewEG_ContentRowContent()
-			if len(t.x.EG_ContentRowContent) <= i+2 {
+			if len(t.x.EG_ContentRowContent) < i+2 {
 				return t.AddRow()
 			}
 			t.x.EG_ContentRowContent = append(t.x.EG_ContentRowContent, nil)
