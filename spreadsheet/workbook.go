@@ -794,7 +794,7 @@ func (wb *Workbook) GetFilename() string {
 // GetOrCreateCustomProperties returns the custom properties of the document (and if they not exist yet, creating them first)
 func (wb *Workbook) GetOrCreateCustomProperties() common.CustomProperties {
 	if wb.CustomProperties.X() == nil {
-		 wb.createCustomProperties()
+		wb.createCustomProperties()
 	}
 	return wb.CustomProperties
 }

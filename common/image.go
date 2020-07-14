@@ -13,8 +13,9 @@ import (
 	"image"
 	"os"
 
-	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/common/tempstorage"
+	"github.com/unidoc/unioffice/measurement"
+
 	// Add image format support
 	_ "image/gif"
 	_ "image/jpeg"

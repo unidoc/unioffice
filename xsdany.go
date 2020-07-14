@@ -260,7 +260,7 @@ func (x *XSDAny) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	}
 	if includeIgnorable && len(attrsToIgnore) > 0 {
 		a.Attrs = append(a.Attrs, xml.Attr{
-			Name: xml.Name{Local: "mc:Ignorable"},
+			Name:  xml.Name{Local: "mc:Ignorable"},
 			Value: strings.Join(attrsToIgnore, " "),
 		})
 	}

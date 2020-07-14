@@ -22,7 +22,7 @@ import (
 
 // memStorage contains and manages memdataCell items as operating system manages files
 type memStorage struct {
-	m    sync.Map
+	m sync.Map
 }
 
 // memDataCell is an imitation of file on disk
@@ -35,7 +35,7 @@ type memDataCell struct {
 // SetAsStorage sets temp storage as a memory storage
 func SetAsStorage() {
 	ts := memStorage{
-		m:    sync.Map{},
+		m: sync.Map{},
 	}
 	tempstorage.SetAsStorage(&ts)
 }
@@ -47,14 +47,14 @@ func (ts *memStorage) Open(path string) (tempstorage.File, error) {
 		return nil, errors.New(fmt.Sprintf("Cannot open the file %s", path))
 	}
 	return &memFile{
-		file:      file.(*memDataCell),
+		file: file.(*memDataCell),
 	}, nil
 }
 
 // TempFile creates a new empty file in the storage and returns it
 func (ts *memStorage) TempFile(dir, pattern string) (tempstorage.File, error) {
 	path := dir + "/" + getNameFromPattern(pattern)
-	newDataCell := &memDataCell {
+	newDataCell := &memDataCell{
 		name: path,
 		data: []byte{},
 	}

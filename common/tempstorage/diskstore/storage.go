@@ -17,7 +17,7 @@ import (
 	"github.com/unidoc/unioffice/common/tempstorage"
 )
 
-type diskStorage struct {}
+type diskStorage struct{}
 
 // SetAsStorage sets temp storage as a disk storage
 func SetAsStorage() {

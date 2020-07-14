@@ -9,9 +9,9 @@ package common
 
 import (
 	"fmt"
-	"strings"
-	"strconv"
 	"regexp"
+	"strconv"
+	"strings"
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/schema/soo/pkg/content_types"
@@ -114,7 +114,7 @@ func (c ContentTypes) RemoveOverride(path string) {
 
 // RemoveOverrideByIndex removes an override given a path and override index.
 func (c ContentTypes) RemoveOverrideByIndex(path string, indexToFind int) error {
-	pathPrefix := path[0:len(path)-5] // cut off '0.xml' from the end
+	pathPrefix := path[0 : len(path)-5] // cut off '0.xml' from the end
 	if !strings.HasPrefix(pathPrefix, "/") {
 		pathPrefix = "/" + pathPrefix
 	}
