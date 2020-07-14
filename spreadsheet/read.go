@@ -11,16 +11,24 @@ import (
 	"archive/zip"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"path/filepath"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/zippkg"
 )
 
 // Read reads a workbook from an io.Reader(.xlsx).
 func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 	wb := New()
+
+	tmpPath, err := tempstorage.TempDir("unioffice-xlsx")
+	if err != nil {
+		log.Fatalf("creating zip: %s", err)
+	}
+	wb.TmpPath = tmpPath
 
 	zr, err := zip.NewReader(r, size)
 	if err != nil {

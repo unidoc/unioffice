@@ -93,11 +93,6 @@ func New() *Document {
 	d.docRels.AddRelationship("styles.xml", unioffice.StylesType)
 
 	d.x.Body = wml.NewCT_Body()
-	tmpPath, err := tempstorage.TempDir("unioffice-docx")
-	if err != nil {
-		log.Fatalf("creating zip: %s", err)
-	}
-	d.TmpPath = tmpPath
 	return d
 }
 
@@ -646,6 +641,12 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	doc := New()
 	// numbering is not required
 	doc.Numbering.x = nil
+
+	tmpPath, err := tempstorage.TempDir("unioffice-docx")
+	if err != nil {
+		log.Fatalf("creating zip: %s", err)
+	}
+	doc.TmpPath = tmpPath
 
 	zr, err := zip.NewReader(r, size)
 	if err != nil {

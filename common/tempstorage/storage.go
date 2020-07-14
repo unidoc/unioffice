@@ -17,6 +17,8 @@ type storage interface {
 	Add(path string) error
 }
 
+// File is a representation of a storage file
+// with Read, Write, Close and Name methods identical to os.File.
 type File interface {
 	io.Reader
 	io.Writer
@@ -26,32 +28,32 @@ type File interface {
 
 var s storage
 
-// SetAsStorage changes temporary storage to newStorage
+// SetAsStorage changes temporary storage to newStorage.
 func SetAsStorage(newStorage storage) {
 	s = newStorage
 }
 
-// Open returns tempstorage File object by name
+// Open returns tempstorage File object by name.
 func Open(path string) (File, error) {
 	return s.Open(path)
 }
 
-// TempFile creates new empty file in the storage and returns it
+// TempFile creates new empty file in the storage and returns it.
 func TempFile(dir, pattern string) (File, error) {
 	return s.TempFile(dir, pattern)
 }
 
-// TempDir creates a name for a new temp directory using a pattern argument
+// TempDir creates a name for a new temp directory using a pattern argument.
 func TempDir(pattern string) (string, error) {
 	return s.TempDir(pattern)
 }
 
-// RemoveAll removes all files according to the dir argument prefix
+// RemoveAll removes all files according to the dir argument prefix.
 func RemoveAll(dir string) error {
 	return s.RemoveAll(dir)
 }
 
-// Add reads a file from a disk and adds it to the storage
+// Add reads a file from a disk and adds it to the storage.
 func Add(path string) error {
 	return s.Add(path)
 }

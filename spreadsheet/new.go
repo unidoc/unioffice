@@ -8,11 +8,9 @@
 package spreadsheet
 
 import (
-	"log"
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/common"
-	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/schema/soo/sml"
 )
 
@@ -41,12 +39,6 @@ func New() *Workbook {
 	wb.SharedStrings = NewSharedStrings()
 	wb.ContentTypes.AddOverride(unioffice.AbsoluteFilename(unioffice.DocTypeSpreadsheet, unioffice.SharedStringsType, 0), unioffice.SharedStringsContentType)
 	wb.wbRels.AddRelationship(unioffice.RelativeFilename(unioffice.DocTypeSpreadsheet, unioffice.OfficeDocumentType, unioffice.SharedStringsType, 0), unioffice.SharedStringsType)
-
-	tmpPath, err := tempstorage.TempDir("unioffice-xlsx")
-	if err != nil {
-		log.Fatalf("creating zip: %s", err)
-	}
-	wb.TmpPath = tmpPath
 
 	return wb
 }

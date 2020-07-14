@@ -72,11 +72,6 @@ func newEmpty() *Presentation {
 	p.presentationProperties = NewPresentationProperties()
 	p.viewProperties = NewViewProperties()
 	p.imagesMap = map[string]string{}
-	tmpPath, err := tempstorage.TempDir("unioffice-pptx")
-	if err != nil {
-		log.Fatalf("creating zip: %s", err)
-	}
-	p.TmpPath = tmpPath
 	return p
 }
 
