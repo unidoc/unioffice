@@ -11,7 +11,6 @@ import (
 	"archive/zip"
 	"fmt"
 	"io"
-	"log"
 	"os"
 	"path/filepath"
 
@@ -26,7 +25,7 @@ func Read(r io.ReaderAt, size int64) (*Workbook, error) {
 
 	tmpPath, err := tempstorage.TempDir("unioffice-xlsx")
 	if err != nil {
-		log.Fatalf("creating zip: %s", err)
+		return nil, err
 	}
 	wb.TmpPath = tmpPath
 

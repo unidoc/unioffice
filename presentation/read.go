@@ -11,7 +11,6 @@ import (
 	"archive/zip"
 	"fmt"
 	"io"
-	"log"
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/common/tempstorage"
@@ -24,7 +23,7 @@ func Read(r io.ReaderAt, size int64) (*Presentation, error) {
 
 	tmpPath, err := tempstorage.TempDir("unioffice-pptx")
 	if err != nil {
-		log.Fatalf("creating zip: %s", err)
+		return nil, err
 	}
 	doc.TmpPath = tmpPath
 

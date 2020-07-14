@@ -15,7 +15,6 @@ import (
 	"image"
 	"image/jpeg"
 	"io"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -644,7 +643,7 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 
 	tmpPath, err := tempstorage.TempDir("unioffice-docx")
 	if err != nil {
-		log.Fatalf("creating zip: %s", err)
+		return nil, err
 	}
 	doc.TmpPath = tmpPath
 
