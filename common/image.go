@@ -129,8 +129,8 @@ func ImageFromBytes(data []byte) (Image, error) {
 	return r, nil
 }
 
-// ImageFromStorage reads an image from a temporary storage. It doesn't keep the image
-// in memory and only reads it to determine the format and size. You can also
+// ImageFromStorage reads an image using the currently set
+// temporary storage mechanism (see tempstorage). You can also
 // construct an Image directly if the file and size are known.
 func ImageFromStorage(path string) (Image, error) {
 	r := Image{}
