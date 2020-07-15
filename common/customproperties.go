@@ -44,7 +44,6 @@ func (c CustomProperties) PropertiesList() []*custom_properties.CT_Property {
 }
 
 // GetPropertyByName returns a custom property selected by it's name.
-// This method is deprecated and will be removed in the future.
 func (c CustomProperties) GetPropertyByName(name string) CustomProperty {
 	propsList := c.x.Property
 	for _, property := range propsList {
