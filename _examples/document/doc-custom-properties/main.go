@@ -20,15 +20,15 @@ func main() {
 	cp := doc.GetOrCreateCustomProperties()
 
 	// You can read properties from the document
-	fmt.Println("AppVersion", *cp.GetCTPropertyByName("AppVersion").Lpwstr)
-	fmt.Println("Company", *cp.GetCTPropertyByName("Company").Lpwstr)
-	fmt.Println("DocSecurity", *cp.GetCTPropertyByName("DocSecurity").I4)
-	fmt.Println("LinksUpToDate", *cp.GetCTPropertyByName("LinksUpToDate").Bool)
-	fmt.Println("Non-existent", cp.GetCTPropertyByName("nonexistentproperty"))
+	fmt.Println("AppVersion", *cp.GetPropertyByName("AppVersion").X().Lpwstr)
+	fmt.Println("Company", *cp.GetPropertyByName("Company").X().Lpwstr)
+	fmt.Println("DocSecurity", *cp.GetPropertyByName("DocSecurity").X().I4)
+	fmt.Println("LinksUpToDate", *cp.GetPropertyByName("LinksUpToDate").X().Bool)
+	fmt.Println("Non-existent", cp.GetPropertyByName("nonexistentproperty"))
 
 	// And change them as well
 	cp.SetPropertyAsLpwstr("Company", "Another company") // text, existing property
-	fmt.Println("Company", *cp.GetCTPropertyByName("Company").Lpwstr)
+	fmt.Println("Company", *cp.GetPropertyByName("Company").X().Lpwstr)
 
 	// Adding new properties
 	cp.SetPropertyAsLpwstr("Another text property", "My text value") // text
