@@ -32,7 +32,7 @@ func (r Run) X() *wml.CT_R {
 	return r.x
 }
 
-// Text returns the underlying tet in the run.
+// Text returns the underlying text in the run.
 func (r Run) Text() string {
 	if len(r.x.EG_RunInnerContent) == 0 {
 		return ""
@@ -54,7 +54,7 @@ func (r Run) ClearContent() {
 	r.x.EG_RunInnerContent = nil
 }
 
-// AddText adds tet to a run.
+// AddText adds text to a run.
 func (r Run) AddText(s string) {
 	ic := wml.NewEG_RunInnerContent()
 	r.x.EG_RunInnerContent = append(r.x.EG_RunInnerContent, ic)
