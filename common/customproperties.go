@@ -19,11 +19,13 @@ type CustomProperties struct {
 	x *custom_properties.Properties
 }
 
+// CustomProperty contains document specific property.
 // Using of this type is deprecated.
 type CustomProperty struct {
 	x *custom_properties.CT_Property
 }
 
+// X returns the inner wrapped XML type of CustomProperty.
 func (c CustomProperty) X() *custom_properties.CT_Property {
 	return c.x
 }
@@ -48,7 +50,7 @@ func (c CustomProperties) GetPropertyByName(name string) CustomProperty {
 	propsList := c.x.Property
 	for _, property := range propsList {
 		if *property.NameAttr == name {
-			return CustomProperty{property}
+			return CustomProperty{x: property}
 		}
 	}
 	return CustomProperty{}
