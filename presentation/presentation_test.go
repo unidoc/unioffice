@@ -36,6 +36,7 @@ func TestFillPlaceholderText(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer ppt.Close()
 
 	// Add new slide from template
 	layout, err := ppt.GetLayoutByName("Picture with Caption")
@@ -73,6 +74,7 @@ func TestFillPlaceholderImage(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer ppt.Close()
 
 	// Add local image to pptx
 	image, err := common.ImageFromFile("testdata/gophercolor.png")
@@ -151,6 +153,7 @@ func loadTemplateHelper() (*Presentation, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer ppt.Close()
 
 	for _, s := range ppt.Slides() {
 		if err = ppt.RemoveSlide(s); err != nil {
@@ -166,6 +169,7 @@ func TestTmpFiles(t *testing.T) {
 	if err != nil {
 		t.Errorf("error opening document: %s", err)
 	}
+	defer ppt.Close()
 	files, err := ioutil.ReadDir(ppt.TmpPath)
 	if err != nil {
 		t.Errorf("cannot open a workbook: %s", err)
