@@ -647,7 +647,7 @@ func (s *Sheet) ClearCachedFormulaResults() {
 }
 
 // RecalculateFormulas re-computes any computed formula values that are stored
-// in the sheet. As gooxml formula support is still new and not all functins are
+// in the sheet. As unioffice formula support is still new and not all functins are
 // supported,  if formula execution fails either due to a parse error or missing
 // function, or erorr in the result (even if expected) the cached value will be
 // left empty allowing Excel to recompute it on load.

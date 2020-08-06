@@ -17,6 +17,7 @@ import (
 
 func TestRunClear(t *testing.T) {
 	doc := New()
+	defer doc.Close()
 	para := doc.AddParagraph()
 	run := para.AddRun()
 	if len(run.X().EG_RunInnerContent) != 0 {

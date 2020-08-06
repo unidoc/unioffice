@@ -11,6 +11,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	defer doc.Close()
 	doc.SetStrict(false) // document will be saved as Word document (this is a default option for new files)
 	doc.SaveToFile("conformance_transitional.docx")
 	doc.SetStrict(true) // document will be saved in the Strict mode

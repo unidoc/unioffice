@@ -15,19 +15,20 @@ func main() {
 	if err != nil {
 		log.Fatalf("error opening document: %s", err)
 	}
+	defer doc.Close()
 
 	cp := doc.GetOrCreateCustomProperties()
 
 	// You can read properties from the document
-	fmt.Println("AppVersion", *cp.GetPropertyByName("AppVersion").Lpwstr)
-	fmt.Println("Company", *cp.GetPropertyByName("Company").Lpwstr)
-	fmt.Println("DocSecurity", *cp.GetPropertyByName("DocSecurity").I4)
-	fmt.Println("LinksUpToDate", *cp.GetPropertyByName("LinksUpToDate").Bool)
+	fmt.Println("AppVersion", *cp.GetPropertyByName("AppVersion").X().Lpwstr)
+	fmt.Println("Company", *cp.GetPropertyByName("Company").X().Lpwstr)
+	fmt.Println("DocSecurity", *cp.GetPropertyByName("DocSecurity").X().I4)
+	fmt.Println("LinksUpToDate", *cp.GetPropertyByName("LinksUpToDate").X().Bool)
 	fmt.Println("Non-existent", cp.GetPropertyByName("nonexistentproperty"))
 
 	// And change them as well
 	cp.SetPropertyAsLpwstr("Company", "Another company") // text, existing property
-	fmt.Println("Company", *cp.GetPropertyByName("Company").Lpwstr)
+	fmt.Println("Company", *cp.GetPropertyByName("Company").X().Lpwstr)
 
 	// Adding new properties
 	cp.SetPropertyAsLpwstr("Another text property", "My text value") // text
@@ -39,6 +40,7 @@ func main() {
 
 	// For new documents all is the same
 	docNew := document.New()
+	defer docNew.Close()
 
 	cpNew := docNew.GetOrCreateCustomProperties()
 	cpNew.SetPropertyAsLpwstr("Another text property", "My text value") // text

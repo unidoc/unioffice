@@ -15,7 +15,6 @@ import (
 	"image"
 	"image/jpeg"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -24,6 +23,7 @@ import (
 	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/common/license"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/zippkg"
 
@@ -61,6 +61,7 @@ type Document struct {
 // New constructs an empty document that content can be added to.
 func New() *Document {
 	d := &Document{x: wml.NewDocument()}
+
 	d.ContentTypes = common.NewContentTypes()
 	d.x.Body = wml.NewCT_Body()
 	d.x.ConformanceAttr = st.ST_ConformanceClassTransitional
@@ -640,11 +641,11 @@ func Read(r io.ReaderAt, size int64) (*Document, error) {
 	// numbering is not required
 	doc.Numbering.x = nil
 
-	td, err := ioutil.TempDir("", "gooxml-docx")
+	tmpPath, err := tempstorage.TempDir("unioffice-docx")
 	if err != nil {
 		return nil, err
 	}
-	doc.TmpPath = td
+	doc.TmpPath = tmpPath
 
 	zr, err := zip.NewReader(r, size)
 	if err != nil {
@@ -779,6 +780,12 @@ func (d *Document) AddImage(i common.Image) (common.ImageRef, error) {
 	}
 	if i.Size.X == 0 || i.Size.Y == 0 {
 		return r, errors.New("image must have a valid size")
+	}
+	if i.Path != "" {
+		err := tempstorage.Add(i.Path)
+		if err != nil {
+			return r, err
+		}
 	}
 
 	d.Images = append(d.Images, r)
@@ -973,7 +980,7 @@ func (d *Document) onNewRelationship(decMap *zippkg.DecodeMap, target, typ strin
 				if err != nil {
 					return err
 				}
-				img, err := common.ImageFromFile(path)
+				img, err := common.ImageFromStorage(path)
 				if err != nil {
 					return err
 				}
@@ -1168,6 +1175,15 @@ func (d Document) SetStrict(strict bool) {
 	} else {
 		d.x.ConformanceAttr = st.ST_ConformanceClassTransitional
 	}
+}
+
+// Close closes the document, removing any temporary files that might have been
+// created when opening a document.
+func (d *Document) Close() error {
+	if d.TmpPath != "" {
+		return tempstorage.RemoveAll(d.TmpPath)
+	}
+	return nil
 }
 
 func getBool(onOff *wml.CT_OnOff) bool {

@@ -21,6 +21,7 @@ func main() {
 		fmt.Println("presentation.OpenTemplate err ", err)
 		os.Exit(1)
 	}
+	defer ppt.Close()
 
 	// Clear out example slides
 	for _, s := range ppt.Slides() {

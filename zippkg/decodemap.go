@@ -23,7 +23,7 @@ import (
 // decoded directly (e.g. images)
 //
 // rel is the actual relationship so its target can be modified if the source
-// target doesn't match where gooxml will write the file (e.g. read in
+// target doesn't match where unioffice will write the file (e.g. read in
 // 'xl/worksheets/MyWorksheet.xml' and we'll write out
 // 'xl/worksheets/sheet1.xml')
 type OnNewRelationshipFunc func(decMap *DecodeMap, target, typ string, files []*zip.File, rel *relationships.Relationship, src Target) error

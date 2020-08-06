@@ -1,6 +1,8 @@
 package presentation
 
 import (
+	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/unidoc/unioffice/common"
@@ -29,17 +31,12 @@ func TestRemoveChoicesWithPics(t *testing.T) {
 	}
 }
 
-// Filling in placeholder fields: both text and images and check that it is as expected
-
-// Saving slides and checking if valid
-
-// anything else we can think of?
-
 func TestFillPlaceholderText(t *testing.T) {
 	ppt, err := loadTemplateHelper()
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer ppt.Close()
 
 	// Add new slide from template
 	layout, err := ppt.GetLayoutByName("Picture with Caption")
@@ -77,6 +74,7 @@ func TestFillPlaceholderImage(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer ppt.Close()
 
 	// Add local image to pptx
 	image, err := common.ImageFromFile("testdata/gophercolor.png")
@@ -155,6 +153,7 @@ func loadTemplateHelper() (*Presentation, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer ppt.Close()
 
 	for _, s := range ppt.Slides() {
 		if err = ppt.RemoveSlide(s); err != nil {
@@ -163,4 +162,32 @@ func loadTemplateHelper() (*Presentation, error) {
 	}
 
 	return ppt, nil
+}
+
+func TestTmpFiles(t *testing.T) {
+	ppt, err := Open("testdata/image.pptx")
+	if err != nil {
+		t.Errorf("error opening document: %s", err)
+	}
+	defer ppt.Close()
+	files, err := ioutil.ReadDir(ppt.TmpPath)
+	if err != nil {
+		t.Errorf("cannot open a workbook: %s", err)
+	}
+	got := len(files)
+	if got == 0 {
+		t.Errorf("should be more than %d files in the temp dir, found %d", got, got)
+	}
+	ppt.Close()
+	if _, err := os.Stat(ppt.TmpPath); err == nil {
+		files, err := ioutil.ReadDir(ppt.TmpPath)
+		if err != nil {
+			t.Errorf("cannot open a workbook: %s", err)
+		}
+		expected := 0
+		got = len(files)
+		if got != expected {
+			t.Errorf("should be %d files in the temp dir, found %d", expected, got)
+		}
+	}
 }

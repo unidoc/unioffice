@@ -60,5 +60,5 @@ func (d *DocBase) WriteExtraFiles(z *zip.Writer) error {
 // zip package
 type ExtraFile struct {
 	ZipPath  string
-	DiskPath string
+	DiskPath string // TODO: Change to "StoragePath" in next major version (v2).
 }

@@ -11,6 +11,7 @@ var lorem = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin lobo
 
 func main() {
 	doc := document.New()
+	defer doc.Close()
 
 	// Headers/footers apply to the preceding paragraphs in the document. There
 	// is a section properties on the document body itself acessible via

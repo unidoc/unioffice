@@ -14,6 +14,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("error opening document: %s", err)
 	}
+	defer doc.Close()
 
 	if doc.HasFootnotes() {
 		fmt.Printf("Document has %02d footnotes.\n", len(doc.Footnotes()))

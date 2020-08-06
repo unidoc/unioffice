@@ -94,7 +94,7 @@ func (d Drawing) AddChart(at AnchorType) (chart.Chart, Anchor) {
 	gf.Graphic.GraphicData.Any = []unioffice.Any{c}
 
 	//chart.Chart.PlotVisOnly = crt.NewCT_Boolean()
-	//chart.Chart.PlotVisOnly.ValAttr = gooxml.Bool(true)
+	//chart.Chart.PlotVisOnly.ValAttr = unioffice.Bool(true)
 
 	chrt := chart.MakeChart(chartSpace)
 	chrt.Properties().SetSolidFill(color.White)

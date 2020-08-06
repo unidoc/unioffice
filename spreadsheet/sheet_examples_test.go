@@ -16,6 +16,7 @@ import (
 
 func ExampleSheet_Cell() {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 
 	// Cell creates or returns a cell with a given reference
@@ -24,6 +25,7 @@ func ExampleSheet_Cell() {
 
 func ExampleSheet_Row() {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 
 	// Row/Cell create or returns a cell with a given reference
@@ -32,6 +34,7 @@ func ExampleSheet_Row() {
 
 func ExampleSheet_AddRow() {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 
 	// AddRow/AddCell add a new unspecified row/cell.  These will be numbered
@@ -41,6 +44,7 @@ func ExampleSheet_AddRow() {
 
 func ExampleSheet_AddNumberedRow() {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 
 	// AddNumberedRow adds a row with a given number, the difference between Row
@@ -51,6 +55,7 @@ func ExampleSheet_AddNumberedRow() {
 
 func ExampleSheet_Name() {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	sheet.SetName("Sheet 1")
 	fmt.Println(sheet.Name())
@@ -60,6 +65,7 @@ func ExampleSheet_Name() {
 
 func ExampleCell_SetDate() {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	cell := sheet.Cell("A1")
 	// set our date value
@@ -73,6 +79,7 @@ func ExampleCell_SetDate() {
 
 func ExampleCell_SetDateWithStyle() {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	cell := sheet.Cell("A1")
 

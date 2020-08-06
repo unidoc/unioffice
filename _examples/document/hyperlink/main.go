@@ -9,6 +9,7 @@ import (
 func main() {
 
 	doc := document.New()
+	defer doc.Close()
 
 	hlStyle := doc.Styles.AddStyle("Hyperlink", wml.ST_StyleTypeCharacter, false)
 	hlStyle.SetName("Hyperlink")

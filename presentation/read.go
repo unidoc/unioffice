@@ -11,9 +11,9 @@ import (
 	"archive/zip"
 	"fmt"
 	"io"
-	"io/ioutil"
 
 	"github.com/unidoc/unioffice"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/zippkg"
 )
 
@@ -21,11 +21,11 @@ import (
 func Read(r io.ReaderAt, size int64) (*Presentation, error) {
 	doc := newEmpty()
 
-	td, err := ioutil.TempDir("", "gooxml-pptx")
+	tmpPath, err := tempstorage.TempDir("unioffice-pptx")
 	if err != nil {
 		return nil, err
 	}
-	doc.TmpPath = td
+	doc.TmpPath = tmpPath
 
 	zr, err := zip.NewReader(r, size)
 	if err != nil {

@@ -13,6 +13,7 @@ import (
 
 func main() {
 	ppt := presentation.New()
+	defer ppt.Close()
 	for i := 0; i < 5; i++ {
 		slide := ppt.AddSlide()
 

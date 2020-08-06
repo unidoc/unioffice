@@ -15,6 +15,7 @@ import (
 
 func main() {
 	doc := document.New()
+	defer doc.Close()
 
 	para := doc.AddParagraph()
 	run := para.AddRun()
@@ -33,17 +34,20 @@ func main() {
 	doc.SaveToFile("simple.docx")
 
 	cwd, _ := os.Getwd()
-	ConvertToPDF(filepath.Join(cwd, "simple.docx"), filepath.Join(cwd, "simple.pdf"))
+	err := ConvertToPDF(filepath.Join(cwd, "simple.docx"), filepath.Join(cwd, "simple.pdf"))
+	if err != nil {
+		log.Printf("error creating Word object: %s", err)
+	}
 }
 
 // ConvertToPDF uses go-ole to convert a docx to a PDF using the Word application
-func ConvertToPDF(source, destination string) {
+func ConvertToPDF(source, destination string) error {
 	ole.CoInitialize(0)
 	defer ole.CoUninitialize()
 
 	iunk, err := oleutil.CreateObject("Word.Application")
 	if err != nil {
-		log.Fatalf("error creating Word object: %s", err)
+		return err
 	}
 
 	word := iunk.MustQueryInterface(ole.IID_IDispatch)
@@ -59,4 +63,5 @@ func ConvertToPDF(source, destination string) {
 	oleutil.MustCallMethod(wordDoc, "SaveAs2", destination, wdFormatPDF)
 	oleutil.MustCallMethod(wordDoc, "Close")
 	oleutil.MustCallMethod(word, "Quit")
+	return nil
 }

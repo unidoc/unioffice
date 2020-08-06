@@ -25,6 +25,7 @@ import (
 	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/common/license"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/measurement"
 	"github.com/unidoc/unioffice/schema/soo/dml"
 	crt "github.com/unidoc/unioffice/schema/soo/dml/chart"
@@ -137,7 +138,7 @@ func New() *Presentation {
 
 	thm := dml.NewTheme()
 
-	thm.NameAttr = unioffice.String("gooxml Theme")
+	thm.NameAttr = unioffice.String("unioffice Theme")
 	thm.ThemeElements.ClrScheme.NameAttr = "Office"
 	thm.ThemeElements.ClrScheme.Dk1.SysClr = dml.NewCT_SystemColor()
 	thm.ThemeElements.ClrScheme.Dk1.SysClr.LastClrAttr = unioffice.String("000000")
@@ -765,7 +766,7 @@ func (p *Presentation) onNewRelationship(decMap *zippkg.DecodeMap, target, typ s
 				if err != nil {
 					return err
 				}
-				img, err := common.ImageFromFile(path)
+				img, err := common.ImageFromStorage(path)
 				if err != nil {
 					return err
 				}
@@ -852,6 +853,12 @@ func (p *Presentation) AddImage(i common.Image) (common.ImageRef, error) {
 	if i.Size.X == 0 || i.Size.Y == 0 {
 		return r, errors.New("image must have a valid size")
 	}
+	if i.Path != "" {
+		err := tempstorage.Add(i.Path)
+		if err != nil {
+			return r, err
+		}
+	}
 
 	p.Images = append(p.Images, r)
 	p.ContentTypes.EnsureDefault("png", "image/png")
@@ -889,4 +896,13 @@ func (p *Presentation) createCustomProperties() {
 func (p *Presentation) addCustomRelationships() {
 	p.ContentTypes.AddOverride("/docProps/custom.xml", "application/vnd.openxmlformats-officedocument.custom-properties+xml")
 	p.Rels.AddRelationship("docProps/custom.xml", unioffice.CustomPropertiesType)
+}
+
+// Close closes the presentation, removing any temporary files that might have been
+// created when opening a document.
+func (p *Presentation) Close() error {
+	if p.TmpPath != "" {
+		return tempstorage.RemoveAll(p.TmpPath)
+	}
+	return nil
 }

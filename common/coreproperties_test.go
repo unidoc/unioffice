@@ -105,6 +105,7 @@ func TestCorePropertiesSettersDates(t *testing.T) {
 
 func ExampleCoreProperties() {
 	doc, _ := document.Open("document.docx")
+	defer doc.Close()
 	cp := doc.CoreProperties
 	// Reading Properties
 	fmt.Println("Title:", cp.Title())

@@ -68,6 +68,7 @@ var standardFmtTestData = []struct {
 
 func TestDefaultFormats(t *testing.T) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	for _, tc := range standardFmtTestData {
@@ -88,6 +89,7 @@ func TestDefaultFormats(t *testing.T) {
 
 func BenchmarkDefaultFormat(b *testing.B) {
 	wb := spreadsheet.New()
+	defer wb.Close()
 	sheet := wb.AddSheet()
 	row := sheet.AddRow()
 	cell := row.AddCell()

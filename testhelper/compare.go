@@ -180,6 +180,10 @@ func dumpXmlDiff(t *testing.T, exp, got []byte) {
 	ioutil.WriteFile(expF, exp, 0644)
 	gotF := tempFilePath("got")
 	ioutil.WriteFile(gotF, got, 0644)
+	defer func() {
+		os.Remove(expF)
+		os.Remove(gotF)
+	}()
 
 	xmlIndentFile(expF)
 	xmlIndentFile(gotF)

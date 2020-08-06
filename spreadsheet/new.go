@@ -8,8 +8,6 @@
 package spreadsheet
 
 import (
-	"runtime"
-
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/schema/soo/sml"
@@ -19,8 +17,6 @@ import (
 func New() *Workbook {
 	wb := &Workbook{}
 	wb.x = sml.NewWorkbook()
-
-	runtime.SetFinalizer(wb, workbookFinalizer)
 
 	wb.AppProperties = common.NewAppProperties()
 	wb.CoreProperties = common.NewCoreProperties()

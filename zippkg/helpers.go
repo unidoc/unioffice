@@ -13,14 +13,13 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
-	"io/ioutil"
-	"os"
 	"sort"
 	"strings"
 
 	"github.com/unidoc/unioffice"
 
 	"github.com/unidoc/unioffice/algo"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/schema/soo/pkg/relationships"
 )
 
@@ -118,16 +117,19 @@ func Decode(f *zip.File, dest interface{}) error {
 	return nil
 }
 
-// AddFileFromDisk reads a file from disk and adds it at a given path to a zip file.
-func AddFileFromDisk(z *zip.Writer, zipPath, diskPath string) error {
+// AddFileFromDisk reads a file from internal storage and adds it at a given path to a zip file.
+// TODO: Rename to AddFileFromStorage in next major version release (v2).
+// NOTE: If disk storage cannot be used, memory storage can be used instead by calling memstore.SetAsStorage().
+func AddFileFromDisk(z *zip.Writer, zipPath, storagePath string) error {
 	w, err := z.Create(zipPath)
 	if err != nil {
 		return fmt.Errorf("error creating %s: %s", zipPath, err)
 	}
-	f, err := os.Open(diskPath)
+	f, err := tempstorage.Open(storagePath)
 	if err != nil {
-		return fmt.Errorf("error opening %s: %s", diskPath, err)
+		return fmt.Errorf("error opening %s: %s", storagePath, err)
 	}
+	defer f.Close()
 	_, err = io.Copy(w, f)
 	return err
 }
@@ -145,7 +147,7 @@ func AddFileFromBytes(z *zip.Writer, zipPath string, data []byte) error {
 // ExtractToDiskTmp extracts a zip file to a temporary file in a given path,
 // returning the name of the file.
 func ExtractToDiskTmp(f *zip.File, path string) (string, error) {
-	tmpFile, err := ioutil.TempFile(path, "zz")
+	tmpFile, err := tempstorage.TempFile(path, "zz")
 	if err != nil {
 		return "", err
 	}

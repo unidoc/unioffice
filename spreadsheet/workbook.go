@@ -16,13 +16,13 @@ import (
 	"image/jpeg"
 	"io"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/unidoc/unioffice"
 	"github.com/unidoc/unioffice/color"
 	"github.com/unidoc/unioffice/common"
 	"github.com/unidoc/unioffice/common/license"
+	"github.com/unidoc/unioffice/common/tempstorage"
 	"github.com/unidoc/unioffice/vmldrawing"
 	"github.com/unidoc/unioffice/zippkg"
 
@@ -345,6 +345,11 @@ func (wb *Workbook) Save(w io.Writer) error {
 	if err := zippkg.MarshalXMLByType(z, dt, unioffice.SharedStringsType, wb.SharedStrings.X()); err != nil {
 		return err
 	}
+	if wb.CustomProperties.X() != nil {
+		if err := zippkg.MarshalXMLByType(z, dt, unioffice.CustomPropertiesType, wb.CustomProperties.X()); err != nil {
+			return err
+		}
+	}
 
 	if wb.Thumbnail != nil {
 		fn := unioffice.AbsoluteFilename(dt, unioffice.ThumbnailType, 0)
@@ -466,6 +471,10 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 		decMap.AddTarget(target, wb.CoreProperties.X(), typ, 0)
 		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
 
+	case unioffice.CustomPropertiesType:
+		decMap.AddTarget(target, wb.CustomProperties.X(), typ, 0)
+		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
+
 	case unioffice.ExtendedPropertiesType:
 		decMap.AddTarget(target, wb.AppProperties.X(), typ, 0)
 		rel.TargetAttr = unioffice.RelativeFilename(dt, src.Typ, typ, 0)
@@ -534,7 +543,7 @@ func (wb *Workbook) onNewRelationship(decMap *zippkg.DecodeMap, target, typ stri
 				if err != nil {
 					return err
 				}
-				img, err := common.ImageFromFile(path)
+				img, err := common.ImageFromStorage(path)
 				if err != nil {
 					return err
 				}
@@ -649,8 +658,8 @@ func (wb *Workbook) ClearCachedFormulaResults() {
 }
 
 // RecalculateFormulas re-computes any computed formula values that are stored
-// in the sheet. As gooxml formula support is still new and not all functins are
-// supported,  if formula execution fails either due to a parse error or missing
+// in the sheet. As unioffice formula support is still new and not all functins are
+// supported, if formula execution fails either due to a parse error or missing
 // function, or erorr in the result (even if expected) the cached value will be
 // left empty allowing Excel to recompute it on load.
 func (wb *Workbook) RecalculateFormulas() {
@@ -672,6 +681,12 @@ func (wb *Workbook) AddImage(i common.Image) (common.ImageRef, error) {
 	}
 	if i.Size.X == 0 || i.Size.Y == 0 {
 		return r, errors.New("image must have a valid size")
+	}
+	if i.Path != "" {
+		err := tempstorage.Add(i.Path)
+		if err != nil {
+			return r, err
+		}
 	}
 
 	wb.Images = append(wb.Images, r)
@@ -737,15 +752,11 @@ func (wb *Workbook) GetSheet(name string) (Sheet, error) {
 	return Sheet{}, ErrorNotFound
 }
 
-func workbookFinalizer(wb *Workbook) {
-	wb.Close()
-}
-
 // Close closes the workbook, removing any temporary files that might have been
 // created when opening a document.
 func (wb *Workbook) Close() error {
-	if wb.TmpPath != "" && strings.HasPrefix(wb.TmpPath, os.TempDir()) {
-		return os.RemoveAll(wb.TmpPath)
+	if wb.TmpPath != "" {
+		return tempstorage.RemoveAll(wb.TmpPath)
 	}
 	return nil
 }
@@ -778,4 +789,22 @@ func (wb *Workbook) RemoveCalcChain() {
 // GetFilename returns the name of file from which workbook was opened with full path to it
 func (wb *Workbook) GetFilename() string {
 	return wb.filename
+}
+
+// GetOrCreateCustomProperties returns the custom properties of the document (and if they not exist yet, creating them first)
+func (wb *Workbook) GetOrCreateCustomProperties() common.CustomProperties {
+	if wb.CustomProperties.X() == nil {
+		wb.createCustomProperties()
+	}
+	return wb.CustomProperties
+}
+
+func (wb *Workbook) createCustomProperties() {
+	wb.CustomProperties = common.NewCustomProperties()
+	wb.addCustomRelationships()
+}
+
+func (wb *Workbook) addCustomRelationships() {
+	wb.ContentTypes.AddOverride("/docProps/custom.xml", "application/vnd.openxmlformats-officedocument.custom-properties+xml")
+	wb.Rels.AddRelationship("docProps/custom.xml", unioffice.CustomPropertiesType)
 }
