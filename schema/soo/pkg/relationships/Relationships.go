@@ -5,7 +5,7 @@
 // Use of this software package and source code is governed by the terms of the
 // UniDoc End User License Agreement (EULA) that is available at:
 // https://unidoc.io/eula/
-// commercial license can be purchased via https://unidoc.io website.
+// A trial license code for evaluation can be obtained at https://unidoc.io website.
 
 package relationships
 
