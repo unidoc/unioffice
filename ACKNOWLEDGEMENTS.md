@@ -3,10 +3,7 @@ Acknowledgements
 
 UniOffice contains code from or depends on the following open source projects:
 
-* [The standard Go library](https://golang.org/pkg/#stdlib), 
-and [Go supplementary image libraries](https://godoc.org/golang.org/x/image/tiff/lzw), BSD-3 license:
-  - Used for TIFF LZW encoding support.
-  - PNG paeth algorithm
+* [The standard Go library](https://golang.org/pkg/#stdlib).
   
 ```
 Copyright (c) 2009 The Go Authors. All rights reserved.
