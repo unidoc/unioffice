@@ -8,8 +8,6 @@
 package formula
 
 import (
-	"fmt"
-	"github.com/davecgh/go-spew/spew"
 	"regexp"
 	"strconv"
 	"strings"
@@ -207,7 +205,7 @@ const nsPerDay = 86400000000000
 
 func dateFromDays(days float64) time.Time {
 	unix := int64((days - daysTo1970) * nsPerDay)
-	return time.Unix(0, unix).UTC()
+	return time.Unix(0, unix)
 }
 
 func daysFromDate(y, m, d int) float64 {
@@ -788,26 +786,17 @@ func YearFrac(args []Result) Result {
 	if args[1].Type != ResultTypeNumber {
 		return MakeErrorResult("YEARFRAC requires end date to be number argument")
 	}
-	spew.Dump(args)
-	spew.Dump(startDate)
 	endDate := args[1].ValueNumber
-	spew.Dump(endDate)
-	spew.Dump(basis)
 	yf, errResult := yearFrac(startDate, endDate, basis)
 	if errResult.Type == ResultTypeError {
 		return errResult
 	}
-	spew.Dump(yf)
 	return MakeNumberResult(yf)
 }
 
-// yearFrac returns float64 fraction of the year and Result value which can be of
-// ResultTypeError type if an error occurs or ResultTypeEmpty if doesn't.
+// yearFrac returns float64 fraction of the year and Result value which can be of ResultTypeError type if an error occurs or ResultTypeEmpty if doesn't.
 func yearFrac(startDateF, endDateF float64, basis int) (float64, Result) {
 	startDate, endDate := dateFromDays(startDateF), dateFromDays(endDateF)
-	fmt.Printf("yearFRac\n")
-	spew.Dump(startDate)
-	spew.Dump(endDate)
 	startDateS := startDate.Unix()
 	endDateS := endDate.Unix()
 	if startDateS == endDateS {
