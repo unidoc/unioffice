@@ -1,8 +1,8 @@
 // Copyright 2017 FoxyUtils ehf. All rights reserved.
 //
-// Use of this source code is governed by the terms of the Affero GNU General
-// Public License version 3.0 as published by the Free Software Foundation and
-// appearing in the file LICENSE included in the packaging of this file. A
+// Use of this software package and source code is governed by the terms of the
+// UniDoc End User License Agreement (EULA) that is available at:
+// https://unidoc.io/eula/
 // commercial license can be purchased by contacting sales@baliance.com.
 
 package document

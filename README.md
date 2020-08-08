@@ -1,14 +1,11 @@
 **unioffice** is a library for creation of Office Open XML documents (.docx, .xlsx
-and .pptx).  It's goal is to be the most compatible and highest performance Go
+and .pptx).  Its goal is to be the most compatible and highest performance Go
 library for creation and editing of docx/xlsx/pptx files.
-
-Requires **go1.8+**, builds are tested with 1.8, 1.9 and tip.
 
 [![Build Status](https://travis-ci.org/unidoc/unioffice.svg?branch=master)](https://travis-ci.org/unidoc/unioffice)
 [![GitHub (pre-)release](https://img.shields.io/github/release/unidoc/unioffice/all.svg)](https://github.com/unidoc/unioffice/releases)
-[![License: AGPL v3](https://img.shields.io/badge/License-Dual%20AGPL%20v3/Commercial-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![License: UniDoc EULA](https://img.shields.io/badge/license-UniDoc%20EULA-blue)](https://unidoc.io/eula/)
 [![GoDoc](https://godoc.org/github.com/unidoc/unioffice?status.svg)](https://godoc.org/github.com/unidoc/unioffice)
-[![go 1.8+](https://img.shields.io/badge/go-1.8%2B-blue.svg)](http://golang.org)
 
 ![https://github.com/unidoc/unioffice/](./_examples/preview.png "unioffice")
 
@@ -51,7 +48,6 @@ DOCX/XLSX/PPTX.
 ## Installation ##
     
     go get github.com/unidoc/unioffice/
-    go build -i github.com/unidoc/unioffice/...
 
 ## Document Examples ##
 
@@ -117,11 +113,12 @@ will be reviewed and merged.
 
 ### Licensing ###
 
-This library is offered under a dual license. It is freely available for use
-under the terms of AGPLv3. If you would like to use this library for a closed
-source project, please contact sales@unidoc.io.
+This software package (unioffice) is a commercial product and requires a license
+code to operate.
 
-There are no differences in functionality between the open source and commercial 
-versions. You are encouraged to use the open source version to evaluate the library
-before purchasing a commercial license.
+The use of this software package is governed by the end-user license agreement 
+(EULA) available at: https://unidoc.io/eula/
+
+To obtain a Trial license code to evaluate the software, please visit
+https://unidoc.io/
 

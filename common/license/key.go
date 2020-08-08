@@ -102,7 +102,7 @@ func (k *LicenseKey) TypeToString() string {
 	}
 
 	if k.Tier == LicenseTierCommunity {
-		return "AGPLv3 Open Source Community License"
+		return "Unlicensed"
 	}
 
 	if k.Tier == LicenseTierIndividual || k.Tier == "indie" {
