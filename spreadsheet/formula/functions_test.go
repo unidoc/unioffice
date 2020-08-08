@@ -1,9 +1,9 @@
 // Copyright 2017 FoxyUtils ehf. All rights reserved.
 //
-// Use of this source code is governed by the terms of the Affero GNU General
-// Public License version 3.0 as published by the Free Software Foundation and
-// appearing in the file LICENSE included in the packaging of this file. A
-// commercial license can be purchased on https://unidoc.io.
+// Use of this software package and source code is governed by the terms of the
+// UniDoc End User License Agreement (EULA) that is available at:
+// https://unidoc.io/eula/
+// A trial license code for evaluation can be obtained at https://unidoc.io.
 
 package formula_test
 
@@ -1136,14 +1136,14 @@ func TestYearFrac(t *testing.T) {
 	ss := spreadsheet.New()
 	sheet := ss.AddSheet()
 
-	sheet.Cell("A1").SetTime(time.Date(1900, time.January, 1, 0, 0, 0, 0, time.UTC))
-	sheet.Cell("A2").SetTime(time.Date(1900, time.January, 2, 0, 0, 0, 0, time.UTC))
-	sheet.Cell("A3").SetTime(time.Date(1900, time.January, 31, 0, 0, 0, 0, time.UTC))
-	sheet.Cell("A4").SetTime(time.Date(1900, time.March, 31, 0, 0, 0, 0, time.UTC))
-	sheet.Cell("A5").SetTime(time.Date(1900, time.February, 1, 0, 0, 0, 0, time.UTC))
-	sheet.Cell("A6").SetTime(time.Date(1904, time.January, 1, 0, 0, 0, 0, time.UTC))
-	sheet.Cell("A7").SetTime(time.Date(1904, time.January, 2, 0, 0, 0, 0, time.UTC))
-	sheet.Cell("A8").SetTime(time.Date(1905, time.January, 1, 0, 0, 0, 0, time.UTC))
+	sheet.Cell("A1").SetTime(time.Date(1900, time.January, 1, 0, 0, 0, 0, time.Local))
+	sheet.Cell("A2").SetTime(time.Date(1900, time.January, 2, 0, 0, 0, 0, time.Local))
+	sheet.Cell("A3").SetTime(time.Date(1900, time.January, 31, 0, 0, 0, 0, time.Local))
+	sheet.Cell("A4").SetTime(time.Date(1900, time.March, 31, 0, 0, 0, 0, time.Local))
+	sheet.Cell("A5").SetTime(time.Date(1900, time.February, 1, 0, 0, 0, 0, time.Local))
+	sheet.Cell("A6").SetTime(time.Date(1904, time.January, 1, 0, 0, 0, 0, time.Local))
+	sheet.Cell("A7").SetTime(time.Date(1904, time.January, 2, 0, 0, 0, 0, time.Local))
+	sheet.Cell("A8").SetTime(time.Date(1905, time.January, 1, 0, 0, 0, 0, time.Local))
 	sheet.Cell("A9").SetString("Hello")
 	sheet.Cell("A10").SetString("World")
 
