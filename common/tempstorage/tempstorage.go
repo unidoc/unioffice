@@ -9,26 +9,26 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package tempstorage ;import _ae "io";
+package tempstorage ;import _cg "io";type storage interface{Open (_b string )(File ,error );TempFile (_f ,_bg string )(File ,error );TempDir (_a string )(string ,error );RemoveAll (_e string )error ;Add (_g string )error ;};var _eg storage ;
 
-// SetAsStorage changes temporary storage to newStorage.
-func SetAsStorage (newStorage storage ){_ag =newStorage };
+// Open returns tempstorage File object by name.
+func Open (path string )(File ,error ){return _eg .Open (path )};
+
+// Add reads a file from a disk and adds it to the storage.
+func Add (path string )error {return _eg .Add (path )};
+
+// TempDir creates a name for a new temp directory using a pattern argument.
+func TempDir (pattern string )(string ,error ){return _eg .TempDir (pattern )};
 
 // File is a representation of a storage file
 // with Read, Write, Close and Name methods identical to os.File.
-type File interface{_ae .Reader ;_ae .Writer ;_ae .Closer ;Name ()string ;};
-
-// RemoveAll removes all files according to the dir argument prefix.
-func RemoveAll (dir string )error {return _ag .RemoveAll (dir )};
-
-// TempDir creates a name for a new temp directory using a pattern argument.
-func TempDir (pattern string )(string ,error ){return _ag .TempDir (pattern )};
+type File interface{_cg .Reader ;_cg .Writer ;_cg .Closer ;Name ()string ;};
 
 // TempFile creates new empty file in the storage and returns it.
-func TempFile (dir ,pattern string )(File ,error ){return _ag .TempFile (dir ,pattern )};var _ag storage ;type storage interface{Open (_dde string )(File ,error );TempFile (_c ,_b string )(File ,error );TempDir (_bf string )(string ,error );RemoveAll (_d string )error ;Add (_a string )error ;};
+func TempFile (dir ,pattern string )(File ,error ){return _eg .TempFile (dir ,pattern )};
 
-// Add reads a file from a disk and adds it to the storage.
-func Add (path string )error {return _ag .Add (path )};
+// RemoveAll removes all files according to the dir argument prefix.
+func RemoveAll (dir string )error {return _eg .RemoveAll (dir )};
 
-// Open returns tempstorage File object by name.
-func Open (path string )(File ,error ){return _ag .Open (path )};
+// SetAsStorage changes temporary storage to newStorage.
+func SetAsStorage (newStorage storage ){_eg =newStorage };
