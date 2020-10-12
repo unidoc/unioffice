@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_f "github.com/unidoc/unioffice/common/tempstorage";_c "io/ioutil";_eb "os";_e "strings";);
-
-// SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_bb :=diskStorage {};_f .SetAsStorage (&_bb )};
+package diskstore ;import (_g "github.com/unidoc/unioffice/common/tempstorage";_d "io/ioutil";_a "os";_c "strings";);
 
 // Add is not applicable in the diskstore implementation
-func (_ff diskStorage )Add (path string )error {return nil };type diskStorage struct{};
-
-// Open opens file from disk according to a path
-func (_g diskStorage )Open (path string )(_f .File ,error ){return _eb .Open (path )};
-
-// RemoveAll removes all files in the directory
-func (_da diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_eb .TempDir ()){return _eb .RemoveAll (dir );};return nil ;};
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_d diskStorage )TempDir (pattern string )(string ,error ){return _c .TempDir ("",pattern )};
+func (_ac diskStorage )Add (path string )error {return nil };
 
 // TempFile creates a new temp file by calling ioutil TempFile
-func (_fg diskStorage )TempFile (dir ,pattern string )(_f .File ,error ){return _c .TempFile (dir ,pattern );};
+func (_dd diskStorage )TempFile (dir ,pattern string )(_g .File ,error ){return _d .TempFile (dir ,pattern );};
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_ag diskStorage )TempDir (pattern string )(string ,error ){return _d .TempDir ("",pattern )};
+
+// SetAsStorage sets temp storage as a disk storage
+func SetAsStorage (){_gg :=diskStorage {};_g .SetAsStorage (&_gg )};type diskStorage struct{};
+
+// RemoveAll removes all files in the directory
+func (_gd diskStorage )RemoveAll (dir string )error {if _c .HasPrefix (dir ,_a .TempDir ()){return _a .RemoveAll (dir );};return nil ;};
+
+// Open opens file from disk according to a path
+func (_b diskStorage )Open (path string )(_g .File ,error ){return _a .Open (path )};
