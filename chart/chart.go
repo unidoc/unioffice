@@ -9,523 +9,523 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package chart ;import (_e "fmt";_c "github.com/unidoc/unioffice";_gd "github.com/unidoc/unioffice/color";_cg "github.com/unidoc/unioffice/drawing";_a "github.com/unidoc/unioffice/measurement";_ea "github.com/unidoc/unioffice/schema/soo/dml";_gf "github.com/unidoc/unioffice/schema/soo/dml/chart";_d "math/rand";);
+package chart ;import (_f "fmt";_d "github.com/unidoc/unioffice";_c "github.com/unidoc/unioffice/color";_cc "github.com/unidoc/unioffice/drawing";_a "github.com/unidoc/unioffice/measurement";_cb "github.com/unidoc/unioffice/schema/soo/dml";_e "github.com/unidoc/unioffice/schema/soo/dml/chart";_ab "math/rand";);
 
-// AddDateAxis adds a value axis to the chart.
-func (_gbc Chart )AddDateAxis ()DateAxis {_afa :=_gf .NewCT_DateAx ();if _gbc ._ed .Chart .PlotArea .CChoice ==nil {_gbc ._ed .Chart .PlotArea .CChoice =_gf .NewCT_PlotAreaChoice1 ();};_afa .AxId =_gf .NewCT_UnsignedInt ();_afa .AxId .ValAttr =0x7FFFFFFF&_d .Uint32 ();_gbc ._ed .Chart .PlotArea .CChoice .DateAx =append (_gbc ._ed .Chart .PlotArea .CChoice .DateAx ,_afa );_afa .Delete =_gf .NewCT_Boolean ();_afa .Delete .ValAttr =_c .Bool (false );_afa .Scaling =_gf .NewCT_Scaling ();_afa .Scaling .Orientation =_gf .NewCT_Orientation ();_afa .Scaling .Orientation .ValAttr =_gf .ST_OrientationMinMax ;_afa .Choice =&_gf .EG_AxSharedChoice {};_afa .Choice .Crosses =_gf .NewCT_Crosses ();_afa .Choice .Crosses .ValAttr =_gf .ST_CrossesAutoZero ;_ddg :=DateAxis {_afa };_ddg .MajorGridLines ().Properties ().LineProperties ().SetSolidFill (_gd .LightGray );_ddg .SetMajorTickMark (_gf .ST_TickMarkOut );_ddg .SetMinorTickMark (_gf .ST_TickMarkIn );_ddg .SetTickLabelPosition (_gf .ST_TickLblPosNextTo );_ddg .Properties ().LineProperties ().SetSolidFill (_gd .Black );_ddg .SetPosition (_gf .ST_AxPosL );return _ddg ;};
+// CategoryAxis returns the category data source.
+func (_bcd BarChartSeries )CategoryAxis ()CategoryAxisDataSource {if _bcd ._ceg .Cat ==nil {_bcd ._ceg .Cat =_e .NewCT_AxDataSource ();};return MakeAxisDataSource (_bcd ._ceg .Cat );};
+
+// X returns the inner wrapped XML type.
+func (_dfa Pie3DChart )X ()*_e .CT_Pie3DChart {return _dfa ._ffcg };
+
+// InitializeDefaults initializes an area series to the default values.
+func (_ge AreaChartSeries )InitializeDefaults (){};func (_edad LineChartSeries )CategoryAxis ()CategoryAxisDataSource {if _edad ._fecc .Cat ==nil {_edad ._fecc .Cat =_e .NewCT_AxDataSource ();};return MakeAxisDataSource (_edad ._fecc .Cat );};
+
+// X returns the inner wrapped XML type.
+func (_gcdf SurfaceChart )X ()*_e .CT_SurfaceChart {return _gcdf ._eddd };
+
+// Labels returns the data label properties.
+func (_dfg ScatterChartSeries )Labels ()DataLabels {if _dfg ._ffa .DLbls ==nil {_dfg ._ffa .DLbls =_e .NewCT_DLbls ();};return MakeDataLabels (_dfg ._ffa .DLbls );};
+
+// SetOrder sets the order of the series
+func (_add ScatterChartSeries )SetOrder (idx uint32 ){_add ._ffa .Order .ValAttr =idx };
+
+// SetType sets the type the secone pie to either pie or bar
+func (_gaed PieOfPieChart )SetType (t _e .ST_OfPieType ){_gaed ._dae .OfPieType .ValAttr =t };func (_bef DataLabels )SetShowLegendKey (b bool ){_bef .ensureChoice ();_bef ._egg .Choice .ShowLegendKey =_e .NewCT_Boolean ();_bef ._egg .Choice .ShowLegendKey .ValAttr =_d .Bool (b );};
+
+// X returns the inner wrapped XML type.
+func (_dgg LineChartSeries )X ()*_e .CT_LineSer {return _dgg ._fecc };func (_cdg ScatterChartSeries )SetSmooth (b bool ){_cdg ._ffa .Smooth =_e .NewCT_Boolean ();_cdg ._ffa .Smooth .ValAttr =&b ;};
+
+// Properties returns the chart's shape properties.
+func (_faf Chart )Properties ()_cc .ShapeProperties {if _faf ._beb .SpPr ==nil {_faf ._beb .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_faf ._beb .SpPr );};
+
+// InitializeDefaults the bar chart to its defaults
+func (_da Area3DChart )InitializeDefaults (){};
+
+// X returns the inner wrapped XML type.
+func (_dggd Surface3DChart )X ()*_e .CT_Surface3DChart {return _dggd ._fgaf };func (_adg BarChart )AddAxis (axis Axis ){_gag :=_e .NewCT_UnsignedInt ();_gag .ValAttr =axis .AxisID ();_adg ._aa .AxId =append (_adg ._aa .AxId ,_gag );};
+
+// SetIndex sets the index of the series
+func (_cba LineChartSeries )SetIndex (idx uint32 ){_cba ._fecc .Idx .ValAttr =idx };var NullAxis Axis =nullAxis (0);
+
+// CategoryAxis returns the category data source.
+func (_ac AreaChartSeries )CategoryAxis ()CategoryAxisDataSource {if _ac ._bb .Cat ==nil {_ac ._bb .Cat =_e .NewCT_AxDataSource ();};return MakeAxisDataSource (_ac ._bb .Cat );};
+
+// Index returns the index of the series
+func (_dafa ScatterChartSeries )Index ()uint32 {return _dafa ._ffa .Idx .ValAttr };func (_befb NumberDataSource )SetReference (s string ){_befb .ensureChoice ();if _befb ._gcac .Choice .NumRef ==nil {_befb ._gcac .Choice .NumRef =_e .NewCT_NumRef ();};_befb ._gcac .Choice .NumRef .F =s ;};func MakeLegend (l *_e .CT_Legend )Legend {return Legend {l }};
+
+// CategoryAxis returns the category data source.
+func (_dg BubbleChartSeries )CategoryAxis ()CategoryAxisDataSource {if _dg ._ggb .XVal ==nil {_dg ._ggb .XVal =_e .NewCT_AxDataSource ();};return MakeAxisDataSource (_dg ._ggb .XVal );};func (_ff nullAxis )AxisID ()uint32 {return 0};
+
+// InitializeDefaults initializes a bar chart series to the default values.
+func (_ag BarChartSeries )InitializeDefaults (){};func (_bebb chartBase )nextColor (_abg int )_c .Color {return _ggf [_abg %len (_ggf )]};
+
+// AddDoughnutChart adds a new doughnut (pie with a hole in the center) chart to a chart.
+func (_dgc Chart )AddDoughnutChart ()DoughnutChart {_ffc :=_e .NewCT_PlotAreaChoice ();_dgc ._beb .Chart .PlotArea .Choice =append (_dgc ._beb .Chart .PlotArea .Choice ,_ffc );_ffc .DoughnutChart =_e .NewCT_DoughnutChart ();_cdc :=DoughnutChart {_bfb :_ffc .DoughnutChart };_cdc .InitializeDefaults ();return _cdc ;};type ValueAxis struct{_dga *_e .CT_ValAx };
+
+// ScatterChartSeries is the data series for a scatter chart.
+type ScatterChartSeries struct{_ffa *_e .CT_ScatterSer };func (_gbcd LineChartSeries )Values ()NumberDataSource {if _gbcd ._fecc .Val ==nil {_gbcd ._fecc .Val =_e .NewCT_NumDataSource ();};return MakeNumberDataSource (_gbcd ._fecc .Val );};
+
+// AddSeries adds a default series to a Bubble chart.
+func (_acg BubbleChart )AddSeries ()BubbleChartSeries {_gbc :=_acg .nextColor (len (_acg ._cec .Ser ));_ea :=_e .NewCT_BubbleSer ();_acg ._cec .Ser =append (_acg ._cec .Ser ,_ea );_ea .Idx .ValAttr =uint32 (len (_acg ._cec .Ser )-1);_ea .Order .ValAttr =uint32 (len (_acg ._cec .Ser )-1);_abc :=BubbleChartSeries {_ea };_abc .InitializeDefaults ();_abc .Properties ().SetSolidFill (_gbc );return _abc ;};func (_bfff GridLines )Properties ()_cc .ShapeProperties {if _bfff ._eee .SpPr ==nil {_bfff ._eee .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_bfff ._eee .SpPr );};
+
+// SetText sets the series text
+func (_bcf SurfaceChartSeries )SetText (s string ){_bcf ._fcag .Tx =_e .NewCT_SerTx ();_bcf ._fcag .Tx .Choice .V =&s ;};
+
+// Properties returns the line chart series shape properties.
+func (_gffb SurfaceChartSeries )Properties ()_cc .ShapeProperties {if _gffb ._fcag .SpPr ==nil {_gffb ._fcag .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_gffb ._fcag .SpPr );};
+
+// BubbleChartSeries is a series to be used on a Bubble chart.
+type BubbleChartSeries struct{_ggb *_e .CT_BubbleSer };func (_gab DateAxis )AxisID ()uint32 {return _gab ._abb .AxId .ValAttr };
 
 // InitializeDefaults initializes a Bubble chart series to the default values.
-func (_acb BubbleChartSeries )InitializeDefaults (){};
+func (_ed BubbleChartSeries )InitializeDefaults (){};func (_dfd DateAxis )SetMinorTickMark (m _e .ST_TickMark ){if m ==_e .ST_TickMarkUnset {_dfd ._abb .MinorTickMark =nil ;}else {_dfd ._abb .MinorTickMark =_e .NewCT_TickMark ();_dfd ._abb .MinorTickMark .ValAttr =m ;};};
+
+// Surface3DChart is a 3D view of a surface chart.
+type Surface3DChart struct{chartBase ;_fgaf *_e .CT_Surface3DChart ;};func (_bea CategoryAxis )SetTickLabelPosition (p _e .ST_TickLblPos ){if p ==_e .ST_TickLblPosUnset {_bea ._aga .TickLblPos =nil ;}else {_bea ._aga .TickLblPos =_e .NewCT_TickLblPos ();_bea ._aga .TickLblPos .ValAttr =p ;};};type ScatterChart struct{chartBase ;_cfg *_e .CT_ScatterChart ;};
+
+// InitializeDefaults initializes an Pie series to the default values.
+func (_gegea PieChartSeries )InitializeDefaults (){};
+
+// AddPieChart adds a new pie chart to a chart.
+func (_gfd Chart )AddPieChart ()PieChart {_gff :=_e .NewCT_PlotAreaChoice ();_gfd ._beb .Chart .PlotArea .Choice =append (_gfd ._beb .Chart .PlotArea .Choice ,_gff );_gff .PieChart =_e .NewCT_PieChart ();_gdd :=PieChart {_gfca :_gff .PieChart };_gdd .InitializeDefaults ();return _gdd ;};
+
+// BubbleChart is a 2D Bubble chart.
+type BubbleChart struct{chartBase ;_cec *_e .CT_BubbleChart ;};
+
+// X returns the inner wrapped XML type.
+func (_ega RadarChartSeries )X ()*_e .CT_RadarSer {return _ega ._dbbg };
+
+// Order returns the order of the series
+func (_acfg ScatterChartSeries )Order ()uint32 {return _acfg ._ffa .Order .ValAttr };
+
+// RemoveLegend removes the legend if the chart has one.
+func (_bdf Chart )RemoveLegend (){_bdf ._beb .Chart .Legend =nil };type CategoryAxis struct{_aga *_e .CT_CatAx };
+
+// BarChartSeries is a series to be used on a bar chart.
+type BarChartSeries struct{_ceg *_e .CT_BarSer };
+
+// X returns the inner wrapped XML type.
+func (_gb AreaChartSeries )X ()*_e .CT_AreaSer {return _gb ._bb };type Legend struct{_ggba *_e .CT_Legend };
+
+// AddStockChart adds a new stock chart.
+func (_efg Chart )AddStockChart ()StockChart {_ca :=_e .NewCT_PlotAreaChoice ();_efg ._beb .Chart .PlotArea .Choice =append (_efg ._beb .Chart .PlotArea .Choice ,_ca );_ca .StockChart =_e .NewCT_StockChart ();_efe :=StockChart {_fbed :_ca .StockChart };_efe .InitializeDefaults ();return _efe ;};
+
+// InitializeDefaults the bar chart to its defaults
+func (_ace PieOfPieChart )InitializeDefaults (){_ace ._dae .VaryColors =_e .NewCT_Boolean ();_ace ._dae .VaryColors .ValAttr =_d .Bool (true );_ace .SetType (_e .ST_OfPieTypePie );_ace ._dae .SecondPieSize =_e .NewCT_SecondPieSize ();_ace ._dae .SecondPieSize .ValAttr =&_e .ST_SecondPieSize {};_ace ._dae .SecondPieSize .ValAttr .ST_SecondPieSizeUShort =_d .Uint16 (75);_fea :=_e .NewCT_ChartLines ();_fea .SpPr =_cb .NewCT_ShapeProperties ();_geba :=_cc .MakeShapeProperties (_fea .SpPr );_geba .LineProperties ().SetSolidFill (_c .Auto );_ace ._dae .SerLines =append (_ace ._dae .SerLines ,_fea );};
+
+// AddBarChart adds a new bar chart to a chart.
+func (_bbe Chart )AddBarChart ()BarChart {_cf :=_e .NewCT_PlotAreaChoice ();_bbe ._beb .Chart .PlotArea .Choice =append (_bbe ._beb .Chart .PlotArea .Choice ,_cf );_cf .BarChart =_e .NewCT_BarChart ();_cf .BarChart .Grouping =_e .NewCT_BarGrouping ();_cf .BarChart .Grouping .ValAttr =_e .ST_BarGroupingStandard ;_bfe :=BarChart {_aa :_cf .BarChart };_bfe .InitializeDefaults ();return _bfe ;};
+
+// AddSeries adds a default series to a bar chart.
+func (_ga BarChart )AddSeries ()BarChartSeries {_acc :=_ga .nextColor (len (_ga ._aa .Ser ));_cgce :=_e .NewCT_BarSer ();_ga ._aa .Ser =append (_ga ._aa .Ser ,_cgce );_cgce .Idx .ValAttr =uint32 (len (_ga ._aa .Ser )-1);_cgce .Order .ValAttr =uint32 (len (_ga ._aa .Ser )-1);_fa :=BarChartSeries {_cgce };_fa .InitializeDefaults ();_fa .Properties ().SetSolidFill (_acc );return _fa ;};func (_bca DateAxis )Properties ()_cc .ShapeProperties {if _bca ._abb .SpPr ==nil {_bca ._abb .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_bca ._abb .SpPr );};
+
+// X returns the inner wrapped XML type.
+func (_ged LineChart )X ()*_e .CT_LineChart {return _ged ._eaf };type NumberDataSource struct{_gcac *_e .CT_NumDataSource };func (_ffcd DateAxis )SetCrosses (axis Axis ){_ffcd ._abb .CrossAx .ValAttr =axis .AxisID ()};func (_cad ValueAxis )MajorGridLines ()GridLines {if _cad ._dga .MajorGridlines ==nil {_cad ._dga .MajorGridlines =_e .NewCT_ChartLines ();};return GridLines {_cad ._dga .MajorGridlines };};
+
+// InitializeDefaults the bar chart to its defaults
+func (_gf AreaChart )InitializeDefaults (){};func (_bg Title )RunProperties ()_cc .RunProperties {if _bg ._feac .Tx ==nil {_bg .SetText ("");};if _bg ._feac .Tx .Choice .Rich .P [0].EG_TextRun [0].R .RPr ==nil {_bg ._feac .Tx .Choice .Rich .P [0].EG_TextRun [0].R .RPr =_cb .NewCT_TextCharacterProperties ();};return _cc .MakeRunProperties (_bg ._feac .Tx .Choice .Rich .P [0].EG_TextRun [0].R .RPr );};func (_fag DataLabels )SetShowCategoryName (b bool ){_fag .ensureChoice ();_fag ._egg .Choice .ShowCatName =_e .NewCT_Boolean ();_fag ._egg .Choice .ShowCatName .ValAttr =_d .Bool (b );};
+
+// X returns the inner wrapped XML type.
+func (_gac ValueAxis )X ()*_e .CT_ValAx {return _gac ._dga };
+
+// Properties returns the line chart series shape properties.
+func (_caag ScatterChartSeries )Properties ()_cc .ShapeProperties {if _caag ._ffa .SpPr ==nil {_caag ._ffa .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_caag ._ffa .SpPr );};
+
+// AddSeries adds a default series to a bar chart.
+func (_geg Bar3DChart )AddSeries ()BarChartSeries {_ae :=_geg .nextColor (len (_geg ._cca .Ser ));_de :=_e .NewCT_BarSer ();_geg ._cca .Ser =append (_geg ._cca .Ser ,_de );_de .Idx .ValAttr =uint32 (len (_geg ._cca .Ser )-1);_de .Order .ValAttr =uint32 (len (_geg ._cca .Ser )-1);_bd :=BarChartSeries {_de };_bd .InitializeDefaults ();_bd .Properties ().SetSolidFill (_ae );return _bd ;};func _fcf (_gegb *_e .CT_Chart ){_gegb .View3D =_e .NewCT_View3D ();_gegb .View3D .RotX =_e .NewCT_RotX ();_gegb .View3D .RotX .ValAttr =_d .Int8 (15);_gegb .View3D .RotY =_e .NewCT_RotY ();_gegb .View3D .RotY .ValAttr =_d .Uint16 (20);_gegb .View3D .RAngAx =_e .NewCT_Boolean ();_gegb .View3D .RAngAx .ValAttr =_d .Bool (false );_gegb .Floor =_e .NewCT_Surface ();_gegb .Floor .Thickness =_e .NewCT_Thickness ();_gegb .Floor .Thickness .ValAttr .Uint32 =_d .Uint32 (0);_gegb .SideWall =_e .NewCT_Surface ();_gegb .SideWall .Thickness =_e .NewCT_Thickness ();_gegb .SideWall .Thickness .ValAttr .Uint32 =_d .Uint32 (0);_gegb .BackWall =_e .NewCT_Surface ();_gegb .BackWall .Thickness =_e .NewCT_Thickness ();_gegb .BackWall .Thickness .ValAttr .Uint32 =_d .Uint32 (0);};
+
+// AddCategoryAxis adds a category axis.
+func (_dbe Chart )AddCategoryAxis ()CategoryAxis {_cbb :=_e .NewCT_CatAx ();if _dbe ._beb .Chart .PlotArea .CChoice ==nil {_dbe ._beb .Chart .PlotArea .CChoice =_e .NewCT_PlotAreaChoice1 ();};_cbb .AxId =_e .NewCT_UnsignedInt ();_cbb .AxId .ValAttr =0x7FFFFFFF&_ab .Uint32 ();_dbe ._beb .Chart .PlotArea .CChoice .CatAx =append (_dbe ._beb .Chart .PlotArea .CChoice .CatAx ,_cbb );_cbb .Auto =_e .NewCT_Boolean ();_cbb .Auto .ValAttr =_d .Bool (true );_cbb .Delete =_e .NewCT_Boolean ();_cbb .Delete .ValAttr =_d .Bool (false );_cdb :=MakeCategoryAxis (_cbb );_cdb .InitializeDefaults ();return _cdb ;};
+
+// AddLine3DChart adds a new 3D line chart to a chart.
+func (_fge Chart )AddLine3DChart ()Line3DChart {_fcf (_fge ._beb .Chart );_eg :=_e .NewCT_PlotAreaChoice ();_fge ._beb .Chart .PlotArea .Choice =append (_fge ._beb .Chart .PlotArea .Choice ,_eg );_eg .Line3DChart =_e .NewCT_Line3DChart ();_eg .Line3DChart .Grouping =_e .NewCT_Grouping ();_eg .Line3DChart .Grouping .ValAttr =_e .ST_GroupingStandard ;return Line3DChart {_accf :_eg .Line3DChart };};
+
+// X returns the inner wrapped XML type.
+func (_dfde Line3DChart )X ()*_e .CT_Line3DChart {return _dfde ._accf };type Line3DChart struct{chartBase ;_accf *_e .CT_Line3DChart ;};
+
+// AddLineChart adds a new line chart to a chart.
+func (_cbg Chart )AddLineChart ()LineChart {_bcc :=_e .NewCT_PlotAreaChoice ();_cbg ._beb .Chart .PlotArea .Choice =append (_cbg ._beb .Chart .PlotArea .Choice ,_bcc );_bcc .LineChart =_e .NewCT_LineChart ();_bcc .LineChart .Grouping =_e .NewCT_Grouping ();_bcc .LineChart .Grouping .ValAttr =_e .ST_GroupingStandard ;return LineChart {_eaf :_bcc .LineChart };};
+
+// AddSeries adds a default series to a Surface chart.
+func (_bbf Surface3DChart )AddSeries ()SurfaceChartSeries {_ede :=_bbf .nextColor (len (_bbf ._fgaf .Ser ));_bae :=_e .NewCT_SurfaceSer ();_bbf ._fgaf .Ser =append (_bbf ._fgaf .Ser ,_bae );_bae .Idx .ValAttr =uint32 (len (_bbf ._fgaf .Ser )-1);_bae .Order .ValAttr =uint32 (len (_bbf ._fgaf .Ser )-1);_bed :=SurfaceChartSeries {_bae };_bed .InitializeDefaults ();_bed .Properties ().LineProperties ().SetSolidFill (_ede );return _bed ;};
+
+// AddSurface3DChart adds a new 3D surface chart to a chart.
+func (_fab Chart )AddSurface3DChart ()Surface3DChart {_ggdd :=_e .NewCT_PlotAreaChoice ();_fab ._beb .Chart .PlotArea .Choice =append (_fab ._beb .Chart .PlotArea .Choice ,_ggdd );_ggdd .Surface3DChart =_e .NewCT_Surface3DChart ();_fcf (_fab ._beb .Chart );_aee :=Surface3DChart {_fgaf :_ggdd .Surface3DChart };_aee .InitializeDefaults ();return _aee ;};func (_bceg Title )InitializeDefaults (){_bceg .SetText ("\u0054\u0069\u0074l\u0065");_bceg .RunProperties ().SetSize (16*_a .Point );_bceg .RunProperties ().SetSolidFill (_c .Black );_bceg .RunProperties ().SetFont ("\u0043\u0061\u006c\u0069\u0062\u0020\u0072\u0069");_bceg .RunProperties ().SetBold (false );};
+
+// AddSeries adds a default series to a Scatter chart.
+func (_ccaf ScatterChart )AddSeries ()ScatterChartSeries {_acf :=_ccaf .nextColor (len (_ccaf ._cfg .Ser ));_ccf :=_e .NewCT_ScatterSer ();_ccaf ._cfg .Ser =append (_ccaf ._cfg .Ser ,_ccf );_ccf .Idx .ValAttr =uint32 (len (_ccaf ._cfg .Ser )-1);_ccf .Order .ValAttr =uint32 (len (_ccaf ._cfg .Ser )-1);_fed :=ScatterChartSeries {_ccf };_fed .InitializeDefaults ();_fed .Marker ().Properties ().LineProperties ().SetSolidFill (_acf );_fed .Marker ().Properties ().SetSolidFill (_acf );return _fed ;};
+
+// Area3DChart is an area chart that has a shaded area underneath a curve.
+type Area3DChart struct{chartBase ;_b *_e .CT_Area3DChart ;};func (_efef Legend )Properties ()_cc .ShapeProperties {if _efef ._ggba .SpPr ==nil {_efef ._ggba .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_efef ._ggba .SpPr );};func (_fac ValueAxis )SetPosition (p _e .ST_AxPos ){_fac ._dga .AxPos =_e .NewCT_AxPos ();_fac ._dga .AxPos .ValAttr =p ;};
+
+// X returns the inner wrapped XML type.
+func (_gg BarChart )X ()*_e .CT_BarChart {return _gg ._aa };
+
+// X returns the inner wrapped XML type.
+func (_daa BubbleChartSeries )X ()*_e .CT_BubbleSer {return _daa ._ggb };func (_cbf DataLabels )SetShowSeriesName (b bool ){_cbf .ensureChoice ();_cbf ._egg .Choice .ShowSerName =_e .NewCT_Boolean ();_cbf ._egg .Choice .ShowSerName .ValAttr =_d .Bool (b );};
+
+// Index returns the index of the series
+func (_bcea LineChartSeries )Index ()uint32 {return _bcea ._fecc .Idx .ValAttr };
+
+// SetText sets the series text.
+func (_cda BarChartSeries )SetText (s string ){_cda ._ceg .Tx =_e .NewCT_SerTx ();_cda ._ceg .Tx .Choice .V =&s ;};var _ggf =[]_c .Color {_c .RGB (0x33,0x66,0xcc),_c .RGB (0xDC,0x39,0x12),_c .RGB (0xFF,0x99,0x00),_c .RGB (0x10,0x96,0x18),_c .RGB (0x99,0x00,0x99),_c .RGB (0x3B,0x3E,0xAC),_c .RGB (0x00,0x99,0xC6),_c .RGB (0xDD,0x44,0x77),_c .RGB (0x66,0xAA,0x00),_c .RGB (0xB8,0x2E,0x2E),_c .RGB (0x31,0x63,0x95),_c .RGB (0x99,0x44,0x99),_c .RGB (0x22,0xAA,0x99),_c .RGB (0xAA,0xAA,0x11),_c .RGB (0x66,0x33,0xCC),_c .RGB (0xE6,0x73,0x00),_c .RGB (0x8B,0x07,0x07),_c .RGB (0x32,0x92,0x62),_c .RGB (0x55,0x74,0xA6),_c .RGB (0x3B,0x3E,0xAC)};type chartBase struct{};
+
+// Labels returns the data label properties.
+func (_aaad LineChartSeries )Labels ()DataLabels {if _aaad ._fecc .DLbls ==nil {_aaad ._fecc .DLbls =_e .NewCT_DLbls ();};return MakeDataLabels (_aaad ._fecc .DLbls );};
+
+// StockChart is a 2D Stock chart.
+type StockChart struct{chartBase ;_fbed *_e .CT_StockChart ;};func (_fca NumberDataSource )ensureChoice (){if _fca ._gcac .Choice ==nil {_fca ._gcac .Choice =_e .NewCT_NumDataSourceChoice ();};};
+
+// X returns the inner wrapped XML type.
+func (_eed Legend )X ()*_e .CT_Legend {return _eed ._ggba };
+
+// AddAxis adds an axis to a Surface chart.
+func (_cbca Surface3DChart )AddAxis (axis Axis ){_badb :=_e .NewCT_UnsignedInt ();_badb .ValAttr =axis .AxisID ();_cbca ._fgaf .AxId =append (_cbca ._fgaf .AxId ,_badb );};type Title struct{_feac *_e .CT_Title };func (_ebdb ValueAxis )SetMajorTickMark (m _e .ST_TickMark ){if m ==_e .ST_TickMarkUnset {_ebdb ._dga .MajorTickMark =nil ;}else {_ebdb ._dga .MajorTickMark =_e .NewCT_TickMark ();_ebdb ._dga .MajorTickMark .ValAttr =m ;};};
+
+// AddSeries adds a default series to an Doughnut chart.
+func (_caa DoughnutChart )AddSeries ()PieChartSeries {_ffb :=_e .NewCT_PieSer ();_caa ._bfb .Ser =append (_caa ._bfb .Ser ,_ffb );_ffb .Idx .ValAttr =uint32 (len (_caa ._bfb .Ser )-1);_ffb .Order .ValAttr =uint32 (len (_caa ._bfb .Ser )-1);_gde :=PieChartSeries {_ffb };_gde .InitializeDefaults ();return _gde ;};
 
 // SetLabelReference is used to set the source data to a range of cells
 // containing strings.
-func (_bfe CategoryAxisDataSource )SetLabelReference (s string ){_bfe ._faag .Choice =_gf .NewCT_AxDataSourceChoice ();_bfe ._faag .Choice .StrRef =_gf .NewCT_StrRef ();_bfe ._faag .Choice .StrRef .F =s ;};func (_effb SurfaceChartSeries )CategoryAxis ()CategoryAxisDataSource {if _effb ._ada .Cat ==nil {_effb ._ada .Cat =_gf .NewCT_AxDataSource ();};return MakeAxisDataSource (_effb ._ada .Cat );};func MakeDataLabels (x *_gf .CT_DLbls )DataLabels {return DataLabels {x }};
-
-// RemoveLegend removes the legend if the chart has one.
-func (_gff Chart )RemoveLegend (){_gff ._ed .Chart .Legend =nil };
-
-// AddArea3DChart adds a new area chart to a chart.
-func (_edc Chart )AddArea3DChart ()Area3DChart {_bff (_edc ._ed .Chart );_cdd :=_gf .NewCT_PlotAreaChoice ();_edc ._ed .Chart .PlotArea .Choice =append (_edc ._ed .Chart .PlotArea .Choice ,_cdd );_cdd .Area3DChart =_gf .NewCT_Area3DChart ();_afg :=Area3DChart {_b :_cdd .Area3DChart };_afg .InitializeDefaults ();return _afg ;};
-
-// Properties returns the line chart series shape properties.
-func (_fcad ScatterChartSeries )Properties ()_cg .ShapeProperties {if _fcad ._bagba .SpPr ==nil {_fcad ._bagba .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_fcad ._bagba .SpPr );};
-
-// Index returns the index of the series
-func (_fbg ScatterChartSeries )Index ()uint32 {return _fbg ._bagba .Idx .ValAttr };
-
-// Pie3DChart is a Pie3D chart.
-type Pie3DChart struct{chartBase ;_fgb *_gf .CT_Pie3DChart ;};
-
-// PieChartSeries is a series to be used on an Pie chart.
-type PieChartSeries struct{_bae *_gf .CT_PieSer };
-
-// X returns the inner wrapped XML type.
-func (_cc AreaChartSeries )X ()*_gf .CT_AreaSer {return _cc ._bf };
-
-// Properties returns the bar chart series shape properties.
-func (_fc BarChartSeries )Properties ()_cg .ShapeProperties {if _fc ._bcc .SpPr ==nil {_fc ._bcc .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_fc ._bcc .SpPr );};func (_bagb ScatterChart )InitializeDefaults (){_bagb ._beba .ScatterStyle .ValAttr =_gf .ST_ScatterStyleMarker ;};
-
-// AddDoughnutChart adds a new doughnut (pie with a hole in the center) chart to a chart.
-func (_cbd Chart )AddDoughnutChart ()DoughnutChart {_dea :=_gf .NewCT_PlotAreaChoice ();_cbd ._ed .Chart .PlotArea .Choice =append (_cbd ._ed .Chart .PlotArea .Choice ,_dea );_dea .DoughnutChart =_gf .NewCT_DoughnutChart ();_abc :=DoughnutChart {_eff :_dea .DoughnutChart };_abc .InitializeDefaults ();return _abc ;};
-
-// Properties returns the chart's shape properties.
-func (_ccf Chart )Properties ()_cg .ShapeProperties {if _ccf ._ed .SpPr ==nil {_ccf ._ed .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_ccf ._ed .SpPr );};var _bge =[]_gd .Color {_gd .RGB (0x33,0x66,0xcc),_gd .RGB (0xDC,0x39,0x12),_gd .RGB (0xFF,0x99,0x00),_gd .RGB (0x10,0x96,0x18),_gd .RGB (0x99,0x00,0x99),_gd .RGB (0x3B,0x3E,0xAC),_gd .RGB (0x00,0x99,0xC6),_gd .RGB (0xDD,0x44,0x77),_gd .RGB (0x66,0xAA,0x00),_gd .RGB (0xB8,0x2E,0x2E),_gd .RGB (0x31,0x63,0x95),_gd .RGB (0x99,0x44,0x99),_gd .RGB (0x22,0xAA,0x99),_gd .RGB (0xAA,0xAA,0x11),_gd .RGB (0x66,0x33,0xCC),_gd .RGB (0xE6,0x73,0x00),_gd .RGB (0x8B,0x07,0x07),_gd .RGB (0x32,0x92,0x62),_gd .RGB (0x55,0x74,0xA6),_gd .RGB (0x3B,0x3E,0xAC)};
-
-// InitializeDefaults the bar chart to its defaults
-func (_cca DoughnutChart )InitializeDefaults (){_cca ._eff .VaryColors =_gf .NewCT_Boolean ();_cca ._eff .VaryColors .ValAttr =_c .Bool (true );_cca ._eff .HoleSize =_gf .NewCT_HoleSize ();_cca ._eff .HoleSize .ValAttr =&_gf .ST_HoleSize {};_cca ._eff .HoleSize .ValAttr .ST_HoleSizeUByte =_c .Uint8 (50);};
-
-// X returns the inner wrapped XML type.
-func (_eef Marker )X ()*_gf .CT_Marker {return _eef ._aegc };func (_bgdf ValueAxis )SetPosition (p _gf .ST_AxPos ){_bgdf ._ggbc .AxPos =_gf .NewCT_AxPos ();_bgdf ._ggbc .AxPos .ValAttr =p ;};func (_fag ScatterChartSeries )CategoryAxis ()CategoryAxisDataSource {if _fag ._bagba .XVal ==nil {_fag ._bagba .XVal =_gf .NewCT_AxDataSource ();};return MakeAxisDataSource (_fag ._bagba .XVal );};
-
-// Labels returns the data label properties.
-func (_bggf ScatterChartSeries )Labels ()DataLabels {if _bggf ._bagba .DLbls ==nil {_bggf ._bagba .DLbls =_gf .NewCT_DLbls ();};return MakeDataLabels (_bggf ._bagba .DLbls );};
-
-// X returns the inner wrapped XML type.
-func (_fff StockChart )X ()*_gf .CT_StockChart {return _fff ._bfeb };func MakeChart (x *_gf .ChartSpace )Chart {return Chart {x }};
-
-// X returns the inner wrapped XML type.
-func (_fbc RadarChartSeries )X ()*_gf .CT_RadarSer {return _fbc ._eebe };func (_ebfc Marker )Properties ()_cg .ShapeProperties {if _ebfc ._aegc .SpPr ==nil {_ebfc ._aegc .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_ebfc ._aegc .SpPr );};func _bff (_ggd *_gf .CT_Chart ){_ggd .View3D =_gf .NewCT_View3D ();_ggd .View3D .RotX =_gf .NewCT_RotX ();_ggd .View3D .RotX .ValAttr =_c .Int8 (15);_ggd .View3D .RotY =_gf .NewCT_RotY ();_ggd .View3D .RotY .ValAttr =_c .Uint16 (20);_ggd .View3D .RAngAx =_gf .NewCT_Boolean ();_ggd .View3D .RAngAx .ValAttr =_c .Bool (false );_ggd .Floor =_gf .NewCT_Surface ();_ggd .Floor .Thickness =_gf .NewCT_Thickness ();_ggd .Floor .Thickness .ValAttr .Uint32 =_c .Uint32 (0);_ggd .SideWall =_gf .NewCT_Surface ();_ggd .SideWall .Thickness =_gf .NewCT_Thickness ();_ggd .SideWall .Thickness .ValAttr .Uint32 =_c .Uint32 (0);_ggd .BackWall =_gf .NewCT_Surface ();_ggd .BackWall .Thickness =_gf .NewCT_Thickness ();_ggd .BackWall .Thickness .ValAttr .Uint32 =_c .Uint32 (0);};
-
-// SetText sets the series text.
-func (_ged BarChartSeries )SetText (s string ){_ged ._bcc .Tx =_gf .NewCT_SerTx ();_ged ._bcc .Tx .Choice .V =&s ;};
-
-// PieChart is a Pie chart.
-type PieChart struct{chartBase ;_cdbc *_gf .CT_PieChart ;};
-
-// X returns the inner wrapped XML type.
-func (_eabg Surface3DChart )X ()*_gf .CT_Surface3DChart {return _eabg ._acae };func (_bga Title )SetText (s string ){if _bga ._dbgg .Tx ==nil {_bga ._dbgg .Tx =_gf .NewCT_Tx ();};if _bga ._dbgg .Tx .Choice .Rich ==nil {_bga ._dbgg .Tx .Choice .Rich =_ea .NewCT_TextBody ();};var _ccee *_ea .CT_TextParagraph ;if len (_bga ._dbgg .Tx .Choice .Rich .P )==0{_ccee =_ea .NewCT_TextParagraph ();_bga ._dbgg .Tx .Choice .Rich .P =[]*_ea .CT_TextParagraph {_ccee };}else {_ccee =_bga ._dbgg .Tx .Choice .Rich .P [0];};var _gbff *_ea .EG_TextRun ;if len (_ccee .EG_TextRun )==0{_gbff =_ea .NewEG_TextRun ();_ccee .EG_TextRun =[]*_ea .EG_TextRun {_gbff };}else {_gbff =_ccee .EG_TextRun [0];};if _gbff .R ==nil {_gbff .R =_ea .NewCT_RegularTextRun ();};_gbff .R .T =s ;};
-
-// AddSurface3DChart adds a new 3D surface chart to a chart.
-func (_fd Chart )AddSurface3DChart ()Surface3DChart {_fdd :=_gf .NewCT_PlotAreaChoice ();_fd ._ed .Chart .PlotArea .Choice =append (_fd ._ed .Chart .PlotArea .Choice ,_fdd );_fdd .Surface3DChart =_gf .NewCT_Surface3DChart ();_bff (_fd ._ed .Chart );_ccba :=Surface3DChart {_acae :_fdd .Surface3DChart };_ccba .InitializeDefaults ();return _ccba ;};func (_gcg Surface3DChart )InitializeDefaults (){_gcg ._acae .Wireframe =_gf .NewCT_Boolean ();_gcg ._acae .Wireframe .ValAttr =_c .Bool (false );_gcg ._acae .BandFmts =_gf .NewCT_BandFmts ();for _aacb :=0;_aacb < 15;_aacb ++{_eggf :=_gf .NewCT_BandFmt ();_eggf .Idx .ValAttr =uint32 (_aacb );_eggf .SpPr =_ea .NewCT_ShapeProperties ();_gad :=_cg .MakeShapeProperties (_eggf .SpPr );_gad .SetSolidFill (_gcg .nextColor (_aacb ));_gcg ._acae .BandFmts .BandFmt =append (_gcg ._acae .BandFmts .BandFmt ,_eggf );};};
-
-// BubbleChart is a 2D Bubble chart.
-type BubbleChart struct{chartBase ;_fad *_gf .CT_BubbleChart ;};
-
-// Chart is a generic chart.
-type Chart struct{_ed *_gf .ChartSpace };func (_gdd DataLabels )SetShowPercent (b bool ){_gdd .ensureChoice ();_gdd ._bdd .Choice .ShowPercent =_gf .NewCT_Boolean ();_gdd ._bdd .Choice .ShowPercent .ValAttr =_c .Bool (b );};
-
-// InitializeDefaults the Bubble chart to its defaults
-func (_aga BubbleChart )InitializeDefaults (){};func (_fdfd ValueAxis )MajorGridLines ()GridLines {if _fdfd ._ggbc .MajorGridlines ==nil {_fdfd ._ggbc .MajorGridlines =_gf .NewCT_ChartLines ();};return GridLines {_fdfd ._ggbc .MajorGridlines };};func (_gba DataLabels )SetShowCategoryName (b bool ){_gba .ensureChoice ();_gba ._bdd .Choice .ShowCatName =_gf .NewCT_Boolean ();_gba ._bdd .Choice .ShowCatName .ValAttr =_c .Bool (b );};
-
-// MakeAxisDataSource constructs an AxisDataSource wrapper.
-func MakeAxisDataSource (x *_gf .CT_AxDataSource )CategoryAxisDataSource {return CategoryAxisDataSource {x };};func (_bcfc GridLines )Properties ()_cg .ShapeProperties {if _bcfc ._ggg .SpPr ==nil {_bcfc ._ggg .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_bcfc ._ggg .SpPr );};
-
-// AddSeries adds a default series to a bar chart.
-func (_eae Bar3DChart )AddSeries ()BarChartSeries {_bcb :=_eae .nextColor (len (_eae ._ccg .Ser ));_dd :=_gf .NewCT_BarSer ();_eae ._ccg .Ser =append (_eae ._ccg .Ser ,_dd );_dd .Idx .ValAttr =uint32 (len (_eae ._ccg .Ser )-1);_dd .Order .ValAttr =uint32 (len (_eae ._ccg .Ser )-1);_gag :=BarChartSeries {_dd };_gag .InitializeDefaults ();_gag .Properties ().SetSolidFill (_bcb );return _gag ;};func (_geb ValueAxis )SetTickLabelPosition (p _gf .ST_TickLblPos ){if p ==_gf .ST_TickLblPosUnset {_geb ._ggbc .TickLblPos =nil ;}else {_geb ._ggbc .TickLblPos =_gf .NewCT_TickLblPos ();_geb ._ggbc .TickLblPos .ValAttr =p ;};};
-
-// X returns the inner wrapped XML type.
-func (_dcd DateAxis )X ()*_gf .CT_DateAx {return _dcd ._aac };
-
-// X returns the inner wrapped XML type.
-func (_bbed SurfaceChartSeries )X ()*_gf .CT_SurfaceSer {return _bbed ._ada };
-
-// X returns the inner wrapped XML type.
-func (_aeff SeriesAxis )X ()*_gf .CT_SerAx {return _aeff ._fec };type LineChart struct{chartBase ;_ebbc *_gf .CT_LineChart ;};
-
-// X returns the inner wrapped XML type.
-func (_eeg SurfaceChart )X ()*_gf .CT_SurfaceChart {return _eeg ._gfaa };
-
-// Properties returns the bar chart series shape properties.
-func (_ebc RadarChartSeries )Properties ()_cg .ShapeProperties {if _ebc ._eebe .SpPr ==nil {_ebc ._eebe .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_ebc ._eebe .SpPr );};func MakeMarker (x *_gf .CT_Marker )Marker {return Marker {x }};
-
-// InitializeDefaults the bar chart to its defaults
-func (_eaee PieChart )InitializeDefaults (){_eaee ._cdbc .VaryColors =_gf .NewCT_Boolean ();_eaee ._cdbc .VaryColors .ValAttr =_c .Bool (true );};
-
-// SetIndex sets the index of the series
-func (_feg SurfaceChartSeries )SetIndex (idx uint32 ){_feg ._ada .Idx .ValAttr =idx };func (_fce BubbleChart )AddAxis (axis Axis ){_ceb :=_gf .NewCT_UnsignedInt ();_ceb .ValAttr =axis .AxisID ();_fce ._fad .AxId =append (_fce ._fad .AxId ,_ceb );};func (_da CategoryAxis )SetMajorTickMark (m _gf .ST_TickMark ){if m ==_gf .ST_TickMarkUnset {_da ._eaf .MajorTickMark =nil ;}else {_da ._eaf .MajorTickMark =_gf .NewCT_TickMark ();_da ._eaf .MajorTickMark .ValAttr =m ;};};
-
-// AddSeries adds a default series to an Pie chart.
-func (_fae PieOfPieChart )AddSeries ()PieChartSeries {_dfd :=_gf .NewCT_PieSer ();_fae ._dcgc .Ser =append (_fae ._dcgc .Ser ,_dfd );_dfd .Idx .ValAttr =uint32 (len (_fae ._dcgc .Ser )-1);_dfd .Order .ValAttr =uint32 (len (_fae ._dcgc .Ser )-1);_ccgd :=PieChartSeries {_dfd };_ccgd .InitializeDefaults ();return _ccgd ;};
-
-// AddSeries adds a default series to a line chart.
-func (_eaba Line3DChart )AddSeries ()LineChartSeries {_gdc :=_eaba .nextColor (len (_eaba ._cdg .Ser ));_ege :=_gf .NewCT_LineSer ();_eaba ._cdg .Ser =append (_eaba ._cdg .Ser ,_ege );_ege .Idx .ValAttr =uint32 (len (_eaba ._cdg .Ser )-1);_ege .Order .ValAttr =uint32 (len (_eaba ._cdg .Ser )-1);_bbg :=LineChartSeries {_ege };_bbg .InitializeDefaults ();_bbg .Properties ().LineProperties ().SetSolidFill (_gdc );_bbg .Properties ().SetSolidFill (_gdc );return _bbg ;};func MakeLegend (l *_gf .CT_Legend )Legend {return Legend {l }};
-
-// AddScatterChart adds a scatter (X/Y) chart.
-func (_aeg Chart )AddScatterChart ()ScatterChart {_ff :=_gf .NewCT_PlotAreaChoice ();_aeg ._ed .Chart .PlotArea .Choice =append (_aeg ._ed .Chart .PlotArea .Choice ,_ff );_ff .ScatterChart =_gf .NewCT_ScatterChart ();_feed :=ScatterChart {_beba :_ff .ScatterChart };_feed .InitializeDefaults ();return _feed ;};
-
-// X returns the inner wrapped XML type.
-func (_af Area3DChart )X ()*_gf .CT_Area3DChart {return _af ._b };
-
-// AddSeries adds a default series to an Doughnut chart.
-func (_ccbb DoughnutChart )AddSeries ()PieChartSeries {_bfg :=_gf .NewCT_PieSer ();_ccbb ._eff .Ser =append (_ccbb ._eff .Ser ,_bfg );_bfg .Idx .ValAttr =uint32 (len (_ccbb ._eff .Ser )-1);_bfg .Order .ValAttr =uint32 (len (_ccbb ._eff .Ser )-1);_aca :=PieChartSeries {_bfg };_aca .InitializeDefaults ();return _aca ;};func MakeCategoryAxis (x *_gf .CT_CatAx )CategoryAxis {return CategoryAxis {x }};
-
-// SetOrder sets the order of the series
-func (_gbcf ScatterChartSeries )SetOrder (idx uint32 ){_gbcf ._bagba .Order .ValAttr =idx };
-
-// AddTitle sets a new title on the chart.
-func (_edf Chart )AddTitle ()Title {_edf ._ed .Chart .Title =_gf .NewCT_Title ();_edf ._ed .Chart .Title .Overlay =_gf .NewCT_Boolean ();_edf ._ed .Chart .Title .Overlay .ValAttr =_c .Bool (false );_edf ._ed .Chart .AutoTitleDeleted =_gf .NewCT_Boolean ();_edf ._ed .Chart .AutoTitleDeleted .ValAttr =_c .Bool (false );_gcb :=MakeTitle (_edf ._ed .Chart .Title );_gcb .InitializeDefaults ();return _gcb ;};
-
-// X returns the inner wrapped XML type.
-func (_agc BarChart )X ()*_gf .CT_BarChart {return _agc ._fg };
-
-// X returns the inner wrapped XML type.
-func (_gbdd GridLines )X ()*_gf .CT_ChartLines {return _gbdd ._ggg };type ValueAxis struct{_ggbc *_gf .CT_ValAx };
-
-// AreaChart is an area chart that has a shaded area underneath a curve.
-type AreaChart struct{chartBase ;_fa *_gf .CT_AreaChart ;};
-
-// ScatterChartSeries is the data series for a scatter chart.
-type ScatterChartSeries struct{_bagba *_gf .CT_ScatterSer };
-
-// AddSeries adds a default series to a Surface chart.
-func (_ebeg SurfaceChart )AddSeries ()SurfaceChartSeries {_gcbf :=_ebeg .nextColor (len (_ebeg ._gfaa .Ser ));_dde :=_gf .NewCT_SurfaceSer ();_ebeg ._gfaa .Ser =append (_ebeg ._gfaa .Ser ,_dde );_dde .Idx .ValAttr =uint32 (len (_ebeg ._gfaa .Ser )-1);_dde .Order .ValAttr =uint32 (len (_ebeg ._gfaa .Ser )-1);_bcbe :=SurfaceChartSeries {_dde };_bcbe .InitializeDefaults ();_bcbe .Properties ().LineProperties ().SetSolidFill (_gcbf );return _bcbe ;};func (_bdb CategoryAxis )SetTickLabelPosition (p _gf .ST_TickLblPos ){if p ==_gf .ST_TickLblPosUnset {_bdb ._eaf .TickLblPos =nil ;}else {_bdb ._eaf .TickLblPos =_gf .NewCT_TickLblPos ();_bdb ._eaf .TickLblPos .ValAttr =p ;};};
-
-// AddSeries adds a default series to an Radar chart.
-func (_gef RadarChart )AddSeries ()RadarChartSeries {_bcce :=_gef .nextColor (len (_gef ._gee .Ser ));_dad :=_gf .NewCT_RadarSer ();_gef ._gee .Ser =append (_gef ._gee .Ser ,_dad );_dad .Idx .ValAttr =uint32 (len (_gef ._gee .Ser )-1);_dad .Order .ValAttr =uint32 (len (_gef ._gee .Ser )-1);_cdab :=RadarChartSeries {_dad };_cdab .InitializeDefaults ();_cdab .Properties ().SetSolidFill (_bcce );return _cdab ;};
-
-// InitializeDefaults the bar chart to its defaults
-func (_gb Area3DChart )InitializeDefaults (){};func (_gea LineChartSeries )Values ()NumberDataSource {if _gea ._dcea .Val ==nil {_gea ._dcea .Val =_gf .NewCT_NumDataSource ();};return MakeNumberDataSource (_gea ._dcea .Val );};
-
-// Order returns the order of the series
-func (_deg LineChartSeries )Order ()uint32 {return _deg ._dcea .Order .ValAttr };func (_daa Legend )Properties ()_cg .ShapeProperties {if _daa ._adc .SpPr ==nil {_daa ._adc .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_daa ._adc .SpPr );};func (_abb DateAxis )SetCrosses (axis Axis ){_abb ._aac .CrossAx .ValAttr =axis .AxisID ()};
-
-// AddLegend adds a legend to a chart, replacing any existing legend.
-func (_caf Chart )AddLegend ()Legend {_caf ._ed .Chart .Legend =_gf .NewCT_Legend ();_age :=MakeLegend (_caf ._ed .Chart .Legend );_age .InitializeDefaults ();return _age ;};func (_gbb DataLabels )SetShowLegendKey (b bool ){_gbb .ensureChoice ();_gbb ._bdd .Choice .ShowLegendKey =_gf .NewCT_Boolean ();_gbb ._bdd .Choice .ShowLegendKey .ValAttr =_c .Bool (b );};
+func (_ebd CategoryAxisDataSource )SetLabelReference (s string ){_ebd ._fec .Choice =_e .NewCT_AxDataSourceChoice ();_ebd ._fec .Choice .StrRef =_e .NewCT_StrRef ();_ebd ._fec .Choice .StrRef .F =s ;};
 
 // CreateEmptyNumberCache creates an empty number cache, which is used sometimes
 // to increase file format compatibility.  It should actually contain the
 // computed cell data, but just creating an empty one is good enough.
-func (_bgd NumberDataSource )CreateEmptyNumberCache (){_bgd .ensureChoice ();if _bgd ._efe .Choice .NumRef ==nil {_bgd ._efe .Choice .NumRef =_gf .NewCT_NumRef ();};_bgd ._efe .Choice .NumLit =nil ;_bgd ._efe .Choice .NumRef .NumCache =_gf .NewCT_NumData ();_bgd ._efe .Choice .NumRef .NumCache .PtCount =_gf .NewCT_UnsignedInt ();_bgd ._efe .Choice .NumRef .NumCache .PtCount .ValAttr =0;};type DataLabels struct{_bdd *_gf .CT_DLbls };
+func (_dde NumberDataSource )CreateEmptyNumberCache (){_dde .ensureChoice ();if _dde ._gcac .Choice .NumRef ==nil {_dde ._gcac .Choice .NumRef =_e .NewCT_NumRef ();};_dde ._gcac .Choice .NumLit =nil ;_dde ._gcac .Choice .NumRef .NumCache =_e .NewCT_NumData ();_dde ._gcac .Choice .NumRef .NumCache .PtCount =_e .NewCT_UnsignedInt ();_dde ._gcac .Choice .NumRef .NumCache .PtCount .ValAttr =0;};func (_bda BubbleChart )AddAxis (axis Axis ){_be :=_e .NewCT_UnsignedInt ();_be .ValAttr =axis .AxisID ();_bda ._cec .AxId =append (_bda ._cec .AxId ,_be );};func (_cag ValueAxis )SetTickLabelPosition (p _e .ST_TickLblPos ){if p ==_e .ST_TickLblPosUnset {_cag ._dga .TickLblPos =nil ;}else {_cag ._dga .TickLblPos =_e .NewCT_TickLblPos ();_cag ._dga .TickLblPos .ValAttr =p ;};};
+
+// InitializeDefaults the bar chart to its defaults
+func (_fgge DoughnutChart )InitializeDefaults (){_fgge ._bfb .VaryColors =_e .NewCT_Boolean ();_fgge ._bfb .VaryColors .ValAttr =_d .Bool (true );_fgge ._bfb .HoleSize =_e .NewCT_HoleSize ();_fgge ._bfb .HoleSize .ValAttr =&_e .ST_HoleSize {};_fgge ._bfb .HoleSize .ValAttr .ST_HoleSizeUByte =_d .Uint8 (50);};
 
 // X returns the inner wrapped XML type.
-func (_ggdf Title )X ()*_gf .CT_Title {return _ggdf ._dbgg };
-
-// AddValueAxis adds a value axis to the chart.
-func (_gga Chart )AddValueAxis ()ValueAxis {_gac :=_gf .NewCT_ValAx ();if _gga ._ed .Chart .PlotArea .CChoice ==nil {_gga ._ed .Chart .PlotArea .CChoice =_gf .NewCT_PlotAreaChoice1 ();};_gac .AxId =_gf .NewCT_UnsignedInt ();_gac .AxId .ValAttr =0x7FFFFFFF&_d .Uint32 ();_gga ._ed .Chart .PlotArea .CChoice .ValAx =append (_gga ._ed .Chart .PlotArea .CChoice .ValAx ,_gac );_gac .Delete =_gf .NewCT_Boolean ();_gac .Delete .ValAttr =_c .Bool (false );_gac .Scaling =_gf .NewCT_Scaling ();_gac .Scaling .Orientation =_gf .NewCT_Orientation ();_gac .Scaling .Orientation .ValAttr =_gf .ST_OrientationMinMax ;_gac .Choice =&_gf .EG_AxSharedChoice {};_gac .Choice .Crosses =_gf .NewCT_Crosses ();_gac .Choice .Crosses .ValAttr =_gf .ST_CrossesAutoZero ;_gac .CrossBetween =_gf .NewCT_CrossBetween ();_gac .CrossBetween .ValAttr =_gf .ST_CrossBetweenBetween ;_cgbe :=MakeValueAxis (_gac );_cgbe .MajorGridLines ().Properties ().LineProperties ().SetSolidFill (_gd .LightGray );_cgbe .SetMajorTickMark (_gf .ST_TickMarkOut );_cgbe .SetMinorTickMark (_gf .ST_TickMarkIn );_cgbe .SetTickLabelPosition (_gf .ST_TickLblPosNextTo );_cgbe .Properties ().LineProperties ().SetSolidFill (_gd .Black );_cgbe .SetPosition (_gf .ST_AxPosL );return _cgbe ;};
-
-// Values returns the value data source.
-func (_ebb BarChartSeries )Values ()NumberDataSource {if _ebb ._bcc .Val ==nil {_ebb ._bcc .Val =_gf .NewCT_NumDataSource ();};return MakeNumberDataSource (_ebb ._bcc .Val );};
-
-// AddSeries adds a default series to a Scatter chart.
-func (_aaf ScatterChart )AddSeries ()ScatterChartSeries {_decg :=_aaf .nextColor (len (_aaf ._beba .Ser ));_dcfa :=_gf .NewCT_ScatterSer ();_aaf ._beba .Ser =append (_aaf ._beba .Ser ,_dcfa );_dcfa .Idx .ValAttr =uint32 (len (_aaf ._beba .Ser )-1);_dcfa .Order .ValAttr =uint32 (len (_aaf ._beba .Ser )-1);_fdbc :=ScatterChartSeries {_dcfa };_fdbc .InitializeDefaults ();_fdbc .Marker ().Properties ().LineProperties ().SetSolidFill (_decg );_fdbc .Marker ().Properties ().SetSolidFill (_decg );return _fdbc ;};
-
-// Surface3DChart is a 3D view of a surface chart.
-type Surface3DChart struct{chartBase ;_acae *_gf .CT_Surface3DChart ;};
+func (_fg AreaChart )X ()*_e .CT_AreaChart {return _fg ._gd };
 
 // X returns the inner wrapped XML type.
-func (_eec Legend )X ()*_gf .CT_Legend {return _eec ._adc };type Marker struct{_aegc *_gf .CT_Marker };
-
-// AddSeries adds a default series to a Stock chart.
-func (_gbfc StockChart )AddSeries ()LineChartSeries {_cdgg :=_gf .NewCT_LineSer ();_gbfc ._bfeb .Ser =append (_gbfc ._bfeb .Ser ,_cdgg );_cdgg .Idx .ValAttr =uint32 (len (_gbfc ._bfeb .Ser )-1);_cdgg .Order .ValAttr =uint32 (len (_gbfc ._bfeb .Ser )-1);_gage :=LineChartSeries {_cdgg };_gage .Values ().CreateEmptyNumberCache ();_gage .Properties ().LineProperties ().SetNoFill ();return _gage ;};
-
-// AddAxis adds an axis to a line chart.
-func (_geg Line3DChart )AddAxis (axis Axis ){_fdb :=_gf .NewCT_UnsignedInt ();_fdb .ValAttr =axis .AxisID ();_geg ._cdg .AxId =append (_geg ._cdg .AxId ,_fdb );};
+func (_fbb DateAxis )X ()*_e .CT_DateAx {return _fbb ._abb };
 
 // X returns the inner wrapped XML type.
-func (_cae PieChartSeries )X ()*_gf .CT_PieSer {return _cae ._bae };
+func (_cbdb PieChart )X ()*_e .CT_PieChart {return _cbdb ._gfca };
 
-// SetOrder sets the order of the series
-func (_fege SurfaceChartSeries )SetOrder (idx uint32 ){_fege ._ada .Order .ValAttr =idx };func (_fea CategoryAxis )AxisID ()uint32 {return _fea ._eaf .AxId .ValAttr };
+// InitializeDefaults the Bubble chart to its defaults
+func (_gga BubbleChart )InitializeDefaults (){};
 
-// BarChart is a 2D bar chart.
-type BarChart struct{chartBase ;_fg *_gf .CT_BarChart ;};
-
-// SetHoleSize controls the hole size in the pie chart and is measured in percent.
-func (_acca DoughnutChart )SetHoleSize (pct uint8 ){if _acca ._eff .HoleSize ==nil {_acca ._eff .HoleSize =_gf .NewCT_HoleSize ();};if _acca ._eff .HoleSize .ValAttr ==nil {_acca ._eff .HoleSize .ValAttr =&_gf .ST_HoleSize {};};_acca ._eff .HoleSize .ValAttr .ST_HoleSizeUByte =&pct ;};
-
-// X returns the inner wrapped XML type.
-func (_fgg BubbleChartSeries )X ()*_gf .CT_BubbleSer {return _fgg ._ca };
-
-// X returns the inner wrapped XML type.
-func (_afab Pie3DChart )X ()*_gf .CT_Pie3DChart {return _afab ._fgb };
-
-// AddPieChart adds a new pie chart to a chart.
-func (_bda Chart )AddPieChart ()PieChart {_cfg :=_gf .NewCT_PlotAreaChoice ();_bda ._ed .Chart .PlotArea .Choice =append (_bda ._ed .Chart .PlotArea .Choice ,_cfg );_cfg .PieChart =_gf .NewCT_PieChart ();_aef :=PieChart {_cdbc :_cfg .PieChart };_aef .InitializeDefaults ();return _aef ;};
+// Properties returns the Bubble chart series shape properties.
+func (_gagb BubbleChartSeries )Properties ()_cc .ShapeProperties {if _gagb ._ggb .SpPr ==nil {_gagb ._ggb .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_gagb ._ggb .SpPr );};func (_gfc DateAxis )SetTickLabelPosition (p _e .ST_TickLblPos ){if p ==_e .ST_TickLblPosUnset {_gfc ._abb .TickLblPos =nil ;}else {_gfc ._abb .TickLblPos =_e .NewCT_TickLblPos ();_gfc ._abb .TickLblPos .ValAttr =p ;};};func MakeDataLabels (x *_e .CT_DLbls )DataLabels {return DataLabels {x }};
 
 // Order returns the order of the series
-func (_feaf ScatterChartSeries )Order ()uint32 {return _feaf ._bagba .Order .ValAttr };
-
-// X returns the inner wrapped XML type.
-func (_aae ScatterChart )X ()*_gf .CT_ScatterChart {return _aae ._beba };
-
-// Area3DChart is an area chart that has a shaded area underneath a curve.
-type Area3DChart struct{chartBase ;_b *_gf .CT_Area3DChart ;};
-
-// Values returns the value data source.
-func (_fab AreaChartSeries )Values ()NumberDataSource {if _fab ._bf .Val ==nil {_fab ._bf .Val =_gf .NewCT_NumDataSource ();};return MakeNumberDataSource (_fab ._bf .Val );};
-
-// X returns the inner wrapped XML type.
-func (_df AreaChart )X ()*_gf .CT_AreaChart {return _df ._fa };
-
-// BarChartSeries is a series to be used on a bar chart.
-type BarChartSeries struct{_bcc *_gf .CT_BarSer };
-
-// AddLine3DChart adds a new 3D line chart to a chart.
-func (_faad Chart )AddLine3DChart ()Line3DChart {_bff (_faad ._ed .Chart );_efc :=_gf .NewCT_PlotAreaChoice ();_faad ._ed .Chart .PlotArea .Choice =append (_faad ._ed .Chart .PlotArea .Choice ,_efc );_efc .Line3DChart =_gf .NewCT_Line3DChart ();_efc .Line3DChart .Grouping =_gf .NewCT_Grouping ();_efc .Line3DChart .Grouping .ValAttr =_gf .ST_GroupingStandard ;return Line3DChart {_cdg :_efc .Line3DChart };};
-
-// Values returns the value data source.
-func (_ddbe PieChartSeries )Values ()NumberDataSource {if _ddbe ._bae .Val ==nil {_ddbe ._bae .Val =_gf .NewCT_NumDataSource ();};return MakeNumberDataSource (_ddbe ._bae .Val );};
-
-// X returns the inner wrapped XML type.
-func (_bgg ScatterChartSeries )X ()*_gf .CT_ScatterSer {return _bgg ._bagba };
-
-// X returns the inner wrapped XML type.
-func (_cac PieOfPieChart )X ()*_gf .CT_OfPieChart {return _cac ._dcgc };
-
-// SetDirection changes the direction of the bar chart (bar or column).
-func (_gg BarChart )SetDirection (d _gf .ST_BarDir ){_gg ._fg .BarDir .ValAttr =d };func (_gace StockChart )AddAxis (axis Axis ){_bbbg :=_gf .NewCT_UnsignedInt ();_bbbg .ValAttr =axis .AxisID ();_gace ._bfeb .AxId =append (_gace ._bfeb .AxId ,_bbbg );};
-
-// SetExplosion sets the value that the segements of the pie are 'exploded' by
-func (_faca PieChartSeries )SetExplosion (v uint32 ){_faca ._bae .Explosion =_gf .NewCT_UnsignedInt ();_faca ._bae .Explosion .ValAttr =v ;};func (_bafd DateAxis )AxisID ()uint32 {return _bafd ._aac .AxId .ValAttr };func MakeTitle (x *_gf .CT_Title )Title {return Title {x }};
+func (_baeg SurfaceChartSeries )Order ()uint32 {return _baeg ._fcag .Order .ValAttr };type GridLines struct{_eee *_e .CT_ChartLines };
 
 // CategoryAxis returns the category data source.
-func (_bcf BubbleChartSeries )CategoryAxis ()CategoryAxisDataSource {if _bcf ._ca .XVal ==nil {_bcf ._ca .XVal =_gf .NewCT_AxDataSource ();};return MakeAxisDataSource (_bcf ._ca .XVal );};
+func (_dbec RadarChartSeries )CategoryAxis ()CategoryAxisDataSource {if _dbec ._dbbg .Cat ==nil {_dbec ._dbbg .Cat =_e .NewCT_AxDataSource ();};return MakeAxisDataSource (_dbec ._dbbg .Cat );};
 
 // SetOrder sets the order of the series
-func (_cbc LineChartSeries )SetOrder (idx uint32 ){_cbc ._dcea .Order .ValAttr =idx };
+func (_cff LineChartSeries )SetOrder (idx uint32 ){_cff ._fecc .Order .ValAttr =idx };
 
-// AddAxis adds an axis to a line chart.
-func (_gbad LineChart )AddAxis (axis Axis ){_aacg :=_gf .NewCT_UnsignedInt ();_aacg .ValAttr =axis .AxisID ();_gbad ._ebbc .AxId =append (_gbad ._ebbc .AxId ,_aacg );};
+// SetNumberReference is used to set the source data to a range of cells containing
+// numbers.
+func (_daf CategoryAxisDataSource )SetNumberReference (s string ){_daf ._fec .Choice =_e .NewCT_AxDataSourceChoice ();_daf ._fec .Choice .NumRef =_e .NewCT_NumRef ();_daf ._fec .Choice .NumRef .F =s ;};
 
-// SetText sets the series text.
-func (_dff BubbleChartSeries )SetText (s string ){_dff ._ca .Tx =_gf .NewCT_SerTx ();_dff ._ca .Tx .Choice .V =&s ;};
+// Index returns the index of the series
+func (_aef SurfaceChartSeries )Index ()uint32 {return _aef ._fcag .Idx .ValAttr };func (_fb Area3DChart )AddAxis (axis Axis ){_cd :=_e .NewCT_UnsignedInt ();_cd .ValAttr =axis .AxisID ();_fb ._b .AxId =append (_fb ._b .AxId ,_cd );};
 
-// InitializeDefaults the bar chart to its defaults
-func (_eg AreaChart )InitializeDefaults (){};func (_abd Title )InitializeDefaults (){_abd .SetText ("\u0054\u0069\u0074l\u0065");_abd .RunProperties ().SetSize (16*_a .Point );_abd .RunProperties ().SetSolidFill (_gd .Black );_abd .RunProperties ().SetFont ("\u0043\u0061\u006c\u0069\u0062\u0020\u0072\u0069");_abd .RunProperties ().SetBold (false );};
+// SetValues sets values directly on a source.
+func (_cbad NumberDataSource )SetValues (v []float64 ){_cbad .ensureChoice ();_cbad ._gcac .Choice .NumRef =nil ;_cbad ._gcac .Choice .NumLit =_e .NewCT_NumData ();_cbad ._gcac .Choice .NumLit .PtCount =_e .NewCT_UnsignedInt ();_cbad ._gcac .Choice .NumLit .PtCount .ValAttr =uint32 (len (v ));for _bag ,_dgd :=range v {_cbad ._gcac .Choice .NumLit .Pt =append (_cbad ._gcac .Choice .NumLit .Pt ,&_e .CT_NumVal {IdxAttr :uint32 (_bag ),V :_f .Sprintf ("\u0025\u0067",_dgd )});};};
 
-// AddSeries adds a default series to an Pie3D chart.
-func (_dcg Pie3DChart )AddSeries ()PieChartSeries {_bbb :=_gf .NewCT_PieSer ();_dcg ._fgb .Ser =append (_dcg ._fgb .Ser ,_bbb );_bbb .Idx .ValAttr =uint32 (len (_dcg ._fgb .Ser )-1);_bbb .Order .ValAttr =uint32 (len (_dcg ._fgb .Ser )-1);_beb :=PieChartSeries {_bbb };_beb .InitializeDefaults ();return _beb ;};func (_abbb SeriesAxis )InitializeDefaults (){};func (_cde LineChartSeries )InitializeDefaults (){_cde .Properties ().LineProperties ().SetWidth (1*_a .Point );_cde .Properties ().LineProperties ().SetSolidFill (_gd .Black );_cde .Properties ().LineProperties ().SetJoin (_cg .LineJoinRound );_cde .Marker ().SetSymbol (_gf .ST_MarkerStyleNone );_cde .Labels ().SetShowLegendKey (false );_cde .Labels ().SetShowValue (false );_cde .Labels ().SetShowPercent (false );_cde .Labels ().SetShowCategoryName (false );_cde .Labels ().SetShowSeriesName (false );_cde .Labels ().SetShowLeaderLines (false );};func (_afd RadarChart )AddAxis (axis Axis ){_cff :=_gf .NewCT_UnsignedInt ();_cff .ValAttr =axis .AxisID ();_afd ._gee .AxId =append (_afd ._gee .AxId ,_cff );};
+// Values returns the value data source.
+func (_cbc PieChartSeries )Values ()NumberDataSource {if _cbc ._gddg .Val ==nil {_cbc ._gddg .Val =_e .NewCT_NumDataSource ();};return MakeNumberDataSource (_cbc ._gddg .Val );};
 
-// Marker returns the marker properties.
-func (_dac ScatterChartSeries )Marker ()Marker {if _dac ._bagba .Marker ==nil {_dac ._bagba .Marker =_gf .NewCT_Marker ();};return MakeMarker (_dac ._bagba .Marker );};
-
-// Labels returns the data label properties.
-func (_ebag LineChartSeries )Labels ()DataLabels {if _ebag ._dcea .DLbls ==nil {_ebag ._dcea .DLbls =_gf .NewCT_DLbls ();};return MakeDataLabels (_ebag ._dcea .DLbls );};func (_fda LineChartSeries )CategoryAxis ()CategoryAxisDataSource {if _fda ._dcea .Cat ==nil {_fda ._dcea .Cat =_gf .NewCT_AxDataSource ();};return MakeAxisDataSource (_fda ._dcea .Cat );};func (_eeb Legend )SetOverlay (b bool ){_eeb ._adc .Overlay =_gf .NewCT_Boolean ();_eeb ._adc .Overlay .ValAttr =_c .Bool (b );};var NullAxis Axis =nullAxis (0);
-
-// SetText sets the series text
-func (_feeg ScatterChartSeries )SetText (s string ){_feeg ._bagba .Tx =_gf .NewCT_SerTx ();_feeg ._bagba .Tx .Choice .V =&s ;};
-
-// AddSeries adds a default series to a Surface chart.
-func (_ded Surface3DChart )AddSeries ()SurfaceChartSeries {_gfe :=_ded .nextColor (len (_ded ._acae .Ser ));_edff :=_gf .NewCT_SurfaceSer ();_ded ._acae .Ser =append (_ded ._acae .Ser ,_edff );_edff .Idx .ValAttr =uint32 (len (_ded ._acae .Ser )-1);_edff .Order .ValAttr =uint32 (len (_ded ._acae .Ser )-1);_cgba :=SurfaceChartSeries {_edff };_cgba .InitializeDefaults ();_cgba .Properties ().LineProperties ().SetSolidFill (_gfe );return _cgba ;};func (_eba CategoryAxis )InitializeDefaults (){_eba .SetPosition (_gf .ST_AxPosB );_eba .SetMajorTickMark (_gf .ST_TickMarkOut );_eba .SetMinorTickMark (_gf .ST_TickMarkIn );_eba .SetTickLabelPosition (_gf .ST_TickLblPosNextTo );_eba .MajorGridLines ().Properties ().LineProperties ().SetSolidFill (_gd .LightGray );_eba .Properties ().LineProperties ().SetSolidFill (_gd .Black );};
-
-// Properties returns the line chart series shape properties.
-func (_dead LineChartSeries )Properties ()_cg .ShapeProperties {if _dead ._dcea .SpPr ==nil {_dead ._dcea .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_dead ._dcea .SpPr );};
-
-// X returns the inner wrapped XML type.
-func (_dc BarChartSeries )X ()*_gf .CT_BarSer {return _dc ._bcc };
-
-// AddSeries adds a default series to an area chart.
-func (_gbg Area3DChart )AddSeries ()AreaChartSeries {_bc :=_gbg .nextColor (len (_gbg ._b .Ser ));_ce :=_gf .NewCT_AreaSer ();_gbg ._b .Ser =append (_gbg ._b .Ser ,_ce );_ce .Idx .ValAttr =uint32 (len (_gbg ._b .Ser )-1);_ce .Order .ValAttr =uint32 (len (_gbg ._b .Ser )-1);_eb :=AreaChartSeries {_ce };_eb .InitializeDefaults ();_eb .Properties ().SetSolidFill (_bc );return _eb ;};
-
-// InitializeDefaults the bar chart to its defaults
-func (_fe BarChart )InitializeDefaults (){_fe .SetDirection (_gf .ST_BarDirCol )};
-
-// StockChart is a 2D Stock chart.
-type StockChart struct{chartBase ;_bfeb *_gf .CT_StockChart ;};func (_ebe Area3DChart )AddAxis (axis Axis ){_f :=_gf .NewCT_UnsignedInt ();_f .ValAttr =axis .AxisID ();_ebe ._b .AxId =append (_ebe ._b .AxId ,_f );};
+// PieChart is a Pie chart.
+type PieChart struct{chartBase ;_gfca *_e .CT_PieChart ;};type DateAxis struct{_abb *_e .CT_DateAx };
 
 // Properties returns the bar chart series shape properties.
-func (_dbd PieChartSeries )Properties ()_cg .ShapeProperties {if _dbd ._bae .SpPr ==nil {_dbd ._bae .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_dbd ._bae .SpPr );};func (_gedf ScatterChartSeries )SetSmooth (b bool ){_gedf ._bagba .Smooth =_gf .NewCT_Boolean ();_gedf ._bagba .Smooth .ValAttr =&b ;};
+func (_ebef PieChartSeries )Properties ()_cc .ShapeProperties {if _ebef ._gddg .SpPr ==nil {_ebef ._gddg .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_ebef ._gddg .SpPr );};
 
-// Values returns the value data source.
-func (_eaa BubbleChartSeries )Values ()NumberDataSource {if _eaa ._ca .YVal ==nil {_eaa ._ca .YVal =_gf .NewCT_NumDataSource ();};return MakeNumberDataSource (_eaa ._ca .YVal );};func (_edd SeriesAxis )AxisID ()uint32 {return _edd ._fec .AxId .ValAttr };
-
-// Values returns the value data source.
-func (_fef RadarChartSeries )Values ()NumberDataSource {if _fef ._eebe .Val ==nil {_fef ._eebe .Val =_gf .NewCT_NumDataSource ();};return MakeNumberDataSource (_fef ._eebe .Val );};
-
-// CategoryAxis returns the category data source.
-func (_dce BarChartSeries )CategoryAxis ()CategoryAxisDataSource {if _dce ._bcc .Cat ==nil {_dce ._bcc .Cat =_gf .NewCT_AxDataSource ();};return MakeAxisDataSource (_dce ._bcc .Cat );};
-
-// Values returns the bubble size data source.
-func (_eag BubbleChartSeries )BubbleSizes ()NumberDataSource {if _eag ._ca .BubbleSize ==nil {_eag ._ca .BubbleSize =_gf .NewCT_NumDataSource ();};return MakeNumberDataSource (_eag ._ca .BubbleSize );};
+// SetExplosion sets the value that the segements of the pie are 'exploded' by
+func (_bcdg PieChartSeries )SetExplosion (v uint32 ){_bcdg ._gddg .Explosion =_e .NewCT_UnsignedInt ();_bcdg ._gddg .Explosion .ValAttr =v ;};func (_fga CategoryAxis )Properties ()_cc .ShapeProperties {if _fga ._aga .SpPr ==nil {_fga ._aga .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_fga ._aga .SpPr );};func (_bbg ScatterChartSeries )Values ()NumberDataSource {if _bbg ._ffa .YVal ==nil {_bbg ._ffa .YVal =_e .NewCT_NumDataSource ();};return MakeNumberDataSource (_bbg ._ffa .YVal );};
 
 // X returns the inner wrapped XML type.
-func (_gagc DoughnutChart )X ()*_gf .CT_DoughnutChart {return _gagc ._eff };func (_aafe SeriesAxis )SetCrosses (axis Axis ){_aafe ._fec .CrossAx .ValAttr =axis .AxisID ()};
+func (_cg Area3DChart )X ()*_e .CT_Area3DChart {return _cg ._b };func (_dbg Title )SetText (s string ){if _dbg ._feac .Tx ==nil {_dbg ._feac .Tx =_e .NewCT_Tx ();};if _dbg ._feac .Tx .Choice .Rich ==nil {_dbg ._feac .Tx .Choice .Rich =_cb .NewCT_TextBody ();};var _dcac *_cb .CT_TextParagraph ;if len (_dbg ._feac .Tx .Choice .Rich .P )==0{_dcac =_cb .NewCT_TextParagraph ();_dbg ._feac .Tx .Choice .Rich .P =[]*_cb .CT_TextParagraph {_dcac };}else {_dcac =_dbg ._feac .Tx .Choice .Rich .P [0];};var _gade *_cb .EG_TextRun ;if len (_dcac .EG_TextRun )==0{_gade =_cb .NewEG_TextRun ();_dcac .EG_TextRun =[]*_cb .EG_TextRun {_gade };}else {_gade =_dcac .EG_TextRun [0];};if _gade .R ==nil {_gade .R =_cb .NewCT_RegularTextRun ();};_gade .R .T =s ;};func (_ada SeriesAxis )InitializeDefaults (){};
+
+// SetText sets the series text
+func (_dcf ScatterChartSeries )SetText (s string ){_dcf ._ffa .Tx =_e .NewCT_SerTx ();_dcf ._ffa .Tx .Choice .V =&s ;};
 
 // Axis is the interface implemented by different axes when assigning to a
 // chart.
 type Axis interface{AxisID ()uint32 ;};
 
-// CategoryAxisDataSource specifies the data for an axis.  It's commonly used with
-// SetReference to set the axis data to a range of cells.
-type CategoryAxisDataSource struct{_faag *_gf .CT_AxDataSource };
-
-// InitializeDefaults the bar chart to its defaults
-func (_dcff PieOfPieChart )InitializeDefaults (){_dcff ._dcgc .VaryColors =_gf .NewCT_Boolean ();_dcff ._dcgc .VaryColors .ValAttr =_c .Bool (true );_dcff .SetType (_gf .ST_OfPieTypePie );_dcff ._dcgc .SecondPieSize =_gf .NewCT_SecondPieSize ();_dcff ._dcgc .SecondPieSize .ValAttr =&_gf .ST_SecondPieSize {};_dcff ._dcgc .SecondPieSize .ValAttr .ST_SecondPieSizeUShort =_c .Uint16 (75);_cab :=_gf .NewCT_ChartLines ();_cab .SpPr =_ea .NewCT_ShapeProperties ();_fcg :=_cg .MakeShapeProperties (_cab .SpPr );_fcg .LineProperties ().SetSolidFill (_gd .Auto );_dcff ._dcgc .SerLines =append (_dcff ._dcgc .SerLines ,_cab );};
-
-// AddAxis adds an axis to a Scatter chart.
-func (_agcc ScatterChart )AddAxis (axis Axis ){_gec :=_gf .NewCT_UnsignedInt ();_gec .ValAttr =axis .AxisID ();_agcc ._beba .AxId =append (_agcc ._beba .AxId ,_gec );};func (_dag LineChartSeries )SetSmooth (b bool ){_dag ._dcea .Smooth =_gf .NewCT_Boolean ();_dag ._dcea .Smooth .ValAttr =&b ;};
-
-// AddBar3DChart adds a new 3D bar chart to a chart.
-func (_gbd Chart )AddBar3DChart ()Bar3DChart {_bff (_gbd ._ed .Chart );_cda :=_gf .NewCT_PlotAreaChoice ();_gbd ._ed .Chart .PlotArea .Choice =append (_gbd ._ed .Chart .PlotArea .Choice ,_cda );_cda .Bar3DChart =_gf .NewCT_Bar3DChart ();_cda .Bar3DChart .Grouping =_gf .NewCT_BarGrouping ();_cda .Bar3DChart .Grouping .ValAttr =_gf .ST_BarGroupingStandard ;_dda :=Bar3DChart {_ccg :_cda .Bar3DChart };_dda .InitializeDefaults ();return _dda ;};type Title struct{_dbgg *_gf .CT_Title };type GridLines struct{_ggg *_gf .CT_ChartLines };
-
-// X returns the inner wrapped XML type.
-func (_ebg Line3DChart )X ()*_gf .CT_Line3DChart {return _ebg ._cdg };
-
-// InitializeDefaults initializes an Pie series to the default values.
-func (_feee PieChartSeries )InitializeDefaults (){};
-
-// SetValues is used to set the source data to a set of values.
-func (_acc CategoryAxisDataSource )SetValues (v []string ){_acc ._faag .Choice =_gf .NewCT_AxDataSourceChoice ();_acc ._faag .Choice .StrLit =_gf .NewCT_StrData ();_acc ._faag .Choice .StrLit .PtCount =_gf .NewCT_UnsignedInt ();_acc ._faag .Choice .StrLit .PtCount .ValAttr =uint32 (len (v ));for _bad ,_be :=range v {_acc ._faag .Choice .StrLit .Pt =append (_acc ._faag .Choice .StrLit .Pt ,&_gf .CT_StrVal {IdxAttr :uint32 (_bad ),V :_be });};};
-
-// SetText sets the series text
-func (_cgac SurfaceChartSeries )SetText (s string ){_cgac ._ada .Tx =_gf .NewCT_SerTx ();_cgac ._ada .Tx .Choice .V =&s ;};type DateAxis struct{_aac *_gf .CT_DateAx };func (_ffa Legend )InitializeDefaults (){_ffa .SetPosition (_gf .ST_LegendPosR );_ffa .SetOverlay (false );_ffa .Properties ().SetNoFill ();_ffa .Properties ().LineProperties ().SetNoFill ();};
+// AddAxis adds an axis to a line chart.
+func (_gecg LineChart )AddAxis (axis Axis ){_bbc :=_e .NewCT_UnsignedInt ();_bbc .ValAttr =axis .AxisID ();_gecg ._eaf .AxId =append (_gecg ._eaf .AxId ,_bbc );};
 
 // InitializeDefaults initializes an Radar series to the default values.
-func (_cbde RadarChartSeries )InitializeDefaults (){};
+func (_bcbf RadarChartSeries )InitializeDefaults (){};
 
-// X returns the inner wrapped XML type.
-func (_eafa PieChart )X ()*_gf .CT_PieChart {return _eafa ._cdbc };func (_cgb AreaChart )AddAxis (axis Axis ){_cd :=_gf .NewCT_UnsignedInt ();_cd .ValAttr =axis .AxisID ();_cgb ._fa .AxId =append (_cgb ._fa .AxId ,_cd );};func (_bfb ValueAxis )Properties ()_cg .ShapeProperties {if _bfb ._ggbc .SpPr ==nil {_bfb ._ggbc .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_bfb ._ggbc .SpPr );};func (_abg ValueAxis )SetMajorTickMark (m _gf .ST_TickMark ){if m ==_gf .ST_TickMarkUnset {_abg ._ggbc .MajorTickMark =nil ;}else {_abg ._ggbc .MajorTickMark =_gf .NewCT_TickMark ();_abg ._ggbc .MajorTickMark .ValAttr =m ;};};
-
-// DoughnutChart is a Doughnut chart.
-type DoughnutChart struct{chartBase ;_eff *_gf .CT_DoughnutChart ;};
+// InitializeDefaults the bar chart to its defaults
+func (_gbg RadarChart )InitializeDefaults (){_gbg ._cea .RadarStyle .ValAttr =_e .ST_RadarStyleMarker };
 
 // SetIndex sets the index of the series
-func (_ffd LineChartSeries )SetIndex (idx uint32 ){_ffd ._dcea .Idx .ValAttr =idx };
+func (_ecdb SurfaceChartSeries )SetIndex (idx uint32 ){_ecdb ._fcag .Idx .ValAttr =idx };
 
-// SetNumberReference is used to set the source data to a range of cells containing
-// numbers.
-func (_egf CategoryAxisDataSource )SetNumberReference (s string ){_egf ._faag .Choice =_gf .NewCT_AxDataSourceChoice ();_egf ._faag .Choice .NumRef =_gf .NewCT_NumRef ();_egf ._faag .Choice .NumRef .F =s ;};
-
-// AddRadarChart adds a new radar chart to a chart.
-func (_fcf Chart )AddRadarChart ()RadarChart {_cge :=_gf .NewCT_PlotAreaChoice ();_fcf ._ed .Chart .PlotArea .Choice =append (_fcf ._ed .Chart .PlotArea .Choice ,_cge );_cge .RadarChart =_gf .NewCT_RadarChart ();_decd :=RadarChart {_gee :_cge .RadarChart };_decd .InitializeDefaults ();return _decd ;};
-
-// AddSeries adds a default series to an Pie chart.
-func (_bec PieChart )AddSeries ()PieChartSeries {_gegd :=_gf .NewCT_PieSer ();_bec ._cdbc .Ser =append (_bec ._cdbc .Ser ,_gegd );_gegd .Idx .ValAttr =uint32 (len (_bec ._cdbc .Ser )-1);_gegd .Order .ValAttr =uint32 (len (_bec ._cdbc .Ser )-1);_eecc :=PieChartSeries {_gegd };_eecc .InitializeDefaults ();return _eecc ;};func (_ee DataLabels )SetShowValue (b bool ){_ee .ensureChoice ();_ee ._bdd .Choice .ShowVal =_gf .NewCT_Boolean ();_ee ._bdd .Choice .ShowVal .ValAttr =_c .Bool (b );};func (_cfga DateAxis )SetTickLabelPosition (p _gf .ST_TickLblPos ){if p ==_gf .ST_TickLblPosUnset {_cfga ._aac .TickLblPos =nil ;}else {_cfga ._aac .TickLblPos =_gf .NewCT_TickLblPos ();_cfga ._aac .TickLblPos .ValAttr =p ;};};func (_gbf Legend )SetPosition (p _gf .ST_LegendPos ){if p ==_gf .ST_LegendPosUnset {_gbf ._adc .LegendPos =nil ;}else {_gbf ._adc .LegendPos =_gf .NewCT_LegendPos ();_gbf ._adc .LegendPos .ValAttr =p ;};};
-
-// X returns the inner wrapped XML type.
-func (_gae BubbleChart )X ()*_gf .CT_BubbleChart {return _gae ._fad };func (_fcd SurfaceChartSeries )InitializeDefaults (){_fcd .Properties ().LineProperties ().SetWidth (1*_a .Point );_fcd .Properties ().LineProperties ().SetSolidFill (_gd .Black );_fcd .Properties ().LineProperties ().SetJoin (_cg .LineJoinRound );};func (_afb ValueAxis )AxisID ()uint32 {return _afb ._ggbc .AxId .ValAttr };
-
-// BubbleChartSeries is a series to be used on a Bubble chart.
-type BubbleChartSeries struct{_ca *_gf .CT_BubbleSer };
-
-// AddAxis adds an axis to a Surface chart.
-func (_ffg Surface3DChart )AddAxis (axis Axis ){_fagc :=_gf .NewCT_UnsignedInt ();_fagc .ValAttr =axis .AxisID ();_ffg ._acae .AxId =append (_ffg ._acae .AxId ,_fagc );};
-
-// Marker returns the marker properties.
-func (_fb LineChartSeries )Marker ()Marker {if _fb ._dcea .Marker ==nil {_fb ._dcea .Marker =_gf .NewCT_Marker ();};return MakeMarker (_fb ._dcea .Marker );};
-
-// InitializeDefaults the bar chart to its defaults
-func (_cdf Bar3DChart )InitializeDefaults (){_cdf .SetDirection (_gf .ST_BarDirCol )};
-
-// PieOfPieChart is a Pie chart with an extra Pie chart.
-type PieOfPieChart struct{chartBase ;_dcgc *_gf .CT_OfPieChart ;};type ScatterChart struct{chartBase ;_beba *_gf .CT_ScatterChart ;};
-
-// X returns the inner wrapped XML type.
-func (_bca LineChartSeries )X ()*_gf .CT_LineSer {return _bca ._dcea };type SeriesAxis struct{_fec *_gf .CT_SerAx };
-
-// SetValues sets values directly on a source.
-func (_eda NumberDataSource )SetValues (v []float64 ){_eda .ensureChoice ();_eda ._efe .Choice .NumRef =nil ;_eda ._efe .Choice .NumLit =_gf .NewCT_NumData ();_eda ._efe .Choice .NumLit .PtCount =_gf .NewCT_UnsignedInt ();_eda ._efe .Choice .NumLit .PtCount .ValAttr =uint32 (len (v ));for _cefc ,_ddb :=range v {_eda ._efe .Choice .NumLit .Pt =append (_eda ._efe .Choice .NumLit .Pt ,&_gf .CT_NumVal {IdxAttr :uint32 (_cefc ),V :_e .Sprintf ("\u0025\u0067",_ddb )});};};func (_ccbcc SurfaceChartSeries )Values ()NumberDataSource {if _ccbcc ._ada .Val ==nil {_ccbcc ._ada .Val =_gf .NewCT_NumDataSource ();};_fcea :=MakeNumberDataSource (_ccbcc ._ada .Val );_fcea .CreateEmptyNumberCache ();return _fcea ;};
-
-// CategoryAxis returns the category data source.
-func (_cfd RadarChartSeries )CategoryAxis ()CategoryAxisDataSource {if _cfd ._eebe .Cat ==nil {_cfd ._eebe .Cat =_gf .NewCT_AxDataSource ();};return MakeAxisDataSource (_cfd ._eebe .Cat );};
-
-// Properties returns the line chart series shape properties.
-func (_caeg SurfaceChartSeries )Properties ()_cg .ShapeProperties {if _caeg ._ada .SpPr ==nil {_caeg ._ada .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_caeg ._ada .SpPr );};
-
-// SetText sets the series text.
-func (_efec PieChartSeries )SetText (s string ){_efec ._bae .Tx =_gf .NewCT_SerTx ();_efec ._bae .Tx .Choice .V =&s ;};
-
-// AddPieOfPieChart adds a new pie chart to a chart.
-func (_ebed Chart )AddPieOfPieChart ()PieOfPieChart {_egc :=_gf .NewCT_PlotAreaChoice ();_ebed ._ed .Chart .PlotArea .Choice =append (_ebed ._ed .Chart .PlotArea .Choice ,_egc );_egc .OfPieChart =_gf .NewCT_OfPieChart ();_aeb :=PieOfPieChart {_dcgc :_egc .OfPieChart };_aeb .InitializeDefaults ();return _aeb ;};
-
-// AddSeries adds a default series to a bar chart.
-func (_dg BarChart )AddSeries ()BarChartSeries {_abe :=_dg .nextColor (len (_dg ._fg .Ser ));_bg :=_gf .NewCT_BarSer ();_dg ._fg .Ser =append (_dg ._fg .Ser ,_bg );_bg .Idx .ValAttr =uint32 (len (_dg ._fg .Ser )-1);_bg .Order .ValAttr =uint32 (len (_dg ._fg .Ser )-1);_ge :=BarChartSeries {_bg };_ge .InitializeDefaults ();_ge .Properties ().SetSolidFill (_abe );return _ge ;};type Legend struct{_adc *_gf .CT_Legend };func (_ebf CategoryAxis )SetCrosses (axis Axis ){_ebf ._eaf .Choice =_gf .NewEG_AxSharedChoice ();_ebf ._eaf .Choice .Crosses =_gf .NewCT_Crosses ();_ebf ._eaf .Choice .Crosses .ValAttr =_gf .ST_CrossesAutoZero ;_ebf ._eaf .CrossAx .ValAttr =axis .AxisID ();};func (_dbg SurfaceChart )InitializeDefaults (){_dbg ._gfaa .Wireframe =_gf .NewCT_Boolean ();_dbg ._gfaa .Wireframe .ValAttr =_c .Bool (false );_dbg ._gfaa .BandFmts =_gf .NewCT_BandFmts ();for _ffe :=0;_ffe < 15;_ffe ++{_def :=_gf .NewCT_BandFmt ();_def .Idx .ValAttr =uint32 (_ffe );_def .SpPr =_ea .NewCT_ShapeProperties ();_ffc :=_cg .MakeShapeProperties (_def .SpPr );_ffc .SetSolidFill (_dbg .nextColor (_ffe ));_dbg ._gfaa .BandFmts .BandFmt =append (_dbg ._gfaa .BandFmts .BandFmt ,_def );};};func (_dec CategoryAxis )MajorGridLines ()GridLines {if _dec ._eaf .MajorGridlines ==nil {_dec ._eaf .MajorGridlines =_gf .NewCT_ChartLines ();};return GridLines {_dec ._eaf .MajorGridlines };};func (_cbe DateAxis )SetPosition (p _gf .ST_AxPos ){_cbe ._aac .AxPos =_gf .NewCT_AxPos ();_cbe ._aac .AxPos .ValAttr =p ;};func (_cbg Marker )SetSize (sz uint8 ){_cbg ._aegc .Size =_gf .NewCT_MarkerSize ();_cbg ._aegc .Size .ValAttr =&sz ;};func (_fgf DateAxis )MajorGridLines ()GridLines {if _fgf ._aac .MajorGridlines ==nil {_fgf ._aac .MajorGridlines =_gf .NewCT_ChartLines ();};return GridLines {_fgf ._aac .MajorGridlines };};
-
-// InitializeDefaults initializes an area series to the default values.
-func (_ac AreaChartSeries )InitializeDefaults (){};
-
-// X returns the inner wrapped XML type.
-func (_cga RadarChart )X ()*_gf .CT_RadarChart {return _cga ._gee };
-
-// RadarChartSeries is a series to be used on an Radar chart.
-type RadarChartSeries struct{_eebe *_gf .CT_RadarSer };
-
-// SetType sets the type the secone pie to either pie or bar
-func (_cceg PieOfPieChart )SetType (t _gf .ST_OfPieType ){_cceg ._dcgc .OfPieType .ValAttr =t };
-
-// CategoryAxis returns the category data source.
-func (_ef AreaChartSeries )CategoryAxis ()CategoryAxisDataSource {if _ef ._bf .Cat ==nil {_ef ._bf .Cat =_gf .NewCT_AxDataSource ();};return MakeAxisDataSource (_ef ._bf .Cat );};
-
-// X returns the inner wrapped XML type.
-func (_cee Bar3DChart )X ()*_gf .CT_Bar3DChart {return _cee ._ccg };
-
-// SetDirection changes the direction of the bar chart (bar or column).
-func (_bbe Bar3DChart )SetDirection (d _gf .ST_BarDir ){_bbe ._ccg .BarDir .ValAttr =d };
-
-// RadarChart is an Radar chart that has a shaded Radar underneath a curve.
-type RadarChart struct{chartBase ;_gee *_gf .CT_RadarChart ;};func (_cf nullAxis )AxisID ()uint32 {return 0};
-
-// InitializeDefaults the bar chart to its defaults
-func (_cdeg Pie3DChart )InitializeDefaults (){_cdeg ._fgb .VaryColors =_gf .NewCT_Boolean ();_cdeg ._fgb .VaryColors .ValAttr =_c .Bool (true );};func (_dcgf ScatterChartSeries )InitializeDefaults (){_dcgf .Properties ().LineProperties ().SetNoFill ();_dcgf .Marker ().SetSymbol (_gf .ST_MarkerStyleAuto );_dcgf .Labels ().SetShowLegendKey (false );_dcgf .Labels ().SetShowValue (true );_dcgf .Labels ().SetShowPercent (false );_dcgf .Labels ().SetShowCategoryName (false );_dcgf .Labels ().SetShowSeriesName (false );_dcgf .Labels ().SetShowLeaderLines (false );};
-
-// Index returns the index of the series
-func (_dfe LineChartSeries )Index ()uint32 {return _dfe ._dcea .Idx .ValAttr };func (_cfc Bar3DChart )AddAxis (axis Axis ){_aa :=_gf .NewCT_UnsignedInt ();_aa .ValAttr =axis .AxisID ();_cfc ._ccg .AxId =append (_cfc ._ccg .AxId ,_aa );};
-
-// SetIndex sets the index of the series
-func (_ccbc ScatterChartSeries )SetIndex (idx uint32 ){_ccbc ._bagba .Idx .ValAttr =idx };func (_ggb CategoryAxis )SetMinorTickMark (m _gf .ST_TickMark ){if m ==_gf .ST_TickMarkUnset {_ggb ._eaf .MinorTickMark =nil ;}else {_ggb ._eaf .MinorTickMark =_gf .NewCT_TickMark ();_ggb ._eaf .MinorTickMark .ValAttr =m ;};};func (_cefg ValueAxis )SetMinorTickMark (m _gf .ST_TickMark ){if m ==_gf .ST_TickMarkUnset {_cefg ._ggbc .MinorTickMark =nil ;}else {_cefg ._ggbc .MinorTickMark =_gf .NewCT_TickMark ();_cefg ._ggbc .MinorTickMark .ValAttr =m ;};};func (_egcf Title )ParagraphProperties ()_cg .ParagraphProperties {if _egcf ._dbgg .Tx ==nil {_egcf .SetText ("");};if _egcf ._dbgg .Tx .Choice .Rich .P [0].PPr ==nil {_egcf ._dbgg .Tx .Choice .Rich .P [0].PPr =_ea .NewCT_TextParagraphProperties ();};return _cg .MakeParagraphProperties (_egcf ._dbgg .Tx .Choice .Rich .P [0].PPr );};
-
-// X returns the inner wrapped XML type.
-func (_bag LineChart )X ()*_gf .CT_LineChart {return _bag ._ebbc };
-
-// InitializeDefaults initializes a bar chart series to the default values.
-func (_eac BarChartSeries )InitializeDefaults (){};
-
-// InitializeDefaults the bar chart to its defaults
-func (_ddc RadarChart )InitializeDefaults (){_ddc ._gee .RadarStyle .ValAttr =_gf .ST_RadarStyleMarker };type Line3DChart struct{chartBase ;_cdg *_gf .CT_Line3DChart ;};
-
-// InitializeDefaults the Stock chart to its defaults
-func (_abbf StockChart )InitializeDefaults (){_abbf ._bfeb .HiLowLines =_gf .NewCT_ChartLines ();_abbf ._bfeb .UpDownBars =_gf .NewCT_UpDownBars ();_abbf ._bfeb .UpDownBars .GapWidth =_gf .NewCT_GapAmount ();_abbf ._bfeb .UpDownBars .GapWidth .ValAttr =&_gf .ST_GapAmount {};_abbf ._bfeb .UpDownBars .GapWidth .ValAttr .ST_GapAmountUShort =_c .Uint16 (150);_abbf ._bfeb .UpDownBars .UpBars =_gf .NewCT_UpDownBar ();_abbf ._bfeb .UpDownBars .DownBars =_gf .NewCT_UpDownBar ();};
-
-// AddLineChart adds a new line chart to a chart.
-func (_gfa Chart )AddLineChart ()LineChart {_bbef :=_gf .NewCT_PlotAreaChoice ();_gfa ._ed .Chart .PlotArea .Choice =append (_gfa ._ed .Chart .PlotArea .Choice ,_bbef );_bbef .LineChart =_gf .NewCT_LineChart ();_bbef .LineChart .Grouping =_gf .NewCT_Grouping ();_bbef .LineChart .Grouping .ValAttr =_gf .ST_GroupingStandard ;return LineChart {_ebbc :_bbef .LineChart };};func (_bd CategoryAxis )Properties ()_cg .ShapeProperties {if _bd ._eaf .SpPr ==nil {_bd ._eaf .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_bd ._eaf .SpPr );};
-
-// Properties returns the bar chart series shape properties.
-func (_ab AreaChartSeries )Properties ()_cg .ShapeProperties {if _ab ._bf .SpPr ==nil {_ab ._bf .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_ab ._bf .SpPr );};func (_eeff ScatterChartSeries )Values ()NumberDataSource {if _eeff ._bagba .YVal ==nil {_eeff ._bagba .YVal =_gf .NewCT_NumDataSource ();};return MakeNumberDataSource (_eeff ._bagba .YVal );};
-
-// AddAxis adds an axis to a Surface chart.
-func (_dbc SurfaceChart )AddAxis (axis Axis ){_fbe :=_gf .NewCT_UnsignedInt ();_fbe .ValAttr =axis .AxisID ();_dbc ._gfaa .AxId =append (_dbc ._gfaa .AxId ,_fbe );};func (_ace Marker )SetSymbol (s _gf .ST_MarkerStyle ){if s ==_gf .ST_MarkerStyleUnset {_ace ._aegc .Symbol =nil ;}else {_ace ._aegc .Symbol =_gf .NewCT_MarkerStyle ();_ace ._aegc .Symbol .ValAttr =s ;};};func (_bebe Title )RunProperties ()_cg .RunProperties {if _bebe ._dbgg .Tx ==nil {_bebe .SetText ("");};if _bebe ._dbgg .Tx .Choice .Rich .P [0].EG_TextRun [0].R .RPr ==nil {_bebe ._dbgg .Tx .Choice .Rich .P [0].EG_TextRun [0].R .RPr =_ea .NewCT_TextCharacterProperties ();};return _cg .MakeRunProperties (_bebe ._dbgg .Tx .Choice .Rich .P [0].EG_TextRun [0].R .RPr );};
-
-// AddSeries adds a default series to a Bubble chart.
-func (_de BubbleChart )AddSeries ()BubbleChartSeries {_aff :=_de .nextColor (len (_de ._fad .Ser ));_ccb :=_gf .NewCT_BubbleSer ();_de ._fad .Ser =append (_de ._fad .Ser ,_ccb );_ccb .Idx .ValAttr =uint32 (len (_de ._fad .Ser )-1);_ccb .Order .ValAttr =uint32 (len (_de ._fad .Ser )-1);_faf :=BubbleChartSeries {_ccb };_faf .InitializeDefaults ();_faf .Properties ().SetSolidFill (_aff );return _faf ;};func (_bac DataLabels )ensureChoice (){if _bac ._bdd .Choice ==nil {_bac ._bdd .Choice =_gf .NewCT_DLblsChoice ();};};type NumberDataSource struct{_efe *_gf .CT_NumDataSource };
-
-// Bar3DChart is a 3D bar chart.
-type Bar3DChart struct{chartBase ;_ccg *_gf .CT_Bar3DChart ;};func (_aeba NumberDataSource )SetReference (s string ){_aeba .ensureChoice ();if _aeba ._efe .Choice .NumRef ==nil {_aeba ._efe .Choice .NumRef =_gf .NewCT_NumRef ();};_aeba ._efe .Choice .NumRef .F =s ;};
-
-// AddSeries adds a default series to a line chart.
-func (_fde LineChart )AddSeries ()LineChartSeries {_cfe :=_fde .nextColor (len (_fde ._ebbc .Ser ));_ebfb :=_gf .NewCT_LineSer ();_fde ._ebbc .Ser =append (_fde ._ebbc .Ser ,_ebfb );_ebfb .Idx .ValAttr =uint32 (len (_fde ._ebbc .Ser )-1);_ebfb .Order .ValAttr =uint32 (len (_fde ._ebbc .Ser )-1);_cfed :=LineChartSeries {_ebfb };_cfed .InitializeDefaults ();_cfed .Properties ().LineProperties ().SetSolidFill (_cfe );return _cfed ;};
-
-// LineChartSeries is the data series for a line chart.
-type LineChartSeries struct{_dcea *_gf .CT_LineSer };func (_ceeg DateAxis )Properties ()_cg .ShapeProperties {if _ceeg ._aac .SpPr ==nil {_ceeg ._aac .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_ceeg ._aac .SpPr );};func MakeNumberDataSource (x *_gf .CT_NumDataSource )NumberDataSource {return NumberDataSource {x }};
-
-// X returns the inner wrapped XML type.
-func (_gfg ValueAxis )X ()*_gf .CT_ValAx {return _gfg ._ggbc };
-
-// SetText sets the series text.
-func (_eea RadarChartSeries )SetText (s string ){_eea ._eebe .Tx =_gf .NewCT_SerTx ();_eea ._eebe .Tx .Choice .V =&s ;};func (_fdf DataLabels )SetPosition (p _gf .ST_DLblPos ){_fdf .ensureChoice ();_fdf ._bdd .Choice .DLblPos =_gf .NewCT_DLblPos ();_fdf ._bdd .Choice .DLblPos .ValAttr =p ;};
-
-// SurfaceChart is a 3D surface chart, viewed from the top-down.
-type SurfaceChart struct{chartBase ;_gfaa *_gf .CT_SurfaceChart ;};func (_cdb BarChart )AddAxis (axis Axis ){_gfc :=_gf .NewCT_UnsignedInt ();_gfc .ValAttr =axis .AxisID ();_cdb ._fg .AxId =append (_cdb ._fg .AxId ,_gfc );};
-
-// X returns the inner wrapped XML type.
-func (_eab Chart )X ()*_gf .ChartSpace {return _eab ._ed };
-
-// AddSurfaceChart adds a new surface chart to a chart.
-func (_cddd Chart )AddSurfaceChart ()SurfaceChart {_ad :=_gf .NewCT_PlotAreaChoice ();_cddd ._ed .Chart .PlotArea .Choice =append (_cddd ._ed .Chart .PlotArea .Choice ,_ad );_ad .SurfaceChart =_gf .NewCT_SurfaceChart ();_bff (_cddd ._ed .Chart );_cddd ._ed .Chart .View3D .RotX .ValAttr =_c .Int8 (90);_cddd ._ed .Chart .View3D .RotY .ValAttr =_c .Uint16 (0);_cddd ._ed .Chart .View3D .Perspective =_gf .NewCT_Perspective ();_cddd ._ed .Chart .View3D .Perspective .ValAttr =_c .Uint8 (0);_gdb :=SurfaceChart {_gfaa :_ad .SurfaceChart };_gdb .InitializeDefaults ();return _gdb ;};
-
-// AddBubbleChart adds a new bubble chart.
-func (_edb Chart )AddBubbleChart ()BubbleChart {_cbb :=_gf .NewCT_PlotAreaChoice ();_edb ._ed .Chart .PlotArea .Choice =append (_edb ._ed .Chart .PlotArea .Choice ,_cbb );_cbb .BubbleChart =_gf .NewCT_BubbleChart ();_db :=BubbleChart {_fad :_cbb .BubbleChart };_db .InitializeDefaults ();return _db ;};func (_cdgb NumberDataSource )ensureChoice (){if _cdgb ._efe .Choice ==nil {_cdgb ._efe .Choice =_gf .NewCT_NumDataSourceChoice ();};};
-
-// AddCategoryAxis adds a category axis.
-func (_gfae Chart )AddCategoryAxis ()CategoryAxis {_bfd :=_gf .NewCT_CatAx ();if _gfae ._ed .Chart .PlotArea .CChoice ==nil {_gfae ._ed .Chart .PlotArea .CChoice =_gf .NewCT_PlotAreaChoice1 ();};_bfd .AxId =_gf .NewCT_UnsignedInt ();_bfd .AxId .ValAttr =0x7FFFFFFF&_d .Uint32 ();_gfae ._ed .Chart .PlotArea .CChoice .CatAx =append (_gfae ._ed .Chart .PlotArea .CChoice .CatAx ,_bfd );_bfd .Auto =_gf .NewCT_Boolean ();_bfd .Auto .ValAttr =_c .Bool (true );_bfd .Delete =_gf .NewCT_Boolean ();_bfd .Delete .ValAttr =_c .Bool (false );_dcf :=MakeCategoryAxis (_bfd );_dcf .InitializeDefaults ();return _dcf ;};func (_dbe DateAxis )SetMinorTickMark (m _gf .ST_TickMark ){if m ==_gf .ST_TickMarkUnset {_dbe ._aac .MinorTickMark =nil ;}else {_dbe ._aac .MinorTickMark =_gf .NewCT_TickMark ();_dbe ._aac .MinorTickMark .ValAttr =m ;};};
-
-// SetText sets the series text.
-func (_ag AreaChartSeries )SetText (s string ){_ag ._bf .Tx =_gf .NewCT_SerTx ();_ag ._bf .Tx .Choice .V =&s ;};
-
-// RemoveTitle removes any existing title from the chart.
-func (_baf Chart )RemoveTitle (){_baf ._ed .Chart .Title =nil ;_baf ._ed .Chart .AutoTitleDeleted =_gf .NewCT_Boolean ();_baf ._ed .Chart .AutoTitleDeleted .ValAttr =_c .Bool (true );};
-
-// SetText sets the series text
-func (_ddga LineChartSeries )SetText (s string ){_ddga ._dcea .Tx =_gf .NewCT_SerTx ();_ddga ._dcea .Tx .Choice .V =&s ;};
-
-// AddStockChart adds a new stock chart.
-func (_ae Chart )AddStockChart ()StockChart {_gbe :=_gf .NewCT_PlotAreaChoice ();_ae ._ed .Chart .PlotArea .Choice =append (_ae ._ed .Chart .PlotArea .Choice ,_gbe );_gbe .StockChart =_gf .NewCT_StockChart ();_cb :=StockChart {_bfeb :_gbe .StockChart };_cb .InitializeDefaults ();return _cb ;};type CategoryAxis struct{_eaf *_gf .CT_CatAx };type nullAxis byte ;func (_bgf DataLabels )SetShowSeriesName (b bool ){_bgf .ensureChoice ();_bgf ._bdd .Choice .ShowSerName =_gf .NewCT_Boolean ();_bgf ._bdd .Choice .ShowSerName .ValAttr =_c .Bool (b );};func (_gca DataLabels )SetShowLeaderLines (b bool ){_gca .ensureChoice ();_gca ._bdd .Choice .ShowLeaderLines =_gf .NewCT_Boolean ();_gca ._bdd .Choice .ShowLeaderLines .ValAttr =_c .Bool (b );};func (_efg DateAxis )SetMajorTickMark (m _gf .ST_TickMark ){if m ==_gf .ST_TickMarkUnset {_efg ._aac .MajorTickMark =nil ;}else {_efg ._aac .MajorTickMark =_gf .NewCT_TickMark ();_efg ._aac .MajorTickMark .ValAttr =m ;};};func (_egg chartBase )nextColor (_bab int )_gd .Color {return _bge [_bab %len (_bge )]};func (_faa CategoryAxis )SetPosition (p _gf .ST_AxPos ){_faa ._eaf .AxPos =_gf .NewCT_AxPos ();_faa ._eaf .AxPos .ValAttr =p ;};
+// BarChart is a 2D bar chart.
+type BarChart struct{chartBase ;_aa *_e .CT_BarChart ;};
 
 // AreaChartSeries is a series to be used on an area chart.
-type AreaChartSeries struct{_bf *_gf .CT_AreaSer };func (_faba Chart )AddSeriesAxis ()SeriesAxis {_dee :=_gf .NewCT_SerAx ();if _faba ._ed .Chart .PlotArea .CChoice ==nil {_faba ._ed .Chart .PlotArea .CChoice =_gf .NewCT_PlotAreaChoice1 ();};_dee .AxId =_gf .NewCT_UnsignedInt ();_dee .AxId .ValAttr =0x7FFFFFFF&_d .Uint32 ();_faba ._ed .Chart .PlotArea .CChoice .SerAx =append (_faba ._ed .Chart .PlotArea .CChoice .SerAx ,_dee );_dee .Delete =_gf .NewCT_Boolean ();_dee .Delete .ValAttr =_c .Bool (false );_deae :=MakeSeriesAxis (_dee );_deae .InitializeDefaults ();return _deae ;};func MakeValueAxis (x *_gf .CT_ValAx )ValueAxis {return ValueAxis {x }};
+type AreaChartSeries struct{_bb *_e .CT_AreaSer };
 
-// AddAreaChart adds a new area chart to a chart.
-func (_fee Chart )AddAreaChart ()AreaChart {_feab :=_gf .NewCT_PlotAreaChoice ();_fee ._ed .Chart .PlotArea .Choice =append (_fee ._ed .Chart .PlotArea .Choice ,_feab );_feab .AreaChart =_gf .NewCT_AreaChart ();_fac :=AreaChart {_fa :_feab .AreaChart };_fac .InitializeDefaults ();return _fac ;};type chartBase struct{};
+// InitializeDefaults the bar chart to its defaults
+func (_fcc PieChart )InitializeDefaults (){_fcc ._gfca .VaryColors =_e .NewCT_Boolean ();_fcc ._gfca .VaryColors .ValAttr =_d .Bool (true );};func (_afa Legend )SetPosition (p _e .ST_LegendPos ){if p ==_e .ST_LegendPosUnset {_afa ._ggba .LegendPos =nil ;}else {_afa ._ggba .LegendPos =_e .NewCT_LegendPos ();_afa ._ggba .LegendPos .ValAttr =p ;};};
 
-// SetDisplayBlanksAs controls how missing values are displayed.
-func (_dba Chart )SetDisplayBlanksAs (v _gf .ST_DispBlanksAs ){_dba ._ed .Chart .DispBlanksAs =_gf .NewCT_DispBlanksAs ();_dba ._ed .Chart .DispBlanksAs .ValAttr =v ;};
+// X returns the inner wrapped XML type.
+func (_afab PieOfPieChart )X ()*_e .CT_OfPieChart {return _afab ._dae };
 
-// Order returns the order of the series
-func (_gab SurfaceChartSeries )Order ()uint32 {return _gab ._ada .Order .ValAttr };
+// InitializeDefaults the bar chart to its defaults
+func (_aea BarChart )InitializeDefaults (){_aea .SetDirection (_e .ST_BarDirCol )};
 
-// AddSeries adds a default series to an area chart.
-func (_bb AreaChart )AddSeries ()AreaChartSeries {_gc :=_bb .nextColor (len (_bb ._fa .Ser ));_ga :=_gf .NewCT_AreaSer ();_bb ._fa .Ser =append (_bb ._fa .Ser ,_ga );_ga .Idx .ValAttr =uint32 (len (_bb ._fa .Ser )-1);_ga .Order .ValAttr =uint32 (len (_bb ._fa .Ser )-1);_ba :=AreaChartSeries {_ga };_ba .InitializeDefaults ();_ba .Properties ().SetSolidFill (_gc );return _ba ;};func MakeSeriesAxis (x *_gf .CT_SerAx )SeriesAxis {return SeriesAxis {x }};
+// AddArea3DChart adds a new area chart to a chart.
+func (_cde Chart )AddArea3DChart ()Area3DChart {_fcf (_cde ._beb .Chart );_cbd :=_e .NewCT_PlotAreaChoice ();_cde ._beb .Chart .PlotArea .Choice =append (_cde ._beb .Chart .PlotArea .Choice ,_cbd );_cbd .Area3DChart =_e .NewCT_Area3DChart ();_aaa :=Area3DChart {_b :_cbd .Area3DChart };_aaa .InitializeDefaults ();return _aaa ;};type SeriesAxis struct{_bcef *_e .CT_SerAx };
 
-// Properties returns the Bubble chart series shape properties.
-func (_ccgc BubbleChartSeries )Properties ()_cg .ShapeProperties {if _ccgc ._ca .SpPr ==nil {_ccgc ._ca .SpPr =_ea .NewCT_ShapeProperties ();};return _cg .MakeShapeProperties (_ccgc ._ca .SpPr );};
+// Values returns the value data source.
+func (_dfe RadarChartSeries )Values ()NumberDataSource {if _dfe ._dbbg .Val ==nil {_dfe ._dbbg .Val =_e .NewCT_NumDataSource ();};return MakeNumberDataSource (_dfe ._dbbg .Val );};
 
-// CategoryAxis returns the category data source.
-func (_gacc PieChartSeries )CategoryAxis ()CategoryAxisDataSource {if _gacc ._bae .Cat ==nil {_gacc ._bae .Cat =_gf .NewCT_AxDataSource ();};return MakeAxisDataSource (_gacc ._bae .Cat );};type SurfaceChartSeries struct{_ada *_gf .CT_SurfaceSer };
+// AddSeries adds a default series to a Surface chart.
+func (_cdcbe SurfaceChart )AddSeries ()SurfaceChartSeries {_bcca :=_cdcbe .nextColor (len (_cdcbe ._eddd .Ser ));_fdfb :=_e .NewCT_SurfaceSer ();_cdcbe ._eddd .Ser =append (_cdcbe ._eddd .Ser ,_fdfb );_fdfb .Idx .ValAttr =uint32 (len (_cdcbe ._eddd .Ser )-1);_fdfb .Order .ValAttr =uint32 (len (_cdcbe ._eddd .Ser )-1);_cbce :=SurfaceChartSeries {_fdfb };_cbce .InitializeDefaults ();_cbce .Properties ().LineProperties ().SetSolidFill (_bcca );return _cbce ;};
 
-// AddBarChart adds a new bar chart to a chart.
-func (_cce Chart )AddBarChart ()BarChart {_fca :=_gf .NewCT_PlotAreaChoice ();_cce ._ed .Chart .PlotArea .Choice =append (_cce ._ed .Chart .PlotArea .Choice ,_fca );_fca .BarChart =_gf .NewCT_BarChart ();_fca .BarChart .Grouping =_gf .NewCT_BarGrouping ();_fca .BarChart .Grouping .ValAttr =_gf .ST_BarGroupingStandard ;_cef :=BarChart {_fg :_fca .BarChart };_cef .InitializeDefaults ();return _cef ;};
+// MakeAxisDataSource constructs an AxisDataSource wrapper.
+func MakeAxisDataSource (x *_e .CT_AxDataSource )CategoryAxisDataSource {return CategoryAxisDataSource {x };};func (_ec AreaChart )AddAxis (axis Axis ){_ad :=_e .NewCT_UnsignedInt ();_ad .ValAttr =axis .AxisID ();_ec ._gd .AxId =append (_ec ._gd .AxId ,_ad );};func (_abe Marker )SetSize (sz uint8 ){_abe ._cab .Size =_e .NewCT_MarkerSize ();_abe ._cab .Size .ValAttr =&sz ;};func (_fdd DateAxis )SetMajorTickMark (m _e .ST_TickMark ){if m ==_e .ST_TickMarkUnset {_fdd ._abb .MajorTickMark =nil ;}else {_fdd ._abb .MajorTickMark =_e .NewCT_TickMark ();_fdd ._abb .MajorTickMark .ValAttr =m ;};};func (_aba CategoryAxis )SetPosition (p _e .ST_AxPos ){_aba ._aga .AxPos =_e .NewCT_AxPos ();_aba ._aga .AxPos .ValAttr =p ;};func (_gaf ScatterChart )InitializeDefaults (){_gaf ._cfg .ScatterStyle .ValAttr =_e .ST_ScatterStyleMarker ;};
+
+// X returns the inner wrapped XML type.
+func (_bbfg SurfaceChartSeries )X ()*_e .CT_SurfaceSer {return _bbfg ._fcag };
+
+// X returns the inner wrapped XML type.
+func (_aac RadarChart )X ()*_e .CT_RadarChart {return _aac ._cea };
+
+// Values returns the value data source.
+func (_gda BarChartSeries )Values ()NumberDataSource {if _gda ._ceg .Val ==nil {_gda ._ceg .Val =_e .NewCT_NumDataSource ();};return MakeNumberDataSource (_gda ._ceg .Val );};func MakeCategoryAxis (x *_e .CT_CatAx )CategoryAxis {return CategoryAxis {x }};func (_gebab Surface3DChart )InitializeDefaults (){_gebab ._fgaf .Wireframe =_e .NewCT_Boolean ();_gebab ._fgaf .Wireframe .ValAttr =_d .Bool (false );_gebab ._fgaf .BandFmts =_e .NewCT_BandFmts ();for _eede :=0;_eede < 15;_eede ++{_aggd :=_e .NewCT_BandFmt ();_aggd .Idx .ValAttr =uint32 (_eede );_aggd .SpPr =_cb .NewCT_ShapeProperties ();_gefb :=_cc .MakeShapeProperties (_aggd .SpPr );_gefb .SetSolidFill (_gebab .nextColor (_eede ));_gebab ._fgaf .BandFmts .BandFmt =append (_gebab ._fgaf .BandFmts .BandFmt ,_aggd );};};
+
+// X returns the inner wrapped XML type.
+func (_fdf GridLines )X ()*_e .CT_ChartLines {return _fdf ._eee };func (_ffd DateAxis )SetPosition (p _e .ST_AxPos ){_ffd ._abb .AxPos =_e .NewCT_AxPos ();_ffd ._abb .AxPos .ValAttr =p ;};func (_eb CategoryAxis )MajorGridLines ()GridLines {if _eb ._aga .MajorGridlines ==nil {_eb ._aga .MajorGridlines =_e .NewCT_ChartLines ();};return GridLines {_eb ._aga .MajorGridlines };};
+
+// X returns the inner wrapped XML type.
+func (_fcb BubbleChart )X ()*_e .CT_BubbleChart {return _fcb ._cec };
 
 // AddPie3DChart adds a new pie chart to a chart.
-func (_bbc Chart )AddPie3DChart ()Pie3DChart {_bff (_bbc ._ed .Chart );_gce :=_gf .NewCT_PlotAreaChoice ();_bbc ._ed .Chart .PlotArea .Choice =append (_bbc ._ed .Chart .PlotArea .Choice ,_gce );_gce .Pie3DChart =_gf .NewCT_Pie3DChart ();_ec :=Pie3DChart {_fgb :_gce .Pie3DChart };_ec .InitializeDefaults ();return _ec ;};func (_dadb ValueAxis )SetCrosses (axis Axis ){_dadb ._ggbc .CrossAx .ValAttr =axis .AxisID ()};
+func (_eaa Chart )AddPie3DChart ()Pie3DChart {_fcf (_eaa ._beb .Chart );_ggc :=_e .NewCT_PlotAreaChoice ();_eaa ._beb .Chart .PlotArea .Choice =append (_eaa ._beb .Chart .PlotArea .Choice ,_ggc );_ggc .Pie3DChart =_e .NewCT_Pie3DChart ();_df :=Pie3DChart {_ffcg :_ggc .Pie3DChart };_df .InitializeDefaults ();return _df ;};
 
-// Index returns the index of the series
-func (_efb SurfaceChartSeries )Index ()uint32 {return _efb ._ada .Idx .ValAttr };
+// Properties returns the bar chart series shape properties.
+func (_gad RadarChartSeries )Properties ()_cc .ShapeProperties {if _gad ._dbbg .SpPr ==nil {_gad ._dbbg .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_gad ._dbbg .SpPr );};func (_ggd CategoryAxis )AxisID ()uint32 {return _ggd ._aga .AxId .ValAttr };
+
+// SetText sets the series text.
+func (_ef AreaChartSeries )SetText (s string ){_ef ._bb .Tx =_e .NewCT_SerTx ();_ef ._bb .Tx .Choice .V =&s };
+
+// Order returns the order of the series
+func (_cdf LineChartSeries )Order ()uint32 {return _cdf ._fecc .Order .ValAttr };
+
+// Properties returns the line chart series shape properties.
+func (_aed LineChartSeries )Properties ()_cc .ShapeProperties {if _aed ._fecc .SpPr ==nil {_aed ._fecc .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_aed ._fecc .SpPr );};
+
+// InitializeDefaults the bar chart to its defaults
+func (_dbcfg Pie3DChart )InitializeDefaults (){_dbcfg ._ffcg .VaryColors =_e .NewCT_Boolean ();_dbcfg ._ffcg .VaryColors .ValAttr =_d .Bool (true );};
+
+// SetHoleSize controls the hole size in the pie chart and is measured in percent.
+func (_dac DoughnutChart )SetHoleSize (pct uint8 ){if _dac ._bfb .HoleSize ==nil {_dac ._bfb .HoleSize =_e .NewCT_HoleSize ();};if _dac ._bfb .HoleSize .ValAttr ==nil {_dac ._bfb .HoleSize .ValAttr =&_e .ST_HoleSize {};};_dac ._bfb .HoleSize .ValAttr .ST_HoleSizeUByte =&pct ;};
+
+// AddValueAxis adds a value axis to the chart.
+func (_cgcc Chart )AddValueAxis ()ValueAxis {_bff :=_e .NewCT_ValAx ();if _cgcc ._beb .Chart .PlotArea .CChoice ==nil {_cgcc ._beb .Chart .PlotArea .CChoice =_e .NewCT_PlotAreaChoice1 ();};_bff .AxId =_e .NewCT_UnsignedInt ();_bff .AxId .ValAttr =0x7FFFFFFF&_ab .Uint32 ();_cgcc ._beb .Chart .PlotArea .CChoice .ValAx =append (_cgcc ._beb .Chart .PlotArea .CChoice .ValAx ,_bff );_bff .Delete =_e .NewCT_Boolean ();_bff .Delete .ValAttr =_d .Bool (false );_bff .Scaling =_e .NewCT_Scaling ();_bff .Scaling .Orientation =_e .NewCT_Orientation ();_bff .Scaling .Orientation .ValAttr =_e .ST_OrientationMinMax ;_bff .Choice =&_e .EG_AxSharedChoice {};_bff .Choice .Crosses =_e .NewCT_Crosses ();_bff .Choice .Crosses .ValAttr =_e .ST_CrossesAutoZero ;_bff .CrossBetween =_e .NewCT_CrossBetween ();_bff .CrossBetween .ValAttr =_e .ST_CrossBetweenBetween ;_bdb :=MakeValueAxis (_bff );_bdb .MajorGridLines ().Properties ().LineProperties ().SetSolidFill (_c .LightGray );_bdb .SetMajorTickMark (_e .ST_TickMarkOut );_bdb .SetMinorTickMark (_e .ST_TickMarkIn );_bdb .SetTickLabelPosition (_e .ST_TickLblPosNextTo );_bdb .Properties ().LineProperties ().SetSolidFill (_c .Black );_bdb .SetPosition (_e .ST_AxPosL );return _bdb ;};func (_cgcf CategoryAxis )SetMajorTickMark (m _e .ST_TickMark ){if m ==_e .ST_TickMarkUnset {_cgcf ._aga .MajorTickMark =nil ;}else {_cgcf ._aga .MajorTickMark =_e .NewCT_TickMark ();_cgcf ._aga .MajorTickMark .ValAttr =m ;};};
+
+// SetText sets the series text.
+func (_edd BubbleChartSeries )SetText (s string ){_edd ._ggb .Tx =_e .NewCT_SerTx ();_edd ._ggb .Tx .Choice .V =&s ;};
+
+// AddSurfaceChart adds a new surface chart to a chart.
+func (_eda Chart )AddSurfaceChart ()SurfaceChart {_bad :=_e .NewCT_PlotAreaChoice ();_eda ._beb .Chart .PlotArea .Choice =append (_eda ._beb .Chart .PlotArea .Choice ,_bad );_bad .SurfaceChart =_e .NewCT_SurfaceChart ();_fcf (_eda ._beb .Chart );_eda ._beb .Chart .View3D .RotX .ValAttr =_d .Int8 (90);_eda ._beb .Chart .View3D .RotY .ValAttr =_d .Uint16 (0);_eda ._beb .Chart .View3D .Perspective =_e .NewCT_Perspective ();_eda ._beb .Chart .View3D .Perspective .ValAttr =_d .Uint8 (0);_agg :=SurfaceChart {_eddd :_bad .SurfaceChart };_agg .InitializeDefaults ();return _agg ;};func (_dc DataLabels )ensureChoice (){if _dc ._egg .Choice ==nil {_dc ._egg .Choice =_e .NewCT_DLblsChoice ();};};
+
+// SetIndex sets the index of the series
+func (_accc ScatterChartSeries )SetIndex (idx uint32 ){_accc ._ffa .Idx .ValAttr =idx };func (_fgf Bar3DChart )AddAxis (axis Axis ){_ecc :=_e .NewCT_UnsignedInt ();_ecc .ValAttr =axis .AxisID ();_fgf ._cca .AxId =append (_fgf ._cca .AxId ,_ecc );};
+
+// RadarChart is an Radar chart that has a shaded Radar underneath a curve.
+type RadarChart struct{chartBase ;_cea *_e .CT_RadarChart ;};func (_abcg SurfaceChart )InitializeDefaults (){_abcg ._eddd .Wireframe =_e .NewCT_Boolean ();_abcg ._eddd .Wireframe .ValAttr =_d .Bool (false );_abcg ._eddd .BandFmts =_e .NewCT_BandFmts ();for _gggg :=0;_gggg < 15;_gggg ++{_aebb :=_e .NewCT_BandFmt ();_aebb .Idx .ValAttr =uint32 (_gggg );_aebb .SpPr =_cb .NewCT_ShapeProperties ();_cee :=_cc .MakeShapeProperties (_aebb .SpPr );_cee .SetSolidFill (_abcg .nextColor (_gggg ));_abcg ._eddd .BandFmts .BandFmt =append (_abcg ._eddd .BandFmts .BandFmt ,_aebb );};};
+
+// Values returns the value data source.
+func (_efb AreaChartSeries )Values ()NumberDataSource {if _efb ._bb .Val ==nil {_efb ._bb .Val =_e .NewCT_NumDataSource ();};return MakeNumberDataSource (_efb ._bb .Val );};func (_fbf SurfaceChartSeries )Values ()NumberDataSource {if _fbf ._fcag .Val ==nil {_fbf ._fcag .Val =_e .NewCT_NumDataSource ();};_eba :=MakeNumberDataSource (_fbf ._fcag .Val );_eba .CreateEmptyNumberCache ();return _eba ;};func (_egd ValueAxis )AxisID ()uint32 {return _egd ._dga .AxId .ValAttr };func (_cdcg DataLabels )SetShowPercent (b bool ){_cdcg .ensureChoice ();_cdcg ._egg .Choice .ShowPercent =_e .NewCT_Boolean ();_cdcg ._egg .Choice .ShowPercent .ValAttr =_d .Bool (b );};
+
+// CategoryAxisDataSource specifies the data for an axis.  It's commonly used with
+// SetReference to set the axis data to a range of cells.
+type CategoryAxisDataSource struct{_fec *_e .CT_AxDataSource };func (_bdaf DataLabels )SetPosition (p _e .ST_DLblPos ){_bdaf .ensureChoice ();_bdaf ._egg .Choice .DLblPos =_e .NewCT_DLblPos ();_bdaf ._egg .Choice .DLblPos .ValAttr =p ;};
+
+// X returns the inner wrapped XML type.
+func (_ccg BarChartSeries )X ()*_e .CT_BarSer {return _ccg ._ceg };func (_dfeg SurfaceChartSeries )CategoryAxis ()CategoryAxisDataSource {if _dfeg ._fcag .Cat ==nil {_dfeg ._fcag .Cat =_e .NewCT_AxDataSource ();};return MakeAxisDataSource (_dfeg ._fcag .Cat );};func MakeChart (x *_e .ChartSpace )Chart {return Chart {x }};
+
+// SetValues is used to set the source data to a set of values.
+func (_gec CategoryAxisDataSource )SetValues (v []string ){_gec ._fec .Choice =_e .NewCT_AxDataSourceChoice ();_gec ._fec .Choice .StrLit =_e .NewCT_StrData ();_gec ._fec .Choice .StrLit .PtCount =_e .NewCT_UnsignedInt ();_gec ._fec .Choice .StrLit .PtCount .ValAttr =uint32 (len (v ));for _aeg ,_eac :=range v {_gec ._fec .Choice .StrLit .Pt =append (_gec ._fec .Choice .StrLit .Pt ,&_e .CT_StrVal {IdxAttr :uint32 (_aeg ),V :_eac });};};
+
+// AreaChart is an area chart that has a shaded area underneath a curve.
+type AreaChart struct{chartBase ;_gd *_e .CT_AreaChart ;};
+
+// Values returns the bubble size data source.
+func (_ba BubbleChartSeries )BubbleSizes ()NumberDataSource {if _ba ._ggb .BubbleSize ==nil {_ba ._ggb .BubbleSize =_e .NewCT_NumDataSource ();};return MakeNumberDataSource (_ba ._ggb .BubbleSize );};
+
+// X returns the inner wrapped XML type.
+func (_gc Bar3DChart )X ()*_e .CT_Bar3DChart {return _gc ._cca };func (_eff SurfaceChartSeries )InitializeDefaults (){_eff .Properties ().LineProperties ().SetWidth (1*_a .Point );_eff .Properties ().LineProperties ().SetSolidFill (_c .Black );_eff .Properties ().LineProperties ().SetJoin (_cc .LineJoinRound );};
+
+// RadarChartSeries is a series to be used on an Radar chart.
+type RadarChartSeries struct{_dbbg *_e .CT_RadarSer };
+
+// SetText sets the series text.
+func (_agb RadarChartSeries )SetText (s string ){_agb ._dbbg .Tx =_e .NewCT_SerTx ();_agb ._dbbg .Tx .Choice .V =&s ;};func (_gba SeriesAxis )AxisID ()uint32 {return _gba ._bcef .AxId .ValAttr };
+
+// AddSeries adds a default series to an area chart.
+func (_fc AreaChart )AddSeries ()AreaChartSeries {_fe :=_fc .nextColor (len (_fc ._gd .Ser ));_ced :=_e .NewCT_AreaSer ();_fc ._gd .Ser =append (_fc ._gd .Ser ,_ced );_ced .Idx .ValAttr =uint32 (len (_fc ._gd .Ser )-1);_ced .Order .ValAttr =uint32 (len (_fc ._gd .Ser )-1);_fgg :=AreaChartSeries {_ced };_fgg .InitializeDefaults ();_fgg .Properties ().SetSolidFill (_fe );return _fgg ;};
+
+// AddAreaChart adds a new area chart to a chart.
+func (_aab Chart )AddAreaChart ()AreaChart {_dbb :=_e .NewCT_PlotAreaChoice ();_aab ._beb .Chart .PlotArea .Choice =append (_aab ._beb .Chart .PlotArea .Choice ,_dbb );_dbb .AreaChart =_e .NewCT_AreaChart ();_dbc :=AreaChart {_gd :_dbb .AreaChart };_dbc .InitializeDefaults ();return _dbc ;};
+
+// X returns the inner wrapped XML type.
+func (_ebc PieChartSeries )X ()*_e .CT_PieSer {return _ebc ._gddg };
+
+// AddSeries adds a default series to an Radar chart.
+func (_gfg RadarChart )AddSeries ()RadarChartSeries {_aae :=_gfg .nextColor (len (_gfg ._cea .Ser ));_fgaa :=_e .NewCT_RadarSer ();_gfg ._cea .Ser =append (_gfg ._cea .Ser ,_fgaa );_fgaa .Idx .ValAttr =uint32 (len (_gfg ._cea .Ser )-1);_fgaa .Order .ValAttr =uint32 (len (_gfg ._cea .Ser )-1);_dbeb :=RadarChartSeries {_fgaa };_dbeb .InitializeDefaults ();_dbeb .Properties ().SetSolidFill (_aae );return _dbeb ;};func (_bdae DataLabels )SetShowLeaderLines (b bool ){_bdae .ensureChoice ();_bdae ._egg .Choice .ShowLeaderLines =_e .NewCT_Boolean ();_bdae ._egg .Choice .ShowLeaderLines .ValAttr =_d .Bool (b );};func (_cecd LineChartSeries )InitializeDefaults (){_cecd .Properties ().LineProperties ().SetWidth (1*_a .Point );_cecd .Properties ().LineProperties ().SetSolidFill (_c .Black );_cecd .Properties ().LineProperties ().SetJoin (_cc .LineJoinRound );_cecd .Marker ().SetSymbol (_e .ST_MarkerStyleNone );_cecd .Labels ().SetShowLegendKey (false );_cecd .Labels ().SetShowValue (false );_cecd .Labels ().SetShowPercent (false );_cecd .Labels ().SetShowCategoryName (false );_cecd .Labels ().SetShowSeriesName (false );_cecd .Labels ().SetShowLeaderLines (false );};type Marker struct{_cab *_e .CT_Marker };
+
+// Marker returns the marker properties.
+func (_agag ScatterChartSeries )Marker ()Marker {if _agag ._ffa .Marker ==nil {_agag ._ffa .Marker =_e .NewCT_Marker ();};return MakeMarker (_agag ._ffa .Marker );};
+
+// AddSeries adds a default series to a line chart.
+func (_eef LineChart )AddSeries ()LineChartSeries {_ecd :=_eef .nextColor (len (_eef ._eaf .Ser ));_gegbg :=_e .NewCT_LineSer ();_eef ._eaf .Ser =append (_eef ._eaf .Ser ,_gegbg );_gegbg .Idx .ValAttr =uint32 (len (_eef ._eaf .Ser )-1);_gegbg .Order .ValAttr =uint32 (len (_eef ._eaf .Ser )-1);_eddf :=LineChartSeries {_gegbg };_eddf .InitializeDefaults ();_eddf .Properties ().LineProperties ().SetSolidFill (_ecd );return _eddf ;};func (_gagg CategoryAxis )SetCrosses (axis Axis ){_gagg ._aga .Choice =_e .NewEG_AxSharedChoice ();_gagg ._aga .Choice .Crosses =_e .NewCT_Crosses ();_gagg ._aga .Choice .Crosses .ValAttr =_e .ST_CrossesAutoZero ;_gagg ._aga .CrossAx .ValAttr =axis .AxisID ();};
+
+// AddDateAxis adds a value axis to the chart.
+func (_gege Chart )AddDateAxis ()DateAxis {_fce :=_e .NewCT_DateAx ();if _gege ._beb .Chart .PlotArea .CChoice ==nil {_gege ._beb .Chart .PlotArea .CChoice =_e .NewCT_PlotAreaChoice1 ();};_fce .AxId =_e .NewCT_UnsignedInt ();_fce .AxId .ValAttr =0x7FFFFFFF&_ab .Uint32 ();_gege ._beb .Chart .PlotArea .CChoice .DateAx =append (_gege ._beb .Chart .PlotArea .CChoice .DateAx ,_fce );_fce .Delete =_e .NewCT_Boolean ();_fce .Delete .ValAttr =_d .Bool (false );_fce .Scaling =_e .NewCT_Scaling ();_fce .Scaling .Orientation =_e .NewCT_Orientation ();_fce .Scaling .Orientation .ValAttr =_e .ST_OrientationMinMax ;_fce .Choice =&_e .EG_AxSharedChoice {};_fce .Choice .Crosses =_e .NewCT_Crosses ();_fce .Choice .Crosses .ValAttr =_e .ST_CrossesAutoZero ;_gbd :=DateAxis {_fce };_gbd .MajorGridLines ().Properties ().LineProperties ().SetSolidFill (_c .LightGray );_gbd .SetMajorTickMark (_e .ST_TickMarkOut );_gbd .SetMinorTickMark (_e .ST_TickMarkIn );_gbd .SetTickLabelPosition (_e .ST_TickLblPosNextTo );_gbd .Properties ().LineProperties ().SetSolidFill (_c .Black );_gbd .SetPosition (_e .ST_AxPosL );return _gbd ;};
+
+// AddBar3DChart adds a new 3D bar chart to a chart.
+func (_gcd Chart )AddBar3DChart ()Bar3DChart {_fcf (_gcd ._beb .Chart );_fbc :=_e .NewCT_PlotAreaChoice ();_gcd ._beb .Chart .PlotArea .Choice =append (_gcd ._beb .Chart .PlotArea .Choice ,_fbc );_fbc .Bar3DChart =_e .NewCT_Bar3DChart ();_fbc .Bar3DChart .Grouping =_e .NewCT_BarGrouping ();_fbc .Bar3DChart .Grouping .ValAttr =_e .ST_BarGroupingStandard ;_bbb :=Bar3DChart {_cca :_fbc .Bar3DChart };_bbb .InitializeDefaults ();return _bbb ;};func (_cfd Legend )SetOverlay (b bool ){_cfd ._ggba .Overlay =_e .NewCT_Boolean ();_cfd ._ggba .Overlay .ValAttr =_d .Bool (b );};func (_dca ScatterChartSeries )CategoryAxis ()CategoryAxisDataSource {if _dca ._ffa .XVal ==nil {_dca ._ffa .XVal =_e .NewCT_AxDataSource ();};return MakeAxisDataSource (_dca ._ffa .XVal );};func (_ebb CategoryAxis )SetMinorTickMark (m _e .ST_TickMark ){if m ==_e .ST_TickMarkUnset {_ebb ._aga .MinorTickMark =nil ;}else {_ebb ._aga .MinorTickMark =_e .NewCT_TickMark ();_ebb ._aga .MinorTickMark .ValAttr =m ;};};type nullAxis byte ;func (_dd Chart )AddSeriesAxis ()SeriesAxis {_edg :=_e .NewCT_SerAx ();if _dd ._beb .Chart .PlotArea .CChoice ==nil {_dd ._beb .Chart .PlotArea .CChoice =_e .NewCT_PlotAreaChoice1 ();};_edg .AxId =_e .NewCT_UnsignedInt ();_edg .AxId .ValAttr =0x7FFFFFFF&_ab .Uint32 ();_dd ._beb .Chart .PlotArea .CChoice .SerAx =append (_dd ._beb .Chart .PlotArea .CChoice .SerAx ,_edg );_edg .Delete =_e .NewCT_Boolean ();_edg .Delete .ValAttr =_d .Bool (false );_baa :=MakeSeriesAxis (_edg );_baa .InitializeDefaults ();return _baa ;};
+
+// Pie3DChart is a Pie3D chart.
+type Pie3DChart struct{chartBase ;_ffcg *_e .CT_Pie3DChart ;};func MakeMarker (x *_e .CT_Marker )Marker {return Marker {x }};type DataLabels struct{_egg *_e .CT_DLbls };
+
+// AddTitle sets a new title on the chart.
+func (_eag Chart )AddTitle ()Title {_eag ._beb .Chart .Title =_e .NewCT_Title ();_eag ._beb .Chart .Title .Overlay =_e .NewCT_Boolean ();_eag ._beb .Chart .Title .Overlay .ValAttr =_d .Bool (false );_eag ._beb .Chart .AutoTitleDeleted =_e .NewCT_Boolean ();_eag ._beb .Chart .AutoTitleDeleted .ValAttr =_d .Bool (false );_daad :=MakeTitle (_eag ._beb .Chart .Title );_daad .InitializeDefaults ();return _daad ;};
+
+// SurfaceChart is a 3D surface chart, viewed from the top-down.
+type SurfaceChart struct{chartBase ;_eddd *_e .CT_SurfaceChart ;};
+
+// AddLegend adds a legend to a chart, replacing any existing legend.
+func (_bcb Chart )AddLegend ()Legend {_bcb ._beb .Chart .Legend =_e .NewCT_Legend ();_fcfd :=MakeLegend (_bcb ._beb .Chart .Legend );_fcfd .InitializeDefaults ();return _fcfd ;};func (_ccff StockChart )AddAxis (axis Axis ){_bega :=_e .NewCT_UnsignedInt ();_bega .ValAttr =axis .AxisID ();_ccff ._fbed .AxId =append (_ccff ._fbed .AxId ,_bega );};func (_cffd Marker )Properties ()_cc .ShapeProperties {if _cffd ._cab .SpPr ==nil {_cffd ._cab .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_cffd ._cab .SpPr );};
+
+// AddRadarChart adds a new radar chart to a chart.
+func (_eae Chart )AddRadarChart ()RadarChart {_aeb :=_e .NewCT_PlotAreaChoice ();_eae ._beb .Chart .PlotArea .Choice =append (_eae ._beb .Chart .PlotArea .Choice ,_aeb );_aeb .RadarChart =_e .NewCT_RadarChart ();_gcb :=RadarChart {_cea :_aeb .RadarChart };_gcb .InitializeDefaults ();return _gcb ;};func (_caf ScatterChartSeries )InitializeDefaults (){_caf .Properties ().LineProperties ().SetNoFill ();_caf .Marker ().SetSymbol (_e .ST_MarkerStyleAuto );_caf .Labels ().SetShowLegendKey (false );_caf .Labels ().SetShowValue (true );_caf .Labels ().SetShowPercent (false );_caf .Labels ().SetShowCategoryName (false );_caf .Labels ().SetShowSeriesName (false );_caf .Labels ().SetShowLeaderLines (false );};
+
+// AddSeries adds a default series to an Pie3D chart.
+func (_ggg Pie3DChart )AddSeries ()PieChartSeries {_fbe :=_e .NewCT_PieSer ();_ggg ._ffcg .Ser =append (_ggg ._ffcg .Ser ,_fbe );_fbe .Idx .ValAttr =uint32 (len (_ggg ._ffcg .Ser )-1);_fbe .Order .ValAttr =uint32 (len (_ggg ._ffcg .Ser )-1);_feg :=PieChartSeries {_fbe };_feg .InitializeDefaults ();return _feg ;};
+
+// SetDirection changes the direction of the bar chart (bar or column).
+func (_bc BarChart )SetDirection (d _e .ST_BarDir ){_bc ._aa .BarDir .ValAttr =d };func (_gfdg ValueAxis )Properties ()_cc .ShapeProperties {if _gfdg ._dga .SpPr ==nil {_gfdg ._dga .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_gfdg ._dga .SpPr );};func MakeNumberDataSource (x *_e .CT_NumDataSource )NumberDataSource {return NumberDataSource {x }};func MakeTitle (x *_e .CT_Title )Title {return Title {x }};
+
+// AddPieOfPieChart adds a new pie chart to a chart.
+func (_ece Chart )AddPieOfPieChart ()PieOfPieChart {_dbcc :=_e .NewCT_PlotAreaChoice ();_ece ._beb .Chart .PlotArea .Choice =append (_ece ._beb .Chart .PlotArea .Choice ,_dbcc );_dbcc .OfPieChart =_e .NewCT_OfPieChart ();_ee :=PieOfPieChart {_dae :_dbcc .OfPieChart };_ee .InitializeDefaults ();return _ee ;};
+
+// AddSeries adds a default series to an area chart.
+func (_cgc Area3DChart )AddSeries ()AreaChartSeries {_ce :=_cgc .nextColor (len (_cgc ._b .Ser ));_bf :=_e .NewCT_AreaSer ();_cgc ._b .Ser =append (_cgc ._b .Ser ,_bf );_bf .Idx .ValAttr =uint32 (len (_cgc ._b .Ser )-1);_bf .Order .ValAttr =uint32 (len (_cgc ._b .Ser )-1);_fd :=AreaChartSeries {_bf };_fd .InitializeDefaults ();_fd .Properties ().SetSolidFill (_ce );return _fd ;};
+
+// InitializeDefaults the Stock chart to its defaults
+func (_bdg StockChart )InitializeDefaults (){_bdg ._fbed .HiLowLines =_e .NewCT_ChartLines ();_bdg ._fbed .UpDownBars =_e .NewCT_UpDownBars ();_bdg ._fbed .UpDownBars .GapWidth =_e .NewCT_GapAmount ();_bdg ._fbed .UpDownBars .GapWidth .ValAttr =&_e .ST_GapAmount {};_bdg ._fbed .UpDownBars .GapWidth .ValAttr .ST_GapAmountUShort =_d .Uint16 (150);_bdg ._fbed .UpDownBars .UpBars =_e .NewCT_UpDownBar ();_bdg ._fbed .UpDownBars .DownBars =_e .NewCT_UpDownBar ();};func (_ecce Legend )InitializeDefaults (){_ecce .SetPosition (_e .ST_LegendPosR );_ecce .SetOverlay (false );_ecce .Properties ().SetNoFill ();_ecce .Properties ().LineProperties ().SetNoFill ();};
+
+// Bar3DChart is a 3D bar chart.
+type Bar3DChart struct{chartBase ;_cca *_e .CT_Bar3DChart ;};
+
+// CategoryAxis returns the category data source.
+func (_gae PieChartSeries )CategoryAxis ()CategoryAxisDataSource {if _gae ._gddg .Cat ==nil {_gae ._gddg .Cat =_e .NewCT_AxDataSource ();};return MakeAxisDataSource (_gae ._gddg .Cat );};func MakeValueAxis (x *_e .CT_ValAx )ValueAxis {return ValueAxis {x }};
+
+// X returns the inner wrapped XML type.
+func (_bce DoughnutChart )X ()*_e .CT_DoughnutChart {return _bce ._bfb };func (_edgd DataLabels )SetShowValue (b bool ){_edgd .ensureChoice ();_edgd ._egg .Choice .ShowVal =_e .NewCT_Boolean ();_edgd ._egg .Choice .ShowVal .ValAttr =_d .Bool (b );};
+
+// X returns the inner wrapped XML type.
+func (_gfcf StockChart )X ()*_e .CT_StockChart {return _gfcf ._fbed };
+
+// Marker returns the marker properties.
+func (_bcag LineChartSeries )Marker ()Marker {if _bcag ._fecc .Marker ==nil {_bcag ._fecc .Marker =_e .NewCT_Marker ();};return MakeMarker (_bcag ._fecc .Marker );};
+
+// AddSeries adds a default series to a line chart.
+func (_afe Line3DChart )AddSeries ()LineChartSeries {_cedc :=_afe .nextColor (len (_afe ._accf .Ser ));_gbfa :=_e .NewCT_LineSer ();_afe ._accf .Ser =append (_afe ._accf .Ser ,_gbfa );_gbfa .Idx .ValAttr =uint32 (len (_afe ._accf .Ser )-1);_gbfa .Order .ValAttr =uint32 (len (_afe ._accf .Ser )-1);_ebg :=LineChartSeries {_gbfa };_ebg .InitializeDefaults ();_ebg .Properties ().LineProperties ().SetSolidFill (_cedc );_ebg .Properties ().SetSolidFill (_cedc );return _ebg ;};
+
+// X returns the inner wrapped XML type.
+func (_gcf Marker )X ()*_e .CT_Marker {return _gcf ._cab };func (_gfb Marker )SetSymbol (s _e .ST_MarkerStyle ){if s ==_e .ST_MarkerStyleUnset {_gfb ._cab .Symbol =nil ;}else {_gfb ._cab .Symbol =_e .NewCT_MarkerStyle ();_gfb ._cab .Symbol .ValAttr =s ;};};func (_fbea Title )ParagraphProperties ()_cc .ParagraphProperties {if _fbea ._feac .Tx ==nil {_fbea .SetText ("");};if _fbea ._feac .Tx .Choice .Rich .P [0].PPr ==nil {_fbea ._feac .Tx .Choice .Rich .P [0].PPr =_cb .NewCT_TextParagraphProperties ();};return _cc .MakeParagraphProperties (_fbea ._feac .Tx .Choice .Rich .P [0].PPr );};
+
+// RemoveTitle removes any existing title from the chart.
+func (_dda Chart )RemoveTitle (){_dda ._beb .Chart .Title =nil ;_dda ._beb .Chart .AutoTitleDeleted =_e .NewCT_Boolean ();_dda ._beb .Chart .AutoTitleDeleted .ValAttr =_d .Bool (true );};
+
+// AddAxis adds an axis to a line chart.
+func (_gef Line3DChart )AddAxis (axis Axis ){_gca :=_e .NewCT_UnsignedInt ();_gca .ValAttr =axis .AxisID ();_gef ._accf .AxId =append (_gef ._accf .AxId ,_gca );};
+
+// AddAxis adds an axis to a Scatter chart.
+func (_adc ScatterChart )AddAxis (axis Axis ){_baad :=_e .NewCT_UnsignedInt ();_baad .ValAttr =axis .AxisID ();_adc ._cfg .AxId =append (_adc ._cfg .AxId ,_baad );};func (_dbcf LineChartSeries )SetSmooth (b bool ){_dbcf ._fecc .Smooth =_e .NewCT_Boolean ();_dbcf ._fecc .Smooth .ValAttr =&b ;};
+
+// SetDirection changes the direction of the bar chart (bar or column).
+func (_db Bar3DChart )SetDirection (d _e .ST_BarDir ){_db ._cca .BarDir .ValAttr =d };
+
+// AddSeries adds a default series to an Pie chart.
+func (_beg PieChart )AddSeries ()PieChartSeries {_gdbg :=_e .NewCT_PieSer ();_beg ._gfca .Ser =append (_beg ._gfca .Ser ,_gdbg );_gdbg .Idx .ValAttr =uint32 (len (_beg ._gfca .Ser )-1);_gdbg .Order .ValAttr =uint32 (len (_beg ._gfca .Ser )-1);_dcg :=PieChartSeries {_gdbg };_dcg .InitializeDefaults ();return _dcg ;};func (_bgb ValueAxis )SetMinorTickMark (m _e .ST_TickMark ){if m ==_e .ST_TickMarkUnset {_bgb ._dga .MinorTickMark =nil ;}else {_bgb ._dga .MinorTickMark =_e .NewCT_TickMark ();_bgb ._dga .MinorTickMark .ValAttr =m ;};};
+
+// AddScatterChart adds a scatter (X/Y) chart.
+func (_gbf Chart )AddScatterChart ()ScatterChart {_dag :=_e .NewCT_PlotAreaChoice ();_gbf ._beb .Chart .PlotArea .Choice =append (_gbf ._beb .Chart .PlotArea .Choice ,_dag );_dag .ScatterChart =_e .NewCT_ScatterChart ();_ebe :=ScatterChart {_cfg :_dag .ScatterChart };_ebe .InitializeDefaults ();return _ebe ;};
+
+// X returns the inner wrapped XML type.
+func (_bfd ScatterChart )X ()*_e .CT_ScatterChart {return _bfd ._cfg };
+
+// Properties returns the bar chart series shape properties.
+func (_gdb AreaChartSeries )Properties ()_cc .ShapeProperties {if _gdb ._bb .SpPr ==nil {_gdb ._bb .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_gdb ._bb .SpPr );};type SurfaceChartSeries struct{_fcag *_e .CT_SurfaceSer };
+
+// PieChartSeries is a series to be used on an Pie chart.
+type PieChartSeries struct{_gddg *_e .CT_PieSer };
+
+// AddAxis adds an axis to a Surface chart.
+func (_ecee SurfaceChart )AddAxis (axis Axis ){_eab :=_e .NewCT_UnsignedInt ();_eab .ValAttr =axis .AxisID ();_ecee ._eddd .AxId =append (_ecee ._eddd .AxId ,_eab );};
+
+// SetOrder sets the order of the series
+func (_cac SurfaceChartSeries )SetOrder (idx uint32 ){_cac ._fcag .Order .ValAttr =idx };type LineChart struct{chartBase ;_eaf *_e .CT_LineChart ;};
+
+// X returns the inner wrapped XML type.
+func (_gcdc Title )X ()*_e .CT_Title {return _gcdc ._feac };
+
+// LineChartSeries is the data series for a line chart.
+type LineChartSeries struct{_fecc *_e .CT_LineSer };
+
+// AddSeries adds a default series to a Stock chart.
+func (_cdcb StockChart )AddSeries ()LineChartSeries {_faff :=_e .NewCT_LineSer ();_cdcb ._fbed .Ser =append (_cdcb ._fbed .Ser ,_faff );_faff .Idx .ValAttr =uint32 (len (_cdcb ._fbed .Ser )-1);_faff .Order .ValAttr =uint32 (len (_cdcb ._fbed .Ser )-1);_dbd :=LineChartSeries {_faff };_dbd .Values ().CreateEmptyNumberCache ();_dbd .Properties ().LineProperties ().SetNoFill ();return _dbd ;};
+
+// X returns the inner wrapped XML type.
+func (_dbce ScatterChartSeries )X ()*_e .CT_ScatterSer {return _dbce ._ffa };
+
+// Values returns the value data source.
+func (_fbd BubbleChartSeries )Values ()NumberDataSource {if _fbd ._ggb .YVal ==nil {_fbd ._ggb .YVal =_e .NewCT_NumDataSource ();};return MakeNumberDataSource (_fbd ._ggb .YVal );};
+
+// DoughnutChart is a Doughnut chart.
+type DoughnutChart struct{chartBase ;_bfb *_e .CT_DoughnutChart ;};func (_bcdf ValueAxis )SetCrosses (axis Axis ){_bcdf ._dga .CrossAx .ValAttr =axis .AxisID ()};func (_ecb CategoryAxis )InitializeDefaults (){_ecb .SetPosition (_e .ST_AxPosB );_ecb .SetMajorTickMark (_e .ST_TickMarkOut );_ecb .SetMinorTickMark (_e .ST_TickMarkIn );_ecb .SetTickLabelPosition (_e .ST_TickLblPosNextTo );_ecb .MajorGridLines ().Properties ().LineProperties ().SetSolidFill (_c .LightGray );_ecb .Properties ().LineProperties ().SetSolidFill (_c .Black );};
+
+// SetText sets the series text.
+func (_geb PieChartSeries )SetText (s string ){_geb ._gddg .Tx =_e .NewCT_SerTx ();_geb ._gddg .Tx .Choice .V =&s ;};
+
+// SetText sets the series text
+func (_aec LineChartSeries )SetText (s string ){_aec ._fecc .Tx =_e .NewCT_SerTx ();_aec ._fecc .Tx .Choice .V =&s ;};
+
+// InitializeDefaults the bar chart to its defaults
+func (_af Bar3DChart )InitializeDefaults (){_af .SetDirection (_e .ST_BarDirCol )};func (_cabf SeriesAxis )SetCrosses (axis Axis ){_cabf ._bcef .CrossAx .ValAttr =axis .AxisID ()};
+
+// X returns the inner wrapped XML type.
+func (_ebdf Chart )X ()*_e .ChartSpace {return _ebdf ._beb };
+
+// PieOfPieChart is a Pie chart with an extra Pie chart.
+type PieOfPieChart struct{chartBase ;_dae *_e .CT_OfPieChart ;};
+
+// Chart is a generic chart.
+type Chart struct{_beb *_e .ChartSpace };func (_fcce RadarChart )AddAxis (axis Axis ){_bcbb :=_e .NewCT_UnsignedInt ();_bcbb .ValAttr =axis .AxisID ();_fcce ._cea .AxId =append (_fcce ._cea .AxId ,_bcbb );};
+
+// Properties returns the bar chart series shape properties.
+func (_fee BarChartSeries )Properties ()_cc .ShapeProperties {if _fee ._ceg .SpPr ==nil {_fee ._ceg .SpPr =_cb .NewCT_ShapeProperties ();};return _cc .MakeShapeProperties (_fee ._ceg .SpPr );};
+
+// AddSeries adds a default series to an Pie chart.
+func (_cbe PieOfPieChart )AddSeries ()PieChartSeries {_eea :=_e .NewCT_PieSer ();_cbe ._dae .Ser =append (_cbe ._dae .Ser ,_eea );_eea .Idx .ValAttr =uint32 (len (_cbe ._dae .Ser )-1);_eea .Order .ValAttr =uint32 (len (_cbe ._dae .Ser )-1);_ebcc :=PieChartSeries {_eea };_ebcc .InitializeDefaults ();return _ebcc ;};func (_edf DateAxis )MajorGridLines ()GridLines {if _edf ._abb .MajorGridlines ==nil {_edf ._abb .MajorGridlines =_e .NewCT_ChartLines ();};return GridLines {_edf ._abb .MajorGridlines };};
+
+// SetDisplayBlanksAs controls how missing values are displayed.
+func (_efd Chart )SetDisplayBlanksAs (v _e .ST_DispBlanksAs ){_efd ._beb .Chart .DispBlanksAs =_e .NewCT_DispBlanksAs ();_efd ._beb .Chart .DispBlanksAs .ValAttr =v ;};func MakeSeriesAxis (x *_e .CT_SerAx )SeriesAxis {return SeriesAxis {x }};
+
+// X returns the inner wrapped XML type.
+func (_abbe SeriesAxis )X ()*_e .CT_SerAx {return _abbe ._bcef };
+
+// AddBubbleChart adds a new bubble chart.
+func (_cgf Chart )AddBubbleChart ()BubbleChart {_gfe :=_e .NewCT_PlotAreaChoice ();_cgf ._beb .Chart .PlotArea .Choice =append (_cgf ._beb .Chart .PlotArea .Choice ,_gfe );_gfe .BubbleChart =_e .NewCT_BubbleChart ();_gea :=BubbleChart {_cec :_gfe .BubbleChart };_gea .InitializeDefaults ();return _gea ;};
