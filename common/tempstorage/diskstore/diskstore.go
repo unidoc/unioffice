@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_g "github.com/unidoc/unioffice/common/tempstorage";_d "io/ioutil";_a "os";_c "strings";);
-
-// Add is not applicable in the diskstore implementation
-func (_ac diskStorage )Add (path string )error {return nil };
+package diskstore ;import (_b "github.com/unidoc/unioffice/common/tempstorage";_a "io/ioutil";_c "os";_ee "strings";);
 
 // TempFile creates a new temp file by calling ioutil TempFile
-func (_dd diskStorage )TempFile (dir ,pattern string )(_g .File ,error ){return _d .TempFile (dir ,pattern );};
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_ag diskStorage )TempDir (pattern string )(string ,error ){return _d .TempDir ("",pattern )};
+func (_de diskStorage )TempFile (dir ,pattern string )(_b .File ,error ){return _a .TempFile (dir ,pattern );};
 
 // SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_gg :=diskStorage {};_g .SetAsStorage (&_gg )};type diskStorage struct{};
-
-// RemoveAll removes all files in the directory
-func (_gd diskStorage )RemoveAll (dir string )error {if _c .HasPrefix (dir ,_a .TempDir ()){return _a .RemoveAll (dir );};return nil ;};
+func SetAsStorage (){_bd :=diskStorage {};_b .SetAsStorage (&_bd )};
 
 // Open opens file from disk according to a path
-func (_b diskStorage )Open (path string )(_g .File ,error ){return _a .Open (path )};
+func (_d diskStorage )Open (path string )(_b .File ,error ){return _c .Open (path )};
+
+// Add is not applicable in the diskstore implementation
+func (_ab diskStorage )Add (path string )error {return nil };
+
+// RemoveAll removes all files in the directory
+func (_fb diskStorage )RemoveAll (dir string )error {if _ee .HasPrefix (dir ,_c .TempDir ()){return _c .RemoveAll (dir );};return nil ;};
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_f diskStorage )TempDir (pattern string )(string ,error ){return _a .TempDir ("",pattern )};type diskStorage struct{};
