@@ -98,7 +98,7 @@ For example, the library currently doesn't have an API for setting a document
 background color. However it's easy to do manually via editing the
 ```CT_Background``` element of the document.
 
-    dox := document.New()
+    doc := document.New()
     doc.X().Background = wordprocessingml.NewCT_Background()
 	doc.X().Background.ColorAttr = &wordprocessingml.ST_HexColor{}
 	doc.X().Background.ColorAttr.ST_HexColorRGB = color.RGB(50, 50, 50).AsRGBString()
