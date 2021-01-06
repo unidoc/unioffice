@@ -9,26 +9,26 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package tempstorage ;import _dd "io";type storage interface{Open (_f string )(File ,error );TempFile (_e ,_dg string )(File ,error );TempDir (_a string )(string ,error );RemoveAll (_fc string )error ;Add (_c string )error ;};
+package tempstorage ;import _c "io";
+
+// TempFile creates new empty file in the storage and returns it.
+func TempFile (dir ,pattern string )(File ,error ){return _fad .TempFile (dir ,pattern )};
 
 // Open returns tempstorage File object by name.
-func Open (path string )(File ,error ){return _cd .Open (path )};
-
-// TempDir creates a name for a new temp directory using a pattern argument.
-func TempDir (pattern string )(string ,error ){return _cd .TempDir (pattern )};
+func Open (path string )(File ,error ){return _fad .Open (path )};
 
 // File is a representation of a storage file
 // with Read, Write, Close and Name methods identical to os.File.
-type File interface{_dd .Reader ;_dd .Writer ;_dd .Closer ;Name ()string ;};var _cd storage ;
-
-// SetAsStorage changes temporary storage to newStorage.
-func SetAsStorage (newStorage storage ){_cd =newStorage };
+type File interface{_c .Reader ;_c .Writer ;_c .Closer ;Name ()string ;};
 
 // RemoveAll removes all files according to the dir argument prefix.
-func RemoveAll (dir string )error {return _cd .RemoveAll (dir )};
+func RemoveAll (dir string )error {return _fad .RemoveAll (dir )};
 
 // Add reads a file from a disk and adds it to the storage.
-func Add (path string )error {return _cd .Add (path )};
+func Add (path string )error {return _fad .Add (path )};var _fad storage ;
 
-// TempFile creates new empty file in the storage and returns it.
-func TempFile (dir ,pattern string )(File ,error ){return _cd .TempFile (dir ,pattern )};
+// SetAsStorage changes temporary storage to newStorage.
+func SetAsStorage (newStorage storage ){_fad =newStorage };
+
+// TempDir creates a name for a new temp directory using a pattern argument.
+func TempDir (pattern string )(string ,error ){return _fad .TempDir (pattern )};type storage interface{Open (_fa string )(File ,error );TempFile (_cf ,_b string )(File ,error );TempDir (_a string )(string ,error );RemoveAll (_cfe string )error ;Add (_ad string )error ;};
