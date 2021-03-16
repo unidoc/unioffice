@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_bd "github.com/unidoc/unioffice/common/tempstorage";_e "io/ioutil";_bb "os";_b "strings";);type diskStorage struct{};
-
-// Open opens file from disk according to a path
-func (_cd diskStorage )Open (path string )(_bd .File ,error ){return _bb .Open (path )};
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_g diskStorage )TempDir (pattern string )(string ,error ){return _e .TempDir ("",pattern )};
-
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_a diskStorage )TempFile (dir ,pattern string )(_bd .File ,error ){return _e .TempFile (dir ,pattern );};
-
-// RemoveAll removes all files in the directory
-func (_gf diskStorage )RemoveAll (dir string )error {if _b .HasPrefix (dir ,_bb .TempDir ()){return _bb .RemoveAll (dir );};return nil ;};
-
-// Add is not applicable in the diskstore implementation
-func (_bbc diskStorage )Add (path string )error {return nil };
+package diskstore ;import (_fa "github.com/unidoc/unioffice/common/tempstorage";_c "io/ioutil";_dg "os";_f "strings";);
 
 // SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_bde :=diskStorage {};_bd .SetAsStorage (&_bde )};
+func SetAsStorage (){_db :=diskStorage {};_fa .SetAsStorage (&_db )};type diskStorage struct{};
+
+// Add is not applicable in the diskstore implementation
+func (_da diskStorage )Add (path string )error {return nil };
+
+// Open opens file from disk according to a path
+func (_e diskStorage )Open (path string )(_fa .File ,error ){return _dg .Open (path )};
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_b diskStorage )TempFile (dir ,pattern string )(_fa .File ,error ){return _c .TempFile (dir ,pattern );};
+
+// RemoveAll removes all files in the directory
+func (_faa diskStorage )RemoveAll (dir string )error {if _f .HasPrefix (dir ,_dg .TempDir ()){return _dg .RemoveAll (dir );};return nil ;};
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_dgg diskStorage )TempDir (pattern string )(string ,error ){return _c .TempDir ("",pattern )};
