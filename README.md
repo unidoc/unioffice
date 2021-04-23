@@ -5,7 +5,8 @@ library for creation and editing of docx/xlsx/pptx files.
 [![Build Status](https://travis-ci.org/unidoc/unioffice.svg?branch=master)](https://travis-ci.org/unidoc/unioffice)
 [![GitHub (pre-)release](https://img.shields.io/github/release/unidoc/unioffice/all.svg)](https://github.com/unidoc/unioffice/releases)
 [![License: UniDoc EULA](https://img.shields.io/badge/license-UniDoc%20EULA-blue)](https://unidoc.io/eula/)
-[![GoDoc](https://godoc.org/github.com/unidoc/unioffice?status.svg)](https://godoc.org/github.com/unidoc/unioffice)
+[![ApiDocs](https://img.shields.io/badge/godoc-reference-blue.svg)](https://apidocs.unidoc.io/unioffice/latest/)
+
 
 ![https://github.com/unidoc/unioffice/](./.github/preview.png "unioffice")
 
@@ -16,6 +17,7 @@ library for creation and editing of docx/xlsx/pptx files.
 	- Formatting
 	- Images
 	- Tables
+	- Word to PDF (docx to pdf)
 - Spreadsheets (xlsx) [Excel]
  	- Read/Write/Edit
  	- Cell formatting including conditional formatting
@@ -48,6 +50,11 @@ DOCX/XLSX/PPTX.
 ## Installation ##
     
     go get github.com/unidoc/unioffice/
+
+## License key
+This software package (unioffice) is a commercial product and requires a license code to operate.
+
+To Get a Metered License API Key in the Free Tier, sign up on https://cloud.unidoc.io
 
 ## Document Examples ##
 
@@ -103,22 +110,19 @@ background color. However it's easy to do manually via editing the
 	doc.X().Background.ColorAttr = &wordprocessingml.ST_HexColor{}
 	doc.X().Background.ColorAttr.ST_HexColorRGB = color.RGB(50, 50, 50).AsRGBString()
 
-### Contribution guidelines ###
+## Contribution guidelines ###
 
-[![CLA assistant](https://cla-assistant.io/readme/badge/unidoc/unioffice)](https://cla-assistant.io/unidoc/unioffice)
+If you are interested in contributing, please contact us.
 
-All contributors are must sign a contributor license agreement before their code
-will be reviewed and merged.
+## Support and consulting ##
 
+Please email us at support@unidoc.io for any queries.
 
-### Licensing ###
+If you have any specific tasks that need to be done, we offer consulting in certain cases.
+Please contact us with a brief summary of what you need and we will get back to you with a quote, if appropriate.
 
-This software package (unioffice) is a commercial product and requires a license
-code to operate.
+## License agreement ##
 
 The use of this software package is governed by the end-user license agreement 
 (EULA) available at: https://unidoc.io/eula/
-
-To obtain a Trial license code to evaluate the software, please visit
-https://unidoc.io/
 
