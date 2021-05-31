@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_ce "github.com/unidoc/unioffice/common/tempstorage";_b "io/ioutil";_c "os";_f "strings";);
-
-// Open opens file from disk according to a path
-func (_e diskStorage )Open (path string )(_ce .File ,error ){return _c .Open (path )};type diskStorage struct{};
+package diskstore ;import (_fa "github.com/unidoc/unioffice/common/tempstorage";_b "io/ioutil";_g "os";_e "strings";);
 
 // SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_a :=diskStorage {};_ce .SetAsStorage (&_a )};
+func SetAsStorage (){_a :=diskStorage {};_fa .SetAsStorage (&_a )};
 
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_ec diskStorage )TempDir (pattern string )(string ,error ){return _b .TempDir ("",pattern )};
-
-// Add is not applicable in the diskstore implementation
-func (_cc diskStorage )Add (path string )error {return nil };
+// Open opens file from disk according to a path
+func (_ag diskStorage )Open (path string )(_fa .File ,error ){return _g .Open (path )};type diskStorage struct{};
 
 // RemoveAll removes all files in the directory
-func (_fd diskStorage )RemoveAll (dir string )error {if _f .HasPrefix (dir ,_c .TempDir ()){return _c .RemoveAll (dir );};return nil ;};
+func (_ef diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_g .TempDir ()){return _g .RemoveAll (dir );};return nil ;};
 
 // TempFile creates a new temp file by calling ioutil TempFile
-func (_ae diskStorage )TempFile (dir ,pattern string )(_ce .File ,error ){return _b .TempFile (dir ,pattern );};
+func (_ae diskStorage )TempFile (dir ,pattern string )(_fa .File ,error ){return _b .TempFile (dir ,pattern );};
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_fd diskStorage )TempDir (pattern string )(string ,error ){return _b .TempDir ("",pattern )};
+
+// Add is not applicable in the diskstore implementation
+func (_bb diskStorage )Add (path string )error {return nil };
