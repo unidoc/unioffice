@@ -11,24 +11,24 @@
 
 package tempstorage ;import _g "io";
 
+// TempDir creates a name for a new temp directory using a pattern argument.
+func TempDir (pattern string )(string ,error ){return _a .TempDir (pattern )};type storage interface{Open (_d string )(File ,error );TempFile (_dg ,_da string )(File ,error );TempDir (_df string )(string ,error );RemoveAll (_ce string )error ;Add (_f string )error ;};
+
+// TempFile creates new empty file in the storage and returns it.
+func TempFile (dir ,pattern string )(File ,error ){return _a .TempFile (dir ,pattern )};
+
 // SetAsStorage changes temporary storage to newStorage.
-func SetAsStorage (newStorage storage ){_a =newStorage };
+func SetAsStorage (newStorage storage ){_a =newStorage };var _a storage ;
 
 // RemoveAll removes all files according to the dir argument prefix.
 func RemoveAll (dir string )error {return _a .RemoveAll (dir )};
 
-// TempDir creates a name for a new temp directory using a pattern argument.
-func TempDir (pattern string )(string ,error ){return _a .TempDir (pattern )};type storage interface{Open (_gb string )(File ,error );TempFile (_d ,_c string )(File ,error );TempDir (_de string )(string ,error );RemoveAll (_gf string )error ;Add (_cf string )error ;};
-
 // File is a representation of a storage file
 // with Read, Write, Close and Name methods identical to os.File.
-type File interface{_g .Reader ;_g .Writer ;_g .Closer ;Name ()string ;};var _a storage ;
-
-// Add reads a file from a disk and adds it to the storage.
-func Add (path string )error {return _a .Add (path )};
+type File interface{_g .Reader ;_g .Writer ;_g .Closer ;Name ()string ;};
 
 // Open returns tempstorage File object by name.
 func Open (path string )(File ,error ){return _a .Open (path )};
 
-// TempFile creates new empty file in the storage and returns it.
-func TempFile (dir ,pattern string )(File ,error ){return _a .TempFile (dir ,pattern )};
+// Add reads a file from a disk and adds it to the storage.
+func Add (path string )error {return _a .Add (path )};
