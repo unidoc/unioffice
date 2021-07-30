@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_g "github.com/unidoc/unioffice/common/tempstorage";_e "io/ioutil";_c "os";_a "strings";);
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_ce diskStorage )TempDir (pattern string )(string ,error ){return _e .TempDir ("",pattern )};
-
-// RemoveAll removes all files in the directory
-func (_ee diskStorage )RemoveAll (dir string )error {if _a .HasPrefix (dir ,_c .TempDir ()){return _c .RemoveAll (dir );};return nil ;};
+package diskstore ;import (_de "github.com/unidoc/unioffice/common/tempstorage";_e "io/ioutil";_ec "os";_d "strings";);
 
 // SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_ca :=diskStorage {};_g .SetAsStorage (&_ca )};
+func SetAsStorage (){_g :=diskStorage {};_de .SetAsStorage (&_g )};
 
-// Add is not applicable in the diskstore implementation
-func (_d diskStorage )Add (path string )error {return nil };
-
-// Open opens file from disk according to a path
-func (_af diskStorage )Open (path string )(_g .File ,error ){return _c .Open (path )};type diskStorage struct{};
+// RemoveAll removes all files in the directory
+func (_a diskStorage )RemoveAll (dir string )error {if _d .HasPrefix (dir ,_ec .TempDir ()){return _ec .RemoveAll (dir );};return nil ;};
 
 // TempFile creates a new temp file by calling ioutil TempFile
-func (_cg diskStorage )TempFile (dir ,pattern string )(_g .File ,error ){return _e .TempFile (dir ,pattern );};
+func (_db diskStorage )TempFile (dir ,pattern string )(_de .File ,error ){return _e .TempFile (dir ,pattern );};
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_df diskStorage )TempDir (pattern string )(string ,error ){return _e .TempDir ("",pattern )};type diskStorage struct{};
+
+// Open opens file from disk according to a path
+func (_dc diskStorage )Open (path string )(_de .File ,error ){return _ec .Open (path )};
+
+// Add is not applicable in the diskstore implementation
+func (_c diskStorage )Add (path string )error {return nil };
