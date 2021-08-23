@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_de "github.com/unidoc/unioffice/common/tempstorage";_e "io/ioutil";_ec "os";_d "strings";);
-
-// SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_g :=diskStorage {};_de .SetAsStorage (&_g )};
-
-// RemoveAll removes all files in the directory
-func (_a diskStorage )RemoveAll (dir string )error {if _d .HasPrefix (dir ,_ec .TempDir ()){return _ec .RemoveAll (dir );};return nil ;};
-
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_db diskStorage )TempFile (dir ,pattern string )(_de .File ,error ){return _e .TempFile (dir ,pattern );};
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_df diskStorage )TempDir (pattern string )(string ,error ){return _e .TempDir ("",pattern )};type diskStorage struct{};
-
-// Open opens file from disk according to a path
-func (_dc diskStorage )Open (path string )(_de .File ,error ){return _ec .Open (path )};
+package diskstore ;import (_a "github.com/unidoc/unioffice/common/tempstorage";_b "io/ioutil";_ba "os";_e "strings";);
 
 // Add is not applicable in the diskstore implementation
-func (_c diskStorage )Add (path string )error {return nil };
+func (_de diskStorage )Add (path string )error {return nil };
+
+// RemoveAll removes all files in the directory
+func (_f diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_ba .TempDir ()){return _ba .RemoveAll (dir );};return nil ;};type diskStorage struct{};
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_bg diskStorage )TempDir (pattern string )(string ,error ){return _b .TempDir ("",pattern )};
+
+// SetAsStorage sets temp storage as a disk storage
+func SetAsStorage (){_d :=diskStorage {};_a .SetAsStorage (&_d )};
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_eg diskStorage )TempFile (dir ,pattern string )(_a .File ,error ){return _b .TempFile (dir ,pattern );};
+
+// Open opens file from disk according to a path
+func (_bf diskStorage )Open (path string )(_a .File ,error ){return _ba .Open (path )};
