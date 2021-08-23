@@ -13,32 +13,32 @@
 // are valid for the version of UniOffice used.
 package license ;import _f "github.com/unidoc/unioffice/internal/license";
 
-// SetLicenseKey sets and validates the license key.
-func SetLicenseKey (content string ,customerName string )error {return _f .SetLicenseKey (content ,customerName );};
-
-// GetLicenseKey returns the currently loaded license key.
-func GetLicenseKey ()*LicenseKey {return _f .GetLicenseKey ()};
-
 // LegacyLicense holds the old-style unioffice license information.
 type LegacyLicense =_f .LegacyLicense ;
 
 // MakeUnlicensedKey returns a default key.
 func MakeUnlicensedKey ()*LicenseKey {return _f .MakeUnlicensedKey ()};
 
-// SetLegacyLicenseKey installs a legacy license code. License codes issued prior to June 2019.
-// Will be removed at some point in a future major version.
-func SetLegacyLicenseKey (s string )error {return _f .SetLegacyLicenseKey (s )};const (LicenseTierUnlicensed =_f .LicenseTierUnlicensed ;LicenseTierCommunity =_f .LicenseTierCommunity ;LicenseTierIndividual =_f .LicenseTierIndividual ;LicenseTierBusiness =_f .LicenseTierBusiness ;);
-
-// SetMeteredKey sets the metered License API key required for SaaS operation.
-// Document usage is reported periodically for the product to function correctly.
-func SetMeteredKey (apiKey string )error {return _f .SetMeteredKey (apiKey )};
-
 // LegacyLicenseType is the type of license
 type LegacyLicenseType =_f .LegacyLicenseType ;
 
-// LicenseKey represents a loaded license key.
-type LicenseKey =_f .LicenseKey ;
+// SetLicenseKey sets and validates the license key.
+func SetLicenseKey (content string ,customerName string )error {return _f .SetLicenseKey (content ,customerName );};const (LicenseTierUnlicensed =_f .LicenseTierUnlicensed ;LicenseTierCommunity =_f .LicenseTierCommunity ;LicenseTierIndividual =_f .LicenseTierIndividual ;LicenseTierBusiness =_f .LicenseTierBusiness ;);
 
 // GetMeteredState checks the currently used metered document usage status,
 // documents used and credits available.
 func GetMeteredState ()(_f .MeteredStatus ,error ){return _f .GetMeteredState ()};
+
+// GetLicenseKey returns the currently loaded license key.
+func GetLicenseKey ()*LicenseKey {return _f .GetLicenseKey ()};
+
+// SetLegacyLicenseKey installs a legacy license code. License codes issued prior to June 2019.
+// Will be removed at some point in a future major version.
+func SetLegacyLicenseKey (s string )error {return _f .SetLegacyLicenseKey (s )};
+
+// LicenseKey represents a loaded license key.
+type LicenseKey =_f .LicenseKey ;
+
+// SetMeteredKey sets the metered License API key required for SaaS operation.
+// Document usage is reported periodically for the product to function correctly.
+func SetMeteredKey (apiKey string )error {return _f .SetMeteredKey (apiKey )};
