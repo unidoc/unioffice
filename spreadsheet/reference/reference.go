@@ -9,46 +9,46 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package reference ;import (_d "errors";_e "fmt";_b "github.com/unidoc/unioffice/spreadsheet/update";_g "regexp";_df "strconv";_ge "strings";);
+package reference ;import (_b "errors";_dc "fmt";_ba "github.com/unidoc/unioffice/spreadsheet/update";_c "regexp";_df "strconv";_d "strings";);
+
+// Update updates reference to point one of the neighboring cells with respect to the update type after removing a row/column.
+func (_ee *CellReference )Update (updateType _ba .UpdateAction )*CellReference {switch updateType {case _ba .UpdateActionRemoveColumn :_fe :=_ee ;_fe .ColumnIdx =_ee .ColumnIdx -1;_fe .Column =IndexToColumn (_fe .ColumnIdx );return _fe ;default:return _ee ;};};
+
+// String returns a string representation of CellReference.
+func (_aa CellReference )String ()string {_g :=make ([]byte ,0,4);if _aa .AbsoluteColumn {_g =append (_g ,'$');};_g =append (_g ,_aa .Column ...);if _aa .AbsoluteRow {_g =append (_g ,'$');};_g =_df .AppendInt (_g ,int64 (_aa .RowIdx ),10);return string (_g );};
+
+// Update updates reference to point one of the neighboring columns with respect to the update type after removing a row/column.
+func (_agf *ColumnReference )Update (updateType _ba .UpdateAction )*ColumnReference {switch updateType {case _ba .UpdateActionRemoveColumn :_ga :=_agf ;_ga .ColumnIdx =_agf .ColumnIdx -1;_ga .Column =IndexToColumn (_ga .ColumnIdx );return _ga ;default:return _agf ;};};
+
+// String returns a string representation of ColumnReference.
+func (_bac ColumnReference )String ()string {_dd :=make ([]byte ,0,4);if _bac .AbsoluteColumn {_dd =append (_dd ,'$');};_dd =append (_dd ,_bac .Column ...);return string (_dd );};
+
+// ParseColumnReference parses a column reference of the form 'Sheet1!A' and splits it
+// into sheet name and column segments.
+func ParseColumnReference (s string )(ColumnReference ,error ){s =_d .TrimSpace (s );if len (s )< 1{return ColumnReference {},_b .New ("\u0063\u006f\u006c\u0075\u006d\u006e \u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u006d\u0075\u0073\u0074\u0020\u0068\u0061\u0076\u0065\u0020a\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u0063\u0068a\u0072a\u0063\u0074\u0065\u0072");};_dff :=ColumnReference {};_ag ,_edd ,_ge :=_da (s );if _ge !=nil {return ColumnReference {},_ge ;};if _ag !=""{_dff .SheetName =_ag ;};if _edd [0]=='$'{_dff .AbsoluteColumn =true ;_edd =_edd [1:];};if !_ef .MatchString (_edd ){return ColumnReference {},_b .New ("\u0063\u006f\u006c\u0075\u006dn\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u006d\u0075s\u0074\u0020\u0062\u0065\u0020\u0062\u0065\u0074\u0077\u0065\u0065\u006e\u0020\u0041\u0020\u0061\u006e\u0064\u0020\u005a\u005a");};_dff .Column =_edd ;_dff .ColumnIdx =ColumnToIndex (_dff .Column );return _dff ,nil ;};
+
+// ParseColumnRangeReference splits a range reference of the form "A:B" into its
+// components.
+func ParseColumnRangeReference (s string )(_gd ,_bc ColumnReference ,_dae error ){_cg :="";_cd :=_d .Split (s ,"\u0021");if len (_cd )==2{_cg =_cd [0];s =_cd [1];};_bd :=_d .Split (s ,"\u003a");if len (_bd )!=2{return ColumnReference {},ColumnReference {},_b .New ("i\u006ev\u0061\u006c\u0069\u0064\u0020\u0072\u0061\u006eg\u0065\u0020\u0066\u006frm\u0061\u0074");};if _cg !=""{_bd [0]=_cg +"\u0021"+_bd [0];_bd [1]=_cg +"\u0021"+_bd [1];};_fee ,_dae :=ParseColumnReference (_bd [0]);if _dae !=nil {return ColumnReference {},ColumnReference {},_dae ;};_fad ,_dae :=ParseColumnReference (_bd [1]);if _dae !=nil {return ColumnReference {},ColumnReference {},_dae ;};return _fee ,_fad ,nil ;};var _ef =_c .MustCompile ("^\u005b\u0061\u002d\u007aA-\u005a]\u0028\u005b\u0061\u002d\u007aA\u002d\u005a\u005d\u003f\u0029\u0024");
+
+// ParseRangeReference splits a range reference of the form "A1:B5" into its
+// components.
+func ParseRangeReference (s string )(_gg ,_aga CellReference ,_dda error ){_fa ,_dcg ,_dda :=_da (s );if _dda !=nil {return CellReference {},CellReference {},_dda ;};_fc :=_d .Split (_dcg ,"\u003a");if len (_fc )!=2{return CellReference {},CellReference {},_b .New ("i\u006ev\u0061\u006c\u0069\u0064\u0020\u0072\u0061\u006eg\u0065\u0020\u0066\u006frm\u0061\u0074");};if _fa !=""{_fc [0]=_fa +"\u0021"+_fc [0];_fc [1]=_fa +"\u0021"+_fc [1];};_db ,_dda :=ParseCellReference (_fc [0]);if _dda !=nil {return CellReference {},CellReference {},_dda ;};_adf ,_dda :=ParseCellReference (_fc [1]);if _dda !=nil {return CellReference {},CellReference {},_dda ;};return _db ,_adf ,nil ;};
+
+// ColumnToIndex maps a column to a zero based index (e.g. A = 0, B = 1, AA = 26)
+func ColumnToIndex (col string )uint32 {col =_d .ToUpper (col );_fd :=uint32 (0);for _ ,_dfa :=range col {_fd *=26;_fd +=uint32 (_dfa -'A'+1);};return _fd -1;};
 
 // ParseCellReference parses a cell reference of the form 'A10' and splits it
 // into column/row segments.
-func ParseCellReference (s string )(CellReference ,error ){s =_ge .TrimSpace (s );if len (s )< 2{return CellReference {},_d .New ("\u0063\u0065\u006c\u006c\u0020\u0072\u0065\u0066e\u0072\u0065\u006ece\u0020\u006d\u0075\u0073\u0074\u0020h\u0061\u0076\u0065\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u0074\u0077o\u0020\u0063\u0068\u0061\u0072\u0061\u0063\u0074e\u0072\u0073");};_ba :=CellReference {};_ec ,_gec ,_ff :=_aa (s );if _ff !=nil {return CellReference {},_ff ;};if _ec !=""{_ba .SheetName =_ec ;};if s [0]=='$'{_ba .AbsoluteColumn =true ;_gec =_gec [1:];};_cc :=-1;_cd :for _fc :=0;_fc < len (_gec );_fc ++{switch {case _gec [_fc ]>='0'&&_gec [_fc ]<='9'||_gec [_fc ]=='$':_cc =_fc ;break _cd ;};};switch _cc {case 0:return CellReference {},_e .Errorf ("\u006e\u006f\u0020\u006cet\u0074\u0065\u0072\u0020\u0070\u0072\u0065\u0066\u0069\u0078\u0020\u0069\u006e\u0020%\u0073",_gec );case -1:return CellReference {},_e .Errorf ("\u006eo\u0020d\u0069\u0067\u0069\u0074\u0073\u0020\u0069\u006e\u0020\u0025\u0073",_gec );};_ba .Column =_gec [0:_cc ];if _gec [_cc ]=='$'{_ba .AbsoluteRow =true ;_cc ++;};_ba .ColumnIdx =ColumnToIndex (_ba .Column );_cg ,_ff :=_df .ParseUint (_gec [_cc :],10,32);if _ff !=nil {return CellReference {},_e .Errorf ("e\u0072\u0072\u006f\u0072 p\u0061r\u0073\u0069\u006e\u0067\u0020r\u006f\u0077\u003a\u0020\u0025\u0073",_ff );};if _cg ==0{return CellReference {},_e .Errorf ("\u0065\u0072\u0072\u006f\u0072\u0020\u0070\u0061\u0072\u0073i\u006e\u0067\u0020\u0072\u006f\u0077\u003a \u0063\u0061\u006e\u006e\u006f\u0074\u0020\u0062\u0065\u0020\u0030");};_ba .RowIdx =uint32 (_cg );return _ba ,nil ;};
-
-// Update updates reference to point one of the neighboring cells with respect to the update type after removing a row/column.
-func (_ccg *CellReference )Update (updateType _b .UpdateAction )*CellReference {switch updateType {case _b .UpdateActionRemoveColumn :_a :=_ccg ;_a .ColumnIdx =_ccg .ColumnIdx -1;_a .Column =IndexToColumn (_a .ColumnIdx );return _a ;default:return _ccg ;};};
-
-// ColumnReference is a parsed reference to a column.  Input is of the form 'A',
-// '$C', etc.
-type ColumnReference struct{ColumnIdx uint32 ;Column string ;AbsoluteColumn bool ;SheetName string ;};
-
-// Update updates reference to point one of the neighboring columns with respect to the update type after removing a row/column.
-func (_bf *ColumnReference )Update (updateType _b .UpdateAction )*ColumnReference {switch updateType {case _b .UpdateActionRemoveColumn :_ae :=_bf ;_ae .ColumnIdx =_bf .ColumnIdx -1;_ae .Column =IndexToColumn (_ae .ColumnIdx );return _ae ;default:return _bf ;};};
-
-// String returns a string representation of ColumnReference.
-func (_cgd ColumnReference )String ()string {_gb :=make ([]byte ,0,4);if _cgd .AbsoluteColumn {_gb =append (_gb ,'$');};_gb =append (_gb ,_cgd .Column ...);return string (_gb );};
+func ParseCellReference (s string )(CellReference ,error ){s =_d .TrimSpace (s );if len (s )< 2{return CellReference {},_b .New ("\u0063\u0065\u006c\u006c\u0020\u0072\u0065\u0066e\u0072\u0065\u006ece\u0020\u006d\u0075\u0073\u0074\u0020h\u0061\u0076\u0065\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u0074\u0077o\u0020\u0063\u0068\u0061\u0072\u0061\u0063\u0074e\u0072\u0073");};_ad :=CellReference {};_aaf ,_f ,_e :=_da (s );if _e !=nil {return CellReference {},_e ;};if _aaf !=""{_ad .SheetName =_aaf ;};if s [0]=='$'{_ad .AbsoluteColumn =true ;_f =_f [1:];};_bg :=-1;_ed :for _ca :=0;_ca < len (_f );_ca ++{switch {case _f [_ca ]>='0'&&_f [_ca ]<='9'||_f [_ca ]=='$':_bg =_ca ;break _ed ;};};switch _bg {case 0:return CellReference {},_dc .Errorf ("\u006e\u006f\u0020\u006cet\u0074\u0065\u0072\u0020\u0070\u0072\u0065\u0066\u0069\u0078\u0020\u0069\u006e\u0020%\u0073",_f );case -1:return CellReference {},_dc .Errorf ("\u006eo\u0020d\u0069\u0067\u0069\u0074\u0073\u0020\u0069\u006e\u0020\u0025\u0073",_f );};_ad .Column =_f [0:_bg ];if _f [_bg ]=='$'{_ad .AbsoluteRow =true ;_bg ++;};_ad .ColumnIdx =ColumnToIndex (_ad .Column );_fg ,_e :=_df .ParseUint (_f [_bg :],10,32);if _e !=nil {return CellReference {},_dc .Errorf ("e\u0072\u0072\u006f\u0072 p\u0061r\u0073\u0069\u006e\u0067\u0020r\u006f\u0077\u003a\u0020\u0025\u0073",_e );};if _fg ==0{return CellReference {},_dc .Errorf ("\u0065\u0072\u0072\u006f\u0072\u0020\u0070\u0061\u0072\u0073i\u006e\u0067\u0020\u0072\u006f\u0077\u003a \u0063\u0061\u006e\u006e\u006f\u0074\u0020\u0062\u0065\u0020\u0030");};_ad .RowIdx =uint32 (_fg );return _ad ,nil ;};func _da (_gea string )(string ,string ,error ){_aag :="";_de :=_d .LastIndex (_gea ,"\u0021");if _de > -1{_aag =_gea [:_de ];_gea =_gea [_de +1:];if _aag ==""{return "","",_b .New ("\u0049n\u0076a\u006c\u0069\u0064\u0020\u0073h\u0065\u0065t\u0020\u006e\u0061\u006d\u0065");};};return _aag ,_gea ,nil ;};
 
 // CellReference is a parsed reference to a cell.  Input is of the form 'A1',
 // '$C$2', etc.
 type CellReference struct{RowIdx uint32 ;ColumnIdx uint32 ;Column string ;AbsoluteColumn bool ;AbsoluteRow bool ;SheetName string ;};
 
-// ParseColumnReference parses a column reference of the form 'Sheet1!A' and splits it
-// into sheet name and column segments.
-func ParseColumnReference (s string )(ColumnReference ,error ){s =_ge .TrimSpace (s );if len (s )< 1{return ColumnReference {},_d .New ("\u0063\u006f\u006c\u0075\u006d\u006e \u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u006d\u0075\u0073\u0074\u0020\u0068\u0061\u0076\u0065\u0020a\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u0063\u0068a\u0072a\u0063\u0074\u0065\u0072");};_ea :=ColumnReference {};_ee ,_ab ,_cb :=_aa (s );if _cb !=nil {return ColumnReference {},_cb ;};if _ee !=""{_ea .SheetName =_ee ;};if _ab [0]=='$'{_ea .AbsoluteColumn =true ;_ab =_ab [1:];};if !_bb .MatchString (_ab ){return ColumnReference {},_d .New ("\u0063\u006f\u006c\u0075\u006dn\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u006d\u0075s\u0074\u0020\u0062\u0065\u0020\u0062\u0065\u0074\u0077\u0065\u0065\u006e\u0020\u0041\u0020\u0061\u006e\u0064\u0020\u005a\u005a");};_ea .Column =_ab ;_ea .ColumnIdx =ColumnToIndex (_ea .Column );return _ea ,nil ;};func _aa (_ac string )(string ,string ,error ){_de :="";_db :=_ge .LastIndex (_ac ,"\u0021");if _db > -1{_de =_ac [:_db ];_ac =_ac [_db +1:];if _de ==""{return "","",_d .New ("\u0049n\u0076a\u006c\u0069\u0064\u0020\u0073h\u0065\u0065t\u0020\u006e\u0061\u006d\u0065");};};return _de ,_ac ,nil ;};var _bb =_g .MustCompile ("^\u005b\u0061\u002d\u007aA-\u005a]\u0028\u005b\u0061\u002d\u007aA\u002d\u005a\u005d\u003f\u0029\u0024");
+// ColumnReference is a parsed reference to a column.  Input is of the form 'A',
+// '$C', etc.
+type ColumnReference struct{ColumnIdx uint32 ;Column string ;AbsoluteColumn bool ;SheetName string ;};
 
 // IndexToColumn maps a column number to a column name (e.g. 0 = A, 1 = B, 26 = AA)
-func IndexToColumn (col uint32 )string {var _fcf [64+1]byte ;_ag :=len (_fcf );_bd :=col ;const _cde =26;for _bd >=_cde {_ag --;_ffe :=_bd /_cde ;_fcf [_ag ]=byte ('A'+uint (_bd -_ffe *_cde ));_bd =_ffe -1;};_ag --;_fcf [_ag ]=byte ('A'+uint (_bd ));return string (_fcf [_ag :]);};
-
-// String returns a string representation of CellReference.
-func (_f CellReference )String ()string {_fa :=make ([]byte ,0,4);if _f .AbsoluteColumn {_fa =append (_fa ,'$');};_fa =append (_fa ,_f .Column ...);if _f .AbsoluteRow {_fa =append (_fa ,'$');};_fa =_df .AppendInt (_fa ,int64 (_f .RowIdx ),10);return string (_fa );};
-
-// ParseColumnRangeReference splits a range reference of the form "A:B" into its
-// components.
-func ParseColumnRangeReference (s string )(_eg ,_fd ColumnReference ,_gc error ){_gba :="";_ggb :=_ge .Split (s ,"\u0021");if len (_ggb )==2{_gba =_ggb [0];s =_ggb [1];};_cda :=_ge .Split (s ,"\u003a");if len (_cda )!=2{return ColumnReference {},ColumnReference {},_d .New ("i\u006ev\u0061\u006c\u0069\u0064\u0020\u0072\u0061\u006eg\u0065\u0020\u0066\u006frm\u0061\u0074");};if _gba !=""{_cda [0]=_gba +"\u0021"+_cda [0];_cda [1]=_gba +"\u0021"+_cda [1];};_cf ,_gc :=ParseColumnReference (_cda [0]);if _gc !=nil {return ColumnReference {},ColumnReference {},_gc ;};_fb ,_gc :=ParseColumnReference (_cda [1]);if _gc !=nil {return ColumnReference {},ColumnReference {},_gc ;};return _cf ,_fb ,nil ;};
-
-// ColumnToIndex maps a column to a zero based index (e.g. A = 0, B = 1, AA = 26)
-func ColumnToIndex (col string )uint32 {col =_ge .ToUpper (col );_gg :=uint32 (0);for _ ,_ffb :=range col {_gg *=26;_gg +=uint32 (_ffb -'A'+1);};return _gg -1;};
-
-// ParseRangeReference splits a range reference of the form "A1:B5" into its
-// components.
-func ParseRangeReference (s string )(_bc ,_dbb CellReference ,_bfe error ){_dee ,_bbc ,_bfe :=_aa (s );if _bfe !=nil {return CellReference {},CellReference {},_bfe ;};_fe :=_ge .Split (_bbc ,"\u003a");if len (_fe )!=2{return CellReference {},CellReference {},_d .New ("i\u006ev\u0061\u006c\u0069\u0064\u0020\u0072\u0061\u006eg\u0065\u0020\u0066\u006frm\u0061\u0074");};if _dee !=""{_fe [0]=_dee +"\u0021"+_fe [0];_fe [1]=_dee +"\u0021"+_fe [1];};_ecd ,_bfe :=ParseCellReference (_fe [0]);if _bfe !=nil {return CellReference {},CellReference {},_bfe ;};_dbe ,_bfe :=ParseCellReference (_fe [1]);if _bfe !=nil {return CellReference {},CellReference {},_bfe ;};return _ecd ,_dbe ,nil ;};
+func IndexToColumn (col uint32 )string {var _eg [64+1]byte ;_efd :=len (_eg );_fb :=col ;const _ae =26;for _fb >=_ae {_efd --;_eeb :=_fb /_ae ;_eg [_efd ]=byte ('A'+uint (_fb -_eeb *_ae ));_fb =_eeb -1;};_efd --;_eg [_efd ]=byte ('A'+uint (_fb ));return string (_eg [_efd :]);};
