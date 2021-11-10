@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_c "github.com/unidoc/unioffice/common/tempstorage";_f "io/ioutil";_a "os";_bb "strings";);
-
-// Add is not applicable in the diskstore implementation
-func (_d diskStorage )Add (path string )error {return nil };
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_e diskStorage )TempDir (pattern string )(string ,error ){return _f .TempDir ("",pattern )};
+package diskstore ;import (_gag "github.com/unidoc/unioffice/common/tempstorage";_a "io/ioutil";_ga "os";_g "strings";);
 
 // SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_g :=diskStorage {};_c .SetAsStorage (&_g )};
-
-// RemoveAll removes all files in the directory
-func (_cc diskStorage )RemoveAll (dir string )error {if _bb .HasPrefix (dir ,_a .TempDir ()){return _a .RemoveAll (dir );};return nil ;};
-
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_fa diskStorage )TempFile (dir ,pattern string )(_c .File ,error ){return _f .TempFile (dir ,pattern );};type diskStorage struct{};
+func SetAsStorage (){_e :=diskStorage {};_gag .SetAsStorage (&_e )};
 
 // Open opens file from disk according to a path
-func (_bg diskStorage )Open (path string )(_c .File ,error ){return _a .Open (path )};
+func (_gf diskStorage )Open (path string )(_gag .File ,error ){return _ga .Open (path )};
+
+// RemoveAll removes all files in the directory
+func (_d diskStorage )RemoveAll (dir string )error {if _g .HasPrefix (dir ,_ga .TempDir ()){return _ga .RemoveAll (dir );};return nil ;};
+
+// Add is not applicable in the diskstore implementation
+func (_gd diskStorage )Add (path string )error {return nil };type diskStorage struct{};
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_b diskStorage )TempDir (pattern string )(string ,error ){return _a .TempDir ("",pattern )};
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_c diskStorage )TempFile (dir ,pattern string )(_gag .File ,error ){return _a .TempFile (dir ,pattern );};
