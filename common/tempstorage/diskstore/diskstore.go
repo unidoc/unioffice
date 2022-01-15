@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_gag "github.com/unidoc/unioffice/common/tempstorage";_a "io/ioutil";_ga "os";_g "strings";);
-
-// SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_e :=diskStorage {};_gag .SetAsStorage (&_e )};
+package diskstore ;import (_bd "github.com/unidoc/unioffice/common/tempstorage";_g "io/ioutil";_ed "os";_e "strings";);
 
 // Open opens file from disk according to a path
-func (_gf diskStorage )Open (path string )(_gag .File ,error ){return _ga .Open (path )};
-
-// RemoveAll removes all files in the directory
-func (_d diskStorage )RemoveAll (dir string )error {if _g .HasPrefix (dir ,_ga .TempDir ()){return _ga .RemoveAll (dir );};return nil ;};
+func (_c diskStorage )Open (path string )(_bd .File ,error ){return _ed .OpenFile (path ,_ed .O_RDWR ,0644);};
 
 // Add is not applicable in the diskstore implementation
-func (_gd diskStorage )Add (path string )error {return nil };type diskStorage struct{};
+func (_cg diskStorage )Add (path string )error {return nil };
 
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_b diskStorage )TempDir (pattern string )(string ,error ){return _a .TempDir ("",pattern )};
+// SetAsStorage sets temp storage as a disk storage
+func SetAsStorage (){_ga :=diskStorage {};_bd .SetAsStorage (&_ga )};type diskStorage struct{};
 
 // TempFile creates a new temp file by calling ioutil TempFile
-func (_c diskStorage )TempFile (dir ,pattern string )(_gag .File ,error ){return _a .TempFile (dir ,pattern );};
+func (_gg diskStorage )TempFile (dir ,pattern string )(_bd .File ,error ){return _g .TempFile (dir ,pattern );};
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_eg diskStorage )TempDir (pattern string )(string ,error ){return _g .TempDir ("",pattern )};
+
+// RemoveAll removes all files in the directory
+func (_d diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_ed .TempDir ()){return _ed .RemoveAll (dir );};return nil ;};
