@@ -11,11 +11,11 @@
 
 package measurement ;
 
-// FromEMU converts int64 ENU units to float64 distance units.
-func FromEMU (emu int64 )float64 {return float64 (emu )/914400*Inch };
-
 // ToEMU converts float64 distance units to int64 EMU.
 func ToEMU (m float64 )int64 {return int64 (914400.0/Inch *m )};
+
+// FromEMU converts int64 ENU units to float64 distance units.
+func FromEMU (emu int64 )float64 {return float64 (emu )/914400*Inch };
 
 // Distance represents a distance and is automatically converted
 // to the units needed internally in the various ECMA 376 formats.
