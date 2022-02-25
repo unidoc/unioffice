@@ -9,26 +9,26 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package tempstorage ;import _g "io";
-
-// Open returns tempstorage File object by name.
-func Open (path string )(File ,error ){return _da .Open (path )};
-
-// RemoveAll removes all files according to the dir argument prefix.
-func RemoveAll (dir string )error {return _da .RemoveAll (dir )};type storage interface{Open (_ad string )(File ,error );TempFile (_c ,_f string )(File ,error );TempDir (_d string )(string ,error );RemoveAll (_e string )error ;Add (_fc string )error ;};
+package tempstorage ;import _c "io";
 
 // TempDir creates a name for a new temp directory using a pattern argument.
-func TempDir (pattern string )(string ,error ){return _da .TempDir (pattern )};
+func TempDir (pattern string )(string ,error ){return _ab .TempDir (pattern )};
 
 // File is a representation of a storage file
 // with Read, Write, Close and Name methods identical to os.File.
-type File interface{_g .Reader ;_g .ReaderAt ;_g .Writer ;_g .Closer ;Name ()string ;};
+type File interface{_c .Reader ;_c .ReaderAt ;_c .Writer ;_c .Closer ;Name ()string ;};
 
-// TempFile creates new empty file in the storage and returns it.
-func TempFile (dir ,pattern string )(File ,error ){return _da .TempFile (dir ,pattern )};
+// Open returns tempstorage File object by name.
+func Open (path string )(File ,error ){return _ab .Open (path )};
 
 // Add reads a file from a disk and adds it to the storage.
-func Add (path string )error {return _da .Add (path )};
+func Add (path string )error {return _ab .Add (path )};
+
+// TempFile creates new empty file in the storage and returns it.
+func TempFile (dir ,pattern string )(File ,error ){return _ab .TempFile (dir ,pattern )};var _ab storage ;
+
+// RemoveAll removes all files according to the dir argument prefix.
+func RemoveAll (dir string )error {return _ab .RemoveAll (dir )};type storage interface{Open (_e string )(File ,error );TempFile (_f ,_g string )(File ,error );TempDir (_cc string )(string ,error );RemoveAll (_a string )error ;Add (_b string )error ;};
 
 // SetAsStorage changes temporary storage to newStorage.
-func SetAsStorage (newStorage storage ){_da =newStorage };var _da storage ;
+func SetAsStorage (newStorage storage ){_ab =newStorage };
