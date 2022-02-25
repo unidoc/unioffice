@@ -11,34 +11,34 @@
 
 // Package license helps manage commercial licenses and check if they
 // are valid for the version of UniOffice used.
-package license ;import _eb "github.com/unidoc/unioffice/internal/license";
-
-// LegacyLicenseType is the type of license
-type LegacyLicenseType =_eb .LegacyLicenseType ;
-
-// SetLicenseKey sets and validates the license key.
-func SetLicenseKey (content string ,customerName string )error {return _eb .SetLicenseKey (content ,customerName );};
-
-// MakeUnlicensedKey returns a default key.
-func MakeUnlicensedKey ()*LicenseKey {return _eb .MakeUnlicensedKey ()};
-
-// LicenseKey represents a loaded license key.
-type LicenseKey =_eb .LicenseKey ;
+package license ;import _c "github.com/unidoc/unioffice/internal/license";
 
 // GetLicenseKey returns the currently loaded license key.
-func GetLicenseKey ()*LicenseKey {return _eb .GetLicenseKey ()};
+func GetLicenseKey ()*LicenseKey {return _c .GetLicenseKey ()};
+
+// LegacyLicense holds the old-style unioffice license information.
+type LegacyLicense =_c .LegacyLicense ;
 
 // GetMeteredState checks the currently used metered document usage status,
 // documents used and credits available.
-func GetMeteredState ()(_eb .MeteredStatus ,error ){return _eb .GetMeteredState ()};
+func GetMeteredState ()(_c .MeteredStatus ,error ){return _c .GetMeteredState ()};
 
-// LegacyLicense holds the old-style unioffice license information.
-type LegacyLicense =_eb .LegacyLicense ;
+// LicenseKey represents a loaded license key.
+type LicenseKey =_c .LicenseKey ;
+
+// MakeUnlicensedKey returns a default key.
+func MakeUnlicensedKey ()*LicenseKey {return _c .MakeUnlicensedKey ()};
 
 // SetMeteredKey sets the metered License API key required for SaaS operation.
 // Document usage is reported periodically for the product to function correctly.
-func SetMeteredKey (apiKey string )error {return _eb .SetMeteredKey (apiKey )};
+func SetMeteredKey (apiKey string )error {return _c .SetMeteredKey (apiKey )};
+
+// LegacyLicenseType is the type of license
+type LegacyLicenseType =_c .LegacyLicenseType ;
 
 // SetLegacyLicenseKey installs a legacy license code. License codes issued prior to June 2019.
 // Will be removed at some point in a future major version.
-func SetLegacyLicenseKey (s string )error {return _eb .SetLegacyLicenseKey (s )};const (LicenseTierUnlicensed =_eb .LicenseTierUnlicensed ;LicenseTierCommunity =_eb .LicenseTierCommunity ;LicenseTierIndividual =_eb .LicenseTierIndividual ;LicenseTierBusiness =_eb .LicenseTierBusiness ;);
+func SetLegacyLicenseKey (s string )error {return _c .SetLegacyLicenseKey (s )};
+
+// SetLicenseKey sets and validates the license key.
+func SetLicenseKey (content string ,customerName string )error {return _c .SetLicenseKey (content ,customerName );};const (LicenseTierUnlicensed =_c .LicenseTierUnlicensed ;LicenseTierCommunity =_c .LicenseTierCommunity ;LicenseTierIndividual =_c .LicenseTierIndividual ;LicenseTierBusiness =_c .LicenseTierBusiness ;);
