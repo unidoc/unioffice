@@ -11,34 +11,39 @@
 
 // Package license helps manage commercial licenses and check if they
 // are valid for the version of UniOffice used.
-package license ;import _c "github.com/unidoc/unioffice/internal/license";
-
-// GetLicenseKey returns the currently loaded license key.
-func GetLicenseKey ()*LicenseKey {return _c .GetLicenseKey ()};
-
-// SetLicenseKey sets and validates the license key.
-func SetLicenseKey (content string ,customerName string )error {return _c .SetLicenseKey (content ,customerName );};
+package license ;import _g "github.com/unidoc/unioffice/internal/license";
 
 // LegacyLicenseType is the type of license
-type LegacyLicenseType =_c .LegacyLicenseType ;
+type LegacyLicenseType =_g .LegacyLicenseType ;
+
+// MakeUnlicensedKey returns a default key.
+func MakeUnlicensedKey ()*LicenseKey {return _g .MakeUnlicensedKey ()};
 
 // LicenseKey represents a loaded license key.
-type LicenseKey =_c .LicenseKey ;
+type LicenseKey =_g .LicenseKey ;
+
+// GetLicenseKey returns the currently loaded license key.
+func GetLicenseKey ()*LicenseKey {return _g .GetLicenseKey ()};const (LicenseTierUnlicensed =_g .LicenseTierUnlicensed ;LicenseTierCommunity =_g .LicenseTierCommunity ;LicenseTierIndividual =_g .LicenseTierIndividual ;LicenseTierBusiness =_g .LicenseTierBusiness ;);
 
 // SetMeteredKey sets the metered License API key required for SaaS operation.
 // Document usage is reported periodically for the product to function correctly.
-func SetMeteredKey (apiKey string )error {return _c .SetMeteredKey (apiKey )};
-
-// SetLegacyLicenseKey installs a legacy license code. License codes issued prior to June 2019.
-// Will be removed at some point in a future major version.
-func SetLegacyLicenseKey (s string )error {return _c .SetLegacyLicenseKey (s )};const (LicenseTierUnlicensed =_c .LicenseTierUnlicensed ;LicenseTierCommunity =_c .LicenseTierCommunity ;LicenseTierIndividual =_c .LicenseTierIndividual ;LicenseTierBusiness =_c .LicenseTierBusiness ;);
-
-// MakeUnlicensedKey returns a default key.
-func MakeUnlicensedKey ()*LicenseKey {return _c .MakeUnlicensedKey ()};
-
-// LegacyLicense holds the old-style unioffice license information.
-type LegacyLicense =_c .LegacyLicense ;
+func SetMeteredKey (apiKey string )error {return _g .SetMeteredKey (apiKey )};
 
 // GetMeteredState checks the currently used metered document usage status,
 // documents used and credits available.
-func GetMeteredState ()(_c .MeteredStatus ,error ){return _c .GetMeteredState ()};
+func GetMeteredState ()(_g .MeteredStatus ,error ){return _g .GetMeteredState ()};
+
+// LegacyLicense holds the old-style unioffice license information.
+type LegacyLicense =_g .LegacyLicense ;
+
+// SetMeteredKeyPersistentCache sets the metered License API Key persistent cache.
+// Default value `true`, set to `false` will report the usage immediately to license server,
+// this can be used when there's no access to persistent data storage.
+func SetMeteredKeyPersistentCache (val bool ){_g .SetMeteredKeyPersistentCache (val )};
+
+// SetLicenseKey sets and validates the license key.
+func SetLicenseKey (content string ,customerName string )error {return _g .SetLicenseKey (content ,customerName );};
+
+// SetLegacyLicenseKey installs a legacy license code. License codes issued prior to June 2019.
+// Will be removed at some point in a future major version.
+func SetLegacyLicenseKey (s string )error {return _g .SetLegacyLicenseKey (s )};
