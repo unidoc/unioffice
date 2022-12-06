@@ -15,610 +15,114 @@
 // UniDoc End User License Agreement (EULA) that is available at:
 // https://unidoc.io/eula/
 // A trial license code for evaluation can be obtained at https://unidoc.io.
-package spreadsheet ;import (_bc "archive/zip";_fc "bytes";_gb "errors";_eg "fmt";_e "github.com/unidoc/unioffice";_dg "github.com/unidoc/unioffice/chart";_afd "github.com/unidoc/unioffice/color";_egb "github.com/unidoc/unioffice/common";_af "github.com/unidoc/unioffice/common/logger";_ef "github.com/unidoc/unioffice/common/tempstorage";_dd "github.com/unidoc/unioffice/internal/license";_ga "github.com/unidoc/unioffice/measurement";_cg "github.com/unidoc/unioffice/schema/soo/dml";_ff "github.com/unidoc/unioffice/schema/soo/dml/chart";_dbg "github.com/unidoc/unioffice/schema/soo/dml/spreadsheetDrawing";_ae "github.com/unidoc/unioffice/schema/soo/pkg/relationships";_ege "github.com/unidoc/unioffice/schema/soo/sml";_de "github.com/unidoc/unioffice/spreadsheet/format";_ce "github.com/unidoc/unioffice/spreadsheet/formula";_ba "github.com/unidoc/unioffice/spreadsheet/reference";_cf "github.com/unidoc/unioffice/spreadsheet/update";_bcc "github.com/unidoc/unioffice/vmldrawing";_db "github.com/unidoc/unioffice/zippkg";_fd "image";_f "image/jpeg";_bg "io";_cd "math";_aa "math/big";_ee "os";_b "path";_a "path/filepath";_da "regexp";_d "sort";_gd "strconv";_fca "strings";_c "time";);
-
-// Protection allows control over the workbook protections.
-func (_debe *Workbook )Protection ()WorkbookProtection {if _debe ._aadd .WorkbookProtection ==nil {_debe ._aadd .WorkbookProtection =_ege .NewCT_WorkbookProtection ();};return WorkbookProtection {_debe ._aadd .WorkbookProtection };};func (_gbgc Row )renumberAs (_bdg uint32 ){_gbgc ._bddg .RAttr =_e .Uint32 (_bdg );for _ ,_beec :=range _gbgc .Cells (){_efce ,_dgg :=_ba .ParseCellReference (_beec .Reference ());if _dgg ==nil {_efdg :=_eg .Sprintf ("\u0025\u0073\u0025\u0064",_efce .Column ,_bdg );_beec ._be .RAttr =_e .String (_efdg );};};};func _fb (_ecg _c .Time )_c .Time {_ecg =_ecg .UTC ();return _c .Date (_ecg .Year (),_ecg .Month (),_ecg .Day (),_ecg .Hour (),_ecg .Minute (),_ecg .Second (),_ecg .Nanosecond (),_c .Local );};
-
-// SetHidden controls the visibility of a column.
-func (_abb Column )SetHidden (b bool ){if !b {_abb ._ceef .HiddenAttr =nil ;}else {_abb ._ceef .HiddenAttr =_e .Bool (true );};};func (_abga Fill )SetPatternFill ()PatternFill {_abga ._bgdb .GradientFill =nil ;_abga ._bgdb .PatternFill =_ege .NewCT_PatternFill ();_abga ._bgdb .PatternFill .PatternTypeAttr =_ege .ST_PatternTypeSolid ;return PatternFill {_abga ._bgdb .PatternFill ,_abga ._bgdb };};
-
-// NumberFormat returns the number format that the cell style uses, or zero if
-// it is not set.
-func (_fcdc CellStyle )NumberFormat ()uint32 {if _fcdc ._ceca .NumFmtIdAttr ==nil {return 0;};return *_fcdc ._ceca .NumFmtIdAttr ;};
-
-// GetFormat sets the number format code.
-func (_ead NumberFormat )GetFormat ()string {return _ead ._cecf .FormatCodeAttr };
-
-// SetAutoFilter creates autofilters on the sheet. These are the automatic
-// filters that are common for a header row.  The RangeRef should be of the form
-// "A1:C5" and cover the entire range of cells to be filtered, not just the
-// header. SetAutoFilter replaces any existing auto filter on the sheet.
-func (_dgee *Sheet )SetAutoFilter (rangeRef string ){rangeRef =_fca .Replace (rangeRef ,"\u0024","",-1);_dgee ._eaa .AutoFilter =_ege .NewCT_AutoFilter ();_dgee ._eaa .AutoFilter .RefAttr =_e .String (rangeRef );_bfa :="\u0027"+_dgee .Name ()+"\u0027\u0021";var _gcbdb DefinedName ;for _ ,_fgdc :=range _dgee ._geaf .DefinedNames (){if _fgdc .Name ()==_ddab {if _fca .HasPrefix (_fgdc .Content (),_bfa ){_gcbdb =_fgdc ;_gcbdb .SetContent (_dgee .RangeReference (rangeRef ));break ;};};};if _gcbdb .X ()==nil {_gcbdb =_dgee ._geaf .AddDefinedName (_ddab ,_dgee .RangeReference (rangeRef ));};for _fgda ,_fga :=range _dgee ._geaf ._gbed {if _fga ==_dgee ._eaa {_gcbdb .SetLocalSheetID (uint32 (_fgda ));};};};
-
-// Text returns text from the workbook as one string separated with line breaks.
-func (_bcab *WorkbookText )Text ()string {_ggeba :=_fc .NewBuffer ([]byte {});for _ ,_cged :=range _bcab .Sheets {_ggeba .WriteString (_cged .Text ());};return _ggeba .String ();};func (_cade PatternFill )SetBgColor (c _afd .Color ){_cade ._gbec .BgColor =_ege .NewCT_Color ();_cade ._gbec .BgColor .RgbAttr =c .AsRGBAString ();};
-
-// GetValueAsNumber retrieves the cell's value as a number
-func (_egfd Cell )GetValueAsNumber ()(float64 ,error ){if _egfd ._be .V ==nil &&_egfd ._be .Is ==nil {return 0,nil ;};if _egfd ._be .TAttr ==_ege .ST_CellTypeS ||!_de .IsNumber (*_egfd ._be .V ){return _cd .NaN (),_gb .New ("\u0063\u0065\u006c\u006c\u0020\u0069\u0073\u0020\u006e\u006f\u0074 \u006f\u0066\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020t\u0079\u0070\u0065");};return _gd .ParseFloat (*_egfd ._be .V ,64);};
-
-// LockStructure controls the locking of the workbook structure.
-func (_ffaeg WorkbookProtection )LockStructure (b bool ){if !b {_ffaeg ._gcge .LockStructureAttr =nil ;}else {_ffaeg ._gcge .LockStructureAttr =_e .Bool (true );};};
-
-// GetFilename returns the name of file from which workbook was opened with full path to it
-func (_dafg *Workbook )GetFilename ()string {return _dafg ._aaa };
-
-// BottomRight returns the CellMaker for the bottom right corner of the anchor.
-func (_cecd TwoCellAnchor )BottomRight ()CellMarker {return CellMarker {_cecd ._fdab .To }};func (_ddc Comments )getOrCreateAuthor (_bff string )uint32 {for _cbg ,_agd :=range _ddc ._abcb .Authors .Author {if _agd ==_bff {return uint32 (_cbg );};};_cgc :=uint32 (len (_ddc ._abcb .Authors .Author ));_ddc ._abcb .Authors .Author =append (_ddc ._abcb .Authors .Author ,_bff );return _cgc ;};
-
-// SetHeightCells is a no-op.
-func (_gg AbsoluteAnchor )SetHeightCells (int32 ){};
-
-// NewStyleSheet constructs a new default stylesheet.
-func NewStyleSheet (wb *Workbook )StyleSheet {_fdggc :=_ege .NewStyleSheet ();_fdggc .CellStyleXfs =_ege .NewCT_CellStyleXfs ();_fdggc .CellXfs =_ege .NewCT_CellXfs ();_fdggc .CellStyles =_ege .NewCT_CellStyles ();_edbcd :=_ege .NewCT_CellStyle ();_edbcd .NameAttr =_e .String ("\u004e\u006f\u0072\u006d\u0061\u006c");_edbcd .XfIdAttr =0;_edbcd .BuiltinIdAttr =_e .Uint32 (0);_fdggc .CellStyles .CellStyle =append (_fdggc .CellStyles .CellStyle ,_edbcd );_fdggc .CellStyles .CountAttr =_e .Uint32 (uint32 (len (_fdggc .CellStyles .CellStyle )));_fecee :=_ege .NewCT_Xf ();_fecee .NumFmtIdAttr =_e .Uint32 (0);_fecee .FontIdAttr =_e .Uint32 (0);_fecee .FillIdAttr =_e .Uint32 (0);_fecee .BorderIdAttr =_e .Uint32 (0);_fdggc .CellStyleXfs .Xf =append (_fdggc .CellStyleXfs .Xf ,_fecee );_fdggc .CellStyleXfs .CountAttr =_e .Uint32 (uint32 (len (_fdggc .CellStyleXfs .Xf )));_ebfg :=NewFills ();_fdggc .Fills =_ebfg .X ();_fabb :=_ebfg .AddFill ().SetPatternFill ();_fabb .SetPattern (_ege .ST_PatternTypeNone );_fabb =_ebfg .AddFill ().SetPatternFill ();_fabb .SetPattern (_ege .ST_PatternTypeGray125 );_fdggc .Fonts =_ege .NewCT_Fonts ();_fdggc .Borders =_ege .NewCT_Borders ();_eaada :=StyleSheet {wb ,_fdggc };_eaada .AddBorder ().InitializeDefaults ();_dgbg :=_eaada .AddFont ();_dgbg .SetName ("\u0043a\u006c\u0069\u0062\u0072\u0069");_dgbg .SetSize (11);_dbcgg :=_ege .NewCT_Xf ();*_dbcgg =*_fecee ;_dbcgg .XfIdAttr =_e .Uint32 (0);_fdggc .CellXfs .Xf =append (_fdggc .CellXfs .Xf ,_dbcgg );_fdggc .CellXfs .CountAttr =_e .Uint32 (uint32 (len (_fdggc .CellXfs .Xf )));return _eaada ;};func (_deg Border )SetDiagonal (style _ege .ST_BorderStyle ,c _afd .Color ,up ,down bool ){if _deg ._ac .Diagonal ==nil {_deg ._ac .Diagonal =_ege .NewCT_BorderPr ();};_deg ._ac .Diagonal .Color =_ege .NewCT_Color ();_deg ._ac .Diagonal .Color .RgbAttr =c .AsRGBAString ();_deg ._ac .Diagonal .StyleAttr =style ;if up {_deg ._ac .DiagonalUpAttr =_e .Bool (true );};if down {_deg ._ac .DiagonalDownAttr =_e .Bool (true );};};
-
-// SetRowOffset sets the row offset of the two cell anchor
-func (_dgfd TwoCellAnchor )SetRowOffset (m _ga .Distance ){_ffabc :=m -_dgfd .TopLeft ().RowOffset ();_dgfd .TopLeft ().SetRowOffset (m );_dgfd .BottomRight ().SetRowOffset (_dgfd .BottomRight ().RowOffset ()+_ffabc );};
-
-// AddGradientStop adds a color gradient stop.
-func (_gccf ColorScale )AddGradientStop (color _afd .Color ){_aedd :=_ege .NewCT_Color ();_aedd .RgbAttr =color .AsRGBAString ();_gccf ._bada .Color =append (_gccf ._bada .Color ,_aedd );};
-
-// RowOffset returns the offset from the row cell.
-func (_bee CellMarker )RowOffset ()_ga .Distance {if _bee ._cgf .RowOff .ST_CoordinateUnqualified ==nil {return 0;};return _ga .Distance (float64 (*_bee ._cgf .RowOff .ST_CoordinateUnqualified )*_ga .EMU );};
-
-// SetActiveSheetIndex sets the index of the active sheet (0-n) which will be
-// the tab displayed when the spreadsheet is initially opened.
-func (_agfce *Workbook )SetActiveSheetIndex (idx uint32 ){if _agfce ._aadd .BookViews ==nil {_agfce ._aadd .BookViews =_ege .NewCT_BookViews ();};if len (_agfce ._aadd .BookViews .WorkbookView )==0{_agfce ._aadd .BookViews .WorkbookView =append (_agfce ._aadd .BookViews .WorkbookView ,_ege .NewCT_BookView ());};_agfce ._aadd .BookViews .WorkbookView [0].ActiveTabAttr =_e .Uint32 (idx );};
-
-// CellsWithEmpty returns a slice of cells including empty ones from the first column to the last one used in the sheet.
-// The cells can be manipulated, but appending to the slice will have no effect.
-func (_cabb Row )CellsWithEmpty (lastColIdx uint32 )[]Cell {_ecdd :=[]Cell {};for _baag :=uint32 (0);_baag <=lastColIdx ;_baag ++{_ceda :=_cabb .Cell (_ba .IndexToColumn (_baag ));_ecdd =append (_ecdd ,_ceda );};return _ecdd ;};type Fill struct{_bgdb *_ege .CT_Fill ;_facb *_ege .CT_Fills ;};type Fills struct{_gdcc *_ege .CT_Fills };
-
-// SetRow set the row of the cell marker.
-func (_affd CellMarker )SetRow (row int32 ){_affd ._cgf .Row =row };
-
-// X returns the inner wrapped XML type.
-func (_fdfdf *Workbook )X ()*_ege .Workbook {return _fdfdf ._aadd };
-
-// SetColor sets teh color of the databar.
-func (_eeee DataBarScale )SetColor (c _afd .Color ){_eeee ._bca .Color =_ege .NewCT_Color ();_eeee ._bca .Color .RgbAttr =c .AsRGBAString ();};
-
-// Type returns the type of anchor
-func (_fgcd TwoCellAnchor )Type ()AnchorType {return AnchorTypeTwoCell };const (DVOpGreater =_ege .ST_DataValidationOperatorGreaterThanOrEqual ;);
-
-// Operator returns the operator for the rule
-func (_bffd ConditionalFormattingRule )Operator ()_ege .ST_ConditionalFormattingOperator {return _bffd ._cdfd .OperatorAttr ;};
-
-// AddFormatValue adds a format value to be used in determining which icons to display.
-func (_eeed IconScale )AddFormatValue (t _ege .ST_CfvoType ,val string ){_dfdb :=_ege .NewCT_Cfvo ();_dfdb .TypeAttr =t ;_dfdb .ValAttr =_e .String (val );_eeed ._aggb .Cfvo =append (_eeed ._aggb .Cfvo ,_dfdb );};
-
-// Workbook is the top level container item for a set of spreadsheets.
-type Workbook struct{_egb .DocBase ;_aadd *_ege .Workbook ;StyleSheet StyleSheet ;SharedStrings SharedStrings ;_gafdb []*_ege .Comments ;_gbed []*_ege .Worksheet ;_abeb []_egb .Relationships ;_ceee _egb .Relationships ;_bfag []*_cg .Theme ;_caea []*_dbg .WsDr ;_gbbbb []_egb .Relationships ;_edbcf []*_bcc .Container ;_fbaf []*_ff .ChartSpace ;_fcbbc []*_ege .Table ;_aaa string ;_eece map[string ]string ;_bgea map[string ]*_ff .ChartSpace ;_ebge string ;};func (_dede *Sheet )setList (_eabcc string ,_fefd _ce .Result )error {_aecf ,_afec :=_ba .ParseCellReference (_eabcc );if _afec !=nil {return _afec ;};_ggda :=_dede .Row (_aecf .RowIdx );for _faef ,_ecffg :=range _fefd .ValueList {_eafeb :=_ggda .Cell (_ba .IndexToColumn (_aecf .ColumnIdx +uint32 (_faef )));if _ecffg .Type !=_ce .ResultTypeEmpty {if _ecffg .IsBoolean {_eafeb .SetBool (_ecffg .ValueNumber !=0);}else {_eafeb .SetCachedFormulaResult (_ecffg .String ());};};};return nil ;};
-
-// AnchorType is the type of anchor.
-type AnchorType byte ;
-
-// GetString retrieves a string from the shared strings table by index.
-func (_bgdce SharedStrings )GetString (id int )(string ,error ){if id < 0{return "",_eg .Errorf ("\u0069\u006eva\u006c\u0069\u0064 \u0073\u0074\u0072\u0069ng \u0069nd\u0065\u0078\u0020\u0025\u0064\u002c\u0020mu\u0073\u0074\u0020\u0062\u0065\u0020\u003e \u0030",id );};if id > len (_bgdce ._baee .Si ){return "",_eg .Errorf ("\u0069\u006e\u0076\u0061\u006c\u0069d\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0069\u006e\u0064\u0065\u0078\u0020\u0025\u0064\u002c\u0020\u0074\u0061b\u006c\u0065\u0020\u006f\u006e\u006c\u0079\u0020\u0068\u0061\u0073\u0020\u0025\u0064 \u0076a\u006c\u0075\u0065\u0073",id ,len (_bgdce ._baee .Si ));};_affbc :=_bgdce ._baee .Si [id ];if _affbc .T !=nil {return *_affbc .T ,nil ;};return "",nil ;};
-
-// RecalculateFormulas re-computes any computed formula values that are stored
-// in the sheet. As unioffice formula support is still new and not all functins are
-// supported,  if formula execution fails either due to a parse error or missing
-// function, or erorr in the result (even if expected) the cached value will be
-// left empty allowing Excel to recompute it on load.
-func (_dabd *Sheet )RecalculateFormulas (){_cfcc :=_ce .NewEvaluator ();_abgae :=_dabd .FormulaContext ();for _ ,_gfca :=range _dabd .Rows (){for _ ,_eefe :=range _gfca .Cells (){if _eefe .X ().F !=nil {_dbcb :=_eefe .X ().F .Content ;if _eefe .X ().F .TAttr ==_ege .ST_CellFormulaTypeShared &&len (_dbcb )==0{continue ;};_edef :=_cfcc .Eval (_abgae ,_dbcb ).AsString ();if _edef .Type ==_ce .ResultTypeError {_af .Log .Debug ("\u0065\u0072\u0072o\u0072\u0020\u0065\u0076a\u0075\u006c\u0061\u0074\u0069\u006e\u0067 \u0066\u006f\u0072\u006d\u0075\u006c\u0061\u0020\u0025\u0073\u003a\u0020\u0025\u0073",_dbcb ,_edef .ErrorMessage );_eefe .X ().V =nil ;}else {if _edef .Type ==_ce .ResultTypeNumber {_eefe .X ().TAttr =_ege .ST_CellTypeN ;}else {_eefe .X ().TAttr =_ege .ST_CellTypeInlineStr ;};_eefe .X ().V =_e .String (_edef .Value ());if _eefe .X ().F .TAttr ==_ege .ST_CellFormulaTypeArray {if _edef .Type ==_ce .ResultTypeArray {_dabd .setArray (_eefe .Reference (),_edef );}else if _edef .Type ==_ce .ResultTypeList {_dabd .setList (_eefe .Reference (),_edef );};}else if _eefe .X ().F .TAttr ==_ege .ST_CellFormulaTypeShared &&_eefe .X ().F .RefAttr !=nil {_eggd ,_fadd ,_gcd :=_ba .ParseRangeReference (*_eefe .X ().F .RefAttr );if _gcd !=nil {_af .Log .Debug ("\u0065\u0072r\u006f\u0072\u0020\u0069n\u0020\u0073h\u0061\u0072\u0065\u0064\u0020\u0066\u006f\u0072m\u0075\u006c\u0061\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063e\u003a\u0020\u0025\u0073",_gcd );continue ;};_dabd .setShared (_eefe .Reference (),_eggd ,_fadd ,_dbcb );};};};};};};
-
-// SortOrder is a column sort order.
-//go:generate stringer -type=SortOrder
-type SortOrder byte ;const (DVCompareOpEqual =DVCompareOp (_ege .ST_DataValidationOperatorEqual );DVCompareOpBetween =DVCompareOp (_ege .ST_DataValidationOperatorBetween );DVCompareOpNotBetween =DVCompareOp (_ege .ST_DataValidationOperatorNotBetween );DVCompareOpNotEqual =DVCompareOp (_ege .ST_DataValidationOperatorNotEqual );DVCompareOpGreater =DVCompareOp (_ege .ST_DataValidationOperatorGreaterThan );DVCompareOpGreaterEqual =DVCompareOp (_ege .ST_DataValidationOperatorGreaterThanOrEqual );DVCompareOpLess =DVCompareOp (_ege .ST_DataValidationOperatorLessThan );DVCompareOpLessEqual =DVCompareOp (_ege .ST_DataValidationOperatorLessThanOrEqual ););
-
-// AddDrawing adds a drawing to a workbook.  However the drawing is not actually
-// displayed or used until it's set on a sheet.
-func (_bedac *Workbook )AddDrawing ()Drawing {_gcbg :=_dbg .NewWsDr ();_bedac ._caea =append (_bedac ._caea ,_gcbg );_ceeb :=_e .AbsoluteFilename (_e .DocTypeSpreadsheet ,_e .DrawingType ,len (_bedac ._caea ));_bedac .ContentTypes .AddOverride (_ceeb ,_e .DrawingContentType );_bedac ._gbbbb =append (_bedac ._gbbbb ,_egb .NewRelationships ());return Drawing {_bedac ,_gcbg };};
-
-// SetRotation configures the cell to be rotated.
-func (_ddef CellStyle )SetRotation (deg uint8 ){if _ddef ._ceca .Alignment ==nil {_ddef ._ceca .Alignment =_ege .NewCT_CellAlignment ();};_ddef ._ceca .ApplyAlignmentAttr =_e .Bool (true );_ddef ._ceca .Alignment .TextRotationAttr =_e .Uint8 (deg );};
-
-// Index returns the index of the border for use with a cell style.
-func (_fdd Border )Index ()uint32 {for _caf ,_dea :=range _fdd ._gbd .Border {if _dea ==_fdd ._ac {return uint32 (_caf );};};return 0;};
-
-// SetHidden marks the defined name as hidden.
-func (_aafd DefinedName )SetHidden (b bool ){_aafd ._bgf .HiddenAttr =_e .Bool (b )};
-
-// SetWrapped configures the cell to wrap text.
-func (_fgef CellStyle )SetWrapped (b bool ){if _fgef ._ceca .Alignment ==nil {_fgef ._ceca .Alignment =_ege .NewCT_CellAlignment ();};if !b {_fgef ._ceca .Alignment .WrapTextAttr =nil ;}else {_fgef ._ceca .Alignment .WrapTextAttr =_e .Bool (true );_fgef ._ceca .ApplyAlignmentAttr =_e .Bool (true );};};
-
-// Content returns the content of the defined range (the range in most cases)/
-func (_fbc DefinedName )Content ()string {return _fbc ._bgf .Content };func (_ffgfd *Sheet )getAllCellsInFormulaArraysForColumn ()(map[string ]bool ,error ){return _ffgfd .getAllCellsInFormulaArrays (false );};func (_cfc Cell )GetRawValue ()(string ,error ){switch _cfc ._be .TAttr {case _ege .ST_CellTypeInlineStr :if _cfc ._be .Is ==nil ||_cfc ._be .Is .T ==nil {return "",nil ;};return *_cfc ._be .Is .T ,nil ;case _ege .ST_CellTypeS :if _cfc ._be .V ==nil {return "",nil ;};_fea ,_ceg :=_gd .Atoi (*_cfc ._be .V );if _ceg !=nil {return "",_ceg ;};return _cfc ._cdb .SharedStrings .GetString (_fea );case _ege .ST_CellTypeStr :if _cfc ._be .F !=nil {return _cfc ._be .F .Content ,nil ;};};if _cfc ._be .V ==nil {return "",nil ;};return *_cfc ._be .V ,nil ;};
-
-// Drawing is a drawing overlay on a sheet.  Only a single drawing is allowed
-// per sheet, so to display multiple charts and images on a single sheet, they
-// must be added to the same drawing.
-type Drawing struct{_gfce *Workbook ;_cffa *_dbg .WsDr ;};
-
-// Sheets returns the sheets from the workbook.
-func (_fbee *Workbook )Sheets ()[]Sheet {_fbfdf :=[]Sheet {};for _bcbfd ,_bbffb :=range _fbee ._gbed {_fcfb :=_fbee ._aadd .Sheets .Sheet [_bcbfd ];_gbdbd :=Sheet {_fbee ,_fcfb ,_bbffb };_fbfdf =append (_fbfdf ,_gbdbd );};return _fbfdf ;};
-
-// SetHeight sets the row height in points.
-func (_gbff Row )SetHeight (d _ga .Distance ){_gbff ._bddg .HtAttr =_e .Float64 (float64 (d ));_gbff ._bddg .CustomHeightAttr =_e .Bool (true );};func (_edeaa StyleSheet )GetNumberFormat (id uint32 )NumberFormat {if id >=0&&id < 50{return CreateDefaultNumberFormat (StandardFormat (id ));};for _ ,_ccac :=range _edeaa ._eebcg .NumFmts .NumFmt {if _ccac .NumFmtIdAttr ==id {return NumberFormat {_edeaa ._baea ,_ccac };};};return NumberFormat {};};func (_ede DataValidationCompare )SetValue2 (v string ){_ede ._aced .Formula2 =&v };
-
-// SetColorScale configures the rule as a color scale, removing existing
-// configuration.
-func (_eafe ConditionalFormattingRule )SetColorScale ()ColorScale {_eafe .clear ();_eafe .SetType (_ege .ST_CfTypeColorScale );_eafe ._cdfd .ColorScale =_ege .NewCT_ColorScale ();return ColorScale {_eafe ._cdfd .ColorScale };};func (_gdaa CellStyle )Index ()uint32 {for _eabf ,_aga :=range _gdaa ._cab .Xf {if _gdaa ._ceca ==_aga {return uint32 (_eabf );};};return 0;};
-
-// SetFrozen removes any existing sheet views and creates a new single view with
-// either the first row, first column or both frozen.
-func (_cgbb *Sheet )SetFrozen (firstRow ,firstCol bool ){_cgbb ._eaa .SheetViews =nil ;_bdcg :=_cgbb .AddView ();_bdcg .SetState (_ege .ST_PaneStateFrozen );switch {case firstRow &&firstCol :_bdcg .SetYSplit (1);_bdcg .SetXSplit (1);_bdcg .SetTopLeft ("\u0042\u0032");case firstRow :_bdcg .SetYSplit (1);_bdcg .SetTopLeft ("\u0041\u0032");case firstCol :_bdcg .SetXSplit (1);_bdcg .SetTopLeft ("\u0042\u0031");};};
-
-// SetXSplit sets the column split point
-func (_fedgg SheetView )SetXSplit (v float64 ){_fedgg .ensurePane ();_fedgg ._cdfa .Pane .XSplitAttr =_e .Float64 (v );};func (_fgcf ConditionalFormattingRule )clear (){_fgcf ._cdfd .OperatorAttr =_ege .ST_ConditionalFormattingOperatorUnset ;_fgcf ._cdfd .ColorScale =nil ;_fgcf ._cdfd .IconSet =nil ;_fgcf ._cdfd .Formula =nil ;};
-
-// AddFormatValue adds a format value to be used to determine the cell background.
-func (_dcc ColorScale )AddFormatValue (t _ege .ST_CfvoType ,val string ){_cff :=_ege .NewCT_Cfvo ();_cff .TypeAttr =t ;_cff .ValAttr =_e .String (val );_dcc ._bada .Cfvo =append (_dcc ._bada .Cfvo ,_cff );};
-
-// SetState sets the sheet view state (frozen/split/frozen-split)
-func (_addbb SheetView )SetState (st _ege .ST_PaneState ){_addbb .ensurePane ();_addbb ._cdfa .Pane .StateAttr =st ;};
-
-// RichText is a container for the rich text within a cell. It's similar to a
-// paragaraph for a document, except a cell can only contain one rich text item.
-type RichText struct{_dbaa *_ege .CT_Rst };func (_addg Fill )Index ()uint32 {if _addg ._facb ==nil {return 0;};for _ccab ,_gab :=range _addg ._facb .Fill {if _addg ._bgdb ==_gab {return uint32 (_ccab );};};return 0;};
-
-// Save writes the workbook out to a writer in the zipped xlsx format.
-func (_dbga *Workbook )Save (w _bg .Writer )error {const _bbaff ="\u0073\u0070\u0072\u0065ad\u0073\u0068\u0065\u0065\u0074\u003a\u0077\u0062\u002e\u0053\u0061\u0076\u0065";if !_dd .GetLicenseKey ().IsLicensed ()&&!_fdgb {_eg .Println ("\u0055\u006e\u006ci\u0063\u0065\u006e\u0073e\u0064\u0020\u0076\u0065\u0072\u0073\u0069o\u006e\u0020\u006f\u0066\u0020\u0055\u006e\u0069\u004f\u0066\u0066\u0069\u0063\u0065");_eg .Println ("\u002d\u0020\u0047e\u0074\u0020\u0061\u0020\u0074\u0072\u0069\u0061\u006c\u0020\u006c\u0069\u0063\u0065\u006e\u0073\u0065\u0020\u006f\u006e\u0020\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002fu\u006e\u0069\u0064\u006f\u0063\u002e\u0069\u006f");return _gb .New ("\u0075\u006e\u0069\u006f\u0066\u0066\u0069\u0063\u0065\u0020\u006ci\u0063\u0065\u006e\u0073\u0065\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0064");};if len (_dbga ._ebge )==0{_efag ,_abbc :=_dd .GenRefId ("\u0073\u0077");if _abbc !=nil {_af .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_abbc );return _abbc ;};_dbga ._ebge =_efag ;};if _eafb :=_dd .Track (_dbga ._ebge ,_bbaff );_eafb !=nil {_af .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_eafb );return _eafb ;};_gbfe :=_bc .NewWriter (w );defer _gbfe .Close ();_eeac :=_e .DocTypeSpreadsheet ;if _bgfc :=_db .MarshalXML (_gbfe ,_e .BaseRelsFilename ,_dbga .Rels .X ());_bgfc !=nil {return _bgfc ;};if _ffdgd :=_db .MarshalXMLByType (_gbfe ,_eeac ,_e .ExtendedPropertiesType ,_dbga .AppProperties .X ());_ffdgd !=nil {return _ffdgd ;};if _dac :=_db .MarshalXMLByType (_gbfe ,_eeac ,_e .CorePropertiesType ,_dbga .CoreProperties .X ());_dac !=nil {return _dac ;};_adfe :=_e .AbsoluteFilename (_eeac ,_e .OfficeDocumentType ,0);if _ccec :=_db .MarshalXML (_gbfe ,_adfe ,_dbga ._aadd );_ccec !=nil {return _ccec ;};if _cddc :=_db .MarshalXML (_gbfe ,_db .RelationsPathFor (_adfe ),_dbga ._ceee .X ());_cddc !=nil {return _cddc ;};if _bfaga :=_db .MarshalXMLByType (_gbfe ,_eeac ,_e .StylesType ,_dbga .StyleSheet .X ());_bfaga !=nil {return _bfaga ;};for _ddfb ,_bfab :=range _dbga ._bfag {if _fcea :=_db .MarshalXMLByTypeIndex (_gbfe ,_eeac ,_e .ThemeType ,_ddfb +1,_bfab );_fcea !=nil {return _fcea ;};};for _dagec ,_ggfg :=range _dbga ._gbed {_ggfg .Dimension .RefAttr =Sheet {_dbga ,nil ,_ggfg }.Extents ();_gcfc :=_e .AbsoluteFilename (_eeac ,_e .WorksheetType ,_dagec +1);_db .MarshalXML (_gbfe ,_gcfc ,_ggfg );_db .MarshalXML (_gbfe ,_db .RelationsPathFor (_gcfc ),_dbga ._abeb [_dagec ].X ());};if _face :=_db .MarshalXMLByType (_gbfe ,_eeac ,_e .SharedStringsType ,_dbga .SharedStrings .X ());_face !=nil {return _face ;};if _dbga .CustomProperties .X ()!=nil {if _eegbf :=_db .MarshalXMLByType (_gbfe ,_eeac ,_e .CustomPropertiesType ,_dbga .CustomProperties .X ());_eegbf !=nil {return _eegbf ;};};if _dbga .Thumbnail !=nil {_ddgg :=_e .AbsoluteFilename (_eeac ,_e .ThumbnailType ,0);_ceag ,_gedca :=_gbfe .Create (_ddgg );if _gedca !=nil {return _gedca ;};if _bcdg :=_f .Encode (_ceag ,_dbga .Thumbnail ,nil );_bcdg !=nil {return _bcdg ;};};for _acec ,_bdbca :=range _dbga ._fbaf {_afdd :=_e .AbsoluteFilename (_eeac ,_e .ChartType ,_acec +1);_db .MarshalXML (_gbfe ,_afdd ,_bdbca );};for _fdgba ,_ggdc :=range _dbga ._fcbbc {_eddb :=_e .AbsoluteFilename (_eeac ,_e .TableType ,_fdgba +1);_db .MarshalXML (_gbfe ,_eddb ,_ggdc );};for _fgaef ,_cfaac :=range _dbga ._caea {_bcce :=_e .AbsoluteFilename (_eeac ,_e .DrawingType ,_fgaef +1);_db .MarshalXML (_gbfe ,_bcce ,_cfaac );if !_dbga ._gbbbb [_fgaef ].IsEmpty (){_db .MarshalXML (_gbfe ,_db .RelationsPathFor (_bcce ),_dbga ._gbbbb [_fgaef ].X ());};};for _begfa ,_gdfgd :=range _dbga ._edbcf {_db .MarshalXML (_gbfe ,_e .AbsoluteFilename (_eeac ,_e .VMLDrawingType ,_begfa +1),_gdfgd );};for _bfd ,_bbd :=range _dbga .Images {if _gfdfc :=_egb .AddImageToZip (_gbfe ,_bbd ,_bfd +1,_e .DocTypeSpreadsheet );_gfdfc !=nil {return _gfdfc ;};};if _daaff :=_db .MarshalXML (_gbfe ,_e .ContentTypesFilename ,_dbga .ContentTypes .X ());_daaff !=nil {return _daaff ;};for _defe ,_dfe :=range _dbga ._gafdb {if _dfe ==nil {continue ;};_db .MarshalXML (_gbfe ,_e .AbsoluteFilename (_eeac ,_e .CommentsType ,_defe +1),_dfe );};if _cfdge :=_dbga .WriteExtraFiles (_gbfe );_cfdge !=nil {return _cfdge ;};return _gbfe .Close ();};
-
-// SetProtectedAndHidden sets protected and hidden for given cellStyle
-func (_ddd CellStyle )SetProtection (protected bool ,hidden bool ){_ddd ._ceca .Protection =&_ege .CT_CellProtection {LockedAttr :&protected ,HiddenAttr :&hidden };};
+package spreadsheet ;import (_be "archive/zip";_e "bytes";_cc "errors";_eg "fmt";_a "github.com/unidoc/unioffice";_bb "github.com/unidoc/unioffice/chart";_ce "github.com/unidoc/unioffice/color";_gg "github.com/unidoc/unioffice/common";_egd "github.com/unidoc/unioffice/common/logger";_efg "github.com/unidoc/unioffice/common/tempstorage";_ae "github.com/unidoc/unioffice/internal/license";_d "github.com/unidoc/unioffice/measurement";_gff "github.com/unidoc/unioffice/schema/soo/dml";_cfd "github.com/unidoc/unioffice/schema/soo/dml/chart";_bd "github.com/unidoc/unioffice/schema/soo/dml/spreadsheetDrawing";_ffa "github.com/unidoc/unioffice/schema/soo/pkg/relationships";_ca "github.com/unidoc/unioffice/schema/soo/sml";_fcc "github.com/unidoc/unioffice/spreadsheet/format";_ea "github.com/unidoc/unioffice/spreadsheet/formula";_ag "github.com/unidoc/unioffice/spreadsheet/reference";_dc "github.com/unidoc/unioffice/spreadsheet/update";_deb "github.com/unidoc/unioffice/vmldrawing";_de "github.com/unidoc/unioffice/zippkg";_f "image";_c "image/jpeg";_gf "io";_ff "math";_ef "math/big";_bg "os";_g "path";_fc "path/filepath";_afa "regexp";_af "sort";_gb "strconv";_cf "strings";_gc "time";);
 
 // SetRowOffset sets a column offset in absolute distance.
-func (_eed CellMarker )SetRowOffset (m _ga .Distance ){_eed ._cgf .RowOff .ST_CoordinateUnqualified =_e .Int64 (int64 (m /_ga .EMU ));};
+func (_aaa CellMarker )SetRowOffset (m _d .Distance ){_aaa ._aag .RowOff .ST_CoordinateUnqualified =_a .Int64 (int64 (m /_d .EMU ));};
 
-// CopySheetByName copies the existing sheet with the name `name` and puts its copy with the name `copiedSheetName`.
-func (_fgac *Workbook )CopySheetByName (name ,copiedSheetName string )(Sheet ,error ){_edff :=-1;for _cgef ,_bcgba :=range _fgac .Sheets (){if name ==_bcgba .Name (){_edff =_cgef ;break ;};};if _edff ==-1{return Sheet {},ErrorNotFound ;};return _fgac .CopySheet (_edff ,copiedSheetName );};
+// GetFormattedValue returns the formatted cell value as it would appear in
+// Excel. This involves determining the format string to apply, parsing it, and
+// then formatting the value according to the format string.  This should only
+// be used if you care about replicating what Excel would show, otherwise
+// GetValueAsNumber()/GetValueAsTime
+func (_efb Cell )GetFormattedValue ()string {_egb :=_efb .getFormat ();switch _efb ._gbf .TAttr {case _ca .ST_CellTypeB :_egdg ,_ :=_efb .GetValueAsBool ();if _egdg {return "\u0054\u0052\u0055\u0045";};return "\u0046\u0041\u004cS\u0045";case _ca .ST_CellTypeN :_ebdd ,_ :=_efb .GetValueAsNumber ();return _fcc .Number (_ebdd ,_egb );case _ca .ST_CellTypeE :if _efb ._gbf .V !=nil {return *_efb ._gbf .V ;};return "";case _ca .ST_CellTypeS ,_ca .ST_CellTypeInlineStr :return _fcc .String (_efb .GetString (),_egb );case _ca .ST_CellTypeStr :_dec :=_efb .GetString ();if _fcc .IsNumber (_dec ){_ggc ,_ :=_gb .ParseFloat (_dec ,64);return _fcc .Number (_ggc ,_egb );};return _fcc .String (_dec ,_egb );case _ca .ST_CellTypeUnset :fallthrough;default:_dfc ,_ :=_efb .GetRawValue ();if len (_dfc )==0{return "";};_fd ,_dgd :=_efb .GetValueAsNumber ();if _dgd ==nil {return _fcc .Number (_fd ,_egb );};return _fcc .String (_dfc ,_egb );};};
 
-// X returns the inner wrapped XML type.
-func (_dgfb IconScale )X ()*_ege .CT_IconSet {return _dgfb ._aggb };func (_befg *Sheet )updateAfterRemove (_afb uint32 ,_gccg _cf .UpdateAction )error {_gcba :=_befg .Name ();_fgaf :=&_cf .UpdateQuery {UpdateType :_gccg ,ColumnIdx :_afb ,SheetToUpdate :_gcba };for _ ,_fafcf :=range _befg ._geaf .Sheets (){_fgaf .UpdateCurrentSheet =_gcba ==_fafcf .Name ();for _ ,_gddd :=range _fafcf .Rows (){for _ ,_ccdc :=range _gddd .Cells (){if _ccdc .X ().F !=nil {_agde :=_ccdc .X ().F .Content ;_aeg :=_ce .ParseString (_agde );if _aeg ==nil {_ccdc .SetError ("\u0023\u0052\u0045F\u0021");}else {_cgeg :=_aeg .Update (_fgaf );_ccdc .X ().F .Content =_eg .Sprintf ("\u003d\u0025\u0073",_cgeg .String ());};};};};};return nil ;};
-
-// Uses1904Dates returns true if the the workbook uses dates relative to
-// 1 Jan 1904. This is uncommon.
-func (_fgfdc *Workbook )Uses1904Dates ()bool {if _fgfdc ._aadd .WorkbookPr ==nil ||_fgfdc ._aadd .WorkbookPr .Date1904Attr ==nil {return false ;};return *_fgfdc ._aadd .WorkbookPr .Date1904Attr ;};
-
-// AddRow adds a new row to a sheet.  You can mix this with numbered rows,
-// however it will get confusing. You should prefer to use either automatically
-// numbered rows with AddRow or manually numbered rows with Row/AddNumberedRow
-func (_efgc *Sheet )AddRow ()Row {_bafa :=uint32 (0);_gbab :=uint32 (len (_efgc ._eaa .SheetData .Row ));if _gbab > 0&&_efgc ._eaa .SheetData .Row [_gbab -1].RAttr !=nil &&*_efgc ._eaa .SheetData .Row [_gbab -1].RAttr ==_gbab {return _efgc .addNumberedRowFast (_gbab +1);};for _ ,_fbdg :=range _efgc ._eaa .SheetData .Row {if _fbdg .RAttr !=nil &&*_fbdg .RAttr > _bafa {_bafa =*_fbdg .RAttr ;};};return _efgc .AddNumberedRow (_bafa +1);};func (_bbba *Sheet )slideCellsLeft (_gfaa []*_ege .CT_Cell )[]*_ege .CT_Cell {for _ ,_efcc :=range _gfaa {_acbc ,_ffae :=_ba .ParseCellReference (*_efcc .RAttr );if _ffae !=nil {return _gfaa ;};_efdb :=_acbc .ColumnIdx -1;_ffab :=_ba .IndexToColumn (_efdb )+_eg .Sprintf ("\u0025\u0064",_acbc .RowIdx );_efcc .RAttr =&_ffab ;};return _gfaa ;};
-
-// IsBool returns true if the cell boolean value.
-func (_gbe *evalContext )IsBool (cellRef string )bool {return _gbe ._aac .Cell (cellRef ).IsBool ()};
-
-// RichTextRun is a segment of text within a cell that is directly formatted.
-type RichTextRun struct{_cebg *_ege .CT_RElt };
-
-// SetFont sets the font name for a rich text run.
-func (_afcc RichTextRun )SetFont (s string ){_afcc .ensureRpr ();_afcc ._cebg .RPr .RFont =_ege .NewCT_FontName ();_afcc ._cebg .RPr .RFont .ValAttr =s ;};
+// MergedCells returns the merged cell regions within the sheet.
+func (_ddc *Sheet )MergedCells ()[]MergedCell {if _ddc ._bedf .MergeCells ==nil {return nil ;};_dcfga :=[]MergedCell {};for _ ,_bbba :=range _ddc ._bedf .MergeCells .MergeCell {_dcfga =append (_dcfga ,MergedCell {_ddc ._egccf ,_ddc ,_bbba });};return _dcfga ;};const (DVCompareTypeWholeNumber =DVCompareType (_ca .ST_DataValidationTypeWhole );DVCompareTypeDecimal =DVCompareType (_ca .ST_DataValidationTypeDecimal );DVCompareTypeDate =DVCompareType (_ca .ST_DataValidationTypeDate );DVCompareTypeTime =DVCompareType (_ca .ST_DataValidationTypeTime );DVompareTypeTextLength =DVCompareType (_ca .ST_DataValidationTypeTextLength ););
 
 // X returns the inner wrapped XML type.
-func (_fece Drawing )X ()*_dbg .WsDr {return _fece ._cffa };
+func (_bbgae NumberFormat )X ()*_ca .CT_NumFmt {return _bbgae ._dddb };
 
-// SetStyle sets the cell style for an entire column.
-func (_dcd Column )SetStyle (cs CellStyle ){_dcd ._ceef .StyleAttr =_e .Uint32 (cs .Index ())};
-
-// X returns the inner wrapped XML type.
-func (_gcg DataValidation )X ()*_ege .CT_DataValidation {return _gcg ._faa };
-
-// ValidateWithPath validates the sheet passing path informaton for a better
-// error message
-func (_gggb Sheet )ValidateWithPath (path string )error {return _gggb ._eaa .ValidateWithPath (path )};
-
-// MakeComments constructs a new Comments wrapper.
-func MakeComments (w *Workbook ,x *_ege .Comments )Comments {return Comments {w ,x }};
-
-// PasswordHash returns the password hash for a workbook using the modified
-// spreadsheetML password hash that is compatible with Excel.
-func PasswordHash (s string )string {_acad :=uint16 (0);if len (s )> 0{for _edgd :=len (s )-1;_edgd >=0;_edgd --{_ecc :=s [_edgd ];_acad =((_acad >>14)&0x01)|((_acad <<1)&0x7fff);_acad ^=uint16 (_ecc );};_acad =((_acad >>14)&0x01)|((_acad <<1)&0x7fff);_acad ^=uint16 (len (s ));_acad ^=(0x8000|('N'<<8)|'K');};return _eg .Sprintf ("\u0025\u0030\u0034\u0058",uint64 (_acad ));};
-
-// SetShowRuler controls the visibility of the ruler
-func (_gabf SheetView )SetShowRuler (b bool ){if !b {_gabf ._cdfa .ShowRulerAttr =_e .Bool (false );}else {_gabf ._cdfa .ShowRulerAttr =nil ;};};
-
-// Fonts returns the list of fonts defined in the stylesheet.
-func (_bcec StyleSheet )Fonts ()[]Font {_efbd :=[]Font {};for _ ,_fgca :=range _bcec ._eebcg .Fonts .Font {_efbd =append (_efbd ,Font {_fgca ,_bcec ._eebcg });};return _efbd ;};func _eae (_bbf _c .Time )_c .Time {_bbf =_bbf .Local ();return _c .Date (_bbf .Year (),_bbf .Month (),_bbf .Day (),_bbf .Hour (),_bbf .Minute (),_bbf .Second (),_bbf .Nanosecond (),_c .UTC );};func (_ddea PatternFill )ClearFgColor (){_ddea ._gbec .FgColor =nil };
-
-// X returns the inner wrapped XML type.
-func (_fcec RichTextRun )X ()*_ege .CT_RElt {return _fcec ._cebg };
-
-// AddSheet adds a new sheet to a workbook.
-func (_egfb *Workbook )AddSheet ()Sheet {_dbdff :=_ege .NewCT_Sheet ();_dbdff .SheetIdAttr =1;for _ ,_ddbd :=range _egfb ._aadd .Sheets .Sheet {if _dbdff .SheetIdAttr <=_ddbd .SheetIdAttr {_dbdff .SheetIdAttr =_ddbd .SheetIdAttr +1;};};_egfb ._aadd .Sheets .Sheet =append (_egfb ._aadd .Sheets .Sheet ,_dbdff );_dbdff .NameAttr =_eg .Sprintf ("\u0053\u0068\u0065\u0065\u0074\u0020\u0025\u0064",_dbdff .SheetIdAttr );_ffac :=_ege .NewWorksheet ();_ffac .Dimension =_ege .NewCT_SheetDimension ();_ffac .Dimension .RefAttr ="\u0041\u0031";_egfb ._gbed =append (_egfb ._gbed ,_ffac );_fgcc :=_egb .NewRelationships ();_egfb ._abeb =append (_egfb ._abeb ,_fgcc );_ffac .SheetData =_ege .NewCT_SheetData ();_egfb ._gafdb =append (_egfb ._gafdb ,nil );_fbec :=_e .DocTypeSpreadsheet ;_fdabb :=_egfb ._ceee .AddAutoRelationship (_fbec ,_e .OfficeDocumentType ,len (_egfb ._aadd .Sheets .Sheet ),_e .WorksheetType );_dbdff .IdAttr =_fdabb .ID ();_egfb .ContentTypes .AddOverride (_e .AbsoluteFilename (_fbec ,_e .WorksheetContentType ,len (_egfb ._aadd .Sheets .Sheet )),_e .WorksheetContentType );return Sheet {_egfb ,_dbdff ,_ffac };};
-
-// X returns the inner wrapped XML type.
-func (_aggc DifferentialStyle )X ()*_ege .CT_Dxf {return _aggc ._ccbd };
-
-// X returns the inner wrapped XML type.
-func (_bfg Comments )X ()*_ege .Comments {return _bfg ._abcb };
-
-// SetBold causes the text to be displayed in bold.
-func (_egbc RichTextRun )SetBold (b bool ){_egbc .ensureRpr ();_egbc ._cebg .RPr .B =_ege .NewCT_BooleanProperty ();_egbc ._cebg .RPr .B .ValAttr =_e .Bool (b );};type MergedCell struct{_cfbd *Workbook ;_dbfg *Sheet ;_ggbdc *_ege .CT_MergeCell ;};func (_dedd Cell )getFormat ()string {if _dedd ._be .SAttr ==nil {return "\u0047e\u006e\u0065\u0072\u0061\u006c";};_efb :=*_dedd ._be .SAttr ;_cdbc :=_dedd ._cdb .StyleSheet .GetCellStyle (_efb );_cfb :=_dedd ._cdb .StyleSheet .GetNumberFormat (_cdbc .NumberFormat ());return _cfb .GetFormat ();};
-
-// Row returns the row of the cell marker.
-func (_gcec CellMarker )Row ()int32 {return _gcec ._cgf .Row };
-
-// Sheet is a single sheet within a workbook.
-type Sheet struct{_geaf *Workbook ;_edab *_ege .CT_Sheet ;_eaa *_ege .Worksheet ;};func (_ded Border )SetTop (style _ege .ST_BorderStyle ,c _afd .Color ){if _ded ._ac .Top ==nil {_ded ._ac .Top =_ege .NewCT_BorderPr ();};_ded ._ac .Top .Color =_ege .NewCT_Color ();_ded ._ac .Top .Color .RgbAttr =c .AsRGBAString ();_ded ._ac .Top .StyleAttr =style ;};func (_efe PatternFill )X ()*_ege .CT_PatternFill {return _efe ._gbec };
-
-// X returns the inner wrapped XML type.
-func (_acga NumberFormat )X ()*_ege .CT_NumFmt {return _acga ._cecf };
-
-// DVCompareOp is a comparison operator for a data validation rule.
-type DVCompareOp byte ;
-
-// SetNumberWithStyle sets a number and applies a standard format to the cell.
-func (_bagc Cell )SetNumberWithStyle (v float64 ,f StandardFormat ){_bagc .SetNumber (v );_bagc .SetStyle (_bagc ._cdb .StyleSheet .GetOrCreateStandardNumberFormat (f ));};
-
-// TwoCellAnchor is an anchor that is attached to a top-left cell with a fixed
-// width/height in cells.
-type TwoCellAnchor struct{_fdab *_dbg .CT_TwoCellAnchor };var _fdgb =false ;
-
-// Column represents a column within a sheet. It's only used for formatting
-// purposes, so it's possible to construct a sheet without configuring columns.
-type Column struct{_ceef *_ege .CT_Col };
-
-// Comment is a single comment within a sheet.
-type Comment struct{_fad *Workbook ;_ecf *_ege .CT_Comment ;_ggb *_ege .Comments ;};
-
-// X returns the inner wrapped XML type.
-func (_ecbc DefinedName )X ()*_ege .CT_DefinedName {return _ecbc ._bgf };func (_dde Cell )getLabelPrefix ()string {if _dde ._be .SAttr ==nil {return "";};_fdf :=*_dde ._be .SAttr ;_cafa :=_dde ._cdb .StyleSheet .GetCellStyle (_fdf );switch _cafa ._ceca .Alignment .HorizontalAttr {case _ege .ST_HorizontalAlignmentLeft :return "\u0027";case _ege .ST_HorizontalAlignmentRight :return "\u0022";case _ege .ST_HorizontalAlignmentCenter :return "\u005e";case _ege .ST_HorizontalAlignmentFill :return "\u005c";default:return "";};};const _eaad ="\u0053\u006fr\u0074\u004f\u0072\u0064e\u0072\u0041s\u0063\u0065\u006e\u0064\u0069\u006e\u0067\u0053o\u0072\u0074\u004f\u0072\u0064\u0065\u0072\u0044\u0065\u0073\u0063\u0065n\u0064\u0069\u006e\u0067";
-
-// SetRange sets the cell or range of cells that the validation should apply to.
-// It can be a single cell (e.g. "A1") or a range of cells (e.g. "A1:B5")
-func (_ece DataValidation )SetRange (cellRange string ){_ece ._faa .SqrefAttr =_ege .ST_Sqref {cellRange }};func (_gafg *Sheet )setArray (_fabc string ,_afe _ce .Result )error {_gafc ,_dgad :=_ba .ParseCellReference (_fabc );if _dgad !=nil {return _dgad ;};for _dgbb ,_eagc :=range _afe .ValueArray {_gcce :=_gafg .Row (_gafc .RowIdx +uint32 (_dgbb ));for _bafc ,_dcbcg :=range _eagc {_aebb :=_gcce .Cell (_ba .IndexToColumn (_gafc .ColumnIdx +uint32 (_bafc )));if _dcbcg .Type !=_ce .ResultTypeEmpty {if _dcbcg .IsBoolean {_aebb .SetBool (_dcbcg .ValueNumber !=0);}else {_aebb .SetCachedFormulaResult (_dcbcg .String ());};};};};return nil ;};
-
-// HasFormula returns true if the cell contains formula.
-func (_fabe *evalContext )HasFormula (cellRef string )bool {return _fabe ._aac .Cell (cellRef ).HasFormula ();};func (_gacfc *Sheet )getAllCellsInFormulaArrays (_dbcfe bool )(map[string ]bool ,error ){_egbaa :=_ce .NewEvaluator ();_dgcg :=_gacfc .FormulaContext ();_gbcec :=map[string ]bool {};for _ ,_ggea :=range _gacfc .Rows (){for _ ,_ecba :=range _ggea .Cells (){if _ecba .X ().F !=nil {_fbab :=_ecba .X ().F .Content ;if _ecba .X ().F .TAttr ==_ege .ST_CellFormulaTypeArray {_deaec :=_egbaa .Eval (_dgcg ,_fbab ).AsString ();if _deaec .Type ==_ce .ResultTypeError {_af .Log .Debug ("\u0065\u0072\u0072o\u0072\u0020\u0065\u0076a\u0075\u006c\u0061\u0074\u0069\u006e\u0067 \u0066\u006f\u0072\u006d\u0075\u006c\u0061\u0020\u0025\u0073\u003a\u0020\u0025\u0073",_fbab ,_deaec .ErrorMessage );_ecba .X ().V =nil ;};if _deaec .Type ==_ce .ResultTypeArray {_ggbe ,_dgedb :=_ba .ParseCellReference (_ecba .Reference ());if _dgedb !=nil {return map[string ]bool {},_dgedb ;};if (_dbcfe &&len (_deaec .ValueArray )==1)||(!_dbcfe &&len (_deaec .ValueArray [0])==1){continue ;};for _fafd ,_fdbfc :=range _deaec .ValueArray {_cccd :=_ggbe .RowIdx +uint32 (_fafd );for _cadb :=range _fdbfc {_dbac :=_ba .IndexToColumn (_ggbe .ColumnIdx +uint32 (_cadb ));_gbcec [_eg .Sprintf ("\u0025\u0073\u0025\u0064",_dbac ,_cccd )]=true ;};};}else if _deaec .Type ==_ce .ResultTypeList {_deba ,_gff :=_ba .ParseCellReference (_ecba .Reference ());if _gff !=nil {return map[string ]bool {},_gff ;};if _dbcfe ||len (_deaec .ValueList )==1{continue ;};_dgeg :=_deba .RowIdx ;for _eebe :=range _deaec .ValueList {_badff :=_ba .IndexToColumn (_deba .ColumnIdx +uint32 (_eebe ));_gbcec [_eg .Sprintf ("\u0025\u0073\u0025\u0064",_badff ,_dgeg )]=true ;};};};};};};return _gbcec ,nil ;};
-
-// SetType sets the type of the rule.
-func (_adb ConditionalFormattingRule )SetType (t _ege .ST_CfType ){_adb ._cdfd .TypeAttr =t };
-
-// ClearSheetViews clears the list of sheet views.  This will clear the results
-// of AddView() or SetFrozen.
-func (_fadgd *Sheet )ClearSheetViews (){_fadgd ._eaa .SheetViews =nil };
-
-// SetYSplit sets the row split point
-func (_gcbc SheetView )SetYSplit (v float64 ){_gcbc .ensurePane ();_gcbc ._cdfa .Pane .YSplitAttr =_e .Float64 (v );};func (_dfg Cell )getRawSortValue ()(string ,bool ){if _dfg .HasFormula (){_cbf :=_dfg .GetCachedFormulaResult ();return _cbf ,_de .IsNumber (_cbf );};_badb ,_ :=_dfg .GetRawValue ();return _badb ,_de .IsNumber (_badb );};
-
-// ClearCachedFormulaResults clears any computed formula values that are stored
-// in the sheet. This may be required if you modify cells that are used as a
-// formula input to force the formulas to be recomputed the next time the sheet
-// is opened in Excel.
-func (_ddcb *Workbook )ClearCachedFormulaResults (){for _ ,_dcff :=range _ddcb .Sheets (){_dcff .ClearCachedFormulaResults ();};};
+// AddDataValidation adds a data validation rule to a sheet.
+func (_bded *Sheet )AddDataValidation ()DataValidation {if _bded ._bedf .DataValidations ==nil {_bded ._bedf .DataValidations =_ca .NewCT_DataValidations ();};_cade :=_ca .NewCT_DataValidation ();_cade .ShowErrorMessageAttr =_a .Bool (true );_bded ._bedf .DataValidations .DataValidation =append (_bded ._bedf .DataValidations .DataValidation ,_cade );_bded ._bedf .DataValidations .CountAttr =_a .Uint32 (uint32 (len (_bded ._bedf .DataValidations .DataValidation )));return DataValidation {_cade };};
 
 // SetOperator sets the operator for the rule.
-func (_aaf ConditionalFormattingRule )SetOperator (t _ege .ST_ConditionalFormattingOperator ){_aaf ._cdfd .OperatorAttr =t ;};func (_fcb Font )SetSize (size float64 ){_fcb ._eeea .Sz =[]*_ege .CT_FontSize {{ValAttr :size }}};
+func (_cca ConditionalFormattingRule )SetOperator (t _ca .ST_ConditionalFormattingOperator ){_cca ._dac .OperatorAttr =t ;};var _bbfe =_a .RelativeFilename (_a .DocTypeSpreadsheet ,_a .OfficeDocumentType ,_a .SharedStringsType ,0);func (_ega ConditionalFormattingRule )InitializeDefaults (){_ega .SetType (_ca .ST_CfTypeCellIs );_ega .SetOperator (_ca .ST_ConditionalFormattingOperatorGreaterThan );_ega .SetPriority (1);};
 
-// GetEpoch returns a workbook's time epoch.
-func (_ebeg *evalContext )GetEpoch ()_c .Time {return _ebeg ._aac ._geaf .Epoch ()};
+// SetMaxLength sets the maximum bar length in percent.
+func (_cggf DataBarScale )SetMaxLength (l uint32 ){_cggf ._cdd .MaxLengthAttr =_a .Uint32 (l )};
 
-// SetFill applies a fill to a cell style. The fill is referenced by its index
-// so modifying the fill afterward will affect all styles that reference it.
-func (_cba CellStyle )SetFill (f Fill ){_cba ._ceca .FillIdAttr =_e .Uint32 (f .Index ());_cba ._ceca .ApplyFillAttr =_e .Bool (true );};
+// GetBorder gets a Border from a cell style.
+func (_bfg CellStyle )GetBorder ()*_ca .CT_Border {if _def :=_bfg ._gaa .BorderIdAttr ;_def !=nil {_bbga :=_bfg ._ead .StyleSheet .Borders ();if int (*_def )< len (_bbga ){return _bbga [int (*_def )].X ();};};return nil ;};
 
-// SetValues sets the possible values. This is incompatible with SetRange.
-func (_cdca DataValidationList )SetValues (values []string ){_cdca ._fae .Formula1 =_e .String ("\u0022"+_fca .Join (values ,"\u002c")+"\u0022");_cdca ._fae .Formula2 =_e .String ("\u0030");};
+// SetConditionValue sets the condition value to be used for style applicaton.
+func (_cbd ConditionalFormattingRule )SetConditionValue (v string ){_cbd ._dac .Formula =[]string {v }};
 
-// Wrapped returns true if the cell will wrap text.
-func (_aab CellStyle )Wrapped ()bool {if _aab ._ceca .Alignment ==nil {return false ;};if _aab ._ceca .Alignment .WrapTextAttr ==nil {return false ;};return *_aab ._ceca .Alignment .WrapTextAttr ;};
+// SetRow set the row of the cell marker.
+func (_ced CellMarker )SetRow (row int32 ){_ced ._aag .Row =row };
 
-// LastRow returns the name of last row which contains data in range of context sheet's given columns.
-func (_egeb *evalContext )LastRow (col string )int {_eedg :=_egeb ._aac ;_dfdf :=int (_ba .ColumnToIndex (col ));_cbfb :=1;for _ ,_dcf :=range _eedg ._eaa .SheetData .Row {if _dcf .RAttr !=nil {_fec :=Row {_eedg ._geaf ,_eedg ,_dcf };_ggba :=len (_fec .Cells ());if _ggba > _dfdf {_cbfb =int (_fec .RowNumber ());};};};return _cbfb ;};
+// GetCachedFormulaResult returns the cached formula result if it exists. If the
+// cell type is not a formula cell, the result will be the cell value if it's a
+// string/number/bool cell.
+func (_gge Cell )GetCachedFormulaResult ()string {if _gge ._gbf .V !=nil {return *_gge ._gbf .V ;};return "";};
 
-// IsError returns true if the cell is an error type cell.
-func (_cbd Cell )IsError ()bool {return _cbd ._be .TAttr ==_ege .ST_CellTypeE };
+// PasswordHash returns the hash of the workbook password.
+func (_ddbf WorkbookProtection )PasswordHash ()string {if _ddbf ._gfde .WorkbookPasswordAttr ==nil {return "";};return *_ddbf ._gfde .WorkbookPasswordAttr ;};
 
-// IsEmpty returns true if the cell is empty.
-func (_dc Cell )IsEmpty ()bool {return _dc ._be .TAttr ==_ege .ST_CellTypeUnset &&_dc ._be .V ==nil &&_dc ._be .F ==nil ;};
+// X returns the inner wrapped XML type.
+func (_eced SheetView )X ()*_ca .CT_SheetView {return _eced ._ggeg };
 
-// BottomRight is a no-op.
-func (_ffgd OneCellAnchor )BottomRight ()CellMarker {return CellMarker {}};type Table struct{_fgea *_ege .Table };
-
-// ClearProtection clears all workbook protections.
-func (_cadece *Workbook )ClearProtection (){_cadece ._aadd .WorkbookProtection =nil };
-
-// AddDefinedName adds a name for a cell or range reference that can be used in
-// formulas and charts.
-func (_egac *Workbook )AddDefinedName (name ,ref string )DefinedName {if _egac ._aadd .DefinedNames ==nil {_egac ._aadd .DefinedNames =_ege .NewCT_DefinedNames ();};_fceb :=_ege .NewCT_DefinedName ();_fceb .Content =ref ;_fceb .NameAttr =name ;_egac ._aadd .DefinedNames .DefinedName =append (_egac ._aadd .DefinedNames .DefinedName ,_fceb );return DefinedName {_fceb };};
-
-// SetPriority sets the rule priority
-func (_cfa ConditionalFormattingRule )SetPriority (p int32 ){_cfa ._cdfd .PriorityAttr =p };
-
-// SetWidth controls the width of a column.
-func (_gga Column )SetWidth (w _ga .Distance ){_gga ._ceef .WidthAttr =_e .Float64 (float64 (w /_ga .Character ));};
-
-// GetLocked returns true if the cell is locked.
-func (_dcgd *evalContext )GetLocked (cellRef string )bool {return _dcgd ._aac .Cell (cellRef ).getLocked ()};
-
-// Rows returns all of the rows in a sheet.
-func (_affc *Sheet )Rows ()[]Row {_egea :=[]Row {};for _ ,_cbde :=range _affc ._eaa .SheetData .Row {_egea =append (_egea ,Row {_affc ._geaf ,_affc ,_cbde });};return _egea ;};
-
-// SetText sets the text to be displayed.
-func (_eaec RichTextRun )SetText (s string ){_eaec ._cebg .T =s };
-
-// SetCachedFormulaResult sets the cached result of a formula. This is normally
-// not needed but is used internally when expanding an array formula.
-func (_fff Cell )SetCachedFormulaResult (s string ){_fff ._be .V =&s };
-
-// SetUnderline controls if the run is underlined.
-func (_daga RichTextRun )SetUnderline (u _ege .ST_UnderlineValues ){_daga .ensureRpr ();_daga ._cebg .RPr .U =_ege .NewCT_UnderlineProperty ();_daga ._cebg .RPr .U .ValAttr =u ;};
+// X returns the inner XML entity for a stylesheet.
+func (_aeeg StyleSheet )X ()*_ca .StyleSheet {return _aeeg ._ddaga };
 
 // RemoveCalcChain removes the cached caculation chain. This is sometimes needed
 // as we don't update it when rows are added/removed.
-func (_adaf *Workbook )RemoveCalcChain (){var _adab string ;for _ ,_bcgbe :=range _adaf ._ceee .Relationships (){if _bcgbe .Type ()=="ht\u0074\u0070\u003a\u002f\u002f\u0073\u0063he\u006d\u0061\u0073\u002e\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072\u006da\u0074\u0073\u002e\u006f\u0072\u0067\u002f\u006f\u0066\u0066\u0069\u0063\u0065\u0044\u006f\u0063\u0075\u006d\u0065\u006et\u002f\u0032\u0030\u0030\u0036\u002fr\u0065\u006c\u0061\u0074\u0069\u006f\u006e\u0073\u0068i\u0070s\u002f\u0063\u0061\u006c\u0063\u0043\u0068\u0061\u0069\u006e"{_adab ="\u0078\u006c\u002f"+_bcgbe .Target ();_adaf ._ceee .Remove (_bcgbe );break ;};};if _adab ==""{return ;};_adaf .ContentTypes .RemoveOverride (_adab );for _accfa ,_gddf :=range _adaf .ExtraFiles {if _gddf .ZipPath ==_adab {_adaf .ExtraFiles [_accfa ]=_adaf .ExtraFiles [len (_adaf .ExtraFiles )-1];_adaf .ExtraFiles =_adaf .ExtraFiles [:len (_adaf .ExtraFiles )-1];return ;};};};
+func (_dfda *Workbook )RemoveCalcChain (){var _bdag string ;for _ ,_bebd :=range _dfda ._caaf .Relationships (){if _bebd .Type ()=="ht\u0074\u0070\u003a\u002f\u002f\u0073\u0063he\u006d\u0061\u0073\u002e\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072\u006da\u0074\u0073\u002e\u006f\u0072\u0067\u002f\u006f\u0066\u0066\u0069\u0063\u0065\u0044\u006f\u0063\u0075\u006d\u0065\u006et\u002f\u0032\u0030\u0030\u0036\u002fr\u0065\u006c\u0061\u0074\u0069\u006f\u006e\u0073\u0068i\u0070s\u002f\u0063\u0061\u006c\u0063\u0043\u0068\u0061\u0069\u006e"{_bdag ="\u0078\u006c\u002f"+_bebd .Target ();_dfda ._caaf .Remove (_bebd );break ;};};if _bdag ==""{return ;};_dfda .ContentTypes .RemoveOverride (_bdag );for _gcadc ,_bdbf :=range _dfda .ExtraFiles {if _bdbf .ZipPath ==_bdag {_dfda .ExtraFiles [_gcadc ]=_dfda .ExtraFiles [len (_dfda .ExtraFiles )-1];_dfda .ExtraFiles =_dfda .ExtraFiles [:len (_dfda .ExtraFiles )-1];return ;};};};
 
-// ClearAutoFilter removes the autofilters from the sheet.
-func (_ebgg *Sheet )ClearAutoFilter (){_ebgg ._eaa .AutoFilter =nil ;_fcbf :="\u0027"+_ebgg .Name ()+"\u0027\u0021";for _ ,_debd :=range _ebgg ._geaf .DefinedNames (){if _debd .Name ()==_ddab {if _fca .HasPrefix (_debd .Content (),_fcbf ){_ebgg ._geaf .RemoveDefinedName (_debd );break ;};};};};
+// BottomRight is a no-op.
+func (_fa AbsoluteAnchor )BottomRight ()CellMarker {return CellMarker {}};
 
-// SetCol set the column of the cell marker.
-func (_cac CellMarker )SetCol (col int32 ){_cac ._cgf .Col =col };
-
-// CellMarker represents a cell position
-type CellMarker struct{_cgf *_dbg .CT_Marker };func (_bbb Cell )setLocked (_ffb bool ){_cag :=_bbb ._be .SAttr ;if _cag !=nil {_bed :=_bbb ._cdb .StyleSheet .GetCellStyle (*_cag );if _bed ._ceca .Protection ==nil {_bed ._ceca .Protection =_ege .NewCT_CellProtection ();};_bed ._ceca .Protection .LockedAttr =&_ffb ;};};
-
-// DefinedName is a named range, formula, etc.
-type DefinedName struct{_bgf *_ege .CT_DefinedName };
-
-// NumberFormat is a number formatting string that can be applied to a cell
-// style.
-type NumberFormat struct{_gbg *Workbook ;_cecf *_ege .CT_NumFmt ;};func (_bbae PatternFill )ClearBgColor (){_bbae ._gbec .BgColor =nil };
-
-// DataBarScale is a colored scale that fills the cell with a background
-// gradeint depending on the value.
-type DataBarScale struct{_bca *_ege .CT_DataBar };
-
-// SetWidthCells sets the height the anchored object by moving the right hand
-// side. It is not compatible with SetWidth.
-func (_fddc TwoCellAnchor )SetWidthCells (w int32 ){_gbda :=_fddc .TopLeft ();_begc :=_fddc .BottomRight ();_begc .SetCol (_gbda .Col ()+w );};
-
-// Cell retrieves or adds a new cell to a row. Col is the column (e.g. 'A', 'B')
-func (_cdbg Row )Cell (col string )Cell {_egd :=_eg .Sprintf ("\u0025\u0073\u0025\u0064",col ,_cdbg .RowNumber ());for _ ,_fcgf :=range _cdbg ._bddg .C {if _fcgf .RAttr !=nil &&*_fcgf .RAttr ==_egd {return Cell {_cdbg ._cddd ,_cdbg ._fcge ,_cdbg ._bddg ,_fcgf };};};return _cdbg .AddNamedCell (col );};
-
-// Col returns the column of the cell marker.
-func (_eab CellMarker )Col ()int32 {return _eab ._cgf .Col };
-
-// GetWidth returns a worksheet's column width.
-func (_dca *evalContext )GetWidth (colIdx int )float64 {colIdx ++;for _ ,_beg :=range _dca ._aac .X ().Cols [0].Col {if int (_beg .MinAttr )<=colIdx &&colIdx <=int (_beg .MaxAttr ){return float64 (int (*_beg .WidthAttr ));};};return 0;};
-
-// CellText is used for keeping text with references to a cell where it is located.
-type CellText struct{Text string ;Cell Cell ;};
-
-// DefinedNames returns a slice of all defined names in the workbook.
-func (_gcebg *Workbook )DefinedNames ()[]DefinedName {if _gcebg ._aadd .DefinedNames ==nil {return nil ;};_dgfdb :=[]DefinedName {};for _ ,_gdcb :=range _gcebg ._aadd .DefinedNames .DefinedName {_dgfdb =append (_dgfdb ,DefinedName {_gdcb });};return _dgfdb ;};
-
-// SetDrawing sets the worksheet drawing.  A worksheet can have a reference to a
-// single drawing, but the drawing can have many charts.
-func (_ggabe *Sheet )SetDrawing (d Drawing ){var _gcef _egb .Relationships ;for _gace ,_fffb :=range _ggabe ._geaf ._gbed {if _fffb ==_ggabe ._eaa {_gcef =_ggabe ._geaf ._abeb [_gace ];break ;};};var _cfgc string ;for _gebg ,_fbfa :=range d ._gfce ._caea {if _fbfa ==d ._cffa {_gaed :=_gcef .AddAutoRelationship (_e .DocTypeSpreadsheet ,_e .WorksheetType ,_gebg +1,_e .DrawingType );_cfgc =_gaed .ID ();break ;};};_ggabe ._eaa .Drawing =_ege .NewCT_Drawing ();_ggabe ._eaa .Drawing .IdAttr =_cfgc ;};
-
-// SetColOffset sets the column offset of the top-left of the image in fixed units.
-func (_ca AbsoluteAnchor )SetColOffset (m _ga .Distance ){_ca ._cgb .Pos .XAttr .ST_CoordinateUnqualified =_e .Int64 (int64 (m /_ga .EMU ));};
-
-// SetStyleIndex directly sets a style index to the cell.  This should only be
-// called with an index retrieved from CellStyle.Index()
-func (_fgc Cell )SetStyleIndex (idx uint32 ){_fgc ._be .SAttr =_e .Uint32 (idx )};func (_ffdg Font )SetColor (c _afd .Color ){_ebed :=_ege .NewCT_Color ();_gaaa :="\u0066\u0066"+*c .AsRGBString ();_ebed .RgbAttr =&_gaaa ;_ffdg ._eeea .Color =[]*_ege .CT_Color {_ebed };};const _ddab ="_\u0078\u006c\u006e\u006d._\u0046i\u006c\u0074\u0065\u0072\u0044a\u0074\u0061\u0062\u0061\u0073\u0065";var _bcb []string =[]string {"\u007a\u0068\u002dH\u004b","\u007a\u0068\u002dM\u004f","\u007a\u0068\u002dC\u004e","\u007a\u0068\u002dS\u0047","\u007a\u0068\u002dT\u0057","\u006a\u0061\u002dJ\u0050","\u006b\u006f\u002dK\u0052"};const (StandardFormatGeneral StandardFormat =0;StandardFormat0 StandardFormat =0;StandardFormatWholeNumber StandardFormat =1;StandardFormat1 StandardFormat =1;StandardFormat2 StandardFormat =2;StandardFormat3 StandardFormat =3;StandardFormat4 StandardFormat =4;StandardFormatPercent StandardFormat =9;StandardFormat9 StandardFormat =9;StandardFormat10 StandardFormat =10;StandardFormat11 StandardFormat =11;StandardFormat12 StandardFormat =12;StandardFormat13 StandardFormat =13;StandardFormatDate StandardFormat =14;StandardFormat14 StandardFormat =14;StandardFormat15 StandardFormat =15;StandardFormat16 StandardFormat =16;StandardFormat17 StandardFormat =17;StandardFormat18 StandardFormat =18;StandardFormatTime StandardFormat =19;StandardFormat19 StandardFormat =19;StandardFormat20 StandardFormat =20;StandardFormat21 StandardFormat =21;StandardFormatDateTime StandardFormat =22;StandardFormat22 StandardFormat =22;StandardFormat37 StandardFormat =37;StandardFormat38 StandardFormat =38;StandardFormat39 StandardFormat =39;StandardFormat40 StandardFormat =40;StandardFormat45 StandardFormat =45;StandardFormat46 StandardFormat =46;StandardFormat47 StandardFormat =47;StandardFormat48 StandardFormat =48;StandardFormat49 StandardFormat =49;);
-
-// Cell creates or returns a cell given a cell reference of the form 'A10'
-func (_eaee *Sheet )Cell (cellRef string )Cell {_cegd ,_aebcd :=_ba .ParseCellReference (cellRef );if _aebcd !=nil {_af .Log .Debug ("\u0065\u0072\u0072\u006f\u0072\u0020\u0070\u0061\u0072\u0073\u0069\u006e\u0067\u0020\u0063e\u006cl\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u003a\u0020\u0025\u0073",_aebcd );return _eaee .AddRow ().AddCell ();};return _eaee .Row (_cegd .RowIdx ).Cell (_cegd .Column );};type evalContext struct{_aac *Sheet ;_fdeg ,_gddea uint32 ;_ccf map[string ]struct{};};
-
-// PasswordHash returns the hash of the workbook password.
-func (_defb WorkbookProtection )PasswordHash ()string {if _defb ._gcge .WorkbookPasswordAttr ==nil {return "";};return *_defb ._gcge .WorkbookPasswordAttr ;};func CreateDefaultNumberFormat (id StandardFormat )NumberFormat {_gac :=NumberFormat {_cecf :_ege .NewCT_NumFmt ()};_gac ._cecf .NumFmtIdAttr =uint32 (id );_gac ._cecf .FormatCodeAttr ="\u0047e\u006e\u0065\u0072\u0061\u006c";switch id {case StandardFormat0 :_gac ._cecf .FormatCodeAttr ="\u0047e\u006e\u0065\u0072\u0061\u006c";case StandardFormat1 :_gac ._cecf .FormatCodeAttr ="\u0030";case StandardFormat2 :_gac ._cecf .FormatCodeAttr ="\u0030\u002e\u0030\u0030";case StandardFormat3 :_gac ._cecf .FormatCodeAttr ="\u0023\u002c\u0023#\u0030";case StandardFormat4 :_gac ._cecf .FormatCodeAttr ="\u0023\u002c\u0023\u0023\u0030\u002e\u0030\u0030";case StandardFormat9 :_gac ._cecf .FormatCodeAttr ="\u0030\u0025";case StandardFormat10 :_gac ._cecf .FormatCodeAttr ="\u0030\u002e\u00300\u0025";case StandardFormat11 :_gac ._cecf .FormatCodeAttr ="\u0030\u002e\u0030\u0030\u0045\u002b\u0030\u0030";case StandardFormat12 :_gac ._cecf .FormatCodeAttr ="\u0023\u0020\u003f/\u003f";case StandardFormat13 :_gac ._cecf .FormatCodeAttr ="\u0023 \u003f\u003f\u002f\u003f\u003f";case StandardFormat14 :_gac ._cecf .FormatCodeAttr ="\u006d\u002f\u0064\u002f\u0079\u0079";case StandardFormat15 :_gac ._cecf .FormatCodeAttr ="\u0064\u002d\u006d\u006d\u006d\u002d\u0079\u0079";case StandardFormat16 :_gac ._cecf .FormatCodeAttr ="\u0064\u002d\u006dm\u006d";case StandardFormat17 :_gac ._cecf .FormatCodeAttr ="\u006d\u006d\u006d\u002d\u0079\u0079";case StandardFormat18 :_gac ._cecf .FormatCodeAttr ="\u0068\u003a\u006d\u006d\u0020\u0041\u004d\u002f\u0050\u004d";case StandardFormat19 :_gac ._cecf .FormatCodeAttr ="\u0068\u003a\u006d\u006d\u003a\u0073\u0073\u0020\u0041\u004d\u002f\u0050\u004d";case StandardFormat20 :_gac ._cecf .FormatCodeAttr ="\u0068\u003a\u006d\u006d";case StandardFormat21 :_gac ._cecf .FormatCodeAttr ="\u0068:\u006d\u006d\u003a\u0073\u0073";case StandardFormat22 :_gac ._cecf .FormatCodeAttr ="m\u002f\u0064\u002f\u0079\u0079\u0020\u0068\u003a\u006d\u006d";case StandardFormat37 :_gac ._cecf .FormatCodeAttr ="\u0023\u002c\u0023\u0023\u0030\u0020\u003b\u0028\u0023,\u0023\u0023\u0030\u0029";case StandardFormat38 :_gac ._cecf .FormatCodeAttr ="\u0023\u002c\u0023\u00230 \u003b\u005b\u0052\u0065\u0064\u005d\u0028\u0023\u002c\u0023\u0023\u0030\u0029";case StandardFormat39 :_gac ._cecf .FormatCodeAttr ="\u0023\u002c\u0023\u00230.\u0030\u0030\u003b\u0028\u0023\u002c\u0023\u0023\u0030\u002e\u0030\u0030\u0029";case StandardFormat40 :_gac ._cecf .FormatCodeAttr ="\u0023,\u0023\u0023\u0030\u002e\u0030\u0030\u003b\u005b\u0052\u0065\u0064]\u0028\u0023\u002c\u0023\u0023\u0030\u002e\u0030\u0030\u0029";case StandardFormat45 :_gac ._cecf .FormatCodeAttr ="\u006d\u006d\u003as\u0073";case StandardFormat46 :_gac ._cecf .FormatCodeAttr ="\u005bh\u005d\u003a\u006d\u006d\u003a\u0073s";case StandardFormat47 :_gac ._cecf .FormatCodeAttr ="\u006dm\u003a\u0073\u0073\u002e\u0030";case StandardFormat48 :_gac ._cecf .FormatCodeAttr ="\u0023\u0023\u0030\u002e\u0030\u0045\u002b\u0030";case StandardFormat49 :_gac ._cecf .FormatCodeAttr ="\u0040";};return _gac ;};
-
-// Validate validates the sheet, returning an error if it is found to be invalid.
-func (_ddfc Sheet )Validate ()error {_bedf :=[]func ()error {_ddfc .validateRowCellNumbers ,_ddfc .validateMergedCells ,_ddfc .validateSheetNames };for _ ,_dgbcg :=range _bedf {if _cebcc :=_dgbcg ();_cebcc !=nil {return _cebcc ;};};if _cddg :=_ddfc ._eaa .Validate ();_cddg !=nil {return _cddg ;};return _ddfc ._eaa .Validate ();};func (_fcca DataValidation )SetList ()DataValidationList {_fcca .clear ();_fcca ._faa .TypeAttr =_ege .ST_DataValidationTypeList ;_fcca ._faa .OperatorAttr =_ege .ST_DataValidationOperatorEqual ;return DataValidationList {_fcca ._faa };};func _cgce ()*_dbg .CT_TwoCellAnchor {_fdef :=_dbg .NewCT_TwoCellAnchor ();_fdef .EditAsAttr =_dbg .ST_EditAsOneCell ;_fdef .From .Col =5;_fdef .From .Row =0;_fdef .From .ColOff .ST_CoordinateUnqualified =_e .Int64 (0);_fdef .From .RowOff .ST_CoordinateUnqualified =_e .Int64 (0);_fdef .To .Col =10;_fdef .To .Row =20;_fdef .To .ColOff .ST_CoordinateUnqualified =_e .Int64 (0);_fdef .To .RowOff .ST_CoordinateUnqualified =_e .Int64 (0);return _fdef ;};type ConditionalFormattingRule struct{_cdfd *_ege .CT_CfRule };
-
-// SetMaxLength sets the maximum bar length in percent.
-func (_abe DataBarScale )SetMaxLength (l uint32 ){_abe ._bca .MaxLengthAttr =_e .Uint32 (l )};
-
-// Close closes the workbook, removing any temporary files that might have been
-// created when opening a document.
-func (_dgag *Workbook )Close ()error {if _dgag .TmpPath !=""{return _ef .RemoveAll (_dgag .TmpPath );};return nil ;};
-
-// Comments is the container for comments for a single sheet.
-type Comments struct{_dgbc *Workbook ;_abcb *_ege .Comments ;};
-
-// IsWindowLocked returns whether the workbook windows are locked.
-func (_agfb WorkbookProtection )IsWindowLocked ()bool {return _agfb ._gcge .LockWindowsAttr !=nil &&*_agfb ._gcge .LockWindowsAttr ;};
-
-// TopLeft is a no-op.
-func (_bcf AbsoluteAnchor )TopLeft ()CellMarker {return CellMarker {}};
-
-// TopLeft returns the CellMaker for the top left corner of the anchor.
-func (_fbbf TwoCellAnchor )TopLeft ()CellMarker {return CellMarker {_fbbf ._fdab .From }};
-
-// ClearBorder clears any border configuration from the cell style.
-func (_egaf CellStyle )ClearBorder (){_egaf ._ceca .BorderIdAttr =nil ;_egaf ._ceca .ApplyBorderAttr =nil ;};func (_fac DataValidation )clear (){_fac ._faa .Formula1 =_e .String ("\u0030");_fac ._faa .Formula2 =_e .String ("\u0030");};
-
-// Comments returns the list of comments for this sheet
-func (_ebe Comments )Comments ()[]Comment {_gdde :=[]Comment {};for _ ,_eabff :=range _ebe ._abcb .CommentList .Comment {_gdde =append (_gdde ,Comment {_ebe ._dgbc ,_eabff ,_ebe ._abcb });};return _gdde ;};func (_fbag Fills )AddFill ()Fill {_eea :=_ege .NewCT_Fill ();_fbag ._gdcc .Fill =append (_fbag ._gdcc .Fill ,_eea );_fbag ._gdcc .CountAttr =_e .Uint32 (uint32 (len (_fbag ._gdcc .Fill )));return Fill {_eea ,_fbag ._gdcc };};
-
-// Index returns the index of the differential style.
-func (_cdfg DifferentialStyle )Index ()uint32 {for _gedg ,_begf :=range _cdfg ._dcae .Dxf {if _cdfg ._ccbd ==_begf {return uint32 (_gedg );};};return 0;};
-
-// GetFilename returns the filename of the context's workbook.
-func (_gccb *evalContext )GetFilename ()string {return _gccb ._aac ._geaf .GetFilename ()};
-
-// SetAllowBlank controls if blank values are accepted.
-func (_ecd DataValidation )SetAllowBlank (b bool ){if !b {_ecd ._faa .AllowBlankAttr =nil ;}else {_ecd ._faa .AllowBlankAttr =_e .Bool (true );};};
-
-// Clear clears the cell's value and type.
-func (_gdf Cell )Clear (){_gdf .clearValue ();_gdf ._be .TAttr =_ege .ST_CellTypeUnset };
-
-// Column returns or creates a column that with a given index (1-N).  Columns
-// can span multiple column indices, this method will return the column that
-// applies to a column index if it exists or create a new column that only
-// applies to the index passed in otherwise.
-func (_dbd *Sheet )Column (idx uint32 )Column {for _ ,_ffa :=range _dbd ._eaa .Cols {for _ ,_caed :=range _ffa .Col {if idx >=_caed .MinAttr &&idx <=_caed .MaxAttr {return Column {_caed };};};};var _gagdb *_ege .CT_Cols ;if len (_dbd ._eaa .Cols )==0{_gagdb =_ege .NewCT_Cols ();_dbd ._eaa .Cols =append (_dbd ._eaa .Cols ,_gagdb );}else {_gagdb =_dbd ._eaa .Cols [0];};_ecce :=_ege .NewCT_Col ();_ecce .MinAttr =idx ;_ecce .MaxAttr =idx ;_gagdb .Col =append (_gagdb .Col ,_ecce );return Column {_ecce };};
-
-// SetPasswordHash sets the password hash to the input.
-func (_fagbc SheetProtection )SetPasswordHash (pwHash string ){_fagbc ._aebf .PasswordAttr =_e .String (pwHash );};
-
-// MoveTo repositions the anchor without changing the objects size.
-func (_bgfea TwoCellAnchor )MoveTo (col ,row int32 ){_accf :=_bgfea .TopLeft ();_degc :=_bgfea .BottomRight ();_efccc :=_degc .Col ()-_accf .Col ();_dcfc :=_degc .Row ()-_accf .Row ();_accf .SetCol (col );_accf .SetRow (row );_degc .SetCol (col +_efccc );_degc .SetRow (row +_dcfc );};
-
-// LessRows compares two rows based off of a column. If the column doesn't exist
-// in one row, that row is 'less'.
-func (_dcbc Comparer )LessRows (column string ,lhs ,rhs Row )bool {var _ebee ,_ddb Cell ;for _ ,_cceg :=range lhs .Cells (){_eaf ,_ :=_ba .ParseCellReference (_cceg .Reference ());if _eaf .Column ==column {_ebee =_cceg ;break ;};};for _ ,_deace :=range rhs .Cells (){_gbdcd ,_ :=_ba .ParseCellReference (_deace .Reference ());if _gbdcd .Column ==column {_ddb =_deace ;break ;};};return _dcbc .LessCells (_ebee ,_ddb );};func (_fcfge RichTextRun )ensureRpr (){if _fcfge ._cebg .RPr ==nil {_fcfge ._cebg .RPr =_ege .NewCT_RPrElt ();};};
-
-// SetFormulaRaw sets the cell type to formula, and the raw formula to the given string
-func (_bad Cell )SetFormulaRaw (s string ){_daa :=_ce .ParseString (s );if _daa ==nil {return ;};_bad .clearValue ();_bad ._be .TAttr =_ege .ST_CellTypeStr ;_bad ._be .F =_ege .NewCT_CellFormula ();_bad ._be .F .Content =s ;};
-
-// SetNumberFormatStandard sets the format based off of the ECMA 376 standard formats.  These
-// formats are standardized and don't need to be defined in the styles.
-func (_ed CellStyle )SetNumberFormatStandard (s StandardFormat ){_ed ._ceca .NumFmtIdAttr =_e .Uint32 (uint32 (s ));_ed ._ceca .ApplyNumberFormatAttr =_e .Bool (true );};
-
-// SetRichTextString sets the cell to rich string mode and returns a struct that
-// can be used to add formatted text to the cell.
-func (_cdba Cell )SetRichTextString ()RichText {_cdba .clearValue ();_cdba ._be .Is =_ege .NewCT_Rst ();_cdba ._be .TAttr =_ege .ST_CellTypeInlineStr ;return RichText {_cdba ._be .Is };};
-
-// SetShowValue controls if the cell value is displayed.
-func (_bcbd DataBarScale )SetShowValue (b bool ){_bcbd ._bca .ShowValueAttr =_e .Bool (b )};
-
-// NewSharedStrings constructs a new Shared Strings table.
-func NewSharedStrings ()SharedStrings {return SharedStrings {_baee :_ege .NewSst (),_fgdd :make (map[string ]int )};};func (_aebc Font )SetName (name string ){_aebc ._eeea .Name =[]*_ege .CT_FontName {{ValAttr :name }}};
-
-// Type returns the type of anchor
-func (_gbf OneCellAnchor )Type ()AnchorType {return AnchorTypeOneCell };
-
-// Tables returns a slice of all defined tables in the workbook.
-func (_abfd *Workbook )Tables ()[]Table {if _abfd ._fcbbc ==nil {return nil ;};_ecbcb :=[]Table {};for _ ,_acecb :=range _abfd ._fcbbc {_ecbcb =append (_ecbcb ,Table {_acecb });};return _ecbcb ;};
-
-// AddImage adds an image with a paricular anchor type, returning an anchor to
-// allow adusting the image size/position.
-func (_aafc Drawing )AddImage (img _egb .ImageRef ,at AnchorType )Anchor {_ecff :=0;for _cdbf ,_gaf :=range _aafc ._gfce .Images {if _gaf ==img {_ecff =_cdbf +1;break ;};};var _eggf string ;for _acg ,_fcae :=range _aafc ._gfce ._caea {if _fcae ==_aafc ._cffa {_defd :=_eg .Sprintf ("\u002e\u002e\u002f\u006ded\u0069\u0061\u002f\u0069\u006d\u0061\u0067\u0065\u0025\u0064\u002e\u0025\u0073",_ecff ,img .Format ());_fadg :=_aafc ._gfce ._gbbbb [_acg ].AddRelationship (_defd ,_e .ImageType );_eggf =_fadg .ID ();break ;};};var _dcde Anchor ;var _fcfg *_dbg .CT_Picture ;switch at {case AnchorTypeAbsolute :_febb :=_cebc ();_aafc ._cffa .EG_Anchor =append (_aafc ._cffa .EG_Anchor ,&_dbg .EG_Anchor {AbsoluteAnchor :_febb });_febb .Choice =&_dbg .EG_ObjectChoicesChoice {};_febb .Choice .Pic =_dbg .NewCT_Picture ();_febb .Pos .XAttr .ST_CoordinateUnqualified =_e .Int64 (0);_febb .Pos .YAttr .ST_CoordinateUnqualified =_e .Int64 (0);_fcfg =_febb .Choice .Pic ;_dcde =AbsoluteAnchor {_febb };case AnchorTypeOneCell :_gceb :=_dce ();_aafc ._cffa .EG_Anchor =append (_aafc ._cffa .EG_Anchor ,&_dbg .EG_Anchor {OneCellAnchor :_gceb });_gceb .Choice =&_dbg .EG_ObjectChoicesChoice {};_gceb .Choice .Pic =_dbg .NewCT_Picture ();_fcfg =_gceb .Choice .Pic ;_dcde =OneCellAnchor {_gceb };case AnchorTypeTwoCell :_feac :=_cgce ();_aafc ._cffa .EG_Anchor =append (_aafc ._cffa .EG_Anchor ,&_dbg .EG_Anchor {TwoCellAnchor :_feac });_feac .Choice =&_dbg .EG_ObjectChoicesChoice {};_feac .Choice .Pic =_dbg .NewCT_Picture ();_fcfg =_feac .Choice .Pic ;_dcde =TwoCellAnchor {_feac };};_fcfg .NvPicPr .CNvPr .IdAttr =uint32 (len (_aafc ._cffa .EG_Anchor ));_fcfg .NvPicPr .CNvPr .NameAttr ="\u0049\u006d\u0061g\u0065";_fcfg .BlipFill .Blip =_cg .NewCT_Blip ();_fcfg .BlipFill .Blip .EmbedAttr =_e .String (_eggf );_fcfg .BlipFill .Stretch =_cg .NewCT_StretchInfoProperties ();_fcfg .SpPr =_cg .NewCT_ShapeProperties ();_fcfg .SpPr .Xfrm =_cg .NewCT_Transform2D ();_fcfg .SpPr .Xfrm .Off =_cg .NewCT_Point2D ();_fcfg .SpPr .Xfrm .Off .XAttr .ST_CoordinateUnqualified =_e .Int64 (0);_fcfg .SpPr .Xfrm .Off .YAttr .ST_CoordinateUnqualified =_e .Int64 (0);_fcfg .SpPr .Xfrm .Ext =_cg .NewCT_PositiveSize2D ();_fcfg .SpPr .Xfrm .Ext .CxAttr =int64 (float64 (img .Size ().X *_ga .Pixel72 )/_ga .EMU );_fcfg .SpPr .Xfrm .Ext .CyAttr =int64 (float64 (img .Size ().Y *_ga .Pixel72 )/_ga .EMU );_fcfg .SpPr .PrstGeom =_cg .NewCT_PresetGeometry2D ();_fcfg .SpPr .PrstGeom .PrstAttr =_cg .ST_ShapeTypeRect ;_fcfg .SpPr .Ln =_cg .NewCT_LineProperties ();_fcfg .SpPr .Ln .NoFill =_cg .NewCT_NoFillProperties ();return _dcde ;};
-
-// ExtractText returns text from the sheet as a SheetText object.
-func (_acaa *Sheet )ExtractText ()*SheetText {_acf :=[]CellText {};for _ ,_edee :=range _acaa .Rows (){for _ ,_bgdc :=range _edee .Cells (){if !_bgdc .IsEmpty (){if _gfg :=_bgdc .GetFormattedValue ();_gfg !=""{_acf =append (_acf ,CellText {Text :_gfg ,Cell :_bgdc });};};};};return &SheetText {Cells :_acf };};
-
-// MergedCells returns the merged cell regions within the sheet.
-func (_fafe *Sheet )MergedCells ()[]MergedCell {if _fafe ._eaa .MergeCells ==nil {return nil ;};_fcba :=[]MergedCell {};for _ ,_dcca :=range _fafe ._eaa .MergeCells .MergeCell {_fcba =append (_fcba ,MergedCell {_fafe ._geaf ,_fafe ,_dcca });};return _fcba ;};
-
-// RangeReference converts a range reference of the form 'A1:A5' to 'Sheet
-// 1'!$A$1:$A$5 . Renaming a sheet after calculating a range reference will
-// invalidate the reference.
-func (_bbec Sheet )RangeReference (n string )string {_bdbb :=_fca .Split (n ,"\u003a");_gbac ,_ :=_ba .ParseCellReference (_bdbb [0]);_agf :=_eg .Sprintf ("\u0024\u0025\u0073\u0024\u0025\u0064",_gbac .Column ,_gbac .RowIdx );if len (_bdbb )==1{return _eg .Sprintf ("\u0027%\u0073\u0027\u0021\u0025\u0073",_bbec .Name (),_agf );};_fdc ,_ :=_ba .ParseCellReference (_bdbb [1]);_aag :=_eg .Sprintf ("\u0024\u0025\u0073\u0024\u0025\u0064",_fdc .Column ,_fdc .RowIdx );return _eg .Sprintf ("\u0027\u0025\u0073\u0027\u0021\u0025\u0073\u003a\u0025\u0073",_bbec .Name (),_agf ,_aag );};
-
-// ColorScale colors a cell background based off of the cell value.
-type ColorScale struct{_bada *_ege .CT_ColorScale };func (_befgd SheetView )ensurePane (){if _befgd ._cdfa .Pane ==nil {_befgd ._cdfa .Pane =_ege .NewCT_Pane ();_befgd ._cdfa .Pane .ActivePaneAttr =_ege .ST_PaneBottomLeft ;};};func (_bdce Sheet )IsValid ()bool {return _bdce ._eaa !=nil };
-
-// SetWidthCells is a no-op.
-func (_gdb AbsoluteAnchor )SetWidthCells (int32 ){};
-
-// AddFont adds a new empty font to the stylesheet.
-func (_dgfc StyleSheet )AddFont ()Font {_agfc :=_ege .NewCT_Font ();_dgfc ._eebcg .Fonts .Font =append (_dgfc ._eebcg .Fonts .Font ,_agfc );_dgfc ._eebcg .Fonts .CountAttr =_e .Uint32 (uint32 (len (_dgfc ._eebcg .Fonts .Font )));return Font {_agfc ,_dgfc ._eebcg };};
-
-// AddCell adds a cell to a spreadsheet.
-func (_bgcg Row )AddCell ()Cell {_eeab :=uint32 (len (_bgcg ._bddg .C ));var _ecbf *string ;if _eeab > 0{_beeg :=_e .Stringf ("\u0025\u0073\u0025\u0064",_ba .IndexToColumn (_eeab -1),_bgcg .RowNumber ());if _bgcg ._bddg .C [_eeab -1].RAttr !=nil &&*_bgcg ._bddg .C [_eeab -1].RAttr ==*_beeg {_ecbf =_e .Stringf ("\u0025\u0073\u0025\u0064",_ba .IndexToColumn (_eeab ),_bgcg .RowNumber ());};};_edaa :=_ege .NewCT_Cell ();_bgcg ._bddg .C =append (_bgcg ._bddg .C ,_edaa );if _ecbf ==nil {_acff :=uint32 (0);for _ ,_baga :=range _bgcg ._bddg .C {if _baga .RAttr !=nil {_efee ,_ :=_ba .ParseCellReference (*_baga .RAttr );if _efee .ColumnIdx >=_acff {_acff =_efee .ColumnIdx +1;};};};_ecbf =_e .Stringf ("\u0025\u0073\u0025\u0064",_ba .IndexToColumn (_acff ),_bgcg .RowNumber ());};_edaa .RAttr =_ecbf ;return Cell {_bgcg ._cddd ,_bgcg ._fcge ,_bgcg ._bddg ,_edaa };};func _dce ()*_dbg .CT_OneCellAnchor {_cfbad :=_dbg .NewCT_OneCellAnchor ();return _cfbad };
-
-// SetZoom controls the zoom level of the sheet and is measured in percent. The
-// default value is 100.
-func (_gef SheetView )SetZoom (pct uint32 ){_gef ._cdfa .ZoomScaleAttr =&pct };func (_ggf Border )SetLeft (style _ege .ST_BorderStyle ,c _afd .Color ){if _ggf ._ac .Left ==nil {_ggf ._ac .Left =_ege .NewCT_BorderPr ();};_ggf ._ac .Left .Color =_ege .NewCT_Color ();_ggf ._ac .Left .Color .RgbAttr =c .AsRGBAString ();_ggf ._ac .Left .StyleAttr =style ;};func (_gdg Font )Index ()uint32 {for _ggab ,_dbcf :=range _gdg ._ccgf .Fonts .Font {if _gdg ._eeea ==_dbcf {return uint32 (_ggab );};};return 0;};
+// SetShowRuler controls the visibility of the ruler
+func (_cabba SheetView )SetShowRuler (b bool ){if !b {_cabba ._ggeg .ShowRulerAttr =_a .Bool (false );}else {_cabba ._ggeg .ShowRulerAttr =nil ;};};
 
 // X returns the inner wrapped XML type.
-func (_dbefc SharedStrings )X ()*_ege .Sst {return _dbefc ._baee };
+func (_dcgdc Column )X ()*_ca .CT_Col {return _dcgdc ._bbde };
 
-// RowNumber returns the row number (1-N), or zero if it is unset.
-func (_gae Row )RowNumber ()uint32 {if _gae ._bddg .RAttr !=nil {return *_gae ._bddg .RAttr ;};return 0;};
-
-// GetDrawing return the worksheet drawing and its relationships if exists.
-func (_fddd *Sheet )GetDrawing ()(*_dbg .WsDr ,_egb .Relationships ){if _bab :=_fddd ._eaa .Drawing ;_bab !=nil {_fdaa :=0;for _ ,_bef :=range _fddd ._geaf ._gbed {if _bgbg :=_bef .Drawing ;_bgbg !=nil {if _bef ==_fddd ._eaa {return _fddd ._geaf ._caea [_fdaa ],_fddd ._geaf ._gbbbb [_fdaa ];};_fdaa ++;};};};return nil ,_egb .Relationships {};};func (_gbgg Sheet )validateMergedCells ()error {_ceba :=map[uint64 ]struct{}{};for _ ,_ecec :=range _gbgg .MergedCells (){_bbe ,_daac ,_fafc :=_ba .ParseRangeReference (_ecec .Reference ());if _fafc !=nil {return _eg .Errorf ("\u0073\u0068e\u0065\u0074\u0020\u006e\u0061m\u0065\u0020\u0027\u0025\u0073'\u0020\u0068\u0061\u0073\u0020\u0069\u006e\u0076\u0061\u006c\u0069\u0064\u0020\u006d\u0065\u0072\u0067\u0065\u0064\u0020\u0063\u0065\u006c\u006c\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u0025\u0073",_gbgg .Name (),_ecec .Reference ());};for _ccfg :=_bbe .RowIdx ;_ccfg <=_daac .RowIdx ;_ccfg ++{for _efec :=_bbe .ColumnIdx ;_efec <=_daac .ColumnIdx ;_efec ++{_fagbf :=uint64 (_ccfg )<<32|uint64 (_efec );if _ ,_gdbaf :=_ceba [_fagbf ];_gdbaf {return _eg .Errorf ("\u0073\u0068\u0065\u0065\u0074\u0020n\u0061\u006d\u0065\u0020\u0027\u0025\u0073\u0027\u0020\u0068\u0061\u0073\u0020\u006f\u0076\u0065\u0072\u006c\u0061\u0070p\u0069\u006e\u0067\u0020\u006d\u0065\u0072\u0067\u0065\u0064\u0020\u0063\u0065\u006cl\u0020r\u0061\u006e\u0067\u0065",_gbgg .Name ());};_ceba [_fagbf ]=struct{}{};};};};return nil ;};
-
-// SetHeightCells sets the height the anchored object by moving the bottom.  It
-// is not compatible with SetHeight.
-func (_bgce TwoCellAnchor )SetHeightCells (h int32 ){_bgce .SetHeight (0);_cgedg :=_bgce .TopLeft ();_bdda :=_bgce .BottomRight ();_bdda .SetRow (_cgedg .Row ()+h );};
-
-// Epoch returns the point at which the dates/times in the workbook are relative to.
-func (_bac *Workbook )Epoch ()_c .Time {if _bac .Uses1904Dates (){_c .Date (1904,1,1,0,0,0,0,_c .UTC );};return _c .Date (1899,12,30,0,0,0,0,_c .UTC );};func _dfb (_adf bool )int {if _adf {return 1;};return 0;};
-
-// HasNumberFormat returns true if the cell style has a number format applied.
-func (_bgc CellStyle )HasNumberFormat ()bool {return _bgc ._ceca .NumFmtIdAttr !=nil &&_bgc ._ceca .ApplyNumberFormatAttr !=nil &&*_bgc ._ceca .ApplyNumberFormatAttr ;};
-
-// WorkbookText is an array of extracted text items which has some methods for representing extracted text from a workbook.
-type WorkbookText struct{Sheets []*SheetText ;};
+// Comments returns the comments for a sheet.
+func (_bcga *Sheet )Comments ()Comments {for _efgg ,_baeg :=range _bcga ._egccf ._dgga {if _baeg ==_bcga ._bedf {if _bcga ._egccf ._aeec [_efgg ]==nil {_bcga ._egccf ._aeec [_efgg ]=_ca .NewComments ();_bcga ._egccf ._fcbc [_efgg ].AddAutoRelationship (_a .DocTypeSpreadsheet ,_a .WorksheetType ,_efgg +1,_a .CommentsType );_bcga ._egccf .ContentTypes .AddOverride (_a .AbsoluteFilename (_a .DocTypeSpreadsheet ,_a .CommentsType ,_efgg +1),_a .CommentsContentType );};if len (_bcga ._egccf ._dedb )==0{_bcga ._egccf ._dedb =append (_bcga ._egccf ._dedb ,_deb .NewCommentDrawing ());_bfefc :=_bcga ._egccf ._fcbc [_efgg ].AddAutoRelationship (_a .DocTypeSpreadsheet ,_a .WorksheetType ,1,_a .VMLDrawingType );if _bcga ._bedf .LegacyDrawing ==nil {_bcga ._bedf .LegacyDrawing =_ca .NewCT_LegacyDrawing ();};_bcga ._bedf .LegacyDrawing .IdAttr =_bfefc .ID ();};return Comments {_bcga ._egccf ,_bcga ._egccf ._aeec [_efgg ]};};};_egd .Log .Debug ("\u0061\u0074\u0074\u0065\u006dp\u0074\u0065\u0064\u0020\u0074\u006f\u0020\u0061\u0063\u0063\u0065\u0073\u0073 \u0063\u006f\u006d\u006d\u0065\u006e\u0074\u0073\u0020\u0066\u006f\u0072\u0020\u006e\u006f\u006e\u002d\u0065\u0078\u0069\u0073\u0074\u0065\u006e\u0074\u0020\u0073\u0068\u0065\u0065t");return Comments {};};
 
 // SetDate sets the cell value to a date. It's stored as the number of days past
 // th sheet epoch. When we support v5 strict, we can store an ISO 8601 date
 // string directly, however that's not allowed with v5 transitional  (even
 // though it works in Excel). The cell is not styled via this method, so it will
 // display as a number. SetDateWithStyle should normally be used instead.
-func (_bbfg Cell )SetDate (d _c .Time ){_bbfg .clearValue ();d =_eae (d );_fed :=_bbfg ._cdb .Epoch ();if d .Before (_fed ){_af .Log .Debug ("d\u0061\u0074\u0065\u0073\u0020\u0062e\u0066\u006f\u0072\u0065\u0020\u00319\u0030\u0030\u0020\u0061\u0072\u0065\u0020n\u006f\u0074\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074e\u0064");return ;};_dec :=d .Sub (_fed );_gce :=new (_aa .Float );_ged :=new (_aa .Float );_ged .SetPrec (128);_ged .SetUint64 (uint64 (_dec ));_acb :=new (_aa .Float );_acb .SetUint64 (24*60*60*1e9);_gce .Quo (_ged ,_acb );_efd ,_ :=_gce .Uint64 ();_bbfg ._be .V =_e .Stringf ("\u0025\u0064",_efd );};
+func (_geb Cell )SetDate (d _gc .Time ){_geb .clearValue ();d =_baa (d );_cfb :=_geb ._abb .Epoch ();if d .Before (_cfb ){_egd .Log .Debug ("d\u0061\u0074\u0065\u0073\u0020\u0062e\u0066\u006f\u0072\u0065\u0020\u00319\u0030\u0030\u0020\u0061\u0072\u0065\u0020n\u006f\u0074\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074e\u0064");return ;};_eec :=d .Sub (_cfb );_dcgd :=new (_ef .Float );_cbe :=new (_ef .Float );_cbe .SetPrec (128);_cbe .SetUint64 (uint64 (_eec ));_ffbb :=new (_ef .Float );_ffbb .SetUint64 (24*60*60*1e9);_dcgd .Quo (_cbe ,_ffbb );_ggbe ,_ :=_dcgd .Uint64 ();_geb ._gbf .V =_a .Stringf ("\u0025\u0064",_ggbe );};
 
-// SetHeightAuto sets the row height to be automatically determined.
-func (_efa Row )SetHeightAuto (){_efa ._bddg .HtAttr =nil ;_efa ._bddg .CustomHeightAttr =nil };func (_gage *Sheet )removeColumnFromMergedCells (_ceac uint32 )error {if _gage ._eaa .MergeCells ==nil ||_gage ._eaa .MergeCells .MergeCell ==nil {return nil ;};_fccd :=[]*_ege .CT_MergeCell {};for _ ,_egce :=range _gage .MergedCells (){_fbae :=_acfe (_egce .Reference (),_ceac ,true );if _fbae !=""{_egce .SetReference (_fbae );_fccd =append (_fccd ,_egce .X ());};};_gage ._eaa .MergeCells .MergeCell =_fccd ;return nil ;};
+// AddGradientStop adds a color gradient stop.
+func (_aadd ColorScale )AddGradientStop (color _ce .Color ){_gggd :=_ca .NewCT_Color ();_gggd .RgbAttr =color .AsRGBAString ();_aadd ._gfe .Color =append (_aadd ._gfe .Color ,_gggd );};
 
-// X returns the inner wrapped XML type.
-func (_eeef ColorScale )X ()*_ege .CT_ColorScale {return _eeef ._bada };
+// New constructs a new workbook.
+func New ()*Workbook {_caf :=&Workbook {};_caf ._dadd =_ca .NewWorkbook ();_caf .AppProperties =_gg .NewAppProperties ();_caf .CoreProperties =_gg .NewCoreProperties ();_caf .StyleSheet =NewStyleSheet (_caf );_caf .Rels =_gg .NewRelationships ();_caf ._caaf =_gg .NewRelationships ();_caf .Rels .AddRelationship (_a .RelativeFilename (_a .DocTypeSpreadsheet ,"",_a .ExtendedPropertiesType ,0),_a .ExtendedPropertiesType );_caf .Rels .AddRelationship (_a .RelativeFilename (_a .DocTypeSpreadsheet ,"",_a .CorePropertiesType ,0),_a .CorePropertiesType );_caf .Rels .AddRelationship (_a .RelativeFilename (_a .DocTypeSpreadsheet ,"",_a .OfficeDocumentType ,0),_a .OfficeDocumentType );_caf ._caaf .AddRelationship (_a .RelativeFilename (_a .DocTypeSpreadsheet ,_a .OfficeDocumentType ,_a .StylesType ,0),_a .StylesType );_caf .ContentTypes =_gg .NewContentTypes ();_caf .ContentTypes .AddDefault ("\u0076\u006d\u006c",_a .VMLDrawingContentType );_caf .ContentTypes .AddOverride (_a .AbsoluteFilename (_a .DocTypeSpreadsheet ,_a .OfficeDocumentType ,0),"\u0061\u0070\u0070\u006c\u0069c\u0061\u0074\u0069\u006f\u006e\u002fv\u006e\u0064\u002e\u006f\u0070\u0065\u006ex\u006d\u006c\u0066o\u0072\u006d\u0061\u0074s\u002d\u006f\u0066\u0066\u0069\u0063e\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0073\u0070\u0072\u0065\u0061\u0064\u0073\u0068e\u0065\u0074\u006d\u006c\u002e\u0073\u0068\u0065\u0065\u0074\u002e\u006d\u0061\u0069\u006e\u002b\u0078\u006d\u006c");_caf .ContentTypes .AddOverride (_a .AbsoluteFilename (_a .DocTypeSpreadsheet ,_a .StylesType ,0),_a .SMLStyleSheetContentType );_caf .SharedStrings =NewSharedStrings ();_caf .ContentTypes .AddOverride (_a .AbsoluteFilename (_a .DocTypeSpreadsheet ,_a .SharedStringsType ,0),_a .SharedStringsContentType );_caf ._caaf .AddRelationship (_a .RelativeFilename (_a .DocTypeSpreadsheet ,_a .OfficeDocumentType ,_a .SharedStringsType ,0),_a .SharedStringsType );_caf ._dbba =map[string ]string {};return _caf ;};
 
-// X returns the inner wrapped XML type.
-func (_dbcg Font )X ()*_ege .CT_Font {return _dbcg ._eeea };func NewPatternFill (fills *_ege .CT_Fills )PatternFill {_edeb :=_ege .NewCT_Fill ();_edeb .PatternFill =_ege .NewCT_PatternFill ();return PatternFill {_edeb .PatternFill ,_edeb };};
+// DVCompareType is a comparison type for a data validation rule. This restricts
+// the input format of the cell.
+type DVCompareType byte ;
 
-// AddDifferentialStyle adds a new empty differential cell style to the stylesheet.
-func (_fgb StyleSheet )AddDifferentialStyle ()DifferentialStyle {if _fgb ._eebcg .Dxfs ==nil {_fgb ._eebcg .Dxfs =_ege .NewCT_Dxfs ();};_cacgg :=_ege .NewCT_Dxf ();_fgb ._eebcg .Dxfs .Dxf =append (_fgb ._eebcg .Dxfs .Dxf ,_cacgg );_fgb ._eebcg .Dxfs .CountAttr =_e .Uint32 (uint32 (len (_fgb ._eebcg .Dxfs .Dxf )));return DifferentialStyle {_cacgg ,_fgb ._baea ,_fgb ._eebcg .Dxfs };};func _acfe (_bfbd string ,_aefa uint32 ,_aagg bool )string {_eeae ,_gdgf ,_fecg :=_ba .ParseRangeReference (_bfbd );if _fecg ==nil {_cdda ,_fdbd :=_eeae .ColumnIdx ,_gdgf .ColumnIdx ;if _aefa >=_cdda &&_aefa <=_fdbd {if _cdda ==_fdbd {if _aagg {return "";}else {return _bfbd ;};}else {_fbfd :=_gdgf .Update (_cf .UpdateActionRemoveColumn );return _eg .Sprintf ("\u0025\u0073\u003a%\u0073",_eeae .String (),_fbfd .String ());};}else if _aefa < _cdda {_eacf :=_eeae .Update (_cf .UpdateActionRemoveColumn );_eebb :=_gdgf .Update (_cf .UpdateActionRemoveColumn );return _eg .Sprintf ("\u0025\u0073\u003a%\u0073",_eacf .String (),_eebb .String ());};}else {_effe ,_bfcfc ,_cbdc :=_ba .ParseColumnRangeReference (_bfbd );if _cbdc !=nil {return "";};_dagcd ,_eba :=_effe .ColumnIdx ,_bfcfc .ColumnIdx ;if _aefa >=_dagcd &&_aefa <=_eba {if _dagcd ==_eba {if _aagg {return "";}else {return _bfbd ;};}else {_beff :=_bfcfc .Update (_cf .UpdateActionRemoveColumn );return _eg .Sprintf ("\u0025\u0073\u003a%\u0073",_effe .String (),_beff .String ());};}else if _aefa < _dagcd {_abcc :=_effe .Update (_cf .UpdateActionRemoveColumn );_agfd :=_bfcfc .Update (_cf .UpdateActionRemoveColumn );return _eg .Sprintf ("\u0025\u0073\u003a%\u0073",_abcc .String (),_agfd .String ());};};return "";};func (_aadb Sheet )validateRowCellNumbers ()error {_ceaa :=map[uint32 ]struct{}{};for _ ,_cbdb :=range _aadb ._eaa .SheetData .Row {if _cbdb .RAttr !=nil {if _ ,_gfa :=_ceaa [*_cbdb .RAttr ];_gfa {return _eg .Errorf ("\u0027%\u0073'\u0020\u0072\u0065\u0075\u0073e\u0064\u0020r\u006f\u0077\u0020\u0025\u0064",_aadb .Name (),*_cbdb .RAttr );};_ceaa [*_cbdb .RAttr ]=struct{}{};};_fgff :=map[string ]struct{}{};for _ ,_dfdd :=range _cbdb .C {if _dfdd .RAttr ==nil {continue ;};if _ ,_cadec :=_fgff [*_dfdd .RAttr ];_cadec {return _eg .Errorf ("\u0027\u0025\u0073\u0027 r\u0065\u0075\u0073\u0065\u0064\u0020\u0063\u0065\u006c\u006c\u0020\u0025\u0073",_aadb .Name (),*_dfdd .RAttr );};_fgff [*_dfdd .RAttr ]=struct{}{};};};return nil ;};
+// DataValidationList is just a view on a DataValidation configured as a list.
+// It presents a drop-down combo box for spreadsheet users to select values. The
+// contents of the dropdown can either pull from a rang eof cells (SetRange) or
+// specified directly (SetValues).
+type DataValidationList struct{_eaaf *_ca .CT_DataValidation };
 
-// X returns the inner wrapped XML type.
-func (_dab DataBarScale )X ()*_ege .CT_DataBar {return _dab ._bca };
+// DVCompareOp is a comparison operator for a data validation rule.
+type DVCompareOp byte ;
 
-// SetFormat sets the number format code.
-func (_acgb NumberFormat )SetFormat (f string ){_acgb ._cecf .FormatCodeAttr =f };
+// RangeReference converts a range reference of the form 'A1:A5' to 'Sheet
+// 1'!$A$1:$A$5 . Renaming a sheet after calculating a range reference will
+// invalidate the reference.
+func (_ggfb Sheet )RangeReference (n string )string {_gfg :=_cf .Split (n ,"\u003a");_ggee ,_ :=_ag .ParseCellReference (_gfg [0]);_abbe :=_eg .Sprintf ("\u0024\u0025\u0073\u0024\u0025\u0064",_ggee .Column ,_ggee .RowIdx );if len (_gfg )==1{return _eg .Sprintf ("\u0027%\u0073\u0027\u0021\u0025\u0073",_ggfb .Name (),_abbe );};_aabe ,_ :=_ag .ParseCellReference (_gfg [1]);_ffcf :=_eg .Sprintf ("\u0024\u0025\u0073\u0024\u0025\u0064",_aabe .Column ,_aabe .RowIdx );return _eg .Sprintf ("\u0027\u0025\u0073\u0027\u0021\u0025\u0073\u003a\u0025\u0073",_ggfb .Name (),_abbe ,_ffcf );};
 
-// SetSize sets the text size for a rich text run.
-func (_gafd RichTextRun )SetSize (m _ga .Distance ){_gafd .ensureRpr ();_gafd ._cebg .RPr .Sz =_ege .NewCT_FontSize ();_gafd ._cebg .RPr .Sz .ValAttr =float64 (m /_ga .Point );};
+// HasFormula returns true if the cell has an asoociated formula.
+func (_efc Cell )HasFormula ()bool {return _efc ._gbf .F !=nil };
 
-// IsStructureLocked returns whether the workbook structure is locked.
-func (_deee WorkbookProtection )IsStructureLocked ()bool {return _deee ._gcge .LockStructureAttr !=nil &&*_deee ._gcge .LockStructureAttr ;};
-
-// SetItalic causes the text to be displayed in italic.
-func (_fagc RichTextRun )SetItalic (b bool ){_fagc .ensureRpr ();_fagc ._cebg .RPr .I =_ege .NewCT_BooleanProperty ();_fagc ._cebg .RPr .I .ValAttr =_e .Bool (b );};
-
-// SetColOffset sets the column offset of the top-left anchor.
-func (_bage OneCellAnchor )SetColOffset (m _ga .Distance ){_bage .TopLeft ().SetColOffset (m )};var ErrorNotFound =_gb .New ("\u006eo\u0074\u0020\u0066\u006f\u0075\u006ed");
-
-// X returns the inner wrapped XML type.
-func (_cdd RichText )X ()*_ege .CT_Rst {return _cdd ._dbaa };
-
-// StandardFormat is a standard ECMA 376 number format.
-//go:generate stringer -type=StandardFormat
-type StandardFormat uint32 ;
-
-// LockWindow controls the locking of the workbook windows.
-func (_bddag WorkbookProtection )LockWindow (b bool ){if !b {_bddag ._gcge .LockWindowsAttr =nil ;}else {_bddag ._gcge .LockWindowsAttr =_e .Bool (true );};};
-
-// SetWidthCells is a no-op.
-func (_dba OneCellAnchor )SetWidthCells (int32 ){};var (_gbdfc =[...]uint8 {0,21,46,61,76,91};_fgdf =[...]uint8 {0,21,37,53,69,85,103,119,135,151,167,185,201,217,239};_bbff =[...]uint8 {0,16,32,48,64};_daggg =[...]uint8 {0,16,32,48,64,80};);
-
-// SetPassword sets the password hash to a hash of the input password.
-func (_cdff SheetProtection )SetPassword (pw string ){_cdff .SetPasswordHash (PasswordHash (pw ))};
-
-// SetPattern sets the pattern of the fill.
-func (_fgf PatternFill )SetPattern (p _ege .ST_PatternType ){_fgf ._gbec .PatternTypeAttr =p };
-
-// ClearNumberFormat removes any number formatting from the style.
-func (_abg CellStyle )ClearNumberFormat (){_abg ._ceca .NumFmtIdAttr =nil ;_abg ._ceca .ApplyNumberFormatAttr =nil ;};
-
-// CellStyles returns the list of defined cell styles
-func (_adgd StyleSheet )CellStyles ()[]CellStyle {_ecgg :=[]CellStyle {};for _ ,_ecbed :=range _adgd ._eebcg .CellXfs .Xf {_ecgg =append (_ecgg ,CellStyle {_adgd ._baea ,_ecbed ,_adgd ._eebcg .CellXfs });};return _ecgg ;};type DifferentialStyle struct{_ccbd *_ege .CT_Dxf ;_aba *Workbook ;_dcae *_ege .CT_Dxfs ;};
-
-// SetHeightCells is a no-op.
-func (_baa OneCellAnchor )SetHeightCells (int32 ){};
-
-// ClearProtection removes any protections applied to teh sheet.
-func (_abbb *Sheet )ClearProtection (){_abbb ._eaa .SheetProtection =nil };
-
-// AddChart adds an chart to a drawing, returning the chart and an anchor that
-// can be used to position the chart within the sheet.
-func (_gdfd Drawing )AddChart (at AnchorType )(_dg .Chart ,Anchor ){_febc :=_ff .NewChartSpace ();_gdfd ._gfce ._fbaf =append (_gdfd ._gfce ._fbaf ,_febc );_cfbf :=_e .AbsoluteFilename (_e .DocTypeSpreadsheet ,_e .ChartContentType ,len (_gdfd ._gfce ._fbaf ));_gdfd ._gfce .ContentTypes .AddOverride (_cfbf ,_e .ChartContentType );var _fbf string ;for _dgd ,_ccg :=range _gdfd ._gfce ._caea {if _ccg ==_gdfd ._cffa {_bdee :=_e .RelativeFilename (_e .DocTypeSpreadsheet ,_e .DrawingType ,_e .ChartType ,len (_gdfd ._gfce ._fbaf ));_cfdg :=_gdfd ._gfce ._gbbbb [_dgd ].AddRelationship (_bdee ,_e .ChartType );_fbf =_cfdg .ID ();break ;};};var _ddfg Anchor ;var _addee *_dbg .CT_GraphicalObjectFrame ;switch at {case AnchorTypeAbsolute :_cca :=_cebc ();_gdfd ._cffa .EG_Anchor =append (_gdfd ._cffa .EG_Anchor ,&_dbg .EG_Anchor {AbsoluteAnchor :_cca });_cca .Choice =&_dbg .EG_ObjectChoicesChoice {};_cca .Choice .GraphicFrame =_dbg .NewCT_GraphicalObjectFrame ();_addee =_cca .Choice .GraphicFrame ;_ddfg =AbsoluteAnchor {_cca };case AnchorTypeOneCell :_gbce :=_dce ();_gdfd ._cffa .EG_Anchor =append (_gdfd ._cffa .EG_Anchor ,&_dbg .EG_Anchor {OneCellAnchor :_gbce });_gbce .Choice =&_dbg .EG_ObjectChoicesChoice {};_gbce .Choice .GraphicFrame =_dbg .NewCT_GraphicalObjectFrame ();_addee =_gbce .Choice .GraphicFrame ;_ddfg =OneCellAnchor {_gbce };case AnchorTypeTwoCell :_geg :=_cgce ();_gdfd ._cffa .EG_Anchor =append (_gdfd ._cffa .EG_Anchor ,&_dbg .EG_Anchor {TwoCellAnchor :_geg });_geg .Choice =&_dbg .EG_ObjectChoicesChoice {};_geg .Choice .GraphicFrame =_dbg .NewCT_GraphicalObjectFrame ();_addee =_geg .Choice .GraphicFrame ;_ddfg =TwoCellAnchor {_geg };};_addee .NvGraphicFramePr =_dbg .NewCT_GraphicalObjectFrameNonVisual ();_addee .NvGraphicFramePr .CNvPr .IdAttr =uint32 (len (_gdfd ._cffa .EG_Anchor ));_addee .NvGraphicFramePr .CNvPr .NameAttr ="\u0043\u0068\u0061r\u0074";_addee .Graphic =_cg .NewGraphic ();_addee .Graphic .GraphicData .UriAttr ="\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0073\u0063\u0068\u0065\u006d\u0061\u0073\u002eo\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072\u006d\u0061\u0074\u0073.\u006f\u0072\u0067\u002f\u0064\u0072\u0061\u0077\u0069\u006e\u0067\u006dl/\u0032\u0030\u0030\u0036\u002f\u0063\u0068\u0061\u0072\u0074";_ffd :=_ff .NewChart ();_ffd .IdAttr =_fbf ;_addee .Graphic .GraphicData .Any =[]_e .Any {_ffd };_adff :=_dg .MakeChart (_febc );_adff .Properties ().SetSolidFill (_afd .White );_adff .SetDisplayBlanksAs (_ff .ST_DispBlanksAsGap );return _adff ,_ddfg ;};
+// ClearCachedFormulaResults clears any computed formula values that are stored
+// in the sheet. This may be required if you modify cells that are used as a
+// formula input to force the formulas to be recomputed the next time the sheet
+// is opened in Excel.
+func (_ecfe *Sheet )ClearCachedFormulaResults (){for _ ,_ecfee :=range _ecfe .Rows (){for _ ,_dfgf :=range _ecfee .Cells (){if _dfgf .X ().F !=nil {_dfgf .X ().V =nil ;};};};};const (_bbbaf ="\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061tGe\u006e\u0065\u0072\u0061\u006cS\u0074a\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0057\u0068\u006f\u006ce\u004e\u0075\u006d\u0062\u0065\u0072\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0032\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006da\u0074\u0033\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064F\u006f\u0072\u006d\u0061\u0074\u0034";_fdadg ="\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074P\u0065\u0072\u0063\u0065\u006e\u0074\u0053\u0074\u0061nd\u0061r\u0064F\u006fr\u006d\u0061\u0074\u0031\u0030\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061t\u0031\u0031\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064F\u006f\u0072\u006d\u0061\u0074\u0031\u0032\u0053\u0074a\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0031\u0033\u0053t\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0044\u0061\u0074\u0065\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046o\u0072\u006d\u0061\u0074\u00315\u0053\u0074\u0061\u006e\u0064a\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0031\u0036\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0031\u0037S\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0031\u0038\u0053\u0074\u0061n\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0054\u0069\u006d\u0065\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u00320\u0053\u0074a\u006e\u0064a\u0072\u0064\u0046\u006f\u0072\u006d\u0061t\u0032\u0031\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0044\u0061t\u0065\u0054\u0069\u006d\u0065";_gdebf ="\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0033\u0037\u0053t\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006da\u0074\u0033\u0038\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u00339\u0053\u0074\u0061\u006e\u0064\u0061r\u0064\u0046o\u0072\u006da\u00744\u0030";_aggc ="\u0053t\u0061\u006e\u0064a\u0072\u0064\u0046o\u0072ma\u0074\u0034\u0035\u0053\u0074\u0061\u006ed\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0034\u0036\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0034\u0037\u0053ta\u006ed\u0061\u0072\u0064\u0046\u006f\u0072m\u0061\u0074\u0034\u0038\u0053t\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061t\u0034\u0039";);type Table struct{_eebe *_ca .Table };func (_cggb *Sheet )getAllCellsInFormulaArrays (_afbg bool )(map[string ]bool ,error ){_bcgg :=_ea .NewEvaluator ();_efga :=_cggb .FormulaContext ();_acbd :=map[string ]bool {};for _ ,_degda :=range _cggb .Rows (){for _ ,_cabd :=range _degda .Cells (){if _cabd .X ().F !=nil {_becdd :=_cabd .X ().F .Content ;if _cabd .X ().F .TAttr ==_ca .ST_CellFormulaTypeArray {_dfdc :=_bcgg .Eval (_efga ,_becdd ).AsString ();if _dfdc .Type ==_ea .ResultTypeError {_egd .Log .Debug ("\u0065\u0072\u0072o\u0072\u0020\u0065\u0076a\u0075\u006c\u0061\u0074\u0069\u006e\u0067 \u0066\u006f\u0072\u006d\u0075\u006c\u0061\u0020\u0025\u0073\u003a\u0020\u0025\u0073",_becdd ,_dfdc .ErrorMessage );_cabd .X ().V =nil ;};if _dfdc .Type ==_ea .ResultTypeArray {_edcf ,_eebc :=_ag .ParseCellReference (_cabd .Reference ());if _eebc !=nil {return map[string ]bool {},_eebc ;};if (_afbg &&len (_dfdc .ValueArray )==1)||(!_afbg &&len (_dfdc .ValueArray [0])==1){continue ;};for _bbfa ,_eage :=range _dfdc .ValueArray {_ddeg :=_edcf .RowIdx +uint32 (_bbfa );for _eebb :=range _eage {_cgcc :=_ag .IndexToColumn (_edcf .ColumnIdx +uint32 (_eebb ));_acbd [_eg .Sprintf ("\u0025\u0073\u0025\u0064",_cgcc ,_ddeg )]=true ;};};}else if _dfdc .Type ==_ea .ResultTypeList {_agec ,_cgdg :=_ag .ParseCellReference (_cabd .Reference ());if _cgdg !=nil {return map[string ]bool {},_cgdg ;};if _afbg ||len (_dfdc .ValueList )==1{continue ;};_gafcb :=_agec .RowIdx ;for _eeed :=range _dfdc .ValueList {_defgd :=_ag .IndexToColumn (_agec .ColumnIdx +uint32 (_eeed ));_acbd [_eg .Sprintf ("\u0025\u0073\u0025\u0064",_defgd ,_gafcb )]=true ;};};};};};};return _acbd ,nil ;};
 
 // Fills returns a Fills object that can be used to add/create/edit fills.
-func (_gedc StyleSheet )Fills ()Fills {return Fills {_gedc ._eebcg .Fills }};
-
-// X returns the inner wrapped XML type.
-func (_daee ConditionalFormattingRule )X ()*_ege .CT_CfRule {return _daee ._cdfd };
-
-// FormulaContext returns a formula evaluation context that can be used to
-// evaluate formaulas.
-func (_fcgc *Sheet )FormulaContext ()_ce .Context {return _bgb (_fcgc )};
+func (_ecee StyleSheet )Fills ()Fills {return Fills {_ecee ._ddaga .Fills }};
 
 // Anchor is the interface implemented by anchors. It's modeled after the most
 // common anchor (Two cell variant with a from/to position), but will also be
@@ -634,159 +138,617 @@ BottomRight ()CellMarker ;
 TopLeft ()CellMarker ;
 
 // MoveTo repositions the anchor without changing the objects size.
-MoveTo (_gda ,_ea int32 );
+MoveTo (_cb ,_fe int32 );
 
 // SetWidth sets the width of the anchored object. It is not compatible with
 // SetWidthCells.
-SetWidth (_fg _ga .Distance );
+SetWidth (_bbe _d .Distance );
 
 // SetWidthCells sets the height the anchored object by moving the right
 // hand side. It is not compatible with SetWidth.
-SetWidthCells (_gc int32 );
+SetWidthCells (_bec int32 );
 
 // SetHeight sets the height of the anchored object. It is not compatible
 // with SetHeightCells.
-SetHeight (_dgf _ga .Distance );
+SetHeight (_fea _d .Distance );
 
 // SetHeightCells sets the height the anchored object by moving the bottom.
 // It is not compatible with SetHeight.
-SetHeightCells (_fdg int32 );
+SetHeightCells (_ad int32 );
 
 // SetColOffset sets the column offset of the top-left anchor.
-SetColOffset (_ag _ga .Distance );
+SetColOffset (_ege _d .Distance );
 
 // SetRowOffset sets the row offset of the top-left anchor.
-SetRowOffset (_egf _ga .Distance );
+SetRowOffset (_gd _d .Distance );
 
 // Type returns the type of anchor
 Type ()AnchorType ;};
 
-// Cell is a single cell within a sheet.
-type Cell struct{_cdb *Workbook ;_bd *Sheet ;_gge *_ege .CT_Row ;_be *_ege .CT_Cell ;};
+// Read reads a workbook from an io.Reader(.xlsx).
+func Read (r _gf .ReaderAt ,size int64 )(*Workbook ,error ){const _fdc ="\u0073\u0070r\u0065\u0061\u0064s\u0068\u0065\u0065\u0074\u003a\u0052\u0065\u0061\u0064";if !_ae .GetLicenseKey ().IsLicensed ()&&!_fegeda {_eg .Println ("\u0055\u006e\u006ci\u0063\u0065\u006e\u0073e\u0064\u0020\u0076\u0065\u0072\u0073\u0069o\u006e\u0020\u006f\u0066\u0020\u0055\u006e\u0069\u004f\u0066\u0066\u0069\u0063\u0065");_eg .Println ("\u002d\u0020\u0047e\u0074\u0020\u0061\u0020\u0074\u0072\u0069\u0061\u006c\u0020\u006c\u0069\u0063\u0065\u006e\u0073\u0065\u0020\u006f\u006e\u0020\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002fu\u006e\u0069\u0064\u006f\u0063\u002e\u0069\u006f");return nil ,_cc .New ("\u0075\u006e\u0069\u006f\u0066\u0066\u0069\u0063\u0065\u0020\u006ci\u0063\u0065\u006e\u0073\u0065\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0064");};_adeff :=New ();_dcba ,_fgd :=_ae .GenRefId ("\u0073\u0072");if _fgd !=nil {_egd .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_fgd );return nil ,_fgd ;};_adeff ._abca =_dcba ;if _egdc :=_ae .Track (_adeff ._abca ,_fdc );_egdc !=nil {_egd .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_egdc );return nil ,_egdc ;};_dadag ,_fgd :=_efg .TempDir ("\u0075\u006e\u0069\u006f\u0066\u0066\u0069\u0063\u0065-\u0078\u006c\u0073\u0078");if _fgd !=nil {return nil ,_fgd ;};_adeff .TmpPath =_dadag ;_gcg ,_fgd :=_be .NewReader (r ,size );if _fgd !=nil {return nil ,_eg .Errorf ("\u0070a\u0072s\u0069\u006e\u0067\u0020\u007a\u0069\u0070\u003a\u0020\u0025\u0073",_fgd );};_fec :=[]*_be .File {};_fec =append (_fec ,_gcg .File ...);_abfda :=false ;for _ ,_cdec :=range _fec {if _cdec .FileHeader .Name =="\u0064\u006f\u0063\u0050ro\u0070\u0073\u002f\u0063\u0075\u0073\u0074\u006f\u006d\u002e\u0078\u006d\u006c"{_abfda =true ;break ;};};if _abfda {_adeff .CreateCustomProperties ();};_aadba :=_de .DecodeMap {};_aadba .SetOnNewRelationshipFunc (_adeff .onNewRelationship );_aadba .AddTarget (_a .ContentTypesFilename ,_adeff .ContentTypes .X (),"",0);_aadba .AddTarget (_a .BaseRelsFilename ,_adeff .Rels .X (),"",0);if _bafd :=_aadba .Decode (_fec );_bafd !=nil {return nil ,_bafd ;};for _ ,_dcc :=range _fec {if _dcc ==nil {continue ;};if _fed :=_adeff .AddExtraFileFromZip (_dcc );_fed !=nil {return nil ,_fed ;};};if _abfda {_dbdd :=false ;for _ ,_fdggc :=range _adeff .Rels .X ().Relationship {if _fdggc .TargetAttr =="\u0064\u006f\u0063\u0050ro\u0070\u0073\u002f\u0063\u0075\u0073\u0074\u006f\u006d\u002e\u0078\u006d\u006c"{_dbdd =true ;break ;};};if !_dbdd {_adeff .AddCustomRelationships ();};};return _adeff ,nil ;};func (_bbg Cell )getLabelPrefix ()string {if _bbg ._gbf .SAttr ==nil {return "";};_bc :=*_bbg ._gbf .SAttr ;_ebd :=_bbg ._abb .StyleSheet .GetCellStyle (_bc );switch _ebd ._gaa .Alignment .HorizontalAttr {case _ca .ST_HorizontalAlignmentLeft :return "\u0027";case _ca .ST_HorizontalAlignmentRight :return "\u0022";case _ca .ST_HorizontalAlignmentCenter :return "\u005e";case _ca .ST_HorizontalAlignmentFill :return "\u005c";default:return "";};};
 
-// GetFormat returns a cell data format.
-func (_dbc *evalContext )GetFormat (cellRef string )string {return _dbc ._aac .Cell (cellRef ).getFormat ()};
+// SetAutoFilter creates autofilters on the sheet. These are the automatic
+// filters that are common for a header row.  The RangeRef should be of the form
+// "A1:C5" and cover the entire range of cells to be filtered, not just the
+// header. SetAutoFilter replaces any existing auto filter on the sheet.
+func (_bff *Sheet )SetAutoFilter (rangeRef string ){rangeRef =_cf .Replace (rangeRef ,"\u0024","",-1);_bff ._bedf .AutoFilter =_ca .NewCT_AutoFilter ();_bff ._bedf .AutoFilter .RefAttr =_a .String (rangeRef );_fdga :="\u0027"+_bff .Name ()+"\u0027\u0021";var _dacd DefinedName ;for _ ,_acac :=range _bff ._egccf .DefinedNames (){if _acac .Name ()==_cdga {if _cf .HasPrefix (_acac .Content (),_fdga ){_dacd =_acac ;_dacd .SetContent (_bff .RangeReference (rangeRef ));break ;};};};if _dacd .X ()==nil {_dacd =_bff ._egccf .AddDefinedName (_cdga ,_bff .RangeReference (rangeRef ));};for _bffd ,_cefeb :=range _bff ._egccf ._dgga {if _cefeb ==_bff ._bedf {_dacd .SetLocalSheetID (uint32 (_bffd ));};};};
 
-// LockObject controls the locking of the sheet objects.
-func (_caaad SheetProtection )LockObject (b bool ){if !b {_caaad ._aebf .ObjectsAttr =nil ;}else {_caaad ._aebf .ObjectsAttr =_e .Bool (true );};};
+// GetValueAsBool retrieves the cell's value as a boolean
+func (_bge Cell )GetValueAsBool ()(bool ,error ){if _bge ._gbf .TAttr !=_ca .ST_CellTypeB {return false ,_cc .New ("\u0063e\u006c\u006c\u0020\u0069\u0073\u0020\u006e\u006f\u0074\u0020\u006ff\u0020\u0062\u006f\u006f\u006c\u0020\u0074\u0079\u0070\u0065");};if _bge ._gbf .V ==nil {return false ,_cc .New ("\u0063\u0065\u006c\u006c\u0020\u0068\u0061\u0073\u0020\u006e\u006f\u0020v\u0061\u006c\u0075\u0065");};return _gb .ParseBool (*_bge ._gbf .V );};
 
-// AddHyperlink creates and sets a hyperlink on a cell.
-func (_adde Cell )AddHyperlink (url string ){for _gaa ,_gfc :=range _adde ._cdb ._gbed {if _gfc ==_adde ._bd ._eaa {_adde .SetHyperlink (_adde ._cdb ._abeb [_gaa ].AddHyperlink (url ));return ;};};};
+// SetVerticalAlignment sets the vertical alignment of a cell style.
+func (_gddb CellStyle )SetVerticalAlignment (a _ca .ST_VerticalAlignment ){if _gddb ._gaa .Alignment ==nil {_gddb ._gaa .Alignment =_ca .NewCT_CellAlignment ();};_gddb ._gaa .ApplyAlignmentAttr =_a .Bool (true );_gddb ._gaa .Alignment .VerticalAttr =a ;};
 
-// RemoveColumn removes column from the sheet and moves all columns to the right of the removed column one step left.
-func (_efga *Sheet )RemoveColumn (column string )error {_badd ,_faad :=_efga .getAllCellsInFormulaArraysForColumn ();if _faad !=nil {return _faad ;};_gdcd :=_ba .ColumnToIndex (column );for _ ,_bfba :=range _efga .Rows (){_dgec :=_eg .Sprintf ("\u0025\u0073\u0025\u0064",column ,*_bfba .X ().RAttr );if _ ,_afce :=_badd [_dgec ];_afce {return nil ;};};for _ ,_cdcge :=range _efga .Rows (){_aea :=_cdcge ._bddg .C ;for _cgcf ,_badac :=range _aea {_fcbb ,_egad :=_ba .ParseCellReference (*_badac .RAttr );if _egad !=nil {return _egad ;};if _fcbb .ColumnIdx ==_gdcd {_cdcge ._bddg .C =append (_aea [:_cgcf ],_efga .slideCellsLeft (_aea [_cgcf +1:])...);break ;}else if _fcbb .ColumnIdx > _gdcd {_cdcge ._bddg .C =append (_aea [:_cgcf ],_efga .slideCellsLeft (_aea [_cgcf :])...);break ;};};};_faad =_efga .updateAfterRemove (_gdcd ,_cf .UpdateActionRemoveColumn );if _faad !=nil {return _faad ;};_faad =_efga .removeColumnFromNamedRanges (_gdcd );if _faad !=nil {return _faad ;};_faad =_efga .removeColumnFromMergedCells (_gdcd );if _faad !=nil {return _faad ;};for _ ,_dfc :=range _efga ._geaf .Sheets (){_dfc .RecalculateFormulas ();};return nil ;};var _gefb =_e .AbsoluteFilename (_e .DocTypeSpreadsheet ,_e .SharedStringsType ,0);
+// CellText is used for keeping text with references to a cell where it is located.
+type CellText struct{Text string ;Cell Cell ;};func NewPatternFill (fills *_ca .CT_Fills )PatternFill {_daeb :=_ca .NewCT_Fill ();_daeb .PatternFill =_ca .NewCT_PatternFill ();return PatternFill {_daeb .PatternFill ,_daeb };};
 
-// SetHeight sets the height of the anchored object.
-func (_edg OneCellAnchor )SetHeight (h _ga .Distance ){_edg ._bfeef .Ext .CyAttr =int64 (h /_ga .EMU )};
+// HasNumberFormat returns true if the cell style has a number format applied.
+func (_fgb CellStyle )HasNumberFormat ()bool {return _fgb ._gaa .NumFmtIdAttr !=nil &&_fgb ._gaa .ApplyNumberFormatAttr !=nil &&*_fgb ._gaa .ApplyNumberFormatAttr ;};
 
-// AddCommentWithStyle adds a new comment styled in a default way
-func (_ddf Comments )AddCommentWithStyle (cellRef string ,author string ,comment string )error {_eged :=_ddf .AddComment (cellRef ,author );_abcf :=_eged .AddRun ();_abcf .SetBold (true );_abcf .SetSize (10);_abcf .SetColor (_afd .Black );_abcf .SetFont ("\u0043a\u006c\u0069\u0062\u0072\u0069");_abcf .SetText (author +"\u003a");_abcf =_eged .AddRun ();_abcf .SetSize (10);_abcf .SetFont ("\u0043a\u006c\u0069\u0062\u0072\u0069");_abcf .SetColor (_afd .Black );_abcf .SetText ("\u000d\u000a"+comment +"\u000d\u000a");_gbc ,_gedf :=_ba .ParseCellReference (cellRef );if _gedf !=nil {return _gedf ;};_ddf ._dgbc ._edbcf [0].Shape =append (_ddf ._dgbc ._edbcf [0].Shape ,_bcc .NewCommentShape (int64 (_gbc .ColumnIdx ),int64 (_gbc .RowIdx -1)));return nil ;};
+// X returns the inner wrapped XML type.
+func (_dadb Drawing )X ()*_bd .WsDr {return _dadb ._dbf };
 
-// Column returns the cell column
-func (_ecaf Cell )Column ()(string ,error ){_ccd ,_ega :=_ba .ParseCellReference (_ecaf .Reference ());if _ega !=nil {return "",_ega ;};return _ccd .Column ,nil ;};
+// ClearCachedFormulaResults clears any computed formula values that are stored
+// in the sheet. This may be required if you modify cells that are used as a
+// formula input to force the formulas to be recomputed the next time the sheet
+// is opened in Excel.
+func (_fffbb *Workbook )ClearCachedFormulaResults (){for _ ,_ddcg :=range _fffbb .Sheets (){_ddcg .ClearCachedFormulaResults ();};};func (_ggg Cell )setLocked (_egc bool ){_bba :=_ggg ._gbf .SAttr ;if _bba !=nil {_abf :=_ggg ._abb .StyleSheet .GetCellStyle (*_bba );if _abf ._gaa .Protection ==nil {_abf ._gaa .Protection =_ca .NewCT_CellProtection ();};_abf ._gaa .Protection .LockedAttr =&_egc ;};};
+
+// IsSheetLocked returns whether the sheet is locked.
+func (_fbfd SheetProtection )IsSheetLocked ()bool {return _fbfd ._gfgfc .SheetAttr !=nil &&*_fbfd ._gfgfc .SheetAttr ;};func (_bgee Sheet )validateMergedCells ()error {_bdff :=map[uint64 ]struct{}{};for _ ,_daa :=range _bgee .MergedCells (){_acc ,_ggad ,_egdf :=_ag .ParseRangeReference (_daa .Reference ());if _egdf !=nil {return _eg .Errorf ("\u0073\u0068e\u0065\u0074\u0020\u006e\u0061m\u0065\u0020\u0027\u0025\u0073'\u0020\u0068\u0061\u0073\u0020\u0069\u006e\u0076\u0061\u006c\u0069\u0064\u0020\u006d\u0065\u0072\u0067\u0065\u0064\u0020\u0063\u0065\u006c\u006c\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u0025\u0073",_bgee .Name (),_daa .Reference ());};for _bccg :=_acc .RowIdx ;_bccg <=_ggad .RowIdx ;_bccg ++{for _ecce :=_acc .ColumnIdx ;_ecce <=_ggad .ColumnIdx ;_ecce ++{_fabf :=uint64 (_bccg )<<32|uint64 (_ecce );if _ ,_gbeea :=_bdff [_fabf ];_gbeea {return _eg .Errorf ("\u0073\u0068\u0065\u0065\u0074\u0020n\u0061\u006d\u0065\u0020\u0027\u0025\u0073\u0027\u0020\u0068\u0061\u0073\u0020\u006f\u0076\u0065\u0072\u006c\u0061\u0070p\u0069\u006e\u0067\u0020\u006d\u0065\u0072\u0067\u0065\u0064\u0020\u0063\u0065\u006cl\u0020r\u0061\u006e\u0067\u0065",_bgee .Name ());};_bdff [_fabf ]=struct{}{};};};};return nil ;};func (_abeb *Workbook )onNewRelationship (_deegb *_de .DecodeMap ,_dbgf ,_abfce string ,_ceed []*_be .File ,_bbae *_ffa .Relationship ,_dbde _de .Target )error {_ebag :=_a .DocTypeSpreadsheet ;switch _abfce {case _a .OfficeDocumentType :_abeb ._dadd =_ca .NewWorkbook ();_deegb .AddTarget (_dbgf ,_abeb ._dadd ,_abfce ,0);_abeb ._caaf =_gg .NewRelationships ();_deegb .AddTarget (_de .RelationsPathFor (_dbgf ),_abeb ._caaf .X (),_abfce ,0);_bbae .TargetAttr =_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,0);case _a .CorePropertiesType :_deegb .AddTarget (_dbgf ,_abeb .CoreProperties .X (),_abfce ,0);_bbae .TargetAttr =_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,0);case _a .CustomPropertiesType :_deegb .AddTarget (_dbgf ,_abeb .CustomProperties .X (),_abfce ,0);_bbae .TargetAttr =_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,0);case _a .ExtendedPropertiesType :_deegb .AddTarget (_dbgf ,_abeb .AppProperties .X (),_abfce ,0);_bbae .TargetAttr =_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,0);case _a .WorksheetType :_bdcf :=_ca .NewWorksheet ();_gdfb :=uint32 (len (_abeb ._dgga ));_abeb ._dgga =append (_abeb ._dgga ,_bdcf );_deegb .AddTarget (_dbgf ,_bdcf ,_abfce ,_gdfb );_fddc :=_gg .NewRelationships ();_deegb .AddTarget (_de .RelationsPathFor (_dbgf ),_fddc .X (),_abfce ,0);_abeb ._fcbc =append (_abeb ._fcbc ,_fddc );_abeb ._aeec =append (_abeb ._aeec ,nil );_bbae .TargetAttr =_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,len (_abeb ._dgga ));case _a .StylesType :_abeb .StyleSheet =NewStyleSheet (_abeb );_deegb .AddTarget (_dbgf ,_abeb .StyleSheet .X (),_abfce ,0);_bbae .TargetAttr =_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,0);case _a .ThemeType :_gcff :=_gff .NewTheme ();_abeb ._fcgb =append (_abeb ._fcgb ,_gcff );_deegb .AddTarget (_dbgf ,_gcff ,_abfce ,0);_bbae .TargetAttr =_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,len (_abeb ._fcgb ));case _a .SharedStringsType :_abeb .SharedStrings =NewSharedStrings ();_deegb .AddTarget (_dbgf ,_abeb .SharedStrings .X (),_abfce ,0);_bbae .TargetAttr =_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,0);case _a .ThumbnailType :for _dbfc ,_aafc :=range _ceed {if _aafc ==nil {continue ;};if _aafc .Name ==_dbgf {_dbbe ,_ecdgb :=_aafc .Open ();if _ecdgb !=nil {return _eg .Errorf ("e\u0072\u0072\u006f\u0072\u0020\u0072e\u0061\u0064\u0069\u006e\u0067\u0020\u0074\u0068\u0075m\u0062\u006e\u0061i\u006c:\u0020\u0025\u0073",_ecdgb );};_abeb .Thumbnail ,_ ,_ecdgb =_f .Decode (_dbbe );_dbbe .Close ();if _ecdgb !=nil {return _eg .Errorf ("\u0065\u0072\u0072\u006fr\u0020\u0064\u0065\u0063\u006f\u0064\u0069\u006e\u0067\u0020t\u0068u\u006d\u0062\u006e\u0061\u0069\u006c\u003a \u0025\u0073",_ecdgb );};_ceed [_dbfc ]=nil ;};};case _a .ImageType :for _gbcdf ,_bbec :=range _abeb ._dbba {_aagf :=_g .Clean (_dbgf );if _aagf ==_gbcdf {_bbae .TargetAttr =_bbec ;return nil ;};};_fcfee :=_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,len (_abeb .Images )+1);for _afdc ,_aggb :=range _ceed {if _aggb ==nil {continue ;};if _aggb .Name ==_g .Clean (_dbgf ){_dgcc ,_eecb :=_de .ExtractToDiskTmp (_aggb ,_abeb .TmpPath );if _eecb !=nil {return _eecb ;};_gcaa ,_eecb :=_gg .ImageFromStorage (_dgcc );if _eecb !=nil {return _eecb ;};_gcbb :=_gg .MakeImageRef (_gcaa ,&_abeb .DocBase ,_abeb ._caaf );_gcbb .SetTarget (_fcfee );_abeb ._dbba [_aggb .Name ]=_fcfee ;_abeb .Images =append (_abeb .Images ,_gcbb );_ceed [_afdc ]=nil ;};};_bbae .TargetAttr =_fcfee ;case _a .DrawingType :_dgaa :=_bd .NewWsDr ();_afgfb :=uint32 (len (_abeb ._decb ));_deegb .AddTarget (_dbgf ,_dgaa ,_abfce ,_afgfb );_abeb ._decb =append (_abeb ._decb ,_dgaa );_bbag :=_gg .NewRelationships ();_deegb .AddTarget (_de .RelationsPathFor (_dbgf ),_bbag .X (),_abfce ,_afgfb );_abeb ._ebfa =append (_abeb ._ebfa ,_bbag );_bbae .TargetAttr =_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,len (_abeb ._decb ));case _a .VMLDrawingType :_acbg :=_deb .NewContainer ();_bbcb :=uint32 (len (_abeb ._dedb ));_deegb .AddTarget (_dbgf ,_acbg ,_abfce ,_bbcb );_abeb ._dedb =append (_abeb ._dedb ,_acbg );case _a .CommentsType :_abeb ._aeec [_dbde .Index ]=_ca .NewComments ();_deegb .AddTarget (_dbgf ,_abeb ._aeec [_dbde .Index ],_abfce ,_dbde .Index );_bbae .TargetAttr =_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,len (_abeb ._aeec ));case _a .ChartType :_agba :=_cfd .NewChartSpace ();_ecaf :=uint32 (len (_abeb ._dabb ));_deegb .AddTarget (_dbgf ,_agba ,_abfce ,_ecaf );_abeb ._dabb =append (_abeb ._dabb ,_agba );_bbae .TargetAttr =_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,len (_abeb ._dabb ));_abeb ._deebb [_bbae .TargetAttr ]=_agba ;case _a .TableType :_cbbg :=_ca .NewTable ();_feda :=uint32 (len (_abeb ._dgac ));_deegb .AddTarget (_dbgf ,_cbbg ,_abfce ,_feda );_abeb ._dgac =append (_abeb ._dgac ,_cbbg );_bbae .TargetAttr =_a .RelativeFilename (_ebag ,_dbde .Typ ,_abfce ,len (_abeb ._dgac ));default:_egd .Log .Debug ("\u0075\u006e\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0065d\u0020\u0072\u0065\u006c\u0061\u0074\u0069o\u006e\u0073\u0068\u0069\u0070\u0020\u0025\u0073\u0020\u0025\u0073",_dbgf ,_abfce );};return nil ;};
+
+// IsError returns true if the cell is an error type cell.
+func (_ggbg Cell )IsError ()bool {return _ggbg ._gbf .TAttr ==_ca .ST_CellTypeE };
+
+// SetActiveSheet sets the active sheet which will be the tab displayed when the
+// spreadsheet is initially opened.
+func (_bef *Workbook )SetActiveSheet (s Sheet ){for _afeg ,_gcda :=range _bef ._dgga {if s ._bedf ==_gcda {_bef .SetActiveSheetIndex (uint32 (_afeg ));};};};func (_ecd *evalContext )NamedRange (ref string )_ea .Reference {for _ ,_adf :=range _ecd ._gffe ._egccf .DefinedNames (){if _adf .Name ()==ref {return _ea .MakeRangeReference (_adf .Content ());};};for _ ,_abfe :=range _ecd ._gffe ._egccf .Tables (){if _abfe .Name ()==ref {return _ea .MakeRangeReference (_eg .Sprintf ("\u0025\u0073\u0021%\u0073",_ecd ._gffe .Name (),_abfe .Reference ()));};};return _ea .ReferenceInvalid ;};func (_gefe SheetView )ensurePane (){if _gefe ._ggeg .Pane ==nil {_gefe ._ggeg .Pane =_ca .NewCT_Pane ();_gefe ._ggeg .Pane .ActivePaneAttr =_ca .ST_PaneBottomLeft ;};};
+
+// SetDateWithStyle sets a date with the default date style applied.
+func (_cde Cell )SetDateWithStyle (d _gc .Time ){_cde .SetDate (d );for _ ,_ffe :=range _cde ._abb .StyleSheet .CellStyles (){if _ffe .HasNumberFormat ()&&_ffe .NumberFormat ()==uint32 (StandardFormatDate ){_cde .SetStyle (_ffe );return ;};};_fag :=_cde ._abb .StyleSheet .AddCellStyle ();_fag .SetNumberFormatStandard (StandardFormatDate );_cde .SetStyle (_fag );};type WorkbookProtection struct{_gfde *_ca .CT_WorkbookProtection };
+
+// SetType sets the type of the rule.
+func (_bdb ConditionalFormattingRule )SetType (t _ca .ST_CfType ){_bdb ._dac .TypeAttr =t };
 
 // GetString returns the string in a cell if it's an inline or string table
 // string. Otherwise it returns an empty string.
-func (_ab Cell )GetString ()string {switch _ab ._be .TAttr {case _ege .ST_CellTypeInlineStr :if _ab ._be .Is !=nil &&_ab ._be .Is .T !=nil {return *_ab ._be .Is .T ;};if _ab ._be .V !=nil {return *_ab ._be .V ;};case _ege .ST_CellTypeS :if _ab ._be .V ==nil {return "";};_bdd ,_ebc :=_gd .Atoi (*_ab ._be .V );if _ebc !=nil {return "";};_ccc ,_ebc :=_ab ._cdb .SharedStrings .GetString (_bdd );if _ebc !=nil {return "";};return _ccc ;};if _ab ._be .V ==nil {return "";};return *_ab ._be .V ;};func (_bccb DataValidation )SetComparison (t DVCompareType ,op DVCompareOp )DataValidationCompare {_bccb .clear ();_bccb ._faa .TypeAttr =_ege .ST_DataValidationType (t );_bccb ._faa .OperatorAttr =_ege .ST_DataValidationOperator (op );return DataValidationCompare {_bccb ._faa };};
+func (_dfd Cell )GetString ()string {switch _dfd ._gbf .TAttr {case _ca .ST_CellTypeInlineStr :if _dfd ._gbf .Is !=nil &&_dfd ._gbf .Is .T !=nil {return *_dfd ._gbf .Is .T ;};if _dfd ._gbf .V !=nil {return *_dfd ._gbf .V ;};case _ca .ST_CellTypeS :if _dfd ._gbf .V ==nil {return "";};_faad ,_fdg :=_gb .Atoi (*_dfd ._gbf .V );if _fdg !=nil {return "";};_fda ,_fdg :=_dfd ._abb .SharedStrings .GetString (_faad );if _fdg !=nil {return "";};return _fda ;};if _dfd ._gbf .V ==nil {return "";};return *_dfd ._gbf .V ;};
 
-// HasFormula returns true if the cell has an asoociated formula.
-func (_badc Cell )HasFormula ()bool {return _badc ._be .F !=nil };
+// Sheet is a single sheet within a workbook.
+type Sheet struct{_egccf *Workbook ;_ffea *_ca .CT_Sheet ;_bedf *_ca .Worksheet ;};
 
-// Reference returns the region of cells that are merged.
-func (_feaa MergedCell )Reference ()string {return _feaa ._ggbdc .RefAttr };
+// X returns the inner wrapped XML type.
+func (_gggf ConditionalFormattingRule )X ()*_ca .CT_CfRule {return _gggf ._dac };
 
-// SetAuthor sets the author of the comment. If the comment body contains the
-// author's name (as is the case with Excel and Comments.AddCommentWithStyle, it
-// will not be changed).  This method only changes the metadata author of the
-// comment.
-func (_baf Comment )SetAuthor (author string ){_baf ._ecf .AuthorIdAttr =Comments {_baf ._fad ,_baf ._ggb }.getOrCreateAuthor (author );};
+// SetWidthCells is a no-op.
+func (_fbgf OneCellAnchor )SetWidthCells (int32 ){};func (_eafg ConditionalFormattingRule )clear (){_eafg ._dac .OperatorAttr =_ca .ST_ConditionalFormattingOperatorUnset ;_eafg ._dac .ColorScale =nil ;_eafg ._dac .IconSet =nil ;_eafg ._dac .Formula =nil ;};
+
+// LockStructure controls the locking of the workbook structure.
+func (_gfbc WorkbookProtection )LockStructure (b bool ){if !b {_gfbc ._gfde .LockStructureAttr =nil ;}else {_gfbc ._gfde .LockStructureAttr =_a .Bool (true );};};
+
+// SetColor sets the text color.
+func (_efaf RichTextRun )SetColor (c _ce .Color ){_efaf .ensureRpr ();_efaf ._bgc .RPr .Color =_ca .NewCT_Color ();_ccee :="\u0066\u0066"+*c .AsRGBString ();_efaf ._bgc .RPr .Color .RgbAttr =&_ccee ;};
+
+// X returns the inner wrapped XML type.
+func (_eagg CellMarker )X ()*_bd .CT_Marker {return _eagg ._aag };
+
+// SetNumber sets the cell type to number, and the value to the given number
+func (_becb Cell )SetNumber (v float64 ){_becb .clearValue ();if _ff .IsNaN (v )||_ff .IsInf (v ,0){_becb ._gbf .TAttr =_ca .ST_CellTypeE ;_becb ._gbf .V =_a .String ("\u0023\u004e\u0055M\u0021");return ;};_becb ._gbf .TAttr =_ca .ST_CellTypeN ;_becb ._gbf .V =_a .String (_gb .FormatFloat (v ,'f',-1,64));};
+
+// Row is a row within a spreadsheet.
+type Row struct{_dacc *Workbook ;_aada *Sheet ;_bcb *_ca .CT_Row ;};type Fill struct{_egge *_ca .CT_Fill ;_ffg *_ca .CT_Fills ;};
+
+// AddCell adds a cell to a spreadsheet.
+func (_gabg Row )AddCell ()Cell {_fdcf :=uint32 (len (_gabg ._bcb .C ));var _fefc *string ;if _fdcf > 0{_cccb :=_a .Stringf ("\u0025\u0073\u0025\u0064",_ag .IndexToColumn (_fdcf -1),_gabg .RowNumber ());if _gabg ._bcb .C [_fdcf -1].RAttr !=nil &&*_gabg ._bcb .C [_fdcf -1].RAttr ==*_cccb {_fefc =_a .Stringf ("\u0025\u0073\u0025\u0064",_ag .IndexToColumn (_fdcf ),_gabg .RowNumber ());};};_egcc :=_ca .NewCT_Cell ();_gabg ._bcb .C =append (_gabg ._bcb .C ,_egcc );if _fefc ==nil {_gddf :=uint32 (0);for _ ,_cecb :=range _gabg ._bcb .C {if _cecb .RAttr !=nil {_aga ,_ :=_ag .ParseCellReference (*_cecb .RAttr );if _aga .ColumnIdx >=_gddf {_gddf =_aga .ColumnIdx +1;};};};_fefc =_a .Stringf ("\u0025\u0073\u0025\u0064",_ag .IndexToColumn (_gddf ),_gabg .RowNumber ());};_egcc .RAttr =_fefc ;return Cell {_gabg ._dacc ,_gabg ._aada ,_gabg ._bcb ,_egcc };};
+
+// AddConditionalFormatting adds conditional formatting to the sheet.
+func (_gbfbc *Sheet )AddConditionalFormatting (cellRanges []string )ConditionalFormatting {_afgd :=_ca .NewCT_ConditionalFormatting ();_gbfbc ._bedf .ConditionalFormatting =append (_gbfbc ._bedf .ConditionalFormatting ,_afgd );_agbg :=make (_ca .ST_Sqref ,0,0);_afgd .SqrefAttr =&_agbg ;for _ ,_gfgd :=range cellRanges {*_afgd .SqrefAttr =append (*_afgd .SqrefAttr ,_gfgd );};return ConditionalFormatting {_afgd };};
+
+// SetColOffset sets the column offset of the top-left anchor.
+func (_bga OneCellAnchor )SetColOffset (m _d .Distance ){_bga .TopLeft ().SetColOffset (m )};
+
+// ClearNumberFormat removes any number formatting from the style.
+func (_ceb CellStyle )ClearNumberFormat (){_ceb ._gaa .NumFmtIdAttr =nil ;_ceb ._gaa .ApplyNumberFormatAttr =nil ;};
+
+// TwoCellAnchor is an anchor that is attached to a top-left cell with a fixed
+// width/height in cells.
+type TwoCellAnchor struct{_afab *_bd .CT_TwoCellAnchor };
+
+// Themes returns the array of workbook dml.Theme.
+func (_gfed *Workbook )Themes ()[]*_gff .Theme {return _gfed ._fcgb };
+
+// SetHidden marks the defined name as hidden.
+func (_dbggf DefinedName )SetLocalSheetID (id uint32 ){_dbggf ._gcaf .LocalSheetIdAttr =_a .Uint32 (id )};
+
+// Type returns the type of anchor
+func (_eb AbsoluteAnchor )Type ()AnchorType {return AnchorTypeAbsolute };
+
+// GetWidth returns a worksheet's column width.
+func (_cdb *evalContext )GetWidth (colIdx int )float64 {colIdx ++;for _ ,_cgg :=range _cdb ._gffe .X ().Cols [0].Col {if int (_cgg .MinAttr )<=colIdx &&colIdx <=int (_cgg .MaxAttr ){return float64 (int (*_cgg .WidthAttr ));};};return 0;};
+
+// ExtractText returns text from the workbook as a WorkbookText object.
+func (_cag *Workbook )ExtractText ()*WorkbookText {_acfd :=[]*SheetText {};for _ ,_cbcd :=range _cag .Sheets (){_acfd =append (_acfd ,&SheetText {Cells :_cbcd .ExtractText ().Cells });};return &WorkbookText {Sheets :_acfd };};
+
+// SetLocked sets cell locked or not.
+func (_beg *evalContext )SetLocked (cellRef string ,locked bool ){_beg ._gffe .Cell (cellRef ).setLocked (locked );};var _acca =_a .AbsoluteFilename (_a .DocTypeSpreadsheet ,_a .SharedStringsType ,0);
+
+// Border is a cell border configuraton.
+type Border struct{_ga *_ca .CT_Border ;_gfa *_ca .CT_Borders ;};
+
+// ColOffset returns the offset from the row cell.
+func (_aead CellMarker )ColOffset ()_d .Distance {if _aead ._aag .RowOff .ST_CoordinateUnqualified ==nil {return 0;};return _d .Distance (float64 (*_aead ._aag .ColOff .ST_CoordinateUnqualified )*_d .EMU );};
+
+// ClearFont clears any font configuration from the cell style.
+func (_beb CellStyle )ClearFont (){_beb ._gaa .FontIdAttr =nil ;_beb ._gaa .ApplyFontAttr =nil };
+
+// Protection allows control over the workbook protections.
+func (_bgdc *Workbook )Protection ()WorkbookProtection {if _bgdc ._dadd .WorkbookProtection ==nil {_bgdc ._dadd .WorkbookProtection =_ca .NewCT_WorkbookProtection ();};return WorkbookProtection {_bgdc ._dadd .WorkbookProtection };};
+
+// SetInlineString adds a string inline instead of in the shared strings table.
+func (_beda Cell )SetInlineString (s string ){_beda .clearValue ();_beda ._gbf .Is =_ca .NewCT_Rst ();_beda ._gbf .Is .T =_a .String (s );_beda ._gbf .TAttr =_ca .ST_CellTypeInlineStr ;};
+
+// IsBool returns true if the cell is a boolean type cell.
+func (_fcg Cell )IsBool ()bool {return _fcg ._gbf .TAttr ==_ca .ST_CellTypeB };
+
+// X returns the inner wrapped XML type.
+func (_ecb Comment )X ()*_ca .CT_Comment {return _ecb ._dee };
+
+// SetYSplit sets the row split point
+func (_gfad SheetView )SetYSplit (v float64 ){_gfad .ensurePane ();_gfad ._ggeg .Pane .YSplitAttr =_a .Float64 (v );};func (_cfa DataValidation )SetComparison (t DVCompareType ,op DVCompareOp )DataValidationCompare {_cfa .clear ();_cfa ._fabc .TypeAttr =_ca .ST_DataValidationType (t );_cfa ._fabc .OperatorAttr =_ca .ST_DataValidationOperator (op );return DataValidationCompare {_cfa ._fabc };};func (_dfg Cell )getFormat ()string {if _dfg ._gbf .SAttr ==nil {return "\u0047e\u006e\u0065\u0072\u0061\u006c";};_dba :=*_dfg ._gbf .SAttr ;_cac :=_dfg ._abb .StyleSheet .GetCellStyle (_dba );_cee :=_dfg ._abb .StyleSheet .GetNumberFormat (_cac .NumberFormat ());return _cee .GetFormat ();};func (_aac RichTextRun )ensureRpr (){if _aac ._bgc .RPr ==nil {_aac ._bgc .RPr =_ca .NewCT_RPrElt ();};};
+
+// SortOrder is a column sort order.
+//go:generate stringer -type=SortOrder
+type SortOrder byte ;
+
+// GetFormat sets the number format code.
+func (_eeea NumberFormat )GetFormat ()string {return _eeea ._dddb .FormatCodeAttr };
+
+// AddView adds a sheet view.
+func (_ffdcbf *Sheet )AddView ()SheetView {if _ffdcbf ._bedf .SheetViews ==nil {_ffdcbf ._bedf .SheetViews =_ca .NewCT_SheetViews ();};_acee :=_ca .NewCT_SheetView ();_ffdcbf ._bedf .SheetViews .SheetView =append (_ffdcbf ._bedf .SheetViews .SheetView ,_acee );return SheetView {_acee };};func (_aec Border )SetBottom (style _ca .ST_BorderStyle ,c _ce .Color ){if _aec ._ga .Bottom ==nil {_aec ._ga .Bottom =_ca .NewCT_BorderPr ();};_aec ._ga .Bottom .Color =_ca .NewCT_Color ();_aec ._ga .Bottom .Color .RgbAttr =c .AsRGBAString ();_aec ._ga .Bottom .StyleAttr =style ;};func _faga ()*_bd .CT_AbsoluteAnchor {_agb :=_bd .NewCT_AbsoluteAnchor ();return _agb };
 
 // Priority returns the rule priority
-func (_fag ConditionalFormattingRule )Priority ()int32 {return _fag ._cdfd .PriorityAttr };
+func (_cba ConditionalFormattingRule )Priority ()int32 {return _cba ._dac .PriorityAttr };
 
-// AddString adds a string to the shared string cache.
-func (_aeef SharedStrings )AddString (v string )int {if _gbca ,_caeb :=_aeef ._fgdd [v ];_caeb {return _gbca ;};_ccaa :=_ege .NewCT_Rst ();_ccaa .T =_e .String (v );_aeef ._baee .Si =append (_aeef ._baee .Si ,_ccaa );_bge :=len (_aeef ._baee .Si )-1;_aeef ._fgdd [v ]=_bge ;_aeef ._baee .CountAttr =_e .Uint32 (uint32 (len (_aeef ._baee .Si )));_aeef ._baee .UniqueCountAttr =_aeef ._baee .CountAttr ;return _bge ;};func (_dee *Sheet )removeColumnFromNamedRanges (_ebfbf uint32 )error {for _ ,_fdcf :=range _dee ._geaf .DefinedNames (){_bdba :=_fdcf .Name ();_gbbb :=_fdcf .Content ();_fagcc :=_fca .Split (_gbbb ,"\u0021");if len (_fagcc )!=2{return _gb .New ("\u0049\u006e\u0063\u006frr\u0065\u0063\u0074\u0020\u006e\u0061\u006d\u0065\u0064\u0020\u0072\u0061\u006e\u0067e\u003a"+_gbbb );};_afca :=_fagcc [0];if _dee .Name ()==_afca {_fedgb :=_dee ._geaf .RemoveDefinedName (_fdcf );if _fedgb !=nil {return _fedgb ;};_gaee :=_acfe (_fagcc [1],_ebfbf ,true );if _gaee !=""{_ddbb :=_afca +"\u0021"+_gaee ;_dee ._geaf .AddDefinedName (_bdba ,_ddbb );};};};_cfe :=0;if _dee ._eaa .TableParts !=nil &&_dee ._eaa .TableParts .TablePart !=nil {_cfe =len (_dee ._eaa .TableParts .TablePart );};if _cfe !=0{_cccf :=0;for _ ,_dbad :=range _dee ._geaf .Sheets (){if _dbad .Name ()==_dee .Name (){break ;}else {if _dbad ._eaa .TableParts !=nil &&_dbad ._eaa .TableParts .TablePart !=nil {_cccf +=len (_dbad ._eaa .TableParts .TablePart );};};};_dgda :=_dee ._geaf ._fcbbc [_cccf :_cccf +_cfe ];for _dcaf ,_faeg :=range _dgda {_cffaf :=_faeg ;_cffaf .RefAttr =_acfe (_cffaf .RefAttr ,_ebfbf ,false );_dee ._geaf ._fcbbc [_cccf +_dcaf ]=_cffaf ;};};return nil ;};
-
-// X returns the inner wrapped XML type.
-func (_eeeef Table )X ()*_ege .Table {return _eeeef ._fgea };
+// TopLeft returns the top-left corner of the anchored object.
+func (_efe OneCellAnchor )TopLeft ()CellMarker {return CellMarker {_efe ._cefe .From }};type PatternFill struct{_cedb *_ca .CT_PatternFill ;_cbff *_ca .CT_Fill ;};
 
 // X returns the inner wrapped XML type.
-func (_edec SheetView )X ()*_ege .CT_SheetView {return _edec ._cdfa };type PatternFill struct{_gbec *_ege .CT_PatternFill ;_beda *_ege .CT_Fill ;};func (_bae *evalContext )Sheet (name string )_ce .Context {for _ ,_dcg :=range _bae ._aac ._geaf .Sheets (){if _dcg .Name ()==name {return _dcg .FormulaContext ();};};return _ce .InvalidReferenceContext ;};
+func (_eaegd Row )X ()*_ca .CT_Row {return _eaegd ._bcb };
+
+// Extents returns the sheet extents in the form "A1:B15". This requires
+// scanning the entire sheet.
+func (_fffeg Sheet )Extents ()string {_eabf ,_fecd ,_gfgf ,_fcaf :=_fffeg .ExtentsIndex ();return _eg .Sprintf ("\u0025s\u0025\u0064\u003a\u0025\u0073\u0025d",_eabf ,_fecd ,_gfgf ,_fcaf );};
 
 // X returns the inner wrapped XML type.
-func (_agbg Row )X ()*_ege .CT_Row {return _agbg ._bddg };var _beffg =_e .RelativeFilename (_e .DocTypeSpreadsheet ,_e .OfficeDocumentType ,_e .SharedStringsType ,0);
+func (_efgb MergedCell )X ()*_ca .CT_MergeCell {return _efgb ._bfed };
 
-// IsDBCS returns if a workbook's default language is among DBCS.
-func (_dfd *evalContext )IsDBCS ()bool {_cfgd :=_dfd ._aac ._geaf .CoreProperties .X ().Language ;if _cfgd ==nil {return false ;};_ebgf :=string (_cfgd .Data );for _ ,_fdb :=range _bcb {if _ebgf ==_fdb {return true ;};};return false ;};
+// DataBarScale is a colored scale that fills the cell with a background
+// gradeint depending on the value.
+type DataBarScale struct{_cdd *_ca .CT_DataBar };
 
-// Comments returns the comments for a sheet.
-func (_cgcb *Sheet )Comments ()Comments {for _ffgc ,_bfcd :=range _cgcb ._geaf ._gbed {if _bfcd ==_cgcb ._eaa {if _cgcb ._geaf ._gafdb [_ffgc ]==nil {_cgcb ._geaf ._gafdb [_ffgc ]=_ege .NewComments ();_cgcb ._geaf ._abeb [_ffgc ].AddAutoRelationship (_e .DocTypeSpreadsheet ,_e .WorksheetType ,_ffgc +1,_e .CommentsType );_cgcb ._geaf .ContentTypes .AddOverride (_e .AbsoluteFilename (_e .DocTypeSpreadsheet ,_e .CommentsType ,_ffgc +1),_e .CommentsContentType );};if len (_cgcb ._geaf ._edbcf )==0{_cgcb ._geaf ._edbcf =append (_cgcb ._geaf ._edbcf ,_bcc .NewCommentDrawing ());_gaea :=_cgcb ._geaf ._abeb [_ffgc ].AddAutoRelationship (_e .DocTypeSpreadsheet ,_e .WorksheetType ,1,_e .VMLDrawingType );if _cgcb ._eaa .LegacyDrawing ==nil {_cgcb ._eaa .LegacyDrawing =_ege .NewCT_LegacyDrawing ();};_cgcb ._eaa .LegacyDrawing .IdAttr =_gaea .ID ();};return Comments {_cgcb ._geaf ,_cgcb ._geaf ._gafdb [_ffgc ]};};};_af .Log .Debug ("\u0061\u0074\u0074\u0065\u006dp\u0074\u0065\u0064\u0020\u0074\u006f\u0020\u0061\u0063\u0063\u0065\u0073\u0073 \u0063\u006f\u006d\u006d\u0065\u006e\u0074\u0073\u0020\u0066\u006f\u0072\u0020\u006e\u006f\u006e\u002d\u0065\u0078\u0069\u0073\u0074\u0065\u006e\u0074\u0020\u0073\u0068\u0065\u0065t");return Comments {};};
+// WorkbookText is an array of extracted text items which has some methods for representing extracted text from a workbook.
+type WorkbookText struct{Sheets []*SheetText ;};
+
+// Rows returns all of the rows in a sheet.
+func (_beed *Sheet )Rows ()[]Row {_dgbd :=[]Row {};for _ ,_fgbg :=range _beed ._bedf .SheetData .Row {_dgbd =append (_dgbd ,Row {_beed ._egccf ,_beed ,_fgbg });};return _dgbd ;};
+
+// SetText sets the text to be displayed.
+func (_dbaac RichTextRun )SetText (s string ){_dbaac ._bgc .T =s };
+
+// SetHeight sets the height of the anchored object.
+func (_ffd AbsoluteAnchor )SetHeight (h _d .Distance ){_ffd ._cg .Ext .CyAttr =int64 (h /_d .EMU )};func (_fafc Font )SetBold (b bool ){if b {_fafc ._efde .B =[]*_ca .CT_BooleanProperty {{}};}else {_fafc ._efde .B =nil ;};};
+
+// AddFormatValue adds a format value to be used to determine the cell background.
+func (_dgdc ColorScale )AddFormatValue (t _ca .ST_CfvoType ,val string ){_dfe :=_ca .NewCT_Cfvo ();_dfe .TypeAttr =t ;_dfe .ValAttr =_a .String (val );_dgdc ._gfe .Cfvo =append (_dgdc ._gfe .Cfvo ,_dfe );};
+
+// SetHeight sets the height of the anchored object.
+func (_gaga OneCellAnchor )SetHeight (h _d .Distance ){_gaga ._cefe .Ext .CyAttr =int64 (h /_d .EMU )};
+
+// X returns the inner wrapped XML type.
+func (_cgcd SharedStrings )X ()*_ca .Sst {return _cgcd ._fgc };func (_cegfa Font )SetName (name string ){_cegfa ._efde .Name =[]*_ca .CT_FontName {{ValAttr :name }}};
+
+// X returns the inner wrapped XML type.
+func (_gag ColorScale )X ()*_ca .CT_ColorScale {return _gag ._gfe };
+
+// Index returns the index of the border for use with a cell style.
+func (_ade Border )Index ()uint32 {for _gdf ,_ffac :=range _ade ._gfa .Border {if _ffac ==_ade ._ga {return uint32 (_gdf );};};return 0;};
+
+// AddRule adds and returns a new rule that can be configured.
+func (_abbg ConditionalFormatting )AddRule ()ConditionalFormattingRule {_efab :=_ca .NewCT_CfRule ();_abbg ._dea .CfRule =append (_abbg ._dea .CfRule ,_efab );_ebbe :=ConditionalFormattingRule {_efab };_ebbe .InitializeDefaults ();_ebbe .SetPriority (int32 (len (_abbg ._dea .CfRule )+1));return _ebbe ;};
+
+// Cell returns the actual cell behind the merged region
+func (_bedc MergedCell )Cell ()Cell {_afbb :=_bedc .Reference ();if _ccc :=_cf .Index (_bedc .Reference (),"\u003a");_ccc !=-1{_afbb =_afbb [0:_ccc ];return _bedc ._gfbg .Cell (_afbb );};return Cell {};};
+
+// Type returns the type of anchor
+func (_aagd OneCellAnchor )Type ()AnchorType {return AnchorTypeOneCell };
+
+// Cell creates or returns a cell given a cell reference of the form 'A10'
+func (_feabd *Sheet )Cell (cellRef string )Cell {_egac ,_aagdf :=_ag .ParseCellReference (cellRef );if _aagdf !=nil {_egd .Log .Debug ("\u0065\u0072\u0072\u006f\u0072\u0020\u0070\u0061\u0072\u0073\u0069\u006e\u0067\u0020\u0063e\u006cl\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u003a\u0020\u0025\u0073",_aagdf );return _feabd .AddRow ().AddCell ();};return _feabd .Row (_egac .RowIdx ).Cell (_egac .Column );};type evalContext struct{_gffe *Sheet ;_gba ,_gbg uint32 ;_gdg map[string ]struct{};};
+
+// ValidateWithPath validates the sheet passing path informaton for a better
+// error message
+func (_bcdf Sheet )ValidateWithPath (path string )error {return _bcdf ._bedf .ValidateWithPath (path )};
+
+// Type returns the type of the rule
+func (_dab ConditionalFormattingRule )Type ()_ca .ST_CfType {return _dab ._dac .TypeAttr };func (_gfeaa *Sheet )setList (_ddbd string ,_edce _ea .Result )error {_ffba ,_deaf :=_ag .ParseCellReference (_ddbd );if _deaf !=nil {return _deaf ;};_fgfd :=_gfeaa .Row (_ffba .RowIdx );for _ddcc ,_efgd :=range _edce .ValueList {_eeab :=_fgfd .Cell (_ag .IndexToColumn (_ffba .ColumnIdx +uint32 (_ddcc )));if _efgd .Type !=_ea .ResultTypeEmpty {if _efgd .IsBoolean {_eeab .SetBool (_efgd .ValueNumber !=0);}else {_eeab .SetCachedFormulaResult (_efgd .String ());};};};return nil ;};
+
+// Name returns the sheet name
+func (_bace Sheet )Name ()string {return _bace ._ffea .NameAttr };
+
+// SetDataBar configures the rule as a data bar, removing existing
+// configuration.
+func (_cfg ConditionalFormattingRule )SetDataBar ()DataBarScale {_cfg .clear ();_cfg .SetType (_ca .ST_CfTypeDataBar );_cfg ._dac .DataBar =_ca .NewCT_DataBar ();_ebf :=DataBarScale {_cfg ._dac .DataBar };_ebf .SetShowValue (true );_ebf .SetMinLength (10);_ebf .SetMaxLength (90);return _ebf ;};
+
+// SetIcons configures the rule as an icon scale, removing existing
+// configuration.
+func (_aca ConditionalFormattingRule )SetIcons ()IconScale {_aca .clear ();_aca .SetType (_ca .ST_CfTypeIconSet );_aca ._dac .IconSet =_ca .NewCT_IconSet ();_gcbf :=IconScale {_aca ._dac .IconSet };_gcbf .SetIcons (_ca .ST_IconSetType3TrafficLights1 );return _gcbf ;};
+
+// Reference returns the region of cells that are merged.
+func (_bega MergedCell )Reference ()string {return _bega ._bfed .RefAttr };
+
+// SetShowValue controls if the cell value is displayed.
+func (_bce DataBarScale )SetShowValue (b bool ){_bce ._cdd .ShowValueAttr =_a .Bool (b )};
+
+// SetDrawing sets the worksheet drawing.  A worksheet can have a reference to a
+// single drawing, but the drawing can have many charts.
+func (_dbbg *Sheet )SetDrawing (d Drawing ){var _dcfg _gg .Relationships ;for _adga ,_afcb :=range _dbbg ._egccf ._dgga {if _afcb ==_dbbg ._bedf {_dcfg =_dbbg ._egccf ._fcbc [_adga ];break ;};};var _dff string ;for _eede ,_bggd :=range d ._gcad ._decb {if _bggd ==d ._dbf {_acfg :=_dcfg .AddAutoRelationship (_a .DocTypeSpreadsheet ,_a .WorksheetType ,_eede +1,_a .DrawingType );_dff =_acfg .ID ();break ;};};_dbbg ._bedf .Drawing =_ca .NewCT_Drawing ();_dbbg ._bedf .Drawing .IdAttr =_dff ;};
+
+// ConditionalFormatting controls the formatting styles and rules for a range of
+// cells with the same conditional formatting.
+type ConditionalFormatting struct{_dea *_ca .CT_ConditionalFormatting };
+
+// SetRowOffset sets the row offset of the top-left anchor.
+func (_dgbf OneCellAnchor )SetRowOffset (m _d .Distance ){_dgbf .TopLeft ().SetRowOffset (m )};
+
+// AddHyperlink adds a hyperlink to a sheet. Adding the hyperlink to the sheet
+// and setting it on a cell is more efficient than setting hyperlinks directly
+// on a cell.
+func (_geg *Sheet )AddHyperlink (url string )_gg .Hyperlink {for _dadfb ,_babe :=range _geg ._egccf ._dgga {if _babe ==_geg ._bedf {return _geg ._egccf ._fcbc [_dadfb ].AddHyperlink (url );};};return _gg .Hyperlink {};};
+
+// CellStyles returns the list of defined cell styles
+func (_adadg StyleSheet )CellStyles ()[]CellStyle {_aedd :=[]CellStyle {};for _ ,_dbgd :=range _adadg ._ddaga .CellXfs .Xf {_aedd =append (_aedd ,CellStyle {_adadg ._bcggc ,_dbgd ,_adadg ._ddaga .CellXfs });};return _aedd ;};
+
+// CopySheetByName copies the existing sheet with the name `name` and puts its copy with the name `copiedSheetName`.
+func (_eca *Workbook )CopySheetByName (name ,copiedSheetName string )(Sheet ,error ){_fac :=-1;for _daag ,_ggegc :=range _eca .Sheets (){if name ==_ggegc .Name (){_fac =_daag ;break ;};};if _fac ==-1{return Sheet {},ErrorNotFound ;};return _eca .CopySheet (_fac ,copiedSheetName );};var _dcaa *_afa .Regexp =_afa .MustCompile ("\u005e(\u005ba\u002d\u007a\u005d\u002b\u0029(\u005b\u0030-\u0039\u005d\u002b\u0029\u0024");
+
+// X returns the inner wrapped XML type.
+func (_bdee RichText )X ()*_ca .CT_Rst {return _bdee ._gccf };
+
+// MaxColumnIdx returns the max used column of the sheet.
+func (_deee Sheet )MaxColumnIdx ()uint32 {_dgcd :=uint32 (0);for _ ,_decd :=range _deee .Rows (){_gbcb :=_decd ._bcb .C ;if len (_gbcb )> 0{_eda :=_gbcb [len (_gbcb )-1];_ggbb ,_ :=_ag .ParseCellReference (*_eda .RAttr );if _dgcd < _ggbb .ColumnIdx {_dgcd =_ggbb .ColumnIdx ;};};};return _dgcd ;};
+
+// SetColor sets teh color of the databar.
+func (_cegf DataBarScale )SetColor (c _ce .Color ){_cegf ._cdd .Color =_ca .NewCT_Color ();_cegf ._cdd .Color .RgbAttr =c .AsRGBAString ();};type MergedCell struct{_acbc *Workbook ;_gfbg *Sheet ;_bfed *_ca .CT_MergeCell ;};func _edg (_gee *Sheet )*evalContext {return &evalContext {_gffe :_gee ,_gdg :make (map[string ]struct{})};};
 
 // Reference returns the cell reference (e.g. "A4"). This is not required,
 // however both unioffice and Excel will always set it.
-func (_gdc Cell )Reference ()string {if _gdc ._be .RAttr !=nil {return *_gdc ._be .RAttr ;};return "";};
+func (_eab Cell )Reference ()string {if _eab ._gbf .RAttr !=nil {return *_eab ._gbf .RAttr ;};return "";};var ErrorNotFound =_cc .New ("\u006eo\u0074\u0020\u0066\u006f\u0075\u006ed");
 
-// IsNumber returns true if the cell is a number type cell.
-func (_dad Cell )IsNumber ()bool {switch _dad ._be .TAttr {case _ege .ST_CellTypeN :return true ;case _ege .ST_CellTypeS ,_ege .ST_CellTypeB :return false ;};return _dad ._be .V !=nil &&_de .IsNumber (*_dad ._be .V );};
+// SetFrozen removes any existing sheet views and creates a new single view with
+// either the first row, first column or both frozen.
+func (_gdadf *Sheet )SetFrozen (firstRow ,firstCol bool ){_gdadf ._bedf .SheetViews =nil ;_bfgf :=_gdadf .AddView ();_bfgf .SetState (_ca .ST_PaneStateFrozen );switch {case firstRow &&firstCol :_bfgf .SetYSplit (1);_bfgf .SetXSplit (1);_bfgf .SetTopLeft ("\u0042\u0032");case firstRow :_bfgf .SetYSplit (1);_bfgf .SetTopLeft ("\u0041\u0032");case firstCol :_bfgf .SetXSplit (1);_bfgf .SetTopLeft ("\u0042\u0031");};};
 
-// DVCompareType is a comparison type for a data validation rule. This restricts
-// the input format of the cell.
-type DVCompareType byte ;
+// SetHidden marks the defined name as hidden.
+func (_fbgg DefinedName )SetHidden (b bool ){_fbgg ._gcaf .HiddenAttr =_a .Bool (b )};
 
-// AddFormatValue adds a format value (databars require two).
-func (_fgcg DataBarScale )AddFormatValue (t _ege .ST_CfvoType ,val string ){_eec :=_ege .NewCT_Cfvo ();_eec .TypeAttr =t ;_eec .ValAttr =_e .String (val );_fgcg ._bca .Cfvo =append (_fgcg ._bca .Cfvo ,_eec );};
+// DefinedNames returns a slice of all defined names in the workbook.
+func (_cafb *Workbook )DefinedNames ()[]DefinedName {if _cafb ._dadd .DefinedNames ==nil {return nil ;};_ffcb :=[]DefinedName {};for _ ,_gfge :=range _cafb ._dadd .DefinedNames .DefinedName {_ffcb =append (_ffcb ,DefinedName {_gfge });};return _ffcb ;};
 
-// GetOrCreateStandardNumberFormat gets or creates a cell style with a given
-// standard format. This should only be used when you want to perform
-// number/date/time formatting only.  Manipulating the style returned will cause
-// all cells using style returned from this for a given format to be formatted.
-func (_dcce StyleSheet )GetOrCreateStandardNumberFormat (f StandardFormat )CellStyle {for _ ,_geaff :=range _dcce .CellStyles (){if _geaff .HasNumberFormat ()&&_geaff .NumberFormat ()==uint32 (f ){return _geaff ;};};_fddf :=_dcce .AddCellStyle ();_fddf .SetNumberFormatStandard (f );return _fddf ;};
+// Save writes the workbook out to a writer in the zipped xlsx format.
+func (_gcd *Workbook )Save (w _gf .Writer )error {const _fbga ="\u0073\u0070\u0072\u0065ad\u0073\u0068\u0065\u0065\u0074\u003a\u0077\u0062\u002e\u0053\u0061\u0076\u0065";if !_ae .GetLicenseKey ().IsLicensed ()&&!_fegeda {_eg .Println ("\u0055\u006e\u006ci\u0063\u0065\u006e\u0073e\u0064\u0020\u0076\u0065\u0072\u0073\u0069o\u006e\u0020\u006f\u0066\u0020\u0055\u006e\u0069\u004f\u0066\u0066\u0069\u0063\u0065");_eg .Println ("\u002d\u0020\u0047e\u0074\u0020\u0061\u0020\u0074\u0072\u0069\u0061\u006c\u0020\u006c\u0069\u0063\u0065\u006e\u0073\u0065\u0020\u006f\u006e\u0020\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002fu\u006e\u0069\u0064\u006f\u0063\u002e\u0069\u006f");return _cc .New ("\u0075\u006e\u0069\u006f\u0066\u0066\u0069\u0063\u0065\u0020\u006ci\u0063\u0065\u006e\u0073\u0065\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0064");};if len (_gcd ._abca )==0{_bcgab ,_gagec :=_ae .GenRefId ("\u0073\u0077");if _gagec !=nil {_egd .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_gagec );return _gagec ;};_gcd ._abca =_bcgab ;};if _gbcg :=_ae .Track (_gcd ._abca ,_fbga );_gbcg !=nil {_egd .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_gbcg );return _gbcg ;};_efed :=_be .NewWriter (w );defer _efed .Close ();_caab :=_a .DocTypeSpreadsheet ;if _ffcd :=_de .MarshalXML (_efed ,_a .BaseRelsFilename ,_gcd .Rels .X ());_ffcd !=nil {return _ffcd ;};if _fafe :=_de .MarshalXMLByType (_efed ,_caab ,_a .ExtendedPropertiesType ,_gcd .AppProperties .X ());_fafe !=nil {return _fafe ;};if _eeeda :=_de .MarshalXMLByType (_efed ,_caab ,_a .CorePropertiesType ,_gcd .CoreProperties .X ());_eeeda !=nil {return _eeeda ;};_afbe :=_a .AbsoluteFilename (_caab ,_a .OfficeDocumentType ,0);if _dbgde :=_de .MarshalXML (_efed ,_afbe ,_gcd ._dadd );_dbgde !=nil {return _dbgde ;};if _gccg :=_de .MarshalXML (_efed ,_de .RelationsPathFor (_afbe ),_gcd ._caaf .X ());_gccg !=nil {return _gccg ;};if _baec :=_de .MarshalXMLByType (_efed ,_caab ,_a .StylesType ,_gcd .StyleSheet .X ());_baec !=nil {return _baec ;};for _gacb ,_agca :=range _gcd ._fcgb {if _cdac :=_de .MarshalXMLByTypeIndex (_efed ,_caab ,_a .ThemeType ,_gacb +1,_agca );_cdac !=nil {return _cdac ;};};for _ccedc ,_faabe :=range _gcd ._dgga {_faabe .Dimension .RefAttr =Sheet {_gcd ,nil ,_faabe }.Extents ();_geef :=_a .AbsoluteFilename (_caab ,_a .WorksheetType ,_ccedc +1);_de .MarshalXML (_efed ,_geef ,_faabe );_de .MarshalXML (_efed ,_de .RelationsPathFor (_geef ),_gcd ._fcbc [_ccedc ].X ());};if _cdee :=_de .MarshalXMLByType (_efed ,_caab ,_a .SharedStringsType ,_gcd .SharedStrings .X ());_cdee !=nil {return _cdee ;};if _gcd .CustomProperties .X ()!=nil {if _aafg :=_de .MarshalXMLByType (_efed ,_caab ,_a .CustomPropertiesType ,_gcd .CustomProperties .X ());_aafg !=nil {return _aafg ;};};if _gcd .Thumbnail !=nil {_acbe :=_a .AbsoluteFilename (_caab ,_a .ThumbnailType ,0);_dbeea ,_cfcb :=_efed .Create (_acbe );if _cfcb !=nil {return _cfcb ;};if _gfef :=_c .Encode (_dbeea ,_gcd .Thumbnail ,nil );_gfef !=nil {return _gfef ;};};for _cbda ,_cdda :=range _gcd ._dabb {_fdee :=_a .AbsoluteFilename (_caab ,_a .ChartType ,_cbda +1);_de .MarshalXML (_efed ,_fdee ,_cdda );};for _egaa ,_gcgfc :=range _gcd ._dgac {_gcfgg :=_a .AbsoluteFilename (_caab ,_a .TableType ,_egaa +1);_de .MarshalXML (_efed ,_gcfgg ,_gcgfc );};for _bdeef ,_gfbfg :=range _gcd ._decb {_cgab :=_a .AbsoluteFilename (_caab ,_a .DrawingType ,_bdeef +1);_de .MarshalXML (_efed ,_cgab ,_gfbfg );if !_gcd ._ebfa [_bdeef ].IsEmpty (){_de .MarshalXML (_efed ,_de .RelationsPathFor (_cgab ),_gcd ._ebfa [_bdeef ].X ());};};for _dcaac ,_adfad :=range _gcd ._dedb {_de .MarshalXML (_efed ,_a .AbsoluteFilename (_caab ,_a .VMLDrawingType ,_dcaac +1),_adfad );};for _fdcd ,_fedc :=range _gcd .Images {if _ebfb :=_gg .AddImageToZip (_efed ,_fedc ,_fdcd +1,_a .DocTypeSpreadsheet );_ebfb !=nil {return _ebfb ;};};if _fafdg :=_de .MarshalXML (_efed ,_a .ContentTypesFilename ,_gcd .ContentTypes .X ());_fafdg !=nil {return _fafdg ;};for _cabgd ,_bafc :=range _gcd ._aeec {if _bafc ==nil {continue ;};_de .MarshalXML (_efed ,_a .AbsoluteFilename (_caab ,_a .CommentsType ,_cabgd +1),_bafc );};if _gbaba :=_gcd .WriteExtraFiles (_efed );_gbaba !=nil {return _gbaba ;};return _efed .Close ();};
 
-// SetStyle sets the style to be used for conditional rules
-func (_abge ConditionalFormattingRule )SetStyle (d DifferentialStyle ){_abge ._cdfd .DxfIdAttr =_e .Uint32 (d .Index ());};func (_bbfd DifferentialStyle )Fill ()Fill {if _bbfd ._ccbd .Fill ==nil {_bbfd ._ccbd .Fill =_ege .NewCT_Fill ();};return Fill {_bbfd ._ccbd .Fill ,nil };};
+// SetNumberFormatStandard sets the format based off of the ECMA 376 standard formats.  These
+// formats are standardized and don't need to be defined in the styles.
+func (_aecc CellStyle )SetNumberFormatStandard (s StandardFormat ){_aecc ._gaa .NumFmtIdAttr =_a .Uint32 (uint32 (s ));_aecc ._gaa .ApplyNumberFormatAttr =_a .Bool (true );};func (_dbggc DifferentialStyle )Fill ()Fill {if _dbggc ._ecdg .Fill ==nil {_dbggc ._ecdg .Fill =_ca .NewCT_Fill ();};return Fill {_dbggc ._ecdg .Fill ,nil };};func (_dced Sheet )IsValid ()bool {return _dced ._bedf !=nil };
 
-// SetNumber sets the cell type to number, and the value to the given number
-func (_ggg Cell )SetNumber (v float64 ){_ggg .clearValue ();if _cd .IsNaN (v )||_cd .IsInf (v ,0){_ggg ._be .TAttr =_ege .ST_CellTypeE ;_ggg ._be .V =_e .String ("\u0023\u004e\u0055M\u0021");return ;};_ggg ._be .TAttr =_ege .ST_CellTypeN ;_ggg ._be .V =_e .String (_gd .FormatFloat (v ,'f',-1,64));};
+// AddCellStyle adds a new empty cell style to the stylesheet.
+func (_aggcg StyleSheet )AddCellStyle ()CellStyle {_effa :=_ca .NewCT_Xf ();_aggcg ._ddaga .CellXfs .Xf =append (_aggcg ._ddaga .CellXfs .Xf ,_effa );_aggcg ._ddaga .CellXfs .CountAttr =_a .Uint32 (uint32 (len (_aggcg ._ddaga .CellXfs .Xf )));return CellStyle {_aggcg ._bcggc ,_effa ,_aggcg ._ddaga .CellXfs };};
+
+// SheetView is a view of a sheet. There is typically one per sheet, though more
+// are supported.
+type SheetView struct{_ggeg *_ca .CT_SheetView };
+
+// SetRotation configures the cell to be rotated.
+func (_gffd CellStyle )SetRotation (deg uint8 ){if _gffd ._gaa .Alignment ==nil {_gffd ._gaa .Alignment =_ca .NewCT_CellAlignment ();};_gffd ._gaa .ApplyAlignmentAttr =_a .Bool (true );_gffd ._gaa .Alignment .TextRotationAttr =_a .Uint8 (deg );};
+
+// SetPassword sets the password hash to a hash of the input password.
+func (_beaac WorkbookProtection )SetPassword (pw string ){_beaac .SetPasswordHash (PasswordHash (pw ))};
+
+// Type returns the type of anchor
+func (_cebg TwoCellAnchor )Type ()AnchorType {return AnchorTypeTwoCell };func (_cda CellStyle )SetNumberFormat (s string ){_bfb :=_cda ._ead .StyleSheet .AddNumberFormat ();_bfb .SetFormat (s );_cda ._gaa .ApplyNumberFormatAttr =_a .Bool (true );_cda ._gaa .NumFmtIdAttr =_a .Uint32 (_bfb .ID ());};
+
+// SetSize sets the text size for a rich text run.
+func (_fbae RichTextRun )SetSize (m _d .Distance ){_fbae .ensureRpr ();_fbae ._bgc .RPr .Sz =_ca .NewCT_FontSize ();_fbae ._bgc .RPr .Sz .ValAttr =float64 (m /_d .Point );};
+
+// AddBorder creates a new empty border that can be applied to a cell style.
+func (_acdd StyleSheet )AddBorder ()Border {_gbcc :=_ca .NewCT_Border ();_acdd ._ddaga .Borders .Border =append (_acdd ._ddaga .Borders .Border ,_gbcc );_acdd ._ddaga .Borders .CountAttr =_a .Uint32 (uint32 (len (_acdd ._ddaga .Borders .Border )));return Border {_gbcc ,_acdd ._ddaga .Borders };};
+
+// GetFormat returns a cell data format.
+func (_edee *evalContext )GetFormat (cellRef string )string {return _edee ._gffe .Cell (cellRef ).getFormat ();};
+
+// MoveTo repositions the anchor without changing the objects size.
+func (_fgec TwoCellAnchor )MoveTo (col ,row int32 ){_daba :=_fgec .TopLeft ();_abgb :=_fgec .BottomRight ();_agc :=_abgb .Col ()-_daba .Col ();_dgeeg :=_abgb .Row ()-_daba .Row ();_daba .SetCol (col );_daba .SetRow (row );_abgb .SetCol (col +_agc );_abgb .SetRow (row +_dgeeg );};
+
+// SetBorder applies a border to a cell style. The border is referenced by its
+// index so modifying the border afterward will affect all styles that reference
+// it.
+func (_cga CellStyle )SetBorder (b Border ){_cga ._gaa .BorderIdAttr =_a .Uint32 (b .Index ());_cga ._gaa .ApplyBorderAttr =_a .Bool (true );};
+
+// SetFont sets the font name for a rich text run.
+func (_bcfg RichTextRun )SetFont (s string ){_bcfg .ensureRpr ();_bcfg ._bgc .RPr .RFont =_ca .NewCT_FontName ();_bcfg ._bgc .RPr .RFont .ValAttr =s ;};
 
 // X returns the inner wrapped XML type.
-func (_gdag Comment )X ()*_ege .CT_Comment {return _gdag ._ecf };
+func (_dcede Table )X ()*_ca .Table {return _dcede ._eebe };
 
-// InitializeDefaults initializes a border to its defaulte empty values.
-func (_ge Border )InitializeDefaults (){_ge ._ac .Left =_ege .NewCT_BorderPr ();_ge ._ac .Bottom =_ege .NewCT_BorderPr ();_ge ._ac .Right =_ege .NewCT_BorderPr ();_ge ._ac .Top =_ege .NewCT_BorderPr ();_ge ._ac .Diagonal =_ege .NewCT_BorderPr ();};
+// GetFilename returns the name of file from which workbook was opened with full path to it
+func (_efeg *Workbook )GetFilename ()string {return _efeg ._ccgd };
 
-// SetHyperlink sets a hyperlink on a cell.
-func (_cbb Cell )SetHyperlink (hl _egb .Hyperlink ){_fde :=_cbb ._bd ._eaa ;if _fde .Hyperlinks ==nil {_fde .Hyperlinks =_ege .NewCT_Hyperlinks ();};_abc :=_egb .Relationship (hl );_deac :=_ege .NewCT_Hyperlink ();_deac .RefAttr =_cbb .Reference ();_deac .IdAttr =_e .String (_abc .ID ());_fde .Hyperlinks .Hyperlink =append (_fde .Hyperlinks .Hyperlink ,_deac );};
+// SetRange sets the cell or range of cells that the validation should apply to.
+// It can be a single cell (e.g. "A1") or a range of cells (e.g. "A1:B5")
+func (_gdb DataValidation )SetRange (cellRange string ){_gdb ._fabc .SqrefAttr =_ca .ST_Sqref {cellRange }};
 
-// SetColOffset sets a column offset in absolute distance.
-func (_cad CellMarker )SetColOffset (m _ga .Distance ){_cad ._cgf .ColOff .ST_CoordinateUnqualified =_e .Int64 (int64 (m /_ga .EMU ));};
+// ClearAutoFilter removes the autofilters from the sheet.
+func (_fdgc *Sheet )ClearAutoFilter (){_fdgc ._bedf .AutoFilter =nil ;_edab :="\u0027"+_fdgc .Name ()+"\u0027\u0021";for _ ,_aedb :=range _fdgc ._egccf .DefinedNames (){if _aedb .Name ()==_cdga {if _cf .HasPrefix (_aedb .Content (),_edab ){_fdgc ._egccf .RemoveDefinedName (_aedb );break ;};};};};
+
+// SetPasswordHash sets the password hash to the input.
+func (_bgac WorkbookProtection )SetPasswordHash (pwHash string ){_bgac ._gfde .WorkbookPasswordAttr =_a .String (pwHash );};
+
+// GetFill gets a Fill from a cell style.
+func (_agd CellStyle )GetFill ()*_ca .CT_Fill {if _deg :=_agd ._gaa .FillIdAttr ;_deg !=nil {_eeg :=_agd ._ead .StyleSheet .Fills ().X ().Fill ;if int (*_deg )< len (_eeg ){return _eeg [int (*_deg )];};};return nil ;};
+
+// SetNumberWithStyle sets a number and applies a standard format to the cell.
+func (_fcd Cell )SetNumberWithStyle (v float64 ,f StandardFormat ){_fcd .SetNumber (v );_fcd .SetStyle (_fcd ._abb .StyleSheet .GetOrCreateStandardNumberFormat (f ));};
+
+// X returns the inner wrapped XML type.
+func (_egbe *Workbook )X ()*_ca .Workbook {return _egbe ._dadd };
+
+// X returns the inner wrapped XML type.
+func (_cabb RichTextRun )X ()*_ca .CT_RElt {return _cabb ._bgc };func _bcg (_dag string )bool {_dag =_cf .Replace (_dag ,"\u0024","",-1);if _egec :=_dcaa .FindStringSubmatch (_cf .ToLower (_dag ));len (_egec )> 2{_efac :=_egec [1];_bgd ,_dcag :=_gb .Atoi (_egec [2]);if _dcag !=nil {return false ;};return _bgd <=1048576&&_efac <="\u007a\u007a";};return false ;};
+
+// X returns the inner wrapped XML type.
+func (_cdf DefinedName )X ()*_ca .CT_DefinedName {return _cdf ._gcaf };func (_gec PatternFill )ClearBgColor (){_gec ._cedb .BgColor =nil };
+
+// RemoveSheet removes the sheet with the given index from the workbook.
+func (_edgc *Workbook )RemoveSheet (ind int )error {if _edgc .SheetCount ()<=ind {return ErrorNotFound ;};for _ ,_agf :=range _edgc ._caaf .Relationships (){if _agf .ID ()==_edgc ._dadd .Sheets .Sheet [ind ].IdAttr {_edgc ._caaf .Remove (_agf );break ;};};_edgc .ContentTypes .RemoveOverride (_a .AbsoluteFilename (_a .DocTypeSpreadsheet ,_a .WorksheetContentType ,ind +1));copy (_edgc ._dgga [ind :],_edgc ._dgga [ind +1:]);_edgc ._dgga =_edgc ._dgga [:len (_edgc ._dgga )-1];_bfaa :=_edgc ._dadd .Sheets .Sheet [ind ];copy (_edgc ._dadd .Sheets .Sheet [ind :],_edgc ._dadd .Sheets .Sheet [ind +1:]);_edgc ._dadd .Sheets .Sheet =_edgc ._dadd .Sheets .Sheet [:len (_edgc ._dadd .Sheets .Sheet )-1];for _aacd :=range _edgc ._dadd .Sheets .Sheet {if _edgc ._dadd .Sheets .Sheet [_aacd ].SheetIdAttr > _bfaa .SheetIdAttr {_edgc ._dadd .Sheets .Sheet [_aacd ].SheetIdAttr --;};};copy (_edgc ._fcbc [ind :],_edgc ._fcbc [ind +1:]);_edgc ._fcbc =_edgc ._fcbc [:len (_edgc ._fcbc )-1];copy (_edgc ._aeec [ind :],_edgc ._aeec [ind +1:]);_edgc ._aeec =_edgc ._aeec [:len (_edgc ._aeec )-1];return nil ;};
+
+// SetTime sets the cell value to a date. It's stored as the number of days past
+// th sheet epoch. When we support v5 strict, we can store an ISO 8601 date
+// string directly, however that's not allowed with v5 transitional  (even
+// though it works in Excel).
+func (_ed Cell )SetTime (d _gc .Time ){_ed .clearValue ();d =_baa (d );_aecg :=_ed ._abb .Epoch ();if d .Before (_aecg ){_egd .Log .Debug ("t\u0069\u006d\u0065\u0073\u0020\u0062e\u0066\u006f\u0072\u0065\u0020\u00319\u0030\u0030\u0020\u0061\u0072\u0065\u0020n\u006f\u0074\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074e\u0064");return ;};_ged :=d .Sub (_aecg );_aad :=new (_ef .Float );_effb :=new (_ef .Float );_effb .SetPrec (128);_effb .SetUint64 (uint64 (_ged ));_efbe :=new (_ef .Float );_efbe .SetUint64 (24*60*60*1e9);_aad .Quo (_effb ,_efbe );_ed ._gbf .V =_a .String (_aad .Text ('g',20));};
+
+// SetBold causes the text to be displayed in bold.
+func (_dfce RichTextRun )SetBold (b bool ){_dfce .ensureRpr ();_dfce ._bgc .RPr .B =_ca .NewCT_BooleanProperty ();_dfce ._bgc .RPr .B .ValAttr =_a .Bool (b );};
+
+// SetCellReference sets the cell reference within a sheet that a comment refers
+// to (e.g. "A1")
+func (_fca Comment )SetCellReference (cellRef string ){_fca ._dee .RefAttr =cellRef };
+
+// SetColOffset sets the column offset of the top-left of the image in fixed units.
+func (_ab AbsoluteAnchor )SetColOffset (m _d .Distance ){_ab ._cg .Pos .XAttr .ST_CoordinateUnqualified =_a .Int64 (int64 (m /_d .EMU ));};
+
+// AddString adds a string to the shared string cache.
+func (_ccg SharedStrings )AddString (v string )int {if _ffgf ,_fecg :=_ccg ._afcg [v ];_fecg {return _ffgf ;};_fgcf :=_ca .NewCT_Rst ();_fgcf .T =_a .String (v );_ccg ._fgc .Si =append (_ccg ._fgc .Si ,_fgcf );_cbcg :=len (_ccg ._fgc .Si )-1;_ccg ._afcg [v ]=_cbcg ;_ccg ._fgc .CountAttr =_a .Uint32 (uint32 (len (_ccg ._fgc .Si )));_ccg ._fgc .UniqueCountAttr =_ccg ._fgc .CountAttr ;return _cbcg ;};
+
+// LockObject controls the locking of the sheet objects.
+func (_cfee SheetProtection )LockObject (b bool ){if !b {_cfee ._gfgfc .ObjectsAttr =nil ;}else {_cfee ._gfgfc .ObjectsAttr =_a .Bool (true );};};func (_acaa *Sheet )getAllCellsInFormulaArraysForColumn ()(map[string ]bool ,error ){return _acaa .getAllCellsInFormulaArrays (false );};
+
+// Borders returns the list of borders defined in the stylesheet.
+func (_cgfa StyleSheet )Borders ()[]Border {_cbcgf :=[]Border {};for _ ,_afdge :=range _cgfa ._ddaga .Borders .Border {_cbcgf =append (_cbcgf ,Border {_ga :_afdge });};return _cbcgf ;};
+
+// AddNamedCell adds a new named cell to a row and returns it. You should
+// normally prefer Cell() as it will return the existing cell if the cell
+// already exists, while AddNamedCell will duplicate the cell creating an
+// invaild spreadsheet.
+func (_edb Row )AddNamedCell (col string )Cell {_gacc :=_ca .NewCT_Cell ();_gacc .RAttr =_a .Stringf ("\u0025\u0073\u0025\u0064",col ,_edb .RowNumber ());_bcdc :=-1;_bacb :=_ag .ColumnToIndex (col );for _fbc ,_agbe :=range _edb ._bcb .C {_ebec ,_cff :=_ag .ParseCellReference (*_agbe .RAttr );if _cff !=nil {return Cell {};};if _bacb < _ebec .ColumnIdx {_bcdc =_fbc ;break ;};};if _bcdc ==-1{_edb ._bcb .C =append (_edb ._bcb .C ,_gacc );}else {_edb ._bcb .C =append (_edb ._bcb .C [:_bcdc ],append ([]*_ca .CT_Cell {_gacc },_edb ._bcb .C [_bcdc :]...)...);};return Cell {_edb ._dacc ,_edb ._aada ,_edb ._bcb ,_gacc };};
+
+// SetWidth sets the width of the anchored object.
+func (_aaef OneCellAnchor )SetWidth (w _d .Distance ){_aaef ._cefe .Ext .CxAttr =int64 (w /_d .EMU )};
+
+// CellsWithEmpty returns a slice of cells including empty ones from the first column to the last one used in the sheet.
+// The cells can be manipulated, but appending to the slice will have no effect.
+func (_fdab Row )CellsWithEmpty (lastColIdx uint32 )[]Cell {_daeba :=[]Cell {};for _dacf :=uint32 (0);_dacf <=lastColIdx ;_dacf ++{_efafg :=_fdab .Cell (_ag .IndexToColumn (_dacf ));_daeba =append (_daeba ,_efafg );};return _daeba ;};
+
+// SetWidth is a no-op.
+func (_bea TwoCellAnchor )SetWidth (w _d .Distance ){};func (_dfgd Cell )getLocked ()bool {if _dfgd ._gbf .SAttr ==nil {return false ;};_eabe :=*_dfgd ._gbf .SAttr ;_efd :=_dfgd ._abb .StyleSheet .GetCellStyle (_eabe );return *_efd ._gaa .Protection .LockedAttr ;};func (_egecc Fills )AddFill ()Fill {_bggg :=_ca .NewCT_Fill ();_egecc ._fcca .Fill =append (_egecc ._fcca .Fill ,_bggg );_egecc ._fcca .CountAttr =_a .Uint32 (uint32 (len (_egecc ._fcca .Fill )));return Fill {_bggg ,_egecc ._fcca };};
+
+// GetLocked returns true if the cell is locked.
+func (_bfe *evalContext )GetLocked (cellRef string )bool {return _bfe ._gffe .Cell (cellRef ).getLocked ()};func (_afac *Sheet )updateAfterRemove (_edcc uint32 ,_egee _dc .UpdateAction )error {_acgd :=_afac .Name ();_deafg :=&_dc .UpdateQuery {UpdateType :_egee ,ColumnIdx :_edcc ,SheetToUpdate :_acgd };for _ ,_gdbg :=range _afac ._egccf .Sheets (){_deafg .UpdateCurrentSheet =_acgd ==_gdbg .Name ();for _ ,_cbg :=range _gdbg .Rows (){for _ ,_fabe :=range _cbg .Cells (){if _fabe .X ().F !=nil {_bfea :=_fabe .X ().F .Content ;_ecec :=_ea .ParseString (_bfea );if _ecec ==nil {_fabe .SetError ("\u0023\u0052\u0045F\u0021");}else {_aegc :=_ecec .Update (_deafg );_fabe .X ().F .Content =_eg .Sprintf ("\u003d\u0025\u0073",_aegc .String ());};};};};};return nil ;};var _fegeda =false ;type DifferentialStyle struct{_ecdg *_ca .CT_Dxf ;_fgee *Workbook ;_dgc *_ca .CT_Dxfs ;};
+
+// ClearSheetViews clears the list of sheet views.  This will clear the results
+// of AddView() or SetFrozen.
+func (_abbb *Sheet )ClearSheetViews (){_abbb ._bedf .SheetViews =nil };
+
+// X returns the inner wrapped XML type.
+func (_acgdc WorkbookProtection )X ()*_ca .CT_WorkbookProtection {return _acgdc ._gfde };
+
+// SheetViews returns the sheet views defined.  This is where splits and frozen
+// rows/cols are configured.  Multiple sheet views are allowed, but I'm not
+// aware of there being a use for more than a single sheet view.
+func (_aadg *Sheet )SheetViews ()[]SheetView {if _aadg ._bedf .SheetViews ==nil {return nil ;};_ebeg :=[]SheetView {};for _ ,_dggf :=range _aadg ._bedf .SheetViews .SheetView {_ebeg =append (_ebeg ,SheetView {_dggf });};return _ebeg ;};
+
+// Row will return a row with a given row number, creating a new row if
+// necessary.
+func (_abgc *Sheet )Row (rowNum uint32 )Row {for _ ,_fbeg :=range _abgc ._bedf .SheetData .Row {if _fbeg .RAttr !=nil &&*_fbeg .RAttr ==rowNum {return Row {_abgc ._egccf ,_abgc ,_fbeg };};};return _abgc .AddNumberedRow (rowNum );};
+
+// StyleSheet is a document style sheet.
+type StyleSheet struct{_bcggc *Workbook ;_ddaga *_ca .StyleSheet ;};func (_gbc CellStyle )Index ()uint32 {for _eed ,_bdg :=range _gbc ._eaf .Xf {if _gbc ._gaa ==_bdg {return uint32 (_eed );};};return 0;};
+
+// SetStyle sets the style to be used for conditional rules
+func (_eee ConditionalFormattingRule )SetStyle (d DifferentialStyle ){_eee ._dac .DxfIdAttr =_a .Uint32 (d .Index ());};type Fills struct{_fcca *_ca .CT_Fills };
+
+// SetStyle applies a style to the cell.  This style is referenced in the
+// generated XML via CellStyle.Index().
+func (_eae Cell )SetStyle (cs CellStyle ){_eae .SetStyleIndex (cs .Index ())};func _bbd (_ee _gc .Time )_gc .Time {_ee =_ee .UTC ();return _gc .Date (_ee .Year (),_ee .Month (),_ee .Day (),_ee .Hour (),_ee .Minute (),_ee .Second (),_ee .Nanosecond (),_gc .Local );};func (_aega StyleSheet )GetNumberFormat (id uint32 )NumberFormat {if id >=0&&id < 50{return CreateDefaultNumberFormat (StandardFormat (id ));};for _ ,_gbcd :=range _aega ._ddaga .NumFmts .NumFmt {if _gbcd .NumFmtIdAttr ==id {return NumberFormat {_aega ._bcggc ,_gbcd };};};return NumberFormat {};};
+
+// CellMarker represents a cell position
+type CellMarker struct{_aag *_bd .CT_Marker };
+
+// InsertRow inserts a new row into a spreadsheet at a particular row number.  This
+// row will now be the row number specified, and any rows after it will be renumbed.
+func (_fabb *Sheet )InsertRow (rowNum int )Row {_degd :=uint32 (rowNum );for _ ,_cfgb :=range _fabb .Rows (){if _cfgb ._bcb .RAttr !=nil &&*_cfgb ._bcb .RAttr >=_degd {*_cfgb ._bcb .RAttr ++;for _ ,_feaf :=range _cfgb .Cells (){_gggc ,_cae :=_ag .ParseCellReference (_feaf .Reference ());if _cae !=nil {continue ;};_gggc .RowIdx ++;_feaf ._gbf .RAttr =_a .String (_gggc .String ());};};};for _ ,_ddag :=range _fabb .MergedCells (){_ada ,_ceec ,_ffbf :=_ag .ParseRangeReference (_ddag .Reference ());if _ffbf !=nil {continue ;};if int (_ada .RowIdx )>=rowNum {_ada .RowIdx ++;};if int (_ceec .RowIdx )>=rowNum {_ceec .RowIdx ++;};_gbfb :=_eg .Sprintf ("\u0025\u0073\u003a%\u0073",_ada ,_ceec );_ddag .SetReference (_gbfb );};return _fabb .AddNumberedRow (_degd );};
+
+// SetFormulaShared sets the cell type to formula shared, and the raw formula to
+// the given string. The range is the range of cells that the formula applies
+// to, and is used to conserve disk space.
+func (_gbee Cell )SetFormulaShared (formulaStr string ,rows ,cols uint32 )error {_fff :=_ea .ParseString (formulaStr );if _fff ==nil {return _cc .New (_eg .Sprintf ("\u0043a\u006en\u006f\u0074\u0020\u0070\u0061\u0072\u0073\u0065\u0020\u0025\u0073",formulaStr ));};_gbee .clearValue ();_gbee ._gbf .TAttr =_ca .ST_CellTypeStr ;_gbee ._gbf .F =_ca .NewCT_CellFormula ();_gbee ._gbf .F .TAttr =_ca .ST_CellFormulaTypeShared ;_gbee ._gbf .F .Content =formulaStr ;_gda ,_gffa :=_ag .ParseCellReference (_gbee .Reference ());if _gffa !=nil {return _gffa ;};_cfe :=uint32 (0);for _ ,_efa :=range _gbee ._becd .Rows (){for _ ,_cgc :=range _efa ._bcb .C {if _cgc .F !=nil &&_cgc .F .SiAttr !=nil &&*_cgc .F .SiAttr >=_cfe {_cfe =*_cgc .F .SiAttr ;};};};_cfe ++;_fg :=_eg .Sprintf ("\u0025s\u0025\u0064\u003a\u0025\u0073\u0025d",_gda .Column ,_gda .RowIdx ,_ag .IndexToColumn (_gda .ColumnIdx +cols ),_gda .RowIdx +rows );_gbee ._gbf .F .RefAttr =_a .String (_fg );_gbee ._gbf .F .SiAttr =_a .Uint32 (_cfe );_gafg :=Sheet {_gbee ._abb ,_gbee ._becd ._ffea ,_gbee ._becd ._bedf };for _dg :=_gda .RowIdx ;_dg <=_gda .RowIdx +rows ;_dg ++{for _bf :=_gda .ColumnIdx ;_bf <=_gda .ColumnIdx +cols ;_bf ++{if _dg ==_gda .RowIdx &&_bf ==_gda .ColumnIdx {continue ;};_age :=_eg .Sprintf ("\u0025\u0073\u0025\u0064",_ag .IndexToColumn (_bf ),_dg );_gafg .Cell (_age ).Clear ();_gafg .Cell (_age ).X ().F =_ca .NewCT_CellFormula ();_gafg .Cell (_age ).X ().F .TAttr =_ca .ST_CellFormulaTypeShared ;_gafg .Cell (_age ).X ().F .SiAttr =_a .Uint32 (_cfe );};};return nil ;};
+
+// SetWidthCells is a no-op.
+func (_da AbsoluteAnchor )SetWidthCells (int32 ){};func (_bfc PatternFill )ClearFgColor (){_bfc ._cedb .FgColor =nil };
+
+// X returns the inner wrapped XML type.
+func (_gde DifferentialStyle )X ()*_ca .CT_Dxf {return _gde ._ecdg };func _gdc ()*_bd .CT_OneCellAnchor {_gae :=_bd .NewCT_OneCellAnchor ();return _gae };func (_eaga Sheet )validateRowCellNumbers ()error {_dfba :=map[uint32 ]struct{}{};for _ ,_eccg :=range _eaga ._bedf .SheetData .Row {if _eccg .RAttr !=nil {if _ ,_fffg :=_dfba [*_eccg .RAttr ];_fffg {return _eg .Errorf ("\u0027%\u0073'\u0020\u0072\u0065\u0075\u0073e\u0064\u0020r\u006f\u0077\u0020\u0025\u0064",_eaga .Name (),*_eccg .RAttr );};_dfba [*_eccg .RAttr ]=struct{}{};};_bceg :=map[string ]struct{}{};for _ ,_eegd :=range _eccg .C {if _eegd .RAttr ==nil {continue ;};if _ ,_ddef :=_bceg [*_eegd .RAttr ];_ddef {return _eg .Errorf ("\u0027\u0025\u0073\u0027 r\u0065\u0075\u0073\u0065\u0064\u0020\u0063\u0065\u006c\u006c\u0020\u0025\u0073",_eaga .Name (),*_eegd .RAttr );};_bceg [*_eegd .RAttr ]=struct{}{};};};return nil ;};
+
+// AddNumberFormat adds a new blank number format to the stylesheet.
+func (_bege StyleSheet )AddNumberFormat ()NumberFormat {if _bege ._ddaga .NumFmts ==nil {_bege ._ddaga .NumFmts =_ca .NewCT_NumFmts ();};_aeda :=_ca .NewCT_NumFmt ();_aeda .NumFmtIdAttr =uint32 (200+len (_bege ._ddaga .NumFmts .NumFmt ));_bege ._ddaga .NumFmts .NumFmt =append (_bege ._ddaga .NumFmts .NumFmt ,_aeda );_bege ._ddaga .NumFmts .CountAttr =_a .Uint32 (uint32 (len (_bege ._ddaga .NumFmts .NumFmt )));return NumberFormat {_bege ._bcggc ,_aeda };};
+
+// NewSharedStrings constructs a new Shared Strings table.
+func NewSharedStrings ()SharedStrings {return SharedStrings {_fgc :_ca .NewSst (),_afcg :make (map[string ]int )};};
+
+// AddFormatValue adds a format value (databars require two).
+func (_adef DataBarScale )AddFormatValue (t _ca .ST_CfvoType ,val string ){_aed :=_ca .NewCT_Cfvo ();_aed .TypeAttr =t ;_aed .ValAttr =_a .String (val );_adef ._cdd .Cfvo =append (_adef ._cdd .Cfvo ,_aed );};
+
+// ID returns the number format ID.  This is not an index as there are some
+// predefined number formats which can be used in cell styles and don't need a
+// corresponding NumberFormat.
+func (_efce NumberFormat )ID ()uint32 {return _efce ._dddb .NumFmtIdAttr };
+
+// IsEmpty returns true if the cell is empty.
+func (_bade Cell )IsEmpty ()bool {return _bade ._gbf .TAttr ==_ca .ST_CellTypeUnset &&_bade ._gbf .V ==nil &&_bade ._gbf .F ==nil ;};func (_ddfb Comments )getOrCreateAuthor (_eeb string )uint32 {for _dae ,_ecbe :=range _ddfb ._fdae .Authors .Author {if _ecbe ==_eeb {return uint32 (_dae );};};_egg :=uint32 (len (_ddfb ._fdae .Authors .Author ));_ddfb ._fdae .Authors .Author =append (_ddfb ._fdae .Authors .Author ,_eeb );return _egg ;};
+
+// SetPriority sets the rule priority
+func (_dgb ConditionalFormattingRule )SetPriority (p int32 ){_dgb ._dac .PriorityAttr =p };
+
+// Name returns the name of the defined name.
+func (_gcbc DefinedName )Name ()string {return _gcbc ._gcaf .NameAttr };
+
+// SetHeightAuto sets the row height to be automatically determined.
+func (_cebc Row )SetHeightAuto (){_cebc ._bcb .HtAttr =nil ;_cebc ._bcb .CustomHeightAttr =nil };
+
+// Column returns or creates a column that with a given index (1-N).  Columns
+// can span multiple column indices, this method will return the column that
+// applies to a column index if it exists or create a new column that only
+// applies to the index passed in otherwise.
+func (_begaa *Sheet )Column (idx uint32 )Column {for _ ,_dbbd :=range _begaa ._bedf .Cols {for _ ,_bbef :=range _dbbd .Col {if idx >=_bbef .MinAttr &&idx <=_bbef .MaxAttr {return Column {_bbef };};};};var _adee *_ca .CT_Cols ;if len (_begaa ._bedf .Cols )==0{_adee =_ca .NewCT_Cols ();_begaa ._bedf .Cols =append (_begaa ._bedf .Cols ,_adee );}else {_adee =_begaa ._bedf .Cols [0];};_cfef :=_ca .NewCT_Col ();_cfef .MinAttr =idx ;_cfef .MaxAttr =idx ;_adee .Col =append (_adee .Col ,_cfef );return Column {_cfef };};func (_dede Font )Index ()uint32 {for _fcdb ,_ceea :=range _dede ._ccaf .Fonts .Font {if _dede ._efde ==_ceea {return uint32 (_fcdb );};};return 0;};
+
+// SetProtectedAndHidden sets protected and hidden for given cellStyle
+func (_dbd CellStyle )SetProtection (protected bool ,hidden bool ){_dbd ._gaa .Protection =&_ca .CT_CellProtection {LockedAttr :&protected ,HiddenAttr :&hidden };};
+
+// SetHeight is a nop-op.
+func (_dabgd TwoCellAnchor )SetHeight (h _d .Distance ){};
+
+// SetReference sets the regin of cells that the merged cell applies to.
+func (_faab MergedCell )SetReference (ref string ){_faab ._bfed .RefAttr =ref };func (_adefd *Sheet )removeColumnFromNamedRanges (_eaae uint32 )error {for _ ,_ggdg :=range _adefd ._egccf .DefinedNames (){_dbdf :=_ggdg .Name ();_bdce :=_ggdg .Content ();_gecf :=_cf .Split (_bdce ,"\u0021");if len (_gecf )!=2{return _cc .New ("\u0049\u006e\u0063\u006frr\u0065\u0063\u0074\u0020\u006e\u0061\u006d\u0065\u0064\u0020\u0072\u0061\u006e\u0067e\u003a"+_bdce );};_dfcd :=_gecf [0];if _adefd .Name ()==_dfcd {_dfbc :=_adefd ._egccf .RemoveDefinedName (_ggdg );if _dfbc !=nil {return _dfbc ;};_faaf :=_bcec (_gecf [1],_eaae ,true );if _faaf !=""{_fgff :=_dfcd +"\u0021"+_faaf ;_adefd ._egccf .AddDefinedName (_dbdf ,_fgff );};};};_bada :=0;if _adefd ._bedf .TableParts !=nil &&_adefd ._bedf .TableParts .TablePart !=nil {_bada =len (_adefd ._bedf .TableParts .TablePart );};if _bada !=0{_agda :=0;for _ ,_cced :=range _adefd ._egccf .Sheets (){if _cced .Name ()==_adefd .Name (){break ;}else {if _cced ._bedf .TableParts !=nil &&_cced ._bedf .TableParts .TablePart !=nil {_agda +=len (_cced ._bedf .TableParts .TablePart );};};};_bafa :=_adefd ._egccf ._dgac [_agda :_agda +_bada ];for _dega ,_aeabg :=range _bafa {_bebg :=_aeabg ;_bebg .RefAttr =_bcec (_bebg .RefAttr ,_eaae ,false );_adefd ._egccf ._dgac [_agda +_dega ]=_bebg ;};};return nil ;};
+
+// TopLeft is a no-op.
+func (_cab AbsoluteAnchor )TopLeft ()CellMarker {return CellMarker {}};func (_gca CellStyle )SetShrinkToFit (b bool ){if _gca ._gaa .Alignment ==nil {_gca ._gaa .Alignment =_ca .NewCT_CellAlignment ();};_gca ._gaa .ApplyAlignmentAttr =_a .Bool (true );if !b {_gca ._gaa .Alignment .ShrinkToFitAttr =nil ;}else {_gca ._gaa .Alignment .ShrinkToFitAttr =_a .Bool (b );};};
+
+// X returns the inner wrapped XML type.
+func (_ccef SheetProtection )X ()*_ca .CT_SheetProtection {return _ccef ._gfgfc };
+
+// AddChart adds an chart to a drawing, returning the chart and an anchor that
+// can be used to position the chart within the sheet.
+func (_bcf Drawing )AddChart (at AnchorType )(_bb .Chart ,Anchor ){_fcdd :=_cfd .NewChartSpace ();_bcf ._gcad ._dabb =append (_bcf ._gcad ._dabb ,_fcdd );_fbaf :=_a .AbsoluteFilename (_a .DocTypeSpreadsheet ,_a .ChartContentType ,len (_bcf ._gcad ._dabb ));_bcf ._gcad .ContentTypes .AddOverride (_fbaf ,_a .ChartContentType );var _dcbd string ;for _ggd ,_adfa :=range _bcf ._gcad ._decb {if _adfa ==_bcf ._dbf {_acb :=_a .RelativeFilename (_a .DocTypeSpreadsheet ,_a .DrawingType ,_a .ChartType ,len (_bcf ._gcad ._dabb ));_egef :=_bcf ._gcad ._ebfa [_ggd ].AddRelationship (_acb ,_a .ChartType );_dcbd =_egef .ID ();break ;};};var _aegb Anchor ;var _cgaa *_bd .CT_GraphicalObjectFrame ;switch at {case AnchorTypeAbsolute :_fefaa :=_faga ();_bcf ._dbf .EG_Anchor =append (_bcf ._dbf .EG_Anchor ,&_bd .EG_Anchor {AbsoluteAnchor :_fefaa });_fefaa .Choice =&_bd .EG_ObjectChoicesChoice {};_fefaa .Choice .GraphicFrame =_bd .NewCT_GraphicalObjectFrame ();_cgaa =_fefaa .Choice .GraphicFrame ;_aegb =AbsoluteAnchor {_fefaa };case AnchorTypeOneCell :_bda :=_gdc ();_bcf ._dbf .EG_Anchor =append (_bcf ._dbf .EG_Anchor ,&_bd .EG_Anchor {OneCellAnchor :_bda });_bda .Choice =&_bd .EG_ObjectChoicesChoice {};_bda .Choice .GraphicFrame =_bd .NewCT_GraphicalObjectFrame ();_cgaa =_bda .Choice .GraphicFrame ;_aegb =OneCellAnchor {_bda };case AnchorTypeTwoCell :_gfbf :=_deaa ();_bcf ._dbf .EG_Anchor =append (_bcf ._dbf .EG_Anchor ,&_bd .EG_Anchor {TwoCellAnchor :_gfbf });_gfbf .Choice =&_bd .EG_ObjectChoicesChoice {};_gfbf .Choice .GraphicFrame =_bd .NewCT_GraphicalObjectFrame ();_cgaa =_gfbf .Choice .GraphicFrame ;_aegb =TwoCellAnchor {_gfbf };};_cgaa .NvGraphicFramePr =_bd .NewCT_GraphicalObjectFrameNonVisual ();_cgaa .NvGraphicFramePr .CNvPr .IdAttr =uint32 (len (_bcf ._dbf .EG_Anchor ));_cgaa .NvGraphicFramePr .CNvPr .NameAttr ="\u0043\u0068\u0061r\u0074";_cgaa .Graphic =_gff .NewGraphic ();_cgaa .Graphic .GraphicData .UriAttr ="\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0073\u0063\u0068\u0065\u006d\u0061\u0073\u002eo\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072\u006d\u0061\u0074\u0073.\u006f\u0072\u0067\u002f\u0064\u0072\u0061\u0077\u0069\u006e\u0067\u006dl/\u0032\u0030\u0030\u0036\u002f\u0063\u0068\u0061\u0072\u0074";_gcf :=_cfd .NewChart ();_gcf .IdAttr =_dcbd ;_cgaa .Graphic .GraphicData .Any =[]_a .Any {_gcf };_afdf :=_bb .MakeChart (_fcdd );_afdf .Properties ().SetSolidFill (_ce .White );_afdf .SetDisplayBlanksAs (_cfd .ST_DispBlanksAsGap );return _afdf ,_aegb ;};
+
+// SetHeightCells sets the height the anchored object by moving the bottom.  It
+// is not compatible with SetHeight.
+func (_efcda TwoCellAnchor )SetHeightCells (h int32 ){_efcda .SetHeight (0);_fbag :=_efcda .TopLeft ();_aggf :=_efcda .BottomRight ();_aggf .SetRow (_fbag .Row ()+h );};
+
+// Drawing is a drawing overlay on a sheet.  Only a single drawing is allowed
+// per sheet, so to display multiple charts and images on a single sheet, they
+// must be added to the same drawing.
+type Drawing struct{_gcad *Workbook ;_dbf *_bd .WsDr ;};
+
+// Comments is the container for comments for a single sheet.
+type Comments struct{_afg *Workbook ;_fdae *_ca .Comments ;};func NewFills ()Fills {return Fills {_ca .NewCT_Fills ()}};
+
+// IconScale maps values to icons.
+type IconScale struct{_cfdb *_ca .CT_IconSet };func (_gddc Font )SetSize (size float64 ){_gddc ._efde .Sz =[]*_ca .CT_FontSize {{ValAttr :size }}};
+
+// SetWidth controls the width of a column.
+func (_edc Column )SetWidth (w _d .Distance ){_edc ._bbde .WidthAttr =_a .Float64 (float64 (w /_d .Character ));};
+
+// AddFormatValue adds a format value to be used in determining which icons to display.
+func (_aedg IconScale )AddFormatValue (t _ca .ST_CfvoType ,val string ){_gdgf :=_ca .NewCT_Cfvo ();_gdgf .TypeAttr =t ;_gdgf .ValAttr =_a .String (val );_aedg ._cfdb .Cfvo =append (_aedg ._cfdb .Cfvo ,_gdgf );};
+
+// RemoveMergedCell removes merging from a cell range within a sheet.  The cells
+// that made up the merged cell remain, but are no lon merged.
+func (_afbba *Sheet )RemoveMergedCell (mc MergedCell ){for _ccfe ,_bede :=range _afbba ._bedf .MergeCells .MergeCell {if _bede ==mc .X (){copy (_afbba ._bedf .MergeCells .MergeCell [_ccfe :],_afbba ._bedf .MergeCells .MergeCell [_ccfe +1:]);_afbba ._bedf .MergeCells .MergeCell [len (_afbba ._bedf .MergeCells .MergeCell )-1]=nil ;_afbba ._bedf .MergeCells .MergeCell =_afbba ._bedf .MergeCells .MergeCell [:len (_afbba ._bedf .MergeCells .MergeCell )-1];};};};
+
+// X returns the inner wrapped XML type.
+func (_bgeg DataValidation )X ()*_ca .CT_DataValidation {return _bgeg ._fabc };
 
 // SetTopLeft sets the top left visible cell after the split.
-func (_bdbc SheetView )SetTopLeft (cellRef string ){_bdbc .ensurePane ();_bdbc ._cdfa .Pane .TopLeftCellAttr =&cellRef ;};
+func (_ffbad SheetView )SetTopLeft (cellRef string ){_ffbad .ensurePane ();_ffbad ._ggeg .Pane .TopLeftCellAttr =&cellRef ;};
 
-// AddDataValidation adds a data validation rule to a sheet.
-func (_agfa *Sheet )AddDataValidation ()DataValidation {if _agfa ._eaa .DataValidations ==nil {_agfa ._eaa .DataValidations =_ege .NewCT_DataValidations ();};_fffbe :=_ege .NewCT_DataValidation ();_fffbe .ShowErrorMessageAttr =_e .Bool (true );_agfa ._eaa .DataValidations .DataValidation =append (_agfa ._eaa .DataValidations .DataValidation ,_fffbe );_agfa ._eaa .DataValidations .CountAttr =_e .Uint32 (uint32 (len (_agfa ._eaa .DataValidations .DataValidation )));return DataValidation {_fffbe };};
+// Validate attempts to validate the structure of a workbook.
+func (_gedg *Workbook )Validate ()error {if _gedg ==nil ||_gedg ._dadd ==nil {return _cc .New ("\u0077o\u0072\u006bb\u006f\u006f\u006b\u0020n\u006f\u0074\u0020i\u006e\u0069\u0074\u0069\u0061\u006c\u0069\u007a\u0065d \u0063\u006f\u0072r\u0065\u0063t\u006c\u0079\u002c\u0020\u006e\u0069l\u0020\u0062a\u0073\u0065");};_ggde :=uint32 (0);for _ ,_egccfa :=range _gedg ._dadd .Sheets .Sheet {if _egccfa .SheetIdAttr > _ggde {_ggde =_egccfa .SheetIdAttr ;};};if _ggde !=uint32 (len (_gedg ._dgga )){return _eg .Errorf ("\u0066\u006f\u0075\u006e\u0064\u0020%\u0064\u0020\u0077\u006f\u0072\u006b\u0073\u0068\u0065\u0065\u0074\u0020\u0064\u0065\u0073\u0063\u0072\u0069\u0070\u0074i\u006f\u006e\u0073\u0020\u0061\u006e\u0064\u0020\u0025\u0064\u0020\u0077\u006f\u0072k\u0073h\u0065\u0065\u0074\u0073",_ggde ,len (_gedg ._dgga ));};_bcfb :=map[string ]struct{}{};for _fffa ,_afcgg :=range _gedg ._dadd .Sheets .Sheet {_fgad :=Sheet {_gedg ,_afcgg ,_gedg ._dgga [_fffa ]};if _ ,_gbdd :=_bcfb [_fgad .Name ()];_gbdd {return _eg .Errorf ("\u0077\u006f\u0072k\u0062\u006f\u006f\u006b\u002f\u0053\u0068\u0065\u0065\u0074\u005b\u0025\u0064\u005d\u0020\u0068\u0061\u0073\u0020\u0064\u0075\u0070\u006c\u0069\u0063\u0061\u0074\u0065\u0020n\u0061\u006d\u0065\u0020\u0027\u0025\u0073\u0027",_fffa ,_fgad .Name ());};_bcfb [_fgad .Name ()]=struct{}{};if _begcf :=_fgad .ValidateWithPath (_eg .Sprintf ("\u0077o\u0072k\u0062\u006f\u006f\u006b\u002fS\u0068\u0065e\u0074\u005b\u0025\u0064\u005d",_fffa ));_begcf !=nil {return _begcf ;};if _aaeg :=_fgad .Validate ();_aaeg !=nil {return _aaeg ;};};return nil ;};
 
-// MoveTo is a no-op.
-func (_cb AbsoluteAnchor )MoveTo (x ,y int32 ){};
+// GetValueAsNumber retrieves the cell's value as a number
+func (_ac Cell )GetValueAsNumber ()(float64 ,error ){if _ac ._gbf .V ==nil &&_ac ._gbf .Is ==nil {return 0,nil ;};if _ac ._gbf .TAttr ==_ca .ST_CellTypeS ||!_fcc .IsNumber (*_ac ._gbf .V ){return _ff .NaN (),_cc .New ("\u0063\u0065\u006c\u006c\u0020\u0069\u0073\u0020\u006e\u006f\u0074 \u006f\u0066\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020t\u0079\u0070\u0065");};return _gb .ParseFloat (*_ac ._gbf .V ,64);};
 
-// Author returns the author of the comment
-func (_dcb Comment )Author ()string {if _dcb ._ecf .AuthorIdAttr < uint32 (len (_dcb ._ggb .Authors .Author )){return _dcb ._ggb .Authors .Author [_dcb ._ecf .AuthorIdAttr ];};return "";};func (_aeddg Sheet )ExtentsIndex ()(string ,uint32 ,string ,uint32 ){var _bgfe ,_ade ,_cgd ,_eef uint32 =1,1,0,0;for _ ,_cacg :=range _aeddg .Rows (){if _cacg .RowNumber ()< _bgfe {_bgfe =_cacg .RowNumber ();}else if _cacg .RowNumber ()> _ade {_ade =_cacg .RowNumber ();};for _ ,_dafc :=range _cacg .Cells (){_caaf ,_ffgdd :=_ba .ParseCellReference (_dafc .Reference ());if _ffgdd ==nil {if _caaf .ColumnIdx < _cgd {_cgd =_caaf .ColumnIdx ;}else if _caaf .ColumnIdx > _eef {_eef =_caaf .ColumnIdx ;};};};};return _ba .IndexToColumn (_cgd ),_bgfe ,_ba .IndexToColumn (_eef ),_ade ;};func (_def CellStyle )SetNumberFormat (s string ){_cdf :=_def ._ceb .StyleSheet .AddNumberFormat ();_cdf .SetFormat (s );_def ._ceca .ApplyNumberFormatAttr =_e .Bool (true );_def ._ceca .NumFmtIdAttr =_e .Uint32 (_cdf .ID ());};
+// Epoch returns the point at which the dates/times in the workbook are relative to.
+func (_ccbg *Workbook )Epoch ()_gc .Time {if _ccbg .Uses1904Dates (){_gc .Date (1904,1,1,0,0,0,0,_gc .UTC );};return _gc .Date (1899,12,30,0,0,0,0,_gc .UTC );};
 
-// IsHidden returns whether the row is hidden or not.
-func (_cdbcf Row )IsHidden ()bool {return _cdbcf ._bddg .HiddenAttr !=nil &&*_cdbcf ._bddg .HiddenAttr };
+// SetActiveSheetIndex sets the index of the active sheet (0-n) which will be
+// the tab displayed when the spreadsheet is initially opened.
+func (_edeea *Workbook )SetActiveSheetIndex (idx uint32 ){if _edeea ._dadd .BookViews ==nil {_edeea ._dadd .BookViews =_ca .NewCT_BookViews ();};if len (_edeea ._dadd .BookViews .WorkbookView )==0{_edeea ._dadd .BookViews .WorkbookView =append (_edeea ._dadd .BookViews .WorkbookView ,_ca .NewCT_BookView ());};_edeea ._dadd .BookViews .WorkbookView [0].ActiveTabAttr =_a .Uint32 (idx );};
 
-// IsEmpty checks if the cell style contains nothing.
-func (_cda CellStyle )IsEmpty ()bool {return _cda ._ceb ==nil ||_cda ._ceca ==nil ||_cda ._cab ==nil ||_cda ._cab .Xf ==nil ;};
+// Sheets returns the sheets from the workbook.
+func (_ecad *Workbook )Sheets ()[]Sheet {_dbca :=[]Sheet {};for _fbeeb ,_fdeg :=range _ecad ._dgga {_dcgc :=_ecad ._dadd .Sheets .Sheet [_fbeeb ];_bcgae :=Sheet {_ecad ,_dcgc ,_fdeg };_dbca =append (_dbca ,_bcgae );};return _dbca ;};
 
-// SetValue sets the first value to be used in the comparison.  For comparisons
-// that need only one value, this is the only value used.  For comparisons like
-// 'between' that require two values, SetValue2 must also be used.
-func (_dadd DataValidationCompare )SetValue (v string ){_dadd ._aced .Formula1 =&v };
+// SetBool sets the cell type to boolean and the value to the given boolean
+// value.
+func (_gfb Cell )SetBool (v bool ){_gfb .clearValue ();_gfb ._gbf .V =_a .String (_gb .Itoa (_aba (v )));_gfb ._gbf .TAttr =_ca .ST_CellTypeB ;};
 
-// GetCachedFormulaResult returns the cached formula result if it exists. If the
-// cell type is not a formula cell, the result will be the cell value if it's a
-// string/number/bool cell.
-func (_deab Cell )GetCachedFormulaResult ()string {if _deab ._be .V !=nil {return *_deab ._be .V ;};return "";};
+// SetFormat sets the number format code.
+func (_eaggb NumberFormat )SetFormat (f string ){_eaggb ._dddb .FormatCodeAttr =f };func (_abfb *Workbook )ensureSharedStringsRelationships (){_fgfc :=false ;for _ ,_gafb :=range _abfb .ContentTypes .X ().Override {if _gafb .ContentTypeAttr ==_a .SharedStringsContentType {_fgfc =true ;break ;};};if !_fgfc {_abfb .ContentTypes .AddOverride (_acca ,_a .SharedStringsContentType );};_ceaeg :=false ;for _ ,_dadgc :=range _abfb ._caaf .Relationships (){if _dadgc .X ().TargetAttr ==_bbfe {_ceaeg =true ;break ;};};if !_ceaeg {_abfb ._caaf .AddRelationship (_bbfe ,_a .SharedStringsType );};};
+
+// X returns the inner wrapped XML type.
+func (_fdbg ConditionalFormatting )X ()*_ca .CT_ConditionalFormatting {return _fdbg ._dea };const (SortOrderAscending SortOrder =iota ;SortOrderDescending ;);
+
+// DataValidation controls cell validation
+type DataValidation struct{_fabc *_ca .CT_DataValidation };
+
+// SetStyleIndex directly sets a style index to the cell.  This should only be
+// called with an index retrieved from CellStyle.Index()
+func (_ede Cell )SetStyleIndex (idx uint32 ){_ede ._gbf .SAttr =_a .Uint32 (idx )};
+
+// SetPassword sets the password hash to a hash of the input password.
+func (_dafad SheetProtection )SetPassword (pw string ){_dafad .SetPasswordHash (PasswordHash (pw ))};func (_baf PatternFill )X ()*_ca .CT_PatternFill {return _baf ._cedb };
+
+// SetFont applies a font to a cell style. The font is referenced by its
+// index so modifying the font afterward will affect all styles that reference
+// it.
+func (_add CellStyle )SetFont (f Font ){_add ._gaa .FontIdAttr =_a .Uint32 (f .Index ());_add ._gaa .ApplyFontAttr =_a .Bool (true );};func (_fcb DataValidation )clear (){_fcb ._fabc .Formula1 =_a .String ("\u0030");_fcb ._fabc .Formula2 =_a .String ("\u0030");};
+
+// Col returns the column of the cell marker.
+func (_afb CellMarker )Col ()int32 {return _afb ._aag .Col };type ConditionalFormattingRule struct{_dac *_ca .CT_CfRule };func (_aacb *Sheet )slideCellsLeft (_ffef []*_ca .CT_Cell )[]*_ca .CT_Cell {for _ ,_adge :=range _ffef {_dacdf ,_gdec :=_ag .ParseCellReference (*_adge .RAttr );if _gdec !=nil {return _ffef ;};_feaff :=_dacdf .ColumnIdx -1;_dadg :=_ag .IndexToColumn (_feaff )+_eg .Sprintf ("\u0025\u0064",_dacdf .RowIdx );_adge .RAttr =&_dadg ;};return _ffef ;};
+
+// SetContent sets the defined name content.
+func (_bac DefinedName )SetContent (s string ){_bac ._gcaf .Content =s };const (DVCompareOpEqual =DVCompareOp (_ca .ST_DataValidationOperatorEqual );DVCompareOpBetween =DVCompareOp (_ca .ST_DataValidationOperatorBetween );DVCompareOpNotBetween =DVCompareOp (_ca .ST_DataValidationOperatorNotBetween );DVCompareOpNotEqual =DVCompareOp (_ca .ST_DataValidationOperatorNotEqual );DVCompareOpGreater =DVCompareOp (_ca .ST_DataValidationOperatorGreaterThan );DVCompareOpGreaterEqual =DVCompareOp (_ca .ST_DataValidationOperatorGreaterThanOrEqual );DVCompareOpLess =DVCompareOp (_ca .ST_DataValidationOperatorLessThan );DVCompareOpLessEqual =DVCompareOp (_ca .ST_DataValidationOperatorLessThanOrEqual ););
+
+// RemoveDefinedName removes an existing defined name.
+func (_eadd *Workbook )RemoveDefinedName (dn DefinedName )error {if dn .X ()==nil {return _cc .New ("\u0061\u0074\u0074\u0065\u006d\u0070t\u0020\u0074\u006f\u0020\u0072\u0065\u006d\u006f\u0076\u0065\u0020\u006e\u0069l\u0020\u0044\u0065\u0066\u0069\u006e\u0065d\u004e\u0061\u006d\u0065");};for _cddb ,_gbcf :=range _eadd ._dadd .DefinedNames .DefinedName {if _gbcf ==dn .X (){copy (_eadd ._dadd .DefinedNames .DefinedName [_cddb :],_eadd ._dadd .DefinedNames .DefinedName [_cddb +1:]);_eadd ._dadd .DefinedNames .DefinedName [len (_eadd ._dadd .DefinedNames .DefinedName )-1]=nil ;_eadd ._dadd .DefinedNames .DefinedName =_eadd ._dadd .DefinedNames .DefinedName [:len (_eadd ._dadd .DefinedNames .DefinedName )-1];return nil ;};};return _cc .New ("\u0064\u0065\u0066\u0069ne\u0064\u0020\u006e\u0061\u006d\u0065\u0020\u006e\u006f\u0074\u0020\u0066\u006f\u0075n\u0064");};
+
+// LastRow returns the name of last row which contains data in range of context sheet's given columns.
+func (_abcd *evalContext )LastRow (col string )int {_ffbd :=_abcd ._gffe ;_gbag :=int (_ag .ColumnToIndex (col ));_eaff :=1;for _ ,_bfef :=range _ffbd ._bedf .SheetData .Row {if _bfef .RAttr !=nil {_dbaa :=Row {_ffbd ._egccf ,_ffbd ,_bfef };_aefg :=len (_dbaa .Cells ());if _aefg > _gbag {_eaff =int (_dbaa .RowNumber ());};};};return _eaff ;};
+
+// Column returns the cell column
+func (_cce Cell )Column ()(string ,error ){_cef ,_fbe :=_ag .ParseCellReference (_cce .Reference ());if _fbe !=nil {return "",_fbe ;};return _cef .Column ,nil ;};func (_gfbb Cell )GetRawValue ()(string ,error ){switch _gfbb ._gbf .TAttr {case _ca .ST_CellTypeInlineStr :if _gfbb ._gbf .Is ==nil ||_gfbb ._gbf .Is .T ==nil {return "",nil ;};return *_gfbb ._gbf .Is .T ,nil ;case _ca .ST_CellTypeS :if _gfbb ._gbf .V ==nil {return "",nil ;};_daf ,_fggf :=_gb .Atoi (*_gfbb ._gbf .V );if _fggf !=nil {return "",_fggf ;};return _gfbb ._abb .SharedStrings .GetString (_daf );case _ca .ST_CellTypeStr :if _gfbb ._gbf .F !=nil {return _gfbb ._gbf .F .Content ,nil ;};};if _gfbb ._gbf .V ==nil {return "",nil ;};return *_gfbb ._gbf .V ,nil ;};
+
+// GetVerticalAlignment sets the vertical alignment of a cell style.
+func (_baaf CellStyle )GetVerticalAlignment ()_ca .ST_VerticalAlignment {if _baaf ._gaa .Alignment ==nil {return _ca .ST_VerticalAlignmentUnset ;};return _baaf ._gaa .Alignment .VerticalAttr ;};
+
+// SetName sets the sheet name.
+func (_gaagc *Sheet )SetName (name string ){_gaagc ._ffea .NameAttr =name };
+
+// GetEpoch returns a workbook's time epoch.
+func (_edf *evalContext )GetEpoch ()_gc .Time {return _edf ._gffe ._egccf .Epoch ()};
+
+// SetPattern sets the pattern of the fill.
+func (_abee PatternFill )SetPattern (p _ca .ST_PatternType ){_abee ._cedb .PatternTypeAttr =p };func (_bgcg Row )renumberAs (_agbc uint32 ){_bgcg ._bcb .RAttr =_a .Uint32 (_agbc );for _ ,_fddg :=range _bgcg .Cells (){_eef ,_ccb :=_ag .ParseCellReference (_fddg .Reference ());if _ccb ==nil {_ggbgg :=_eg .Sprintf ("\u0025\u0073\u0025\u0064",_eef .Column ,_agbc );_fddg ._gbf .RAttr =_a .String (_ggbgg );};};};
 
 // SetBorder is a helper function for creating borders across multiple cells. In
 // the OOXML spreadsheet format, a border applies to a single cell.  To draw a
@@ -794,366 +756,114 @@ func (_deab Cell )GetCachedFormulaResult ()string {if _deab ._be .V !=nil {retur
 // the cells on the top,left,right,bottom and four corners.  This function
 // breaks apart a single border into its components and applies it to cells as
 // needed to give the effect of a border applying to multiple cells.
-func (_eeca *Sheet )SetBorder (cellRange string ,border Border )error {_begff ,_fdgg ,_eegb :=_ba .ParseRangeReference (cellRange );if _eegb !=nil {return _eegb ;};_eadac :=_eeca ._geaf .StyleSheet .AddCellStyle ();_ffe :=_eeca ._geaf .StyleSheet .AddBorder ();_eadac .SetBorder (_ffe );_ffe ._ac .Top =border ._ac .Top ;_ffe ._ac .Left =border ._ac .Left ;_eac :=_eeca ._geaf .StyleSheet .AddCellStyle ();_ggd :=_eeca ._geaf .StyleSheet .AddBorder ();_eac .SetBorder (_ggd );_ggd ._ac .Top =border ._ac .Top ;_ggd ._ac .Right =border ._ac .Right ;_gbebb :=_eeca ._geaf .StyleSheet .AddCellStyle ();_dgga :=_eeca ._geaf .StyleSheet .AddBorder ();_gbebb .SetBorder (_dgga );_dgga ._ac .Top =border ._ac .Top ;_gbdb :=_eeca ._geaf .StyleSheet .AddCellStyle ();_fabd :=_eeca ._geaf .StyleSheet .AddBorder ();_gbdb .SetBorder (_fabd );_fabd ._ac .Left =border ._ac .Left ;_gbb :=_eeca ._geaf .StyleSheet .AddCellStyle ();_eedeb :=_eeca ._geaf .StyleSheet .AddBorder ();_gbb .SetBorder (_eedeb );_eedeb ._ac .Right =border ._ac .Right ;_adec :=_eeca ._geaf .StyleSheet .AddCellStyle ();_cdcd :=_eeca ._geaf .StyleSheet .AddBorder ();_adec .SetBorder (_cdcd );_cdcd ._ac .Bottom =border ._ac .Bottom ;_fgae :=_eeca ._geaf .StyleSheet .AddCellStyle ();_dbefg :=_eeca ._geaf .StyleSheet .AddBorder ();_fgae .SetBorder (_dbefg );_dbefg ._ac .Bottom =border ._ac .Bottom ;_dbefg ._ac .Left =border ._ac .Left ;_gdadf :=_eeca ._geaf .StyleSheet .AddCellStyle ();_agaa :=_eeca ._geaf .StyleSheet .AddBorder ();_gdadf .SetBorder (_agaa );_agaa ._ac .Bottom =border ._ac .Bottom ;_agaa ._ac .Right =border ._ac .Right ;_fbbg :=_begff .RowIdx ;_fgefb :=_begff .ColumnIdx ;_egc :=_fdgg .RowIdx ;_agaac :=_fdgg .ColumnIdx ;for _cbce :=_fbbg ;_cbce <=_egc ;_cbce ++{for _dbcfc :=_fgefb ;_dbcfc <=_agaac ;_dbcfc ++{_agge :=_eg .Sprintf ("\u0025\u0073\u0025\u0064",_ba .IndexToColumn (_dbcfc ),_cbce );switch {case _cbce ==_fbbg &&_dbcfc ==_fgefb :_eeca .Cell (_agge ).SetStyle (_eadac );case _cbce ==_fbbg &&_dbcfc ==_agaac :_eeca .Cell (_agge ).SetStyle (_eac );case _cbce ==_egc &&_dbcfc ==_fgefb :_eeca .Cell (_agge ).SetStyle (_fgae );case _cbce ==_egc &&_dbcfc ==_agaac :_eeca .Cell (_agge ).SetStyle (_gdadf );case _cbce ==_fbbg :_eeca .Cell (_agge ).SetStyle (_gbebb );case _cbce ==_egc :_eeca .Cell (_agge ).SetStyle (_adec );case _dbcfc ==_fgefb :_eeca .Cell (_agge ).SetStyle (_gbdb );case _dbcfc ==_agaac :_eeca .Cell (_agge ).SetStyle (_gbb );};};};return nil ;};
+func (_gggad *Sheet )SetBorder (cellRange string ,border Border )error {_fabd ,_bfeb ,_bbgd :=_ag .ParseRangeReference (cellRange );if _bbgd !=nil {return _bbgd ;};_afga :=_gggad ._egccf .StyleSheet .AddCellStyle ();_gfbgg :=_gggad ._egccf .StyleSheet .AddBorder ();_afga .SetBorder (_gfbgg );_gfbgg ._ga .Top =border ._ga .Top ;_gfbgg ._ga .Left =border ._ga .Left ;_dege :=_gggad ._egccf .StyleSheet .AddCellStyle ();_fdaee :=_gggad ._egccf .StyleSheet .AddBorder ();_dege .SetBorder (_fdaee );_fdaee ._ga .Top =border ._ga .Top ;_fdaee ._ga .Right =border ._ga .Right ;_bgec :=_gggad ._egccf .StyleSheet .AddCellStyle ();_fege :=_gggad ._egccf .StyleSheet .AddBorder ();_bgec .SetBorder (_fege );_fege ._ga .Top =border ._ga .Top ;_fbcg :=_gggad ._egccf .StyleSheet .AddCellStyle ();_dcfd :=_gggad ._egccf .StyleSheet .AddBorder ();_fbcg .SetBorder (_dcfd );_dcfd ._ga .Left =border ._ga .Left ;_cffe :=_gggad ._egccf .StyleSheet .AddCellStyle ();_fbafd :=_gggad ._egccf .StyleSheet .AddBorder ();_cffe .SetBorder (_fbafd );_fbafd ._ga .Right =border ._ga .Right ;_ddfc :=_gggad ._egccf .StyleSheet .AddCellStyle ();_dabg :=_gggad ._egccf .StyleSheet .AddBorder ();_ddfc .SetBorder (_dabg );_dabg ._ga .Bottom =border ._ga .Bottom ;_ebge :=_gggad ._egccf .StyleSheet .AddCellStyle ();_gfc :=_gggad ._egccf .StyleSheet .AddBorder ();_ebge .SetBorder (_gfc );_gfc ._ga .Bottom =border ._ga .Bottom ;_gfc ._ga .Left =border ._ga .Left ;_eeead :=_gggad ._egccf .StyleSheet .AddCellStyle ();_feb :=_gggad ._egccf .StyleSheet .AddBorder ();_eeead .SetBorder (_feb );_feb ._ga .Bottom =border ._ga .Bottom ;_feb ._ga .Right =border ._ga .Right ;_fffb :=_fabd .RowIdx ;_cgcdf :=_fabd .ColumnIdx ;_aedf :=_bfeb .RowIdx ;_gcae :=_bfeb .ColumnIdx ;for _bdd :=_fffb ;_bdd <=_aedf ;_bdd ++{for _ccac :=_cgcdf ;_ccac <=_gcae ;_ccac ++{_fagcc :=_eg .Sprintf ("\u0025\u0073\u0025\u0064",_ag .IndexToColumn (_ccac ),_bdd );switch {case _bdd ==_fffb &&_ccac ==_cgcdf :_gggad .Cell (_fagcc ).SetStyle (_afga );case _bdd ==_fffb &&_ccac ==_gcae :_gggad .Cell (_fagcc ).SetStyle (_dege );case _bdd ==_aedf &&_ccac ==_cgcdf :_gggad .Cell (_fagcc ).SetStyle (_ebge );case _bdd ==_aedf &&_ccac ==_gcae :_gggad .Cell (_fagcc ).SetStyle (_eeead );case _bdd ==_fffb :_gggad .Cell (_fagcc ).SetStyle (_bgec );case _bdd ==_aedf :_gggad .Cell (_fagcc ).SetStyle (_ddfc );case _ccac ==_cgcdf :_gggad .Cell (_fagcc ).SetStyle (_fbcg );case _ccac ==_gcae :_gggad .Cell (_fagcc ).SetStyle (_cffe );};};};return nil ;};
 
-// SetColor sets the text color.
-func (_egaa RichTextRun )SetColor (c _afd .Color ){_egaa .ensureRpr ();_egaa ._cebg .RPr .Color =_ege .NewCT_Color ();_gdaga :="\u0066\u0066"+*c .AsRGBString ();_egaa ._cebg .RPr .Color .RgbAttr =&_gdaga ;};
+// Uses1904Dates returns true if the the workbook uses dates relative to
+// 1 Jan 1904. This is uncommon.
+func (_ggcf *Workbook )Uses1904Dates ()bool {if _ggcf ._dadd .WorkbookPr ==nil ||_ggcf ._dadd .WorkbookPr .Date1904Attr ==nil {return false ;};return *_ggcf ._dadd .WorkbookPr .Date1904Attr ;};
+
+// SetValue sets the first value to be used in the comparison.  For comparisons
+// that need only one value, this is the only value used.  For comparisons like
+// 'between' that require two values, SetValue2 must also be used.
+func (_fgfg DataValidationCompare )SetValue (v string ){_fgfg ._ebe .Formula1 =&v };
+
+// Close closes the workbook, removing any temporary files that might have been
+// created when opening a document.
+func (_fecae *Workbook )Close ()error {if _fecae .TmpPath !=""{return _efg .RemoveAll (_fecae .TmpPath );};return nil ;};
+
+// GetString retrieves a string from the shared strings table by index.
+func (_aacf SharedStrings )GetString (id int )(string ,error ){if id < 0{return "",_eg .Errorf ("\u0069\u006eva\u006c\u0069\u0064 \u0073\u0074\u0072\u0069ng \u0069nd\u0065\u0078\u0020\u0025\u0064\u002c\u0020mu\u0073\u0074\u0020\u0062\u0065\u0020\u003e \u0030",id );};if id > len (_aacf ._fgc .Si )-1{return "",_eg .Errorf ("\u0069\u006e\u0076\u0061\u006c\u0069d\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0069\u006e\u0064\u0065\u0078\u0020\u0025\u0064\u002c\u0020\u0074\u0061b\u006c\u0065\u0020\u006f\u006e\u006c\u0079\u0020\u0068\u0061\u0073\u0020\u0025\u0064 \u0076a\u006c\u0075\u0065\u0073",id ,len (_aacf ._fgc .Si ));};_egff :=_aacf ._fgc .Si [id ];if _egff .T !=nil {return *_egff .T ,nil ;};_deba :="";for _ ,_cecc :=range _egff .R {if _cecc .T !=""{_deba +=_cecc .T ;};};return _deba ,nil ;};
+
+// SetFill applies a fill to a cell style. The fill is referenced by its index
+// so modifying the fill afterward will affect all styles that reference it.
+func (_dce CellStyle )SetFill (f Fill ){_dce ._gaa .FillIdAttr =_a .Uint32 (f .Index ());_dce ._gaa .ApplyFillAttr =_a .Bool (true );};
+
+// Row returns the row of the cell marker.
+func (_baaa CellMarker )Row ()int32 {return _baaa ._aag .Row };func (_efbf Fill )SetPatternFill ()PatternFill {_efbf ._egge .GradientFill =nil ;_efbf ._egge .PatternFill =_ca .NewCT_PatternFill ();_efbf ._egge .PatternFill .PatternTypeAttr =_ca .ST_PatternTypeSolid ;return PatternFill {_efbf ._egge .PatternFill ,_efbf ._egge };};
+
+// X returns the inner wrapped XML type.
+func (_ecf Font )X ()*_ca .CT_Font {return _ecf ._efde };
+
+// SetUnderline controls if the run is underlined.
+func (_cedc RichTextRun )SetUnderline (u _ca .ST_UnderlineValues ){_cedc .ensureRpr ();_cedc ._bgc .RPr .U =_ca .NewCT_UnderlineProperty ();_cedc ._bgc .RPr .U .ValAttr =u ;};
+
+// SetIcons sets the icon set to use for display.
+func (_acge IconScale )SetIcons (t _ca .ST_IconSetType ){_acge ._cfdb .IconSetAttr =t };const (StandardFormatGeneral StandardFormat =0;StandardFormat0 StandardFormat =0;StandardFormatWholeNumber StandardFormat =1;StandardFormat1 StandardFormat =1;StandardFormat2 StandardFormat =2;StandardFormat3 StandardFormat =3;StandardFormat4 StandardFormat =4;StandardFormatPercent StandardFormat =9;StandardFormat9 StandardFormat =9;StandardFormat10 StandardFormat =10;StandardFormat11 StandardFormat =11;StandardFormat12 StandardFormat =12;StandardFormat13 StandardFormat =13;StandardFormatDate StandardFormat =14;StandardFormat14 StandardFormat =14;StandardFormat15 StandardFormat =15;StandardFormat16 StandardFormat =16;StandardFormat17 StandardFormat =17;StandardFormat18 StandardFormat =18;StandardFormatTime StandardFormat =19;StandardFormat19 StandardFormat =19;StandardFormat20 StandardFormat =20;StandardFormat21 StandardFormat =21;StandardFormatDateTime StandardFormat =22;StandardFormat22 StandardFormat =22;StandardFormat37 StandardFormat =37;StandardFormat38 StandardFormat =38;StandardFormat39 StandardFormat =39;StandardFormat40 StandardFormat =40;StandardFormat45 StandardFormat =45;StandardFormat46 StandardFormat =46;StandardFormat47 StandardFormat =47;StandardFormat48 StandardFormat =48;StandardFormat49 StandardFormat =49;);
+
+// SetWidth sets the width of the anchored object.
+func (_bgf AbsoluteAnchor )SetWidth (w _d .Distance ){_bgf ._cg .Ext .CxAttr =int64 (w /_d .EMU )};func (_fcgd *evalContext )Sheet (name string )_ea .Context {for _ ,_aee :=range _fcgd ._gffe ._egccf .Sheets (){if _aee .Name ()==name {return _aee .FormulaContext ();};};return _ea .InvalidReferenceContext ;};
+
+// ClearFill clears any fill configuration from the cell style.
+func (_ece CellStyle )ClearFill (){_ece ._gaa .FillIdAttr =nil ;_ece ._gaa .ApplyFillAttr =nil };
+
+// ColorScale colors a cell background based off of the cell value.
+type ColorScale struct{_gfe *_ca .CT_ColorScale };func (_bfff *Sheet )removeColumnFromMergedCells (_abd uint32 )error {if _bfff ._bedf .MergeCells ==nil ||_bfff ._bedf .MergeCells .MergeCell ==nil {return nil ;};_aceef :=[]*_ca .CT_MergeCell {};for _ ,_agga :=range _bfff .MergedCells (){_edga :=_bcec (_agga .Reference (),_abd ,true );if _edga !=""{_agga .SetReference (_edga );_aceef =append (_aceef ,_agga .X ());};};_bfff ._bedf .MergeCells .MergeCell =_aceef ;return nil ;};
+
+// LastColumn returns the name of last column which contains data in range of context sheet's given rows.
+func (_ffab *evalContext )LastColumn (rowFrom ,rowTo int )string {_gac :=_ffab ._gffe ;_gbd :=1;for _faf :=rowFrom ;_faf <=rowTo ;_faf ++{_dbgg :=len (_gac .Row (uint32 (_faf )).Cells ());if _dbgg > _gbd {_gbd =_dbgg ;};};return _ag .IndexToColumn (uint32 (_gbd -1));};
+
+// Validate validates the sheet, returning an error if it is found to be invalid.
+func (_gbba Sheet )Validate ()error {_dcge :=[]func ()error {_gbba .validateRowCellNumbers ,_gbba .validateMergedCells ,_gbba .validateSheetNames };for _ ,_ggcc :=range _dcge {if _ebgc :=_ggcc ();_ebgc !=nil {return _ebgc ;};};if _dcd :=_gbba ._bedf .Validate ();_dcd !=nil {return _dcd ;};return _gbba ._bedf .Validate ();};func (_aagg DataValidation )SetList ()DataValidationList {_aagg .clear ();_aagg ._fabc .TypeAttr =_ca .ST_DataValidationTypeList ;_aagg ._fabc .OperatorAttr =_ca .ST_DataValidationOperatorEqual ;return DataValidationList {_aagg ._fabc };};
+
+// Column represents a column within a sheet. It's only used for formatting
+// purposes, so it's possible to construct a sheet without configuring columns.
+type Column struct{_bbde *_ca .CT_Col };
+
+// BottomRight returns the CellMaker for the bottom right corner of the anchor.
+func (_dddg TwoCellAnchor )BottomRight ()CellMarker {return CellMarker {_dddg ._afab .To }};
+
+// IsSheetLocked returns whether the sheet objects are locked.
+func (_agged SheetProtection )IsObjectLocked ()bool {return _agged ._gfgfc .ObjectsAttr !=nil &&*_agged ._gfgfc .ObjectsAttr ;};
+
+// RichText is a container for the rich text within a cell. It's similar to a
+// paragaraph for a document, except a cell can only contain one rich text item.
+type RichText struct{_gccf *_ca .CT_Rst };
+
+// HasFormula returns true if the cell contains formula.
+func (_bfa *evalContext )HasFormula (cellRef string )bool {return _bfa ._gffe .Cell (cellRef ).HasFormula ();};
+
+// Comparer is used to compare rows based off a column and cells based off of
+// their value.
+type Comparer struct{Order SortOrder ;};
+
+// SetValues sets the possible values. This is incompatible with SetRange.
+func (_fee DataValidationList )SetValues (values []string ){_fee ._eaaf .Formula1 =_a .String ("\u0022"+_cf .Join (values ,"\u002c")+"\u0022");_fee ._eaaf .Formula2 =_a .String ("\u0030");};const _abbd ="\u0053\u006fr\u0074\u004f\u0072\u0064e\u0072\u0041s\u0063\u0065\u006e\u0064\u0069\u006e\u0067\u0053o\u0072\u0074\u004f\u0072\u0064\u0065\u0072\u0044\u0065\u0073\u0063\u0065n\u0064\u0069\u006e\u0067";
+
+// Wrapped returns true if the cell will wrap text.
+func (_dcf CellStyle )Wrapped ()bool {if _dcf ._gaa .Alignment ==nil {return false ;};if _dcf ._gaa .Alignment .WrapTextAttr ==nil {return false ;};return *_dcf ._gaa .Alignment .WrapTextAttr ;};
+
+// LockWindow controls the locking of the workbook windows.
+func (_cagb WorkbookProtection )LockWindow (b bool ){if !b {_cagb ._gfde .LockWindowsAttr =nil ;}else {_cagb ._gfde .LockWindowsAttr =_a .Bool (true );};};
+
+// Workbook returns sheet's parent workbook.
+func (_geda *Sheet )Workbook ()*Workbook {return _geda ._egccf };
+
+// RemoveColumn removes column from the sheet and moves all columns to the right of the removed column one step left.
+func (_ccbe *Sheet )RemoveColumn (column string )error {_baaad ,_dcbe :=_ccbe .getAllCellsInFormulaArraysForColumn ();if _dcbe !=nil {return _dcbe ;};_fbd :=_ag .ColumnToIndex (column );for _ ,_faee :=range _ccbe .Rows (){_ccce :=_eg .Sprintf ("\u0025\u0073\u0025\u0064",column ,*_faee .X ().RAttr );if _ ,_ggac :=_baaad [_ccce ];_ggac {return nil ;};};for _ ,_gdfe :=range _ccbe .Rows (){_fddd :=_gdfe ._bcb .C ;for _gffdc ,_fgdd :=range _fddd {_ebde ,_fbdd :=_ag .ParseCellReference (*_fgdd .RAttr );if _fbdd !=nil {return _fbdd ;};if _ebde .ColumnIdx ==_fbd {_gdfe ._bcb .C =append (_fddd [:_gffdc ],_ccbe .slideCellsLeft (_fddd [_gffdc +1:])...);break ;}else if _ebde .ColumnIdx > _fbd {_gdfe ._bcb .C =append (_fddd [:_gffdc ],_ccbe .slideCellsLeft (_fddd [_gffdc :])...);break ;};};};_dcbe =_ccbe .updateAfterRemove (_fbd ,_dc .UpdateActionRemoveColumn );if _dcbe !=nil {return _dcbe ;};_dcbe =_ccbe .removeColumnFromNamedRanges (_fbd );if _dcbe !=nil {return _dcbe ;};_dcbe =_ccbe .removeColumnFromMergedCells (_fbd );if _dcbe !=nil {return _dcbe ;};for _ ,_afad :=range _ccbe ._egccf .Sheets (){_afad .RecalculateFormulas ();};return nil ;};
+
+// IsHidden returns whether the row is hidden or not.
+func (_bcca Row )IsHidden ()bool {return _bcca ._bcb .HiddenAttr !=nil &&*_bcca ._bcb .HiddenAttr };
 
 // LessCells returns true if the lhs value is less than the rhs value. If the
 // cells contain numeric values, their value interpreted as a floating point is
 // compared. Otherwise their string contents are compared.
-func (_cfd Comparer )LessCells (lhs ,rhs Cell )bool {if _cfd .Order ==SortOrderDescending {lhs ,rhs =rhs ,lhs ;};if lhs .X ()==nil {if rhs .X ()==nil {return false ;};return true ;};if rhs .X ()==nil {return false ;};_cebd ,_fda :=lhs .getRawSortValue ();_abd ,_eede :=rhs .getRawSortValue ();switch {case _fda &&_eede :_bgcc ,_ :=_gd .ParseFloat (_cebd ,64);_bagg ,_ :=_gd .ParseFloat (_abd ,64);return _bgcc < _bagg ;case _fda :return true ;case _eede :return false ;};_cebd =lhs .GetFormattedValue ();_abd =rhs .GetFormattedValue ();return _cebd < _abd ;};
+func (_eea Comparer )LessCells (lhs ,rhs Cell )bool {if _eea .Order ==SortOrderDescending {lhs ,rhs =rhs ,lhs ;};if lhs .X ()==nil {if rhs .X ()==nil {return false ;};return true ;};if rhs .X ()==nil {return false ;};_ace ,_feg :=lhs .getRawSortValue ();_fggc ,_aeb :=rhs .getRawSortValue ();switch {case _feg &&_aeb :_aeab ,_ :=_gb .ParseFloat (_ace ,64);_fdb ,_ :=_gb .ParseFloat (_fggc ,64);return _aeab < _fdb ;case _feg :return true ;case _aeb :return false ;};_ace =lhs .GetFormattedValue ();_fggc =rhs .GetFormattedValue ();return _ace < _fggc ;};func (_bdgd Font )SetColor (c _ce .Color ){_dada :=_ca .NewCT_Color ();_fcgdc :="\u0066\u0066"+*c .AsRGBString ();_dada .RgbAttr =&_fcgdc ;_bdgd ._efde .Color =[]*_ca .CT_Color {_dada };};
 
-// GetFill gets a Fill from a cell style.
-func (_ced CellStyle )GetFill ()*_ege .CT_Fill {if _agc :=_ced ._ceca .FillIdAttr ;_agc !=nil {_cee :=_ced ._ceb .StyleSheet .Fills ().X ().Fill ;if int (*_agc )< len (_cee ){return _cee [int (*_agc )];};};return nil ;};var _dga *_da .Regexp =_da .MustCompile ("\u005e(\u005ba\u002d\u007a\u005d\u002b\u0029(\u005b\u0030-\u0039\u005d\u002b\u0029\u0024");
+// GetDrawing return the worksheet drawing and its relationships if exists.
+func (_ageed *Sheet )GetDrawing ()(*_bd .WsDr ,_gg .Relationships ){if _ddba :=_ageed ._bedf .Drawing ;_ddba !=nil {_fbed :=0;for _ ,_edag :=range _ageed ._egccf ._dgga {if _ceeb :=_edag .Drawing ;_ceeb !=nil {if _edag ==_ageed ._bedf {return _ageed ._egccf ._decb [_fbed ],_ageed ._egccf ._ebfa [_fbed ];};_fbed ++;};};};return nil ,_gg .Relationships {};};
 
-// SheetText is an array of extracted text items which has some methods for representing extracted text from a sheet.
-type SheetText struct{Cells []CellText ;};const (AnchorTypeAbsolute AnchorType =iota ;AnchorTypeOneCell ;AnchorTypeTwoCell ;);
+// ClearProtection removes any protections applied to teh sheet.
+func (_eagf *Sheet )ClearProtection (){_eagf ._bedf .SheetProtection =nil };
 
-// ColOffset returns the offset from the row cell.
-func (_aaea CellMarker )ColOffset ()_ga .Distance {if _aaea ._cgf .RowOff .ST_CoordinateUnqualified ==nil {return 0;};return _ga .Distance (float64 (*_aaea ._cgf .ColOff .ST_CoordinateUnqualified )*_ga .EMU );};
-
-// OneCellAnchor is anchored to a top-left cell with a fixed with/height
-// in distance.
-type OneCellAnchor struct{_bfeef *_dbg .CT_OneCellAnchor };
-
-// SetMinLength sets the minimum bar length in percent.
-func (_fgd DataBarScale )SetMinLength (l uint32 ){_fgd ._bca .MinLengthAttr =_e .Uint32 (l )};
-
-// ClearFill clears any fill configuration from the cell style.
-func (_gbdc CellStyle )ClearFill (){_gbdc ._ceca .FillIdAttr =nil ;_gbdc ._ceca .ApplyFillAttr =nil };
-
-// AddBorder creates a new empty border that can be applied to a cell style.
-func (_cefa StyleSheet )AddBorder ()Border {_cgff :=_ege .NewCT_Border ();_cefa ._eebcg .Borders .Border =append (_cefa ._eebcg .Borders .Border ,_cgff );_cefa ._eebcg .Borders .CountAttr =_e .Uint32 (uint32 (len (_cefa ._eebcg .Borders .Border )));return Border {_cgff ,_cefa ._eebcg .Borders };};
-
-// GetFormula returns the formula for a cell.
-func (_dbeg Cell )GetFormula ()string {if _dbeg ._be .F !=nil {return _dbeg ._be .F .Content ;};return "";};func (_bgbc *Workbook )onNewRelationship (_bedbf *_db .DecodeMap ,_bffgd ,_acdd string ,_bffgb []*_bc .File ,_efca *_ae .Relationship ,_gfge _db .Target )error {_beb :=_e .DocTypeSpreadsheet ;switch _acdd {case _e .OfficeDocumentType :_bgbc ._aadd =_ege .NewWorkbook ();_bedbf .AddTarget (_bffgd ,_bgbc ._aadd ,_acdd ,0);_bgbc ._ceee =_egb .NewRelationships ();_bedbf .AddTarget (_db .RelationsPathFor (_bffgd ),_bgbc ._ceee .X (),_acdd ,0);_efca .TargetAttr =_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,0);case _e .CorePropertiesType :_bedbf .AddTarget (_bffgd ,_bgbc .CoreProperties .X (),_acdd ,0);_efca .TargetAttr =_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,0);case _e .CustomPropertiesType :_bedbf .AddTarget (_bffgd ,_bgbc .CustomProperties .X (),_acdd ,0);_efca .TargetAttr =_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,0);case _e .ExtendedPropertiesType :_bedbf .AddTarget (_bffgd ,_bgbc .AppProperties .X (),_acdd ,0);_efca .TargetAttr =_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,0);case _e .WorksheetType :_degf :=_ege .NewWorksheet ();_debb :=uint32 (len (_bgbc ._gbed ));_bgbc ._gbed =append (_bgbc ._gbed ,_degf );_bedbf .AddTarget (_bffgd ,_degf ,_acdd ,_debb );_ccecd :=_egb .NewRelationships ();_bedbf .AddTarget (_db .RelationsPathFor (_bffgd ),_ccecd .X (),_acdd ,0);_bgbc ._abeb =append (_bgbc ._abeb ,_ccecd );_bgbc ._gafdb =append (_bgbc ._gafdb ,nil );_efca .TargetAttr =_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,len (_bgbc ._gbed ));case _e .StylesType :_bgbc .StyleSheet =NewStyleSheet (_bgbc );_bedbf .AddTarget (_bffgd ,_bgbc .StyleSheet .X (),_acdd ,0);_efca .TargetAttr =_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,0);case _e .ThemeType :_ecggb :=_cg .NewTheme ();_bgbc ._bfag =append (_bgbc ._bfag ,_ecggb );_bedbf .AddTarget (_bffgd ,_ecggb ,_acdd ,0);_efca .TargetAttr =_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,len (_bgbc ._bfag ));case _e .SharedStringsType :_bgbc .SharedStrings =NewSharedStrings ();_bedbf .AddTarget (_bffgd ,_bgbc .SharedStrings .X (),_acdd ,0);_efca .TargetAttr =_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,0);case _e .ThumbnailType :for _fgg ,_ecbb :=range _bffgb {if _ecbb ==nil {continue ;};if _ecbb .Name ==_bffgd {_fcdb ,_bbeg :=_ecbb .Open ();if _bbeg !=nil {return _eg .Errorf ("e\u0072\u0072\u006f\u0072\u0020\u0072e\u0061\u0064\u0069\u006e\u0067\u0020\u0074\u0068\u0075m\u0062\u006e\u0061i\u006c:\u0020\u0025\u0073",_bbeg );};_bgbc .Thumbnail ,_ ,_bbeg =_fd .Decode (_fcdb );_fcdb .Close ();if _bbeg !=nil {return _eg .Errorf ("\u0065\u0072\u0072\u006fr\u0020\u0064\u0065\u0063\u006f\u0064\u0069\u006e\u0067\u0020t\u0068u\u006d\u0062\u006e\u0061\u0069\u006c\u003a \u0025\u0073",_bbeg );};_bffgb [_fgg ]=nil ;};};case _e .ImageType :for _afcf ,_agab :=range _bgbc ._eece {_ccbc :=_b .Clean (_bffgd );if _ccbc ==_afcf {_efca .TargetAttr =_agab ;return nil ;};};_fgdb :=_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,len (_bgbc .Images )+1);for _gbee ,_cfgcg :=range _bffgb {if _cfgcg ==nil {continue ;};if _cfgcg .Name ==_b .Clean (_bffgd ){_fgaa ,_baggd :=_db .ExtractToDiskTmp (_cfgcg ,_bgbc .TmpPath );if _baggd !=nil {return _baggd ;};_addbc ,_baggd :=_egb .ImageFromStorage (_fgaa );if _baggd !=nil {return _baggd ;};_ddfe :=_egb .MakeImageRef (_addbc ,&_bgbc .DocBase ,_bgbc ._ceee );_ddfe .SetTarget (_fgdb );_bgbc ._eece [_cfgcg .Name ]=_fgdb ;_bgbc .Images =append (_bgbc .Images ,_ddfe );_bffgb [_gbee ]=nil ;};};_efca .TargetAttr =_fgdb ;case _e .DrawingType :_eggc :=_dbg .NewWsDr ();_afcd :=uint32 (len (_bgbc ._caea ));_bedbf .AddTarget (_bffgd ,_eggc ,_acdd ,_afcd );_bgbc ._caea =append (_bgbc ._caea ,_eggc );_geaa :=_egb .NewRelationships ();_bedbf .AddTarget (_db .RelationsPathFor (_bffgd ),_geaa .X (),_acdd ,_afcd );_bgbc ._gbbbb =append (_bgbc ._gbbbb ,_geaa );_efca .TargetAttr =_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,len (_bgbc ._caea ));case _e .VMLDrawingType :_bbdgf :=_bcc .NewContainer ();_gdff :=uint32 (len (_bgbc ._edbcf ));_bedbf .AddTarget (_bffgd ,_bbdgf ,_acdd ,_gdff );_bgbc ._edbcf =append (_bgbc ._edbcf ,_bbdgf );case _e .CommentsType :_bgbc ._gafdb [_gfge .Index ]=_ege .NewComments ();_bedbf .AddTarget (_bffgd ,_bgbc ._gafdb [_gfge .Index ],_acdd ,_gfge .Index );_efca .TargetAttr =_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,len (_bgbc ._gafdb ));case _e .ChartType :_fggg :=_ff .NewChartSpace ();_cdge :=uint32 (len (_bgbc ._fbaf ));_bedbf .AddTarget (_bffgd ,_fggg ,_acdd ,_cdge );_bgbc ._fbaf =append (_bgbc ._fbaf ,_fggg );_efca .TargetAttr =_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,len (_bgbc ._fbaf ));_bgbc ._bgea [_efca .TargetAttr ]=_fggg ;case _e .TableType :_gdab :=_ege .NewTable ();_dbae :=uint32 (len (_bgbc ._fcbbc ));_bedbf .AddTarget (_bffgd ,_gdab ,_acdd ,_dbae );_bgbc ._fcbbc =append (_bgbc ._fcbbc ,_gdab );_efca .TargetAttr =_e .RelativeFilename (_beb ,_gfge .Typ ,_acdd ,len (_bgbc ._fcbbc ));default:_af .Log .Debug ("\u0075\u006e\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0065d\u0020\u0072\u0065\u006c\u0061\u0074\u0069o\u006e\u0073\u0068\u0069\u0070\u0020\u0025\u0073\u0020\u0025\u0073",_bffgd ,_acdd );};return nil ;};func (_baaf Sheet )validateSheetNames ()error {if len (_baaf .Name ())> 31{return _eg .Errorf ("\u0073\u0068\u0065\u0065\u0074 \u006e\u0061\u006d\u0065\u0020\u0027\u0025\u0073\u0027\u0020\u0068\u0061\u0073 \u0025\u0064\u0020\u0063\u0068\u0061\u0072\u0061\u0063\u0074\u0065\u0072\u0073\u002c\u0020\u006d\u0061\u0078\u0020\u006c\u0065\u006e\u0067\u0074\u0068\u0020\u0069\u0073\u0020\u00331",_baaf .Name (),len (_baaf .Name ()));};return nil ;};
-
-// Name returns the sheet name
-func (_gdae Sheet )Name ()string {return _gdae ._edab .NameAttr };
-
-// SetDateWithStyle sets a date with the default date style applied.
-func (_fge Cell )SetDateWithStyle (d _c .Time ){_fge .SetDate (d );for _ ,_bfe :=range _fge ._cdb .StyleSheet .CellStyles (){if _bfe .HasNumberFormat ()&&_bfe .NumberFormat ()==uint32 (StandardFormatDate ){_fge .SetStyle (_bfe );return ;};};_dae :=_fge ._cdb .StyleSheet .AddCellStyle ();_dae .SetNumberFormatStandard (StandardFormatDate );_fge .SetStyle (_dae );};
-
-// Name returns the name of the defined name.
-func (_dffa DefinedName )Name ()string {return _dffa ._bgf .NameAttr };
-
-// IconScale maps values to icons.
-type IconScale struct{_aggb *_ege .CT_IconSet };
-
-// DataValidationCompare is a view on a data validation rule that is oriented
-// towards value comparisons.
-type DataValidationCompare struct{_aced *_ege .CT_DataValidation };
-
-// SetRowOffset sets the row offset of the top-left anchor.
-func (_abged OneCellAnchor )SetRowOffset (m _ga .Distance ){_abged .TopLeft ().SetRowOffset (m )};
-
-// SetStyle applies a style to the cell.  This style is referenced in the
-// generated XML via CellStyle.Index().
-func (_ffc Cell )SetStyle (cs CellStyle ){_ffc .SetStyleIndex (cs .Index ())};func (_afdb Cell )getLocked ()bool {if _afdb ._be .SAttr ==nil {return false ;};_fcf :=*_afdb ._be .SAttr ;_daf :=_afdb ._cdb .StyleSheet .GetCellStyle (_fcf );return *_daf ._ceca .Protection .LockedAttr ;};
-
-// SetColOffset sets the column offset of the two cell anchor.
-func (_dfbb TwoCellAnchor )SetColOffset (m _ga .Distance ){_cecag :=m -_dfbb .TopLeft ().ColOffset ();_dfbb .TopLeft ().SetColOffset (m );_dfbb .BottomRight ().SetColOffset (_dfbb .BottomRight ().ColOffset ()+_cecag );};
-
-// ClearCachedFormulaResults clears any computed formula values that are stored
-// in the sheet. This may be required if you modify cells that are used as a
-// formula input to force the formulas to be recomputed the next time the sheet
-// is opened in Excel.
-func (_gfdf *Sheet )ClearCachedFormulaResults (){for _ ,_bbg :=range _gfdf .Rows (){for _ ,_bcd :=range _bbg .Cells (){if _bcd .X ().F !=nil {_bcd .X ().V =nil ;};};};};
-
-// GetChartByTargetId returns the array of workbook crt.ChartSpace.
-func (_eeabc *Workbook )GetChartByTargetId (targetAttr string )*_ff .ChartSpace {return _eeabc ._bgea [targetAttr ];};
-
-// SheetViews returns the sheet views defined.  This is where splits and frozen
-// rows/cols are configured.  Multiple sheet views are allowed, but I'm not
-// aware of there being a use for more than a single sheet view.
-func (_fddab *Sheet )SheetViews ()[]SheetView {if _fddab ._eaa .SheetViews ==nil {return nil ;};_daeg :=[]SheetView {};for _ ,_cdddd :=range _fddab ._eaa .SheetViews .SheetView {_daeg =append (_daeg ,SheetView {_cdddd });};return _daeg ;};
-
-// AddNumberFormat adds a new blank number format to the stylesheet.
-func (_dadg StyleSheet )AddNumberFormat ()NumberFormat {if _dadg ._eebcg .NumFmts ==nil {_dadg ._eebcg .NumFmts =_ege .NewCT_NumFmts ();};_cabd :=_ege .NewCT_NumFmt ();_cabd .NumFmtIdAttr =uint32 (200+len (_dadg ._eebcg .NumFmts .NumFmt ));_dadg ._eebcg .NumFmts .NumFmt =append (_dadg ._eebcg .NumFmts .NumFmt ,_cabd );_dadg ._eebcg .NumFmts .CountAttr =_e .Uint32 (uint32 (len (_dadg ._eebcg .NumFmts .NumFmt )));return NumberFormat {_dadg ._baea ,_cabd };};
-
-// X returns the inner wrapped XML type.
-func (_fedf CellMarker )X ()*_dbg .CT_Marker {return _fedf ._cgf };
-
-// GetFormattedValue returns the formatted cell value as it would appear in
-// Excel. This involves determining the format string to apply, parsing it, and
-// then formatting the value according to the format string.  This should only
-// be used if you care about replicating what Excel would show, otherwise
-// GetValueAsNumber()/GetValueAsTime
-func (_dbef Cell )GetFormattedValue ()string {_agbe :=_dbef .getFormat ();switch _dbef ._be .TAttr {case _ege .ST_CellTypeB :_aff ,_ :=_dbef .GetValueAsBool ();if _aff {return "\u0054\u0052\u0055\u0045";};return "\u0046\u0041\u004cS\u0045";case _ege .ST_CellTypeN :_gec ,_ :=_dbef .GetValueAsNumber ();return _de .Number (_gec ,_agbe );case _ege .ST_CellTypeE :if _dbef ._be .V !=nil {return *_dbef ._be .V ;};return "";case _ege .ST_CellTypeS ,_ege .ST_CellTypeInlineStr :return _de .String (_dbef .GetString (),_agbe );case _ege .ST_CellTypeStr :_gee :=_dbef .GetString ();if _de .IsNumber (_gee ){_cfba ,_ :=_gd .ParseFloat (_gee ,64);return _de .Number (_cfba ,_agbe );};return _de .String (_gee ,_agbe );case _ege .ST_CellTypeUnset :fallthrough;default:_cde ,_ :=_dbef .GetRawValue ();if len (_cde )==0{return "";};_fe ,_cef :=_dbef .GetValueAsNumber ();if _cef ==nil {return _de .Number (_fe ,_agbe );};return _de .String (_cde ,_agbe );};};
-
-// AddImage adds an image to the workbook package, returning a reference that
-// can be used to add the image to a drawing.
-func (_fgfa *Workbook )AddImage (i _egb .Image )(_egb .ImageRef ,error ){_cdedc :=_egb .MakeImageRef (i ,&_fgfa .DocBase ,_fgfa ._ceee );if i .Data ==nil &&i .Path ==""{return _cdedc ,_gb .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0064\u0061t\u0061\u0020\u006f\u0072\u0020\u0061\u0020\u0070\u0061\u0074\u0068");};if i .Format ==""{return _cdedc ,_gb .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0061\u0020v\u0061\u006c\u0069\u0064\u0020\u0066\u006f\u0072\u006d\u0061\u0074");};if i .Size .X ==0||i .Size .Y ==0{return _cdedc ,_gb .New ("\u0069\u006d\u0061\u0067e\u0020\u006d\u0075\u0073\u0074\u0020\u0068\u0061\u0076\u0065 \u0061 \u0076\u0061\u006c\u0069\u0064\u0020\u0073i\u007a\u0065");};if i .Path !=""{_abec :=_ef .Add (i .Path );if _abec !=nil {return _cdedc ,_abec ;};};_fgfa .Images =append (_fgfa .Images ,_cdedc );return _cdedc ,nil ;};
-
-// SetIcons configures the rule as an icon scale, removing existing
-// configuration.
-func (_cebb ConditionalFormattingRule )SetIcons ()IconScale {_cebb .clear ();_cebb .SetType (_ege .ST_CfTypeIconSet );_cebb ._cdfd .IconSet =_ege .NewCT_IconSet ();_dff :=IconScale {_cebb ._cdfd .IconSet };_dff .SetIcons (_ege .ST_IconSetType3TrafficLights1 );return _dff ;};
-
-// AddRun adds a new run of text to the cell.
-func (_cgge RichText )AddRun ()RichTextRun {_fdda :=_ege .NewCT_RElt ();_cgge ._dbaa .R =append (_cgge ._dbaa .R ,_fdda );return RichTextRun {_fdda };};
-
-// GetValueAsBool retrieves the cell's value as a boolean
-func (_bcg Cell )GetValueAsBool ()(bool ,error ){if _bcg ._be .TAttr !=_ege .ST_CellTypeB {return false ,_gb .New ("\u0063e\u006c\u006c\u0020\u0069\u0073\u0020\u006e\u006f\u0074\u0020\u006ff\u0020\u0062\u006f\u006f\u006c\u0020\u0074\u0079\u0070\u0065");};if _bcg ._be .V ==nil {return false ,_gb .New ("\u0063\u0065\u006c\u006c\u0020\u0068\u0061\u0073\u0020\u006e\u006f\u0020v\u0061\u006c\u0075\u0065");};return _gd .ParseBool (*_bcg ._be .V );};func (_fage *Sheet )setShared (_dfae string ,_cdcga ,_aagf _ba .CellReference ,_ffec string ){_bcee :=_fage .FormulaContext ();_edaaa :=_ce .NewEvaluator ();for _bgfa :=_cdcga .RowIdx ;_bgfa <=_aagf .RowIdx ;_bgfa ++{for _dbce :=_cdcga .ColumnIdx ;_dbce <=_aagf .ColumnIdx ;_dbce ++{_cacgf :=_bgfa -_cdcga .RowIdx ;_fafed :=_dbce -_cdcga .ColumnIdx ;_bcee .SetOffset (_fafed ,_cacgf );_addb :=_edaaa .Eval (_bcee ,_ffec );_abgfce :=_eg .Sprintf ("\u0025\u0073\u0025\u0064",_ba .IndexToColumn (_dbce ),_bgfa );_bcef :=_fage .Cell (_abgfce );if _addb .Type ==_ce .ResultTypeNumber {_bcef .X ().TAttr =_ege .ST_CellTypeN ;}else {_bcef .X ().TAttr =_ege .ST_CellTypeInlineStr ;};_bcef .X ().V =_e .String (_addb .Value ());};};_ =_edaaa ;_ =_bcee ;};
-
-// AddNamedCell adds a new named cell to a row and returns it. You should
-// normally prefer Cell() as it will return the existing cell if the cell
-// already exists, while AddNamedCell will duplicate the cell creating an
-// invaild spreadsheet.
-func (_ebb Row )AddNamedCell (col string )Cell {_ebd :=_ege .NewCT_Cell ();_ebd .RAttr =_e .Stringf ("\u0025\u0073\u0025\u0064",col ,_ebb .RowNumber ());_gbfba :=-1;_cea :=_ba .ColumnToIndex (col );for _afcb ,_dafe :=range _ebb ._bddg .C {_gcb ,_fcecb :=_ba .ParseCellReference (*_dafe .RAttr );if _fcecb !=nil {return Cell {};};if _cea < _gcb .ColumnIdx {_gbfba =_afcb ;break ;};};if _gbfba ==-1{_ebb ._bddg .C =append (_ebb ._bddg .C ,_ebd );}else {_ebb ._bddg .C =append (_ebb ._bddg .C [:_gbfba ],append ([]*_ege .CT_Cell {_ebd },_ebb ._bddg .C [_gbfba :]...)...);};return Cell {_ebb ._cddd ,_ebb ._fcge ,_ebb ._bddg ,_ebd };};
-
-// RemoveMergedCell removes merging from a cell range within a sheet.  The cells
-// that made up the merged cell remain, but are no lon merged.
-func (_daaf *Sheet )RemoveMergedCell (mc MergedCell ){for _fcdcf ,_ebfb :=range _daaf ._eaa .MergeCells .MergeCell {if _ebfb ==mc .X (){copy (_daaf ._eaa .MergeCells .MergeCell [_fcdcf :],_daaf ._eaa .MergeCells .MergeCell [_fcdcf +1:]);_daaf ._eaa .MergeCells .MergeCell [len (_daaf ._eaa .MergeCells .MergeCell )-1]=nil ;_daaf ._eaa .MergeCells .MergeCell =_daaf ._eaa .MergeCells .MergeCell [:len (_daaf ._eaa .MergeCells .MergeCell )-1];};};};
-
-// SetPassword sets the password hash to a hash of the input password.
-func (_bdcd WorkbookProtection )SetPassword (pw string ){_bdcd .SetPasswordHash (PasswordHash (pw ))};
-
-// SetString sets the cell type to string, and the value to the given string,
-// returning an ID from the shared strings table. To reuse a string, call
-// SetStringByID with the ID returned.
-func (_ecb Cell )SetString (s string )int {_ecb ._cdb .ensureSharedStringsRelationships ();_ecb .clearValue ();_fcd :=_ecb ._cdb .SharedStrings .AddString (s );_ecb ._be .V =_e .String (_gd .Itoa (_fcd ));_ecb ._be .TAttr =_ege .ST_CellTypeS ;return _fcd ;};
-
-// SetFormulaShared sets the cell type to formula shared, and the raw formula to
-// the given string. The range is the range of cells that the formula applies
-// to, and is used to conserve disk space.
-func (_aed Cell )SetFormulaShared (formulaStr string ,rows ,cols uint32 )error {_agg :=_ce .ParseString (formulaStr );if _agg ==nil {return _gb .New (_eg .Sprintf ("\u0043a\u006en\u006f\u0074\u0020\u0070\u0061\u0072\u0073\u0065\u0020\u0025\u0073",formulaStr ));};_aed .clearValue ();_aed ._be .TAttr =_ege .ST_CellTypeStr ;_aed ._be .F =_ege .NewCT_CellFormula ();_aed ._be .F .TAttr =_ege .ST_CellFormulaTypeShared ;_aed ._be .F .Content =formulaStr ;_age ,_cbc :=_ba .ParseCellReference (_aed .Reference ());if _cbc !=nil {return _cbc ;};_bce :=uint32 (0);for _ ,_cc :=range _aed ._bd .Rows (){for _ ,_ec :=range _cc ._bddg .C {if _ec .F !=nil &&_ec .F .SiAttr !=nil &&*_ec .F .SiAttr >=_bce {_bce =*_ec .F .SiAttr ;};};};_bce ++;_egg :=_eg .Sprintf ("\u0025s\u0025\u0064\u003a\u0025\u0073\u0025d",_age .Column ,_age .RowIdx ,_ba .IndexToColumn (_age .ColumnIdx +cols ),_age .RowIdx +rows );_aed ._be .F .RefAttr =_e .String (_egg );_aed ._be .F .SiAttr =_e .Uint32 (_bce );_eca :=Sheet {_aed ._cdb ,_aed ._bd ._edab ,_aed ._bd ._eaa };for _dedf :=_age .RowIdx ;_dedf <=_age .RowIdx +rows ;_dedf ++{for _dgb :=_age .ColumnIdx ;_dgb <=_age .ColumnIdx +cols ;_dgb ++{if _dedf ==_age .RowIdx &&_dgb ==_age .ColumnIdx {continue ;};_df :=_eg .Sprintf ("\u0025\u0073\u0025\u0064",_ba .IndexToColumn (_dgb ),_dedf );_eca .Cell (_df ).Clear ();_eca .Cell (_df ).X ().F =_ege .NewCT_CellFormula ();_eca .Cell (_df ).X ().F .TAttr =_ege .ST_CellFormulaTypeShared ;_eca .Cell (_df ).X ().F .SiAttr =_e .Uint32 (_bce );};};return nil ;};
-
-// SheetView is a view of a sheet. There is typically one per sheet, though more
-// are supported.
-type SheetView struct{_cdfa *_ege .CT_SheetView };
-
-// X returns the inner wrapped XML type.
-func (_cffc ConditionalFormatting )X ()*_ege .CT_ConditionalFormatting {return _cffc ._dbegg };func _cebc ()*_dbg .CT_AbsoluteAnchor {_dcge :=_dbg .NewCT_AbsoluteAnchor ();return _dcge };func (_eee Cell )clearValue (){_eee ._be .F =nil ;_eee ._be .Is =nil ;_eee ._be .V =nil ;_eee ._be .TAttr =_ege .ST_CellTypeUnset ;};
-
-// SetHeight is a nop-op.
-func (_fgab TwoCellAnchor )SetHeight (h _ga .Distance ){};
-
-// AddView adds a sheet view.
-func (_gfbg *Sheet )AddView ()SheetView {if _gfbg ._eaa .SheetViews ==nil {_gfbg ._eaa .SheetViews =_ege .NewCT_SheetViews ();};_ddcd :=_ege .NewCT_SheetView ();_gfbg ._eaa .SheetViews .SheetView =append (_gfbg ._eaa .SheetViews .SheetView ,_ddcd );return SheetView {_ddcd };};
-
-// SetRange sets the range that contains the possible values. This is incompatible with SetValues.
-func (_edcc DataValidationList )SetRange (cellRange string ){_edcc ._fae .Formula1 =_e .String (cellRange );_edcc ._fae .Formula2 =_e .String ("\u0030");};
-
-// SetPasswordHash sets the password hash to the input.
-func (_ffaf WorkbookProtection )SetPasswordHash (pwHash string ){_ffaf ._gcge .WorkbookPasswordAttr =_e .String (pwHash );};
-
-// SetActiveSheet sets the active sheet which will be the tab displayed when the
-// spreadsheet is initially opened.
-func (_bdbad *Workbook )SetActiveSheet (s Sheet ){for _deec ,_fgdbf :=range _bdbad ._gbed {if s ._eaa ==_fgdbf {_bdbad .SetActiveSheetIndex (uint32 (_deec ));};};};func _bgb (_efc *Sheet )*evalContext {return &evalContext {_aac :_efc ,_ccf :make (map[string ]struct{})}};
-
-// Protection controls the protection on an individual sheet.
-func (_ggc *Sheet )Protection ()SheetProtection {if _ggc ._eaa .SheetProtection ==nil {_ggc ._eaa .SheetProtection =_ege .NewCT_SheetProtection ();};return SheetProtection {_ggc ._eaa .SheetProtection };};
-
-// Name returns the name of the table
-func (_bbbf Table )Name ()string {if _bbbf ._fgea .NameAttr !=nil {return *_bbbf ._fgea .NameAttr ;};return "";};
-
-// AddComment adds a new comment and returns a RichText which will contain the
-// styled comment text.
-func (_caa Comments )AddComment (cellRef string ,author string )RichText {_efdd :=_ege .NewCT_Comment ();_caa ._abcb .CommentList .Comment =append (_caa ._abcb .CommentList .Comment ,_efdd );_efdd .RefAttr =cellRef ;_efdd .AuthorIdAttr =_caa .getOrCreateAuthor (author );_efdd .Text =_ege .NewCT_Rst ();return RichText {_efdd .Text };};func (_beea Fills )X ()*_ege .CT_Fills {return _beea ._gdcc };type WorkbookProtection struct{_gcge *_ege .CT_WorkbookProtection };
-
-// AddMergedCells merges cells within a sheet.
-func (_dgfg *Sheet )AddMergedCells (fromRef ,toRef string )MergedCell {if _dgfg ._eaa .MergeCells ==nil {_dgfg ._eaa .MergeCells =_ege .NewCT_MergeCells ();};_ecfb :=_ege .NewCT_MergeCell ();_ecfb .RefAttr =_eg .Sprintf ("\u0025\u0073\u003a%\u0073",fromRef ,toRef );_dgfg ._eaa .MergeCells .MergeCell =append (_dgfg ._eaa .MergeCells .MergeCell ,_ecfb );_dgfg ._eaa .MergeCells .CountAttr =_e .Uint32 (uint32 (len (_dgfg ._eaa .MergeCells .MergeCell )));return MergedCell {_dgfg ._geaf ,_dgfg ,_ecfb };};
-
-// SetWidth sets the width of the anchored object.
-func (_bf AbsoluteAnchor )SetWidth (w _ga .Distance ){_bf ._cgb .Ext .CxAttr =int64 (w /_ga .EMU )};
-
-// SetTime sets the cell value to a date. It's stored as the number of days past
-// th sheet epoch. When we support v5 strict, we can store an ISO 8601 date
-// string directly, however that's not allowed with v5 transitional  (even
-// though it works in Excel).
-func (_gf Cell )SetTime (d _c .Time ){_gf .clearValue ();d =_eae (d );_eb :=_gf ._cdb .Epoch ();if d .Before (_eb ){_af .Log .Debug ("t\u0069\u006d\u0065\u0073\u0020\u0062e\u0066\u006f\u0072\u0065\u0020\u00319\u0030\u0030\u0020\u0061\u0072\u0065\u0020n\u006f\u0074\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074e\u0064");return ;};_aefg :=d .Sub (_eb );_dbgd :=new (_aa .Float );_aae :=new (_aa .Float );_aae .SetPrec (128);_aae .SetUint64 (uint64 (_aefg ));_acc :=new (_aa .Float );_acc .SetUint64 (24*60*60*1e9);_dbgd .Quo (_aae ,_acc );_gf ._be .V =_e .String (_dbgd .Text ('g',20));};
-
-// Workbook returns sheet's parent workbook.
-func (_ggad *Sheet )Workbook ()*Workbook {return _ggad ._geaf };
-
-// RemoveSheet removes the sheet with the given index from the workbook.
-func (_deea *Workbook )RemoveSheet (ind int )error {if _deea .SheetCount ()<=ind {return ErrorNotFound ;};for _ ,_bccdd :=range _deea ._ceee .Relationships (){if _bccdd .ID ()==_deea ._aadd .Sheets .Sheet [ind ].IdAttr {_deea ._ceee .Remove (_bccdd );break ;};};_deea .ContentTypes .RemoveOverride (_e .AbsoluteFilename (_e .DocTypeSpreadsheet ,_e .WorksheetContentType ,ind +1));copy (_deea ._gbed [ind :],_deea ._gbed [ind +1:]);_deea ._gbed =_deea ._gbed [:len (_deea ._gbed )-1];_gaad :=_deea ._aadd .Sheets .Sheet [ind ];copy (_deea ._aadd .Sheets .Sheet [ind :],_deea ._aadd .Sheets .Sheet [ind +1:]);_deea ._aadd .Sheets .Sheet =_deea ._aadd .Sheets .Sheet [:len (_deea ._aadd .Sheets .Sheet )-1];for _agba :=range _deea ._aadd .Sheets .Sheet {if _deea ._aadd .Sheets .Sheet [_agba ].SheetIdAttr > _gaad .SheetIdAttr {_deea ._aadd .Sheets .Sheet [_agba ].SheetIdAttr --;};};copy (_deea ._abeb [ind :],_deea ._abeb [ind +1:]);_deea ._abeb =_deea ._abeb [:len (_deea ._abeb )-1];copy (_deea ._gafdb [ind :],_deea ._gafdb [ind +1:]);_deea ._gafdb =_deea ._gafdb [:len (_deea ._gafdb )-1];return nil ;};
-
-// SetWidth is a no-op.
-func (_aecfg TwoCellAnchor )SetWidth (w _ga .Distance ){};
-
-// IsBool returns true if the cell is a boolean type cell.
-func (_dbb Cell )IsBool ()bool {return _dbb ._be .TAttr ==_ege .ST_CellTypeB };
-
-// SetReference sets the regin of cells that the merged cell applies to.
-func (_dage MergedCell )SetReference (ref string ){_dage ._ggbdc .RefAttr =ref };var _aeaa =[...]uint8 {0,18,37};
-
-// GetVerticalAlignment sets the vertical alignment of a cell style.
-func (_bdb CellStyle )GetVerticalAlignment ()_ege .ST_VerticalAlignment {if _bdb ._ceca .Alignment ==nil {return _ege .ST_VerticalAlignmentUnset ;};return _bdb ._ceca .Alignment .VerticalAttr ;};
-
-// Type returns the type of anchor
-func (_bb AbsoluteAnchor )Type ()AnchorType {return AnchorTypeAbsolute };
-
-// SetFormulaArray sets the cell type to formula array, and the raw formula to
-// the given string. This is equivlent to entering a formula and pressing
-// Ctrl+Shift+Enter in Excel.
-func (_bbc Cell )SetFormulaArray (s string ){_bde :=_ce .ParseString (s );if _bde ==nil {return ;};_bbc .clearValue ();_bbc ._be .TAttr =_ege .ST_CellTypeStr ;_bbc ._be .F =_ege .NewCT_CellFormula ();_bbc ._be .F .TAttr =_ege .ST_CellFormulaTypeArray ;_bbc ._be .F .Content =s ;};
-
-// SetName sets the sheet name.
-func (_agga *Sheet )SetName (name string ){_agga ._edab .NameAttr =name };
-
-// SheetCount returns the number of sheets in the workbook.
-func (_efff Workbook )SheetCount ()int {return len (_efff ._gbed )};
+// SetStyle sets the cell style for an entire column.
+func (_edde Column )SetStyle (cs CellStyle ){_edde ._bbde .StyleAttr =_a .Uint32 (cs .Index ())};
 
 // CellReference returns the cell reference within a sheet that a comment refers
 // to (e.g. "A1")
-func (_edb Comment )CellReference ()string {return _edb ._ecf .RefAttr };
+func (_fab Comment )CellReference ()string {return _fab ._dee .RefAttr };
 
-// SetCellReference sets the cell reference within a sheet that a comment refers
-// to (e.g. "A1")
-func (_ccb Comment )SetCellReference (cellRef string ){_ccb ._ecf .RefAttr =cellRef };
-
-// GetLabelPrefix returns label prefix which depends on the cell's horizontal alignment.
-func (_bba *evalContext )GetLabelPrefix (cellRef string )string {return _bba ._aac .Cell (cellRef ).getLabelPrefix ();};
-
-// SetFont applies a font to a cell style. The font is referenced by its
-// index so modifying the font afterward will affect all styles that reference
-// it.
-func (_gdd CellStyle )SetFont (f Font ){_gdd ._ceca .FontIdAttr =_e .Uint32 (f .Index ());_gdd ._ceca .ApplyFontAttr =_e .Bool (true );};
-
-// AddConditionalFormatting adds conditional formatting to the sheet.
-func (_cfbc *Sheet )AddConditionalFormatting (cellRanges []string )ConditionalFormatting {_ebcf :=_ege .NewCT_ConditionalFormatting ();_cfbc ._eaa .ConditionalFormatting =append (_cfbc ._eaa .ConditionalFormatting ,_ebcf );_eafed :=make (_ege .ST_Sqref ,0,0);_ebcf .SqrefAttr =&_eafed ;for _ ,_begb :=range cellRanges {*_ebcf .SqrefAttr =append (*_ebcf .SqrefAttr ,_begb );};return ConditionalFormatting {_ebcf };};func (_adcg *evalContext )NamedRange (ref string )_ce .Reference {for _ ,_dbfc :=range _adcg ._aac ._geaf .DefinedNames (){if _dbfc .Name ()==ref {return _ce .MakeRangeReference (_dbfc .Content ());};};for _ ,_eff :=range _adcg ._aac ._geaf .Tables (){if _eff .Name ()==ref {return _ce .MakeRangeReference (_eg .Sprintf ("\u0025\u0073\u0021%\u0073",_adcg ._aac .Name (),_eff .Reference ()));};};return _ce .ReferenceInvalid ;};
-
-// GetBorder gets a Border from a cell style.
-func (_dfgg CellStyle )GetBorder ()*_ege .CT_Border {if _afg :=_dfgg ._ceca .BorderIdAttr ;_afg !=nil {_feaf :=_dfgg ._ceb .StyleSheet .Borders ();if int (*_afg )< len (_feaf ){return _feaf [int (*_afg )].X ();};};return nil ;};
-
-// CopySheet copies the existing sheet at index `ind` and puts its copy with the name `copiedSheetName`.
-func (_bgbe *Workbook )CopySheet (ind int ,copiedSheetName string )(Sheet ,error ){if _bgbe .SheetCount ()<=ind {return Sheet {},ErrorNotFound ;};var _bea _egb .Relationship ;for _ ,_gbggg :=range _bgbe ._ceee .Relationships (){if _gbggg .ID ()==_bgbe ._aadd .Sheets .Sheet [ind ].IdAttr {var _dddfc bool ;if _bea ,_dddfc =_bgbe ._ceee .CopyRelationship (_gbggg .ID ());!_dddfc {return Sheet {},ErrorNotFound ;};break ;};};_bgbe .ContentTypes .CopyOverride (_e .AbsoluteFilename (_e .DocTypeSpreadsheet ,_e .WorksheetContentType ,ind +1),_e .AbsoluteFilename (_e .DocTypeSpreadsheet ,_e .WorksheetContentType ,len (_bgbe .ContentTypes .X ().Override )));_ecgb :=*_bgbe ._gbed [ind ];_bgbe ._gbed =append (_bgbe ._gbed ,&_ecgb );var _cbgg uint32 =0;for _ ,_gcf :=range _bgbe ._aadd .Sheets .Sheet {if _gcf .SheetIdAttr > _cbgg {_cbgg =_gcf .SheetIdAttr ;};};_cbgg ++;_aaac :=*_bgbe ._aadd .Sheets .Sheet [ind ];_aaac .IdAttr =_bea .ID ();_aaac .NameAttr =copiedSheetName ;_aaac .SheetIdAttr =_cbgg ;_bgbe ._aadd .Sheets .Sheet =append (_bgbe ._aadd .Sheets .Sheet ,&_aaac );_gffb :=_egb .NewRelationshipsCopy (_bgbe ._abeb [ind ]);_bgbe ._abeb =append (_bgbe ._abeb ,_gffb );_dcec :=_bgbe ._gafdb [ind ];if _dcec ==nil {_bgbe ._gafdb =append (_bgbe ._gafdb ,nil );}else {_abea :=*_dcec ;_bgbe ._gafdb =append (_bgbe ._gafdb ,&_abea );};_cegb :=Sheet {_bgbe ,&_aaac ,&_ecgb };return _cegb ,nil ;};
-
-// RecalculateFormulas re-computes any computed formula values that are stored
-// in the sheet. As unioffice formula support is still new and not all functins are
-// supported, if formula execution fails either due to a parse error or missing
-// function, or erorr in the result (even if expected) the cached value will be
-// left empty allowing Excel to recompute it on load.
-func (_ddgd *Workbook )RecalculateFormulas (){for _ ,_dagf :=range _ddgd .Sheets (){_dagf .RecalculateFormulas ();};};
-
-// AddCellStyle adds a new empty cell style to the stylesheet.
-func (_dbdf StyleSheet )AddCellStyle ()CellStyle {_cbgf :=_ege .NewCT_Xf ();_dbdf ._eebcg .CellXfs .Xf =append (_dbdf ._eebcg .CellXfs .Xf ,_cbgf );_dbdf ._eebcg .CellXfs .CountAttr =_e .Uint32 (uint32 (len (_dbdf ._eebcg .CellXfs .Xf )));return CellStyle {_dbdf ._baea ,_cbgf ,_dbdf ._eebcg .CellXfs };};const (_agcd ="\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061tGe\u006e\u0065\u0072\u0061\u006cS\u0074a\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0057\u0068\u006f\u006ce\u004e\u0075\u006d\u0062\u0065\u0072\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0032\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006da\u0074\u0033\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064F\u006f\u0072\u006d\u0061\u0074\u0034";_bda ="\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074P\u0065\u0072\u0063\u0065\u006e\u0074\u0053\u0074\u0061nd\u0061r\u0064F\u006fr\u006d\u0061\u0074\u0031\u0030\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061t\u0031\u0031\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064F\u006f\u0072\u006d\u0061\u0074\u0031\u0032\u0053\u0074a\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0031\u0033\u0053t\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0044\u0061\u0074\u0065\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046o\u0072\u006d\u0061\u0074\u00315\u0053\u0074\u0061\u006e\u0064a\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0031\u0036\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0031\u0037S\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0031\u0038\u0053\u0074\u0061n\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0054\u0069\u006d\u0065\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u00320\u0053\u0074a\u006e\u0064a\u0072\u0064\u0046\u006f\u0072\u006d\u0061t\u0032\u0031\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0044\u0061t\u0065\u0054\u0069\u006d\u0065";_ebfc ="\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0033\u0037\u0053t\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006da\u0074\u0033\u0038\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u00339\u0053\u0074\u0061\u006e\u0064\u0061r\u0064\u0046o\u0072\u006da\u00744\u0030";_gdeb ="\u0053t\u0061\u006e\u0064a\u0072\u0064\u0046o\u0072ma\u0074\u0034\u0035\u0053\u0074\u0061\u006ed\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0034\u0036\u0053\u0074\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061\u0074\u0034\u0037\u0053ta\u006ed\u0061\u0072\u0064\u0046\u006f\u0072m\u0061\u0074\u0034\u0038\u0053t\u0061\u006e\u0064\u0061\u0072\u0064\u0046\u006f\u0072\u006d\u0061t\u0034\u0039";);
-
-// SharedStrings is a shared strings table, where string data can be placed
-// outside of the sheet contents and referenced from a sheet.
-type SharedStrings struct{_baee *_ege .Sst ;_fgdd map[string ]int ;};
-
-// Read reads a workbook from an io.Reader(.xlsx).
-func Read (r _bg .ReaderAt ,size int64 )(*Workbook ,error ){const _cbgb ="\u0073\u0070r\u0065\u0061\u0064s\u0068\u0065\u0065\u0074\u003a\u0052\u0065\u0061\u0064";if !_dd .GetLicenseKey ().IsLicensed ()&&!_fdgb {_eg .Println ("\u0055\u006e\u006ci\u0063\u0065\u006e\u0073e\u0064\u0020\u0076\u0065\u0072\u0073\u0069o\u006e\u0020\u006f\u0066\u0020\u0055\u006e\u0069\u004f\u0066\u0066\u0069\u0063\u0065");_eg .Println ("\u002d\u0020\u0047e\u0074\u0020\u0061\u0020\u0074\u0072\u0069\u0061\u006c\u0020\u006c\u0069\u0063\u0065\u006e\u0073\u0065\u0020\u006f\u006e\u0020\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002fu\u006e\u0069\u0064\u006f\u0063\u002e\u0069\u006f");return nil ,_gb .New ("\u0075\u006e\u0069\u006f\u0066\u0066\u0069\u0063\u0065\u0020\u006ci\u0063\u0065\u006e\u0073\u0065\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0064");};_eaff :=New ();_gbfb ,_gega :=_dd .GenRefId ("\u0073\u0072");if _gega !=nil {_af .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_gega );return nil ,_gega ;};_eaff ._ebge =_gbfb ;if _gbeb :=_dd .Track (_eaff ._ebge ,_cbgb );_gbeb !=nil {_af .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_gbeb );return nil ,_gbeb ;};_bfcf ,_gega :=_ef .TempDir ("\u0075\u006e\u0069\u006f\u0066\u0066\u0069\u0063\u0065-\u0078\u006c\u0073\u0078");if _gega !=nil {return nil ,_gega ;};_eaff .TmpPath =_bfcf ;_fdad ,_gega :=_bc .NewReader (r ,size );if _gega !=nil {return nil ,_eg .Errorf ("\u0070a\u0072s\u0069\u006e\u0067\u0020\u007a\u0069\u0070\u003a\u0020\u0025\u0073",_gega );};_dbec :=[]*_bc .File {};_dbec =append (_dbec ,_fdad .File ...);_edbb :=false ;for _ ,_cdcgf :=range _dbec {if _cdcgf .FileHeader .Name =="\u0064\u006f\u0063\u0050ro\u0070\u0073\u002f\u0063\u0075\u0073\u0074\u006f\u006d\u002e\u0078\u006d\u006c"{_edbb =true ;break ;};};if _edbb {_eaff .CreateCustomProperties ();};_caee :=_db .DecodeMap {};_caee .SetOnNewRelationshipFunc (_eaff .onNewRelationship );_caee .AddTarget (_e .ContentTypesFilename ,_eaff .ContentTypes .X (),"",0);_caee .AddTarget (_e .BaseRelsFilename ,_eaff .Rels .X (),"",0);if _gea :=_caee .Decode (_dbec );_gea !=nil {return nil ,_gea ;};for _ ,_dedb :=range _dbec {if _dedb ==nil {continue ;};if _ddg :=_eaff .AddExtraFileFromZip (_dedb );_ddg !=nil {return nil ,_ddg ;};};if _edbb {_eabg :=false ;for _ ,_bccd :=range _eaff .Rels .X ().Relationship {if _bccd .TargetAttr =="\u0064\u006f\u0063\u0050ro\u0070\u0073\u002f\u0063\u0075\u0073\u0074\u006f\u006d\u002e\u0078\u006d\u006c"{_eabg =true ;break ;};};if !_eabg {_eaff .AddCustomRelationships ();};};return _eaff ,nil ;};
-
-// Border is a cell border configuraton.
-type Border struct{_ac *_ege .CT_Border ;_gbd *_ege .CT_Borders ;};func (_gfgg *Workbook )ensureSharedStringsRelationships (){_feceea :=false ;for _ ,_afcg :=range _gfgg .ContentTypes .X ().Override {if _afcg .ContentTypeAttr ==_e .SharedStringsContentType {_feceea =true ;break ;};};if !_feceea {_gfgg .ContentTypes .AddOverride (_gefb ,_e .SharedStringsContentType );};_aecb :=false ;for _ ,_ffdd :=range _gfgg ._ceee .Relationships (){if _ffdd .X ().TargetAttr ==_beffg {_aecb =true ;break ;};};if !_aecb {_gfgg ._ceee .AddRelationship (_beffg ,_e .SharedStringsType );};};
-
-// X returns the inner wrapped XML type.
-func (_cabe MergedCell )X ()*_ege .CT_MergeCell {return _cabe ._ggbdc };type SheetProtection struct{_aebf *_ege .CT_SheetProtection };
-
-// AddNumberedRow adds a row with a given row number.  If you reuse a row number
-// the resulting file will fail validation and fail to open in Office programs. Use
-// Row instead which creates a new row or returns an existing row.
-func (_aebcf *Sheet )AddNumberedRow (rowNum uint32 )Row {_dgc :=_ege .NewCT_Row ();_dgc .RAttr =_e .Uint32 (rowNum );_aebcf ._eaa .SheetData .Row =append (_aebcf ._eaa .SheetData .Row ,_dgc );_d .Slice (_aebcf ._eaa .SheetData .Row ,func (_fabee ,_adbd int )bool {_bfgc :=_aebcf ._eaa .SheetData .Row [_fabee ].RAttr ;_cadee :=_aebcf ._eaa .SheetData .Row [_adbd ].RAttr ;if _bfgc ==nil {return true ;};if _cadee ==nil {return true ;};return *_bfgc < *_cadee ;});return Row {_aebcf ._geaf ,_aebcf ,_dgc };};
-
-// IsSheetLocked returns whether the sheet is locked.
-func (_eade SheetProtection )IsSheetLocked ()bool {return _eade ._aebf .SheetAttr !=nil &&*_eade ._aebf .SheetAttr ;};
-
-// ClearFont clears any font configuration from the cell style.
-func (_fba CellStyle )ClearFont (){_fba ._ceca .FontIdAttr =nil ;_fba ._ceca .ApplyFontAttr =nil };
-
-// PasswordHash returns the hash of the workbook password.
-func (_eaded SheetProtection )PasswordHash ()string {if _eaded ._aebf .PasswordAttr ==nil {return "";};return *_eaded ._aebf .PasswordAttr ;};
-
-// RemoveSheetByName removes the sheet with the given name from the workbook.
-func (_acge *Workbook )RemoveSheetByName (name string )error {_cede :=-1;for _cbfg ,_eebf :=range _acge .Sheets (){if name ==_eebf .Name (){_cede =_cbfg ;break ;};};if _cede ==-1{return ErrorNotFound ;};return _acge .RemoveSheet (_cede );};
-
-// Row will return a row with a given row number, creating a new row if
-// necessary.
-func (_gfea *Sheet )Row (rowNum uint32 )Row {for _ ,_egba :=range _gfea ._eaa .SheetData .Row {if _egba .RAttr !=nil &&*_egba .RAttr ==rowNum {return Row {_gfea ._geaf ,_gfea ,_egba };};};return _gfea .AddNumberedRow (rowNum );};
-
-// InsertRow inserts a new row into a spreadsheet at a particular row number.  This
-// row will now be the row number specified, and any rows after it will be renumbed.
-func (_acffe *Sheet )InsertRow (rowNum int )Row {_bbbb :=uint32 (rowNum );for _ ,_deddd :=range _acffe .Rows (){if _deddd ._bddg .RAttr !=nil &&*_deddd ._bddg .RAttr >=_bbbb {*_deddd ._bddg .RAttr ++;for _ ,_dagg :=range _deddd .Cells (){_beef ,_gddce :=_ba .ParseCellReference (_dagg .Reference ());if _gddce !=nil {continue ;};_beef .RowIdx ++;_dagg ._be .RAttr =_e .String (_beef .String ());};};};for _ ,_edea :=range _acffe .MergedCells (){_gag ,_edf ,_ecbd :=_ba .ParseRangeReference (_edea .Reference ());if _ecbd !=nil {continue ;};if int (_gag .RowIdx )>=rowNum {_gag .RowIdx ++;};if int (_edf .RowIdx )>=rowNum {_edf .RowIdx ++;};_cded :=_eg .Sprintf ("\u0025\u0073\u003a%\u0073",_gag ,_edf );_edea .SetReference (_cded );};return _acffe .AddNumberedRow (_bbbb );};
-
-// GetSheet returns a sheet by name, or an error if a sheet by the given name
-// was not found.
-func (_fgfc *Workbook )GetSheet (name string )(Sheet ,error ){for _ ,_bbbd :=range _fgfc .Sheets (){if _bbbd .Name ()==name {return _bbbd ,nil ;};};return Sheet {},ErrorNotFound ;};
-
-// GetFont gets a Font from a cell style.
-func (_adc CellStyle )GetFont ()*_ege .CT_Font {if _dge :=_adc ._ceca .FontIdAttr ;_dge !=nil {_cgg :=_adc ._ceb .StyleSheet .Fonts ();if int (*_dge )< len (_cgg ){return _cgg [int (*_dge )].X ();};};return nil ;};func (_bgde CellStyle )SetShrinkToFit (b bool ){if _bgde ._ceca .Alignment ==nil {_bgde ._ceca .Alignment =_ege .NewCT_CellAlignment ();};_bgde ._ceca .ApplyAlignmentAttr =_e .Bool (true );if !b {_bgde ._ceca .Alignment .ShrinkToFitAttr =nil ;}else {_bgde ._ceca .Alignment .ShrinkToFitAttr =_e .Bool (b );};};
-
-// SetBool sets the cell type to boolean and the value to the given boolean
-// value.
-func (_ccde Cell )SetBool (v bool ){_ccde .clearValue ();_ccde ._be .V =_e .String (_gd .Itoa (_dfb (v )));_ccde ._be .TAttr =_ege .ST_CellTypeB ;};
-
-// X returns the inner wrapped XML type.
-func (_badf Column )X ()*_ege .CT_Col {return _badf ._ceef };
-
-// GetHorizontalAlignment sets the horizontal alignment of a cell style.
-func (_fbd CellStyle )GetHorizontalAlignment ()_ege .ST_HorizontalAlignment {if _fbd ._ceca .Alignment ==nil {return _ege .ST_HorizontalAlignmentUnset ;};return _fbd ._ceca .Alignment .HorizontalAttr ;};
-
-// Themes returns the array of workbook dml.Theme.
-func (_bbad *Workbook )Themes ()[]*_cg .Theme {return _bbad ._bfag };
-
-// SetConditionValue sets the condition value to be used for style applicaton.
-func (_fbb ConditionalFormattingRule )SetConditionValue (v string ){_fbb ._cdfd .Formula =[]string {v }};
-
-// LastColumn returns the name of last column which contains data in range of context sheet's given rows.
-func (_dagb *evalContext )LastColumn (rowFrom ,rowTo int )string {_ebfe :=_dagb ._aac ;_dddf :=1;for _afc :=rowFrom ;_afc <=rowTo ;_afc ++{_eda :=len (_ebfe .Row (uint32 (_afc )).Cells ());if _eda > _dddf {_dddf =_eda ;};};return _ba .IndexToColumn (uint32 (_dddf -1));};
-
-// AbsoluteAnchor has a fixed top-left corner in distance units as well as a
-// fixed height/width.
-type AbsoluteAnchor struct{_cgb *_dbg .CT_AbsoluteAnchor };
-
-// TopLeft returns the top-left corner of the anchored object.
-func (_eaga OneCellAnchor )TopLeft ()CellMarker {return CellMarker {_eaga ._bfeef .From }};func (_fdbf Font )SetItalic (b bool ){if b {_fdbf ._eeea .I =[]*_ege .CT_BooleanProperty {{}};}else {_fdbf ._eeea .I =nil ;};};
-
-// Type returns the type of the rule
-func (_gdfg ConditionalFormattingRule )Type ()_ege .ST_CfType {return _gdfg ._cdfd .TypeAttr };
-
-// New constructs a new workbook.
-func New ()*Workbook {_dged :=&Workbook {};_dged ._aadd =_ege .NewWorkbook ();_dged .AppProperties =_egb .NewAppProperties ();_dged .CoreProperties =_egb .NewCoreProperties ();_dged .StyleSheet =NewStyleSheet (_dged );_dged .Rels =_egb .NewRelationships ();_dged ._ceee =_egb .NewRelationships ();_dged .Rels .AddRelationship (_e .RelativeFilename (_e .DocTypeSpreadsheet ,"",_e .ExtendedPropertiesType ,0),_e .ExtendedPropertiesType );_dged .Rels .AddRelationship (_e .RelativeFilename (_e .DocTypeSpreadsheet ,"",_e .CorePropertiesType ,0),_e .CorePropertiesType );_dged .Rels .AddRelationship (_e .RelativeFilename (_e .DocTypeSpreadsheet ,"",_e .OfficeDocumentType ,0),_e .OfficeDocumentType );_dged ._ceee .AddRelationship (_e .RelativeFilename (_e .DocTypeSpreadsheet ,_e .OfficeDocumentType ,_e .StylesType ,0),_e .StylesType );_dged .ContentTypes =_egb .NewContentTypes ();_dged .ContentTypes .AddDefault ("\u0076\u006d\u006c",_e .VMLDrawingContentType );_dged .ContentTypes .AddOverride (_e .AbsoluteFilename (_e .DocTypeSpreadsheet ,_e .OfficeDocumentType ,0),"\u0061\u0070\u0070\u006c\u0069c\u0061\u0074\u0069\u006f\u006e\u002fv\u006e\u0064\u002e\u006f\u0070\u0065\u006ex\u006d\u006c\u0066o\u0072\u006d\u0061\u0074s\u002d\u006f\u0066\u0066\u0069\u0063e\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0073\u0070\u0072\u0065\u0061\u0064\u0073\u0068e\u0065\u0074\u006d\u006c\u002e\u0073\u0068\u0065\u0065\u0074\u002e\u006d\u0061\u0069\u006e\u002b\u0078\u006d\u006c");_dged .ContentTypes .AddOverride (_e .AbsoluteFilename (_e .DocTypeSpreadsheet ,_e .StylesType ,0),_e .SMLStyleSheetContentType );_dged .SharedStrings =NewSharedStrings ();_dged .ContentTypes .AddOverride (_e .AbsoluteFilename (_e .DocTypeSpreadsheet ,_e .SharedStringsType ,0),_e .SharedStringsContentType );_dged ._ceee .AddRelationship (_e .RelativeFilename (_e .DocTypeSpreadsheet ,_e .OfficeDocumentType ,_e .SharedStringsType ,0),_e .SharedStringsType );_dged ._eece =map[string ]string {};return _dged ;};func (_dbbf *evalContext )SetOffset (col ,row uint32 ){_dbbf ._fdeg =col ;_dbbf ._gddea =row };
-
-// MaxColumnIdx returns the max used column of the sheet.
-func (_bcbg Sheet )MaxColumnIdx ()uint32 {_aeec :=uint32 (0);for _ ,_aabd :=range _bcbg .Rows (){_cdee :=_aabd ._bddg .C ;if len (_cdee )> 0{_ccaf :=_cdee [len (_cdee )-1];_abce ,_ :=_ba .ParseCellReference (*_ccaf .RAttr );if _aeec < _abce .ColumnIdx {_aeec =_abce .ColumnIdx ;};};};return _aeec ;};
-
-// SetLocked sets cell locked or not.
-func (_eafaf *evalContext )SetLocked (cellRef string ,locked bool ){_eafaf ._aac .Cell (cellRef ).setLocked (locked );};
-
-// SaveToFile writes the workbook out to a file.
-func (_gecc *Workbook )SaveToFile (path string )error {_fgfd ,_eeff :=_ee .Create (path );if _eeff !=nil {return _eeff ;};defer _fgfd .Close ();return _gecc .Save (_fgfd );};
-
-// RemoveDefinedName removes an existing defined name.
-func (_fcag *Workbook )RemoveDefinedName (dn DefinedName )error {if dn .X ()==nil {return _gb .New ("\u0061\u0074\u0074\u0065\u006d\u0070t\u0020\u0074\u006f\u0020\u0072\u0065\u006d\u006f\u0076\u0065\u0020\u006e\u0069l\u0020\u0044\u0065\u0066\u0069\u006e\u0065d\u004e\u0061\u006d\u0065");};for _gccgg ,_bcdc :=range _fcag ._aadd .DefinedNames .DefinedName {if _bcdc ==dn .X (){copy (_fcag ._aadd .DefinedNames .DefinedName [_gccgg :],_fcag ._aadd .DefinedNames .DefinedName [_gccgg +1:]);_fcag ._aadd .DefinedNames .DefinedName [len (_fcag ._aadd .DefinedNames .DefinedName )-1]=nil ;_fcag ._aadd .DefinedNames .DefinedName =_fcag ._aadd .DefinedNames .DefinedName [:len (_fcag ._aadd .DefinedNames .DefinedName )-1];return nil ;};};return _gb .New ("\u0064\u0065\u0066\u0069ne\u0064\u0020\u006e\u0061\u006d\u0065\u0020\u006e\u006f\u0074\u0020\u0066\u006f\u0075n\u0064");};func _eeb (_daab string )bool {_daab =_fca .Replace (_daab ,"\u0024","",-1);if _gddc :=_dga .FindStringSubmatch (_fca .ToLower (_daab ));len (_gddc )> 2{_fcc :=_gddc [1];_gfd ,_bcge :=_gd .Atoi (_gddc [2]);if _bcge !=nil {return false ;};return _gfd <=1048576&&_fcc <="\u007a\u007a";};return false ;};
-
-// SetDataBar configures the rule as a data bar, removing existing
-// configuration.
-func (_gad ConditionalFormattingRule )SetDataBar ()DataBarScale {_gad .clear ();_gad .SetType (_ege .ST_CfTypeDataBar );_gad ._cdfd .DataBar =_ege .NewCT_DataBar ();_aca :=DataBarScale {_gad ._cdfd .DataBar };_aca .SetShowValue (true );_aca .SetMinLength (10);_aca .SetMaxLength (90);return _aca ;};func (_cgfg *evalContext )Cell (ref string ,ev _ce .Evaluator )_ce .Result {if !_eeb (ref ){return _ce .MakeErrorResultType (_ce .ErrorTypeName ,"");};_faf :=_cgfg ._aac .Name ()+"\u0021"+ref ;if _cgcc ,_dbf :=ev .GetFromCache (_faf );_dbf {return _cgcc ;};_adgc ,_ebf :=_ba .ParseCellReference (ref );if _ebf !=nil {return _ce .MakeErrorResult (_eg .Sprintf ("e\u0072r\u006f\u0072\u0020\u0070\u0061\u0072\u0073\u0069n\u0067\u0020\u0025\u0073: \u0025\u0073",ref ,_ebf ));};if _cgfg ._fdeg !=0&&!_adgc .AbsoluteColumn {_adgc .ColumnIdx +=_cgfg ._fdeg ;_adgc .Column =_ba .IndexToColumn (_adgc .ColumnIdx );};if _cgfg ._gddea !=0&&!_adgc .AbsoluteRow {_adgc .RowIdx +=_cgfg ._gddea ;};_agea :=_cgfg ._aac .Cell (_adgc .String ());if _agea .HasFormula (){if _ ,_addf :=_cgfg ._ccf [ref ];_addf {return _ce .MakeErrorResult ("r\u0065\u0063\u0075\u0072\u0073\u0069\u006f\u006e\u0020\u0064\u0065\u0074\u0065\u0063\u0074\u0065\u0064\u0020d\u0075\u0072\u0069\u006e\u0067\u0020\u0065\u0076\u0061\u006cua\u0074\u0069\u006fn\u0020o\u0066\u0020"+ref );};_cgfg ._ccf [ref ]=struct{}{};_aad :=ev .Eval (_cgfg ,_agea .GetFormula ());delete (_cgfg ._ccf ,ref );ev .SetCache (_faf ,_aad );return _aad ;};if _agea .IsEmpty (){_cafe :=_ce .MakeEmptyResult ();ev .SetCache (_faf ,_cafe );return _cafe ;}else if _agea .IsNumber (){_bfee ,_ :=_agea .GetValueAsNumber ();_ffgf :=_ce .MakeNumberResult (_bfee );ev .SetCache (_faf ,_ffgf );return _ffgf ;}else if _agea .IsBool (){_dda ,_ :=_agea .GetValueAsBool ();_fab :=_ce .MakeBoolResult (_dda );ev .SetCache (_faf ,_fab );return _fab ;};_addd ,_ :=_agea .GetRawValue ();if _agea .IsError (){_abdf :=_ce .MakeErrorResult ("");_abdf .ValueString =_addd ;ev .SetCache (_faf ,_abdf );return _abdf ;};_edc :=_ce .MakeStringResult (_addd );ev .SetCache (_faf ,_edc );return _edc ;};
-
-// SetHeight sets the height of the anchored object.
-func (_bag AbsoluteAnchor )SetHeight (h _ga .Distance ){_bag ._cgb .Ext .CyAttr =int64 (h /_ga .EMU )};
-
-// Borders returns the list of borders defined in the stylesheet.
-func (_aacf StyleSheet )Borders ()[]Border {_agcc :=[]Border {};for _ ,_beegb :=range _aacf ._eebcg .Borders .Border {_agcc =append (_agcc ,Border {_ac :_beegb });};return _agcc ;};
-
-// Text returns text from the sheet as one string separated with line breaks.
-func (_ggag *SheetText )Text ()string {_bbaf :=_fc .NewBuffer ([]byte {});for _ ,_bdc :=range _ggag .Cells {if _bdc .Text !=""{_bbaf .WriteString (_bdc .Text );_bbaf .WriteString ("\u000a");};};return _bbaf .String ();};
-
-// IsSheetLocked returns whether the sheet objects are locked.
-func (_daed SheetProtection )IsObjectLocked ()bool {return _daed ._aebf .ObjectsAttr !=nil &&*_daed ._aebf .ObjectsAttr ;};
-
-// Font allows editing fonts within a spreadsheet stylesheet.
-type Font struct{_eeea *_ege .CT_Font ;_ccgf *_ege .StyleSheet ;};
-
-// CellStyle is a formatting style for a cell. CellStyles are spreadsheet global
-// and can be applied to cells across sheets.
-type CellStyle struct{_ceb *Workbook ;_ceca *_ege .CT_Xf ;_cab *_ege .CT_CellXfs ;};
-
-// SetContent sets the defined name content.
-func (_fce DefinedName )SetContent (s string ){_fce ._bgf .Content =s };
-
-// LockSheet controls the locking of the sheet.
-func (_aedf SheetProtection )LockSheet (b bool ){if !b {_aedf ._aebf .SheetAttr =nil ;}else {_aedf ._aebf .SheetAttr =_e .Bool (true );};};
-
-// SetVerticalAlignment sets the vertical alignment of a cell style.
-func (_gba CellStyle )SetVerticalAlignment (a _ege .ST_VerticalAlignment ){if _gba ._ceca .Alignment ==nil {_gba ._ceca .Alignment =_ege .NewCT_CellAlignment ();};_gba ._ceca .ApplyAlignmentAttr =_e .Bool (true );_gba ._ceca .Alignment .VerticalAttr =a ;};func (_aef Border )SetBottom (style _ege .ST_BorderStyle ,c _afd .Color ){if _aef ._ac .Bottom ==nil {_aef ._ac .Bottom =_ege .NewCT_BorderPr ();};_aef ._ac .Bottom .Color =_ege .NewCT_Color ();_aef ._ac .Bottom .Color .RgbAttr =c .AsRGBAString ();_aef ._ac .Bottom .StyleAttr =style ;};func (_efg ConditionalFormattingRule )InitializeDefaults (){_efg .SetType (_ege .ST_CfTypeCellIs );_efg .SetOperator (_ege .ST_ConditionalFormattingOperatorGreaterThan );_efg .SetPriority (1);};
-
-// SetRowOffset sets the row offset of the top-left of the image in fixed units.
-func (_bgd AbsoluteAnchor )SetRowOffset (m _ga .Distance ){_bgd ._cgb .Pos .YAttr .ST_CoordinateUnqualified =_e .Int64 (int64 (m /_ga .EMU ));};func (_dgeb StyleSheet )GetCellStyle (id uint32 )CellStyle {for _bcdf ,_ddcg :=range _dgeb ._eebcg .CellXfs .Xf {if uint32 (_bcdf )==id {return CellStyle {_dgeb ._baea ,_ddcg ,_dgeb ._eebcg .CellXfs };};};return CellStyle {};};
+// RowOffset returns the offset from the row cell.
+func (_dbag CellMarker )RowOffset ()_d .Distance {if _dbag ._aag .RowOff .ST_CoordinateUnqualified ==nil {return 0;};return _d .Distance (float64 (*_dbag ._aag .RowOff .ST_CoordinateUnqualified )*_d .EMU );};
 
 // Sort sorts all of the rows within a sheet by the contents of a column. As the
 // file format doesn't suppot indicating that a column should be sorted by the
@@ -1163,135 +873,425 @@ func (_bgd AbsoluteAnchor )SetRowOffset (m _ga .Distance ){_bgd ._cgb .Pos .YAtt
 // specifies the column to sort by. The firstRow is a 1-based index and
 // specifies the firstRow to include in the sort, allowing skipping over a
 // header row.
-func (_bcgbf *Sheet )Sort (column string ,firstRow uint32 ,order SortOrder ){_eagg :=_bcgbf ._eaa .SheetData .Row ;_gca :=_bcgbf .Rows ();for _acfa ,_deae :=range _gca {if _deae .RowNumber ()==firstRow {_eagg =_bcgbf ._eaa .SheetData .Row [_acfa :];break ;};};_bccf :=Comparer {Order :order };_d .Slice (_eagg ,func (_dbfga ,_cabbb int )bool {return _bccf .LessRows (column ,Row {_bcgbf ._geaf ,_bcgbf ,_eagg [_dbfga ]},Row {_bcgbf ._geaf ,_bcgbf ,_eagg [_cabbb ]});});for _gfcba ,_cagg :=range _bcgbf .Rows (){_gfcd :=uint32 (_gfcba +1);if _cagg .RowNumber ()!=_gfcd {_cagg .renumberAs (_gfcd );};};};func (_gdad Font )SetBold (b bool ){if b {_gdad ._eeea .B =[]*_ege .CT_BooleanProperty {{}};}else {_gdad ._eeea .B =nil ;};};
+func (_fcga *Sheet )Sort (column string ,firstRow uint32 ,order SortOrder ){_gefd :=_fcga ._bedf .SheetData .Row ;_bdc :=_fcga .Rows ();for _gfag ,_egae :=range _bdc {if _egae .RowNumber ()==firstRow {_gefd =_fcga ._bedf .SheetData .Row [_gfag :];break ;};};_gbbg :=Comparer {Order :order };_af .Slice (_gefd ,func (_faba ,_feged int )bool {return _gbbg .LessRows (column ,Row {_fcga ._egccf ,_fcga ,_gefd [_faba ]},Row {_fcga ._egccf ,_fcga ,_gefd [_feged ]});});for _bbf ,_dcgf :=range _fcga .Rows (){_addb :=uint32 (_bbf +1);if _dcgf .RowNumber ()!=_addb {_dcgf .renumberAs (_addb );};};};
 
 // X returns the inner wrapped XML type.
-func (_deb Border )X ()*_ege .CT_Border {return _deb ._ac };const _dbe ="\u00320\u0030\u0036\u002d\u00301\u002d\u0030\u0032\u0054\u00315\u003a0\u0034:\u0030\u0035\u005a\u0030\u0037\u003a\u00300";
+func (_fefa DataBarScale )X ()*_ca .CT_DataBar {return _fefa ._cdd };
 
-// MoveTo moves the top-left of the anchored object.
-func (_ffbg OneCellAnchor )MoveTo (col ,row int32 ){_ffbg .TopLeft ().SetCol (col );_ffbg .TopLeft ().SetRow (row );};func (_fef *Sheet )addNumberedRowFast (_gcbd uint32 )Row {_dfa :=_ege .NewCT_Row ();_dfa .RAttr =_e .Uint32 (_gcbd );_fef ._eaa .SheetData .Row =append (_fef ._eaa .SheetData .Row ,_dfa );return Row {_fef ._geaf ,_fef ,_dfa };};
+// LockSheet controls the locking of the sheet.
+func (_begc SheetProtection )LockSheet (b bool ){if !b {_begc ._gfgfc .SheetAttr =nil ;}else {_begc ._gfgfc .SheetAttr =_a .Bool (true );};};
+
+// IsStructureLocked returns whether the workbook structure is locked.
+func (_eecc WorkbookProtection )IsStructureLocked ()bool {return _eecc ._gfde .LockStructureAttr !=nil &&*_eecc ._gfde .LockStructureAttr ;};
+
+// AddHyperlink creates and sets a hyperlink on a cell.
+func (_fbg Cell )AddHyperlink (url string ){for _gdd ,_gcb :=range _fbg ._abb ._dgga {if _gcb ==_fbg ._becd ._bedf {_fbg .SetHyperlink (_fbg ._abb ._fcbc [_gdd ].AddHyperlink (url ));return ;};};};func (_cead *evalContext )Cell (ref string ,ev _ea .Evaluator )_ea .Result {if !_bcg (ref ){return _ea .MakeErrorResultType (_ea .ErrorTypeName ,"");};_dcb :=_cead ._gffe .Name ()+"\u0021"+ref ;if _egf ,_dgg :=ev .GetFromCache (_dcb );_dgg {return _egf ;};_gbb ,_cbc :=_ag .ParseCellReference (ref );if _cbc !=nil {return _ea .MakeErrorResult (_eg .Sprintf ("e\u0072r\u006f\u0072\u0020\u0070\u0061\u0072\u0073\u0069n\u0067\u0020\u0025\u0073: \u0025\u0073",ref ,_cbc ));};if _cead ._gba !=0&&!_gbb .AbsoluteColumn {_gbb .ColumnIdx +=_cead ._gba ;_gbb .Column =_ag .IndexToColumn (_gbb .ColumnIdx );};if _cead ._gbg !=0&&!_gbb .AbsoluteRow {_gbb .RowIdx +=_cead ._gbg ;};_cge :=_cead ._gffe .Cell (_gbb .String ());if _cge .HasFormula (){if _ ,_cbf :=_cead ._gdg [ref ];_cbf {return _ea .MakeErrorResult ("r\u0065\u0063\u0075\u0072\u0073\u0069\u006f\u006e\u0020\u0064\u0065\u0074\u0065\u0063\u0074\u0065\u0064\u0020d\u0075\u0072\u0069\u006e\u0067\u0020\u0065\u0076\u0061\u006cua\u0074\u0069\u006fn\u0020o\u0066\u0020"+ref );};_cead ._gdg [ref ]=struct{}{};_dga :=ev .Eval (_cead ,_cge .GetFormula ());delete (_cead ._gdg ,ref );ev .SetCache (_dcb ,_dga );return _dga ;};if _cge .IsEmpty (){_fgae :=_ea .MakeEmptyResult ();ev .SetCache (_dcb ,_fgae );return _fgae ;}else if _cge .IsNumber (){_dcbc ,_ :=_cge .GetValueAsNumber ();_fbee :=_ea .MakeNumberResult (_dcbc );ev .SetCache (_dcb ,_fbee );return _fbee ;}else if _cge .IsBool (){_abg ,_ :=_cge .GetValueAsBool ();_gffeb :=_ea .MakeBoolResult (_abg );ev .SetCache (_dcb ,_gffeb );return _gffeb ;};_aadb ,_ :=_cge .GetRawValue ();if _cge .IsError (){_gdaa :=_ea .MakeErrorResult ("");_gdaa .ValueString =_aadb ;ev .SetCache (_dcb ,_gdaa );return _gdaa ;};_fgbe :=_ea .MakeStringResult (_aadb );ev .SetCache (_dcb ,_fgbe );return _fgbe ;};
+
+// SetPasswordHash sets the password hash to the input.
+func (_eedc SheetProtection )SetPasswordHash (pwHash string ){_eedc ._gfgfc .PasswordAttr =_a .String (pwHash );};
+
+// X returns the inner wrapped XML type.
+func (_ffb Border )X ()*_ca .CT_Border {return _ffb ._ga };
+
+// RowNumber returns the row number (1-N), or zero if it is unset.
+func (_defg Row )RowNumber ()uint32 {if _defg ._bcb .RAttr !=nil {return *_defg ._bcb .RAttr ;};return 0;};
+
+// AddCommentWithStyle adds a new comment styled in a default way
+func (_dda Comments )AddCommentWithStyle (cellRef string ,author string ,comment string )error {_bdga :=_dda .AddComment (cellRef ,author );_dfa :=_bdga .AddRun ();_dfa .SetBold (true );_dfa .SetSize (10);_dfa .SetColor (_ce .Black );_dfa .SetFont ("\u0043a\u006c\u0069\u0062\u0072\u0069");_dfa .SetText (author +"\u003a");_dfa =_bdga .AddRun ();_dfa .SetSize (10);_dfa .SetFont ("\u0043a\u006c\u0069\u0062\u0072\u0069");_dfa .SetColor (_ce .Black );_dfa .SetText ("\u000d\u000a"+comment +"\u000d\u000a");_ecg ,_acf :=_ag .ParseCellReference (cellRef );if _acf !=nil {return _acf ;};_dda ._afg ._dedb [0].Shape =append (_dda ._afg ._dedb [0].Shape ,_deb .NewCommentShape (int64 (_ecg .ColumnIdx ),int64 (_ecg .RowIdx -1)));return nil ;};func (_gce PatternFill )SetBgColor (c _ce .Color ){_gce ._cedb .BgColor =_ca .NewCT_Color ();_gce ._cedb .BgColor .RgbAttr =c .AsRGBAString ();};
+
+// MoveTo is a no-op.
+func (_dcg AbsoluteAnchor )MoveTo (x ,y int32 ){};
+
+// ClearBorder clears any border configuration from the cell style.
+func (_acd CellStyle )ClearBorder (){_acd ._gaa .BorderIdAttr =nil ;_acd ._gaa .ApplyBorderAttr =nil };
+
+// Name returns the name of the table
+func (_afaa Table )Name ()string {if _afaa ._eebe .NameAttr !=nil {return *_afaa ._eebe .NameAttr ;};return "";};
+
+// SetColOffset sets the column offset of the two cell anchor.
+func (_aebc TwoCellAnchor )SetColOffset (m _d .Distance ){_agbgb :=m -_aebc .TopLeft ().ColOffset ();_aebc .TopLeft ().SetColOffset (m );_aebc .BottomRight ().SetColOffset (_aebc .BottomRight ().ColOffset ()+_agbgb );};
+
+// Clear clears the cell's value and type.
+func (_df Cell )Clear (){_df .clearValue ();_df ._gbf .TAttr =_ca .ST_CellTypeUnset };
+
+// RecalculateFormulas re-computes any computed formula values that are stored
+// in the sheet. As unioffice formula support is still new and not all functins are
+// supported, if formula execution fails either due to a parse error or missing
+// function, or erorr in the result (even if expected) the cached value will be
+// left empty allowing Excel to recompute it on load.
+func (_gdfa *Workbook )RecalculateFormulas (){for _ ,_agad :=range _gdfa .Sheets (){_agad .RecalculateFormulas ();};};
+
+// InitializeDefaults initializes a border to its defaulte empty values.
+func (_ec Border )InitializeDefaults (){_ec ._ga .Left =_ca .NewCT_BorderPr ();_ec ._ga .Bottom =_ca .NewCT_BorderPr ();_ec ._ga .Right =_ca .NewCT_BorderPr ();_ec ._ga .Top =_ca .NewCT_BorderPr ();_ec ._ga .Diagonal =_ca .NewCT_BorderPr ();};
+
+// SetCachedFormulaResult sets the cached result of a formula. This is normally
+// not needed but is used internally when expanding an array formula.
+func (_ddf Cell )SetCachedFormulaResult (s string ){_ddf ._gbf .V =&s };
+
+// AddNumberedRow adds a row with a given row number.  If you reuse a row number
+// the resulting file will fail validation and fail to open in Office programs. Use
+// Row instead which creates a new row or returns an existing row.
+func (_gecd *Sheet )AddNumberedRow (rowNum uint32 )Row {_afbf :=_ca .NewCT_Row ();_afbf .RAttr =_a .Uint32 (rowNum );_gecd ._bedf .SheetData .Row =append (_gecd ._bedf .SheetData .Row ,_afbf );_af .Slice (_gecd ._bedf .SheetData .Row ,func (_dde ,_dbe int )bool {_dbeb :=_gecd ._bedf .SheetData .Row [_dde ].RAttr ;_bdbb :=_gecd ._bedf .SheetData .Row [_dbe ].RAttr ;if _dbeb ==nil {return true ;};if _bdbb ==nil {return true ;};return *_dbeb < *_bdbb ;});return Row {_gecd ._egccf ,_gecd ,_afbf };};
+
+// X returns the inner wrapped XML type.
+func (_fgef Sheet )X ()*_ca .Worksheet {return _fgef ._bedf };func CreateDefaultNumberFormat (id StandardFormat )NumberFormat {_fggcg :=NumberFormat {_dddb :_ca .NewCT_NumFmt ()};_fggcg ._dddb .NumFmtIdAttr =uint32 (id );_fggcg ._dddb .FormatCodeAttr ="\u0047e\u006e\u0065\u0072\u0061\u006c";switch id {case StandardFormat0 :_fggcg ._dddb .FormatCodeAttr ="\u0047e\u006e\u0065\u0072\u0061\u006c";case StandardFormat1 :_fggcg ._dddb .FormatCodeAttr ="\u0030";case StandardFormat2 :_fggcg ._dddb .FormatCodeAttr ="\u0030\u002e\u0030\u0030";case StandardFormat3 :_fggcg ._dddb .FormatCodeAttr ="\u0023\u002c\u0023#\u0030";case StandardFormat4 :_fggcg ._dddb .FormatCodeAttr ="\u0023\u002c\u0023\u0023\u0030\u002e\u0030\u0030";case StandardFormat9 :_fggcg ._dddb .FormatCodeAttr ="\u0030\u0025";case StandardFormat10 :_fggcg ._dddb .FormatCodeAttr ="\u0030\u002e\u00300\u0025";case StandardFormat11 :_fggcg ._dddb .FormatCodeAttr ="\u0030\u002e\u0030\u0030\u0045\u002b\u0030\u0030";case StandardFormat12 :_fggcg ._dddb .FormatCodeAttr ="\u0023\u0020\u003f/\u003f";case StandardFormat13 :_fggcg ._dddb .FormatCodeAttr ="\u0023 \u003f\u003f\u002f\u003f\u003f";case StandardFormat14 :_fggcg ._dddb .FormatCodeAttr ="\u006d\u002f\u0064\u002f\u0079\u0079";case StandardFormat15 :_fggcg ._dddb .FormatCodeAttr ="\u0064\u002d\u006d\u006d\u006d\u002d\u0079\u0079";case StandardFormat16 :_fggcg ._dddb .FormatCodeAttr ="\u0064\u002d\u006dm\u006d";case StandardFormat17 :_fggcg ._dddb .FormatCodeAttr ="\u006d\u006d\u006d\u002d\u0079\u0079";case StandardFormat18 :_fggcg ._dddb .FormatCodeAttr ="\u0068\u003a\u006d\u006d\u0020\u0041\u004d\u002f\u0050\u004d";case StandardFormat19 :_fggcg ._dddb .FormatCodeAttr ="\u0068\u003a\u006d\u006d\u003a\u0073\u0073\u0020\u0041\u004d\u002f\u0050\u004d";case StandardFormat20 :_fggcg ._dddb .FormatCodeAttr ="\u0068\u003a\u006d\u006d";case StandardFormat21 :_fggcg ._dddb .FormatCodeAttr ="\u0068:\u006d\u006d\u003a\u0073\u0073";case StandardFormat22 :_fggcg ._dddb .FormatCodeAttr ="m\u002f\u0064\u002f\u0079\u0079\u0020\u0068\u003a\u006d\u006d";case StandardFormat37 :_fggcg ._dddb .FormatCodeAttr ="\u0023\u002c\u0023\u0023\u0030\u0020\u003b\u0028\u0023,\u0023\u0023\u0030\u0029";case StandardFormat38 :_fggcg ._dddb .FormatCodeAttr ="\u0023\u002c\u0023\u00230 \u003b\u005b\u0052\u0065\u0064\u005d\u0028\u0023\u002c\u0023\u0023\u0030\u0029";case StandardFormat39 :_fggcg ._dddb .FormatCodeAttr ="\u0023\u002c\u0023\u00230.\u0030\u0030\u003b\u0028\u0023\u002c\u0023\u0023\u0030\u002e\u0030\u0030\u0029";case StandardFormat40 :_fggcg ._dddb .FormatCodeAttr ="\u0023,\u0023\u0023\u0030\u002e\u0030\u0030\u003b\u005b\u0052\u0065\u0064]\u0028\u0023\u002c\u0023\u0023\u0030\u002e\u0030\u0030\u0029";case StandardFormat45 :_fggcg ._dddb .FormatCodeAttr ="\u006d\u006d\u003as\u0073";case StandardFormat46 :_fggcg ._dddb .FormatCodeAttr ="\u005bh\u005d\u003a\u006d\u006d\u003a\u0073s";case StandardFormat47 :_fggcg ._dddb .FormatCodeAttr ="\u006dm\u003a\u0073\u0073\u002e\u0030";case StandardFormat48 :_fggcg ._dddb .FormatCodeAttr ="\u0023\u0023\u0030\u002e\u0030\u0045\u002b\u0030";case StandardFormat49 :_fggcg ._dddb .FormatCodeAttr ="\u0040";};return _fggcg ;};
+
+// IsWindowLocked returns whether the workbook windows are locked.
+func (_gcdd WorkbookProtection )IsWindowLocked ()bool {return _gcdd ._gfde .LockWindowsAttr !=nil &&*_gcdd ._gfde .LockWindowsAttr ;};
+
+// SetAllowBlank controls if blank values are accepted.
+func (_fdgg DataValidation )SetAllowBlank (b bool ){if !b {_fdgg ._fabc .AllowBlankAttr =nil ;}else {_fdgg ._fabc .AllowBlankAttr =_a .Bool (true );};};
+
+// DefinedName is a named range, formula, etc.
+type DefinedName struct{_gcaf *_ca .CT_DefinedName };
+
+// FormulaContext returns a formula evaluation context that can be used to
+// evaluate formaulas.
+func (_fbca *Sheet )FormulaContext ()_ea .Context {return _edg (_fbca )};
+
+// NewStyleSheet constructs a new default stylesheet.
+func NewStyleSheet (wb *Workbook )StyleSheet {_edffc :=_ca .NewStyleSheet ();_edffc .CellStyleXfs =_ca .NewCT_CellStyleXfs ();_edffc .CellXfs =_ca .NewCT_CellXfs ();_edffc .CellStyles =_ca .NewCT_CellStyles ();_aaad :=_ca .NewCT_CellStyle ();_aaad .NameAttr =_a .String ("\u004e\u006f\u0072\u006d\u0061\u006c");_aaad .XfIdAttr =0;_aaad .BuiltinIdAttr =_a .Uint32 (0);_edffc .CellStyles .CellStyle =append (_edffc .CellStyles .CellStyle ,_aaad );_edffc .CellStyles .CountAttr =_a .Uint32 (uint32 (len (_edffc .CellStyles .CellStyle )));_fecc :=_ca .NewCT_Xf ();_fecc .NumFmtIdAttr =_a .Uint32 (0);_fecc .FontIdAttr =_a .Uint32 (0);_fecc .FillIdAttr =_a .Uint32 (0);_fecc .BorderIdAttr =_a .Uint32 (0);_edffc .CellStyleXfs .Xf =append (_edffc .CellStyleXfs .Xf ,_fecc );_edffc .CellStyleXfs .CountAttr =_a .Uint32 (uint32 (len (_edffc .CellStyleXfs .Xf )));_efaa :=NewFills ();_edffc .Fills =_efaa .X ();_degf :=_efaa .AddFill ().SetPatternFill ();_degf .SetPattern (_ca .ST_PatternTypeNone );_degf =_efaa .AddFill ().SetPatternFill ();_degf .SetPattern (_ca .ST_PatternTypeGray125 );_edffc .Fonts =_ca .NewCT_Fonts ();_edffc .Borders =_ca .NewCT_Borders ();_ccfa :=StyleSheet {wb ,_edffc };_ccfa .AddBorder ().InitializeDefaults ();_ebegf :=_ccfa .AddFont ();_ebegf .SetName ("\u0043a\u006c\u0069\u0062\u0072\u0069");_ebegf .SetSize (11);_bdaf :=_ca .NewCT_Xf ();*_bdaf =*_fecc ;_bdaf .XfIdAttr =_a .Uint32 (0);_edffc .CellXfs .Xf =append (_edffc .CellXfs .Xf ,_bdaf );_edffc .CellXfs .CountAttr =_a .Uint32 (uint32 (len (_edffc .CellXfs .Xf )));return _ccfa ;};
+
+// Comments returns the list of comments for this sheet
+func (_fga Comments )Comments ()[]Comment {_ecc :=[]Comment {};for _ ,_fcf :=range _fga ._fdae .CommentList .Comment {_ecc =append (_ecc ,Comment {_fga ._afg ,_fcf ,_fga ._fdae });};return _ecc ;};func (_cd Border )SetRight (style _ca .ST_BorderStyle ,c _ce .Color ){if _cd ._ga .Right ==nil {_cd ._ga .Right =_ca .NewCT_BorderPr ();};_cd ._ga .Right .Color =_ca .NewCT_Color ();_cd ._ga .Right .Color .RgbAttr =c .AsRGBAString ();_cd ._ga .Right .StyleAttr =style ;};func (_fdd Fills )X ()*_ca .CT_Fills {return _fdd ._fcca };
+
+// AddFont adds a new empty font to the stylesheet.
+func (_bbeec StyleSheet )AddFont ()Font {_dcaef :=_ca .NewCT_Font ();_bbeec ._ddaga .Fonts .Font =append (_bbeec ._ddaga .Fonts .Font ,_dcaef );_bbeec ._ddaga .Fonts .CountAttr =_a .Uint32 (uint32 (len (_bbeec ._ddaga .Fonts .Font )));return Font {_dcaef ,_bbeec ._ddaga };};const _cdga ="_\u0078\u006c\u006e\u006d._\u0046i\u006c\u0074\u0065\u0072\u0044a\u0074\u0061\u0062\u0061\u0073\u0065";
+
+// SetItalic causes the text to be displayed in italic.
+func (_cgb RichTextRun )SetItalic (b bool ){_cgb .ensureRpr ();_cgb ._bgc .RPr .I =_ca .NewCT_BooleanProperty ();_cgb ._bgc .RPr .I .ValAttr =_a .Bool (b );};
+
+// X returns the inner wrapped XML type.
+func (_efcd IconScale )X ()*_ca .CT_IconSet {return _efcd ._cfdb };
 
 // Cells returns a slice of cells.  The cells can be manipulated, but appending
 // to the slice will have no effect.
-func (_fdfd Row )Cells ()[]Cell {_afa :=[]Cell {};_bcgd :=-1;_cacd :=append ([]*_ege .CT_Cell {},_fdfd ._bddg .C ...);for _ ,_gbffb :=range _cacd {if _gbffb .RAttr ==nil {_af .Log .Debug ("\u0052\u0041\u0074tr\u0020\u0069\u0073\u0020\u006e\u0069\u006c\u0020\u0066o\u0072 \u0061 \u0063e\u006c\u006c\u002c\u0020\u0073\u006b\u0069\u0070\u0070\u0069\u006e\u0067\u002e");continue ;};_bedg ,_eada :=_ba .ParseCellReference (*_gbffb .RAttr );if _eada !=nil {_af .Log .Debug ("\u0052\u0041\u0074t\u0072\u0020\u0069\u0073 \u0069\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0066\u006f\u0072\u0020\u0061\u0020\u0063\u0065\u006c\u006c\u003a\u0020"+*_gbffb .RAttr +",\u0020\u0073\u006b\u0069\u0070\u0070\u0069\u006e\u0067\u002e");continue ;};_ccef :=int (_bedg .ColumnIdx );if _ccef -_bcgd > 1{for _bffdb :=_bcgd +1;_bffdb < _ccef ;_bffdb ++{_afa =append (_afa ,_fdfd .Cell (_ba .IndexToColumn (uint32 (_bffdb ))));};};_bcgd =_ccef ;_afa =append (_afa ,Cell {_fdfd ._cddd ,_fdfd ._fcge ,_fdfd ._bddg ,_gbffb });};return _afa ;};
+func (_cggd Row )Cells ()[]Cell {_egcd :=[]Cell {};_gbab :=-1;_faaa :=append ([]*_ca .CT_Cell {},_cggd ._bcb .C ...);for _ ,_bcfgb :=range _faaa {if _bcfgb .RAttr ==nil {_egd .Log .Debug ("\u0052\u0041\u0074tr\u0020\u0069\u0073\u0020\u006e\u0069\u006c\u0020\u0066o\u0072 \u0061 \u0063e\u006c\u006c\u002c\u0020\u0073\u006b\u0069\u0070\u0070\u0069\u006e\u0067\u002e");continue ;};_ddgg ,_adc :=_ag .ParseCellReference (*_bcfgb .RAttr );if _adc !=nil {_egd .Log .Debug ("\u0052\u0041\u0074t\u0072\u0020\u0069\u0073 \u0069\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0066\u006f\u0072\u0020\u0061\u0020\u0063\u0065\u006c\u006c\u003a\u0020"+*_bcfgb .RAttr +",\u0020\u0073\u006b\u0069\u0070\u0070\u0069\u006e\u0067\u002e");continue ;};_fdggb :=int (_ddgg .ColumnIdx );if _fdggb -_gbab > 1{for _cece :=_gbab +1;_cece < _fdggb ;_cece ++{_egcd =append (_egcd ,_cggd .Cell (_ag .IndexToColumn (uint32 (_cece ))));};};_gbab =_fdggb ;_egcd =append (_egcd ,Cell {_cggd ._dacc ,_cggd ._aada ,_cggd ._bcb ,_bcfgb });};return _egcd ;};
 
-// Validate attempts to validate the structure of a workbook.
-func (_bbdg *Workbook )Validate ()error {if _bbdg ==nil ||_bbdg ._aadd ==nil {return _gb .New ("\u0077o\u0072\u006bb\u006f\u006f\u006b\u0020n\u006f\u0074\u0020i\u006e\u0069\u0074\u0069\u0061\u006c\u0069\u007a\u0065d \u0063\u006f\u0072r\u0065\u0063t\u006c\u0079\u002c\u0020\u006e\u0069l\u0020\u0062a\u0073\u0065");};_gdea :=uint32 (0);for _ ,_abf :=range _bbdg ._aadd .Sheets .Sheet {if _abf .SheetIdAttr > _gdea {_gdea =_abf .SheetIdAttr ;};};if _gdea !=uint32 (len (_bbdg ._gbed )){return _eg .Errorf ("\u0066\u006f\u0075\u006e\u0064\u0020%\u0064\u0020\u0077\u006f\u0072\u006b\u0073\u0068\u0065\u0065\u0074\u0020\u0064\u0065\u0073\u0063\u0072\u0069\u0070\u0074i\u006f\u006e\u0073\u0020\u0061\u006e\u0064\u0020\u0025\u0064\u0020\u0077\u006f\u0072k\u0073h\u0065\u0065\u0074\u0073",_gdea ,len (_bbdg ._gbed ));};_dgbbe :=map[string ]struct{}{};for _gacc ,_ddfbc :=range _bbdg ._aadd .Sheets .Sheet {_abeaf :=Sheet {_bbdg ,_ddfbc ,_bbdg ._gbed [_gacc ]};if _ ,_abbe :=_dgbbe [_abeaf .Name ()];_abbe {return _eg .Errorf ("\u0077\u006f\u0072k\u0062\u006f\u006f\u006b\u002f\u0053\u0068\u0065\u0065\u0074\u005b\u0025\u0064\u005d\u0020\u0068\u0061\u0073\u0020\u0064\u0075\u0070\u006c\u0069\u0063\u0061\u0074\u0065\u0020n\u0061\u006d\u0065\u0020\u0027\u0025\u0073\u0027",_gacc ,_abeaf .Name ());};_dgbbe [_abeaf .Name ()]=struct{}{};if _bedb :=_abeaf .ValidateWithPath (_eg .Sprintf ("\u0077o\u0072k\u0062\u006f\u006f\u006b\u002fS\u0068\u0065e\u0074\u005b\u0025\u0064\u005d",_gacc ));_bedb !=nil {return _bedb ;};if _fbdb :=_abeaf .Validate ();_fbdb !=nil {return _fbdb ;};};return nil ;};func (_aeed SortOrder )String ()string {if _aeed >=SortOrder (len (_aeaa )-1){return _eg .Sprintf ("\u0053\u006f\u0072\u0074\u004f\u0072\u0064\u0065\u0072\u0028\u0025\u0064\u0029",_aeed );};return _eaad [_aeaa [_aeed ]:_aeaa [_aeed +1]];};
+// IsEmpty checks if the cell style contains nothing.
+func (_cgf CellStyle )IsEmpty ()bool {return _cgf ._ead ==nil ||_cgf ._gaa ==nil ||_cgf ._eaf ==nil ||_cgf ._eaf .Xf ==nil ;};
 
-// SetError sets the cell type to error and the value to the given error message.
-func (_feb Cell )SetError (msg string ){_feb .clearValue ();_feb ._be .V =_e .String (msg );_feb ._be .TAttr =_ege .ST_CellTypeE ;};
+// SetZoom controls the zoom level of the sheet and is measured in percent. The
+// default value is 100.
+func (_eedeg SheetView )SetZoom (pct uint32 ){_eedeg ._ggeg .ZoomScaleAttr =&pct };
 
-// SetInlineString adds a string inline instead of in the shared strings table.
-func (_fa Cell )SetInlineString (s string ){_fa .clearValue ();_fa ._be .Is =_ege .NewCT_Rst ();_fa ._be .Is .T =_e .String (s );_fa ._be .TAttr =_ege .ST_CellTypeInlineStr ;};const (DVCompareTypeWholeNumber =DVCompareType (_ege .ST_DataValidationTypeWhole );DVCompareTypeDecimal =DVCompareType (_ege .ST_DataValidationTypeDecimal );DVCompareTypeDate =DVCompareType (_ege .ST_DataValidationTypeDate );DVCompareTypeTime =DVCompareType (_ege .ST_DataValidationTypeTime );DVompareTypeTextLength =DVCompareType (_ege .ST_DataValidationTypeTextLength ););
-
-// SetStringByID sets the cell type to string, and the value a string in the
-// shared strings table.
-func (_cdg Cell )SetStringByID (id int ){_cdg ._cdb .ensureSharedStringsRelationships ();_cdg .clearValue ();_cdg ._be .V =_e .String (_gd .Itoa (id ));_cdg ._be .TAttr =_ege .ST_CellTypeS ;};func NewFills ()Fills {return Fills {_ege .NewCT_Fills ()}};const (SortOrderAscending SortOrder =iota ;SortOrderDescending ;);
-
-// Row is a row within a spreadsheet.
-type Row struct{_cddd *Workbook ;_fcge *Sheet ;_bddg *_ege .CT_Row ;};
-
-// ExtractText returns text from the workbook as a WorkbookText object.
-func (_ddad *Workbook )ExtractText ()*WorkbookText {_eebc :=[]*SheetText {};for _ ,_bbfe :=range _ddad .Sheets (){_eebc =append (_eebc ,&SheetText {Cells :_bbfe .ExtractText ().Cells });};return &WorkbookText {Sheets :_eebc };};func (_gbbc StandardFormat )String ()string {switch {case 0<=_gbbc &&_gbbc <=4:return _agcd [_gbdfc [_gbbc ]:_gbdfc [_gbbc +1]];case 9<=_gbbc &&_gbbc <=22:_gbbc -=9;return _bda [_fgdf [_gbbc ]:_fgdf [_gbbc +1]];case 37<=_gbbc &&_gbbc <=40:_gbbc -=37;return _ebfc [_bbff [_gbbc ]:_bbff [_gbbc +1]];case 45<=_gbbc &&_gbbc <=49:_gbbc -=45;return _gdeb [_daggg [_gbbc ]:_daggg [_gbbc +1]];default:return _eg .Sprintf ("\u0053t\u0061n\u0064\u0061\u0072\u0064\u0046o\u0072\u006da\u0074\u0028\u0025\u0064\u0029",_gbbc );};};
-
-// Open opens and reads a workbook from a file (.xlsx).
-func Open (filename string )(*Workbook ,error ){_eabc ,_aggca :=_ee .Open (filename );if _aggca !=nil {return nil ,_eg .Errorf ("e\u0072r\u006f\u0072\u0020\u006f\u0070\u0065\u006e\u0069n\u0067\u0020\u0025\u0073: \u0025\u0073",filename ,_aggca );};defer _eabc .Close ();_bbfdf ,_aggca :=_ee .Stat (filename );if _aggca !=nil {return nil ,_eg .Errorf ("e\u0072r\u006f\u0072\u0020\u006f\u0070\u0065\u006e\u0069n\u0067\u0020\u0025\u0073: \u0025\u0073",filename ,_aggca );};_eeg ,_aggca :=Read (_eabc ,_bbfdf .Size ());if _aggca !=nil {return nil ,_aggca ;};_bcbf ,_ :=_a .Abs (_a .Dir (filename ));_eeg ._aaa =_a .Join (_bcbf ,filename );return _eeg ,nil ;};
+// SetFormulaArray sets the cell type to formula array, and the raw formula to
+// the given string. This is equivlent to entering a formula and pressing
+// Ctrl+Shift+Enter in Excel.
+func (_db Cell )SetFormulaArray (s string ){_eff :=_ea .ParseString (s );if _eff ==nil {return ;};_db .clearValue ();_db ._gbf .TAttr =_ca .ST_CellTypeStr ;_db ._gbf .F =_ca .NewCT_CellFormula ();_db ._gbf .F .TAttr =_ca .ST_CellFormulaTypeArray ;_db ._gbf .F .Content =s ;};
 
 // SetFgColor sets the *fill* foreground color.  As an example, the solid pattern foreground color becomes the
 // background color of the cell when applied.
-func (_ccfb PatternFill )SetFgColor (c _afd .Color ){_ccfb ._gbec .FgColor =_ege .NewCT_Color ();_ccfb ._gbec .FgColor .RgbAttr =c .AsRGBAString ();};
+func (_feab PatternFill )SetFgColor (c _ce .Color ){_feab ._cedb .FgColor =_ca .NewCT_Color ();_feab ._cedb .FgColor .RgbAttr =c .AsRGBAString ();};
 
-// SetHidden marks the defined name as hidden.
-func (_edd DefinedName )SetLocalSheetID (id uint32 ){_edd ._bgf .LocalSheetIdAttr =_e .Uint32 (id )};
+// Cell is a single cell within a sheet.
+type Cell struct{_abb *Workbook ;_becd *Sheet ;_gaf *_ca .CT_Row ;_gbf *_ca .CT_Cell ;};func (_agbf Font )SetItalic (b bool ){if b {_agbf ._efde .I =[]*_ca .CT_BooleanProperty {{}};}else {_agbf ._efde .I =nil ;};};
 
-// Reference returns the table reference (the cells within the table)
-func (_dcad Table )Reference ()string {return _dcad ._fgea .RefAttr };
+// AddComment adds a new comment and returns a RichText which will contain the
+// styled comment text.
+func (_ddb Comments )AddComment (cellRef string ,author string )RichText {_bgff :=_ca .NewCT_Comment ();_ddb ._fdae .CommentList .Comment =append (_ddb ._fdae .CommentList .Comment ,_bgff );_bgff .RefAttr =cellRef ;_bgff .AuthorIdAttr =_ddb .getOrCreateAuthor (author );_bgff .Text =_ca .NewCT_Rst ();return RichText {_bgff .Text };};func (_dbee *Sheet )addNumberedRowFast (_aaed uint32 )Row {_dgee :=_ca .NewCT_Row ();_dgee .RAttr =_a .Uint32 (_aaed );_dbee ._bedf .SheetData .Row =append (_dbee ._bedf .SheetData .Row ,_dgee );return Row {_dbee ._egccf ,_dbee ,_dgee };};
 
-// SetWidth sets the width of the anchored object.
-func (_gfe OneCellAnchor )SetWidth (w _ga .Distance ){_gfe ._bfeef .Ext .CxAttr =int64 (w /_ga .EMU )};
+// DataValidationCompare is a view on a data validation rule that is oriented
+// towards value comparisons.
+type DataValidationCompare struct{_ebe *_ca .CT_DataValidation };
 
-// Cell returns the actual cell behind the merged region
-func (_fcg MergedCell )Cell ()Cell {_gacf :=_fcg .Reference ();if _bede :=_fca .Index (_fcg .Reference (),"\u003a");_bede !=-1{_gacf =_gacf [0:_bede ];return _fcg ._dbfg .Cell (_gacf );};return Cell {};};
+// SheetText is an array of extracted text items which has some methods for representing extracted text from a sheet.
+type SheetText struct{Cells []CellText ;};
 
-// X returns the inner wrapped XML type.
-func (_ecdb WorkbookProtection )X ()*_ege .CT_WorkbookProtection {return _ecdb ._gcge };func (_add Border )SetRight (style _ege .ST_BorderStyle ,c _afd .Color ){if _add ._ac .Right ==nil {_add ._ac .Right =_ege .NewCT_BorderPr ();};_add ._ac .Right .Color =_ege .NewCT_Color ();_add ._ac .Right .Color .RgbAttr =c .AsRGBAString ();_add ._ac .Right .StyleAttr =style ;};
+// Protection controls the protection on an individual sheet.
+func (_bgb *Sheet )Protection ()SheetProtection {if _bgb ._bedf .SheetProtection ==nil {_bgb ._bedf .SheetProtection =_ca .NewCT_SheetProtection ();};return SheetProtection {_bgb ._bedf .SheetProtection };};
 
-// X returns the inner XML entity for a stylesheet.
-func (_ececf StyleSheet )X ()*_ege .StyleSheet {return _ececf ._eebcg };
+// SetMinLength sets the minimum bar length in percent.
+func (_gaad DataBarScale )SetMinLength (l uint32 ){_gaad ._cdd .MinLengthAttr =_a .Uint32 (l )};func _bcec (_deec string ,_fcfe uint32 ,_aecgd bool )string {_edaba ,_edcef ,_dagf :=_ag .ParseRangeReference (_deec );if _dagf ==nil {_ddaf ,_degdd :=_edaba .ColumnIdx ,_edcef .ColumnIdx ;if _fcfe >=_ddaf &&_fcfe <=_degdd {if _ddaf ==_degdd {if _aecgd {return "";}else {return _deec ;};}else {_abea :=_edcef .Update (_dc .UpdateActionRemoveColumn );return _eg .Sprintf ("\u0025\u0073\u003a%\u0073",_edaba .String (),_abea .String ());};}else if _fcfe < _ddaf {_bgbb :=_edaba .Update (_dc .UpdateActionRemoveColumn );_bccc :=_edcef .Update (_dc .UpdateActionRemoveColumn );return _eg .Sprintf ("\u0025\u0073\u003a%\u0073",_bgbb .String (),_bccc .String ());};}else {_bbc ,_gcge ,_fgedf :=_ag .ParseColumnRangeReference (_deec );if _fgedf !=nil {return "";};_adb ,_beea :=_bbc .ColumnIdx ,_gcge .ColumnIdx ;if _fcfe >=_adb &&_fcfe <=_beea {if _adb ==_beea {if _aecgd {return "";}else {return _deec ;};}else {_ecgbg :=_gcge .Update (_dc .UpdateActionRemoveColumn );return _eg .Sprintf ("\u0025\u0073\u003a%\u0073",_bbc .String (),_ecgbg .String ());};}else if _fcfe < _adb {_fbega :=_bbc .Update (_dc .UpdateActionRemoveColumn );_ceeg :=_gcge .Update (_dc .UpdateActionRemoveColumn );return _eg .Sprintf ("\u0025\u0073\u003a%\u0073",_fbega .String (),_ceeg .String ());};};return "";};
+
+// AddDifferentialStyle adds a new empty differential cell style to the stylesheet.
+func (_gede StyleSheet )AddDifferentialStyle ()DifferentialStyle {if _gede ._ddaga .Dxfs ==nil {_gede ._ddaga .Dxfs =_ca .NewCT_Dxfs ();};_aacbg :=_ca .NewCT_Dxf ();_gede ._ddaga .Dxfs .Dxf =append (_gede ._ddaga .Dxfs .Dxf ,_aacbg );_gede ._ddaga .Dxfs .CountAttr =_a .Uint32 (uint32 (len (_gede ._ddaga .Dxfs .Dxf )));return DifferentialStyle {_aacbg ,_gede ._bcggc ,_gede ._ddaga .Dxfs };};
+
+// GetHorizontalAlignment sets the horizontal alignment of a cell style.
+func (_edd CellStyle )GetHorizontalAlignment ()_ca .ST_HorizontalAlignment {if _edd ._gaa .Alignment ==nil {return _ca .ST_HorizontalAlignmentUnset ;};return _edd ._gaa .Alignment .HorizontalAttr ;};
+
+// Content returns the content of the defined range (the range in most cases)/
+func (_fbbb DefinedName )Content ()string {return _fbbb ._gcaf .Content };
+
+// SetXSplit sets the column split point
+func (_gage SheetView )SetXSplit (v float64 ){_gage .ensurePane ();_gage ._ggeg .Pane .XSplitAttr =_a .Float64 (v );};var (_eabb =[...]uint8 {0,21,46,61,76,91};_fdbb =[...]uint8 {0,21,37,53,69,85,103,119,135,151,167,185,201,217,239};_ecgf =[...]uint8 {0,16,32,48,64};_efea =[...]uint8 {0,16,32,48,64,80};);
+
+// IsDBCS returns if a workbook's default language is among DBCS.
+func (_fgf *evalContext )IsDBCS ()bool {_gafc :=_fgf ._gffe ._egccf .CoreProperties .X ().Language ;if _gafc ==nil {return false ;};_fgbd :=string (_gafc .Data );for _ ,_bgg :=range _eded {if _fgbd ==_bgg {return true ;};};return false ;};func (_bbee *Sheet )setArray (_fged string ,_cbfa _ea .Result )error {_ffdcb ,_cbbb :=_ag .ParseCellReference (_fged );if _cbbb !=nil {return _cbbb ;};for _aefge ,_baaaa :=range _cbfa .ValueArray {_bdbd :=_bbee .Row (_ffdcb .RowIdx +uint32 (_aefge ));for _bcfe ,_gad :=range _baaaa {_dcca :=_bdbd .Cell (_ag .IndexToColumn (_ffdcb .ColumnIdx +uint32 (_bcfe )));if _gad .Type !=_ea .ResultTypeEmpty {if _gad .IsBoolean {_dcca .SetBool (_gad .ValueNumber !=0);}else {_dcca .SetCachedFormulaResult (_gad .String ());};};};};return nil ;};
+
+// SheetCount returns the number of sheets in the workbook.
+func (_efead Workbook )SheetCount ()int {return len (_efead ._dgga )};const _cgd ="\u00320\u0030\u0036\u002d\u00301\u002d\u0030\u0032\u0054\u00315\u003a0\u0034:\u0030\u0035\u005a\u0030\u0037\u003a\u00300";
+
+// SetHeight sets the row height in points.
+func (_fcbd Row )SetHeight (d _d .Distance ){_fcbd ._bcb .HtAttr =_a .Float64 (float64 (d ));_fcbd ._bcb .CustomHeightAttr =_a .Bool (true );};
+
+// Text returns text from the workbook as one string separated with line breaks.
+func (_edede *WorkbookText )Text ()string {_cegb :=_e .NewBuffer ([]byte {});for _ ,_eaeg :=range _edede .Sheets {_cegb .WriteString (_eaeg .Text ());};return _cegb .String ();};func (_bde Fill )Index ()uint32 {if _bde ._ffg ==nil {return 0;};for _bab ,_agg :=range _bde ._ffg .Fill {if _bde ._egge ==_agg {return uint32 (_bab );};};return 0;};func _baa (_aea _gc .Time )_gc .Time {_aea =_aea .Local ();return _gc .Date (_aea .Year (),_aea .Month (),_aea .Day (),_aea .Hour (),_aea .Minute (),_aea .Second (),_aea .Nanosecond (),_gc .UTC );};func (_fb Border )SetDiagonal (style _ca .ST_BorderStyle ,c _ce .Color ,up ,down bool ){if _fb ._ga .Diagonal ==nil {_fb ._ga .Diagonal =_ca .NewCT_BorderPr ();};_fb ._ga .Diagonal .Color =_ca .NewCT_Color ();_fb ._ga .Diagonal .Color .RgbAttr =c .AsRGBAString ();_fb ._ga .Diagonal .StyleAttr =style ;if up {_fb ._ga .DiagonalUpAttr =_a .Bool (true );};if down {_fb ._ga .DiagonalDownAttr =_a .Bool (true );};};
+
+// RecalculateFormulas re-computes any computed formula values that are stored
+// in the sheet. As unioffice formula support is still new and not all functins are
+// supported,  if formula execution fails either due to a parse error or missing
+// function, or erorr in the result (even if expected) the cached value will be
+// left empty allowing Excel to recompute it on load.
+func (_deeb *Sheet )RecalculateFormulas (){_dafa :=_ea .NewEvaluator ();_feca :=_deeb .FormulaContext ();for _ ,_ebef :=range _deeb .Rows (){for _ ,_faaad :=range _ebef .Cells (){if _faaad .X ().F !=nil {_egag :=_faaad .X ().F .Content ;if _faaad .X ().F .TAttr ==_ca .ST_CellFormulaTypeShared &&len (_egag )==0{continue ;};_afbbe :=_dafa .Eval (_feca ,_egag ).AsString ();if _afbbe .Type ==_ea .ResultTypeError {_egd .Log .Debug ("\u0065\u0072\u0072o\u0072\u0020\u0065\u0076a\u0075\u006c\u0061\u0074\u0069\u006e\u0067 \u0066\u006f\u0072\u006d\u0075\u006c\u0061\u0020\u0025\u0073\u003a\u0020\u0025\u0073",_egag ,_afbbe .ErrorMessage );_faaad .X ().V =nil ;}else {if _afbbe .Type ==_ea .ResultTypeNumber {_faaad .X ().TAttr =_ca .ST_CellTypeN ;}else {_faaad .X ().TAttr =_ca .ST_CellTypeInlineStr ;};_faaad .X ().V =_a .String (_afbbe .Value ());if _faaad .X ().F .TAttr ==_ca .ST_CellFormulaTypeArray {if _afbbe .Type ==_ea .ResultTypeArray {_deeb .setArray (_faaad .Reference (),_afbbe );}else if _afbbe .Type ==_ea .ResultTypeList {_deeb .setList (_faaad .Reference (),_afbbe );};}else if _faaad .X ().F .TAttr ==_ca .ST_CellFormulaTypeShared &&_faaad .X ().F .RefAttr !=nil {_gea ,_aefgd ,_fad :=_ag .ParseRangeReference (*_faaad .X ().F .RefAttr );if _fad !=nil {_egd .Log .Debug ("\u0065\u0072r\u006f\u0072\u0020\u0069n\u0020\u0073h\u0061\u0072\u0065\u0064\u0020\u0066\u006f\u0072m\u0075\u006c\u0061\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063e\u003a\u0020\u0025\u0073",_fad );continue ;};_deeb .setShared (_faaad .Reference (),_gea ,_aefgd ,_egag );};};};};};};
+
+// AddSheet adds a new sheet to a workbook.
+func (_ceaa *Workbook )AddSheet ()Sheet {_adde :=_ca .NewCT_Sheet ();_adde .SheetIdAttr =1;for _ ,_ddac :=range _ceaa ._dadd .Sheets .Sheet {if _adde .SheetIdAttr <=_ddac .SheetIdAttr {_adde .SheetIdAttr =_ddac .SheetIdAttr +1;};};_ceaa ._dadd .Sheets .Sheet =append (_ceaa ._dadd .Sheets .Sheet ,_adde );_adde .NameAttr =_eg .Sprintf ("\u0053\u0068\u0065\u0065\u0074\u0020\u0025\u0064",_adde .SheetIdAttr );_fegec :=_ca .NewWorksheet ();_fegec .Dimension =_ca .NewCT_SheetDimension ();_fegec .Dimension .RefAttr ="\u0041\u0031";_ceaa ._dgga =append (_ceaa ._dgga ,_fegec );_ggegb :=_gg .NewRelationships ();_ceaa ._fcbc =append (_ceaa ._fcbc ,_ggegb );_fegec .SheetData =_ca .NewCT_SheetData ();_ceaa ._aeec =append (_ceaa ._aeec ,nil );_gegg :=_a .DocTypeSpreadsheet ;_gcfd :=_ceaa ._caaf .AddAutoRelationship (_gegg ,_a .OfficeDocumentType ,len (_ceaa ._dadd .Sheets .Sheet ),_a .WorksheetType );_adde .IdAttr =_gcfd .ID ();_ceaa .ContentTypes .AddOverride (_a .AbsoluteFilename (_gegg ,_a .WorksheetContentType ,len (_ceaa ._dadd .Sheets .Sheet )),_a .WorksheetContentType );return Sheet {_ceaa ,_adde ,_fegec };};func (_gef Sheet )ExtentsIndex ()(string ,uint32 ,string ,uint32 ){var _cbb ,_begg ,_gbed ,_cgff uint32 =1,1,0,0;for _ ,_gcafd :=range _gef .Rows (){if _gcafd .RowNumber ()< _cbb {_cbb =_gcafd .RowNumber ();}else if _gcafd .RowNumber ()> _begg {_begg =_gcafd .RowNumber ();};for _ ,_abfc :=range _gcafd .Cells (){_eaega ,_fabbf :=_ag .ParseCellReference (_abfc .Reference ());if _fabbf ==nil {if _eaega .ColumnIdx < _gbed {_gbed =_eaega .ColumnIdx ;}else if _eaega .ColumnIdx > _cgff {_cgff =_eaega .ColumnIdx ;};};};};return _ag .IndexToColumn (_gbed ),_cbb ,_ag .IndexToColumn (_cgff ),_begg ;};
+
+// CellStyle is a formatting style for a cell. CellStyles are spreadsheet global
+// and can be applied to cells across sheets.
+type CellStyle struct{_ead *Workbook ;_gaa *_ca .CT_Xf ;_eaf *_ca .CT_CellXfs ;};
+
+// AnchorType is the type of anchor.
+type AnchorType byte ;
+
+// SetString sets the cell type to string, and the value to the given string,
+// returning an ID from the shared strings table. To reuse a string, call
+// SetStringByID with the ID returned.
+func (_ba Cell )SetString (s string )int {_ba ._abb .ensureSharedStringsRelationships ();_ba .clearValue ();_cea :=_ba ._abb .SharedStrings .AddString (s );_ba ._gbf .V =_a .String (_gb .Itoa (_cea ));_ba ._gbf .TAttr =_ca .ST_CellTypeS ;return _cea ;};
+
+// CopySheet copies the existing sheet at index `ind` and puts its copy with the name `copiedSheetName`.
+func (_feeg *Workbook )CopySheet (ind int ,copiedSheetName string )(Sheet ,error ){if _feeg .SheetCount ()<=ind {return Sheet {},ErrorNotFound ;};var _edagb _gg .Relationship ;for _ ,_fgba :=range _feeg ._caaf .Relationships (){if _fgba .ID ()==_feeg ._dadd .Sheets .Sheet [ind ].IdAttr {var _eefg bool ;if _edagb ,_eefg =_feeg ._caaf .CopyRelationship (_fgba .ID ());!_eefg {return Sheet {},ErrorNotFound ;};break ;};};_feeg .ContentTypes .CopyOverride (_a .AbsoluteFilename (_a .DocTypeSpreadsheet ,_a .WorksheetContentType ,ind +1),_a .AbsoluteFilename (_a .DocTypeSpreadsheet ,_a .WorksheetContentType ,len (_feeg .ContentTypes .X ().Override )));_fbfb :=*_feeg ._dgga [ind ];_feeg ._dgga =append (_feeg ._dgga ,&_fbfb );var _cfefb uint32 =0;for _ ,_cagf :=range _feeg ._dadd .Sheets .Sheet {if _cagf .SheetIdAttr > _cfefb {_cfefb =_cagf .SheetIdAttr ;};};_cfefb ++;_aegg :=*_feeg ._dadd .Sheets .Sheet [ind ];_aegg .IdAttr =_edagb .ID ();_aegg .NameAttr =copiedSheetName ;_aegg .SheetIdAttr =_cfefb ;_feeg ._dadd .Sheets .Sheet =append (_feeg ._dadd .Sheets .Sheet ,&_aegg );_afcc :=_gg .NewRelationshipsCopy (_feeg ._fcbc [ind ]);_feeg ._fcbc =append (_feeg ._fcbc ,_afcc );_beaa :=_feeg ._aeec [ind ];if _beaa ==nil {_feeg ._aeec =append (_feeg ._aeec ,nil );}else {_aeae :=*_beaa ;_feeg ._aeec =append (_feeg ._aeec ,&_aeae );};_fbcaf :=Sheet {_feeg ,&_aegg ,&_fbfb };return _fbcaf ,nil ;};func (_dgcdf StandardFormat )String ()string {switch {case 0<=_dgcdf &&_dgcdf <=4:return _bbbaf [_eabb [_dgcdf ]:_eabb [_dgcdf +1]];case 9<=_dgcdf &&_dgcdf <=22:_dgcdf -=9;return _fdadg [_fdbb [_dgcdf ]:_fdbb [_dgcdf +1]];case 37<=_dgcdf &&_dgcdf <=40:_dgcdf -=37;return _gdebf [_ecgf [_dgcdf ]:_ecgf [_dgcdf +1]];case 45<=_dgcdf &&_dgcdf <=49:_dgcdf -=45;return _aggc [_efea [_dgcdf ]:_efea [_dgcdf +1]];default:return _eg .Sprintf ("\u0053t\u0061n\u0064\u0061\u0072\u0064\u0046o\u0072\u006da\u0074\u0028\u0025\u0064\u0029",_dgcdf );};};
+
+// Font allows editing fonts within a spreadsheet stylesheet.
+type Font struct{_efde *_ca .CT_Font ;_ccaf *_ca .StyleSheet ;};
+
+// Tables returns a slice of all defined tables in the workbook.
+func (_cdfe *Workbook )Tables ()[]Table {if _cdfe ._dgac ==nil {return nil ;};_fffge :=[]Table {};for _ ,_fdbd :=range _cdfe ._dgac {_fffge =append (_fffge ,Table {_fdbd });};return _fffge ;};
+
+// IsBool returns true if the cell boolean value.
+func (_beec *evalContext )IsBool (cellRef string )bool {return _beec ._gffe .Cell (cellRef ).IsBool ()};
+
+// GetOrCreateStandardNumberFormat gets or creates a cell style with a given
+// standard format. This should only be used when you want to perform
+// number/date/time formatting only.  Manipulating the style returned will cause
+// all cells using style returned from this for a given format to be formatted.
+func (_caa StyleSheet )GetOrCreateStandardNumberFormat (f StandardFormat )CellStyle {for _ ,_egdb :=range _caa .CellStyles (){if _egdb .HasNumberFormat ()&&_egdb .NumberFormat ()==uint32 (f ){return _egdb ;};};_bcgc :=_caa .AddCellStyle ();_bcgc .SetNumberFormatStandard (f );return _bcgc ;};
+
+// MoveTo moves the top-left of the anchored object.
+func (_afc OneCellAnchor )MoveTo (col ,row int32 ){_afc .TopLeft ().SetCol (col );_afc .TopLeft ().SetRow (row );};const (DVOpGreater =_ca .ST_DataValidationOperatorGreaterThanOrEqual ;);func _aba (_ebb bool )int {if _ebb {return 1;};return 0;};func (_cgbg StyleSheet )GetCellStyle (id uint32 )CellStyle {for _ebddb ,_daac :=range _cgbg ._ddaga .CellXfs .Xf {if uint32 (_ebddb )==id {return CellStyle {_cgbg ._bcggc ,_daac ,_cgbg ._ddaga .CellXfs };};};return CellStyle {};};func (_bdgg SortOrder )String ()string {if _bdgg >=SortOrder (len (_ebbc )-1){return _eg .Sprintf ("\u0053\u006f\u0072\u0074\u004f\u0072\u0064\u0065\u0072\u0028\u0025\u0064\u0029",_bdgg );};return _abbd [_ebbc [_bdgg ]:_ebbc [_bdgg +1]];};
+
+// SetColorScale configures the rule as a color scale, removing existing
+// configuration.
+func (_cec ConditionalFormattingRule )SetColorScale ()ColorScale {_cec .clear ();_cec .SetType (_ca .ST_CfTypeColorScale );_cec ._dac .ColorScale =_ca .NewCT_ColorScale ();return ColorScale {_cec ._dac .ColorScale };};
+
+// SetWrapped configures the cell to wrap text.
+func (_baac CellStyle )SetWrapped (b bool ){if _baac ._gaa .Alignment ==nil {_baac ._gaa .Alignment =_ca .NewCT_CellAlignment ();};if !b {_baac ._gaa .Alignment .WrapTextAttr =nil ;}else {_baac ._gaa .Alignment .WrapTextAttr =_a .Bool (true );_baac ._gaa .ApplyAlignmentAttr =_a .Bool (true );};};
+
+// IsNumber returns true if the cell is a number type cell.
+func (_ddd Cell )IsNumber ()bool {switch _ddd ._gbf .TAttr {case _ca .ST_CellTypeN :return true ;case _ca .ST_CellTypeS ,_ca .ST_CellTypeB :return false ;};return _ddd ._gbf .V !=nil &&_fcc .IsNumber (*_ddd ._gbf .V );};
 
 // BottomRight is a no-op.
-func (_ad AbsoluteAnchor )BottomRight ()CellMarker {return CellMarker {}};
+func (_efcb OneCellAnchor )BottomRight ()CellMarker {return CellMarker {}};
 
-// ConditionalFormatting controls the formatting styles and rules for a range of
-// cells with the same conditional formatting.
-type ConditionalFormatting struct{_dbegg *_ege .CT_ConditionalFormatting ;};
+// RemoveSheetByName removes the sheet with the given name from the workbook.
+func (_abcab *Workbook )RemoveSheetByName (name string )error {_cadd :=-1;for _gcgfa ,_fbeda :=range _abcab .Sheets (){if name ==_fbeda .Name (){_cadd =_gcgfa ;break ;};};if _cadd ==-1{return ErrorNotFound ;};return _abcab .RemoveSheet (_cadd );};
 
-// SetHidden hides or unhides the row
-func (_aafcg Row )SetHidden (hidden bool ){if !hidden {_aafcg ._bddg .HiddenAttr =nil ;}else {_aafcg ._bddg .HiddenAttr =_e .Bool (true );};};
+// GetLabelPrefix returns label prefix which depends on the cell's horizontal alignment.
+func (_gdge *evalContext )GetLabelPrefix (cellRef string )string {return _gdge ._gffe .Cell (cellRef ).getLabelPrefix ();};
 
-// DataValidationList is just a view on a DataValidation configured as a list.
-// It presents a drop-down combo box for spreadsheet users to select values. The
-// contents of the dropdown can either pull from a rang eof cells (SetRange) or
-// specified directly (SetValues).
-type DataValidationList struct{_fae *_ege .CT_DataValidation };
+// MakeComments constructs a new Comments wrapper.
+func MakeComments (w *Workbook ,x *_ca .Comments )Comments {return Comments {w ,x }};
 
-// StyleSheet is a document style sheet.
-type StyleSheet struct{_baea *Workbook ;_eebcg *_ege .StyleSheet ;};
+// GetSheet returns a sheet by name, or an error if a sheet by the given name
+// was not found.
+func (_gccd *Workbook )GetSheet (name string )(Sheet ,error ){for _ ,_gabe :=range _gccd .Sheets (){if _gabe .Name ()==name {return _gabe ,nil ;};};return Sheet {},ErrorNotFound ;};
 
-// SetIcons sets the icon set to use for display.
-func (_gdba IconScale )SetIcons (t _ege .ST_IconSetType ){_gdba ._aggb .IconSetAttr =t };
+// Fonts returns the list of fonts defined in the stylesheet.
+func (_afacg StyleSheet )Fonts ()[]Font {_gcfg :=[]Font {};for _ ,_fbbd :=range _afacg ._ddaga .Fonts .Font {_gcfg =append (_gcfg ,Font {_fbbd ,_afacg ._ddaga });};return _gcfg ;};
+
+// AddImage adds an image with a paricular anchor type, returning an anchor to
+// allow adusting the image size/position.
+func (_gfea Drawing )AddImage (img _gg .ImageRef ,at AnchorType )Anchor {_fdgf :=0;for _gaag ,_aae :=range _gfea ._gcad .Images {if _aae ==img {_fdgf =_gaag +1;break ;};};var _ebddf string ;for _cfec ,_bbb :=range _gfea ._gcad ._decb {if _bbb ==_gfea ._dbf {_edfa :=_eg .Sprintf ("\u002e\u002e\u002f\u006ded\u0069\u0061\u002f\u0069\u006d\u0061\u0067\u0065\u0025\u0064\u002e\u0025\u0073",_fdgf ,img .Format ());_cdc :=_gfea ._gcad ._ebfa [_cfec ].AddRelationship (_edfa ,_a .ImageType );_ebddf =_cdc .ID ();break ;};};var _bfba Anchor ;var _dadf *_bd .CT_Picture ;switch at {case AnchorTypeAbsolute :_fgfa :=_faga ();_gfea ._dbf .EG_Anchor =append (_gfea ._dbf .EG_Anchor ,&_bd .EG_Anchor {AbsoluteAnchor :_fgfa });_fgfa .Choice =&_bd .EG_ObjectChoicesChoice {};_fgfa .Choice .Pic =_bd .NewCT_Picture ();_fgfa .Pos .XAttr .ST_CoordinateUnqualified =_a .Int64 (0);_fgfa .Pos .YAttr .ST_CoordinateUnqualified =_a .Int64 (0);_dadf =_fgfa .Choice .Pic ;_bfba =AbsoluteAnchor {_fgfa };case AnchorTypeOneCell :_cgeb :=_gdc ();_gfea ._dbf .EG_Anchor =append (_gfea ._dbf .EG_Anchor ,&_bd .EG_Anchor {OneCellAnchor :_cgeb });_cgeb .Choice =&_bd .EG_ObjectChoicesChoice {};_cgeb .Choice .Pic =_bd .NewCT_Picture ();_dadf =_cgeb .Choice .Pic ;_bfba =OneCellAnchor {_cgeb };case AnchorTypeTwoCell :_fcbe :=_deaa ();_gfea ._dbf .EG_Anchor =append (_gfea ._dbf .EG_Anchor ,&_bd .EG_Anchor {TwoCellAnchor :_fcbe });_fcbe .Choice =&_bd .EG_ObjectChoicesChoice {};_fcbe .Choice .Pic =_bd .NewCT_Picture ();_dadf =_fcbe .Choice .Pic ;_bfba =TwoCellAnchor {_fcbe };};_dadf .NvPicPr .CNvPr .IdAttr =uint32 (len (_gfea ._dbf .EG_Anchor ));_dadf .NvPicPr .CNvPr .NameAttr ="\u0049\u006d\u0061g\u0065";_dadf .BlipFill .Blip =_gff .NewCT_Blip ();_dadf .BlipFill .Blip .EmbedAttr =_a .String (_ebddf );_dadf .BlipFill .Stretch =_gff .NewCT_StretchInfoProperties ();_dadf .SpPr =_gff .NewCT_ShapeProperties ();_dadf .SpPr .Xfrm =_gff .NewCT_Transform2D ();_dadf .SpPr .Xfrm .Off =_gff .NewCT_Point2D ();_dadf .SpPr .Xfrm .Off .XAttr .ST_CoordinateUnqualified =_a .Int64 (0);_dadf .SpPr .Xfrm .Off .YAttr .ST_CoordinateUnqualified =_a .Int64 (0);_dadf .SpPr .Xfrm .Ext =_gff .NewCT_PositiveSize2D ();_dadf .SpPr .Xfrm .Ext .CxAttr =int64 (float64 (img .Size ().X *_d .Pixel72 )/_d .EMU );_dadf .SpPr .Xfrm .Ext .CyAttr =int64 (float64 (img .Size ().Y *_d .Pixel72 )/_d .EMU );_dadf .SpPr .PrstGeom =_gff .NewCT_PresetGeometry2D ();_dadf .SpPr .PrstGeom .PrstAttr =_gff .ST_ShapeTypeRect ;_dadf .SpPr .Ln =_gff .NewCT_LineProperties ();_dadf .SpPr .Ln .NoFill =_gff .NewCT_NoFillProperties ();return _bfba ;};func (_afd Border )SetLeft (style _ca .ST_BorderStyle ,c _ce .Color ){if _afd ._ga .Left ==nil {_afd ._ga .Left =_ca .NewCT_BorderPr ();};_afd ._ga .Left .Color =_ca .NewCT_Color ();_afd ._ga .Left .Color .RgbAttr =c .AsRGBAString ();_afd ._ga .Left .StyleAttr =style ;};type SheetProtection struct{_gfgfc *_ca .CT_SheetProtection };func (_caba Border )SetTop (style _ca .ST_BorderStyle ,c _ce .Color ){if _caba ._ga .Top ==nil {_caba ._ga .Top =_ca .NewCT_BorderPr ();};_caba ._ga .Top .Color =_ca .NewCT_Color ();_caba ._ga .Top .Color .RgbAttr =c .AsRGBAString ();_caba ._ga .Top .StyleAttr =style ;};
+
+// GetFilename returns the filename of the context's workbook.
+func (_bee *evalContext )GetFilename ()string {return _bee ._gffe ._egccf .GetFilename ()};func _deaa ()*_bd .CT_TwoCellAnchor {_cbeg :=_bd .NewCT_TwoCellAnchor ();_cbeg .EditAsAttr =_bd .ST_EditAsOneCell ;_cbeg .From .Col =5;_cbeg .From .Row =0;_cbeg .From .ColOff .ST_CoordinateUnqualified =_a .Int64 (0);_cbeg .From .RowOff .ST_CoordinateUnqualified =_a .Int64 (0);_cbeg .To .Col =10;_cbeg .To .Row =20;_cbeg .To .ColOff .ST_CoordinateUnqualified =_a .Int64 (0);_cbeg .To .RowOff .ST_CoordinateUnqualified =_a .Int64 (0);return _cbeg ;};
+
+// AbsoluteAnchor has a fixed top-left corner in distance units as well as a
+// fixed height/width.
+type AbsoluteAnchor struct{_cg *_bd .CT_AbsoluteAnchor };
+
+// Workbook is the top level container item for a set of spreadsheets.
+type Workbook struct{_gg .DocBase ;_dadd *_ca .Workbook ;StyleSheet StyleSheet ;SharedStrings SharedStrings ;_aeec []*_ca .Comments ;_dgga []*_ca .Worksheet ;_fcbc []_gg .Relationships ;_caaf _gg .Relationships ;_fcgb []*_gff .Theme ;_decb []*_bd .WsDr ;_ebfa []_gg .Relationships ;_dedb []*_deb .Container ;_dabb []*_cfd .ChartSpace ;_dgac []*_ca .Table ;_ccgd string ;_dbba map[string ]string ;_deebb map[string ]*_cfd .ChartSpace ;_abca string ;};
+
+// SetAuthor sets the author of the comment. If the comment body contains the
+// author's name (as is the case with Excel and Comments.AddCommentWithStyle, it
+// will not be changed).  This method only changes the metadata author of the
+// comment.
+func (_agee Comment )SetAuthor (author string ){_agee ._dee .AuthorIdAttr =Comments {_agee ._dfbb ,_agee ._dbb }.getOrCreateAuthor (author );};func (_adad Sheet )validateSheetNames ()error {if len (_adad .Name ())> 31{return _eg .Errorf ("\u0073\u0068\u0065\u0065\u0074 \u006e\u0061\u006d\u0065\u0020\u0027\u0025\u0073\u0027\u0020\u0068\u0061\u0073 \u0025\u0064\u0020\u0063\u0068\u0061\u0072\u0061\u0063\u0074\u0065\u0072\u0073\u002c\u0020\u006d\u0061\u0078\u0020\u006c\u0065\u006e\u0067\u0074\u0068\u0020\u0069\u0073\u0020\u00331",_adad .Name (),len (_adad .Name ()));};return nil ;};
+
+// Reference returns the table reference (the cells within the table)
+func (_gbbe Table )Reference ()string {return _gbbe ._eebe .RefAttr };
 
 // X returns the inner wrapped XML type.
-func (_gde SheetProtection )X ()*_ege .CT_SheetProtection {return _gde ._aebf };
+func (_bfd Comments )X ()*_ca .Comments {return _bfd ._fdae };
 
-// SetBorder applies a border to a cell style. The border is referenced by its
-// index so modifying the border afterward will affect all styles that reference
-// it.
-func (_abgf CellStyle )SetBorder (b Border ){_abgf ._ceca .BorderIdAttr =_e .Uint32 (b .Index ());_abgf ._ceca .ApplyBorderAttr =_e .Bool (true );};
+// Comment is a single comment within a sheet.
+type Comment struct{_dfbb *Workbook ;_dee *_ca .CT_Comment ;_dbb *_ca .Comments ;};
 
-// AddHyperlink adds a hyperlink to a sheet. Adding the hyperlink to the sheet
-// and setting it on a cell is more efficient than setting hyperlinks directly
-// on a cell.
-func (_fdff *Sheet )AddHyperlink (url string )_egb .Hyperlink {for _eafc ,_gagd :=range _fdff ._geaf ._gbed {if _gagd ==_fdff ._eaa {return _fdff ._geaf ._abeb [_eafc ].AddHyperlink (url );};};return _egb .Hyperlink {};};
+// SetWidthCells sets the height the anchored object by moving the right hand
+// side. It is not compatible with SetWidth.
+func (_gcgf TwoCellAnchor )SetWidthCells (w int32 ){_efef :=_gcgf .TopLeft ();_gcgc :=_gcgf .BottomRight ();_gcgc .SetCol (_efef .Col ()+w );};func (_dfb Cell )getRawSortValue ()(string ,bool ){if _dfb .HasFormula (){_bdf :=_dfb .GetCachedFormulaResult ();return _bdf ,_fcc .IsNumber (_bdf );};_aeg ,_ :=_dfb .GetRawValue ();return _aeg ,_fcc .IsNumber (_aeg );};
+
+// SetStringByID sets the cell type to string, and the value a string in the
+// shared strings table.
+func (_gdaf Cell )SetStringByID (id int ){_gdaf ._abb .ensureSharedStringsRelationships ();_gdaf .clearValue ();_gdaf ._gbf .V =_a .String (_gb .Itoa (id ));_gdaf ._gbf .TAttr =_ca .ST_CellTypeS ;};
 
 // RemoveFont removes a font from the style sheet.  It *does not* update styles that refer
 // to this font.
-func (_cefe StyleSheet )RemoveFont (f Font )error {for _gbdcc ,_dagbf :=range _cefe ._eebcg .Fonts .Font {if _dagbf ==f .X (){_cefe ._eebcg .Fonts .Font =append (_cefe ._eebcg .Fonts .Font [:_gbdcc ],_cefe ._eebcg .Fonts .Font [_gbdcc +1:]...);return nil ;};};return _gb .New ("\u0066\u006f\u006e\u0074\u0020\u006e\u006f\u0074\u0020f\u006f\u0075\u006e\u0064");};
+func (_bfda StyleSheet )RemoveFont (f Font )error {for _acdcd ,_fdef :=range _bfda ._ddaga .Fonts .Font {if _fdef ==f .X (){_bfda ._ddaga .Fonts .Font =append (_bfda ._ddaga .Fonts .Font [:_acdcd ],_bfda ._ddaga .Fonts .Font [_acdcd +1:]...);return nil ;};};return _cc .New ("\u0066\u006f\u006e\u0074\u0020\u006e\u006f\u0074\u0020f\u006f\u0075\u006e\u0064");};func (_geeg *evalContext )SetOffset (col ,row uint32 ){_geeg ._gba =col ;_geeg ._gbg =row };func (_eeae *Sheet )setShared (_baee string ,_feec ,_ecgb _ag .CellReference ,_degde string ){_bffg :=_eeae .FormulaContext ();_gecg :=_ea .NewEvaluator ();for _bcff :=_feec .RowIdx ;_bcff <=_ecgb .RowIdx ;_bcff ++{for _efba :=_feec .ColumnIdx ;_efba <=_ecgb .ColumnIdx ;_efba ++{_cecea :=_bcff -_feec .RowIdx ;_agbb :=_efba -_feec .ColumnIdx ;_bffg .SetOffset (_agbb ,_cecea );_gdeb :=_gecg .Eval (_bffg ,_degde );_cedd :=_eg .Sprintf ("\u0025\u0073\u0025\u0064",_ag .IndexToColumn (_efba ),_bcff );_fadc :=_eeae .Cell (_cedd );if _gdeb .Type ==_ea .ResultTypeNumber {_fadc .X ().TAttr =_ca .ST_CellTypeN ;}else {_fadc .X ().TAttr =_ca .ST_CellTypeInlineStr ;};_fadc .X ().V =_a .String (_gdeb .Value ());};};_ =_gecg ;_ =_bffg ;};
 
-// X returns the inner wrapped XML type.
-func (_abgd Sheet )X ()*_ege .Worksheet {return _abgd ._eaa };
+// SaveToFile writes the workbook out to a file.
+func (_aecb *Workbook )SaveToFile (path string )error {_fecad ,_cbgb :=_bg .Create (path );if _cbgb !=nil {return _cbgb ;};defer _fecad .Close ();return _aecb .Save (_fecad );};
 
-// ID returns the number format ID.  This is not an index as there are some
-// predefined number formats which can be used in cell styles and don't need a
-// corresponding NumberFormat.
-func (_addea NumberFormat )ID ()uint32 {return _addea ._cecf .NumFmtIdAttr };
+// SetRange sets the range that contains the possible values. This is incompatible with SetValues.
+func (_fdad DataValidationList )SetRange (cellRange string ){_fdad ._eaaf .Formula1 =_a .String (cellRange );_fdad ._eaaf .Formula2 =_a .String ("\u0030");};
 
-// DataValidation controls cell validation
-type DataValidation struct{_faa *_ege .CT_DataValidation };
+// AddDrawing adds a drawing to a workbook.  However the drawing is not actually
+// displayed or used until it's set on a sheet.
+func (_ebae *Workbook )AddDrawing ()Drawing {_bfcc :=_bd .NewWsDr ();_ebae ._decb =append (_ebae ._decb ,_bfcc );_aefgf :=_a .AbsoluteFilename (_a .DocTypeSpreadsheet ,_a .DrawingType ,len (_ebae ._decb ));_ebae .ContentTypes .AddOverride (_aefgf ,_a .DrawingContentType );_ebae ._ebfa =append (_ebae ._ebfa ,_gg .NewRelationships ());return Drawing {_ebae ,_bfcc };};
 
-// InitialView returns the first defined sheet view. If there are no views, one
-// is created and returned.
-func (_abbd *Sheet )InitialView ()SheetView {if _abbd ._eaa .SheetViews ==nil ||len (_abbd ._eaa .SheetViews .SheetView )==0{return _abbd .AddView ();};return SheetView {_abbd ._eaa .SheetViews .SheetView [0]};};
+// NumberFormat is a number formatting string that can be applied to a cell
+// style.
+type NumberFormat struct{_daeeg *Workbook ;_dddb *_ca .CT_NumFmt ;};var _eded []string =[]string {"\u007a\u0068\u002dH\u004b","\u007a\u0068\u002dM\u004f","\u007a\u0068\u002dC\u004e","\u007a\u0068\u002dS\u0047","\u007a\u0068\u002dT\u0057","\u006a\u0061\u002dJ\u0050","\u006b\u006f\u002dK\u0052"};
 
-// Extents returns the sheet extents in the form "A1:B15". This requires
-// scanning the entire sheet.
-func (_egfc Sheet )Extents ()string {_aec ,_abgfc ,_ggeg ,_aagc :=_egfc .ExtentsIndex ();return _eg .Sprintf ("\u0025s\u0025\u0064\u003a\u0025\u0073\u0025d",_aec ,_abgfc ,_ggeg ,_aagc );};
+// TopLeft returns the CellMaker for the top left corner of the anchor.
+func (_eba TwoCellAnchor )TopLeft ()CellMarker {return CellMarker {_eba ._afab .From }};
 
-// X returns the inner wrapped XML type.
-func (_agb Cell )X ()*_ege .CT_Cell {return _agb ._be };
+// SetColOffset sets a column offset in absolute distance.
+func (_ggga CellMarker )SetColOffset (m _d .Distance ){_ggga ._aag .ColOff .ST_CoordinateUnqualified =_a .Int64 (int64 (m /_d .EMU ));};
 
-// AddRule adds and returns a new rule that can be configured.
-func (_adg ConditionalFormatting )AddRule ()ConditionalFormattingRule {_eafa :=_ege .NewCT_CfRule ();_adg ._dbegg .CfRule =append (_adg ._dbegg .CfRule ,_eafa );_ada :=ConditionalFormattingRule {_eafa };_ada .InitializeDefaults ();_ada .SetPriority (int32 (len (_adg ._dbegg .CfRule )+1));return _ada ;};
+// ExtractText returns text from the sheet as a SheetText object.
+func (_gab *Sheet )ExtractText ()*SheetText {_edge :=[]CellText {};for _ ,_gdda :=range _gab .Rows (){for _ ,_cbab :=range _gdda .Cells (){if !_cbab .IsEmpty (){if _gfd :=_cbab .GetFormattedValue ();_gfd !=""{_edge =append (_edge ,CellText {Text :_gfd ,Cell :_cbab });};};};};return &SheetText {Cells :_edge };};
+
+// AddMergedCells merges cells within a sheet.
+func (_ddfe *Sheet )AddMergedCells (fromRef ,toRef string )MergedCell {if _ddfe ._bedf .MergeCells ==nil {_ddfe ._bedf .MergeCells =_ca .NewCT_MergeCells ();};_ecbd :=_ca .NewCT_MergeCell ();_ecbd .RefAttr =_eg .Sprintf ("\u0025\u0073\u003a%\u0073",fromRef ,toRef );_ddfe ._bedf .MergeCells .MergeCell =append (_ddfe ._bedf .MergeCells .MergeCell ,_ecbd );_ddfe ._bedf .MergeCells .CountAttr =_a .Uint32 (uint32 (len (_ddfe ._bedf .MergeCells .MergeCell )));return MergedCell {_ddfe ._egccf ,_ddfe ,_ecbd };};var _ebbc =[...]uint8 {0,18,37};
+
+// PasswordHash returns the hash of the workbook password.
+func (_dceg SheetProtection )PasswordHash ()string {if _dceg ._gfgfc .PasswordAttr ==nil {return "";};return *_dceg ._gfgfc .PasswordAttr ;};
+
+// SetHidden hides or unhides the row
+func (_fdaa Row )SetHidden (hidden bool ){if !hidden {_fdaa ._bcb .HiddenAttr =nil ;}else {_fdaa ._bcb .HiddenAttr =_a .Bool (true );};};
+
+// Operator returns the operator for the rule
+func (_fdf ConditionalFormattingRule )Operator ()_ca .ST_ConditionalFormattingOperator {return _fdf ._dac .OperatorAttr ;};
+
+// AddImage adds an image to the workbook package, returning a reference that
+// can be used to add the image to a drawing.
+func (_gfee *Workbook )AddImage (i _gg .Image )(_gg .ImageRef ,error ){_cceg :=_gg .MakeImageRef (i ,&_gfee .DocBase ,_gfee ._caaf );if i .Data ==nil &&i .Path ==""{return _cceg ,_cc .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0064\u0061t\u0061\u0020\u006f\u0072\u0020\u0061\u0020\u0070\u0061\u0074\u0068");};if i .Format ==""{return _cceg ,_cc .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0061\u0020v\u0061\u006c\u0069\u0064\u0020\u0066\u006f\u0072\u006d\u0061\u0074");};if i .Size .X ==0||i .Size .Y ==0{return _cceg ,_cc .New ("\u0069\u006d\u0061\u0067e\u0020\u006d\u0075\u0073\u0074\u0020\u0068\u0061\u0076\u0065 \u0061 \u0076\u0061\u006c\u0069\u0064\u0020\u0073i\u007a\u0065");};if i .Path !=""{_ggeea :=_efg .Add (i .Path );if _ggeea !=nil {return _cceg ,_ggeea ;};};_gfee .Images =append (_gfee .Images ,_cceg );return _cceg ,nil ;};
+
+// SharedStrings is a shared strings table, where string data can be placed
+// outside of the sheet contents and referenced from a sheet.
+type SharedStrings struct{_fgc *_ca .Sst ;_afcg map[string ]int ;};
+
+// Author returns the author of the comment
+func (_adeb Comment )Author ()string {if _adeb ._dee .AuthorIdAttr < uint32 (len (_adeb ._dbb .Authors .Author )){return _adeb ._dbb .Authors .Author [_adeb ._dee .AuthorIdAttr ];};return "";};
+
+// StandardFormat is a standard ECMA 376 number format.
+//go:generate stringer -type=StandardFormat
+type StandardFormat uint32 ;const (AnchorTypeAbsolute AnchorType =iota ;AnchorTypeOneCell ;AnchorTypeTwoCell ;);
+
+// PasswordHash returns the password hash for a workbook using the modified
+// spreadsheetML password hash that is compatible with Excel.
+func PasswordHash (s string )string {_bgfff :=uint16 (0);if len (s )> 0{for _gbaf :=len (s )-1;_gbaf >=0;_gbaf --{_cgaae :=s [_gbaf ];_bgfff =((_bgfff >>14)&0x01)|((_bgfff <<1)&0x7fff);_bgfff ^=uint16 (_cgaae );};_bgfff =((_bgfff >>14)&0x01)|((_bgfff <<1)&0x7fff);_bgfff ^=uint16 (len (s ));_bgfff ^=(0x8000|('N'<<8)|'K');};return _eg .Sprintf ("\u0025\u0030\u0034\u0058",uint64 (_bgfff ));};
+
+// NumberFormat returns the number format that the cell style uses, or zero if
+// it is not set.
+func (_fge CellStyle )NumberFormat ()uint32 {if _fge ._gaa .NumFmtIdAttr ==nil {return 0;};return *_fge ._gaa .NumFmtIdAttr ;};
 
 // SetHorizontalAlignment sets the horizontal alignment of a cell style.
-func (_cce CellStyle )SetHorizontalAlignment (a _ege .ST_HorizontalAlignment ){if _cce ._ceca .Alignment ==nil {_cce ._ceca .Alignment =_ege .NewCT_CellAlignment ();};_cce ._ceca .Alignment .HorizontalAttr =a ;_cce ._ceca .ApplyAlignmentAttr =_e .Bool (true );};
-
-// Comparer is used to compare rows based off a column and cells based off of
-// their value.
-type Comparer struct{Order SortOrder ;};
+func (_dbg CellStyle )SetHorizontalAlignment (a _ca .ST_HorizontalAlignment ){if _dbg ._gaa .Alignment ==nil {_dbg ._gaa .Alignment =_ca .NewCT_CellAlignment ();};_dbg ._gaa .Alignment .HorizontalAttr =a ;_dbg ._gaa .ApplyAlignmentAttr =_a .Bool (true );};
 
 // GetValueAsTime retrieves the cell's value as a time.  There is no difference
 // in SpreadsheetML between a time/date cell other than formatting, and that
 // typically a date cell won't have a fractional component. GetValueAsTime will
 // work for date cells as well.
-func (_aee Cell )GetValueAsTime ()(_c .Time ,error ){if _aee ._be .TAttr !=_ege .ST_CellTypeUnset {return _c .Time {},_gb .New ("\u0063e\u006c\u006c\u0020\u0074y\u0070\u0065\u0020\u0073\u0068o\u0075l\u0064 \u0062\u0065\u0020\u0075\u006e\u0073\u0065t");};if _aee ._be .V ==nil {return _c .Time {},_gb .New ("\u0063\u0065\u006c\u006c\u0020\u0068\u0061\u0073\u0020\u006e\u006f\u0020v\u0061\u006c\u0075\u0065");};_gfb ,_ ,_ebg :=_aa .ParseFloat (*_aee ._be .V ,10,128,_aa .ToNearestEven );if _ebg !=nil {return _c .Time {},_ebg ;};_cfg :=new (_aa .Float );_cfg .SetUint64 (uint64 (24*_c .Hour ));_gfb .Mul (_gfb ,_cfg );_geb ,_ :=_gfb .Uint64 ();_debc :=_aee ._cdb .Epoch ().Add (_c .Duration (_geb ));return _fb (_debc ),nil ;};
+func (_cfbf Cell )GetValueAsTime ()(_gc .Time ,error ){if _cfbf ._gbf .TAttr !=_ca .ST_CellTypeUnset {return _gc .Time {},_cc .New ("\u0063e\u006c\u006c\u0020\u0074y\u0070\u0065\u0020\u0073\u0068o\u0075l\u0064 \u0062\u0065\u0020\u0075\u006e\u0073\u0065t");};if _cfbf ._gbf .V ==nil {return _gc .Time {},_cc .New ("\u0063\u0065\u006c\u006c\u0020\u0068\u0061\u0073\u0020\u006e\u006f\u0020v\u0061\u006c\u0075\u0065");};_bag ,_ ,_bad :=_ef .ParseFloat (*_cfbf ._gbf .V ,10,128,_ef .ToNearestEven );if _bad !=nil {return _gc .Time {},_bad ;};_cabg :=new (_ef .Float );_cabg .SetUint64 (uint64 (24*_gc .Hour ));_bag .Mul (_bag ,_cabg );_ebg ,_ :=_bag .Uint64 ();_dad :=_cfbf ._abb .Epoch ().Add (_gc .Duration (_ebg ));return _bbd (_dad ),nil ;};
+
+// SetHidden controls the visibility of a column.
+func (_ggf Column )SetHidden (b bool ){if !b {_ggf ._bbde .HiddenAttr =nil ;}else {_ggf ._bbde .HiddenAttr =_a .Bool (true );};};
+
+// Index returns the index of the differential style.
+func (_fffe DifferentialStyle )Index ()uint32 {for _edgf ,_eebg :=range _fffe ._dgc .Dxf {if _fffe ._ecdg ==_eebg {return uint32 (_edgf );};};return 0;};
+
+// SetRowOffset sets the row offset of the top-left of the image in fixed units.
+func (_bed AbsoluteAnchor )SetRowOffset (m _d .Distance ){_bed ._cg .Pos .YAttr .ST_CoordinateUnqualified =_a .Int64 (int64 (m /_d .EMU ));};
+
+// GetChartByTargetId returns the array of workbook crt.ChartSpace.
+func (_fecag *Workbook )GetChartByTargetId (targetAttr string )*_cfd .ChartSpace {return _fecag ._deebb [targetAttr ];};
+
+// AddDefinedName adds a name for a cell or range reference that can be used in
+// formulas and charts.
+func (_ggca *Workbook )AddDefinedName (name ,ref string )DefinedName {if _ggca ._dadd .DefinedNames ==nil {_ggca ._dadd .DefinedNames =_ca .NewCT_DefinedNames ();};_gebc :=_ca .NewCT_DefinedName ();_gebc .Content =ref ;_gebc .NameAttr =name ;_ggca ._dadd .DefinedNames .DefinedName =append (_ggca ._dadd .DefinedNames .DefinedName ,_gebc );return DefinedName {_gebc };};
+
+// Cell retrieves or adds a new cell to a row. Col is the column (e.g. 'A', 'B')
+func (_efgf Row )Cell (col string )Cell {_ceef :=_eg .Sprintf ("\u0025\u0073\u0025\u0064",col ,_efgf .RowNumber ());for _ ,_eeeb :=range _efgf ._bcb .C {if _eeeb .RAttr !=nil &&*_eeeb .RAttr ==_ceef {return Cell {_efgf ._dacc ,_efgf ._aada ,_efgf ._bcb ,_eeeb };};};return _efgf .AddNamedCell (col );};
+
+// SetState sets the sheet view state (frozen/split/frozen-split)
+func (_fafd SheetView )SetState (st _ca .ST_PaneState ){_fafd .ensurePane ();_fafd ._ggeg .Pane .StateAttr =st ;};
+
+// SetHyperlink sets a hyperlink on a cell.
+func (_fbb Cell )SetHyperlink (hl _gg .Hyperlink ){_fagc :=_fbb ._becd ._bedf ;if _fagc .Hyperlinks ==nil {_fagc .Hyperlinks =_ca .NewCT_Hyperlinks ();};_dd :=_gg .Relationship (hl );_ddg :=_ca .NewCT_Hyperlink ();_ddg .RefAttr =_fbb .Reference ();_ddg .IdAttr =_a .String (_dd .ID ());_fagc .Hyperlinks .Hyperlink =append (_fagc .Hyperlinks .Hyperlink ,_ddg );};
+
+// SetHeightCells is a no-op.
+func (_gbe AbsoluteAnchor )SetHeightCells (int32 ){};
+
+// Open opens and reads a workbook from a file (.xlsx).
+func Open (filename string )(*Workbook ,error ){_agge ,_daec :=_bg .Open (filename );if _daec !=nil {return nil ,_eg .Errorf ("e\u0072r\u006f\u0072\u0020\u006f\u0070\u0065\u006e\u0069n\u0067\u0020\u0025\u0073: \u0025\u0073",filename ,_daec );};defer _agge .Close ();_afe ,_daec :=_bg .Stat (filename );if _daec !=nil {return nil ,_eg .Errorf ("e\u0072r\u006f\u0072\u0020\u006f\u0070\u0065\u006e\u0069n\u0067\u0020\u0025\u0073: \u0025\u0073",filename ,_daec );};_acdf ,_daec :=Read (_agge ,_afe .Size ());if _daec !=nil {return nil ,_daec ;};_gbdf ,_ :=_fc .Abs (_fc .Dir (filename ));_acdf ._ccgd =_fc .Join (_gbdf ,filename );return _acdf ,nil ;};
+
+// SetRowOffset sets the row offset of the two cell anchor
+func (_baff TwoCellAnchor )SetRowOffset (m _d .Distance ){_ecfb :=m -_baff .TopLeft ().RowOffset ();_baff .TopLeft ().SetRowOffset (m );_baff .BottomRight ().SetRowOffset (_baff .BottomRight ().RowOffset ()+_ecfb );};
+
+// X returns the inner wrapped XML type.
+func (_ggb Cell )X ()*_ca .CT_Cell {return _ggb ._gbf };
+
+// InitialView returns the first defined sheet view. If there are no views, one
+// is created and returned.
+func (_bgdd *Sheet )InitialView ()SheetView {if _bgdd ._bedf .SheetViews ==nil ||len (_bgdd ._bedf .SheetViews .SheetView )==0{return _bgdd .AddView ();};return SheetView {_bgdd ._bedf .SheetViews .SheetView [0]};};
+
+// AddRun adds a new run of text to the cell.
+func (_egbc RichText )AddRun ()RichTextRun {_fdfg :=_ca .NewCT_RElt ();_egbc ._gccf .R =append (_egbc ._gccf .R ,_fdfg );return RichTextRun {_fdfg };};
+
+// SetRichTextString sets the cell to rich string mode and returns a struct that
+// can be used to add formatted text to the cell.
+func (_abc Cell )SetRichTextString ()RichText {_abc .clearValue ();_abc ._gbf .Is =_ca .NewCT_Rst ();_abc ._gbf .TAttr =_ca .ST_CellTypeInlineStr ;return RichText {_abc ._gbf .Is };};func (_afgf DataValidationCompare )SetValue2 (v string ){_afgf ._ebe .Formula2 =&v };
+
+// GetFormula returns the formula for a cell.
+func (_dbab Cell )GetFormula ()string {if _dbab ._gbf .F !=nil {return _dbab ._gbf .F .Content ;};return "";};
+
+// Text returns text from the sheet as one string separated with line breaks.
+func (_edff *SheetText )Text ()string {_acg :=_e .NewBuffer ([]byte {});for _ ,_agdd :=range _edff .Cells {if _agdd .Text !=""{_acg .WriteString (_agdd .Text );_acg .WriteString ("\u000a");};};return _acg .String ();};
+
+// OneCellAnchor is anchored to a top-left cell with a fixed with/height
+// in distance.
+type OneCellAnchor struct{_cefe *_bd .CT_OneCellAnchor };
+
+// GetFont gets a Font from a cell style.
+func (_cfbe CellStyle )GetFont ()*_ca .CT_Font {if _abcb :=_cfbe ._gaa .FontIdAttr ;_abcb !=nil {_eddb :=_cfbe ._ead .StyleSheet .Fonts ();if int (*_abcb )< len (_eddb ){return _eddb [int (*_abcb )].X ();};};return nil ;};
+
+// LessRows compares two rows based off of a column. If the column doesn't exist
+// in one row, that row is 'less'.
+func (_gga Comparer )LessRows (column string ,lhs ,rhs Row )bool {var _efbc ,_fggb Cell ;for _ ,_fba :=range lhs .Cells (){_daee ,_ :=_ag .ParseCellReference (_fba .Reference ());if _daee .Column ==column {_efbc =_fba ;break ;};};for _ ,_eaef :=range rhs .Cells (){_ecbc ,_ :=_ag .ParseCellReference (_eaef .Reference ());if _ecbc .Column ==column {_fggb =_eaef ;break ;};};return _gga .LessCells (_efbc ,_fggb );};func (_aef Cell )clearValue (){_aef ._gbf .F =nil ;_aef ._gbf .Is =nil ;_aef ._gbf .V =nil ;_aef ._gbf .TAttr =_ca .ST_CellTypeUnset ;};
+
+// AddRow adds a new row to a sheet.  You can mix this with numbered rows,
+// however it will get confusing. You should prefer to use either automatically
+// numbered rows with AddRow or manually numbered rows with Row/AddNumberedRow
+func (_aab *Sheet )AddRow ()Row {_aefd :=uint32 (0);_bgdb :=uint32 (len (_aab ._bedf .SheetData .Row ));if _bgdb > 0&&_aab ._bedf .SheetData .Row [_bgdb -1].RAttr !=nil &&*_aab ._bedf .SheetData .Row [_bgdb -1].RAttr ==_bgdb {return _aab .addNumberedRowFast (_bgdb +1);};for _ ,_adgc :=range _aab ._bedf .SheetData .Row {if _adgc .RAttr !=nil &&*_adgc .RAttr > _aefd {_aefd =*_adgc .RAttr ;};};return _aab .AddNumberedRow (_aefd +1);};
+
+// RichTextRun is a segment of text within a cell that is directly formatted.
+type RichTextRun struct{_bgc *_ca .CT_RElt };
+
+// ClearProtection clears all workbook protections.
+func (_cbfaa *Workbook )ClearProtection (){_cbfaa ._dadd .WorkbookProtection =nil };
+
+// SetCol set the column of the cell marker.
+func (_gdad CellMarker )SetCol (col int32 ){_gdad ._aag .Col =col };
+
+// SetFormulaRaw sets the cell type to formula, and the raw formula to the given string
+func (_ge Cell )SetFormulaRaw (s string ){_faa :=_ea .ParseString (s );if _faa ==nil {return ;};_ge .clearValue ();_ge ._gbf .TAttr =_ca .ST_CellTypeStr ;_ge ._gbf .F =_ca .NewCT_CellFormula ();_ge ._gbf .F .Content =s ;};
+
+// SetError sets the cell type to error and the value to the given error message.
+func (_gafe Cell )SetError (msg string ){_gafe .clearValue ();_gafe ._gbf .V =_a .String (msg );_gafe ._gbf .TAttr =_ca .ST_CellTypeE ;};
+
+// SetHeightCells is a no-op.
+func (_abfd OneCellAnchor )SetHeightCells (int32 ){};
