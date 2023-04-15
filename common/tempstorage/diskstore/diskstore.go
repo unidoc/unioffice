@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_b "github.com/unidoc/unioffice/common/tempstorage";_c "io/ioutil";_ga "os";_f "strings";);
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_d diskStorage )TempDir (pattern string )(string ,error ){return _c .TempDir ("",pattern )};
-
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_e diskStorage )TempFile (dir ,pattern string )(_b .File ,error ){return _c .TempFile (dir ,pattern );};
-
-// Open opens file from disk according to a path
-func (_a diskStorage )Open (path string )(_b .File ,error ){return _ga .OpenFile (path ,_ga .O_RDWR ,0644)};
-
-// Add is not applicable in the diskstore implementation
-func (_fe diskStorage )Add (path string )error {return nil };
-
-// SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_bd :=diskStorage {};_b .SetAsStorage (&_bd )};
+package diskstore ;import (_dc "github.com/unidoc/unioffice/common/tempstorage";_fb "io/ioutil";_d "os";_c "strings";);
 
 // RemoveAll removes all files in the directory
-func (_gg diskStorage )RemoveAll (dir string )error {if _f .HasPrefix (dir ,_ga .TempDir ()){return _ga .RemoveAll (dir );};return nil ;};type diskStorage struct{};
+func (_a diskStorage )RemoveAll (dir string )error {if _c .HasPrefix (dir ,_d .TempDir ()){return _d .RemoveAll (dir );};return nil ;};
+
+// Add is not applicable in the diskstore implementation
+func (_b diskStorage )Add (path string )error {return nil };
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_g diskStorage )TempFile (dir ,pattern string )(_dc .File ,error ){return _fb .TempFile (dir ,pattern );};
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_e diskStorage )TempDir (pattern string )(string ,error ){return _fb .TempDir ("",pattern )};type diskStorage struct{};
+
+// Open opens file from disk according to a path
+func (_df diskStorage )Open (path string )(_dc .File ,error ){return _d .OpenFile (path ,_d .O_RDWR ,0644)};
+
+// SetAsStorage sets temp storage as a disk storage
+func SetAsStorage (){_de :=diskStorage {};_dc .SetAsStorage (&_de )};
