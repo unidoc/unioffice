@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_a "github.com/unidoc/unioffice/common/tempstorage";_c "io/ioutil";_cg "os";_e "strings";);
-
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_b diskStorage )TempFile (dir ,pattern string )(_a .File ,error ){return _c .TempFile (dir ,pattern );};
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_d diskStorage )TempDir (pattern string )(string ,error ){return _c .TempDir ("",pattern )};type diskStorage struct{};
-
-// SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_g :=diskStorage {};_a .SetAsStorage (&_g )};
+package diskstore ;import (_bc "github.com/unidoc/unioffice/common/tempstorage";_g "io/ioutil";_d "os";_e "strings";);
 
 // Open opens file from disk according to a path
-func (_fb diskStorage )Open (path string )(_a .File ,error ){return _cg .OpenFile (path ,_cg .O_RDWR ,0644);};
+func (_bcg diskStorage )Open (path string )(_bc .File ,error ){return _d .OpenFile (path ,_d .O_RDWR ,0644);};
 
-// RemoveAll removes all files in the directory
-func (_ga diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_cg .TempDir ()){return _cg .RemoveAll (dir );};return nil ;};
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_ag diskStorage )TempDir (pattern string )(string ,error ){return _g .TempDir ("",pattern )};
 
 // Add is not applicable in the diskstore implementation
-func (_eb diskStorage )Add (path string )error {return nil };
+func (_ab diskStorage )Add (path string )error {return nil };
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_a diskStorage )TempFile (dir ,pattern string )(_bc .File ,error ){return _g .TempFile (dir ,pattern );};
+
+// RemoveAll removes all files in the directory
+func (_ed diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_d .TempDir ()){return _d .RemoveAll (dir );};return nil ;};
+
+// SetAsStorage sets temp storage as a disk storage
+func SetAsStorage (){_f :=diskStorage {};_bc .SetAsStorage (&_f )};type diskStorage struct{};
