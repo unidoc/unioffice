@@ -13,404 +13,404 @@
 // OOXML document formats.
 //
 // Package common contains common properties used by the subpackages.
-package common ;import (_c "archive/zip";_ad "bytes";_aa "encoding/xml";_g "errors";_gc "fmt";_fga "github.com/unidoc/unioffice";_bbd "github.com/unidoc/unioffice/common/logger";_ed "github.com/unidoc/unioffice/common/tempstorage";_adg "github.com/unidoc/unioffice/common/tempstorage/diskstore";_cbd "github.com/unidoc/unioffice/measurement";_fg "github.com/unidoc/unioffice/schema/soo/dml";_cd "github.com/unidoc/unioffice/schema/soo/ofc/custom_properties";_cb "github.com/unidoc/unioffice/schema/soo/ofc/docPropsVTypes";_be "github.com/unidoc/unioffice/schema/soo/ofc/extended_properties";_eg "github.com/unidoc/unioffice/schema/soo/pkg/content_types";_aae "github.com/unidoc/unioffice/schema/soo/pkg/metadata/core_properties";_ga "github.com/unidoc/unioffice/schema/soo/pkg/relationships";_dd "github.com/unidoc/unioffice/zippkg";_bd "image";_ "image/gif";_ "image/jpeg";_ "image/png";_f "os";_a "reflect";_d "regexp";_ba "strconv";_af "strings";_ag "time";);
+package common ;import (_bd "archive/zip";_f "bytes";_e "encoding/xml";_d "errors";_bde "fmt";_ea "github.com/unidoc/unioffice";_ge "github.com/unidoc/unioffice/common/logger";_eg "github.com/unidoc/unioffice/common/tempstorage";_gg "github.com/unidoc/unioffice/common/tempstorage/diskstore";_gf "github.com/unidoc/unioffice/measurement";_bdd "github.com/unidoc/unioffice/schema/soo/dml";_ga "github.com/unidoc/unioffice/schema/soo/ofc/custom_properties";_de "github.com/unidoc/unioffice/schema/soo/ofc/docPropsVTypes";_ad "github.com/unidoc/unioffice/schema/soo/ofc/extended_properties";_fc "github.com/unidoc/unioffice/schema/soo/pkg/content_types";_ag "github.com/unidoc/unioffice/schema/soo/pkg/metadata/core_properties";_ac "github.com/unidoc/unioffice/schema/soo/pkg/relationships";_dg "github.com/unidoc/unioffice/zippkg";_cee "image";_ "image/gif";_ "image/jpeg";_ "image/png";_ce "os";_a "reflect";_dc "regexp";_fe "strconv";_ca "strings";_gb "time";);
 
-// SetApplication sets the name of the application that created the document.
-func (_ggf AppProperties )SetApplication (s string ){_ggf ._afd .Application =&s };func (_deec CustomProperties )SetPropertyAsDate (name string ,date _ag .Time ){date =date .UTC ();_eeab ,_fgc ,_edc :=date .Date ();_bgg ,_cbdd ,_bbge :=date .Clock ();_adef :=_ag .Date (_eeab ,_fgc ,_edc ,_bgg ,_cbdd ,_bbge ,0,_ag .UTC );_ebc :=_deec .getNewProperty (name );_ebc .Filetime =&_adef ;_deec .setOrReplaceProperty (_ebc );};func (_agff CustomProperties )SetPropertyAsOblob (name ,oblob string ){_cbec :=_agff .getNewProperty (name );_cbec .Oblob =&oblob ;_agff .setOrReplaceProperty (_cbec );};func _afdb (_gfg *_fga .XSDAny )_ag .Time {if _gfg ==nil {return _ag .Time {};};_cdb ,_gecf :=_ag .Parse (_abg ,string (_gfg .Data ));if _gecf !=nil {_bbd .Log .Debug ("\u0065\u0072\u0072\u006f\u0072\u0020\u0070\u0061\u0072\u0073i\u006e\u0067\u0020\u0074\u0069\u006d\u0065 \u0066\u0072\u006f\u006d\u0020\u0025\u0073\u003a\u0020\u0025\u0073",string (_gfg .Data ),_gecf );};return _cdb ;};
+// AddExtraFileFromZip is used when reading an unsupported file from an OOXML
+// file. This ensures that unsupported file content will at least round-trip
+// correctly.
+func (_cda *DocBase )AddExtraFileFromZip (f *_bd .File )error {_gace ,_agff :=_dg .ExtractToDiskTmp (f ,_cda .TmpPath );if _agff !=nil {return _bde .Errorf ("\u0065\u0072r\u006f\u0072\u0020\u0065x\u0074\u0072a\u0063\u0074\u0069\u006e\u0067\u0020\u0075\u006es\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u0066\u0069\u006ce\u003a\u0020\u0025\u0073",_agff );};_cda .ExtraFiles =append (_cda .ExtraFiles ,ExtraFile {ZipPath :f .Name ,DiskPath :_gace });return nil ;};
 
-// GetByRelId returns a relationship with the associated relation ID.
-func (_gdec Relationships )GetByRelId (idAttr string )Relationship {for _ ,_fgbd :=range _gdec ._cfga .Relationship {if _fgbd .IdAttr ==idAttr {return Relationship {_fce :_fgbd };};};return Relationship {};};
+// X returns the underlying raw XML data.
+func (_cdge Relationships )X ()*_ac .Relationships {return _cdge ._dafb };
 
-// TableRow represents a row in a table.
-type TableRow struct{_dbe *_fg .CT_TableRow };func _dbdf (_edde _ag .Time ,_cbb string )*_fga .XSDAny {_aff :=&_fga .XSDAny {XMLName :_aa .Name {Local :_cbb }};_aff .Attrs =append (_aff .Attrs ,_aa .Attr {Name :_aa .Name {Local :"\u0078\u0073\u0069\u003a\u0074\u0079\u0070\u0065"},Value :"\u0064\u0063\u0074\u0065\u0072\u006d\u0073\u003a\u00573\u0043\u0044\u0054\u0046"});_aff .Attrs =append (_aff .Attrs ,_aa .Attr {Name :_aa .Name {Local :"\u0078m\u006c\u006e\u0073\u003a\u0078\u0073i"},Value :"\u0068\u0074\u0074\u0070\u003a/\u002f\u0077\u0077\u0077\u002e\u0077\u0033\u002e\u006f\u0072\u0067\u002f\u00320\u0030\u0031\u002f\u0058\u004d\u004c\u0053\u0063\u0068\u0065\u006d\u0061\u002d\u0069\u006e\u0073\u0074\u0061\u006e\u0063\u0065"});_aff .Attrs =append (_aff .Attrs ,_aa .Attr {Name :_aa .Name {Local :"\u0078\u006d\u006c\u006e\u0073\u003a\u0064\u0063\u0074\u0065\u0072\u006d\u0073"},Value :"\u0068t\u0074\u0070\u003a\u002f/\u0070\u0075\u0072\u006c\u002eo\u0072g\u002fd\u0063\u002f\u0074\u0065\u0072\u006d\u0073/"});_aff .Data =[]byte (_edde .Format (_abg ));return _aff ;};
+// ImageRef is a reference to an image within a document.
+type ImageRef struct{_aed *DocBase ;_bae Relationships ;_fcb Image ;_gfd string ;_aae string ;};
 
-// CopyOverride copies override content type for a given `path` and puts it with a path `newPath`.
-func (_fca ContentTypes )CopyOverride (path ,newPath string ){if !_af .HasPrefix (path ,"\u002f"){path ="\u002f"+path ;};if !_af .HasPrefix (newPath ,"\u002f"){newPath ="\u002f"+newPath ;};for _cda :=range _fca ._gae .Override {if _fca ._gae .Override [_cda ].PartNameAttr ==path {_abd :=*_fca ._gae .Override [_cda ];_abd .PartNameAttr =newPath ;_fca ._gae .Override =append (_fca ._gae .Override ,&_abd );};};};func (_cbeb CustomProperties )SetPropertyAsStream (name string ,stream string ){_bcdb :=_cbeb .getNewProperty (name );_bcdb .Stream =&stream ;_cbeb .setOrReplaceProperty (_bcdb );};
+// NewRelationshipsCopy creates a new relationships wrapper as a copy of passed in instance.
+func NewRelationshipsCopy (rels Relationships )Relationships {_ddcc :=*rels ._dafb ;return Relationships {_dafb :&_ddcc };};func (_fgg CustomProperties )SetPropertyAsError (name string ,error string ){_deec :=_fgg .getNewProperty (name );_deec .Error =&error ;_fgg .setOrReplaceProperty (_deec );};
+
+// NewCoreProperties constructs a new CoreProperties.
+func NewCoreProperties ()CoreProperties {return CoreProperties {_ae :_ag .NewCoreProperties ()}};
+
+// AddImageToZip adds an image (either from bytes or from disk) and adds it to the zip file.
+func AddImageToZip (z *_bd .Writer ,img ImageRef ,imageNum int ,dt _ea .DocType )error {_cbd :=_ea .AbsoluteImageFilename (dt ,imageNum ,_ca .ToLower (img .Format ()));if img .Data ()!=nil &&len (*img .Data ())> 0{if _ffed :=_dg .AddFileFromBytes (z ,_cbd ,*img .Data ());_ffed !=nil {return _ffed ;};}else if img .Path ()!=""{if _dbgf :=_dg .AddFileFromDisk (z ,_cbd ,img .Path ());_dbgf !=nil {return _dbgf ;};}else {return _bde .Errorf ("\u0075\u006es\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u0069\u006d\u0061\u0067\u0065\u0020\u0073\u006f\u0075\u0072\u0063\u0065\u003a %\u002b\u0076",img );};return nil ;};
+
+// Properties returns table properties.
+func (_fccd Table )Properties ()*_bdd .CT_TableProperties {return _fccd ._bef .TblPr };
 
 // X returns the inner wrapped XML type.
-func (_ceec TableStyles )X ()*_fg .TblStyleLst {return _ceec ._bdea };
+func (_dfef CustomProperties )X ()*_ga .Properties {return _dfef ._gbg };func (_ebg CustomProperties )SetPropertyAsFiletime (name string ,filetime _gb .Time ){_gda :=_ebg .getNewProperty (name );_gda .Filetime =&filetime ;_ebg .setOrReplaceProperty (_gda );};
 
-// WriteExtraFiles writes the extra files to the zip package.
-func (_dfab *DocBase )WriteExtraFiles (z *_c .Writer )error {for _ ,_egge :=range _dfab .ExtraFiles {if _fad :=_dd .AddFileFromDisk (z ,_egge .ZipPath ,_egge .DiskPath );_fad !=nil {return _fad ;};};return nil ;};func (_dgc CustomProperties )SetPropertyAsLpstr (name string ,lpstr string ){_bcda :=_dgc .getNewProperty (name );_bcda .Lpstr =&lpstr ;_dgc .setOrReplaceProperty (_bcda );};
+// ImageFromBytes returns an Image struct for an in-memory image. You can also
+// construct an Image directly if the file and size are known.
+func ImageFromBytes (data []byte )(Image ,error ){_dcdd :=Image {};_agge ,_egcc ,_beae :=_cee .Decode (_f .NewReader (data ));if _beae !=nil {return _dcdd ,_bde .Errorf ("\u0075n\u0061\u0062\u006c\u0065 \u0074\u006f\u0020\u0070\u0061r\u0073e\u0020i\u006d\u0061\u0067\u0065\u003a\u0020\u0025s",_beae );};_dcdd .Data =&data ;_dcdd .Format =_egcc ;_dcdd .Size =_agge .Bounds ().Size ();return _dcdd ,nil ;};func (_cdd CustomProperties )SetPropertyAsLpstr (name string ,lpstr string ){_eae :=_cdd .getNewProperty (name );_eae .Lpstr =&lpstr ;_cdd .setOrReplaceProperty (_eae );};
 
-// Description returns the description of the document
-func (_cdg CoreProperties )Description ()string {if _cdg ._bee .Description !=nil {return string (_cdg ._bee .Description .Data );};return "";};
+// Append appends DocBase part of an office document to another DocBase.
+func (_dga DocBase )Append (docBase1 DocBase )DocBase {_fb :=docBase1 .ContentTypes .X ();for _ ,_ec :=range _fb .Default {_dga .ContentTypes .AddDefault (_ec .ExtensionAttr ,_ec .ContentTypeAttr );};for _ ,_ggb :=range _fb .Override {_dga .ContentTypes .AddOverride (_ggb .PartNameAttr ,_ggb .ContentTypeAttr );};_cc :=_dga .AppProperties .X ();_acd :=docBase1 .AppProperties .X ();if _cc .Pages !=nil {if _acd .Pages !=nil {*_cc .Pages +=*_acd .Pages ;};}else if _acd .Pages !=nil {_cc .Pages =_acd .Pages ;};if _cc .Words !=nil {if _acd .Words !=nil {*_cc .Words +=*_acd .Words ;};}else if _acd .Words !=nil {_cc .Words =_acd .Words ;};if _cc .Characters !=nil {if _acd .Characters !=nil {*_cc .Characters +=*_acd .Characters ;};}else if _acd .Characters !=nil {_cc .Characters =_acd .Characters ;};if _cc .Lines !=nil {if _acd .Lines !=nil {*_cc .Lines +=*_acd .Lines ;};}else if _acd .Lines !=nil {_cc .Lines =_acd .Lines ;};if _cc .Paragraphs !=nil {if _acd .Paragraphs !=nil {*_cc .Paragraphs +=*_acd .Paragraphs ;};}else if _acd .Paragraphs !=nil {_cc .Paragraphs =_acd .Paragraphs ;};if _cc .Notes !=nil {if _acd .Notes !=nil {*_cc .Notes +=*_acd .Notes ;};}else if _acd .Notes !=nil {_cc .Notes =_acd .Notes ;};if _cc .HiddenSlides !=nil {if _acd .HiddenSlides !=nil {*_cc .HiddenSlides +=*_acd .HiddenSlides ;};}else if _acd .HiddenSlides !=nil {_cc .HiddenSlides =_acd .HiddenSlides ;};if _cc .MMClips !=nil {if _acd .MMClips !=nil {*_cc .MMClips +=*_acd .MMClips ;};}else if _acd .MMClips !=nil {_cc .MMClips =_acd .MMClips ;};if _cc .LinksUpToDate !=nil {if _acd .LinksUpToDate !=nil {*_cc .LinksUpToDate =*_cc .LinksUpToDate &&*_acd .LinksUpToDate ;};}else if _acd .LinksUpToDate !=nil {_cc .LinksUpToDate =_acd .LinksUpToDate ;};if _cc .CharactersWithSpaces !=nil {if _acd .CharactersWithSpaces !=nil {*_cc .CharactersWithSpaces +=*_acd .CharactersWithSpaces ;};}else if _acd .CharactersWithSpaces !=nil {_cc .CharactersWithSpaces =_acd .CharactersWithSpaces ;};if _cc .SharedDoc !=nil {if _acd .SharedDoc !=nil {*_cc .SharedDoc =*_cc .SharedDoc ||*_acd .SharedDoc ;};}else if _acd .SharedDoc !=nil {_cc .SharedDoc =_acd .SharedDoc ;};if _cc .HyperlinksChanged !=nil {if _acd .HyperlinksChanged !=nil {*_cc .HyperlinksChanged =*_cc .HyperlinksChanged ||*_acd .HyperlinksChanged ;};}else if _acd .HyperlinksChanged !=nil {_cc .HyperlinksChanged =_acd .HyperlinksChanged ;};_cc .DigSig =nil ;if _cc .TitlesOfParts ==nil &&_acd .TitlesOfParts !=nil {_cc .TitlesOfParts =_acd .TitlesOfParts ;};if _cc .HeadingPairs !=nil {if _acd .HeadingPairs !=nil {_fa :=_cc .HeadingPairs .Vector ;_cd :=_acd .HeadingPairs .Vector ;_cad :=_fa .Variant ;_aa :=_cd .Variant ;_ggd :=[]*_de .Variant {};for _gdb :=0;_gdb < len (_aa );_gdb +=2{_bb :=_aa [_gdb ].Lpstr ;_fce :=false ;for _ded :=0;_ded < len (_cad );_ded +=2{_ff :=_cad [_ded ].Lpstr ;if _ff !=nil &&_bb !=nil &&*_ff ==*_bb {*_cad [_ded +1].I4 =*_cad [_ded +1].I4 +*_aa [_gdb +1].I4 ;_fce =true ;break ;};};if !_fce {_ggd =append (_ggd ,&_de .Variant {CT_Variant :_de .CT_Variant {Lpstr :_aa [_gdb ].Lpstr }});_ggd =append (_ggd ,&_de .Variant {CT_Variant :_de .CT_Variant {I4 :_aa [_gdb ].I4 }});};};_cad =append (_cad ,_ggd ...);_fa .SizeAttr =uint32 (len (_cad ));};}else if _acd .HeadingPairs !=nil {_cc .HeadingPairs =_acd .HeadingPairs ;};if _cc .HLinks !=nil {if _acd .HLinks !=nil {_bbb :=_cc .HLinks .Vector ;_aac :=_acd .HLinks .Vector ;_agf :=_bbb .Variant ;_da :=_aac .Variant ;for _ ,_gba :=range _da {_bac :=true ;for _ ,_df :=range _agf {if _a .DeepEqual (_df ,_gba ){_bac =false ;break ;};};if _bac {_agf =append (_agf ,_gba );_bbb .SizeAttr ++;};};};}else if _acd .HLinks !=nil {_cc .HLinks =_acd .HLinks ;};_fef :=_dga .GetOrCreateCustomProperties ();_ecc :=docBase1 .GetOrCreateCustomProperties ();for _ ,_cb :=range _ecc .PropertiesList (){_fef .setProperty (_cb );};_dga .CustomProperties =_fef ;_ffc :=_dga .Rels .X ().Relationship ;for _ ,_bcc :=range docBase1 .Rels .X ().Relationship {_acf :=true ;for _ ,_ccb :=range _ffc {if _ccb .TargetAttr ==_bcc .TargetAttr &&_ccb .TypeAttr ==_bcc .TypeAttr {_acf =false ;break ;};};if _acf {_dga .Rels .AddRelationship (_bcc .TargetAttr ,_bcc .TypeAttr );};};for _ ,_gde :=range docBase1 .ExtraFiles {_cdg :=_gde .ZipPath ;_cf :=true ;for _ ,_ab :=range _dga .ExtraFiles {if _ab .ZipPath ==_cdg {_cf =false ;break ;};};if _cf {_dga .ExtraFiles =append (_dga .ExtraFiles ,_gde );};};return _dga ;};
 
-// LastModifiedBy returns the name of the last person to modify the document
-func (_eag CoreProperties )LastModifiedBy ()string {if _eag ._bee .LastModifiedBy !=nil {return *_eag ._bee .LastModifiedBy ;};return "";};
+// RemoveOverride removes an override given a path.
+func (_dfd ContentTypes )RemoveOverride (path string ){if !_ca .HasPrefix (path ,"\u002f"){path ="\u002f"+path ;};for _egg ,_aaa :=range _dfd ._abd .Override {if _aaa .PartNameAttr ==path {copy (_dfd ._abd .Override [_egg :],_dfd ._abd .Override [_egg +1:]);_dfd ._abd .Override =_dfd ._abd .Override [0:len (_dfd ._abd .Override )-1];};};};
 
-// NewRelationships creates a new relationship wrapper.
-func NewRelationships ()Relationships {return Relationships {_cfga :_ga .NewRelationships ()}};
+// GetTargetByRelId returns a target path with the associated relation ID.
+func (_edf Relationships )GetTargetByRelId (idAttr string )string {for _ ,_gdab :=range _edf ._dafb .Relationship {if _gdab .IdAttr ==idAttr {return _gdab .TargetAttr ;};};return "";};
 
-// SetTarget set the target (path) of a relationship.
-func (_adf Relationship )SetTarget (s string ){_adf ._fce .TargetAttr =s };func (_fae CustomProperties )SetPropertyAsCy (name string ,cy string ){_ade :=_fae .getNewProperty (name );_ade .Cy =&cy ;_fae .setOrReplaceProperty (_ade );};
+// CreateCustomProperties creates the custom properties of the document.
+func (_fed *DocBase )CreateCustomProperties (){_fed .CustomProperties =NewCustomProperties ();_fed .AddCustomRelationships ();};
 
-// NewRelationship constructs a new relationship.
-func NewRelationship ()Relationship {return Relationship {_fce :_ga .NewRelationship ()}};
+// NewTableWithXfrm makes a new table with a pointer to its parent Xfrm for changing its offset and size.
+func NewTableWithXfrm (xfrm *_bdd .CT_Transform2D )*Table {_cef :=_bdd .NewTbl ();_cef .TblPr =_bdd .NewCT_TableProperties ();return &Table {_bef :_cef ,_dgcc :xfrm };};func (_gga CustomProperties )SetPropertyAsR8 (name string ,r8 float64 ){_bcd :=_gga .getNewProperty (name );_bcd .R8 =&r8 ;_gga .setOrReplaceProperty (_bcd );};
 
-// ContentStatus returns the content status of the document (e.g. "Final", "Draft")
-func (_cdc CoreProperties )ContentStatus ()string {if _cdc ._bee .ContentStatus !=nil {return *_cdc ._bee .ContentStatus ;};return "";};
+// X returns the inner wrapped XML type.
+func (_gce TableStyles )X ()*_bdd .TblStyleLst {return _gce ._debd };
 
-// TableCol represents a column in a table.
-type TableCol struct{_dfbe *_fg .CT_TableCol };func (_agcc CustomProperties )setOrReplaceProperty (_ggg *_cd .CT_Property ){_agcc .setPropertyHelper (_ggg ,true );};func (_eab CustomProperties )setPropertyHelper (_aeg *_cd .CT_Property ,_bdg bool ){_eaf :=_eab .GetPropertyByName (*_aeg .NameAttr );if (_eaf ==CustomProperty {}){_eab ._ebbf .Property =append (_eab ._ebbf .Property ,_aeg );}else if _bdg {_aeg .FmtidAttr =_eaf ._ec .FmtidAttr ;if _eaf ._ec .PidAttr ==0{_aeg .PidAttr =_eaf ._ec .PidAttr ;};_aeg .LinkTargetAttr =_eaf ._ec .LinkTargetAttr ;*_eaf ._ec =*_aeg ;};};func (_ced CustomProperties )SetPropertyAsVstream (name string ,vstream *_cb .Vstream ){_geg :=_ced .getNewProperty (name );_geg .Vstream =vstream ;_ced .setOrReplaceProperty (_geg );};
+// ID returns the ID of a relationship.
+func (_bcdf Relationship )ID ()string {return _bcdf ._fdg .IdAttr };
+
+// SetCreated sets the time that the document was created.
+func (_aff CoreProperties )SetCreated (t _gb .Time ){_aff ._ae .Created =_agca (t ,"\u0064c\u0074e\u0072\u006d\u0073\u003a\u0063\u0072\u0065\u0061\u0074\u0065\u0064");};
+
+// GetByRelId returns a relationship with the associated relation ID.
+func (_dge Relationships )GetByRelId (idAttr string )Relationship {for _ ,_dabe :=range _dge ._dafb .Relationship {if _dabe .IdAttr ==idAttr {return Relationship {_fdg :_dabe };};};return Relationship {};};
+
+// Clear removes any existing relationships.
+func (_bffc Relationships )Clear (){_bffc ._dafb .Relationship =nil };
+
+// SetDescription records the description of the document.
+func (_ffe CoreProperties )SetDescription (s string ){if _ffe ._ae .Description ==nil {_ffe ._ae .Description =&_ea .XSDAny {XMLName :_e .Name {Local :"\u0064\u0063\u003a\u0064\u0065\u0073\u0063\u0072\u0069p\u0074\u0069\u006f\u006e"}};};_ffe ._ae .Description .Data =[]byte (s );};func (_fbbd CustomProperties )SetPropertyAsDecimal (name string ,decimal float64 ){_dbc :=_fbbd .getNewProperty (name );_dbc .Decimal =&decimal ;_fbbd .setOrReplaceProperty (_dbc );};const _cgfd =30;func (_gbf CustomProperties )SetPropertyAsI1 (name string ,i1 int8 ){_ddac :=_gbf .getNewProperty (name );_ddac .I1 =&i1 ;_gbf .setOrReplaceProperty (_ddac );};
+
+// MakeImageRef constructs an image reference which is a reference to a
+// particular image file inside a document.  The same image can be used multiple
+// times in a document by re-use the ImageRef.
+func MakeImageRef (img Image ,d *DocBase ,rels Relationships )ImageRef {return ImageRef {_fcb :img ,_aed :d ,_bae :rels };};
+
+// Type returns the type of a relationship.
+func (_edd Relationship )Type ()string {return _edd ._fdg .TypeAttr };func (_fga CustomProperties )getNewProperty (_fda string )*_ga .CT_Property {_gec :=_fga ._gbg .Property ;_dacg :=int32 (1);for _ ,_dbf :=range _gec {if _dbf .PidAttr > _dacg {_dacg =_dbf .PidAttr ;};};_aab :=_ga .NewCT_Property ();_aab .NameAttr =&_fda ;_aab .PidAttr =_dacg +1;_aab .FmtidAttr ="\u007b\u0044\u0035\u0043\u0044\u0044\u0035\u0030\u0035\u002d\u0032\u0045\u0039\u0043\u002d\u0031\u0030\u0031\u0042\u002d\u0039\u0033\u0039\u0037-\u0030\u0038\u0030\u0030\u0032B\u0032\u0043F\u0039\u0041\u0045\u007d";return _aab ;};
 
 // DocBase is the type embedded in in the Document/Workbook/Presentation types
 // that contains members common to all.
-type DocBase struct{ContentTypes ContentTypes ;AppProperties AppProperties ;Rels Relationships ;CoreProperties CoreProperties ;CustomProperties CustomProperties ;Thumbnail _bd .Image ;Images []ImageRef ;ExtraFiles []ExtraFile ;TmpPath string ;};
+type DocBase struct{ContentTypes ContentTypes ;AppProperties AppProperties ;Rels Relationships ;CoreProperties CoreProperties ;CustomProperties CustomProperties ;Thumbnail _cee .Image ;Images []ImageRef ;ExtraFiles []ExtraFile ;TmpPath string ;};
 
-// NewCustomProperties constructs a new CustomProperties.
-func NewCustomProperties ()CustomProperties {return CustomProperties {_ebbf :_cd .NewProperties ()}};
+// X returns the inner wrapped XML type.
+func (_gdc Table )X ()*_bdd .Tbl {return _gdc ._bef };
 
-// Author returns the author of the document
-func (_daf CoreProperties )Author ()string {if _daf ._bee .Creator !=nil {return string (_daf ._bee .Creator .Data );};return "";};var ReleasedAt =_ag .Date (_cfgb ,_def ,_ccdb ,_gbac ,_fceb ,0,0,_ag .UTC );
+// RelID returns the relationship ID.
+func (_gab ImageRef )RelID ()string {return _gab ._gfd };
 
-// SetLanguage records the language of the document.
-func (_ada CoreProperties )SetLanguage (s string ){_ada ._bee .Language =&_fga .XSDAny {XMLName :_aa .Name {Local :"d\u0063\u003a\u006c\u0061\u006e\u0067\u0075\u0061\u0067\u0065"}};_ada ._bee .Language .Data =[]byte (s );};
+// LastModifiedBy returns the name of the last person to modify the document
+func (_dbb CoreProperties )LastModifiedBy ()string {if _dbb ._ae .LastModifiedBy !=nil {return *_dbb ._ae .LastModifiedBy ;};return "";};
 
-// TblStyle returns the TblStyle property.
-func (_cbdg TableStyles )TblStyle ()[]*_fg .CT_TableStyle {return _cbdg ._bdea .TblStyle };
+// GetImageBytesByTarget returns Image object with Data bytes read from its target.
+func (_cdf *DocBase )GetImageBytesByTarget (target string )(Image ,error ){if target !=""{target ="\u0077\u006f\u0072d\u002f"+target ;for _ ,_bcde :=range _cdf .Images {if _bcde .Target ()==target {return ImageFromStorage (_bcde .Path ());};};};return Image {},_eeba ;};
 
-// SetID set the ID of a relationship.
-func (_cbag Relationship )SetID (ID string ){_cbag ._fce .IdAttr =ID ;};func (_gfgf CustomProperties )SetPropertyAsEmpty (name string ){_fed :=_gfgf .getNewProperty (name );_fed .Empty =_cb .NewEmpty ();_gfgf .setOrReplaceProperty (_fed );};func (_eddg CustomProperties )SetPropertyAsDecimal (name string ,decimal float64 ){_bdfe :=_eddg .getNewProperty (name );_bdfe .Decimal =&decimal ;_eddg .setOrReplaceProperty (_bdfe );};func (_dceg CustomProperties )SetPropertyAsVector (name string ,vector *_cb .Vector ){_cde :=_dceg .getNewProperty (name );_cde .Vector =vector ;_dceg .setOrReplaceProperty (_cde );};
+// Title returns the Title of the document
+func (_efb CoreProperties )Title ()string {if _efb ._ae .Title !=nil {return string (_efb ._ae .Title .Data );};return "";};func (_cba CustomProperties )SetPropertyAsCy (name string ,cy string ){_cbga :=_cba .getNewProperty (name );_cbga .Cy =&cy ;_cba .setOrReplaceProperty (_cbga );};func (_fffc CustomProperties )SetPropertyAsArray (name string ,array *_de .Array ){_faa :=_fffc .getNewProperty (name );_faa .Array =array ;_fffc .setOrReplaceProperty (_faa );};func (_bfc CustomProperties )SetPropertyAsBstr (name string ,bstr string ){_gdd :=_bfc .getNewProperty (name );_gdd .Bstr =&bstr ;_bfc .setOrReplaceProperty (_gdd );};
 
-// AddRelationship adds a relationship.
-func (_fdc Relationships )AddRelationship (target ,ctype string )Relationship {if !_af .HasPrefix (ctype ,"\u0068t\u0074\u0070\u003a\u002f\u002f"){_bbd .Log .Debug ("\u0072\u0065\u006c\u0061\u0074\u0069\u006f\u006es\u0068\u0069\u0070 t\u0079\u0070\u0065\u0020\u0025\u0073 \u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0073\u0074\u0061\u0072\u0074\u0020\u0077\u0069t\u0068\u0020\u0027\u0068\u0074\u0074\u0070\u003a/\u002f\u0027",ctype );};_bbee :=_ga .NewRelationship ();_gab :=len (_fdc ._cfga .Relationship )+1;_bacf :=map[string ]struct{}{};for _ ,_afaf :=range _fdc ._cfga .Relationship {_bacf [_afaf .IdAttr ]=struct{}{};};for _ ,_aeb :=_bacf [_gc .Sprintf ("\u0072\u0049\u0064%\u0064",_gab )];_aeb ;_ ,_aeb =_bacf [_gc .Sprintf ("\u0072\u0049\u0064%\u0064",_gab )]{_gab ++;};_bbee .IdAttr =_gc .Sprintf ("\u0072\u0049\u0064%\u0064",_gab );_bbee .TargetAttr =target ;_bbee .TypeAttr =ctype ;_fdc ._cfga .Relationship =append (_fdc ._cfga .Relationship ,_bbee );return Relationship {_fce :_bbee };};
+// Path returns the path to an image file, if any.
+func (_abdd ImageRef )Path ()string {return _abdd ._fcb .Path };
+
+// Created returns the time that the document was created.
+func (_bf CoreProperties )Created ()_gb .Time {return _dffc (_bf ._ae .Created )};
+
+// AddAutoRelationship adds a relationship with an automatically generated
+// filename based off of the type. It should be preferred over AddRelationship
+// to ensure consistent filenames are maintained.
+func (_afe Relationships )AddAutoRelationship (dt _ea .DocType ,src string ,idx int ,ctype string )Relationship {return _afe .AddRelationship (_ea .RelativeFilename (dt ,src ,ctype ,idx ),ctype );};func (_bdc CustomProperties )SetPropertyAsOstream (name string ,ostream string ){_fcc :=_bdc .getNewProperty (name );_fcc .Ostream =&ostream ;_bdc .setOrReplaceProperty (_fcc );};
+
+// X returns the inner raw content types.
+func (_gcc ContentTypes )X ()*_fc .Types {return _gcc ._abd };
+
+// AddCol adds a column to a table.
+func (_gadd Table )AddCol ()*TableCol {_gaf :=_bdd .NewCT_TableCol ();_gadd ._bef .TblGrid .GridCol =append (_gadd ._bef .TblGrid .GridCol ,_gaf );for _ ,_ccbe :=range _gadd ._bef .Tr {_abgc :=_bdd .NewCT_TableCell ();_ccbe .Tc =append (_ccbe .Tc ,_abgc );};return &TableCol {_eaba :_gaf };};func (_eba CustomProperties )SetPropertyAsLpwstr (name string ,lpwstr string ){_ddc :=_eba .getNewProperty (name );_ddc .Lpwstr =&lpwstr ;_eba .setOrReplaceProperty (_ddc );};
+
+// RelativeWidth returns the relative width of an image given a fixed height.
+// This is used when setting image to a fixed height to calculate the width
+// required to keep the same image aspect ratio.
+func (_ddaa ImageRef )RelativeWidth (h _gf .Distance )_gf .Distance {_bbgc :=float64 (_ddaa .Size ().X )/float64 (_ddaa .Size ().Y );return h *_gf .Distance (_bbgc );};
+
+// Category returns the category of the document
+func (_dbd CoreProperties )Category ()string {if _dbd ._ae .Category !=nil {return *_dbd ._ae .Category ;};return "";};
+
+// AddRow adds a row to a table.
+func (_ffcf Table )AddRow ()*TableRow {_efc :=_bdd .NewCT_TableRow ();for _fbf :=0;_fbf < len (_ffcf ._bef .TblGrid .GridCol );_fbf ++{_efc .Tc =append (_efc .Tc ,_bdd .NewCT_TableCell ());};_ffcf ._bef .Tr =append (_ffcf ._bef .Tr ,_efc );return &TableRow {_cbde :_efc };};
+
+// SetDocSecurity sets the document security flag.
+func (_fg AppProperties )SetDocSecurity (v int32 ){_fg ._agfd .DocSecurity =_ea .Int32 (v )};
+
+// SetCategory records the category of the document.
+func (_cbg CoreProperties )SetCategory (s string ){_cbg ._ae .Category =&s };
+
+// Target returns the target attrubute of the image reference (a path where the image file is located in the document structure).
+func (_fccf *ImageRef )Target ()string {return _fccf ._aae };
+
+// Theme is a drawingml theme.
+type Theme struct{_acda *_bdd .Theme };
+
+// CoreProperties contains document specific properties.
+type CoreProperties struct{_ae *_ag .CoreProperties };
+
+// TableRow represents a row in a table.
+type TableRow struct{_cbde *_bdd .CT_TableRow };const _face =15;
+
+// CustomProperties contains document specific properties.
+type CustomProperties struct{_gbg *_ga .Properties };
+
+// SetOffsetY sets vertical offset of a table in distance units (see measurement package).
+func (_aadb Table )SetOffsetY (offY float64 ){if _aadb ._dgcc .Off ==nil {_aadb ._dgcc .Off =_bdd .NewCT_Point2D ();_geag :=int64 (0);_aadb ._dgcc .Off .XAttr =_bdd .ST_Coordinate {ST_CoordinateUnqualified :&_geag };};_eeea :=_gf .ToEMU (offY );_aadb ._dgcc .Off .YAttr =_bdd .ST_Coordinate {ST_CoordinateUnqualified :&_eeea };};
+
+// ContentTypes is the top level "[Content_Types].xml" in a zip package.
+type ContentTypes struct{_abd *_fc .Types };
 
 // AddHyperlink adds an external hyperlink relationship.
-func (_edda Relationships )AddHyperlink (target string )Hyperlink {_dcd :=_edda .AddRelationship (target ,_fga .HyperLinkType );_dcd ._fce .TargetModeAttr =_ga .ST_TargetModeExternal ;return Hyperlink (_dcd );};func (_ffg CustomProperties )SetPropertyAsNull (name string ){_ca :=_ffg .getNewProperty (name );_ca .Null =_cb .NewNull ();_ffg .setOrReplaceProperty (_ca );};
+func (_agfb Relationships )AddHyperlink (target string )Hyperlink {_ebf :=_agfb .AddRelationship (target ,_ea .HyperLinkType );_ebf ._fdg .TargetModeAttr =_ac .ST_TargetModeExternal ;return Hyperlink (_ebf );};func (_cac CustomProperties )SetPropertyAsI8 (name string ,i8 int64 ){_gded :=_cac .getNewProperty (name );_gded .I8 =&i8 ;_cac .setOrReplaceProperty (_gded );};func (_afa CustomProperties )SetPropertyAsUi1 (name string ,ui1 uint8 ){_agce :=_afa .getNewProperty (name );_agce .Ui1 =&ui1 ;_afa .setOrReplaceProperty (_agce );};
 
-// SetAuthor records the author of the document.
-func (_cbdc CoreProperties )SetAuthor (s string ){if _cbdc ._bee .Creator ==nil {_cbdc ._bee .Creator =&_fga .XSDAny {XMLName :_aa .Name {Local :"\u0064\u0063\u003a\u0063\u0072\u0065\u0061\u0074\u006f\u0072"}};};_cbdc ._bee .Creator .Data =[]byte (s );};
+// SetModified sets the time that the document was modified.
+func (_dfe CoreProperties )SetModified (t _gb .Time ){_dfe ._ae .Modified =_agca (t ,"\u0064\u0063t\u0065\u0072\u006ds\u003a\u006d\u006f\u0064\u0069\u0066\u0069\u0065\u0064");};
 
-// Modified returns the time that the document was modified.
-func (_abe CoreProperties )Modified ()_ag .Time {return _afdb (_abe ._bee .Modified )};
+// GetPropertyByName returns a custom property selected by it's name.
+func (_dda CustomProperties )GetPropertyByName (name string )CustomProperty {_deb :=_dda ._gbg .Property ;for _ ,_dee :=range _deb {if *_dee .NameAttr ==name {return CustomProperty {_dba :_dee };};};return CustomProperty {};};
 
-// SetHeight sets row height, see measurement package.
-func (_fdd TableRow )SetHeight (m _cbd .Distance ){_eba :=_cbd .ToEMU (float64 (m ));_fdd ._dbe .HAttr =_fg .ST_Coordinate {ST_CoordinateUnqualified :&_eba };};
+// SetTarget changes the target attribute of the image reference (e.g. in the case of the creation of the reference or if the image which the reference is related to was moved from one location to another).
+func (_acb *ImageRef )SetTarget (target string ){_acb ._aae =target };
 
-// Table represents a table in the document.
-type Table struct{_fgbf *_fg .Tbl ;_cdgba *_fg .CT_Transform2D ;};const _cfgb =2023;var _aee =_g .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006e\u006f\u0074\u0020\u0066o\u0075\u006e\u0064\u0020\u0069\u006e\u0020\u0073\u0074\u006fr\u0061\u0067\u0065");
+// AddDefault registers a default content type for a given file extension.
+func (_dff ContentTypes )AddDefault (fileExtension string ,contentType string ){fileExtension =_ca .ToLower (fileExtension );for _ ,_dgaf :=range _dff ._abd .Default {if _dgaf .ExtensionAttr ==fileExtension {return ;};};_gdea :=_fc .NewDefault ();_gdea .ExtensionAttr =fileExtension ;_gdea .ContentTypeAttr =contentType ;_dff ._abd .Default =append (_dff ._abd .Default ,_gdea );};
 
-// ImageFromStorage reads an image using the currently set
-// temporary storage mechanism (see tempstorage). You can also
-// construct an Image directly if the file and size are known.
-func ImageFromStorage (path string )(Image ,error ){_gdgc :=Image {};_ecg ,_acdc :=_ed .Open (path );if _acdc !=nil {return _gdgc ,_gc .Errorf ("\u0065\u0072\u0072or\u0020\u0072\u0065\u0061\u0064\u0069\u006e\u0067\u0020\u0069\u006d\u0061\u0067\u0065\u003a\u0020\u0025\u0073",_acdc );};defer _ecg .Close ();_feg ,_dbc ,_acdc :=_bd .Decode (_ecg );if _acdc !=nil {return _gdgc ,_gc .Errorf ("\u0075n\u0061\u0062\u006c\u0065 \u0074\u006f\u0020\u0070\u0061r\u0073e\u0020i\u006d\u0061\u0067\u0065\u003a\u0020\u0025s",_acdc );};_gdgc .Path =path ;_gdgc .Format =_dbc ;_gdgc .Size =_feg .Bounds ().Size ();return _gdgc ,nil ;};
+// Data returns the data of an image file, if any.
+func (_bdg ImageRef )Data ()*[]byte {return _bdg ._fcb .Data };
+
+// AddOverride adds an override content type for a given path name.
+func (_ece ContentTypes )AddOverride (path ,contentType string ){if !_ca .HasPrefix (path ,"\u002f"){path ="\u002f"+path ;};if _ca .HasPrefix (contentType ,"\u0068\u0074\u0074\u0070"){_ge .Log .Debug ("\u0063\u006f\u006e\u0074\u0065\u006et\u0020\u0074\u0079p\u0065\u0020\u0027%\u0073\u0027\u0020\u0069\u0073\u0020\u0069\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u002c m\u0075\u0073\u0074\u0020\u006e\u006f\u0074\u0020\u0073\u0074\u0061\u0072\u0074\u0020\u0077\u0069\u0074\u0068\u0020\u0068\u0074\u0074\u0070",contentType );};for _ ,_dbg :=range _ece ._abd .Override {if _dbg .PartNameAttr ==path {return ;};};_be :=_fc .NewOverride ();_be .PartNameAttr =path ;_be .ContentTypeAttr =contentType ;_ece ._abd .Override =append (_ece ._abd .Override ,_be );};
+
+// SetTarget set the target (path) of a relationship.
+func (_ege Relationship )SetTarget (s string ){_ege ._fdg .TargetAttr =s };
+
+// SetOffsetX sets horizontal offset of a table in distance units (see measurement package).
+func (_fac Table )SetOffsetX (offX float64 ){if _fac ._dgcc .Off ==nil {_fac ._dgcc .Off =_bdd .NewCT_Point2D ();_dad :=int64 (0);_fac ._dgcc .Off .YAttr =_bdd .ST_Coordinate {ST_CoordinateUnqualified :&_dad };};_add :=_gf .ToEMU (offX );_fac ._dgcc .Off .XAttr =_bdd .ST_Coordinate {ST_CoordinateUnqualified :&_add };};const _bbg ="2\u00300\u0036\u002d\u0030\u0031\u002d\u0030\u0032\u00541\u0035\u003a\u0030\u0034:0\u0035\u005a";func (_feaf CustomProperties )SetPropertyAsStream (name string ,stream string ){_bff :=_feaf .getNewProperty (name );_bff .Stream =&stream ;_feaf .setOrReplaceProperty (_bff );};
+
+// SetContentStatus records the content status of the document.
+func (_dac CoreProperties )SetContentStatus (s string ){_dac ._ae .ContentStatus =&s };
 
 // RelativeHeight returns the relative height of an image given a fixed width.
 // This is used when setting image to a fixed width to calculate the height
 // required to keep the same image aspect ratio.
-func (_aea ImageRef )RelativeHeight (w _cbd .Distance )_cbd .Distance {_dcg :=float64 (_aea .Size ().Y )/float64 (_aea .Size ().X );return w *_cbd .Distance (_dcg );};
+func (_ffce ImageRef )RelativeHeight (w _gf .Distance )_gf .Distance {_fag :=float64 (_ffce .Size ().Y )/float64 (_ffce .Size ().X );return w *_gf .Distance (_fag );};
+
+// SetApplication sets the name of the application that created the document.
+func (_eed AppProperties )SetApplication (s string ){_eed ._agfd .Application =&s };
+
+// FindRIDForN returns the relationship ID for the i'th relationship of type t.
+func (_ggfa Relationships )FindRIDForN (i int ,t string )string {for _ ,_fgb :=range _ggfa ._dafb .CT_Relationships .Relationship {if _fgb .TypeAttr ==t {if i ==0{return _fgb .IdAttr ;};i --;};};return "";};var ReleasedAt =_gb .Date (_baeb ,_ccc ,_ggdg ,_face ,_cgfd ,0,0,_gb .UTC );
+
+// EnsureDefault esnures that an extension and default content type exist,
+// adding it if necessary.
+func (_gdbg ContentTypes )EnsureDefault (ext ,contentType string ){ext =_ca .ToLower (ext );for _ ,_ed :=range _gdbg ._abd .Default {if _ed .ExtensionAttr ==ext {_ed .ContentTypeAttr =contentType ;return ;};};_ggf :=&_fc .Default {};_ggf .ContentTypeAttr =contentType ;_ggf .ExtensionAttr =ext ;_gdbg ._abd .Default =append (_gdbg ._abd .Default ,_ggf );};
+
+// Remove removes an existing relationship.
+func (_dgb Relationships )Remove (rel Relationship )bool {for _eee ,_aad :=range _dgb ._dafb .Relationship {if _aad ==rel ._fdg {copy (_dgb ._dafb .Relationship [_eee :],_dgb ._dafb .Relationship [_eee +1:]);_dgb ._dafb .Relationship =_dgb ._dafb .Relationship [0:len (_dgb ._dafb .Relationship )-1];return true ;};};return false ;};
+
+// Rows returns all table rows.
+func (_bdab Table )Rows ()[]*TableRow {_dgeb :=_bdab ._bef .Tr ;_cgd :=[]*TableRow {};for _ ,_bgb :=range _dgeb {_cgd =append (_cgd ,&TableRow {_cbde :_bgb });};return _cgd ;};
+
+// RemoveOverrideByIndex removes an override given a path and override index.
+func (_gdec ContentTypes )RemoveOverrideByIndex (path string ,indexToFind int )error {_bea :=path [0:len (path )-5];if !_ca .HasPrefix (_bea ,"\u002f"){_bea ="\u002f"+_bea ;};_fd ,_baf :=_dc .Compile (_bea +"\u0028\u005b\u0030-\u0039\u005d\u002b\u0029\u002e\u0078\u006d\u006c");if _baf !=nil {return _baf ;};_afd :=0;_ffg :=-1;for _dca ,_bg :=range _gdec ._abd .Override {if _feb :=_fd .FindStringSubmatch (_bg .PartNameAttr );len (_feb )> 1{if _afd ==indexToFind {_ffg =_dca ;}else if _afd > indexToFind {_dcc ,_ :=_fe .Atoi (_feb [1]);_dcc --;_bg .PartNameAttr =_bde .Sprintf ("\u0025\u0073\u0025\u0064\u002e\u0078\u006d\u006c",_bea ,_dcc );};_afd ++;};};if _ffg > -1{copy (_gdec ._abd .Override [_ffg :],_gdec ._abd .Override [_ffg +1:]);_gdec ._abd .Override =_gdec ._abd .Override [0:len (_gdec ._abd .Override )-1];};return nil ;};func (_edaf CustomProperties )SetPropertyAsI2 (name string ,i2 int16 ){_cabd :=_edaf .getNewProperty (name );_cabd .I2 =&i2 ;_edaf .setOrReplaceProperty (_cabd );};
 
 // X returns the inner wrapped XML type.
-func (_ddg CustomProperties )X ()*_cd .Properties {return _ddg ._ebbf };
+func (_edb CoreProperties )X ()*_ag .CoreProperties {return _edb ._ae };func (_geab Relationship )String ()string {return _bde .Sprintf ("\u007b\u0049\u0044\u003a \u0025\u0073\u0020\u0054\u0061\u0072\u0067\u0065\u0074\u003a \u0025s\u0020\u0054\u0079\u0070\u0065\u003a\u0020%\u0073\u007d",_geab .ID (),_geab .Target (),_geab .Type ());};
 
-// AddDefault registers a default content type for a given file extension.
-func (_fb ContentTypes )AddDefault (fileExtension string ,contentType string ){fileExtension =_af .ToLower (fileExtension );for _ ,_ace :=range _fb ._gae .Default {if _ace .ExtensionAttr ==fileExtension &&_ace .ContentTypeAttr ==contentType {return ;};};_ea :=_eg .NewDefault ();_ea .ExtensionAttr =fileExtension ;_ea .ContentTypeAttr =contentType ;_fb ._gae .Default =append (_fb ._gae .Default ,_ea );};
+// Cells returns an array of row cells.
+func (_gfed TableRow )Cells ()[]*_bdd .CT_TableCell {return _gfed ._cbde .Tc };
 
-// SetTitle records the title of the document.
-func (_bcd CoreProperties )SetTitle (s string ){if _bcd ._bee .Title ==nil {_bcd ._bee .Title =&_fga .XSDAny {XMLName :_aa .Name {Local :"\u0064\u0063\u003a\u0074\u0069\u0074\u006c\u0065"}};};_bcd ._bee .Title .Data =[]byte (s );};
+// SetCompany sets the name of the company that created the document.
+func (_bca AppProperties )SetCompany (s string ){_bca ._agfd .Company =&s };func (_ccf CustomProperties )SetPropertyAsVstream (name string ,vstream *_de .Vstream ){_fcdg :=_ccf .getNewProperty (name );_fcdg .Vstream =vstream ;_ccf .setOrReplaceProperty (_fcdg );};const Version ="\u0031\u002e\u0032\u0038\u002e\u0030";
 
-// ID returns the ID of a relationship.
-func (_acc Relationship )ID ()string {return _acc ._fce .IdAttr };
+// AddCustomRelationships adds relationships related to custom properties to the document.
+func (_aabd *DocBase )AddCustomRelationships (){_aabd .ContentTypes .AddOverride ("/\u0064o\u0063\u0050\u0072\u006f\u0070\u0073\u002f\u0063u\u0073\u0074\u006f\u006d.x\u006d\u006c","\u0061\u0070\u0070\u006c\u0069\u0063a\u0074\u0069\u006f\u006e\u002fv\u006e\u0064\u002e\u006f\u0070\u0065n\u0078\u006d\u006c\u0066\u006fr\u006d\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064o\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0063\u0075\u0073\u0074\u006f\u006d\u002d\u0070r\u006f\u0070\u0065\u0072\u0074\u0069\u0065\u0073+\u0078\u006d\u006c");_aabd .Rels .AddRelationship ("\u0064\u006f\u0063\u0050ro\u0070\u0073\u002f\u0063\u0075\u0073\u0074\u006f\u006d\u002e\u0078\u006d\u006c",_ea .CustomPropertiesType );};func (_dfg CustomProperties )SetPropertyAsOblob (name ,oblob string ){_edc :=_dfg .getNewProperty (name );_edc .Oblob =&oblob ;_dfg .setOrReplaceProperty (_edc );};func UtcTimeFormat (t _gb .Time )string {return t .Format (_befb )+"\u0020\u0055\u0054\u0043"};
 
-// AddOverride adds an override content type for a given path name.
-func (_dfeb ContentTypes )AddOverride (path ,contentType string ){if !_af .HasPrefix (path ,"\u002f"){path ="\u002f"+path ;};if _af .HasPrefix (contentType ,"\u0068\u0074\u0074\u0070"){_bbd .Log .Debug ("\u0063\u006f\u006e\u0074\u0065\u006et\u0020\u0074\u0079p\u0065\u0020\u0027%\u0073\u0027\u0020\u0069\u0073\u0020\u0069\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u002c m\u0075\u0073\u0074\u0020\u006e\u006f\u0074\u0020\u0073\u0074\u0061\u0072\u0074\u0020\u0077\u0069\u0074\u0068\u0020\u0068\u0074\u0074\u0070",contentType );};for _ ,_dcb :=range _dfeb ._gae .Override {if _dcb .PartNameAttr ==path &&_dcb .ContentTypeAttr ==contentType {return ;};};_fcg :=_eg .NewOverride ();_fcg .PartNameAttr =path ;_fcg .ContentTypeAttr =contentType ;_dfeb ._gae .Override =append (_dfeb ._gae .Override ,_fcg );};
+// Modified returns the time that the document was modified.
+func (_gcd CoreProperties )Modified ()_gb .Time {return _dffc (_gcd ._ae .Modified )};
 
-// Data returns the data of an image file, if any.
-func (_fece ImageRef )Data ()*[]byte {return _fece ._ecc .Data };
+// ContentStatus returns the content status of the document (e.g. "Final", "Draft")
+func (_gee CoreProperties )ContentStatus ()string {if _gee ._ae .ContentStatus !=nil {return *_gee ._ae .ContentStatus ;};return "";};
 
-// Created returns the time that the document was created.
-func (_gdga CoreProperties )Created ()_ag .Time {return _afdb (_gdga ._bee .Created )};func (_cgg CustomProperties )SetPropertyAsR4 (name string ,r4 float32 ){_acb :=_cgg .getNewProperty (name );_acb .R4 =&r4 ;_cgg .setOrReplaceProperty (_acb );};
+// CustomProperty contains document specific property.
+// Using of this type is deprecated.
+type CustomProperty struct{_dba *_ga .CT_Property };
 
-// Properties returns table properties.
-func (_gba Table )Properties ()*_fg .CT_TableProperties {return _gba ._fgbf .TblPr };func (_geeg CustomProperties )SetPropertyAsI8 (name string ,i8 int64 ){_gbg :=_geeg .getNewProperty (name );_gbg .I8 =&i8 ;_geeg .setOrReplaceProperty (_gbg );};
+// SetID set the ID of a relationship.
+func (_gbcg Relationship )SetID (ID string ){_gbcg ._fdg .IdAttr =ID ;};
 
-// CoreProperties contains document specific properties.
-type CoreProperties struct{_bee *_aae .CoreProperties };func (_gfb CustomProperties )SetPropertyAsI1 (name string ,i1 int8 ){_gedc :=_gfb .getNewProperty (name );_gedc .I1 =&i1 ;_gfb .setOrReplaceProperty (_gedc );};func (_faea CustomProperties )SetPropertyAsBool (name string ,b bool ){_cbge :=_faea .getNewProperty (name );_cbge .Bool =&b ;_faea .setOrReplaceProperty (_cbge );};
+// SetLinksUpToDate sets the links up to date flag.
+func (_bbe AppProperties )SetLinksUpToDate (v bool ){_bbe ._agfd .LinksUpToDate =_ea .Bool (v )};func _dffc (_aggg *_ea .XSDAny )_gb .Time {if _aggg ==nil {return _gb .Time {};};_bee ,_fea :=_gb .Parse (_bbg ,string (_aggg .Data ));if _fea !=nil {_ge .Log .Debug ("\u0065\u0072\u0072\u006f\u0072\u0020\u0070\u0061\u0072\u0073i\u006e\u0067\u0020\u0074\u0069\u006d\u0065 \u0066\u0072\u006f\u006d\u0020\u0025\u0073\u003a\u0020\u0025\u0073",string (_aggg .Data ),_fea );};return _bee ;};
 
 // Pages returns total number of pages which are saved by the text editor which produced the document.
 // For unioffice created documents, it is 0.
-func (_fa AppProperties )Pages ()int32 {if _fa ._afd .Pages !=nil {return *_fa ._afd .Pages ;};return 0;};
+func (_gc AppProperties )Pages ()int32 {if _gc ._agfd .Pages !=nil {return *_gc ._agfd .Pages ;};return 0;};
 
-// X returns the inner raw content types.
-func (_afe ContentTypes )X ()*_eg .Types {return _afe ._gae };
+// NewTheme constructs a new theme.
+func NewTheme ()Theme {return Theme {_bdd .NewTheme ()}};func (_gdeb CustomProperties )SetPropertyAsBool (name string ,b bool ){_gbb :=_gdeb .getNewProperty (name );_gbb .Bool =&b ;_gdeb .setOrReplaceProperty (_gbb );};
 
-// SetCompany sets the name of the company that created the document.
-func (_gce AppProperties )SetCompany (s string ){_gce ._afd .Company =&s };
+// GetTargetByRelIdAndType returns a target path with the associated relation ID.
+func (_gdg Relationships )GetTargetByRelIdAndType (idAttr string ,typeAttr string )string {for _ ,_bccg :=range _gdg ._dafb .Relationship {if _bccg .IdAttr ==idAttr &&_bccg .TypeAttr ==typeAttr {return _bccg .TargetAttr ;};};return "";};
 
-// SetContentStatus records the content status of the document.
-func (_deb CoreProperties )SetContentStatus (s string ){_deb ._bee .ContentStatus =&s };
-
-// SetWidth sets column width, see measurement package.
-func (_dfeg TableCol )SetWidth (m _cbd .Distance ){_acde :=_cbd .ToEMU (float64 (m ));_dfeg ._dfbe .WAttr =_fg .ST_Coordinate {ST_CoordinateUnqualified :&_acde };};
-
-// Size returns the size of an image
-func (_aede ImageRef )Size ()_bd .Point {return _aede ._ecc .Size };
-
-// NewTableWithXfrm makes a new table with a pointer to its parent Xfrm for changing its offset and size.
-func NewTableWithXfrm (xfrm *_fg .CT_Transform2D )*Table {_eaed :=_fg .NewTbl ();_eaed .TblPr =_fg .NewCT_TableProperties ();return &Table {_fgbf :_eaed ,_cdgba :xfrm };};func (_gde CustomProperties )SetPropertyAsBlob (name ,blob string ){_ccba :=_gde .getNewProperty (name );_ccba .Blob =&blob ;_gde .setOrReplaceProperty (_ccba );};
+// NewCustomProperties constructs a new CustomProperties.
+func NewCustomProperties ()CustomProperties {return CustomProperties {_gbg :_ga .NewProperties ()}};
 
 // X returns the inner wrapped XML type.
-func (_dbaf Theme )X ()*_fg .Theme {return _dbaf ._fag };
+func (_fab AppProperties )X ()*_ad .Properties {return _fab ._agfd };func (_fdd CustomProperties )SetPropertyAsVector (name string ,vector *_de .Vector ){_bacg :=_fdd .getNewProperty (name );_bacg .Vector =vector ;_fdd .setOrReplaceProperty (_bacg );};func (_eef CustomProperties )setOrReplaceProperty (_ead *_ga .CT_Property ){_eef .setPropertyHelper (_ead ,true );};
+
+// X returns the inner wrapped XML type.
+func (_gad Relationship )X ()*_ac .Relationship {return _gad ._fdg };
+
+// ExtraFile is an unsupported file type extracted from, or to be written to a
+// zip package
+type ExtraFile struct{ZipPath string ;DiskPath string ;};const _baeb =2023;
+
+// IsEmpty returns true if there are no relationships.
+func (_afc Relationships )IsEmpty ()bool {return _afc ._dafb ==nil ||len (_afc ._dafb .Relationship )==0;};
+
+// SetAuthor records the author of the document.
+func (_eda CoreProperties )SetAuthor (s string ){if _eda ._ae .Creator ==nil {_eda ._ae .Creator =&_ea .XSDAny {XMLName :_e .Name {Local :"\u0064\u0063\u003a\u0063\u0072\u0065\u0061\u0074\u006f\u0072"}};};_eda ._ae .Creator .Data =[]byte (s );};
+
+// Relationship is a relationship within a .rels file.
+type Relationship struct{_fdg *_ac .Relationship };func (_egc CustomProperties )SetPropertyAsUint (name string ,ui uint ){_gggf :=_egc .getNewProperty (name );_edg :=uint32 (ui );_gggf .Uint =&_edg ;_egc .setOrReplaceProperty (_gggf );};
+
+// Target returns the target (path) of a relationship.
+func (_ebad Relationship )Target ()string {return _ebad ._fdg .TargetAttr };func (_bba CustomProperties )SetPropertyAsNull (name string ){_abg :=_bba .getNewProperty (name );_abg .Null =_de .NewNull ();_bba .setOrReplaceProperty (_abg );};
+
+// Properties returns table properties.
+func (_egb Table )Grid ()*_bdd .CT_TableGrid {return _egb ._bef .TblGrid };
 
 // NewTable makes a new table.
-func NewTable ()*Table {_dfac :=_fg .NewTbl ();_dfac .TblPr =_fg .NewCT_TableProperties ();return &Table {_fgbf :_dfac };};
+func NewTable ()*Table {_cbe :=_bdd .NewTbl ();_cbe .TblPr =_bdd .NewCT_TableProperties ();return &Table {_bef :_cbe };};func (_gecb CustomProperties )setProperty (_faf *_ga .CT_Property ){_gecb .setPropertyHelper (_faf ,false );};func (_bdcb CustomProperties )SetPropertyAsOstorage (name string ,ostorage string ){_gaa :=_bdcb .getNewProperty (name );_gaa .Ostorage =&ostorage ;_bdcb .setOrReplaceProperty (_gaa );};
 
-// CustomProperties contains document specific properties.
-type CustomProperties struct{_ebbf *_cd .Properties };func UtcTimeFormat (t _ag .Time )string {return t .Format (_ded )+"\u0020\u0055\u0054\u0043"};
+// AddRelationship adds a relationship.
+func (_ebag Relationships )AddRelationship (target ,ctype string )Relationship {if !_ca .HasPrefix (ctype ,"\u0068t\u0074\u0070\u003a\u002f\u002f"){_ge .Log .Debug ("\u0072\u0065\u006c\u0061\u0074\u0069\u006f\u006es\u0068\u0069\u0070 t\u0079\u0070\u0065\u0020\u0025\u0073 \u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0073\u0074\u0061\u0072\u0074\u0020\u0077\u0069t\u0068\u0020\u0027\u0068\u0074\u0074\u0070\u003a/\u002f\u0027",ctype );};_cdab :=_ac .NewRelationship ();_geec :=len (_ebag ._dafb .Relationship )+1;_fgcd :=map[string ]struct{}{};for _ ,_eebd :=range _ebag ._dafb .Relationship {_fgcd [_eebd .IdAttr ]=struct{}{};};for _ ,_gfg :=_fgcd [_bde .Sprintf ("\u0072\u0049\u0064%\u0064",_geec )];_gfg ;_ ,_gfg =_fgcd [_bde .Sprintf ("\u0072\u0049\u0064%\u0064",_geec )]{_geec ++;};_cdab .IdAttr =_bde .Sprintf ("\u0072\u0049\u0064%\u0064",_geec );_cdab .TargetAttr =target ;_cdab .TypeAttr =ctype ;_ebag ._dafb .Relationship =append (_ebag ._dafb .Relationship ,_cdab );return Relationship {_fdg :_cdab };};
 
-// GetOrCreateCustomProperties returns the custom properties of the document (and if they not exist yet, creating them first).
-func (_gga *DocBase )GetOrCreateCustomProperties ()CustomProperties {if _gga .CustomProperties .X ()==nil {_gga .CreateCustomProperties ();};return _gga .CustomProperties ;};
+// Relationships represents a .rels file.
+type Relationships struct{_dafb *_ac .Relationships };
 
-// AddImageToZip adds an image (either from bytes or from disk) and adds it to the zip file.
-func AddImageToZip (z *_c .Writer ,img ImageRef ,imageNum int ,dt _fga .DocType )error {_dcegf :=_fga .AbsoluteImageFilename (dt ,imageNum ,_af .ToLower (img .Format ()));if img .Data ()!=nil &&len (*img .Data ())> 0{if _dfb :=_dd .AddFileFromBytes (z ,_dcegf ,*img .Data ());_dfb !=nil {return _dfb ;};}else if img .Path ()!=""{if _ggc :=_dd .AddFileFromDisk (z ,_dcegf ,img .Path ());_ggc !=nil {return _ggc ;};}else {return _gc .Errorf ("\u0075\u006es\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u0069\u006d\u0061\u0067\u0065\u0020\u0073\u006f\u0075\u0072\u0063\u0065\u003a %\u002b\u0076",img );};return nil ;};
+// PropertiesList returns the list of all custom properties of the document.
+func (_fdf CustomProperties )PropertiesList ()[]*_ga .CT_Property {return _fdf ._gbg .Property };const _ccc =9;
 
-// Company returns the name of the company that created the document.
-// For unioffice created documents, it defaults to github.com/unidoc/unioffice
-func (_dc AppProperties )Company ()string {if _dc ._afd .Company !=nil {return *_dc ._afd .Company ;};return "";};const _fceb =30;func (_gdeg TableRow )addCell ()*_fg .CT_TableCell {_geggb :=_fg .NewCT_TableCell ();_gdeg ._dbe .Tc =append (_gdeg ._dbe .Tc ,_geggb );return _geggb ;};func (_fdgc CustomProperties )SetPropertyAsUi2 (name string ,ui2 uint16 ){_ece :=_fdgc .getNewProperty (name );_ece .Ui2 =&ui2 ;_fdgc .setOrReplaceProperty (_ece );};
+// Image is a container for image information. It's used as we need format and
+// and size information to use images.
+// It contains either the filesystem path to the image, or the image itself.
+type Image struct{Size _cee .Point ;Format string ;Path string ;Data *[]byte ;};func (_gea CustomProperties )SetPropertyAsI4 (name string ,i4 int32 ){_dgab :=_gea .getNewProperty (name );_dgab .I4 =&i4 ;_gea .setOrReplaceProperty (_dgab );};
 
-// CreateCustomProperties creates the custom properties of the document.
-func (_dcba *DocBase )CreateCustomProperties (){_dcba .CustomProperties =NewCustomProperties ();_dcba .AddCustomRelationships ();};
+// Size returns the size of an image
+func (_aeg ImageRef )Size ()_cee .Point {return _aeg ._fcb .Size };
+
+// ApplicationVersion returns the version of the application that created the
+// document.
+func (_fff AppProperties )ApplicationVersion ()string {if _fff ._agfd .AppVersion !=nil {return *_fff ._agfd .AppVersion ;};return "";};
+
+// TableCol represents a column in a table.
+type TableCol struct{_eaba *_bdd .CT_TableCol };
+
+// DefAttr returns the DefAttr property.
+func (_ccec TableStyles )DefAttr ()string {return _ccec ._debd .DefAttr };
+
+// SetLastModifiedBy records the last person to modify the document.
+func (_fae CoreProperties )SetLastModifiedBy (s string ){_fae ._ae .LastModifiedBy =&s };
+
+// X returns the inner wrapped XML type of CustomProperty.
+func (_ecf CustomProperty )X ()*_ga .CT_Property {return _ecf ._dba };
+
+// NewAppProperties constructs a new AppProperties.
+func NewAppProperties ()AppProperties {_af :=AppProperties {_agfd :_ad .NewProperties ()};_af .SetCompany ("\u0046\u006f\u0078\u0079\u0055\u0074\u0069\u006c\u0073\u0020\u0065\u0068\u0066");_af .SetApplication ("g\u0069\u0074\u0068\u0075\u0062\u002ec\u006f\u006d\u002f\u0075\u006e\u0069\u0064\u006f\u0063/\u0075\u006e\u0069o\u0066f\u0069\u0063\u0065");_af .SetDocSecurity (0);_af .SetLinksUpToDate (false );var _abb ,_afg ,_ee int64 ;_bde .Sscanf (Version ,"\u0025\u0064\u002e\u0025\u0064\u002e\u0025\u0064",&_abb ,&_afg ,&_ee );_db :=float64 (_abb )+float64 (_afg )/10000.0;_af .SetApplicationVersion (_bde .Sprintf ("\u0025\u0030\u0037\u002e\u0034\u0066",_db ));return _af ;};
+
+// Table represents a table in the document.
+type Table struct{_bef *_bdd .Tbl ;_dgcc *_bdd .CT_Transform2D ;};func (_eeb CustomProperties )SetPropertyAsStorage (name string ,storage string ){_daf :=_eeb .getNewProperty (name );_daf .Storage =&storage ;_eeb .setOrReplaceProperty (_daf );};
+
+// ImageFromStorage reads an image using the currently set
+// temporary storage mechanism (see tempstorage). You can also
+// construct an Image directly if the file and size are known.
+func ImageFromStorage (path string )(Image ,error ){_acdf :=Image {};_afga ,_bcac :=_eg .Open (path );if _bcac !=nil {return _acdf ,_bde .Errorf ("\u0065\u0072\u0072or\u0020\u0072\u0065\u0061\u0064\u0069\u006e\u0067\u0020\u0069\u006d\u0061\u0067\u0065\u003a\u0020\u0025\u0073",_bcac );};defer _afga .Close ();_aagd ,_dbe ,_bcac :=_cee .Decode (_afga );if _bcac !=nil {return _acdf ,_bde .Errorf ("\u0075n\u0061\u0062\u006c\u0065 \u0074\u006f\u0020\u0070\u0061r\u0073e\u0020i\u006d\u0061\u0067\u0065\u003a\u0020\u0025s",_bcac );};_acdf .Path =path ;_acdf .Format =_dbe ;_acdf .Size =_aagd .Bounds ().Size ();return _acdf ,nil ;};func _agca (_cff _gb .Time ,_aag string )*_ea .XSDAny {_fgc :=&_ea .XSDAny {XMLName :_e .Name {Local :_aag }};_fgc .Attrs =append (_fgc .Attrs ,_e .Attr {Name :_e .Name {Local :"\u0078\u0073\u0069\u003a\u0074\u0079\u0070\u0065"},Value :"\u0064\u0063\u0074\u0065\u0072\u006d\u0073\u003a\u00573\u0043\u0044\u0054\u0046"});_fgc .Attrs =append (_fgc .Attrs ,_e .Attr {Name :_e .Name {Local :"\u0078m\u006c\u006e\u0073\u003a\u0078\u0073i"},Value :"\u0068\u0074\u0074\u0070\u003a/\u002f\u0077\u0077\u0077\u002e\u0077\u0033\u002e\u006f\u0072\u0067\u002f\u00320\u0030\u0031\u002f\u0058\u004d\u004c\u0053\u0063\u0068\u0065\u006d\u0061\u002d\u0069\u006e\u0073\u0074\u0061\u006e\u0063\u0065"});_fgc .Attrs =append (_fgc .Attrs ,_e .Attr {Name :_e .Name {Local :"\u0078\u006d\u006c\u006e\u0073\u003a\u0064\u0063\u0074\u0065\u0072\u006d\u0073"},Value :"\u0068t\u0074\u0070\u003a\u002f/\u0070\u0075\u0072\u006c\u002eo\u0072g\u002fd\u0063\u002f\u0074\u0065\u0072\u006d\u0073/"});_fgc .Data =[]byte (_cff .Format (_bbg ));return _fgc ;};
+
+// Author returns the author of the document
+func (_agc CoreProperties )Author ()string {if _agc ._ae .Creator !=nil {return string (_agc ._ae .Creator .Data );};return "";};
 
 // NewTableStyles constructs a new TableStyles.
-func NewTableStyles ()TableStyles {return TableStyles {_bdea :_fg .NewTblStyleLst ()}};func (_cdeg CustomProperties )SetPropertyAsUint (name string ,ui uint ){_afg :=_cdeg .getNewProperty (name );_cbg :=uint32 (ui );_afg .Uint =&_cbg ;_cdeg .setOrReplaceProperty (_afg );};
+func NewTableStyles ()TableStyles {return TableStyles {_debd :_bdd .NewTblStyleLst ()}};
 
-// SetTarget changes the target attribute of the image reference (e.g. in the case of the creation of the reference or if the image which the reference is related to was moved from one location to another).
-func (_fge *ImageRef )SetTarget (target string ){_fge ._gagf =target };
+// SetApplicationVersion sets the version of the application that created the
+// document.  Per MS, the verison string mut be in the form 'XX.YYYY'.
+func (_ada AppProperties )SetApplicationVersion (s string ){_ada ._agfd .AppVersion =&s };
+
+// SetStyle assigns TableStyle to a table.
+func (_dbge Table )SetStyle (style *_bdd .CT_TableStyle ){if _dbge ._bef .TblPr ==nil {_dbge ._bef .TblPr =_bdd .NewCT_TableProperties ();};if _dbge ._bef .TblPr .Choice ==nil {_dbge ._bef .TblPr .Choice =_bdd .NewCT_TablePropertiesChoice ();};_dbge ._bef .TblPr .Choice .TableStyle =style ;};
+
+// TblStyle returns the TblStyle property.
+func (_bdgc TableStyles )TblStyle ()[]*_bdd .CT_TableStyle {return _bdgc ._debd .TblStyle };
+
+// Application returns the name of the application that created the document.
+// For unioffice created documents, it defaults to github.com/unidoc/unioffice
+func (_cce AppProperties )Application ()string {if _cce ._agfd .Application !=nil {return *_cce ._agfd .Application ;};return "";};func (_aabf CustomProperties )SetPropertyAsDate (name string ,date _gb .Time ){date =date .UTC ();_dgcg ,_dcce ,_dacc :=date .Date ();_fdfe ,_fcg ,_fggf :=date .Clock ();_gfe :=_gb .Date (_dgcg ,_dcce ,_dacc ,_fdfe ,_fcg ,_fggf ,0,_gb .UTC );_gge :=_aabf .getNewProperty (name );_gge .Filetime =&_gfe ;_aabf .setOrReplaceProperty (_gge );};func init (){_gg .SetAsStorage ()};
+
+// SetLanguage records the language of the document.
+func (_ggg CoreProperties )SetLanguage (s string ){_ggg ._ae .Language =&_ea .XSDAny {XMLName :_e .Name {Local :"d\u0063\u003a\u006c\u0061\u006e\u0067\u0075\u0061\u0067\u0065"}};_ggg ._ae .Language .Data =[]byte (s );};
+
+// AppProperties contains properties specific to the document and the
+// application that created it.
+type AppProperties struct{_agfd *_ad .Properties };func (_eeg CustomProperties )SetPropertyAsR4 (name string ,r4 float32 ){_cge :=_eeg .getNewProperty (name );_cge .R4 =&r4 ;_eeg .setOrReplaceProperty (_cge );};
+
+// NewContentTypes returns a wrapper around a newly constructed content-types.
+func NewContentTypes ()ContentTypes {_afb :=ContentTypes {_abd :_fc .NewTypes ()};_afb .AddDefault ("\u0078\u006d\u006c","\u0061p\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0078\u006d\u006c");_afb .AddDefault ("\u0072\u0065\u006c\u0073","\u0061\u0070\u0070\u006c\u0069\u0063a\u0074\u0069\u006fn\u002f\u0076\u006ed\u002e\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006fr\u006d\u0061\u0074\u0073\u002dpa\u0063\u006b\u0061\u0067\u0065\u002e\u0072\u0065\u006c\u0061\u0074\u0069\u006f\u006e\u0073\u0068\u0069\u0070\u0073\u002b\u0078\u006d\u006c");_afb .AddDefault ("\u0070\u006e\u0067","\u0069m\u0061\u0067\u0065\u002f\u0070\u006eg");_afb .AddDefault ("\u006a\u0070\u0065\u0067","\u0069\u006d\u0061\u0067\u0065\u002f\u006a\u0070\u0065\u0067");_afb .AddDefault ("\u006a\u0070\u0067","\u0069m\u0061\u0067\u0065\u002f\u006a\u0070g");_afb .AddDefault ("\u0077\u006d\u0066","i\u006d\u0061\u0067\u0065\u002f\u0078\u002d\u0077\u006d\u0066");_afb .AddOverride ("\u002fd\u006fc\u0050\u0072\u006f\u0070\u0073/\u0063\u006fr\u0065\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064\u002e\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072\u006d\u0061\u0074\u0073-\u0070\u0061\u0063\u006b\u0061\u0067\u0065\u002e\u0063\u006f\u0072\u0065\u002dp\u0072\u006f\u0070\u0065\u0072\u0074i\u0065\u0073\u002bx\u006d\u006c");_afb .AddOverride ("\u002f\u0064\u006f\u0063\u0050\u0072\u006f\u0070\u0073\u002f\u0061\u0070p\u002e\u0078\u006d\u006c","a\u0070\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066o\u0072\u006d\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075m\u0065\u006e\u0074\u002e\u0065\u0078\u0074\u0065\u006e\u0064\u0065\u0064\u002dp\u0072\u006f\u0070\u0065\u0072\u0074\u0069\u0065\u0073\u002b\u0078m\u006c");return _afb ;};
+
+// SetTitle records the title of the document.
+func (_fbb CoreProperties )SetTitle (s string ){if _fbb ._ae .Title ==nil {_fbb ._ae .Title =&_ea .XSDAny {XMLName :_e .Name {Local :"\u0064\u0063\u003a\u0074\u0069\u0074\u006c\u0065"}};};_fbb ._ae .Title .Data =[]byte (s );};
+
+// GetOrCreateCustomProperties returns the custom properties of the document (and if they not exist yet, creating them first).
+func (_dcaf *DocBase )GetOrCreateCustomProperties ()CustomProperties {if _dcaf .CustomProperties .X ()==nil {_dcaf .CreateCustomProperties ();};return _dcaf .CustomProperties ;};
+
+// SetWidth sets column width, see measurement package.
+func (_dedc TableCol )SetWidth (m _gf .Distance ){_cddc :=_gf .ToEMU (float64 (m ));_dedc ._eaba .WAttr =_bdd .ST_Coordinate {ST_CoordinateUnqualified :&_cddc };};
+
+// WriteExtraFiles writes the extra files to the zip package.
+func (_egf *DocBase )WriteExtraFiles (z *_bd .Writer )error {for _ ,_bfd :=range _egf .ExtraFiles {if _fccb :=_dg .AddFileFromDisk (z ,_bfd .ZipPath ,_bfd .DiskPath );_fccb !=nil {return _fccb ;};};return nil ;};func (_dce CustomProperties )SetPropertyAsUi8 (name string ,ui8 uint64 ){_aaba :=_dce .getNewProperty (name );_aaba .Ui8 =&ui8 ;_dce .setOrReplaceProperty (_aaba );};
+
+// NewRelationships creates a new relationship wrapper.
+func NewRelationships ()Relationships {return Relationships {_dafb :_ac .NewRelationships ()}};
+
+// SetHeight sets row height, see measurement package.
+func (_bed TableRow )SetHeight (m _gf .Distance ){_dgba :=_gf .ToEMU (float64 (m ));_bed ._cbde .HAttr =_bdd .ST_Coordinate {ST_CoordinateUnqualified :&_dgba };};
+
+// CopyRelationship copies the relationship.
+func (_afbe Relationships )CopyRelationship (idAttr string )(Relationship ,bool ){for _deeg :=range _afbe ._dafb .Relationship {if _afbe ._dafb .Relationship [_deeg ].IdAttr ==idAttr {_fbe :=*_afbe ._dafb .Relationship [_deeg ];_ccef :=len (_afbe ._dafb .Relationship )+1;_bafc :=map[string ]struct{}{};for _ ,_dffg :=range _afbe ._dafb .Relationship {_bafc [_dffg .IdAttr ]=struct{}{};};for _ ,_bdeb :=_bafc [_bde .Sprintf ("\u0072\u0049\u0064%\u0064",_ccef )];_bdeb ;_ ,_bdeb =_bafc [_bde .Sprintf ("\u0072\u0049\u0064%\u0064",_ccef )]{_ccef ++;};_fbe .IdAttr =_bde .Sprintf ("\u0072\u0049\u0064%\u0064",_ccef );_afbe ._dafb .Relationship =append (_afbe ._dafb .Relationship ,&_fbe );return Relationship {_fdg :&_fbe },true ;};};return Relationship {},false ;};
+
+// NewRelationship constructs a new relationship.
+func NewRelationship ()Relationship {return Relationship {_fdg :_ac .NewRelationship ()}};func (_abgd *ImageRef )SetRelID (id string ){_abgd ._gfd =id };func (_bccd CustomProperties )SetPropertyAsClsid (name string ,clsid string ){_dcf :=_bccd .getNewProperty (name );_dcf .Clsid =&clsid ;_bccd .setOrReplaceProperty (_dcf );};
+
+// TableStyles contains document specific properties.
+type TableStyles struct{_debd *_bdd .TblStyleLst };func (_gac CustomProperties )setPropertyHelper (_gccg *_ga .CT_Property ,_dcd bool ){_ccee :=_gac .GetPropertyByName (*_gccg .NameAttr );if (_ccee ==CustomProperty {}){_gac ._gbg .Property =append (_gac ._gbg .Property ,_gccg );}else if _dcd {_gccg .FmtidAttr =_ccee ._dba .FmtidAttr ;if _ccee ._dba .PidAttr ==0{_gccg .PidAttr =_ccee ._dba .PidAttr ;};_gccg .LinkTargetAttr =_ccee ._dba .LinkTargetAttr ;*_ccee ._dba =*_gccg ;};};
 
 // ImageFromFile reads an image from a file on disk. It doesn't keep the image
 // in memory and only reads it to determine the format and size. You can also
 // construct an Image directly if the file and size are known.
 // NOTE: See also ImageFromStorage.
-func ImageFromFile (path string )(Image ,error ){_eafb ,_cbf :=_f .Open (path );_aaf :=Image {};if _cbf !=nil {return _aaf ,_gc .Errorf ("\u0065\u0072\u0072or\u0020\u0072\u0065\u0061\u0064\u0069\u006e\u0067\u0020\u0069\u006d\u0061\u0067\u0065\u003a\u0020\u0025\u0073",_cbf );};defer _eafb .Close ();_gcc ,_debb ,_cbf :=_bd .Decode (_eafb );if _cbf !=nil {return _aaf ,_gc .Errorf ("\u0075n\u0061\u0062\u006c\u0065 \u0074\u006f\u0020\u0070\u0061r\u0073e\u0020i\u006d\u0061\u0067\u0065\u003a\u0020\u0025s",_cbf );};_aaf .Path =path ;_aaf .Format =_debb ;_aaf .Size =_gcc .Bounds ().Size ();return _aaf ,nil ;};
+func ImageFromFile (path string )(Image ,error ){_abf ,_bddf :=_ce .Open (path );_aef :=Image {};if _bddf !=nil {return _aef ,_bde .Errorf ("\u0065\u0072\u0072or\u0020\u0072\u0065\u0061\u0064\u0069\u006e\u0067\u0020\u0069\u006d\u0061\u0067\u0065\u003a\u0020\u0025\u0073",_bddf );};defer _abf .Close ();_ffec ,_gbc ,_bddf :=_cee .Decode (_abf );if _bddf !=nil {return _aef ,_bde .Errorf ("\u0075n\u0061\u0062\u006c\u0065 \u0074\u006f\u0020\u0070\u0061r\u0073e\u0020i\u006d\u0061\u0067\u0065\u003a\u0020\u0025s",_bddf );};_aef .Path =path ;_aef .Format =_gbc ;_aef .Size =_ffec .Bounds ().Size ();return _aef ,nil ;};
 
-// CustomProperty contains document specific property.
-// Using of this type is deprecated.
-type CustomProperty struct{_ec *_cd .CT_Property };
+// Company returns the name of the company that created the document.
+// For unioffice created documents, it defaults to github.com/unidoc/unioffice
+func (_ef AppProperties )Company ()string {if _ef ._agfd .Company !=nil {return *_ef ._agfd .Company ;};return "";};
 
-// ImageRef is a reference to an image within a document.
-type ImageRef struct{_faa *DocBase ;_gef Relationships ;_ecc Image ;_egf string ;_gagf string ;};
-
-// Append appends DocBase part of an office document to another DocBase.
-func (_gf DocBase )Append (docBase1 DocBase )DocBase {_edd :=docBase1 .ContentTypes .X ();for _ ,_dbf :=range _edd .Default {_gf .ContentTypes .AddDefault (_dbf .ExtensionAttr ,_dbf .ContentTypeAttr );};for _ ,_gd :=range _edd .Override {_gf .ContentTypes .AddOverride (_gd .PartNameAttr ,_gd .ContentTypeAttr );};_fc :=_gf .AppProperties .X ();_egg :=docBase1 .AppProperties .X ();if _fc .Pages !=nil {if _egg .Pages !=nil {*_fc .Pages +=*_egg .Pages ;};}else if _egg .Pages !=nil {_fc .Pages =_egg .Pages ;};if _fc .Words !=nil {if _egg .Words !=nil {*_fc .Words +=*_egg .Words ;};}else if _egg .Words !=nil {_fc .Words =_egg .Words ;};if _fc .Characters !=nil {if _egg .Characters !=nil {*_fc .Characters +=*_egg .Characters ;};}else if _egg .Characters !=nil {_fc .Characters =_egg .Characters ;};if _fc .Lines !=nil {if _egg .Lines !=nil {*_fc .Lines +=*_egg .Lines ;};}else if _egg .Lines !=nil {_fc .Lines =_egg .Lines ;};if _fc .Paragraphs !=nil {if _egg .Paragraphs !=nil {*_fc .Paragraphs +=*_egg .Paragraphs ;};}else if _egg .Paragraphs !=nil {_fc .Paragraphs =_egg .Paragraphs ;};if _fc .Notes !=nil {if _egg .Notes !=nil {*_fc .Notes +=*_egg .Notes ;};}else if _egg .Notes !=nil {_fc .Notes =_egg .Notes ;};if _fc .HiddenSlides !=nil {if _egg .HiddenSlides !=nil {*_fc .HiddenSlides +=*_egg .HiddenSlides ;};}else if _egg .HiddenSlides !=nil {_fc .HiddenSlides =_egg .HiddenSlides ;};if _fc .MMClips !=nil {if _egg .MMClips !=nil {*_fc .MMClips +=*_egg .MMClips ;};}else if _egg .MMClips !=nil {_fc .MMClips =_egg .MMClips ;};if _fc .LinksUpToDate !=nil {if _egg .LinksUpToDate !=nil {*_fc .LinksUpToDate =*_fc .LinksUpToDate &&*_egg .LinksUpToDate ;};}else if _egg .LinksUpToDate !=nil {_fc .LinksUpToDate =_egg .LinksUpToDate ;};if _fc .CharactersWithSpaces !=nil {if _egg .CharactersWithSpaces !=nil {*_fc .CharactersWithSpaces +=*_egg .CharactersWithSpaces ;};}else if _egg .CharactersWithSpaces !=nil {_fc .CharactersWithSpaces =_egg .CharactersWithSpaces ;};if _fc .SharedDoc !=nil {if _egg .SharedDoc !=nil {*_fc .SharedDoc =*_fc .SharedDoc ||*_egg .SharedDoc ;};}else if _egg .SharedDoc !=nil {_fc .SharedDoc =_egg .SharedDoc ;};if _fc .HyperlinksChanged !=nil {if _egg .HyperlinksChanged !=nil {*_fc .HyperlinksChanged =*_fc .HyperlinksChanged ||*_egg .HyperlinksChanged ;};}else if _egg .HyperlinksChanged !=nil {_fc .HyperlinksChanged =_egg .HyperlinksChanged ;};_fc .DigSig =nil ;if _fc .TitlesOfParts ==nil &&_egg .TitlesOfParts !=nil {_fc .TitlesOfParts =_egg .TitlesOfParts ;};if _fc .HeadingPairs !=nil {if _egg .HeadingPairs !=nil {_eb :=_fc .HeadingPairs .Vector ;_cf :=_egg .HeadingPairs .Vector ;_cfg :=_eb .Variant ;_ae :=_cf .Variant ;_egc :=[]*_cb .Variant {};for _egcc :=0;_egcc < len (_ae );_egcc +=2{_bg :=_ae [_egcc ].Lpstr ;_bgf :=false ;for _ge :=0;_ge < len (_cfg );_ge +=2{_df :=_cfg [_ge ].Lpstr ;if _df !=nil &&_bg !=nil &&*_df ==*_bg {*_cfg [_ge +1].I4 =*_cfg [_ge +1].I4 +*_ae [_egcc +1].I4 ;_bgf =true ;break ;};};if !_bgf {_egc =append (_egc ,&_cb .Variant {CT_Variant :_cb .CT_Variant {Lpstr :_ae [_egcc ].Lpstr }});_egc =append (_egc ,&_cb .Variant {CT_Variant :_cb .CT_Variant {I4 :_ae [_egcc ].I4 }});};};_cfg =append (_cfg ,_egc ...);_eb .SizeAttr =uint32 (len (_cfg ));};}else if _egg .HeadingPairs !=nil {_fc .HeadingPairs =_egg .HeadingPairs ;};if _fc .HLinks !=nil {if _egg .HLinks !=nil {_bag :=_fc .HLinks .Vector ;_dfa :=_egg .HLinks .Vector ;_bc :=_bag .Variant ;_ged :=_dfa .Variant ;for _ ,_dfe :=range _ged {_ef :=true ;for _ ,_agf :=range _bc {if _a .DeepEqual (_agf ,_dfe ){_ef =false ;break ;};};if _ef {_bc =append (_bc ,_dfe );_bag .SizeAttr ++;};};};}else if _egg .HLinks !=nil {_fc .HLinks =_egg .HLinks ;};_ac :=_gf .GetOrCreateCustomProperties ();_acg :=docBase1 .GetOrCreateCustomProperties ();for _ ,_ddd :=range _acg .PropertiesList (){_ac .setProperty (_ddd );};_gf .CustomProperties =_ac ;_bbf :=_gf .Rels .X ().Relationship ;for _ ,_gdg :=range docBase1 .Rels .X ().Relationship {_fe :=true ;for _ ,_bf :=range _bbf {if _bf .TargetAttr ==_gdg .TargetAttr &&_bf .TypeAttr ==_gdg .TypeAttr {_fe =false ;break ;};};if _fe {_gf .Rels .AddRelationship (_gdg .TargetAttr ,_gdg .TypeAttr );};};for _ ,_acf :=range docBase1 .ExtraFiles {_dg :=_acf .ZipPath ;_gg :=true ;for _ ,_afa :=range _gf .ExtraFiles {if _afa .ZipPath ==_dg {_gg =false ;break ;};};if _gg {_gf .ExtraFiles =append (_gf .ExtraFiles ,_acf );};};return _gf ;};func (_bdb CustomProperties )SetPropertyAsInt (name string ,i int ){_cdgb :=_bdb .getNewProperty (name );_ddb :=int32 (i );_cdgb .Int =&_ddb ;_bdb .setOrReplaceProperty (_cdgb );};func (_gbgb CustomProperties )SetPropertyAsFiletime (name string ,filetime _ag .Time ){_gbgc :=_gbgb .getNewProperty (name );_gbgc .Filetime =&filetime ;_gbgb .setOrReplaceProperty (_gbgc );};const _ded ="\u0032\u0020\u004aan\u0075\u0061\u0072\u0079\u0020\u0032\u0030\u0030\u0036\u0020\u0061\u0074\u0020\u0031\u0035\u003a\u0030\u0034";func (_afab CustomProperties )SetPropertyAsUi4 (name string ,ui4 uint32 ){_agd :=_afab .getNewProperty (name );_agd .Ui4 =&ui4 ;_afab .setOrReplaceProperty (_agd );};
-
-// AppProperties contains properties specific to the document and the
-// application that created it.
-type AppProperties struct{_afd *_be .Properties };func (_gbf CustomProperties )SetPropertyAsStorage (name string ,storage string ){_gdb :=_gbf .getNewProperty (name );_gdb .Storage =&storage ;_gbf .setOrReplaceProperty (_gdb );};
-
-// MakeImageRef constructs an image reference which is a reference to a
-// particular image file inside a document.  The same image can be used multiple
-// times in a document by re-use the ImageRef.
-func MakeImageRef (img Image ,d *DocBase ,rels Relationships )ImageRef {return ImageRef {_ecc :img ,_faa :d ,_gef :rels };};
-
-// RemoveOverride removes an override given a path.
-func (_fbb ContentTypes )RemoveOverride (path string ){if !_af .HasPrefix (path ,"\u002f"){path ="\u002f"+path ;};for _bbe ,_efg :=range _fbb ._gae .Override {if _efg .PartNameAttr ==path {copy (_fbb ._gae .Override [_bbe :],_fbb ._gae .Override [_bbe +1:]);_fbb ._gae .Override =_fbb ._gae .Override [0:len (_fbb ._gae .Override )-1];};};};
-
-// SetLinksUpToDate sets the links up to date flag.
-func (_de AppProperties )SetLinksUpToDate (v bool ){_de ._afd .LinksUpToDate =_fga .Bool (v )};
-
-// GetImageBytesByTarget returns Image object with Data bytes read from its target.
-func (_abdf *DocBase )GetImageBytesByTarget (target string )(Image ,error ){if target !=""{target ="\u0077\u006f\u0072d\u002f"+target ;for _ ,_faf :=range _abdf .Images {if _faf .Target ()==target {return ImageFromStorage (_faf .Path ());};};};return Image {},_aee ;};const _abg ="2\u00300\u0036\u002d\u0030\u0031\u002d\u0030\u0032\u00541\u0035\u003a\u0030\u0034:0\u0035\u005a";func (_bcg CustomProperties )setProperty (_beed *_cd .CT_Property ){_bcg .setPropertyHelper (_beed ,false );};
-
-// SetDescription records the description of the document.
-func (_gda CoreProperties )SetDescription (s string ){if _gda ._bee .Description ==nil {_gda ._bee .Description =&_fga .XSDAny {XMLName :_aa .Name {Local :"\u0064\u0063\u003a\u0064\u0065\u0073\u0063\u0072\u0069p\u0074\u0069\u006f\u006e"}};};_gda ._bee .Description .Data =[]byte (s );};
-
-// Category returns the category of the document
-func (_edg CoreProperties )Category ()string {if _edg ._bee .Category !=nil {return *_edg ._bee .Category ;};return "";};
-
-// ExtraFile is an unsupported file type extracted from, or to be written to a
-// zip package
-type ExtraFile struct{ZipPath string ;DiskPath string ;};
-
-// X returns the inner wrapped XML type of CustomProperty.
-func (_fcb CustomProperty )X ()*_cd .CT_Property {return _fcb ._ec };
-
-// FindRIDForN returns the relationship ID for the i'th relationship of type t.
-func (_gegg Relationships )FindRIDForN (i int ,t string )string {for _ ,_dddd :=range _gegg ._cfga .CT_Relationships .Relationship {if _dddd .TypeAttr ==t {if i ==0{return _dddd .IdAttr ;};i --;};};return "";};
-
-// GetTargetByRelIdAndType returns a target path with the associated relation ID.
-func (_ddeb Relationships )GetTargetByRelIdAndType (idAttr string ,typeAttr string )string {for _ ,_bebf :=range _ddeb ._cfga .Relationship {if _bebf .IdAttr ==idAttr &&_bebf .TypeAttr ==typeAttr {return _bebf .TargetAttr ;};};return "";};
-
-// ApplicationVersion returns the version of the application that created the
-// document.
-func (_gaa AppProperties )ApplicationVersion ()string {if _gaa ._afd .AppVersion !=nil {return *_gaa ._afd .AppVersion ;};return "";};
-
-// SetModified sets the time that the document was modified.
-func (_dea CoreProperties )SetModified (t _ag .Time ){_dea ._bee .Modified =_dbdf (t ,"\u0064\u0063t\u0065\u0072\u006ds\u003a\u006d\u006f\u0064\u0069\u0066\u0069\u0065\u0064");};
-
-// Type returns the type of a relationship.
-func (_ccd Relationship )Type ()string {return _ccd ._fce .TypeAttr };
-
-// Path returns the path to an image file, if any.
-func (_aegf ImageRef )Path ()string {return _aegf ._ecc .Path };
-
-// RelativeWidth returns the relative width of an image given a fixed height.
-// This is used when setting image to a fixed height to calculate the width
-// required to keep the same image aspect ratio.
-func (_ebbfa ImageRef )RelativeWidth (h _cbd .Distance )_cbd .Distance {_gca :=float64 (_ebbfa .Size ().X )/float64 (_ebbfa .Size ().Y );return h *_cbd .Distance (_gca );};func (_afcg CustomProperties )SetPropertyAsBstr (name string ,bstr string ){_acee :=_afcg .getNewProperty (name );_acee .Bstr =&bstr ;_afcg .setOrReplaceProperty (_acee );};
-
-// Properties returns table properties.
-func (_bea Table )Grid ()*_fg .CT_TableGrid {return _bea ._fgbf .TblGrid };
-
-// RelID returns the relationship ID.
-func (_agcb ImageRef )RelID ()string {return _agcb ._egf };func (_cee CustomProperties )SetPropertyAsOstream (name string ,ostream string ){_dee :=_cee .getNewProperty (name );_dee .Ostream =&ostream ;_cee .setOrReplaceProperty (_dee );};
-
-// X returns the inner wrapped XML type.
-func (_edgb Table )X ()*_fg .Tbl {return _edgb ._fgbf };
-
-// NewAppProperties constructs a new AppProperties.
-func NewAppProperties ()AppProperties {_aed :=AppProperties {_afd :_be .NewProperties ()};_aed .SetCompany ("\u0046\u006f\u0078\u0079\u0055\u0074\u0069\u006c\u0073\u0020\u0065\u0068\u0066");_aed .SetApplication ("g\u0069\u0074\u0068\u0075\u0062\u002ec\u006f\u006d\u002f\u0075\u006e\u0069\u0064\u006f\u0063/\u0075\u006e\u0069o\u0066f\u0069\u0063\u0065");_aed .SetDocSecurity (0);_aed .SetLinksUpToDate (false );var _eff ,_gb ,_cff int64 ;_gc .Sscanf (Version ,"\u0025\u0064\u002e\u0025\u0064\u002e\u0025\u0064",&_eff ,&_gb ,&_cff );_fcf :=float64 (_eff )+float64 (_gb )/10000.0;_aed .SetApplicationVersion (_gc .Sprintf ("\u0025\u0030\u0037\u002e\u0034\u0066",_fcf ));return _aed ;};
-
-// NewCoreProperties constructs a new CoreProperties.
-func NewCoreProperties ()CoreProperties {return CoreProperties {_bee :_aae .NewCoreProperties ()}};func (_ffc CustomProperties )SetPropertyAsR8 (name string ,r8 float64 ){_eafg :=_ffc .getNewProperty (name );_eafg .R8 =&r8 ;_ffc .setOrReplaceProperty (_eafg );};
-
-// DefAttr returns the DefAttr property.
-func (_dfea TableStyles )DefAttr ()string {return _dfea ._bdea .DefAttr };const Version ="\u0031\u002e\u0032\u0037\u002e\u0030";func (_geb CustomProperties )SetPropertyAsOstorage (name string ,ostorage string ){_edded :=_geb .getNewProperty (name );_edded .Ostorage =&ostorage ;_geb .setOrReplaceProperty (_edded );};
-
-// X returns the inner wrapped XML type.
-func (_dge CoreProperties )X ()*_aae .CoreProperties {return _dge ._bee };func (_abb *ImageRef )SetRelID (id string ){_abb ._egf =id };func (_dfaa Relationship )String ()string {return _gc .Sprintf ("\u007b\u0049\u0044\u003a \u0025\u0073\u0020\u0054\u0061\u0072\u0067\u0065\u0074\u003a \u0025s\u0020\u0054\u0079\u0070\u0065\u003a\u0020%\u0073\u007d",_dfaa .ID (),_dfaa .Target (),_dfaa .Type ());};
-
-// NewRelationshipsCopy creates a new relationships wrapper as a copy of passed in instance.
-func NewRelationshipsCopy (rels Relationships )Relationships {_gfbd :=*rels ._cfga ;return Relationships {_cfga :&_gfbd };};func (_gag CustomProperties )SetPropertyAsLpwstr (name string ,lpwstr string ){_egcg :=_gag .getNewProperty (name );_egcg .Lpwstr =&lpwstr ;_gag .setOrReplaceProperty (_egcg );};
-
-// AddCustomRelationships adds relationships related to custom properties to the document.
-func (_ebg *DocBase )AddCustomRelationships (){_ebg .ContentTypes .AddOverride ("/\u0064o\u0063\u0050\u0072\u006f\u0070\u0073\u002f\u0063u\u0073\u0074\u006f\u006d.x\u006d\u006c","\u0061\u0070\u0070\u006c\u0069\u0063a\u0074\u0069\u006f\u006e\u002fv\u006e\u0064\u002e\u006f\u0070\u0065n\u0078\u006d\u006c\u0066\u006fr\u006d\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064o\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0063\u0075\u0073\u0074\u006f\u006d\u002d\u0070r\u006f\u0070\u0065\u0072\u0074\u0069\u0065\u0073+\u0078\u006d\u006c");_ebg .Rels .AddRelationship ("\u0064\u006f\u0063\u0050ro\u0070\u0073\u002f\u0063\u0075\u0073\u0074\u006f\u006d\u002e\u0078\u006d\u006c",_fga .CustomPropertiesType );};
-
-// Title returns the Title of the document
-func (_gdd CoreProperties )Title ()string {if _gdd ._bee .Title !=nil {return string (_gdd ._bee .Title .Data );};return "";};
-
-// RemoveOverrideByIndex removes an override given a path and override index.
-func (_bfa ContentTypes )RemoveOverrideByIndex (path string ,indexToFind int )error {_fbcc :=path [0:len (path )-5];if !_af .HasPrefix (_fbcc ,"\u002f"){_fbcc ="\u002f"+_fbcc ;};_dfc ,_fdb :=_d .Compile (_fbcc +"\u0028\u005b\u0030-\u0039\u005d\u002b\u0029\u002e\u0078\u006d\u006c");if _fdb !=nil {return _fdb ;};_bfd :=0;_fec :=-1;for _da ,_bdf :=range _bfa ._gae .Override {if _bde :=_dfc .FindStringSubmatch (_bdf .PartNameAttr );len (_bde )> 1{if _bfd ==indexToFind {_fec =_da ;}else if _bfd > indexToFind {_fdg ,_ :=_ba .Atoi (_bde [1]);_fdg --;_bdf .PartNameAttr =_gc .Sprintf ("\u0025\u0073\u0025\u0064\u002e\u0078\u006d\u006c",_fbcc ,_fdg );};_bfd ++;};};if _fec > -1{copy (_bfa ._gae .Override [_fec :],_bfa ._gae .Override [_fec +1:]);_bfa ._gae .Override =_bfa ._gae .Override [0:len (_bfa ._gae .Override )-1];};return nil ;};func (_gfe CustomProperties )SetPropertyAsUi1 (name string ,ui1 uint8 ){_cg :=_gfe .getNewProperty (name );_cg .Ui1 =&ui1 ;_gfe .setOrReplaceProperty (_cg );};
-
-// Remove removes an existing relationship.
-func (_dbad Relationships )Remove (rel Relationship )bool {for _eda ,_gaf :=range _dbad ._cfga .Relationship {if _gaf ==rel ._fce {copy (_dbad ._cfga .Relationship [_eda :],_dbad ._cfga .Relationship [_eda +1:]);_dbad ._cfga .Relationship =_dbad ._cfga .Relationship [0:len (_dbad ._cfga .Relationship )-1];return true ;};};return false ;};
-
-// Image is a container for image information. It's used as we need format and
-// and size information to use images.
-// It contains either the filesystem path to the image, or the image itself.
-type Image struct{Size _bd .Point ;Format string ;Path string ;Data *[]byte ;};func (_bdc CustomProperties )SetPropertyAsI4 (name string ,i4 int32 ){_dfda :=_bdc .getNewProperty (name );_dfda .I4 =&i4 ;_bdc .setOrReplaceProperty (_dfda );};func (_baa CustomProperties )SetPropertyAsI2 (name string ,i2 int16 ){_ggb :=_baa .getNewProperty (name );_ggb .I2 =&i2 ;_baa .setOrReplaceProperty (_ggb );};
-
-// AddRow adds a row to a table.
-func (_afga Table )AddRow ()*TableRow {_dbdd :=_fg .NewCT_TableRow ();for _fcfb :=0;_fcfb < len (_afga ._fgbf .TblGrid .GridCol );_fcfb ++{_dbdd .Tc =append (_dbdd .Tc ,_fg .NewCT_TableCell ());};_afga ._fgbf .Tr =append (_afga ._fgbf .Tr ,_dbdd );return &TableRow {_dbe :_dbdd };};
-
-// SetDocSecurity sets the document security flag.
-func (_cc AppProperties )SetDocSecurity (v int32 ){_cc ._afd .DocSecurity =_fga .Int32 (v )};
-
-// Relationships returns a slice of all of the relationships.
-func (_ffce Relationships )Relationships ()[]Relationship {_bga :=[]Relationship {};for _ ,_ebd :=range _ffce ._cfga .Relationship {_bga =append (_bga ,Relationship {_fce :_ebd });};return _bga ;};func (_ega CustomProperties )getNewProperty (_dgg string )*_cd .CT_Property {_acga :=_ega ._ebbf .Property ;_fbfe :=int32 (1);for _ ,_agfd :=range _acga {if _agfd .PidAttr > _fbfe {_fbfe =_agfd .PidAttr ;};};_aca :=_cd .NewCT_Property ();_aca .NameAttr =&_dgg ;_aca .PidAttr =_fbfe +1;_aca .FmtidAttr ="\u007b\u0044\u0035\u0043\u0044\u0044\u0035\u0030\u0035\u002d\u0032\u0045\u0039\u0043\u002d\u0031\u0030\u0031\u0042\u002d\u0039\u0033\u0039\u0037-\u0030\u0038\u0030\u0030\u0032B\u0032\u0043F\u0039\u0041\u0045\u007d";return _aca ;};
-
-// ImageFromBytes returns an Image struct for an in-memory image. You can also
-// construct an Image directly if the file and size are known.
-func ImageFromBytes (data []byte )(Image ,error ){_eeb :=Image {};_ecf ,_cfd ,_egfe :=_bd .Decode (_ad .NewReader (data ));if _egfe !=nil {return _eeb ,_gc .Errorf ("\u0075n\u0061\u0062\u006c\u0065 \u0074\u006f\u0020\u0070\u0061r\u0073e\u0020i\u006d\u0061\u0067\u0065\u003a\u0020\u0025s",_egfe );};_eeb .Data =&data ;_eeb .Format =_cfd ;_eeb .Size =_ecf .Bounds ().Size ();return _eeb ,nil ;};
-
-// X returns the inner wrapped XML type.
-func (_bad Relationship )X ()*_ga .Relationship {return _bad ._fce };func (_dcef CustomProperties )SetPropertyAsError (name string ,error string ){_ceg :=_dcef .getNewProperty (name );_ceg .Error =&error ;_dcef .setOrReplaceProperty (_ceg );};
-
-// SetLastModifiedBy records the last person to modify the document.
-func (_ccb CoreProperties )SetLastModifiedBy (s string ){_ccb ._bee .LastModifiedBy =&s };
-
-// Theme is a drawingml theme.
-type Theme struct{_fag *_fg .Theme };
-
-// AddCol adds a column to a table.
-func (_dfg Table )AddCol ()*TableCol {_cdff :=_fg .NewCT_TableCol ();_dfg ._fgbf .TblGrid .GridCol =append (_dfg ._fgbf .TblGrid .GridCol ,_cdff );for _ ,_ggea :=range _dfg ._fgbf .Tr {_ege :=_fg .NewCT_TableCell ();_ggea .Tc =append (_ggea .Tc ,_ege );};return &TableCol {_dfbe :_cdff };};
-
-// NewTheme constructs a new theme.
-func NewTheme ()Theme {return Theme {_fg .NewTheme ()}};
-
-// Target returns the target (path) of a relationship.
-func (_ddde Relationship )Target ()string {return _ddde ._fce .TargetAttr };func init (){_adg .SetAsStorage ()};
-
-// SetCreated sets the time that the document was created.
-func (_ffb CoreProperties )SetCreated (t _ag .Time ){_ffb ._bee .Created =_dbdf (t ,"\u0064c\u0074e\u0072\u006d\u0073\u003a\u0063\u0072\u0065\u0061\u0074\u0065\u0064");};func (_abda CustomProperties )SetPropertyAsUi8 (name string ,ui8 uint64 ){_afc :=_abda .getNewProperty (name );_afc .Ui8 =&ui8 ;_abda .setOrReplaceProperty (_afc );};
-
-// Format returns the format of the underlying image
-func (_eddc ImageRef )Format ()string {return _eddc ._ecc .Format };func (_cgd CustomProperties )SetPropertyAsClsid (name string ,clsid string ){_caf :=_cgd .getNewProperty (name );_caf .Clsid =&clsid ;_cgd .setOrReplaceProperty (_caf );};
-
-// X returns the underlying raw XML data.
-func (_beb Relationships )X ()*_ga .Relationships {return _beb ._cfga };
-
-// ContentTypes is the top level "[Content_Types].xml" in a zip package.
-type ContentTypes struct{_gae *_eg .Types };
+// CopyOverride copies override content type for a given `path` and puts it with a path `newPath`.
+func (_dgc ContentTypes )CopyOverride (path ,newPath string ){if !_ca .HasPrefix (path ,"\u002f"){path ="\u002f"+path ;};if !_ca .HasPrefix (newPath ,"\u002f"){newPath ="\u002f"+newPath ;};for _ggfb :=range _dgc ._abd .Override {if _dgc ._abd .Override [_ggfb ].PartNameAttr ==path {_adb :=*_dgc ._abd .Override [_ggfb ];_adb .PartNameAttr =newPath ;_dgc ._abd .Override =append (_dgc ._abd .Override ,&_adb );};};};func (_bdf CustomProperties )SetPropertyAsInt (name string ,i int ){_fbc :=_bdf .getNewProperty (name );_bda :=int32 (i );_fbc .Int =&_bda ;_bdf .setOrReplaceProperty (_fbc );};func (_fba CustomProperties )SetPropertyAsUi4 (name string ,ui4 uint32 ){_fdc :=_fba .getNewProperty (name );_fdc .Ui4 =&ui4 ;_fba .setOrReplaceProperty (_fdc );};
 
 // Hyperlink is just an appropriately configured relationship.
-type Hyperlink Relationship ;
+type Hyperlink Relationship ;func (_gef TableRow )addCell ()*_bdd .CT_TableCell {_cgec :=_bdd .NewCT_TableCell ();_gef ._cbde .Tc =append (_gef ._cbde .Tc ,_cgec );return _cgec ;};var _eeba =_d .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006e\u006f\u0074\u0020\u0066o\u0075\u006e\u0064\u0020\u0069\u006e\u0020\u0073\u0074\u006fr\u0061\u0067\u0065");
 
-// IsEmpty returns true if there are no relationships.
-func (_dbfc Relationships )IsEmpty ()bool {return _dbfc ._cfga ==nil ||len (_dbfc ._cfga .Relationship )==0;};
+// Description returns the description of the document
+func (_fca CoreProperties )Description ()string {if _fca ._ae .Description !=nil {return string (_fca ._ae .Description .Data );};return "";};
 
-// NewContentTypes returns a wrapper around a newly constructed content-types.
-func NewContentTypes ()ContentTypes {_ebb :=ContentTypes {_gae :_eg .NewTypes ()};_ebb .AddDefault ("\u0078\u006d\u006c","\u0061p\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0078\u006d\u006c");_ebb .AddDefault ("\u0072\u0065\u006c\u0073","\u0061\u0070\u0070\u006c\u0069\u0063a\u0074\u0069\u006fn\u002f\u0076\u006ed\u002e\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006fr\u006d\u0061\u0074\u0073\u002dpa\u0063\u006b\u0061\u0067\u0065\u002e\u0072\u0065\u006c\u0061\u0074\u0069\u006f\u006e\u0073\u0068\u0069\u0070\u0073\u002b\u0078\u006d\u006c");_ebb .AddDefault ("\u0070\u006e\u0067","\u0069m\u0061\u0067\u0065\u002f\u0070\u006eg");_ebb .AddDefault ("\u006a\u0070\u0065\u0067","\u0069\u006d\u0061\u0067\u0065\u002f\u006a\u0070\u0065\u0067");_ebb .AddDefault ("\u006a\u0070\u0067","\u0069m\u0061\u0067\u0065\u002f\u006a\u0070g");_ebb .AddDefault ("\u0077\u006d\u0066","i\u006d\u0061\u0067\u0065\u002f\u0078\u002d\u0077\u006d\u0066");_ebb .AddOverride ("\u002fd\u006fc\u0050\u0072\u006f\u0070\u0073/\u0063\u006fr\u0065\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064\u002e\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072\u006d\u0061\u0074\u0073-\u0070\u0061\u0063\u006b\u0061\u0067\u0065\u002e\u0063\u006f\u0072\u0065\u002dp\u0072\u006f\u0070\u0065\u0072\u0074i\u0065\u0073\u002bx\u006d\u006c");_ebb .AddOverride ("\u002f\u0064\u006f\u0063\u0050\u0072\u006f\u0070\u0073\u002f\u0061\u0070p\u002e\u0078\u006d\u006c","a\u0070\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066o\u0072\u006d\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075m\u0065\u006e\u0074\u002e\u0065\u0078\u0074\u0065\u006e\u0064\u0065\u0064\u002dp\u0072\u006f\u0070\u0065\u0072\u0074\u0069\u0065\u0073\u002b\u0078m\u006c");return _ebb ;};
-
-// SetOffsetY sets vertical offset of a table in distance units (see measurement package).
-func (_cdge Table )SetOffsetY (offY float64 ){if _cdge ._cdgba .Off ==nil {_cdge ._cdgba .Off =_fg .NewCT_Point2D ();_fda :=int64 (0);_cdge ._cdgba .Off .XAttr =_fg .ST_Coordinate {ST_CoordinateUnqualified :&_fda };};_agcbf :=_cbd .ToEMU (offY );_cdge ._cdgba .Off .YAttr =_fg .ST_Coordinate {ST_CoordinateUnqualified :&_agcbf };};
-
-// Relationships represents a .rels file.
-type Relationships struct{_cfga *_ga .Relationships };const _ccdb =7;
-
-// Relationship is a relationship within a .rels file.
-type Relationship struct{_fce *_ga .Relationship };
-
-// X returns the inner wrapped XML type.
-func (_cdf AppProperties )X ()*_be .Properties {return _cdf ._afd };const _gbac =15;const _def =8;
-
-// EnsureDefault esnures that an extension and default content type exist,
-// adding it if necessary.
-func (_fbd ContentTypes )EnsureDefault (ext ,contentType string ){ext =_af .ToLower (ext );for _ ,_ff :=range _fbd ._gae .Default {if _ff .ExtensionAttr ==ext {_ff .ContentTypeAttr =contentType ;return ;};};_dde :=&_eg .Default {};_dde .ContentTypeAttr =contentType ;_dde .ExtensionAttr =ext ;_fbd ._gae .Default =append (_fbd ._gae .Default ,_dde );};
-
-// CopyRelationship copies the relationship.
-func (_aaeg Relationships )CopyRelationship (idAttr string )(Relationship ,bool ){for _agdd :=range _aaeg ._cfga .Relationship {if _aaeg ._cfga .Relationship [_agdd ].IdAttr ==idAttr {_cedb :=*_aaeg ._cfga .Relationship [_agdd ];_dda :=len (_aaeg ._cfga .Relationship )+1;_cbdcf :=map[string ]struct{}{};for _ ,_fgb :=range _aaeg ._cfga .Relationship {_cbdcf [_fgb .IdAttr ]=struct{}{};};for _ ,_dfaaa :=_cbdcf [_gc .Sprintf ("\u0072\u0049\u0064%\u0064",_dda )];_dfaaa ;_ ,_dfaaa =_cbdcf [_gc .Sprintf ("\u0072\u0049\u0064%\u0064",_dda )]{_dda ++;};_cedb .IdAttr =_gc .Sprintf ("\u0072\u0049\u0064%\u0064",_dda );_aaeg ._cfga .Relationship =append (_aaeg ._cfga .Relationship ,&_cedb );return Relationship {_fce :&_cedb },true ;};};return Relationship {},false ;};
-
-// SetOffsetX sets horizontal offset of a table in distance units (see measurement package).
-func (_acgb Table )SetOffsetX (offX float64 ){if _acgb ._cdgba .Off ==nil {_acgb ._cdgba .Off =_fg .NewCT_Point2D ();_gcd :=int64 (0);_acgb ._cdgba .Off .YAttr =_fg .ST_Coordinate {ST_CoordinateUnqualified :&_gcd };};_fcbd :=_cbd .ToEMU (offX );_acgb ._cdgba .Off .XAttr =_fg .ST_Coordinate {ST_CoordinateUnqualified :&_fcbd };};
-
-// Clear removes any existing relationships.
-func (_gcaf Relationships )Clear (){_gcaf ._cfga .Relationship =nil };
+// Format returns the format of the underlying image
+func (_egd ImageRef )Format ()string {return _egd ._fcb .Format };
 
 // EnsureOverride ensures that an override for the given path exists, adding it if necessary
-func (_fbf ContentTypes )EnsureOverride (path ,contentType string ){for _ ,_cbe :=range _fbf ._gae .Override {if _cbe .PartNameAttr ==path {if _af .HasPrefix (contentType ,"\u0068\u0074\u0074\u0070"){_bbd .Log .Debug ("\u0063\u006f\u006e\u0074\u0065\u006et\u0020\u0074\u0079p\u0065\u0020\u0027%\u0073\u0027\u0020\u0069\u0073\u0020\u0069\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u002c m\u0075\u0073\u0074\u0020\u006e\u006f\u0074\u0020\u0073\u0074\u0061\u0072\u0074\u0020\u0077\u0069\u0074\u0068\u0020\u0068\u0074\u0074\u0070",contentType );};_cbe .ContentTypeAttr =contentType ;return ;};};_fbf .AddOverride (path ,contentType );};
+func (_fec ContentTypes )EnsureOverride (path ,contentType string ){for _ ,_aace :=range _fec ._abd .Override {if _aace .PartNameAttr ==path {if _ca .HasPrefix (contentType ,"\u0068\u0074\u0074\u0070"){_ge .Log .Debug ("\u0063\u006f\u006e\u0074\u0065\u006et\u0020\u0074\u0079p\u0065\u0020\u0027%\u0073\u0027\u0020\u0069\u0073\u0020\u0069\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u002c m\u0075\u0073\u0074\u0020\u006e\u006f\u0074\u0020\u0073\u0074\u0061\u0072\u0074\u0020\u0077\u0069\u0074\u0068\u0020\u0068\u0074\u0074\u0070",contentType );};_aace .ContentTypeAttr =contentType ;return ;};};_fec .AddOverride (path ,contentType );};func (_geg CustomProperties )SetPropertyAsUi2 (name string ,ui2 uint16 ){_cgf :=_geg .getNewProperty (name );_cgf .Ui2 =&ui2 ;_geg .setOrReplaceProperty (_cgf );};const _befb ="\u0032\u0020\u004aan\u0075\u0061\u0072\u0079\u0020\u0032\u0030\u0030\u0036\u0020\u0061\u0074\u0020\u0031\u0035\u003a\u0030\u0034";
 
-// AddExtraFileFromZip is used when reading an unsupported file from an OOXML
-// file. This ensures that unsupported file content will at least round-trip
-// correctly.
-func (_cbbf *DocBase )AddExtraFileFromZip (f *_c .File )error {_cbc ,_ceeg :=_dd .ExtractToDiskTmp (f ,_cbbf .TmpPath );if _ceeg !=nil {return _gc .Errorf ("\u0065\u0072r\u006f\u0072\u0020\u0065x\u0074\u0072a\u0063\u0074\u0069\u006e\u0067\u0020\u0075\u006es\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u0066\u0069\u006ce\u003a\u0020\u0025\u0073",_ceeg );};_cbbf .ExtraFiles =append (_cbbf .ExtraFiles ,ExtraFile {ZipPath :f .Name ,DiskPath :_cbc });return nil ;};
+// Relationships returns a slice of all of the relationships.
+func (_dace Relationships )Relationships ()[]Relationship {_dab :=[]Relationship {};for _ ,_eca :=range _dace ._dafb .Relationship {_dab =append (_dab ,Relationship {_fdg :_eca });};return _dab ;};func (_gcb CustomProperties )SetPropertyAsBlob (name ,blob string ){_fbd :=_gcb .getNewProperty (name );_fbd .Blob =&blob ;_gcb .setOrReplaceProperty (_fbd );};const _ggdg =17;
 
-// AddAutoRelationship adds a relationship with an automatically generated
-// filename based off of the type. It should be preferred over AddRelationship
-// to ensure consistent filenames are maintained.
-func (_fedf Relationships )AddAutoRelationship (dt _fga .DocType ,src string ,idx int ,ctype string )Relationship {return _fedf .AddRelationship (_fga .RelativeFilename (dt ,src ,ctype ,idx ),ctype );};
-
-// SetApplicationVersion sets the version of the application that created the
-// document.  Per MS, the verison string mut be in the form 'XX.YYYY'.
-func (_fdf AppProperties )SetApplicationVersion (s string ){_fdf ._afd .AppVersion =&s };
-
-// Rows returns all table rows.
-func (_ggdf Table )Rows ()[]*TableRow {_bdcc :=_ggdf ._fgbf .Tr ;_dfba :=[]*TableRow {};for _ ,_dfebe :=range _bdcc {_dfba =append (_dfba ,&TableRow {_dbe :_dfebe });};return _dfba ;};
-
-// SetStyle assigns TableStyle to a table.
-func (_dfdc Table )SetStyle (style *_fg .CT_TableStyle ){if _dfdc ._fgbf .TblPr ==nil {_dfdc ._fgbf .TblPr =_fg .NewCT_TableProperties ();};if _dfdc ._fgbf .TblPr .Choice ==nil {_dfdc ._fgbf .TblPr .Choice =_fg .NewCT_TablePropertiesChoice ();};_dfdc ._fgbf .TblPr .Choice .TableStyle =style ;};
-
-// Application returns the name of the application that created the document.
-// For unioffice created documents, it defaults to github.com/unidoc/unioffice
-func (_bac AppProperties )Application ()string {if _bac ._afd .Application !=nil {return *_bac ._afd .Application ;};return "";};
-
-// PropertiesList returns the list of all custom properties of the document.
-func (_ee CustomProperties )PropertiesList ()[]*_cd .CT_Property {return _ee ._ebbf .Property };
-
-// SetCategory records the category of the document.
-func (_acd CoreProperties )SetCategory (s string ){_acd ._bee .Category =&s };
-
-// GetPropertyByName returns a custom property selected by it's name.
-func (_ffe CustomProperties )GetPropertyByName (name string )CustomProperty {_ffd :=_ffe ._ebbf .Property ;for _ ,_efc :=range _ffd {if *_efc .NameAttr ==name {return CustomProperty {_ec :_efc };};};return CustomProperty {};};
-
-// Target returns the target attrubute of the image reference (a path where the image file is located in the document structure).
-func (_dba *ImageRef )Target ()string {return _dba ._gagf };func (_eea CustomProperties )SetPropertyAsArray (name string ,array *_cb .Array ){_dbdb :=_eea .getNewProperty (name );_dbdb .Array =array ;_eea .setOrReplaceProperty (_dbdb );};
-
-// Cells returns an array of row cells.
-func (_cab TableRow )Cells ()[]*_fg .CT_TableCell {return _cab ._dbe .Tc };
-
-// GetTargetByRelId returns a target path with the associated relation ID.
-func (_fadc Relationships )GetTargetByRelId (idAttr string )string {for _ ,_ggd :=range _fadc ._cfga .Relationship {if _ggd .IdAttr ==idAttr {return _ggd .TargetAttr ;};};return "";};
-
-// TableStyles contains document specific properties.
-type TableStyles struct{_bdea *_fg .TblStyleLst };
+// X returns the inner wrapped XML type.
+func (_ebc Theme )X ()*_bdd .Theme {return _ebc ._acda };func (_edcd CustomProperties )SetPropertyAsEmpty (name string ){_dffca :=_edcd .getNewProperty (name );_dffca .Empty =_de .NewEmpty ();_edcd .setOrReplaceProperty (_dffca );};
