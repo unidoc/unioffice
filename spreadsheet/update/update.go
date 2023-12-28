@@ -25,7 +25,7 @@ ColumnIdx uint32 ;
 SheetToUpdate string ;
 
 // UpdateCurrentSheet is true if references without sheet prefix should be updated as well.
-UpdateCurrentSheet bool ;};
+UpdateCurrentSheet bool ;};const (UpdateActionRemoveColumn UpdateAction =iota ;);
 
 // UpdateAction is the type for update types constants.
-type UpdateAction byte ;const (UpdateActionRemoveColumn UpdateAction =iota ;);
+type UpdateAction byte ;

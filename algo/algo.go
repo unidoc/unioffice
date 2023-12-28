@@ -9,10 +9,10 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package algo ;import _c "strconv";
+package algo ;import _a "strconv";func _f (_af byte )bool {return _af >='0'&&_af <='9'};
 
 // NaturalLess compares two strings in a human manner so rId2 sorts less than rId10
-func NaturalLess (lhs ,rhs string )bool {_d ,_gae :=0,0;for _d < len (lhs )&&_gae < len (rhs ){_da :=lhs [_d ];_b :=rhs [_gae ];_e :=_ga (_da );_db :=_ga (_b );switch {case _e &&!_db :return true ;case !_e &&_db :return false ;case !_e &&!_db :if _da !=_b {return _da < _b ;
-};_d ++;_gae ++;default:_ff :=_d +1;_bf :=_gae +1;for _ff < len (lhs )&&_ga (lhs [_ff ]){_ff ++;};for _bf < len (rhs )&&_ga (rhs [_bf ]){_bf ++;};_dac ,_ :=_c .ParseUint (lhs [_d :_ff ],10,64);_fff ,_ :=_c .ParseUint (rhs [_d :_bf ],10,64);if _dac !=_fff {return _dac < _fff ;
-};_d =_ff ;_gae =_bf ;};};return len (lhs )< len (rhs );};func RepeatString (s string ,cnt int )string {if cnt <=0{return "";};_fg :=make ([]byte ,len (s )*cnt );_cf :=[]byte (s );for _bc :=0;_bc < cnt ;_bc ++{copy (_fg [_bc :],_cf );};return string (_fg );
-};func _ga (_f byte )bool {return _f >='0'&&_f <='9'};
+func NaturalLess (lhs ,rhs string )bool {_fb ,_dg :=0,0;for _fb < len (lhs )&&_dg < len (rhs ){_dd :=lhs [_fb ];_fa :=rhs [_dg ];_db :=_f (_dd );_fd :=_f (_fa );switch {case _db &&!_fd :return true ;case !_db &&_fd :return false ;case !_db &&!_fd :if _dd !=_fa {return _dd < _fa ;
+};_fb ++;_dg ++;default:_b :=_fb +1;_fdf :=_dg +1;for _b < len (lhs )&&_f (lhs [_b ]){_b ++;};for _fdf < len (rhs )&&_f (rhs [_fdf ]){_fdf ++;};_c ,_ :=_a .ParseUint (lhs [_fb :_b ],10,64);_fad ,_ :=_a .ParseUint (rhs [_fb :_fdf ],10,64);if _c !=_fad {return _c < _fad ;
+};_fb =_b ;_dg =_fdf ;};};return len (lhs )< len (rhs );};func RepeatString (s string ,cnt int )string {if cnt <=0{return "";};_aa :=make ([]byte ,len (s )*cnt );_g :=[]byte (s );for _fdfg :=0;_fdfg < cnt ;_fdfg ++{copy (_aa [_fdfg :],_g );};return string (_aa );
+};
