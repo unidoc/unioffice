@@ -9,57 +9,54 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package elements ;import (_df "encoding/xml";_f "fmt";_fd "github.com/unidoc/unioffice";_g "github.com/unidoc/unioffice/common/logger";);func (_b *ElementContainer )UnmarshalXML (d *_df .Decoder ,start _df .StartElement )error {_ea :for {_ee ,_eb :=d .Token ();
-if _eb !=nil {return _eb ;};switch _dfb :=_ee .(type ){case _df .StartElement :switch _dfb .Name {case _df .Name {Space :"\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f",Local :"\u0061\u006e\u0079"}:_ff :=NewElementsGroupChoice ();
-if _cc :=d .DecodeElement (&_ff .Any ,&_dfb );_cc !=nil {return _cc ;};_b .Choice =append (_b .Choice ,_ff );default:_g .Log .Debug ("\u0073\u006b\u0069\u0070\u0070i\u006e\u0067\u0020\u0075\u006e\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0065d\u0020\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u006f\u006e\u0020\u0045\u006c\u0065\u006d\u0065\u006e\u0074\u0043\u006f\u006e\u0074\u0061\u0069\u006e\u0065\u0072\u0020\u0025v",_dfb .Name );
-if _af :=d .Skip ();_af !=nil {return _af ;};};case _df .EndElement :break _ea ;case _df .CharData :};};return nil ;};
+package elements ;import (_c "encoding/xml";_gf "fmt";_a "github.com/unidoc/unioffice";_b "github.com/unidoc/unioffice/common/logger";);func (_cb *Any )UnmarshalXML (d *_c .Decoder ,start _c .StartElement )error {_cb .SimpleLiteral =*NewSimpleLiteral ();
+for {_f ,_gd :=d .Token ();if _gd !=nil {return _gf .Errorf ("\u0070a\u0072s\u0069\u006e\u0067\u0020\u0041\u006e\u0079\u003a\u0020\u0025\u0073",_gd );};if _ee ,_ba :=_f .(_c .EndElement );_ba &&_ee .Name ==start .Name {break ;};};return nil ;};
+
+// ValidateWithPath validates the Any and its children, prefixing error messages with path
+func (_aca *Any )ValidateWithPath (path string )error {if _bae :=_aca .SimpleLiteral .ValidateWithPath (path );_bae !=nil {return _bae ;};return nil ;};func NewElementContainer ()*ElementContainer {_fd :=&ElementContainer {};return _fd };
+
+// Validate validates the ElementContainer and its children
+func (_gc *ElementContainer )Validate ()error {return _gc .ValidateWithPath ("\u0045\u006ce\u006d\u0065\u006et\u0043\u006f\u006e\u0074\u0061\u0069\u006e\u0065\u0072");};type ElementContainer struct{Choice []*ElementsGroupChoice ;};
+
+// Validate validates the SimpleLiteral and its children
+func (_ad *SimpleLiteral )Validate ()error {return _ad .ValidateWithPath ("\u0053\u0069\u006d\u0070\u006c\u0065\u004c\u0069\u0074\u0065\u0072\u0061\u006c");};
 
 // ValidateWithPath validates the ElementContainer and its children, prefixing error messages with path
-func (_fa *ElementContainer )ValidateWithPath (path string )error {for _ce ,_ac :=range _fa .Choice {if _bd :=_ac .ValidateWithPath (_f .Sprintf ("\u0025\u0073\u002f\u0043\u0068\u006f\u0069\u0063\u0065\u005b\u0025\u0064\u005d",path ,_ce ));_bd !=nil {return _bd ;
+func (_fc *ElementContainer )ValidateWithPath (path string )error {for _fcb ,_bb :=range _fc .Choice {if _fab :=_bb .ValidateWithPath (_gf .Sprintf ("\u0025\u0073\u002f\u0043\u0068\u006f\u0069\u0063\u0065\u005b\u0025\u0064\u005d",path ,_fcb ));_fab !=nil {return _fab ;
+};};return nil ;};func NewSimpleLiteral ()*SimpleLiteral {_afe :=&SimpleLiteral {};return _afe };func (_ac *Any )MarshalXML (e *_c .Encoder ,start _c .StartElement )error {return _ac .SimpleLiteral .MarshalXML (e ,start );};func NewElementsGroup ()*ElementsGroup {_da :=&ElementsGroup {};
+return _da };func (_db *ElementsGroup )UnmarshalXML (d *_c .Decoder ,start _c .StartElement )error {_be :for {_ff ,_dfd :=d .Token ();if _dfd !=nil {return _dfd ;};switch _fca :=_ff .(type ){case _c .StartElement :switch _fca .Name {case _c .Name {Space :"\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f",Local :"\u0061\u006e\u0079"}:_bac :=NewElementsGroupChoice ();
+if _ef :=d .DecodeElement (&_bac .Any ,&_fca );_ef !=nil {return _ef ;};_db .Choice =append (_db .Choice ,_bac );default:_b .Log .Debug ("\u0073\u006b\u0069\u0070\u0070\u0069\u006e\u0067 \u0075\u006e\u0073up\u0070\u006f\u0072\u0074\u0065\u0064 \u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u006f\u006e\u0020\u0045\u006c\u0065\u006de\u006e\u0074\u0073\u0047\u0072\u006f\u0075\u0070 \u0025\u0076",_fca .Name );
+if _fe :=d .Skip ();_fe !=nil {return _fe ;};};case _c .EndElement :break _be ;case _c .CharData :};};return nil ;};type ElementsGroupChoice struct{Any []*Any ;};type SimpleLiteral struct{};func (_fb *ElementsGroup )MarshalXML (e *_c .Encoder ,start _c .StartElement )error {if _fb .Choice !=nil {for _ ,_df :=range _fb .Choice {_df .MarshalXML (e ,_c .StartElement {});
+};};return nil ;};func (_ca *ElementContainer )UnmarshalXML (d *_c .Decoder ,start _c .StartElement )error {_fa :for {_bg ,_cd :=d .Token ();if _cd !=nil {return _cd ;};switch _bd :=_bg .(type ){case _c .StartElement :switch _bd .Name {case _c .Name {Space :"\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f",Local :"\u0061\u006e\u0079"}:_ec :=NewElementsGroupChoice ();
+if _ea :=d .DecodeElement (&_ec .Any ,&_bd );_ea !=nil {return _ea ;};_ca .Choice =append (_ca .Choice ,_ec );default:_b .Log .Debug ("\u0073\u006b\u0069\u0070\u0070i\u006e\u0067\u0020\u0075\u006e\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0065d\u0020\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u006f\u006e\u0020\u0045\u006c\u0065\u006d\u0065\u006e\u0074\u0043\u006f\u006e\u0074\u0061\u0069\u006e\u0065\u0072\u0020\u0025v",_bd .Name );
+if _bf :=d .Skip ();_bf !=nil {return _bf ;};};case _c .EndElement :break _fa ;case _c .CharData :};};return nil ;};
+
+// ValidateWithPath validates the ElementsGroup and its children, prefixing error messages with path
+func (_dc *ElementsGroup )ValidateWithPath (path string )error {for _eg ,_ag :=range _dc .Choice {if _ffe :=_ag .ValidateWithPath (_gf .Sprintf ("\u0025\u0073\u002f\u0043\u0068\u006f\u0069\u0063\u0065\u005b\u0025\u0064\u005d",path ,_eg ));_ffe !=nil {return _ffe ;
+};};return nil ;};type ElementsGroup struct{Choice []*ElementsGroupChoice ;};type Any struct{SimpleLiteral };
+
+// Validate validates the ElementsGroupChoice and its children
+func (_eff *ElementsGroupChoice )Validate ()error {return _eff .ValidateWithPath ("\u0045\u006c\u0065\u006den\u0074\u0073\u0047\u0072\u006f\u0075\u0070\u0043\u0068\u006f\u0069\u0063\u0065");};func (_bad *ElementContainer )MarshalXML (e *_c .Encoder ,start _c .StartElement )error {start .Name .Local ="\u0065\u006ce\u006d\u0065\u006et\u0043\u006f\u006e\u0074\u0061\u0069\u006e\u0065\u0072";
+e .EncodeToken (start );if _bad .Choice !=nil {for _ ,_cc :=range _bad .Choice {_cc .MarshalXML (e ,_c .StartElement {});};};e .EncodeToken (_c .EndElement {Name :start .Name });return nil ;};func (_bgcf *SimpleLiteral )UnmarshalXML (d *_c .Decoder ,start _c .StartElement )error {for {_gcd ,_aff :=d .Token ();
+if _aff !=nil {return _gf .Errorf ("\u0070a\u0072\u0073\u0069\u006eg\u0020\u0053\u0069\u006d\u0070l\u0065L\u0069t\u0065\u0072\u0061\u006c\u003a\u0020\u0025s",_aff );};if _aa ,_dg :=_gcd .(_c .EndElement );_dg &&_aa .Name ==start .Name {break ;};};return nil ;
+};
+
+// ValidateWithPath validates the ElementsGroupChoice and its children, prefixing error messages with path
+func (_efe *ElementsGroupChoice )ValidateWithPath (path string )error {for _bbf ,_bfa :=range _efe .Any {if _dd :=_bfa .ValidateWithPath (_gf .Sprintf ("\u0025\u0073\u002f\u0041\u006e\u0079\u005b\u0025\u0064\u005d",path ,_bbf ));_dd !=nil {return _dd ;
 };};return nil ;};
 
 // Validate validates the ElementsGroup and its children
-func (_gef *ElementsGroup )Validate ()error {return _gef .ValidateWithPath ("\u0045\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u0047\u0072\u006f\u0075\u0070");};func NewElementsGroup ()*ElementsGroup {_ae :=&ElementsGroup {};return _ae };type ElementsGroupChoice struct{Any []*Any ;
-};
-
-// ValidateWithPath validates the ElementsGroup and its children, prefixing error messages with path
-func (_bg *ElementsGroup )ValidateWithPath (path string )error {for _eg ,_de :=range _bg .Choice {if _cgb :=_de .ValidateWithPath (_f .Sprintf ("\u0025\u0073\u002f\u0043\u0068\u006f\u0069\u0063\u0065\u005b\u0025\u0064\u005d",path ,_eg ));_cgb !=nil {return _cgb ;
-};};return nil ;};type ElementContainer struct{Choice []*ElementsGroupChoice ;};func NewElementContainer ()*ElementContainer {_dac :=&ElementContainer {};return _dac };func (_gcg *ElementsGroupChoice )MarshalXML (e *_df .Encoder ,start _df .StartElement )error {if _gcg .Any !=nil {_afe :=_df .StartElement {Name :_df .Name {Local :"\u0064\u0063\u003a\u0061\u006e\u0079"}};
-for _ ,_fbd :=range _gcg .Any {e .EncodeElement (_fbd ,_afe );};};return nil ;};func (_fdd *SimpleLiteral )MarshalXML (e *_df .Encoder ,start _df .StartElement )error {e .EncodeToken (start );e .EncodeToken (_df .EndElement {Name :start .Name });return nil ;
-};func (_cdg *ElementsGroupChoice )UnmarshalXML (d *_df .Decoder ,start _df .StartElement )error {_cb :for {_fbf ,_bb :=d .Token ();if _bb !=nil {return _bb ;};switch _afeg :=_fbf .(type ){case _df .StartElement :switch _afeg .Name {case _df .Name {Space :"\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f",Local :"\u0061\u006e\u0079"}:_gdf :=NewAny ();
-if _gda :=d .DecodeElement (_gdf ,&_afeg );_gda !=nil {return _gda ;};_cdg .Any =append (_cdg .Any ,_gdf );default:_g .Log .Debug ("\u0073\u006b\u0069\u0070\u0070\u0069\u006e\u0067\u0020\u0075\u006e\u0073\u0075\u0070\u0070o\u0072\u0074\u0065\u0064\u0020\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0020o\u006e\u0020\u0045\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u0047\u0072ou\u0070\u0043\u0068\u006f\u0069\u0063\u0065\u0020\u0025\u0076",_afeg .Name );
-if _deg :=d .Skip ();_deg !=nil {return _deg ;};};case _df .EndElement :break _cb ;case _df .CharData :};};return nil ;};func (_fe *ElementContainer )MarshalXML (e *_df .Encoder ,start _df .StartElement )error {start .Name .Local ="\u0065\u006ce\u006d\u0065\u006et\u0043\u006f\u006e\u0074\u0061\u0069\u006e\u0065\u0072";
-e .EncodeToken (start );if _fe .Choice !=nil {for _ ,_db :=range _fe .Choice {_db .MarshalXML (e ,_df .StartElement {});};};e .EncodeToken (_df .EndElement {Name :start .Name });return nil ;};func (_fg *Any )UnmarshalXML (d *_df .Decoder ,start _df .StartElement )error {_fg .SimpleLiteral =*NewSimpleLiteral ();
-for {_da ,_cg :=d .Token ();if _cg !=nil {return _f .Errorf ("\u0070a\u0072s\u0069\u006e\u0067\u0020\u0041\u006e\u0079\u003a\u0020\u0025\u0073",_cg );};if _gc ,_e :=_da .(_df .EndElement );_e &&_gc .Name ==start .Name {break ;};};return nil ;};func (_aff *ElementsGroup )UnmarshalXML (d *_df .Decoder ,start _df .StartElement )error {_daa :for {_gd ,_cde :=d .Token ();
-if _cde !=nil {return _cde ;};switch _gab :=_gd .(type ){case _df .StartElement :switch _gab .Name {case _df .Name {Space :"\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f",Local :"\u0061\u006e\u0079"}:_ef :=NewElementsGroupChoice ();
-if _efc :=d .DecodeElement (&_ef .Any ,&_gab );_efc !=nil {return _efc ;};_aff .Choice =append (_aff .Choice ,_ef );default:_g .Log .Debug ("\u0073\u006b\u0069\u0070\u0070\u0069\u006e\u0067 \u0075\u006e\u0073up\u0070\u006f\u0072\u0074\u0065\u0064 \u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u006f\u006e\u0020\u0045\u006c\u0065\u006de\u006e\u0074\u0073\u0047\u0072\u006f\u0075\u0070 \u0025\u0076",_gab .Name );
-if _ge :=d .Skip ();_ge !=nil {return _ge ;};};case _df .EndElement :break _daa ;case _df .CharData :};};return nil ;};type SimpleLiteral struct{};func NewSimpleLiteral ()*SimpleLiteral {_cdee :=&SimpleLiteral {};return _cdee };
-
-// Validate validates the ElementsGroupChoice and its children
-func (_ec *ElementsGroupChoice )Validate ()error {return _ec .ValidateWithPath ("\u0045\u006c\u0065\u006den\u0074\u0073\u0047\u0072\u006f\u0075\u0070\u0043\u0068\u006f\u0069\u0063\u0065");};func NewElementsGroupChoice ()*ElementsGroupChoice {_bf :=&ElementsGroupChoice {};
-return _bf };
+func (_ecf *ElementsGroup )Validate ()error {return _ecf .ValidateWithPath ("\u0045\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u0047\u0072\u006f\u0075\u0070");};func (_egb *ElementsGroupChoice )MarshalXML (e *_c .Encoder ,start _c .StartElement )error {if _egb .Any !=nil {_cg :=_c .StartElement {Name :_c .Name {Local :"\u0064\u0063\u003a\u0061\u006e\u0079"}};
+for _ ,_ce :=range _egb .Any {e .EncodeElement (_ce ,_cg );};};return nil ;};
 
 // Validate validates the Any and its children
-func (_ga *Any )Validate ()error {return _ga .ValidateWithPath ("\u0041\u006e\u0079")};func NewAny ()*Any {_c :=&Any {};_c .SimpleLiteral =*NewSimpleLiteral ();return _c };
-
-// ValidateWithPath validates the ElementsGroupChoice and its children, prefixing error messages with path
-func (_acc *ElementsGroupChoice )ValidateWithPath (path string )error {for _ed ,_dfg :=range _acc .Any {if _fbg :=_dfg .ValidateWithPath (_f .Sprintf ("\u0025\u0073\u002f\u0041\u006e\u0079\u005b\u0025\u0064\u005d",path ,_ed ));_fbg !=nil {return _fbg ;
-};};return nil ;};
-
-// Validate validates the ElementContainer and its children
-func (_gf *ElementContainer )Validate ()error {return _gf .ValidateWithPath ("\u0045\u006ce\u006d\u0065\u006et\u0043\u006f\u006e\u0074\u0061\u0069\u006e\u0065\u0072");};func (_afa *SimpleLiteral )UnmarshalXML (d *_df .Decoder ,start _df .StartElement )error {for {_ag ,_dcc :=d .Token ();
-if _dcc !=nil {return _f .Errorf ("\u0070a\u0072\u0073\u0069\u006eg\u0020\u0053\u0069\u006d\u0070l\u0065L\u0069t\u0065\u0072\u0061\u006c\u003a\u0020\u0025s",_dcc );};if _be ,_ace :=_ag .(_df .EndElement );_ace &&_be .Name ==start .Name {break ;};};return nil ;
-};func (_a *Any )MarshalXML (e *_df .Encoder ,start _df .StartElement )error {return _a .SimpleLiteral .MarshalXML (e ,start );};
-
-// Validate validates the SimpleLiteral and its children
-func (_dfgb *SimpleLiteral )Validate ()error {return _dfgb .ValidateWithPath ("\u0053\u0069\u006d\u0070\u006c\u0065\u004c\u0069\u0074\u0065\u0072\u0061\u006c");};type ElementsGroup struct{Choice []*ElementsGroupChoice ;};
+func (_d *Any )Validate ()error {return _d .ValidateWithPath ("\u0041\u006e\u0079")};func (_bdf *SimpleLiteral )MarshalXML (e *_c .Encoder ,start _c .StartElement )error {e .EncodeToken (start );e .EncodeToken (_c .EndElement {Name :start .Name });return nil ;
+};func (_faec *ElementsGroupChoice )UnmarshalXML (d *_c .Decoder ,start _c .StartElement )error {_fg :for {_af ,_bgc :=d .Token ();if _bgc !=nil {return _bgc ;};switch _eae :=_af .(type ){case _c .StartElement :switch _eae .Name {case _c .Name {Space :"\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f",Local :"\u0061\u006e\u0079"}:_gda :=NewAny ();
+if _ga :=d .DecodeElement (_gda ,&_eae );_ga !=nil {return _ga ;};_faec .Any =append (_faec .Any ,_gda );default:_b .Log .Debug ("\u0073\u006b\u0069\u0070\u0070\u0069\u006e\u0067\u0020\u0075\u006e\u0073\u0075\u0070\u0070o\u0072\u0074\u0065\u0064\u0020\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0020o\u006e\u0020\u0045\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u0047\u0072ou\u0070\u0043\u0068\u006f\u0069\u0063\u0065\u0020\u0025\u0076",_eae .Name );
+if _cf :=d .Skip ();_cf !=nil {return _cf ;};};case _c .EndElement :break _fg ;case _c .CharData :};};return nil ;};func NewAny ()*Any {_e :=&Any {};_e .SimpleLiteral =*NewSimpleLiteral ();return _e };
 
 // ValidateWithPath validates the SimpleLiteral and its children, prefixing error messages with path
-func (_ba *SimpleLiteral )ValidateWithPath (path string )error {return nil };func (_dc *ElementsGroup )MarshalXML (e *_df .Encoder ,start _df .StartElement )error {if _dc .Choice !=nil {for _ ,_cd :=range _dc .Choice {_cd .MarshalXML (e ,_df .StartElement {});
-};};return nil ;};
-
-// ValidateWithPath validates the Any and its children, prefixing error messages with path
-func (_fb *Any )ValidateWithPath (path string )error {if _cge :=_fb .SimpleLiteral .ValidateWithPath (path );_cge !=nil {return _cge ;};return nil ;};type Any struct{SimpleLiteral };func init (){_fd .RegisterConstructor ("\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f","\u0053\u0069\u006d\u0070\u006c\u0065\u004c\u0069\u0074\u0065\u0072\u0061\u006c",NewSimpleLiteral );
-_fd .RegisterConstructor ("\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f","\u0065\u006ce\u006d\u0065\u006et\u0043\u006f\u006e\u0074\u0061\u0069\u006e\u0065\u0072",NewElementContainer );
-_fd .RegisterConstructor ("\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f","\u0061\u006e\u0079",NewAny );_fd .RegisterConstructor ("\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f","\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u0047\u0072\u006f\u0075\u0070",NewElementsGroup );
+func (_eeaf *SimpleLiteral )ValidateWithPath (path string )error {return nil };func NewElementsGroupChoice ()*ElementsGroupChoice {_fae :=&ElementsGroupChoice {};return _fae };func init (){_a .RegisterConstructor ("\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f","\u0053\u0069\u006d\u0070\u006c\u0065\u004c\u0069\u0074\u0065\u0072\u0061\u006c",NewSimpleLiteral );
+_a .RegisterConstructor ("\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f","\u0065\u006ce\u006d\u0065\u006et\u0043\u006f\u006e\u0074\u0061\u0069\u006e\u0065\u0072",NewElementContainer );
+_a .RegisterConstructor ("\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f","\u0061\u006e\u0079",NewAny );_a .RegisterConstructor ("\u0068\u0074\u0074\u0070\u003a\u002f\u002f\u0070\u0075\u0072\u006c\u002e\u006f\u0072\u0067/\u0064c\u002f\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u002f\u0031\u002e\u0031\u002f","\u0065\u006c\u0065\u006d\u0065\u006e\u0074\u0073\u0047\u0072\u006f\u0075\u0070",NewElementsGroup );
 };

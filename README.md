@@ -114,6 +114,28 @@ background color. However it's easy to do manually via editing the
 
 If you are interested in contributing, please contact us.
 
+## Development Notes
+
+The bash script file `run_test.sh` could be used to run test and update the test result (if required). This script could receive the following parameter:
+- `-s`: Save a baseline, updates all the test result.
+- `-v`: Run the test in verbose mode.
+- `t` or `--testname` [test name]: Run a specific test name. For example `-t AddImage` would be running a `TestAddImage` test.
+
+To run the script in dockerized environment, use the provided `Makefile` such as:
+
+```bash
+make docker-test
+```
+or
+
+```bash
+make docker-update-testdata
+```
+
+## Go Version Compatibility
+
+Officially we support three latest Go versions, but internally we would test the build with up to five latest Go versions in our CI runner.
+
 ## Support and consulting ##
 
 Please email us at support@unidoc.io for any queries.
