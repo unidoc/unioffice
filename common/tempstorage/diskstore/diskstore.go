@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_df "github.com/unidoc/unioffice/common/tempstorage";_f "io/ioutil";_e "os";_d "strings";);
+package diskstore ;import (_af "github.com/unidoc/unioffice/common/tempstorage";_a "io/ioutil";_ae "os";_g "strings";);
 
 // Open opens file from disk according to a path
-func (_eg diskStorage )Open (path string )(_df .File ,error ){return _e .OpenFile (path ,_e .O_RDWR ,0644)};
-
-// Add is not applicable in the diskstore implementation
-func (_a diskStorage )Add (path string )error {return nil };
-
-// SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_dd :=diskStorage {};_df .SetAsStorage (&_dd )};
-
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_dg diskStorage )TempFile (dir ,pattern string )(_df .File ,error ){return _f .TempFile (dir ,pattern );};
+func (_gb diskStorage )Open (path string )(_af .File ,error ){return _ae .OpenFile (path ,_ae .O_RDWR ,0644);};
 
 // RemoveAll removes all files in the directory
-func (_egd diskStorage )RemoveAll (dir string )error {if _d .HasPrefix (dir ,_e .TempDir ()){return _e .RemoveAll (dir );};return nil ;};type diskStorage struct{};
+func (_aea diskStorage )RemoveAll (dir string )error {if _g .HasPrefix (dir ,_ae .TempDir ()){return _ae .RemoveAll (dir );};return nil ;};
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_fd diskStorage )TempFile (dir ,pattern string )(_af .File ,error ){return _a .TempFile (dir ,pattern );};
+
+// SetAsStorage sets temp storage as a disk storage
+func SetAsStorage (){_f :=diskStorage {};_af .SetAsStorage (&_f )};
+
+// Add is not applicable in the diskstore implementation
+func (_e diskStorage )Add (path string )error {return nil };
 
 // TempFile creates a new temp directory by calling ioutil TempDir
-func (_da diskStorage )TempDir (pattern string )(string ,error ){return _f .TempDir ("",pattern )};
+func (_gd diskStorage )TempDir (pattern string )(string ,error ){return _a .TempDir ("",pattern )};type diskStorage struct{};
