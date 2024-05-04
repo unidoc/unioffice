@@ -9,27 +9,27 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package tempstorage ;import _g "io";
+package tempstorage ;import _c "io";var _dc storage ;
+
+// RemoveAll removes all files according to the dir argument prefix.
+func RemoveAll (dir string )error {return _dc .RemoveAll (dir )};type storage interface{Open (_e string )(File ,error );TempFile (_ef ,_d string )(File ,error );TempDir (_eb string )(string ,error );RemoveAll (_ge string )error ;Add (_dd string )error ;
+};
+
+// TempDir creates a name for a new temp directory using a pattern argument.
+func TempDir (pattern string )(string ,error ){return _dc .TempDir (pattern )};
 
 // Add reads a file from a disk and adds it to the storage.
-func Add (path string )error {return _ee .Add (path )};
-
-// SetAsStorage changes temporary storage to newStorage.
-func SetAsStorage (newStorage storage ){_ee =newStorage };
+func Add (path string )error {return _dc .Add (path )};
 
 // File is a representation of a storage file
 // with Read, Write, Close and Name methods identical to os.File.
-type File interface{_g .Reader ;_g .ReaderAt ;_g .Writer ;_g .Closer ;Name ()string ;};
+type File interface{_c .Reader ;_c .ReaderAt ;_c .Writer ;_c .Closer ;Name ()string ;};
 
 // TempFile creates new empty file in the storage and returns it.
-func TempFile (dir ,pattern string )(File ,error ){return _ee .TempFile (dir ,pattern )};
-
-// TempDir creates a name for a new temp directory using a pattern argument.
-func TempDir (pattern string )(string ,error ){return _ee .TempDir (pattern )};var _ee storage ;type storage interface{Open (_a string )(File ,error );TempFile (_ad ,_ag string )(File ,error );TempDir (_e string )(string ,error );RemoveAll (_ab string )error ;
-Add (_c string )error ;};
-
-// RemoveAll removes all files according to the dir argument prefix.
-func RemoveAll (dir string )error {return _ee .RemoveAll (dir )};
+func TempFile (dir ,pattern string )(File ,error ){return _dc .TempFile (dir ,pattern )};
 
 // Open returns tempstorage File object by name.
-func Open (path string )(File ,error ){return _ee .Open (path )};
+func Open (path string )(File ,error ){return _dc .Open (path )};
+
+// SetAsStorage changes temporary storage to newStorage.
+func SetAsStorage (newStorage storage ){_dc =newStorage };
