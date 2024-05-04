@@ -9,128 +9,131 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package drawing ;import (_e "github.com/unidoc/unioffice";_ge "github.com/unidoc/unioffice/color";_b "github.com/unidoc/unioffice/measurement";_c "github.com/unidoc/unioffice/schema/soo/dml";);type LineProperties struct{_gg *_c .CT_LineProperties };
+package drawing ;import (_ce "github.com/unidoc/unioffice";_a "github.com/unidoc/unioffice/color";_f "github.com/unidoc/unioffice/measurement";_g "github.com/unidoc/unioffice/schema/soo/dml";);
 
-// SetNumbered controls if bullets are numbered or not.
-func (_bf ParagraphProperties )SetNumbered (scheme _c .ST_TextAutonumberScheme ){if scheme ==_c .ST_TextAutonumberSchemeUnset {_bf ._adf .BuAutoNum =nil ;}else {_bf ._adf .BuAutoNum =_c .NewCT_TextAutonumberBullet ();_bf ._adf .BuAutoNum .TypeAttr =scheme ;
-};};
-
-// SetBold controls the bolding of a run.
-func (_fe RunProperties )SetBold (b bool ){_fe ._df .BAttr =_e .Bool (b )};
-
-// SetSolidFill controls the text color of a run.
-func (_cg RunProperties )SetSolidFill (c _ge .Color ){_cg ._df .NoFill =nil ;_cg ._df .BlipFill =nil ;_cg ._df .GradFill =nil ;_cg ._df .GrpFill =nil ;_cg ._df .PattFill =nil ;_cg ._df .SolidFill =_c .NewCT_SolidColorFillProperties ();_cg ._df .SolidFill .SrgbClr =_c .NewCT_SRgbColor ();
-_cg ._df .SolidFill .SrgbClr .ValAttr =*c .AsRGBString ();};
-
-// Properties returns the run's properties.
-func (_ee Run )Properties ()RunProperties {if _ee ._ga .R ==nil {_ee ._ga .R =_c .NewCT_RegularTextRun ();};if _ee ._ga .R .RPr ==nil {_ee ._ga .R .RPr =_c .NewCT_TextCharacterProperties ();};return RunProperties {_ee ._ga .R .RPr };};
-
-// MakeParagraphProperties constructs a new ParagraphProperties wrapper.
-func MakeParagraphProperties (x *_c .CT_TextParagraphProperties )ParagraphProperties {return ParagraphProperties {x };};
-
-// MakeRun constructs a new Run wrapper.
-func MakeRun (x *_c .EG_TextRun )Run {return Run {x }};
+// SetLevel sets the level of indentation of a paragraph.
+func (_ad ParagraphProperties )SetLevel (idx int32 ){_ad ._dg .LvlAttr =_ce .Int32 (idx )};
 
 // SetHeight sets the height of the shape.
-func (_gge ShapeProperties )SetHeight (h _b .Distance ){_gge .ensureXfrm ();if _gge ._fge .Xfrm .Ext ==nil {_gge ._fge .Xfrm .Ext =_c .NewCT_PositiveSize2D ();};_gge ._fge .Xfrm .Ext .CyAttr =int64 (h /_b .EMU );};
+func (_abf ShapeProperties )SetHeight (h _f .Distance ){_abf .ensureXfrm ();if _abf ._dgb .Xfrm .Ext ==nil {_abf ._dgb .Xfrm .Ext =_g .NewCT_PositiveSize2D ();};_abf ._dgb .Xfrm .Ext .CyAttr =int64 (h /_f .EMU );};type ShapeProperties struct{_dgb *_g .CT_ShapeProperties };
+
+
+// MakeParagraphProperties constructs a new ParagraphProperties wrapper.
+func MakeParagraphProperties (x *_g .CT_TextParagraphProperties )ParagraphProperties {return ParagraphProperties {x };};
 
 // X returns the inner wrapped XML type.
-func (_dfa ShapeProperties )X ()*_c .CT_ShapeProperties {return _dfa ._fge };
+func (_bf ParagraphProperties )X ()*_g .CT_TextParagraphProperties {return _bf ._dg };
 
-// RunProperties controls the run properties.
-type RunProperties struct{_df *_c .CT_TextCharacterProperties ;};
+// X returns the inner wrapped XML type.
+func (_gg ShapeProperties )X ()*_g .CT_ShapeProperties {return _gg ._dgb };
 
-// MakeRunProperties constructs a new RunProperties wrapper.
-func MakeRunProperties (x *_c .CT_TextCharacterProperties )RunProperties {return RunProperties {x }};
+// SetNumbered controls if bullets are numbered or not.
+func (_bd ParagraphProperties )SetNumbered (scheme _g .ST_TextAutonumberScheme ){if scheme ==_g .ST_TextAutonumberSchemeUnset {_bd ._dg .BuAutoNum =nil ;}else {_bd ._dg .BuAutoNum =_g .NewCT_TextAutonumberBullet ();_bd ._dg .BuAutoNum .TypeAttr =scheme ;
+};};
 
-// SetBulletFont controls the font for the bullet character.
-func (_ade ParagraphProperties )SetBulletFont (f string ){if f ==""{_ade ._adf .BuFont =nil ;}else {_ade ._adf .BuFont =_c .NewCT_TextFont ();_ade ._adf .BuFont .TypefaceAttr =f ;};};
+// Properties returns the run's properties.
+func (_gfg Run )Properties ()RunProperties {if _gfg ._fa .R ==nil {_gfg ._fa .R =_g .NewCT_RegularTextRun ();};if _gfg ._fa .R .RPr ==nil {_gfg ._fa .R .RPr =_g .NewCT_TextCharacterProperties ();};return RunProperties {_gfg ._fa .R .RPr };};const (LineJoinRound LineJoin =iota ;
+LineJoinBevel ;LineJoinMiter ;);
+
+// ParagraphProperties allows controlling paragraph properties.
+type ParagraphProperties struct{_dg *_g .CT_TextParagraphProperties ;};
+
+// MakeRun constructs a new Run wrapper.
+func MakeRun (x *_g .EG_TextRun )Run {return Run {x }};
+
+// AddBreak adds a new line break to a paragraph.
+func (_ca Paragraph )AddBreak (){_dc :=_g .NewEG_TextRun ();_dc .Br =_g .NewCT_TextLineBreak ();_ca ._gd .EG_TextRun =append (_ca ._gd .EG_TextRun ,_dc );};func MakeShapeProperties (x *_g .CT_ShapeProperties )ShapeProperties {return ShapeProperties {x }};
+func (_bc ShapeProperties )clearFill (){_bc ._dgb .NoFill =nil ;_bc ._dgb .BlipFill =nil ;_bc ._dgb .GradFill =nil ;_bc ._dgb .GrpFill =nil ;_bc ._dgb .SolidFill =nil ;_bc ._dgb .PattFill =nil ;};func (_cb LineProperties )SetSolidFill (c _a .Color ){_cb .clearFill ();
+_cb ._e .SolidFill =_g .NewCT_SolidColorFillProperties ();_cb ._e .SolidFill .SrgbClr =_g .NewCT_SRgbColor ();_cb ._e .SolidFill .SrgbClr .ValAttr =*c .AsRGBString ();};
 
 // LineJoin is the type of line join
-type LineJoin byte ;func (_eaeg ShapeProperties )LineProperties ()LineProperties {if _eaeg ._fge .Ln ==nil {_eaeg ._fge .Ln =_c .NewCT_LineProperties ();};return LineProperties {_eaeg ._fge .Ln };};func (_ab ShapeProperties )ensureXfrm (){if _ab ._fge .Xfrm ==nil {_ab ._fge .Xfrm =_c .NewCT_Transform2D ();
-};};func (_ea LineProperties )SetSolidFill (c _ge .Color ){_ea .clearFill ();_ea ._gg .SolidFill =_c .NewCT_SolidColorFillProperties ();_ea ._gg .SolidFill .SrgbClr =_c .NewCT_SRgbColor ();_ea ._gg .SolidFill .SrgbClr .ValAttr =*c .AsRGBString ();};
-
-// SetPosition sets the position of the shape.
-func (_eba ShapeProperties )SetPosition (x ,y _b .Distance ){_eba .ensureXfrm ();if _eba ._fge .Xfrm .Off ==nil {_eba ._fge .Xfrm .Off =_c .NewCT_Point2D ();};_eba ._fge .Xfrm .Off .XAttr .ST_CoordinateUnqualified =_e .Int64 (int64 (x /_b .EMU ));_eba ._fge .Xfrm .Off .YAttr .ST_CoordinateUnqualified =_e .Int64 (int64 (y /_b .EMU ));
-};
+type LineJoin byte ;
 
 // SetJoin sets the line join style.
-func (_gf LineProperties )SetJoin (e LineJoin ){_gf ._gg .Round =nil ;_gf ._gg .Miter =nil ;_gf ._gg .Bevel =nil ;switch e {case LineJoinRound :_gf ._gg .Round =_c .NewCT_LineJoinRound ();case LineJoinBevel :_gf ._gg .Bevel =_c .NewCT_LineJoinBevel ();
-case LineJoinMiter :_gf ._gg .Miter =_c .NewCT_LineJoinMiterProperties ();};};
-
-// X returns the inner wrapped XML type.
-func (_eae Run )X ()*_c .EG_TextRun {return _eae ._ga };
-
-// Paragraph is a paragraph within a document.
-type Paragraph struct{_geg *_c .CT_TextParagraph };
-
-// SetWidth sets the width of the shape.
-func (_cf ShapeProperties )SetWidth (w _b .Distance ){_cf .ensureXfrm ();if _cf ._fge .Xfrm .Ext ==nil {_cf ._fge .Xfrm .Ext =_c .NewCT_PositiveSize2D ();};_cf ._fge .Xfrm .Ext .CxAttr =int64 (w /_b .EMU );};
-
-// SetText sets the run's text contents.
-func (_ca Run )SetText (s string ){_ca ._ga .Br =nil ;_ca ._ga .Fld =nil ;if _ca ._ga .R ==nil {_ca ._ga .R =_c .NewCT_RegularTextRun ();};_ca ._ga .R .T =s ;};
-
-// SetAlign controls the paragraph alignment
-func (_ag ParagraphProperties )SetAlign (a _c .ST_TextAlignType ){_ag ._adf .AlgnAttr =a };
-
-// SetGeometry sets the shape type of the shape
-func (_bfg ShapeProperties )SetGeometry (g _c .ST_ShapeType ){if _bfg ._fge .PrstGeom ==nil {_bfg ._fge .PrstGeom =_c .NewCT_PresetGeometry2D ();};_bfg ._fge .PrstGeom .PrstAttr =g ;};type ShapeProperties struct{_fge *_c .CT_ShapeProperties };
+func (_d LineProperties )SetJoin (e LineJoin ){_d ._e .Round =nil ;_d ._e .Miter =nil ;_d ._e .Bevel =nil ;switch e {case LineJoinRound :_d ._e .Round =_g .NewCT_LineJoinRound ();case LineJoinBevel :_d ._e .Bevel =_g .NewCT_LineJoinBevel ();case LineJoinMiter :_d ._e .Miter =_g .NewCT_LineJoinMiterProperties ();
+};};
 
 // MakeParagraph constructs a new paragraph wrapper.
-func MakeParagraph (x *_c .CT_TextParagraph )Paragraph {return Paragraph {x }};func MakeShapeProperties (x *_c .CT_ShapeProperties )ShapeProperties {return ShapeProperties {x }};func (_ae ShapeProperties )SetSolidFill (c _ge .Color ){_ae .clearFill ();
-_ae ._fge .SolidFill =_c .NewCT_SolidColorFillProperties ();_ae ._fge .SolidFill .SrgbClr =_c .NewCT_SRgbColor ();_ae ._fge .SolidFill .SrgbClr .ValAttr =*c .AsRGBString ();};const (LineJoinRound LineJoin =iota ;LineJoinBevel ;LineJoinMiter ;);
+func MakeParagraph (x *_g .CT_TextParagraph )Paragraph {return Paragraph {x }};
 
-// Run is a run within a paragraph.
-type Run struct{_ga *_c .EG_TextRun };func (_gfd ShapeProperties )SetNoFill (){_gfd .clearFill ();_gfd ._fge .NoFill =_c .NewCT_NoFillProperties ();};
+// SetFlipVertical controls if the shape is flipped vertically.
+func (_ec ShapeProperties )SetFlipVertical (b bool ){_ec .ensureXfrm ();if !b {_ec ._dgb .Xfrm .FlipVAttr =nil ;}else {_ec ._dgb .Xfrm .FlipVAttr =_ce .Bool (true );};};
 
-// X returns the inner wrapped XML type.
-func (_fgb ParagraphProperties )X ()*_c .CT_TextParagraphProperties {return _fgb ._adf };
-
-// SetSize sets the font size of the run text
-func (_fd RunProperties )SetSize (sz _b .Distance ){_fd ._df .SzAttr =_e .Int32 (int32 (sz /_b .HundredthPoint ));};
+// RunProperties controls the run properties.
+type RunProperties struct{_ed *_g .CT_TextCharacterProperties ;};
 
 // SetWidth sets the line width, MS products treat zero as the minimum width
 // that can be displayed.
-func (_eb LineProperties )SetWidth (w _b .Distance ){_eb ._gg .WAttr =_e .Int32 (int32 (w /_b .EMU ))};
-
-// AddRun adds a new run to a paragraph.
-func (_gef Paragraph )AddRun ()Run {_ac :=MakeRun (_c .NewEG_TextRun ());_gef ._geg .EG_TextRun =append (_gef ._geg .EG_TextRun ,_ac .X ());return _ac ;};
+func (_cg LineProperties )SetWidth (w _f .Distance ){_cg ._e .WAttr =_ce .Int32 (int32 (w /_f .EMU ))};
 
 // X returns the inner wrapped XML type.
-func (_ad Paragraph )X ()*_c .CT_TextParagraph {return _ad ._geg };
+func (_gb LineProperties )X ()*_g .CT_LineProperties {return _gb ._e };
 
-// SetLevel sets the level of indentation of a paragraph.
-func (_gc ParagraphProperties )SetLevel (idx int32 ){_gc ._adf .LvlAttr =_e .Int32 (idx )};
+// SetWidth sets the width of the shape.
+func (_cf ShapeProperties )SetWidth (w _f .Distance ){_cf .ensureXfrm ();if _cf ._dgb .Xfrm .Ext ==nil {_cf ._dgb .Xfrm .Ext =_g .NewCT_PositiveSize2D ();};_cf ._dgb .Xfrm .Ext .CxAttr =int64 (w /_f .EMU );};
 
-// GetPosition gets the position of the shape in EMU.
-func (_dd ShapeProperties )GetPosition ()(int64 ,int64 ){_dd .ensureXfrm ();if _dd ._fge .Xfrm .Off ==nil {_dd ._fge .Xfrm .Off =_c .NewCT_Point2D ();};return *_dd ._fge .Xfrm .Off .XAttr .ST_CoordinateUnqualified ,*_dd ._fge .Xfrm .Off .YAttr .ST_CoordinateUnqualified ;
-};func (_ed ShapeProperties )clearFill (){_ed ._fge .NoFill =nil ;_ed ._fge .BlipFill =nil ;_ed ._fge .GradFill =nil ;_ed ._fge .GrpFill =nil ;_ed ._fge .SolidFill =nil ;_ed ._fge .PattFill =nil ;};
+// X returns the inner wrapped XML type.
+func (_gf Paragraph )X ()*_g .CT_TextParagraph {return _gf ._gd };
 
-// SetFont controls the font of a run.
-func (_db RunProperties )SetFont (s string ){_db ._df .Latin =_c .NewCT_TextFont ();_db ._df .Latin .TypefaceAttr =s ;};
+// MakeRunProperties constructs a new RunProperties wrapper.
+func MakeRunProperties (x *_g .CT_TextCharacterProperties )RunProperties {return RunProperties {x }};
 
-// SetSize sets the width and height of the shape.
-func (_cd ShapeProperties )SetSize (w ,h _b .Distance ){_cd .SetWidth (w );_cd .SetHeight (h )};
-
-// SetFlipVertical controls if the shape is flipped vertically.
-func (_bb ShapeProperties )SetFlipVertical (b bool ){_bb .ensureXfrm ();if !b {_bb ._fge .Xfrm .FlipVAttr =nil ;}else {_bb ._fge .Xfrm .FlipVAttr =_e .Bool (true );};};
+// SetBold controls the bolding of a run.
+func (_feg RunProperties )SetBold (b bool ){_feg ._ed .BAttr =_ce .Bool (b )};func (_b LineProperties )SetNoFill (){_b .clearFill ();_b ._e .NoFill =_g .NewCT_NoFillProperties ()};
 
 // SetFlipHorizontal controls if the shape is flipped horizontally.
-func (_dbb ShapeProperties )SetFlipHorizontal (b bool ){_dbb .ensureXfrm ();if !b {_dbb ._fge .Xfrm .FlipHAttr =nil ;}else {_dbb ._fge .Xfrm .FlipHAttr =_e .Bool (true );};};func (_bd LineProperties )SetNoFill (){_bd .clearFill ();_bd ._gg .NoFill =_c .NewCT_NoFillProperties ()};
+func (_eg ShapeProperties )SetFlipHorizontal (b bool ){_eg .ensureXfrm ();if !b {_eg ._dgb .Xfrm .FlipHAttr =nil ;}else {_eg ._dgb .Xfrm .FlipHAttr =_ce .Bool (true );};};
 
+// SetAlign controls the paragraph alignment
+func (_cbd ParagraphProperties )SetAlign (a _g .ST_TextAlignType ){_cbd ._dg .AlgnAttr =a };
+
+// SetFont controls the font of a run.
+func (_aa RunProperties )SetFont (s string ){_aa ._ed .Latin =_g .NewCT_TextFont ();_aa ._ed .Latin .TypefaceAttr =s ;};type LineProperties struct{_e *_g .CT_LineProperties };func (_df ShapeProperties )SetSolidFill (c _a .Color ){_df .clearFill ();_df ._dgb .SolidFill =_g .NewCT_SolidColorFillProperties ();
+_df ._dgb .SolidFill .SrgbClr =_g .NewCT_SRgbColor ();_df ._dgb .SolidFill .SrgbClr .ValAttr =*c .AsRGBString ();};
+
+// SetSize sets the font size of the run text
+func (_cgc RunProperties )SetSize (sz _f .Distance ){_cgc ._ed .SzAttr =_ce .Int32 (int32 (sz /_f .HundredthPoint ));};func (_ag ShapeProperties )SetNoFill (){_ag .clearFill ();_ag ._dgb .NoFill =_g .NewCT_NoFillProperties ();};
+
+// SetText sets the run's text contents.
+func (_gba Run )SetText (s string ){_gba ._fa .Br =nil ;_gba ._fa .Fld =nil ;if _gba ._fa .R ==nil {_gba ._fa .R =_g .NewCT_RegularTextRun ();};_gba ._fa .R .T =s ;};
 
 // X returns the inner wrapped XML type.
-func (_a LineProperties )X ()*_c .CT_LineProperties {return _a ._gg };
-
-// AddBreak adds a new line break to a paragraph.
-func (_cb Paragraph )AddBreak (){_fg :=_c .NewEG_TextRun ();_fg .Br =_c .NewCT_TextLineBreak ();_cb ._geg .EG_TextRun =append (_cb ._geg .EG_TextRun ,_fg );};
-
-// SetBulletChar sets the bullet character for the paragraph.
-func (_d ParagraphProperties )SetBulletChar (c string ){if c ==""{_d ._adf .BuChar =nil ;}else {_d ._adf .BuChar =_c .NewCT_TextCharBullet ();_d ._adf .BuChar .CharAttr =c ;};};
+func (_ge Run )X ()*_g .EG_TextRun {return _ge ._fa };func (_bda ShapeProperties )ensureXfrm (){if _bda ._dgb .Xfrm ==nil {_bda ._dgb .Xfrm =_g .NewCT_Transform2D ();};};
 
 // Properties returns the paragraph properties.
-func (_bc Paragraph )Properties ()ParagraphProperties {if _bc ._geg .PPr ==nil {_bc ._geg .PPr =_c .NewCT_TextParagraphProperties ();};return MakeParagraphProperties (_bc ._geg .PPr );};func (_f LineProperties )clearFill (){_f ._gg .NoFill =nil ;_f ._gg .GradFill =nil ;
-_f ._gg .SolidFill =nil ;_f ._gg .PattFill =nil ;};
+func (_fe Paragraph )Properties ()ParagraphProperties {if _fe ._gd .PPr ==nil {_fe ._gd .PPr =_g .NewCT_TextParagraphProperties ();};return MakeParagraphProperties (_fe ._gd .PPr );};
 
-// ParagraphProperties allows controlling paragraph properties.
-type ParagraphProperties struct{_adf *_c .CT_TextParagraphProperties ;};
+// Paragraph is a paragraph within a document.
+type Paragraph struct{_gd *_g .CT_TextParagraph };
+
+// SetBulletFont controls the font for the bullet character.
+func (_ee ParagraphProperties )SetBulletFont (f string ){if f ==""{_ee ._dg .BuFont =nil ;}else {_ee ._dg .BuFont =_g .NewCT_TextFont ();_ee ._dg .BuFont .TypefaceAttr =f ;};};func (_cec LineProperties )clearFill (){_cec ._e .NoFill =nil ;_cec ._e .GradFill =nil ;
+_cec ._e .SolidFill =nil ;_cec ._e .PattFill =nil ;};
+
+// GetPosition gets the position of the shape in EMU.
+func (_gfb ShapeProperties )GetPosition ()(int64 ,int64 ){_gfb .ensureXfrm ();if _gfb ._dgb .Xfrm .Off ==nil {_gfb ._dgb .Xfrm .Off =_g .NewCT_Point2D ();};return *_gfb ._dgb .Xfrm .Off .XAttr .ST_CoordinateUnqualified ,*_gfb ._dgb .Xfrm .Off .YAttr .ST_CoordinateUnqualified ;
+};
+
+// SetBulletChar sets the bullet character for the paragraph.
+func (_ab ParagraphProperties )SetBulletChar (c string ){if c ==""{_ab ._dg .BuChar =nil ;}else {_ab ._dg .BuChar =_g .NewCT_TextCharBullet ();_ab ._dg .BuChar .CharAttr =c ;};};func (_ggd ShapeProperties )LineProperties ()LineProperties {if _ggd ._dgb .Ln ==nil {_ggd ._dgb .Ln =_g .NewCT_LineProperties ();
+};return LineProperties {_ggd ._dgb .Ln };};
+
+// SetGeometry sets the shape type of the shape
+func (_de ShapeProperties )SetGeometry (g _g .ST_ShapeType ){if _de ._dgb .PrstGeom ==nil {_de ._dgb .PrstGeom =_g .NewCT_PresetGeometry2D ();};_de ._dgb .PrstGeom .PrstAttr =g ;};
+
+// SetSolidFill controls the text color of a run.
+func (_ga RunProperties )SetSolidFill (c _a .Color ){_ga ._ed .NoFill =nil ;_ga ._ed .BlipFill =nil ;_ga ._ed .GradFill =nil ;_ga ._ed .GrpFill =nil ;_ga ._ed .PattFill =nil ;_ga ._ed .SolidFill =_g .NewCT_SolidColorFillProperties ();_ga ._ed .SolidFill .SrgbClr =_g .NewCT_SRgbColor ();
+_ga ._ed .SolidFill .SrgbClr .ValAttr =*c .AsRGBString ();};
+
+// AddRun adds a new run to a paragraph.
+func (_gfe Paragraph )AddRun ()Run {_fg :=MakeRun (_g .NewEG_TextRun ());_gfe ._gd .EG_TextRun =append (_gfe ._gd .EG_TextRun ,_fg .X ());return _fg ;};
+
+// SetPosition sets the position of the shape.
+func (_db ShapeProperties )SetPosition (x ,y _f .Distance ){_db .ensureXfrm ();if _db ._dgb .Xfrm .Off ==nil {_db ._dgb .Xfrm .Off =_g .NewCT_Point2D ();};_db ._dgb .Xfrm .Off .XAttr .ST_CoordinateUnqualified =_ce .Int64 (int64 (x /_f .EMU ));_db ._dgb .Xfrm .Off .YAttr .ST_CoordinateUnqualified =_ce .Int64 (int64 (y /_f .EMU ));
+};
+
+// Run is a run within a paragraph.
+type Run struct{_fa *_g .EG_TextRun };
+
+// SetSize sets the width and height of the shape.
+func (_aaa ShapeProperties )SetSize (w ,h _f .Distance ){_aaa .SetWidth (w );_aaa .SetHeight (h )};

@@ -9,6 +9,6 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package mergesort ;func MergeSort (array []float64 )[]float64 {if len (array )<=1{_g :=make ([]float64 ,len (array ));copy (_g ,array );return _g ;};_c :=len (array )/2;_ad :=MergeSort (array [:_c ]);_d :=MergeSort (array [_c :]);_e :=make ([]float64 ,len (array ));
-_f :=0;_ec :=0;_df :=0;for _ec < len (_ad )&&_df < len (_d ){if _ad [_ec ]<=_d [_df ]{_e [_f ]=_ad [_ec ];_ec ++;}else {_e [_f ]=_d [_df ];_df ++;};_f ++;};for _ec < len (_ad ){_e [_f ]=_ad [_ec ];_ec ++;_f ++;};for _df < len (_d ){_e [_f ]=_d [_df ];_df ++;
-_f ++;};return _e ;};
+package mergesort ;func MergeSort (array []float64 )[]float64 {if len (array )<=1{_d :=make ([]float64 ,len (array ));copy (_d ,array );return _d ;};_df :=len (array )/2;_e :=MergeSort (array [:_df ]);_ee :=MergeSort (array [_df :]);_dd :=make ([]float64 ,len (array ));
+_f :=0;_eef :=0;_a :=0;for _eef < len (_e )&&_a < len (_ee ){if _e [_eef ]<=_ee [_a ]{_dd [_f ]=_e [_eef ];_eef ++;}else {_dd [_f ]=_ee [_a ];_a ++;};_f ++;};for _eef < len (_e ){_dd [_f ]=_e [_eef ];_eef ++;_f ++;};for _a < len (_ee ){_dd [_f ]=_ee [_a ];
+_a ++;_f ++;};return _dd ;};

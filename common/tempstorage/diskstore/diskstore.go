@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_eg "github.com/unidoc/unioffice/common/tempstorage";_c "io/ioutil";_a "os";_e "strings";);
-
-// Open opens file from disk according to a path
-func (_cb diskStorage )Open (path string )(_eg .File ,error ){return _a .OpenFile (path ,_a .O_RDWR ,0644)};type diskStorage struct{};
-
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_d diskStorage )TempFile (dir ,pattern string )(_eg .File ,error ){return _c .TempFile (dir ,pattern );};
-
-// SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_fd :=diskStorage {};_eg .SetAsStorage (&_fd )};
+package diskstore ;import (_f "github.com/unidoc/unioffice/common/tempstorage";_g "io/ioutil";_ga "os";_b "strings";);
 
 // RemoveAll removes all files in the directory
-func (_fe diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_a .TempDir ()){return _a .RemoveAll (dir );};return nil ;};
+func (_e diskStorage )RemoveAll (dir string )error {if _b .HasPrefix (dir ,_ga .TempDir ()){return _ga .RemoveAll (dir );};return nil ;};
 
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_fb diskStorage )TempDir (pattern string )(string ,error ){return _c .TempDir ("",pattern )};
+// Open opens file from disk according to a path
+func (_db diskStorage )Open (path string )(_f .File ,error ){return _ga .OpenFile (path ,_ga .O_RDWR ,0644);};type diskStorage struct{};
+
+// SetAsStorage sets temp storage as a disk storage
+func SetAsStorage (){_c :=diskStorage {};_f .SetAsStorage (&_c )};
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_gd diskStorage )TempFile (dir ,pattern string )(_f .File ,error ){return _g .TempFile (dir ,pattern );};
 
 // Add is not applicable in the diskstore implementation
-func (_ed diskStorage )Add (path string )error {return nil };
+func (_ac diskStorage )Add (path string )error {return nil };
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_a diskStorage )TempDir (pattern string )(string ,error ){return _g .TempDir ("",pattern )};
