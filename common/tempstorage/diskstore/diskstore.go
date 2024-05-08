@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_f "github.com/unidoc/unioffice/common/tempstorage";_g "io/ioutil";_ga "os";_b "strings";);
+package diskstore ;import (_aa "github.com/unidoc/unioffice/common/tempstorage";_e "io/ioutil";_a "os";_b "strings";);
 
 // RemoveAll removes all files in the directory
-func (_e diskStorage )RemoveAll (dir string )error {if _b .HasPrefix (dir ,_ga .TempDir ()){return _ga .RemoveAll (dir );};return nil ;};
-
-// Open opens file from disk according to a path
-func (_db diskStorage )Open (path string )(_f .File ,error ){return _ga .OpenFile (path ,_ga .O_RDWR ,0644);};type diskStorage struct{};
-
-// SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_c :=diskStorage {};_f .SetAsStorage (&_c )};
-
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_gd diskStorage )TempFile (dir ,pattern string )(_f .File ,error ){return _g .TempFile (dir ,pattern );};
+func (_d diskStorage )RemoveAll (dir string )error {if _b .HasPrefix (dir ,_a .TempDir ()){return _a .RemoveAll (dir );};return nil ;};
 
 // Add is not applicable in the diskstore implementation
-func (_ac diskStorage )Add (path string )error {return nil };
+func (_bga diskStorage )Add (path string )error {return nil };
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_ce diskStorage )TempFile (dir ,pattern string )(_aa .File ,error ){return _e .TempFile (dir ,pattern );};
 
 // TempFile creates a new temp directory by calling ioutil TempDir
-func (_a diskStorage )TempDir (pattern string )(string ,error ){return _g .TempDir ("",pattern )};
+func (_bg diskStorage )TempDir (pattern string )(string ,error ){return _e .TempDir ("",pattern )};type diskStorage struct{};
+
+// SetAsStorage sets temp storage as a disk storage
+func SetAsStorage (){_f :=diskStorage {};_aa .SetAsStorage (&_f )};
+
+// Open opens file from disk according to a path
+func (_g diskStorage )Open (path string )(_aa .File ,error ){return _a .OpenFile (path ,_a .O_RDWR ,0644)};
