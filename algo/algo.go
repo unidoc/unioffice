@@ -9,9 +9,10 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package algo ;import _d "strconv";func RepeatString (s string ,cnt int )string {if cnt <=0{return "";};_ae :=make ([]byte ,len (s )*cnt );_ffb :=[]byte (s );for _gf :=0;_gf < cnt ;_gf ++{copy (_ae [_gf :],_ffb );};return string (_ae );};
+package algo ;import _c "strconv";
 
 // NaturalLess compares two strings in a human manner so rId2 sorts less than rId10
-func NaturalLess (lhs ,rhs string )bool {_gd ,_ac :=0,0;for _gd < len (lhs )&&_ac < len (rhs ){_f :=lhs [_gd ];_fa :=rhs [_ac ];_e :=_c (_f );_ff :=_c (_fa );switch {case _e &&!_ff :return true ;case !_e &&_ff :return false ;case !_e &&!_ff :if _f !=_fa {return _f < _fa ;
-};_gd ++;_ac ++;default:_b :=_gd +1;_bd :=_ac +1;for _b < len (lhs )&&_c (lhs [_b ]){_b ++;};for _bd < len (rhs )&&_c (rhs [_bd ]){_bd ++;};_ca ,_ :=_d .ParseUint (lhs [_gd :_b ],10,64);_bdf ,_ :=_d .ParseUint (rhs [_gd :_bd ],10,64);if _ca !=_bdf {return _ca < _bdf ;
-};_gd =_b ;_ac =_bd ;};};return len (lhs )< len (rhs );};func _c (_g byte )bool {return _g >='0'&&_g <='9'};
+func NaturalLess (lhs ,rhs string )bool {_d ,_cc :=0,0;for _d < len (lhs )&&_cc < len (rhs ){_a :=lhs [_d ];_ff :=rhs [_cc ];_cg :=_b (_a );_db :=_b (_ff );switch {case _cg &&!_db :return true ;case !_cg &&_db :return false ;case !_cg &&!_db :if _a !=_ff {return _a < _ff ;
+};_d ++;_cc ++;default:_fg :=_d +1;_be :=_cc +1;for _fg < len (lhs )&&_b (lhs [_fg ]){_fg ++;};for _be < len (rhs )&&_b (rhs [_be ]){_be ++;};_de ,_ :=_c .ParseUint (lhs [_d :_fg ],10,64);_bec ,_ :=_c .ParseUint (rhs [_d :_be ],10,64);if _de !=_bec {return _de < _bec ;
+};_d =_fg ;_cc =_be ;};};return len (lhs )< len (rhs );};func _b (_f byte )bool {return _f >='0'&&_f <='9'};func RepeatString (s string ,cnt int )string {if cnt <=0{return "";};_ag :=make ([]byte ,len (s )*cnt );_fb :=[]byte (s );for _agb :=0;_agb < cnt ;
+_agb ++{copy (_ag [_agb :],_fb );};return string (_ag );};

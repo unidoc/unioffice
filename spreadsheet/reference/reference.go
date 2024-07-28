@@ -9,62 +9,62 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package reference ;import (_a "errors";_dg "fmt";_c "github.com/unidoc/unioffice/spreadsheet/update";_d "regexp";_gf "strconv";_b "strings";);
+package reference ;import (_c "errors";_bc "fmt";_ab "github.com/unidoc/unioffice/spreadsheet/update";_b "regexp";_a "strconv";_cc "strings";);
+
+// ColumnToIndex maps a column to a zero based index (e.g. A = 0, B = 1, AA = 26)
+func ColumnToIndex (col string )uint32 {col =_cc .ToUpper (col );_ce :=uint32 (0);for _ ,_ca :=range col {_ce *=26;_ce +=uint32 (_ca -'A'+1);};return _ce -1;};
 
 // ParseColumnReference parses a column reference of the form 'Sheet1!A' and splits it
 // into sheet name and column segments.
-func ParseColumnReference (s string )(ColumnReference ,error ){s =_b .TrimSpace (s );if len (s )< 1{return ColumnReference {},_a .New ("\u0063\u006f\u006c\u0075\u006d\u006e \u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u006d\u0075\u0073\u0074\u0020\u0068\u0061\u0076\u0065\u0020a\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u0063\u0068a\u0072a\u0063\u0074\u0065\u0072");
-};_de :=ColumnReference {};_f ,_gc ,_gcc :=_gec (s );if _gcc !=nil {return ColumnReference {},_gcc ;};if _f !=""{_de .SheetName =_f ;};if _gc [0]=='$'{_de .AbsoluteColumn =true ;_gc =_gc [1:];};if !_ef .MatchString (_gc ){return ColumnReference {},_a .New ("\u0063\u006f\u006c\u0075\u006dn\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u006d\u0075s\u0074\u0020\u0062\u0065\u0020\u0062\u0065\u0074\u0077\u0065\u0065\u006e\u0020\u0041\u0020\u0061\u006e\u0064\u0020\u005a\u005a");
-};_de .Column =_gc ;_de .ColumnIdx =ColumnToIndex (_de .Column );return _de ,nil ;};
+func ParseColumnReference (s string )(ColumnReference ,error ){s =_cc .TrimSpace (s );if len (s )< 1{return ColumnReference {},_c .New ("\u0063\u006f\u006c\u0075\u006d\u006e \u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u006d\u0075\u0073\u0074\u0020\u0068\u0061\u0076\u0065\u0020a\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u0063\u0068a\u0072a\u0063\u0074\u0065\u0072");
+};_gb :=ColumnReference {};_fd ,_gca ,_abb :=_ge (s );if _abb !=nil {return ColumnReference {},_abb ;};if _fd !=""{_gb .SheetName =_fd ;};if _gca [0]=='$'{_gb .AbsoluteColumn =true ;_gca =_gca [1:];};if !_cfe .MatchString (_gca ){return ColumnReference {},_c .New ("\u0063\u006f\u006c\u0075\u006dn\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u006d\u0075s\u0074\u0020\u0062\u0065\u0020\u0062\u0065\u0074\u0077\u0065\u0065\u006e\u0020\u0041\u0020\u0061\u006e\u0064\u0020\u005a\u005a");
+};_gb .Column =_gca ;_gb .ColumnIdx =ColumnToIndex (_gb .Column );return _gb ,nil ;};
 
-// ColumnToIndex maps a column to a zero based index (e.g. A = 0, B = 1, AA = 26)
-func ColumnToIndex (col string )uint32 {col =_b .ToUpper (col );_gg :=uint32 (0);for _ ,_fee :=range col {_gg *=26;_gg +=uint32 (_fee -'A'+1);};return _gg -1;};
+// Update updates reference to point one of the neighboring columns with respect to the update type after removing a row/column.
+func (_ac *ColumnReference )Update (updateType _ab .UpdateAction )*ColumnReference {switch updateType {case _ab .UpdateActionRemoveColumn :_ff :=_ac ;_ff .ColumnIdx =_ac .ColumnIdx -1;_ff .Column =IndexToColumn (_ff .ColumnIdx );return _ff ;default:return _ac ;
+};};
 
 // ColumnReference is a parsed reference to a column.  Input is of the form 'A',
 // '$C', etc.
 type ColumnReference struct{ColumnIdx uint32 ;Column string ;AbsoluteColumn bool ;SheetName string ;};
 
-// String returns a string representation of ColumnReference.
-func (_aa ColumnReference )String ()string {_ba :=make ([]byte ,0,4);if _aa .AbsoluteColumn {_ba =append (_ba ,'$');};_ba =append (_ba ,_aa .Column ...);return string (_ba );};
-
 // ParseColumnRangeReference splits a range reference of the form "A:B" into its
 // components.
-func ParseColumnRangeReference (s string )(_fdc ,_gfe ColumnReference ,_gff error ){_bfg :="";_cgf :=_b .Split (s ,"\u0021");if len (_cgf )==2{_bfg =_cgf [0];s =_cgf [1];};_bac :=_b .Split (s ,"\u003a");if len (_bac )!=2{return ColumnReference {},ColumnReference {},_a .New ("i\u006ev\u0061\u006c\u0069\u0064\u0020\u0072\u0061\u006eg\u0065\u0020\u0066\u006frm\u0061\u0074");
-};if _bfg !=""{_bac [0]=_bfg +"\u0021"+_bac [0];_bac [1]=_bfg +"\u0021"+_bac [1];};_cb ,_gff :=ParseColumnReference (_bac [0]);if _gff !=nil {return ColumnReference {},ColumnReference {},_gff ;};_aed ,_gff :=ParseColumnReference (_bac [1]);if _gff !=nil {return ColumnReference {},ColumnReference {},_gff ;
-};return _cb ,_aed ,nil ;};
+func ParseColumnRangeReference (s string )(_fc ,_bfg ColumnReference ,_fdf error ){_bba :="";_abd :=_cc .Split (s ,"\u0021");if len (_abd )==2{_bba =_abd [0];s =_abd [1];};_cba :=_cc .Split (s ,"\u003a");if len (_cba )!=2{return ColumnReference {},ColumnReference {},_c .New ("i\u006ev\u0061\u006c\u0069\u0064\u0020\u0072\u0061\u006eg\u0065\u0020\u0066\u006frm\u0061\u0074");
+};if _bba !=""{_cba [0]=_bba +"\u0021"+_cba [0];_cba [1]=_bba +"\u0021"+_cba [1];};_ae ,_fdf :=ParseColumnReference (_cba [0]);if _fdf !=nil {return ColumnReference {},ColumnReference {},_fdf ;};_db ,_fdf :=ParseColumnReference (_cba [1]);if _fdf !=nil {return ColumnReference {},ColumnReference {},_fdf ;
+};return _ae ,_db ,nil ;};func _ge (_dc string )(string ,string ,error ){_cfee :="";_bfa :=_cc .LastIndex (_dc ,"\u0021");if _bfa > -1{_cfee =_dc [:_bfa ];_dc =_dc [_bfa +1:];if _cfee ==""{return "","",_c .New ("\u0049n\u0076a\u006c\u0069\u0064\u0020\u0073h\u0065\u0065t\u0020\u006e\u0061\u006d\u0065");
+};};return _cfee ,_dc ,nil ;};var _cfe =_b .MustCompile ("^\u005b\u0061\u002d\u007aA-\u005a]\u0028\u005b\u0061\u002d\u007aA\u002d\u005a\u005d\u003f\u0029\u0024");
 
-// ParseCellReference parses a cell reference of the form 'A10' and splits it
-// into column/row segments.
-func ParseCellReference (s string )(CellReference ,error ){s =_b .TrimSpace (s );if len (s )< 2{return CellReference {},_a .New ("\u0063\u0065\u006c\u006c\u0020\u0072\u0065\u0066e\u0072\u0065\u006ece\u0020\u006d\u0075\u0073\u0074\u0020h\u0061\u0076\u0065\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u0074\u0077o\u0020\u0063\u0068\u0061\u0072\u0061\u0063\u0074e\u0072\u0073");
-};_af :=CellReference {};_ab ,_ga ,_ae :=_gec (s );if _ae !=nil {return CellReference {},_ae ;};if _ab !=""{_af .SheetName =_ab ;};if s [0]=='$'{_af .AbsoluteColumn =true ;_ga =_ga [1:];};_ge :=-1;_gfb :for _e :=0;_e < len (_ga );_e ++{switch {case _ga [_e ]>='0'&&_ga [_e ]<='9'||_ga [_e ]=='$':_ge =_e ;
-break _gfb ;};};switch _ge {case 0:return CellReference {},_dg .Errorf ("\u006e\u006f\u0020\u006cet\u0074\u0065\u0072\u0020\u0070\u0072\u0065\u0066\u0069\u0078\u0020\u0069\u006e\u0020%\u0073",_ga );case -1:return CellReference {},_dg .Errorf ("\u006eo\u0020d\u0069\u0067\u0069\u0074\u0073\u0020\u0069\u006e\u0020\u0025\u0073",_ga );
-};_af .Column =_ga [0:_ge ];if _ga [_ge ]=='$'{_af .AbsoluteRow =true ;_ge ++;};_af .ColumnIdx =ColumnToIndex (_af .Column );_bb ,_ae :=_gf .ParseUint (_ga [_ge :],10,32);if _ae !=nil {return CellReference {},_dg .Errorf ("e\u0072\u0072\u006f\u0072 p\u0061r\u0073\u0069\u006e\u0067\u0020r\u006f\u0077\u003a\u0020\u0025\u0073",_ae );
-};if _bb ==0{return CellReference {},_dg .Errorf ("\u0065\u0072\u0072\u006f\u0072\u0020\u0070\u0061\u0072\u0073i\u006e\u0067\u0020\u0072\u006f\u0077\u003a \u0063\u0061\u006e\u006e\u006f\u0074\u0020\u0062\u0065\u0020\u0030");};_af .RowIdx =uint32 (_bb );
-return _af ,nil ;};
-
-// IndexToColumn maps a column number to a column name (e.g. 0 = A, 1 = B, 26 = AA)
-func IndexToColumn (col uint32 )string {var _aad [64+1]byte ;_be :=len (_aad );_fd :=col ;const _bfe =26;for _fd >=_bfe {_be --;_bbf :=_fd /_bfe ;_aad [_be ]=byte ('A'+uint (_fd -_bbf *_bfe ));_fd =_bbf -1;};_be --;_aad [_be ]=byte ('A'+uint (_fd ));return string (_aad [_be :]);
-};
+// Update updates reference to point one of the neighboring cells with respect to the update type after removing a row/column.
+func (_cf *CellReference )Update (updateType _ab .UpdateAction )*CellReference {switch updateType {case _ab .UpdateActionRemoveColumn :_dd :=_cf ;_dd .ColumnIdx =_cf .ColumnIdx -1;_dd .Column =IndexToColumn (_dd .ColumnIdx );return _dd ;default:return _cf ;
+};};
 
 // CellReference is a parsed reference to a cell.  Input is of the form 'A1',
 // '$C$2', etc.
 type CellReference struct{RowIdx uint32 ;ColumnIdx uint32 ;Column string ;AbsoluteColumn bool ;AbsoluteRow bool ;SheetName string ;};
 
-// Update updates reference to point one of the neighboring cells with respect to the update type after removing a row/column.
-func (_dge *CellReference )Update (updateType _c .UpdateAction )*CellReference {switch updateType {case _c .UpdateActionRemoveColumn :_db :=_dge ;_db .ColumnIdx =_dge .ColumnIdx -1;_db .Column =IndexToColumn (_db .ColumnIdx );return _db ;default:return _dge ;
-};};
+// IndexToColumn maps a column number to a column name (e.g. 0 = A, 1 = B, 26 = AA)
+func IndexToColumn (col uint32 )string {var _e [64+1]byte ;_cb :=len (_e );_cec :=col ;const _cd =26;for _cec >=_cd {_cb --;_ba :=_cec /_cd ;_e [_cb ]=byte ('A'+uint (_cec -_ba *_cd ));_cec =_ba -1;};_cb --;_e [_cb ]=byte ('A'+uint (_cec ));return string (_e [_cb :]);
+};
+
+// ParseCellReference parses a cell reference of the form 'A10' and splits it
+// into column/row segments.
+func ParseCellReference (s string )(CellReference ,error ){s =_cc .TrimSpace (s );if len (s )< 2{return CellReference {},_c .New ("\u0063\u0065\u006c\u006c\u0020\u0072\u0065\u0066e\u0072\u0065\u006ece\u0020\u006d\u0075\u0073\u0074\u0020h\u0061\u0076\u0065\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u0074\u0077o\u0020\u0063\u0068\u0061\u0072\u0061\u0063\u0074e\u0072\u0073");
+};_gc :=CellReference {};_cg ,_f ,_cga :=_ge (s );if _cga !=nil {return CellReference {},_cga ;};if _cg !=""{_gc .SheetName =_cg ;};if s [0]=='$'{_gc .AbsoluteColumn =true ;_f =_f [1:];};_fg :=-1;_bcb :for _fe :=0;_fe < len (_f );_fe ++{switch {case _f [_fe ]>='0'&&_f [_fe ]<='9'||_f [_fe ]=='$':_fg =_fe ;
+break _bcb ;};};switch _fg {case 0:return CellReference {},_bc .Errorf ("\u006e\u006f\u0020\u006cet\u0074\u0065\u0072\u0020\u0070\u0072\u0065\u0066\u0069\u0078\u0020\u0069\u006e\u0020%\u0073",_f );case -1:return CellReference {},_bc .Errorf ("\u006eo\u0020d\u0069\u0067\u0069\u0074\u0073\u0020\u0069\u006e\u0020\u0025\u0073",_f );
+};_gc .Column =_f [0:_fg ];if _f [_fg ]=='$'{_gc .AbsoluteRow =true ;_fg ++;};_gc .ColumnIdx =ColumnToIndex (_gc .Column );_bf ,_cga :=_a .ParseUint (_f [_fg :],10,32);if _cga !=nil {return CellReference {},_bc .Errorf ("e\u0072\u0072\u006f\u0072 p\u0061r\u0073\u0069\u006e\u0067\u0020r\u006f\u0077\u003a\u0020\u0025\u0073",_cga );
+};if _bf ==0{return CellReference {},_bc .Errorf ("\u0065\u0072\u0072\u006f\u0072\u0020\u0070\u0061\u0072\u0073i\u006e\u0067\u0020\u0072\u006f\u0077\u003a \u0063\u0061\u006e\u006e\u006f\u0074\u0020\u0062\u0065\u0020\u0030");};_gc .RowIdx =uint32 (_bf );
+return _gc ,nil ;};
 
 // ParseRangeReference splits a range reference of the form "A1:B5" into its
 // components.
-func ParseRangeReference (s string )(_cf ,_fed CellReference ,_dgg error ){_beb ,_gbb ,_dgg :=_gec (s );if _dgg !=nil {return CellReference {},CellReference {},_dgg ;};_cg :=_b .Split (_gbb ,"\u003a");if len (_cg )!=2{return CellReference {},CellReference {},_a .New ("i\u006ev\u0061\u006c\u0069\u0064\u0020\u0072\u0061\u006eg\u0065\u0020\u0066\u006frm\u0061\u0074");
-};if _beb !=""{_cg [0]=_beb +"\u0021"+_cg [0];_cg [1]=_beb +"\u0021"+_cg [1];};_aab ,_dgg :=ParseCellReference (_cg [0]);if _dgg !=nil {return CellReference {},CellReference {},_dgg ;};_cc ,_dgg :=ParseCellReference (_cg [1]);if _dgg !=nil {return CellReference {},CellReference {},_dgg ;
-};return _aab ,_cc ,nil ;};var _ef =_d .MustCompile ("^\u005b\u0061\u002d\u007aA-\u005a]\u0028\u005b\u0061\u002d\u007aA\u002d\u005a\u005d\u003f\u0029\u0024");
+func ParseRangeReference (s string )(_bfaa ,_gbd CellReference ,_eg error ){_bfac ,_ceb ,_eg :=_ge (s );if _eg !=nil {return CellReference {},CellReference {},_eg ;};_aa :=_cc .Split (_ceb ,"\u003a");if len (_aa )!=2{return CellReference {},CellReference {},_c .New ("i\u006ev\u0061\u006c\u0069\u0064\u0020\u0072\u0061\u006eg\u0065\u0020\u0066\u006frm\u0061\u0074");
+};if _bfac !=""{_aa [0]=_bfac +"\u0021"+_aa [0];_aa [1]=_bfac +"\u0021"+_aa [1];};_ag ,_eg :=ParseCellReference (_aa [0]);if _eg !=nil {return CellReference {},CellReference {},_eg ;};_ef ,_eg :=ParseCellReference (_aa [1]);if _eg !=nil {return CellReference {},CellReference {},_eg ;
+};return _ag ,_ef ,nil ;};
 
 // String returns a string representation of CellReference.
-func (_bd CellReference )String ()string {_bf :=make ([]byte ,0,4);if _bd .AbsoluteColumn {_bf =append (_bf ,'$');};_bf =append (_bf ,_bd .Column ...);if _bd .AbsoluteRow {_bf =append (_bf ,'$');};_bf =_gf .AppendInt (_bf ,int64 (_bd .RowIdx ),10);return string (_bf );
+func (_bb CellReference )String ()string {_g :=make ([]byte ,0,4);if _bb .AbsoluteColumn {_g =append (_g ,'$');};_g =append (_g ,_bb .Column ...);if _bb .AbsoluteRow {_g =append (_g ,'$');};_g =_a .AppendInt (_g ,int64 (_bb .RowIdx ),10);return string (_g );
 };
 
-// Update updates reference to point one of the neighboring columns with respect to the update type after removing a row/column.
-func (_ca *ColumnReference )Update (updateType _c .UpdateAction )*ColumnReference {switch updateType {case _c .UpdateActionRemoveColumn :_fg :=_ca ;_fg .ColumnIdx =_ca .ColumnIdx -1;_fg .Column =IndexToColumn (_fg .ColumnIdx );return _fg ;default:return _ca ;
-};};func _gec (_gb string )(string ,string ,error ){_ggb :="";_dc :=_b .LastIndex (_gb ,"\u0021");if _dc > -1{_ggb =_gb [:_dc ];_gb =_gb [_dc +1:];if _ggb ==""{return "","",_a .New ("\u0049n\u0076a\u006c\u0069\u0064\u0020\u0073h\u0065\u0065t\u0020\u006e\u0061\u006d\u0065");
-};};return _ggb ,_gb ,nil ;};
+// String returns a string representation of ColumnReference.
+func (_bcf ColumnReference )String ()string {_gf :=make ([]byte ,0,4);if _bcf .AbsoluteColumn {_gf =append (_gf ,'$');};_gf =append (_gf ,_bcf .Column ...);return string (_gf );};
