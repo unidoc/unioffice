@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_eb "github.com/unidoc/unioffice/common/tempstorage";_e "io/ioutil";_g "os";_eg "strings";);
+package diskstore ;import (_de "github.com/unidoc/unioffice/common/tempstorage";_f "io/ioutil";_d "os";_e "strings";);
 
 // TempFile creates a new temp directory by calling ioutil TempDir
-func (_ba diskStorage )TempDir (pattern string )(string ,error ){return _e .TempDir ("",pattern )};type diskStorage struct{};
-
-// SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_a :=diskStorage {};_eb .SetAsStorage (&_a )};
-
-// Add is not applicable in the diskstore implementation
-func (_bad diskStorage )Add (path string )error {return nil };
+func (_g diskStorage )TempDir (pattern string )(string ,error ){return _f .TempDir ("",pattern )};
 
 // RemoveAll removes all files in the directory
-func (_f diskStorage )RemoveAll (dir string )error {if _eg .HasPrefix (dir ,_g .TempDir ()){return _g .RemoveAll (dir );};return nil ;};
+func (_fb diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_d .TempDir ()){return _d .RemoveAll (dir );};return nil ;};
 
-// Open opens file from disk according to a path
-func (_b diskStorage )Open (path string )(_eb .File ,error ){return _g .OpenFile (path ,_g .O_RDWR ,0644)};
+// Add is not applicable in the diskstore implementation
+func (_dd diskStorage )Add (path string )error {return nil };
+
+// SetAsStorage sets temp storage as a disk storage
+func SetAsStorage (){_ee :=diskStorage {};_de .SetAsStorage (&_ee )};
 
 // TempFile creates a new temp file by calling ioutil TempFile
-func (_c diskStorage )TempFile (dir ,pattern string )(_eb .File ,error ){return _e .TempFile (dir ,pattern );};
+func (_ed diskStorage )TempFile (dir ,pattern string )(_de .File ,error ){return _f .TempFile (dir ,pattern );};
+
+// Open opens file from disk according to a path
+func (_a diskStorage )Open (path string )(_de .File ,error ){return _d .OpenFile (path ,_d .O_RDWR ,0644)};type diskStorage struct{};
