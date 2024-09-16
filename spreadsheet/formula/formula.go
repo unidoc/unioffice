@@ -25,480 +25,451 @@
 // a new test means just adding a new formula to one of the reference sheets
 // with Excel. During the unit test, we evaluate the formula and compare it to
 // the value that Excel computed.  If they're the same, the test passes.
-package formula ;import (_e "bytes";_be "errors";_b "fmt";_gd "github.com/unidoc/unioffice/common/logger";_efe "github.com/unidoc/unioffice/internal/mergesort";_dg "github.com/unidoc/unioffice/internal/wildcard";_ba "github.com/unidoc/unioffice/spreadsheet/format";
-_de "github.com/unidoc/unioffice/spreadsheet/reference";_a "github.com/unidoc/unioffice/spreadsheet/update";_bc "io";_d "math";_ef "math/big";_ec "math/rand";_fa "regexp";_ca "sort";_fce "strconv";_bcd "strings";_fc "sync";_g "time";_c "unicode";);
+package formula ;import (_c "bytes";_a "errors";_gf "fmt";_af "github.com/unidoc/unioffice/common/logger";_ce "github.com/unidoc/unioffice/internal/mergesort";_eg "github.com/unidoc/unioffice/internal/wildcard";_ef "github.com/unidoc/unioffice/spreadsheet/format";
+_bce "github.com/unidoc/unioffice/spreadsheet/reference";_db "github.com/unidoc/unioffice/spreadsheet/update";_b "io";_d "math";_bc "math/big";_gd "math/rand";_bg "regexp";_bf "sort";_fd "strconv";_e "strings";_ad "sync";_bcd "time";_f "unicode";);
 
-// NewConstArrayExpr constructs a new constant array expression with a given data.
-func NewConstArrayExpr (data [][]Expression )Expression {return &ConstArrayExpr {_ggg :data }};type criteriaParsed struct{_fggcg bool ;_accg float64 ;_bace string ;_afcgf *criteriaRegex ;};func MakeRangeReference (ref string )Reference {return Reference {Type :ReferenceTypeRange ,Value :ref }};
+// Update returns the same object as updating sheet references does not affect EmptyExpr.
+func (_fdgf EmptyExpr )Update (q *_db .UpdateQuery )Expression {return _fdgf };func _daaa (_fbec string ,_bgdbb func (_abbga float64 )float64 )Function {return func (_bded []Result )Result {if len (_bded )!=1{return MakeErrorResult (_fbec +"\u0020\u0072\u0065\u0071ui\u0072\u0065\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
+};_aeca :=_bded [0].AsNumber ();switch _aeca .Type {case ResultTypeNumber :_cbdd :=_bgdbb (_aeca .ValueNumber );if _d .IsNaN (_cbdd ){return MakeErrorResult (_fbec +"\u0020\u0072\u0065\u0074\u0075\u0072\u006e\u0065\u0064\u0020\u004e\u0061\u004e");};if _d .IsInf (_cbdd ,0){return MakeErrorResult (_fbec +"\u0020r\u0065t\u0075\u0072\u006e\u0065\u0064 \u0069\u006ef\u0069\u006e\u0069\u0074\u0079");
+};return MakeNumberResult (_cbdd );case ResultTypeList ,ResultTypeString :return MakeErrorResult (_fbec +"\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u006e\u0075\u006de\u0072i\u0063\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+case ResultTypeError :return _aeca ;default:return MakeErrorResult (_gf .Sprintf ("\u0075\u006e\u0068a\u006e\u0064\u006c\u0065d\u0020\u0025\u0073\u0028\u0029\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_fbec ,_aeca .Type ));
+};};};
 
+// Max is an implementation of the Excel MAX() function.
+func Max (args []Result )Result {return _aeeef (args ,false )};func (_egbg *yyParserImpl )Lookahead ()int {return _egbg ._ccege };var _fccgd =[...]int {-1,1,1,-1,-2,0};type yyParserImpl struct{_bdedf yySymType ;_efcba [_aeed ]yySymType ;_ccege int ;};const _dd ="\u0042\u0069\u006e\u004f\u0070\u0054y\u0070\u0065\u0055\u006e\u006bn\u006fw\u006e\u0042\u0069\u006eO\u0070\u0054\u0079\u0070\u0065\u0050\u006c\u0075\u0073\u0042\u0069\u006eO\u0070\u0054\u0079\u0070\u0065\u004d\u0069\u006e\u0075\u0073\u0042\u0069\u006e\u004f\u0070\u0054\u0079\u0070\u0065M\u0075lt\u0042\u0069\u006e\u004f\u0070\u0054\u0079\u0070\u0065\u0044\u0069\u0076\u0042\u0069\u006e\u004f\u0070\u0054\u0079\u0070\u0065\u0045\u0078\u0070\u0042\u0069\u006e\u004f\u0070\u0054\u0079\u0070\u0065\u004c\u0054\u0042\u0069\u006eO\u0070\u0054\u0079\u0070\u0065G\u0054B\u0069\u006eO\u0070\u0054\u0079\u0070\u0065\u0045\u0051\u0042\u0069nO\u0070\u0054\u0079\u0070\u0065\u004c\u0045\u0051\u0042i\u006eO\u0070\u0054\u0079\u0070\u0065\u0047\u0045\u0051\u0042\u0069\u006e\u004f\u0070\u0054\u0079\u0070\u0065N\u0045\u0042\u0069\u006eO\u0070\u0054\u0079\u0070\u0065\u0043\u006f\u006e\u0063\u0061\u0074";
+const _daga ="\u0028\u0028\u006a\u0061\u006e|\u006a\u0061\u006e\u0075\u0061\u0072\u0079\u0029\u007c\u0028\u0066\u0065\u0062\u007c\u0066\u0065\u0062\u0072\u0075a\u0072\u0079\u0029\u007c\u0028\u006da\u0072\u007c\u006da\u0072\u0063\u0068\u0029\u007c\u0028\u0061\u0070\u0072\u007c\u0061\u0070\u0072\u0069\u006c\u0029\u007c\u0028\u006d\u0061\u0079\u0029\u007c\u0028j\u0075\u006e\u007cj\u0075\u006e\u0065\u0029\u007c\u0028\u006a\u0075\u006c\u007c\u006a\u0075\u006c\u0079\u0029\u007c\u0028a\u0075\u0067\u007c\u0061\u0075\u0067\u0075\u0073t\u0029\u007c\u0028\u0073\u0065\u0070\u007c\u0073\u0065\u0070\u0074\u0065\u006d\u0062\u0065\u0072\u0029\u007c\u0028o\u0063\u0074\u007c\u006f\u0063\u0074\u006f\u0062\u0065\u0072\u0029\u007c\u0028\u006e\u006f\u0076\u007c\u006e\u006f\u0076\u0065\u006d\u0062e\u0072\u0029\u007c\u0028\u0064\u0065\u0063\u007c\u0064\u0065\u0063\u0065\u006d\u0062\u0065\u0072\u0029\u0029";
+type ivr struct{};var _fbae =[...]string {};
 
-// ISTEXT is an implementation of the Excel ISTEXT() function.
-func IsText (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u0054EX\u0054\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070t\u0073 \u0061 \u0073i\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};return MakeBoolResult (args [0].Type ==ResultTypeString );};
+// Eomonth is an implementation of the Excel EOMONTH() function.
+func Eomonth (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0045\u004f\u004d\u004f\u004e\u0054\u0048\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074w\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0066\u006f\u0072\u0020\u0045\u004f\u004d\u004f\u004e\u0054\u0048");};_gbg :=args [1].ValueNumber ;
+_cdda :=args [0];var _fbf float64 ;switch _cdda .Type {case ResultTypeEmpty :_fbf =0;case ResultTypeNumber :_fbf =_cdda .ValueNumber ;case ResultTypeString :_acc :=DateValue ([]Result {args [0]});if _acc .Type ==ResultTypeError {return MakeErrorResult ("\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0066\u006f\u0072\u0020\u0045\u004f\u004d\u004f\u004e\u0054\u0048");
+};_fbf =_acc .ValueNumber ;default:return MakeErrorResult ("\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0066\u006f\u0072\u0020\u0045\u004f\u004d\u004f\u004e\u0054\u0048");};_cbcb :=_ded (_fbf );
+_edbb :=_cbcb .AddDate (0,int (_gbg +1),0);_cdb ,_bfge ,_ :=_edbb .Date ();_ecbf :=_efdc (_cdb ,int (_bfge ),0);if _ecbf < 1{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0066\u006f\u0072\u0020\u0045\u004f\u004d\u004f\u004e\u0054\u0048");
+};if _cdb ==1900&&_bfge ==3{_ecbf --;};return MakeNumberResult (_ecbf );};
 
-// String returns a string representation of a range with prefix.
-func (_geceg PrefixRangeExpr )String ()string {return _b .Sprintf ("\u0025\u0073\u0021\u0025\u0073\u003a\u0025\u0073",_geceg ._fgcba .String (),_geceg ._bgacf .String (),_geceg ._fabf .String ());};func _gfd (_ffg string )bool {for _ ,_feec :=range _bdf {_edb :=_feec .FindStringSubmatch (_ffg );
-if len (_edb )> 1{return true ;};};return false ;};func _bcc (_dd BinOpType ,_fee ,_ecf []Result )Result {_gb :=[]Result {};for _cf :=range _fee {_ag :=_fee [_cf ].AsNumber ();_bd :=_ecf [_cf ].AsNumber ();if _ag .Type !=ResultTypeNumber ||_bd .Type !=ResultTypeNumber {return MakeErrorResult ("\u006e\u006f\u006e\u002d\u006e\u0075\u006e\u006d\u0065\u0072\u0069\u0063\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0069\u006e\u0020\u0062\u0069n\u0061\u0072\u0079\u0020\u006fp\u0065\u0072a\u0074\u0069\u006f\u006e");
-};switch _dd {case BinOpTypePlus :_gb =append (_gb ,MakeNumberResult (_ag .ValueNumber +_bd .ValueNumber ));case BinOpTypeMinus :_gb =append (_gb ,MakeNumberResult (_ag .ValueNumber -_bd .ValueNumber ));case BinOpTypeMult :_gb =append (_gb ,MakeNumberResult (_ag .ValueNumber *_bd .ValueNumber ));
-case BinOpTypeDiv :if _bd .ValueNumber ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"");};_gb =append (_gb ,MakeNumberResult (_ag .ValueNumber /_bd .ValueNumber ));case BinOpTypeExp :_gb =append (_gb ,MakeNumberResult (_d .Pow (_ag .ValueNumber ,_bd .ValueNumber )));
-case BinOpTypeLT :_gb =append (_gb ,MakeBoolResult (_ag .ValueNumber < _bd .ValueNumber ));case BinOpTypeGT :_gb =append (_gb ,MakeBoolResult (_ag .ValueNumber > _bd .ValueNumber ));case BinOpTypeEQ :_gb =append (_gb ,MakeBoolResult (_ag .ValueNumber ==_bd .ValueNumber ));
-case BinOpTypeLEQ :_gb =append (_gb ,MakeBoolResult (_ag .ValueNumber <=_bd .ValueNumber ));case BinOpTypeGEQ :_gb =append (_gb ,MakeBoolResult (_ag .ValueNumber >=_bd .ValueNumber ));case BinOpTypeNE :_gb =append (_gb ,MakeBoolResult (_ag .ValueNumber !=_bd .ValueNumber ));
-default:return MakeErrorResult (_b .Sprintf ("\u0075\u006es\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u006c\u0069\u0073\u0074\u0020\u0062\u0069\u006e\u0061\u0072\u0079\u0020\u006fp \u0025\u0073",_dd ));};};return MakeListResult (_gb );};func _fd (_bfe BinOpType ,_ff []Result ,_fde Result )Result {_ffa :=[]Result {};
-switch _fde .Type {case ResultTypeNumber :_cge :=_fde .ValueNumber ;for _cd :=range _ff {_eg :=_ff [_cd ].AsNumber ();if _eg .Type !=ResultTypeNumber {return MakeErrorResult ("\u006e\u006f\u006e\u002d\u006e\u0075\u006e\u006d\u0065\u0072\u0069\u0063\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0069\u006e\u0020\u0062\u0069n\u0061\u0072\u0079\u0020\u006fp\u0065\u0072a\u0074\u0069\u006f\u006e");
-};switch _bfe {case BinOpTypePlus :_ffa =append (_ffa ,MakeNumberResult (_eg .ValueNumber +_cge ));case BinOpTypeMinus :_ffa =append (_ffa ,MakeNumberResult (_eg .ValueNumber -_cge ));case BinOpTypeMult :_ffa =append (_ffa ,MakeNumberResult (_eg .ValueNumber *_cge ));
-case BinOpTypeDiv :if _cge ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"");};_ffa =append (_ffa ,MakeNumberResult (_eg .ValueNumber /_cge ));case BinOpTypeExp :_ffa =append (_ffa ,MakeNumberResult (_d .Pow (_eg .ValueNumber ,_cge )));case BinOpTypeLT :_ffa =append (_ffa ,MakeBoolResult (_eg .ValueNumber < _cge ));
-case BinOpTypeGT :_ffa =append (_ffa ,MakeBoolResult (_eg .ValueNumber > _cge ));case BinOpTypeEQ :_ffa =append (_ffa ,MakeBoolResult (_eg .ValueNumber ==_cge ));case BinOpTypeLEQ :_ffa =append (_ffa ,MakeBoolResult (_eg .ValueNumber <=_cge ));case BinOpTypeGEQ :_ffa =append (_ffa ,MakeBoolResult (_eg .ValueNumber >=_cge ));
-case BinOpTypeNE :_ffa =append (_ffa ,MakeBoolResult (_eg .ValueNumber !=_cge ));default:return MakeErrorResult (_b .Sprintf ("\u0075\u006es\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u006c\u0069\u0073\u0074\u0020\u0062\u0069\u006e\u0061\u0072\u0079\u0020\u006fp \u0025\u0073",_bfe ));
-};};case ResultTypeString :_egg :=_fde .ValueString ;for _ge :=range _ff {_bdb :=_ff [_ge ].AsString ();if _bdb .Type !=ResultTypeString {return MakeErrorResult ("\u006e\u006f\u006e\u002d\u006e\u0075\u006e\u006d\u0065\u0072\u0069\u0063\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0069\u006e\u0020\u0062\u0069n\u0061\u0072\u0079\u0020\u006fp\u0065\u0072a\u0074\u0069\u006f\u006e");
-};switch _bfe {case BinOpTypeLT :_ffa =append (_ffa ,MakeBoolResult (_bdb .ValueString < _egg ));case BinOpTypeGT :_ffa =append (_ffa ,MakeBoolResult (_bdb .ValueString > _egg ));case BinOpTypeEQ :_ffa =append (_ffa ,MakeBoolResult (_bdb .ValueString ==_egg ));
-case BinOpTypeLEQ :_ffa =append (_ffa ,MakeBoolResult (_bdb .ValueString <=_egg ));case BinOpTypeGEQ :_ffa =append (_ffa ,MakeBoolResult (_bdb .ValueString >=_egg ));case BinOpTypeNE :_ffa =append (_ffa ,MakeBoolResult (_bdb .ValueString !=_egg ));default:return MakeErrorResult (_b .Sprintf ("\u0075\u006es\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u006c\u0069\u0073\u0074\u0020\u0062\u0069\u006e\u0061\u0072\u0079\u0020\u006fp \u0025\u0073",_bfe ));
-};};default:return MakeErrorResult ("\u006e\u006f\u006e\u002d\u006e\u0075\u006e\u006d\u0065\u0072\u0069c\u0020\u0061\u006e\u0064\u0020\u006e\u006f\u006e-\u0073t\u0072\u0069\u006e\u0067\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0069\u006e\u0020\u0062\u0069\u006e\u0061r\u0079\u0020\u006f\u0070\u0065\u0072\u0061\u0074\u0069\u006f\u006e");
-};return MakeListResult (_ffa );};
+// SumProduct is an implementation of the Excel SUMPRODUCT() function.
+func SumProduct (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0053\u0055\u004d\u0050\u0052\u004f\u0044U\u0043\u0054\u0028)\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_gbff :=args [0].Type ;for _ ,_bceg :=range args {if _bceg .Type !=_gbff {return MakeErrorResult ("\u0053\u0055M\u0050\u0052\u004f\u0044\u0055C\u0054\u0028\u0029\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u006c\u006c\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u006f\u0066\u0020\u0074\u0068\u0065\u0020\u0073\u0061\u006d\u0065\u0020\u0074\u0079\u0070\u0065");
+};};switch _gbff {case ResultTypeNumber :return Product (args );case ResultTypeList ,ResultTypeArray :_dbaff :=len (args [0].ListValues ());_dgee :=make ([]float64 ,_dbaff );for _bfgfba :=range _dgee {_dgee [_bfgfba ]=1.0;};for _ ,_fegc :=range args {if len (_fegc .ListValues ())!=_dbaff {return MakeErrorResult ("\u0053\u0055\u004d\u0050\u0052\u004f\u0044\u0055\u0043\u0054\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069re\u0073 \u0061\u006c\u006c\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074s\u0020\u0074\u006f\u0020\u0068\u0061\u0076\u0065\u0020\u0074\u0068\u0065\u0020\u0073\u0061\u006d\u0065 \u0064\u0069\u006d\u0065\u006e\u0073\u0069\u006f\u006e");
+};for _cdafd ,_bgeca :=range _fegc .ListValues (){_bgeca =_bgeca .AsNumber ();if _bgeca .Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0055\u004d\u0050\u0052\u004fD\u0055\u0043\u0054\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u006c\u006c\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020n\u0075m\u0065\u0072\u0069\u0063");
+};_dgee [_cdafd ]=_dgee [_cdafd ]*_bgeca .ValueNumber ;};};_gadd :=0.0;for _ ,_edfd :=range _dgee {_gadd +=_edfd ;};return MakeNumberResult (_gadd );};return MakeNumberResult (1.0);};
 
-// Npv implements the Excel NPV function.
-func Npv (args []Result )Result {_efgb :=len (args );if _efgb < 2{return MakeErrorResult ("\u004e\u0050\u0056 r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074w\u006f \u006fr\u0020m\u006f\u0072\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u004e\u0050\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020r\u0061\u0074\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_dbab :=args [0].ValueNumber ;if _dbab ==-1{return MakeErrorResultType (ErrorTypeDivideByZero ,"");};_ffee :=[]float64 {};for _ ,_bgdd :=range args [1:]{switch _bgdd .Type {case ResultTypeNumber :_ffee =append (_ffee ,_bgdd .ValueNumber );case ResultTypeArray ,ResultTypeList :_agce :=_badg (_bgdd );
-for _ ,_fceb :=range _agce {for _ ,_eeeea :=range _fceb {if _eeeea .Type ==ResultTypeNumber &&!_eeeea .IsBoolean {_ffee =append (_ffee ,_eeeea .ValueNumber );};};};};};_agdgd :=0.0;for _caaa ,_fgga :=range _ffee {_agdgd +=_fgga /_d .Pow (1+_dbab ,float64 (_caaa )+1);
-};return MakeNumberResult (_agdgd );};
+// Xirr implements the Excel XIRR function.
+func Xirr (args []Result )Result {_adea :=len (args );if _adea !=2&&_adea !=3{return MakeErrorResult ("\u0058\u0049RR\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s t\u0077o \u006f\u0072\u0020\u0074\u0068\u0072\u0065e \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
+};_gcbd ,_edbae :=_beea (args [0],args [1],"\u0058\u0049\u0052\u0052");if _edbae .Type ==ResultTypeError {return _edbae ;};_fegfb :=_gcbd ._dfcfc ;_dbfe :=_gcbd ._fegbf ;_bddd :=0.1;if _adea ==3&&args [2].Type !=ResultTypeEmpty {if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0058\u0049\u0052\u0052\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0067\u0075\u0065\u0073\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_bddd =args [2].ValueNumber ;if _bddd <=-1{return MakeErrorResult ("\u0058\u0049\u0052\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0067\u0075\u0065\u0073\u0073\u0020\u0074\u006f\u0020\u0062e\u0020\u006d\u006f\u0072\u0065 \u0074\u0068a\u006e\u0020\u002d\u0031");
+};};return _bbgd (_fegfb ,_dbfe ,_bddd );};
 
-// Reference returns a string reference value to an expression with prefix.
-func (_afbbc PrefixExpr )Reference (ctx Context ,ev Evaluator )Reference {_bbdca :=_afbbc ._begcd .Reference (ctx ,ev );_cbffa :=_afbbc ._ddeba .Reference (ctx ,ev );if _bbdca .Type ==ReferenceTypeSheet &&_cbffa .Type ==ReferenceTypeCell {return Reference {Type :ReferenceTypeCell ,Value :_bbdca .Value +"\u0021"+_cbffa .Value };
-};return ReferenceInvalid ;};func _cbca (_bfgg int )bool {if _bfgg ==_bfgg /400*400{return true ;};if _bfgg ==_bfgg /100*100{return false ;};return _bfgg ==_bfgg /4*4;};
+// LookupFunctionComplex looks up and returns a complex function or nil.
+func LookupFunctionComplex (name string )FunctionComplex {_bfeac .Lock ();defer _bfeac .Unlock ();if _efagg ,_eefd :=_ccgcg [name ];_eefd {return _efagg ;};return nil ;};
 
-// CeilingMath implements _xlfn.CEILING.MATH which rounds numbers to the nearest
-// multiple of the second argument, toward or away from zero as specified by the
-// third argument.
-func CeilingMath (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0043E\u0049\u004cI\u004e\u0047\u002eM\u0041\u0054\u0048\u0028\u0029\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073 \u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006ee\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if len (args )> 3{return MakeErrorResult ("\u0043E\u0049\u004cI\u004e\u0047\u002eM\u0041\u0054\u0048\u0028\u0029\u0020\u0061l\u006c\u006f\u0077\u0073\u0020\u0061t\u0020\u006d\u006f\u0073\u0074\u0020\u0074\u0068\u0072\u0065\u0065 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_agfeg :=args [0].AsNumber ();if _agfeg .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072\u0073\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0043\u0045\u0049\u004c\u0049\u004e\u0047\u002e\u004dA\u0054\u0048\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061 \u006eu\u006d\u0062\u0065\u0072");
-};_cebc :=float64 (1);if _agfeg .ValueNumber < 0{_cebc =-1;};if len (args )> 1{_gggac :=args [1].AsNumber ();if _gggac .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f \u0043\u0045\u0049\u004c\u0049\u004e\u0047.\u004d\u0041\u0054\u0048\u0028\u0029\u0020\u006d\u0075\u0073\u0074 \u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_cebc =_gggac .ValueNumber ;};_gdbgf :=float64 (1);if len (args )> 2{_cdaf :=args [2].AsNumber ();if _cdaf .Type !=ResultTypeNumber {return MakeErrorResult ("\u0074\u0068\u0069\u0072\u0064\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0043\u0045\u0049\u004c\u0049\u004e\u0047\u002e\u004dA\u0054\u0048\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061 \u006eu\u006d\u0062\u0065\u0072");
-};_gdbgf =_cdaf .ValueNumber ;};if len (args )==1{return MakeNumberResult (_d .Ceil (_agfeg .ValueNumber ));};_fafdc :=_agfeg .ValueNumber ;_fafdc ,_fffd :=_d .Modf (_fafdc /_cebc );if _fffd !=0{if _agfeg .ValueNumber > 0{_fafdc ++;}else if _gdbgf < 0{_fafdc --;
-};};return MakeNumberResult (_fafdc *_cebc );};const _eecc =57364;
+// Small implements the Excel SMALL function.
+func Small (args []Result )Result {return _cbcd (args ,false )};
+
+// Char is an implementation of the Excel CHAR function that takes an integer in
+// the range [0,255] and returns the corresponding ASCII character.
+func Char (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0043\u0048\u0041\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0061\u0020\u0073\u0069\u006e\u0067l\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_cdfd :=args [0].AsNumber ();if _cdfd .Type !=ResultTypeNumber {return MakeErrorResult ("\u0043\u0048\u0041\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0061\u0020\u0073\u0069\u006e\u0067l\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_gfgde :=int (_cdfd .ValueNumber );if _gfgde < 0||_gfgde > 255{return MakeErrorResult ("\u0043H\u0041\u0052 \u0072\u0065\u0071\u0075i\u0072\u0065\u0073 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073 i\u006e\u0020\u0074h\u0065\u0020r\u0061\u006e\u0067\u0065\u0020\u005b0\u002c\u00325\u0035\u005d");
+};return MakeStringResult (_gf .Sprintf ("\u0025\u0063",_gfgde ));};
+
+// PrefixHorizontalRange is a range expression that when evaluated returns a list of Results from references like Sheet1!1:4 (all cells from rows 1 to 4 of sheet 'Sheet1').
+type PrefixHorizontalRange struct{_fbcde Expression ;_deafa ,_edfgc int ;};
+
+// ConstArrayExpr is a constant array expression.
+type ConstArrayExpr struct{_fed [][]Expression };const _dbdbb =57372;func _cgaf (_gdce string )bool {for _ ,_bbg :=range _add {_dda :=_bbg .FindStringSubmatch (_gdce );if len (_dda )> 1{return true ;};};return false ;};
+
+// Pv implements the Excel PV function.
+func Pv (args []Result )Result {_ggga :=len (args );if _ggga < 3||_ggga > 5{return MakeErrorResult ("\u0050\u0056\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020o\u0066\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u006f\u0066\u0020\u0033\u0020\u0061\u006e\u0064\u00205");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_cdafc :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0056\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020o\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
+};_fcdf :=args [1].ValueNumber ;if _fcdf !=float64 (int (_fcdf )){return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006ff\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0069\u006e\u0074\u0065\u0067\u0065\u0072\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065n\u0074");
+};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0056\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0061\u0079\u006d\u0065\u006e\u0074 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_gbbe :=args [2].ValueNumber ;_ebcd :=0.0;if _ggga >=4&&args [3].Type !=ResultTypeEmpty {if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0056 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0075\u0074\u0075\u0072\u0065\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_ebcd =args [3].ValueNumber ;};_cedc :=0.0;if _ggga ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0079\u0070\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_cedc =args [4].ValueNumber ;if _cedc !=0{_cedc =1;};};if _cdafc ==0{return MakeNumberResult (-_gbbe *_fcdf -_ebcd );}else {return MakeNumberResult ((((1-_d .Pow (1+_cdafc ,_fcdf ))/_cdafc )*_gbbe *(1+_cdafc *_cedc )-_ebcd )/_d .Pow (1+_cdafc ,_fcdf ));
+};};const (_ byte =iota ;_becec ;_gfgd ;_efaf ;_fcbfe ;_gagd ;);func Unicode (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0055\u004e\u0049\u0043\u004fD\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020s\u0069\u006e\u0067\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_cccd :=args [0].AsString ();if _cccd .Type !=ResultTypeString {return MakeErrorResult ("\u0055\u004e\u0049\u0043\u004fD\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020s\u0069\u006e\u0067\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if len (_cccd .ValueString )==0{return MakeErrorResult ("\u0055\u004e\u0049\u0043\u004f\u0044\u0045 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073 \u0061\u0020\u006e\u006f\u006e\u002d\u007a\u0065\u0072\u006f\u0020\u006c\u0065\u006e\u0067\u0074\u0068\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};return MakeNumberResult (float64 (_cccd .ValueString [0]));};func _ccgg (_deafb ,_gdgf _bcd .Time ,_gda ,_babgf int )_bcd .Time {_bafc :=_gdgf ;_dgbg :=_deafb .Year ()-_gdgf .Year ();_bafc =_bafc .AddDate (_dgbg ,0,0);if _deafb .After (_bafc ){_bafc =_bafc .AddDate (1,0,0);
+};_cbf :=-12/_gda ;for _bafc .After (_deafb ){_bafc =_bafc .AddDate (0,_cbf ,0);};return _bafc ;};
+
+// Quotient is an implementation of the Excel QUOTIENT function that returns the
+// integer portion of division.
+func Quotient (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0051\u0055\u004f\u0054\u0049E\u004e\u0054\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0074\u0077\u006f\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_aeff :=args [0].AsNumber ();_bgff :=args [1].AsNumber ();if _aeff .Type !=ResultTypeNumber ||_bgff .Type !=ResultTypeNumber {return MakeErrorResult ("\u0051\u0055\u004f\u0054\u0049E\u004e\u0054\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0074\u0077\u006f\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if _bgff .ValueNumber ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0051U\u004f\u0054\u0049\u0045N\u0054\u0028\u0029\u0020\u0064i\u0076i\u0064e\u0020\u0062\u0079\u0020\u007a\u0065\u0072o");};return MakeNumberResult (_d .Trunc (_aeff .ValueNumber /_bgff .ValueNumber ));
+};
+
+// Search is an implementation of the Excel SEARCH().
+func Search (args []Result )Result {_afee ,_ebdc :=_eacd ("\u0046\u0049\u004e\u0044",args );if _ebdc .Type !=ResultTypeEmpty {return _ebdc ;};_gecc :=_e .ToLower (_afee ._eefe );if _gecc ==""{return MakeNumberResult (1.0);};_ffbf :=_e .ToLower (_afee ._gdgff );
+_beeeg :=_afee ._dbdf ;_eaeef :=1;for _fbdab :=range _ffbf {if _eaeef < _beeeg {_eaeef ++;continue ;};_cbgcb :=_eg .Index (_gecc ,_ffbf [_fbdab :]);if _cbgcb ==0{return MakeNumberResult (float64 (_eaeef ));};_eaeef ++;};return MakeErrorResultType (ErrorTypeValue ,"\u004eo\u0074\u0020\u0066\u006f\u0075\u006ed");
+};func _bfgeb (_eaabg []Result )(float64 ,float64 ,Result ){_egbbg :=0.0;_defg :=1.0;for _ ,_cecdf :=range _eaabg {switch _cecdf .Type {case ResultTypeNumber :_egbbg +=_cecdf .ValueNumber ;_defg *=_feed (_cecdf .ValueNumber );case ResultTypeList ,ResultTypeArray :_cfbgc ,_cddb ,_gdgg :=_bfgeb (_cecdf .ListValues ());
+_egbbg +=_cfbgc ;_defg *=_feed (_cddb );if _gdgg .Type ==ResultTypeError {return 0,0,_gdgg ;};case ResultTypeString :return 0,0,MakeErrorResult ("M\u0055\u004c\u0054\u0049\u004e\u004f\u004d\u0049\u0041\u004c\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063 a\u0072\u0067\u0075m\u0065n\u0074\u0073");
+case ResultTypeError :return 0,0,_cecdf ;};};return _egbbg ,_defg ,_fcea ;};type criteriaRegex struct{_ebed byte ;_bagg string ;};const _fbafc =57354;func _dccb (_egee ,_cgd float64 ,_agga ,_fcec int )float64 {_edgc :=_ded (_egee );_egag :=_ded (_cgd );
+_dafd :=_ccgg (_edgc ,_egag ,_agga ,_fcec );return _eebg (_dafd ,_edgc ,_fcec );};type parsedSearchObject struct{_eefe string ;_gdgff string ;_dbdf int ;};var _bcgcc =map[string ]Function {};var _feb =[]int {31,28,31,30,31,30,31,31,30,31,30,31};func _fgbaf (_cbdc ,_ggdf Result ,_eeabd ,_bbcfd bool )cmpResult {_cbdc =_cbdc .AsNumber ();
+_ggdf =_ggdf .AsNumber ();if _cbdc .Type !=_ggdf .Type {return _fdegf ;};if _cbdc .Type ==ResultTypeNumber {if _cbdc .ValueNumber ==_ggdf .ValueNumber {return _beaf ;};if _cbdc .ValueNumber < _ggdf .ValueNumber {return _cggc ;};return _beab ;};if _cbdc .Type ==ResultTypeString {_gbfb :=_cbdc .ValueString ;
+_affe :=_ggdf .ValueString ;if !_eeabd {_gbfb =_e .ToLower (_gbfb );_affe =_e .ToLower (_affe );};if _bbcfd {_cgee :=_eg .Match (_affe ,_gbfb );if _cgee {return _beaf ;}else {return _beab ;};};return cmpResult (_e .Compare (_gbfb ,_affe ));};if _cbdc .Type ==ResultTypeEmpty {return _beaf ;
+};if _cbdc .Type ==ResultTypeList {if len (_cbdc .ValueList )< len (_ggdf .ValueList ){return _cggc ;};if len (_cbdc .ValueList )> len (_ggdf .ValueList ){return _beab ;};for _acgb :=range _cbdc .ValueList {_bfgee :=_fgbaf (_cbdc .ValueList [_acgb ],_ggdf .ValueList [_acgb ],_eeabd ,_bbcfd );
+if _bfgee !=_beaf {return _bfgee ;};};return _beaf ;};if _cbdc .Type ==ResultTypeList {if len (_cbdc .ValueArray )< len (_ggdf .ValueArray ){return _cggc ;};if len (_cbdc .ValueArray )> len (_ggdf .ValueArray ){return _beab ;};for _afad :=range _cbdc .ValueArray {_fdda :=_cbdc .ValueArray [_afad ];
+_cdag :=_cbdc .ValueArray [_afad ];if len (_fdda )< len (_cdag ){return _cggc ;};if len (_fdda )> len (_cdag ){return _beab ;};for _gfabg :=range _fdda {_bba :=_fgbaf (_fdda [_gfabg ],_cdag [_gfabg ],_eeabd ,_bbcfd );if _bba !=_beaf {return _bba ;};};};
+return _beaf ;};return _fdegf ;};func _cbgb (_gccf Result )[][]Result {switch _gccf .Type {case ResultTypeArray :return _gccf .ValueArray ;case ResultTypeList :return [][]Result {_gccf .ValueList };default:return [][]Result {};};};
+
+// Bool is a boolean expression.
+type Bool struct{_ec bool };func _gg (_cc BinOpType ,_ca ,_eb []Result )Result {_gdc :=[]Result {};for _efbc :=range _ca {_dbb :=_ca [_efbc ].AsNumber ();_cec :=_eb [_efbc ].AsNumber ();if _dbb .Type !=ResultTypeNumber ||_cec .Type !=ResultTypeNumber {return MakeErrorResult ("\u006e\u006f\u006e\u002d\u006e\u0075\u006e\u006d\u0065\u0072\u0069\u0063\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0069\u006e\u0020\u0062\u0069n\u0061\u0072\u0079\u0020\u006fp\u0065\u0072a\u0074\u0069\u006f\u006e");
+};switch _cc {case BinOpTypePlus :_gdc =append (_gdc ,MakeNumberResult (_dbb .ValueNumber +_cec .ValueNumber ));case BinOpTypeMinus :_gdc =append (_gdc ,MakeNumberResult (_dbb .ValueNumber -_cec .ValueNumber ));case BinOpTypeMult :_gdc =append (_gdc ,MakeNumberResult (_dbb .ValueNumber *_cec .ValueNumber ));
+case BinOpTypeDiv :if _cec .ValueNumber ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"");};_gdc =append (_gdc ,MakeNumberResult (_dbb .ValueNumber /_cec .ValueNumber ));case BinOpTypeExp :_gdc =append (_gdc ,MakeNumberResult (_d .Pow (_dbb .ValueNumber ,_cec .ValueNumber )));
+case BinOpTypeLT :_gdc =append (_gdc ,MakeBoolResult (_dbb .ValueNumber < _cec .ValueNumber ));case BinOpTypeGT :_gdc =append (_gdc ,MakeBoolResult (_dbb .ValueNumber > _cec .ValueNumber ));case BinOpTypeEQ :_gdc =append (_gdc ,MakeBoolResult (_dbb .ValueNumber ==_cec .ValueNumber ));
+case BinOpTypeLEQ :_gdc =append (_gdc ,MakeBoolResult (_dbb .ValueNumber <=_cec .ValueNumber ));case BinOpTypeGEQ :_gdc =append (_gdc ,MakeBoolResult (_dbb .ValueNumber >=_cec .ValueNumber ));case BinOpTypeNE :_gdc =append (_gdc ,MakeBoolResult (_dbb .ValueNumber !=_cec .ValueNumber ));
+default:return MakeErrorResult (_gf .Sprintf ("\u0075\u006es\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u006c\u0069\u0073\u0074\u0020\u0062\u0069\u006e\u0061\u0072\u0079\u0020\u006fp \u0025\u0073",_cc ));};};return MakeListResult (_gdc );};func (_adceb PrefixHorizontalRange )horizontalRangeReference (_facad string )string {return _gf .Sprintf ("\u0025\u0073\u0021\u0025\u0064\u003a\u0025\u0064",_facad ,_adceb ._deafa ,_adceb ._edfgc );
+};
+
+// Index implements the Excel INDEX function.
+func Index (args []Result )Result {_ccee :=len (args );if _ccee < 2||_ccee > 3{return MakeErrorResult ("\u0049\u004e\u0044E\u0058\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0072\u006f\u006d\u0020\u006f\u006e\u0065\u0020\u0074\u006f\u0020\u0074\u0068\u0072\u0065\u0065\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_afcb :=args [0];if _afcb .Type !=ResultTypeArray &&_afcb .Type !=ResultTypeList {return MakeErrorResult ("\u0049\u004e\u0044\u0045\u0058\u0020\u0072e\u0071\u0075\u0069r\u0065\u0073\u0020\u0066i\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
+};_daee :=args [1].AsNumber ();if _daee .Type !=ResultTypeNumber {return MakeErrorResult ("I\u004e\u0044\u0045\u0058\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073 \u006e\u0075\u006d\u0065\u0072\u0069\u0063 \u0072\u006f\u0077\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
+};_gdad :=int (_daee .ValueNumber )-1;_gfdb :=-1;if _ccee ==3&&args [2].Type !=ResultTypeEmpty {_feea :=args [2].AsNumber ();if _feea .Type !=ResultTypeNumber {return MakeErrorResult ("I\u004e\u0044\u0045\u0058\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073 \u006e\u0075\u006d\u0065\u0072\u0069\u0063 \u0063\u006f\u006c\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
+};_gfdb =int (_feea .ValueNumber )-1;};if _gdad ==-1&&_gfdb ==-1{return MakeErrorResult ("\u0049\u004e\u0044EX\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0072o\u0077 \u006fr\u0020\u0063\u006f\u006c\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};var _dgae []Result ;if _afcb .Type ==ResultTypeArray {_dgdge :=_afcb .ValueArray ;if _gdad < -1||_gdad >=len (_dgdge ){return MakeErrorResult ("\u0049\u004e\u0044\u0045\u0058\u0020\u0068\u0061\u0073\u0020\u0072o\u0077\u0020\u006f\u0075\u0074\u0020\u006f\u0066\u0020\u0072a\u006e\u0067\u0065");
+};if _gdad ==-1{if _gfdb >=len (_dgdge [0]){return MakeErrorResult ("\u0049\u004e\u0044\u0045\u0058\u0020\u0068\u0061\u0073\u0020\u0063o\u006c\u0020\u006f\u0075\u0074\u0020\u006f\u0066\u0020\u0072a\u006e\u0067\u0065");};_bbfed :=[][]Result {};for _ ,_bdba :=range _dgdge {_edgb :=_bdba [_gfdb ];
+if _edgb .Type ==ResultTypeEmpty {_edgb =MakeNumberResult (0);};_bbfed =append (_bbfed ,[]Result {_edgb });};return MakeArrayResult (_bbfed );};_dgae =_dgdge [_gdad ];}else {_abcfb :=_afcb .ValueList ;if _gdad < -1||_gdad >=1{return MakeErrorResult ("\u0049\u004e\u0044\u0045\u0058\u0020\u0068\u0061\u0073\u0020\u0072o\u0077\u0020\u006f\u0075\u0074\u0020\u006f\u0066\u0020\u0072a\u006e\u0067\u0065");
+};if _gdad ==-1{if _gfdb >=len (_abcfb ){return MakeErrorResult ("\u0049\u004e\u0044\u0045\u0058\u0020\u0068\u0061\u0073\u0020\u0063o\u006c\u0020\u006f\u0075\u0074\u0020\u006f\u0066\u0020\u0072a\u006e\u0067\u0065");};_eeaa :=_abcfb [_gfdb ];if _eeaa .Type ==ResultTypeEmpty {_eeaa =MakeNumberResult (0);
+};return _eeaa ;};_dgae =_abcfb ;};if _gfdb < -1||_gfdb > len (_dgae ){return MakeErrorResult ("\u0049\u004e\u0044\u0045\u0058\u0020\u0068\u0061\u0073\u0020\u0063o\u006c\u0020\u006f\u0075\u0074\u0020\u006f\u0066\u0020\u0072a\u006e\u0067\u0065");};if _gfdb ==-1{_gfff :=[]Result {};
+for _ ,_ddac :=range _dgae {if _ddac .Type ==ResultTypeEmpty {_gfff =append (_gfff ,MakeNumberResult (0));}else {_gfff =append (_gfff ,_ddac );};};return MakeArrayResult ([][]Result {_gfff });};_gedg :=_dgae [_gfdb ];if _gedg .Type ==ResultTypeEmpty {return MakeNumberResult (0);
+};return _gedg ;};
+
+// Eval evaluates and returns the result of a formula.
+func (_dfeg *defEval )Eval (ctx Context ,formula string )Result {_beg :=ParseString (formula );_ddd :=make (chan Result );go func (){if _beg ==nil {_ddd <-MakeErrorResult (_gf .Sprintf ("\u0075\u006e\u0061\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0070a\u0072\u0073\u0065\u0020\u0066\u006f\u0072\u006d\u0075\u006ca\u0020\u0025\u0073",formula ));
+}else {_dfeg .checkLastEvalIsRef (ctx ,_beg );_ddd <-_beg .Eval (ctx ,_dfeg );};}();select{case _fa :=<-_ddd :return _fa ;case <-_bcd .After (_ae ):_af .Log .Debug ("\u0055\u006e\u0069\u004ff\u0066\u0069\u0063\u0065\u0020\u0065\u0076\u0061\u006c\u0075a\u0074i\u006f\u006e\u0020\u0074\u0069\u006d\u0065o\u0075\u0074");
+return MakeNumberResult (0);};};
+
+// Ipmt implements the Excel IPMT function.
+func Ipmt (args []Result )Result {_gacf :=len (args );if _gacf < 4||_gacf > 6{return MakeErrorResult ("\u0049P\u004d\u0054\u0020\u0072\u0065\u0071\u0075ir\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074s\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u0062\u0065\u0074\u0077\u0065\u0065n\u0020\u0066ou\u0072\u0020\u0061n\u0064\u0020\u0073\u0069\u0078");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("I\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_caff :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0050\u004dT\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_agab :=args [1].ValueNumber ;if _agab <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u0050\u004d\u0054\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006fd\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
+};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006ff\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_dacb :=args [2].ValueNumber ;if _dacb <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062er\u0020o\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f \u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0050\u004d\u0054\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065\u0073\u0065\u006e\u0074\u0020\u0076\u0061\u006c\u0075\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
+};_gbad :=args [3].ValueNumber ;_fgd :=0.0;if _gacf > 4&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0050\u004d\u0054\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s \u0066\u0075\u0074\u0075\u0072\u0065 \u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+};_fgd =args [4].ValueNumber ;};_eafa :=0;if _gacf ==6&&args [5].Type !=ResultTypeEmpty {if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("I\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0079\u0070\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_eafa =int (args [5].ValueNumber );if _eafa !=0{_eafa =1;};};return MakeNumberResult (_gfag (_caff ,_agab ,_dacb ,_gbad ,_fgd ,_eafa ));};func _fcbd (_ddf string )(int ,int ,int ,bool ,Result ){_dcd :="";_adbf :=[]string {};for _ceda ,_fab :=range _aae {_adbf =_fab .FindStringSubmatch (_ddf );
+if len (_adbf )> 1{_dcd =_ceda ;break ;};};if _dcd ==""{return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );};_fbg :=false ;var _agd ,_ffcd ,_cgeb int ;var _bgg error ;switch _dcd {case "\u006d\u006d\u002f\u0064\u0064\u002f\u0079\u0079":_ffcd ,_bgg =_fd .Atoi (_adbf [1]);
+if _bgg !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );};_cgeb ,_bgg =_fd .Atoi (_adbf [3]);if _bgg !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );};_agd ,_bgg =_fd .Atoi (_adbf [5]);if _bgg !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );
+};if _agd < 0||_agd > 9999||(_agd > 99&&_agd < 1900){return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );};_agd =_adec (_agd );_fbg =_adbf [8]=="";case "\u006dm\u0020\u0064\u0064\u002c\u0020\u0079y":_ffcd =_fec [_adbf [1]];_cgeb ,_bgg =_fd .Atoi (_adbf [14]);
+if _bgg !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );};_agd ,_bgg =_fd .Atoi (_adbf [16]);if _bgg !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );};if _agd < 0||_agd > 9999||(_agd > 99&&_agd < 1900){return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );
+};_agd =_adec (_agd );_fbg =_adbf [19]=="";case "\u0079\u0079\u002d\u006d\u006d\u002d\u0064\u0064":_bgde ,_cecb :=_fd .Atoi (_adbf [1]);if _cecb !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );};_fdbb ,_cecb :=_fd .Atoi (_adbf [3]);
+if _cecb !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );};_ddb ,_cecb :=_fd .Atoi (_adbf [5]);if _cecb !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );};if _bgde >=1900&&_bgde < 10000{_agd =_bgde ;_ffcd =_fdbb ;
+_cgeb =_ddb ;}else if _bgde > 0&&_bgde < 13{_ffcd =_bgde ;_cgeb =_fdbb ;_agd =_ddb ;}else {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );};_fbg =_adbf [8]=="";case "y\u0079\u002d\u006d\u006d\u0053\u0074\u0072\u002d\u0064\u0064":_agd ,_bgg =_fd .Atoi (_adbf [16]);
+if _bgg !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );};_ffcd =_fec [_adbf [3]];_cgeb ,_bgg =_fd .Atoi (_adbf [1]);if _bgg !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );};_fbg =_adbf [19]=="";};if !_babg (_agd ,_ffcd ,_cgeb ){return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_dce );
+};return _agd ,_ffcd ,_cgeb ,_fbg ,_fcea ;};
+
+// Minute is an implementation of the Excel MINUTE() function.
+func Minute (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u004d\u0049\u004e\u0055T\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");};_cac :=args [0];switch _cac .Type {case ResultTypeEmpty :return MakeNumberResult (0);
+case ResultTypeNumber :_bed :=_ded (_cac .ValueNumber );return MakeNumberResult (float64 (_bed .Minute ()));case ResultTypeString :_acb :=_e .ToLower (_cac .ValueString );if !_fbd (_acb ){_ ,_ ,_ ,_dcc ,_cddc :=_fcbd (_acb );if _cddc .Type ==ResultTypeError {_cddc .ErrorMessage ="\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074s\u0020\u0066\u006f\u0072\u0020\u004d\u0049\u004e\u0055\u0054\u0045";
+return _cddc ;};if _dcc {return MakeNumberResult (0);};};_ ,_bdcb ,_ ,_ ,_ ,_cegb :=_edbe (_acb );if _cegb .Type ==ResultTypeError {return _cegb ;};return MakeNumberResult (float64 (_bdcb ));default:return MakeErrorResult ("\u0049\u006ec\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u004d\u0049NU\u0054\u0045");
+};};
+
+// Columns implements the Excel COLUMNS function.
+func Columns (args []Result )Result {if len (args )< 1{return MakeErrorResult ("\u0043\u004fL\u0055\u004d\u004e\u0053\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075me\u006e\u0074");};_fgbb :=args [0];
+if _fgbb .Type !=ResultTypeArray &&_fgbb .Type !=ResultTypeList {return MakeErrorResult ("\u0043O\u004c\u0055M\u004e\u0053\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0066\u0069\u0072\u0073\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020t\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
+};_gccc :=_fgbb .ValueArray ;if len (_gccc )==0{return MakeErrorResult ("\u0043\u004f\u004c\u0055\u004d\u004e\u0053\u0020r\u0065\u0071\u0075ir\u0065\u0073\u0020\u0061\u0072\u0072a\u0079\u0020\u0074\u006f\u0020\u0063\u006f\u006e\u0074\u0061\u0069\u006e\u0020\u0061\u0074 \u006c\u0065\u0061\u0073\u0074\u0020\u0031\u0020r\u006f\u0077");
+};return MakeNumberResult (float64 (len (_gccc [0])));};
+
+// SheetPrefixExpr is a reference to a sheet like Sheet1! (reference to sheet 'Sheet1').
+type SheetPrefixExpr struct{_aeef string };
+
+// Price implements the Excel PRICE function.
+func Price (args []Result )Result {_fgff :=len (args );if _fgff !=6&&_fgff !=7{return MakeErrorResult ("\u0050\u0052I\u0043\u0045\u0020\u0072e\u0071\u0075i\u0072\u0065\u0073\u0020\u0073\u0069\u0078\u0020o\u0072\u0020\u0073\u0065\u0076\u0065\u006e\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_fgdf ,_efef ,_cgga :=_abcb (args [0],args [1],"\u0050\u0052\u0049C\u0045");if _cgga .Type ==ResultTypeError {return _cgga ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052\u0049CE\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0072a\u0074e\u0020o\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_afed :=args [2].ValueNumber ;if _afed < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u006eo\u0074\u0020\u0062\u0065\u0020n\u0065\u0067a\u0074\u0069\u0076\u0065");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("P\u0052\u0049\u0043\u0045\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073 \u0079\u0069\u0065\u006c\u0064\u0020\u006ff\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062e\u0072");
+};_ebcg :=args [3].ValueNumber ;if _ebcg < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0079\u0069\u0065\u006c\u0064 \u0074\u006f\u0020\u006e\u006f\u0074\u0020\u0062\u0065\u0020\u006e\u0065\u0067a\u0074\u0069\u0076\u0065");
+};if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("P\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0072\u0065\u0064em\u0070\u0074\u0069\u006fn\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_afgg :=args [4].ValueNumber ;if _afgg <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0052\u0049\u0043\u0045\u0020r\u0065\u0071\u0075i\u0072\u0065\u0073 \u0072\u0065\u0064\u0065\u006d\u0070\u0074\u0069\u006f\u006e \u0074\u006f\u0020\u0062\u0065 p\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_egbb :=args [5];if _egbb .Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0066\u0072\u0065\u0071\u0075e\u006e\u0063\u0079\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_bdcbb :=_egbb .ValueNumber ;if !_fegd (_bdcbb ){return MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0066\u0072e\u0071u\u0065n\u0063\u0065\u0020\u0076\u0061\u006c\u0075e");};_bfbb :=0;if _fgff ==7&&args [6].Type !=ResultTypeEmpty {if args [6].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052\u0049C\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_bfbb =int (args [6].ValueNumber );if !_ccfg (_bfbb ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063or\u0072\u0065\u0063\u0074\u0020\u0062\u0061\u0073\u0069s\u0020a\u0072g\u0075m\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u0050\u0052\u0049\u0043\u0045");
+};};_bggb ,_cgga :=_ecaa (_fgdf ,_efef ,_afed ,_ebcg ,_afgg ,_bdcbb ,_bfbb );if _cgga .Type ==ResultTypeError {return _cgga ;};return MakeNumberResult (_bggb );};
+
+// IsBool returns false for the invalid reference context.
+func (_eccd *ivr )IsBool (cellRef string )bool {return false };
+
+// NewNamedRangeRef constructs a new named range reference.
+func NewNamedRangeRef (v string )Expression {return NamedRangeRef {_ceba :v }};const _feaf =57368;func _ebd (_cbfg ,_fbfe float64 ,_begd ,_bca int )(float64 ,Result ){_efdd ,_bfdg :=_ded (_cbfg ),_ded (_fbfe );if _bfdg .After (_efdd ){_bfade :=_ccgg (_efdd ,_bfdg ,_begd ,_bca );
+_ageg :=(_bfdg .Year ()-_bfade .Year ())*12+int (_bfdg .Month ())-int (_bfade .Month ());return float64 (_ageg *_begd )/12.0,_fcea ;};return 0,MakeErrorResultType (ErrorTypeNum ,"\u0053\u0065t\u0074\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074\u0065\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u0062\u0065\u0066\u006f\u0072\u0065\u0020\u006d\u0061\u0074\u0075\u0072\u0069\u0074\u0079\u0020\u0064\u0061\u0074\u0065");
+};const _dgd ="\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0054\u0049\u004d\u0045\u0056\u0041\u004c\u0055\u0045";
+
+// GetWidth returns 0 for the invalid reference context.
+func (_bdbb *ivr )GetWidth (colIdx int )float64 {return float64 (0)};
+
+// Eval evaluates the binary expression using the context given.
+func (_dec BinaryExpr )String ()string {_gff :="";switch _dec ._fdb {case BinOpTypePlus :_gff ="\u002b";case BinOpTypeMinus :_gff ="\u002d";case BinOpTypeMult :_gff ="\u002a";case BinOpTypeDiv :_gff ="\u002f";case BinOpTypeExp :_gff ="\u005e";case BinOpTypeLT :_gff ="\u003c";
+case BinOpTypeGT :_gff ="\u003e";case BinOpTypeEQ :_gff ="\u003d";case BinOpTypeLEQ :_gff ="\u003c\u003d";case BinOpTypeGEQ :_gff ="\u003e\u003d";case BinOpTypeNE :_gff ="\u003c\u003e";case BinOpTypeConcat :_gff ="\u0026";};return _dec ._ba .String ()+_gff +_dec ._efb .String ();
+};
+
+// MinA is an implementation of the Excel MINA() function.
+func MinA (args []Result )Result {return _cgbc (args ,true )};
+
+// Update updates the horizontal range references after removing a row/column.
+func (_dgdb HorizontalRange )Update (q *_db .UpdateQuery )Expression {return _dgdb };
+
+// Multinomial implements the excel MULTINOMIAL function.
+func Multinomial (args []Result )Result {if len (args )< 1{return MakeErrorResult ("\u004d\u0055\u004c\u0054\u0049\u004eO\u004d\u0049\u0041\u004c\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006ce\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069c\u0020i\u006e\u0070\u0075\u0074");
+};_cbcde ,_aced ,_bceb :=_bfgeb (args );if _bceb .Type ==ResultTypeError {return _bceb ;};return MakeNumberResult (_feed (_cbcde )/_aced );};func _gdecg (_cgaag Result ,_ebca int )[]Result {_fddbg :=[]Result {};switch _cgaag .Type {case ResultTypeList :_dbcc :=_cgaag .ValueList ;
+_fbce :=len (_dbcc );for _ggdc :=0;_ggdc < _ebca ;_ggdc ++{if _ggdc < _fbce {_fddbg =append (_fddbg ,_dbcc [_ggdc ]);}else {_fddbg =append (_fddbg ,MakeErrorResultType (ErrorTypeNA ,""));};};case ResultTypeNumber ,ResultTypeString ,ResultTypeError ,ResultTypeEmpty :for _bgda :=0;
+_bgda < _ebca ;_bgda ++{_fddbg =append (_fddbg ,_cgaag );};};return _fddbg ;};type rmode byte ;func _ffb (){_aae ["\u006d\u006d\u002f\u0064\u0064\u002f\u0079\u0079"]=_bg .MustCompile ("\u005e"+_cfed +_beb );_aae ["\u006dm\u0020\u0064\u0064\u002c\u0020\u0079y"]=_bg .MustCompile ("\u005e"+_cfg +_beb );
+_aae ["\u0079\u0079\u002d\u006d\u006d\u002d\u0064\u0064"]=_bg .MustCompile ("\u005e"+_gea +_beb );_aae ["y\u0079\u002d\u006d\u006d\u0053\u0074\u0072\u002d\u0064\u0064"]=_bg .MustCompile ("\u005e"+_bcb +_beb );_adge ["\u0068\u0068"]=_bg .MustCompile (_gfe +_dbg +"\u0024");
+_adge ["\u0068\u0068\u003am\u006d"]=_bg .MustCompile (_gfe +_cfgg +"\u0024");_adge ["\u006d\u006d\u003as\u0073"]=_bg .MustCompile (_gfe +_ebee +"\u0024");_adge ["\u0068\u0068\u003a\u006d\u006d\u003a\u0073\u0073"]=_bg .MustCompile (_gfe +_bfae +"\u0024");
+_add =[]*_bg .Regexp {_bg .MustCompile ("\u005e"+_cfed +"\u0024"),_bg .MustCompile ("\u005e"+_cfg +"\u0024"),_bg .MustCompile ("\u005e"+_gea +"\u0024"),_bg .MustCompile ("\u005e"+_bcb +"\u0024")};_efd =[]*_bg .Regexp {_bg .MustCompile ("\u005e"+_dbg +"\u0024"),_bg .MustCompile ("\u005e"+_cfgg +"\u0024"),_bg .MustCompile ("\u005e"+_ebee +"\u0024"),_bg .MustCompile ("\u005e"+_bfae +"\u0024")};
+};func (_badc tokenType )String ()string {return _eafge (int (_badc ))};const _effdd ="\u0052\u0065\u0073\u0075\u006c\u0074\u0054\u0079\u0070\u0065U\u006e\u006b\u006e\u006f\u0077\u006e\u0052\u0065\u0073u\u006c\u0074\u0054y\u0070\u0065\u004e\u0075\u006d\u0062\u0065\u0072\u0052\u0065s\u0075\u006c\u0074\u0054\u0079\u0070\u0065\u0053\u0074\u0072\u0069\u006e\u0067\u0052\u0065\u0073\u0075\u006c\u0074\u0054\u0079\u0070\u0065\u004c\u0069\u0073\u0074\u0052\u0065\u0073\u0075lt\u0054\u0079p\u0065\u0041r\u0072\u0061\u0079\u0052\u0065\u0073\u0075\u006c\u0074\u0054\u0079\u0070\u0065\u0045\u0072\u0072\u006f\u0072\u0052\u0065\u0073\u0075\u006c\u0074\u0054\u0079\u0070\u0065\u0045\u006d\u0070\u0074\u0079";
+const _dggb =2;func init (){_ffb ();RegisterFunction ("\u0044\u0041\u0054\u0045",Date );RegisterFunction ("\u0044A\u0054\u0045\u0044\u0049\u0046",DateDif );RegisterFunction ("\u0044A\u0054\u0045\u0056\u0041\u004c\u0055E",DateValue );RegisterFunction ("\u0044\u0041\u0059",Day );
+RegisterFunction ("\u0044\u0041\u0059\u0053",Days );RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0044\u0041\u0059\u0053",Days );RegisterFunction ("\u0045\u0044\u0041T\u0045",Edate );RegisterFunction ("\u0045O\u004d\u004f\u004e\u0054\u0048",Eomonth );
+RegisterFunction ("\u004d\u0049\u004e\u0055\u0054\u0045",Minute );RegisterFunction ("\u004d\u004f\u004eT\u0048",Month );RegisterFunction ("\u004e\u004f\u0057",Now );RegisterFunction ("\u0054\u0049\u004d\u0045",Time );RegisterFunction ("\u0054I\u004d\u0045\u0056\u0041\u004c\u0055E",TimeValue );
+RegisterFunction ("\u0054\u004f\u0044A\u0059",Today );RegisterFunctionComplex ("\u0059\u0045\u0041\u0052",Year );RegisterFunction ("\u0059\u0045\u0041\u0052\u0046\u0052\u0041\u0043",YearFrac );};const _dce ="\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0044\u0041\u0054\u0045\u0056\u0041\u004c\u0055\u0045";
+func _ccffc (_agdba yyLexer ,_gaebe *yySymType )(_gbagg ,_cbcc int ){_cbcc =0;_gbagg =_agdba .Lex (_gaebe );if _gbagg <=0{_cbcc =_ecdfb [0];goto _cacf ;};if _gbagg < len (_ecdfb ){_cbcc =_ecdfb [_gbagg ];goto _cacf ;};if _gbagg >=_egac {if _gbagg < _egac +len (_beabb ){_cbcc =_beabb [_gbagg -_egac ];
+goto _cacf ;};};for _gbba :=0;_gbba < len (_dbcd );_gbba +=2{_cbcc =_dbcd [_gbba +0];if _cbcc ==_gbagg {_cbcc =_dbcd [_gbba +1];goto _cacf ;};};_cacf :if _cbcc ==0{_cbcc =_beabb [1];};if _cfbf >=3{_gf .Printf ("l\u0065\u0078\u0020\u0025\u0073\u0028\u0025\u0064\u0029\u000a",_eafge (_cbcc ),uint (_gbagg ));
+};return _gbagg ,_cbcc ;};
+
+// GetLocked returns FALSE for the invalid reference context.
+func (_fgdgg *ivr )GetLocked (cellRef string )bool {return false };
+
+// HorizontalRange is a range expression that when evaluated returns a list of Results from references like 1:4 (all cells from rows 1 to 4).
+type HorizontalRange struct{_caag ,_fegba int };
+
+// IsDBCS returns false for the invalid reference context.
+func (_gaae *ivr )IsDBCS ()bool {return false };
+
+// Coupdaybs implements the Excel COUPDAYBS function.
+func Coupdaybs (args []Result )Result {_cdg ,_daf :=_daegg (args ,"\u0043O\u0055\u0050\u0044\u0041\u0059\u0042S");if _daf .Type ==ResultTypeError {return _daf ;};return MakeNumberResult (_dccb (_cdg ._agg ,_cdg ._cgef ,_cdg ._fbdc ,_cdg ._bcgf ));};func _eegaa (_cbgfe ,_gccae []string )[]string {for _ ,_ebefgd :=range _gccae {_cbgfe =append (_cbgfe ,_ebefgd );
+};return _cbgfe ;};
+
+// RegisterFunctionComplex registers a standard function.
+func RegisterFunctionComplex (name string ,fn FunctionComplex ){_bfeac .Lock ();defer _bfeac .Unlock ();if _ ,_aacb :=_ccgcg [name ];_aacb {_af .Log .Debug ("\u0064\u0075p\u006c\u0069\u0063\u0061t\u0065\u0020r\u0065\u0067\u0069\u0073\u0074\u0072\u0061\u0074i\u006f\u006e\u0020\u006f\u0066\u0020\u0066\u0075\u006e\u0063\u0074\u0069o\u006e\u0020\u0025\u0073",name );
+};_ccgcg [name ]=fn ;};
+
+// Update returns the same object as updating sheet references does not affect ConstArrayExpr.
+func (_cdc ConstArrayExpr )Update (q *_db .UpdateQuery )Expression {return _cdc };
+
+// FloorMath implements _xlfn.FLOOR.MATH which rounds numbers down to the
+// nearest multiple of the second argument, toward or away from zero as
+// specified by the third argument.
+func FloorMath (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0046\u004c\u004f\u004f\u0052\u002e\u004dA\u0054\u0048\u0028)\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if len (args )> 3{return MakeErrorResult ("\u0046\u004c\u004f\u004f\u0052\u002e\u004dA\u0054\u0048\u0028)\u0020\u0061\u006c\u006co\u0077\u0073\u0020\u0061\u0074\u0020\u006d\u006f\u0073\u0074\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_ebcc :=args [0].AsNumber ();if _ebcc .Type !=ResultTypeNumber {return MakeErrorResult ("f\u0069\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u006f\u0020FL\u004f\u004f\u0052\u002eM\u0041\u0054\u0048\u0028\u0029\u0020\u006d\u0075\u0073t \u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_aeee :=float64 (1);if _ebcc .ValueNumber < 0{_aeee =-1;};if len (args )> 1{_deea :=args [1].AsNumber ();if _deea .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061r\u0067\u0075\u006den\u0074\u0020\u0074\u006f\u0020\u0046L\u004f\u004f\u0052\u002e\u004d\u0041\u0054\u0048\u0028\u0029\u0020\u006d\u0075\u0073\u0074 \u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006db\u0065\u0072");
+};_aeee =_deea .ValueNumber ;};_gcade :=float64 (1);if len (args )> 2{_aeaa :=args [2].AsNumber ();if _aeaa .Type !=ResultTypeNumber {return MakeErrorResult ("t\u0068\u0069\u0072\u0064\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u006f\u0020FL\u004f\u004f\u0052\u002eM\u0041\u0054\u0048\u0028\u0029\u0020\u006d\u0075\u0073t \u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_gcade =_aeaa .ValueNumber ;};if len (args )==1{return MakeNumberResult (_d .Floor (_ebcc .ValueNumber ));};_adgd :=_ebcc .ValueNumber ;_adgd ,_gaaf :=_d .Modf (_adgd /_aeee );if _gaaf !=0&&_ebcc .ValueNumber < 0&&_gcade > 0{_adgd ++;};return MakeNumberResult (_adgd *_aeee );
+};
+
+// Pduration implements the Excel PDURATION function.
+func Pduration (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u0050\u0044\u0055RA\u0054\u0049\u004f\u004e\u0020\u0072\u0065\u0071\u0075i\u0072e\u0073 \u0074h\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050D\u0055\u0052A\u0054\u0049\u004fN\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0072\u0061\u0074\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_fgg :=args [0].ValueNumber ;if _fgg <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0044\u0055\u0052\u0041\u0054\u0049\u004f\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020t\u006f\u0020\u0062\u0065\u0020p\u006f\u0073i\u0074\u0069\u0076\u0065");
+};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0044\u0055\u0052\u0041\u0054\u0049\u004f\u004e\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0063\u0075\u0072\u0072\u0065\u006e\u0074\u0020\u0076\u0061l\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006dbe\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_bbba :=args [1].ValueNumber ;if _bbba <=0{return MakeErrorResultType (ErrorTypeNum ,"P\u0044\u0055\u0052\u0041\u0054\u0049\u004f\u004e\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073 c\u0075\u0072\u0072\u0065n\u0074\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0074o \u0062\u0065 \u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
+};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0044\u0055\u0052\u0041\u0054I\u004f\u004e\u0020r\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0073\u0070\u0065\u0063\u0069\u0066i\u0065\u0064\u0020\u0076\u0061lu\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_baag :=args [2].ValueNumber ;if _baag <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0044\u0055\u0052\u0041\u0054I\u004f\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0070\u0065\u0063\u0069\u0066\u0069\u0065d\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070o\u0073i\u0074\u0069\u0076\u0065");
+};return MakeNumberResult ((_d .Log10 (_baag )-_d .Log10 (_bbba ))/_d .Log10 (1+_fgg ));};
+
+// Eval evaluates and returns the result of an empty expression.
+func (_aagf EmptyExpr )Eval (ctx Context ,ev Evaluator )Result {return MakeEmptyResult ()};
+
+// Cell is an implementation of the Excel CELL function that returns information
+// about the formatting, location, or contents of a cell.
+func Cell (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=1&&len (args )!=2{return MakeErrorResult ("\u0043\u0045\u004cL \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020o\u006ee\u0020o\u0072 \u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_bgaac :=args [0].AsString ();if _bgaac .Type !=ResultTypeString {return MakeErrorResult ("\u0043\u0045\u004c\u004c\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065 \u0073t\u0072\u0069\u006e\u0067");
+};_bddf :="\u0041\u0031";if len (args )==2{_egdef :=args [1].Ref ;if _egdef .Type !=ReferenceTypeCell {return MakeErrorResult ("\u0043\u0045\u004c\u004c\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064 \u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0079p\u0065\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065");
+};_bddf =_egdef .Value ;};switch _bgaac .ValueString {case "\u0061d\u0064\u0072\u0065\u0073\u0073":_dgec ,_egec :=_bce .ParseCellReference (_bddf );if _egec !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072re\u0063t\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065\u003a\u0020"+_bddf );
+};_gefc :="\u0024"+_dgec .Column +"\u0024"+_fd .Itoa (int (_dgec .RowIdx ));if _dgec .SheetName !=""{_gefc =_dgec .SheetName +"\u0021"+_gefc ;};return MakeStringResult (_gefc );case "\u0063\u006f\u006c":_fgdg ,_dadg :=_bce .ParseCellReference (_bddf );
+if _dadg !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072re\u0063t\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065\u003a\u0020"+_bddf );};return MakeNumberResult (float64 (_fgdg .ColumnIdx +1));case "\u0063\u006f\u006co\u0072":_efdab :=_e .Contains (ctx .GetFormat (_bddf ),"\u005b\u0052\u0045D\u005d");
+return MakeBoolResult (_efdab );case "\u0063\u006f\u006e\u0074\u0065\u006e\u0074\u0073":return args [1];case "\u0066\u0069\u006c\u0065\u006e\u0061\u006d\u0065":return MakeStringResult (ctx .GetFilename ());case "\u0066\u006f\u0072\u006d\u0061\u0074":_bddae :="\u0047";
+_gede :=ctx .GetFormat (_bddf );if _gede =="\u0047e\u006e\u0065\u0072\u0061\u006c"||_gcac .MatchString (_gede ){_bddae ="\u0046\u0030";}else if _gede =="\u0030\u0025"{_bddae ="\u0050\u0030";}else if _gede =="\u004d\u004d\u004d\u0020\u0044\u0044"{_bddae ="\u0044\u0032";
+}else if _gede =="\u004d\u004d\u002fY\u0059"{_bddae ="\u0044\u0033";}else if _gede =="\u004d\u004d\u002f\u0044D/\u0059\u0059\u005c\u0020\u0048\u0048\u003a\u004d\u004d\u005c\u0020\u0041\u004d\u002fP\u004d"||_gede =="M\u004d/\u0044\u0044\u002f\u0059\u0059\u0059\u0059\u005c \u0048\u0048\u003a\u004dM:\u0053\u0053"{_bddae ="\u0044\u0034";
+}else if _gede =="\u004d\u004d\u005c\u002d\u0044\u0044"{_bddae ="\u0044\u0035";}else if _gede =="\u0048H\u003aM\u004d\u003a\u0053\u0053\u005c\u0020\u0041\u004d\u002f\u0050\u004d"{_bddae ="\u0044\u0036";}else if _gede =="\u0048\u0048\u003aM\u004d\u005c\u0020\u0041\u004d\u002f\u0050\u004d"{_bddae ="\u0044\u0037";
+}else if _gede =="\u0048\u0048\u003a\u004d\u004d\u003a\u0053\u0053"{_bddae ="\u0044\u0038";}else if _gede =="\u0048\u0048\u003aM\u004d"{_bddae ="\u0044\u0039";}else if _cbggc .MatchString (_gede ){_bddae ="\u002e\u0030";}else if _egaf .MatchString (_gede ){_bddae ="\u002e\u0030\u0028\u0029";
+}else if _ecfb .MatchString (_gede ){_bddae ="\u0043\u0030";}else if _ggcb .MatchString (_gede )||_adce .MatchString (_gede ){_bddae ="\u0044\u0031";}else if _ffcea :=_dfag .FindStringSubmatch (_gede );len (_ffcea )> 1{_bddae ="\u0046"+_fd .Itoa (len (_ffcea [1]));
+}else if _gdbb :=_gdaf .FindStringSubmatch (_gede );len (_gdbb )> 1{_bddae ="\u002e"+_fd .Itoa (len (_gdbb [2]));}else if _geba :=_gdcf .FindStringSubmatch (_gede );len (_geba )> 1{_bddae ="\u0050"+_fd .Itoa (len (_geba [2]));}else if _gedf :=_bbad .FindStringSubmatch (_gede );
+len (_gedf )> 1{_bddae ="\u0043"+_ccbgc (_gedf ,1);}else if _eddf :=_gdfc .FindStringSubmatch (_gede );len (_eddf )> 1{_bddae ="\u0043"+_ccbgc (_eddf ,1);}else if _efcgc :=_agde .FindStringSubmatch (_gede );len (_efcgc )> 1{_bddae ="\u002e"+_ccbgc (_efcgc ,1)+"\u0028\u0029";
+}else if _degc :=_begg .FindStringSubmatch (_gede );len (_degc )> 1{_bddae ="\u002e"+_ccbgc (_degc ,1);}else if _ecaf :=_gbcf .FindStringSubmatch (_gede );len (_ecaf )> 1{_bddae ="\u0053"+_ccbgc (_ecaf ,3);};if _bddae !="\u0047"&&_e .Contains (_gede ,"\u005b\u0052\u0045D\u005d"){_bddae +="\u002d";
+};return MakeStringResult (_bddae );case "p\u0061\u0072\u0065\u006e\u0074\u0068\u0065\u0073\u0065\u0073":_befa :=ctx .GetFormat (_bddf );if _cbab .MatchString (_befa ){return MakeNumberResult (1);}else {return MakeNumberResult (0);};case "\u0070\u0072\u0065\u0066\u0069\u0078":return MakeStringResult (ctx .GetLabelPrefix (_bddf ));
+case "\u0070r\u006f\u0074\u0065\u0063\u0074":_gcccd :=0.0;if ctx .GetLocked (_bddf ){_gcccd =1.0;};return MakeNumberResult (_gcccd );case "\u0072\u006f\u0077":_gdfbe ,_gabgd :=_bce .ParseCellReference (_bddf );if _gabgd !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072re\u0063t\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065\u003a\u0020"+_bddf );
+};return MakeNumberResult (float64 (_gdfbe .RowIdx ));case "\u0074\u0079\u0070\u0065":switch args [1].Type {case ResultTypeEmpty :return MakeStringResult ("\u0062");case ResultTypeString :return MakeStringResult ("\u006c");default:return MakeStringResult ("\u0076");
+};case "\u0077\u0069\u0064t\u0068":_aaab ,_ggbff :=_bce .ParseCellReference (_bddf );if _ggbff !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072re\u0063t\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065\u003a\u0020"+_bddf );};if _aaab .SheetName ==""{return MakeNumberResult (ctx .GetWidth (int (_aaab .ColumnIdx )));
+}else {return MakeNumberResult (ctx .Sheet (_aaab .SheetName ).GetWidth (int (_aaab .ColumnIdx )));};};return MakeErrorResult ("\u0049\u006e\u0063or\u0072\u0065\u0063\u0074\u0020\u0066\u0069\u0072\u0073t\u0020a\u0072g\u0075m\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0043\u0045\u004c\u004c\u003a\u0020"+_bgaac .ValueString );
+};
+
+// Ceiling is an implementation of the CEILING function which
+// returns the ceiling of a number.
+func Ceiling (args []Result )Result {if len (args )==0{return MakeErrorResult ("C\u0045\u0049\u004c\u0049\u004e\u0047\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020a\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006ee \u0061\u0072\u0067u\u006de\u006e\u0074");
+};if len (args )> 2{return MakeErrorResult ("\u0043\u0045\u0049\u004c\u0049\u004e\u0047\u0028\u0029\u0020\u0061\u006c\u006c\u006f\u0077\u0073\u0020\u0061\u0074\u0020\u006d\u006f\u0073\u0074 \u0074\u0077\u006f\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_aecba :=args [0].AsNumber ();if _aecba .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066i\u0072\u0073t\u0020\u0061\u0072\u0067u\u006d\u0065\u006et\u0020\u0074\u006f\u0020\u0043\u0045\u0049\u004c\u0049NG\u0028\u0029\u0020m\u0075\u0073t\u0020\u0062\u0065\u0020\u0061\u0020n\u0075\u006db\u0065\u0072");
+};_agaf :=float64 (1);if _aecba .ValueNumber < 0{_agaf =-1;};if len (args )> 1{_fgcf :=args [1].AsNumber ();if _fgcf .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073e\u0063\u006fn\u0064\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020t\u006f\u0020\u0043\u0045\u0049\u004cI\u004e\u0047\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062e\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_agaf =_fgcf .ValueNumber ;};if _agaf < 0&&_aecba .ValueNumber > 0{return MakeErrorResultType (ErrorTypeNum ,"\u006e\u0065\u0067\u0061\u0074\u0069v\u0065\u0020\u0073\u0069\u0067\u0020\u0074\u006f\u0020\u0043\u0045\u0049\u004cI\u004e\u0047\u0028\u0029\u0020\u0069\u006ev\u0061\u006c\u0069\u0064");
+};if len (args )==1{return MakeNumberResult (_d .Ceil (_aecba .ValueNumber ));};_dcdf :=_aecba .ValueNumber ;_dcdf ,_efgf :=_d .Modf (_dcdf /_agaf );if _efgf > 0{_dcdf ++;};return MakeNumberResult (_dcdf *_agaf );};const _aaada =57370;func _gbcc (){_ggdgg =_bg .MustCompile ("\u005e\u0028\u005b\u0030\u002d\u0039\u005d\u002b\u0029\u0024");
+_cbaf =_bg .MustCompile ("\u005e=\u0028\u002e\u002a\u0029\u0024");_ebbg =_bg .MustCompile ("\u005e<\u0028\u002e\u002a\u0029\u0024");_fdee =_bg .MustCompile ("\u005e>\u0028\u002e\u002a\u0029\u0024");_bffbe =_bg .MustCompile ("\u005e\u003c\u003d\u0028\u002e\u002a\u0029\u0024");
+_agba =_bg .MustCompile ("\u005e\u003e\u003d\u0028\u002e\u002a\u0029\u0024");};
+
+// FloorPrecise is an implementation of the FlOOR.PRECISE function.
+func FloorPrecise (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0046\u004cO\u004f\u0052\u002e\u0050\u0052\u0045\u0043\u0049\u0053\u0045\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if len (args )> 2{return MakeErrorResult ("\u0046L\u004f\u004fR\u002e\u0050\u0052\u0045C\u0049\u0053\u0045(\u0029\u0020\u0061\u006c\u006c\u006f\u0077\u0073\u0020at\u0020\u006d\u006fs\u0074\u0020t\u0077\u006f\u0020\u0061\u0072\u0067u\u006d\u0065n\u0074\u0073");
+};_ebgc :=args [0].AsNumber ();if _ebgc .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020F\u004c\u004f\u004f\u0052\u002e\u0050\u0052E\u0043\u0049\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074 \u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_bgbf :=float64 (1);if _ebgc .ValueNumber < 0{_bgbf =-1;};if len (args )> 1{_gcfd :=args [1].AsNumber ();if _gcfd .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006ed\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020F\u004c\u004f\u004f\u0052\u002e\u0050\u0052\u0045\u0043\u0049\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065r");
+};_bgbf =_d .Abs (_gcfd .ValueNumber );};if len (args )==1{return MakeNumberResult (_d .Floor (_ebgc .ValueNumber ));};_dfee :=_ebgc .ValueNumber ;_dfee ,_eebe :=_d .Modf (_dfee /_bgbf );if _eebe !=0{if _ebgc .ValueNumber < 0{_dfee --;};};return MakeNumberResult (_dfee *_bgbf );
+};
+
+// NewPrefixExpr constructs an expression with prefix.
+func NewPrefixExpr (pfx ,exp Expression )Expression {return &PrefixExpr {_fefaa :pfx ,_fbdf :exp }};var _gfg int64 =_fba (1900,_bcd .January ,1);func _cbcd (_deg []Result ,_fcdaa bool )Result {var _bfgfb string ;if _fcdaa {_bfgfb ="\u004c\u0041\u0052G\u0045";
+}else {_bfgfb ="\u0053\u004d\u0041L\u004c";};if len (_deg )!=2{return MakeErrorResult (_bfgfb +"\u0020\u0072\u0065qu\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");};_eecda :=_deg [0];var _daggd [][]Result ;
+switch _eecda .Type {case ResultTypeArray :_daggd =_eecda .ValueArray ;case ResultTypeList :_daggd =[][]Result {_eecda .ValueList };default:return MakeErrorResult (_bfgfb +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u006f\u0066\u0020\u0074\u0079p\u0065\u0020a\u0072\u0072\u0061\u0079");
+};if len (_daggd )==0{return MakeErrorResult (_bfgfb +"\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0061\u0072\u0072\u0061\u0079\u0020\u0074\u006f\u0020c\u006f\u006e\u0074\u0061\u0069\u006e\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u0031\u0020\u0072\u006f\u0077");
+};if _deg [1].Type !=ResultTypeNumber {return MakeErrorResult (_bfgfb +" \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074yp\u0065\u0020\u006eu\u006db\u0065\u0072");
+};_fbge :=_deg [1].ValueNumber ;if _fbge < 1{return MakeErrorResultType (ErrorTypeNum ,_bfgfb +"\u0020\u0072e\u0071\u0075\u0069\u0072\u0065s\u0020\u0073\u0065\u0063\u006fn\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e\u0020\u0030");
+};_gaba :=int (_fbge );if float64 (_gaba )!=_fbge {return MakeErrorResultType (ErrorTypeNum ,_bfgfb +"\u0020\u0072e\u0071\u0075\u0069\u0072\u0065s\u0020\u0073\u0065\u0063\u006fn\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e\u0020\u0030");
+};_dcce :=[]float64 {};for _ ,_bcbd :=range _daggd {for _ ,_cbdf :=range _bcbd {if _cbdf .Type ==ResultTypeNumber {_dcce =append (_dcce ,_cbdf .ValueNumber );};};};if _gaba > len (_dcce ){return MakeErrorResultType (ErrorTypeNum ,_bfgfb +" \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u006c\u0065s\u0073\u0020\u006f\u0072\u0020\u0065\u0071\u0075\u0061\u006c\u0020\u0074\u0068\u0061\u006e\u0020t\u0068\u0065\u0020\u006e\u0075m\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u006e\u0075\u006d\u0062\u0065\u0072s\u0020\u0069\u006e\u0020t\u0068\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
+};_abed :=_ce .MergeSort (_dcce );if _fcdaa {return MakeNumberResult (_abed [len (_abed )-_gaba ]);}else {return MakeNumberResult (_abed [_gaba -1]);};};
+
+// Eval evaluates and returns a number.
+func (_fdada Number )Eval (ctx Context ,ev Evaluator )Result {return MakeNumberResult (_fdada ._dgga )};func _fegd (_dddb float64 )bool {return _dddb ==1||_dddb ==2||_dddb ==4};func _acadc (_afag ,_edgfa []float64 ,_aec float64 )float64 {_ecgf :=_aec +1;
+_cdab :=_afag [0];_eaee :=len (_afag );_gefd :=_edgfa [0];for _dacf :=1;_dacf < _eaee ;_dacf ++{_cdab +=_afag [_dacf ]/_d .Pow (_ecgf ,(_edgfa [_dacf ]-_gefd )/365);};return _cdab ;};
+
+// Oddlyield implements the Excel ODDLYIELD function.
+func Oddlyield (args []Result )Result {if len (args )!=7&&len (args )!=8{return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0059\u0049\u0045L\u0044\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u0073\u0065\u0076\u0065\u006e\u0020\u006f\u0072\u0020\u0065\u0069\u0067\u0068\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_babd ,_ddbc ,_agae :=_abcb (args [0],args [1],"\u004fD\u0044\u004c\u0059\u0049\u0045\u004cD");if _agae .Type ==ResultTypeError {return _agae ;};_agcg ,_agae :=_gfcac (args [2],"\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065","\u004fD\u0044\u004c\u0050\u0052\u0049\u0043E");
+if _agae .Type ==ResultTypeError {return _agae ;};if _agcg >=_babd {return MakeErrorResultType (ErrorTypeNum ,"\u004c\u0061\u0073\u0074\u0020i\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0020\u0064\u0061\u0074\u0065\u0020s\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u0062\u0065\u0066\u006f\u0072\u0065\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074e");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0059\u0049\u0045\u004c\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020o\u0066\u0020\u0074\u0079\u0070e\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_bgaf :=args [3].ValueNumber ;if _bgaf < 0{return MakeErrorResultType (ErrorTypeNum ,"R\u0061\u0074\u0065\u0020\u0073\u0068o\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u006e\u006fn\u0020\u006e\u0065g\u0061t\u0069\u0076\u0065");};if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("O\u0044\u0044\u004c\u0059\u0049\u0045\u004c\u0044\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073 p\u0072\u0065\u0073\u0065n\u0074\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u006ff \u0074\u0079p\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_ebga :=args [4].ValueNumber ;if _ebga <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0072\u0065\u0073\u0065\u006e\u0074\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0073h\u006fu\u006c\u0064\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
+};if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("\u004fD\u0044\u004cY\u0049\u0045\u004c\u0044 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065mp\u0074\u0069\u006fn\u0020\u006ff\u0020\u0074\u0079\u0070\u0065\u0020n\u0075\u006db\u0065\u0072");
+};_ffbeb :=args [5].ValueNumber ;if _ffbeb < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0059\u0069\u0065\u006cd\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065 \u006eo\u006e\u0020\u006e\u0065\u0067\u0061\u0074i\u0076\u0065");};if args [6].Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0059\u0049\u0045L\u0044\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u0066\u0072\u0065\u0071\u0075\u0065\u006e\u0063\u0079\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_ebac :=float64 (int (args [6].ValueNumber ));if !_fegd (_ebac ){return MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0066\u0072e\u0071u\u0065n\u0063\u0065\u0020\u0076\u0061\u006c\u0075e");};_dgbe :=0;if len (args )==8&&args [7].Type !=ResultTypeEmpty {if args [7].Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0059\u0049\u0045\u004c\u0044\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0062a\u0073\u0069\u0073\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_dgbe =int (args [7].ValueNumber );if !_ccfg (_dgbe ){return MakeErrorResultType (ErrorTypeNum ,"I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0062\u0061\u0073\u0069s\u0020\u0076\u0061\u006c\u0075\u0065\u0020f\u006f\u0072\u0020\u004f\u0044\u0044\u004c\u0059\u0049\u0045L\u0044");
+};};_fgeg ,_agae :=_fdbc (_agcg ,_ddbc ,_dgbe );if _agae .Type ==ResultTypeError {return _agae ;};_fgeg *=_ebac ;_cded ,_agae :=_fdbc (_babd ,_ddbc ,_dgbe );if _agae .Type ==ResultTypeError {return _agae ;};_cded *=_ebac ;_ggaf ,_agae :=_fdbc (_agcg ,_babd ,_dgbe );
+if _agae .Type ==ResultTypeError {return _agae ;};_ggaf *=_ebac ;_fcdef :=_ffbeb +_fgeg *100*_bgaf /_ebac ;_fcdef /=_ebga +_ggaf *100*_bgaf /_ebac ;_fcdef --;_fcdef *=_ebac /_cded ;return MakeNumberResult (_fcdef );};
 
 // Rows implements the Excel ROWS function.
-func Rows (args []Result )Result {if len (args )< 1{return MakeErrorResult ("\u0052\u004f\u0057\u0053\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074");};_abcd :=args [0];if _abcd .Type !=ResultTypeArray &&_abcd .Type !=ResultTypeList {return MakeErrorResult ("\u0052\u004f\u0057S\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074y\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
-};_bgcf :=_abcd .ValueArray ;if len (_bgcf )==0{return MakeErrorResult ("\u0052O\u0057\u0053 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0072r\u0061\u0079\u0020\u0074\u006f\u0020c\u006f\u006e\u0074\u0061\u0069\u006e\u0020\u0061\u0074\u0020\u006ce\u0061\u0073\u0074\u0020\u0031\u0020\u0072\u006f\u0077");
-};return MakeNumberResult (float64 (len (_bgcf )));};func _add (_egce ,_gfcb int64 )float64 {return float64 (int (0.5+float64 ((_gfcb -_egce )/86400)))};const _gcfe =57376;
+func Rows (args []Result )Result {if len (args )< 1{return MakeErrorResult ("\u0052\u004f\u0057\u0053\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074");};_dacbb :=args [0];if _dacbb .Type !=ResultTypeArray &&_dacbb .Type !=ResultTypeList {return MakeErrorResult ("\u0052\u004f\u0057S\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074y\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
+};_dcgg :=_dacbb .ValueArray ;if len (_dcgg )==0{return MakeErrorResult ("\u0052O\u0057\u0053 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0072r\u0061\u0079\u0020\u0074\u006f\u0020c\u006f\u006e\u0074\u0061\u0069\u006e\u0020\u0061\u0074\u0020\u006ce\u0061\u0073\u0074\u0020\u0031\u0020\u0072\u006f\u0077");
+};return MakeNumberResult (float64 (len (_dcgg )));};
+
+// RandBetween is an implementation of the Excel RANDBETWEEN() function that returns a random
+// integer in the range specified.
+func RandBetween (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0052A\u004e\u0044B\u0045\u0054\u0057\u0045E\u004e\u0028\u0029 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020tw\u006f\u0020\u006eu\u006d\u0065r\u0069\u0063\u0020\u0061\u0072\u0067u\u006d\u0065n\u0074\u0073");
+};_gfad :=args [0].AsNumber ();_gfdg :=args [1].AsNumber ();if _gfad .Type !=ResultTypeNumber ||_gfdg .Type !=ResultTypeNumber {return MakeErrorResult ("\u0052A\u004e\u0044B\u0045\u0054\u0057\u0045E\u004e\u0028\u0029 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020tw\u006f\u0020\u006eu\u006d\u0065r\u0069\u0063\u0020\u0061\u0072\u0067u\u006d\u0065n\u0074\u0073");
+};if _gfdg .ValueNumber < _gfad .ValueNumber {return MakeErrorResult ("\u0052\u0041\u004e\u0044\u0042E\u0054\u0057\u0045\u0045\u004e\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006c\u0061\u0072\u0067\u0065r");
+};_cadaf :=int64 (_gfad .ValueNumber );_adgdc :=int64 (_gfdg .ValueNumber );return MakeNumberResult (float64 (_fgbad .Int63n (_adgdc -_cadaf +1)+_cadaf ));};var _ggdgg ,_cbaf ,_fdee ,_ebbg ,_agba ,_bffbe *_bg .Regexp ;func _bdegc (_cdce Result ,_fadb ,_agcb string )(string ,Result ){switch _cdce .Type {case ResultTypeString ,ResultTypeNumber ,ResultTypeEmpty :return _cdce .Value (),_fcea ;
+default:return "",MakeErrorResult (_fadb +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020"+_agcb +"\u0020t\u006f\u0020\u0062\u0065 \u0061\u0020\u006e\u0075\u006db\u0065r\u0020o\u0072\u0020\u0073\u0074\u0072\u0069\u006eg");};};func _eebg (_acd ,_febb _bcd .Time ,_bbbd int )float64 {if _acd .After (_febb ){_acd ,_febb =_febb ,_acd ;
+};_ggcc :=0;_cdca ,_aee ,_cdcb :=_acd .Date ();_efca ,_egd ,_gagb :=_febb .Date ();_fee ,_afa :=int (_aee ),int (_egd );_dfaa ,_bad :=_bcdc (_cdca ,_fee ,_cdcb ,_bbbd ),_bcdc (_efca ,_afa ,_gagb ,_bbbd );if !_cfad (_bbbd ){return _efdc (_efca ,_afa ,_bad )-_efdc (_cdca ,_fee ,_dfaa );
+};if _bbbd ==0{if (_fee ==2||_dfaa < 30)&&_gagb ==31{_bad =31;}else if _afa ==2&&_bad ==_ggf (_efca ,_afa ){_bad =_ggf (_efca ,2);};}else {if _fee ==2&&_dfaa ==30{_dfaa =_ggf (_cdca ,2);};if _afa ==2&&_bad ==30{_bad =_ggf (_efca ,2);};};if _cdca < _efca ||(_cdca ==_efca &&_fee < _afa ){_ggcc =30-_dfaa +1;
+_cdcb =1;_dfaa =1;_acdg :=_bcd .Date (_cdca ,_bcd .Month (_fee ),_cdcb ,0,0,0,0,_bcd .UTC ).AddDate (0,1,0);if _acdg .Year ()< _efca {_ggcc +=_abb (_acdg .Year (),int (_acdg .Month ()),12,_bbbd );_acdg =_acdg .AddDate (0,13-int (_acdg .Month ()),0);_ggcc +=_fdf (_acdg .Year (),_efca -1,_bbbd );
+};_ggcc +=_abb (_efca ,int (_acdg .Month ()),_afa -1,_bbbd );_acdg =_acdg .AddDate (0,_afa -int (_acdg .Month ()),0);_fee =_acdg .Day ();};_ggcc +=_bad -_dfaa ;if _ggcc > 0{return float64 (_ggcc );}else {return 0;};};
+
+// Date is an implementation of the Excel DATE() function.
+func Date (args []Result )Result {if len (args )!=3||args [0].Type !=ResultTypeNumber ||args [1].Type !=ResultTypeNumber ||args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0041TE\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s t\u0068re\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
+};_cgf :=int (args [0].ValueNumber );if _cgf < 0||_cgf >=10000{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074 \u0064\u0061\u0074\u0065");}else if _cgf <=1899{_cgf +=1900;};_bgdd :=_bcd .Month (args [1].ValueNumber );
+_ffcc :=int (args [2].ValueNumber );_gced :=_fba (_cgf ,_bgdd ,_ffcc );_bcef :=_bacc (_gfg ,_gced )+1;if _bcef < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074 \u0064\u0061\u0074\u0065");};return MakeNumberResult (_bcef );
+};const _daffg =57359;type couponArgs struct{_agg float64 ;_cgef float64 ;_fbdc int ;_bcgf int ;};const (_dbebf rmode =iota ;_febab ;_ddbg ;);func (_efedg Result )String ()string {return _efedg .Value ()};
+
+// Int is an implementation of the Excel INT() function that rounds a number
+// down to an integer.
+func Int (args []Result )Result {if len (args )!=1{return MakeErrorResult ("I\u004e\u0054\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_bddfg :=args [0].AsNumber ();if _bddfg .Type !=ResultTypeNumber {return MakeErrorResult ("I\u004e\u0054\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_bage ,_fbafg :=_d .Modf (_bddfg .ValueNumber );if _fbafg < 0{_bage --;};return MakeNumberResult (_bage );};
+
+// String returns a string representation of a vertical range with prefix.
+func (_ggbad PrefixVerticalRange )String ()string {return _gf .Sprintf ("\u0025\u0073\u0021\u0025\u0073\u003a\u0025\u0073",_ggbad ._fdgbe .String (),_ggbad ._adfgb ,_ggbad ._caagf );};
+
+// Averagea implements the AVERAGEA function, AVERAGEA counts cells that contain
+// text as a zero where AVERAGE ignores them entirely.
+func Averagea (args []Result )Result {_bfff ,_gaafe :=_befd (args ,true );if _gaafe ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0041\u0056\u0045\u0052AG\u0045\u0020\u0064\u0069\u0076\u0069\u0064\u0065\u0020\u0062\u0079\u0020\u007a\u0065r\u006f");
+};return MakeNumberResult (_bfff /_gaafe );};
+
+// Even is an implementation of the Excel EVEN() that rounds a number to the
+// nearest even integer.
+func Even (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0045\u0056\u0045\u004e(\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");};_aecbf :=args [0].AsNumber ();
+if _aecbf .Type !=ResultTypeNumber {return MakeErrorResult ("\u0045\u0056\u0045N\u0028\u0029\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");};_aacfe :=_d .Signbit (_aecbf .ValueNumber );
+_gabfa ,_ggdcb :=_d .Modf (_aecbf .ValueNumber /2);_babe :=_gabfa *2;if _ggdcb !=0{if !_aacfe {_babe +=2;}else {_babe -=2;};};return MakeNumberResult (_babe );};
+
+// RoundUp is an implementation of the Excel ROUNDUP function that rounds a number
+// up to a specified number of digits.
+func RoundUp (args []Result )Result {return _bbaa (args ,_ddbg )};
 
 // Base is an implementation of the Excel BASE function that returns a string
 // form of an integer in a specified base and of a minimum length with padded
 // zeros.
 func Base (args []Result )Result {if len (args )< 2{return MakeErrorResult ("\u0042\u0041\u0053\u0045\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074 \u0074\u0077\u006f\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
-};if len (args )> 3{return MakeErrorResult ("\u0042\u0041S\u0045\u0028\u0029\u0020a\u006c\u006co\u0077\u0073\u0020\u0061\u0074\u0020\u006d\u006fs\u0074\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");};_adcg :=args [0].AsNumber ();
-if _adcg .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072\u0073\u0074 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0042A\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_acdd :=args [1].AsNumber ();if _acdd .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063o\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0042\u0041\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_bgcee :=int (_acdd .ValueNumber );if _bgcee < 0||_bgcee > 36{return MakeErrorResult ("\u0072\u0061\u0064\u0069\u0078\u0020m\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0069\u006e\u0020\u0074\u0068\u0065 \u0072\u0061\u006e\u0067\u0065\u0020\u005b0\u002c\u0033\u0036\u005d");
-};_dbebb :=0;if len (args )> 2{_adcb :=args [2].AsNumber ();if _adcb .Type !=ResultTypeNumber {return MakeErrorResult ("\u0074\u0068\u0069\u0072\u0064 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0042A\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_dbebb =int (_adcb .ValueNumber );};_cfdeb :=_fce .FormatInt (int64 (_adcg .ValueNumber ),_bgcee );if len (_cfdeb )< _dbebb {_cfdeb =_bcd .Repeat ("\u0030",_dbebb -len (_cfdeb ))+_cfdeb ;};return MakeStringResult (_cfdeb );};var _eagb []byte =[]byte {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,69,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+};if len (args )> 3{return MakeErrorResult ("\u0042\u0041S\u0045\u0028\u0029\u0020a\u006c\u006co\u0077\u0073\u0020\u0061\u0074\u0020\u006d\u006fs\u0074\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");};_adde :=args [0].AsNumber ();
+if _adde .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072\u0073\u0074 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0042A\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_fgegf :=args [1].AsNumber ();if _fgegf .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063o\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0042\u0041\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_ffaa :=int (_fgegf .ValueNumber );if _ffaa < 0||_ffaa > 36{return MakeErrorResult ("\u0072\u0061\u0064\u0069\u0078\u0020m\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0069\u006e\u0020\u0074\u0068\u0065 \u0072\u0061\u006e\u0067\u0065\u0020\u005b0\u002c\u0033\u0036\u005d");
+};_faaa :=0;if len (args )> 2{_caaca :=args [2].AsNumber ();if _caaca .Type !=ResultTypeNumber {return MakeErrorResult ("\u0074\u0068\u0069\u0072\u0064 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0042A\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_faaa =int (_caaca .ValueNumber );};_aefd :=_fd .FormatInt (int64 (_adde .ValueNumber ),_ffaa );if len (_aefd )< _faaa {_aefd =_e .Repeat ("\u0030",_faaa -len (_aefd ))+_aefd ;};return MakeStringResult (_aefd );};func _fdbc (_cba ,_ffg float64 ,_aaa int )(float64 ,Result ){_ggb ,_fff :=_ded (_cba ),_ded (_ffg );
+_gfge :=_ggb .Unix ();_bbb :=_fff .Unix ();if _gfge ==_bbb {return 0,_fcea ;};_ceddb ,_cbg ,_ebf :=_ggb .Date ();_aaea ,_eegf ,_bee :=_fff .Date ();_bfdf ,_eagc :=int (_cbg ),int (_eegf );var _ddbf ,_aba float64 ;switch _aaa {case 0:if _ebf ==31{_ebf --;
+};if _ebf ==30&&_bee ==31{_bee --;}else if _edec :=_bgea (_ceddb );_bfdf ==2&&((_edec &&_ebf ==29)||(!_edec &&_ebf ==28)){_ebf =30;if _bbd :=_bgea (_aaea );_eagc ==2&&((_bbd &&_bee ==29)||(!_bbd &&_bee ==28)){_bee =30;};};_ddbf =float64 ((_aaea -_ceddb )*360+(_eagc -_bfdf )*30+(_bee -_ebf ));
+_aba =360;case 1:_ddbf =_ffg -_cba ;_cegdee :=_ceddb !=_aaea ;if _cegdee &&(_aaea !=_ceddb +1||_bfdf < _eagc ||(_bfdf ==_eagc &&_ebf < _bee )){_aef :=0;for _edfa :=_ceddb ;_edfa <=_aaea ;_edfa ++{_aef +=_cfab (_edfa ,1);};_aba =float64 (_aef )/float64 (_aaea -_ceddb +1);
+}else {if !_cegdee &&_bgea (_ceddb ){_aba =366;}else {if _cegdee &&((_bgea (_ceddb )&&(_bfdf < 2||(_bfdf ==2&&_ebf <=29)))||(_bgea (_aaea )&&(_eagc > 2||(_eagc ==2&&_bee ==29)))){_aba =366;}else {_aba =365;};};};case 2:_ddbf =_ffg -_cba ;_aba =360;case 3:_ddbf =_ffg -_cba ;
+_aba =365;case 4:if _ebf ==31{_ebf --;};if _bee ==31{_bee --;};_ddbf =float64 ((_aaea -_ceddb )*360+(_eagc -_bfdf )*30+(_bee -_ebf ));_aba =360;default:return 0,MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0062\u0061\u0073\u0069\u0073 \u0066o\u0072\u0020\u0059\u0065\u0061\u0072\u0046r\u0061\u0063");
+};return _ddbf /_aba ,_fcea ;};func (_feee HorizontalRange )horizontalRangeReference ()string {return _gf .Sprintf ("\u0025\u0064\u003a%\u0064",_feee ._caag ,_feee ._fegba );};
 
+// Degrees is an implementation of the Excel function DEGREES() that converts
+// radians to degrees.
+func Degrees (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0044\u0045\u0047R\u0045\u0045\u0053\u0028)\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_effd :=args [0].AsNumber ();if _effd .Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0045\u0047RE\u0045\u0053\u0028\u0029\u0020\u0072\u0065\u0071\u0075i\u0072e\u0073 \u006eu\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};return MakeNumberResult (180.0/_d .Pi *_effd .ValueNumber );};func _fc (_ced BinOpType ,_fca ,_fg [][]Result )Result {_cd :=[][]Result {};for _geb :=range _fca {_aa :=_gg (_ced ,_fca [_geb ],_fg [_geb ]);if _aa .Type ==ResultTypeError {return _aa ;};
+_cd =append (_cd ,_aa .ValueList );};return MakeArrayResult (_cd );};const _acfgg int =30;const _caafe =57361;
 
-// Log implements the Excel LOG function which returns the log of a number. By
-// default the result is base 10, however the second argument to the function
-// can specify a different base.
-func Log (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u004cO\u0047\u0028)\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074 o\u006e\u0065\u0020n\u0075\u006de\u0072\u0069\u0063\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
-};if len (args )> 2{return MakeErrorResult ("L\u004f\u0047\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u006d\u0061\u0078i\u006d\u0075\u006d\u0020\u006f\u0066\u0020\u0074\u0077\u006f a\u0072\u0067\u0075m\u0065n\u0074\u0073");
-};_bcedg :=args [0].AsNumber ();if _bcedg .Type !=ResultTypeNumber {return MakeErrorResult ("\u004cO\u0047\u0028)\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074 o\u006e\u0065\u0020n\u0075\u006de\u0072\u0069\u0063\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
-};_bcff :=10.0;if len (args )> 1{_ebfc :=args [1].AsNumber ();if _ebfc .Type !=ResultTypeNumber {return MakeErrorResult ("\u004cO\u0047\u0028)\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061rg\u0075\u006d\u0065n\u0074\u0020t\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0065r\u0069\u0063");
-};_bcff =args [1].ValueNumber ;};if _bcedg .ValueNumber ==0{return MakeErrorResult ("\u004cO\u0047\u0028)\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s\u0020\u0066\u0069\u0072\u0073\u0074\u0020\u0061\u0072gu\u006d\u0065\u006et\u0020\u0074o\u0020\u0062\u0065\u0020\u006e\u006fn\u002d\u007ae\u0072\u006f");
-};if _bcff ==0{return MakeErrorResult ("\u004cO\u0047\u0028)\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0073e\u0063\u006f\u006e\u0064\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062e\u0020\u006e\u006f\u006e\u002d\u007a\u0065\u0072\u006f");
-};return MakeNumberResult (_d .Log (_bcedg .ValueNumber )/_d .Log (_bcff ));};
-
-// SumIf implements the SUMIF function.
-func SumIf (args []Result )Result {if len (args )< 3{return MakeErrorResult ("\u0053\u0055\u004d\u0049\u0046\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0074\u0068\u0072e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");};
-_bfece :=args [0];if _bfece .Type !=ResultTypeArray &&_bfece .Type !=ResultTypeList {return MakeErrorResult ("\u0053\u0055\u004d\u0049\u0046\u0020\u0072e\u0071\u0075\u0069r\u0065\u0073\u0020\u0066i\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
-};_ebgbc :=_badg (_bfece );_abca :=args [2];if _abca .Type !=ResultTypeArray &&_abca .Type !=ResultTypeList {return MakeErrorResult ("\u0053\u0055\u004dI\u0046\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0061\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074y\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
-};_abaf :=_badg (_abca );_adbbe :=_deda (args [1]);_febg :=0.0;for _ddbag ,_ebfgf :=range _ebgbc {for _gfag ,_ceeaf :=range _ebfgf {if _aacb (_ceeaf ,_adbbe ){_febg +=_abaf [_ddbag ][_gfag ].ValueNumber ;};};};return MakeNumberResult (_febg );};const _gaab =187;
-const _cagdc =57348;func (_ggffa node )String ()string {return _b .Sprintf ("\u007b%\u0073\u0020\u0025\u0073\u007d",_ggffa ._beabb ,_dcbbf (string (_ggffa ._cafdf )));};func _dbc (_ecag string )bool {for _ ,_fcea :=range _fdd {_deed :=_fcea .FindStringSubmatch (_ecag );
-if len (_deed )> 1{return true ;};};return false ;};
-
-// Ispmt implements the Excel ISPMT function.
-func Ispmt (args []Result )Result {if len (args )!=4{return MakeErrorResult ("\u0049\u0053P\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u006f\u0075\u0072\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0073");};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0053\u0050\u004d\u0054 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_efdb :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0053\u0050\u004d\u0054\u0020\u0072e\u0071\u0075\u0069r\u0065\u0073\u0020\u0070e\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_adea :=args [1].ValueNumber ;if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0053\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0070\u0065\u0072\u0069o\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006dbe\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_dbd :=args [2].ValueNumber ;if _dbd <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0049S\u0050\u004d\u0054\u0020\u0072\u0065\u0071ui\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020p\u0065\u0072i\u006f\u0064\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006eu\u006d\u0062er\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0053\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065s\u0065\u006e\u0074\u0020\u0076\u0061\u006cu\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gdca :=args [3].ValueNumber ;return MakeNumberResult (_gdca *_efdb *(_adea /_dbd -1));};
-
-// ISNUMBER is an implementation of the Excel ISNUMBER() function.
-func IsNumber (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053NU\u004d\u0042\u0045R\u0028\u0029\u0020\u0061cce\u0070ts\u0020\u0061\u0020\u0073\u0069\u006e\u0067le\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");};return MakeBoolResult (args [0].Type ==ResultTypeNumber );
-};func _cbae (_cafg ,_bce ,_gee int )bool {if _bce < 1||_bce > 12{return false ;};if _gee < 1{return false ;};return _gee <=_affb (_cafg ,_bce );};
-
-// Eval evaluates and returns the result of a function call.
-func (_bccg FunctionCall )Eval (ctx Context ,ev Evaluator )Result {_cffe :=LookupFunction (_bccg ._ffgb );if _cffe !=nil {_ggge :=make ([]Result ,len (_bccg ._ebga ));for _bcaaf ,_ccfde :=range _bccg ._ebga {_ggge [_bcaaf ]=_ccfde .Eval (ctx ,ev );_ggge [_bcaaf ].Ref =_ccfde .Reference (ctx ,ev );
-};if _ ,_gddfg :=_gagfb [_bccg ._ffgb ];!_gddfg {if _ffegb ,_bcfa :=_ggeeb (_ggge );_ffegb {return _bcfa ;};};return _cffe (_ggge );};_gbfd :=LookupFunctionComplex (_bccg ._ffgb );if _gbfd !=nil {_gccf :=make ([]Result ,len (_bccg ._ebga ));for _cgca ,_cafea :=range _bccg ._ebga {_gccf [_cgca ]=_cafea .Eval (ctx ,ev );
-_gccf [_cgca ].Ref =_cafea .Reference (ctx ,ev );};if _ ,_cdcfd :=_gagfb [_bccg ._ffgb ];!_cdcfd {if _dceba ,_cfgdd :=_ggeeb (_gccf );_dceba {return _cfgdd ;};};return _gbfd (ctx ,ev ,_gccf );};return MakeErrorResult ("\u0075\u006e\u006b\u006e\u006f\u0077\u006e\u0020\u0066\u0075\u006e\u0063t\u0069\u006f\u006e\u0020"+_bccg ._ffgb );
-};
-
-// Syd implements the Excel SYD function.
-func Syd (args []Result )Result {if len (args )!=4{return MakeErrorResult ("S\u0059\u0044\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0066\u006f\u0075\u0072 \u0061\u0072\u0067u\u006de\u006e\u0074\u0073");};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0059\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020c\u006f\u0073\u0074\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_ceef :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0059\u0044 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061\u0067\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_ffbe :=args [1].ValueNumber ;if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0059\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020l\u0069\u0066\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_cfba :=args [2].ValueNumber ;if _cfba <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0053\u0059\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0069f\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0059\u0044\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_ebbce :=args [3].ValueNumber ;if _ebbce <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0053\u0059\u0044 r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070e\u0072i\u006fd\u0020t\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
-};if _ebbce > _cfba {return MakeErrorResultType (ErrorTypeNum ,"\u0053\u0059\u0044\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0065q\u0075\u0061\u006c\u0020\u006f\u0072\u0020\u006c\u0065\u0073\u0073\u0020\u0074\u0068a\u006e \u006c\u0069\u0066\u0065");
-};_ada :=(_ceef -_ffbe )*(_cfba -_ebbce +1)*2;_eaaf :=_cfba *(_cfba +1);return MakeNumberResult (_ada /_eaaf );};var _aede =[...]int {0,0,71,70,69,4,67,66,53,51,50,49,48,47,46,45,44,2};func (_cbef *Lexer )Next ()*node {_cbef ._gaad .Lock ();defer _cbef ._gaad .Unlock ();
-if len (_cbef ._bagea )> 0{_ddadb :=_cbef ._bagea [0];_cbef ._bagea =_cbef ._bagea [1:];return _ddadb ;};return _cbef .nextRaw ();};func _cbeee (_agfe ,_ecab ,_ffbfb ,_ggfe ,_agcf ,_cegb float64 ,_gbca int )(float64 ,Result ){_gdad :=int (_cegb );_ddaeb :=_ded (_agfe ,_ecab ,_gdad ,_gbca );
-_dcggc :=_gbdd (_agfe ,_ecab ,_gdad ,_gbca )/_ddaeb ;_ddga ,_cacgg :=_fgbd (_agfe ,_ecab ,_gdad ,_gbca );if _cacgg .Type ==ResultTypeError {return 0,_cacgg ;};_dada :=_bebff (_agfe ,_ecab ,_gdad ,_gbca );_fadg :=_agcf /_d .Pow (1+_ggfe /_cegb ,_ddga -1+_dcggc );
-_fadg -=100*_ffbfb /_cegb *_dada /_ddaeb ;_cefd :=100*_ffbfb /_cegb ;_ceggfb :=1+_ggfe /_cegb ;for _gecd :=0.0;_gecd < _ddga ;_gecd ++{_fadg +=_cefd /_d .Pow (_ceggfb ,_gecd +_dcggc );};return _fadg ,MakeEmptyResult ();};
-
-// Reference returns a string reference value to a range with prefix.
-func (_fcfdc PrefixRangeExpr )Reference (ctx Context ,ev Evaluator )Reference {_fgbg :=_fcfdc ._fgcba .Reference (ctx ,ev );_dfbeb :=_fcfdc ._bgacf .Reference (ctx ,ev );_gecfg :=_fcfdc ._fabf .Reference (ctx ,ev );if _fgbg .Type ==ReferenceTypeSheet &&_dfbeb .Type ==ReferenceTypeCell &&_gecfg .Type ==ReferenceTypeCell {return MakeRangeReference (_egffg (_fgbg ,_dfbeb ,_gecfg ));
-};return ReferenceInvalid ;};func _eebfc (_dfag string ,_egade _g .Time )(_g .Time ,error ){_acbg ,_ ,_eag :=_ef .ParseFloat (_dfag ,10,128,_ef .ToNearestEven );if _eag !=nil {return _g .Time {},_eag ;};_efegc :=new (_ef .Float );_efegc .SetUint64 (uint64 (24*_g .Hour ));
-_acbg .Mul (_acbg ,_efegc );_dcddc ,_ :=_acbg .Uint64 ();_cbcc :=_egade .Add (_g .Duration (_dcddc ));return _efaa (_cbcc ),nil ;};
-
-// RoundUp is an implementation of the Excel ROUNDUP function that rounds a number
-// up to a specified number of digits.
-func RoundUp (args []Result )Result {return _eggd (args ,_caeb )};
-
-// Value is an implementation of the Excel VALUE function.
-func Value (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0056\u0041\u004c\u0055\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020a\u0020s\u0069\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_agfb :=args [0];if _agfb .Type ==ResultTypeNumber {return _agfb ;};if _agfb .Type ==ResultTypeString {_acdg ,_gagdc :=_fce .ParseFloat (_agfb .Value (),64);if _gagdc ==nil {return MakeNumberResult (_acdg );};};return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0056\u0041L\u0055\u0045");
-};
-
-// NA is an implementation of the Excel NA() function that just returns the #N/A! error.
-func NA (args []Result )Result {if len (args )!=0{return MakeErrorResult ("\u004eA\u0028\u0029\u0020\u0061c\u0063\u0065\u0070\u0074\u0073 \u006eo\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074s");};return MakeErrorResultType (ErrorTypeNA ,"");};var _dabg =[...]struct{_dfggf int ;
-_aaac int ;_fgbcb string ;}{};
-
-// Eval evaluates and returns a boolean.
-func (_ed Bool )Eval (ctx Context ,ev Evaluator )Result {return MakeBoolResult (_ed ._dca )};
-
-// SumIfs implements the SUMIFS function.
-func SumIfs (args []Result )Result {_gdgce :=_fgff (args ,true ,"\u0053\u0055\u004d\u0049\u0046\u0053");if _gdgce .Type !=ResultTypeEmpty {return _gdgce ;};_fbdb :=_dddc (args [1:]);_dfca :=0.0;_ebcc :=_badg (args [0]);for _ ,_dggf :=range _fbdb {_dfca +=_ebcc [_dggf ._cacd ][_dggf ._gdab ].ValueNumber ;
-};return MakeNumberResult (float64 (_dfca ));};
-
-// Update returns the same object as updating sheet references does not affect EmptyExpr.
-func (_fb EmptyExpr )Update (q *_a .UpdateQuery )Expression {return _fb };
-
-// Pricemat implements the Excel PRICEMAT function.
-func Pricemat (args []Result )Result {_ddfa :=len (args );if _ddfa !=5&&_ddfa !=6{return MakeErrorResult ("\u0050\u0052\u0049\u0043\u0045\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0066\u0069v\u0065\u0020\u006f\u0072\u0020\u0073\u0069\u0078\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_fabc ,_gaea ,_edbad :=_fbae (args [0],args [1],"\u0050\u0052\u0049\u0043\u0045\u004d\u0041\u0054");if _edbad .Type ==ResultTypeError {return _edbad ;};_gabd ,_edbad :=_cdde (args [2],"\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065","\u0050\u0052\u0049\u0043\u0045\u004d\u0041\u0054");
-if _edbad .Type ==ResultTypeError {return _edbad ;};if _gabd >=_fabc {return MakeErrorResult ("\u0050\u0052\u0049\u0043E\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062e\u0020\u0062\u0065\u0066\u006fr\u0065\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074\u0065");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052I\u0043\u0045\u004d\u0041T\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072a\u0074\u0065\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_feae :=args [3].ValueNumber ;if _feae < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0052\u0049\u0043\u0045M\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072a\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u006e\u0065\u0067\u0061\u0074\u0069\u0076\u0065");
-};if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052\u0049\u0043\u0045\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0079\u0069\u0065\u006c\u0064\u0020o\u0066\u0020\u0074\u0079\u0070e\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_dfg :=args [4].ValueNumber ;if _dfg < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0052\u0049C\u0045\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0079\u0069\u0065\u006c\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e \u006e\u0065\u0067\u0061\u0074\u0069\u0076\u0065");
-};_gfbg :=0;if _ddfa ==6&&args [5].Type !=ResultTypeEmpty {if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050R\u0049\u0043E\u004d\u0041\u0054 \u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0062\u0061\u0073\u0069\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gfbg =int (args [5].ValueNumber );if !_feeb (_gfbg ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065c\u0074\u0020b\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u0050\u0052\u0049C\u0045\u004d\u0041\u0054");
-};};_cada ,_edbad :=_gad (_fabc ,_gaea ,_gfbg );if _edbad .Type ==ResultTypeError {return _edbad ;};_gdfb ,_edbad :=_gad (_gabd ,_gaea ,_gfbg );if _edbad .Type ==ResultTypeError {return _edbad ;};_dgdf ,_edbad :=_gad (_gabd ,_fabc ,_gfbg );if _edbad .Type ==ResultTypeError {return _edbad ;
-};_eaa :=1+_gdfb *_feae ;_dccgf :=1+_cada *_dfg ;return MakeNumberResult ((_eaa /_dccgf -_dgdf *_feae )*100);};
-
-// Duration implements the Excel DURATION function.
-func Duration (args []Result )Result {_fbdf ,_fdeb :=_dfbg (args ,"\u0044\u0055\u0052\u0041\u0054\u0049\u004f\u004e");if _fdeb .Type ==ResultTypeError {return _fdeb ;};_caea :=_fbdf ._cfe ;_fbda :=_fbdf ._cef ;_bcde :=_fbdf ._cegad ;_agfa :=_fbdf ._bfad ;
-_fedb :=_fbdf ._dgc ;_bdag :=_fbdf ._gafg ;return _abg (_caea ,_fbda ,_bcde ,_agfa ,_fedb ,_bdag );};
-
-// Update returns the same object as updating sheet references does not affect Bool.
-func (_bg Bool )Update (q *_a .UpdateQuery )Expression {return _bg };var _afbg *_ec .Rand ;
-
-// Nominal implements the Excel NOMINAL function.
-func Nominal (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u004e\u004f\u004d\u0049\u004e\u0041\u004c\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074w\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("NO\u004d\u0049N\u0041\u004c\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006e\u006f\u006d\u0069\u006e\u0061\u006c\u0020\u0069\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062e\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072g\u0075m\u0065\u006et");
-};_bbag :=args [0].ValueNumber ;if _bbag <=0{return MakeErrorResultType (ErrorTypeNum ,"\u004e\u004fM\u0049\u004e\u0041\u004c\u0020r\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0065\u0066\u0066\u0065\u0063\u0074\u0020\u0069\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
-};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u004e\u004f\u004d\u0049\u004e\u0041\u004c\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u006f\u0066\u0020\u0063\u006f\u006d\u0070\u006f\u0075\u006e\u0064\u0069\u006e\u0067\u0020\u0070\u0065\u0072i\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062e\u0072\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074");
-};_eccfa :=float64 (int (args [1].ValueNumber ));if _eccfa < 1{return MakeErrorResultType (ErrorTypeNum ,"\u004e\u004f\u004d\u0049\u004e\u0041\u004c\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006eum\u0062e\u0072\u0020\u006f\u0066\u0020\u0063\u006f\u006d\u0070\u006f\u0075\u006ed\u0069\u006e\u0067\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065 \u0031\u0020\u006f\u0072\u0020\u006d\u006f\u0072\u0065");
-};return MakeNumberResult ((_d .Pow (_bbag +1,1/_eccfa )-1)*_eccfa );};const _bcefd =16;func _fcg (_fbd int )bool {return _fbd ==0||_fbd ==4};var _fgcg =[...]int {0,-2,1,2,0,0,0,0,11,12,13,14,0,16,5,6,7,8,22,0,24,46,0,26,25,29,30,31,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,18,20,9,10,0,0,23,32,33,47,0,49,51,34,35,36,37,38,39,40,41,42,43,44,45,0,17,0,0,15,27,0,48,53,4,19,21,28,50,52};
-
-
-// Proper is an implementation of the Excel PROPER function that returns a copy
+// Mid is an implementation of the Excel MID function that returns a copy
 // of the string with each word capitalized.
-func Proper (args []Result )Result {if len (args )!=1{return MakeErrorResult ("P\u0052\u004f\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073i\u006e\u0067\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006eg \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_edfad :=args [0].AsString ();if _edfad .Type !=ResultTypeString {return MakeErrorResult ("P\u0052\u004f\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073i\u006e\u0067\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006eg \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_fbefa :=_e .Buffer {};_gecdc :=false ;for _ ,_gfaab :=range _edfad .ValueString {if !_gecdc &&_c .IsLetter (_gfaab ){_fbefa .WriteRune (_c .ToUpper (_gfaab ));}else {_fbefa .WriteRune (_c .ToLower (_gfaab ));};_gecdc =_c .IsLetter (_gfaab );};return MakeStringResult (_fbefa .String ());
-};
+func Mid (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u004d\u0049\u0044\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068r\u0065e\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074\u0073");};_bdfb :=args [0];if _bdfb .Type ==ResultTypeError {return _bdfb ;
+};if _bdfb .Type !=ResultTypeString &&_bdfb .Type !=ResultTypeNumber &&_bdfb .Type !=ResultTypeEmpty {return MakeErrorResult ("\u004d\u0049\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0065x\u0074 \u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u0073\u0074\u0072\u0069\u006e\u0067");
+};_gdbgd :=args [0].Value ();if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u0049D\u0020\u0072\u0065\u0071u\u0069\u0072e\u0073\u0020\u0073\u0074\u0061\u0072\u0074\u005fn\u0075\u006d\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_ebceb :=int (args [1].ValueNumber );if _ebceb < 1{return MakeErrorResult ("M\u0049\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0074\u0061\u0072\u0074\u005fn\u0075\u006d\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006dor\u0065\u0020\u0074h\u0061n\u0020\u0030");
+};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u0049D\u0020\u0072\u0065\u0071u\u0069\u0072e\u0073\u0020\u006e\u0075\u006d\u005f\u0063\u0068a\u0072\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_gecf :=int (args [2].ValueNumber );if _gecf < 0{return MakeErrorResult ("\u004d\u0049\u0044\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u005f\u0063\u0068a\u0072\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u006e\u0065\u0067\u0061\u0074\u0069\u0076\u0065");
+};_ddfab :=len (_gdbgd );if _ebceb > _ddfab {return MakeStringResult ("");};_ebceb --;_fade :=_ebceb +_gecf ;if _fade > _ddfab {return MakeStringResult (_gdbgd [_ebceb :]);}else {return MakeStringResult (_gdbgd [_ebceb :_fade ]);};};
 
-// Coupnum implements the Excel COUPNUM function.
-func Coupnum (args []Result )Result {_cdce ,_dcgb :=_fcge (args ,"\u0043O\u0055\u0050\u004e\u0055\u004d");if _dcgb .Type ==ResultTypeError {return _dcgb ;};_fcfe :=_cdce ._fdf ;_cacf :=_cdce ._fgae ;_gedb ,_dcgb :=_fgbd (_cdce ._dbeb ,_cdce ._bfbe ,_fcfe ,_cacf );
-if _dcgb .Type ==ResultTypeError {return _dcgb ;};return MakeNumberResult (_gedb );};
-
-// String returns a string representation of a vertical range.
-func (_becd VerticalRange )String ()string {return _becd .verticalRangeReference ()};
-
-// Lookup implements the LOOKUP function that returns a matching value from a
-// column, or from the same index in a second column.
-func Lookup (args []Result )Result {if len (args )< 2{return MakeErrorResult ("\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074 \u0074\u0077\u006f\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
-};if len (args )> 3{return MakeErrorResult ("\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0061\u0074\u0020\u006do\u0073\u0074\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_cdcf :=args [0];_bbab :=args [1];if _bbab .Type !=ResultTypeArray &&_bbab .Type !=ResultTypeList {return MakeErrorResult ("\u0056\u004cO\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
-};_aaeac :=_ggbba (_bbab );_eef :=-1;for _fgagb ,_aeag :=range _aaeac {if _dgdb (_cdcf ,_aeag ,false ,false )==_bfggb {_eef =_fgagb ;};};if _eef ==-1{return MakeErrorResultType (ErrorTypeNA ,"\u004c\u004f\u004f\u004bUP\u0020\u006e\u006f\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0066\u006f\u0075n\u0064");
-};_feba :=_aaeac ;if len (args )==3{_feba =_ggbba (args [2]);};if _eef < 0||_eef >=len (_feba ){return MakeErrorResultType (ErrorTypeNA ,"\u004c\u004f\u004f\u004bUP\u0020\u006e\u006f\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0066\u006f\u0075n\u0064");
-};return _feba [_eef ];};
-
-// Median implements the MEDIAN function that returns the median of a range of
-// values.
-func Median (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u004d\u0045D\u0049\u0041\u004e\u0020r\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020l\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_ffagd :=_fedgc (args );_ca .Float64s (_ffagd );var _abgde float64 ;if len (_ffagd )%2==0{_abgde =(_ffagd [len (_ffagd )/2-1]+_ffagd [len (_ffagd )/2])/2;}else {_abgde =_ffagd [len (_ffagd )/2];};return MakeNumberResult (_abgde );};
-
-// Eval evaluates and returns the result of the cell reference.
-func (_cdd CellRef )Eval (ctx Context ,ev Evaluator )Result {return ctx .Cell (_cdd ._bge ,ev )};
-
-// Upper is an implementation of the Excel UPPER function that returns a upper
-// case version of a string.
-func Upper (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0055\u0050\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0061\u0020\u0073\u0069\u006eg\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_cbfbc :=args [0].AsString ();if _cbfbc .Type !=ResultTypeString {return MakeErrorResult ("\u0055\u0050\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0061\u0020\u0073\u0069\u006eg\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};return MakeStringResult (_bcd .ToUpper (_cbfbc .ValueString ));};var _feeef =[]ri {{1000,"\u004d"},{999,"\u0049\u004d"},{995,"\u0056\u004d"},{990,"\u0058\u004d"},{950,"\u004c\u004d"},{900,"\u0043\u004d"},{500,"\u0044"},{499,"\u0049\u0044"},{495,"\u0056\u0044"},{490,"\u0058\u0044"},{450,"\u004c\u0044"},{400,"\u0043\u0044"},{100,"\u0043"},{99,"\u0049\u0043"},{90,"\u0058\u0043"},{50,"\u004c"},{45,"\u0056\u004c"},{40,"\u0058\u004c"},{10,"\u0058"},{9,"\u0049\u0058"},{5,"\u0056"},{4,"\u0049\u0056"},{1,"\u0049"}};
-
-
-// Tbilleq implements the Excel TBILLEQ function.
-func Tbilleq (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u0054\u0042\u0049\u004c\u004c\u0045\u0051\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020t\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_cgb ,_aege ,_cdcea :=_fbae (args [0],args [1],"\u0054B\u0049\u004c\u004c\u0045\u0051");if _cdcea .Type ==ResultTypeError {return _cdcea ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("T\u0042\u0049\u004c\u004c\u0045\u0051\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0064is\u0063\u006f\u0075\u006et\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_bgbcd :=_aege -_cgb ;if _bgbcd > 365{return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0042\u0049\u004c\u004c\u0045\u0051\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006d\u0061\u0074\u0075\u0072\u0069\u0074\u0079\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eo\u0074\u0020m\u006f\u0072e\u0020\u0074\u0068\u0061\u006e\u0020\u006f\u006e\u0065\u0020\u0079\u0065\u0061r \u0061\u0066\u0074\u0065\u0072\u0020\u0073\u0065\u0074t\u006c\u0065\u006d\u0065\u006e\u0074");
-};_cfac :=args [2].ValueNumber ;if _cfac <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0042\u0049\u004c\u004c\u0045Q\u0020\u0072\u0065q\u0075\u0069\u0072e\u0073\u0020\u0064\u0069\u0073\u0063\u006f\u0075\u006e\u0074 \u0074\u006f\u0020\u0062\u0065 p\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};return MakeNumberResult ((365*_cfac )/(360-_cfac *_bgbcd ));};func _gdc (_fegg ,_aefe int )int {switch _aefe {case 1:if _cbca (_fegg ){return 366;}else {return 365;};case 3:return 365;default:return 360;};};func _dgfb (_caae ,_dbfg ,_fefc ,_bfaf float64 ,_cbgg int )float64 {var _aaddg float64 ;
-if _caae ==0{_aaddg =_bfaf +_fefc *_dbfg ;}else {_eabg :=_d .Pow (1+_caae ,_dbfg );if _cbgg ==1{_aaddg =_bfaf *_eabg +_fefc *(1+_caae )*(_eabg -1)/_caae ;}else {_aaddg =_bfaf *_eabg +_fefc *(_eabg -1)/_caae ;};};return -_aaddg ;};
-
-// Coupdaybs implements the Excel COUPDAYBS function.
-func Coupdaybs (args []Result )Result {_dbb ,_geg :=_fcge (args ,"\u0043O\u0055\u0050\u0044\u0041\u0059\u0042S");if _geg .Type ==ResultTypeError {return _geg ;};return MakeNumberResult (_bebff (_dbb ._dbeb ,_dbb ._bfbe ,_dbb ._fdf ,_dbb ._fgae ));};type yyLexer interface{Lex (_ebgd *yySymType )int ;
-Error (_ccaa string );};func init (){_ecd ();RegisterFunction ("\u0044\u0041\u0054\u0045",Date );RegisterFunction ("\u0044A\u0054\u0045\u0044\u0049\u0046",DateDif );RegisterFunction ("\u0044A\u0054\u0045\u0056\u0041\u004c\u0055E",DateValue );RegisterFunction ("\u0044\u0041\u0059",Day );
-RegisterFunction ("\u0044\u0041\u0059\u0053",Days );RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0044\u0041\u0059\u0053",Days );RegisterFunction ("\u0045\u0044\u0041T\u0045",Edate );RegisterFunction ("\u0045O\u004d\u004f\u004e\u0054\u0048",Eomonth );
-RegisterFunction ("\u004d\u0049\u004e\u0055\u0054\u0045",Minute );RegisterFunction ("\u004d\u004f\u004eT\u0048",Month );RegisterFunction ("\u004e\u004f\u0057",Now );RegisterFunction ("\u0054\u0049\u004d\u0045",Time );RegisterFunction ("\u0054I\u004d\u0045\u0056\u0041\u004c\u0055E",TimeValue );
-RegisterFunction ("\u0054\u004f\u0044A\u0059",Today );RegisterFunctionComplex ("\u0059\u0045\u0041\u0052",Year );RegisterFunction ("\u0059\u0045\u0041\u0052\u0046\u0052\u0041\u0043",YearFrac );};
-
-// Right implements the Excel RIGHT(string,[n]) function which returns the
-// rightmost n characters.
-func Right (args []Result )Result {_bbgfb :=1;switch len (args ){case 1:case 2:if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0049\u0047\u0048\u0054\u0020\u0065\u0078\u0070\u0065c\u0074\u0065\u0064\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_bbgfb =int (args [1].ValueNumber );if _bbgfb < 0{return MakeErrorResult ("R\u0049\u0047\u0048\u0054\u0020\u0065x\u0070\u0065\u0063\u0074\u0065\u0064 \u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u003e\u003d \u0030");
-};if _bbgfb ==0{return MakeStringResult ("");};default:return MakeErrorResult ("\u0052\u0049\u0047HT\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020o\u006ee\u0020o\u0072 \u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if args [0].Type ==ResultTypeList {return MakeErrorResult ("\u0052\u0049\u0047\u0048\u0054\u0020\u0063\u0061\u006e\u0027\u0074\u0020\u0062\u0065\u0020c\u0061l\u006c\u0065\u0064\u0020\u006f\u006e\u0020\u0061\u0020\u0072\u0061\u006e\u0067\u0065");};_gbcg :=args [0].Value ();
-_aeff :=len (_gbcg );if _bbgfb > _aeff {return MakeStringResult (_gbcg );};return MakeStringResult (_gbcg [_aeff -_bbgfb :_aeff ]);};func (_ddc *evCache )SetCache (key string ,value Result ){_ddc ._acd .Lock ();_ddc ._caf [key ]=value ;_ddc ._acd .Unlock ();
-};
-
-// And is an implementation of the Excel AND() function.
-func And (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0041\u004e\u0044 r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061t\u0020l\u0065a\u0073t\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gdagb :=true ;for _ ,_aeaf :=range args {_aeaf =_aeaf .AsNumber ();switch _aeaf .Type {case ResultTypeList ,ResultTypeArray :_acfc :=And (_aeaf .ListValues ());if _acfc .Type ==ResultTypeError {return _acfc ;};if _acfc .ValueNumber ==0{_gdagb =false ;
-};case ResultTypeNumber :if _aeaf .ValueNumber ==0{_gdagb =false ;};case ResultTypeString :return MakeErrorResult ("\u0041\u004e\u0044\u0020\u0064\u006f\u0065\u0073\u006e\u0027t\u0020\u006f\u0070\u0065\u0072\u0061\u0074e\u0020\u006f\u006e\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0073");
-case ResultTypeError :return _aeaf ;default:return MakeErrorResult ("\u0075\u006e\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u0061\u0072\u0067u\u006de\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0069\u006e\u0020\u0041\u004e\u0044");
-};};return MakeBoolResult (_gdagb );};func _dcdd (_abffa ,_baga float64 )bool {return _d .Abs (_abffa -_baga )< 1.0e-6};var InvalidReferenceContext =&ivr {};
-
-// Clean is an implementation of the Excel CLEAN function that removes
-// unprintable characters.
-func Clean (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0043\u004c\u0045\u0041\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0061\u0020\u0073\u0069\u006eg\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_gadc :=args [0].AsString ();if _gadc .Type !=ResultTypeString {return MakeErrorResult ("\u0043\u0048\u0041\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0073t\u0072\u0069\u006e\u0067\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_ffcc :=_e .Buffer {};for _ ,_ccbfd :=range _gadc .ValueString {if _c .IsPrint (_ccbfd ){_ffcc .WriteRune (_ccbfd );};};return MakeStringResult (_ffcc .String ());};
-
-// Minute is an implementation of the Excel MINUTE() function.
-func Minute (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u004d\u0049\u004e\u0055T\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");};_gaa :=args [0];switch _gaa .Type {case ResultTypeEmpty :return MakeNumberResult (0);
-case ResultTypeNumber :_fda :=_dad (_gaa .ValueNumber );return MakeNumberResult (float64 (_fda .Minute ()));case ResultTypeString :_gbg :=_bcd .ToLower (_gaa .ValueString );if !_dbc (_gbg ){_ ,_ ,_ ,_ccdd ,_deb :=_eea (_gbg );if _deb .Type ==ResultTypeError {_deb .ErrorMessage ="\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074s\u0020\u0066\u006f\u0072\u0020\u004d\u0049\u004e\u0055\u0054\u0045";
-return _deb ;};if _ccdd {return MakeNumberResult (0);};};_ ,_bedg ,_ ,_ ,_ ,_ceea :=_ddcb (_gbg );if _ceea .Type ==ResultTypeError {return _ceea ;};return MakeNumberResult (float64 (_bedg ));default:return MakeErrorResult ("\u0049\u006ec\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u004d\u0049NU\u0054\u0045");
-};};
-
-// Counta implements the COUNTA function.
-func Counta (args []Result )Result {return MakeNumberResult (_geee (args ,_eccc ))};func _gad (_gce ,_ccbf float64 ,_dfea int )(float64 ,Result ){_ebaae ,_eeec :=_dad (_gce ),_dad (_ccbf );_gcd :=_ebaae .Unix ();_gcga :=_eeec .Unix ();if _gcd ==_gcga {return 0,_fca ;
-};_gbbg ,_abc ,_fdgg :=_ebaae .Date ();_fgdf ,_bbc ,_bbeb :=_eeec .Date ();_bbg ,_ace :=int (_abc ),int (_bbc );var _cbceb ,_gbgb float64 ;switch _dfea {case 0:if _fdgg ==31{_fdgg --;};if _fdgg ==30&&_bbeb ==31{_bbeb --;}else if _acc :=_cbca (_gbbg );_bbg ==2&&((_acc &&_fdgg ==29)||(!_acc &&_fdgg ==28)){_fdgg =30;
-if _geba :=_cbca (_fgdf );_ace ==2&&((_geba &&_bbeb ==29)||(!_geba &&_bbeb ==28)){_bbeb =30;};};_cbceb =float64 ((_fgdf -_gbbg )*360+(_ace -_bbg )*30+(_bbeb -_fdgg ));_gbgb =360;case 1:_cbceb =_ccbf -_gce ;_ddfg :=_gbbg !=_fgdf ;if _ddfg &&(_fgdf !=_gbbg +1||_bbg < _ace ||(_bbg ==_ace &&_fdgg < _bbeb )){_dcg :=0;
-for _fcdf :=_gbbg ;_fcdf <=_fgdf ;_fcdf ++{_dcg +=_gdc (_fcdf ,1);};_gbgb =float64 (_dcg )/float64 (_fgdf -_gbbg +1);}else {if !_ddfg &&_cbca (_gbbg ){_gbgb =366;}else {if _ddfg &&((_cbca (_gbbg )&&(_bbg < 2||(_bbg ==2&&_fdgg <=29)))||(_cbca (_fgdf )&&(_ace > 2||(_ace ==2&&_bbeb ==29)))){_gbgb =366;
-}else {_gbgb =365;};};};case 2:_cbceb =_ccbf -_gce ;_gbgb =360;case 3:_cbceb =_ccbf -_gce ;_gbgb =365;case 4:if _fdgg ==31{_fdgg --;};if _bbeb ==31{_bbeb --;};_cbceb =float64 ((_fgdf -_gbbg )*360+(_ace -_bbg )*30+(_bbeb -_fdgg ));_gbgb =360;default:return 0,MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0062\u0061\u0073\u0069\u0073 \u0066o\u0072\u0020\u0059\u0065\u0061\u0072\u0046r\u0061\u0063");
-};return _cbceb /_gbgb ,_fca ;};
-
-// Atan2 implements the Excel ATAN2 function.  It accepts two numeric arguments,
-// and the arguments are (x,y), reversed from normal to match Excel's behaviour.
-func Atan2 (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0041\u0054\u0041\u004e2\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020t\u0077o\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074\u0073");};_fbcd :=args [0].AsNumber ();
-_gffc :=args [1].AsNumber ();if _fbcd .Type ==ResultTypeNumber &&_gffc .Type ==ResultTypeNumber {_egdff :=_d .Atan2 (_gffc .ValueNumber ,_fbcd .ValueNumber );if _egdff !=_egdff {return MakeErrorResult ("\u0041T\u0041N\u0032\u0020\u0072\u0065\u0074u\u0072\u006ee\u0064\u0020\u004e\u0061\u004e");
-};return MakeNumberResult (_egdff );};for _ ,_agad :=range []ResultType {_fbcd .Type ,_gffc .Type }{switch _agad {case ResultTypeList ,ResultTypeString :return MakeErrorResult ("\u0041\u0054\u0041\u004e\u0032\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u006e\u0075\u006de\u0072\u0069\u0063\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-case ResultTypeError :return _fbcd ;default:return MakeErrorResult (_b .Sprintf ("\u0075\u006e\u0068an\u0064\u006c\u0065\u0064\u0020\u0041\u0054\u0041\u004e2\u0028)\u0020a\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_agad ));
-};};return MakeErrorResult ("u\u006e\u0068\u0061\u006e\u0064\u006ce\u0064\u0020\u0065\u0072\u0072\u006f\u0072\u0020\u0066o\u0072\u0020\u0041T\u0041N\u0032\u0028\u0029");};
-
-// ISODD is an implementation of the Excel ISODD() function.
-func IsOdd (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u004f\u0044\u0044\u0028)\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0053\u004f\u0044\u0044\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061 \u006eu\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");};_gdbdg :=int (args [0].ValueNumber );
-return MakeBoolResult (_gdbdg !=_gdbdg /2*2);};
-
-// String returns a string representation of Number.
-func (_bggbg Number )String ()string {return _fce .FormatFloat (_bggbg ._aaeec ,'f',-1,64)};const _cfbee =57365;
-
-// NewEmptyExpr constructs a new empty expression.
-func NewEmptyExpr ()Expression {return EmptyExpr {}};
-
-// String returns an empty string for Error.
-func (_fcfg Error )String ()string {return ""};var _fca Result =MakeEmptyResult ();
-
-// String returns a string representation of CellRef.
-func (_cece CellRef )String ()string {return _cece ._bge };func _bebff (_cbcf ,_gbeg float64 ,_dfba ,_ebad int )float64 {_egfa :=_dad (_cbcf );_afce :=_dad (_gbeg );_fae :=_gggg (_egfa ,_afce ,_dfba ,_ebad );return _dac (_fae ,_egfa ,_ebad );};func (_bfg *defEval )checkLastEvalIsRef (_def Context ,_cee Expression ){switch _cee .(type ){case FunctionCall :switch _cee .(FunctionCall )._ffgb {case "\u0049\u0053\u0052E\u0046":for _ ,_fcce :=range _cee .(FunctionCall )._ebga {switch _fcce .(type ){case CellRef ,Range ,HorizontalRange ,VerticalRange ,NamedRangeRef ,PrefixExpr ,PrefixRangeExpr ,PrefixHorizontalRange ,PrefixVerticalRange :_bbbc :=_fcce .Eval (_def ,_bfg );
-_bfg ._dee =!(_bbbc .Type ==ResultTypeError &&_bbbc .ValueString =="\u0023\u004e\u0041\u004d\u0045\u003f");default:_bfg ._dee =false ;};};};};};
-
-// CountBlank implements the COUNTBLANK function.
-func CountBlank (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0043\u004f\u0055N\u0054\u0042\u004c\u0041N\u004b\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0061\u006e\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};return MakeNumberResult (_geee (args ,_dceg ));};
-
-// MakeNumberResult constructs a number result.
-func MakeNumberResult (v float64 )Result {if v ==_d .Copysign (0,-1){v =0;};return Result {Type :ResultTypeNumber ,ValueNumber :v };};
-
-// Value returns a string version of the result.
-func (_dece Result )Value ()string {switch _dece .Type {case ResultTypeNumber :_agga :=_fce .FormatFloat (_dece .ValueNumber ,'f',-1,64);if len (_agga )> 12{_baefc :=12;for _cdeag :=_baefc ;_cdeag > 0&&_agga [_cdeag ]=='0';_cdeag --{_baefc --;};_agga =_agga [0:_baefc +1];
-};return _agga ;case ResultTypeError :return _dece .ValueString ;case ResultTypeString :return _dece .ValueString ;case ResultTypeList :if len (_dece .ValueList )==0{return "";};return _dece .ValueList [0].Value ();case ResultTypeArray :if len (_dece .ValueArray )==0||len (_dece .ValueArray [0])==0{return "";
-};return _dece .ValueArray [0][0].Value ();case ResultTypeEmpty :return "";default:return "\u0075\u006e\u0068\u0061nd\u006c\u0065\u0064\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0076\u0061\u006cu\u0065";};};func _affb (_dfe ,_gcf int )int {if _gcf ==2&&_cbca (_dfe ){return 29;
-}else {return _eda [_gcf -1];};};const _dbfe =57366;
-
-// Days is an implementation of the Excel DAYS() function.
-func Days (args []Result )Result {if len (args )!=2{return MakeErrorResult ("D\u0041\u0059\u0053\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f \u0061\u0072\u0067u\u006de\u006e\u0074\u0073");};var _dabe ,_ddd float64 ;switch args [0].Type {case ResultTypeNumber :_ddd =args [0].ValueNumber ;
-case ResultTypeString :_ddf :=DateValue ([]Result {args [0]});if _ddf .Type ==ResultTypeError {return MakeErrorResult ("I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0065\u006e\u0064\u0020\u0064\u0061\u0074e\u0020\u0066\u006fr\u0020D\u0041\u0059\u0053");
-};_ddd =_ddf .ValueNumber ;default:return MakeErrorResult ("I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0020\u0066\u006fr\u0020D\u0041\u0059\u0053");};switch args [1].Type {case ResultTypeNumber :_dabe =args [1].ValueNumber ;
-if _dabe < 62&&_ddd >=62{_dabe --;};case ResultTypeString :_aadb :=DateValue ([]Result {args [1]});if _aadb .Type ==ResultTypeError {return MakeErrorResult ("\u0049\u006ec\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0073\u0074\u0061\u0072\u0074\u0020\u0064\u0061\u0074\u0065\u0020\u0066\u006f\u0072\u0020DA\u0059\u0053");
-};_dabe =_aadb .ValueNumber ;default:return MakeErrorResult ("I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0020\u0066\u006fr\u0020D\u0041\u0059\u0053");};_eccf :=float64 (int (_ddd -_dabe ));return MakeNumberResult (_eccf );
-};func _aacg (_abfe ,_bbdf []float64 ,_ddcbg float64 )float64 {_eccbf :=_ddcbg +1;_gef :=0.0;_aded :=len (_abfe );_dbed :=_bbdf [0];for _dgfba :=1;_dgfba < _aded ;_dgfba ++{_dafa :=(_bbdf [_dgfba ]-_dbed )/365;_gef -=_dafa *_abfe [_dgfba ]/_d .Pow (_eccbf ,_dafa +1);
-};return _gef ;};
-
-// CeilingPrecise is an implementation of the CEILING.PRECISE function which
-// returns the ceiling of a number.
-func CeilingPrecise (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0043\u0045\u0049\u004c\u0049\u004e\u0047\u002eP\u0052\u0045\u0043IS\u0045\u0028\u0029\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020o\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-};if len (args )> 2{return MakeErrorResult ("\u0043\u0045I\u004c\u0049\u004e\u0047\u002e\u0050\u0052\u0045\u0043\u0049\u0053\u0045\u0028\u0029\u0020\u0061\u006c\u006c\u006f\u0077\u0073\u0020\u0061\u0074\u0020\u006d\u006f\u0073\u0074\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_bdgae :=args [0].AsNumber ();if _bdgae .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069r\u0073\u0074\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074 \u0074\u006f\u0020\u0043\u0045\u0049\u004c\u0049\u004e\u0047\u002e\u0050\u0052\u0045\u0043\u0049\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_gadg :=float64 (1);if _bdgae .ValueNumber < 0{_gadg =-1;};if len (args )> 1{_afdg :=args [1].AsNumber ();if _afdg .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0043E\u0049L\u0049\u004e\u0047\u002e\u0050\u0052\u0045\u0043\u0049\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074 \u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_gadg =_d .Abs (_afdg .ValueNumber );};if len (args )==1{return MakeNumberResult (_d .Ceil (_bdgae .ValueNumber ));};_accb :=_bdgae .ValueNumber ;_accb ,_feeg :=_d .Modf (_accb /_gadg );if _feeg !=0{if _bdgae .ValueNumber > 0{_accb ++;};};return MakeNumberResult (_accb *_gadg );
-};
-
-// GCD implements the Excel GCD() function which returns the greatest common
-// divisor of a range of numbers.
-func GCD (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0047\u0043D(\u0029\u0020\u0072e\u0071\u0075\u0069\u0072es \u0061t \u006c\u0065\u0061\u0073\u0074\u0020\u006fne\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");};_acff :=[]float64 {};
-for _ ,_agfff :=range args {switch _agfff .Type {case ResultTypeString :_ffaf :=_agfff .AsNumber ();if _ffaf .Type !=ResultTypeNumber {return MakeErrorResult ("\u0047\u0043D(\u0029\u0020\u006fn\u006c\u0079\u0020\u0061cce\u0070ts\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
-};_acff =append (_acff ,_ffaf .ValueNumber );case ResultTypeList ,ResultTypeArray :_bcec :=GCD (_agfff .ListValues ());if _bcec .Type !=ResultTypeNumber {return _bcec ;};_acff =append (_acff ,_bcec .ValueNumber );case ResultTypeNumber :_acff =append (_acff ,_agfff .ValueNumber );
-case ResultTypeError :return _agfff ;default:return MakeErrorResult (_b .Sprintf ("\u0047\u0043\u0044()\u0020\u0075\u006e\u0073\u0075\u0070\u0070\u006f\u0072t\u0065d\u0020a\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_agfff .Type ));
-};};if _acff [0]< 0{return MakeErrorResult ("\u0047\u0043D\u0028\u0029\u0020\u006fn\u006c\u0079 \u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020p\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");};if len (_acff )==1{return MakeNumberResult (_acff [0]);
-};_ebegd :=_acff [0];for _aaaga :=1;_aaaga < len (_acff );_aaaga ++{if _acff [_aaaga ]< 0{return MakeErrorResult ("\u0047\u0043D\u0028\u0029\u0020\u006fn\u006c\u0079 \u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020p\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_ebegd =_afcedc (_ebegd ,_acff [_aaaga ]);};return MakeNumberResult (_ebegd );};
-
-// String returns a string representation of PrefixExpr.
-func (_geecd PrefixExpr )String ()string {return _b .Sprintf ("\u0025\u0073\u0021%\u0073",_geecd ._begcd .String (),_geecd ._ddeba .String ());};var _dccgd =[...]int {0,7,3,3,3,8,8,8,8,1,1,1,2,2,2,2,2,14,15,15,17,17,4,4,4,13,5,6,6,6,6,6,6,6,12,12,12,12,12,12,12,12,12,12,12,12,9,9,9,16,16,11,10,10};
-
-
-// Eval evaluates and returns the result of the NamedRangeRef reference.
-func (_eedb NamedRangeRef )Eval (ctx Context ,ev Evaluator )Result {_ccae :=ctx .NamedRange (_eedb ._cbbgb );_bbdb :=_ccae .Value ;if _becbd ,_feaaa :=ev .GetFromCache (_bbdb );_feaaa {return _becbd ;};_gdbc :=_bcd .Split (_bbdb ,"\u0021");if len (_gdbc )!=2{return MakeErrorResult (_b .Sprintf ("\u0075\u006e\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u006e\u0061\u006de\u0064 \u0072\u0061\u006e\u0067\u0065\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0025\u0073",_bbdb ));
-};_ebcb :=ctx .Sheet (_gdbc [0]);_egceb :=_bcd .Split (_gdbc [1],"\u003a");switch len (_egceb ){case 1:_gbfc :=ev .Eval (_ebcb ,_egceb [0]);ev .SetCache (_bbdb ,_gbfc );return _gbfc ;case 2:_dcbe :=_ggac (_ebcb ,ev ,_egceb [0],_egceb [1]);ev .SetCache (_bbdb ,_dcbe );
-return _dcbe ;};return MakeErrorResult (_b .Sprintf ("\u0075\u006es\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u0074\u0079\u0070e \u0025\u0073",_ccae .Type ));};func _efaa (_fgceb _g .Time )_g .Time {_fgceb =_fgceb .UTC ();
-return _g .Date (_fgceb .Year (),_fgceb .Month (),_fgceb .Day (),_fgceb .Hour (),_fgceb .Minute (),_fgceb .Second (),_fgceb .Nanosecond (),_g .Local );};func _cdgcd (){_cfdc =_fa .MustCompile ("\u005e\u0030\u002b\u0024");_fcgb =_fa .MustCompile ("\u005e\u0028\u0028\u0023|0\u0029\u002b\u002c\u0029\u002b\u0028\u0023\u007c\u0030\u0029\u002b\u0028\u003b\u007c$\u0029");
-_degbc =_fa .MustCompile ("\u005e\u0028\u0023\u007c\u0030\u007c\u002c\u0029\u002a\u005f\u005c\u0029\u003b");_agbf =_fa .MustCompile ("\u005e\u0030\u002b\u005c\u002e\u0028\u0030\u002b\u0029\u0024");_bbae =_fa .MustCompile ("\u005e\u0028\u0028\u0023\u007c\u0030\u0029\u002b\u002c\u0029+\u0028\u0023\u007c\u0030\u0029\u002b\u005c.\u0028\u0030\u002b\u0029\u002e\u002a\u0028\u003b\u007c\u0024\u0029");
-_fgdd =_fa .MustCompile ("^\u0028\u005f\u007c\u002d\u007c\u0020)\u002b\u005c\u002a\u0020\u0023\u002b\u002c\u0023\u002b0\u005c\u002e\u00280\u002b)\u002e\u002a\u003b");_faaa =_fa .MustCompile ("\u005e\u0028\u0028\u0023\u007c\u0030)\u002b\u002c\u0029\u002b\u0028\u0023\u007c\u0030\u0029\u002b\u005c\u002e\u0028(\u0023\u007c\u0030\u0029\u002b\u0029\u005f\\\u0029\u002e\u002a\u003b");
-_eggc =_fa .MustCompile ("\u005e\u0028\u0023\u007c0)\u002b\u005c\u002e\u0028\u0028\u0023\u007c\u0030\u0029\u002b\u0029\u0025\u0024");_fbbe =_fa .MustCompile ("\u005c\u005b\u005c$\u005c\u0024\u002d\u002e+\u005c\u005d\u0028\u005c\u002a\u0020\u0029?\u0028\u0023\u007c\u0030\u0029\u002b\u002c\u0028\u0023\u007c\u0030\u0029\u002b\u003b");
-_edge =_fa .MustCompile ("\u005c[\u005c\u0024\\\u0024\u002d\u002e+\u005c\u005d\u0028\u005c\u002a\u0020\u0029?\u0028\u0023\u007c\u0030\u0029\u002b,\u0028\u0023\u007c\u0030\u0029\u002b\u005c\u002e\u0028\u0028\u0023|\u0030\u007c\u002d\u0029\u002b\u0029\u002e\u002a\u003b");
-_cfgba =_fa .MustCompile ("\u005e(\u0028\u0023|\u0030\u0029\u002b,\u0029\u002b\u0028\u0023\u007c\u0030\u0029+\u0028\u005c\u002e\u0028\u0028\u0023|\u0030\u007c\u002d\u0029\u002b\u0029\u0029\u003f\u002e\u002b\u005c[\u005c\u0024\u002e\u002b\u005c\u005d\u002e\u002a\u003b");
-_fafa =_fa .MustCompile ("\u005e\u004d\u002b(\u002f\u007c\u0020\u007c\u002c\u007c\u0022\u007c"+_agde +_agde +"\u0029\u002b\u0044\u002b\u0028\u002f\u007c\u0020\u007c\u002c\u007c\u0022\u007c"+_agde +_agde +"\u0029\u002b\u0059+\u0024");_eebff =_fa .MustCompile ("\u005e\u0044\u002b\u0028\u002f\u007c\u0020\u007c\u005c\u002e\u007c\u0022\u007c"+_agde +_agde +"\u0029\u002b\u004d\u002b\u0028\u002f\u007c\u0020\u007c\\\u002e\u007c\u0022\u007c"+_agde +_agde +"\u0029\u002b\u0059+\u0024");
-_dggdc =_fa .MustCompile ("\u005e\u0028\u0023|\u0030\u0029\u002b\u005c.\u0028\u0028\u0023\u007c\u0030\u0029\u002a)\u0045\u005c\u002b\u0028\u0023\u007c\u0030\u0029\u002b\u0028\u003b\u007c\u0024\u0029");_afcf =_fa .MustCompile ("\u005e.\u002a\u005f\u005c\u0029\u002e\u002a;");
-};
-
-// ReferenceType is a type of reference
-//
-//go:generate stringer -type=ReferenceType
-type ReferenceType byte ;func _cacg (_bcee ,_fagc []float64 ,_gcgag float64 )Result {_cab :=false ;_agdb :=false ;for _bafa :=0;_bafa < len (_bcee );_bafa ++{if _bcee [_bafa ]> 0{_cab =true ;};if _bcee [_bafa ]< 0{_agdb =true ;};};if !_cab ||!_agdb {return MakeErrorResultType (ErrorTypeNum ,"");
-};_feee :=_gcgag ;_fcde :=1e-10;_fgcb :=0;_cagg :=50;_bdcf :=false ;for {_fbaed :=_cbcee (_bcee ,_fagc ,_feee );_bbbgc :=_feee -_fbaed /_aacg (_bcee ,_fagc ,_feee );_gfgcd :=_d .Abs (_bbbgc -_feee );_feee =_bbbgc ;_fgcb ++;if _gfgcd <=_fcde ||_d .Abs (_fbaed )<=_fcde {break ;
-};if _fgcb > _cagg {_bdcf =true ;break ;};};if _bdcf ||_d .IsNaN (_feee )||_d .IsInf (_feee ,0){return MakeErrorResultType (ErrorTypeNum ,"");};return MakeNumberResult (_feee );};
-
-// Xor is an implementation of the Excel XOR() function and takes a variable
-// number of arguments. It's odd to say the least.  If any argument is numeric,
-// it returns true if the number of non-zero numeric arguments is odd and false
-// otherwise.  If no argument is numeric, it returns an error.
-func Xor (args []Result )Result {if len (args )< 1{return MakeErrorResult ("\u0058\u004f\u0052 r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061t\u0020l\u0065a\u0073t\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_abeb :=0;_fced :=false ;for _ ,_bdac :=range args {switch _bdac .Type {case ResultTypeList ,ResultTypeArray :_gfce :=Xor (_bdac .ListValues ());if _gfce .Type ==ResultTypeError {return _gfce ;};if _gfce .ValueNumber !=0{_abeb ++;};_fced =true ;case ResultTypeNumber :if _bdac .ValueNumber !=0{_abeb ++;
-};_fced =true ;case ResultTypeString :case ResultTypeError :return _bdac ;default:return MakeErrorResult ("\u0075\u006e\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u0061\u0072\u0067u\u006de\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0069\u006e\u0020\u0058\u004f\u0052");
-};};if !_fced {return MakeErrorResult ("\u0058\u004f\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0069n\u0070\u0075\u0074");};return MakeBoolResult (_abeb %2!=0);};
-
-// MakeErrorResultType makes an error result of a given type with a specified
-// debug message
-func MakeErrorResultType (t ErrorType ,msg string )Result {switch t {case ErrorTypeNull :return Result {Type :ResultTypeError ,ValueString :"\u0023\u004e\u0055\u004c\u004c\u0021",ErrorMessage :msg };case ErrorTypeValue :return Result {Type :ResultTypeError ,ValueString :"\u0023V\u0041\u004c\u0055\u0045\u0021",ErrorMessage :msg };
-case ErrorTypeRef :return Result {Type :ResultTypeError ,ValueString :"\u0023\u0052\u0045F\u0021",ErrorMessage :msg };case ErrorTypeName :return Result {Type :ResultTypeError ,ValueString :"\u0023\u004e\u0041\u004d\u0045\u003f",ErrorMessage :msg };case ErrorTypeNum :return Result {Type :ResultTypeError ,ValueString :"\u0023\u004e\u0055M\u0021",ErrorMessage :msg };
-case ErrorTypeSpill :return Result {Type :ResultTypeError ,ValueString :"\u0023S\u0050\u0049\u004c\u004c\u0021",ErrorMessage :msg };case ErrorTypeNA :return Result {Type :ResultTypeError ,ValueString :"\u0023\u004e\u002f\u0041",ErrorMessage :msg };case ErrorTypeDivideByZero :return Result {Type :ResultTypeError ,ValueString :"\u0023D\u0049\u0056\u002f\u0030\u0021",ErrorMessage :msg };
-default:return Result {Type :ResultTypeError ,ValueString :"\u0023V\u0041\u004c\u0055\u0045\u0021",ErrorMessage :msg };};};
-
-// MaxA is an implementation of the Excel MAXA() function.
-func MaxA (args []Result )Result {return _bfadc (args ,true )};func _bf (_eb Result )bool {if _eb .Type ==ResultTypeString {return _eb .ValueString =="";};return _eb .ValueNumber ==0;};
-
-// Oddlprice implements the Excel ODDLPRICE function.
-func Oddlprice (args []Result )Result {if len (args )!=8&&len (args )!=9{return MakeErrorResult ("\u004f\u0044\u0044L\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0065\u0069\u0067\u0068\u0074\u0020\u006f\u0072\u0020\u006e\u0069\u006e\u0065\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_fdad ,_adgc ,_fefea :=_fbae (args [0],args [1],"\u004fD\u0044\u004c\u0050\u0052\u0049\u0043E");if _fefea .Type ==ResultTypeError {return _fefea ;};_cfeg ,_fefea :=_cdde (args [2],"\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065","\u004fD\u0044\u004c\u0050\u0052\u0049\u0043E");
-if _fefea .Type ==ResultTypeError {return _fefea ;};if _cfeg >=_fdad {return MakeErrorResultType (ErrorTypeNum ,"\u004c\u0061\u0073\u0074\u0020i\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0020\u0064\u0061\u0074\u0065\u0020s\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u0062\u0065\u0066\u006f\u0072\u0065\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074e");
-};_dcgd :=args [3];if _dcgd .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020o\u0066\u0020\u0074\u0079\u0070e\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_efbd :=_dcgd .ValueNumber ;if _efbd < 0{return MakeErrorResultType (ErrorTypeNum ,"R\u0061\u0074\u0065\u0020\u0073\u0068o\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u006e\u006fn\u0020\u006e\u0065g\u0061t\u0069\u0076\u0065");};_gdfc :=args [4];if _gdfc .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0079i\u0065\u006c\u0064\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_gffb :=_gdfc .ValueNumber ;if _gffb < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0059\u0069\u0065\u006cd\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065 \u006eo\u006e\u0020\u006e\u0065\u0067\u0061\u0074i\u0076\u0065");};_bfgc :=args [5];
-if _bfgc .Type !=ResultTypeNumber {return MakeErrorResult ("\u004fD\u0044\u004cP\u0052\u0049\u0043\u0045 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065mp\u0074\u0069\u006fn\u0020\u006ff\u0020\u0074\u0079\u0070\u0065\u0020n\u0075\u006db\u0065\u0072");
-};_afceg :=_bfgc .ValueNumber ;if _afceg < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0059\u0069\u0065\u006cd\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065 \u006eo\u006e\u0020\u006e\u0065\u0067\u0061\u0074i\u0076\u0065");};_debb :=args [6];
-if _debb .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0050\u0052\u0049C\u0045\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u0066\u0072\u0065\u0071\u0075\u0065\u006e\u0063\u0079\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_aefc :=float64 (int (_debb .ValueNumber ));if !_bcf (_aefc ){return MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0066\u0072e\u0071u\u0065n\u0063\u0065\u0020\u0076\u0061\u006c\u0075e");};_gdfd :=0;if len (args )==8&&args [7].Type !=ResultTypeEmpty {_bdgc :=args [7];
-if _bdgc .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0062a\u0073\u0069\u0073\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_gdfd =int (_bdgc .ValueNumber );if !_feeb (_gdfd ){return MakeErrorResultType (ErrorTypeNum ,"I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0062\u0061\u0073\u0069s\u0020\u0076\u0061\u006c\u0075\u0065\u0020f\u006f\u0072\u0020\u004f\u0044\u0044\u004c\u0050\u0052\u0049C\u0045");
-};};_eecb ,_fefea :=_gad (_cfeg ,_adgc ,_gdfd );if _fefea .Type ==ResultTypeError {return _fefea ;};_eecb *=_aefc ;_ccdc ,_fefea :=_gad (_fdad ,_adgc ,_gdfd );if _fefea .Type ==ResultTypeError {return _fefea ;};_ccdc *=_aefc ;_gacc ,_fefea :=_gad (_cfeg ,_fdad ,_gdfd );
-if _fefea .Type ==ResultTypeError {return _fefea ;};_gacc *=_aefc ;_cdff :=_afceg +_eecb *100*_efbd /_aefc ;_cdff /=_ccdc *_gffb /_aefc +1;_cdff -=_gacc *100*_efbd /_aefc ;return MakeNumberResult (_cdff );};func _bdfab (_edbe float64 )float64 {return float64 (int (_edbe +0.5))};
-
-
-// Update makes a reference to point to one of the neighboring cells after removing a row/column with respect to the update type.
-func (_efb CellRef )Update (q *_a .UpdateQuery )Expression {if q .UpdateCurrentSheet {_efb ._bge =_gf (_efb ._bge ,q );};return _efb ;};const _ebba =57344;
-
-// LookupFunction looks up and returns a standard function or nil.
-func LookupFunction (name string )Function {_cdccd .Lock ();defer _cdccd .Unlock ();if _adead ,_geaed :=_ebdbf [name ];_geaed {return _adead ;};return nil ;};
-
-// Trim is an implementation of the Excel TRIM function that removes leading,
-// trailing and consecutive spaces.
-func Trim (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0054\u0052\u0049\u004d\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0073t\u0072\u0069\u006e\u0067\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_acbe :=args [0].AsString ();if _acbe .Type !=ResultTypeString {return MakeErrorResult ("\u0054\u0052\u0049\u004d\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0073t\u0072\u0069\u006e\u0067\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_fafc :=_e .Buffer {};_cfbeb :=false ;_egcf :=false ;_acfa :=0;for _ ,_decf :=range _acbe .ValueString {_edca :=_decf ==' ';if _edca {if !_cfbeb {continue ;};if !_egcf {_acfa ++;_fafc .WriteRune (_decf );};}else {_acfa =0;_cfbeb =true ;_fafc .WriteRune (_decf );
-};_egcf =_edca ;};_fafc .Truncate (_fafc .Len ()-_acfa );return MakeStringResult (_fafc .String ());};
-
-// Eval evaluates a range returning a list of results or an error.
-func (_bdefb Range )Eval (ctx Context ,ev Evaluator )Result {_aacfb :=_bdefb ._eege .Reference (ctx ,ev );_befag :=_bdefb ._cbfg .Reference (ctx ,ev );_afadc :=_deba (_aacfb ,_befag );if _aacfb .Type ==ReferenceTypeCell &&_befag .Type ==ReferenceTypeCell {if _ccgae ,_bgacd :=ev .GetFromCache (_afadc );
-_bgacd {return _ccgae ;}else {_cefff :=_ggac (ctx ,ev ,_aacfb .Value ,_befag .Value );ev .SetCache (_afadc ,_cefff );return _cefff ;};};return MakeErrorResult ("\u0069\u006e\u0076\u0061\u006c\u0069\u0064\u0020\u0072a\u006e\u0067\u0065\u0020"+_afadc );};
-
-
-// Reference returns a string reference value to a named range.
-func (_faee NamedRangeRef )Reference (ctx Context ,ev Evaluator )Reference {return Reference {Type :ReferenceTypeNamedRange ,Value :_faee ._cbbgb };};
-
-// Pi is an implementation of the Excel Pi() function that just returns the Pi
-// constant.
-func Pi (args []Result )Result {if len (args )!=0{return MakeErrorResult ("\u0050I\u0028\u0029\u0020\u0061c\u0063\u0065\u0070\u0074\u0073 \u006eo\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074s");};return MakeNumberResult (_d .Pi );};
-
-// Edate is an implementation of the Excel EDATE() function.
-func Edate (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0045\u0044\u0041\u0054E\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020t\u0077o\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074\u0073");};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0045\u0044A\u0054\u0045");
-};_bgb :=args [1].ValueNumber ;_gcg :=args [0];var _dfd float64 ;switch _gcg .Type {case ResultTypeEmpty :return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0045\u0044A\u0054\u0045");
-case ResultTypeNumber :_dfd =_gcg .ValueNumber ;case ResultTypeString :_bcdb :=DateValue ([]Result {args [0]});if _bcdb .Type ==ResultTypeError {return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0045\u0044A\u0054\u0045");
-};_dfd =_bcdb .ValueNumber ;default:return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0045\u0044A\u0054\u0045");};_fge :=_dad (_dfd );_gdf :=_fge .AddDate (0,int (_bgb ),0);
-_edd ,_bea ,_ggef :=_gdf .Date ();_cafe :=_ee (_edd ,int (_bea ),_ggef );if _cafe < 1{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0045\u0044A\u0054\u0045");
-};return MakeNumberResult (_cafe );};
-
-// MakeBoolResult constructs a boolean result (internally a number).
-func MakeBoolResult (b bool )Result {if b {return Result {Type :ResultTypeNumber ,ValueNumber :1,IsBoolean :true };};return Result {Type :ResultTypeNumber ,ValueNumber :0,IsBoolean :true };};func (_acdbd Result )String ()string {return _acdbd .Value ()};
-
-
-// NewError constructs a new error expression from a string.
-func NewError (v string )Expression {return Error {_faa :v }};func _bb (_fe BinOpType ,_cg ,_ce [][]Result )Result {_cae :=[][]Result {};for _af :=range _cg {_df :=_bcc (_fe ,_cg [_af ],_ce [_af ]);if _df .Type ==ResultTypeError {return _df ;};_cae =append (_cae ,_df .ValueList );
-};return MakeArrayResult (_cae );};
-
-// Offset is an implementation of the Excel OFFSET function.
-func Offset (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=3&&len (args )!=5{return MakeErrorResult ("\u004f\u0046\u0046\u0053\u0045\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0074\u0068\u0072\u0065e\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_aeab :=args [0].Ref ;for _aeab .Type ==ReferenceTypeNamedRange {_aeab =ctx .NamedRange (_aeab .Value );};_ecagb :="";switch _aeab .Type {case ReferenceTypeCell :_ecagb =_aeab .Value ;case ReferenceTypeRange :_dgda :=_bcd .Split (_aeab .Value ,"\u003a");
-if len (_dgda )==2{_ecagb =_dgda [0];};default:return MakeErrorResult (_b .Sprintf ("\u0049\u006ev\u0061\u006c\u0069\u0064\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u0069\u006e\u0020\u004f\u0046\u0046\u0053\u0045\u0054\u0028\u0029: \u0025\u0073",_aeab .Type ));
-};_caggb ,_baff :=_de .ParseCellReference (_ecagb );if _baff !=nil {return MakeErrorResult (_b .Sprintf ("\u0070\u0061\u0072s\u0065\u0020\u006f\u0072i\u0067\u0069\u006e\u0020\u0065\u0072\u0072o\u0072\u0020\u004f\u0046\u0046\u0053\u0045\u0054\u0028\u0029\u003a\u0020\u0025\u0073",_baff .Error ()));
-};_debbd ,_bgbfd ,_affeg :=_caggb .Column ,_caggb .RowIdx ,_caggb .SheetName ;_cefb :=args [1].AsNumber ();if _cefb .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0046\u0046SE\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020n\u0075m\u0065r\u0069\u0063\u0020\u0072\u006f\u0077\u0020\u006f\u0066\u0066\u0073\u0065\u0074");
-};_gcdf :=args [2].AsNumber ();if _gcdf .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0046\u0046SE\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020n\u0075m\u0065r\u0069\u0063\u0020\u0063\u006f\u006c\u0020\u006f\u0066\u0066\u0073\u0065\u0074");
-};var _gffbb ,_fcfd Result ;if len (args )==3{_gffbb =MakeNumberResult (1);_fcfd =MakeNumberResult (1);}else {_gffbb =args [3].AsNumber ();if _gffbb .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0046\u0046\u0053\u0045\u0054\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u006e\u0075m\u0065\u0072\u0069\u0063\u0020\u0068\u0065\u0069\u0067\u0068\u0074");
-};if _gffbb .ValueNumber ==0{return MakeErrorResultType (ErrorTypeRef ,"");};_fcfd =args [4].AsNumber ();if _fcfd .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0046F\u0053\u0045\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0077id\u0074\u0068");
-};if _fcfd .ValueNumber ==0{return MakeErrorResultType (ErrorTypeRef ,"");};};_ccbe :=_de .ColumnToIndex (_debbd );_ceegb :=_bgbfd +uint32 (_cefb .ValueNumber );_fgef :=_ccbe +uint32 (_gcdf .ValueNumber );_gbf :=_ceegb +uint32 (_gffbb .ValueNumber );_gga :=_fgef +uint32 (_fcfd .ValueNumber );
-if _gffbb .ValueNumber > 0{_gbf --;}else {_gbf ++;_ceegb ,_gbf =_gbf ,_ceegb ;};if _fcfd .ValueNumber > 0{_gga --;}else {_gga ++;_fgef ,_gga =_gga ,_fgef ;};_gdaga :=_b .Sprintf ("\u0025\u0073\u0025\u0064",_de .IndexToColumn (_fgef ),_ceegb );_feddc :=_b .Sprintf ("\u0025\u0073\u0025\u0064",_de .IndexToColumn (_gga ),_gbf );
-if _affeg ==""{return _ggac (ctx ,ev ,_gdaga ,_feddc );}else {return _ggac (ctx .Sheet (_affeg ),ev ,_gdaga ,_feddc );};};
-
-// Error is called in the case of parsing error and saves an error to a plex.
-func (_bgeec *plex )Error (s string ){_gd .Log .Debug ("\u0070a\u0072s\u0065\u0020\u0065\u0072\u0072\u006f\u0072\u003a\u0020\u0025\u0073",s );_bgeec ._eegab =s ;};
-
-// Amorlinc implements the Excel AMORLINC function.
-func Amorlinc (args []Result )Result {_fbdd ,_accd :=_bba (args ,"\u0041\u004d\u004f\u0052\u004c\u0049\u004e\u0043");if _accd .Type ==ResultTypeError {return _accd ;};_baea :=_fbdd ._afed ;_gcgda :=_fbdd ._bcab ;_adg :=_fbdd ._fgfb ;_bbcb :=_fbdd ._bdaa ;
-_baeg :=_fbdd ._ggce ;_aadd :=_fbdd ._eebc ;_efdg :=_fbdd ._aaea ;_dabb ,_aagd :=_gad (_gcgda ,_adg ,_efdg );if _aagd .Type ==ResultTypeError {return MakeErrorResult ("\u0069\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0064\u0061\u0074\u0065\u0073 \u0066o\u0072\u0020\u0041\u004d\u004f\u0052\u004cI\u004e\u0043");
-};_egb :=_dabb *_aadd *_baea ;if _baeg ==0{return MakeNumberResult (_egb );};_bfagb :=_baea *_aadd ;_fdca :=_baea -_bbcb ;_ddge :=int ((_fdca -_egb )/_bfagb );if _baeg <=_ddge {return MakeNumberResult (_bfagb );}else if _baeg ==_ddge +1{return MakeNumberResult (_fdca -_bfagb *float64 (_ddge )-_egb );
-}else {return MakeNumberResult (0);};};type yyParserImpl struct{_cdea yySymType ;_fbfd [_bcefd ]yySymType ;_deada int ;};
-
-// ConstArrayExpr is a constant array expression.
-type ConstArrayExpr struct{_ggg [][]Expression };
-
-// Munit is an implementation of the Excel MUNIT function that returns an
-// identity matrix.
-func Munit (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u004d\u0055\u004eIT\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073 \u006fn\u0065 \u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0069\u006e\u0070\u0075\u0074");
-};_aecd :=args [0].AsNumber ();if _aecd .Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u0055\u004eIT\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073 \u006fn\u0065 \u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0069\u006e\u0070\u0075\u0074");
-};_ecagg :=int (_aecd .ValueNumber );_fegcd :=make ([][]Result ,0,_ecagg );for _gfga :=0;_gfga < _ecagg ;_gfga ++{_bceda :=make ([]Result ,_ecagg );for _aefbg :=0;_aefbg < _ecagg ;_aefbg ++{if _gfga ==_aefbg {_bceda [_aefbg ]=MakeNumberResult (1.0);}else {_bceda [_aefbg ]=MakeNumberResult (0.0);
-};};_fegcd =append (_fegcd ,_bceda );};return MakeArrayResult (_fegcd );};
+// RoundDown is an implementation of the Excel ROUNDDOWN function that rounds a number
+// down to a specified number of digits.
+func RoundDown (args []Result )Result {return _bbaa (args ,_febab )};func (_afg *defEval )checkLastEvalIsRef (_eae Context ,_cfb Expression ){switch _cfb .(type ){case FunctionCall :switch _cfb .(FunctionCall )._cdabe {case "\u0049\u0053\u0052E\u0046":for _ ,_aag :=range _cfb .(FunctionCall )._fdca {switch _aag .(type ){case CellRef ,Range ,HorizontalRange ,VerticalRange ,NamedRangeRef ,PrefixExpr ,PrefixRangeExpr ,PrefixHorizontalRange ,PrefixVerticalRange :_eeg :=_aag .Eval (_eae ,_afg );
+_afg ._fce =!(_eeg .Type ==ResultTypeError &&_eeg .ValueString =="\u0023\u004e\u0041\u004d\u0045\u003f");default:_afg ._fce =false ;};};};};};
 
 // Year is an implementation of the Excel YEAR() function.
 func Year (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=1||args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0045\u0041\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_agea :=ctx .GetEpoch ();_ggd ,_gfea :=_eebfc (args [0].Value (),_agea );if _gfea !=nil {return MakeErrorResult ("\u0059\u0045AR\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s a\u0020si\u006e\u0067\u006c\u0065\u0020\u0064\u0061te\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
-};return MakeNumberResult (float64 (_ggd .Year ()));};
+};_dbcg :=ctx .GetEpoch ();_cfbg ,_gfca :=_gabbc (args [0].Value (),_dbcg );if _gfca !=nil {return MakeErrorResult ("\u0059\u0045AR\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s a\u0020si\u006e\u0067\u006c\u0065\u0020\u0064\u0061te\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
+};return MakeNumberResult (float64 (_cfbg .Year ()));};func MakeRangeReference (ref string )Reference {return Reference {Type :ReferenceTypeRange ,Value :ref }};
 
-// ISBLANK is an implementation of the Excel ISBLANK() function.
-func IsBlank (args []Result )Result {if len (args )!=1{return MakeErrorResult ("I\u0053\u0042\u004c\u0041\u004e\u004b(\u0029\u0020\u0061\u0063\u0063\u0065p\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
-};return MakeBoolResult (args [0].Type ==ResultTypeEmpty );};func init (){RegisterFunction ("\u0041\u0043\u0043\u0052\u0049\u004e\u0054\u004d",Accrintm );RegisterFunction ("\u0041M\u004f\u0052\u0044\u0045\u0047\u0052C",Amordegrc );RegisterFunction ("\u0041\u004d\u004f\u0052\u004c\u0049\u004e\u0043",Amorlinc );
+// Mduration implements the Excel MDURATION function.
+func Mduration (args []Result )Result {_decd ,_badf :=_agfa (args ,"\u004dD\u0055\u0052\u0041\u0054\u0049\u004fN");if _badf .Type ==ResultTypeError {return _badf ;};_cfada :=_decd ._beba ;_bgdf :=_decd ._gebg ;_bebbd :=_decd ._bcec ;_eece :=_decd ._edee ;
+_cefg :=_decd ._fabd ;_cdcbc :=_decd ._dgfb ;_ccbb :=_gabe (_cfada ,_bgdf ,_bebbd ,_eece ,_cefg ,_cdcbc );if _ccbb .Type ==ResultTypeError {return _ccbb ;};_dbeb :=_ccbb .ValueNumber /(1.0+_eece /_cefg );return MakeNumberResult (_dbeb );};
+
+// False is an implementation of the Excel FALSE() function. It takes no
+// arguments.
+func False (args []Result )Result {if len (args )!=0{return MakeErrorResult ("\u0046A\u004c\u0053\u0045\u0020\u0074\u0061\u006b\u0065\u0073\u0020\u006eo\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");};return MakeBoolResult (false );};
+
+// Eval evaluates a horizontal range returning a list of results or an error.
+func (_dfab HorizontalRange )Eval (ctx Context ,ev Evaluator )Result {_fdcba :=_dfab .horizontalRangeReference ();if _bagfe ,_dfecd :=ev .GetFromCache (_fdcba );_dfecd {return _bagfe ;};_aaeea ,_ccgfd :=_cecg (ctx ,_dfab ._caag ,_dfab ._fegba );_gdca :=_ebcb (ctx ,ev ,_aaeea ,_ccgfd );
+ev .SetCache (_fdcba ,_gdca );return _gdca ;};
+
+// Eval evaluates a vertical range returning a list of results or an error.
+func (_gcdaf VerticalRange )Eval (ctx Context ,ev Evaluator )Result {_ggbg :=_gcdaf .verticalRangeReference ();if _eadf ,_gafb :=ev .GetFromCache (_ggbg );_gafb {return _eadf ;};_eegfae ,_aecf :=_abgca (ctx ,_gcdaf ._cege ,_gcdaf ._afaca );_baea :=_ebcb (ctx ,ev ,_eegfae ,_aecf );
+ev .SetCache (_ggbg ,_baea );return _baea ;};const (_beaf cmpResult =0;_cggc cmpResult =-1;_beab cmpResult =1;_fdegf cmpResult =2;);
+
+// Range is a range expression that when evaluated returns a list of Results.
+type Range struct{_gfddg ,_bffe Expression };
+
+// NewString constructs a new string expression.
+func NewString (v string )Expression {v =_e .Replace (v ,"\u0022\u0022","\u0022",-1);return String {_eaebe :v };};var ReferenceInvalid =Reference {Type :ReferenceTypeInvalid };
+
+// Min is an implementation of the Excel MIN() function.
+func Min (args []Result )Result {return _cgbc (args ,false )};
+
+// Text is an implementation of the Excel TEXT function.
+func Text (args []Result )Result {if len (args )!=2{return MakeErrorResult ("T\u0045\u0058\u0054\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f \u0061\u0072\u0067u\u006de\u006e\u0074\u0073");};_fbag :=args [0];if _fbag .Type !=ResultTypeNumber &&_fbag .Type !=ResultTypeString &&_fbag .Type !=ResultTypeEmpty {return MakeErrorResult ("\u0054\u0045\u0058\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0066\u0069\u0072\u0073\u0074\u0020a\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062e\u0072\u0020\u006f\u0072\u0020\u0073\u0074\u0072\u0069\u006e\u0067");
+};if args [1].Type !=ResultTypeString {return MakeErrorResult ("\u0054E\u0058\u0054 \u0072\u0065\u0071\u0075i\u0072\u0065\u0073 \u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072gu\u006d\u0065\u006et\u0020\u0074o\u0020\u0062\u0065\u0020\u0061\u0020s\u0074\u0072i\u006e\u0067");
+};_bgbac :=args [1].ValueString ;switch _fbag .Type {case ResultTypeNumber :return MakeStringResult (_ef .Number (_fbag .ValueNumber ,_bgbac ));case ResultTypeString :return MakeStringResult (_ef .String (_fbag .ValueString ,_bgbac ));case ResultTypeEmpty :return MakeStringResult (_ef .Number (0,_bgbac ));
+case ResultTypeArray ,ResultTypeList :return MakeErrorResultType (ErrorTypeSpill ,"\u0054\u0045X\u0054\u0020\u0064\u006f\u0065\u0073\u006e\u0027\u0074\u0020\u0077\u006f\u0072\u006b\u0020\u0077\u0069\u0074\u0068\u0020\u0061\u0072ra\u0079\u0073");default:return MakeErrorResult ("I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0020\u0066\u006fr\u0020T\u0045\u0058\u0054");
+};};func init (){RegisterFunction ("\u0041\u0043\u0043\u0052\u0049\u004e\u0054\u004d",Accrintm );RegisterFunction ("\u0041M\u004f\u0052\u0044\u0045\u0047\u0052C",Amordegrc );RegisterFunction ("\u0041\u004d\u004f\u0052\u004c\u0049\u004e\u0043",Amorlinc );
 RegisterFunction ("\u0043O\u0055\u0050\u0044\u0041\u0059\u0042S",Coupdaybs );RegisterFunction ("\u0043\u004f\u0055\u0050\u0044\u0041\u0059\u0053",Coupdays );RegisterFunction ("\u0043\u004f\u0055\u0050\u0044\u0041\u0059\u0053\u004e\u0043",Coupdaysnc );RegisterFunction ("\u0043O\u0055\u0050\u004e\u0055\u004d",Coupnum );
 RegisterFunction ("\u0043O\u0055\u0050\u004e\u0043\u0044",Coupncd );RegisterFunction ("\u0043O\u0055\u0050\u0050\u0043\u0044",Couppcd );RegisterFunction ("\u0043U\u004d\u0049\u0050\u004d\u0054",Cumipmt );RegisterFunction ("\u0043\u0055\u004d\u0050\u0052\u0049\u004e\u0043",Cumprinc );
 RegisterFunction ("\u0044\u0042",Db );RegisterFunction ("\u0044\u0044\u0042",Ddb );RegisterFunction ("\u0044\u0049\u0053\u0043",Disc );RegisterFunction ("\u0044\u004f\u004c\u004c\u0041\u0052\u0044\u0045",Dollarde );RegisterFunction ("\u0044\u004f\u004c\u004c\u0041\u0052\u0046\u0052",Dollarfr );
@@ -510,1508 +481,387 @@ RegisterFunction ("\u0050\u004d\u0054",Pmt );RegisterFunction ("\u0050\u0050\u00
 RegisterFunction ("\u0050\u0056",Pv );RegisterFunction ("\u0052\u0041\u0054\u0045",Rate );RegisterFunction ("\u0052\u0045\u0043\u0045\u0049\u0056\u0045\u0044",Received );RegisterFunction ("\u0052\u0052\u0049",Rri );RegisterFunction ("\u005fx\u006c\u0066\u006e\u002e\u0052\u0052I",Rri );
 RegisterFunction ("\u0053\u004c\u004e",Sln );RegisterFunction ("\u0053\u0059\u0044",Syd );RegisterFunction ("\u0054B\u0049\u004c\u004c\u0045\u0051",Tbilleq );RegisterFunction ("\u0054\u0042\u0049\u004c\u004c\u0050\u0052\u0049\u0043\u0045",Tbillprice );
 RegisterFunction ("\u0054\u0042\u0049\u004c\u004c\u0059\u0049\u0045\u004c\u0044",Tbillyield );RegisterFunction ("\u0056\u0044\u0042",Vdb );RegisterFunction ("\u0058\u0049\u0052\u0052",Xirr );RegisterFunction ("\u0058\u004e\u0050\u0056",Xnpv );RegisterFunction ("\u0059\u0049\u0045L\u0044",Yield );
-RegisterFunction ("\u0059I\u0045\u004c\u0044\u0044\u0049\u0053C",Yielddisc );RegisterFunction ("\u0059\u0049\u0045\u004c\u0044\u004d\u0041\u0054",Yieldmat );};
-
-// Eval evaluates and returns the result of a sheet expression.
-func (_dcdbc SheetPrefixExpr )Eval (ctx Context ,ev Evaluator )Result {return MakeErrorResult ("\u0073\u0068\u0065\u0065\u0074\u0020\u0070\u0072\u0065\u0066\u0069\u0078\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u006e\u0065\u0076\u0065r\u0020\u0062\u0065\u0020\u0065v\u0061\u006cu\u0061\u0074\u0065\u0064");
-};var _ccda float64 =25569.0;const _baafe =57356;
-
-// IsLeapYear is an implementation of the Excel ISLEAPYEAR() function.
-func IsLeapYear (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=1||args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049S\u004c\u0045A\u0050\u0059\u0045\u0041R\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073in\u0067\u006c\u0065 \u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
-};_dbbe :=ctx .GetEpoch ();_efdd ,_ebgbf :=_eebfc (args [0].Value (),_dbbe );if _ebgbf !=nil {return MakeErrorResult ("\u0049S\u004c\u0045A\u0050\u0059\u0045\u0041R\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073in\u0067\u006c\u0065 \u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
-};_bbagc :=_efdd .Year ();return MakeBoolResult (_cbca (_bbagc ));};func _ddcb (_fdg string )(int ,int ,float64 ,bool ,bool ,Result ){_fefe :="";_geed :=[]string {};for _ebaa ,_afb :=range _age {_geed =_afb .FindStringSubmatch (_fdg );if len (_geed )> 1{_fefe =_ebaa ;
-break ;};};if _fefe ==""{return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_beef );};_edc :=_geed [1]=="";_geed =_geed [49:];_eecf :=len (_geed );_gde :=_geed [_eecf -1];_abfb :=_gde =="\u0061\u006d";_bbf :=_gde =="\u0070\u006d";var _gfe ,_bfb int ;
-var _fcbef float64 ;var _eceb error ;switch _fefe {case "\u0068\u0068":_gfe ,_eceb =_fce .Atoi (_geed [0]);if _eceb !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_beef );};_bfb =0;_fcbef =0;case "\u0068\u0068\u003am\u006d":_gfe ,_eceb =_fce .Atoi (_geed [0]);
-if _eceb !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_beef );};_bfb ,_eceb =_fce .Atoi (_geed [2]);if _eceb !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_beef );};_fcbef =0;case "\u006d\u006d\u003as\u0073":_gfe =0;
-_bfb ,_eceb =_fce .Atoi (_geed [0]);if _eceb !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_beef );};_fcbef ,_eceb =_fce .ParseFloat (_geed [2],64);if _eceb !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_beef );
-};case "\u0068\u0068\u003a\u006d\u006d\u003a\u0073\u0073":_gfe ,_eceb =_fce .Atoi (_geed [0]);if _eceb !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_beef );};_bfb ,_eceb =_fce .Atoi (_geed [2]);if _eceb !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_beef );
-};_fcbef ,_eceb =_fce .ParseFloat (_geed [4],64);if _eceb !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_beef );};};if _bfb >=60{return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_beef );};if _abfb ||_bbf {if _gfe > 12||_fcbef >=60{return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_beef );
-}else if _gfe ==12{_gfe =0;};}else if _gfe >=24||_fcbef >=10000{return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_beef );};return _gfe ,_bfb ,_fcbef ,_bbf ,_edc ,_fca ;};
-
-// RandBetween is an implementation of the Excel RANDBETWEEN() function that returns a random
-// integer in the range specified.
-func RandBetween (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0052A\u004e\u0044B\u0045\u0054\u0057\u0045E\u004e\u0028\u0029 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020tw\u006f\u0020\u006eu\u006d\u0065r\u0069\u0063\u0020\u0061\u0072\u0067u\u006d\u0065n\u0074\u0073");
-};_ddea :=args [0].AsNumber ();_ggff :=args [1].AsNumber ();if _ddea .Type !=ResultTypeNumber ||_ggff .Type !=ResultTypeNumber {return MakeErrorResult ("\u0052A\u004e\u0044B\u0045\u0054\u0057\u0045E\u004e\u0028\u0029 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020tw\u006f\u0020\u006eu\u006d\u0065r\u0069\u0063\u0020\u0061\u0072\u0067u\u006d\u0065n\u0074\u0073");
-};if _ggff .ValueNumber < _ddea .ValueNumber {return MakeErrorResult ("\u0052\u0041\u004e\u0044\u0042E\u0054\u0057\u0045\u0045\u004e\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006c\u0061\u0072\u0067\u0065r");
-};_eeff :=int64 (_ddea .ValueNumber );_bfec :=int64 (_ggff .ValueNumber );return MakeNumberResult (float64 (_afbg .Int63n (_bfec -_eeff +1)+_eeff ));};func (_efdac *noCache )GetFromCache (key string )(Result ,bool ){return _fca ,false };type cmpResult int8 ;
-var _ebge =[...]int {0};
-
-// Reference returns an invalid reference for EmptyExpr.
-func (_ab EmptyExpr )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
-
-// LastEvalIsRef returns if last evaluation with the evaluator was a reference.
-func (_fdee *defEval )LastEvalIsRef ()bool {return _fdee ._dee };const _agc ="\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0044\u0041\u0054\u0045\u0056\u0041\u004c\u0055\u0045";
-
-
-// PrefixExpr is an expression containing reference to another sheet like Sheet1!A1 (the value of the cell A1 from sheet 'Sheet1').
-type PrefixExpr struct{_begcd Expression ;_ddeba Expression ;};var _efd =map[string ]*_fa .Regexp {};func _gf (_fgc string ,_cce *_a .UpdateQuery )string {_fcff ,_gbe :=_de .ParseCellReference (_fgc );if _gbe !=nil {return "\u0023\u0052\u0045F\u0021";};
-if _cce .UpdateType ==_a .UpdateActionRemoveColumn {_fec :=_cce .ColumnIdx ;_bee :=_fcff .ColumnIdx ;if _bee < _fec {return _fgc ;}else if _bee ==_fec {return "\u0023\u0052\u0045F\u0021";}else {return _fcff .Update (_a .UpdateActionRemoveColumn ).String ();
-};};return _fgc ;};func (_geeb *Lexer )emit (_ffbfbf tokenType ,_fddg []byte ){if _dgad {_b .Println ("\u0065\u006d\u0069\u0074",_ffbfbf ,_dcbbf (string (_fddg )));};_geeb ._dcceb <-&node {_ffbfbf ,string (_fddg )};};
-
-// Reference returns a string reference value to a vertical range with prefix.
-func (_adgd PrefixVerticalRange )Reference (ctx Context ,ev Evaluator )Reference {_fafcf :=_adgd ._efdgde .Reference (ctx ,ev );return Reference {Type :ReferenceTypeVerticalRange ,Value :_adgd .verticalRangeReference (_fafcf .Value )};};const _fcb ="\u0028\u0020\u0028"+_dbg +"\u007c"+_bdba +"\u007c"+_fab +"\u007c"+_gfc +"\u0029\u0029\u003f\u0024";
-
-
-// NewHorizontalRange constructs a new full rows range.
-func NewHorizontalRange (v string )Expression {_gbgcc :=_bcd .Split (v ,"\u003a");if len (_gbgcc )!=2{return nil ;};_gfbac ,_ :=_fce .Atoi (_gbgcc [0]);_begd ,_ :=_fce .Atoi (_gbgcc [1]);if _gfbac > _begd {_gfbac ,_begd =_begd ,_gfbac ;};return HorizontalRange {_eaeb :_gfbac ,_fdedb :_begd };
-};type rmode byte ;
-
-// Rept is an implementation of the Excel REPT function that returns n copies of
-// a string.
-func Rept (args []Result )Result {if len (args )!=2{return MakeErrorResult ("R\u0045\u0050\u0054\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f \u0061\u0072\u0067u\u006de\u006e\u0074\u0073");};_bbgfe :=args [0].AsString ();if _bbgfe .Type !=ResultTypeString {return MakeErrorResult ("\u0050R\u004f\u0050E\u0052\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020f\u0069\u0072\u0073\u0074\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062e\u0020\u0061\u0020\u0073\u0074\u0072\u0069\u006e\u0067");
-};_cgdda :=args [1].AsNumber ();if _cgdda .Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052O\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};if _cgdda .ValueNumber < 0{return MakeErrorResult ("\u0050\u0052\u004fP\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074o\u0020\u0062\u0065\u0020\u003e\u003d\u0020\u0030");
-};if _cgdda .ValueNumber ==0{return MakeStringResult ("");};_eggbf :=_e .Buffer {};for _cfcf :=0;_cfcf < int (_cgdda .ValueNumber );_cfcf ++{_eggbf .WriteString (_bbgfe .ValueString );};return MakeStringResult (_eggbf .String ());};
-
-// Eval evaluates a range with prefix returning a list of results or an error.
-func (_eagf PrefixRangeExpr )Eval (ctx Context ,ev Evaluator )Result {_bgeb :=_eagf ._fgcba .Reference (ctx ,ev );_abab :=_eagf ._bgacf .Reference (ctx ,ev );_caaef :=_eagf ._fabf .Reference (ctx ,ev );switch _bgeb .Type {case ReferenceTypeSheet :if _fegcda (_bgeb ,ctx ){return MakeErrorResultType (ErrorTypeName ,_b .Sprintf ("\u0053h\u0065e\u0074\u0020\u0025\u0073\u0020n\u006f\u0074 \u0066\u006f\u0075\u006e\u0064",_bgeb .Value ));
-};_fdfd :=_egffg (_bgeb ,_abab ,_caaef );if _abab .Type ==ReferenceTypeCell &&_caaef .Type ==ReferenceTypeCell {if _eadf ,_dfaf :=ev .GetFromCache (_fdfd );_dfaf {return _eadf ;}else {_ccfe :=_ggac (ctx .Sheet (_bgeb .Value ),ev ,_abab .Value ,_caaef .Value );
-ev .SetCache (_fdfd ,_ccfe );return _ccfe ;};};return MakeErrorResult ("\u0069\u006e\u0076\u0061\u006c\u0069\u0064\u0020\u0072a\u006e\u0067\u0065\u0020"+_fdfd );default:return MakeErrorResult (_b .Sprintf ("\u006e\u006f\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0020\u0066\u006f\u0072\u0020r\u0065f\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_bgeb .Type ));
-};};
-
-// GetFilename returns an empty string for the invalid reference context.
-func (_bbbe *ivr )GetFilename ()string {return ""};const (ReferenceTypeInvalid ReferenceType =iota ;ReferenceTypeCell ;ReferenceTypeHorizontalRange ;ReferenceTypeVerticalRange ;ReferenceTypeNamedRange ;ReferenceTypeRange ;ReferenceTypeSheet ;);var _feege []byte =[]byte {0,1,2,1,11,1,12,1,13,1,14,1,15,1,16,1,17,1,18,1,19,1,20,1,21,1,22,1,23,1,24,1,25,1,26,1,27,1,28,1,29,1,30,1,31,1,32,1,33,1,34,1,35,1,36,1,37,1,38,1,39,1,40,1,41,1,42,1,43,2,0,1,2,3,4,2,3,5,2,3,6,2,3,7,2,3,8,2,3,9,2,3,10};
-
-
-// Eval evaluates the binary expression using the context given.
-func (_deg BinaryExpr )String ()string {_bed :="";switch _deg ._cag {case BinOpTypePlus :_bed ="\u002b";case BinOpTypeMinus :_bed ="\u002d";case BinOpTypeMult :_bed ="\u002a";case BinOpTypeDiv :_bed ="\u002f";case BinOpTypeExp :_bed ="\u005e";case BinOpTypeLT :_bed ="\u003c";
-case BinOpTypeGT :_bed ="\u003e";case BinOpTypeEQ :_bed ="\u003d";case BinOpTypeLEQ :_bed ="\u003c\u003d";case BinOpTypeGEQ :_bed ="\u003e\u003d";case BinOpTypeNE :_bed ="\u003c\u003e";case BinOpTypeConcat :_bed ="\u0026";};return _deg ._fcf .String ()+_bed +_deg ._ga .String ();
-};
-
-// ISERR is an implementation of the Excel ISERR() function.
-func IsErr (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u0045\u0052\u0052\u0028)\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};return MakeBoolResult (args [0].Type ==ResultTypeError &&args [0].ValueString !="\u0023\u004e\u002f\u0041");};func _ead (_cggb int ,_dfc _g .Month ,_eeca int )int64 {if _cggb ==1900&&int (_dfc )<=2{_eeca --;};_cbeg :=_g .Date (_cggb ,_dfc ,_eeca ,0,0,0,0,_g .UTC );
-return _cbeg .Unix ();};
-
-// MDeterm is an implementation of the Excel MDETERM which finds the determinant
-// of a matrix.
-func MDeterm (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u004d\u0044\u0045T\u0045\u0052\u004d\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0072\u0061\u0079 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gfba :=args [0];if _gfba .Type !=ResultTypeArray {return MakeErrorResult ("\u004d\u0044\u0045T\u0045\u0052\u004d\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0072\u0061\u0079 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_ebcd :=len (_gfba .ValueArray );for _ ,_fbgb :=range _gfba .ValueArray {if len (_fbgb )!=_ebcd {return MakeErrorResult ("\u004d\u0044\u0045TE\u0052\u004d\u0028\u0029\u0020\u0072\u0065\u0071\u0075i\u0072e\u0073 \u0061 \u0073\u0071\u0075\u0061\u0072\u0065\u0020\u006d\u0061\u0074\u0072\u0069\u0078");
-};};return MakeNumberResult (_dgec (_gfba .ValueArray ));};
-
-// DateDif is an implementation of the Excel DATEDIF() function.
-func DateDif (args []Result )Result {if len (args )!=3||args [0].Type !=ResultTypeNumber ||args [1].Type !=ResultTypeNumber ||args [2].Type !=ResultTypeString {return MakeErrorResult ("\u0044\u0041\u0054\u0045\u0044I\u0046\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077o\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u006e\u0064\u0020\u006f\u006e\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
-};_cbce :=args [0].ValueNumber ;_dbe :=args [1].ValueNumber ;if _dbe < _cbce {return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0068\u0065\u0020\u0073\u0074\u0061r\u0074\u0020\u0064a\u0074\u0065\u0020\u0069s\u0020\u0067\u0072\u0065\u0061\u0074\u0065\u0072\u0020\u0074\u0068\u0061\u006e\u0020\u0074\u0068\u0065\u0020\u0065\u006e\u0064\u0020\u0064\u0061\u0074\u0065");
-};if _dbe ==_cbce {return MakeNumberResult (0);};_ffeg :=_bcd .ToLower (args [2].ValueString );if _ffeg =="\u0064"{return MakeNumberResult (_dbe -_cbce );};_fbe :=_dad (_cbce );_gab :=_dad (_dbe );_gge ,_bgdf ,_fded :=_fbe .Date ();_gae ,_aef ,_dadb :=_gab .Date ();
-_bag :=int (_bgdf );_dda :=int (_aef );var _ebb float64 ;switch _ffeg {case "\u0079":_ebb =float64 (_gae -_gge );if _dda < _bag ||(_dda ==_bag &&_dadb < _fded ){_ebb --;};case "\u006d":_bebf :=_gae -_gge ;_dfa :=_dda -_bag ;if _dadb < _fded {_dfa --;};
-if _dfa < 0{_bebf --;_dfa +=12;};_ebb =float64 (_bebf *12+_dfa );case "\u006d\u0064":_cecd :=_dda ;if _dadb < _fded {_cecd --;};_ebb =float64 (int (_dbe -_ee (_gae ,_cecd ,_fded )));case "\u0079\u006d":_ebb =float64 (_dda -_bag );if _dadb < _fded {_ebb --;
-};if _ebb < 0{_ebb +=12;};case "\u0079\u0064":_acdb :=_gae ;if _dda < _bag ||(_dda ==_bag &&_dadb < _fded ){_acdb --;};_ebb =float64 (int (_dbe -_ee (_acdb ,_bag ,_fded )));default:return MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0069\u006e\u0074e\u0072\u0076\u0061\u006c\u0020\u0076\u0061\u006c\u0075\u0065");
-};return MakeNumberResult (_ebb );};
-
-// Yielddisc implements the Excel YIELDDISC function.
-func Yielddisc (args []Result )Result {_dadae :=len (args );if _dadae !=4&&_dadae !=5{return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044D\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020f\u006f\u0075\u0072\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_bbcef ,_bgdg ,_gdga :=_fbae (args [0],args [1],"\u0059I\u0045\u004c\u0044\u0044\u0049\u0053C");if _gdga .Type ==ResultTypeError {return _gdga ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044\u0044\u0049S\u0043\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u0070\u0072\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_aefd :=args [2].ValueNumber ;if _aefd <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0059\u0049E\u004c\u0044\u0044\u0049\u0053C\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0070\u0072\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044D\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020r\u0065\u0064\u0065\u006d\u0070\u0074\u0069\u006f\u006e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
-};_eggf :=args [3].ValueNumber ;if _eggf <=0{return MakeErrorResultType (ErrorTypeNum ,"YI\u0045\u004cD\u0044\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065\u006d\u0070\u0074\u0069\u006f\u006e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076e\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072g\u0075m\u0065\u006et");
-};_efgc :=0;if _dadae ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049E\u004c\u0044\u0044\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_efgc =int (args [4].ValueNumber );if !_feeb (_efgc ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0066\u006f\u0072\u0020\u0059I\u0045\u004cD\u0044\u0049\u0053\u0043");
-};};_addf ,_gdga :=_gad (_bbcef ,_bgdg ,_efgc );if _gdga .Type ==ResultTypeError {return _gdga ;};return MakeNumberResult ((_eggf /_aefd -1)/_addf );};
-
-// Received implements the Excel RECEIVED function.
-func Received (args []Result )Result {_cgeb :=len (args );if _cgeb !=4&&_cgeb !=5{return MakeErrorResult ("R\u0045\u0043\u0045\u0049\u0056\u0045\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066o\u0075\u0072\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065 a\u0072\u0067\u0075m\u0065n\u0074\u0073");
-};_cdef ,_ggba ,_ebgb :=_fbae (args [0],args [1],"\u0052\u0045\u0043\u0045\u0049\u0056\u0045\u0044");if _ebgb .Type ==ResultTypeError {return _ebgb ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0045\u0043\u0045\u0049\u0056\u0045\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020i\u006e\u0076\u0065\u0073\u0074\u006d\u0065n\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gcbc :=args [2].ValueNumber ;if _gcbc <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0052\u0045\u0043\u0045\u0049\u0056\u0045\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0069\u006ev\u0065\u0073\u0074\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065n\u0074");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0045\u0043\u0045\u0049\u0056\u0045\u0044 \u0072\u0065\u0071ui\u0072\u0065\u0073\u0020\u0064\u0069s\u0063\u006f\u0075\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-};_fggf :=args [3].ValueNumber ;if _fggf <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0052\u0045\u0043\u0045I\u0056\u0045\u0044\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0064\u0069\u0073\u0063\u006f\u0075\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020p\u006f\u0073\u0069\u0074\u0069v\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_ffacf :=0;if _cgeb ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052E\u0043\u0045I\u0056\u0045\u0044 \u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0062\u0061\u0073\u0069\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_ffacf =int (args [4].ValueNumber );if !_feeb (_ffacf ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065c\u0074\u0020b\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u0052\u0045\u0043E\u0049\u0056\u0045\u0044");
-};};_beff ,_ebgb :=_gad (_cdef ,_ggba ,_ffacf );if _ebgb .Type ==ResultTypeError {return _ebgb ;};return MakeNumberResult (_gcbc /(1-_fggf *_beff ));};func (_gdee tokenType )String ()string {return _dbgcc (int (_gdee ))};
-
-// FloorPrecise is an implementation of the FlOOR.PRECISE function.
-func FloorPrecise (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0046\u004cO\u004f\u0052\u002e\u0050\u0052\u0045\u0043\u0049\u0053\u0045\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if len (args )> 2{return MakeErrorResult ("\u0046L\u004f\u004fR\u002e\u0050\u0052\u0045C\u0049\u0053\u0045(\u0029\u0020\u0061\u006c\u006c\u006f\u0077\u0073\u0020at\u0020\u006d\u006fs\u0074\u0020t\u0077\u006f\u0020\u0061\u0072\u0067u\u006d\u0065n\u0074\u0073");
-};_fcgg :=args [0].AsNumber ();if _fcgg .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020F\u004c\u004f\u004f\u0052\u002e\u0050\u0052E\u0043\u0049\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074 \u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_cfgd :=float64 (1);if _fcgg .ValueNumber < 0{_cfgd =-1;};if len (args )> 1{_abbb :=args [1].AsNumber ();if _abbb .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006ed\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020F\u004c\u004f\u004f\u0052\u002e\u0050\u0052\u0045\u0043\u0049\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065r");
-};_cfgd =_d .Abs (_abbb .ValueNumber );};if len (args )==1{return MakeNumberResult (_d .Floor (_fcgg .ValueNumber ));};_cecee :=_fcgg .ValueNumber ;_cecee ,_affg :=_d .Modf (_cecee /_cfgd );if _affg !=0{if _fcgg .ValueNumber < 0{_cecee --;};};return MakeNumberResult (_cecee *_cfgd );
-};
-
-// Price implements the Excel PRICE function.
-func Price (args []Result )Result {_afdb :=len (args );if _afdb !=6&&_afdb !=7{return MakeErrorResult ("\u0050\u0052I\u0043\u0045\u0020\u0072e\u0071\u0075i\u0072\u0065\u0073\u0020\u0073\u0069\u0078\u0020o\u0072\u0020\u0073\u0065\u0076\u0065\u006e\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_ecage ,_fbgdg ,_aefa :=_fbae (args [0],args [1],"\u0050\u0052\u0049C\u0045");if _aefa .Type ==ResultTypeError {return _aefa ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052\u0049CE\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0072a\u0074e\u0020o\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_beaea :=args [2].ValueNumber ;if _beaea < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u006eo\u0074\u0020\u0062\u0065\u0020n\u0065\u0067a\u0074\u0069\u0076\u0065");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("P\u0052\u0049\u0043\u0045\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073 \u0079\u0069\u0065\u006c\u0064\u0020\u006ff\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062e\u0072");
-};_dgefd :=args [3].ValueNumber ;if _dgefd < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0079\u0069\u0065\u006c\u0064 \u0074\u006f\u0020\u006e\u006f\u0074\u0020\u0062\u0065\u0020\u006e\u0065\u0067a\u0074\u0069\u0076\u0065");
-};if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("P\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0072\u0065\u0064em\u0070\u0074\u0069\u006fn\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_eafgd :=args [4].ValueNumber ;if _eafgd <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0052\u0049\u0043\u0045\u0020r\u0065\u0071\u0075i\u0072\u0065\u0073 \u0072\u0065\u0064\u0065\u006d\u0070\u0074\u0069\u006f\u006e \u0074\u006f\u0020\u0062\u0065 p\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_dcba :=args [5];if _dcba .Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0066\u0072\u0065\u0071\u0075e\u006e\u0063\u0079\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_dbde :=_dcba .ValueNumber ;if !_bcf (_dbde ){return MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0066\u0072e\u0071u\u0065n\u0063\u0065\u0020\u0076\u0061\u006c\u0075e");};_dbcf :=0;if _afdb ==7&&args [6].Type !=ResultTypeEmpty {if args [6].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052\u0049C\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_dbcf =int (args [6].ValueNumber );if !_feeb (_dbcf ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063or\u0072\u0065\u0063\u0074\u0020\u0062\u0061\u0073\u0069s\u0020a\u0072g\u0075m\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u0050\u0052\u0049\u0043\u0045");
-};};_fcbd ,_aefa :=_cbeee (_ecage ,_fbgdg ,_beaea ,_dgefd ,_eafgd ,_dbde ,_dbcf );if _aefa .Type ==ResultTypeError {return _aefa ;};return MakeNumberResult (_fcbd );};func _feeb (_ddagbe int )bool {return _ddagbe >=0&&_ddagbe <=4};
-
-// Text is an implementation of the Excel TEXT function.
-func Text (args []Result )Result {if len (args )!=2{return MakeErrorResult ("T\u0045\u0058\u0054\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f \u0061\u0072\u0067u\u006de\u006e\u0074\u0073");};_aggg :=args [0];if _aggg .Type !=ResultTypeNumber &&_aggg .Type !=ResultTypeString &&_aggg .Type !=ResultTypeEmpty {return MakeErrorResult ("\u0054\u0045\u0058\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0066\u0069\u0072\u0073\u0074\u0020a\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062e\u0072\u0020\u006f\u0072\u0020\u0073\u0074\u0072\u0069\u006e\u0067");
-};if args [1].Type !=ResultTypeString {return MakeErrorResult ("\u0054E\u0058\u0054 \u0072\u0065\u0071\u0075i\u0072\u0065\u0073 \u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072gu\u006d\u0065\u006et\u0020\u0074o\u0020\u0062\u0065\u0020\u0061\u0020s\u0074\u0072i\u006e\u0067");
-};_cfgde :=args [1].ValueString ;switch _aggg .Type {case ResultTypeNumber :return MakeStringResult (_ba .Number (_aggg .ValueNumber ,_cfgde ));case ResultTypeString :return MakeStringResult (_ba .String (_aggg .ValueString ,_cfgde ));case ResultTypeEmpty :return MakeStringResult (_ba .Number (0,_cfgde ));
-case ResultTypeArray ,ResultTypeList :return MakeErrorResultType (ErrorTypeSpill ,"\u0054\u0045X\u0054\u0020\u0064\u006f\u0065\u0073\u006e\u0027\u0074\u0020\u0077\u006f\u0072\u006b\u0020\u0077\u0069\u0074\u0068\u0020\u0061\u0072ra\u0079\u0073");default:return MakeErrorResult ("I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0020\u0066\u006fr\u0020T\u0045\u0058\u0054");
-};};
-
-// SupportedFunctions returns a list of supported functions.
-func SupportedFunctions ()[]string {_gbbbb :=[]string {};for _ecgb :=range _ebdbf {_gbbbb =append (_gbbbb ,_ecgb );};for _bgfac :=range _eedg {_gbbbb =append (_gbbbb ,_bgfac );};_ca .Strings (_gbbbb );return _gbbbb ;};const (ResultTypeUnknown ResultType =iota ;
-ResultTypeNumber ;ResultTypeString ;ResultTypeList ;ResultTypeArray ;ResultTypeError ;ResultTypeEmpty ;);func _dbgcc (_eegfa int )string {if _eegfa >=1&&_eegfa -1< len (_abfea ){if _abfea [_eegfa -1]!=""{return _abfea [_eegfa -1];};};return _b .Sprintf ("\u0074\u006f\u006b\u002d\u0025\u0076",_eegfa );
-};
-
-// Cumprinc implements the Excel CUMPRINC function.
-func Cumprinc (args []Result )Result {_eddg ,_dgbe :=_fedd (args ,"\u0043\u0055\u004d\u0050\u0052\u0049\u004e\u0043");if _dgbe .Type ==ResultTypeError {return _dgbe ;};_beec :=_eddg ._bcfg ;_adbe :=_eddg ._aecb ;_eddd :=_eddg ._bdbe ;_eccb :=_eddg ._cddfe ;
-_ebgcf :=_eddg ._bgc ;_gbc :=_eddg ._fdgc ;_cagd :=_beea (_beec ,_adbe ,_eddd ,0,_gbc );_ddagf :=0.0;if _eccb ==1{if _gbc ==0{_ddagf =_cagd +_eddd *_beec ;}else {_ddagf =_cagd ;};_eccb ++;};for _fcdc :=_eccb ;_fcdc <=_ebgcf ;_fcdc ++{if _gbc ==1{_ddagf +=_cagd -(_dgfb (_beec ,_fcdc -2,_cagd ,_eddd ,1)-_cagd )*_beec ;
-}else {_ddagf +=_cagd -_dgfb (_beec ,_fcdc -1,_cagd ,_eddd ,0)*_beec ;};};return MakeNumberResult (_ddagf );};const _gbef =57355;func _fcfce (_fcdgf string ,_cabg []Result )(*parsedReplaceObject ,Result ){if len (_cabg )!=4{return nil ,MakeErrorResult (_fcdgf +"\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u006f\u0075r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if _cabg [0].Type !=ResultTypeString {return nil ,MakeErrorResult (_fcdgf +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069\u0072s\u0074\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u0073t\u0072\u0069\u006e\u0067");
-};_cgdc :=_cabg [0].ValueString ;if _cabg [1].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_fcdgf +" \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062e \u0061\u0020\u006eu\u006db\u0065\u0072");
-};_fcbgc :=int (_cabg [1].ValueNumber )-1;if _cabg [2].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_fcdgf +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068\u0069r\u0064\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_afac :=int (_cabg [2].ValueNumber );if _cabg [3].Type !=ResultTypeString {return nil ,MakeErrorResult (_fcdgf +" \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u006f\u0075\u0072\u0074\u0068\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062e \u0061\u0020\u0073t\u0072i\u006e\u0067");
-};_gfacc :=_cabg [3].ValueString ;return &parsedReplaceObject {_cgdc ,_fcbgc ,_afac ,_gfacc },_fca ;};func _cgdf (_cbcac Result )bool {_dbdc :=_cbcac .Type ;return _dbdc !=ResultTypeArray &&_dbdc !=ResultTypeList ;};
-
-// BinOpType is the binary operation operator type
-//
-//go:generate stringer -type=BinOpType
-type BinOpType byte ;
-
-// String returns a string representation of a vertical range with prefix.
-func (_bggd PrefixVerticalRange )String ()string {return _b .Sprintf ("\u0025\u0073\u0021\u0025\u0073\u003a\u0025\u0073",_bggd ._efdgde .String (),_bggd ._eebda ,_bggd ._ebcdb );};func _badg (_bgac Result )[][]Result {switch _bgac .Type {case ResultTypeArray :return _bgac .ValueArray ;
-case ResultTypeList :return [][]Result {_bgac .ValueList };default:return [][]Result {};};};
-
-// Reference returns a string reference value to a horizontal range with prefix.
-func (_fbcag PrefixHorizontalRange )Reference (ctx Context ,ev Evaluator )Reference {_bfdg :=_fbcag ._eabcd .Reference (ctx ,ev );return Reference {Type :ReferenceTypeHorizontalRange ,Value :_fbcag .horizontalRangeReference (_bfdg .Value )};};
-
-// RoundDown is an implementation of the Excel ROUNDDOWN function that rounds a number
-// down to a specified number of digits.
-func RoundDown (args []Result )Result {return _eggd (args ,_aaaf )};
-
-// Reference returns an invalid reference for BinaryExpr.
-func (_ece BinaryExpr )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
-
-// Bool is a boolean expression.
-type Bool struct{_dca bool };func _dddc (_ddaa []Result )[]rangeIndex {_ddaag :=[]rangeIndex {};_bcade :=len (_ddaa );for _aeeaa :=0;_aeeaa < _bcade -1;_aeeaa +=2{_efde :=[]rangeIndex {};_eadc :=_badg (_ddaa [_aeeaa ]);_cecdf :=_deda (_ddaa [_aeeaa +1]);
-if _aeeaa ==0{for _fabce ,_dgga :=range _eadc {for _aaddc ,_ceac :=range _dgga {if _aacb (_ceac ,_cecdf ){_efde =append (_efde ,rangeIndex {_fabce ,_aaddc });};};};}else {for _ ,_dgae :=range _ddaag {_aggfd :=_eadc [_dgae ._cacd ][_dgae ._gdab ];if _aacb (_aggfd ,_cecdf ){_efde =append (_efde ,_dgae );
-};};};if len (_efde )==0{return []rangeIndex {};};_ddaag =_efde [:];};return _ddaag ;};func _ecg ()evCache {_ccd :=evCache {};_ccd ._caf =make (map[string ]Result );_ccd ._acd =&_fc .Mutex {};return _ccd ;};func _beea (_cdgb ,_aeea ,_acaa ,_fdbag float64 ,_cbge int )float64 {var _gccdg float64 ;
-if _cdgb ==0{_gccdg =(_acaa +_fdbag )/_aeea ;}else {_egdc :=_d .Pow (1+_cdgb ,_aeea );if _cbge ==1{_gccdg =(_fdbag *_cdgb /(_egdc -1)+_acaa *_cdgb /(1-1/_egdc ))/(1+_cdgb );}else {_gccdg =_fdbag *_cdgb /(_egdc -1)+_acaa *_cdgb /(1-1/_egdc );};};return -_gccdg ;
-};func _ecdd (_gbgcb ,_bbda Result ,_degae string )(*xargs ,Result ){if _gbgcb .Type !=ResultTypeList &&_gbgcb .Type !=ResultTypeArray {return nil ,MakeErrorResult (_degae +"\u0020\u0072eq\u0075\u0069\u0072e\u0073\u0020\u0076\u0061lue\u0073 t\u006f\u0020\u0062\u0065\u0020\u006f\u0066 a\u0072\u0072\u0061\u0079\u0020\u0074\u0079p\u0065");
-};_aced :=_badg (_gbgcb );_ecge :=[]float64 {};for _ ,_cdb :=range _aced {for _ ,_geca :=range _cdb {if _geca .Type ==ResultTypeNumber &&!_geca .IsBoolean {_ecge =append (_ecge ,_geca .ValueNumber );}else {return nil ,MakeErrorResult (_degae +"\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0076\u0061\u006c\u0075\u0065\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006dbe\u0072\u0073");
-};};};_dec :=len (_ecge );if len (_ecge )< 2{return nil ,MakeErrorResultType (ErrorTypeNum ,"");};if _bbda .Type !=ResultTypeList &&_bbda .Type !=ResultTypeArray {return nil ,MakeErrorResult (_degae +" \u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0064\u0061\u0074\u0065s\u0020\u0074\u006f\u0020\u0062\u0065\u0020o\u0066\u0020\u0061\u0072\u0072\u0061\u0079\u0020\u0074\u0079p\u0065");
-};_gdaf :=_badg (_bbda );_efbef :=[]float64 {};_fffc :=0.0;for _ ,_acb :=range _gdaf {for _ ,_bbdag :=range _acb {if _bbdag .Type ==ResultTypeNumber &&!_bbdag .IsBoolean {_aeaa :=float64 (int (_bbdag .ValueNumber ));if _aeaa < _fffc {return nil ,MakeErrorResultType (ErrorTypeNum ,_degae +" \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0064\u0061\u0074\u0065\u0073\u0020\u0074\u006f\u0020b\u0065\u0020\u0069\u006e\u0020\u0061\u0073\u0063\u0065\u006edi\u006e\u0067\u0020o\u0072d\u0065\u0072");
-};_efbef =append (_efbef ,_aeaa );_fffc =_aeaa ;}else {return nil ,MakeErrorResult (_degae +"\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0064\u0061\u0074\u0065\u0073\u0020t\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062e\u0072\u0073");};};};if len (_efbef )!=_dec {return nil ,MakeErrorResultType (ErrorTypeNum ,"");
-};return &xargs {_ecge ,_efbef },MakeEmptyResult ();};
-
-// Even is an implementation of the Excel EVEN() that rounds a number to the
-// nearest even integer.
-func Even (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0045\u0056\u0045\u004e(\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");};_edbf :=args [0].AsNumber ();
-if _edbf .Type !=ResultTypeNumber {return MakeErrorResult ("\u0045\u0056\u0045N\u0028\u0029\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");};_defb :=_d .Signbit (_edbf .ValueNumber );
-_ggdc ,_cefa :=_d .Modf (_edbf .ValueNumber /2);_gbce :=_ggdc *2;if _cefa !=0{if !_defb {_gbce +=2;}else {_gbce -=2;};};return MakeNumberResult (_gbce );};
-
-// Findb is an implementation of the Excel FINDB().
-func Findb (ctx Context ,ev Evaluator ,args []Result )Result {if !ctx .IsDBCS (){return Find (args );};_bggfb ,_ceag :=_bceff ("\u0046\u0049\u004e\u0044",args );if _ceag .Type !=ResultTypeEmpty {return _ceag ;};_bdff :=_bggfb ._dgcdd ;if _bdff ==""{return MakeNumberResult (1.0);
-};_caedg :=_bggfb ._eddfb ;_dgag :=_bggfb ._bedab -1;_agaa :=1;_dafb :=0;for _fcffb :=range _caedg {if _fcffb !=0{_cgde :=1;if _fcffb -_dafb > 1{_cgde =2;};_agaa +=_cgde ;};if _agaa > _dgag {_egccg :=_bcd .Index (_caedg [_fcffb :],_bdff );if _egccg ==0{return MakeNumberResult (float64 (_agaa ));
-};};_dafb =_fcffb ;};return MakeErrorResultType (ErrorTypeValue ,"\u004eo\u0074\u0020\u0066\u006f\u0075\u006ed");};func _aa (_ae ,_cba [][]Result )bool {if len (_ae )!=len (_cba ){return false ;};for _cc :=range _ae {if len (_ae [_cc ])!=len (_cba [_cc ]){return false ;
-};};return true ;};const _abaa ="\u0052\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0054\u0079\u0070\u0065\u0049\u006e\u0076\u0061\u006c\u0069\u0064\u0052\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0054\u0079\u0070\u0065\u0043\u0065\u006c\u006c\u0052\u0065\u0066\u0065r\u0065\u006ec\u0065\u0054\u0079\u0070e\u004e\u0061\u006d\u0065\u0064\u0052\u0061\u006e\u0067\u0065R\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0054y\u0070\u0065\u0052\u0061\u006e\u0067\u0065\u0052\u0065\u0066e\u0072\u0065\u006ec\u0065\u0054\u0079\u0070\u0065\u0053\u0068e\u0065\u0074";
-type yyParser interface{Parse (yyLexer )int ;Lookahead ()int ;};
-
-// NewNegate constructs a new negate expression.
-func NewNegate (e Expression )Expression {return Negate {_ecbga :e }};
-
-// Choose implements the Excel CHOOSE function.
-func Choose (args []Result )Result {if len (args )< 2{return MakeErrorResult ("\u0043\u0048O\u004f\u0053\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0073");};_bdga :=args [0];
-if _bdga .Type !=ResultTypeNumber {return MakeErrorResult ("\u0043H\u004f\u004fS\u0045\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020f\u0069\u0072\u0073\u0074\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074y\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_fdcac :=int (_bdga .ValueNumber );if _fdcac < 1{return MakeErrorResult ("\u0049\u006e\u0064\u0065\u0078\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065 \u0061 \u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u0076\u0061\u006c\u0075\u0065");
-};if len (args )<=_fdcac {return MakeErrorResult ("\u0049\u006e\u0064\u0065\u0078\u0020\u0073\u0068\u006f\u0075\u006cd\u0020\u0062\u0065\u0020\u006c\u0065\u0073\u0073 \u006fr\u0020\u0065\u0071\u0075\u0061\u006c\u0020\u0074\u006f\u0020\u0074\u0068\u0065\u0020\u006e\u0075\u006d\u0062e\u0072\u0020\u006f\u0066\u0020\u0076\u0061\u006c\u0075\u0065\u0073");
-};return args [_fdcac ];};func _afcedc (_afaec ,_cacga float64 )float64 {_afaec =_d .Trunc (_afaec );_cacga =_d .Trunc (_cacga );if _afaec ==0{return _cacga ;};if _cacga ==0{return _afaec ;};for _afaec !=_cacga {if _afaec > _cacga {_afaec =_afaec -_cacga ;
-}else {_cacga =_cacga -_afaec ;};};return _afaec ;};
-
-// NewBinaryExpr constructs a new binary expression with a given operator.
-func NewBinaryExpr (lhs Expression ,op BinOpType ,rhs Expression )Expression {return BinaryExpr {_fcf :lhs ,_ga :rhs ,_cag :op };};
-
-// Transpose implements the TRANSPOSE function that transposes a cell range.
-func Transpose (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0054\u0052AN\u0053\u0050\u004fS\u0045\u0020\u0072\u0065qui\u0072es\u0020\u0061\u0020\u0073\u0069\u006e\u0067le\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");};if args [0].Type !=ResultTypeArray &&args [0].Type !=ResultTypeList {return MakeErrorResult ("T\u0052\u0041\u004e\u0053\u0050\u004fS\u0045\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0061\u0020\u0072a\u006e\u0067\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
-};_fffg :=args [0];if _fffg .Type ==ResultTypeList {_agcbb :=[][]Result {};for _ ,_ddeb :=range _fffg .ValueList {_agcbb =append (_agcbb ,[]Result {_ddeb });};return MakeArrayResult (_agcbb );};_eeac :=make ([][]Result ,len (_fffg .ValueArray [0]));for _ ,_fege :=range _fffg .ValueArray {for _dfgg ,_cbeef :=range _fege {_eeac [_dfgg ]=append (_eeac [_dfgg ],_cbeef );
-};};return MakeArrayResult (_eeac );};const _dcgfd =57369;
-
-// Update updates the horizontal range references after removing a row/column.
-func (_edgb HorizontalRange )Update (q *_a .UpdateQuery )Expression {return _edgb };
-
-// Eval evaluates and returns the result of an error expression.
-func (_fgb Error )Eval (ctx Context ,ev Evaluator )Result {return MakeErrorResult (_fgb ._faa )};
-
-// Average implements the AVERAGE function. It differs slightly from Excel (and
-// agrees with LibreOffice) in that boolean values are counted. As an example,
-// AVERAGE of two cells containing TRUE & FALSE is 0.5 in LibreOffice and
-// #DIV/0! in Excel. unioffice will return 0.5 in this case.
-func Average (args []Result )Result {_cdaae ,_effb :=_bgbe (args ,false );if _effb ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0041\u0056\u0045\u0052AG\u0045\u0020\u0064\u0069\u0076\u0069\u0064\u0065\u0020\u0062\u0079\u0020\u007a\u0065r\u006f");
-};return MakeNumberResult (_cdaae /_effb );};var ReferenceInvalid =Reference {Type :ReferenceTypeInvalid };
-
-// Reference returns a string reference value to a cell.
-func (_cgf CellRef )Reference (ctx Context ,ev Evaluator )Reference {return Reference {Type :ReferenceTypeCell ,Value :_cgf ._bge };};
-
-// Reference returns an invalid reference for Bool.
-func (_dce Bool )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };func _fgbd (_abce ,_ccdga float64 ,_cdgf ,_feaa int )(float64 ,Result ){_fgg ,_ddae :=_dad (_abce ),_dad (_ccdga );if _ddae .After (_fgg ){_fdfc :=_gggg (_fgg ,_ddae ,_cdgf ,_feaa );
-_gada :=(_ddae .Year ()-_fdfc .Year ())*12+int (_ddae .Month ())-int (_fdfc .Month ());return float64 (_gada *_cdgf )/12.0,_fca ;};return 0,MakeErrorResultType (ErrorTypeNum ,"\u0053\u0065t\u0074\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074\u0065\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u0062\u0065\u0066\u006f\u0072\u0065\u0020\u006d\u0061\u0074\u0075\u0072\u0069\u0074\u0079\u0020\u0064\u0061\u0074\u0065");
-};
-
-// AsNumber attempts to intepret a string cell value as a number. Upon success,
-// it returns a new number result, upon  failure it returns the original result.
-// This is used as functions return strings that can then act like number (e.g.
-// LEFT(1.2345,3) + LEFT(1.2345,3) = 2.4)
-func (_facdf Result )AsNumber ()Result {if _facdf .Type ==ResultTypeString {_caggd ,_cdbe :=_fce .ParseFloat (_facdf .ValueString ,64);if _cdbe ==nil {return MakeNumberResult (_caggd );};};if _facdf .Type ==ResultTypeEmpty {return MakeNumberResult (0);
-};return _facdf ;};
-
-// Fv implements the Excel FV function.
-func Fv (args []Result )Result {_agg :=len (args );if _agg < 3||_agg > 5{return MakeErrorResult ("\u0046\u0056\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020o\u0066\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u006f\u0066\u0020\u0033\u0020\u0061\u006e\u0064\u00205");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0046\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_daca :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0046\u0056\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020o\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
-};_fgda :=args [1].ValueNumber ;if _fgda !=float64 (int (_fgda )){return MakeErrorResultType (ErrorTypeNum ,"\u0046\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006ff\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0069\u006e\u0074\u0065\u0067\u0065\u0072\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065n\u0074");
-};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0046\u0056\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0061\u0079\u006d\u0065\u006e\u0074 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gfb :=args [2].ValueNumber ;_acgc :=0.0;if _agg >=4&&args [3].Type !=ResultTypeEmpty {if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("F\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0070\u0072\u0065\u0073\u0065\u006et \u0076\u0061\u006c\u0075e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_acgc =args [3].ValueNumber ;};_gaca :=0;if _agg ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0046\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0079\u0070\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_gaca =int (args [4].ValueNumber );if _gaca !=0{_gaca =1;};};return MakeNumberResult (_dgfb (_daca ,_fgda ,_gfb ,_acgc ,_gaca ));};func (_bgbd ReferenceType )String ()string {if _bgbd >=ReferenceType (len (_cbfa )-1){return _b .Sprintf ("\u0052\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0054\u0079\u0070e\u0028\u0025\u0064\u0029",_bgbd );
-};return _abaa [_cbfa [_bgbd ]:_cbfa [_bgbd +1]];};
-
-// Rand is an implementation of the Excel RAND() function that returns random
-// numbers in the range [0,1).
-func Rand (args []Result )Result {if len (args )!=0{return MakeErrorResult ("R\u0041\u004e\u0044\u0028\u0029\u0020a\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u006e\u006f \u0061\u0072\u0067u\u006de\u006e\u0074\u0073");};return MakeNumberResult (_afbg .Float64 ());
-};
-
-// SetLocked does nothing for the invalid reference context.
-func (_fcced *ivr )SetLocked (cellRef string ,locked bool ){};
-
-// Intrate implements the Excel INTRATE function.
-func Intrate (args []Result )Result {_ffda :=len (args );if _ffda !=4&&_ffda !=5{return MakeErrorResult ("\u0049\u004e\u0054\u0052\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0066\u006f\u0075r\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_dbagb ,_edaa ,_gdbd :=_fbae (args [0],args [1],"\u0049N\u0054\u0052\u0041\u0054\u0045");if _gdbd .Type ==ResultTypeError {return _gdbd ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u004e\u0054\u0052\u0041\u0054E\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0069\u006e\u0076\u0065\u0073\u0074\u006d\u0065\u006e\u0074 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
-};_eddf :=args [2].ValueNumber ;if _eddf <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u004e\u0054\u0052\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0069\u006e\u0076e\u0073\u0074\u006d\u0065\u006e\u0074\u0020\u0074\u006f \u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020\u0061r\u0067\u0075\u006de\u006e\u0074");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u004e\u0054\u0052\u0041\u0054E\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065\u006d\u0070\u0074\u0069\u006f\u006e \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
-};_cbgb :=args [3].ValueNumber ;if _cbgb <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u004e\u0054\u0052\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064e\u006d\u0070\u0074\u0069\u006f\u006e\u0020\u0074\u006f \u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020\u0061r\u0067\u0075\u006de\u006e\u0074");
-};_aacc :=0;if _ffda ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049N\u0054\u0052A\u0054\u0045\u0020\u0072e\u0071\u0075\u0069r\u0065\u0073\u0020\u0062\u0061\u0073\u0069\u0073\u0020to\u0020\u0062\u0065 \u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
-};_aacc =int (args [4].ValueNumber );if !_feeb (_aacc ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006eco\u0072\u0072\u0065c\u0074\u0020\u0062\u0061sis\u0020ar\u0067\u0075\u006d\u0065\u006e\u0074\u0020fo\u0072\u0020\u0049\u004e\u0054\u0052\u0041T\u0045");
-};};_dgcd ,_gdbd :=_gad (_dbagb ,_edaa ,_aacc );if _gdbd .Type ==ResultTypeError {return _gdbd ;};return MakeNumberResult ((_cbgb -_eddf )/_eddf /_dgcd );};func _cdde (_aed Result ,_bbde ,_edee string )(float64 ,Result ){var _fccc float64 ;switch _aed .Type {case ResultTypeNumber :_fccc =float64 (int (_aed .ValueNumber ));
-case ResultTypeString :_eaf :=DateValue ([]Result {_aed });if _eaf .Type ==ResultTypeError {return 0,MakeErrorResult ("\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020"+_bbde +"\u0020\u0064\u0061\u0074\u0065\u0020\u0066\u006f\u0072\u0020"+_edee );
-};_fccc =_eaf .ValueNumber ;default:return 0,MakeErrorResult ("\u0049\u006e\u0063or\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020"+_edee );};if _fccc < 0{return 0,MakeErrorResultType (ErrorTypeNum ,_bbde +"\u0020\u0073\u0068ou\u006c\u0064\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u006e\u0065\u0067\u0061\u0074\u0069\u0076\u0065");
-};return _fccc ,_fca ;};
-
-// Roman is an implementation of the Excel ROMAN function that convers numbers
-// to roman numerals in one of 5 formats.
-func Roman (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0052\u004fM\u0041\u004e\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if len (args )> 2{return MakeErrorResult ("\u0052\u004fM\u0041\u004e\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006d\u006f\u0073\u0074\u0020\u0074\u0077\u006f\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_debge :=args [0].AsNumber ();if _debge .Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u004fM\u0041\u004e\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_fdede :=0;if len (args )> 1{_afec :=args [1];if _afec .Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u004fM\u0041\u004e\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063");
-};_fdede =int (_afec .ValueNumber );if _fdede < 0{_fdede =0;}else if _fdede > 4{_fdede =4;};};_dcbag :=_efcg ;switch _fdede {case 1:_dcbag =_cgbc ;case 2:_dcbag =_dcgc ;case 3:_dcbag =_cbedc ;case 4:_dcbag =_feeef ;};_cfcd :=_d .Trunc (_debge .ValueNumber );
-_dgfcd :=_e .Buffer {};for _ ,_fbgfd :=range _dcbag {for _cfcd >=_fbgfd ._fgde {_dgfcd .WriteString (_fbgfd ._egfdb );_cfcd -=_fbgfd ._fgde ;};};return MakeStringResult (_dgfcd .String ());};const _bdba ="\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029\u003a\u0028\u0028\u005b\u0030-\u0039]\u0029\u002b\u0029\u0028\u0020\u0028\u0061\u006d\u007c\u0070\u006d\u0029\u0029\u003f";
-const _fedgb =57354;
-
-// Match implements the MATCH function.
-func Match (args []Result )Result {_ebeg :=len (args );if _ebeg !=2&&_ebeg !=3{return MakeErrorResult ("\u004d\u0041T\u0043\u0048\u0020\u0072e\u0071\u0075i\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020o\u0072\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_cbab :=1;if _ebeg ==3&&args [2].Type !=ResultTypeEmpty {if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u0041\u0054\u0043\u0048\u0020\u0072\u0065q\u0075\u0069\u0072es\u0020\u0074\u0068\u0065\u0020\u0074h\u0069\u0072\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f \u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006db\u0065\u0072");
-};_bagg :=args [2].ValueNumber ;if _bagg ==-1||_bagg ==0{_cbab =int (_bagg );};};_cfaga :=args [1];var _adad []Result ;switch _cfaga .Type {case ResultTypeList :_adad =_cfaga .ValueList ;case ResultTypeArray :_gefc :=_cfaga .ValueArray ;for _ ,_faba :=range _gefc {if len (_faba )!=1{return MakeErrorResult ("\u004d\u0041\u0054\u0043\u0048\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068e\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006f\u006e\u0065\u002dd\u0069\u006d\u0065\u006e\u0073\u0069o\u006e\u0061l\u0020\u0072a\u006eg\u0065");
-};_adad =append (_adad ,_faba [0]);};default:return MakeErrorResult ("\u004d\u0041\u0054\u0043\u0048\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068e\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006f\u006e\u0065\u002dd\u0069\u006d\u0065\u006e\u0073\u0069o\u006e\u0061l\u0020\u0072a\u006eg\u0065");
-};_ffef :=_deda (args [0]);switch _cbab {case 0:for _gcfge ,_fccd :=range _adad {if _acf (_fccd ,_ffef ){return MakeNumberResult (float64 (_gcfge +1));};};case -1:for _bdgd :=0;_bdgd < len (_adad );_bdgd ++{if _acf (_adad [_bdgd ],_ffef ){return MakeNumberResult (float64 (_bdgd +1));
-};if _ffef ._fggcg &&(_adad [_bdgd ].ValueNumber < _ffef ._accg ){if _bdgd ==0{return MakeErrorResultType (ErrorTypeNA ,"");};return MakeNumberResult (float64 (_bdgd ));};};case 1:for _eadgc :=0;_eadgc < len (_adad );_eadgc ++{if _acf (_adad [_eadgc ],_ffef ){return MakeNumberResult (float64 (_eadgc +1));
-};if _ffef ._fggcg &&(_adad [_eadgc ].ValueNumber > _ffef ._accg ){if _eadgc ==0{return MakeErrorResultType (ErrorTypeNA ,"");};return MakeNumberResult (float64 (_eadgc ));};};};return MakeErrorResultType (ErrorTypeNA ,"");};func init (){RegisterFunction ("\u0043\u0048\u004f\u004f\u0053\u0045",Choose );
-RegisterFunction ("\u0043\u004f\u004c\u0055\u004d\u004e",Column );RegisterFunction ("\u0043O\u004c\u0055\u004d\u004e\u0053",Columns );RegisterFunction ("\u0049\u004e\u0044E\u0058",Index );RegisterFunctionComplex ("\u0049\u004e\u0044\u0049\u0052\u0045\u0043\u0054",Indirect );
-RegisterFunctionComplex ("\u004f\u0046\u0046\u0053\u0045\u0054",Offset );RegisterFunction ("\u004d\u0041\u0054C\u0048",Match );RegisterFunction ("\u0048L\u004f\u004f\u004b\u0055\u0050",HLookup );RegisterFunction ("\u004c\u0041\u0052G\u0045",Large );RegisterFunction ("\u004c\u004f\u004f\u004b\u0055\u0050",Lookup );
-RegisterFunction ("\u0052\u004f\u0057",Row );RegisterFunction ("\u0052\u004f\u0057\u0053",Rows );RegisterFunction ("\u0053\u004d\u0041L\u004c",Small );RegisterFunction ("\u0056L\u004f\u004f\u004b\u0055\u0050",VLookup );RegisterFunction ("\u0054R\u0041\u004e\u0053\u0050\u004f\u0053E",Transpose );
-};const _bbecf =57361;const _bbdfe int =30;
-
-// Mid is an implementation of the Excel MID function that returns a copy
-// of the string with each word capitalized.
-func Mid (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u004d\u0049\u0044\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068r\u0065e\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074\u0073");};_gedfa :=args [0];if _gedfa .Type ==ResultTypeError {return _gedfa ;
-};if _gedfa .Type !=ResultTypeString &&_gedfa .Type !=ResultTypeNumber &&_gedfa .Type !=ResultTypeEmpty {return MakeErrorResult ("\u004d\u0049\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0065x\u0074 \u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u0073\u0074\u0072\u0069\u006e\u0067");
-};_aecc :=args [0].Value ();if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u0049D\u0020\u0072\u0065\u0071u\u0069\u0072e\u0073\u0020\u0073\u0074\u0061\u0072\u0074\u005fn\u0075\u006d\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_bbbfb :=int (args [1].ValueNumber );if _bbbfb < 1{return MakeErrorResult ("M\u0049\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0074\u0061\u0072\u0074\u005fn\u0075\u006d\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006dor\u0065\u0020\u0074h\u0061n\u0020\u0030");
-};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u0049D\u0020\u0072\u0065\u0071u\u0069\u0072e\u0073\u0020\u006e\u0075\u006d\u005f\u0063\u0068a\u0072\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_dfbcd :=int (args [2].ValueNumber );if _dfbcd < 0{return MakeErrorResult ("\u004d\u0049\u0044\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u005f\u0063\u0068a\u0072\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u006e\u0065\u0067\u0061\u0074\u0069\u0076\u0065");
-};_bgbg :=len (_aecc );if _bbbfb > _bgbg {return MakeStringResult ("");};_bbbfb --;_cgfff :=_bbbfb +_dfbcd ;if _cgfff > _bgbg {return MakeStringResult (_aecc [_bbbfb :]);}else {return MakeStringResult (_aecc [_bbbfb :_cgfff ]);};};var _agde string =string ([]byte {92});
-const _fcfb ="(\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029\u002d"+_fcd +"-\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029";
-
-// Context is a formula execution context.  Formula evaluation uses the context
-// to retreive information from sheets.
-type Context interface{
-
-// Cell returns the result of evaluating a cell.
-Cell (_fdec string ,_fea Evaluator )Result ;
-
-// Sheet returns an evaluation context for a given sheet name.  This is used
-// when evaluating cells that pull data from other sheets (e.g. ='Sheet 2'!A1).
-Sheet (_baf string )Context ;
-
-// GetEpoch returns the time epoch of the context's Workbook.
-GetEpoch ()_g .Time ;
-
-// GetFilename returns the full filename of the context's Workbook.
-GetFilename ()string ;
-
-// GetWidth returns a worksheet's column width.
-GetWidth (_gfg int )float64 ;
-
-// GetFormat returns a cell's format.
-GetFormat (_fga string )string ;
-
-// GetLabelPrefix returns cell's label prefix dependent on cell horizontal alignment.
-GetLabelPrefix (_afd string )string ;
-
-// GetFormat returns if cell is protected.
-GetLocked (_bfeg string )bool ;
-
-// HasFormula returns if cell contains formula.
-HasFormula (_ecfe string )bool ;
-
-// IsBool returns if cell contains boolean value.
-IsBool (_db string )bool ;
-
-// IsDBCS returns if workbook default language is among DBCS.
-IsDBCS ()bool ;
-
-// LastColumn returns the name of last column which contains data in range of context sheet's given rows.
-LastColumn (_aaf ,_fcc int )string ;
-
-// LastRow returns the name of last row which contains data in range of context sheet's given columns.
-LastRow (_dcec string )int ;
-
-// SetLocked returns sets cell's protected attribute.
-SetLocked (_egge string ,_bbb bool );
-
-// NamedRange returns a named range.
-NamedRange (_feg string )Reference ;
-
-// SetOffset is used so that the Context can evaluate cell references
-// differently when they are not absolute (e.g. not like '$A$5').  See the
-// shared formula support in Cell for usage.
-SetOffset (_dccf ,_aae uint32 );};func _fgff (_bcfc []Result ,_aage bool ,_fffce string )Result {var _eagca ,_gafa string ;if _aage {_eagca ="\u0074\u0068\u0072e\u0065";_gafa ="\u006f\u0064\u0064";}else {_eagca ="\u0074\u0077\u006f";_gafa ="\u0065\u0076\u0065\u006e";
-};_gcdfe :=len (_bcfc );if (_aage &&_gcdfe < 3)||(!_aage &&_gcdfe < 2){return MakeErrorResult (_fffce +"\u0020\u0072\u0065\u0071ui\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020"+_eagca +" \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0073");
-};if (_gcdfe /2*2==_gcdfe )==_aage {return MakeErrorResult (_fffce +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020"+_gafa +" \u006eu\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020a\u0072\u0067\u0075\u006den\u0074\u0073");};_faad :=-1;_gedc :=-1;
-for _geaec :=0;_geaec < _gcdfe ;_geaec +=2{_fdff :=_bcfc [_geaec ];if _fdff .Type !=ResultTypeArray &&_fdff .Type !=ResultTypeList {return MakeErrorResult (_fffce +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u006e\u0067\u0065\u0073\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065 \u006c\u0069\u0073\u0074\u0020o\u0072\u0020a\u0072\u0072\u0061\u0079");
-};_gacge :=_badg (_fdff );if _gedc ==-1{_gedc =len (_gacge );_faad =len (_gacge [0]);}else if len (_gacge )!=_gedc ||len (_gacge [0])!=_faad {return MakeErrorResult (_fffce +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0061l\u006c\u0020\u0072\u0061n\u0067\u0065\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0068\u0065\u0020\u0073\u0061\u006d\u0065\u0020\u0073\u0069\u007a\u0065");
-};if _aage &&_geaec ==0{_geaec --;};};return _fca ;};
-
-// Power is an implementation of the Excel POWER function that raises a number
-// to a power. It requires two numeric arguments.
-func Power (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0050\u004f\u0057\u0045\u0052\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u006e\u0075\u006de\u0072\u0069\u0063\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_gggd :=args [0].AsNumber ();if _gggd .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072s\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0050\u004f\u0057\u0045\u0052\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_fbgdc :=args [1].AsNumber ();if _fbgdc .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020a\u0072\u0067\u0075m\u0065\u006e\u0074\u0020t\u006f\u0020\u0050\u004f\u0057\u0045\u0052\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};return MakeNumberResult (_d .Pow (_gggd .ValueNumber ,_fbgdc .ValueNumber ));};const _gdgg =57377;const _dgfbc =57371;
-
-// MakeErrorResult constructs a #VALUE! error with a given extra error message.
-// The error message is for debugging formula evaluation only and is not stored
-// in the sheet.
-func MakeErrorResult (msg string )Result {return MakeErrorResultType (ErrorTypeValue ,msg )};
-
-// Mod is an implementation of the Excel MOD function which returns the
-// remainder after division. It requires two numeric argumnts.
-func Mod (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u004d\u004fD(\u0029\u0020\u0072e\u0071\u0075\u0069\u0072es \u0074wo\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");};_cgda :=args [0].AsNumber ();
-_fddd :=args [1].AsNumber ();if _cgda .Type !=ResultTypeNumber ||_fddd .Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u004fD(\u0029\u0020\u0072e\u0071\u0075\u0069\u0072es \u0074wo\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
-};if _fddd .ValueNumber ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"M\u004fD\u0028\u0029\u0020\u0064\u0069\u0076\u0069\u0064e\u0020\u0062\u0079\u0020ze\u0072\u006f");};_gcda ,_cfge :=_d .Modf (_cgda .ValueNumber /_fddd .ValueNumber );if _cfge < 0{_gcda --;
-};return MakeNumberResult (_cgda .ValueNumber -_fddd .ValueNumber *_gcda );};
-
-// Month is an implementation of the Excel MONTH() function.
-func Month (args []Result )Result {if len (args )!=1{return MakeErrorResult ("M\u004f\u004e\u0054\u0048\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006f\u006ee\u0020\u0061\u0072g\u0075m\u0065\u006e\u0074");};_fegc :=args [0];switch _fegc .Type {case ResultTypeEmpty :return MakeNumberResult (1);
-case ResultTypeNumber :_bedc :=_dad (_fegc .ValueNumber );return MakeNumberResult (float64 (_bedc .Month ()));case ResultTypeString :_afdf :=_bcd .ToLower (_fegc .ValueString );if !_gfd (_afdf ){_ ,_ ,_ ,_ ,_bda ,_abd :=_ddcb (_afdf );if _abd .Type ==ResultTypeError {_abd .ErrorMessage ="\u0049\u006ec\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0066\u006f\u0072\u0020\u004dON\u0054\u0048";
-return _abd ;};if _bda {return MakeNumberResult (1);};};_ ,_bbea ,_ ,_ ,_gcfa :=_eea (_afdf );if _gcfa .Type ==ResultTypeError {return _gcfa ;};return MakeNumberResult (float64 (_bbea ));default:return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u004d\u004fN\u0054\u0048");
-};};
-
-// Code is an implementation of the Excel CODE function that returns the first
-// character of the string as a number.
-func Code (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0043\u004f\u0044\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0073t\u0072\u0069\u006e\u0067\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_adab :=args [0].AsString ();if _adab .Type !=ResultTypeString {return MakeErrorResult ("\u0043\u004f\u0044\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0073t\u0072\u0069\u006e\u0067\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};if len (_adab .ValueString )==0{return MakeNumberResult (0);};return MakeNumberResult (float64 (_adab .ValueString [0]));};type Reference struct{Type ReferenceType ;Value string ;};
-
-// String returns an empty string for EmptyExpr.
-func (_aac EmptyExpr )String ()string {return ""};func _deba (_cbccc ,_gcddc Reference )string {return _b .Sprintf ("\u0025\u0073\u003a%\u0073",_cbccc .Value ,_gcddc .Value );};var _abfea =[...]string {"\u0024\u0065\u006e\u0064","\u0065\u0072\u0072o\u0072","\u0024\u0075\u006e\u006b","t\u006fk\u0065\u006e\u0048\u006f\u0072\u0069\u007a\u006fn\u0074\u0061\u006c\u0052an\u0067\u0065","\u0074o\u006be\u006e\u0056\u0065\u0072\u0074i\u0063\u0061l\u0052\u0061\u006e\u0067\u0065","\u0074\u006f\u006b\u0065\u006e\u0052\u0065\u0073\u0065\u0072\u0076\u0065d\u004e\u0061\u006d\u0065","\u0074\u006f\u006be\u006e\u0044\u0044\u0045\u0043\u0061\u006c\u006c","\u0074\u006f\u006b\u0065\u006e\u004c\u0065\u0078\u0045\u0072\u0072\u006f\u0072","\u0074o\u006be\u006e\u004e\u0061\u006d\u0065\u0064\u0052\u0061\u006e\u0067\u0065","\u0074o\u006b\u0065\u006e\u0042\u006f\u006fl","t\u006f\u006b\u0065\u006e\u004e\u0075\u006d\u0062\u0065\u0072","t\u006f\u006b\u0065\u006e\u0053\u0074\u0072\u0069\u006e\u0067","\u0074\u006f\u006b\u0065\u006e\u0045\u0072\u0072\u006f\u0072","\u0074\u006f\u006b\u0065\u006e\u0045\u0072\u0072\u006f\u0072\u0052\u0065\u0066","\u0074\u006f\u006b\u0065\u006e\u0053\u0068\u0065\u0065\u0074","\u0074o\u006b\u0065\u006e\u0043\u0065\u006cl","t\u006fk\u0065\u006e\u0046\u0075\u006e\u0063\u0074\u0069o\u006e\u0042\u0075\u0069lt\u0069\u006e","t\u006f\u006b\u0065\u006e\u004c\u0042\u0072\u0061\u0063\u0065","t\u006f\u006b\u0065\u006e\u0052\u0042\u0072\u0061\u0063\u0065","t\u006f\u006b\u0065\u006e\u004c\u0050\u0061\u0072\u0065\u006e","t\u006f\u006b\u0065\u006e\u0052\u0050\u0061\u0072\u0065\u006e","\u0074o\u006b\u0065\u006e\u0050\u006c\u0075s","\u0074\u006f\u006b\u0065\u006e\u004d\u0069\u006e\u0075\u0073","\u0074o\u006b\u0065\u006e\u004d\u0075\u006ct","\u0074\u006f\u006b\u0065\u006e\u0044\u0069\u0076","\u0074\u006f\u006b\u0065\u006e\u0045\u0078\u0070","\u0074o\u006b\u0065\u006e\u0045\u0051","\u0074o\u006b\u0065\u006e\u004c\u0054","\u0074o\u006b\u0065\u006e\u0047\u0054","\u0074\u006f\u006b\u0065\u006e\u004c\u0045\u0051","\u0074\u006f\u006b\u0065\u006e\u0047\u0045\u0051","\u0074o\u006b\u0065\u006e\u004e\u0045","\u0074\u006f\u006b\u0065\u006e\u0043\u006f\u006c\u006f\u006e","\u0074\u006f\u006b\u0065\u006e\u0043\u006f\u006d\u006d\u0061","\u0074\u006f\u006b\u0065\u006e\u0041\u006d\u0070\u0065r\u0073\u0061\u006e\u0064","\u0074o\u006b\u0065\u006e\u0053\u0065\u006di"};
-
-
-// Find is an implementation of the Excel FIND().
-func Find (args []Result )Result {_dbabc ,_caacc :=_bceff ("\u0046\u0049\u004e\u0044",args );if _caacc .Type !=ResultTypeEmpty {return _caacc ;};_agbfd :=_dbabc ._dgcdd ;if _agbfd ==""{return MakeNumberResult (1.0);};_ffbc :=_dbabc ._eddfb ;_gebfb :=_dbabc ._bedab ;
-_abdfa :=1;for _fgeda :=range _ffbc {if _abdfa < _gebfb {_abdfa ++;continue ;};_dcdcc :=_bcd .Index (_ffbc [_fgeda :],_agbfd );if _dcdcc ==0{return MakeNumberResult (float64 (_abdfa ));};_abdfa ++;};return MakeErrorResultType (ErrorTypeValue ,"\u004eo\u0074\u0020\u0066\u006f\u0075\u006ed");
-};
-
-// Rri implements the Excel RRI function.
-func Rri (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u0052\u0052\u0049\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068r\u0065e\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074\u0073");};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0052I\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u006eu\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_cbgf :=args [0].ValueNumber ;if _cbgf <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0052R\u0049\u0020r\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u006f\u0066\u0020p\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062e\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
-};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0052\u0049\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073 p\u0072\u0065\u0073\u0065\u006e\u0074 \u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-};_gebb :=args [1].ValueNumber ;if _gebb <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0052\u0052\u0049\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065\u0073\u0065\u006et\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
-};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("R\u0052\u0049\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0066\u0075\u0074\u0075\u0072e \u0076\u0061\u006c\u0075e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gbgc :=args [2].ValueNumber ;if _gbgc < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0052R\u0049\u0020r\u0065\u0071\u0075\u0069r\u0065\u0073\u0020f\u0075\u0074\u0075\u0072\u0065\u0020\u0076\u0061\u006cue\u0020\u0074\u006f \u0062\u0065 \u006e\u006f\u006e\u0020\u006e\u0065g\u0061\u0074i\u0076\u0065");
-};return MakeNumberResult (_d .Pow (_gbgc /_gebb ,1/_cbgf )-1);};func _gggg (_afg ,_eafd _g .Time ,_dcee ,_aadf int )_g .Time {_gage :=_eafd ;_dgee :=_afg .Year ()-_eafd .Year ();_gage =_gage .AddDate (_dgee ,0,0);if _afg .After (_gage ){_gage =_gage .AddDate (1,0,0);
-};_fbcc :=-12/_dcee ;for _gage .After (_afg ){_gage =_gage .AddDate (0,_fbcc ,0);};return _gage ;};func init (){_cdgcd ();RegisterFunction ("\u004e\u0041",NA );RegisterFunction ("\u0049S\u0042\u004c\u0041\u004e\u004b",IsBlank );RegisterFunction ("\u0049\u0053\u0045R\u0052",IsErr );
-RegisterFunction ("\u0049S\u0045\u0052\u0052\u004f\u0052",IsError );RegisterFunction ("\u0049\u0053\u0045\u0056\u0045\u004e",IsEven );RegisterFunctionComplex ("\u005fx\u006cf\u006e\u002e\u0049\u0053\u0046\u004f\u0052\u004d\u0055\u004c\u0041",IsFormula );
-RegisterFunctionComplex ("\u004fR\u0047\u002e\u004f\u0050E\u004e\u004f\u0046\u0046\u0049C\u0045.\u0049S\u004c\u0045\u0041\u0050\u0059\u0045\u0041R",IsLeapYear );RegisterFunctionComplex ("\u0049S\u004c\u004f\u0047\u0049\u0043\u0041L",IsLogical );RegisterFunction ("\u0049\u0053\u004e\u0041",IsNA );
-RegisterFunction ("\u0049S\u004e\u004f\u004e\u0054\u0045\u0058T",IsNonText );RegisterFunction ("\u0049\u0053\u004e\u0055\u004d\u0042\u0045\u0052",IsNumber );RegisterFunction ("\u0049\u0053\u004fD\u0044",IsOdd );RegisterFunctionComplex ("\u0049\u0053\u0052E\u0046",IsRef );
-RegisterFunction ("\u0049\u0053\u0054\u0045\u0058\u0054",IsText );RegisterFunctionComplex ("\u0043\u0045\u004c\u004c",Cell );};var _cdccd _fc .Mutex ;
-
-// MakeListResult constructs a list result.
-func MakeListResult (list []Result )Result {return Result {Type :ResultTypeList ,ValueList :list }};
-
-// String returns a string representation for Negate.
-func (_fgcbf Negate )String ()string {return "\u002d"+_fgcbf ._ecbga .String ()};func _cbdb (_aaeg string ,_ffebb func (_bacd float64 )float64 )Function {return func (_gedd []Result )Result {if len (_gedd )!=1{return MakeErrorResult (_aaeg +"\u0020\u0072\u0065\u0071ui\u0072\u0065\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
-};_adag :=_gedd [0].AsNumber ();switch _adag .Type {case ResultTypeNumber :_cfga :=_ffebb (_adag .ValueNumber );if _d .IsNaN (_cfga ){return MakeErrorResult (_aaeg +"\u0020\u0072\u0065\u0074\u0075\u0072\u006e\u0065\u0064\u0020\u004e\u0061\u004e");};if _d .IsInf (_cfga ,0){return MakeErrorResult (_aaeg +"\u0020r\u0065t\u0075\u0072\u006e\u0065\u0064 \u0069\u006ef\u0069\u006e\u0069\u0074\u0079");
-};return MakeNumberResult (_cfga );case ResultTypeList ,ResultTypeString :return MakeErrorResult (_aaeg +"\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u006e\u0075\u006de\u0072i\u0063\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-case ResultTypeError :return _adag ;default:return MakeErrorResult (_b .Sprintf ("\u0075\u006e\u0068a\u006e\u0064\u006c\u0065d\u0020\u0025\u0073\u0028\u0029\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_aaeg ,_adag .Type ));
-};};};
-
-// Int is an implementation of the Excel INT() function that rounds a number
-// down to an integer.
-func Int (args []Result )Result {if len (args )!=1{return MakeErrorResult ("I\u004e\u0054\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_bded :=args [0].AsNumber ();if _bded .Type !=ResultTypeNumber {return MakeErrorResult ("I\u004e\u0054\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_fcceb ,_dgafd :=_d .Modf (_bded .ValueNumber );if _dgafd < 0{_fcceb --;};return MakeNumberResult (_fcceb );};
-
-// Fact is an implementation of the excel FACT function which returns the
-// factorial of a positive numeric input.
-func Fact (args []Result )Result {if len (args )!=1{return MakeErrorResult ("F\u0041\u0043\u0054\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_bgeg :=args [0].AsNumber ();if _bgeg .Type !=ResultTypeNumber {return MakeErrorResult ("F\u0041\u0043\u0054\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067u\u006de\u006e\u0074");
-};if _bgeg .ValueNumber < 0{return MakeErrorResult ("\u0046\u0041\u0043\u0054\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u006f\u006e\u006c\u0079\u0020\u0070\u006f\u0073\u0069t\u0069\u0076\u0065\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
-};return MakeNumberResult (_cegf (_bgeg .ValueNumber ));};const _cdfd int =0;
-
-// Xirr implements the Excel XIRR function.
-func Xirr (args []Result )Result {_bbdee :=len (args );if _bbdee !=2&&_bbdee !=3{return MakeErrorResult ("\u0058\u0049RR\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s t\u0077o \u006f\u0072\u0020\u0074\u0068\u0072\u0065e \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
-};_edf ,_dfff :=_ecdd (args [0],args [1],"\u0058\u0049\u0052\u0052");if _dfff .Type ==ResultTypeError {return _dfff ;};_cbac :=_edf ._cdfa ;_cdcg :=_edf ._gcfg ;_edag :=0.1;if _bbdee ==3&&args [2].Type !=ResultTypeEmpty {if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0058\u0049\u0052\u0052\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0067\u0075\u0065\u0073\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_edag =args [2].ValueNumber ;if _edag <=-1{return MakeErrorResult ("\u0058\u0049\u0052\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0067\u0075\u0065\u0073\u0073\u0020\u0074\u006f\u0020\u0062e\u0020\u006d\u006f\u0072\u0065 \u0074\u0068a\u006e\u0020\u002d\u0031");
-};};return _cacg (_cbac ,_cdcg ,_edag );};
-
-// Tbillprice implements the Excel TBILLPRICE function.
-func Tbillprice (args []Result )Result {if len (args )!=3{return MakeErrorResult ("T\u0042\u0049\u004c\u004c\u0050\u0052I\u0043\u0045\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0074\u0068r\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
-};_dcbbc ,_fbeg ,_gdcce :=_fbae (args [0],args [1],"\u0054\u0042\u0049\u004c\u004c\u0050\u0052\u0049\u0043\u0045");if _gdcce .Type ==ResultTypeError {return _gdcce ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0054\u0042\u0049\u004c\u004c\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0064\u0069\u0073\u0063\u006f\u0075n\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gcfc :=_fbeg -_dcbbc ;if _gcfc > 365{return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0042\u0049\u004c\u004cP\u0052\u0049\u0043\u0045\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020m\u0061\u0074\u0075r\u0069\u0074\u0079\u0020t\u006f\u0020\u0062\u0065\u0020\u006eo\u0074\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e\u0020\u006f\u006e\u0065\u0020\u0079e\u0061\u0072\u0020\u0061\u0066\u0074\u0065\u0072\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074");
-};_aeda :=args [2].ValueNumber ;if _aeda <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0042\u0049\u004c\u004c\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020d\u0069\u0073\u0063\u006f\u0075\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065n\u0074");
-};return MakeNumberResult (100*(1-_aeda *_gcfc /360));};const _cecad int =30;type evCache struct{_caf map[string ]Result ;_acd *_fc .Mutex ;};type plex struct{_gbeb chan *node ;_cceb Expression ;_eegab string ;};
-
-// Xnpv implements the Excel XNPV function.
-func Xnpv (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u0058\u004eP\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0073");};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("X\u004e\u0050\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_bgfe :=args [0].ValueNumber ;if _bgfe <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0058\u004e\u0050\u0056\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020\u0074o\u0020\u0062\u0065\u0020\u0070\u006f\u0073i\u0074\u0069\u0076\u0065");
-};_gdgc ,_gefg :=_ecdd (args [1],args [2],"\u0058\u004e\u0050\u0056");if _gefg .Type ==ResultTypeError {return _gefg ;};_ggde :=_gdgc ._cdfa ;_afbb :=_gdgc ._gcfg ;_ebdag :=0.0;_cfdb :=_afbb [0];for _fdae ,_effg :=range _ggde {_ebdag +=_effg /_d .Pow (1+_bgfe ,(_afbb [_fdae ]-_cfdb )/365);
-};return MakeNumberResult (_ebdag );};func (_eccbff *plex )Lex (lval *yySymType )int {_fdab =true ;_bgfa :=<-_eccbff ._gbeb ;if _bgfa !=nil {lval ._dcfgf =_bgfa ;return int (lval ._dcfgf ._beabb );};return 0;};
-
-// Update returns the same object as updating sheet references does not affect ConstArrayExpr.
-func (_aee ConstArrayExpr )Update (q *_a .UpdateQuery )Expression {return _aee };type node struct{_beabb tokenType ;_cafdf string ;};
-
-// Eval evaluates and returns the result of an empty expression.
-func (_ccf EmptyExpr )Eval (ctx Context ,ev Evaluator )Result {return MakeEmptyResult ()};func (_cdca *ivr )NamedRange (ref string )Reference {return ReferenceInvalid };
-
-// Dollarfr implements the Excel DOLLARFR function.
-func Dollarfr (args []Result )Result {_gedgg ,_dbaf ,_dgbec :=_bfc (args ,"\u0044\u004f\u004c\u004c\u0041\u0052\u0046\u0052");if _dgbec .Type ==ResultTypeError {return _dgbec ;};if _dbaf ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0044\u004f\u004c\u004c\u0041R\u0046\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066r\u0061\u0063\u0074\u0069\u006f\u006e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
-};if _gedgg ==0{return MakeNumberResult (0);};_bfab :=_gedgg < 0;if _bfab {_gedgg =-_gedgg ;};_afced :=float64 (int (_gedgg ));_agff :=args [0].Value ();_eebb :=_bcd .Split (_agff ,"\u002e");_cbcfd :=0.0;if len (_eebb )> 1{var _ddce error ;_eafgf :=_eebb [1];
-_cbcfd ,_ddce =_fce .ParseFloat (_eafgf ,64);if _ddce !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0066\u0072\u0061\u0063\u0074\u0069\u006f\u006e\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0066\u006fr \u0044\u004f\u004cL\u0041R\u0046\u0052");
-};_dcd :=float64 (len (_eafgf ));_cbcfd /=_d .Pow (10,_dcd );};_cde :=_cbcfd *_dbaf /_d .Pow (10,float64 (int (_d .Log10 (_dbaf )))+1)+_afced ;if _bfab {_cde =-_cde ;};return MakeNumberResult (_cde );};
-
-// String returns a string representation of a horizontal range.
-func (_gfgb HorizontalRange )String ()string {return _gfgb .horizontalRangeReference ()};const _dfgf =57370;func init (){RegisterFunction ("\u0041\u004e\u0044",And );RegisterFunction ("\u0046\u0041\u004cS\u0045",False );RegisterFunction ("\u0049\u0046",If );
-RegisterFunction ("\u0049F\u0045\u0052\u0052\u004f\u0052",IfError );RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0049\u0046\u004e\u0041",IfNA );RegisterFunction ("\u0049\u0046\u0053",Ifs );RegisterFunction ("\u005fx\u006c\u0066\u006e\u002e\u0049\u0046S",Ifs );
-RegisterFunction ("\u004e\u004f\u0054",Not );RegisterFunction ("\u004f\u0052",Or );RegisterFunction ("\u0054\u0052\u0055\u0045",True );RegisterFunction ("\u005fx\u006c\u0066\u006e\u002e\u0058\u004fR",Xor );};
-
-// SeriesSum implements the Excel SERIESSUM function.
-func SeriesSum (args []Result )Result {if len (args )!=4{return MakeErrorResult ("\u0053\u0045\u0052\u0049\u0045\u0053\u0053\u0055\u004d\u0028\u0029\u0020\u0072\u0065\u0071u\u0069r\u0065\u0073\u0020\u0034\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_bcgb :=args [0].AsNumber ();_befc :=args [1].AsNumber ();_bcdeb :=args [2].AsNumber ();_efca :=args [3].ListValues ();if _bcgb .Type !=ResultTypeNumber ||_befc .Type !=ResultTypeNumber ||_bcdeb .Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0045\u0052\u0049\u0045\u0053S\u0055\u004d\u0028)\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069\u0072\u0073t\u0020\u0074\u0068\u0072\u0065e \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063");
-};_gfbf :=float64 (0);for _gedf ,_ageb :=range _efca {_gfbf +=_ageb .ValueNumber *_d .Pow (_bcgb .ValueNumber ,_befc .ValueNumber +float64 (_gedf )*_bcdeb .ValueNumber );};return MakeNumberResult (_gfbf );};func _egffg (_fbagc ,_gecf ,_aeead Reference )string {return _b .Sprintf ("\u0025\u0073\u0021\u0025\u0073\u003a\u0025\u0073",_fbagc .Value ,_gecf .Value ,_aeead .Value );
-};func _dge (_dfde ,_dbf ,_aefef ,_eab int )int {if !_fcg (_eab ){return _aefef ;};_fbc :=_aefef ;_defc :=_affb (_dfde ,_dbf );if _fbc > 30||_aefef >=_defc ||_fbc >=_defc {_fbc =30;};return _fbc ;};
-
-// GetFormat returns an empty string for the invalid reference context.
-func (_aagc *ivr )GetFormat (cellRef string )string {return ""};var _gag int64 =_ead (1900,_g .January ,1);func _dfbg (_bbcc []Result ,_bgga string )(*durationArgs ,Result ){_cbfc :=len (_bbcc );if _cbfc !=5&&_cbfc !=6{return nil ,MakeErrorResult (_bgga +"\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s\u0020\u0066\u0069\u0076\u0065\u0020\u006fr\u0020\u0073\u0069\u0078\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_ffb ,_bcbg ,_eafdf :=_fbae (_bbcc [0],_bbcc [1],_bgga );if _eafdf .Type ==ResultTypeError {return nil ,_eafdf ;};_ega :=_bbcc [2];if _ega .Type !=ResultTypeNumber {return nil ,MakeErrorResult (_bgga +"\u0020\u0072eq\u0075\u0069\u0072e\u0073\u0020\u0063\u006fupo\u006e r\u0061\u0074\u0065\u0020\u006f\u0066\u0020ty\u0070\u0065\u0020\u006e\u0075\u006d\u0062e\u0072");
-};_ffdg :=_ega .ValueNumber ;if _ffdg < 0{return nil ,MakeErrorResultType (ErrorTypeNum ,"\u0043\u006f\u0075po\u006e\u0020\u0072\u0061\u0074\u0065\u0020\u0073\u0068o\u0075l\u0064 \u006eo\u0074\u0020\u0062\u0065\u0020\u006e\u0065\u0067\u0061\u0074\u0069\u0076\u0065");
-};_ggee :=_bbcc [3];if _ggee .Type !=ResultTypeNumber {return nil ,MakeErrorResult (_bgga +" \u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0079\u0069\u0065\u006cd\u0020\u0072\u0061\u0074\u0065\u0020\u006ff\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062e\u0072");
-};_ggc :=_ggee .ValueNumber ;if _ggc < 0{return nil ,MakeErrorResultType (ErrorTypeNum ,"\u0059\u0069\u0065\u006c\u0064\u0020r\u0061\u0074\u0065\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u006e\u006ft\u0020\u0062\u0065\u0020\u006e\u0065\u0067a\u0074\u0069\u0076\u0065");
-};_bdbg :=_bbcc [4];if _bdbg .Type !=ResultTypeNumber {return nil ,MakeErrorResult (_bgga +"\u0020\u0072\u0065qu\u0069\u0072\u0065\u0073\u0020\u0066\u0072\u0065\u0071u\u0065n\u0063y\u0020o\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_ebac :=float64 (int (_bdbg .ValueNumber ));if !_bcf (_ebac ){return nil ,MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0066\u0072e\u0071u\u0065n\u0063\u0065\u0020\u0076\u0061\u006c\u0075e");};_afbf :=0;if _cbfc ==6&&_bbcc [5].Type !=ResultTypeEmpty {_gedg :=_bbcc [5];
-if _gedg .Type !=ResultTypeNumber {return nil ,MakeErrorResult (_bgga +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020b\u0061\u0073\u0069\u0073\u0020\u006f\u0066 \u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");};_afbf =int (_gedg .ValueNumber );
-if !_feeb (_afbf ){return nil ,MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0062a\u0073\u0069\u0073\u0020\u0076\u0061\u006c\u0075\u0065\u0020f\u006f\u0072\u0020"+_bgga );};};return &durationArgs {_ffb ,_bcbg ,_ffdg ,_ggc ,_ebac ,_afbf },_fca ;
-};
-
-// Yieldmat implements the Excel YIELDMAT function.
-func Yieldmat (args []Result )Result {_eeab :=len (args );if _eeab !=5&&_eeab !=6{return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0066\u0069v\u0065\u0020\u006f\u0072\u0020\u0073\u0069\u0078\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_cccd ,_ffea ,_deff :=_fbae (args [0],args [1],"\u0059\u0049\u0045\u004c\u0044\u004d\u0041\u0054");if _deff .Type ==ResultTypeError {return _deff ;};_dbdgf ,_deff :=_cdde (args [2],"\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065","\u0059\u0049\u0045\u004c\u0044\u004d\u0041\u0054");
-if _deff .Type ==ResultTypeError {return _deff ;};if _dbdgf >=_cccd {return MakeErrorResult ("\u0059\u0049\u0045\u004cD\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062e\u0020\u0062\u0065\u0066\u006fr\u0065\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074\u0065");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049E\u004c\u0044\u004d\u0041T\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072a\u0074\u0065\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_cbec :=args [3].ValueNumber ;if _cbec < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0059\u0049\u0045\u004c\u0044M\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072a\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u006e\u0065\u0067\u0061\u0074\u0069\u0076\u0065");
-};if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0079\u0069\u0065\u006c\u0064\u0020o\u0066\u0020\u0074\u0079\u0070e\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_acgce :=args [4].ValueNumber ;if _acgce <=0{return MakeErrorResultType (ErrorTypeNum ,"Y\u0049\u0045\u004c\u0044\u004d\u0041T\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0070\u0072\u0020\u0074o\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069v\u0065");
-};_bagee :=0;if _eeab ==6&&args [5].Type !=ResultTypeEmpty {if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059I\u0045\u004cD\u004d\u0041\u0054 \u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0062\u0061\u0073\u0069\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_bagee =int (args [5].ValueNumber );if !_feeb (_bagee ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065c\u0074\u0020b\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u0059\u0049\u0045L\u0044\u004d\u0041\u0054");
-};};_ddadg ,_deff :=_gad (_dbdgf ,_ffea ,_bagee );if _deff .Type ==ResultTypeError {return _deff ;};_ddced ,_deff :=_gad (_dbdgf ,_cccd ,_bagee );if _deff .Type ==ResultTypeError {return _deff ;};_eebd ,_deff :=_gad (_cccd ,_ffea ,_bagee );if _deff .Type ==ResultTypeError {return _deff ;
-};_ccce :=1+_ddadg *_cbec ;_ccce /=_acgce /100+_ddced *_cbec ;_ccce --;_ccce /=_eebd ;return MakeNumberResult (_ccce );};func (_dgeb Result )AsString ()Result {switch _dgeb .Type {case ResultTypeNumber :return MakeStringResult (_dgeb .Value ());default:return _dgeb ;
-};};func _cbb (_fcbg ,_cecdc ,_fgce int )int {if _fcbg > _cecdc {return 0;};if _fcg (_fgce ){return (_cecdc -_fcbg +1)*360;};_bdd :=0;for _fbg :=_fcbg ;_fbg <=_cecdc ;_fbg ++{_fbce :=365;if _cbca (_fbg ){_fbce =366;};_bdd +=_fbce ;};return _bdd ;};func _fbaedd (_cdafa []Result ,_cacgf bool )Result {_bddf :="\u004d\u0049\u004e";
-if _cacgf {_bddf ="\u004d\u0049\u004e\u0041";};if len (_cdafa )==0{return MakeErrorResult (_bddf +"\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s\u0020\u0061\u0074\u0020\u006c\u0065\u0061s\u0074\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_fegce :=_d .MaxFloat64 ;for _ ,_dcadc :=range _cdafa {switch _dcadc .Type {case ResultTypeNumber :if (_cacgf ||!_dcadc .IsBoolean )&&_dcadc .ValueNumber < _fegce {_fegce =_dcadc .ValueNumber ;};case ResultTypeList ,ResultTypeArray :_adee :=_fbaedd (_dcadc .ListValues (),_cacgf );
-if _adee .ValueNumber < _fegce {_fegce =_adee .ValueNumber ;};case ResultTypeEmpty :case ResultTypeString :_gcdba :=0.0;if _cacgf {_gcdba =_dcadc .AsNumber ().ValueNumber ;};if _gcdba < _fegce {_fegce =_gcdba ;};default:_gd .Log .Debug ("\u0075\u006e\u0068\u0061\u006e\u0064\u006c\u0065\u0064\u0020"+_bddf +"\u0028\u0029\u0020\u0061rg\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_dcadc .Type );
-};};if _fegce ==_d .MaxFloat64 {_fegce =0;};return MakeNumberResult (_fegce );};
-
-// Db implements the Excel DB function.
-func Db (args []Result )Result {_gdg :=len (args );if _gdg !=4&&_gdg !=5{return MakeErrorResult ("\u0044\u0042\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u006f\u0075\u0072\u0020\u006f\u0072 \u0066\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0063\u006f\u0073\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_eafg :=args [0].ValueNumber ;if _eafg < 0{return MakeErrorResultType (ErrorTypeNum ,"D\u0042\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0063\u006fs\u0074\u0020\u0074\u006f\u0020\u0062\u0065 \u006e\u006f\u006e\u0020\u006e\u0065\u0067\u0061\u0074\u0069v\u0065");
-};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0042\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061\u0067\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_ccbb :=args [1].ValueNumber ;if _ccbb < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061\u0067\u0065\u0020\u0074\u006f\u0020\u0062e\u0020\u006e\u006f\u006e\u0020n\u0065\u0067a\u0074\u0069\u0076\u0065");
-};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0069\u0066\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_daga :=args [2].ValueNumber ;if _daga <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0042\u0020r\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006c\u0069\u0066\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("D\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_bafc :=args [3].ValueNumber ;if _bafc <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0042\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074o\u0020\u0062\u0065\u0020\u0070\u006f\u0073i\u0074\u0069\u0076\u0065");
-};if _bafc -_daga > 1{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063or\u0072\u0065\u0063\u0074\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0066\u006f\u0072\u0020\u0044\u0042");};_ccfb :=12.0;if _gdg ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006do\u006e\u0074\u0068\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_ccfb =args [4].ValueNumber ;if _ccfb < 1||_ccfb > 12{return MakeErrorResultType (ErrorTypeNum ,"\u0044B\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u006do\u006e\u0074\u0068\u0020\u0074\u006f\u0020\u0062\u0065 i\u006e\u0020\u0072a\u006e\u0067e\u0020\u006f\u0066\u0020\u0031\u0020a\u006e\u0064 \u0031\u0032");
-};};if _ccfb ==12&&_bafc > _daga {return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063or\u0072\u0065\u0063\u0074\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0066\u006f\u0072\u0020\u0044\u0042");};if _ccbb >=_eafg {return MakeNumberResult (0);
-};_bbgd :=1-_d .Pow (_ccbb /_eafg ,1/_daga );_bbgd =float64 (int (_bbgd *1000+0.5))/1000;_dbaa :=_eafg *_bbgd *_ccfb /12;if _bafc ==1{return MakeNumberResult (_dbaa );};_ggfc :=_dbaa ;_dfab :=0.0;_cfaaa :=_daga ;if _cfaaa > _bafc {_cfaaa =_bafc ;};for _agdg :=2.0;
-_agdg <=_cfaaa ;_agdg ++{_dfab =(_eafg -_ggfc )*_bbgd ;_ggfc +=_dfab ;};if _bafc > _daga {return MakeNumberResult ((_eafg -_ggfc )*_bbgd *(12-_ccfb )/12);};return MakeNumberResult (_dfab );};
+RegisterFunction ("\u0059I\u0045\u004c\u0044\u0044\u0049\u0053C",Yielddisc );RegisterFunction ("\u0059\u0049\u0045\u004c\u0044\u004d\u0041\u0054",Yieldmat );};const _acbc =57356;
+
+// Update returns the same object as updating sheet references does not affect Error.
+func (_ebef Error )Update (q *_db .UpdateQuery )Expression {return _ebef };func _eacc (_geacg []Result ,_fagf string )(*amorArgs ,Result ){_fegf :=len (_geacg );if _fegf !=6&&_fegf !=7{return nil ,MakeErrorResult (_fagf +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0069\u0078\u0020\u006fr\u0020s\u0065\u0076\u0065\u006e\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if _geacg [0].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_fagf +"\u0020\u0072eq\u0075\u0069\u0072e\u0073\u0020\u0063\u006fst \u0074o \u0062\u0065\u0020\u006e\u0075\u006d\u0062er\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");};_efe :=_geacg [0].ValueNumber ;
+if _efe < 0{return nil ,MakeErrorResultType (ErrorTypeNum ,_fagf +"\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0063\u006f\u0073\u0074\u0020\u0074\u006f\u0020\u0062\u0065 \u006e\u006f\u006e\u0020\u006e\u0065\u0067a\u0074\u0069\u0076\u0065");
+};_fbcb ,_edaf :=_gfcac (_geacg [1],"\u0064\u0061\u0074\u0065\u0020\u0070\u0075\u0072\u0063h\u0061\u0073\u0065\u0064",_fagf );if _edaf .Type ==ResultTypeError {return nil ,_edaf ;};_bdaa ,_edaf :=_gfcac (_geacg [2],"\u0066\u0069\u0072s\u0074\u0020\u0070\u0065\u0072\u0069\u006f\u0064",_fagf );
+if _edaf .Type ==ResultTypeError {return nil ,_edaf ;};if _bdaa < _fbcb {return nil ,MakeErrorResultType (ErrorTypeNum ,_fagf +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069\u0072\u0073\u0074 \u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020l\u0061\u0074\u0065\u0072\u0020\u0074\u0068\u0061\u006e\u0020\u0064\u0061te\u0020\u0070\u0075\u0072\u0063\u0068\u0061\u0073\u0065\u0064");
+};if _geacg [3].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_fagf +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006cv\u0061\u0067\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_ccea :=_geacg [3].ValueNumber ;if _ccea < 0||_ccea > _efe {return nil ,MakeErrorResultType (ErrorTypeNum ,_fagf +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061g\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0062\u0065\u0074\u0077\u0065e\u006e\u0020\u0030\u0020\u0061\u006e\u0064\u0020\u0074\u0068\u0065\u0020in\u0069\u0074\u0069\u0061\u006c\u0020\u0063\u006f\u0073\u0074");
+};if _geacg [4].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_fagf +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_dbfa :=int (_geacg [4].ValueNumber );if _dbfa < 0{return nil ,MakeErrorResultType (ErrorTypeNum ,_fagf +" \u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0070\u0065\u0072\u0069o\u0064\u0020\u0074\u006f\u0020\u0062\u0065 \u006e\u006f\u006e\u002d\u006e\u0065\u0067\u0061\u0074\u0069v\u0065");
+};if _geacg [5].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_fagf +"\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0064\u0065\u0070\u0072\u0065\u0063\u0069\u0061\u0074\u0069\u006f\u006e\u0020\u0072\u0061\u0074\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
+};_fadde :=_geacg [5].ValueNumber ;if _fadde < 0{return nil ,MakeErrorResultType (ErrorTypeNum ,_fagf +"\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073 d\u0065\u0070\u0072\u0065\u0063\u0069\u0061\u0074\u0069\u006f\u006e\u0020\u0072\u0061t\u0065\u0020t\u006f\u0020\u0062e\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e\u0020\u0030\u0020\u0061\u006e\u0064 \u006c\u0065ss\u0020\u0074\u0068a\u006e\u0020\u0030\u002e\u0035");
+};_ddege :=0;if _fegf ==7&&_geacg [6].Type !=ResultTypeEmpty {if _geacg [6].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_fagf +"\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020b\u0061\u0073\u0069\u0073\u0020\u0074\u006f\u0020b\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_ddege =int (_geacg [6].ValueNumber );if !_ccfg (_ddege )||_ddege ==2{return nil ,MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020fo\u0072\u0020"+_fagf );
+};};return &amorArgs {_efe ,_fbcb ,_bdaa ,_ccea ,_dbfa ,_fadde ,_ddege },_fcea ;};func _agffe (_dggea Result ,_aeag ,_dccf int )[][]Result {_dfgf :=[][]Result {};switch _dggea .Type {case ResultTypeArray :for _ffceg ,_bbbfa :=range _dggea .ValueArray {if _ffceg < _aeag {_dfgf =append (_dfgf ,_gdecg (MakeListResult (_bbbfa ),_dccf ));
+}else {_dfgf =append (_dfgf ,_gdecg (MakeErrorResultType (ErrorTypeNA ,""),_dccf ));};};case ResultTypeList :_fdgb :=_gdecg (_dggea ,_dccf );for _eecb :=0;_eecb < _aeag ;_eecb ++{_dfgf =append (_dfgf ,_fdgb );};case ResultTypeNumber ,ResultTypeString ,ResultTypeError ,ResultTypeEmpty :for _adee :=0;
+_adee < _aeag ;_adee ++{_fafd :=_gdecg (_dggea ,_dccf );_dfgf =append (_dfgf ,_fafd );};};return _dfgf ;};var _add =[]*_bg .Regexp {};
+
+// Reference returns a string reference value to a horizontal range.
+func (_abaga HorizontalRange )Reference (ctx Context ,ev Evaluator )Reference {return Reference {Type :ReferenceTypeHorizontalRange ,Value :_abaga .horizontalRangeReference ()};};const _egafg =57363;
 
 // String returns a string representation of a named range.
-func (_bbagg NamedRangeRef )String ()string {return _bbagg ._cbbgb };
+func (_cceb NamedRangeRef )String ()string {return _cceb ._ceba };
 
-// Parse parses an io.Reader to get an Expression. If expression is parsed with an error, nil is returned
-func Parse (r _bc .Reader )Expression {_afcfa :=&plex {_gbeb :LexReader (r )};_caaad (_afcfa );if _afcfa ._eegab !=""{return nil ;};return _afcfa ._cceb ;};
+// String returns a string representation of Number.
+func (_adfgg Number )String ()string {return _fd .FormatFloat (_adfgg ._dgga ,'f',-1,64)};
 
-// CountIf implements the COUNTIF function.
-func CountIf (args []Result )Result {if len (args )< 2{return MakeErrorResult ("\u0043\u004f\u0055N\u0054\u0049\u0046\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0073");
-};_ecebe :=args [0];if _ecebe .Type !=ResultTypeArray &&_ecebe .Type !=ResultTypeList {return MakeErrorResult ("\u0043O\u0055\u004eT\u0049\u0046\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0066\u0069\u0072\u0073\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020t\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
-};_bgde :=_deda (args [1]);_cggf :=0;for _ ,_bfba :=range _badg (_ecebe ){for _ ,_egbg :=range _bfba {if _aacb (_egbg ,_bgde ){_cggf ++;};};};return MakeNumberResult (float64 (_cggf ));};
+// Ifs is an implementation of the Excel IFS() function.
+func Ifs (args []Result )Result {if len (args )< 2{return MakeErrorResult ("I\u0046\u0053\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061t\u0020\u006c\u0065\u0061\u0073\u0074\u0020t\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
+};for _efcd :=0;_efcd < len (args )-1;_efcd +=2{if args [_efcd ].ValueNumber ==1{return args [_efcd +1];};};return MakeErrorResultType (ErrorTypeNA ,"");};
 
-// ISERROR is an implementation of the Excel ISERROR() function.
-func IsError (args []Result )Result {if len (args )!=1{return MakeErrorResult ("I\u0053\u0045\u0052\u0052\u004f\u0052(\u0029\u0020\u0061\u0063\u0063\u0065p\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
-};return MakeBoolResult (args [0].Type ==ResultTypeError );};func _bega (_eefc []Result ,_dabef bool )Result {var _ceff string ;if _dabef {_ceff ="\u004c\u0041\u0052G\u0045";}else {_ceff ="\u0053\u004d\u0041L\u004c";};if len (_eefc )!=2{return MakeErrorResult (_ceff +"\u0020\u0072\u0065qu\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_dbgg :=_eefc [0];var _ebbb [][]Result ;switch _dbgg .Type {case ResultTypeArray :_ebbb =_dbgg .ValueArray ;case ResultTypeList :_ebbb =[][]Result {_dbgg .ValueList };default:return MakeErrorResult (_ceff +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u006f\u0066\u0020\u0074\u0079p\u0065\u0020a\u0072\u0072\u0061\u0079");
-};if len (_ebbb )==0{return MakeErrorResult (_ceff +"\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0061\u0072\u0072\u0061\u0079\u0020\u0074\u006f\u0020c\u006f\u006e\u0074\u0061\u0069\u006e\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u0031\u0020\u0072\u006f\u0077");
-};if _eefc [1].Type !=ResultTypeNumber {return MakeErrorResult (_ceff +" \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074yp\u0065\u0020\u006eu\u006db\u0065\u0072");
-};_dggd :=_eefc [1].ValueNumber ;if _dggd < 1{return MakeErrorResultType (ErrorTypeNum ,_ceff +"\u0020\u0072e\u0071\u0075\u0069\u0072\u0065s\u0020\u0073\u0065\u0063\u006fn\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e\u0020\u0030");
-};_dbgc :=int (_dggd );if float64 (_dbgc )!=_dggd {return MakeErrorResultType (ErrorTypeNum ,_ceff +"\u0020\u0072e\u0071\u0075\u0069\u0072\u0065s\u0020\u0073\u0065\u0063\u006fn\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e\u0020\u0030");
-};_cccc :=[]float64 {};for _ ,_eedd :=range _ebbb {for _ ,_fbcaf :=range _eedd {if _fbcaf .Type ==ResultTypeNumber {_cccc =append (_cccc ,_fbcaf .ValueNumber );};};};if _dbgc > len (_cccc ){return MakeErrorResultType (ErrorTypeNum ,_ceff +" \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u006c\u0065s\u0073\u0020\u006f\u0072\u0020\u0065\u0071\u0075\u0061\u006c\u0020\u0074\u0068\u0061\u006e\u0020t\u0068\u0065\u0020\u006e\u0075m\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u006e\u0075\u006d\u0062\u0065\u0072s\u0020\u0069\u006e\u0020t\u0068\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
-};_abdef :=_efe .MergeSort (_cccc );if _dabef {return MakeNumberResult (_abdef [len (_abdef )-_dbgc ]);}else {return MakeNumberResult (_abdef [_dbgc -1]);};};func init (){_afbg =_ec .New (_ec .NewSource (_g .Now ().UnixNano ()));RegisterFunction ("\u0041\u0042\u0053",_cbdb ("\u0041\u0053\u0049\u004e",_d .Abs ));
-RegisterFunction ("\u0041\u0043\u004f\u0053",_cbdb ("\u0041\u0053\u0049\u004e",_d .Acos ));RegisterFunction ("\u0041\u0043\u004fS\u0048",_cbdb ("\u0041\u0053\u0049\u004e",_d .Acosh ));RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0041\u0043\u004f\u0054",_cbdb ("\u0041\u0043\u004f\u0054",func (_edec float64 )float64 {return _d .Pi /2-_d .Atan (_edec )}));
-RegisterFunction ("_\u0078\u006c\u0066\u006e\u002e\u0041\u0043\u004f\u0054\u0048",_cbdb ("\u0041\u0043\u004fT\u0048",func (_bfegb float64 )float64 {return _d .Atanh (1/_bfegb )}));RegisterFunction ("\u005f\u0078\u006cf\u006e\u002e\u0041\u0052\u0041\u0042\u0049\u0043",Arabic );
-RegisterFunction ("\u0041\u0053\u0049\u004e",_cbdb ("\u0041\u0053\u0049\u004e",_d .Asin ));RegisterFunction ("\u0041\u0053\u0049N\u0048",_cbdb ("\u0041\u0053\u0049N\u0048",_d .Asinh ));RegisterFunction ("\u0041\u0054\u0041\u004e",_cbdb ("\u0041\u0054\u0041\u004e",_d .Atan ));
-RegisterFunction ("\u0041\u0054\u0041N\u0048",_cbdb ("\u0041\u0054\u0041N\u0048",_d .Atanh ));RegisterFunction ("\u0041\u0054\u0041N\u0032",Atan2 );RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0042\u0041\u0053\u0045",Base );RegisterFunction ("\u0043E\u0049\u004c\u0049\u004e\u0047",Ceiling );
-RegisterFunction ("\u005fx\u006cf\u006e\u002e\u0043\u0045\u0049L\u0049\u004eG\u002e\u004d\u0041\u0054\u0048",CeilingMath );RegisterFunction ("_\u0078\u006c\u0066\u006e.C\u0045I\u004c\u0049\u004e\u0047\u002eP\u0052\u0045\u0043\u0049\u0053\u0045",CeilingPrecise );
-RegisterFunction ("\u0043\u004f\u004d\u0042\u0049\u004e",Combin );RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0043\u004f\u004d\u0042\u0049\u004e\u0041",Combina );RegisterFunction ("\u0043\u004f\u0053",_cbdb ("\u0043\u004f\u0053",_d .Cos ));
-RegisterFunction ("\u0043\u004f\u0053\u0048",_cbdb ("\u0043\u004f\u0053\u0048",_d .Cosh ));RegisterFunction ("\u005fx\u006c\u0066\u006e\u002e\u0043\u004fT",_ecae ("\u0043\u004f\u0054",_d .Tan ));RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0043\u004f\u0054\u0048",_ecae ("\u0043\u004f\u0054\u0048",_d .Tanh ));
-RegisterFunction ("\u005fx\u006c\u0066\u006e\u002e\u0043\u0053C",_ecae ("\u0043\u0053\u0043",_d .Sin ));RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0043\u0053\u0043\u0048",_ecae ("\u0043\u0053\u0043",_d .Sinh ));RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0044\u0045\u0043\u0049\u004d\u0041\u004c",Decimal );
-RegisterFunction ("\u0044E\u0047\u0052\u0045\u0045\u0053",Degrees );RegisterFunction ("\u0045\u0056\u0045\u004e",Even );RegisterFunction ("\u0045\u0058\u0050",_cbdb ("\u0045\u0058\u0050",_d .Exp ));RegisterFunction ("\u0046\u0041\u0043\u0054",Fact );RegisterFunction ("\u0046\u0041\u0043\u0054\u0044\u004f\u0055\u0042\u004c\u0045",FactDouble );
-RegisterFunction ("\u0046\u004c\u004fO\u0052",Floor );RegisterFunction ("\u005f\u0078l\u0066\u006e\u002eF\u004c\u004f\u004f\u0052\u002e\u004d\u0041\u0054\u0048",FloorMath );RegisterFunction ("\u005f\u0078\u006c\u0066n.\u0046\u004c\u004f\u004f\u0052\u002e\u0050\u0052\u0045\u0043\u0049\u0053\u0045",FloorPrecise );
-RegisterFunction ("\u0047\u0043\u0044",GCD );RegisterFunction ("\u0049\u004e\u0054",Int );RegisterFunction ("I\u0053\u004f\u002e\u0043\u0045\u0049\u004c\u0049\u004e\u0047",CeilingPrecise );RegisterFunction ("\u004c\u0043\u004d",LCM );RegisterFunction ("\u004c\u004e",_cbdb ("\u004c\u004e",_d .Log ));
-RegisterFunction ("\u004c\u004f\u0047",Log );RegisterFunction ("\u004c\u004f\u00471\u0030",_cbdb ("\u004c\u004f\u00471\u0030",_d .Log10 ));RegisterFunction ("\u004dD\u0045\u0054\u0045\u0052\u004d",MDeterm );RegisterFunction ("\u004d\u004f\u0044",Mod );
-RegisterFunction ("\u004d\u0052\u004f\u0055\u004e\u0044",Mround );RegisterFunction ("M\u0055\u004c\u0054\u0049\u004e\u004f\u004d\u0049\u0041\u004c",Multinomial );RegisterFunction ("_\u0078\u006c\u0066\u006e\u002e\u004d\u0055\u004e\u0049\u0054",Munit );
-RegisterFunction ("\u004f\u0044\u0044",Odd );RegisterFunction ("\u0050\u0049",Pi );RegisterFunction ("\u0050\u004f\u0057E\u0052",Power );RegisterFunction ("\u0050R\u004f\u0044\u0055\u0043\u0054",Product );RegisterFunction ("\u0051\u0055\u004f\u0054\u0049\u0045\u004e\u0054",Quotient );
-RegisterFunction ("\u0052A\u0044\u0049\u0041\u004e\u0053",Radians );RegisterFunction ("\u0052\u0041\u004e\u0044",Rand );RegisterFunction ("R\u0041\u004e\u0044\u0042\u0045\u0054\u0057\u0045\u0045\u004e",RandBetween );RegisterFunction ("\u0052\u004f\u004dA\u004e",Roman );
-RegisterFunction ("\u0052\u004f\u0055N\u0044",Round );RegisterFunction ("\u0052O\u0055\u004e\u0044\u0044\u004f\u0057N",RoundDown );RegisterFunction ("\u0052O\u0055\u004e\u0044\u0055\u0050",RoundUp );RegisterFunction ("\u005fx\u006c\u0066\u006e\u002e\u0053\u0045C",_ecae ("\u0053\u0045\u0043",_d .Cos ));
-RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0053\u0045\u0043\u0048",_ecae ("\u0053\u0045\u0043\u0048",_d .Cosh ));RegisterFunction ("\u0053E\u0052\u0049\u0045\u0053\u0053\u0055M",SeriesSum );RegisterFunction ("\u0053\u0049\u0047\u004e",Sign );
-RegisterFunction ("\u0053\u0049\u004e",_cbdb ("\u0053\u0049\u004e",_d .Sin ));RegisterFunction ("\u0053\u0049\u004e\u0048",_cbdb ("\u0053\u0049\u004e\u0048",_d .Sinh ));RegisterFunction ("\u0053\u0051\u0052\u0054",_cbdb ("\u0053\u0051\u0052\u0054",_d .Sqrt ));
-RegisterFunction ("\u0053\u0051\u0052\u0054\u0050\u0049",_cbdb ("\u0053\u0051\u0052\u0054\u0050\u0049",func (_ggdd float64 )float64 {return _d .Sqrt (_ggdd *_d .Pi )}));RegisterFunction ("\u0053\u0055\u004d",Sum );RegisterFunction ("\u0053\u0055\u004dI\u0046",SumIf );
-RegisterFunction ("\u0053\u0055\u004d\u0049\u0046\u0053",SumIfs );RegisterFunction ("\u0053\u0055\u004d\u0050\u0052\u004f\u0044\u0055\u0043\u0054",SumProduct );RegisterFunction ("\u0053\u0055\u004dS\u0051",SumSquares );RegisterFunction ("\u0054\u0041\u004e",_cbdb ("\u0054\u0041\u004e",_d .Tan ));
-RegisterFunction ("\u0054\u0041\u004e\u0048",_cbdb ("\u0054\u0041\u004e\u0048",_d .Tanh ));RegisterFunction ("\u0054\u0052\u0055N\u0043",Trunc );};func _deda (_dfdc Result )*criteriaParsed {_aefg :=_dfdc .Type ==ResultTypeNumber ;_aabe :=_dfdc .ValueNumber ;
-_fbadf :=_bcd .ToLower (_dfdc .ValueString );_bede :=_gggb (_fbadf );return &criteriaParsed {_aefg ,_aabe ,_fbadf ,_bede };};const _gfc ="\u0028\u0028\u005b\u0030\u002d\u0039]\u0029\u002b\u0029:\u0028\u0028\u005b0\u002d\u0039\u005d\u0029\u002b\u0029\u003a\u0028\u0028\u005b0\u002d\u0039\u005d\u0029\u002b(\\\u002e\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029\u003f\u0029\u0028\u0020\u0028\u0061\u006d\u007c\u0070\u006d\u0029\u0029\u003f";
+// Reference returns a string reference value to a vertical range with prefix.
+func (_cdfc PrefixVerticalRange )Reference (ctx Context ,ev Evaluator )Reference {_efag :=_cdfc ._fdgbe .Reference (ctx ,ev );return Reference {Type :ReferenceTypeVerticalRange ,Value :_cdfc .verticalRangeReference (_efag .Value )};};func _bdaf (_dgece []Result )[]rangeIndex {_ccdc :=[]rangeIndex {};
+_bfed :=len (_dgece );for _ageac :=0;_ageac < _bfed -1;_ageac +=2{_cade :=[]rangeIndex {};_fcedd :=_cbgb (_dgece [_ageac ]);_dggc :=_fdab (_dgece [_ageac +1]);if _ageac ==0{for _bbfb ,_ebbga :=range _fcedd {for _afedd ,_egfg :=range _ebbga {if _fdgg (_egfg ,_dggc ){_cade =append (_cade ,rangeIndex {_bbfb ,_afedd });
+};};};}else {for _ ,_eabc :=range _ccdc {_cbffbe :=_fcedd [_eabc ._cafgf ][_eabc ._afac ];if _fdgg (_cbffbe ,_dggc ){_cade =append (_cade ,_eabc );};};};if len (_cade )==0{return []rangeIndex {};};_ccdc =_cade [:];};return _ccdc ;};
 
+// Function is a standard function whose result only depends on its arguments.
+type Function func (_aebfb []Result )Result ;
 
-// Arabic implements the Excel ARABIC function which parses roman numerals.  It
-// accepts one numeric argument.
-func Arabic (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0041\u0052\u0041\u0042I\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");};_fggfd :=args [0];switch _fggfd .Type {case ResultTypeNumber ,ResultTypeList ,ResultTypeEmpty :return MakeErrorResult ("\u0041\u0052\u0041B\u0049\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-case ResultTypeString :_beeac :=0.0;_aeeb :=0.0;for _ ,_bfgf :=range _fggfd .ValueString {_gaaeg :=0.0;switch _bfgf {case 'I':_gaaeg =1;case 'V':_gaaeg =5;case 'X':_gaaeg =10;case 'L':_gaaeg =50;case 'C':_gaaeg =100;case 'D':_gaaeg =500;case 'M':_gaaeg =1000;
-};_beeac +=_gaaeg ;switch {case _aeeb ==_gaaeg &&(_aeeb ==5||_aeeb ==50||_aeeb ==500):return MakeErrorResult ("i\u006e\u0076\u0061\u006cid\u0020A\u0052\u0041\u0042\u0049\u0043 \u0066\u006f\u0072\u006d\u0061\u0074");case 2*_aeeb ==_gaaeg :return MakeErrorResult ("i\u006e\u0076\u0061\u006cid\u0020A\u0052\u0041\u0042\u0049\u0043 \u0066\u006f\u0072\u006d\u0061\u0074");
-};if _aeeb < _gaaeg {_beeac -=2*_aeeb ;};_aeeb =_gaaeg ;};return MakeNumberResult (_beeac );case ResultTypeError :return _fggfd ;default:return MakeErrorResult (_b .Sprintf ("\u0075\u006e\u0068an\u0064\u006c\u0065\u0064\u0020\u0041\u0043\u004f\u0053H\u0028)\u0020a\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_fggfd .Type ));
-};};
+// Indirect is an implementation of the Excel INDIRECT function that returns the
+// contents of a cell.
+func Indirect (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=1&&len (args )!=2{return MakeErrorResult ("\u0049\u004e\u0044\u0049\u0052\u0045\u0043\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006f\u006e\u0065\u0020\u006f\u0072 \u0074\u0077\u006f\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_fafa :=args [0].AsString ();if _fafa .Type !=ResultTypeString {return MakeErrorResult ("\u0049\u004e\u0044\u0049\u0052\u0045\u0043\u0054\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069r\u0073t\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066 \u0074\u0079\u0070\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067");
+};return ctx .Cell (_fafa .ValueString ,ev );};type criteriaParsed struct{_badfb bool ;_gfaa float64 ;_gaea string ;_geeef *criteriaRegex ;};func _dgge (_geea ,_dbe ,_fegfa ,_aaff float64 ,_ebbc int )float64 {var _acdb float64 ;if _geea ==0{_acdb =(_fegfa +_aaff )/_dbe ;
+}else {_efdb :=_d .Pow (1+_geea ,_dbe );if _ebbc ==1{_acdb =(_aaff *_geea /(_efdb -1)+_fegfa *_geea /(1-1/_efdb ))/(1+_geea );}else {_acdb =_aaff *_geea /(_efdb -1)+_fegfa *_geea /(1-1/_efdb );};};return -_acdb ;};const _cagcb =57353;func _fbbd (_efcgb []Result ,_gdfg countMode )float64 {_dgag :=0.0;
+for _ ,_bbac :=range _efcgb {switch _bbac .Type {case ResultTypeNumber :if _gdfg ==_cgbd ||(_gdfg ==_bffcf &&!_bbac .IsBoolean ){_dgag ++;};case ResultTypeList ,ResultTypeArray :_dgag +=_fbbd (_bbac .ListValues (),_gdfg );case ResultTypeString :if _gdfg ==_cgbd {_dgag ++;
+};case ResultTypeEmpty :if _gdfg ==_bfdef {_dgag ++;};};};return _dgag ;};
 
-// Floor is an implementation of the FlOOR function.
-func Floor (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0046\u004c\u004f\u004f\u0052\u0028\u0029\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074w\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");};
-_ffab :=args [0].AsNumber ();if _ffab .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072s\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0046\u004c\u004f\u004f\u0052\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};var _cdeba float64 ;_fddag :=args [1].AsNumber ();if _fddag .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020a\u0072\u0067\u0075m\u0065\u006e\u0074\u0020t\u006f\u0020\u0046\u004c\u004f\u004f\u0052\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_cdeba =_fddag .ValueNumber ;if _cdeba < 0&&_ffab .ValueNumber >=0{return MakeErrorResultType (ErrorTypeNum ,"\u0069\u006e\u0076\u0061\u006c\u0069\u0064\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0073\u0020\u0074\u006f\u0020\u0046L\u004f\u004f\u0052");
-};_bfcgb :=_ffab .ValueNumber ;_bfcgb ,_agcfa :=_d .Modf (_bfcgb /_cdeba );if _agcfa !=0{if _ffab .ValueNumber < 0&&_agcfa < 0{_bfcgb --;};};return MakeNumberResult (_bfcgb *_cdeba );};
+// Update updates references in the PrefixHorizontalRange after removing a row/column.
+func (_cfggg PrefixHorizontalRange )Update (q *_db .UpdateQuery )Expression {return _cfggg };func _dcef (_gagf []Result ,_gfab string )(*cumulArgs ,Result ){if len (_gagf )!=6{return nil ,MakeErrorResult (_gfab +"\u0020\u0072\u0065qu\u0069\u0072\u0065\u0073\u0020\u0073\u0069\u0078\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if _gagf [0].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_gfab +"\u0020\u0072eq\u0075\u0069\u0072e\u0073\u0020\u0072\u0061te \u0074o \u0062\u0065\u0020\u006e\u0075\u006d\u0062er\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");};_gedb :=_gagf [0].ValueNumber ;
+if _gedb <=0{return nil ,MakeErrorResultType (ErrorTypeNum ,_gfab +"\u0020r\u0065\u0071u\u0069\u0072\u0065s\u0020\u0072\u0061\u0074\u0065\u0020\u0074o\u0020\u0062\u0065\u0020\u0070\u006fs\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if _gagf [1].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_gfab +"\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
+};_edda :=_gagf [1].ValueNumber ;if _edda <=0{return nil ,MakeErrorResultType (ErrorTypeNum ,_gfab +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020p\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f \u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020\u0061r\u0067\u0075\u006de\u006e\u0074");
+};if _gagf [2].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_gfab +"\u0020r\u0065\u0071u\u0069\u0072\u0065s\u0020\u0070\u0072\u0065\u0073\u0065\u006et\u0020\u0076\u0061\u006c\u0075\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_cfcf :=_gagf [2].ValueNumber ;if _cfcf <=0{return nil ,MakeErrorResultType (ErrorTypeNum ,_gfab +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065\u0073\u0065n\u0074\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065 \u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006dbe\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if _gagf [3].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_gfab +"\u0020r\u0065\u0071u\u0069\u0072\u0065\u0073 \u0073\u0074\u0061r\u0074\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020to\u0020\u0062\u0065 \u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
+};_abbc :=_gagf [3].ValueNumber ;if _abbc <=0{return nil ,MakeErrorResultType (ErrorTypeNum ,_gfab +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073t\u0061\u0072\u0074\u0020\u0070\u0065\u0072\u0069o\u0064 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if _gagf [4].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_gfab +"\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0065\u006e\u0064\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_gabb :=_gagf [4].ValueNumber ;if _gabb <=0{return nil ,MakeErrorResultType (ErrorTypeNum ,_gfab +"\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0065\u006e\u0064\u0020\u0070\u0065\u0072\u0069\u006fd\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
+};if _gabb < _abbc {return nil ,MakeErrorResultType (ErrorTypeNum ,_gfab +"\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0065\u006e\u0064\u0020p\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006c\u0061\u0074\u0065\u0072\u0020o\u0072\u0020\u0065\u0071\u0075a\u006c\u0020\u0074\u006f\u0020\u0073\u0074\u0061\u0072\u0074\u0020\u0070\u0065\u0072\u0069\u006f\u0064");
+};if _gabb > _edda {return nil ,MakeErrorResultType (ErrorTypeNum ,_gfab +" \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074o\u0020\u0062\u0065\u0020\u0069\u006e\u0020\u0070\u0065\u0072io\u0064\u0073\u0020r\u0061n\u0067\u0065");
+};_dcf :=int (_gagf [5].ValueNumber );if _dcf !=0&&_dcf !=1{return nil ,MakeErrorResultType (ErrorTypeNum ,_gfab +" \u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0074\u0079\u0070\u0065\u0020\u0074\u006f \u0062\u0065\u00200\u0020o\u0072\u0020\u0031");
+};return &cumulArgs {_gedb ,_edda ,_cfcf ,_abbc ,_gabb ,_dcf },_fcea ;};func (_gebfc ReferenceType )String ()string {if _gebfc >=ReferenceType (len (_bbeg )-1){return _gf .Sprintf ("\u0052\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0054\u0079\u0070e\u0028\u0025\u0064\u0029",_gebfc );
+};return _ebddf [_bbeg [_gebfc ]:_bbeg [_gebfc +1]];};
 
-// Error is an error expression.
-type Error struct{_faa string };
+// String returns a string representation of String.
+func (_bbcb String )String ()string {return "\u0022"+_bbcb ._eaebe +"\u0022"};
 
-// Sln implements the Excel SLN function.
-func Sln (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u0053\u004c\u004e\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068r\u0065e\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074\u0073");};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u004c\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020c\u006f\u0073\u0074\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_dcgdg :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u004c\u004e \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061\u0067\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_bbbf :=args [1].ValueNumber ;if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u004c\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020l\u0069\u0066\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_aecg :=args [2].ValueNumber ;if _aecg ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0053\u004c\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0069f\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u007a\u0065\u0072\u006f");
-};return MakeNumberResult ((_dcgdg -_bbbf )/_aecg );};func _dcf (_gcdfg []string ,_dcfg int )string {return _fce .Itoa (len (_gcdfg [len (_gcdfg )-1-_dcfg ]))};
+// YearFrac is an implementation of the Excel YEARFRAC() function.
+func YearFrac (args []Result )Result {_ffcf :=len (args );if (_ffcf !=2&&_ffcf !=3)||args [0].Type !=ResultTypeNumber ||args [1].Type !=ResultTypeNumber {return MakeErrorResult ("Y\u0045\u0041\u0052\u0046\u0052\u0041\u0043\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020tw\u006f\u0020\u006f\u0072 \u0074\u0068\u0072\u0065\u0065\u0020\u006e\u0075\u006dbe\u0072\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_cadf :=0;if _ffcf ==3&&args [2].Type !=ResultTypeEmpty {if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("Y\u0045\u0041\u0052\u0046\u0052\u0041\u0043\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020ba\u0073\u0069\u0073\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074o \u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_cadf =int (args [2].ValueNumber );if !_ccfg (_cadf ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065c\u0074\u0020b\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u0059\u0045\u0041R\u0046\u0052\u0041\u0043");
+};};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0045\u0041\u0052\u0046\u0052\u0041\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020s\u0074\u0061\u0072\u0074\u0020\u0064\u0061t\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_dfa :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0045\u0041\u0052\u0046\u0052\u0041\u0043 \u0072\u0065\u0071ui\u0072\u0065\u0073\u0020\u0065\u006ed\u0020\u0064\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+};_edac :=args [1].ValueNumber ;_edbc ,_eedf :=_fdbc (_dfa ,_edac ,_cadf );if _eedf .Type ==ResultTypeError {return _eedf ;};return MakeNumberResult (_edbc );};
 
-// HorizontalRange is a range expression that when evaluated returns a list of Results from references like 1:4 (all cells from rows 1 to 4).
-type HorizontalRange struct{_eaeb ,_fdedb int };func Unicode (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0055\u004e\u0049\u0043\u004fD\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020s\u0069\u006e\u0067\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gffe :=args [0].AsString ();if _gffe .Type !=ResultTypeString {return MakeErrorResult ("\u0055\u004e\u0049\u0043\u004fD\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020s\u0069\u006e\u0067\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if len (_gffe .ValueString )==0{return MakeErrorResult ("\u0055\u004e\u0049\u0043\u004f\u0044\u0045 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073 \u0061\u0020\u006e\u006f\u006e\u002d\u007a\u0065\u0072\u006f\u0020\u006c\u0065\u006e\u0067\u0074\u0068\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};return MakeNumberResult (float64 (_gffe .ValueString [0]));};
-
-// String returns a string representation of SheetPrefixExpr.
-func (_ggdf SheetPrefixExpr )String ()string {return _ggdf ._fbcb };func _eggd (_bead []Result ,_agef rmode )Result {if len (_bead )!=2{return MakeErrorResult ("\u0052\u004f\u0055\u004e\u0044\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u006e\u0075\u006de\u0072\u0069\u0063\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_acgd :=_bead [0].AsNumber ();if _acgd .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072s\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0052\u004f\u0055\u004e\u0044\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_fggfb :=_bead [1].AsNumber ();if _fggfb .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020a\u0072\u0067\u0075m\u0065\u006e\u0074\u0020t\u006f\u0020\u0052\u004f\u0055\u004e\u0044\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_ggdca :=_fggfb .ValueNumber ;_degaa :=_acgd .ValueNumber ;_bafb :=1.0;if _ggdca > 0{_bafb =_d .Pow (1/10.0,_ggdca );}else {_bafb =_d .Pow (10.0,-_ggdca );};_degaa ,_eegb :=_d .Modf (_degaa /_bafb );switch _agef {case _agege :const _bggae =0.499999999;
-if _eegb >=_bggae {_degaa ++;}else if _eegb <=-_bggae {_degaa --;};case _aaaf :case _caeb :if _eegb > 0{_degaa ++;}else if _eegb < 0{_degaa --;};};return MakeNumberResult (_degaa *_bafb );};
-
-// MinIfs implements the MINIFS function.
-func MinIfs (args []Result )Result {_cbdbc :=_fgff (args ,true ,"\u004d\u0049\u004e\u0049\u0046\u0053");if _cbdbc .Type !=ResultTypeEmpty {return _cbdbc ;};_badf :=_dddc (args [1:]);_dbgb :=_d .MaxFloat64 ;_aaafc :=_badg (args [0]);for _ ,_fbbc :=range _badf {_gedbg :=_aaafc [_fbbc ._cacd ][_fbbc ._gdab ].ValueNumber ;
-if _dbgb > _gedbg {_dbgb =_gedbg ;};};if _dbgb ==_d .MaxFloat64 {_dbgb =0;};return MakeNumberResult (float64 (_dbgb ));};
-
-// Combina is an implementation of the Excel COMBINA function whic returns the
-// number of combinations with repetitions.
-func Combina (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0043\u004f\u004dB\u0049\u004e\u0041\u0028)\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_edbgd :=args [0].AsNumber ();_geaa :=args [1].AsNumber ();if _edbgd .Type !=ResultTypeNumber ||_geaa .Type !=ResultTypeNumber {return MakeErrorResult ("\u0043\u004fMB\u0049\u004e\u0041(\u0029\u0020\u0072\u0065qui\u0072es\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
-};_bbcce :=_d .Trunc (_edbgd .ValueNumber );_geaae :=_d .Trunc (_geaa .ValueNumber );if _bbcce < _geaae {return MakeErrorResult ("\u0043O\u004d\u0042\u0049\u004e\u0041\u0028\u0029\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u006e\u0020\u003e\u0020\u006b");
-};if _bbcce ==0{return MakeNumberResult (0);};args [0]=MakeNumberResult (_bbcce +_geaae -1);args [1]=MakeNumberResult (_bbcce -1);return Combin (args );};func _cgeac (_fgcd ,_fcad ,_ade float64 )float64 {return (_fgcd *3600+_fcad *60+_ade )/86400};
-
-// MakeArrayResult constructs an array result (matrix).
-func MakeArrayResult (arr [][]Result )Result {return Result {Type :ResultTypeArray ,ValueArray :arr }};
-
-// Mirr implements the Excel MIRR function.
-func Mirr (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u004d\u0049R\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0073");};if args [0].Type !=ResultTypeList &&args [0].Type !=ResultTypeArray {return MakeErrorResult ("M\u0049\u0052\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0076\u0061\u006c\u0075\u0065s\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020ar\u0072\u0061\u0079 \u0074y\u0070\u0065");
-};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u0049\u0052\u0052\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s \u0066\u0069\u006e\u0061\u006e\u0063e\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-};_aeeg :=args [1].ValueNumber +1;if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u0049\u0052\u0052\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0069\u006e\u0076\u0065\u0073\u0074\u0020\u0072\u0061\u0074\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
-};_dgg :=args [2].ValueNumber +1;if _dgg ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"");};_eeee :=_badg (args [0]);_fada :=float64 (len (_eeee ));_fdcg ,_ege :=0.0,0.0;_gged ,_aaag :=1.0,1.0;_ddbcf ,_gcac :=false ,false ;for _ ,_ecbd :=range _eeee {for _ ,_fgbc :=range _ecbd {if _fgbc .Type ==ResultTypeNumber &&!_fgbc .IsBoolean {_cbdee :=_fgbc .ValueNumber ;
-if _cbdee ==0{continue ;}else {if _cbdee > 0{_ddbcf =true ;_ege +=_fgbc .ValueNumber *_aaag ;}else {_gcac =true ;_fdcg +=_fgbc .ValueNumber *_gged ;};_gged /=_aeeg ;_aaag /=_dgg ;};};};};if !_ddbcf ||!_gcac {return MakeErrorResultType (ErrorTypeDivideByZero ,"");
-};_fbbg :=-_ege /_fdcg ;_fbbg *=_d .Pow (_dgg ,_fada -1);_fbbg =_d .Pow (_fbbg ,1/(_fada -1));return MakeNumberResult (_fbbg -1);};
-
-// Update updates references in the BinaryExpr after removing a row/column.
-func (_fg BinaryExpr )Update (q *_a .UpdateQuery )Expression {_bcb :=_fg ;_bcb ._fcf =_fg ._fcf .Update (q );_bcb ._ga =_fg ._ga .Update (q );return _bcb ;};func _ecd (){_efd ["\u006d\u006d\u002f\u0064\u0064\u002f\u0079\u0079"]=_fa .MustCompile ("\u005e"+_bff +_fcb );
-_efd ["\u006dm\u0020\u0064\u0064\u002c\u0020\u0079y"]=_fa .MustCompile ("\u005e"+_caa +_fcb );_efd ["\u0079\u0079\u002d\u006d\u006d\u002d\u0064\u0064"]=_fa .MustCompile ("\u005e"+_egfb +_fcb );_efd ["y\u0079\u002d\u006d\u006d\u0053\u0074\u0072\u002d\u0064\u0064"]=_fa .MustCompile ("\u005e"+_fcfb +_fcb );
-_age ["\u0068\u0068"]=_fa .MustCompile (_egc +_dbg +"\u0024");_age ["\u0068\u0068\u003am\u006d"]=_fa .MustCompile (_egc +_bdba +"\u0024");_age ["\u006d\u006d\u003as\u0073"]=_fa .MustCompile (_egc +_fab +"\u0024");_age ["\u0068\u0068\u003a\u006d\u006d\u003a\u0073\u0073"]=_fa .MustCompile (_egc +_gfc +"\u0024");
-_bdf =[]*_fa .Regexp {_fa .MustCompile ("\u005e"+_bff +"\u0024"),_fa .MustCompile ("\u005e"+_caa +"\u0024"),_fa .MustCompile ("\u005e"+_egfb +"\u0024"),_fa .MustCompile ("\u005e"+_fcfb +"\u0024")};_fdd =[]*_fa .Regexp {_fa .MustCompile ("\u005e"+_dbg +"\u0024"),_fa .MustCompile ("\u005e"+_bdba +"\u0024"),_fa .MustCompile ("\u005e"+_fab +"\u0024"),_fa .MustCompile ("\u005e"+_gfc +"\u0024")};
-};
-
-// NewPrefixHorizontalRange constructs a new full rows range with prefix.
-func NewPrefixHorizontalRange (pfx Expression ,v string )Expression {_gadba :=_bcd .Split (v ,"\u003a");if len (_gadba )!=2{return nil ;};_fgaae ,_ :=_fce .Atoi (_gadba [0]);_gadcf ,_ :=_fce .Atoi (_gadba [1]);if _fgaae > _gadcf {_fgaae ,_gadcf =_gadcf ,_fgaae ;
-};return PrefixHorizontalRange {_eabcd :pfx ,_dcged :_fgaae ,_dafba :_gadcf };};func _abg (_dfaa ,_cfgc ,_bbfg ,_dccg ,_cfgf float64 ,_fggc int )Result {_bgf ,_gdd :=_gad (_dfaa ,_cfgc ,_fggc );if _gdd .Type ==ResultTypeError {return _gdd ;};_ddab ,_cgcc :=_fgbd (_dfaa ,_cfgc ,int (_cfgf ),_fggc );
-if _cgcc .Type ==ResultTypeError {return _cgcc ;};_gddc :=0.0;_cdgfb :=0.0;_bbfg *=100/_cfgf ;_dccg /=_cfgf ;_dccg ++;_becb :=_bgf *_cfgf -_ddab ;for _ggf :=1.0;_ggf < _ddab ;_ggf ++{_ddee :=_ggf +_becb ;_gcff :=_bbfg /_d .Pow (_dccg ,_ddee );_cdgfb +=_gcff ;
-_gddc +=_ddee *_gcff ;};_aaa :=(_bbfg +100)/_d .Pow (_dccg ,_ddab +_becb );_cdgfb +=_aaa ;_gddc +=(_ddab +_becb )*_aaa ;_gddc /=_cdgfb ;_gddc /=_cfgf ;return MakeNumberResult (_gddc );};
-
-// Concat is an implementation of the Excel CONCAT() and deprecated CONCATENATE() function.
-func Concat (args []Result )Result {_adbae :=_e .Buffer {};for _ ,_fgeed :=range args {switch _fgeed .Type {case ResultTypeString :_adbae .WriteString (_fgeed .ValueString );case ResultTypeNumber :var _acfd string ;if _fgeed .IsBoolean {if _fgeed .ValueNumber ==0{_acfd ="\u0046\u0041\u004cS\u0045";
-}else {_acfd ="\u0054\u0052\u0055\u0045";};}else {_acfd =_fgeed .AsString ().ValueString ;};_adbae .WriteString (_acfd );default:return MakeErrorResult ("\u0043\u004f\u004e\u0043\u0041T\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0073");
-};};return MakeStringResult (_adbae .String ());};const _bff ="\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029\u002f\u0028\u0028\u005b\u0030-\u0039]\u0029\u002b\u0029\u002f\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029";const _agced =57363;
-
-
-// Update updates references in the Negate after removing a row/column.
-func (_fddbc Negate )Update (q *_a .UpdateQuery )Expression {return Negate {_ecbga :_fddbc ._ecbga .Update (q )};};
-
-// Eval evaluates a horizontal range returning a list of results or an error.
-func (_eeda HorizontalRange )Eval (ctx Context ,ev Evaluator )Result {_dfefd :=_eeda .horizontalRangeReference ();if _agbff ,_dffb :=ev .GetFromCache (_dfefd );_dffb {return _agbff ;};_gcae ,_abbbd :=_aacbc (ctx ,_eeda ._eaeb ,_eeda ._fdedb );_badbb :=_ggac (ctx ,ev ,_gcae ,_abbbd );
-ev .SetCache (_dfefd ,_badbb );return _badbb ;};
-
-// Amordegrc implements the Excel AMORDEGRC function.
-func Amordegrc (args []Result )Result {_gafd ,_egad :=_bba (args ,"\u0041M\u004f\u0052\u0044\u0045\u0047\u0052C");if _egad .Type ==ResultTypeError {return _egad ;};_bdee :=_gafd ._afed ;_dcgg :=_gafd ._bcab ;_bdae :=_gafd ._fgfb ;_gebf :=_gafd ._bdaa ;
-_dcgf :=_gafd ._ggce ;_cdda :=_gafd ._eebc ;if _cdda >=0.5{return MakeErrorResultType (ErrorTypeNum ,"\u0041\u004d\u004f\u0052\u0044\u0045\u0047R\u0043\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006c\u0065\u0073\u0073\u0020\u0074\u0068\u0061\u006e\u0020\u0030\u002e\u0035");
-};_ddgd :=_gafd ._aaea ;_beg :=1.0/_cdda ;_geec :=2.5;if _beg < 3{_geec =1;}else if _beg < 5{_geec =1.5;}else if _beg <=6{_geec =2;};_cdda *=_geec ;_ffbf ,_fcada :=_gad (_dcgg ,_bdae ,_ddgd );if _fcada .Type ==ResultTypeError {return MakeErrorResult ("\u0069\u006ec\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0064\u0061\u0074\u0065\u0073\u0020\u0066\u006f\u0072\u0020\u0041\u004d\u004f\u0052\u0044EG\u0052\u0043");
-};_abe :=_bdfab (_ffbf *_cdda *_bdee );_bdee -=_abe ;_fedf :=_bdee -_gebf ;for _eada :=0;_eada < _dcgf ;_eada ++{_abe =_bdfab (_cdda *_bdee );_fedf -=_abe ;if _fedf < 0{switch _dcgf -_eada {case 0:case 1:return MakeNumberResult (_bdfab (_bdee *0.5));default:return MakeNumberResult (0);
-};};_bdee -=_abe ;};return MakeNumberResult (_abe );};type yySymType struct{_begc int ;_dcfgf *node ;_feebd Expression ;_edac []Expression ;_bdbcf [][]Expression ;};
-
-// NewCellRef constructs a new cell reference.
-func NewCellRef (v string )Expression {return CellRef {_bge :v }};const (_daeg countMode =iota ;_eccc ;_dceg ;);type noCache struct{};func _cegf (_gbfa float64 )float64 {_caeee :=float64 (1);for _acdcg :=float64 (2);_acdcg <=_gbfa ;_acdcg ++{_caeee *=_acdcg ;
-};return _caeee ;};
-
-// Searchb is an implementation of the Excel SEARCHB().
-func Searchb (ctx Context ,ev Evaluator ,args []Result )Result {if !ctx .IsDBCS (){return Search (args );};_baag ,_ebccc :=_bceff ("\u0046\u0049\u004e\u0044",args );if _ebccc .Type !=ResultTypeEmpty {return _ebccc ;};_edabg :=_bcd .ToLower (_baag ._dgcdd );
-_fbag :=_bcd .ToLower (_baag ._eddfb );if _edabg ==""{return MakeNumberResult (1.0);};_cdcec :=_baag ._bedab -1;_eedc :=1;_deee :=0;for _gccg :=range _fbag {if _gccg !=0{_aeagd :=1;if _gccg -_deee > 1{_aeagd =2;};_eedc +=_aeagd ;};if _eedc > _cdcec {_abcee :=_dg .Index (_edabg ,_fbag [_gccg :]);
-if _abcee ==0{return MakeNumberResult (float64 (_eedc ));};};_deee =_gccg ;};return MakeErrorResultType (ErrorTypeValue ,"\u004eo\u0074\u0020\u0066\u006f\u0075\u006ed");};func _edbff (_afgb float64 ,_gfdf *criteriaRegex )bool {_cecgb ,_dafe :=_fce .ParseFloat (_gfdf ._eggdf ,64);
-if _dafe !=nil {return false ;};switch _gfdf ._ccecd {case _ffffg :return _afgb ==_cecgb ;case _ccbfc :return _afgb <=_cecgb ;case _cafd :return _afgb >=_cecgb ;case _cfgbb :return _afgb < _cecgb ;case _gcdd :return _afgb > _cecgb ;};return false ;};
-
-// Averagea implements the AVERAGEA function, AVERAGEA counts cells that contain
-// text as a zero where AVERAGE ignores them entirely.
-func Averagea (args []Result )Result {_bbbd ,_bgcc :=_bgbe (args ,true );if _bgcc ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0041\u0056\u0045\u0052AG\u0045\u0020\u0064\u0069\u0076\u0069\u0064\u0065\u0020\u0062\u0079\u0020\u007a\u0065r\u006f");
-};return MakeNumberResult (_bbbd /_bgcc );};
-
-// IfError is an implementation of the Excel IFERROR() function. It takes two arguments.
-func IfError (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0049\u0046\u0045\u0052\u0052\u004f\u0052\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074w\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if args [0].Type !=ResultTypeError {if args [0].Type ==ResultTypeEmpty {return MakeNumberResult (0);};return args [0];};return args [1];};func _dgec (_fafb [][]Result )float64 {if len (_fafb )==2{_ecad :=_fafb [0][0].AsNumber ();_dbbeg :=_fafb [0][1].AsNumber ();
-_bfgdc :=_fafb [1][0].AsNumber ();_cdebb :=_fafb [1][1].AsNumber ();if _ecad .Type !=ResultTypeNumber ||_dbbeg .Type !=ResultTypeNumber ||_bfgdc .Type !=ResultTypeNumber ||_cdebb .Type !=ResultTypeNumber {return _d .NaN ();};return _ecad .ValueNumber *_cdebb .ValueNumber -_bfgdc .ValueNumber *_dbbeg .ValueNumber ;
-};_cgab :=float64 (0);_ddfac :=float64 (1);for _cggbf :=range _fafb {_cgab +=_ddfac *_fafb [0][_cggbf ].ValueNumber *_dgec (_gbfae (_fafb ,_cggbf ));_ddfac *=-1;};return _cgab ;};
-
-// CellRef is a reference to a single cell
-type CellRef struct{_bge string };const _feacg =57358;
-
-// Mduration implements the Excel MDURATION function.
-func Mduration (args []Result )Result {_adfb ,_ebdc :=_dfbg (args ,"\u004dD\u0055\u0052\u0041\u0054\u0049\u004fN");if _ebdc .Type ==ResultTypeError {return _ebdc ;};_dff :=_adfb ._cfe ;_fbab :=_adfb ._cef ;_ggbb :=_adfb ._cegad ;_cgcf :=_adfb ._bfad ;_efeb :=_adfb ._dgc ;
-_egaa :=_adfb ._gafg ;_fac :=_abg (_dff ,_fbab ,_ggbb ,_cgcf ,_efeb ,_egaa );if _fac .Type ==ResultTypeError {return _fac ;};_debg :=_fac .ValueNumber /(1.0+_cgcf /_efeb );return MakeNumberResult (_debg );};const _bcag =57347;
-
-// Dollarde implements the Excel DOLLARDE function.
-func Dollarde (args []Result )Result {_fcdd ,_acef ,_egadd :=_bfc (args ,"\u0044\u004f\u004c\u004c\u0041\u0052\u0044\u0045");if _egadd .Type ==ResultTypeError {return _egadd ;};if _acef < 1{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0044\u004f\u004c\u004c\u0041\u0052\u0044\u0045\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0072a\u0063t\u0069\u006f\u006e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0065\u0071\u0075\u0061\u006c\u0020\u006f\u0072 \u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e\u0020\u0031");
-};if _fcdd ==0{return MakeNumberResult (0);};_adgb :=_fcdd < 0;if _adgb {_fcdd =-_fcdd ;};_aega :=args [0].Value ();_gbge :=_bcd .Split (_aega ,"\u002e");_cagdf :=float64 (int (_fcdd ));_geeca :=_gbge [1];_cccf :=len (_geeca );_caab :=int (_d .Log10 (_acef ))+1;
-_gdff :=float64 (_caab -_cccf );_ffeb ,_ddfd :=_fce .ParseFloat (_geeca ,64);if _ddfd !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0066\u0072\u0061\u0063\u0074\u0069\u006f\u006e\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0066\u006fr \u0044\u004f\u004cL\u0041R\u0044\u0045");
-};_ffeb *=_d .Pow (10,_gdff );_fgcc :=_cagdf +_ffeb /_acef ;if _adgb {_fgcc =-_fgcc ;};return MakeNumberResult (_fgcc );};func _cfb (_dgdg ,_beae _g .Time ,_bagd int )_g .Time {_fcbga :=_g .Date (_dgdg .Year (),_beae .Month (),_beae .Day (),0,0,0,0,_g .UTC );
-if _fcbga .After (_dgdg ){_fcbga =_fcbga .AddDate (-1,0,0);};for !_fcbga .After (_dgdg ){_fcbga =_fcbga .AddDate (0,12/_bagd ,0);};return _fcbga ;};
-
-// FloorMath implements _xlfn.FLOOR.MATH which rounds numbers down to the
-// nearest multiple of the second argument, toward or away from zero as
-// specified by the third argument.
-func FloorMath (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0046\u004c\u004f\u004f\u0052\u002e\u004dA\u0054\u0048\u0028)\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if len (args )> 3{return MakeErrorResult ("\u0046\u004c\u004f\u004f\u0052\u002e\u004dA\u0054\u0048\u0028)\u0020\u0061\u006c\u006co\u0077\u0073\u0020\u0061\u0074\u0020\u006d\u006f\u0073\u0074\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_eegf :=args [0].AsNumber ();if _eegf .Type !=ResultTypeNumber {return MakeErrorResult ("f\u0069\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u006f\u0020FL\u004f\u004f\u0052\u002eM\u0041\u0054\u0048\u0028\u0029\u0020\u006d\u0075\u0073t \u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_agbe :=float64 (1);if _eegf .ValueNumber < 0{_agbe =-1;};if len (args )> 1{_acbc :=args [1].AsNumber ();if _acbc .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061r\u0067\u0075\u006den\u0074\u0020\u0074\u006f\u0020\u0046L\u004f\u004f\u0052\u002e\u004d\u0041\u0054\u0048\u0028\u0029\u0020\u006d\u0075\u0073\u0074 \u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006db\u0065\u0072");
-};_agbe =_acbc .ValueNumber ;};_debe :=float64 (1);if len (args )> 2{_egde :=args [2].AsNumber ();if _egde .Type !=ResultTypeNumber {return MakeErrorResult ("t\u0068\u0069\u0072\u0064\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u006f\u0020FL\u004f\u004f\u0052\u002eM\u0041\u0054\u0048\u0028\u0029\u0020\u006d\u0075\u0073t \u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_debe =_egde .ValueNumber ;};if len (args )==1{return MakeNumberResult (_d .Floor (_eegf .ValueNumber ));};_befa :=_eegf .ValueNumber ;_befa ,_agab :=_d .Modf (_befa /_agbe );if _agab !=0&&_eegf .ValueNumber < 0&&_debe > 0{_befa ++;};return MakeNumberResult (_befa *_agbe );
-};
-
-// Search is an implementation of the Excel SEARCH().
-func Search (args []Result )Result {_aaebe ,_cgfa :=_bceff ("\u0046\u0049\u004e\u0044",args );if _cgfa .Type !=ResultTypeEmpty {return _cgfa ;};_bedaf :=_bcd .ToLower (_aaebe ._dgcdd );if _bedaf ==""{return MakeNumberResult (1.0);};_cbebc :=_bcd .ToLower (_aaebe ._eddfb );
-_bfbb :=_aaebe ._bedab ;_agfc :=1;for _caaf :=range _cbebc {if _agfc < _bfbb {_agfc ++;continue ;};_accde :=_dg .Index (_bedaf ,_cbebc [_caaf :]);if _accde ==0{return MakeNumberResult (float64 (_agfc ));};_agfc ++;};return MakeErrorResultType (ErrorTypeValue ,"\u004eo\u0074\u0020\u0066\u006f\u0075\u006ed");
-};type ri struct{_fgde float64 ;_egfdb string ;};func _bceff (_faec string ,_dbce []Result )(*parsedSearchObject ,Result ){_fabcb :=len (_dbce );if _fabcb !=2&&_fabcb !=3{return nil ,MakeErrorResult (_faec +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u006fr\u0020t\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_efcgb :=_dbce [0];if _efcgb .Type ==ResultTypeError {return nil ,_efcgb ;};if _efcgb .Type !=ResultTypeString &&_efcgb .Type !=ResultTypeNumber {return nil ,MakeErrorResult ("\u0054\u0068e\u0020\u0066\u0069\u0072s\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020s\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u0061\u0020\u0073t\u0072\u0069\u006e\u0067");
-};_baef :=_dbce [1];if _baef .Type ==ResultTypeError {return nil ,_baef ;};if _baef .Type !=ResultTypeString &&_baef .Type !=ResultTypeNumber {return nil ,MakeErrorResult ("\u0054\u0068\u0065\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0073\u0068\u006f\u0075l\u0064\u0020\u0062\u0065\u0020a\u0020\u0073t\u0072\u0069\u006e\u0067");
-};_fdbab :=_baef .Value ();_dgbd :=_efcgb .Value ();_gcea :=1;if _fabcb ==3&&_dbce [2].Type !=ResultTypeEmpty {_edfe :=_dbce [2];if _edfe .Type !=ResultTypeNumber {return nil ,MakeErrorResult ("P\u006f\u0073\u0069\u0074\u0069\u006fn\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062e\u0020\u0061\u0020n\u0075m\u0062\u0065\u0072");
-};_gcea =int (_edfe .ValueNumber );if _gcea < 1{return nil ,MakeErrorResultType (ErrorTypeValue ,"\u0050\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u0020\u0073\u0068\u006f\u0075l\u0064\u0020\u0062\u0065\u0020\u0061 \u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006d\u006f\u0072\u0065\u0020\u0074h\u0061\u006e\u0020\u0030");
-};if _gcea > len (_fdbab ){return nil ,MakeErrorResultType (ErrorTypeValue ,"\u0050\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u0020\u0073\u0068\u006f\u0075l\u0064\u0020\u0062\u0065\u0020\u0061 \u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006d\u006f\u0072\u0065\u0020\u0074h\u0061\u006e\u0020\u0030");
-};};return &parsedSearchObject {_dgbd ,_fdbab ,_gcea },_fca ;};
-
-// Pduration implements the Excel PDURATION function.
-func Pduration (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u0050\u0044\u0055RA\u0054\u0049\u004f\u004e\u0020\u0072\u0065\u0071\u0075i\u0072e\u0073 \u0074h\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050D\u0055\u0052A\u0054\u0049\u004fN\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0072\u0061\u0074\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_fdde :=args [0].ValueNumber ;if _fdde <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0044\u0055\u0052\u0041\u0054\u0049\u004f\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020t\u006f\u0020\u0062\u0065\u0020p\u006f\u0073i\u0074\u0069\u0076\u0065");
-};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0044\u0055\u0052\u0041\u0054\u0049\u004f\u004e\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0063\u0075\u0072\u0072\u0065\u006e\u0074\u0020\u0076\u0061l\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006dbe\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_egdb :=args [1].ValueNumber ;if _egdb <=0{return MakeErrorResultType (ErrorTypeNum ,"P\u0044\u0055\u0052\u0041\u0054\u0049\u004f\u004e\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073 c\u0075\u0072\u0072\u0065n\u0074\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0074o \u0062\u0065 \u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
-};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0044\u0055\u0052\u0041\u0054I\u004f\u004e\u0020r\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0073\u0070\u0065\u0063\u0069\u0066i\u0065\u0064\u0020\u0076\u0061lu\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_fadf :=args [2].ValueNumber ;if _fadf <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0044\u0055\u0052\u0041\u0054I\u004f\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0070\u0065\u0063\u0069\u0066\u0069\u0065d\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070o\u0073i\u0074\u0069\u0076\u0065");
-};return MakeNumberResult ((_d .Log10 (_fadf )-_d .Log10 (_egdb ))/_d .Log10 (1+_fdde ));};
-
-// Len is an implementation of the Excel LEN function that returns length of a string
-func Len (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u004c\u0045N\u0020\u0072\u0065\u0071u\u0069\u0072e\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067l\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_eeffc :=args [0].AsString ();if _eeffc .Type !=ResultTypeString {return MakeErrorResult ("\u004c\u0045N\u0020\u0072\u0065\u0071u\u0069\u0072e\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067l\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};return MakeNumberResult (float64 (len (_eeffc .ValueString )));};func _bbge (_ggae []Result )Result {_cgcg :=_ggae [0].ValueArray ;if len (_ggae )==1{_bagae :=[][]Result {};for _ ,_eece :=range _cgcg {_bagae =append (_bagae ,_aecgg ([]Result {MakeListResult (_eece )}).ValueList );
-};return MakeArrayResult (_bagae );}else if len (_ggae )==2{_afcd :=len (_cgcg );_gfgf :=len (_cgcg [0]);_edfbb :=_gabaf (_ggae [1],_afcd ,_gfgf );_bddc :=len (_edfbb );_dage :=[][]Result {};var _baa []Result ;for _edgg ,_bdbb :=range _cgcg {if _edgg < _bddc {_baa =_edfbb [_edgg ];
-}else {_baa =_ceb (MakeErrorResultType (ErrorTypeNA ,""),_gfgf );};_dage =append (_dage ,_aecgg ([]Result {MakeListResult (_bdbb ),MakeListResult (_baa )}).ValueList );};return MakeArrayResult (_dage );}else if len (_ggae )==3{_gcgab :=len (_cgcg );_abdf :=len (_cgcg [0]);
-_bfffe :=_gabaf (_ggae [1],_gcgab ,_abdf );_gcaa :=_gabaf (_ggae [2],_gcgab ,_abdf );_fagd :=len (_bfffe );_fgafa :=len (_gcaa );_efea :=[][]Result {};var _eede ,_bbff []Result ;for _aecf ,_cgef :=range _cgcg {if _aecf < _fagd {_eede =_bfffe [_aecf ];}else {_eede =_ceb (MakeErrorResultType (ErrorTypeNA ,""),_abdf );
-};if _aecf < _fgafa {_bbff =_gcaa [_aecf ];}else {_bbff =_ceb (MakeErrorResultType (ErrorTypeNA ,""),_abdf );};_efea =append (_efea ,_aecgg ([]Result {MakeListResult (_cgef ),MakeListResult (_eede ),MakeListResult (_bbff )}).ValueList );};return MakeArrayResult (_efea );
-};return MakeErrorResultType (ErrorTypeValue ,"");};func _ggeeb (_gbae []Result )(bool ,Result ){for _ ,_accbe :=range _gbae {if _accbe .Type ==ResultTypeError {return true ,_accbe ;};};return false ,MakeEmptyResult ();};func _dace (_gdabc ,_bgafb int )string {const TOKSTART =4;
-if !_fdab {return "\u0073\u0079\u006et\u0061\u0078\u0020\u0065\u0072\u0072\u006f\u0072";};for _ ,_gbee :=range _dabg {if _gbee ._dfggf ==_gdabc &&_gbee ._aaac ==_bgafb {return "\u0073\u0079\u006e\u0074\u0061\u0078\u0020\u0065\u0072r\u006f\u0072\u003a\u0020"+_gbee ._fgbcb ;
-};};_daadg :="\u0073y\u006e\u0074\u0061\u0078 \u0065\u0072\u0072\u006f\u0072:\u0020u\u006ee\u0078\u0070\u0065\u0063\u0074\u0065\u0064 "+_dbgcc (_bgafb );_bcgf :=make ([]int ,0,4);_cdad :=_ebgcc [_gdabc ];for _dfcc :=TOKSTART ;_dfcc -1< len (_abfea );_dfcc ++{if _bfbbg :=_cdad +_dfcc ;
-_bfbbg >=0&&_bfbbg < _gaab &&_bdcg [_fbec [_bfbbg ]]==_dfcc {if len (_bcgf )==cap (_bcgf ){return _daadg ;};_bcgf =append (_bcgf ,_dfcc );};};if _fgcg [_gdabc ]==-2{_fcdebd :=0;for _bcdg [_fcdebd ]!=-1||_bcdg [_fcdebd +1]!=_gdabc {_fcdebd +=2;};for _fcdebd +=2;
-_bcdg [_fcdebd ]>=0;_fcdebd +=2{_cdfg :=_bcdg [_fcdebd ];if _cdfg < TOKSTART ||_bcdg [_fcdebd +1]==0{continue ;};if len (_bcgf )==cap (_bcgf ){return _daadg ;};_bcgf =append (_bcgf ,_cdfg );};if _bcdg [_fcdebd +1]!=0{return _daadg ;};};for _efegbb ,_dggg :=range _bcgf {if _efegbb ==0{_daadg +="\u002c\u0020\u0065x\u0070\u0065\u0063\u0074\u0069\u006e\u0067\u0020";
-}else {_daadg +="\u0020\u006f\u0072\u0020";};_daadg +=_dbgcc (_dggg );};return _daadg ;};var _fbec =[...]int {45,3,44,32,18,40,72,46,47,30,31,32,39,48,28,29,30,31,32,75,39,49,32,56,50,70,23,39,76,57,58,59,60,61,62,63,64,65,66,67,68,77,71,69,54,43,13,19,21,55,82,11,78,9,74,28,29,30,31,32,37,33,34,35,36,38,1,20,39,10,2,8,0,80,79,0,0,0,83,0,81,73,28,29,30,31,32,37,33,34,35,36,38,0,0,39,28,29,30,31,32,37,33,34,35,36,38,26,27,39,51,52,25,14,15,16,17,0,24,23,22,41,23,12,0,6,7,26,27,0,42,0,25,14,15,16,17,0,24,23,22,5,0,12,0,6,7,26,27,0,4,0,25,14,15,16,17,0,24,23,22,41,0,12,53,6,7,26,27,0,0,0,25,14,15,16,17,0,24,23,22,41,0,12,0,6,7};
-
-
-// Or is an implementation of the Excel OR() function and takes a variable
-// number of arguments.
-func Or (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u004f\u0052\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074 \u006f\u006e\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_aaee :=false ;for _ ,_caee :=range args {switch _caee .Type {case ResultTypeList ,ResultTypeArray :_cgbg :=Or (_caee .ListValues ());if _cgbg .Type ==ResultTypeError {return _cgbg ;};if _cgbg .ValueNumber !=0{_aaee =true ;};case ResultTypeNumber :if _caee .ValueNumber !=0{_aaee =true ;
-};case ResultTypeString :return MakeErrorResult ("\u004f\u0052 \u0064\u006f\u0065\u0073\u006e\u0027\u0074\u0020\u006f\u0070\u0065\u0072\u0061\u0074\u0065\u0020\u006f\u006e\u0020\u0073\u0074\u0072in\u0067\u0073");case ResultTypeError :return _caee ;default:return MakeErrorResult ("\u0075\u006e\u0073u\u0070\u0070\u006f\u0072t\u0065\u0064\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0069\u006e\u0020\u004f\u0052");
-};};return MakeBoolResult (_aaee );};
-
-// Radians is an implementation of the Excel function RADIANS() that converts
-// degrees to radians.
-func Radians (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0052\u0041\u0044I\u0041\u004e\u0053\u0028)\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_dfbd :=args [0].AsNumber ();if _dfbd .Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0041\u0044IA\u004e\u0053\u0028\u0029\u0020\u0072\u0065\u0071\u0075i\u0072e\u0073 \u006eu\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};return MakeNumberResult (_d .Pi /180.0*_dfbd .ValueNumber );};func (_fafcc *yyParserImpl )Parse (yylex yyLexer )int {_gfaca :=_g .Now ();var _cdgcc int ;var _dbcgg yySymType ;var _eecbe []yySymType ;_ =_eecbe ;_cegge :=_fafcc ._fbfd [:];Nerrs :=0;Errflag :=0;
-_ebdae :=0;_fafcc ._deada =-1;_cffb :=-1;defer func (){_ebdae =-1;_fafcc ._deada =-1;_cffb =-1}();_ecaf :=-1;goto _acad ;_fgfbe :return 0;_egfcf :return 1;_acad :if _ccccf (_gfaca ){_gd .Log .Error ("\u0050\u0061\u0072\u0073\u0065\u0020\u0074\u0069\u006d\u0065\u006f\u0075\u0074");
-goto _egfcf ;};if _fbegg >=4{_b .Printf ("\u0063\u0068\u0061\u0072\u0020\u0025\u0076\u0020\u0069n\u0020\u0025\u0076\u000a",_dbgcc (_cffb ),_cgee (_ebdae ));};_ecaf ++;if _ecaf >=len (_cegge ){_aefae :=make ([]yySymType ,len (_cegge )*2);copy (_aefae ,_cegge );
-_cegge =_aefae ;};_cegge [_ecaf ]=_dbcgg ;_cegge [_ecaf ]._begc =_ebdae ;_bgcab :if _ccccf (_gfaca ){_gd .Log .Error ("\u0050\u0061\u0072\u0073\u0065\u0020\u0074\u0069\u006d\u0065\u006f\u0075\u0074");goto _egfcf ;};_cdgcc =_ebgcc [_ebdae ];if _cdgcc <=_fcbf {goto _cgbda ;
-};if _fafcc ._deada < 0{_fafcc ._deada ,_cffb =_ffdd (yylex ,&_fafcc ._cdea );};_cdgcc +=_cffb ;if _cdgcc < 0||_cdgcc >=_gaab {goto _cgbda ;};_cdgcc =_fbec [_cdgcc ];if _bdcg [_cdgcc ]==_cffb {_fafcc ._deada =-1;_cffb =-1;_dbcgg =_fafcc ._cdea ;_ebdae =_cdgcc ;
-if Errflag > 0{Errflag --;};goto _acad ;};_cgbda :if _ccccf (_gfaca ){_gd .Log .Error ("\u0050\u0061\u0072\u0073\u0065\u0020\u0074\u0069\u006d\u0065\u006f\u0075\u0074");goto _egfcf ;};_cdgcc =_fgcg [_ebdae ];if _cdgcc ==-2{if _fafcc ._deada < 0{_fafcc ._deada ,_cffb =_ffdd (yylex ,&_fafcc ._cdea );
-};_eead :=0;for {if _bcdg [_eead +0]==-1&&_bcdg [_eead +1]==_ebdae {break ;};_eead +=2;};for _eead +=2;;_eead +=2{_cdgcc =_bcdg [_eead +0];if _cdgcc < 0||_cdgcc ==_cffb {break ;};};_cdgcc =_bcdg [_eead +1];if _cdgcc < 0{goto _fgfbe ;};};if _cdgcc ==0{switch Errflag {case 0:yylex .Error (_dace (_ebdae ,_cffb ));
-Nerrs ++;if _fbegg >=1{_b .Printf ("\u0025\u0073",_cgee (_ebdae ));_b .Printf ("\u0020\u0073\u0061\u0077\u0020\u0025\u0073\u000a",_dbgcc (_cffb ));};fallthrough;case 1,2:Errflag =3;for _ecaf >=0{_cdgcc =_ebgcc [_cegge [_ecaf ]._begc ]+_acae ;if _cdgcc >=0&&_cdgcc < _gaab {_ebdae =_fbec [_cdgcc ];
-if _bdcg [_ebdae ]==_acae {goto _acad ;};};if _fbegg >=2{_b .Printf ("\u0065\u0072r\u006f\u0072\u0020\u0072\u0065\u0063\u006f\u0076\u0065\u0072\u0079\u0020\u0070\u006f\u0070\u0073\u0020\u0073\u0074\u0061\u0074\u0065 %\u0064\u000a",_cegge [_ecaf ]._begc );
-};_ecaf --;};goto _egfcf ;case 3:if _fbegg >=2{_b .Printf ("e\u0072\u0072\u006f\u0072\u0020\u0072e\u0063\u006f\u0076\u0065\u0072\u0079\u0020\u0064\u0069s\u0063\u0061\u0072d\u0073 \u0025\u0073\u000a",_dbgcc (_cffb ));};if _cffb ==_dfdae {goto _egfcf ;};
-_fafcc ._deada =-1;_cffb =-1;goto _bgcab ;};};if _fbegg >=2{_b .Printf ("\u0072e\u0064u\u0063\u0065\u0020\u0025\u0076 \u0069\u006e:\u000a\u0009\u0025\u0076\u000a",_cdgcc ,_cgee (_ebdae ));};_ddcbc :=_cdgcc ;_gfca :=_ecaf ;_ =_gfca ;_ecaf -=_agcgb [_cdgcc ];
-if _ecaf +1>=len (_cegge ){_dbbec :=make ([]yySymType ,len (_cegge )*2);copy (_dbbec ,_cegge );_cegge =_dbbec ;};_dbcgg =_cegge [_ecaf +1];_cdgcc =_dccgd [_cdgcc ];_cegba :=_aede [_cdgcc ];_aaaa :=_cegba +_cegge [_ecaf ]._begc +1;if _aaaa >=_gaab {_ebdae =_fbec [_cegba ];
-}else {_ebdae =_fbec [_aaaa ];if _bdcg [_ebdae ]!=-_cdgcc {_ebdae =_fbec [_cegba ];};};switch _ddcbc {case 1:_eecbe =_cegge [_gfca -1:_gfca +1];{yylex .(*plex )._cceb =_dbcgg ._feebd ;};case 3:_eecbe =_cegge [_gfca -2:_gfca +1];{_dbcgg ._feebd =_eecbe [2]._feebd ;
-};case 4:_eecbe =_cegge [_gfca -4:_gfca +1];{};case 5:_eecbe =_cegge [_gfca -1:_gfca +1];{_dbcgg ._feebd =NewBool (_eecbe [1]._dcfgf ._cafdf );};case 6:_eecbe =_cegge [_gfca -1:_gfca +1];{_dbcgg ._feebd =NewNumber (_eecbe [1]._dcfgf ._cafdf );};case 7:_eecbe =_cegge [_gfca -1:_gfca +1];
-{_dbcgg ._feebd =NewString (_eecbe [1]._dcfgf ._cafdf );};case 8:_eecbe =_cegge [_gfca -1:_gfca +1];{_dbcgg ._feebd =NewError (_eecbe [1]._dcfgf ._cafdf );};case 9:_eecbe =_cegge [_gfca -2:_gfca +1];{_dbcgg ._feebd =_eecbe [2]._feebd ;};case 10:_eecbe =_cegge [_gfca -2:_gfca +1];
-{_dbcgg ._feebd =NewNegate (_eecbe [2]._feebd );};case 15:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =_eecbe [2]._feebd ;};case 17:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewConstArrayExpr (_eecbe [2]._bdbcf );};case 18:_eecbe =_cegge [_gfca -1:_gfca +1];
-{_dbcgg ._bdbcf =append (_dbcgg ._bdbcf ,_eecbe [1]._edac );};case 19:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._bdbcf =append (_eecbe [1]._bdbcf ,_eecbe [3]._edac );};case 20:_eecbe =_cegge [_gfca -1:_gfca +1];{_dbcgg ._edac =append (_dbcgg ._edac ,_eecbe [1]._feebd );
-};case 21:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._edac =append (_eecbe [1]._edac ,_eecbe [3]._feebd );};case 23:_eecbe =_cegge [_gfca -2:_gfca +1];{_dbcgg ._feebd =NewPrefixExpr (_eecbe [1]._feebd ,_eecbe [2]._feebd );};case 25:_eecbe =_cegge [_gfca -1:_gfca +1];
-{_dbcgg ._feebd =NewSheetPrefixExpr (_eecbe [1]._dcfgf ._cafdf );};case 26:_eecbe =_cegge [_gfca -1:_gfca +1];{_dbcgg ._feebd =NewCellRef (_eecbe [1]._dcfgf ._cafdf );};case 27:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewRange (_eecbe [1]._feebd ,_eecbe [3]._feebd );
-};case 28:_eecbe =_cegge [_gfca -4:_gfca +1];{_dbcgg ._feebd =NewPrefixRangeExpr (_eecbe [1]._feebd ,_eecbe [2]._feebd ,_eecbe [4]._feebd );};case 29:_eecbe =_cegge [_gfca -1:_gfca +1];{_dbcgg ._feebd =NewNamedRangeRef (_eecbe [1]._dcfgf ._cafdf );};case 30:_eecbe =_cegge [_gfca -1:_gfca +1];
-{_dbcgg ._feebd =NewHorizontalRange (_eecbe [1]._dcfgf ._cafdf );};case 31:_eecbe =_cegge [_gfca -1:_gfca +1];{_dbcgg ._feebd =NewVerticalRange (_eecbe [1]._dcfgf ._cafdf );};case 32:_eecbe =_cegge [_gfca -2:_gfca +1];{_dbcgg ._feebd =NewPrefixHorizontalRange (_eecbe [1]._feebd ,_eecbe [2]._dcfgf ._cafdf );
-};case 33:_eecbe =_cegge [_gfca -2:_gfca +1];{_dbcgg ._feebd =NewPrefixVerticalRange (_eecbe [1]._feebd ,_eecbe [2]._dcfgf ._cafdf );};case 34:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewBinaryExpr (_eecbe [1]._feebd ,BinOpTypePlus ,_eecbe [3]._feebd );
-};case 35:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewBinaryExpr (_eecbe [1]._feebd ,BinOpTypeMinus ,_eecbe [3]._feebd );};case 36:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewBinaryExpr (_eecbe [1]._feebd ,BinOpTypeMult ,_eecbe [3]._feebd );
-};case 37:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewBinaryExpr (_eecbe [1]._feebd ,BinOpTypeDiv ,_eecbe [3]._feebd );};case 38:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewBinaryExpr (_eecbe [1]._feebd ,BinOpTypeExp ,_eecbe [3]._feebd );
-};case 39:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewBinaryExpr (_eecbe [1]._feebd ,BinOpTypeLT ,_eecbe [3]._feebd );};case 40:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewBinaryExpr (_eecbe [1]._feebd ,BinOpTypeGT ,_eecbe [3]._feebd );
-};case 41:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewBinaryExpr (_eecbe [1]._feebd ,BinOpTypeLEQ ,_eecbe [3]._feebd );};case 42:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewBinaryExpr (_eecbe [1]._feebd ,BinOpTypeGEQ ,_eecbe [3]._feebd );
-};case 43:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewBinaryExpr (_eecbe [1]._feebd ,BinOpTypeEQ ,_eecbe [3]._feebd );};case 44:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewBinaryExpr (_eecbe [1]._feebd ,BinOpTypeNE ,_eecbe [3]._feebd );
-};case 45:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._feebd =NewBinaryExpr (_eecbe [1]._feebd ,BinOpTypeConcat ,_eecbe [3]._feebd );};case 47:_eecbe =_cegge [_gfca -2:_gfca +1];{_dbcgg ._feebd =NewFunction (_eecbe [1]._dcfgf ._cafdf ,nil );};case 48:_eecbe =_cegge [_gfca -3:_gfca +1];
-{_dbcgg ._feebd =NewFunction (_eecbe [1]._dcfgf ._cafdf ,_eecbe [2]._edac );};case 49:_eecbe =_cegge [_gfca -1:_gfca +1];{_dbcgg ._edac =append (_dbcgg ._edac ,_eecbe [1]._feebd );};case 50:_eecbe =_cegge [_gfca -3:_gfca +1];{_dbcgg ._edac =append (_eecbe [1]._edac ,_eecbe [3]._feebd );
-};case 53:_eecbe =_cegge [_gfca -0:_gfca +1];{_dbcgg ._feebd =NewEmptyExpr ();};};goto _acad ;};
-
-// NamedRangeRef is a reference to a named range.
-type NamedRangeRef struct{_cbbgb string };func (_edaag ResultType )String ()string {if _edaag >=ResultType (len (_bbecc )-1){return _b .Sprintf ("\u0052\u0065\u0073\u0075\u006c\u0074\u0054\u0079\u0070e\u0028\u0025\u0064\u0029",_edaag );};return _gbefa [_bbecc [_edaag ]:_bbecc [_edaag +1]];
-};
-
-// NewFunction constructs a new function call expression.
-func NewFunction (name string ,args []Expression )Expression {return FunctionCall {_ffgb :name ,_ebga :args };};
-
-// Eval evaluates and returns the result of a constant array expression.
-func (_ad ConstArrayExpr )Eval (ctx Context ,ev Evaluator )Result {_bedf :=[][]Result {};for _ ,_cfd :=range _ad ._ggg {_bga :=[]Result {};for _ ,_cgg :=range _cfd {_bga =append (_bga ,_cgg .Eval (ctx ,ev ));};_bedf =append (_bedf ,_bga );};return MakeArrayResult (_bedf );
-};
-
-// Range is a range expression that when evaluated returns a list of Results.
-type Range struct{_eege ,_cbfg Expression };func (_cbbaf *ivr )SetOffset (col ,row uint32 ){};var _ebdbf =map[string ]Function {};func init (){_gbaf ();RegisterFunction ("\u0041V\u0045\u0052\u0041\u0047\u0045",Average );RegisterFunction ("\u0041\u0056\u0045\u0052\u0041\u0047\u0045\u0041",Averagea );
-RegisterFunction ("\u0043\u004f\u0055N\u0054",Count );RegisterFunction ("\u0043\u004f\u0055\u004e\u0054\u0041",Counta );RegisterFunction ("\u0043O\u0055\u004e\u0054\u0049\u0046",CountIf );RegisterFunction ("\u0043\u004f\u0055\u004e\u0054\u0049\u0046\u0053",CountIfs );
-RegisterFunction ("\u0043\u004f\u0055\u004e\u0054\u0042\u004c\u0041\u004e\u004b",CountBlank );RegisterFunction ("\u004d\u0041\u0058",Max );RegisterFunction ("\u004d\u0041\u0058\u0041",MaxA );RegisterFunction ("\u004d\u0041\u0058\u0049\u0046\u0053",MaxIfs );
-RegisterFunction ("\u005f\u0078\u006cf\u006e\u002e\u004d\u0041\u0058\u0049\u0046\u0053",MaxIfs );RegisterFunction ("\u004d\u0045\u0044\u0049\u0041\u004e",Median );RegisterFunction ("\u004d\u0049\u004e",Min );RegisterFunction ("\u004d\u0049\u004e\u0041",MinA );
-RegisterFunction ("\u004d\u0049\u004e\u0049\u0046\u0053",MinIfs );RegisterFunction ("\u005f\u0078\u006cf\u006e\u002e\u004d\u0049\u004e\u0049\u0046\u0053",MinIfs );};
-
-// IsLogical is an implementation of the Excel ISLOGICAL() function.
-func IsLogical (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u004c\u004f\u0047\u0049\u0043A\u004c\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gbde :=args [0].Ref ;if _gbde .Type !=ReferenceTypeCell {return MakeErrorResult ("I\u0053\u004c\u004f\u0047\u0049\u0043\u0041\u004c\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068\u0065\u0020\u0066\u0069\u0072\u0073t\u0020a\u0072\u0067\u0075\u006de\u006e\u0074 \u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065");
-};return MakeBoolResult (ctx .Cell (_gbde .Value ,ev ).IsBoolean );};
-
-// Exact is an implementation of the Excel EXACT() which compares two strings.
-func Exact (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0043\u004f\u004e\u0043\u0041\u0054\u0045N\u0041\u0054\u0045(\u0029\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_cedb :=args [0].AsString ();_ecgaf :=args [1].AsString ();if _cedb .Type !=ResultTypeString ||_ecgaf .Type !=ResultTypeString {return MakeErrorResult ("\u0043\u004f\u004e\u0043\u0041\u0054\u0045N\u0041\u0054\u0045(\u0029\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};return MakeBoolResult (_cedb .ValueString ==_ecgaf .ValueString );};func Trunc (args []Result )Result {if len (args )==0{return MakeErrorResult ("T\u0052\u0055\u004e\u0043\u0028\u0029\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0061t \u006c\u0065\u0061\u0073t\u0020\u006f\u006e\u0065\u0020\u006e\u0075\u006d\u0065ri\u0063\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_dddd :=args [0].AsNumber ();if _dddd .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072s\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0054\u0052\u0055\u004e\u0043\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_aggf :=float64 (0);if len (args )> 1{_dfbdg :=args [1].AsNumber ();if _dfbdg .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020a\u0072\u0067\u0075m\u0065\u006e\u0074\u0020t\u006f\u0020\u0054\u0052\u0055\u004e\u0043\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_aggf =_dfbdg .ValueNumber ;};_acde :=_dddd .ValueNumber ;_gdfee :=1.0;if _aggf >=0{_gdfee =_d .Pow (1/10.0,_aggf );}else {return MakeNumberResult (0);};_acde ,_cecb :=_d .Modf (_acde /_gdfee );_cfbe :=0.99999;if _cecb > _cfbe {_acde ++;}else if _cecb < -_cfbe {_acde --;
-};_ =_cecb ;return MakeNumberResult (_acde *_gdfee );};
-
-// Quotient is an implementation of the Excel QUOTIENT function that returns the
-// integer portion of division.
-func Quotient (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0051\u0055\u004f\u0054\u0049E\u004e\u0054\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0074\u0077\u006f\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_ebbe :=args [0].AsNumber ();_dbfd :=args [1].AsNumber ();if _ebbe .Type !=ResultTypeNumber ||_dbfd .Type !=ResultTypeNumber {return MakeErrorResult ("\u0051\u0055\u004f\u0054\u0049E\u004e\u0054\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0074\u0077\u006f\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if _dbfd .ValueNumber ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0051U\u004f\u0054\u0049\u0045N\u0054\u0028\u0029\u0020\u0064i\u0076i\u0064e\u0020\u0062\u0079\u0020\u007a\u0065\u0072o");};return MakeNumberResult (_d .Trunc (_ebbe .ValueNumber /_dbfd .ValueNumber ));
-};
-
-// TextJoin is an implementation of the Excel TEXTJOIN function.
-func TextJoin (args []Result )Result {if len (args )< 3{return MakeErrorResult ("\u0054\u0045\u0058\u0054\u004aO\u0049\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074h\u0072\u0065\u0065\u0020\u006f\u0072\u0020\u006d\u006f\u0072\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if args [0].Type !=ResultTypeString {return MakeErrorResult ("\u0054\u0045\u0058T\u004a\u004f\u0049\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0064\u0065\u006c\u0069\u006d\u0069\u0074\u0065\u0072\u0020\u0074\u006f\u0020\u0062\u0065 \u0061\u0020\u0073\u0074\u0072\u0069\u006e\u0067");
-};_abafc :=args [0].ValueString ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0054\u0045\u0058\u0054\u004a\u004f\u0049\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065c\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0072 \u0062\u006f\u006f\u006c\u0065a\u006e");
-};_abbf :=args [1].ValueNumber !=0;_gacdc :=_bceb (args [2:],[]string {},_abbf );return MakeStringResult (_bcd .Join (_gacdc ,_abafc ));};
+// Right implements the Excel RIGHT(string,[n]) function which returns the
+// rightmost n characters.
+func Right (args []Result )Result {_gceb :=1;switch len (args ){case 1:case 2:if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0049\u0047\u0048\u0054\u0020\u0065\u0078\u0070\u0065c\u0074\u0065\u0064\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_gceb =int (args [1].ValueNumber );if _gceb < 0{return MakeErrorResult ("R\u0049\u0047\u0048\u0054\u0020\u0065x\u0070\u0065\u0063\u0074\u0065\u0064 \u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u003e\u003d \u0030");
+};if _gceb ==0{return MakeStringResult ("");};default:return MakeErrorResult ("\u0052\u0049\u0047HT\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020o\u006ee\u0020o\u0072 \u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if args [0].Type ==ResultTypeList {return MakeErrorResult ("\u0052\u0049\u0047\u0048\u0054\u0020\u0063\u0061\u006e\u0027\u0074\u0020\u0062\u0065\u0020c\u0061l\u006c\u0065\u0064\u0020\u006f\u006e\u0020\u0061\u0020\u0072\u0061\u006e\u0067\u0065");};_daef :=args [0].Value ();
+_gdfdb :=len (_daef );if _gceb > _gdfdb {return MakeStringResult (_daef );};return MakeStringResult (_daef [_gdfdb -_gceb :_gdfdb ]);};func _fdgg (_cgedf Result ,_dbdb *criteriaParsed )bool {if _cgedf .IsBoolean {return false ;};_dbcaf :=_cgedf .Type ;
+if _dbdb ._badfb {return _dbcaf ==ResultTypeNumber &&_cgedf .ValueNumber ==_dbdb ._gfaa ;}else if _dbcaf ==ResultTypeNumber {return _fbda (_cgedf .ValueNumber ,_dbdb ._geeef );};return _dfegd (_cgedf ,_dbdb );};
 
 // Combin is an implementation of the Excel COMBINA function whic returns the
 // number of combinations.
 func Combin (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0043\u004f\u004d\u0042\u0049\u004e\u0028\u0029\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020t\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_ccfg :=args [0].AsNumber ();_abeg :=args [1].AsNumber ();if _ccfg .Type !=ResultTypeNumber ||_abeg .Type !=ResultTypeNumber {return MakeErrorResult ("C\u004f\u004d\u0042\u0049\u004e\u0028)\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006e\u0075\u006d\u0065r\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
-};_decd :=_d .Trunc (_ccfg .ValueNumber );_ceca :=_d .Trunc (_abeg .ValueNumber );if _ceca > _decd {return MakeErrorResult ("\u0043O\u004d\u0042\u0049\u004e\u0028\u0029\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u006b\u0020\u003c\u003d\u0020\u006e");
-};if _ceca ==_decd ||_ceca ==0{return MakeNumberResult (1);};_cca :=float64 (1);for _caac :=float64 (1);_caac <=_ceca ;_caac ++{_cca *=(_decd +1-_caac )/_caac ;};return MakeNumberResult (_cca );};func _ffdd (_fcbab yyLexer ,_cddeg *yySymType )(_bbebe ,_adef int ){_adef =0;
-_bbebe =_fcbab .Lex (_cddeg );if _bbebe <=0{_adef =_gfbe [0];goto _aeac ;};if _bbebe < len (_gfbe ){_adef =_gfbe [_bbebe ];goto _aeac ;};if _bbebe >=_ebba {if _bbebe < _ebba +len (_acagb ){_adef =_acagb [_bbebe -_ebba ];goto _aeac ;};};for _affba :=0;_affba < len (_ebge );
-_affba +=2{_adef =_ebge [_affba +0];if _adef ==_bbebe {_adef =_ebge [_affba +1];goto _aeac ;};};_aeac :if _adef ==0{_adef =_acagb [1];};if _fbegg >=3{_b .Printf ("l\u0065\u0078\u0020\u0025\u0073\u0028\u0025\u0064\u0029\u000a",_dbgcc (_adef ),uint (_bbebe ));
-};return _bbebe ,_adef ;};
+};_dggg :=args [0].AsNumber ();_dgfg :=args [1].AsNumber ();if _dggg .Type !=ResultTypeNumber ||_dgfg .Type !=ResultTypeNumber {return MakeErrorResult ("C\u004f\u004d\u0042\u0049\u004e\u0028)\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006e\u0075\u006d\u0065r\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
+};_daagf :=_d .Trunc (_dggg .ValueNumber );_afcc :=_d .Trunc (_dgfg .ValueNumber );if _afcc > _daagf {return MakeErrorResult ("\u0043O\u004d\u0042\u0049\u004e\u0028\u0029\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u006b\u0020\u003c\u003d\u0020\u006e");
+};if _afcc ==_daagf ||_afcc ==0{return MakeNumberResult (1);};_gebgfd :=float64 (1);for _ccdaa :=float64 (1);_ccdaa <=_afcc ;_ccdaa ++{_gebgfd *=(_daagf +1-_ccdaa )/_ccdaa ;};return MakeNumberResult (_gebgfd );};
 
-// PrefixVerticalRange is a range expression that when evaluated returns a list of Results from references like Sheet1!AA:IJ (all cells from columns AA to IJ of sheet 'Sheet1').
-type PrefixVerticalRange struct{_efdgde Expression ;_eebda ,_ebcdb string ;};
+// ReferenceType is a type of reference
+//
+//go:generate stringer -type=ReferenceType
+type ReferenceType byte ;func _ggf (_cgc ,_ade int )int {if _ade ==2&&_bgea (_cgc ){return 29;}else {return _feb [_ade -1];};};
 
-// VerticalRange is a range expression that when evaluated returns a list of Results from references like AA:IJ (all cells from columns AA to IJ).
-type VerticalRange struct{_cdebbe ,_cfeb string };type ivr struct{};func (_dba *evCache )GetFromCache (key string )(Result ,bool ){_dba ._acd .Lock ();_bccd ,_adc :=_dba ._caf [key ];_dba ._acd .Unlock ();return _bccd ,_adc ;};
-
-// NewNamedRangeRef constructs a new named range reference.
-func NewNamedRangeRef (v string )Expression {return NamedRangeRef {_cbbgb :v }};
-
-// Update updates references in the PrefixExpr after removing a row/column.
-func (_ccdb PrefixExpr )Update (q *_a .UpdateQuery )Expression {_cdcgfd :=_ccdb ;_fagg :=_ccdb ._begcd .String ();if _fagg ==q .SheetToUpdate {_gbbc :=*q ;_gbbc .UpdateCurrentSheet =true ;_cdcgfd ._ddeba =_ccdb ._ddeba .Update (&_gbbc );};return _cdcgfd ;
-};var _cbcg ,_ffcf ,_efegb ,_abcg ,_bedd ,_bdaca *_fa .Regexp ;
+// Floor is an implementation of the FlOOR function.
+func Floor (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0046\u004c\u004f\u004f\u0052\u0028\u0029\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074w\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");};
+_adgdb :=args [0].AsNumber ();if _adgdb .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072s\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0046\u004c\u004f\u004f\u0052\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};var _fgaeg float64 ;_bgeg :=args [1].AsNumber ();if _bgeg .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020a\u0072\u0067\u0075m\u0065\u006e\u0074\u0020t\u006f\u0020\u0046\u004c\u004f\u004f\u0052\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_fgaeg =_bgeg .ValueNumber ;if _fgaeg < 0&&_adgdb .ValueNumber >=0{return MakeErrorResultType (ErrorTypeNum ,"\u0069\u006e\u0076\u0061\u006c\u0069\u0064\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0073\u0020\u0074\u006f\u0020\u0046L\u004f\u004f\u0052");
+};_fcgaf :=_adgdb .ValueNumber ;_fcgaf ,_acfgb :=_d .Modf (_fcgaf /_fgaeg );if _acfgb !=0{if _adgdb .ValueNumber < 0&&_acfgb < 0{_fcgaf --;};};return MakeNumberResult (_fcgaf *_fgaeg );};
 
 // FunctionComplex is a function whose result  depends on its arguments and the
 // context that it's in.  As an example, INDIRECT is a complex function so that
 // INDIRECT("A1") which returns the value of the "A1" cell in a sheet can use
 // the context to reach into the sheet and pull out required values.
-type FunctionComplex func (_edcfg Context ,_fffgb Evaluator ,_fgge []Result )Result ;const _fcbf =-1000;func (_beaf *noCache )SetCache (key string ,value Result ){};func _fgf (_ede ,_ebf _g .Time )bool {_bgbc :=_ede .Unix ();_fgaf :=_ebf .Unix ();_cda :=_ede .Year ();
-_dgb :=_ead (_cda ,_g .March ,1);if _cbca (_cda )&&_bgbc < _dgb &&_fgaf >=_dgb {return true ;};var _ecgab =_ebf .Year ();var _cgfd =_ead (_ecgab ,_g .March ,1);return (_cbca (_ecgab )&&_fgaf >=_cgfd &&_bgbc < _cgfd );};const _bdeeb =57351;func Sign (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0053\u0049\u0047\u004e(\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-};_bgaf :=args [0].AsNumber ();if _bgaf .Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0049\u0047N(\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020a\u0020n\u0075m\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if _bgaf .ValueNumber < 0{return MakeNumberResult (-1);}else if _bgaf .ValueNumber > 0{return MakeNumberResult (1);};return MakeNumberResult (0);};
+type FunctionComplex func (_ddacab Context ,_dbbfd Evaluator ,_gcff []Result )Result ;
+
+// Sln implements the Excel SLN function.
+func Sln (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u0053\u004c\u004e\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068r\u0065e\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074\u0073");};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u004c\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020c\u006f\u0073\u0074\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_ebab :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u004c\u004e \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061\u0067\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_efdee :=args [1].ValueNumber ;if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u004c\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020l\u0069\u0066\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_bdgd :=args [2].ValueNumber ;if _bdgd ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0053\u004c\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0069f\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u007a\u0065\u0072\u006f");
+};return MakeNumberResult ((_ebab -_efdee )/_bdgd );};var _ebgd string =string ([]byte {92});
+
+// Pricedisc implements the Excel PRICEDISC function.
+func Pricedisc (args []Result )Result {_cafg :=len (args );if _cafg !=4&&_cafg !=5{return MakeErrorResult ("\u0050\u0052\u0049\u0043\u0045D\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020f\u006f\u0075\u0072\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_afea ,_cgb ,_ccggb :=_abcb (args [0],args [1],"\u0050R\u0049\u0043\u0045\u0044\u0049\u0053C");if _ccggb .Type ==ResultTypeError {return _ccggb ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052\u0049C\u0045\u0044\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0064\u0069\u0073\u0063\u006f\u0075\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079p\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_ecdcb :=args [2].ValueNumber ;if _ecdcb <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0052\u0049C\u0045\u0044\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0064\u0069\u0073\u0063\u006f\u0075\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065 \u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050R\u0049\u0043E\u0044\u0049\u0053\u0043 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065mp\u0074\u0069\u006fn\u0020\u006ff\u0020\u0074\u0079\u0070\u0065\u0020n\u0075\u006db\u0065\u0072");
+};_adab :=args [3].ValueNumber ;if _adab <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0050R\u0049\u0043E\u0044\u0049\u0053\u0043 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065mp\u0074\u0069\u006fn\u0020\u0074o\u0020\u0062\u0065\u0020\u0070\u006fs\u0069\u0074i\u0076\u0065");
+};_bbcf :=0;if _cafg ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052I\u0043\u0045\u0044\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_bbcf =int (args [4].ValueNumber );if !_ccfg (_bbcf ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0066\u006f\u0072\u0020\u0050R\u0049\u0043E\u0044\u0049\u0053\u0043");
+};};_faddg ,_ccggb :=_fdbc (_afea ,_cgb ,_bbcf );if _ccggb .Type ==ResultTypeError {return _ccggb ;};return MakeNumberResult (_adab *(1-_ecdcb *_faddg ));};
+
+// Nominal implements the Excel NOMINAL function.
+func Nominal (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u004e\u004f\u004d\u0049\u004e\u0041\u004c\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074w\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("NO\u004d\u0049N\u0041\u004c\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006e\u006f\u006d\u0069\u006e\u0061\u006c\u0020\u0069\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062e\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072g\u0075m\u0065\u006et");
+};_gefdc :=args [0].ValueNumber ;if _gefdc <=0{return MakeErrorResultType (ErrorTypeNum ,"\u004e\u004fM\u0049\u004e\u0041\u004c\u0020r\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0065\u0066\u0066\u0065\u0063\u0074\u0020\u0069\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
+};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u004e\u004f\u004d\u0049\u004e\u0041\u004c\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u006f\u0066\u0020\u0063\u006f\u006d\u0070\u006f\u0075\u006e\u0064\u0069\u006e\u0067\u0020\u0070\u0065\u0072i\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062e\u0072\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074");
+};_fddb :=float64 (int (args [1].ValueNumber ));if _fddb < 1{return MakeErrorResultType (ErrorTypeNum ,"\u004e\u004f\u004d\u0049\u004e\u0041\u004c\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006eum\u0062e\u0072\u0020\u006f\u0066\u0020\u0063\u006f\u006d\u0070\u006f\u0075\u006ed\u0069\u006e\u0067\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065 \u0031\u0020\u006f\u0072\u0020\u006d\u006f\u0072\u0065");
+};return MakeNumberResult ((_d .Pow (_gefdc +1,1/_fddb )-1)*_fddb );};const _afab =_bcd .Millisecond *1000;
+
+// Log implements the Excel LOG function which returns the log of a number. By
+// default the result is base 10, however the second argument to the function
+// can specify a different base.
+func Log (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u004cO\u0047\u0028)\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074 o\u006e\u0065\u0020n\u0075\u006de\u0072\u0069\u0063\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
+};if len (args )> 2{return MakeErrorResult ("L\u004f\u0047\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u006d\u0061\u0078i\u006d\u0075\u006d\u0020\u006f\u0066\u0020\u0074\u0077\u006f a\u0072\u0067\u0075m\u0065n\u0074\u0073");
+};_agfbb :=args [0].AsNumber ();if _agfbb .Type !=ResultTypeNumber {return MakeErrorResult ("\u004cO\u0047\u0028)\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074 o\u006e\u0065\u0020n\u0075\u006de\u0072\u0069\u0063\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
+};_bddg :=10.0;if len (args )> 1{_gaac :=args [1].AsNumber ();if _gaac .Type !=ResultTypeNumber {return MakeErrorResult ("\u004cO\u0047\u0028)\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061rg\u0075\u006d\u0065n\u0074\u0020t\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0065r\u0069\u0063");
+};_bddg =args [1].ValueNumber ;};if _agfbb .ValueNumber ==0{return MakeErrorResult ("\u004cO\u0047\u0028)\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s\u0020\u0066\u0069\u0072\u0073\u0074\u0020\u0061\u0072gu\u006d\u0065\u006et\u0020\u0074o\u0020\u0062\u0065\u0020\u006e\u006fn\u002d\u007ae\u0072\u006f");
+};if _bddg ==0{return MakeErrorResult ("\u004cO\u0047\u0028)\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0073e\u0063\u006f\u006e\u0064\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062e\u0020\u006e\u006f\u006e\u002d\u007a\u0065\u0072\u006f");
+};return MakeNumberResult (_d .Log (_agfbb .ValueNumber )/_d .Log (_bddg ));};func (_eebbc *Lexer )lex (_ddacf _b .Reader ){_gbgdd ,_dbbd ,_adcf :=0,0,0;_bgfef :=-1;_faga ,_cgaagd ,_daea :=0,0,0;_ =_daea ;_dbcb :=1;_ =_dbcb ;_cdagc :=make ([]byte ,4096);
+_fefa :=false ;for !_fefa {_ecbc :=0;if _faga > 0{_ecbc =_dbbd -_faga ;};_dbbd =0;_egcbb ,_abfa :=_ddacf .Read (_cdagc [_ecbc :]);if _egcbb ==0||_abfa !=nil {_fefa =true ;};_adcf =_egcbb +_ecbc ;if _adcf < len (_cdagc ){_bgfef =_adcf ;};{_gbgdd =_acfgg ;
+_faga =0;_cgaagd =0;_daea =0;};{var _daba int ;var _effeg uint ;if _dbbd ==_adcf {goto _edcba ;};if _gbgdd ==0{goto _fagdef ;};_cgae :_daba =int (_eagac [_gbgdd ]);_effeg =uint (_bcdaa [_daba ]);_daba ++;for ;_effeg > 0;_effeg --{_daba ++;switch _bcdaa [_daba -1]{case 2:_faga =_dbbd ;
+};};switch _gbgdd {case 30:switch _cdagc [_dbbd ]{case 34:goto _gfcfa ;case 35:goto _dgbc ;case 36:goto _bceaa ;case 38:goto _abdc ;case 39:goto _gdeea ;case 40:goto _eade ;case 41:goto _bcgc ;case 42:goto _cgeeb ;case 43:goto _gcafe ;case 44:goto _fdadg ;
+case 45:goto _ebdcf ;case 47:goto _agcgf ;case 58:goto _gcaef ;case 59:goto _bgee ;case 60:goto _dega ;case 61:goto _bgdbbb ;case 62:goto _ffbcf ;case 63:goto _babbbb ;case 70:goto _baagc ;case 84:goto _gfabgf ;case 92:goto _aaef ;case 94:goto _gdbbc ;
+case 95:goto _aeaba ;case 123:goto _ffgfe ;case 125:goto _gaee ;};switch {case _cdagc [_dbbd ]< 65:switch {case _cdagc [_dbbd ]> 37:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _ebbbf ;};case _cdagc [_dbbd ]>=33:goto _babbbb ;};case _cdagc [_dbbd ]> 90:switch {case _cdagc [_dbbd ]> 93:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgac ;
+};case _cdagc [_dbbd ]>=91:goto _babbbb ;};default:goto _fafb ;};goto _gefde ;case 1:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 47:goto _dacfg ;case 123:goto _dacfg ;case 125:goto _dacfg ;};switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _dacfg ;
+};case _cdagc [_dbbd ]> 45:switch {case _cdagc [_dbbd ]> 63:if 91<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=94{goto _dacfg ;};case _cdagc [_dbbd ]>=58:goto _dacfg ;};default:goto _dacfg ;};goto _gefde ;case 0:goto _fagdef ;case 2:if _cdagc [_dbbd ]==34{goto _dcgbf ;
+};goto _gfcfa ;case 31:if _cdagc [_dbbd ]==34{goto _gfcfa ;};goto _cbea ;case 3:switch _cdagc [_dbbd ]{case 78:goto _dabb ;case 82:goto _cddae ;};goto _babbbb ;case 4:switch _cdagc [_dbbd ]{case 47:goto _fgdge ;case 85:goto _cegaf ;};goto _babbbb ;case 5:if _cdagc [_dbbd ]==65{goto _bbffa ;
+};goto _babbbb ;case 6:switch _cdagc [_dbbd ]{case 76:goto _fgcb ;case 77:goto _bddad ;};goto _babbbb ;case 7:if _cdagc [_dbbd ]==76{goto _bddad ;};goto _babbbb ;case 8:if _cdagc [_dbbd ]==33{goto _bbffa ;};goto _babbbb ;case 9:if _cdagc [_dbbd ]==69{goto _edcbb ;
+};goto _babbbb ;case 10:if _cdagc [_dbbd ]==70{goto _aebf ;};goto _babbbb ;case 11:if _cdagc [_dbbd ]==33{goto _bcecb ;};goto _babbbb ;case 12:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 47:goto _babbbb ;case 123:goto _babbbb ;case 125:goto _babbbb ;
+};switch {case _cdagc [_dbbd ]< 48:switch {case _cdagc [_dbbd ]> 35:if 37<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=45{goto _babbbb ;};case _cdagc [_dbbd ]>=34:goto _babbbb ;};case _cdagc [_dbbd ]> 57:switch {case _cdagc [_dbbd ]< 65:if 58<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=63{goto _babbbb ;
+};case _cdagc [_dbbd ]> 90:if 91<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=94{goto _babbbb ;};default:goto _cffd ;};default:goto _gdaa ;};goto _gefde ;case 13:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 47:goto _babbbb ;case 58:goto _gbbcg ;case 123:goto _babbbb ;
+case 125:goto _babbbb ;};switch {case _cdagc [_dbbd ]< 48:switch {case _cdagc [_dbbd ]> 35:if 37<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=45{goto _babbbb ;};case _cdagc [_dbbd ]>=34:goto _babbbb ;};case _cdagc [_dbbd ]> 57:switch {case _cdagc [_dbbd ]> 63:if 91<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=94{goto _babbbb ;
+};case _cdagc [_dbbd ]>=59:goto _babbbb ;};default:goto _gdaa ;};goto _gefde ;case 14:if _cdagc [_dbbd ]==36{goto _cdcd ;};if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _gaafec ;};goto _dacfg ;case 15:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _gaafec ;
+};goto _dacfg ;case 32:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _gaafec ;};goto _gcda ;case 16:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 36:goto _eebaa ;case 47:goto _babbbb ;case 58:goto _cedbc ;case 123:goto _babbbb ;case 125:goto _babbbb ;
+};switch {case _cdagc [_dbbd ]< 59:switch {case _cdagc [_dbbd ]> 45:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _ceegb ;};case _cdagc [_dbbd ]>=34:goto _babbbb ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]> 90:if 91<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=94{goto _babbbb ;
+};case _cdagc [_dbbd ]>=65:goto _cffd ;};default:goto _babbbb ;};goto _gefde ;case 17:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 47:goto _dacfg ;case 123:goto _dacfg ;case 125:goto _dacfg ;};switch {case _cdagc [_dbbd ]< 48:switch {case _cdagc [_dbbd ]> 35:if 37<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=45{goto _dacfg ;
+};case _cdagc [_dbbd ]>=34:goto _dacfg ;};case _cdagc [_dbbd ]> 57:switch {case _cdagc [_dbbd ]> 63:if 91<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=94{goto _dacfg ;};case _cdagc [_dbbd ]>=58:goto _dacfg ;};default:goto _ceegb ;};goto _gefde ;case 33:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;
+case 47:goto _abdcg ;case 123:goto _abdcg ;case 125:goto _abdcg ;};switch {case _cdagc [_dbbd ]< 48:switch {case _cdagc [_dbbd ]> 35:if 37<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=45{goto _abdcg ;};case _cdagc [_dbbd ]>=34:goto _abdcg ;};case _cdagc [_dbbd ]> 57:switch {case _cdagc [_dbbd ]> 63:if 91<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=94{goto _abdcg ;
+};case _cdagc [_dbbd ]>=58:goto _abdcg ;};default:goto _ceegb ;};goto _gefde ;case 18:if _cdagc [_dbbd ]==36{goto _ddgee ;};if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _daefa ;};goto _dacfg ;case 19:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _daefa ;
+};goto _dacfg ;case 34:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _daefa ;};goto _egddc ;case 20:switch _cdagc [_dbbd ]{case 39:goto _babbbb ;case 42:goto _babbbb ;case 47:goto _babbbb ;case 58:goto _babbbb ;case 63:goto _babbbb ;};if 91<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=93{goto _babbbb ;
+};goto _debgd ;case 21:switch _cdagc [_dbbd ]{case 39:goto _eaebb ;case 42:goto _babbbb ;case 47:goto _babbbb ;case 58:goto _babbbb ;case 63:goto _babbbb ;};if 91<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=93{goto _babbbb ;};goto _debgd ;case 22:if _cdagc [_dbbd ]==33{goto _gbffc ;
+};goto _babbbb ;case 35:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 46:goto _fddbb ;case 58:goto _gbbcg ;case 101:goto _cgfd ;case 123:goto _adcg ;case 125:goto _adcg ;};switch {case _cdagc [_dbbd ]< 48:switch {case _cdagc [_dbbd ]> 35:if 37<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=47{goto _adcg ;
+};case _cdagc [_dbbd ]>=34:goto _adcg ;};case _cdagc [_dbbd ]> 57:switch {case _cdagc [_dbbd ]> 63:if 91<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=94{goto _adcg ;};case _cdagc [_dbbd ]>=59:goto _adcg ;};default:goto _ebbbf ;};goto _gefde ;case 36:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;
+case 47:goto _adcg ;case 101:goto _cgfd ;case 123:goto _adcg ;case 125:goto _adcg ;};switch {case _cdagc [_dbbd ]< 48:switch {case _cdagc [_dbbd ]> 35:if 37<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=45{goto _adcg ;};case _cdagc [_dbbd ]>=34:goto _adcg ;};case _cdagc [_dbbd ]> 57:switch {case _cdagc [_dbbd ]> 63:if 91<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=94{goto _adcg ;
+};case _cdagc [_dbbd ]>=58:goto _adcg ;};default:goto _fddbb ;};goto _gefde ;case 23:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 47:goto _ggff ;case 123:goto _ggff ;case 125:goto _ggff ;};switch {case _cdagc [_dbbd ]< 48:switch {case _cdagc [_dbbd ]> 35:if 37<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=45{goto _ggff ;
+};case _cdagc [_dbbd ]>=34:goto _ggff ;};case _cdagc [_dbbd ]> 57:switch {case _cdagc [_dbbd ]> 63:if 91<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=94{goto _ggff ;};case _cdagc [_dbbd ]>=58:goto _ggff ;};default:goto _fafg ;};goto _gefde ;case 37:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;
+case 47:goto _adcg ;case 123:goto _adcg ;case 125:goto _adcg ;};switch {case _cdagc [_dbbd ]< 48:switch {case _cdagc [_dbbd ]> 35:if 37<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=45{goto _adcg ;};case _cdagc [_dbbd ]>=34:goto _adcg ;};case _cdagc [_dbbd ]> 57:switch {case _cdagc [_dbbd ]> 63:if 91<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=94{goto _adcg ;
+};case _cdagc [_dbbd ]>=58:goto _adcg ;};default:goto _fafg ;};goto _gefde ;case 38:switch _cdagc [_dbbd ]{case 61:goto _ddaca ;case 62:goto _dgdfe ;};goto _agfd ;case 39:if _cdagc [_dbbd ]==61{goto _eacee ;};goto _gdebe ;case 24:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;
+case 36:goto _eebaa ;case 40:goto _fafdc ;case 46:goto _eacgd ;case 58:goto _cedbc ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _babbbb ;case 125:goto _babbbb ;};switch {case _cdagc [_dbbd ]< 59:switch {case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _fggg ;
+};case _cdagc [_dbbd ]>=34:goto _babbbb ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _ebgf ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _babbbb ;
+};default:goto _babbbb ;};goto _gefde ;case 40:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 40:goto _fafdc ;case 46:goto _eacgd ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _gfgee ;case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _gfgee ;
+};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _eacgd ;};default:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _eacgd ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;
+};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;case 41:switch _cdagc [_dbbd ]{case 46:goto _afdefd ;case 92:goto _afdefd ;case 95:goto _afdefd ;};switch {case _cdagc [_dbbd ]< 65:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _afdefd ;};
+case _cdagc [_dbbd ]> 90:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _afdefd ;};default:goto _afdefd ;};goto _gfgee ;case 42:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 46:goto _bgagd ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _gfgee ;
+case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _gfgee ;};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _bgagd ;};default:goto _gfgee ;
+};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _bgagd ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;
+case 43:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 40:goto _fafdc ;case 46:goto _eacgd ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _abdcg ;case 125:goto _abdcg ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _abdcg ;
+};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _fggg ;};default:goto _abdcg ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _eacgd ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;
+};default:goto _abdcg ;};default:goto _abdcg ;};goto _gefde ;case 44:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 36:goto _eebaa ;case 40:goto _fafdc ;case 46:goto _eacgd ;case 58:goto _cedbc ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _dacfg ;
+case 125:goto _dacfg ;};switch {case _cdagc [_dbbd ]< 59:switch {case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _fggg ;};case _cdagc [_dbbd ]>=34:goto _dacfg ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _ebgf ;
+};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _dacfg ;};default:goto _dacfg ;};goto _gefde ;case 25:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 36:goto _eebaa ;case 40:goto _fafdc ;case 46:goto _eacgd ;
+case 58:goto _cedbc ;case 65:goto _gcecf ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _babbbb ;case 125:goto _babbbb ;};switch {case _cdagc [_dbbd ]< 59:switch {case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _fggg ;
+};case _cdagc [_dbbd ]>=34:goto _babbbb ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 66<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _ebgf ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _babbbb ;
+};default:goto _babbbb ;};goto _gefde ;case 45:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 36:goto _eebaa ;case 40:goto _fafdc ;case 46:goto _eacgd ;case 58:goto _cedbc ;case 76:goto _ebfb ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _gfgee ;
+case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 59:switch {case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _fggg ;};case _cdagc [_dbbd ]>=34:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _ebgf ;
+};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;case 46:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 36:goto _eebaa ;case 40:goto _fafdc ;case 46:goto _eacgd ;
+case 58:goto _cedbc ;case 83:goto _cbdb ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _gfgee ;case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 59:switch {case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _fggg ;
+};case _cdagc [_dbbd ]>=34:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _ebgf ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _gfgee ;
+};default:goto _gfgee ;};goto _gefde ;case 47:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 36:goto _eebaa ;case 40:goto _fafdc ;case 46:goto _eacgd ;case 58:goto _cedbc ;case 69:goto _gaafg ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _gfgee ;
+case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 59:switch {case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _fggg ;};case _cdagc [_dbbd ]>=34:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _ebgf ;
+};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;case 26:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 36:goto _eebaa ;case 40:goto _fafdc ;case 46:goto _eacgd ;
+case 58:goto _cedbc ;case 79:goto _fdeff ;case 82:goto _fgca ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _babbbb ;case 125:goto _babbbb ;};switch {case _cdagc [_dbbd ]< 59:switch {case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _fggg ;
+};case _cdagc [_dbbd ]>=34:goto _babbbb ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _ebgf ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _babbbb ;
+};default:goto _babbbb ;};goto _gefde ;case 48:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 36:goto _eebaa ;case 40:goto _fafdc ;case 46:goto _eacgd ;case 58:goto _cedbc ;case 68:goto _dbecb ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _gfgee ;
+case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 59:switch {case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _fggg ;};case _cdagc [_dbbd ]>=34:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _ebgf ;
+};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;case 49:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 36:goto _eebaa ;case 40:goto _fafdc ;case 46:goto _eacgd ;
+case 58:goto _cedbc ;case 79:goto _fgag ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _gfgee ;case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 59:switch {case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _fggg ;
+};case _cdagc [_dbbd ]>=34:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _ebgf ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _gfgee ;
+};default:goto _gfgee ;};goto _gefde ;case 50:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 36:goto _eebaa ;case 40:goto _fafdc ;case 46:goto _eacgd ;case 58:goto _cedbc ;case 85:goto _cbdb ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _gfgee ;
+case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 59:switch {case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _fggg ;};case _cdagc [_dbbd ]>=34:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _ebgf ;
+};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;case 27:switch _cdagc [_dbbd ]{case 46:goto _afdefd ;case 92:goto _afdefd ;case 95:goto _afdefd ;};switch {case _cdagc [_dbbd ]< 65:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _afdefd ;
+};case _cdagc [_dbbd ]> 90:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _afdefd ;};default:goto _afdefd ;};goto _babbbb ;case 28:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 46:goto _bgagd ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 120:goto _agbb ;
+case 123:goto _babbbb ;case 125:goto _babbbb ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _babbbb ;};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _bgagd ;
+};default:goto _babbbb ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _bgagd ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _babbbb ;};
+default:goto _babbbb ;};goto _gefde ;case 51:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 46:goto _bgagd ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 108:goto _gggde ;case 123:goto _gfgee ;case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _gfgee ;
+};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _bgagd ;};default:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _bgagd ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;
+};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;case 52:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 46:goto _bgagd ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 102:goto _fdfef ;case 110:goto _gbae ;case 123:goto _gfgee ;case 125:goto _gfgee ;
+};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _gfgee ;};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _bgagd ;};default:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _bgagd ;
+};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;case 53:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 46:goto _bgagd ;case 92:goto _afdefd ;case 95:goto _bgagd ;
+case 110:goto _addeg ;case 123:goto _gfgee ;case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _gfgee ;};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _bgagd ;
+};default:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _bgagd ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;};default:goto _gfgee ;};default:goto _gfgee ;
+};goto _gefde ;case 54:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 46:goto _fefg ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _gfgee ;case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _gfgee ;
+};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _bgagd ;};default:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _bgagd ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;
+};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;case 55:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 46:goto _bgagd ;case 92:goto _afdefd ;case 95:goto _agdf ;case 123:goto _gfgee ;case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _gfgee ;
+};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _bgagd ;};default:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _agdf ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;
+};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;case 56:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 40:goto _eege ;case 46:goto _agdf ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _gfgee ;case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _gfgee ;
+};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _agdf ;};default:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _agdf ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;
+};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;case 57:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 46:goto _bgagd ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 109:goto _ffcb ;case 123:goto _gfgee ;case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _gfgee ;
+};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _bgagd ;};default:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _bgagd ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;
+};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;case 58:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 46:goto _bcbdc ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _gfgee ;case 125:goto _gfgee ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _gfgee ;
+};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _bgagd ;};default:goto _gfgee ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _bgagd ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;
+};default:goto _gfgee ;};default:goto _gfgee ;};goto _gefde ;case 59:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 46:goto _bgagd ;case 92:goto _afdefd ;case 95:goto _fcef ;case 123:goto _dacfg ;case 125:goto _dacfg ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _dacfg ;
+};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _bgagd ;};default:goto _dacfg ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _fcef ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;
+};default:goto _dacfg ;};default:goto _dacfg ;};goto _gefde ;case 29:switch _cdagc [_dbbd ]{case 33:goto _dfdff ;case 46:goto _bgagd ;case 92:goto _afdefd ;case 95:goto _bgagd ;case 123:goto _babbbb ;case 125:goto _babbbb ;};switch {case _cdagc [_dbbd ]< 58:switch {case _cdagc [_dbbd ]< 37:if 34<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=35{goto _babbbb ;
+};case _cdagc [_dbbd ]> 47:if 48<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=57{goto _bgagd ;};default:goto _babbbb ;};case _cdagc [_dbbd ]> 63:switch {case _cdagc [_dbbd ]< 91:if 65<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=90{goto _bgagd ;};case _cdagc [_dbbd ]> 94:if 97<=_cdagc [_dbbd ]&&_cdagc [_dbbd ]<=122{goto _bgagd ;
+};default:goto _babbbb ;};default:goto _babbbb ;};goto _gefde ;};_babbbb :_gbgdd =0;goto _egcgb ;_gefde :_gbgdd =1;goto _egcgb ;_gfcfa :_gbgdd =2;goto _egcgb ;_dgbc :_gbgdd =3;goto _egcgb ;_dabb :_gbgdd =4;goto _egcgb ;_fgdge :_gbgdd =5;goto _egcgb ;_cegaf :_gbgdd =6;
+goto _egcgb ;_fgcb :_gbgdd =7;goto _egcgb ;_bddad :_gbgdd =8;goto _egcgb ;_cddae :_gbgdd =9;goto _egcgb ;_edcbb :_gbgdd =10;goto _egcgb ;_aebf :_gbgdd =11;goto _egcgb ;_bceaa :_gbgdd =12;goto _egcgb ;_gdaa :_gbgdd =13;goto _egcgb ;_gbbcg :_gbgdd =14;goto _egcgb ;
+_cdcd :_gbgdd =15;goto _egcgb ;_cffd :_gbgdd =16;goto _egcgb ;_eebaa :_gbgdd =17;goto _egcgb ;_cedbc :_gbgdd =18;goto _egcgb ;_ddgee :_gbgdd =19;goto _egcgb ;_gdeea :_gbgdd =20;goto _egcgb ;_debgd :_gbgdd =21;goto _egcgb ;_eaebb :_gbgdd =22;goto _egcgb ;
+_cgfd :_gbgdd =23;goto _egcgb ;_fafb :_gbgdd =24;goto _egcgb ;_baagc :_gbgdd =25;goto _egcgb ;_gfabgf :_gbgdd =26;goto _egcgb ;_aaef :_gbgdd =27;goto _egcgb ;_aeaba :_gbgdd =28;goto _egcgb ;_bgac :_gbgdd =29;goto _egcgb ;_dacfg :_gbgdd =30;goto _bdde ;
+_dfdff :_gbgdd =30;goto _afcbe ;_bbffa :_gbgdd =30;goto _acef ;_bcecb :_gbgdd =30;goto _dddbc ;_gbffc :_gbgdd =30;goto _gebbd ;_ggff :_gbgdd =30;goto _bccfb ;_fafdc :_gbgdd =30;goto _edbea ;_abdc :_gbgdd =30;goto _eadcd ;_eade :_gbgdd =30;goto _baddf ;
+_bcgc :_gbgdd =30;goto _dfcc ;_cgeeb :_gbgdd =30;goto _aefab ;_gcafe :_gbgdd =30;goto _aeeefe ;_fdadg :_gbgdd =30;goto _egbe ;_ebdcf :_gbgdd =30;goto _egggc ;_agcgf :_gbgdd =30;goto _cefd ;_gcaef :_gbgdd =30;goto _dcfe ;_bgee :_gbgdd =30;goto _gcfdg ;_bgdbbb :_gbgdd =30;
+goto _fcded ;_gdbbc :_gbgdd =30;goto _agfde ;_ffgfe :_gbgdd =30;goto _bcff ;_gaee :_gbgdd =30;goto _fada ;_cbea :_gbgdd =30;goto _gabaf ;_gcda :_gbgdd =30;goto _ffge ;_abdcg :_gbgdd =30;goto _ecfed ;_egddc :_gbgdd =30;goto _gadfe ;_adcg :_gbgdd =30;goto _bbga ;
+_agfd :_gbgdd =30;goto _dcffe ;_ddaca :_gbgdd =30;goto _fdcbaf ;_dgdfe :_gbgdd =30;goto _afbbc ;_gdebe :_gbgdd =30;goto _aggg ;_eacee :_gbgdd =30;goto _deee ;_gfgee :_gbgdd =30;goto _eecg ;_eege :_gbgdd =30;goto _fedda ;_dcgbf :_gbgdd =31;goto _gdbbg ;
+_gaafec :_gbgdd =32;goto _egcgb ;_ceegb :_gbgdd =33;goto _egdb ;_daefa :_gbgdd =34;goto _egcgb ;_ebbbf :_gbgdd =35;goto _bdedg ;_fddbb :_gbgdd =36;goto _bdedg ;_fafg :_gbgdd =37;goto _bdedg ;_dega :_gbgdd =38;goto _egcgb ;_ffbcf :_gbgdd =39;goto _egcgb ;
+_eacgd :_gbgdd =40;goto _gcgag ;_afdefd :_gbgdd =41;goto _egcgb ;_bgagd :_gbgdd =42;goto _gcgag ;_fggg :_gbgdd =43;goto _egdb ;_ebgf :_gbgdd =44;goto _gcgag ;_gaafg :_gbgdd =44;goto _gecfc ;_fgag :_gbgdd =44;goto _abfg ;_gcecf :_gbgdd =45;goto _gcgag ;
+_ebfb :_gbgdd =46;goto _gcgag ;_cbdb :_gbgdd =47;goto _gcgag ;_fdeff :_gbgdd =48;goto _gcgag ;_dbecb :_gbgdd =49;goto _gcgag ;_fgca :_gbgdd =50;goto _gcgag ;_agbb :_gbgdd =51;goto _gcgag ;_gggde :_gbgdd =52;goto _gcgag ;_fdfef :_gbgdd =53;goto _gcgag ;
+_addeg :_gbgdd =54;goto _gcgag ;_fefg :_gbgdd =55;goto _gcgag ;_agdf :_gbgdd =56;goto _gcgag ;_gbae :_gbgdd =57;goto _gcgag ;_ffcb :_gbgdd =58;goto _gcgag ;_bcbdc :_gbgdd =59;goto _gcgag ;_fcef :_gbgdd =59;goto _cfgd ;_acef :_daba =3;goto _bcgbb ;_dddbc :_daba =5;
+goto _bcgbb ;_afcbe :_daba =7;goto _bcgbb ;_gebbd :_daba =9;goto _bcgbb ;_edbea :_daba =11;goto _bcgbb ;_fedda :_daba =13;goto _bcgbb ;_eadcd :_daba =15;goto _bcgbb ;_bcff :_daba =17;goto _bcgbb ;_fada :_daba =19;goto _bcgbb ;_baddf :_daba =21;goto _bcgbb ;
+_dfcc :_daba =23;goto _bcgbb ;_aeeefe :_daba =25;goto _bcgbb ;_egggc :_daba =27;goto _bcgbb ;_aefab :_daba =29;goto _bcgbb ;_cefd :_daba =31;goto _bcgbb ;_agfde :_daba =33;goto _bcgbb ;_fcded :_daba =35;goto _bcgbb ;_fdcbaf :_daba =37;goto _bcgbb ;_deee :_daba =39;
+goto _bcgbb ;_afbbc :_daba =41;goto _bcgbb ;_dcfe :_daba =43;goto _bcgbb ;_gcfdg :_daba =45;goto _bcgbb ;_egbe :_daba =47;goto _bcgbb ;_bbga :_daba =49;goto _bcgbb ;_ecfed :_daba =51;goto _bcgbb ;_ffge :_daba =53;goto _bcgbb ;_gadfe :_daba =55;goto _bcgbb ;
+_eecg :_daba =57;goto _bcgbb ;_gabaf :_daba =59;goto _bcgbb ;_dcffe :_daba =61;goto _bcgbb ;_aggg :_daba =63;goto _bcgbb ;_bccfb :_daba =65;goto _bcgbb ;_bdde :_daba =67;goto _bcgbb ;_gecfc :_daba =72;goto _bcgbb ;_bdedg :_daba =75;goto _bcgbb ;_egdb :_daba =78;
+goto _bcgbb ;_abfg :_daba =81;goto _bcgbb ;_cfgd :_daba =84;goto _bcgbb ;_gcgag :_daba =87;goto _bcgbb ;_gdbbg :_daba =90;goto _bcgbb ;_bcgbb :_effeg =uint (_bcdaa [_daba ]);_daba ++;for ;_effeg > 0;_effeg --{_daba ++;switch _bcdaa [_daba -1]{case 3:_cgaagd =_dbbd +1;
+case 4:_daea =1;case 5:_daea =2;case 6:_daea =3;case 7:_daea =4;case 8:_daea =11;case 9:_daea =14;case 10:_daea =15;case 11:_cgaagd =_dbbd +1;{_eebbc .emit (_gdac ,_cdagc [_faga :_cgaagd ]);};case 12:_cgaagd =_dbbd +1;{_eebbc .emit (_acbc ,_cdagc [_faga :_cgaagd ]);
+};case 13:_cgaagd =_dbbd +1;{_eebbc .emit (_gdba ,_cdagc [_faga :_cgaagd -1]);};case 14:_cgaagd =_dbbd +1;{_eebbc .emit (_gdba ,_cdagc [_faga +1:_cgaagd -2]);};case 15:_cgaagd =_dbbd +1;{_eebbc .emit (_daffg ,_cdagc [_faga :_cgaagd -1]);};case 16:_cgaagd =_dbbd +1;
+{_eebbc .emit (_daffg ,_cdagc [_faga :_cgaagd -1]);};case 17:_cgaagd =_dbbd +1;{_eebbc .emit (_agefc ,_cdagc [_faga :_cgaagd ]);};case 18:_cgaagd =_dbbd +1;{_eebbc .emit (_aeecc ,_cdagc [_faga :_cgaagd ]);};case 19:_cgaagd =_dbbd +1;{_eebbc .emit (_caafe ,_cdagc [_faga :_cgaagd ]);
+};case 20:_cgaagd =_dbbd +1;{_eebbc .emit (_fgaca ,_cdagc [_faga :_cgaagd ]);};case 21:_cgaagd =_dbbd +1;{_eebbc .emit (_egafg ,_cdagc [_faga :_cgaagd ]);};case 22:_cgaagd =_dbbd +1;{_eebbc .emit (_eacbc ,_cdagc [_faga :_cgaagd ]);};case 23:_cgaagd =_dbbd +1;
+{_eebbc .emit (_ddae ,_cdagc [_faga :_cgaagd ]);};case 24:_cgaagd =_dbbd +1;{_eebbc .emit (_cefbd ,_cdagc [_faga :_cgaagd ]);};case 25:_cgaagd =_dbbd +1;{_eebbc .emit (_fcbcg ,_cdagc [_faga :_cgaagd ]);};case 26:_cgaagd =_dbbd +1;{_eebbc .emit (_feaf ,_cdagc [_faga :_cgaagd ]);
+};case 27:_cgaagd =_dbbd +1;{_eebbc .emit (_cbadf ,_cdagc [_faga :_cgaagd ]);};case 28:_cgaagd =_dbbd +1;{_eebbc .emit (_dbdbb ,_cdagc [_faga :_cgaagd ]);};case 29:_cgaagd =_dbbd +1;{_eebbc .emit (_abga ,_cdagc [_faga :_cgaagd ]);};case 30:_cgaagd =_dbbd +1;
+{_eebbc .emit (_agee ,_cdagc [_faga :_cgaagd ]);};case 31:_cgaagd =_dbbd +1;{_eebbc .emit (_cdcc ,_cdagc [_faga :_cgaagd ]);};case 32:_cgaagd =_dbbd +1;{_eebbc .emit (_dgbed ,_cdagc [_faga :_cgaagd ]);};case 33:_cgaagd =_dbbd +1;{_eebbc .emit (_edae ,_cdagc [_faga :_cgaagd ]);
+};case 34:_cgaagd =_dbbd ;_dbbd --;{_eebbc .emit (_cagcb ,_cdagc [_faga :_cgaagd ]);};case 35:_cgaagd =_dbbd ;_dbbd --;{_eebbc .emit (_fdadc ,_cdagc [_faga :_cgaagd ]);};case 36:_cgaagd =_dbbd ;_dbbd --;{_eebbc .emit (_dgff ,_cdagc [_faga :_cgaagd ]);};
+case 37:_cgaagd =_dbbd ;_dbbd --;{_eebbc .emit (_cfda ,_cdagc [_faga :_cgaagd ]);};case 38:_cgaagd =_dbbd ;_dbbd --;{_eebbc .emit (_dgfea ,_cdagc [_faga :_cgaagd ]);};case 39:_cgaagd =_dbbd ;_dbbd --;{_eebbc .emit (_fbafc ,_cdagc [_faga +1:_cgaagd -1]);
+};case 40:_cgaagd =_dbbd ;_dbbd --;{_eebbc .emit (_aaada ,_cdagc [_faga :_cgaagd ]);};case 41:_cgaagd =_dbbd ;_dbbd --;{_eebbc .emit (_daefb ,_cdagc [_faga :_cgaagd ]);};case 42:_dbbd =(_cgaagd )-1;{_eebbc .emit (_cagcb ,_cdagc [_faga :_cgaagd ]);};case 43:switch _daea {case 0:{_gbgdd =0;
+goto _egcgb ;};case 1:{_dbbd =(_cgaagd )-1;_eebbc .emit (_bcdce ,_cdagc [_faga :_cgaagd ]);};case 2:{_dbbd =(_cgaagd )-1;_eebbc .emit (_cagcb ,_cdagc [_faga :_cgaagd ]);};case 3:{_dbbd =(_cgaagd )-1;_eebbc .emit (_fdadc ,_cdagc [_faga :_cgaagd ]);};case 4:{_dbbd =(_cgaagd )-1;
+_eebbc .emit (_ffgba ,_cdagc [_faga :_cgaagd ]);};case 11:{_dbbd =(_cgaagd )-1;_eebbc .emit (_dbccd ,_cdagc [_faga :_cgaagd ]);};case 14:{_dbbd =(_cgaagd )-1;_eebbc .emit (_dgfea ,_cdagc [_faga :_cgaagd ]);};case 15:{_dbbd =(_cgaagd )-1;_eebbc .emit (_fbafc ,_cdagc [_faga +1:_cgaagd -1]);
+};};};};goto _egcgb ;_egcgb :_daba =int (_gabag [_gbgdd ]);_effeg =uint (_bcdaa [_daba ]);_daba ++;for ;_effeg > 0;_effeg --{_daba ++;switch _bcdaa [_daba -1]{case 0:_faga =0;case 1:_daea =0;};};if _gbgdd ==0{goto _fagdef ;};if _dbbd ++;_dbbd !=_adcf {goto _cgae ;
+};_edcba :{};if _dbbd ==_bgfef {switch _gbgdd {case 1:goto _dacfg ;case 2:goto _dacfg ;case 31:goto _cbea ;case 14:goto _dacfg ;case 15:goto _dacfg ;case 32:goto _gcda ;case 17:goto _dacfg ;case 33:goto _abdcg ;case 18:goto _dacfg ;case 19:goto _dacfg ;
+case 34:goto _egddc ;case 35:goto _adcg ;case 36:goto _adcg ;case 23:goto _ggff ;case 37:goto _adcg ;case 38:goto _agfd ;case 39:goto _gdebe ;case 40:goto _gfgee ;case 41:goto _gfgee ;case 42:goto _gfgee ;case 43:goto _abdcg ;case 44:goto _dacfg ;case 45:goto _gfgee ;
+case 46:goto _gfgee ;case 47:goto _gfgee ;case 48:goto _gfgee ;case 49:goto _gfgee ;case 50:goto _gfgee ;case 51:goto _gfgee ;case 52:goto _gfgee ;case 53:goto _gfgee ;case 54:goto _gfgee ;case 55:goto _gfgee ;case 56:goto _gfgee ;case 57:goto _gfgee ;
+case 58:goto _gfgee ;case 59:goto _dacfg ;};};_fagdef :{};};if _faga > 0{copy (_cdagc [0:],_cdagc [_faga :]);};};_ =_bgfef ;if _gbgdd ==_eaceb {_eebbc .emit (_dcff ,nil );};close (_eebbc ._cafe );};const _abga =57373;func _cgg (_cf BinOpType ,_ag [][]Result ,_bgb Result )Result {_de :=[][]Result {};
+for _cfa :=range _ag {_fga :=_ggc (_cf ,_ag [_cfa ],_bgb );if _fga .Type ==ResultTypeError {return _fga ;};_de =append (_de ,_fga .ValueList );};return MakeArrayResult (_de );};const _beb ="\u0028\u0020\u0028"+_dbg +"\u007c"+_cfgg +"\u007c"+_ebee +"\u007c"+_bfae +"\u0029\u0029\u003f\u0024";
 
-// Oddlyield implements the Excel ODDLYIELD function.
-func Oddlyield (args []Result )Result {if len (args )!=7&&len (args )!=8{return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0059\u0049\u0045L\u0044\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u0073\u0065\u0076\u0065\u006e\u0020\u006f\u0072\u0020\u0065\u0069\u0067\u0068\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_dbda ,_fafgg ,_cdaa :=_fbae (args [0],args [1],"\u004fD\u0044\u004c\u0059\u0049\u0045\u004cD");if _cdaa .Type ==ResultTypeError {return _cdaa ;};_bfadb ,_cdaa :=_cdde (args [2],"\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065","\u004fD\u0044\u004c\u0050\u0052\u0049\u0043E");
-if _cdaa .Type ==ResultTypeError {return _cdaa ;};if _bfadb >=_dbda {return MakeErrorResultType (ErrorTypeNum ,"\u004c\u0061\u0073\u0074\u0020i\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0020\u0064\u0061\u0074\u0065\u0020s\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u0062\u0065\u0066\u006f\u0072\u0065\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074e");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0059\u0049\u0045\u004c\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020o\u0066\u0020\u0074\u0079\u0070e\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_bgbb :=args [3].ValueNumber ;if _bgbb < 0{return MakeErrorResultType (ErrorTypeNum ,"R\u0061\u0074\u0065\u0020\u0073\u0068o\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u006e\u006fn\u0020\u006e\u0065g\u0061t\u0069\u0076\u0065");};if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("O\u0044\u0044\u004c\u0059\u0049\u0045\u004c\u0044\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073 p\u0072\u0065\u0073\u0065n\u0074\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u006ff \u0074\u0079p\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_ffac :=args [4].ValueNumber ;if _ffac <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0072\u0065\u0073\u0065\u006e\u0074\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0073h\u006fu\u006c\u0064\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
-};if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("\u004fD\u0044\u004cY\u0049\u0045\u004c\u0044 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065mp\u0074\u0069\u006fn\u0020\u006ff\u0020\u0074\u0079\u0070\u0065\u0020n\u0075\u006db\u0065\u0072");
-};_dgef :=args [5].ValueNumber ;if _dgef < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0059\u0069\u0065\u006cd\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065 \u006eo\u006e\u0020\u006e\u0065\u0067\u0061\u0074i\u0076\u0065");};if args [6].Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0059\u0049\u0045L\u0044\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u0066\u0072\u0065\u0071\u0075\u0065\u006e\u0063\u0079\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_cdgc :=float64 (int (args [6].ValueNumber ));if !_bcf (_cdgc ){return MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0066\u0072e\u0071u\u0065n\u0063\u0065\u0020\u0076\u0061\u006c\u0075e");};_acgcb :=0;if len (args )==8&&args [7].Type !=ResultTypeEmpty {if args [7].Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0059\u0049\u0045\u004c\u0044\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0062a\u0073\u0069\u0073\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_acgcb =int (args [7].ValueNumber );if !_feeb (_acgcb ){return MakeErrorResultType (ErrorTypeNum ,"I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0062\u0061\u0073\u0069s\u0020\u0076\u0061\u006c\u0075\u0065\u0020f\u006f\u0072\u0020\u004f\u0044\u0044\u004c\u0059\u0049\u0045L\u0044");
-};};_fggaa ,_cdaa :=_gad (_bfadb ,_fafgg ,_acgcb );if _cdaa .Type ==ResultTypeError {return _cdaa ;};_fggaa *=_cdgc ;_dbdd ,_cdaa :=_gad (_dbda ,_fafgg ,_acgcb );if _cdaa .Type ==ResultTypeError {return _cdaa ;};_dbdd *=_cdgc ;_eaba ,_cdaa :=_gad (_bfadb ,_dbda ,_acgcb );
-if _cdaa .Type ==ResultTypeError {return _cdaa ;};_eaba *=_cdgc ;_dbafa :=_dgef +_fggaa *100*_bgbb /_cdgc ;_dbafa /=_ffac +_eaba *100*_bgbb /_cdgc ;_dbafa --;_dbafa *=_cdgc /_dbdd ;return MakeNumberResult (_dbafa );};
-
-// Reference returns a string reference value to a vertical range.
-func (_fede VerticalRange )Reference (ctx Context ,ev Evaluator )Reference {return Reference {Type :ReferenceTypeVerticalRange ,Value :_fede .verticalRangeReference ()};};
-
-// Eval evaluates and returns an expression with prefix.
-func (_gbfce PrefixExpr )Eval (ctx Context ,ev Evaluator )Result {_fbaff :=_gbfce ._begcd .Reference (ctx ,ev );switch _fbaff .Type {case ReferenceTypeSheet :if _fegcda (_fbaff ,ctx ){return MakeErrorResultType (ErrorTypeName ,_b .Sprintf ("\u0053h\u0065e\u0074\u0020\u0025\u0073\u0020n\u006f\u0074 \u0066\u006f\u0075\u006e\u0064",_fbaff .Value ));
-};_ggfb :=ctx .Sheet (_fbaff .Value );return _gbfce ._ddeba .Eval (_ggfb ,ev );default:return MakeErrorResult (_b .Sprintf ("\u006e\u006f\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0020\u0066\u006f\u0072\u0020r\u0065f\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_fbaff .Type ));
-};};func _ded (_bbdeg ,_gabb float64 ,_ddagb ,_beda int )float64 {_dde :=_dad (_bbdeg );_dcef :=_dad (_gabb );if _beda ==1{_cbfe :=_gggg (_dde ,_dcef ,_ddagb ,1);_eaea :=_cbfe .AddDate (0,12/_ddagb ,0);return _dac (_cbfe ,_eaea ,_beda );};return float64 (_gdc (0,_beda ))/float64 (_ddagb );
-};func _aecgg (_gebc []Result )Result {_ggcd :=_gebc [0].ValueList ;_gaged :=len (_ggcd );switch len (_gebc ){case 1:_adge :=[]Result {};for _ ,_ccfa :=range _ggcd {_adge =append (_adge ,MakeBoolResult (_ccfa .ValueNumber !=0));};return MakeListResult (_adge );
-case 2:_ceeff :=_gebc [1];switch _ceeff .Type {case ResultTypeNumber ,ResultTypeString ,ResultTypeEmpty :_cafb :=[]Result {};for _ ,_aggc :=range _ggcd {var _dgaf Result ;if _aggc .ValueNumber ==0{_dgaf =MakeBoolResult (false );}else {_dgaf =_ceeff ;};
-_cafb =append (_cafb ,_dgaf );};return MakeListResult (_cafb );case ResultTypeList :_efda :=_ceb (_ceeff ,_gaged );_gbdee :=[]Result {};for _dcgfc ,_cgfg :=range _ggcd {var _degd Result ;if _cgfg .ValueNumber ==0{_degd =MakeBoolResult (false );}else {_degd =_efda [_dcgfc ];
-};_gbdee =append (_gbdee ,_degd );};return MakeListResult (_gbdee );case ResultTypeArray :_bgae :=_gabaf (_ceeff ,len (_ceeff .ValueArray ),_gaged );_ggda :=[][]Result {};for _ ,_ebde :=range _bgae {_aaddga :=[]Result {};for _ddcf ,_cdaab :=range _ggcd {var _gece Result ;
-if _cdaab .ValueNumber ==0{_gece =MakeBoolResult (false );}else {_gece =_ebde [_ddcf ];};_aaddga =append (_aaddga ,_gece );};_ggda =append (_ggda ,_aaddga );};return MakeArrayResult (_ggda );};case 3:_bdbgc :=_gebc [1];_bdbd :=_gebc [2];_fdac :=_cgdf (_bdbgc );
-_ebgbfe :=_cgdf (_bdbd );if _fdac &&_ebgbfe {_dccc :=[]Result {};for _ ,_fcae :=range _ggcd {var _gfgd Result ;if _fcae .ValueNumber ==0{_gfgd =_bdbd ;}else {_gfgd =_bdbgc ;};_dccc =append (_dccc ,_gfgd );};return MakeListResult (_dccc );};if _bdbgc .Type !=ResultTypeArray &&_bdbd .Type !=ResultTypeArray {_adca :=_ceb (_bdbgc ,_gaged );
-_eagc :=_ceb (_bdbd ,_gaged );_dgbg :=[]Result {};for _fcccb ,_bfeec :=range _ggcd {var _geabc Result ;if _bfeec .ValueNumber ==0{_geabc =_eagc [_fcccb ];}else {_geabc =_adca [_fcccb ];};_dgbg =append (_dgbg ,_geabc );};return MakeListResult (_dgbg );};
-_acgf ,_bgdb :=len (_bdbgc .ValueArray ),len (_bdbd .ValueArray );_bbga ,_feccb :=_acgf ,_bgdb ;if _bgdb > _bbga {_bbga ,_feccb =_feccb ,_bbga ;};_cdcgf :=_gabaf (_bdbgc ,_bbga ,_gaged );_eded :=_gabaf (_bdbd ,_bbga ,_gaged );_ffegf :=[][]Result {};for _fgeag :=0;
-_fgeag < _bbga ;_fgeag ++{_becfa :=[]Result {};for _dgcb ,_fddb :=range _ggcd {var _dfbe Result ;if _fddb .ValueNumber ==0{if _fgeag < _bgdb {_dfbe =_eded [_fgeag ][_dgcb ];}else {_dfbe =MakeErrorResultType (ErrorTypeNA ,"");};}else {if _fgeag < _acgf {_dfbe =_cdcgf [_fgeag ][_dgcb ];
-}else {_dfbe =MakeErrorResultType (ErrorTypeNA ,"");};};_becfa =append (_becfa ,_dfbe );};_ffegf =append (_ffegf ,_becfa );};return MakeArrayResult (_ffegf );};return MakeErrorResult ("");};
-
-// False is an implementation of the Excel FALSE() function. It takes no
-// arguments.
-func False (args []Result )Result {if len (args )!=0{return MakeErrorResult ("\u0046A\u004c\u0053\u0045\u0020\u0074\u0061\u006b\u0065\u0073\u0020\u006eo\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");};return MakeBoolResult (false );};const _egc ="\u005e\u0028\u0028"+_bff +"\u007c"+_caa +"\u007c"+_egfb +"\u007c"+_fcfb +"\u0029\u0020\u0029\u003f";
-const _egfb ="\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029\u002d\u0028\u0028\u005b\u0030-\u0039]\u0029\u002b\u0029\u002d\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029";
-
-// ISEVEN is an implementation of the Excel ISEVEN() function.
-func IsEven (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u0045VE\u004e\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070t\u0073 \u0061 \u0073i\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0053\u0045\u0056\u0045\u004e \u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u006e\u0075\u006de\u0072\u0069\u0063\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");};
-_dded :=int (args [0].ValueNumber );return MakeBoolResult (_dded ==_dded /2*2);};
-
-// DateValue is an implementation of the Excel DATEVALUE() function.
-func DateValue (args []Result )Result {if len (args )!=1||args [0].Type !=ResultTypeString {return MakeErrorResult ("\u0044A\u0054\u0045V\u0041\u004c\u0055\u0045 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069ng\u006c\u0065\u0020s\u0074\u0072i\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065n\u0074\u0073");
-};_fba :=_bcd .ToLower (args [0].ValueString );if !_gfd (_fba ){_ ,_ ,_ ,_ ,_eee ,_dfb :=_ddcb (_fba );if _dfb .Type ==ResultTypeError {_dfb .ErrorMessage ="\u0049\u006e\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020f\u006f\u0072\u0020\u0044\u0041\u0054\u0045V\u0041\u004c\u0055\u0045";
-return _dfb ;};if _eee {return MakeNumberResult (0);};};_ddfc ,_fdc ,_gbb ,_ ,_fag :=_eea (_fba );if _fag .Type ==ResultTypeError {return _fag ;};return MakeNumberResult (_ee (_ddfc ,_fdc ,_gbb ));};
-
-// GetLocked returns FALSE for the invalid reference context.
-func (_fgbb *ivr )GetLocked (cellRef string )bool {return false };
-
-// FactDouble is an implementation of the excel FACTDOUBLE function which
-// returns the double factorial of a positive numeric input.
-func FactDouble (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0046\u0041C\u0054\u0044\u004f\u0055\u0042\u004c\u0045\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_fefead :=args [0].AsNumber ();if _fefead .Type !=ResultTypeNumber {return MakeErrorResult ("\u0046\u0041C\u0054\u0044\u004f\u0055\u0042\u004c\u0045\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if _fefead .ValueNumber < 0{return MakeErrorResult ("\u0046A\u0043\u0054D\u004f\u0055\u0042\u004cE\u0028\u0029\u0020a\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u006f\u006ely\u0020\u0070\u006fs\u0069\u0074i\u0076\u0065\u0020\u0061\u0072\u0067u\u006d\u0065n\u0074\u0073");
-};_bbec :=float64 (1);_cgefc :=_d .Trunc (_fefead .ValueNumber );for _bcfee :=_cgefc ;_bcfee > 1;_bcfee -=2{_bbec *=_bcfee ;};return MakeNumberResult (_bbec );};
-
-// Min is an implementation of the Excel MIN() function.
-func Min (args []Result )Result {return _fbaedd (args ,false )};var _agcgb =[...]int {0,1,1,2,4,1,1,1,1,2,2,1,1,1,1,3,1,3,1,3,1,3,1,2,1,1,1,3,4,1,1,1,2,2,3,3,3,3,3,3,3,3,3,3,3,3,1,2,3,1,3,1,1,0};
-
-// Eval evaluates and returns the result of a formula.
-func (_bgd *defEval )Eval (ctx Context ,formula string )Result {_dgd :=ParseString (formula );_deec :=make (chan Result );go func (){if _dgd ==nil {_deec <-MakeErrorResult (_b .Sprintf ("\u0075\u006e\u0061\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0070a\u0072\u0073\u0065\u0020\u0066\u006f\u0072\u006d\u0075\u006ca\u0020\u0025\u0073",formula ));
-}else {_bgd .checkLastEvalIsRef (ctx ,_dgd );_deec <-_dgd .Eval (ctx ,_bgd );};}();select{case _fgd :=<-_deec :return _fgd ;case <-_g .After (_gff ):_gd .Log .Debug ("\u0055\u006e\u0069\u004ff\u0066\u0069\u0063\u0065\u0020\u0065\u0076\u0061\u006c\u0075a\u0074i\u006f\u006e\u0020\u0074\u0069\u006d\u0065o\u0075\u0074");
-return MakeNumberResult (0);};};func init (){RegisterFunction ("\u0043\u0048\u0041\u0052",Char );RegisterFunction ("\u0043\u004c\u0045A\u004e",Clean );RegisterFunction ("\u0043\u004f\u0044\u0045",Code );RegisterFunction ("C\u004f\u004e\u0043\u0041\u0054\u0045\u004e\u0041\u0054\u0045",Concat );
-RegisterFunction ("\u0043\u004f\u004e\u0043\u0041\u0054",Concat );RegisterFunction ("\u005f\u0078\u006cf\u006e\u002e\u0043\u004f\u004e\u0043\u0041\u0054",Concat );RegisterFunction ("\u0045\u0058\u0041C\u0054",Exact );RegisterFunction ("\u0046\u0049\u004e\u0044",Find );
-RegisterFunctionComplex ("\u0046\u0049\u004eD\u0042",Findb );RegisterFunction ("\u004c\u0045\u0046\u0054",Left );RegisterFunction ("\u004c\u0045\u0046T\u0042",Left );RegisterFunction ("\u004c\u0045\u004e",Len );RegisterFunction ("\u004c\u0045\u004e\u0042",Len );
-RegisterFunction ("\u004c\u004f\u0057E\u0052",Lower );RegisterFunction ("\u004d\u0049\u0044",Mid );RegisterFunction ("\u0050\u0052\u004f\u0050\u0045\u0052",Proper );RegisterFunction ("\u0052E\u0050\u004c\u0041\u0043\u0045",Replace );RegisterFunction ("\u0052\u0045\u0050\u0054",Rept );
-RegisterFunction ("\u0052\u0049\u0047H\u0054",Right );RegisterFunction ("\u0052\u0049\u0047\u0048\u0054\u0042",Right );RegisterFunction ("\u0053\u0045\u0041\u0052\u0043\u0048",Search );RegisterFunctionComplex ("\u0053E\u0041\u0052\u0043\u0048\u0042",Searchb );
-RegisterFunction ("\u0053\u0055\u0042\u0053\u0054\u0049\u0054\u0055\u0054\u0045",Substitute );RegisterFunction ("\u0054",T );RegisterFunction ("\u0054\u0045\u0058\u0054",Text );RegisterFunction ("\u0054\u0045\u0058\u0054\u004a\u004f\u0049\u004e",TextJoin );
-RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0054\u0045\u0058T\u004a\u004f\u0049\u004e",TextJoin );RegisterFunction ("\u0054\u0052\u0049\u004d",Trim );RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0055\u004e\u0049\u0043\u0048\u0041\u0052",Char );
-RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0055\u004e\u0049\u0043\u004f\u0044\u0045",Unicode );RegisterFunction ("\u0055\u0050\u0050E\u0052",Upper );RegisterFunction ("\u0056\u0041\u004cU\u0045",Value );};
-
-// Update updates the FunctionCall references after removing a row/column.
-func (_bgcad FunctionCall )Update (q *_a .UpdateQuery )Expression {_facga :=[]Expression {};for _ ,_gcbdd :=range _bgcad ._ebga {_dfebb :=_gcbdd .Update (q );_facga =append (_facga ,_dfebb );};return FunctionCall {_ffgb :_bgcad ._ffgb ,_ebga :_facga };
-};func _bfc (_beac []Result ,_gdbg string )(float64 ,float64 ,Result ){if len (_beac )!=2{return 0,0,MakeErrorResult (_gdbg +"\u0020\u0072\u0065qu\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if _beac [0].Type !=ResultTypeNumber {return 0,0,MakeErrorResult (_gdbg +"\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0066\u0072\u0061\u0063\u0074\u0069\u006f\u006e\u0061\u006c\u0020\u0064\u006f\u006c\u006c\u0061\u0072 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
-};_ceegd :=_beac [0].ValueNumber ;if _beac [1].Type !=ResultTypeNumber {return 0,0,MakeErrorResult (_gdbg +" \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0072\u0061\u0063\u0074\u0069\u006f\u006e\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_efa :=float64 (int (_beac [1].ValueNumber ));if _efa < 0{return 0,0,MakeErrorResultType (ErrorTypeNum ,_gdbg +"\u0020r\u0065\u0071u\u0069\u0072\u0065\u0073 \u0066\u0072\u0061c\u0074\u0069\u006f\u006e\u0020\u0074\u006f\u0020\u0062e \u006e\u006f\u006e \u006e\u0065g\u0061\u0074\u0069\u0076\u0065\u0020n\u0075\u006db\u0065\u0072");
-};return _ceegd ,_efa ,_fca ;};
-
-// Pmt implements the Excel PMT function.
-func Pmt (args []Result )Result {_beeb :=len (args );if _beeb < 3||_beeb > 5{return MakeErrorResult ("\u0050\u004dT\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u006eu\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u006f\u0066\u0020\u0033\u0020\u0061\u006e\u0064\u0020\u0035");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020r\u0061\u0074\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_becg :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u004dT\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u006eu\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_bdgf :=args [1].ValueNumber ;if _bdgf ==0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u004d\u0054\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006f\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u0074\u0020\u0065\u0071\u0075\u0061\u006c\u0020\u0074\u006f\u00200");
-};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073 p\u0072\u0065\u0073\u0065\u006e\u0074 \u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-};_ddad :=args [2].ValueNumber ;_fbfc :=0.0;if _beeb >=4&&args [3].Type !=ResultTypeEmpty {if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("P\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0066\u0075\u0074\u0075\u0072e \u0076\u0061\u006c\u0075e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_fbfc =args [3].ValueNumber ;};_fbac :=0.0;if _beeb ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020t\u0079\u0070\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_fbac =args [4].ValueNumber ;if _fbac !=0{_fbac =1;};};var _aeba float64 ;if _becg ==0{_aeba =(_ddad +_fbfc )/_bdgf ;}else {_feed :=_d .Pow (1+_becg ,_bdgf );if _fbac ==1{_aeba =(_fbfc *_becg /(_feed -1)+_ddad *_becg /(1-1/_feed ))/(1+_becg );}else {_aeba =_fbfc *_becg /(_feed -1)+_ddad *_becg /(1-1/_feed );
-};};return MakeNumberResult (-_aeba );};const (ErrorTypeValue ErrorType =iota ;ErrorTypeNull ;ErrorTypeRef ;ErrorTypeName ;ErrorTypeNum ;ErrorTypeSpill ;ErrorTypeNA ;ErrorTypeDivideByZero ;);func (_egdcd *Lexer )lex (_bcdc _bc .Reader ){_gefa ,_dgff ,_gfgba :=0,0,0;
-_bfgcb :=-1;_fdbf ,_ebca ,_edbd :=0,0,0;_ =_edbd ;_cdceb :=1;_ =_cdceb ;_abdg :=make ([]byte ,4096);_fgcda :=false ;for !_fgcda {_bdcgg :=0;if _fdbf > 0{_bdcgg =_dgff -_fdbf ;};_dgff =0;_dced ,_fbaf :=_bcdc .Read (_abdg [_bdcgg :]);if _dced ==0||_fbaf !=nil {_fgcda =true ;
-};_gfgba =_dced +_bdcgg ;if _gfgba < len (_abdg ){_bfgcb =_gfgba ;};{_gefa =_dadg ;_fdbf =0;_ebca =0;_edbd =0;};{var _afecd int ;var _ggbbf uint ;if _dgff ==_gfgba {goto _gfed ;};if _gefa ==0{goto _abdb ;};_ebcg :_afecd =int (_fceg [_gefa ]);_ggbbf =uint (_feege [_afecd ]);
-_afecd ++;for ;_ggbbf > 0;_ggbbf --{_afecd ++;switch _feege [_afecd -1]{case 2:_fdbf =_dgff ;};};switch _gefa {case 30:switch _abdg [_dgff ]{case 34:goto _cgbf ;case 35:goto _aecfb ;case 36:goto _bfegg ;case 38:goto _gccfd ;case 39:goto _bgdac ;case 40:goto _dbcc ;
-case 41:goto _bdce ;case 42:goto _gfada ;case 43:goto _fgcef ;case 44:goto _fdga ;case 45:goto _dagd ;case 47:goto _cccec ;case 58:goto _cfbc ;case 59:goto _ebgg ;case 60:goto _aafaa ;case 61:goto _cdag ;case 62:goto _dgfg ;case 63:goto _ddec ;case 70:goto _dbabg ;
-case 84:goto _gdfa ;case 92:goto _cefe ;case 94:goto _afad ;case 95:goto _aaccc ;case 123:goto _cceg ;case 125:goto _cdab ;};switch {case _abdg [_dgff ]< 65:switch {case _abdg [_dgff ]> 37:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _cbbb ;};case _abdg [_dgff ]>=33:goto _ddec ;
-};case _abdg [_dgff ]> 90:switch {case _abdg [_dgff ]> 93:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dcddb ;};case _abdg [_dgff ]>=91:goto _ddec ;};default:goto _bdaee ;};goto _edggg ;case 1:switch _abdg [_dgff ]{case 33:goto _accbd ;case 47:goto _fddae ;
-case 123:goto _fddae ;case 125:goto _fddae ;};switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _fddae ;};case _abdg [_dgff ]> 45:switch {case _abdg [_dgff ]> 63:if 91<=_abdg [_dgff ]&&_abdg [_dgff ]<=94{goto _fddae ;};case _abdg [_dgff ]>=58:goto _fddae ;
-};default:goto _fddae ;};goto _edggg ;case 0:goto _abdb ;case 2:if _abdg [_dgff ]==34{goto _bbeca ;};goto _cgbf ;case 31:if _abdg [_dgff ]==34{goto _cgbf ;};goto _bcdgc ;case 3:switch _abdg [_dgff ]{case 78:goto _cbecc ;case 82:goto _befg ;};goto _ddec ;
-case 4:switch _abdg [_dgff ]{case 47:goto _gabf ;case 85:goto _affbd ;};goto _ddec ;case 5:if _abdg [_dgff ]==65{goto _eacd ;};goto _ddec ;case 6:switch _abdg [_dgff ]{case 76:goto _cddgag ;case 77:goto _gaaa ;};goto _ddec ;case 7:if _abdg [_dgff ]==76{goto _gaaa ;
-};goto _ddec ;case 8:if _abdg [_dgff ]==33{goto _eacd ;};goto _ddec ;case 9:if _abdg [_dgff ]==69{goto _gbfaa ;};goto _ddec ;case 10:if _abdg [_dgff ]==70{goto _cgbga ;};goto _ddec ;case 11:if _abdg [_dgff ]==33{goto _bgaca ;};goto _ddec ;case 12:switch _abdg [_dgff ]{case 33:goto _accbd ;
-case 47:goto _ddec ;case 123:goto _ddec ;case 125:goto _ddec ;};switch {case _abdg [_dgff ]< 48:switch {case _abdg [_dgff ]> 35:if 37<=_abdg [_dgff ]&&_abdg [_dgff ]<=45{goto _ddec ;};case _abdg [_dgff ]>=34:goto _ddec ;};case _abdg [_dgff ]> 57:switch {case _abdg [_dgff ]< 65:if 58<=_abdg [_dgff ]&&_abdg [_dgff ]<=63{goto _ddec ;
-};case _abdg [_dgff ]> 90:if 91<=_abdg [_dgff ]&&_abdg [_dgff ]<=94{goto _ddec ;};default:goto _fggcb ;};default:goto _ddbcc ;};goto _edggg ;case 13:switch _abdg [_dgff ]{case 33:goto _accbd ;case 47:goto _ddec ;case 58:goto _eggea ;case 123:goto _ddec ;
-case 125:goto _ddec ;};switch {case _abdg [_dgff ]< 48:switch {case _abdg [_dgff ]> 35:if 37<=_abdg [_dgff ]&&_abdg [_dgff ]<=45{goto _ddec ;};case _abdg [_dgff ]>=34:goto _ddec ;};case _abdg [_dgff ]> 57:switch {case _abdg [_dgff ]> 63:if 91<=_abdg [_dgff ]&&_abdg [_dgff ]<=94{goto _ddec ;
-};case _abdg [_dgff ]>=59:goto _ddec ;};default:goto _ddbcc ;};goto _edggg ;case 14:if _abdg [_dgff ]==36{goto _fgdfg ;};if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _cfccd ;};goto _fddae ;case 15:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _cfccd ;
-};goto _fddae ;case 32:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _cfccd ;};goto _acegb ;case 16:switch _abdg [_dgff ]{case 33:goto _accbd ;case 36:goto _eabbc ;case 47:goto _ddec ;case 58:goto _agcab ;case 123:goto _ddec ;case 125:goto _ddec ;};switch {case _abdg [_dgff ]< 59:switch {case _abdg [_dgff ]> 45:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _bbfcg ;
-};case _abdg [_dgff ]>=34:goto _ddec ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]> 90:if 91<=_abdg [_dgff ]&&_abdg [_dgff ]<=94{goto _ddec ;};case _abdg [_dgff ]>=65:goto _fggcb ;};default:goto _ddec ;};goto _edggg ;case 17:switch _abdg [_dgff ]{case 33:goto _accbd ;
-case 47:goto _fddae ;case 123:goto _fddae ;case 125:goto _fddae ;};switch {case _abdg [_dgff ]< 48:switch {case _abdg [_dgff ]> 35:if 37<=_abdg [_dgff ]&&_abdg [_dgff ]<=45{goto _fddae ;};case _abdg [_dgff ]>=34:goto _fddae ;};case _abdg [_dgff ]> 57:switch {case _abdg [_dgff ]> 63:if 91<=_abdg [_dgff ]&&_abdg [_dgff ]<=94{goto _fddae ;
-};case _abdg [_dgff ]>=58:goto _fddae ;};default:goto _bbfcg ;};goto _edggg ;case 33:switch _abdg [_dgff ]{case 33:goto _accbd ;case 47:goto _gfaf ;case 123:goto _gfaf ;case 125:goto _gfaf ;};switch {case _abdg [_dgff ]< 48:switch {case _abdg [_dgff ]> 35:if 37<=_abdg [_dgff ]&&_abdg [_dgff ]<=45{goto _gfaf ;
-};case _abdg [_dgff ]>=34:goto _gfaf ;};case _abdg [_dgff ]> 57:switch {case _abdg [_dgff ]> 63:if 91<=_abdg [_dgff ]&&_abdg [_dgff ]<=94{goto _gfaf ;};case _abdg [_dgff ]>=58:goto _gfaf ;};default:goto _bbfcg ;};goto _edggg ;case 18:if _abdg [_dgff ]==36{goto _gadeg ;
-};if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _egada ;};goto _fddae ;case 19:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _egada ;};goto _fddae ;case 34:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _egada ;};goto _ebgbg ;case 20:switch _abdg [_dgff ]{case 39:goto _ddec ;
-case 42:goto _ddec ;case 47:goto _ddec ;case 58:goto _ddec ;case 63:goto _ddec ;};if 91<=_abdg [_dgff ]&&_abdg [_dgff ]<=93{goto _ddec ;};goto _gace ;case 21:switch _abdg [_dgff ]{case 39:goto _cbfcf ;case 42:goto _ddec ;case 47:goto _ddec ;case 58:goto _ddec ;
-case 63:goto _ddec ;};if 91<=_abdg [_dgff ]&&_abdg [_dgff ]<=93{goto _ddec ;};goto _gace ;case 22:if _abdg [_dgff ]==33{goto _cbecf ;};goto _ddec ;case 35:switch _abdg [_dgff ]{case 33:goto _accbd ;case 46:goto _cggd ;case 58:goto _eggea ;case 101:goto _abfa ;
-case 123:goto _cbedd ;case 125:goto _cbedd ;};switch {case _abdg [_dgff ]< 48:switch {case _abdg [_dgff ]> 35:if 37<=_abdg [_dgff ]&&_abdg [_dgff ]<=47{goto _cbedd ;};case _abdg [_dgff ]>=34:goto _cbedd ;};case _abdg [_dgff ]> 57:switch {case _abdg [_dgff ]> 63:if 91<=_abdg [_dgff ]&&_abdg [_dgff ]<=94{goto _cbedd ;
-};case _abdg [_dgff ]>=59:goto _cbedd ;};default:goto _cbbb ;};goto _edggg ;case 36:switch _abdg [_dgff ]{case 33:goto _accbd ;case 47:goto _cbedd ;case 101:goto _abfa ;case 123:goto _cbedd ;case 125:goto _cbedd ;};switch {case _abdg [_dgff ]< 48:switch {case _abdg [_dgff ]> 35:if 37<=_abdg [_dgff ]&&_abdg [_dgff ]<=45{goto _cbedd ;
-};case _abdg [_dgff ]>=34:goto _cbedd ;};case _abdg [_dgff ]> 57:switch {case _abdg [_dgff ]> 63:if 91<=_abdg [_dgff ]&&_abdg [_dgff ]<=94{goto _cbedd ;};case _abdg [_dgff ]>=58:goto _cbedd ;};default:goto _cggd ;};goto _edggg ;case 23:switch _abdg [_dgff ]{case 33:goto _accbd ;
-case 47:goto _egbb ;case 123:goto _egbb ;case 125:goto _egbb ;};switch {case _abdg [_dgff ]< 48:switch {case _abdg [_dgff ]> 35:if 37<=_abdg [_dgff ]&&_abdg [_dgff ]<=45{goto _egbb ;};case _abdg [_dgff ]>=34:goto _egbb ;};case _abdg [_dgff ]> 57:switch {case _abdg [_dgff ]> 63:if 91<=_abdg [_dgff ]&&_abdg [_dgff ]<=94{goto _egbb ;
-};case _abdg [_dgff ]>=58:goto _egbb ;};default:goto _cbfeg ;};goto _edggg ;case 37:switch _abdg [_dgff ]{case 33:goto _accbd ;case 47:goto _cbedd ;case 123:goto _cbedd ;case 125:goto _cbedd ;};switch {case _abdg [_dgff ]< 48:switch {case _abdg [_dgff ]> 35:if 37<=_abdg [_dgff ]&&_abdg [_dgff ]<=45{goto _cbedd ;
-};case _abdg [_dgff ]>=34:goto _cbedd ;};case _abdg [_dgff ]> 57:switch {case _abdg [_dgff ]> 63:if 91<=_abdg [_dgff ]&&_abdg [_dgff ]<=94{goto _cbedd ;};case _abdg [_dgff ]>=58:goto _cbedd ;};default:goto _cbfeg ;};goto _edggg ;case 38:switch _abdg [_dgff ]{case 61:goto _edcgg ;
-case 62:goto _decg ;};goto _geabg ;case 39:if _abdg [_dgff ]==61{goto _fefg ;};goto _ddgc ;case 24:switch _abdg [_dgff ]{case 33:goto _accbd ;case 36:goto _eabbc ;case 40:goto _eggfe ;case 46:goto _bfeba ;case 58:goto _agcab ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;
-case 123:goto _ddec ;case 125:goto _ddec ;};switch {case _abdg [_dgff ]< 59:switch {case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _gdggg ;};case _abdg [_dgff ]>=34:goto _ddec ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dbeg ;
-};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _ddec ;};default:goto _ddec ;};goto _edggg ;case 40:switch _abdg [_dgff ]{case 33:goto _accbd ;case 40:goto _eggfe ;case 46:goto _bfeba ;case 92:goto _bcfeb ;
-case 95:goto _dfgbd ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _bdgff ;};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _bfeba ;
-};default:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _bfeba ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _bdgff ;};default:goto _bdgff ;
-};goto _edggg ;case 41:switch _abdg [_dgff ]{case 46:goto _bcfeb ;case 92:goto _bcfeb ;case 95:goto _bcfeb ;};switch {case _abdg [_dgff ]< 65:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _bcfeb ;};case _abdg [_dgff ]> 90:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _bcfeb ;
-};default:goto _bcfeb ;};goto _bdgff ;case 42:switch _abdg [_dgff ]{case 33:goto _accbd ;case 46:goto _dfgbd ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _bdgff ;
-};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _dfgbd ;};default:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dfgbd ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;
-};default:goto _bdgff ;};default:goto _bdgff ;};goto _edggg ;case 43:switch _abdg [_dgff ]{case 33:goto _accbd ;case 40:goto _eggfe ;case 46:goto _bfeba ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _gfaf ;case 125:goto _gfaf ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _gfaf ;
-};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _gdggg ;};default:goto _gfaf ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _bfeba ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;
-};default:goto _gfaf ;};default:goto _gfaf ;};goto _edggg ;case 44:switch _abdg [_dgff ]{case 33:goto _accbd ;case 36:goto _eabbc ;case 40:goto _eggfe ;case 46:goto _bfeba ;case 58:goto _agcab ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _fddae ;
-case 125:goto _fddae ;};switch {case _abdg [_dgff ]< 59:switch {case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _gdggg ;};case _abdg [_dgff ]>=34:goto _fddae ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dbeg ;
-};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _fddae ;};default:goto _fddae ;};goto _edggg ;case 25:switch _abdg [_dgff ]{case 33:goto _accbd ;case 36:goto _eabbc ;case 40:goto _eggfe ;case 46:goto _bfeba ;
-case 58:goto _agcab ;case 65:goto _dfed ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _ddec ;case 125:goto _ddec ;};switch {case _abdg [_dgff ]< 59:switch {case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _gdggg ;};case _abdg [_dgff ]>=34:goto _ddec ;
-};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 66<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dbeg ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _ddec ;};default:goto _ddec ;};goto _edggg ;
-case 45:switch _abdg [_dgff ]{case 33:goto _accbd ;case 36:goto _eabbc ;case 40:goto _eggfe ;case 46:goto _bfeba ;case 58:goto _agcab ;case 76:goto _feecg ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 59:switch {case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _gdggg ;
-};case _abdg [_dgff ]>=34:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dbeg ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _bdgff ;
-};default:goto _bdgff ;};goto _edggg ;case 46:switch _abdg [_dgff ]{case 33:goto _accbd ;case 36:goto _eabbc ;case 40:goto _eggfe ;case 46:goto _bfeba ;case 58:goto _agcab ;case 83:goto _ccag ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _bdgff ;
-case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 59:switch {case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _gdggg ;};case _abdg [_dgff ]>=34:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dbeg ;
-};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _bdgff ;};default:goto _bdgff ;};goto _edggg ;case 47:switch _abdg [_dgff ]{case 33:goto _accbd ;case 36:goto _eabbc ;case 40:goto _eggfe ;case 46:goto _bfeba ;
-case 58:goto _agcab ;case 69:goto _abgb ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 59:switch {case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _gdggg ;};case _abdg [_dgff ]>=34:goto _bdgff ;
-};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dbeg ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _bdgff ;};default:goto _bdgff ;};goto _edggg ;
-case 26:switch _abdg [_dgff ]{case 33:goto _accbd ;case 36:goto _eabbc ;case 40:goto _eggfe ;case 46:goto _bfeba ;case 58:goto _agcab ;case 79:goto _becbg ;case 82:goto _daef ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _ddec ;case 125:goto _ddec ;
-};switch {case _abdg [_dgff ]< 59:switch {case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _gdggg ;};case _abdg [_dgff ]>=34:goto _ddec ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dbeg ;
-};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _ddec ;};default:goto _ddec ;};goto _edggg ;case 48:switch _abdg [_dgff ]{case 33:goto _accbd ;case 36:goto _eabbc ;case 40:goto _eggfe ;case 46:goto _bfeba ;
-case 58:goto _agcab ;case 68:goto _afdad ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 59:switch {case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _gdggg ;};case _abdg [_dgff ]>=34:goto _bdgff ;
-};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dbeg ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _bdgff ;};default:goto _bdgff ;};goto _edggg ;
-case 49:switch _abdg [_dgff ]{case 33:goto _accbd ;case 36:goto _eabbc ;case 40:goto _eggfe ;case 46:goto _bfeba ;case 58:goto _agcab ;case 79:goto _dbecg ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 59:switch {case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _gdggg ;
-};case _abdg [_dgff ]>=34:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dbeg ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _bdgff ;
-};default:goto _bdgff ;};goto _edggg ;case 50:switch _abdg [_dgff ]{case 33:goto _accbd ;case 36:goto _eabbc ;case 40:goto _eggfe ;case 46:goto _bfeba ;case 58:goto _agcab ;case 85:goto _ccag ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _bdgff ;
-case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 59:switch {case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _gdggg ;};case _abdg [_dgff ]>=34:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dbeg ;
-};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _bdgff ;};default:goto _bdgff ;};goto _edggg ;case 27:switch _abdg [_dgff ]{case 46:goto _bcfeb ;case 92:goto _bcfeb ;case 95:goto _bcfeb ;};switch {case _abdg [_dgff ]< 65:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _bcfeb ;
-};case _abdg [_dgff ]> 90:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _bcfeb ;};default:goto _bcfeb ;};goto _ddec ;case 28:switch _abdg [_dgff ]{case 33:goto _accbd ;case 46:goto _dfgbd ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 120:goto _bfd ;
-case 123:goto _ddec ;case 125:goto _ddec ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _ddec ;};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _dfgbd ;};default:goto _ddec ;
-};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dfgbd ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _ddec ;};default:goto _ddec ;};goto _edggg ;
-case 51:switch _abdg [_dgff ]{case 33:goto _accbd ;case 46:goto _dfgbd ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 108:goto _dggc ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _bdgff ;
-};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _dfgbd ;};default:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dfgbd ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;
-};default:goto _bdgff ;};default:goto _bdgff ;};goto _edggg ;case 52:switch _abdg [_dgff ]{case 33:goto _accbd ;case 46:goto _dfgbd ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 102:goto _gdafe ;case 110:goto _cdcee ;case 123:goto _bdgff ;case 125:goto _bdgff ;
-};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _bdgff ;};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _dfgbd ;};default:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dfgbd ;
-};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _bdgff ;};default:goto _bdgff ;};goto _edggg ;case 53:switch _abdg [_dgff ]{case 33:goto _accbd ;case 46:goto _dfgbd ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;
-case 110:goto _egfg ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _bdgff ;};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _dfgbd ;
-};default:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dfgbd ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;};default:goto _bdgff ;};default:goto _bdgff ;
-};goto _edggg ;case 54:switch _abdg [_dgff ]{case 33:goto _accbd ;case 46:goto _aead ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _bdgff ;
-};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _dfgbd ;};default:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dfgbd ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;
-};default:goto _bdgff ;};default:goto _bdgff ;};goto _edggg ;case 55:switch _abdg [_dgff ]{case 33:goto _accbd ;case 46:goto _dfgbd ;case 92:goto _bcfeb ;case 95:goto _ebgcg ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _bdgff ;
-};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _dfgbd ;};default:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _ebgcg ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;
-};default:goto _bdgff ;};default:goto _bdgff ;};goto _edggg ;case 56:switch _abdg [_dgff ]{case 33:goto _accbd ;case 40:goto _aegac ;case 46:goto _ebgcg ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _bdgff ;
-};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _ebgcg ;};default:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _ebgcg ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;
-};default:goto _bdgff ;};default:goto _bdgff ;};goto _edggg ;case 57:switch _abdg [_dgff ]{case 33:goto _accbd ;case 46:goto _dfgbd ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 109:goto _bgaa ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _bdgff ;
-};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _dfgbd ;};default:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dfgbd ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;
-};default:goto _bdgff ;};default:goto _bdgff ;};goto _edggg ;case 58:switch _abdg [_dgff ]{case 33:goto _accbd ;case 46:goto _fbafd ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _bdgff ;case 125:goto _bdgff ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _bdgff ;
-};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _dfgbd ;};default:goto _bdgff ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dfgbd ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;
-};default:goto _bdgff ;};default:goto _bdgff ;};goto _edggg ;case 59:switch _abdg [_dgff ]{case 33:goto _accbd ;case 46:goto _dfgbd ;case 92:goto _bcfeb ;case 95:goto _ffge ;case 123:goto _fddae ;case 125:goto _fddae ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _fddae ;
-};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _dfgbd ;};default:goto _fddae ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _ffge ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;
-};default:goto _fddae ;};default:goto _fddae ;};goto _edggg ;case 29:switch _abdg [_dgff ]{case 33:goto _accbd ;case 46:goto _dfgbd ;case 92:goto _bcfeb ;case 95:goto _dfgbd ;case 123:goto _ddec ;case 125:goto _ddec ;};switch {case _abdg [_dgff ]< 58:switch {case _abdg [_dgff ]< 37:if 34<=_abdg [_dgff ]&&_abdg [_dgff ]<=35{goto _ddec ;
-};case _abdg [_dgff ]> 47:if 48<=_abdg [_dgff ]&&_abdg [_dgff ]<=57{goto _dfgbd ;};default:goto _ddec ;};case _abdg [_dgff ]> 63:switch {case _abdg [_dgff ]< 91:if 65<=_abdg [_dgff ]&&_abdg [_dgff ]<=90{goto _dfgbd ;};case _abdg [_dgff ]> 94:if 97<=_abdg [_dgff ]&&_abdg [_dgff ]<=122{goto _dfgbd ;
-};default:goto _ddec ;};default:goto _ddec ;};goto _edggg ;};_ddec :_gefa =0;goto _egbf ;_edggg :_gefa =1;goto _egbf ;_cgbf :_gefa =2;goto _egbf ;_aecfb :_gefa =3;goto _egbf ;_cbecc :_gefa =4;goto _egbf ;_gabf :_gefa =5;goto _egbf ;_affbd :_gefa =6;goto _egbf ;
-_cddgag :_gefa =7;goto _egbf ;_gaaa :_gefa =8;goto _egbf ;_befg :_gefa =9;goto _egbf ;_gbfaa :_gefa =10;goto _egbf ;_cgbga :_gefa =11;goto _egbf ;_bfegg :_gefa =12;goto _egbf ;_ddbcc :_gefa =13;goto _egbf ;_eggea :_gefa =14;goto _egbf ;_fgdfg :_gefa =15;
-goto _egbf ;_fggcb :_gefa =16;goto _egbf ;_eabbc :_gefa =17;goto _egbf ;_agcab :_gefa =18;goto _egbf ;_gadeg :_gefa =19;goto _egbf ;_bgdac :_gefa =20;goto _egbf ;_gace :_gefa =21;goto _egbf ;_cbfcf :_gefa =22;goto _egbf ;_abfa :_gefa =23;goto _egbf ;_bdaee :_gefa =24;
-goto _egbf ;_dbabg :_gefa =25;goto _egbf ;_gdfa :_gefa =26;goto _egbf ;_cefe :_gefa =27;goto _egbf ;_aaccc :_gefa =28;goto _egbf ;_dcddb :_gefa =29;goto _egbf ;_fddae :_gefa =30;goto _gbcbf ;_accbd :_gefa =30;goto _eegbb ;_eacd :_gefa =30;goto _fegdf ;
-_bgaca :_gefa =30;goto _gdgd ;_cbecf :_gefa =30;goto _caef ;_egbb :_gefa =30;goto _dabd ;_eggfe :_gefa =30;goto _agdf ;_gccfd :_gefa =30;goto _cage ;_dbcc :_gefa =30;goto _efbde ;_bdce :_gefa =30;goto _fadff ;_gfada :_gefa =30;goto _dgecf ;_fgcef :_gefa =30;
-goto _fdaec ;_fdga :_gefa =30;goto _adgbc ;_dagd :_gefa =30;goto _eefa ;_cccec :_gefa =30;goto _geedc ;_cfbc :_gefa =30;goto _gbgeb ;_ebgg :_gefa =30;goto _ceeec ;_cdag :_gefa =30;goto _dbfc ;_afad :_gefa =30;goto _cafge ;_cceg :_gefa =30;goto _ffafe ;
-_cdab :_gefa =30;goto _bdfe ;_bcdgc :_gefa =30;goto _deaf ;_acegb :_gefa =30;goto _ggab ;_gfaf :_gefa =30;goto _aadeb ;_ebgbg :_gefa =30;goto _gaaga ;_cbedd :_gefa =30;goto _bcabg ;_geabg :_gefa =30;goto _bdfg ;_edcgg :_gefa =30;goto _dbbc ;_decg :_gefa =30;
-goto _gfgbac ;_ddgc :_gefa =30;goto _gcec ;_fefg :_gefa =30;goto _daaa ;_bdgff :_gefa =30;goto _cebgg ;_aegac :_gefa =30;goto _ffgce ;_bbeca :_gefa =31;goto _agcbg ;_cfccd :_gefa =32;goto _egbf ;_bbfcg :_gefa =33;goto _dcgcc ;_egada :_gefa =34;goto _egbf ;
-_cbbb :_gefa =35;goto _geaaea ;_cggd :_gefa =36;goto _geaaea ;_cbfeg :_gefa =37;goto _geaaea ;_aafaa :_gefa =38;goto _egbf ;_dgfg :_gefa =39;goto _egbf ;_bfeba :_gefa =40;goto _effe ;_bcfeb :_gefa =41;goto _egbf ;_dfgbd :_gefa =42;goto _effe ;_gdggg :_gefa =43;
-goto _dcgcc ;_dbeg :_gefa =44;goto _effe ;_abgb :_gefa =44;goto _edadf ;_dbecg :_gefa =44;goto _fgfab ;_dfed :_gefa =45;goto _effe ;_feecg :_gefa =46;goto _effe ;_ccag :_gefa =47;goto _effe ;_becbg :_gefa =48;goto _effe ;_afdad :_gefa =49;goto _effe ;_daef :_gefa =50;
-goto _effe ;_bfd :_gefa =51;goto _effe ;_dggc :_gefa =52;goto _effe ;_gdafe :_gefa =53;goto _effe ;_egfg :_gefa =54;goto _effe ;_aead :_gefa =55;goto _effe ;_ebgcg :_gefa =56;goto _effe ;_cdcee :_gefa =57;goto _effe ;_bgaa :_gefa =58;goto _effe ;_fbafd :_gefa =59;
-goto _effe ;_ffge :_gefa =59;goto _ddgee ;_fegdf :_afecd =3;goto _dbae ;_gdgd :_afecd =5;goto _dbae ;_eegbb :_afecd =7;goto _dbae ;_caef :_afecd =9;goto _dbae ;_agdf :_afecd =11;goto _dbae ;_ffgce :_afecd =13;goto _dbae ;_cage :_afecd =15;goto _dbae ;_ffafe :_afecd =17;
-goto _dbae ;_bdfe :_afecd =19;goto _dbae ;_efbde :_afecd =21;goto _dbae ;_fadff :_afecd =23;goto _dbae ;_fdaec :_afecd =25;goto _dbae ;_eefa :_afecd =27;goto _dbae ;_dgecf :_afecd =29;goto _dbae ;_geedc :_afecd =31;goto _dbae ;_cafge :_afecd =33;goto _dbae ;
-_dbfc :_afecd =35;goto _dbae ;_dbbc :_afecd =37;goto _dbae ;_daaa :_afecd =39;goto _dbae ;_gfgbac :_afecd =41;goto _dbae ;_gbgeb :_afecd =43;goto _dbae ;_ceeec :_afecd =45;goto _dbae ;_adgbc :_afecd =47;goto _dbae ;_bcabg :_afecd =49;goto _dbae ;_aadeb :_afecd =51;
-goto _dbae ;_ggab :_afecd =53;goto _dbae ;_gaaga :_afecd =55;goto _dbae ;_cebgg :_afecd =57;goto _dbae ;_deaf :_afecd =59;goto _dbae ;_bdfg :_afecd =61;goto _dbae ;_gcec :_afecd =63;goto _dbae ;_dabd :_afecd =65;goto _dbae ;_gbcbf :_afecd =67;goto _dbae ;
-_edadf :_afecd =72;goto _dbae ;_geaaea :_afecd =75;goto _dbae ;_dcgcc :_afecd =78;goto _dbae ;_fgfab :_afecd =81;goto _dbae ;_ddgee :_afecd =84;goto _dbae ;_effe :_afecd =87;goto _dbae ;_agcbg :_afecd =90;goto _dbae ;_dbae :_ggbbf =uint (_feege [_afecd ]);
-_afecd ++;for ;_ggbbf > 0;_ggbbf --{_afecd ++;switch _feege [_afecd -1]{case 3:_ebca =_dgff +1;case 4:_edbd =1;case 5:_edbd =2;case 6:_edbd =3;case 7:_edbd =4;case 8:_edbd =11;case 9:_edbd =14;case 10:_edbd =15;case 11:_ebca =_dgff +1;{_egdcd .emit (_gbef ,_abdg [_fdbf :_ebca ]);
-};case 12:_ebca =_dgff +1;{_egdcd .emit (_baafe ,_abdg [_fdbf :_ebca ]);};case 13:_ebca =_dgff +1;{_egdcd .emit (_cabd ,_abdg [_fdbf :_ebca -1]);};case 14:_ebca =_dgff +1;{_egdcd .emit (_cabd ,_abdg [_fdbf +1:_ebca -2]);};case 15:_ebca =_dgff +1;{_egdcd .emit (_aaef ,_abdg [_fdbf :_ebca -1]);
-};case 16:_ebca =_dgff +1;{_egdcd .emit (_aaef ,_abdg [_fdbf :_ebca -1]);};case 17:_ebca =_dgff +1;{_egdcd .emit (_gdgg ,_abdg [_fdbf :_ebca ]);};case 18:_ebca =_dgff +1;{_egdcd .emit (_fcec ,_abdg [_fdbf :_ebca ]);};case 19:_ebca =_dgff +1;{_egdcd .emit (_bbecf ,_abdg [_fdbf :_ebca ]);
-};case 20:_ebca =_dgff +1;{_egdcd .emit (_ceec ,_abdg [_fdbf :_ebca ]);};case 21:_ebca =_dgff +1;{_egdcd .emit (_agced ,_abdg [_fdbf :_ebca ]);};case 22:_ebca =_dgff +1;{_egdcd .emit (_eecc ,_abdg [_fdbf :_ebca ]);};case 23:_ebca =_dgff +1;{_egdcd .emit (_cfbee ,_abdg [_fdbf :_ebca ]);
-};case 24:_ebca =_dgff +1;{_egdcd .emit (_dbfe ,_abdg [_fdbf :_ebca ]);};case 25:_ebca =_dgff +1;{_egdcd .emit (_bcge ,_abdg [_fdbf :_ebca ]);};case 26:_ebca =_dgff +1;{_egdcd .emit (_dcgfg ,_abdg [_fdbf :_ebca ]);};case 27:_ebca =_dgff +1;{_egdcd .emit (_dcgfd ,_abdg [_fdbf :_ebca ]);
-};case 28:_ebca =_dgff +1;{_egdcd .emit (_eebg ,_abdg [_fdbf :_ebca ]);};case 29:_ebca =_dgff +1;{_egdcd .emit (_efege ,_abdg [_fdbf :_ebca ]);};case 30:_ebca =_dgff +1;{_egdcd .emit (_cfea ,_abdg [_fdbf :_ebca ]);};case 31:_ebca =_dgff +1;{_egdcd .emit (_gfgfg ,_abdg [_fdbf :_ebca ]);
-};case 32:_ebca =_dgff +1;{_egdcd .emit (_cfbaa ,_abdg [_fdbf :_ebca ]);};case 33:_ebca =_dgff +1;{_egdcd .emit (_gcfe ,_abdg [_fdbf :_ebca ]);};case 34:_ebca =_dgff ;_dgff --;{_egdcd .emit (_gcde ,_abdg [_fdbf :_ebca ]);};case 35:_ebca =_dgff ;_dgff --;
-{_egdcd .emit (_feacg ,_abdg [_fdbf :_ebca ]);};case 36:_ebca =_dgff ;_dgff --;{_egdcd .emit (_degbcb ,_abdg [_fdbf :_ebca ]);};case 37:_ebca =_dgff ;_dgff --;{_egdcd .emit (_bcag ,_abdg [_fdbf :_ebca ]);};case 38:_ebca =_dgff ;_dgff --;{_egdcd .emit (_bdeeb ,_abdg [_fdbf :_ebca ]);
-};case 39:_ebca =_dgff ;_dgff --;{_egdcd .emit (_fedgb ,_abdg [_fdbf +1:_ebca -1]);};case 40:_ebca =_dgff ;_dgff --;{_egdcd .emit (_dfgf ,_abdg [_fdbf :_ebca ]);};case 41:_ebca =_dgff ;_dgff --;{_egdcd .emit (_dgfbc ,_abdg [_fdbf :_ebca ]);};case 42:_dgff =(_ebca )-1;
-{_egdcd .emit (_gcde ,_abdg [_fdbf :_ebca ]);};case 43:switch _edbd {case 0:{_gefa =0;goto _egbf ;};case 1:{_dgff =(_ebca )-1;_egdcd .emit (_dgcc ,_abdg [_fdbf :_ebca ]);};case 2:{_dgff =(_ebca )-1;_egdcd .emit (_gcde ,_abdg [_fdbf :_ebca ]);};case 3:{_dgff =(_ebca )-1;
-_egdcd .emit (_feacg ,_abdg [_fdbf :_ebca ]);};case 4:{_dgff =(_ebca )-1;_egdcd .emit (_fbee ,_abdg [_fdbf :_ebca ]);};case 11:{_dgff =(_ebca )-1;_egdcd .emit (_cagdc ,_abdg [_fdbf :_ebca ]);};case 14:{_dgff =(_ebca )-1;_egdcd .emit (_bdeeb ,_abdg [_fdbf :_ebca ]);
-};case 15:{_dgff =(_ebca )-1;_egdcd .emit (_fedgb ,_abdg [_fdbf +1:_ebca -1]);};};};};goto _egbf ;_egbf :_afecd =int (_eagb [_gefa ]);_ggbbf =uint (_feege [_afecd ]);_afecd ++;for ;_ggbbf > 0;_ggbbf --{_afecd ++;switch _feege [_afecd -1]{case 0:_fdbf =0;
-case 1:_edbd =0;};};if _gefa ==0{goto _abdb ;};if _dgff ++;_dgff !=_gfgba {goto _ebcg ;};_gfed :{};if _dgff ==_bfgcb {switch _gefa {case 1:goto _fddae ;case 2:goto _fddae ;case 31:goto _bcdgc ;case 14:goto _fddae ;case 15:goto _fddae ;case 32:goto _acegb ;
-case 17:goto _fddae ;case 33:goto _gfaf ;case 18:goto _fddae ;case 19:goto _fddae ;case 34:goto _ebgbg ;case 35:goto _cbedd ;case 36:goto _cbedd ;case 23:goto _egbb ;case 37:goto _cbedd ;case 38:goto _geabg ;case 39:goto _ddgc ;case 40:goto _bdgff ;case 41:goto _bdgff ;
-case 42:goto _bdgff ;case 43:goto _gfaf ;case 44:goto _fddae ;case 45:goto _bdgff ;case 46:goto _bdgff ;case 47:goto _bdgff ;case 48:goto _bdgff ;case 49:goto _bdgff ;case 50:goto _bdgff ;case 51:goto _bdgff ;case 52:goto _bdgff ;case 53:goto _bdgff ;case 54:goto _bdgff ;
-case 55:goto _bdgff ;case 56:goto _bdgff ;case 57:goto _bdgff ;case 58:goto _bdgff ;case 59:goto _fddae ;};};_abdb :{};};if _fdbf > 0{copy (_abdg [0:],_abdg [_fdbf :]);};};_ =_bfgcb ;if _gefa ==_cdfd {_egdcd .emit (_cbgef ,nil );};close (_egdcd ._dcceb );
-};const _dadg int =30;func _acg (_aab ,_gabc ,_aag ,_dfeae int )int {if _gabc > _aag {return 0;};if _fcg (_dfeae ){return (_aag -_gabc +1)*30;};_efbe :=0;for _feb :=_gabc ;_feb <=_aag ;_feb ++{_efbe +=_affb (_aab ,_feb );};return _efbe ;};
-
-// Update updates references in the Range after removing a row/column.
-func (_gdbe Range )Update (q *_a .UpdateQuery )Expression {_eaag :=_gdbe ;if q .UpdateCurrentSheet {_eaag ._eege =_gdbe ._eege .Update (q );_eaag ._cbfg =_gdbe ._cbfg .Update (q );};return _eaag ;};
-
-// Substitute is an implementation of the Excel SUBSTITUTE function.
-func Substitute (args []Result )Result {_gddag :=len (args );if _gddag !=3&&_gddag !=4{return MakeErrorResult ("\u0053\u0055\u0042\u0053\u0054\u0049\u0054U\u0054\u0045\u0020r\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u006f\u0072\u0020\u0066\u006f\u0075\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_aace ,_gfac :=_gebbd (args [0],"\u0053\u0055\u0042\u0053\u0054\u0049\u0054\u0055\u0054\u0045","\u0074\u0065\u0078\u0074");if _gfac .Type ==ResultTypeError {return _gfac ;};_facd ,_gfac :=_gebbd (args [1],"\u0053\u0055\u0042\u0053\u0054\u0049\u0054\u0055\u0054\u0045","\u006f\u006c\u0064\u0020\u0074\u0065\u0078\u0074");
-if _gfac .Type ==ResultTypeError {return _gfac ;};_gddae ,_gfac :=_gebbd (args [2],"\u0053\u0055\u0042\u0053\u0054\u0049\u0054\u0055\u0054\u0045","\u006e\u0065\u0077\u0020\u0074\u0065\u0078\u0074");if _gfac .Type ==ResultTypeError {return _gfac ;};_cgac :=0;
-if _gddag ==3{return MakeStringResult (_bcd .Replace (_aace ,_facd ,_gddae ,-1));}else {_fgdfb ,_cebf :=_deddg (args [3],"\u0053\u0055\u0042\u0053\u0054\u0049\u0054\u0055\u0054\u0045","\u0069\u006e\u0073t\u0061\u006e\u0063\u0065\u005f\u006e\u0075\u006d");
-if _cebf .Type ==ResultTypeError {return _cebf ;};_cgac =int (_fgdfb );if _cgac < 1{return MakeErrorResult ("\u0069\u006es\u0074\u0061\u006e\u0063e\u005f\u006eu\u006d\u0020\u0073\u0068\u006f\u0075\u006c\u0064 \u0062\u0065\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e \u007a\u0065\u0072\u006f");
-};_gbbba :=_aace ;_accbf :=_cgac ;_bgcac :=-1;_baaf :=len (_facd );_fgddb :=0;for {_accbf --;_bgab :=_bcd .Index (_gbbba ,_facd );if _bgab ==-1{_bgcac =-1;break ;}else {_bgcac =_bgab +_fgddb ;if _accbf ==0{break ;};_efdf :=_baaf +_bgab ;_fgddb +=_efdf ;
-_gbbba =_gbbba [_efdf :];};};if _bgcac ==-1{return MakeStringResult (_aace );}else {_gacd :=_aace [:_bgcac ];_bgdgf :=_aace [_bgcac +_baaf :];return MakeStringResult (_gacd +_gddae +_bgdgf );};};};func _caaad (_eadca yyLexer )int {return _fdggb ().Parse (_eadca )};
-const _ceec =57362;func _deddg (_dagb Result ,_abceg ,_baged string )(float64 ,Result ){switch _dagb .Type {case ResultTypeEmpty :return 0,_fca ;case ResultTypeNumber :return _dagb .ValueNumber ,_fca ;case ResultTypeString :_agac ,_adeb :=_fce .ParseFloat (_dagb .ValueString ,64);
-if _adeb !=nil {return 0,MakeErrorResult (_baged +"\u0020s\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u0061\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0066\u006f\u0072\u0020"+_abceg );};return _agac ,_fca ;default:return 0,MakeErrorResult (_abceg +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020"+_baged +"\u0020t\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062e\u0072\u0020\u006f\u0072\u0020\u0065\u006d\u0070\u0074\u0079");
-};};func _caca (_fefa Context ,_daac ,_adcdef string )(string ,string ){_ddeac :=_daac +"\u0031";_ccggf :=_fefa .LastRow (_daac );_accgg :=_adcdef +_fce .Itoa (_ccggf );return _ddeac ,_accgg ;};var _adf =map[string ]int {"\u006aa\u006e\u0075\u0061\u0072\u0079":1,"\u0066\u0065\u0062\u0072\u0075\u0061\u0072\u0079":2,"\u006d\u0061\u0072c\u0068":3,"\u0061\u0070\u0072i\u006c":4,"\u006d\u0061\u0079":5,"\u006a\u0075\u006e\u0065":6,"\u006a\u0075\u006c\u0079":7,"\u0061\u0075\u0067\u0075\u0073\u0074":8,"\u0073e\u0070\u0074\u0065\u006d\u0070\u0065r":9,"\u006fc\u0074\u006f\u0062\u0065\u0072":10,"\u006e\u006f\u0076\u0065\u006d\u0062\u0065\u0072":11,"\u0064\u0065\u0063\u0065\u006d\u0062\u0065\u0072":12,"\u006a\u0061\u006e":1,"\u0066\u0065\u0062":2,"\u006d\u0061\u0072":3,"\u0061\u0070\u0072":4,"\u006a\u0075\u006e":6,"\u006a\u0075\u006c":7,"\u0061\u0075\u0067":8,"\u0073\u0065\u0070":9,"\u006f\u0063\u0074":10,"\u006e\u006f\u0076":11,"\u0064\u0065\u0063":12};
-
-
-// Nper implements the Excel NPER function.
-func Nper (args []Result )Result {_acag :=len (args );if _acag < 3||_acag > 5{return MakeErrorResult ("\u004e\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006ff\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067e\u0020\u006f\u0066\u0020\u0033\u0020\u0061\u006e\u0064\u0020\u0035");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("N\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_ecce :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u004e\u0050\u0045\u0052\u0020\u0072\u0065q\u0075\u0069\u0072e\u0073\u0020\u0070\u0061y\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gaba :=args [1].ValueNumber ;if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u004e\u0050\u0045\u0052\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065\u0073\u0065\u006e\u0074\u0020\u0076\u0061\u006c\u0075\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
-};_agbd :=args [2].ValueNumber ;_cbdeeb :=0.0;if _acag >=4&&args [3].Type !=ResultTypeEmpty {if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u004e\u0050\u0045\u0052\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s \u0066\u0075\u0074\u0075\u0072\u0065 \u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-};_cbdeeb =args [3].ValueNumber ;};_ddda :=0.0;if _acag ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("N\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0079\u0070\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_ddda =args [4].ValueNumber ;if _ddda !=0{_ddda =1;};};_aada :=_gaba *(1+_ecce *_ddda )-_cbdeeb *_ecce ;_gede :=(_agbd *_ecce +_gaba *(1+_ecce *_ddda ));return MakeNumberResult (_d .Log (_aada /_gede )/_d .Log (1+_ecce ));};
-
-// Eval evaluates a vertical range returning a list of results or an error.
-func (_dddcc VerticalRange )Eval (ctx Context ,ev Evaluator )Result {_cfbg :=_dddcc .verticalRangeReference ();if _ecagbf ,_gacgec :=ev .GetFromCache (_cfbg );_gacgec {return _ecagbf ;};_ffdgdc ,_dacf :=_caca (ctx ,_dddcc ._cdebbe ,_dddcc ._cfeb );_cdgbd :=_ggac (ctx ,ev ,_ffdgdc ,_dacf );
-ev .SetCache (_cfbg ,_cdgbd );return _cdgbd ;};
-
-// Reference returns an invalid reference for Negate.
-func (_dabdb Negate )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
-
-// Ifs is an implementation of the Excel IFS() function.
-func Ifs (args []Result )Result {if len (args )< 2{return MakeErrorResult ("I\u0046\u0053\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061t\u0020\u006c\u0065\u0061\u0073\u0074\u0020t\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
-};for _ebdaa :=0;_ebdaa < len (args )-1;_ebdaa +=2{if args [_ebdaa ].ValueNumber ==1{return args [_ebdaa +1];};};return MakeErrorResultType (ErrorTypeNA ,"");};var _fceg []byte =[]byte {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-
-
-// Accrintm implements the Excel ACCRINTM function.
-func Accrintm (args []Result )Result {_adcde :=len (args );if _adcde !=4&&_adcde !=5{return MakeErrorResult ("A\u0043\u0043\u0052\u0049\u004e\u0054\u004d\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066o\u0075\u0072\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065 a\u0072\u0067\u0075m\u0065n\u0074\u0073");
-};_ffca ,_fgfa :=_cdde (args [0],"\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065","\u0041\u0043\u0043\u0052\u0049\u004e\u0054\u004d");if _fgfa .Type ==ResultTypeError {return _fgfa ;};_bfag ,_fgfa :=_cdde (args [1],"\u0073e\u0074t\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074\u0065","\u0041\u0043\u0043\u0052\u0049\u004e\u0054\u004d");
-if _fgfa .Type ==ResultTypeError {return _fgfa ;};if _ffca >=_bfag {return MakeErrorResultType (ErrorTypeNum ,"\u0049\u0073\u0073\u0075\u0065\u0020d\u0061\u0074\u0065\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u0065\u0061\u0072\u006c\u0069\u0065r\u0020\u0074\u0068\u0061\u006e\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065n\u0074 \u0064\u0061\u0074\u0065");
-};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0041C\u0043\u0052I\u004e\u0054\u004d\u0020r\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020to\u0020\u0062\u0065 \u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
-};_dag :=args [2].ValueNumber ;if _dag <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0041\u0043\u0043\u0052\u0049\u004e\u0054\u004d\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061t\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0041\u0043\u0043\u0052\u0049\u004e\u0054M\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s\u0020\u0070\u0061\u0072\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_ceggf :=args [3].ValueNumber ;if _ceggf <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0041\u0043C\u0052\u0049\u004e\u0054\u004d \u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0070\u0061\u0072\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gac :=0;if _adcde ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0041C\u0043\u0052I\u004e\u0054\u004d \u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0062\u0061\u0073\u0069\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gac =int (args [4].ValueNumber );if !_feeb (_gac ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065c\u0074\u0020b\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u0041\u0043\u0043R\u0049\u004e\u0054\u004d");
-};};_gcgd ,_fgfa :=_gad (_ffca ,_bfag ,_gac );if _fgfa .Type ==ResultTypeError {return _fgfa ;};return MakeNumberResult (_ceggf *_dag *_gcgd );};var _acagb =[...]int {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36};
-
-
-// Irr implements the Excel IRR function.
-func Irr (args []Result )Result {_cbbg :=len (args );if _cbbg ==0||_cbbg > 2{return MakeErrorResult ("\u0049\u0052\u0052\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006f\u006e\u0065\u0020\u006f\u0072\u0020t\u0077\u006f\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};if args [0].Type !=ResultTypeList &&args [0].Type !=ResultTypeArray {return MakeErrorResult ("\u0049\u0052\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020v\u0061\u006c\u0075\u0065\u0073\u0020t\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0061\u0072\u0072\u0061\u0079 \u0074\u0079\u0070\u0065");
-};_fdag :=_badg (args [0]);_fcccg :=[]float64 {};for _ ,_gfa :=range _fdag {for _ ,_deece :=range _gfa {if _deece .Type ==ResultTypeNumber &&!_deece .IsBoolean {_fcccg =append (_fcccg ,_deece .ValueNumber );};};};_dfec :=len (_fcccg );if len (_fcccg )< 2{return MakeErrorResultType (ErrorTypeNum ,"");
-};_fafg :=0.1;if _cbbg ==2&&args [1].Type !=ResultTypeEmpty {if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("I\u0052\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0067\u0075\u0065\u0073\u0073\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_fafg =args [1].ValueNumber ;if _fafg <=-1{return MakeErrorResult ("\u0049\u0052R\u0020\u0072\u0065\u0071u\u0069\u0072e\u0073\u0020\u0067\u0075\u0065\u0073\u0073\u0020t\u006f\u0020\u0062\u0065\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068a\u006e\u0020\u002d\u0031");
-};};_fbaa :=[]float64 {};for _eebf :=0;_eebf < _dfec ;_eebf ++{if _eebf ==0{_fbaa =append (_fbaa ,0);}else {_fbaa =append (_fbaa ,_fbaa [_eebf -1]+365);};};return _cacg (_fcccg ,_fbaa ,_fafg );};func _cbcee (_agda ,_fagf []float64 ,_cea float64 )float64 {_dcdb :=_cea +1;
-_bdde :=_agda [0];_bgff :=len (_agda );_cbff :=_fagf [0];for _ceda :=1;_ceda < _bgff ;_ceda ++{_bdde +=_agda [_ceda ]/_d .Pow (_dcdb ,(_fagf [_ceda ]-_cbff )/365);};return _bdde ;};var _bebb =[...]string {};
-
-// Max is an implementation of the Excel MAX() function.
-func Max (args []Result )Result {return _bfadc (args ,false )};
-
-// RegisterFunctionComplex registers a standard function.
-func RegisterFunctionComplex (name string ,fn FunctionComplex ){_cdccd .Lock ();defer _cdccd .Unlock ();if _ ,_bffc :=_eedg [name ];_bffc {_gd .Log .Debug ("\u0064\u0075p\u006c\u0069\u0063\u0061t\u0065\u0020r\u0065\u0067\u0069\u0073\u0074\u0072\u0061\u0074i\u006f\u006e\u0020\u006f\u0066\u0020\u0066\u0075\u006e\u0063\u0074\u0069o\u006e\u0020\u0025\u0073",name );
-};_eedg [name ]=fn ;};
-
-// MakeStringResult constructs a string result.
-func MakeStringResult (s string )Result {return Result {Type :ResultTypeString ,ValueString :s }};
-
-// Fvschedule implements the Excel FVSCHEDULE function.
-func Fvschedule (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0046\u0056\u0053\u0043\u0048\u0045D\u0055\u004c\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020t\u0077\u006f\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0046\u0056\u0053\u0043\u0048E\u0044\u0055\u004c\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0070\u0072\u0069\u006e\u0063\u0069\u0070\u0061\u006c\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
-};_aea :=args [0].ValueNumber ;switch args [1].Type {case ResultTypeNumber :return MakeNumberResult (_aea *(args [1].ValueNumber +1));case ResultTypeList ,ResultTypeArray :_dccfb :=_badg (args [1]);for _ ,_ebd :=range _dccfb {for _ ,_faf :=range _ebd {if _faf .Type !=ResultTypeNumber ||_faf .IsBoolean {return MakeErrorResult ("\u0046\u0056\u0053\u0043\u0048\u0045\u0044\u0055\u004c\u0045\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020r\u0061\u0074\u0065\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075m\u0062\u0065\u0072\u0073");
-};_aea *=1.0+_faf .ValueNumber ;};};return MakeNumberResult (_aea );default:return MakeErrorResult ("\u0046\u0056\u0053\u0043\u0048\u0045\u0044\u0055\u004c\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020s\u0063\u0068\u0065\u0064\u0075\u006c\u0065\u0020\u0074o\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006f\u0072\u0020\u0061\u0072\u0072a\u0079\u0020\u0074y\u0070\u0065");
-};};
-
-// YearFrac is an implementation of the Excel YEARFRAC() function.
-func YearFrac (args []Result )Result {_ecgc :=len (args );if (_ecgc !=2&&_ecgc !=3)||args [0].Type !=ResultTypeNumber ||args [1].Type !=ResultTypeNumber {return MakeErrorResult ("Y\u0045\u0041\u0052\u0046\u0052\u0041\u0043\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020tw\u006f\u0020\u006f\u0072 \u0074\u0068\u0072\u0065\u0065\u0020\u006e\u0075\u006dbe\u0072\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_dege :=0;if _ecgc ==3&&args [2].Type !=ResultTypeEmpty {if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("Y\u0045\u0041\u0052\u0046\u0052\u0041\u0043\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020ba\u0073\u0069\u0073\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074o \u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_dege =int (args [2].ValueNumber );if !_feeb (_dege ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065c\u0074\u0020b\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u0059\u0045\u0041R\u0046\u0052\u0041\u0043");
-};};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0045\u0041\u0052\u0046\u0052\u0041\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020s\u0074\u0061\u0072\u0074\u0020\u0064\u0061t\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_bced :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0045\u0041\u0052\u0046\u0052\u0041\u0043 \u0072\u0065\u0071ui\u0072\u0065\u0073\u0020\u0065\u006ed\u0020\u0064\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-};_ebgc :=args [1].ValueNumber ;_dbcg ,_bca :=_gad (_bced ,_ebgc ,_dege );if _bca .Type ==ResultTypeError {return _bca ;};return MakeNumberResult (_dbcg );};var (_fbegg =0;_fdab =false ;);type amorArgs struct{_afed float64 ;_bcab float64 ;_fgfb float64 ;
-_bdaa float64 ;_ggce int ;_eebc float64 ;_aaea int ;};
-
-// LookupFunctionComplex looks up and returns a complex function or nil.
-func LookupFunctionComplex (name string )FunctionComplex {_cdccd .Lock ();defer _cdccd .Unlock ();if _gegf ,_cgcca :=_eedg [name ];_cgcca {return _gegf ;};return nil ;};const _dcgfg =57368;
-
-// IsDBCS returns false for the invalid reference context.
-func (_aeeae *ivr )IsDBCS ()bool {return false };
-
-// Eval evaluates the binary expression using the context given.
-func (_cb BinaryExpr )Eval (ctx Context ,ev Evaluator )Result {_ac :=_cb ._fcf .Eval (ctx ,ev );if _ac .Type ==ResultTypeError {return _ac ;};_ebe :=_cb ._ga .Eval (ctx ,ev );if _ebe .Type ==ResultTypeError {return _ebe ;};if _ac .Type ==_ebe .Type {if _ac .Type ==ResultTypeArray {if !_aa (_ac .ValueArray ,_ebe .ValueArray ){return MakeErrorResult ("l\u0068\u0073\u002f\u0072\u0068\u0073 \u0073\u0068\u006f\u0075\u006c\u0064 \u0068\u0061\u0076\u0065\u0020\u0073\u0061m\u0065\u0020\u0064\u0069\u006d\u0065\u006e\u0073\u0069\u006fn\u0073");
-};return _bb (_cb ._cag ,_ac .ValueArray ,_ebe .ValueArray );}else if _ac .Type ==ResultTypeList {if len (_ac .ValueList )!=len (_ebe .ValueList ){return MakeErrorResult ("l\u0068\u0073\u002f\u0072\u0068\u0073 \u0073\u0068\u006f\u0075\u006c\u0064 \u0068\u0061\u0076\u0065\u0020\u0073\u0061m\u0065\u0020\u0064\u0069\u006d\u0065\u006e\u0073\u0069\u006fn\u0073");
-};return _bcc (_cb ._cag ,_ac .ValueList ,_ebe .ValueList );};}else if _ac .Type ==ResultTypeArray &&(_ebe .Type ==ResultTypeNumber ||_ebe .Type ==ResultTypeString ){return _cbd (_cb ._cag ,_ac .ValueArray ,_ebe );}else if _ac .Type ==ResultTypeList &&(_ebe .Type ==ResultTypeNumber ||_ebe .Type ==ResultTypeString ){return _fd (_cb ._cag ,_ac .ValueList ,_ebe );
-};switch _cb ._cag {case BinOpTypePlus :if _ac .Type ==_ebe .Type {if _ac .Type ==ResultTypeNumber {return MakeNumberResult (_ac .ValueNumber +_ebe .ValueNumber );};};case BinOpTypeMinus :if _ac .Type ==_ebe .Type {if _ac .Type ==ResultTypeNumber {return MakeNumberResult (_ac .ValueNumber -_ebe .ValueNumber );
-};};case BinOpTypeMult :if _ac .Type ==_ebe .Type {if _ac .Type ==ResultTypeNumber {return MakeNumberResult (_ac .ValueNumber *_ebe .ValueNumber );};};case BinOpTypeDiv :if _ac .Type ==_ebe .Type {if _ac .Type ==ResultTypeNumber {if _ebe .ValueNumber ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0064\u0069\u0076\u0069\u0064\u0065\u0020\u0062\u0079 \u007a\u0065\u0072\u006f");
-};return MakeNumberResult (_ac .ValueNumber /_ebe .ValueNumber );};};case BinOpTypeExp :if _ac .Type ==_ebe .Type {if _ac .Type ==ResultTypeNumber {return MakeNumberResult (_d .Pow (_ac .ValueNumber ,_ebe .ValueNumber ));};};case BinOpTypeLT :if _ac .Type ==_ebe .Type {if _ac .Type ==ResultTypeNumber {return MakeBoolResult (_ac .ValueNumber < _ebe .ValueNumber );
-};if _ac .Type ==ResultTypeString {return MakeBoolResult (_ac .ValueString < _ebe .ValueString );};if _ac .Type ==ResultTypeEmpty {return MakeBoolResult (false );};}else if _ac .Type ==ResultTypeString &&_ebe .Type ==ResultTypeNumber {return MakeBoolResult (false );
-}else if _ac .Type ==ResultTypeNumber &&_ebe .Type ==ResultTypeString {return MakeBoolResult (true );}else if _ac .Type ==ResultTypeEmpty &&(_ebe .Type ==ResultTypeNumber ||_ebe .Type ==ResultTypeString ){return MakeBoolResult (true );}else if (_ac .Type ==ResultTypeNumber ||_ac .Type ==ResultTypeString )&&_ebe .Type ==ResultTypeEmpty {return MakeBoolResult (false );
-};case BinOpTypeGT :if _ac .Type ==_ebe .Type {if _ac .Type ==ResultTypeNumber {return MakeBoolResult (_ac .ValueNumber > _ebe .ValueNumber );};if _ac .Type ==ResultTypeString {return MakeBoolResult (_ac .ValueString > _ebe .ValueString );};if _ac .Type ==ResultTypeEmpty {return MakeBoolResult (false );
-};}else if _ac .Type ==ResultTypeString &&_ebe .Type ==ResultTypeNumber {return MakeBoolResult (true );}else if _ac .Type ==ResultTypeNumber &&_ebe .Type ==ResultTypeString {return MakeBoolResult (false );}else if _ac .Type ==ResultTypeEmpty &&(_ebe .Type ==ResultTypeNumber ||_ebe .Type ==ResultTypeString ){return MakeBoolResult (false );
-}else if (_ac .Type ==ResultTypeNumber ||_ac .Type ==ResultTypeString )&&_ebe .Type ==ResultTypeEmpty {return MakeBoolResult (true );};case BinOpTypeEQ :if _ac .Type ==_ebe .Type {if _ac .Type ==ResultTypeNumber {return MakeBoolResult (_ac .ValueNumber ==_ebe .ValueNumber );
-};if _ac .Type ==ResultTypeString {return MakeBoolResult (_ac .ValueString ==_ebe .ValueString );};if _ac .Type ==ResultTypeEmpty {return MakeBoolResult (true );};}else if (_ac .Type ==ResultTypeString &&_ebe .Type ==ResultTypeNumber )||(_ac .Type ==ResultTypeNumber &&_ebe .Type ==ResultTypeString ){return MakeBoolResult (false );
-}else if _ac .Type ==ResultTypeEmpty &&(_ebe .Type ==ResultTypeNumber ||_ebe .Type ==ResultTypeString ){return MakeBoolResult (_bf (_ebe ));}else if (_ac .Type ==ResultTypeNumber ||_ac .Type ==ResultTypeString )&&_ebe .Type ==ResultTypeEmpty {return MakeBoolResult (_bf (_ac ));
-};case BinOpTypeNE :if _ac .Type ==_ebe .Type {if _ac .Type ==ResultTypeNumber {return MakeBoolResult (_ac .ValueNumber !=_ebe .ValueNumber );};if _ac .Type ==ResultTypeString {return MakeBoolResult (_ac .ValueString !=_ebe .ValueString );};if _ac .Type ==ResultTypeEmpty {return MakeBoolResult (false );
-};}else if (_ac .Type ==ResultTypeString &&_ebe .Type ==ResultTypeNumber )||(_ac .Type ==ResultTypeNumber &&_ebe .Type ==ResultTypeString ){return MakeBoolResult (true );}else if _ac .Type ==ResultTypeEmpty &&(_ebe .Type ==ResultTypeNumber ||_ebe .Type ==ResultTypeString ){return MakeBoolResult (!_bf (_ebe ));
-}else if (_ac .Type ==ResultTypeNumber ||_ac .Type ==ResultTypeString )&&_ebe .Type ==ResultTypeEmpty {return MakeBoolResult (!_bf (_ac ));};case BinOpTypeLEQ :if _ac .Type ==_ebe .Type {if _ac .Type ==ResultTypeNumber {return MakeBoolResult (_ac .ValueNumber <=_ebe .ValueNumber );
-};if _ac .Type ==ResultTypeString {return MakeBoolResult (_ac .ValueString <=_ebe .ValueString );};if _ac .Type ==ResultTypeEmpty {return MakeBoolResult (true );};}else if _ac .Type ==ResultTypeString &&_ebe .Type ==ResultTypeNumber {return MakeBoolResult (false );
-}else if _ac .Type ==ResultTypeNumber &&_ebe .Type ==ResultTypeString {return MakeBoolResult (true );}else if _ac .Type ==ResultTypeEmpty &&(_ebe .Type ==ResultTypeNumber ||_ebe .Type ==ResultTypeString ){return MakeBoolResult (_bf (_ebe ));}else if (_ac .Type ==ResultTypeNumber ||_ac .Type ==ResultTypeString )&&_ebe .Type ==ResultTypeEmpty {return MakeBoolResult (_bf (_ac ));
-};case BinOpTypeGEQ :if _ac .Type ==_ebe .Type {if _ac .Type ==ResultTypeNumber {return MakeBoolResult (_ac .ValueNumber >=_ebe .ValueNumber );};if _ac .Type ==ResultTypeString {return MakeBoolResult (_ac .ValueString >=_ebe .ValueString );};if _ac .Type ==ResultTypeEmpty {return MakeBoolResult (true );
-};}else if _ac .Type ==ResultTypeString &&_ebe .Type ==ResultTypeNumber {return MakeBoolResult (true );}else if _ac .Type ==ResultTypeNumber &&_ebe .Type ==ResultTypeString {return MakeBoolResult (false );}else if _ac .Type ==ResultTypeEmpty &&(_ebe .Type ==ResultTypeNumber ||_ebe .Type ==ResultTypeString ){return MakeBoolResult (_bf (_ebe ));
-}else if (_ac .Type ==ResultTypeNumber ||_ac .Type ==ResultTypeString )&&_ebe .Type ==ResultTypeEmpty {return MakeBoolResult (_bf (_ac ));};case BinOpTypeConcat :return MakeStringResult (_ac .Value ()+_ebe .Value ());};return MakeErrorResult ("u\u006e\u0073\u0075\u0070po\u0072t\u0065\u0064\u0020\u0062\u0069n\u0061\u0072\u0079\u0020\u006f\u0070");
-};const (BinOpTypeUnknown BinOpType =iota ;BinOpTypePlus ;BinOpTypeMinus ;BinOpTypeMult ;BinOpTypeDiv ;BinOpTypeExp ;BinOpTypeLT ;BinOpTypeGT ;BinOpTypeEQ ;BinOpTypeLEQ ;BinOpTypeGEQ ;BinOpTypeNE ;BinOpTypeConcat ;);
-
-// Negate is a negate expression like -A1.
-type Negate struct{_ecbga Expression };const _fbee =57349;var _dcgc =[]ri {{1000,"\u004d"},{990,"\u0058\u004d"},{950,"\u004c\u004d"},{900,"\u0043\u004d"},{500,"\u0044"},{490,"\u0058\u0044"},{450,"\u004c\u0044"},{400,"\u0043\u0044"},{100,"\u0043"},{99,"\u0049\u0043"},{90,"\u0058\u0043"},{50,"\u004c"},{45,"\u0056\u004c"},{40,"\u0058\u004c"},{10,"\u0058"},{9,"\u0049\u0058"},{5,"\u0056"},{4,"\u0049\u0056"},{1,"\u0049"}};
-
-
-// Eval evaluates and returns a string.
-func (_gbbbd String )Eval (ctx Context ,ev Evaluator )Result {return MakeStringResult (_gbbbd ._bfed )};func _fedd (_deedf []Result ,_gfdc string )(*cumulArgs ,Result ){if len (_deedf )!=6{return nil ,MakeErrorResult (_gfdc +"\u0020\u0072\u0065qu\u0069\u0072\u0065\u0073\u0020\u0073\u0069\u0078\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if _deedf [0].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_gfdc +"\u0020\u0072eq\u0075\u0069\u0072e\u0073\u0020\u0072\u0061te \u0074o \u0062\u0065\u0020\u006e\u0075\u006d\u0062er\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");};_cdfc :=_deedf [0].ValueNumber ;
-if _cdfc <=0{return nil ,MakeErrorResultType (ErrorTypeNum ,_gfdc +"\u0020r\u0065\u0071u\u0069\u0072\u0065s\u0020\u0072\u0061\u0074\u0065\u0020\u0074o\u0020\u0062\u0065\u0020\u0070\u006fs\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if _deedf [1].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_gfdc +"\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
-};_ccc :=_deedf [1].ValueNumber ;if _ccc <=0{return nil ,MakeErrorResultType (ErrorTypeNum ,_gfdc +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020p\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f \u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020\u0061r\u0067\u0075\u006de\u006e\u0074");
-};if _deedf [2].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_gfdc +"\u0020r\u0065\u0071u\u0069\u0072\u0065s\u0020\u0070\u0072\u0065\u0073\u0065\u006et\u0020\u0076\u0061\u006c\u0075\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_afea :=_deedf [2].ValueNumber ;if _afea <=0{return nil ,MakeErrorResultType (ErrorTypeNum ,_gfdc +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065\u0073\u0065n\u0074\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065 \u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006dbe\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if _deedf [3].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_gfdc +"\u0020r\u0065\u0071u\u0069\u0072\u0065\u0073 \u0073\u0074\u0061r\u0074\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020to\u0020\u0062\u0065 \u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
-};_bfge :=_deedf [3].ValueNumber ;if _bfge <=0{return nil ,MakeErrorResultType (ErrorTypeNum ,_gfdc +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073t\u0061\u0072\u0074\u0020\u0070\u0065\u0072\u0069o\u0064 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if _deedf [4].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_gfdc +"\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0065\u006e\u0064\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_bfgd :=_deedf [4].ValueNumber ;if _bfgd <=0{return nil ,MakeErrorResultType (ErrorTypeNum ,_gfdc +"\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0065\u006e\u0064\u0020\u0070\u0065\u0072\u0069\u006fd\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
-};if _bfgd < _bfge {return nil ,MakeErrorResultType (ErrorTypeNum ,_gfdc +"\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0065\u006e\u0064\u0020p\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006c\u0061\u0074\u0065\u0072\u0020o\u0072\u0020\u0065\u0071\u0075a\u006c\u0020\u0074\u006f\u0020\u0073\u0074\u0061\u0072\u0074\u0020\u0070\u0065\u0072\u0069\u006f\u0064");
-};if _bfgd > _ccc {return nil ,MakeErrorResultType (ErrorTypeNum ,_gfdc +" \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074o\u0020\u0062\u0065\u0020\u0069\u006e\u0020\u0070\u0065\u0072io\u0064\u0073\u0020r\u0061n\u0067\u0065");
-};_becf :=int (_deedf [5].ValueNumber );if _becf !=0&&_becf !=1{return nil ,MakeErrorResultType (ErrorTypeNum ,_gfdc +" \u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0074\u0079\u0070\u0065\u0020\u0074\u006f \u0062\u0065\u00200\u0020o\u0072\u0020\u0031");
-};return &cumulArgs {_cdfc ,_ccc ,_afea ,_bfge ,_bfgd ,_becf },_fca ;};const _fcec =57360;
-
-// Day is an implementation of the Excel DAY() function.
-func Day (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0044A\u0059\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065 \u0061\u0072\u0067\u0075\u006d\u0065\u006et");};_cfde :=args [0];switch _cfde .Type {case ResultTypeEmpty :return MakeNumberResult (0);
-case ResultTypeNumber :_ccgg :=_dad (_cfde .ValueNumber );return MakeNumberResult (float64 (_ccgg .Day ()));case ResultTypeString :_ffd :=_bcd .ToLower (_cfde .ValueString );if !_gfd (_ffd ){_ ,_ ,_ ,_ ,_bbbg ,_cdcb :=_ddcb (_ffd );if _cdcb .Type ==ResultTypeError {_cdcb .ErrorMessage ="I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073\u0020\u0066o\u0072 \u0044\u0041\u0059";
-return _cdcb ;};if _bbbg {return MakeNumberResult (0);};};_ ,_ ,_cfdg ,_ ,_gbd :=_eea (_ffd );if _gbd .Type ==ResultTypeError {return _gbd ;};return MakeNumberResult (float64 (_cfdg ));default:return MakeErrorResult ("\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072 \u0044\u0041\u0059");
-};};const _acae =2;const _eebg =57372;
-
-// Update returns the same object as updating sheet references does not affect Number.
-func (_ddcedc Number )Update (q *_a .UpdateQuery )Expression {return _ddcedc };var _cfdc ,_agbf ,_fcgb ,_degbc ,_bbae ,_fgdd ,_faaa ,_afcf ,_eggc ,_fbbe ,_edge ,_cfgba ,_fafa ,_eebff ,_dggdc *_fa .Regexp ;
-
-// String is a string expression.
-type String struct{_bfed string };
-
-// IsNA is an implementation of the Excel ISNA() function.
-func IsNA (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u004e\u0041\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074");};return MakeBoolResult (args [0].Type ==ResultTypeError &&args [0].ValueString =="\u0023\u004e\u002f\u0041");
-};func _geee (_bdcaf []Result ,_cfaf countMode )float64 {_face :=0.0;for _ ,_acdda :=range _bdcaf {switch _acdda .Type {case ResultTypeNumber :if _cfaf ==_eccc ||(_cfaf ==_daeg &&!_acdda .IsBoolean ){_face ++;};case ResultTypeList ,ResultTypeArray :_face +=_geee (_acdda .ListValues (),_cfaf );
-case ResultTypeString :if _cfaf ==_eccc {_face ++;};case ResultTypeEmpty :if _cfaf ==_dceg {_face ++;};};};return _face ;};
-
-// Effect implements the Excel EFFECT function.
-func Effect (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0045\u0046F\u0045\u0043\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0073");};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0045\u0046\u0046\u0045\u0043\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u006f\u006d\u0069n\u0061\u006c\u0020\u0069\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065n\u0074");
-};_geag :=args [0].ValueNumber ;if _geag <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0045\u0046\u0046\u0045\u0043\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u006f\u006d\u0069n\u0061\u006c\u0020\u0069\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062e\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062e\u0072\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074");
-};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0045\u0046\u0046\u0045\u0043\u0054 \u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u006f\u0066 \u0063\u006f\u006d\u0070\u006f\u0075\u006e\u0064\u0069\u006e\u0067\u0020p\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074");
-};_gcbg :=float64 (int (args [1].ValueNumber ));if _gcbg < 1{return MakeErrorResultType (ErrorTypeNum ,"E\u0046\u0046\u0045\u0043\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0063o\u006dp\u006f\u0075\u006e\u0064i\u006e\u0067 \u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0031\u0020\u006f\u0072\u0020\u006d\u006f\u0072\u0065");
-};return MakeNumberResult (_d .Pow ((1+_geag /_gcbg ),_gcbg )-1);};const _beef ="\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0054\u0049\u004d\u0045\u0056\u0041\u004c\u0055\u0045";
-
-
-// GetLabelPrefix returns an empty string for the invalid reference context.
-func (_ebdea *ivr )GetLabelPrefix (cellRef string )string {return ""};
-
-// Date is an implementation of the Excel DATE() function.
-func Date (args []Result )Result {if len (args )!=3||args [0].Type !=ResultTypeNumber ||args [1].Type !=ResultTypeNumber ||args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0041TE\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s t\u0068re\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
-};_egff :=int (args [0].ValueNumber );if _egff < 0||_egff >=10000{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074 \u0064\u0061\u0074\u0065");}else if _egff <=1899{_egff +=1900;};_fed :=_g .Month (args [1].ValueNumber );
-_dcaa :=int (args [2].ValueNumber );_cga :=_ead (_egff ,_fed ,_dcaa );_cbg :=_add (_gag ,_cga )+1;if _cbg < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074 \u0064\u0061\u0074\u0065");};return MakeNumberResult (_cbg );
-};type durationArgs struct{_cfe float64 ;_cef float64 ;_cegad float64 ;_bfad float64 ;_dgc float64 ;_gafg int ;};var _fdd =[]*_fa .Regexp {};
-
-// Update returns the same object as updating sheet references does not affect Error.
-func (_fff Error )Update (q *_a .UpdateQuery )Expression {return _fff };
-
-// Rate implements the Excel RATE function.
-func Rate (args []Result )Result {_ffeec :=len (args );if _ffeec < 3||_ffeec > 6{return MakeErrorResult ("\u0052\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006f\u0066\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u006f\u0066\u0020\u0074\u0068\u0072\u0065\u0065 \u0061\u006e\u0064\u0020\u0073i\u0078");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006ff\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_cbgd :=args [0].ValueNumber ;if _cbgd !=float64 (int (_cbgd )){return MakeErrorResultType (ErrorTypeNum ,"R\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0070\u0065\u0072i\u006fd\u0073\u0020\u0074\u006f \u0062\u0065 \u0069\u006e\u0074\u0065\u0067\u0065\u0072\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0041\u0054\u0045\u0020\u0072\u0065q\u0075\u0069\u0072e\u0073\u0020\u0070\u0061y\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_cbfb :=args [1].ValueNumber ;if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0041\u0054\u0045\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065\u0073\u0065\u006e\u0074\u0020\u0076\u0061\u006c\u0075\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
-};_ebbc :=args [2].ValueNumber ;_cbed :=0.0;if _ffeec >=4&&args [3].Type !=ResultTypeEmpty {if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0041\u0054\u0045\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s \u0066\u0075\u0074\u0075\u0072\u0065 \u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-};_cbed =args [3].ValueNumber ;};_ebed :=0.0;if _ffeec >=5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("R\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0079\u0070\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_ebed =args [4].ValueNumber ;if _ebed !=0{_ebed =1;};};_aga :=0.1;if _ffeec >=6&&args [5].Type !=ResultTypeEmpty {if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0041\u0054\u0045\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0067\u0075\u0065\u0073\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_aga =args [5].ValueNumber ;};_dbdg :=100;_gaae :=0;_gcbd :=false ;_acagf :=1e-6;_eabc :=_aga ;for _gaae < _dbdg &&!_gcbd {_afcg :=_d .Pow (_eabc +1,_cbgd );_bbfc :=_d .Pow (_eabc +1,_cbgd -1);_ggbfg :=_eabc *_ebed +1;_gggf :=_cbfb *(_afcg -1);_bbed :=_cbed +_afcg *_ebbc +_gggf *_ggbfg /_eabc ;
-_bafe :=_cbgd *_bbfc *_ebbc -_gggf *_ggbfg /_d .Pow (_eabc ,2);_ebda :=(_cbgd *_cbfb *_bbfc *_ggbfg +_gggf *_ebed )/_eabc ;_cedg :=_bbed /(_bafe +_ebda );if _d .Abs (_cedg )< _acagf {_gcbd =true ;};_gaae ++;_eabc -=_cedg ;};return MakeNumberResult (_eabc );
-};func _ggbba (_cgcb Result )[]Result {_degf :=_cgcb .ValueList ;if _cgcb .Type ==ResultTypeArray {_degf =nil ;for _ ,_badb :=range _cgcb .ValueArray {if len (_badb )> 0{_degf =append (_degf ,_badb [0]);}else {_degf =append (_degf ,_fca );};};};return _degf ;
-};const _efege =57373;var _cgbc =[]ri {{1000,"\u004d"},{950,"\u004c\u004d"},{900,"\u0043\u004d"},{500,"\u0044"},{450,"\u004c\u0044"},{400,"\u0043\u0044"},{100,"\u0043"},{95,"\u0056\u0043"},{90,"\u0058\u0043"},{50,"\u004c"},{45,"\u0056\u004c"},{40,"\u0058\u004c"},{10,"\u0058"},{9,"\u0049\u0058"},{5,"\u0056"},{4,"\u0049\u0056"},{1,"\u0049"}};
-func _cgee (_dade int )string {if _dade >=0&&_dade < len (_bebb ){if _bebb [_dade ]!=""{return _bebb [_dade ];};};return _b .Sprintf ("\u0073\u0074\u0061\u0074\u0065\u002d\u0025\u0076",_dade );};type couponArgs struct{_dbeb float64 ;_bfbe float64 ;_fdf int ;
-_fgae int ;};const _gff =_g .Second *1;
-
-// GetWidth returns 0 for the invalid reference context.
-func (_fbfa *ivr )GetWidth (colIdx int )float64 {return float64 (0)};
-
-// Reference returns a string reference value to a range.
-func (_abcae Range )Reference (ctx Context ,ev Evaluator )Reference {_cbgdg :=_abcae ._eege .Reference (ctx ,ev );_befe :=_abcae ._cbfg .Reference (ctx ,ev );if _cbgdg .Type ==ReferenceTypeCell &&_befe .Type ==ReferenceTypeCell {return MakeRangeReference (_deba (_cbgdg ,_befe ));
-};return ReferenceInvalid ;};func _fcge (_aca []Result ,_eeed string )(*couponArgs ,Result ){_aacd :=len (_aca );if _aacd !=3&&_aacd !=4{return nil ,MakeErrorResult (_eeed +"\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u006f\u0072\u0020\u0066o\u0075\u0072\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_befd ,_dddbg ,_gccd :=_fbae (_aca [0],_aca [1],_eeed );if _gccd .Type ==ResultTypeError {return nil ,_gccd ;};if _aca [2].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_eeed +"\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0066\u0072\u0065\u0071\u0075\u0065\u006e\u0063\u0079 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_fdfe :=_aca [2].ValueNumber ;if !_bcf (_fdfe ){return nil ,MakeErrorResult ("\u0049n\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0066\u0072\u0065q\u0075\u0065\u006e\u0063\u0079\u0020\u0066\u006f\u0072\u0020"+_eeed );};_edg :=0;if _aacd ==4&&_aca [3].Type !=ResultTypeEmpty {if _aca [3].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_eeed +"\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020b\u0061\u0073\u0069\u0073\u0020\u0074\u006f\u0020b\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_edg =int (_aca [3].ValueNumber );if !_feeb (_edg ){return nil ,MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020fo\u0072\u0020"+_eeed );
-};};return &couponArgs {_befd ,_dddbg ,int (_fdfe ),_edg },_fca ;};func LexReader (r _bc .Reader )chan *node {_ebea :=NewLexer ();go _ebea .lex (r );return _ebea ._dcceb };const _fab ="\u0028\u0028\u005b0\u002d\u0039\u005d\u0029\u002b\u0029\u003a\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u005c\u002e\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029\u0028\u0020(\u0061\u006d\u007c\u0070\u006d\u0029\u0029\u003f";
-
-
-// LCM implements the Excel LCM() function which returns the least common
-// multiple of a range of numbers.
-func LCM (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u004c\u0043M(\u0029\u0020\u0072e\u0071\u0075\u0069\u0072es \u0061t \u006c\u0065\u0061\u0073\u0074\u0020\u006fne\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");};_ebdac :=[]float64 {};
-for _ ,_fdaag :=range args {switch _fdaag .Type {case ResultTypeString :_geff :=_fdaag .AsNumber ();if _geff .Type !=ResultTypeNumber {return MakeErrorResult ("\u004c\u0043M(\u0029\u0020\u006fn\u006c\u0079\u0020\u0061cce\u0070ts\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
-};_ebdac =append (_ebdac ,_geff .ValueNumber );case ResultTypeList :_eccac :=LCM (_fdaag .ValueList );if _eccac .Type !=ResultTypeNumber {return _eccac ;};_ebdac =append (_ebdac ,_eccac .ValueNumber );case ResultTypeNumber :_ebdac =append (_ebdac ,_fdaag .ValueNumber );
-case ResultTypeEmpty :case ResultTypeError :return _fdaag ;};};if len (_ebdac )==0{return MakeErrorResult ("\u004cC\u004d\u0020r\u0065\u0071\u0075\u0069r\u0065\u0073\u0020a\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006fne\u0020\u006e\u006fn\u002d\u0065m\u0070\u0074\u0079\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
-};if _ebdac [0]< 0{return MakeErrorResult ("\u004c\u0043M\u0028\u0029\u0020\u006fn\u006c\u0079 \u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020p\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");};if len (_ebdac )==1{return MakeNumberResult (_ebdac [0]);
-};_gfebf :=_ebdac [0];for _cbba :=1;_cbba < len (_ebdac );_cbba ++{if _ebdac [_cbba ]< 0{return MakeErrorResult ("\u004c\u0043M\u0028\u0029\u0020\u006fn\u006c\u0079 \u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020p\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_gfebf =_gfcf (_gfebf ,_ebdac [_cbba ]);};return MakeNumberResult (_gfebf );};func _fbae (_egga ,_ecda Result ,_gdcc string )(float64 ,float64 ,Result ){_aadg ,_gaf :=_cdde (_egga ,"\u0073e\u0074t\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074\u0065",_gdcc );
-if _gaf .Type ==ResultTypeError {return 0,0,_gaf ;};_afa ,_gaf :=_cdde (_ecda ,"\u006d\u0061\u0074\u0075\u0072\u0069\u0074\u0079\u0020\u0064\u0061\u0074\u0065",_gdcc );if _gaf .Type ==ResultTypeError {return 0,0,_gaf ;};if _aadg >=_afa {return 0,0,MakeErrorResultType (ErrorTypeNum ,_gdcc +"\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020m\u0061\u0074\u0075r\u0069\u0074\u0079\u0020\u0064\u0061\u0074\u0065\u0020\u0074o\u0020\u0062\u0065\u0020\u006cat\u0065\u0072\u0020\u0074\u0068\u0061\u006e\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074\u0065");
-};return _aadg ,_afa ,_fca ;};
-
-// FunctionCall is a function call expression.
-type FunctionCall struct{_ffgb string ;_ebga []Expression ;};
-
-// Mround is an implementation of the Excel MROUND function.  It is not a
-// generic rounding function and has some oddities to match Excel's behavior.
-func Mround (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u004d\u0052\u004f\u0055\u004e\u0044\u0028\u0029\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0074\u0077o\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_caeg :=args [0].AsNumber ();if _caeg .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072\u0073\u0074\u0020\u0061r\u0067\u0075\u006de\u006e\u0074\u0020\u0074o\u0020\u004d\u0052\u004f\u0055\u004e\u0044\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_fdbd :=float64 (1);_ggag :=args [1].AsNumber ();if _ggag .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073e\u0063\u006fn\u0064\u0020\u0061\u0072g\u0075\u006d\u0065n\u0074\u0020\u0074\u006f\u0020\u004d\u0052\u004f\u0055ND\u0028\u0029\u0020m\u0075\u0073t\u0020\u0062\u0065\u0020\u0061\u0020n\u0075\u006db\u0065\u0072");
-};_fdbd =_ggag .ValueNumber ;if _fdbd < 0&&_caeg .ValueNumber > 0||_fdbd > 0&&_caeg .ValueNumber < 0{return MakeErrorResult ("\u004d\u0052\u004fUN\u0044\u0028\u0029\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020s\u0069g\u006e\u0073\u0020\u006d\u0075\u0073\u0074\u0020\u006d\u0061\u0074\u0063\u0068");
-};_fdddd :=_caeg .ValueNumber ;_fdddd ,_cecg :=_d .Modf (_fdddd /_fdbd );if _d .Trunc (_cecg +0.5)> 0{_fdddd ++;};return MakeNumberResult (_fdddd *_fdbd );};
-
-// Eval evaluates a vertical range with prefix returning a list of results or an error.
-func (_cdeg PrefixVerticalRange )Eval (ctx Context ,ev Evaluator )Result {_ffgf :=_cdeg ._efdgde .Reference (ctx ,ev );switch _ffgf .Type {case ReferenceTypeSheet :if _fegcda (_ffgf ,ctx ){return MakeErrorResultType (ErrorTypeName ,_b .Sprintf ("\u0053h\u0065e\u0074\u0020\u0025\u0073\u0020n\u006f\u0074 \u0066\u006f\u0075\u006e\u0064",_ffgf .Value ));
-};_bebc :=_cdeg .verticalRangeReference (_ffgf .Value );if _dgab ,_efgcb :=ev .GetFromCache (_bebc );_efgcb {return _dgab ;};_ggbd :=ctx .Sheet (_ffgf .Value );_ebee ,_gabcg :=_caca (_ggbd ,_cdeg ._eebda ,_cdeg ._ebcdb );_bcbba :=_ggac (_ggbd ,ev ,_ebee ,_gabcg );
-ev .SetCache (_bebc ,_bcbba );return _bcbba ;default:return MakeErrorResult (_b .Sprintf ("\u006e\u006f\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0020\u0066\u006f\u0072\u0020r\u0065f\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_ffgf .Type ));
-};};func _bfadc (_ggfdd []Result ,_edfa bool )Result {_bbfee :="\u004d\u0041\u0058";if _edfa {_bbfee ="\u004d\u0041\u0058\u0041";};if len (_ggfdd )==0{return MakeErrorResult (_bbfee +"\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s\u0020\u0061\u0074\u0020\u006c\u0065\u0061s\u0074\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_ffefd :=-_d .MaxFloat64 ;for _ ,_gebaaa :=range _ggfdd {switch _gebaaa .Type {case ResultTypeNumber :if (_edfa ||!_gebaaa .IsBoolean )&&_gebaaa .ValueNumber > _ffefd {_ffefd =_gebaaa .ValueNumber ;};case ResultTypeList ,ResultTypeArray :_bafac :=_bfadc (_gebaaa .ListValues (),_edfa );
-if _bafac .ValueNumber > _ffefd {_ffefd =_bafac .ValueNumber ;};case ResultTypeEmpty :case ResultTypeString :_dfgb :=0.0;if _edfa {_dfgb =_gebaaa .AsNumber ().ValueNumber ;};if _dfgb > _ffefd {_ffefd =_dfgb ;};default:_gd .Log .Debug ("\u0075\u006e\u0068\u0061\u006e\u0064\u006c\u0065\u0064\u0020"+_bbfee +"\u0028\u0029\u0020\u0061rg\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_gebaaa .Type );
-};};if _ffefd ==-_d .MaxFloat64 {_ffefd =0;};return MakeNumberResult (_ffefd );};
-
-// Now is an implementation of the Excel NOW() function.
-func Now (args []Result )Result {if len (args )> 0{return MakeErrorResult ("\u004e\u004fW\u0020\u0064\u006f\u0065\u0073\u006e\u0027\u0074\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0073");};_gda :=_g .Now ();
-_ ,_cac :=_gda .Zone ();_dceb :=_ccda +float64 (_gda .Unix ()+int64 (_cac ))/86400;return MakeNumberResult (_dceb );};const _cbgef =57350;
-
-// Reference returns an invalid reference for Error.
-func (_beb Error )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
-
-// BinaryExpr is a binary expression.
-type BinaryExpr struct{_fcf ,_ga Expression ;_cag BinOpType ;};type cumulArgs struct{_bcfg float64 ;_aecb float64 ;_bdbe float64 ;_cddfe float64 ;_bgc float64 ;_fdgc int ;};type criteriaRegex struct{_ccecd byte ;_eggdf string ;};func _ggb (_fcbe int )int {if _fcbe < 1900{if _fcbe < 30{_fcbe +=2000;
-}else {_fcbe +=1900;};};return _fcbe ;};
-
-// Cumipmt implements the Excel CUMIPMT function.
-func Cumipmt (args []Result )Result {_dgfc ,_adgg :=_fedd (args ,"\u0043U\u004d\u0049\u0050\u004d\u0054");if _adgg .Type ==ResultTypeError {return _adgg ;};_dagg :=_dgfc ._bcfg ;_eeafe :=_dgfc ._aecb ;_fabe :=_dgfc ._bdbe ;_ccgc :=_dgfc ._cddfe ;_dfda :=_dgfc ._bgc ;
-_eadg :=_dgfc ._fdgc ;_abff :=_beea (_dagg ,_eeafe ,_fabe ,0,_eadg );_bfga :=0.0;if _ccgc ==1{if _eadg ==0{_bfga =-_fabe ;_ccgc ++;};};for _ecbf :=_ccgc ;_ecbf <=_dfda ;_ecbf ++{if _eadg ==1{_bfga +=_dgfb (_dagg ,_ecbf -2,_abff ,_fabe ,1)-_abff ;}else {_bfga +=_dgfb (_dagg ,_ecbf -1,_abff ,_fabe ,0);
-};};_bfga *=_dagg ;return MakeNumberResult (_bfga );};
-
-// Time is an implementation of the Excel TIME() function.
-func Time (args []Result )Result {if len (args )!=3||args [0].Type !=ResultTypeNumber ||args [1].Type !=ResultTypeNumber ||args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0054\u0049ME\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s t\u0068re\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
-};_fddf :=args [0].ValueNumber ;_agca :=args [1].ValueNumber ;_cgff :=args [2].ValueNumber ;_adba :=_cgeac (_fddf ,_agca ,_cgff );if _adba >=0{return MakeNumberResult (_adba );}else {return MakeErrorResultType (ErrorTypeNum ,"");};};
-
-// MinA is an implementation of the Excel MINA() function.
-func MinA (args []Result )Result {return _fbaedd (args ,true )};
-
-// Disc implements the Excel DISC function.
-func Disc (args []Result )Result {_gcbe :=len (args );if _gcbe !=4&&_gcbe !=5{return MakeErrorResult ("\u0044\u0049SC\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s f\u006fur\u0020\u006f\u0072\u0020\u0066\u0069\u0076e \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
-};_dccb ,_ffdgd ,_agf :=_fbae (args [0],args [1],"\u0044\u0049\u0053\u0043");if _agf .Type ==ResultTypeError {return _agf ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_dbag :=args [2].ValueNumber ;if _dbag <=0{return MakeErrorResultType (ErrorTypeNum ,"D\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0070\u0072\u0020\u0074o \u0062\u0065\u0020\u0070o\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0049S\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065\u006d\u0070\u0074\u0069\u006f\u006e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_fbaee :=args [3].ValueNumber ;if _fbaee <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0049\u0053\u0043\u0020\u0072\u0065q\u0075\u0069\u0072e\u0073\u0020\u0072e\u0064\u0065m\u0070\u0074\u0069\u006f\u006e\u0020t\u006f b\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_feac :=0;if _gcbe ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0049\u0053\u0043\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0062\u0061\u0073\u0069\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_feac =int (args [4].ValueNumber );if !_feeb (_feac ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0066\u006f\u0072 \u0044\u0049\u0053\u0043");
-};};_eabd ,_agf :=_gad (_dccb ,_ffdgd ,_feac );if _agf .Type ==ResultTypeError {return _agf ;};return MakeNumberResult ((_fbaee -_dbag )/_fbaee /_eabd );};
-
-// ResultType is the type of the result
-//
-//go:generate stringer -type=ResultType
-type ResultType byte ;
-
-// NewPrefixVerticalRange constructs a new full columns range with prefix.
-func NewPrefixVerticalRange (pfx Expression ,v string )Expression {_cffcb :=_bcd .Split (v ,"\u003a");if len (_cffcb )!=2{return nil ;};if _cffcb [0]> _cffcb [1]{_cffcb [0],_cffcb [1]=_cffcb [1],_cffcb [0];};return PrefixVerticalRange {_efdgde :pfx ,_eebda :_cffcb [0],_ebcdb :_cffcb [1]};
-};
-
-// Multinomial implements the excel MULTINOMIAL function.
-func Multinomial (args []Result )Result {if len (args )< 1{return MakeErrorResult ("\u004d\u0055\u004c\u0054\u0049\u004eO\u004d\u0049\u0041\u004c\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006ce\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069c\u0020i\u006e\u0070\u0075\u0074");
-};_eggb ,_baad ,_bbfe :=_fbad (args );if _bbfe .Type ==ResultTypeError {return _bbfe ;};return MakeNumberResult (_cegf (_eggb )/_baad );};const _degbcb =57346;
-
-// Number is a nubmer expression.
-type Number struct{_aaeec float64 };
-
-// HasFormula returns FALSE for the invalid reference context.
-func (_cdcc *ivr )HasFormula (cellRef string )bool {return false };func _gfcf (_bbcf ,_degbb float64 )float64 {_bbcf =_d .Trunc (_bbcf );_degbb =_d .Trunc (_degbb );if _bbcf ==0&&_degbb ==0{return 0;};return _bbcf *_degbb /_afcedc (_bbcf ,_degbb );};
-
-// Indirect is an implementation of the Excel INDIRECT function that returns the
-// contents of a cell.
-func Indirect (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=1&&len (args )!=2{return MakeErrorResult ("\u0049\u004e\u0044\u0049\u0052\u0045\u0043\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006f\u006e\u0065\u0020\u006f\u0072 \u0074\u0077\u006f\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_aagf :=args [0].AsString ();if _aagf .Type !=ResultTypeString {return MakeErrorResult ("\u0049\u004e\u0044\u0049\u0052\u0045\u0043\u0054\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069r\u0073t\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066 \u0074\u0079\u0070\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067");
-};return ctx .Cell (_aagf .ValueString ,ev );};const (_ byte =iota ;_ffffg ;_ccbfc ;_cafd ;_cfgbb ;_gcdd ;);
-
-// LastRow returns 0 for the invalid reference context.
-func (_bcfad *ivr )LastRow (colFrom string )int {return 0};func (_beeacg VerticalRange )verticalRangeReference ()string {return _b .Sprintf ("\u0025\u0073\u003a%\u0073",_beeacg ._cdebbe ,_beeacg ._cfeb );};var _bdcg =[...]int {-1000,-7,-3,-1,27,18,22,23,-2,-8,-4,-9,20,-14,10,11,12,13,-5,-13,-6,-12,17,16,15,9,4,5,22,23,24,25,26,28,29,30,31,27,32,35,-1,18,27,-15,-17,-1,-1,-1,-1,33,-5,4,5,21,-16,-11,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,19,36,34,21,-5,33,21,34,19,-17,-1,-5,-10,-1};
-func _defa (_aadc ,_cdedd []string )[]string {for _ ,_bcefg :=range _cdedd {_aadc =append (_aadc ,_bcefg );};return _aadc ;};func _gbaf (){_cbcg =_fa .MustCompile ("\u005e\u0028\u005b\u0030\u002d\u0039\u005d\u002b\u0029\u0024");_ffcf =_fa .MustCompile ("\u005e=\u0028\u002e\u002a\u0029\u0024");
-_abcg =_fa .MustCompile ("\u005e<\u0028\u002e\u002a\u0029\u0024");_efegb =_fa .MustCompile ("\u005e>\u0028\u002e\u002a\u0029\u0024");_bdaca =_fa .MustCompile ("\u005e\u003c\u003d\u0028\u002e\u002a\u0029\u0024");_bedd =_fa .MustCompile ("\u005e\u003e\u003d\u0028\u002e\u002a\u0029\u0024");
-};var _ebgcc =[...]int {123,-1000,-1000,74,163,103,163,163,-1000,-1000,-1000,-1000,163,-1000,-1000,-1000,-1000,-1000,-12,106,-1000,-1000,143,-1000,-1000,-1000,-1000,-1000,163,163,163,163,163,163,163,163,163,163,163,163,74,163,163,6,-28,74,-15,-15,60,10,-14,-1000,-1000,-1000,7,-1000,74,-15,-15,-23,-23,-1000,-8,-8,-8,-8,-8,-8,-4,33,-1000,163,163,-1000,-1000,10,-1000,163,-1000,-28,74,-1000,-1000,74};
-
-
-// String returns a string representation for Bool.
-func (_aec Bool )String ()string {if _aec ._dca {return "\u0054\u0052\u0055\u0045";}else {return "\u0046\u0041\u004cS\u0045";};};func _dcbbf (_faeg string )string {_faeg =_bcd .Replace (_faeg ,"\u000a","\u005c\u006e",-1);_faeg =_bcd .Replace (_faeg ,"\u000d","\u005c\u0072",-1);
-_faeg =_bcd .Replace (_faeg ,"\u0009","\u005c\u0074",-1);return _faeg ;};
-
-// Char is an implementation of the Excel CHAR function that takes an integer in
-// the range [0,255] and returns the corresponding ASCII character.
-func Char (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0043\u0048\u0041\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0061\u0020\u0073\u0069\u006e\u0067l\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_fffb :=args [0].AsNumber ();if _fffb .Type !=ResultTypeNumber {return MakeErrorResult ("\u0043\u0048\u0041\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0061\u0020\u0073\u0069\u006e\u0067l\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_dacd :=int (_fffb .ValueNumber );if _dacd < 0||_dacd > 255{return MakeErrorResult ("\u0043H\u0041\u0052 \u0072\u0065\u0071\u0075i\u0072\u0065\u0073 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073 i\u006e\u0020\u0074h\u0065\u0020r\u0061\u006e\u0067\u0065\u0020\u005b0\u002c\u00325\u0035\u005d");
-};return MakeStringResult (_b .Sprintf ("\u0025\u0063",_dacd ));};
-
-// Reference returns an invalid reference for Number.
-func (_dabdf Number )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };func _abfc (_bfgb ,_cgffe ,_defce ,_cdeb ,_gaec float64 )float64 {var _cedd float64 ;_fedda :=_gaec /_defce ;if _fedda >=1{_fedda =1;if _cdeb ==1{_cedd =_bfgb ;
-}else {_cedd =0;};}else {_cedd =_bfgb *_d .Pow (1-_fedda ,_cdeb -1);};_gdec :=_bfgb *_d .Pow (1-_fedda ,_cdeb );var _dfce float64 ;if _gdec < _cgffe {_dfce =_cedd -_cgffe ;}else {_dfce =_cedd -_gdec ;};if _dfce < 0{_dfce =0;};return _dfce ;};func _acf (_bbcd Result ,_cbdf *criteriaParsed )bool {if _bbcd .Type ==ResultTypeEmpty {return false ;
-};if _cbdf ._fggcg {return _bbcd .ValueNumber ==_cbdf ._accg ;}else {_edfb :=_bcd .ToLower (_bbcd .ValueString );return _cbdf ._bace ==_edfb ||_dg .Match (_cbdf ._bace ,_edfb );};};var _eda =[]int {31,28,31,30,31,30,31,31,30,31,30,31};
-
-// Update returns the same object as updating sheet references does not affect named ranges.
-func (_eafdc NamedRangeRef )Update (q *_a .UpdateQuery )Expression {return _eafdc };type tokenType int ;func _afbc (_gbdg ,_agcg ,_faga ,_afeg ,_dgfe ,_dfbb float64 )float64 {var _aadec ,_aaca float64 ;_dega :=0.0;_fcaa :=_d .Ceil (_dgfe );_gaaec :=_gbdg -_agcg ;
-_baec :=false ;_ffag :=0.0;for _bgcb :=1.0;_bgcb <=_fcaa ;_bgcb ++{if !_baec {_aadec =_abfc (_gbdg ,_agcg ,_faga ,_bgcb ,_dfbb );_ffag =_gaaec /(_faga -_bgcb +1);if _ffag > _aadec {_aaca =_ffag ;_baec =true ;}else {_aaca =_aadec ;_gaaec -=_aadec ;};}else {_aaca =_ffag ;
-};if _bgcb ==_fcaa {_aaca *=_dgfe +1-_fcaa ;};_dega +=_aaca ;};return _dega ;};var _dgad =false ;func _fbad (_ggfd []Result )(float64 ,float64 ,Result ){_degba :=0.0;_aeege :=1.0;for _ ,_ebdd :=range _ggfd {switch _ebdd .Type {case ResultTypeNumber :_degba +=_ebdd .ValueNumber ;
-_aeege *=_cegf (_ebdd .ValueNumber );case ResultTypeList ,ResultTypeArray :_adecb ,_acfcb ,_fbgf :=_fbad (_ebdd .ListValues ());_degba +=_adecb ;_aeege *=_cegf (_acfcb );if _fbgf .Type ==ResultTypeError {return 0,0,_fbgf ;};case ResultTypeString :return 0,0,MakeErrorResult ("M\u0055\u004c\u0054\u0049\u004e\u004f\u004d\u0049\u0041\u004c\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063 a\u0072\u0067\u0075m\u0065n\u0074\u0073");
-case ResultTypeError :return 0,0,_ebdd ;};};return _degba ,_aeege ,_fca ;};
-
-// LastColumn returns empty string for the invalid reference context.
-func (_gebg *ivr )LastColumn (rowFrom ,rowTo int )string {return ""};var _cbedc =[]ri {{1000,"\u004d"},{995,"\u0056\u004d"},{990,"\u0058\u004d"},{950,"\u004c\u004d"},{900,"\u0043\u004d"},{500,"\u0044"},{495,"\u0056\u0044"},{490,"\u0058\u0044"},{450,"\u004c\u0044"},{400,"\u0043\u0044"},{100,"\u0043"},{99,"\u0049\u0043"},{90,"\u0058\u0043"},{50,"\u004c"},{45,"\u0056\u004c"},{40,"\u0058\u004c"},{10,"\u0058"},{9,"\u0049\u0058"},{5,"\u0056"},{4,"\u0049\u0056"},{1,"\u0049"}};
-const _cfea =57374;
 
 // Vdb implements the Excel VDB function.
-func Vdb (args []Result )Result {_aefbc :=len (args );if _aefbc < 5||_aefbc > 7{return MakeErrorResult ("\u0056\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006f\u0066\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0074\u006f\u0020b\u0065\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u0062\u0065\u0074\u0077\u0065\u0065\u006e\u0020\u0066\u0069\u0076\u0065\u0020a\u006e\u0064\u0020\u0073\u0065v\u0065\u006e");
+func Vdb (args []Result )Result {_efae :=len (args );if _efae < 5||_efae > 7{return MakeErrorResult ("\u0056\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006f\u0066\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0074\u006f\u0020b\u0065\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u0062\u0065\u0074\u0077\u0065\u0065\u006e\u0020\u0066\u0069\u0076\u0065\u0020a\u006e\u0064\u0020\u0073\u0065v\u0065\u006e");
 };if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0056\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020c\u006f\u0073\u0074\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_bbce :=args [0].ValueNumber ;if _bbce < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0056\u0044B \u0072\u0065\u0071u\u0069\u0072\u0065\u0073 co\u0073t \u0074\u006f\u0020\u0062\u0065\u0020\u006eon\u0020\u006e\u0065\u0067\u0061\u0074\u0069v\u0065");
+};_bedef :=args [0].ValueNumber ;if _bedef < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0056\u0044B \u0072\u0065\u0071u\u0069\u0072\u0065\u0073 co\u0073t \u0074\u006f\u0020\u0062\u0065\u0020\u006eon\u0020\u006e\u0065\u0067\u0061\u0074\u0069v\u0065");
 };if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0056\u0044\u0042 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061\u0067\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_ebacf :=args [1].ValueNumber ;if _ebacf < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0056\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020s\u0061\u006c\u0076\u0061\u0067\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u006e\u0065\u0067a\u0074\u0069\u0076\u0065");
+};_aagfg :=args [1].ValueNumber ;if _aagfg < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0056\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020s\u0061\u006c\u0076\u0061\u0067\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u006e\u0065\u0067a\u0074\u0069\u0076\u0065");
 };if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0056\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020l\u0069\u0066\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_bdef :=args [2].ValueNumber ;if _bdef ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0056\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0069f\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
-};if _bdef < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0056\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0069f\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("V\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0073\u0074\u0061\u0072\u0074 p\u0065\u0072\u0069\u006fd\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_bcae :=args [3].ValueNumber ;if _bcae < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0056\u0044\u0042\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0074\u0061\u0072\u0074\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074o\u0020\u0062\u0065\u0020\u006e\u006f\u0074\u0020\u006c\u0065\u0073\u0073\u0020\u0074h\u0061n\u0020\u006f\u006e\u0065");
+};_bdcd :=args [2].ValueNumber ;if _bdcd ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0056\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0069f\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
+};if _bdcd < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0056\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0069f\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("V\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0073\u0074\u0061\u0072\u0074 p\u0065\u0072\u0069\u006fd\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_fbeb :=args [3].ValueNumber ;if _fbeb < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0056\u0044\u0042\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0074\u0061\u0072\u0074\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074o\u0020\u0062\u0065\u0020\u006e\u006f\u0074\u0020\u006c\u0065\u0073\u0073\u0020\u0074h\u0061n\u0020\u006f\u006e\u0065");
 };if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0056D\u0042\u0020r\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0065\u006e\u0064 \u0070\u0065\u0072\u0069\u006f\u0064 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_cfee :=args [4].ValueNumber ;if _bcae > _cfee {return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020s\u0074\u0061\u0072\u0074\u0020\u0070\u0065r\u0069\u006f\u0064\u0020\u0066\u006f\u0072\u0020\u0056\u0044\u0042");
-};if _cfee > _bdef {return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0065\u006e\u0064\u0020\u0070e\u0072i\u006f\u0064\u0020\u0066\u006f\u0072\u0020V\u0044\u0042");};_dgce :=2.0;if _aefbc > 5{if args [5].Type ==ResultTypeEmpty {_dgce =0.0;
+};_afcf :=args [4].ValueNumber ;if _fbeb > _afcf {return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020s\u0074\u0061\u0072\u0074\u0020\u0070\u0065r\u0069\u006f\u0064\u0020\u0066\u006f\u0072\u0020\u0056\u0044\u0042");
+};if _afcf > _bdcd {return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0065\u006e\u0064\u0020\u0070e\u0072i\u006f\u0064\u0020\u0066\u006f\u0072\u0020V\u0044\u0042");};_dab :=2.0;if _efae > 5{if args [5].Type ==ResultTypeEmpty {_dab =0.0;
 }else {if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("\u0056\u0044\u0042\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0061\u0063\u0074\u006f\u0072 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_dgce =args [5].ValueNumber ;if _dgce < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0056\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0061\u0063\u0074\u006f\u0072\u0020\u0074\u006f\u0020\u0062e\u0020\u006e\u006f\u006e\u0020n\u0065\u0067a\u0074\u0069\u0076\u0065");
-};};};_caga :=false ;if _aefbc > 6&&args [6].Type !=ResultTypeEmpty {if args [6].Type !=ResultTypeNumber {return MakeErrorResult ("\u0056D\u0042\u0020r\u0065\u0071\u0075\u0069r\u0065\u0073\u0020n\u006f\u005f\u0073\u0077\u0069\u0074\u0063\u0068\u0020to\u0020\u0062\u0065 \u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
-};_caga =args [6].ValueNumber !=0;};_afaef :=0.0;_fgeb :=_d .Floor (_bcae );_cded :=_d .Ceil (_cfee );if _caga {for _aagb :=_fgeb +1;_aagb <=_cded ;_aagb ++{_dae :=_abfc (_bbce ,_ebacf ,_bdef ,_aagb ,_dgce );if _aagb ==_fgeb +1{_dae *=_d .Min (_cfee ,_fgeb +1)-_bcae ;
-}else if _aagb ==_cded {_dae *=_cfee +1-_cded ;};_afaef +=_dae ;};}else {_fabb :=_bdef ;var _feeff float64 ;if !_dcdd (_bcae ,_d .Floor (_bcae )){if _dgce ==1{_bedfa :=_bdef /2;if _bcae > _bedfa ||_dcdd (_bcae ,_bedfa ){_feeff =_bcae -_bedfa ;_bcae =_bedfa ;
-_cfee -=_feeff ;_fabb ++;};};};if _dgce !=0{_bbce -=_afbc (_bbce ,_ebacf ,_bdef ,_fabb ,_bcae ,_dgce );};_afaef =_afbc (_bbce ,_ebacf ,_bdef ,_bdef -_bcae ,_cfee -_bcae ,_dgce );};return MakeNumberResult (_afaef );};type xargs struct{_cdfa []float64 ;_gcfg []float64 ;
-};
+};_dab =args [5].ValueNumber ;if _dab < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0056\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0061\u0063\u0074\u006f\u0072\u0020\u0074\u006f\u0020\u0062e\u0020\u006e\u006f\u006e\u0020n\u0065\u0067a\u0074\u0069\u0076\u0065");
+};};};_fcce :=false ;if _efae > 6&&args [6].Type !=ResultTypeEmpty {if args [6].Type !=ResultTypeNumber {return MakeErrorResult ("\u0056D\u0042\u0020r\u0065\u0071\u0075\u0069r\u0065\u0073\u0020n\u006f\u005f\u0073\u0077\u0069\u0074\u0063\u0068\u0020to\u0020\u0062\u0065 \u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
+};_fcce =args [6].ValueNumber !=0;};_bafe :=0.0;_fdbf :=_d .Floor (_fbeb );_eddac :=_d .Ceil (_afcf );if _fcce {for _edacg :=_fdbf +1;_edacg <=_eddac ;_edacg ++{_bbfd :=_cece (_bedef ,_aagfg ,_bdcd ,_edacg ,_dab );if _edacg ==_fdbf +1{_bbfd *=_d .Min (_afcf ,_fdbf +1)-_fbeb ;
+}else if _edacg ==_eddac {_bbfd *=_afcf +1-_eddac ;};_bafe +=_bbfd ;};}else {_ecc :=_bdcd ;var _agff float64 ;if !_dgac (_fbeb ,_d .Floor (_fbeb )){if _dab ==1{_eeab :=_bdcd /2;if _fbeb > _eeab ||_dgac (_fbeb ,_eeab ){_agff =_fbeb -_eeab ;_fbeb =_eeab ;
+_afcf -=_agff ;_ecc ++;};};};if _dab !=0{_bedef -=_accc (_bedef ,_aagfg ,_bdcd ,_ecc ,_fbeb ,_dab );};_bafe =_accc (_bedef ,_aagfg ,_bdcd ,_bdcd -_fbeb ,_afcf -_fbeb ,_dab );};return MakeNumberResult (_bafe );};func _gcfb (_abec ,_bdgc ,_gafe Reference )string {return _gf .Sprintf ("\u0025\u0073\u0021\u0025\u0073\u003a\u0025\u0073",_abec .Value ,_bdgc .Value ,_gafe .Value );
+};func _acgc (_dcbcc ,_adecf _bcd .Time ,_adgef int )_bcd .Time {_dccbc :=_bcd .Date (_dcbcc .Year (),_adecf .Month (),_adecf .Day (),0,0,0,0,_bcd .UTC );if _dccbc .After (_dcbcc ){_dccbc =_dccbc .AddDate (-1,0,0);};for !_dccbc .After (_dcbcc ){_dccbc =_dccbc .AddDate (0,12/_adgef ,0);
+};return _dccbc ;};
 
-// Update updates references in the VerticalRange after removing a row/column.
-func (_ffba VerticalRange )Update (q *_a .UpdateQuery )Expression {if q .UpdateType ==_a .UpdateActionRemoveColumn {_bgcbb :=_ffba ;if q .UpdateCurrentSheet {_dgfgf :=q .ColumnIdx ;_bgcbb ._cdebbe =_gg (_ffba ._cdebbe ,_dgfgf );_bgcbb ._cfeb =_gg (_ffba ._cfeb ,_dgfgf );
-};return _bgcbb ;};return _ffba ;};type rangeIndex struct{_cacd int ;_gdab int ;};
+// Amorlinc implements the Excel AMORLINC function.
+func Amorlinc (args []Result )Result {_bebg ,_gabg :=_eacc (args ,"\u0041\u004d\u004f\u0052\u004c\u0049\u004e\u0043");if _gabg .Type ==ResultTypeError {return _gabg ;};_feff :=_bebg ._aede ;_ggec :=_bebg ._abfe ;_dcbce :=_bebg ._gebgf ;_dcgc :=_bebg ._bcda ;
+_caaf :=_bebg ._daae ;_egdd :=_bebg ._gabd ;_ffgg :=_bebg ._acag ;_baac ,_cebe :=_fdbc (_ggec ,_dcbce ,_ffgg );if _cebe .Type ==ResultTypeError {return MakeErrorResult ("\u0069\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0064\u0061\u0074\u0065\u0073 \u0066o\u0072\u0020\u0041\u004d\u004f\u0052\u004cI\u004e\u0043");
+};_gfed :=_baac *_egdd *_feff ;if _caaf ==0{return MakeNumberResult (_gfed );};_edgf :=_feff *_egdd ;_geac :=_feff -_dcgc ;_fdeg :=int ((_geac -_gfed )/_edgf );if _caaf <=_fdeg {return MakeNumberResult (_edgf );}else if _caaf ==_fdeg +1{return MakeNumberResult (_geac -_edgf *float64 (_fdeg )-_gfed );
+}else {return MakeNumberResult (0);};};
 
-// Count implements the COUNT function.
-func Count (args []Result )Result {return MakeNumberResult (_geee (args ,_daeg ))};
+// Nper implements the Excel NPER function.
+func Nper (args []Result )Result {_ccgd :=len (args );if _ccgd < 3||_ccgd > 5{return MakeErrorResult ("\u004e\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006ff\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067e\u0020\u006f\u0066\u0020\u0033\u0020\u0061\u006e\u0064\u0020\u0035");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("N\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_afde :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u004e\u0050\u0045\u0052\u0020\u0072\u0065q\u0075\u0069\u0072e\u0073\u0020\u0070\u0061y\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_fdag :=args [1].ValueNumber ;if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u004e\u0050\u0045\u0052\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065\u0073\u0065\u006e\u0074\u0020\u0076\u0061\u006c\u0075\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
+};_fddd :=args [2].ValueNumber ;_aaffb :=0.0;if _ccgd >=4&&args [3].Type !=ResultTypeEmpty {if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u004e\u0050\u0045\u0052\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s \u0066\u0075\u0074\u0075\u0072\u0065 \u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+};_aaffb =args [3].ValueNumber ;};_caba :=0.0;if _ccgd ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("N\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0079\u0070\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_caba =args [4].ValueNumber ;if _caba !=0{_caba =1;};};_aefc :=_fdag *(1+_afde *_caba )-_aaffb *_afde ;_gacd :=(_fddd *_afde +_fdag *(1+_afde *_caba ));return MakeNumberResult (_d .Log (_aefc /_gacd )/_d .Log (1+_afde ));};
 
-// String returns a string representation of a horizontal range with prefix.
-func (_bgea PrefixHorizontalRange )String ()string {return _b .Sprintf ("\u0025\u0073\u0021\u0025\u0064\u003a\u0025\u0064",_bgea ._eabcd .String (),_bgea ._dcged ,_bgea ._dafba );};func _ecae (_cbeb string ,_adcded func (_ggaa float64 )float64 )Function {return func (_bfeb []Result )Result {if len (_bfeb )!=1{return MakeErrorResult (_cbeb +"\u0020\u0072\u0065\u0071ui\u0072\u0065\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
-};_gagd :=_bfeb [0].AsNumber ();switch _gagd .Type {case ResultTypeNumber :_bcbb :=_adcded (_gagd .ValueNumber );if _d .IsNaN (_bcbb ){return MakeErrorResult (_cbeb +"\u0020\u0072\u0065\u0074\u0075\u0072\u006e\u0065\u0064\u0020\u004e\u0061\u004e");};if _d .IsInf (_bcbb ,0){return MakeErrorResult (_cbeb +"\u0020r\u0065t\u0075\u0072\u006e\u0065\u0064 \u0069\u006ef\u0069\u006e\u0069\u0074\u0079");
-};if _bcbb ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,_cbeb +"\u0020d\u0069v\u0069\u0064\u0065\u0020\u0062\u0079\u0020\u007a\u0065\u0072\u006f");};return MakeNumberResult (1/_bcbb );case ResultTypeList ,ResultTypeString :return MakeErrorResult (_cbeb +"\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u006e\u0075\u006de\u0072i\u0063\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-case ResultTypeError :return _gagd ;default:return MakeErrorResult (_b .Sprintf ("\u0075\u006e\u0068a\u006e\u0064\u006c\u0065d\u0020\u0025\u0073\u0028\u0029\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_cbeb ,_gagd .Type ));
-};};};const _bdg ="\u0042\u0069\u006e\u004f\u0070\u0054y\u0070\u0065\u0055\u006e\u006bn\u006fw\u006e\u0042\u0069\u006eO\u0070\u0054\u0079\u0070\u0065\u0050\u006c\u0075\u0073\u0042\u0069\u006eO\u0070\u0054\u0079\u0070\u0065\u004d\u0069\u006e\u0075\u0073\u0042\u0069\u006e\u004f\u0070\u0054\u0079\u0070\u0065M\u0075lt\u0042\u0069\u006e\u004f\u0070\u0054\u0079\u0070\u0065\u0044\u0069\u0076\u0042\u0069\u006e\u004f\u0070\u0054\u0079\u0070\u0065\u0045\u0078\u0070\u0042\u0069\u006e\u004f\u0070\u0054\u0079\u0070\u0065\u004c\u0054\u0042\u0069\u006eO\u0070\u0054\u0079\u0070\u0065G\u0054B\u0069\u006eO\u0070\u0054\u0079\u0070\u0065\u0045\u0051\u0042\u0069nO\u0070\u0054\u0079\u0070\u0065\u004c\u0045\u0051\u0042i\u006eO\u0070\u0054\u0079\u0070\u0065\u0047\u0045\u0051\u0042\u0069\u006e\u004f\u0070\u0054\u0079\u0070\u0065N\u0045\u0042\u0069\u006eO\u0070\u0054\u0079\u0070\u0065\u0043\u006f\u006e\u0063\u0061\u0074";
-func (_aabaf *ivr )Sheet (name string )Context {return _aabaf };
+// Code is an implementation of the Excel CODE function that returns the first
+// character of the string as a number.
+func Code (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0043\u004f\u0044\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0073t\u0072\u0069\u006e\u0067\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_feab :=args [0].AsString ();if _feab .Type !=ResultTypeString {return MakeErrorResult ("\u0043\u004f\u0044\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0073t\u0072\u0069\u006e\u0067\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};if len (_feab .ValueString )==0{return MakeNumberResult (0);};return MakeNumberResult (float64 (_feab .ValueString [0]));};type yyLexer interface{Lex (_gacc *yySymType )int ;Error (_eaeb string );};func _bcdc (_aagb ,_gad ,_bcg ,_gef int )int {if !_cfad (_gef ){return _bcg ;
+};_dgg :=_bcg ;_fadd :=_ggf (_aagb ,_gad );if _dgg > 30||_bcg >=_fadd ||_dgg >=_fadd {_dgg =30;};return _dgg ;};
 
-// Update updates references in the PrefixRangeExpr after removing a row/column.
-func (_gcgb PrefixRangeExpr )Update (q *_a .UpdateQuery )Expression {_baaa :=_gcgb ;_dccda :=_gcgb ._fgcba .String ();if _dccda ==q .SheetToUpdate {_agdfc :=*q ;_agdfc .UpdateCurrentSheet =true ;_baaa ._bgacf =_gcgb ._bgacf .Update (&_agdfc );_baaa ._fabf =_gcgb ._fabf .Update (&_agdfc );
-};return _baaa ;};
-
-// NewSheetPrefixExpr constructs a new prefix expression.
-func NewSheetPrefixExpr (s string )Expression {return &SheetPrefixExpr {_fbcb :s }};func _badc (_gcdfa Result )Result {if _gcdfa .Type ==ResultTypeEmpty {return _gcdfa ;};_deab :=_gcdfa .AsString ();if _deab .Type !=ResultTypeString {return MakeErrorResult ("\u004c\u004f\u0057\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0061\u0020\u0073\u0069\u006eg\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};if _gcdfa .IsBoolean {if _deab .ValueString =="\u0031"{return MakeStringResult ("\u0074\u0072\u0075\u0065");}else if _deab .ValueString =="\u0030"{return MakeStringResult ("\u0066\u0061\u006cs\u0065");}else {return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u004c\u004fW\u0045\u0052");
-};}else {return MakeStringResult (_bcd .ToLower (_deab .ValueString ));};};const _fcd ="\u0028\u0028\u006a\u0061\u006e|\u006a\u0061\u006e\u0075\u0061\u0072\u0079\u0029\u007c\u0028\u0066\u0065\u0062\u007c\u0066\u0065\u0062\u0072\u0075a\u0072\u0079\u0029\u007c\u0028\u006da\u0072\u007c\u006da\u0072\u0063\u0068\u0029\u007c\u0028\u0061\u0070\u0072\u007c\u0061\u0070\u0072\u0069\u006c\u0029\u007c\u0028\u006d\u0061\u0079\u0029\u007c\u0028j\u0075\u006e\u007cj\u0075\u006e\u0065\u0029\u007c\u0028\u006a\u0075\u006c\u007c\u006a\u0075\u006c\u0079\u0029\u007c\u0028a\u0075\u0067\u007c\u0061\u0075\u0067\u0075\u0073t\u0029\u007c\u0028\u0073\u0065\u0070\u007c\u0073\u0065\u0070\u0074\u0065\u006d\u0062\u0065\u0072\u0029\u007c\u0028o\u0063\u0074\u007c\u006f\u0063\u0074\u006f\u0062\u0065\u0072\u0029\u007c\u0028\u006e\u006f\u0076\u007c\u006e\u006f\u0076\u0065\u006d\u0062e\u0072\u0029\u007c\u0028\u0064\u0065\u0063\u007c\u0064\u0065\u0063\u0065\u006d\u0062\u0065\u0072\u0029\u0029";
+// True is an implementation of the Excel TRUE() function.  It takes no
+// arguments.
+func True (args []Result )Result {if len (args )!=0{return MakeErrorResult ("\u0054\u0052\u0055E \u0074\u0061\u006b\u0065\u0073\u0020\u006e\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");};return MakeBoolResult (true );};var InvalidReferenceContext =&ivr {};
 
 
-// If is an implementation of the Excel IF() function. It takes one, two or
-// three arguments.
-func If (args []Result )Result {if len (args )< 2{return MakeErrorResult ("\u0049\u0046\u0020re\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074 \u006ce\u0061s\u0074 \u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if len (args )> 3{return MakeErrorResult ("\u0049\u0046\u0020ac\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0074\u0020m\u006fs\u0074 \u0074h\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");};_ddba :=args [0];switch _ddba .Type {case ResultTypeError :return _ddba ;
-case ResultTypeNumber :if len (args )==1{return MakeBoolResult (_ddba .ValueNumber !=0);};if _ddba .ValueNumber !=0{return args [1];};if len (args )==3{return args [2];}else {return MakeBoolResult (false );};case ResultTypeList :return _aecgg (args );case ResultTypeArray :return _bbge (args );
-default:return MakeErrorResult ("\u0049F\u0020\u0069n\u0069\u0074\u0069\u0061l\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u006d\u0075\u0073t \u0062\u0065\u0020n\u0075\u006de\u0072\u0069\u0063\u0020\u006f\u0072 \u0061\u0072r\u0061\u0079");};
-};
+// NewNumber constructs a new number expression.
+func NewNumber (v string )Expression {_gbeae ,_adafb :=_fd .ParseFloat (v ,64);if _adafb !=nil {_af .Log .Debug ("e\u0072\u0072\u006f\u0072\u0020\u0070a\u0072\u0073\u0069\u006e\u0067\u0020f\u006f\u0072\u006d\u0075\u006c\u0061\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0025\u0073\u003a\u0020%\u0076",v ,_adafb );
+};return Number {_dgga :_gbeae };};const _aeecc =57360;
 
-// Index implements the Excel INDEX function.
-func Index (args []Result )Result {_gbcd :=len (args );if _gbcd < 2||_gbcd > 3{return MakeErrorResult ("\u0049\u004e\u0044E\u0058\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0072\u006f\u006d\u0020\u006f\u006e\u0065\u0020\u0074\u006f\u0020\u0074\u0068\u0072\u0065\u0065\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_dcbab :=args [0];if _dcbab .Type !=ResultTypeArray &&_dcbab .Type !=ResultTypeList {return MakeErrorResult ("\u0049\u004e\u0044\u0045\u0058\u0020\u0072e\u0071\u0075\u0069r\u0065\u0073\u0020\u0066i\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
-};_deeg :=args [1].AsNumber ();if _deeg .Type !=ResultTypeNumber {return MakeErrorResult ("I\u004e\u0044\u0045\u0058\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073 \u006e\u0075\u006d\u0065\u0072\u0069\u0063 \u0072\u006f\u0077\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
-};_dcbd :=int (_deeg .ValueNumber )-1;_bdca :=-1;if _gbcd ==3&&args [2].Type !=ResultTypeEmpty {_bfac :=args [2].AsNumber ();if _bfac .Type !=ResultTypeNumber {return MakeErrorResult ("I\u004e\u0044\u0045\u0058\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073 \u006e\u0075\u006d\u0065\u0072\u0069\u0063 \u0063\u006f\u006c\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
-};_bdca =int (_bfac .ValueNumber )-1;};if _dcbd ==-1&&_bdca ==-1{return MakeErrorResult ("\u0049\u004e\u0044EX\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0072o\u0077 \u006fr\u0020\u0063\u006f\u006c\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};var _afab []Result ;if _dcbab .Type ==ResultTypeArray {_cbgbd :=_dcbab .ValueArray ;if _dcbd < -1||_dcbd >=len (_cbgbd ){return MakeErrorResult ("\u0049\u004e\u0044\u0045\u0058\u0020\u0068\u0061\u0073\u0020\u0072o\u0077\u0020\u006f\u0075\u0074\u0020\u006f\u0066\u0020\u0072a\u006e\u0067\u0065");
-};if _dcbd ==-1{if _bdca >=len (_cbgbd [0]){return MakeErrorResult ("\u0049\u004e\u0044\u0045\u0058\u0020\u0068\u0061\u0073\u0020\u0063o\u006c\u0020\u006f\u0075\u0074\u0020\u006f\u0066\u0020\u0072a\u006e\u0067\u0065");};_gdcb :=[][]Result {};for _ ,_eega :=range _cbgbd {_cgccb :=_eega [_bdca ];
-if _cgccb .Type ==ResultTypeEmpty {_cgccb =MakeNumberResult (0);};_gdcb =append (_gdcb ,[]Result {_cgccb });};return MakeArrayResult (_gdcb );};_afab =_cbgbd [_dcbd ];}else {_aeae :=_dcbab .ValueList ;if _dcbd < -1||_dcbd >=1{return MakeErrorResult ("\u0049\u004e\u0044\u0045\u0058\u0020\u0068\u0061\u0073\u0020\u0072o\u0077\u0020\u006f\u0075\u0074\u0020\u006f\u0066\u0020\u0072a\u006e\u0067\u0065");
-};if _dcbd ==-1{if _bdca >=len (_aeae ){return MakeErrorResult ("\u0049\u004e\u0044\u0045\u0058\u0020\u0068\u0061\u0073\u0020\u0063o\u006c\u0020\u006f\u0075\u0074\u0020\u006f\u0066\u0020\u0072a\u006e\u0067\u0065");};_bggb :=_aeae [_bdca ];if _bggb .Type ==ResultTypeEmpty {_bggb =MakeNumberResult (0);
-};return _bggb ;};_afab =_aeae ;};if _bdca < -1||_bdca > len (_afab ){return MakeErrorResult ("\u0049\u004e\u0044\u0045\u0058\u0020\u0068\u0061\u0073\u0020\u0063o\u006c\u0020\u006f\u0075\u0074\u0020\u006f\u0066\u0020\u0072a\u006e\u0067\u0065");};if _bdca ==-1{_cdfcb :=[]Result {};
-for _ ,_cfad :=range _afab {if _cfad .Type ==ResultTypeEmpty {_cdfcb =append (_cdfcb ,MakeNumberResult (0));}else {_cdfcb =append (_cdfcb ,_cfad );};};return MakeArrayResult ([][]Result {_cdfcb });};_daab :=_afab [_bdca ];if _daab .Type ==ResultTypeEmpty {return MakeNumberResult (0);
-};return _daab ;};
+// ISTEXT is an implementation of the Excel ISTEXT() function.
+func IsText (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u0054EX\u0054\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070t\u0073 \u0061 \u0073i\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};return MakeBoolResult (args [0].Type ==ResultTypeString );};const (ReferenceTypeInvalid ReferenceType =iota ;ReferenceTypeCell ;ReferenceTypeHorizontalRange ;ReferenceTypeVerticalRange ;ReferenceTypeNamedRange ;ReferenceTypeRange ;ReferenceTypeSheet ;
+);
 
-// TimeValue is an implementation of the Excel TIMEVALUE() function.
-func TimeValue (args []Result )Result {if len (args )!=1||args [0].Type !=ResultTypeString {return MakeErrorResult ("\u0054I\u004d\u0045V\u0041\u004c\u0055\u0045 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069ng\u006c\u0065\u0020s\u0074\u0072i\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065n\u0074\u0073");
-};_ccb :=_bcd .ToLower (args [0].ValueString );if !_dbc (_ccb ){_ ,_ ,_ ,_cfca ,_fad :=_eea (_ccb );if _fad .Type ==ResultTypeError {_fad .ErrorMessage ="\u0049\u006e\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020f\u006f\u0072\u0020\u0054\u0049\u004d\u0045V\u0041\u004c\u0055\u0045";
-return _fad ;};if _cfca {return MakeNumberResult (0);};};_afe ,_bbd ,_cbee ,_geae ,_ ,_abf :=_ddcb (_ccb );if _abf .Type ==ResultTypeError {return _abf ;};_cfgb :=_cgeac (float64 (_afe ),float64 (_bbd ),_cbee );if _geae {_cfgb +=0.5;}else if _cfgb >=1{_cfgb -=float64 (int (_cfgb ));
-};return MakeNumberResult (_cfgb );};
-
-// SheetPrefixExpr is a reference to a sheet like Sheet1! (reference to sheet 'Sheet1').
-type SheetPrefixExpr struct{_fbcb string };func _dad (_eff float64 )_g .Time {_dea :=int64 ((_eff -_ccda )*_ffe );return _g .Unix (0,_dea ).UTC ()};type Expression interface{Eval (_cfg Context ,_afc Evaluator )Result ;Reference (_egf Context ,_adcd Evaluator )Reference ;
-String ()string ;Update (_gec *_a .UpdateQuery )Expression ;};
-
-// Update returns the same object as updating sheet references does not affect String.
-func (_cfae String )Update (q *_a .UpdateQuery )Expression {return _cfae };func _ggac (_afdac Context ,_ffce Evaluator ,_gbfgc ,_ggeg string )Result {_cdbd ,_bggfe :=_de .ParseCellReference (_gbfgc );if _bggfe !=nil {return MakeErrorResult (_b .Sprintf ("\u0075\u006e\u0061bl\u0065\u0020\u0074\u006f\u0020\u0070\u0061\u0072\u0073e\u0020r\u0061n\u0067e\u0020\u0025\u0073\u003a\u0020\u0065\u0072\u0072\u006f\u0072\u0020\u0025\u0073",_gbfgc ,_bggfe .Error ()));
-};_bddg ,_fabad :=_cdbd .ColumnIdx ,_cdbd .RowIdx ;_ccgb ,_eeba :=_de .ParseCellReference (_ggeg );if _eeba !=nil {return MakeErrorResult (_b .Sprintf ("\u0075\u006e\u0061bl\u0065\u0020\u0074\u006f\u0020\u0070\u0061\u0072\u0073e\u0020r\u0061n\u0067e\u0020\u0025\u0073\u003a\u0020\u0065\u0072\u0072\u006f\u0072\u0020\u0025\u0073",_ggeg ,_eeba .Error ()));
-};_becc ,_bbgdf :=_ccgb .ColumnIdx ,_ccgb .RowIdx ;_ggcc :=[][]Result {};for _afafg :=_fabad ;_afafg <=_bbgdf ;_afafg ++{_gdffg :=[]Result {};for _fgcbaf :=_bddg ;_fgcbaf <=_becc ;_fgcbaf ++{_eegff :=_afdac .Cell (_b .Sprintf ("\u0025\u0073\u0025\u0064",_de .IndexToColumn (_fgcbaf ),_afafg ),_ffce );
-_gdffg =append (_gdffg ,_eegff );};_ggcc =append (_ggcc ,_gdffg );};if len (_ggcc )==1{if len (_ggcc [0])==1{return _ggcc [0][0];};return MakeListResult (_ggcc [0]);};return MakeArrayResult (_ggcc );};const _gfgfg =57375;type countMode byte ;func _bceb (_egdd []Result ,_fcgf []string ,_ebcec bool )[]string {for _ ,_ffbd :=range _egdd {switch _ffbd .Type {case ResultTypeEmpty :if !_ebcec {_fcgf =append (_fcgf ,"");
-};case ResultTypeString :if _ffbd .ValueString !=""||!_ebcec {_fcgf =append (_fcgf ,_ffbd .ValueString );};case ResultTypeNumber :_fcgf =append (_fcgf ,_ffbd .Value ());case ResultTypeList :_fcgf =_defa (_fcgf ,_bceb (_ffbd .ValueList ,[]string {},_ebcec ));
-case ResultTypeArray :for _ ,_eeebe :=range _ffbd .ValueArray {_fcgf =_defa (_fcgf ,_bceb (_eeebe ,[]string {},_ebcec ));};};};return _fcgf ;};func _ceb (_edbc Result ,_agcbe int )[]Result {_gbbb :=[]Result {};switch _edbc .Type {case ResultTypeList :_ggga :=_edbc .ValueList ;
-_adbb :=len (_ggga );for _dfac :=0;_dfac < _agcbe ;_dfac ++{if _dfac < _adbb {_gbbb =append (_gbbb ,_ggga [_dfac ]);}else {_gbbb =append (_gbbb ,MakeErrorResultType (ErrorTypeNA ,""));};};case ResultTypeNumber ,ResultTypeString ,ResultTypeError ,ResultTypeEmpty :for _bedfg :=0;
-_bedfg < _agcbe ;_bedfg ++{_gbbb =append (_gbbb ,_edbc );};};return _gbbb ;};
-
-// NewVerticalRange constructs a new full columns range.
-func NewVerticalRange (v string )Expression {_dcbgb :=_bcd .Split (v ,"\u003a");if len (_dcbgb )!=2{return nil ;};if _dcbgb [0]> _dcbgb [1]{_dcbgb [0],_dcbgb [1]=_dcbgb [1],_dcbgb [0];};return VerticalRange {_cdebbe :_dcbgb [0],_cfeb :_dcbgb [1]};};
+// MaxA is an implementation of the Excel MAXA() function.
+func MaxA (args []Result )Result {return _aeeef (args ,true )};
 
 // Odd is an implementation of the Excel ODD() that rounds a number to the
 // nearest odd integer.
-func Odd (args []Result )Result {if len (args )!=1{return MakeErrorResult ("O\u0044\u0044\u0028\u0029\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006f\u006ee\u0020\u0061\u0072g\u0075m\u0065\u006e\u0074");};_gdba :=args [0].AsNumber ();if _gdba .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u0028\u0029\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_aceg :=_d .Signbit (_gdba .ValueNumber );_aegc ,_efaag :=_d .Modf ((_gdba .ValueNumber -1)/2);_cafec :=_aegc *2+1;if _efaag !=0{if !_aceg {_cafec +=2;}else {_cafec -=2;};};return MakeNumberResult (_cafec );};
+func Odd (args []Result )Result {if len (args )!=1{return MakeErrorResult ("O\u0044\u0044\u0028\u0029\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006f\u006ee\u0020\u0061\u0072g\u0075m\u0065\u006e\u0074");};_dfgcd :=args [0].AsNumber ();if _dfgcd .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u0028\u0029\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_bbef :=_d .Signbit (_dfgcd .ValueNumber );_cebea ,_bcea :=_d .Modf ((_dfgcd .ValueNumber -1)/2);_dbbbe :=_cebea *2+1;if _bcea !=0{if !_bbef {_dbbbe +=2;}else {_dbbbe -=2;};};return MakeNumberResult (_dbbbe );};
+
+// Update updates references in the VerticalRange after removing a row/column.
+func (_ccedd VerticalRange )Update (q *_db .UpdateQuery )Expression {if q .UpdateType ==_db .UpdateActionRemoveColumn {_egfb :=_ccedd ;if q .UpdateCurrentSheet {_bdab :=q .ColumnIdx ;_egfb ._cege =_bag (_ccedd ._cege ,_bdab );_egfb ._afaca =_bag (_ccedd ._afaca ,_bdab );
+};return _egfb ;};return _ccedd ;};func _gabe (_gcf ,_eaa ,_cfge ,_dgfe ,_geeb float64 ,_cagcg int )Result {_eebb ,_bcdg :=_fdbc (_gcf ,_eaa ,_cagcg );if _bcdg .Type ==ResultTypeError {return _bcdg ;};_bbfe ,_aggf :=_ebd (_gcf ,_eaa ,int (_geeb ),_cagcg );
+if _aggf .Type ==ResultTypeError {return _aggf ;};_cfgb :=0.0;_dbbec :=0.0;_cfge *=100/_geeb ;_dgfe /=_geeb ;_dgfe ++;_edbg :=_eebb *_geeb -_bbfe ;for _efde :=1.0;_efde < _bbfe ;_efde ++{_fcbc :=_efde +_edbg ;_cbaa :=_cfge /_d .Pow (_dgfe ,_fcbc );_dbbec +=_cbaa ;
+_cfgb +=_fcbc *_cbaa ;};_bdag :=(_cfge +100)/_d .Pow (_dgfe ,_bbfe +_edbg );_dbbec +=_bdag ;_cfgb +=(_bbfe +_edbg )*_bdag ;_cfgb /=_dbbec ;_cfgb /=_geeb ;return MakeNumberResult (_cfgb );};
+
+// MinIfs implements the MINIFS function.
+func MinIfs (args []Result )Result {_bbfgc :=_gecb (args ,true ,"\u004d\u0049\u004e\u0049\u0046\u0053");if _bbfgc .Type !=ResultTypeEmpty {return _bbfgc ;};_fccg :=_bdaf (args [1:]);_aaeg :=_d .MaxFloat64 ;_bdbef :=_cbgb (args [0]);for _ ,_bcdgc :=range _fccg {_aecg :=_bdbef [_bcdgc ._cafgf ][_bcdgc ._afac ].ValueNumber ;
+if _aaeg > _aecg {_aaeg =_aecg ;};};if _aaeg ==_d .MaxFloat64 {_aaeg =0;};return MakeNumberResult (float64 (_aaeg ));};const _gea ="\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029\u002d\u0028\u0028\u005b\u0030-\u0039]\u0029\u002b\u0029\u002d\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029";
+
+
+// Update updates references in the PrefixVerticalRange after removing a row/column.
+func (_cecbf PrefixVerticalRange )Update (q *_db .UpdateQuery )Expression {if q .UpdateType ==_db .UpdateActionRemoveColumn {_gebbb :=_cecbf ;_bcfg :=_cecbf ._fdgbe .String ();if _bcfg ==q .SheetToUpdate {_egab :=q .ColumnIdx ;_gebbb ._adfgb =_bag (_cecbf ._adfgb ,_egab );
+_gebbb ._caagf =_bag (_cecbf ._caagf ,_egab );};return _gebbb ;};return _cecbf ;};
+
+// Rept is an implementation of the Excel REPT function that returns n copies of
+// a string.
+func Rept (args []Result )Result {if len (args )!=2{return MakeErrorResult ("R\u0045\u0050\u0054\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f \u0061\u0072\u0067u\u006de\u006e\u0074\u0073");};_deabf :=args [0].AsString ();if _deabf .Type !=ResultTypeString {return MakeErrorResult ("\u0050R\u004f\u0050E\u0052\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020f\u0069\u0072\u0073\u0074\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062e\u0020\u0061\u0020\u0073\u0074\u0072\u0069\u006e\u0067");
+};_gcee :=args [1].AsNumber ();if _gcee .Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052O\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};if _gcee .ValueNumber < 0{return MakeErrorResult ("\u0050\u0052\u004fP\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074o\u0020\u0062\u0065\u0020\u003e\u003d\u0020\u0030");
+};if _gcee .ValueNumber ==0{return MakeStringResult ("");};_acgad :=_c .Buffer {};for _dcddc :=0;_dcddc < int (_gcee .ValueNumber );_dcddc ++{_acgad .WriteString (_deabf .ValueString );};return MakeStringResult (_acgad .String ());};func _fdga (_aebd string )*criteriaRegex {_eega :=&criteriaRegex {};
+if _aebd ==""{return _eega ;};if _gbadd :=_ggdgg .FindStringSubmatch (_aebd );len (_gbadd )> 1{_eega ._ebed =_becec ;_eega ._bagg =_gbadd [1];}else if _eagg :=_cbaf .FindStringSubmatch (_aebd );len (_eagg )> 1{_eega ._ebed =_becec ;_eega ._bagg =_eagg [1];
+}else if _cgab :=_bffbe .FindStringSubmatch (_aebd );len (_cgab )> 1{_eega ._ebed =_gfgd ;_eega ._bagg =_cgab [1];}else if _aedd :=_agba .FindStringSubmatch (_aebd );len (_aedd )> 1{_eega ._ebed =_efaf ;_eega ._bagg =_aedd [1];}else if _gebf :=_ebbg .FindStringSubmatch (_aebd );
+len (_gebf )> 1{_eega ._ebed =_fcbfe ;_eega ._bagg =_gebf [1];}else if _dcbag :=_fdee .FindStringSubmatch (_aebd );len (_dcbag )> 1{_eega ._ebed =_gagd ;_eega ._bagg =_dcbag [1];};return _eega ;};
+
+// MakeListResult constructs a list result.
+func MakeListResult (list []Result )Result {return Result {Type :ResultTypeList ,ValueList :list }};var _cgcg =[...]int {45,3,44,32,18,40,72,46,47,30,31,32,39,48,28,29,30,31,32,75,39,49,32,56,50,70,23,39,76,57,58,59,60,61,62,63,64,65,66,67,68,77,71,69,54,43,13,19,21,55,82,11,78,9,74,28,29,30,31,32,37,33,34,35,36,38,1,20,39,10,2,8,0,80,79,0,0,0,83,0,81,73,28,29,30,31,32,37,33,34,35,36,38,0,0,39,28,29,30,31,32,37,33,34,35,36,38,26,27,39,51,52,25,14,15,16,17,0,24,23,22,41,23,12,0,6,7,26,27,0,42,0,25,14,15,16,17,0,24,23,22,5,0,12,0,6,7,26,27,0,4,0,25,14,15,16,17,0,24,23,22,41,0,12,53,6,7,26,27,0,0,0,25,14,15,16,17,0,24,23,22,41,0,12,0,6,7};
+
+
+// FunctionCall is a function call expression.
+type FunctionCall struct{_cdabe string ;_fdca []Expression ;};func _ecd (_gaca ,_egf float64 ,_gcec ,_ecfe int )float64 {_cagc :=_ded (_gaca );_cfdc :=_ded (_egf );_eebc :=_acgc (_cagc ,_cfdc ,_gcec );return _eebg (_cagc ,_eebc ,_ecfe );};var _beabb =[...]int {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36};
+
+
+// String returns a string representation of a horizontal range.
+func (_fdfag HorizontalRange )String ()string {return _fdfag .horizontalRangeReference ()};const _dbg ="\u0028(\u005b0\u002d\u0039\u005d\u0029\u002b)\u0020\u0028a\u006d\u007c\u0070\u006d\u0029";
+
+// Eval evaluates and returns the result of a function call.
+func (_ebecf FunctionCall )Eval (ctx Context ,ev Evaluator )Result {_gbcb :=LookupFunction (_ebecf ._cdabe );if _gbcb !=nil {_edcbd :=make ([]Result ,len (_ebecf ._fdca ));for _cggaa ,_afgd :=range _ebecf ._fdca {_edcbd [_cggaa ]=_afgd .Eval (ctx ,ev );
+_edcbd [_cggaa ].Ref =_afgd .Reference (ctx ,ev );};if _ ,_dcddce :=_beef [_ebecf ._cdabe ];!_dcddce {if _becd ,_ccbc :=_eeeda (_edcbd );_becd {return _ccbc ;};};return _gbcb (_edcbd );};_cdee :=LookupFunctionComplex (_ebecf ._cdabe );if _cdee !=nil {_feag :=make ([]Result ,len (_ebecf ._fdca ));
+for _fgcff ,_cecfb :=range _ebecf ._fdca {_feag [_fgcff ]=_cecfb .Eval (ctx ,ev );_feag [_fgcff ].Ref =_cecfb .Reference (ctx ,ev );};if _ ,_adgeg :=_beef [_ebecf ._cdabe ];!_adgeg {if _fbgd ,_fece :=_eeeda (_feag );_fbgd {return _fece ;};};return _cdee (ctx ,ev ,_feag );
+};return MakeErrorResult ("\u0075\u006e\u006b\u006e\u006f\u0077\u006e\u0020\u0066\u0075\u006e\u0063t\u0069\u006f\u006e\u0020"+_ebecf ._cdabe );};
+
+// PrefixExpr is an expression containing reference to another sheet like Sheet1!A1 (the value of the cell A1 from sheet 'Sheet1').
+type PrefixExpr struct{_fefaa Expression ;_fbdf Expression ;};
 
 // Not is an implementation of the Excel NOT() function and takes a single
 // argument.
@@ -2019,471 +869,1618 @@ func Not (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u00
 case ResultTypeString ,ResultTypeList :return MakeErrorResult ("\u004e\u004f\u0054\u0020\u0065\u0078\u0070\u0065\u0063\u0074s\u0020\u0061\u0020\u006e\u0075\u006d\u0065r\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");case ResultTypeNumber :return MakeBoolResult (!(args [0].ValueNumber !=0));
 default:return MakeErrorResult ("u\u006e\u0068\u0061\u006e\u0064\u006ce\u0064\u0020\u004e\u004f\u0054\u0020\u0061\u0072\u0067u\u006d\u0065\u006et\u0020t\u0079\u0070\u0065");};};
 
-// Row implements the Excel ROW function.
-func Row (args []Result )Result {if len (args )< 1{return MakeErrorResult ("\u0052O\u0057\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065 \u0061\u0072\u0067\u0075\u006d\u0065\u006et");};_cddg :=args [0].Ref ;if _cddg .Type !=ReferenceTypeCell {return MakeErrorResult ("\u0052\u004f\u0057\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073 a\u006e\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0079p\u0065\u0020\u0072\u0065\u0066\u0065\u0072\u0065n\u0063\u0065");
-};_bcef ,_cgcfg :=_de .ParseCellReference (_cddg .Value );if _cgcfg !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072re\u0063t\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065\u003a\u0020"+_cddg .Value );};return MakeNumberResult (float64 (_bcef .RowIdx ));
+// ISODD is an implementation of the Excel ISODD() function.
+func IsOdd (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u004f\u0044\u0044\u0028)\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0053\u004f\u0044\u0044\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061 \u006eu\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");};_cfaa :=int (args [0].ValueNumber );
+return MakeBoolResult (_cfaa !=_cfaa /2*2);};func _abee (_fdcg [][]Result )float64 {if len (_fdcg )==2{_bdbc :=_fdcg [0][0].AsNumber ();_caea :=_fdcg [0][1].AsNumber ();_cegfe :=_fdcg [1][0].AsNumber ();_bdga :=_fdcg [1][1].AsNumber ();if _bdbc .Type !=ResultTypeNumber ||_caea .Type !=ResultTypeNumber ||_cegfe .Type !=ResultTypeNumber ||_bdga .Type !=ResultTypeNumber {return _d .NaN ();
+};return _bdbc .ValueNumber *_bdga .ValueNumber -_cegfe .ValueNumber *_caea .ValueNumber ;};_gcdfc :=float64 (0);_cgdb :=float64 (1);for _acdc :=range _fdcg {_gcdfc +=_cgdb *_fdcg [0][_acdc ].ValueNumber *_abee (_aaeb (_fdcg ,_acdc ));_cgdb *=-1;};return _gcdfc ;
 };
 
-// Degrees is an implementation of the Excel function DEGREES() that converts
-// radians to degrees.
-func Degrees (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0044\u0045\u0047R\u0045\u0045\u0053\u0028)\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_acgec :=args [0].AsNumber ();if _acgec .Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0045\u0047RE\u0045\u0053\u0028\u0029\u0020\u0072\u0065\u0071\u0075i\u0072e\u0073 \u006eu\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};return MakeNumberResult (180.0/_d .Pi *_acgec .ValueNumber );};func _fbdc (_fbef ,_eed ,_bcfe ,_gfgc ,_gfeb float64 ,_ceeag int )float64 {_bfcf :=_beea (_fbef ,_bcfe ,_gfgc ,_gfeb ,_ceeag );var _gdccf float64 ;if _eed ==1{if _ceeag ==1{_gdccf =0;}else {_gdccf =-_gfgc ;
-};}else {if _ceeag ==1{_gdccf =_dgfb (_fbef ,_eed -2,_bfcf ,_gfgc ,1)-_bfcf ;}else {_gdccf =_dgfb (_fbef ,_eed -1,_bfcf ,_gfgc ,0);};};return _gdccf *_fbef ;};
+// Update makes a reference to point to one of the neighboring cells after removing a row/column with respect to the update type.
+func (_bfe CellRef )Update (q *_db .UpdateQuery )Expression {if q .UpdateCurrentSheet {_bfe ._cge =_bge (_bfe ._cge ,q );};return _bfe ;};
 
-// ISNONTEXT is an implementation of the Excel ISNONTEXT() function.
-func IsNonText (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053N\u004f\u004e\u0054\u0045X\u0054\u0028)\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073 \u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};return MakeBoolResult (args [0].Type !=ResultTypeString );};
+// Average implements the AVERAGE function. It differs slightly from Excel (and
+// agrees with LibreOffice) in that boolean values are counted. As an example,
+// AVERAGE of two cells containing TRUE & FALSE is 0.5 in LibreOffice and
+// #DIV/0! in Excel. unioffice will return 0.5 in this case.
+func Average (args []Result )Result {_dgef ,_accbb :=_befd (args ,false );if _accbb ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0041\u0056\u0045\u0052AG\u0045\u0020\u0064\u0069\u0076\u0069\u0064\u0065\u0020\u0062\u0079\u0020\u007a\u0065r\u006f");
+};return MakeNumberResult (_dgef /_accbb );};
 
-// MakeEmptyResult is ued when parsing an empty argument.
-func MakeEmptyResult ()Result {return Result {Type :ResultTypeEmpty }};const _dfdae =1;
-
-// Reference returns a string reference value to a horizontal range.
-func (_cgbdb HorizontalRange )Reference (ctx Context ,ev Evaluator )Reference {return Reference {Type :ReferenceTypeHorizontalRange ,Value :_cgbdb .horizontalRangeReference ()};};const _dgcc =57352;type parsedSearchObject struct{_dgcdd string ;_eddfb string ;
-_bedab int ;};
-
-// True is an implementation of the Excel TRUE() function.  It takes no
-// arguments.
-func True (args []Result )Result {if len (args )!=0{return MakeErrorResult ("\u0054\u0052\u0055E \u0074\u0061\u006b\u0065\u0073\u0020\u006e\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");};return MakeBoolResult (true );};
-
-// String returns a string of a range.
-func (_bcece Range )String ()string {return _b .Sprintf ("\u0025\u0073\u003a%\u0073",_bcece ._eege .String (),_bcece ._cbfg .String ());};var _cbfa =[...]uint8 {0,20,37,60,78,96};
-
-// CountIfs implements the COUNTIFS function.
-func CountIfs (args []Result )Result {_gebaa :=_fgff (args ,false ,"\u0043\u004f\u0055\u004e\u0054\u0049\u0046\u0053");if _gebaa .Type !=ResultTypeEmpty {return _gebaa ;};_dcggcg :=_dddc (args );return MakeNumberResult (float64 (len (_dcggcg )));};var _eedg =map[string ]FunctionComplex {};
-
-
-// Ddb implements the Excel DDB function.
-func Ddb (args []Result )Result {_gcb :=len (args );if _gcb !=4&&_gcb !=5{return MakeErrorResult ("\u0044\u0044\u0042 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u006f\u0075\u0072\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020c\u006f\u0073\u0074\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_gdeb :=args [0].ValueNumber ;if _gdeb < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0044B \u0072\u0065\u0071u\u0069\u0072\u0065\u0073 co\u0073t \u0074\u006f\u0020\u0062\u0065\u0020\u006eon\u0020\u006e\u0065\u0067\u0061\u0074\u0069v\u0065");
-};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0044\u0042 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061\u0067\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_fdaa :=args [1].ValueNumber ;if _fdaa < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020s\u0061\u006c\u0076\u0061\u0067\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u006e\u0065\u0067a\u0074\u0069\u0076\u0065");
-};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020l\u0069\u0066\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_afae :=args [2].ValueNumber ;if _afae <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0069f\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0044\u0042\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_dfbf :=args [3].ValueNumber ;if _dfbf < 1{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0044\u0042\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s\u0020\u0070\u0065\u0072i\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u0074\u0020\u006c\u0065\u0073\u0073\u0020\u0074\u0068\u0061\u006e\u0020\u006f\u006e\u0065");
-};if _dfbf > _afae {return MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0070\u0065\u0072i\u006f\u0064\u0020\u0066\u006f\u0072\u0020\u0044\u0044\u0042");};_gbea :=2.0;if _gcb ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0044\u0042\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0061\u0063\u0074\u006f\u0072 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gbea =args [4].ValueNumber ;if _gbea < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0061\u0063\u0074\u006f\u0072\u0020\u0074\u006f\u0020\u0062e\u0020\u006e\u006f\u006e\u0020n\u0065\u0067a\u0074\u0069\u0076\u0065");
-};};return MakeNumberResult (_abfc (_gdeb ,_fdaa ,_afae ,_dfbf ,_gbea ));};const _gbefa ="\u0052\u0065\u0073\u0075\u006c\u0074\u0054\u0079\u0070\u0065U\u006e\u006b\u006e\u006f\u0077\u006e\u0052\u0065\u0073u\u006c\u0074\u0054y\u0070\u0065\u004e\u0075\u006d\u0062\u0065\u0072\u0052\u0065s\u0075\u006c\u0074\u0054\u0079\u0070\u0065\u0053\u0074\u0072\u0069\u006e\u0067\u0052\u0065\u0073\u0075\u006c\u0074\u0054\u0079\u0070\u0065\u004c\u0069\u0073\u0074\u0052\u0065\u0073\u0075lt\u0054\u0079p\u0065\u0041r\u0072\u0061\u0079\u0052\u0065\u0073\u0075\u006c\u0074\u0054\u0079\u0070\u0065\u0045\u0072\u0072\u006f\u0072\u0052\u0065\u0073\u0075\u006c\u0074\u0054\u0079\u0070\u0065\u0045\u006d\u0070\u0074\u0079";
-func _cbggg (_bebca ,_adabf Expression )(Expression ,Expression ,error ){_aagbd ,_fcaee :=_bebca .(CellRef );if !_fcaee {return nil ,nil ,_be .New (_b .Sprintf ("\u0049\u006e\u0063\u006frr\u0065\u0063\u0074\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020%\u0073",_bebca .String ()));
-};_cegda ,_fcaee :=_adabf .(CellRef );if !_fcaee {return nil ,nil ,_be .New (_b .Sprintf ("\u0049\u006e\u0063\u006frr\u0065\u0063\u0074\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020%\u0073",_adabf .String ()));};_gcbde ,_ffbb :=_de .ParseCellReference (_aagbd ._bge );
-if _ffbb !=nil {return nil ,nil ,_ffbb ;};_afecg ,_adadf :=_de .ParseCellReference (_cegda ._bge );if _adadf !=nil {return nil ,nil ,_adadf ;};_badd :=false ;if _gcbde .RowIdx > _afecg .RowIdx {_badd =true ;_gcbde .RowIdx ,_afecg .RowIdx =_afecg .RowIdx ,_gcbde .RowIdx ;
-};if _gcbde .ColumnIdx > _afecg .ColumnIdx {_badd =true ;_gcbde .ColumnIdx ,_afecg .ColumnIdx =_afecg .ColumnIdx ,_gcbde .ColumnIdx ;_gcbde .Column ,_afecg .Column =_afecg .Column ,_gcbde .Column ;};if _badd {return NewCellRef (_gcbde .String ()),NewCellRef (_afecg .String ()),nil ;
-};return _bebca ,_adabf ,nil ;};var _age =map[string ]*_fa .Regexp {};func _gggb (_cecegg string )*criteriaRegex {_cgfb :=&criteriaRegex {};if _cecegg ==""{return _cgfb ;};if _aeafg :=_cbcg .FindStringSubmatch (_cecegg );len (_aeafg )> 1{_cgfb ._ccecd =_ffffg ;
-_cgfb ._eggdf =_aeafg [1];}else if _feefa :=_ffcf .FindStringSubmatch (_cecegg );len (_feefa )> 1{_cgfb ._ccecd =_ffffg ;_cgfb ._eggdf =_feefa [1];}else if _gegbf :=_bdaca .FindStringSubmatch (_cecegg );len (_gegbf )> 1{_cgfb ._ccecd =_ccbfc ;_cgfb ._eggdf =_gegbf [1];
-}else if _egea :=_bedd .FindStringSubmatch (_cecegg );len (_egea )> 1{_cgfb ._ccecd =_cafd ;_cgfb ._eggdf =_egea [1];}else if _edea :=_abcg .FindStringSubmatch (_cecegg );len (_edea )> 1{_cgfb ._ccecd =_cfgbb ;_cgfb ._eggdf =_edea [1];}else if _bdfd :=_efegb .FindStringSubmatch (_cecegg );
-len (_bdfd )> 1{_cgfb ._ccecd =_gcdd ;_cgfb ._eggdf =_bdfd [1];};return _cgfb ;};
-
-// NewRange constructs a new range.
-func NewRange (from ,to Expression )Expression {_fcecb ,_beefa ,_cdbc :=_cbggg (from ,to );if _cdbc !=nil {_gd .Log .Debug (_cdbc .Error ());return NewError (_cdbc .Error ());};return Range {_eege :_fcecb ,_cbfg :_beefa };};
-
-// Eomonth is an implementation of the Excel EOMONTH() function.
-func Eomonth (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0045\u004f\u004d\u004f\u004e\u0054\u0048\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074w\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0066\u006f\u0072\u0020\u0045\u004f\u004d\u004f\u004e\u0054\u0048");};_agb :=args [1].ValueNumber ;
-_fef :=args [0];var _bdfa float64 ;switch _fef .Type {case ResultTypeEmpty :_bdfa =0;case ResultTypeNumber :_bdfa =_fef .ValueNumber ;case ResultTypeString :_beee :=DateValue ([]Result {args [0]});if _beee .Type ==ResultTypeError {return MakeErrorResult ("\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0066\u006f\u0072\u0020\u0045\u004f\u004d\u004f\u004e\u0054\u0048");
-};_bdfa =_beee .ValueNumber ;default:return MakeErrorResult ("\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0066\u006f\u0072\u0020\u0045\u004f\u004d\u004f\u004e\u0054\u0048");};_ceg :=_dad (_bdfa );
-_cbe :=_ceg .AddDate (0,int (_agb +1),0);_defg ,_ebbf ,_ :=_cbe .Date ();_dbec :=_ee (_defg ,int (_ebbf ),0);if _dbec < 1{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0066\u006f\u0072\u0020\u0045\u004f\u004d\u004f\u004e\u0054\u0048");
-};if _defg ==1900&&_ebbf ==3{_dbec --;};return MakeNumberResult (_dbec );};var _cgea =[...]uint8 {0,16,29,43,56,68,80,91,102,113,125,137,148,163};
-
-// Coupdaysnc implements the Excel COUPDAYSNC function.
-func Coupdaysnc (args []Result )Result {_dgf ,_bage :=_fcge (args ,"\u0043\u004f\u0055\u0050\u0044\u0041\u0059\u0053\u004e\u0043");if _bage .Type ==ResultTypeError {return _bage ;};return MakeNumberResult (_gbdd (_dgf ._dbeb ,_dgf ._bfbe ,_dgf ._fdf ,_dgf ._fgae ));
-};func (_ebaf HorizontalRange )horizontalRangeReference ()string {return _b .Sprintf ("\u0025\u0064\u003a%\u0064",_ebaf ._eaeb ,_ebaf ._fdedb );};
-
-// Function is a standard function whose result only depends on its arguments.
-type Function func (_aebb []Result )Result ;
-
-// Columns implements the Excel COLUMNS function.
-func Columns (args []Result )Result {if len (args )< 1{return MakeErrorResult ("\u0043\u004fL\u0055\u004d\u004e\u0053\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075me\u006e\u0074");};_cdfb :=args [0];
-if _cdfb .Type !=ResultTypeArray &&_cdfb .Type !=ResultTypeList {return MakeErrorResult ("\u0043O\u004c\u0055M\u004e\u0053\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0066\u0069\u0072\u0073\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020t\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
-};_effc :=_cdfb .ValueArray ;if len (_effc )==0{return MakeErrorResult ("\u0043\u004f\u004c\u0055\u004d\u004e\u0053\u0020r\u0065\u0071\u0075ir\u0065\u0073\u0020\u0061\u0072\u0072a\u0079\u0020\u0074\u006f\u0020\u0063\u006f\u006e\u0074\u0061\u0069\u006e\u0020\u0061\u0074 \u006c\u0065\u0061\u0073\u0074\u0020\u0031\u0020r\u006f\u0077");
-};return MakeNumberResult (float64 (len (_effc [0])));};func _aacbc (_edad Context ,_gcded ,_adae int )(string ,string ){_acce :="\u0041"+_fce .Itoa (_gcded );_aacac :=_edad .LastColumn (_gcded ,_adae );_cddga :=_aacac +_fce .Itoa (_adae );return _acce ,_cddga ;
+// Find is an implementation of the Excel FIND().
+func Find (args []Result )Result {_bgddg ,_daabg :=_eacd ("\u0046\u0049\u004e\u0044",args );if _daabg .Type !=ResultTypeEmpty {return _daabg ;};_ffdbe :=_bgddg ._eefe ;if _ffdbe ==""{return MakeNumberResult (1.0);};_dbaad :=_bgddg ._gdgff ;_fgab :=_bgddg ._dbdf ;
+_bdad :=1;for _dade :=range _dbaad {if _bdad < _fgab {_bdad ++;continue ;};_gdbe :=_e .Index (_dbaad [_dade :],_ffdbe );if _gdbe ==0{return MakeNumberResult (float64 (_bdad ));};_bdad ++;};return MakeErrorResultType (ErrorTypeValue ,"\u004eo\u0074\u0020\u0066\u006f\u0075\u006ed");
 };
 
-// PrefixHorizontalRange is a range expression that when evaluated returns a list of Results from references like Sheet1!1:4 (all cells from rows 1 to 4 of sheet 'Sheet1').
-type PrefixHorizontalRange struct{_eabcd Expression ;_dcged ,_dafba int ;};
+// Update updates references in the BinaryExpr after removing a row/column.
+func (_be BinaryExpr )Update (q *_db .UpdateQuery )Expression {_fe :=_be ;_fe ._ba =_be ._ba .Update (q );_fe ._efb =_be ._efb .Update (q );return _fe ;};type node struct{_aefcg tokenType ;_eadc string ;};var _cbae =[]ri {{1000,"\u004d"},{990,"\u0058\u004d"},{950,"\u004c\u004d"},{900,"\u0043\u004d"},{500,"\u0044"},{490,"\u0058\u0044"},{450,"\u004c\u0044"},{400,"\u0043\u0044"},{100,"\u0043"},{99,"\u0049\u0043"},{90,"\u0058\u0043"},{50,"\u004c"},{45,"\u0056\u004c"},{40,"\u0058\u004c"},{10,"\u0058"},{9,"\u0049\u0058"},{5,"\u0056"},{4,"\u0049\u0056"},{1,"\u0049"}};
 
-// Coupdays implements the Excel COUPDAYS function.
-func Coupdays (args []Result )Result {_ggbf ,_dddb :=_fcge (args ,"\u0043\u004f\u0055\u0050\u0044\u0041\u0059\u0053");if _dddb .Type ==ResultTypeError {return _dddb ;};return MakeNumberResult (_ded (_ggbf ._dbeb ,_ggbf ._bfbe ,_ggbf ._fdf ,_ggbf ._fgae ));
-};var _bbecc =[...]uint8 {0,17,33,49,63,78,93,108};
+
+// ISBLANK is an implementation of the Excel ISBLANK() function.
+func IsBlank (args []Result )Result {if len (args )!=1{return MakeErrorResult ("I\u0053\u0042\u004c\u0041\u004e\u004b(\u0029\u0020\u0061\u0063\u0063\u0065p\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
+};return MakeBoolResult (args [0].Type ==ResultTypeEmpty );};
+
+// Xnpv implements the Excel XNPV function.
+func Xnpv (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u0058\u004eP\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0073");};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("X\u004e\u0050\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_aaad :=args [0].ValueNumber ;if _aaad <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0058\u004e\u0050\u0056\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020\u0074o\u0020\u0062\u0065\u0020\u0070\u006f\u0073i\u0074\u0069\u0076\u0065");
+};_gdfd ,_abeb :=_beea (args [1],args [2],"\u0058\u004e\u0050\u0056");if _abeb .Type ==ResultTypeError {return _abeb ;};_ecbec :=_gdfd ._dfcfc ;_caac :=_gdfd ._fegbf ;_cgfe :=0.0;_fecf :=_caac [0];for _cdba ,_ebec :=range _ecbec {_cgfe +=_ebec /_d .Pow (1+_aaad ,(_caac [_cdba ]-_fecf )/365);
+};return MakeNumberResult (_cgfe );};
+
+// Pricemat implements the Excel PRICEMAT function.
+func Pricemat (args []Result )Result {_gcb :=len (args );if _gcb !=5&&_gcb !=6{return MakeErrorResult ("\u0050\u0052\u0049\u0043\u0045\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0066\u0069v\u0065\u0020\u006f\u0072\u0020\u0073\u0069\u0078\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_bgbgd ,_gffa ,_ffa :=_abcb (args [0],args [1],"\u0050\u0052\u0049\u0043\u0045\u004d\u0041\u0054");if _ffa .Type ==ResultTypeError {return _ffa ;};_fgde ,_ffa :=_gfcac (args [2],"\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065","\u0050\u0052\u0049\u0043\u0045\u004d\u0041\u0054");
+if _ffa .Type ==ResultTypeError {return _ffa ;};if _fgde >=_bgbgd {return MakeErrorResult ("\u0050\u0052\u0049\u0043E\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062e\u0020\u0062\u0065\u0066\u006fr\u0065\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074\u0065");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052I\u0043\u0045\u004d\u0041T\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072a\u0074\u0065\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_aefa :=args [3].ValueNumber ;if _aefa < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0052\u0049\u0043\u0045M\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072a\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u006e\u0065\u0067\u0061\u0074\u0069\u0076\u0065");
+};if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052\u0049\u0043\u0045\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0079\u0069\u0065\u006c\u0064\u0020o\u0066\u0020\u0074\u0079\u0070e\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_dfeab :=args [4].ValueNumber ;if _dfeab < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0052\u0049C\u0045\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0079\u0069\u0065\u006c\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e \u006e\u0065\u0067\u0061\u0074\u0069\u0076\u0065");
+};_agad :=0;if _gcb ==6&&args [5].Type !=ResultTypeEmpty {if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050R\u0049\u0043E\u004d\u0041\u0054 \u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0062\u0061\u0073\u0069\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_agad =int (args [5].ValueNumber );if !_ccfg (_agad ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065c\u0074\u0020b\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u0050\u0052\u0049C\u0045\u004d\u0041\u0054");
+};};_dbaa ,_ffa :=_fdbc (_bgbgd ,_gffa ,_agad );if _ffa .Type ==ResultTypeError {return _ffa ;};_cbgc ,_ffa :=_fdbc (_fgde ,_gffa ,_agad );if _ffa .Type ==ResultTypeError {return _ffa ;};_acaa ,_ffa :=_fdbc (_fgde ,_bgbgd ,_agad );if _ffa .Type ==ResultTypeError {return _ffa ;
+};_daagd :=1+_cbgc *_aefa ;_acff :=1+_dbaa *_dfeab ;return MakeNumberResult ((_daagd /_acff -_acaa *_aefa )*100);};func init (){RegisterFunction ("\u0043\u0048\u004f\u004f\u0053\u0045",Choose );RegisterFunction ("\u0043\u004f\u004c\u0055\u004d\u004e",Column );
+RegisterFunction ("\u0043O\u004c\u0055\u004d\u004e\u0053",Columns );RegisterFunction ("\u0049\u004e\u0044E\u0058",Index );RegisterFunctionComplex ("\u0049\u004e\u0044\u0049\u0052\u0045\u0043\u0054",Indirect );RegisterFunctionComplex ("\u004f\u0046\u0046\u0053\u0045\u0054",Offset );
+RegisterFunction ("\u004d\u0041\u0054C\u0048",Match );RegisterFunction ("\u0048L\u004f\u004f\u004b\u0055\u0050",HLookup );RegisterFunction ("\u004c\u0041\u0052G\u0045",Large );RegisterFunction ("\u004c\u004f\u004f\u004b\u0055\u0050",Lookup );RegisterFunction ("\u0052\u004f\u0057",Row );
+RegisterFunction ("\u0052\u004f\u0057\u0053",Rows );RegisterFunction ("\u0053\u004d\u0041L\u004c",Small );RegisterFunction ("\u0056L\u004f\u004f\u004b\u0055\u0050",VLookup );RegisterFunction ("\u0054R\u0041\u004e\u0053\u0050\u004f\u0053E",Transpose );};
+
 
 // ISREF is an implementation of the Excel ISREF() function.
 func IsRef (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u0052\u0045\u0046\u0028)\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};return MakeBoolResult (ev .LastEvalIsRef ());};
+};return MakeBoolResult (ev .LastEvalIsRef ());};func LexReader (r _b .Reader )chan *node {_gdecb :=NewLexer ();go _gdecb .lex (r );return _gdecb ._cafe };const _gdba =57357;
 
-// MaxIfs implements the MAXIFS function.
-func MaxIfs (args []Result )Result {_acgca :=_fgff (args ,true ,"\u004d\u0041\u0058\u0049\u0046\u0053");if _acgca .Type !=ResultTypeEmpty {return _acgca ;};_dcad :=_dddc (args [1:]);_edcg :=-_d .MaxFloat64 ;_fceaa :=_badg (args [0]);for _ ,_cfcc :=range _dcad {_ecfeg :=_fceaa [_cfcc ._cacd ][_cfcc ._gdab ].ValueNumber ;
-if _edcg < _ecfeg {_edcg =_ecfeg ;};};if _edcg ==-_d .MaxFloat64 {_edcg =0;};return MakeNumberResult (float64 (_edcg ));};func _fegcda (_gcecd Reference ,_fecb Context )bool {return _fecb .Sheet (_gcecd .Value )==InvalidReferenceContext ;};
+// Upper is an implementation of the Excel UPPER function that returns a upper
+// case version of a string.
+func Upper (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0055\u0050\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0061\u0020\u0073\u0069\u006eg\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_cagcgf :=args [0].AsString ();if _cagcgf .Type !=ResultTypeString {return MakeErrorResult ("\u0055\u0050\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0061\u0020\u0073\u0069\u006eg\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};return MakeStringResult (_e .ToUpper (_cagcgf .ValueString ));};func _befd (_gfec []Result ,_egfd bool )(float64 ,float64 ){_cceg :=0.0;_fgcfc :=0.0;for _ ,_fdebd :=range _gfec {switch _fdebd .Type {case ResultTypeNumber :if _egfd ||!_fdebd .IsBoolean {_fgcfc +=_fdebd .ValueNumber ;
+_cceg ++;};case ResultTypeList ,ResultTypeArray :_acbg ,_becg :=_befd (_fdebd .ListValues (),_egfd );_fgcfc +=_acbg ;_cceg +=_becg ;case ResultTypeString :if _egfd {_cceg ++;};case ResultTypeEmpty :};};return _fgcfc ,_cceg ;};func (_bbfbe PrefixVerticalRange )verticalRangeReference (_edaa string )string {return _gf .Sprintf ("\u0025\u0073\u0021\u0025\u0073\u003a\u0025\u0073",_edaa ,_bbfbe ._adfgb ,_bbfbe ._caagf );
+};
 
-// PrefixRangeExpr is a range expression that when evaluated returns a list of Results from a given sheet like Sheet1!A1:B4 (all cells from A1 to B4 from a sheet 'Sheet1').
-type PrefixRangeExpr struct{_fgcba ,_bgacf ,_fabf Expression };
+// Ddb implements the Excel DDB function.
+func Ddb (args []Result )Result {_gcc :=len (args );if _gcc !=4&&_gcc !=5{return MakeErrorResult ("\u0044\u0044\u0042 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u006f\u0075\u0072\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020c\u006f\u0073\u0074\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_aaae :=args [0].ValueNumber ;if _aaae < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0044B \u0072\u0065\u0071u\u0069\u0072\u0065\u0073 co\u0073t \u0074\u006f\u0020\u0062\u0065\u0020\u006eon\u0020\u006e\u0065\u0067\u0061\u0074\u0069v\u0065");
+};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0044\u0042 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061\u0067\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_bgeb :=args [1].ValueNumber ;if _bgeb < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020s\u0061\u006c\u0076\u0061\u0067\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u006e\u0065\u0067a\u0074\u0069\u0076\u0065");
+};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020l\u0069\u0066\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_cfgec :=args [2].ValueNumber ;if _cfgec <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0069f\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0044\u0042\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_accg :=args [3].ValueNumber ;if _accg < 1{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0044\u0042\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s\u0020\u0070\u0065\u0072i\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u0074\u0020\u006c\u0065\u0073\u0073\u0020\u0074\u0068\u0061\u006e\u0020\u006f\u006e\u0065");
+};if _accg > _cfgec {return MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0070\u0065\u0072i\u006f\u0064\u0020\u0066\u006f\u0072\u0020\u0044\u0044\u0042");};_fgba :=2.0;if _gcc ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0044\u0042\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0061\u0063\u0074\u006f\u0072 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_fgba =args [4].ValueNumber ;if _fgba < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0061\u0063\u0074\u006f\u0072\u0020\u0074\u006f\u0020\u0062e\u0020\u006e\u006f\u006e\u0020n\u0065\u0067a\u0074\u0069\u0076\u0065");
+};};return MakeNumberResult (_cece (_aaae ,_bgeb ,_cfgec ,_accg ,_fgba ));};
 
-// Eval evaluates and returns a number.
-func (_fgac Number )Eval (ctx Context ,ev Evaluator )Result {return MakeNumberResult (_fgac ._aaeec )};const _dbg ="\u0028(\u005b0\u002d\u0039\u005d\u0029\u002b)\u0020\u0028a\u006d\u007c\u0070\u006d\u0029";func (_afda *Lexer )nextRaw ()*node {for len (_afda ._beabe )!=0{_dgbf :=<-_afda ._beabe [len (_afda ._beabe )-1];
-if _dgbf !=nil {return _dgbf ;};_afda ._beabe =_afda ._beabe [0:len (_afda ._beabe )-1];};return <-_afda ._dcceb ;};const _bcge =57367;func _gebbd (_gaecc Result ,_fcdee ,_begg string )(string ,Result ){switch _gaecc .Type {case ResultTypeString ,ResultTypeNumber ,ResultTypeEmpty :return _gaecc .Value (),_fca ;
-default:return "",MakeErrorResult (_fcdee +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020"+_begg +"\u0020t\u006f\u0020\u0062\u0065 \u0061\u0020\u006e\u0075\u006db\u0065r\u0020o\u0072\u0020\u0073\u0074\u0072\u0069\u006eg");};};
+// MDeterm is an implementation of the Excel MDETERM which finds the determinant
+// of a matrix.
+func MDeterm (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u004d\u0044\u0045T\u0045\u0052\u004d\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0072\u0061\u0079 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_fagde :=args [0];if _fagde .Type !=ResultTypeArray {return MakeErrorResult ("\u004d\u0044\u0045T\u0045\u0052\u004d\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0072\u0061\u0079 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_cgfbc :=len (_fagde .ValueArray );for _ ,_addae :=range _fagde .ValueArray {if len (_addae )!=_cgfbc {return MakeErrorResult ("\u004d\u0044\u0045TE\u0052\u004d\u0028\u0029\u0020\u0072\u0065\u0071\u0075i\u0072e\u0073 \u0061 \u0073\u0071\u0075\u0061\u0072\u0065\u0020\u006d\u0061\u0074\u0072\u0069\u0078");
+};};return MakeNumberResult (_abee (_fagde .ValueArray ));};
 
-// ErrorType is a formula evaluation error type.
-type ErrorType byte ;func (_bbac *ivr )Cell (ref string ,ev Evaluator )Result {return MakeErrorResult ("\u0069\u006e\u0076\u0061\u006c\u0069\u0064\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065");};
-
-// Today is an implementation of the Excel TODAY() function.
-func Today (args []Result )Result {if len (args )> 0{return MakeErrorResult ("\u0054\u004f\u0044A\u0059\u0020\u0064\u006fe\u0073\u006e\u0027\u0074\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_eae :=_g .Now ();_ ,_ddb :=_eae .Zone ();_cace :=_add (_gag ,_eae .Unix ()+int64 (_ddb ))+1;return MakeNumberResult (_cace );};
+// Arabic implements the Excel ARABIC function which parses roman numerals.  It
+// accepts one numeric argument.
+func Arabic (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0041\u0052\u0041\u0042I\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");};_gccac :=args [0];switch _gccac .Type {case ResultTypeNumber ,ResultTypeList ,ResultTypeEmpty :return MakeErrorResult ("\u0041\u0052\u0041B\u0049\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+case ResultTypeString :_geee :=0.0;_dcba :=0.0;for _ ,_acddc :=range _gccac .ValueString {_cbdg :=0.0;switch _acddc {case 'I':_cbdg =1;case 'V':_cbdg =5;case 'X':_cbdg =10;case 'L':_cbdg =50;case 'C':_cbdg =100;case 'D':_cbdg =500;case 'M':_cbdg =1000;
+};_geee +=_cbdg ;switch {case _dcba ==_cbdg &&(_dcba ==5||_dcba ==50||_dcba ==500):return MakeErrorResult ("i\u006e\u0076\u0061\u006cid\u0020A\u0052\u0041\u0042\u0049\u0043 \u0066\u006f\u0072\u006d\u0061\u0074");case 2*_dcba ==_cbdg :return MakeErrorResult ("i\u006e\u0076\u0061\u006cid\u0020A\u0052\u0041\u0042\u0049\u0043 \u0066\u006f\u0072\u006d\u0061\u0074");
+};if _dcba < _cbdg {_geee -=2*_dcba ;};_dcba =_cbdg ;};return MakeNumberResult (_geee );case ResultTypeError :return _gccac ;default:return MakeErrorResult (_gf .Sprintf ("\u0075\u006e\u0068an\u0064\u006c\u0065\u0064\u0020\u0041\u0043\u004f\u0053H\u0028)\u0020a\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_gccac .Type ));
+};};
 
 // Tbillyield implements the Excel TBILLYIELD function.
 func Tbillyield (args []Result )Result {if len (args )!=3{return MakeErrorResult ("T\u0042\u0049\u004c\u004c\u0059\u0049E\u004c\u0044\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0074\u0068r\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
-};_eabb ,_ceed ,_bcg :=_fbae (args [0],args [1],"\u0054\u0042\u0049\u004c\u004c\u0059\u0049\u0045\u004c\u0044");if _bcg .Type ==ResultTypeError {return _bcg ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0054\u0042\u0049\u004c\u004c\u0059\u0049\u0045\u004c\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0064\u0069\u0073\u0063\u006f\u0075n\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_ccef :=_ceed -_eabb ;if _ccef > 365{return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0042\u0049\u004c\u004cY\u0049\u0045\u004c\u0044\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020m\u0061\u0074\u0075r\u0069\u0074\u0079\u0020t\u006f\u0020\u0062\u0065\u0020\u006eo\u0074\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e\u0020\u006f\u006e\u0065\u0020\u0079e\u0061\u0072\u0020\u0061\u0066\u0074\u0065\u0072\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074");
-};_dacb :=args [2].ValueNumber ;if _dacb <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0042\u0049\u004c\u004c\u0059\u0049\u0045\u004c\u0044\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020p\u0072 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_eaec :=(100-_dacb )/_dacb ;_faed :=360/_ccef ;return MakeNumberResult (_eaec *_faed );};var _gagfb =map[string ]bool {"\u0049F\u0045\u0052\u0052\u004f\u0052":true ,"\u0049\u0046\u004e\u0041":true ,"\u005f\u0078\u006c\u0066\u006e\u002e\u0049\u0046\u004e\u0041":true ,"\u0049\u0053\u0045R\u0052":true ,"\u0049S\u0045\u0052\u0052\u004f\u0052":true ,"\u0049\u0053\u004e\u0041":true ,"\u0049\u0053\u0052E\u0046":true };
-func _ccccf (_edcf _g .Time )bool {return _g .Now ().Sub (_edcf )>=_cfdebf };
+};_dedf ,_egde ,_cgfb :=_abcb (args [0],args [1],"\u0054\u0042\u0049\u004c\u004c\u0059\u0049\u0045\u004c\u0044");if _cgfb .Type ==ResultTypeError {return _cgfb ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0054\u0042\u0049\u004c\u004c\u0059\u0049\u0045\u004c\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0064\u0069\u0073\u0063\u006f\u0075n\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_fggf :=_egde -_dedf ;if _fggf > 365{return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0042\u0049\u004c\u004cY\u0049\u0045\u004c\u0044\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020m\u0061\u0074\u0075r\u0069\u0074\u0079\u0020t\u006f\u0020\u0062\u0065\u0020\u006eo\u0074\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e\u0020\u006f\u006e\u0065\u0020\u0079e\u0061\u0072\u0020\u0061\u0066\u0074\u0065\u0072\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074");
+};_abcf :=args [2].ValueNumber ;if _abcf <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0042\u0049\u004c\u004c\u0059\u0049\u0045\u004c\u0044\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020p\u0072 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_cddcb :=(100-_abcf )/_abcf ;_ecee :=360/_fggf ;return MakeNumberResult (_cddcb *_ecee );};
 
-// Cell is an implementation of the Excel CELL function that returns information
-// about the formatting, location, or contents of a cell.
-func Cell (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=1&&len (args )!=2{return MakeErrorResult ("\u0043\u0045\u004cL \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020o\u006ee\u0020o\u0072 \u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_gbfg :=args [0].AsString ();if _gbfg .Type !=ResultTypeString {return MakeErrorResult ("\u0043\u0045\u004c\u004c\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065 \u0073t\u0072\u0069\u006e\u0067");
-};_ffgca :="\u0041\u0031";if len (args )==2{_fddeb :=args [1].Ref ;if _fddeb .Type !=ReferenceTypeCell {return MakeErrorResult ("\u0043\u0045\u004c\u004c\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064 \u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0079p\u0065\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065");
-};_ffgca =_fddeb .Value ;};switch _gbfg .ValueString {case "\u0061d\u0064\u0072\u0065\u0073\u0073":_afdba ,_adac :=_de .ParseCellReference (_ffgca );if _adac !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072re\u0063t\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065\u003a\u0020"+_ffgca );
-};_aba :="\u0024"+_afdba .Column +"\u0024"+_fce .Itoa (int (_afdba .RowIdx ));if _afdba .SheetName !=""{_aba =_afdba .SheetName +"\u0021"+_aba ;};return MakeStringResult (_aba );case "\u0063\u006f\u006c":_fdfee ,_acge :=_de .ParseCellReference (_ffgca );
-if _acge !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072re\u0063t\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065\u003a\u0020"+_ffgca );};return MakeNumberResult (float64 (_fdfee .ColumnIdx +1));case "\u0063\u006f\u006co\u0072":_edeg :=_bcd .Contains (ctx .GetFormat (_ffgca ),"\u005b\u0052\u0045D\u005d");
-return MakeBoolResult (_edeg );case "\u0063\u006f\u006e\u0074\u0065\u006e\u0074\u0073":return args [1];case "\u0066\u0069\u006c\u0065\u006e\u0061\u006d\u0065":return MakeStringResult (ctx .GetFilename ());case "\u0066\u006f\u0072\u006d\u0061\u0074":_dede :="\u0047";
-_gcdb :=ctx .GetFormat (_ffgca );if _gcdb =="\u0047e\u006e\u0065\u0072\u0061\u006c"||_cfdc .MatchString (_gcdb ){_dede ="\u0046\u0030";}else if _gcdb =="\u0030\u0025"{_dede ="\u0050\u0030";}else if _gcdb =="\u004d\u004d\u004d\u0020\u0044\u0044"{_dede ="\u0044\u0032";
-}else if _gcdb =="\u004d\u004d\u002fY\u0059"{_dede ="\u0044\u0033";}else if _gcdb =="\u004d\u004d\u002f\u0044D/\u0059\u0059\u005c\u0020\u0048\u0048\u003a\u004d\u004d\u005c\u0020\u0041\u004d\u002fP\u004d"||_gcdb =="M\u004d/\u0044\u0044\u002f\u0059\u0059\u0059\u0059\u005c \u0048\u0048\u003a\u004dM:\u0053\u0053"{_dede ="\u0044\u0034";
-}else if _gcdb =="\u004d\u004d\u005c\u002d\u0044\u0044"{_dede ="\u0044\u0035";}else if _gcdb =="\u0048H\u003aM\u004d\u003a\u0053\u0053\u005c\u0020\u0041\u004d\u002f\u0050\u004d"{_dede ="\u0044\u0036";}else if _gcdb =="\u0048\u0048\u003aM\u004d\u005c\u0020\u0041\u004d\u002f\u0050\u004d"{_dede ="\u0044\u0037";
-}else if _gcdb =="\u0048\u0048\u003a\u004d\u004d\u003a\u0053\u0053"{_dede ="\u0044\u0038";}else if _gcdb =="\u0048\u0048\u003aM\u004d"{_dede ="\u0044\u0039";}else if _fcgb .MatchString (_gcdb ){_dede ="\u002e\u0030";}else if _degbc .MatchString (_gcdb ){_dede ="\u002e\u0030\u0028\u0029";
-}else if _fbbe .MatchString (_gcdb ){_dede ="\u0043\u0030";}else if _fafa .MatchString (_gcdb )||_eebff .MatchString (_gcdb ){_dede ="\u0044\u0031";}else if _dgdff :=_agbf .FindStringSubmatch (_gcdb );len (_dgdff )> 1{_dede ="\u0046"+_fce .Itoa (len (_dgdff [1]));
-}else if _gbcb :=_fgdd .FindStringSubmatch (_gcdb );len (_gbcb )> 1{_dede ="\u002e"+_fce .Itoa (len (_gbcb [2]));}else if _cgd :=_eggc .FindStringSubmatch (_gcdb );len (_cgd )> 1{_dede ="\u0050"+_fce .Itoa (len (_cgd [2]));}else if _agbfc :=_edge .FindStringSubmatch (_gcdb );
-len (_agbfc )> 1{_dede ="\u0043"+_dcf (_agbfc ,1);}else if _cagaeg :=_cfgba .FindStringSubmatch (_gcdb );len (_cagaeg )> 1{_dede ="\u0043"+_dcf (_cagaeg ,1);}else if _dfdgd :=_faaa .FindStringSubmatch (_gcdb );len (_dfdgd )> 1{_dede ="\u002e"+_dcf (_dfdgd ,1)+"\u0028\u0029";
-}else if _bbbcg :=_bbae .FindStringSubmatch (_gcdb );len (_bbbcg )> 1{_dede ="\u002e"+_dcf (_bbbcg ,1);}else if _aegeg :=_dggdc .FindStringSubmatch (_gcdb );len (_aegeg )> 1{_dede ="\u0053"+_dcf (_aegeg ,3);};if _dede !="\u0047"&&_bcd .Contains (_gcdb ,"\u005b\u0052\u0045D\u005d"){_dede +="\u002d";
-};return MakeStringResult (_dede );case "p\u0061\u0072\u0065\u006e\u0074\u0068\u0065\u0073\u0065\u0073":_bac :=ctx .GetFormat (_ffgca );if _afcf .MatchString (_bac ){return MakeNumberResult (1);}else {return MakeNumberResult (0);};case "\u0070\u0072\u0065\u0066\u0069\u0078":return MakeStringResult (ctx .GetLabelPrefix (_ffgca ));
-case "\u0070r\u006f\u0074\u0065\u0063\u0074":_gacg :=0.0;if ctx .GetLocked (_ffgca ){_gacg =1.0;};return MakeNumberResult (_gacg );case "\u0072\u006f\u0077":_bgce ,_bbgf :=_de .ParseCellReference (_ffgca );if _bbgf !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072re\u0063t\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065\u003a\u0020"+_ffgca );
-};return MakeNumberResult (float64 (_bgce .RowIdx ));case "\u0074\u0079\u0070\u0065":switch args [1].Type {case ResultTypeEmpty :return MakeStringResult ("\u0062");case ResultTypeString :return MakeStringResult ("\u006c");default:return MakeStringResult ("\u0076");
-};case "\u0077\u0069\u0064t\u0068":_befb ,_debf :=_de .ParseCellReference (_ffgca );if _debf !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072re\u0063t\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065\u003a\u0020"+_ffgca );};if _befb .SheetName ==""{return MakeNumberResult (ctx .GetWidth (int (_befb .ColumnIdx )));
-}else {return MakeNumberResult (ctx .Sheet (_befb .SheetName ).GetWidth (int (_befb .ColumnIdx )));};};return MakeErrorResult ("\u0049\u006e\u0063or\u0072\u0065\u0063\u0074\u0020\u0066\u0069\u0072\u0073t\u0020a\u0072g\u0075m\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0043\u0045\u004c\u004c\u003a\u0020"+_gbfg .ValueString );
+// Received implements the Excel RECEIVED function.
+func Received (args []Result )Result {_dbec :=len (args );if _dbec !=4&&_dbec !=5{return MakeErrorResult ("R\u0045\u0043\u0045\u0049\u0056\u0045\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066o\u0075\u0072\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065 a\u0072\u0067\u0075m\u0065n\u0074\u0073");
+};_aceae ,_gcdbe ,_fgege :=_abcb (args [0],args [1],"\u0052\u0045\u0043\u0045\u0049\u0056\u0045\u0044");if _fgege .Type ==ResultTypeError {return _fgege ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0045\u0043\u0045\u0049\u0056\u0045\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020i\u006e\u0076\u0065\u0073\u0074\u006d\u0065n\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_geacf :=args [2].ValueNumber ;if _geacf <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0052\u0045\u0043\u0045\u0049\u0056\u0045\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0069\u006ev\u0065\u0073\u0074\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065n\u0074");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0045\u0043\u0045\u0049\u0056\u0045\u0044 \u0072\u0065\u0071ui\u0072\u0065\u0073\u0020\u0064\u0069s\u0063\u006f\u0075\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+};_dbag :=args [3].ValueNumber ;if _dbag <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0052\u0045\u0043\u0045I\u0056\u0045\u0044\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0064\u0069\u0073\u0063\u006f\u0075\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020p\u006f\u0073\u0069\u0074\u0069v\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_eabg :=0;if _dbec ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052E\u0043\u0045I\u0056\u0045\u0044 \u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0062\u0061\u0073\u0069\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_eabg =int (args [4].ValueNumber );if !_ccfg (_eabg ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065c\u0074\u0020b\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u0052\u0045\u0043E\u0049\u0056\u0045\u0044");
+};};_abaa ,_fgege :=_fdbc (_aceae ,_gcdbe ,_eabg );if _fgege .Type ==ResultTypeError {return _fgege ;};return MakeNumberResult (_geacf /(1-_dbag *_abaa ));};type evCache struct{_fgad map[string ]Result ;_bfc *_ad .Mutex ;};
+
+// MakeStringResult constructs a string result.
+func MakeStringResult (s string )Result {return Result {Type :ResultTypeString ,ValueString :s }};
+
+// Cumipmt implements the Excel CUMIPMT function.
+func Cumipmt (args []Result )Result {_gcef ,_fccf :=_dcef (args ,"\u0043U\u004d\u0049\u0050\u004d\u0054");if _fccf .Type ==ResultTypeError {return _fccf ;};_aeba :=_gcef ._bead ;_egfa :=_gcef ._eacb ;_bgdb :=_gcef ._dbae ;_fdea :=_gcef ._efg ;_cgdc :=_gcef ._cdaf ;
+_fdae :=_gcef ._efda ;_cfeg :=_dgge (_aeba ,_egfa ,_bgdb ,0,_fdae );_ebbe :=0.0;if _fdea ==1{if _fdae ==0{_ebbe =-_bgdb ;_fdea ++;};};for _ddeb :=_fdea ;_ddeb <=_cgdc ;_ddeb ++{if _fdae ==1{_ebbe +=_ggdg (_aeba ,_ddeb -2,_cfeg ,_bgdb ,1)-_cfeg ;}else {_ebbe +=_ggdg (_aeba ,_ddeb -1,_cfeg ,_bgdb ,0);
+};};_ebbe *=_aeba ;return MakeNumberResult (_ebbe );};type countMode byte ;func _babg (_caef ,_bae ,_geab int )bool {if _bae < 1||_bae > 12{return false ;};if _geab < 1{return false ;};return _geab <=_ggf (_caef ,_bae );};func (_dbdd VerticalRange )verticalRangeReference ()string {return _gf .Sprintf ("\u0025\u0073\u003a%\u0073",_dbdd ._cege ,_dbdd ._afaca );
+};func _cfad (_ddaf int )bool {return _ddaf ==0||_ddaf ==4};
+
+// NewPrefixRangeExpr constructs a new range with prefix.
+func NewPrefixRangeExpr (pfx ,from ,to Expression )Expression {_gedcc ,_ggge ,_cffdb :=_fbgeb (from ,to );if _cffdb !=nil {_af .Log .Debug (_cffdb .Error ());return NewError (_cffdb .Error ());};return PrefixRangeExpr {_dgbf :pfx ,_aada :_gedcc ,_gdbf :_ggge };
+};func _eacd (_dbfg string ,_gcedd []Result )(*parsedSearchObject ,Result ){_bdfg :=len (_gcedd );if _bdfg !=2&&_bdfg !=3{return nil ,MakeErrorResult (_dbfg +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u006fr\u0020t\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_fggc :=_gcedd [0];if _fggc .Type ==ResultTypeError {return nil ,_fggc ;};if _fggc .Type !=ResultTypeString &&_fggc .Type !=ResultTypeNumber {return nil ,MakeErrorResult ("\u0054\u0068e\u0020\u0066\u0069\u0072s\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020s\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u0061\u0020\u0073t\u0072\u0069\u006e\u0067");
+};_aceg :=_gcedd [1];if _aceg .Type ==ResultTypeError {return nil ,_aceg ;};if _aceg .Type !=ResultTypeString &&_aceg .Type !=ResultTypeNumber {return nil ,MakeErrorResult ("\u0054\u0068\u0065\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0073\u0068\u006f\u0075l\u0064\u0020\u0062\u0065\u0020a\u0020\u0073t\u0072\u0069\u006e\u0067");
+};_ffceeg :=_aceg .Value ();_agbd :=_fggc .Value ();_fbad :=1;if _bdfg ==3&&_gcedd [2].Type !=ResultTypeEmpty {_ageae :=_gcedd [2];if _ageae .Type !=ResultTypeNumber {return nil ,MakeErrorResult ("P\u006f\u0073\u0069\u0074\u0069\u006fn\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062e\u0020\u0061\u0020n\u0075m\u0062\u0065\u0072");
+};_fbad =int (_ageae .ValueNumber );if _fbad < 1{return nil ,MakeErrorResultType (ErrorTypeValue ,"\u0050\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u0020\u0073\u0068\u006f\u0075l\u0064\u0020\u0062\u0065\u0020\u0061 \u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006d\u006f\u0072\u0065\u0020\u0074h\u0061\u006e\u0020\u0030");
+};if _fbad > len (_ffceeg ){return nil ,MakeErrorResultType (ErrorTypeValue ,"\u0050\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u0020\u0073\u0068\u006f\u0075l\u0064\u0020\u0062\u0065\u0020\u0061 \u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006d\u006f\u0072\u0065\u0020\u0074h\u0061\u006e\u0020\u0030");
+};};return &parsedSearchObject {_agbd ,_ffceeg ,_fbad },_fcea ;};
+
+// Cumprinc implements the Excel CUMPRINC function.
+func Cumprinc (args []Result )Result {_fegb ,_egcb :=_dcef (args ,"\u0043\u0055\u004d\u0050\u0052\u0049\u004e\u0043");if _egcb .Type ==ResultTypeError {return _egcb ;};_cegdf :=_fegb ._bead ;_ddfg :=_fegb ._eacb ;_aea :=_fegb ._dbae ;_cgge :=_fegb ._efg ;
+_defc :=_fegb ._cdaf ;_adac :=_fegb ._efda ;_bgcf :=_dgge (_cegdf ,_ddfg ,_aea ,0,_adac );_cbgfc :=0.0;if _cgge ==1{if _adac ==0{_cbgfc =_bgcf +_aea *_cegdf ;}else {_cbgfc =_bgcf ;};_cgge ++;};for _dfea :=_cgge ;_dfea <=_defc ;_dfea ++{if _adac ==1{_cbgfc +=_bgcf -(_ggdg (_cegdf ,_dfea -2,_bgcf ,_aea ,1)-_bgcf )*_cegdf ;
+}else {_cbgfc +=_bgcf -_ggdg (_cegdf ,_dfea -1,_bgcf ,_aea ,0)*_cegdf ;};};return MakeNumberResult (_cbgfc );};func init (){_gffc ();RegisterFunction ("\u004e\u0041",NA );RegisterFunction ("\u0049S\u0042\u004c\u0041\u004e\u004b",IsBlank );RegisterFunction ("\u0049\u0053\u0045R\u0052",IsErr );
+RegisterFunction ("\u0049S\u0045\u0052\u0052\u004f\u0052",IsError );RegisterFunction ("\u0049\u0053\u0045\u0056\u0045\u004e",IsEven );RegisterFunctionComplex ("\u005fx\u006cf\u006e\u002e\u0049\u0053\u0046\u004f\u0052\u004d\u0055\u004c\u0041",IsFormula );
+RegisterFunctionComplex ("\u004fR\u0047\u002e\u004f\u0050E\u004e\u004f\u0046\u0046\u0049C\u0045.\u0049S\u004c\u0045\u0041\u0050\u0059\u0045\u0041R",IsLeapYear );RegisterFunctionComplex ("\u0049S\u004c\u004f\u0047\u0049\u0043\u0041L",IsLogical );RegisterFunction ("\u0049\u0053\u004e\u0041",IsNA );
+RegisterFunction ("\u0049S\u004e\u004f\u004e\u0054\u0045\u0058T",IsNonText );RegisterFunction ("\u0049\u0053\u004e\u0055\u004d\u0042\u0045\u0052",IsNumber );RegisterFunction ("\u0049\u0053\u004fD\u0044",IsOdd );RegisterFunctionComplex ("\u0049\u0053\u0052E\u0046",IsRef );
+RegisterFunction ("\u0049\u0053\u0054\u0045\u0058\u0054",IsText );RegisterFunctionComplex ("\u0043\u0045\u004c\u004c",Cell );};func Trunc (args []Result )Result {if len (args )==0{return MakeErrorResult ("T\u0052\u0055\u004e\u0043\u0028\u0029\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0061t \u006c\u0065\u0061\u0073t\u0020\u006f\u006e\u0065\u0020\u006e\u0075\u006d\u0065ri\u0063\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_deff :=args [0].AsNumber ();if _deff .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072s\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0054\u0052\u0055\u004e\u0043\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_agcgc :=float64 (0);if len (args )> 1{_ccfed :=args [1].AsNumber ();if _ccfed .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020a\u0072\u0067\u0075m\u0065\u006e\u0074\u0020t\u006f\u0020\u0054\u0052\u0055\u004e\u0043\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_agcgc =_ccfed .ValueNumber ;};_ffca :=_deff .ValueNumber ;_fgac :=1.0;if _agcgc >=0{_fgac =_d .Pow (1/10.0,_agcgc );}else {return MakeNumberResult (0);};_ffca ,_addb :=_d .Modf (_ffca /_fgac );_cdgbc :=0.99999;if _addb > _cdgbc {_ffca ++;}else if _addb < -_cdgbc {_ffca --;
+};_ =_addb ;return MakeNumberResult (_ffca *_fgac );};
+
+// IsLogical is an implementation of the Excel ISLOGICAL() function.
+func IsLogical (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u004c\u004f\u0047\u0049\u0043A\u004c\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_cgff :=args [0].Ref ;if _cgff .Type !=ReferenceTypeCell {return MakeErrorResult ("I\u0053\u004c\u004f\u0047\u0049\u0043\u0041\u004c\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068\u0065\u0020\u0066\u0069\u0072\u0073t\u0020a\u0072\u0067\u0075\u006de\u006e\u0074 \u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065");
+};return MakeBoolResult (ctx .Cell (_cgff .Value ,ev ).IsBoolean );};
+
+// Reference returns an invalid reference for Bool.
+func (_ea Bool )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
+
+// IfError is an implementation of the Excel IFERROR() function. It takes two arguments.
+func IfError (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0049\u0046\u0045\u0052\u0052\u004f\u0052\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074w\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if args [0].Type !=ResultTypeError {if args [0].Type ==ResultTypeEmpty {return MakeNumberResult (0);};return args [0];};return args [1];};
+
+// GetEpoch returns a null time object for the invalid reference context.
+func (_ggadg *ivr )GetEpoch ()_bcd .Time {return _bcd .Time {}};
+
+// Counta implements the COUNTA function.
+func Counta (args []Result )Result {return MakeNumberResult (_fbbd (args ,_cgbd ))};
+
+// GCD implements the Excel GCD() function which returns the greatest common
+// divisor of a range of numbers.
+func GCD (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0047\u0043D(\u0029\u0020\u0072e\u0071\u0075\u0069\u0072es \u0061t \u006c\u0065\u0061\u0073\u0074\u0020\u006fne\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");};_adfd :=[]float64 {};
+for _ ,_eaaf :=range args {switch _eaaf .Type {case ResultTypeString :_afffc :=_eaaf .AsNumber ();if _afffc .Type !=ResultTypeNumber {return MakeErrorResult ("\u0047\u0043D(\u0029\u0020\u006fn\u006c\u0079\u0020\u0061cce\u0070ts\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
+};_adfd =append (_adfd ,_afffc .ValueNumber );case ResultTypeList ,ResultTypeArray :_ebdd :=GCD (_eaaf .ListValues ());if _ebdd .Type !=ResultTypeNumber {return _ebdd ;};_adfd =append (_adfd ,_ebdd .ValueNumber );case ResultTypeNumber :_adfd =append (_adfd ,_eaaf .ValueNumber );
+case ResultTypeError :return _eaaf ;default:return MakeErrorResult (_gf .Sprintf ("\u0047\u0043\u0044()\u0020\u0075\u006e\u0073\u0075\u0070\u0070\u006f\u0072t\u0065d\u0020a\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_eaaf .Type ));
+};};if _adfd [0]< 0{return MakeErrorResult ("\u0047\u0043D\u0028\u0029\u0020\u006fn\u006c\u0079 \u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020p\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");};if len (_adfd )==1{return MakeNumberResult (_adfd [0]);
+};_ceee :=_adfd [0];for _babbb :=1;_babbb < len (_adfd );_babbb ++{if _adfd [_babbb ]< 0{return MakeErrorResult ("\u0047\u0043D\u0028\u0029\u0020\u006fn\u006c\u0079 \u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020p\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_ceee =_dedfb (_ceee ,_adfd [_babbb ]);};return MakeNumberResult (_ceee );};
+
+// NewEmptyExpr constructs a new empty expression.
+func NewEmptyExpr ()Expression {return EmptyExpr {}};
+
+// NewSheetPrefixExpr constructs a new prefix expression.
+func NewSheetPrefixExpr (s string )Expression {return &SheetPrefixExpr {_aeef :s }};func _efbd (_fcc ,_fdef ,_dgf float64 )float64 {return (_fcc *3600+_fdef *60+_dgf )/86400};
+
+// Mod is an implementation of the Excel MOD function which returns the
+// remainder after division. It requires two numeric argumnts.
+func Mod (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u004d\u004fD(\u0029\u0020\u0072e\u0071\u0075\u0069\u0072es \u0074wo\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");};_ggaad :=args [0].AsNumber ();
+_dadc :=args [1].AsNumber ();if _ggaad .Type !=ResultTypeNumber ||_dadc .Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u004fD(\u0029\u0020\u0072e\u0071\u0075\u0069\u0072es \u0074wo\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
+};if _dadc .ValueNumber ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"M\u004fD\u0028\u0029\u0020\u0064\u0069\u0076\u0069\u0064e\u0020\u0062\u0079\u0020ze\u0072\u006f");};_fgbdc ,_aafcd :=_d .Modf (_ggaad .ValueNumber /_dadc .ValueNumber );if _aafcd < 0{_fgbdc --;
+};return MakeNumberResult (_ggaad .ValueNumber -_dadc .ValueNumber *_fgbdc );};
+
+// String returns a string representation of ConstArrayExpr.
+func (_bgd ConstArrayExpr )String ()string {return ""};var _aggdg =[...]string {"\u0024\u0065\u006e\u0064","\u0065\u0072\u0072o\u0072","\u0024\u0075\u006e\u006b","t\u006fk\u0065\u006e\u0048\u006f\u0072\u0069\u007a\u006fn\u0074\u0061\u006c\u0052an\u0067\u0065","\u0074o\u006be\u006e\u0056\u0065\u0072\u0074i\u0063\u0061l\u0052\u0061\u006e\u0067\u0065","\u0074\u006f\u006b\u0065\u006e\u0052\u0065\u0073\u0065\u0072\u0076\u0065d\u004e\u0061\u006d\u0065","\u0074\u006f\u006be\u006e\u0044\u0044\u0045\u0043\u0061\u006c\u006c","\u0074\u006f\u006b\u0065\u006e\u004c\u0065\u0078\u0045\u0072\u0072\u006f\u0072","\u0074o\u006be\u006e\u004e\u0061\u006d\u0065\u0064\u0052\u0061\u006e\u0067\u0065","\u0074o\u006b\u0065\u006e\u0042\u006f\u006fl","t\u006f\u006b\u0065\u006e\u004e\u0075\u006d\u0062\u0065\u0072","t\u006f\u006b\u0065\u006e\u0053\u0074\u0072\u0069\u006e\u0067","\u0074\u006f\u006b\u0065\u006e\u0045\u0072\u0072\u006f\u0072","\u0074\u006f\u006b\u0065\u006e\u0045\u0072\u0072\u006f\u0072\u0052\u0065\u0066","\u0074\u006f\u006b\u0065\u006e\u0053\u0068\u0065\u0065\u0074","\u0074o\u006b\u0065\u006e\u0043\u0065\u006cl","t\u006fk\u0065\u006e\u0046\u0075\u006e\u0063\u0074\u0069o\u006e\u0042\u0075\u0069lt\u0069\u006e","t\u006f\u006b\u0065\u006e\u004c\u0042\u0072\u0061\u0063\u0065","t\u006f\u006b\u0065\u006e\u0052\u0042\u0072\u0061\u0063\u0065","t\u006f\u006b\u0065\u006e\u004c\u0050\u0061\u0072\u0065\u006e","t\u006f\u006b\u0065\u006e\u0052\u0050\u0061\u0072\u0065\u006e","\u0074o\u006b\u0065\u006e\u0050\u006c\u0075s","\u0074\u006f\u006b\u0065\u006e\u004d\u0069\u006e\u0075\u0073","\u0074o\u006b\u0065\u006e\u004d\u0075\u006ct","\u0074\u006f\u006b\u0065\u006e\u0044\u0069\u0076","\u0074\u006f\u006b\u0065\u006e\u0045\u0078\u0070","\u0074o\u006b\u0065\u006e\u0045\u0051","\u0074o\u006b\u0065\u006e\u004c\u0054","\u0074o\u006b\u0065\u006e\u0047\u0054","\u0074\u006f\u006b\u0065\u006e\u004c\u0045\u0051","\u0074\u006f\u006b\u0065\u006e\u0047\u0045\u0051","\u0074o\u006b\u0065\u006e\u004e\u0045","\u0074\u006f\u006b\u0065\u006e\u0043\u006f\u006c\u006f\u006e","\u0074\u006f\u006b\u0065\u006e\u0043\u006f\u006d\u006d\u0061","\u0074\u006f\u006b\u0065\u006e\u0041\u006d\u0070\u0065r\u0073\u0061\u006e\u0064","\u0074o\u006b\u0065\u006e\u0053\u0065\u006di"};
+const _dbccd =57348;
+
+// ISERROR is an implementation of the Excel ISERROR() function.
+func IsError (args []Result )Result {if len (args )!=1{return MakeErrorResult ("I\u0053\u0045\u0052\u0052\u004f\u0052(\u0029\u0020\u0061\u0063\u0063\u0065p\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
+};return MakeBoolResult (args [0].Type ==ResultTypeError );};func _cgbc (_gccfe []Result ,_bagc bool )Result {_cbggg :="\u004d\u0049\u004e";if _bagc {_cbggg ="\u004d\u0049\u004e\u0041";};if len (_gccfe )==0{return MakeErrorResult (_cbggg +"\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s\u0020\u0061\u0074\u0020\u006c\u0065\u0061s\u0074\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_cgcfd :=_d .MaxFloat64 ;for _ ,_fbfg :=range _gccfe {switch _fbfg .Type {case ResultTypeNumber :if (_bagc ||!_fbfg .IsBoolean )&&_fbfg .ValueNumber < _cgcfd {_cgcfd =_fbfg .ValueNumber ;};case ResultTypeList ,ResultTypeArray :_gbbce :=_cgbc (_fbfg .ListValues (),_bagc );
+if _gbbce .ValueNumber < _cgcfd {_cgcfd =_gbbce .ValueNumber ;};case ResultTypeEmpty :case ResultTypeString :_gabee :=0.0;if _bagc {_gabee =_fbfg .AsNumber ().ValueNumber ;};if _gabee < _cgcfd {_cgcfd =_gabee ;};default:_af .Log .Debug ("\u0075\u006e\u0068\u0061\u006e\u0064\u006c\u0065\u0064\u0020"+_cbggg +"\u0028\u0029\u0020\u0061rg\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_fbfg .Type );
+};};if _cgcfd ==_d .MaxFloat64 {_cgcfd =0;};return MakeNumberResult (_cgcfd );};func _agfa (_ddg []Result ,_bfac string )(*durationArgs ,Result ){_ddgd :=len (_ddg );if _ddgd !=5&&_ddgd !=6{return nil ,MakeErrorResult (_bfac +"\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s\u0020\u0066\u0069\u0076\u0065\u0020\u006fr\u0020\u0073\u0069\u0078\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_ecbe ,_gae ,_dba :=_abcb (_ddg [0],_ddg [1],_bfac );if _dba .Type ==ResultTypeError {return nil ,_dba ;};_cgaa :=_ddg [2];if _cgaa .Type !=ResultTypeNumber {return nil ,MakeErrorResult (_bfac +"\u0020\u0072eq\u0075\u0069\u0072e\u0073\u0020\u0063\u006fupo\u006e r\u0061\u0074\u0065\u0020\u006f\u0066\u0020ty\u0070\u0065\u0020\u006e\u0075\u006d\u0062e\u0072");
+};_cbcf :=_cgaa .ValueNumber ;if _cbcf < 0{return nil ,MakeErrorResultType (ErrorTypeNum ,"\u0043\u006f\u0075po\u006e\u0020\u0072\u0061\u0074\u0065\u0020\u0073\u0068o\u0075l\u0064 \u006eo\u0074\u0020\u0062\u0065\u0020\u006e\u0065\u0067\u0061\u0074\u0069\u0076\u0065");
+};_dbac :=_ddg [3];if _dbac .Type !=ResultTypeNumber {return nil ,MakeErrorResult (_bfac +" \u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0079\u0069\u0065\u006cd\u0020\u0072\u0061\u0074\u0065\u0020\u006ff\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062e\u0072");
+};_fbgb :=_dbac .ValueNumber ;if _fbgb < 0{return nil ,MakeErrorResultType (ErrorTypeNum ,"\u0059\u0069\u0065\u006c\u0064\u0020r\u0061\u0074\u0065\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u006e\u006ft\u0020\u0062\u0065\u0020\u006e\u0065\u0067a\u0074\u0069\u0076\u0065");
+};_gcge :=_ddg [4];if _gcge .Type !=ResultTypeNumber {return nil ,MakeErrorResult (_bfac +"\u0020\u0072\u0065qu\u0069\u0072\u0065\u0073\u0020\u0066\u0072\u0065\u0071u\u0065n\u0063y\u0020o\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_gga :=float64 (int (_gcge .ValueNumber ));if !_fegd (_gga ){return nil ,MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0066\u0072e\u0071u\u0065n\u0063\u0065\u0020\u0076\u0061\u006c\u0075e");};_efcg :=0;if _ddgd ==6&&_ddg [5].Type !=ResultTypeEmpty {_gacag :=_ddg [5];
+if _gacag .Type !=ResultTypeNumber {return nil ,MakeErrorResult (_bfac +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020b\u0061\u0073\u0069\u0073\u0020\u006f\u0066 \u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");};_efcg =int (_gacag .ValueNumber );
+if !_ccfg (_efcg ){return nil ,MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0062a\u0073\u0069\u0073\u0020\u0076\u0061\u006c\u0075\u0065\u0020f\u006f\u0072\u0020"+_bfac );};};return &durationArgs {_ecbe ,_gae ,_cbcf ,_fbgb ,_gga ,_efcg },_fcea ;
 };
 
-// String returns a string representation of String.
-func (_cdgd String )String ()string {return "\u0022"+_cdgd ._bfed +"\u0022"};
+// CeilingPrecise is an implementation of the CEILING.PRECISE function which
+// returns the ceiling of a number.
+func CeilingPrecise (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0043\u0045\u0049\u004c\u0049\u004e\u0047\u002eP\u0052\u0045\u0043IS\u0045\u0028\u0029\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020o\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+};if len (args )> 2{return MakeErrorResult ("\u0043\u0045I\u004c\u0049\u004e\u0047\u002e\u0050\u0052\u0045\u0043\u0049\u0053\u0045\u0028\u0029\u0020\u0061\u006c\u006c\u006f\u0077\u0073\u0020\u0061\u0074\u0020\u006d\u006f\u0073\u0074\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_ecec :=args [0].AsNumber ();if _ecec .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069r\u0073\u0074\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074 \u0074\u006f\u0020\u0043\u0045\u0049\u004c\u0049\u004e\u0047\u002e\u0050\u0052\u0045\u0043\u0049\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_fbfaf :=float64 (1);if _ecec .ValueNumber < 0{_fbfaf =-1;};if len (args )> 1{_egea :=args [1].AsNumber ();if _egea .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0043E\u0049L\u0049\u004e\u0047\u002e\u0050\u0052\u0045\u0043\u0049\u0053\u0045\u0028\u0029\u0020\u006d\u0075\u0073\u0074 \u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_fbfaf =_d .Abs (_egea .ValueNumber );};if len (args )==1{return MakeNumberResult (_d .Ceil (_ecec .ValueNumber ));};_fgga :=_ecec .ValueNumber ;_fgga ,_dffd :=_d .Modf (_fgga /_fbfaf );if _dffd !=0{if _ecec .ValueNumber > 0{_fgga ++;};};return MakeNumberResult (_fgga *_fbfaf );
+};var _bcgb =[]ri {{1000,"\u004d"},{950,"\u004c\u004d"},{900,"\u0043\u004d"},{500,"\u0044"},{450,"\u004c\u0044"},{400,"\u0043\u0044"},{100,"\u0043"},{95,"\u0056\u0043"},{90,"\u0058\u0043"},{50,"\u004c"},{45,"\u0056\u004c"},{40,"\u0058\u004c"},{10,"\u0058"},{9,"\u0049\u0058"},{5,"\u0056"},{4,"\u0049\u0056"},{1,"\u0049"}};
+func _febbd (_ffeg Result )[]Result {_ccbbb :=_ffeg .ValueList ;if _ffeg .Type ==ResultTypeArray {_ccbbb =nil ;for _ ,_daca :=range _ffeg .ValueArray {if len (_daca )> 0{_ccbbb =append (_ccbbb ,_daca [0]);}else {_ccbbb =append (_ccbbb ,_fcea );};};};return _ccbbb ;
+};
 
-// Reference returns an invalid reference for FunctionCall.
-func (_bab FunctionCall )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
+// NewPrefixHorizontalRange constructs a new full rows range with prefix.
+func NewPrefixHorizontalRange (pfx Expression ,v string )Expression {_gbga :=_e .Split (v ,"\u003a");if len (_gbga )!=2{return nil ;};_ceffa ,_ :=_fd .Atoi (_gbga [0]);_cgde ,_ :=_fd .Atoi (_gbga [1]);if _ceffa > _cgde {_ceffa ,_cgde =_cgde ,_ceffa ;};
+return PrefixHorizontalRange {_fbcde :pfx ,_deafa :_ceffa ,_edfgc :_cgde };};func init (){RegisterFunction ("\u0041\u004e\u0044",And );RegisterFunction ("\u0046\u0041\u004cS\u0045",False );RegisterFunction ("\u0049\u0046",If );RegisterFunction ("\u0049F\u0045\u0052\u0052\u004f\u0052",IfError );
+RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0049\u0046\u004e\u0041",IfNA );RegisterFunction ("\u0049\u0046\u0053",Ifs );RegisterFunction ("\u005fx\u006c\u0066\u006e\u002e\u0049\u0046S",Ifs );RegisterFunction ("\u004e\u004f\u0054",Not );RegisterFunction ("\u004f\u0052",Or );
+RegisterFunction ("\u0054\u0052\u0055\u0045",True );RegisterFunction ("\u005fx\u006c\u0066\u006e\u002e\u0058\u004fR",Xor );};
 
 // VLookup implements the VLOOKUP function that returns a matching value from a
 // column in an array.
-func VLookup (args []Result )Result {_acga :=len (args );if _acga < 3{return MakeErrorResult ("\u0056\u004c\u004f\u004f\u004bU\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074 \u006c\u0065\u0061\u0073\u0074\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if _acga > 4{return MakeErrorResult ("\u0056\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0061\u0074\u0020m\u006f\u0073\u0074\u0020\u0066\u006f\u0075\u0072\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_efdgd :=args [0];_cafgg :=args [1];if _cafgg .Type !=ResultTypeArray {return MakeErrorResult ("\u0056\u004cO\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
-};_bbba :=args [2].AsNumber ();if _bbba .Type !=ResultTypeNumber {return MakeErrorResult ("\u0056\u004cO\u004f\u004b\u0055\u0050 \u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075m\u0065\u0072\u0069\u0063\u0020\u0063\u006f\u006c\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_bfgdg :=false ;if _acga ==4&&args [3].Type !=ResultTypeEmpty {_abdd :=args [3].AsNumber ();if _abdd .Type !=ResultTypeNumber {return MakeErrorResult ("\u0056\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006e\u0075\u006de\u0072\u0069\u0063\u0020\u006d\u0061\u0074\u0063\u0068\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};if _abdd .ValueNumber ==0{_bfgdg =true ;};};_dgefg :=int (_bbba .ValueNumber )-1;_fcba :=-1;_fbddc :=false ;_cfada :for _gaed ,_febc :=range _cafgg .ValueArray {if len (_febc )==0{continue ;};_dfef :=_febc [0];switch _dgdb (_dfef ,_efdgd ,false ,_bfgdg ){case _dcdbd :_fcba =_gaed ;
-case _bfggb :_fcba =_gaed ;_fbddc =true ;break _cfada ;};};if _fcba ==-1{return MakeErrorResultType (ErrorTypeNA ,"\u0056\u004c\u004fOK\u0055\u0050\u0020\u006e\u006f\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0066\u006f\u0075\u006e\u0064");};_acggd :=_cafgg .ValueArray [_fcba ];
-if _dgefg < 0||_dgefg >=len (_acggd ){return MakeErrorResult ("\u0056\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0068\u0061\u0073\u0020\u0069\u006e\u0076a\u006ci\u0064\u0020\u0063\u006f\u006c\u0075\u006d\u006e\u0020\u0069\u006e\u0064\u0065\u0078");};if _fbddc ||!_bfgdg {return _acggd [_dgefg ];
-};return MakeErrorResultType (ErrorTypeNA ,"\u0056\u004c\u004fOK\u0055\u0050\u0020\u006e\u006f\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0066\u006f\u0075\u006e\u0064");};const _cfbaa =57378;
+func VLookup (args []Result )Result {_dadb :=len (args );if _dadb < 3{return MakeErrorResult ("\u0056\u004c\u004f\u004f\u004bU\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074 \u006c\u0065\u0061\u0073\u0074\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if _dadb > 4{return MakeErrorResult ("\u0056\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0061\u0074\u0020m\u006f\u0073\u0074\u0020\u0066\u006f\u0075\u0072\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_bace :=args [0];_bagfc :=args [1];if _bagfc .Type !=ResultTypeArray {return MakeErrorResult ("\u0056\u004cO\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
+};_abda :=args [2].AsNumber ();if _abda .Type !=ResultTypeNumber {return MakeErrorResult ("\u0056\u004cO\u004f\u004b\u0055\u0050 \u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075m\u0065\u0072\u0069\u0063\u0020\u0063\u006f\u006c\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_gbadf :=false ;if _dadb ==4&&args [3].Type !=ResultTypeEmpty {_deab :=args [3].AsNumber ();if _deab .Type !=ResultTypeNumber {return MakeErrorResult ("\u0056\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006e\u0075\u006de\u0072\u0069\u0063\u0020\u006d\u0061\u0074\u0063\u0068\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};if _deab .ValueNumber ==0{_gbadf =true ;};};_dgbgd :=int (_abda .ValueNumber )-1;_gaab :=-1;_eecc :=false ;_acbbb :for _ggfc ,_fbaa :=range _bagfc .ValueArray {if len (_fbaa )==0{continue ;};_fbdcg :=_fbaa [0];switch _fgbaf (_fbdcg ,_bace ,false ,_gbadf ){case _cggc :_gaab =_ggfc ;
+case _beaf :_gaab =_ggfc ;_eecc =true ;break _acbbb ;};};if _gaab ==-1{return MakeErrorResultType (ErrorTypeNA ,"\u0056\u004c\u004fOK\u0055\u0050\u0020\u006e\u006f\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0066\u006f\u0075\u006e\u0064");};_gbeac :=_bagfc .ValueArray [_gaab ];
+if _dgbgd < 0||_dgbgd >=len (_gbeac ){return MakeErrorResult ("\u0056\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0068\u0061\u0073\u0020\u0069\u006e\u0076a\u006ci\u0064\u0020\u0063\u006f\u006c\u0075\u006d\u006e\u0020\u0069\u006e\u0064\u0065\u0078");};if _eecc ||!_gbadf {return _gbeac [_dgbgd ];
+};return MakeErrorResultType (ErrorTypeNA ,"\u0056\u004c\u004fOK\u0055\u0050\u0020\u006e\u006f\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0066\u006f\u0075\u006e\u0064");};
 
-// Pricedisc implements the Excel PRICEDISC function.
-func Pricedisc (args []Result )Result {_ffgc :=len (args );if _ffgc !=4&&_ffgc !=5{return MakeErrorResult ("\u0050\u0052\u0049\u0043\u0045D\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020f\u006f\u0075\u0072\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_dgeg ,_fggad ,_ecdg :=_fbae (args [0],args [1],"\u0050R\u0049\u0043\u0045\u0044\u0049\u0053C");if _ecdg .Type ==ResultTypeError {return _ecdg ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052\u0049C\u0045\u0044\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0064\u0069\u0073\u0063\u006f\u0075\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079p\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_gaag :=args [2].ValueNumber ;if _gaag <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0052\u0049C\u0045\u0044\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0064\u0069\u0073\u0063\u006f\u0075\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065 \u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050R\u0049\u0043E\u0044\u0049\u0053\u0043 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065mp\u0074\u0069\u006fn\u0020\u006ff\u0020\u0074\u0079\u0070\u0065\u0020n\u0075\u006db\u0065\u0072");
-};_affe :=args [3].ValueNumber ;if _affe <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0050R\u0049\u0043E\u0044\u0049\u0053\u0043 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065mp\u0074\u0069\u006fn\u0020\u0074o\u0020\u0062\u0065\u0020\u0070\u006fs\u0069\u0074i\u0076\u0065");
-};_ebdb :=0;if _ffgc ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0052I\u0043\u0045\u0044\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_ebdb =int (args [4].ValueNumber );if !_feeb (_ebdb ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0066\u006f\u0072\u0020\u0050R\u0049\u0043E\u0044\u0049\u0053\u0043");
-};};_aade ,_ecdg :=_gad (_dgeg ,_fggad ,_ebdb );if _ecdg .Type ==ResultTypeError {return _ecdg ;};return MakeNumberResult (_affe *(1-_gaag *_aade ));};func _gbdd (_feef ,_fgee float64 ,_edba ,_cbde int )float64 {_ccdg :=_dad (_feef );_aafa :=_dad (_fgee );
-_egfc :=_cfb (_ccdg ,_aafa ,_edba );return _dac (_ccdg ,_egfc ,_cbde );};
+// Now is an implementation of the Excel NOW() function.
+func Now (args []Result )Result {if len (args )> 0{return MakeErrorResult ("\u004e\u004fW\u0020\u0064\u006f\u0065\u0073\u006e\u0027\u0074\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0073");};_fdba :=_bcd .Now ();
+_ ,_gebb :=_fdba .Zone ();_gcdb :=_abc +float64 (_fdba .Unix ()+int64 (_gebb ))/86400;return MakeNumberResult (_gcdb );};func _gggd ()yyParser {return &yyParserImpl {}};func _abcb (_adeb ,_fbfa Result ,_cbe string )(float64 ,float64 ,Result ){_gfga ,_adff :=_gfcac (_adeb ,"\u0073e\u0074t\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074\u0065",_cbe );
+if _adff .Type ==ResultTypeError {return 0,0,_adff ;};_fbfac ,_adff :=_gfcac (_fbfa ,"\u006d\u0061\u0074\u0075\u0072\u0069\u0074\u0079\u0020\u0064\u0061\u0074\u0065",_cbe );if _adff .Type ==ResultTypeError {return 0,0,_adff ;};if _gfga >=_fbfac {return 0,0,MakeErrorResultType (ErrorTypeNum ,_cbe +"\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020m\u0061\u0074\u0075r\u0069\u0074\u0079\u0020\u0064\u0061\u0074\u0065\u0020\u0074o\u0020\u0062\u0065\u0020\u006cat\u0065\u0072\u0020\u0074\u0068\u0061\u006e\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074\u0065");
+};return _gfga ,_fbfac ,_fcea ;};func _fbd (_bcc string )bool {for _ ,_adbc :=range _efd {_gdga :=_adbc .FindStringSubmatch (_bcc );if len (_gdga )> 1{return true ;};};return false ;};
+
+// String returns a string representation of FunctionCall expression.
+func (_dddbe FunctionCall )String ()string {_cegfa :=_c .Buffer {};_cegfa .WriteString (_dddbe ._cdabe );_cegfa .WriteString ("\u0028");_aeda :=len (_dddbe ._fdca )-1;for _faca ,_eaga :=range _dddbe ._fdca {_cegfa .WriteString (_eaga .String ());if _faca !=_aeda {_cegfa .WriteString ("\u002c");
+};};_cegfa .WriteString ("\u0029");return _cegfa .String ();};
+
+// ISFORMULA is an implementation of the Excel ISFORMULA() function.
+func IsFormula (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053F\u004f\u0052\u004d\u0055L\u0041\u0028)\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073 \u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_gcbe :=args [0].Ref ;if _gcbe .Type !=ReferenceTypeCell {return MakeErrorResult ("I\u0053\u0046\u004f\u0052\u004d\u0055\u004c\u0041\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068\u0065\u0020\u0066\u0069\u0072\u0073t\u0020a\u0072\u0067\u0075\u006de\u006e\u0074 \u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065");
+};return MakeBoolResult (ctx .HasFormula (_gcbe .Value ));};
+
+// Reference returns a string reference value to a range with prefix.
+func (_edeg PrefixRangeExpr )Reference (ctx Context ,ev Evaluator )Reference {_fecg :=_edeg ._dgbf .Reference (ctx ,ev );_ccab :=_edeg ._aada .Reference (ctx ,ev );_fecca :=_edeg ._gdbf .Reference (ctx ,ev );if _fecg .Type ==ReferenceTypeSheet &&_ccab .Type ==ReferenceTypeCell &&_fecca .Type ==ReferenceTypeCell {return MakeRangeReference (_gcfb (_fecg ,_ccab ,_fecca ));
+};return ReferenceInvalid ;};
+
+// IfNA is an implementation of the Excel IFNA() function. It takes two arguments.
+func IfNA (args []Result )Result {if len (args )!=2{return MakeErrorResult ("I\u0046\u004e\u0041\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f \u0061\u0072\u0067u\u006de\u006e\u0074\u0073");};if args [0].Type ==ResultTypeError &&args [0].ValueString =="\u0023\u004e\u002f\u0041"{return args [1];
+};return args [0];};const _gafad =187;
 
 // Coupncd implements the Excel COUPNCD function.
-func Coupncd (args []Result )Result {_bec ,_fdcb :=_fcge (args ,"\u0043O\u0055\u0050\u004e\u0043\u0044");if _fdcb .Type ==ResultTypeError {return _fdcb ;};_deedb :=_dad (_bec ._dbeb );_cdf :=_dad (_bec ._bfbe );_ddbc :=_bec ._fdf ;_efeg :=_cfb (_deedb ,_cdf ,_ddbc );
-_cega ,_edab ,_bbef :=_efeg .Date ();return MakeNumberResult (_ee (_cega ,int (_edab ),_bbef ));};func (_cdbg *yyParserImpl )Lookahead ()int {return _cdbg ._deada };
+func Coupncd (args []Result )Result {_gcgcg ,_bdb :=_daegg (args ,"\u0043O\u0055\u0050\u004e\u0043\u0044");if _bdb .Type ==ResultTypeError {return _bdb ;};_dfaab :=_ded (_gcgcg ._agg );_ffee :=_ded (_gcgcg ._cgef );_bega :=_gcgcg ._fbdc ;_edd :=_acgc (_dfaab ,_ffee ,_bega );
+_gedc ,_abdg ,_ggfa :=_edd .Date ();return MakeNumberResult (_efdc (_gedc ,int (_abdg ),_ggfa ));};var _bfeac _ad .Mutex ;
 
-// Left implements the Excel LEFT(string,[n]) function which returns the
-// leftmost n characters.
-func Left (args []Result )Result {_gffa :=1;switch len (args ){case 1:case 2:if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u004c\u0045F\u0054\u0020\u0065\u0078\u0070\u0065\u0063\u0074\u0065\u0064\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075me\u006e\u0074");
-};_gffa =int (args [1].ValueNumber );if _gffa < 0{return MakeErrorResult ("\u004c\u0045\u0046T \u0065\u0078\u0070\u0065\u0063\u0074\u0065\u0064\u0020n\u0075m\u0062e\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u003e\u003d\u0020\u0030");
-};if _gffa ==0{return MakeStringResult ("");};default:return MakeErrorResult ("\u004c\u0045\u0046T \u0065\u0078\u0070\u0065\u0063\u0074\u0065\u0064\u0020o\u006ee\u0020o\u0072 \u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};if args [0].Type ==ResultTypeList {return MakeErrorResult ("\u004c\u0045\u0046T\u0020\u0063\u0061\u006e'\u0074\u0020\u0062\u0065\u0020\u0063\u0061l\u006c\u0065\u0064\u0020\u006f\u006e\u0020\u0061\u0020\u0072\u0061\u006e\u0067\u0065");};_ddddf :=args [0].Value ();
-if _gffa > len (_ddddf ){return MakeStringResult (_ddddf );};return MakeStringResult (_ddddf [0:_gffa ]);};
+// Combina is an implementation of the Excel COMBINA function whic returns the
+// number of combinations with repetitions.
+func Combina (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0043\u004f\u004dB\u0049\u004e\u0041\u0028)\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_dgegc :=args [0].AsNumber ();_agbe :=args [1].AsNumber ();if _dgegc .Type !=ResultTypeNumber ||_agbe .Type !=ResultTypeNumber {return MakeErrorResult ("\u0043\u004fMB\u0049\u004e\u0041(\u0029\u0020\u0072\u0065qui\u0072es\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
+};_edcf :=_d .Trunc (_dgegc .ValueNumber );_edbd :=_d .Trunc (_agbe .ValueNumber );if _edcf < _edbd {return MakeErrorResult ("\u0043O\u004d\u0042\u0049\u004e\u0041\u0028\u0029\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u006e\u0020\u003e\u0020\u006b");
+};if _edcf ==0{return MakeNumberResult (0);};args [0]=MakeNumberResult (_edcf +_edbd -1);args [1]=MakeNumberResult (_edcf -1);return Combin (args );};
+
+// Update updates references in the PrefixRangeExpr after removing a row/column.
+func (_ebgbd PrefixRangeExpr )Update (q *_db .UpdateQuery )Expression {_abcee :=_ebgbd ;_fefe :=_ebgbd ._dgbf .String ();if _fefe ==q .SheetToUpdate {_deaca :=*q ;_deaca .UpdateCurrentSheet =true ;_abcee ._aada =_ebgbd ._aada .Update (&_deaca );_abcee ._gdbf =_ebgbd ._gdbf .Update (&_deaca );
+};return _abcee ;};func _eeeda (_agadf []Result )(bool ,Result ){for _ ,_daefd :=range _agadf {if _daefd .Type ==ResultTypeError {return true ,_daefd ;};};return false ,MakeEmptyResult ();};
+
+// NamedRangeRef is a reference to a named range.
+type NamedRangeRef struct{_ceba string };func init (){_fgbad =_gd .New (_gd .NewSource (_bcd .Now ().UnixNano ()));RegisterFunction ("\u0041\u0042\u0053",_daaa ("\u0041\u0053\u0049\u004e",_d .Abs ));RegisterFunction ("\u0041\u0043\u004f\u0053",_daaa ("\u0041\u0053\u0049\u004e",_d .Acos ));
+RegisterFunction ("\u0041\u0043\u004fS\u0048",_daaa ("\u0041\u0053\u0049\u004e",_d .Acosh ));RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0041\u0043\u004f\u0054",_daaa ("\u0041\u0043\u004f\u0054",func (_gfdd float64 )float64 {return _d .Pi /2-_d .Atan (_gfdd )}));
+RegisterFunction ("_\u0078\u006c\u0066\u006e\u002e\u0041\u0043\u004f\u0054\u0048",_daaa ("\u0041\u0043\u004fT\u0048",func (_gacfd float64 )float64 {return _d .Atanh (1/_gacfd )}));RegisterFunction ("\u005f\u0078\u006cf\u006e\u002e\u0041\u0052\u0041\u0042\u0049\u0043",Arabic );
+RegisterFunction ("\u0041\u0053\u0049\u004e",_daaa ("\u0041\u0053\u0049\u004e",_d .Asin ));RegisterFunction ("\u0041\u0053\u0049N\u0048",_daaa ("\u0041\u0053\u0049N\u0048",_d .Asinh ));RegisterFunction ("\u0041\u0054\u0041\u004e",_daaa ("\u0041\u0054\u0041\u004e",_d .Atan ));
+RegisterFunction ("\u0041\u0054\u0041N\u0048",_daaa ("\u0041\u0054\u0041N\u0048",_d .Atanh ));RegisterFunction ("\u0041\u0054\u0041N\u0032",Atan2 );RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0042\u0041\u0053\u0045",Base );RegisterFunction ("\u0043E\u0049\u004c\u0049\u004e\u0047",Ceiling );
+RegisterFunction ("\u005fx\u006cf\u006e\u002e\u0043\u0045\u0049L\u0049\u004eG\u002e\u004d\u0041\u0054\u0048",CeilingMath );RegisterFunction ("_\u0078\u006c\u0066\u006e.C\u0045I\u004c\u0049\u004e\u0047\u002eP\u0052\u0045\u0043\u0049\u0053\u0045",CeilingPrecise );
+RegisterFunction ("\u0043\u004f\u004d\u0042\u0049\u004e",Combin );RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0043\u004f\u004d\u0042\u0049\u004e\u0041",Combina );RegisterFunction ("\u0043\u004f\u0053",_daaa ("\u0043\u004f\u0053",_d .Cos ));
+RegisterFunction ("\u0043\u004f\u0053\u0048",_daaa ("\u0043\u004f\u0053\u0048",_d .Cosh ));RegisterFunction ("\u005fx\u006c\u0066\u006e\u002e\u0043\u004fT",_gbcgc ("\u0043\u004f\u0054",_d .Tan ));RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0043\u004f\u0054\u0048",_gbcgc ("\u0043\u004f\u0054\u0048",_d .Tanh ));
+RegisterFunction ("\u005fx\u006c\u0066\u006e\u002e\u0043\u0053C",_gbcgc ("\u0043\u0053\u0043",_d .Sin ));RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0043\u0053\u0043\u0048",_gbcgc ("\u0043\u0053\u0043",_d .Sinh ));RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0044\u0045\u0043\u0049\u004d\u0041\u004c",Decimal );
+RegisterFunction ("\u0044E\u0047\u0052\u0045\u0045\u0053",Degrees );RegisterFunction ("\u0045\u0056\u0045\u004e",Even );RegisterFunction ("\u0045\u0058\u0050",_daaa ("\u0045\u0058\u0050",_d .Exp ));RegisterFunction ("\u0046\u0041\u0043\u0054",Fact );RegisterFunction ("\u0046\u0041\u0043\u0054\u0044\u004f\u0055\u0042\u004c\u0045",FactDouble );
+RegisterFunction ("\u0046\u004c\u004fO\u0052",Floor );RegisterFunction ("\u005f\u0078l\u0066\u006e\u002eF\u004c\u004f\u004f\u0052\u002e\u004d\u0041\u0054\u0048",FloorMath );RegisterFunction ("\u005f\u0078\u006c\u0066n.\u0046\u004c\u004f\u004f\u0052\u002e\u0050\u0052\u0045\u0043\u0049\u0053\u0045",FloorPrecise );
+RegisterFunction ("\u0047\u0043\u0044",GCD );RegisterFunction ("\u0049\u004e\u0054",Int );RegisterFunction ("I\u0053\u004f\u002e\u0043\u0045\u0049\u004c\u0049\u004e\u0047",CeilingPrecise );RegisterFunction ("\u004c\u0043\u004d",LCM );RegisterFunction ("\u004c\u004e",_daaa ("\u004c\u004e",_d .Log ));
+RegisterFunction ("\u004c\u004f\u0047",Log );RegisterFunction ("\u004c\u004f\u00471\u0030",_daaa ("\u004c\u004f\u00471\u0030",_d .Log10 ));RegisterFunction ("\u004dD\u0045\u0054\u0045\u0052\u004d",MDeterm );RegisterFunction ("\u004d\u004f\u0044",Mod );
+RegisterFunction ("\u004d\u0052\u004f\u0055\u004e\u0044",Mround );RegisterFunction ("M\u0055\u004c\u0054\u0049\u004e\u004f\u004d\u0049\u0041\u004c",Multinomial );RegisterFunction ("_\u0078\u006c\u0066\u006e\u002e\u004d\u0055\u004e\u0049\u0054",Munit );
+RegisterFunction ("\u004f\u0044\u0044",Odd );RegisterFunction ("\u0050\u0049",Pi );RegisterFunction ("\u0050\u004f\u0057E\u0052",Power );RegisterFunction ("\u0050R\u004f\u0044\u0055\u0043\u0054",Product );RegisterFunction ("\u0051\u0055\u004f\u0054\u0049\u0045\u004e\u0054",Quotient );
+RegisterFunction ("\u0052A\u0044\u0049\u0041\u004e\u0053",Radians );RegisterFunction ("\u0052\u0041\u004e\u0044",Rand );RegisterFunction ("R\u0041\u004e\u0044\u0042\u0045\u0054\u0057\u0045\u0045\u004e",RandBetween );RegisterFunction ("\u0052\u004f\u004dA\u004e",Roman );
+RegisterFunction ("\u0052\u004f\u0055N\u0044",Round );RegisterFunction ("\u0052O\u0055\u004e\u0044\u0044\u004f\u0057N",RoundDown );RegisterFunction ("\u0052O\u0055\u004e\u0044\u0055\u0050",RoundUp );RegisterFunction ("\u005fx\u006c\u0066\u006e\u002e\u0053\u0045C",_gbcgc ("\u0053\u0045\u0043",_d .Cos ));
+RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0053\u0045\u0043\u0048",_gbcgc ("\u0053\u0045\u0043\u0048",_d .Cosh ));RegisterFunction ("\u0053E\u0052\u0049\u0045\u0053\u0053\u0055M",SeriesSum );RegisterFunction ("\u0053\u0049\u0047\u004e",Sign );
+RegisterFunction ("\u0053\u0049\u004e",_daaa ("\u0053\u0049\u004e",_d .Sin ));RegisterFunction ("\u0053\u0049\u004e\u0048",_daaa ("\u0053\u0049\u004e\u0048",_d .Sinh ));RegisterFunction ("\u0053\u0051\u0052\u0054",_daaa ("\u0053\u0051\u0052\u0054",_d .Sqrt ));
+RegisterFunction ("\u0053\u0051\u0052\u0054\u0050\u0049",_daaa ("\u0053\u0051\u0052\u0054\u0050\u0049",func (_dbafc float64 )float64 {return _d .Sqrt (_dbafc *_d .Pi )}));RegisterFunction ("\u0053\u0055\u004d",Sum );RegisterFunction ("\u0053\u0055\u004dI\u0046",SumIf );
+RegisterFunction ("\u0053\u0055\u004d\u0049\u0046\u0053",SumIfs );RegisterFunction ("\u0053\u0055\u004d\u0050\u0052\u004f\u0044\u0055\u0043\u0054",SumProduct );RegisterFunction ("\u0053\u0055\u004dS\u0051",SumSquares );RegisterFunction ("\u0054\u0041\u004e",_daaa ("\u0054\u0041\u004e",_d .Tan ));
+RegisterFunction ("\u0054\u0041\u004e\u0048",_daaa ("\u0054\u0041\u004e\u0048",_d .Tanh ));RegisterFunction ("\u0054\u0052\u0055N\u0043",Trunc );};
 
 // Evaluator is the interface for a formula evaluator.  This is needed so we can
 // pass it to the spreadsheet to let it evaluate formula cells before returning
 // the results.
 // NOTE: in order to implement Evaluator without cache embed noCache in it.
-type Evaluator interface{Eval (_da Context ,formula string )Result ;SetCache (_cecf string ,_bfa Result );GetFromCache (_faae string )(Result ,bool );LastEvalIsRef ()bool ;};
+type Evaluator interface{Eval (_ac Context ,formula string )Result ;SetCache (_egg string ,_baa Result );GetFromCache (_cea string )(Result ,bool );LastEvalIsRef ()bool ;};func (_ace *evCache )GetFromCache (key string )(Result ,bool ){_ace ._bfc .Lock ();
+_ccfa ,_dbbe :=_ace ._fgad [key ];_ace ._bfc .Unlock ();return _ccfa ,_dbbe ;};
 
-// NewNumber constructs a new number expression.
-func NewNumber (v string )Expression {_fdacc ,_gecg :=_fce .ParseFloat (v ,64);if _gecg !=nil {_gd .Log .Debug ("e\u0072\u0072\u006f\u0072\u0020\u0070a\u0072\u0073\u0069\u006e\u0067\u0020f\u006f\u0072\u006d\u0075\u006c\u0061\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0025\u0073\u003a\u0020%\u0076",v ,_gecg );
-};return Number {_aaeec :_fdacc };};const _caa =_fcd +"\u0020\u0028\u0028[0\u002d\u0039\u005d\u0029\u002b\u0029\u002c\u0020\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029";
+// NewHorizontalRange constructs a new full rows range.
+func NewHorizontalRange (v string )Expression {_aaeba :=_e .Split (v ,"\u003a");if len (_aaeba )!=2{return nil ;};_ggcf ,_ :=_fd .Atoi (_aaeba [0]);_accea ,_ :=_fd .Atoi (_aaeba [1]);if _ggcf > _accea {_ggcf ,_accea =_accea ,_ggcf ;};return HorizontalRange {_caag :_ggcf ,_fegba :_accea };
+};type parsedReplaceObject struct{_cffc string ;_gefg int ;_cbed int ;_gafa string ;};
 
-// Sum is an implementation of the Excel SUM() function.
-func Sum (args []Result )Result {_cfbaf :=MakeNumberResult (0);for _ ,_fcfa :=range args {_fcfa =_fcfa .AsNumber ();switch _fcfa .Type {case ResultTypeNumber :_cfbaf .ValueNumber +=_fcfa .ValueNumber ;case ResultTypeList ,ResultTypeArray :_ededg :=Sum (_fcfa .ListValues ());
-if _ededg .Type !=ResultTypeNumber {return _ededg ;};_cfbaf .ValueNumber +=_ededg .ValueNumber ;case ResultTypeString :case ResultTypeError :return _fcfa ;case ResultTypeEmpty :default:return MakeErrorResult (_b .Sprintf ("\u0075\u006e\u0068\u0061\u006e\u0064\u006c\u0065\u0064\u0020\u0053\u0055\u004d\u0028\u0029 \u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_fcfa .Type ));
-};};return _cfbaf ;};
+// Reference returns an invalid reference for EmptyExpr.
+func (_edb EmptyExpr )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
 
-// SumProduct is an implementation of the Excel SUMPRODUCT() function.
-func SumProduct (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0053\u0055\u004d\u0050\u0052\u004f\u0044U\u0043\u0054\u0028)\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gbbda :=args [0].Type ;for _ ,_ccfd :=range args {if _ccfd .Type !=_gbbda {return MakeErrorResult ("\u0053\u0055M\u0050\u0052\u004f\u0044\u0055C\u0054\u0028\u0029\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u006c\u006c\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u006f\u0066\u0020\u0074\u0068\u0065\u0020\u0073\u0061\u006d\u0065\u0020\u0074\u0079\u0070\u0065");
-};};switch _gbbda {case ResultTypeNumber :return Product (args );case ResultTypeList ,ResultTypeArray :_ebce :=len (args [0].ListValues ());_fece :=make ([]float64 ,_ebce );for _ffggb :=range _fece {_fece [_ffggb ]=1.0;};for _ ,_dfeb :=range args {if len (_dfeb .ListValues ())!=_ebce {return MakeErrorResult ("\u0053\u0055\u004d\u0050\u0052\u004f\u0044\u0055\u0043\u0054\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069re\u0073 \u0061\u006c\u006c\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074s\u0020\u0074\u006f\u0020\u0068\u0061\u0076\u0065\u0020\u0074\u0068\u0065\u0020\u0073\u0061\u006d\u0065 \u0064\u0069\u006d\u0065\u006e\u0073\u0069\u006f\u006e");
-};for _ccgca ,_abbg :=range _dfeb .ListValues (){_abbg =_abbg .AsNumber ();if _abbg .Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0055\u004d\u0050\u0052\u004fD\u0055\u0043\u0054\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u006c\u006c\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020n\u0075m\u0065\u0072\u0069\u0063");
-};_fece [_ccgca ]=_fece [_ccgca ]*_abbg .ValueNumber ;};};_cead :=0.0;for _ ,_ddgb :=range _fece {_cead +=_ddgb ;};return MakeNumberResult (_cead );};return MakeNumberResult (1.0);};
+// String returns a string representation of a range with prefix.
+func (_gecg PrefixRangeExpr )String ()string {return _gf .Sprintf ("\u0025\u0073\u0021\u0025\u0073\u003a\u0025\u0073",_gecg ._dgbf .String (),_gecg ._aada .String (),_gecg ._gdbf .String ());};
 
-// Ipmt implements the Excel IPMT function.
-func Ipmt (args []Result )Result {_bade :=len (args );if _bade < 4||_bade > 6{return MakeErrorResult ("\u0049P\u004d\u0054\u0020\u0072\u0065\u0071\u0075ir\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074s\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u0062\u0065\u0074\u0077\u0065\u0065n\u0020\u0066ou\u0072\u0020\u0061n\u0064\u0020\u0073\u0069\u0078");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("I\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_ecbb :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0050\u004dT\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gca :=args [1].ValueNumber ;if _gca <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u0050\u004d\u0054\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006fd\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
-};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006ff\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_eabdf :=args [2].ValueNumber ;if _eabdf <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062er\u0020o\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f \u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0050\u004d\u0054\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065\u0073\u0065\u006e\u0074\u0020\u0076\u0061\u006c\u0075\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
-};_egda :=args [3].ValueNumber ;_gabe :=0.0;if _bade > 4&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0050\u004d\u0054\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s \u0066\u0075\u0074\u0075\u0072\u0065 \u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-};_gabe =args [4].ValueNumber ;};_bgbf :=0;if _bade ==6&&args [5].Type !=ResultTypeEmpty {if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("I\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0079\u0070\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_bgbf =int (args [5].ValueNumber );if _bgbf !=0{_bgbf =1;};};return MakeNumberResult (_fbdc (_ecbb ,_gca ,_eabdf ,_egda ,_gabe ,_bgbf ));};
+// Left implements the Excel LEFT(string,[n]) function which returns the
+// leftmost n characters.
+func Left (args []Result )Result {_ebdg :=1;switch len (args ){case 1:case 2:if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u004c\u0045F\u0054\u0020\u0065\u0078\u0070\u0065\u0063\u0074\u0065\u0064\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075me\u006e\u0074");
+};_ebdg =int (args [1].ValueNumber );if _ebdg < 0{return MakeErrorResult ("\u004c\u0045\u0046T \u0065\u0078\u0070\u0065\u0063\u0074\u0065\u0064\u0020n\u0075m\u0062e\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u003e\u003d\u0020\u0030");
+};if _ebdg ==0{return MakeStringResult ("");};default:return MakeErrorResult ("\u004c\u0045\u0046T \u0065\u0078\u0070\u0065\u0063\u0074\u0065\u0064\u0020o\u006ee\u0020o\u0072 \u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if args [0].Type ==ResultTypeList {return MakeErrorResult ("\u004c\u0045\u0046T\u0020\u0063\u0061\u006e'\u0074\u0020\u0062\u0065\u0020\u0063\u0061l\u006c\u0065\u0064\u0020\u006f\u006e\u0020\u0061\u0020\u0072\u0061\u006e\u0067\u0065");};_ecef :=args [0].Value ();
+if _ebdg > len (_ecef ){return MakeStringResult (_ecef );};return MakeStringResult (_ecef [0:_ebdg ]);};
 
-// ListValues converts an array to a list or returns a lists values. This is used
-// for functions that can accept an array, but don't care about ordering to
-// reuse the list function logic.
-func (_ddbg Result )ListValues ()[]Result {if _ddbg .Type ==ResultTypeArray {_fgfe :=[]Result {};for _ ,_cecgd :=range _ddbg .ValueArray {for _ ,_fggg :=range _cecgd {_fgfe =append (_fgfe ,_fggg );};};return _fgfe ;};if _ddbg .Type ==ResultTypeList {return _ddbg .ValueList ;
-};return nil ;};
+// Time is an implementation of the Excel TIME() function.
+func Time (args []Result )Result {if len (args )!=3||args [0].Type !=ResultTypeNumber ||args [1].Type !=ResultTypeNumber ||args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0054\u0049ME\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s t\u0068re\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
+};_bfde :=args [0].ValueNumber ;_gbb :=args [1].ValueNumber ;_dde :=args [2].ValueNumber ;_cegc :=_efbd (_bfde ,_gbb ,_dde );if _cegc >=0{return MakeNumberResult (_cegc );}else {return MakeErrorResultType (ErrorTypeNum ,"");};};const _agefc =57377;var _ggce =[]ri {{1000,"\u004d"},{999,"\u0049\u004d"},{995,"\u0056\u004d"},{990,"\u0058\u004d"},{950,"\u004c\u004d"},{900,"\u0043\u004d"},{500,"\u0044"},{499,"\u0049\u0044"},{495,"\u0056\u0044"},{490,"\u0058\u0044"},{450,"\u004c\u0044"},{400,"\u0043\u0044"},{100,"\u0043"},{99,"\u0049\u0043"},{90,"\u0058\u0043"},{50,"\u004c"},{45,"\u0056\u004c"},{40,"\u0058\u004c"},{10,"\u0058"},{9,"\u0049\u0058"},{5,"\u0056"},{4,"\u0049\u0056"},{1,"\u0049"}};
 
-// Round is an implementation of the Excel ROUND function that rounds a number
-// to a specified number of digits.
-func Round (args []Result )Result {return _eggd (args ,_agege )};var _bdf =[]*_fa .Regexp {};func _cade (_abded Result ,_cffc *criteriaParsed )bool {_gdda :=_bcd .ToLower (_abded .ValueString );_dcdda :=_cffc ._afcgf ._ccecd ;_bedae :=_cffc ._afcgf ._eggdf ;
-if _dcdda ==_ffffg {return _gdda ==_bedae ||_dg .Match (_bedae ,_gdda );};if _abded .Type !=ResultTypeEmpty {if _gdda ==_cffc ._bace ||_dg .Match (_cffc ._bace ,_gdda ){return true ;};if _ ,_bbfa :=_fce .ParseFloat (_bedae ,64);_bbfa ==nil {return false ;
-};switch _dcdda {case _ccbfc :return _gdda <=_bedae ;case _cafd :return _gdda >=_bedae ;case _cfgbb :return _gdda < _bedae ;case _gcdd :return _gdda > _bedae ;};};return false ;};
-
-// Reference returns an invalid reference for ConstArrayExpr.
-func (_bgg ConstArrayExpr )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
-
-// Ppmt implements the Excel PPPMT function.
-func Ppmt (args []Result )Result {_cgfe :=len (args );if _cgfe < 4||_cgfe > 6{return MakeErrorResult ("\u0050\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006f\u0066\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074\u0073\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u006ff\u0020\u0066\u006f\u0075\u0072\u0020a\u006e\u0064\u0020s\u0069\u0078");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("P\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_bfcg :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0050\u004dT\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gdcg :=args [1].ValueNumber ;if _gdcg <=0{return MakeErrorResultType (ErrorTypeNum ,"P\u0050\u004d\u0054\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020p\u0065\u0072\u0069\u006f\u0064\u0020\u0074o\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069v\u0065");
-};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006ff\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_egcb :=args [2].ValueNumber ;if _egcb < _gdcg {return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006f\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064s\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u0074\u0020\u006c\u0065s\u0073\u0020\u0074\u0068\u0061\u006e \u0070\u0065\u0072i\u006f\u0064");
-};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0050\u004d\u0054\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065\u0073\u0065\u006e\u0074\u0020\u0076\u0061\u006c\u0075\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
-};_abde :=args [3].ValueNumber ;_cgec :=0.0;if _cgfe >=5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0050\u004d\u0054\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s \u0066\u0075\u0074\u0075\u0072\u0065 \u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
-};_cgec =args [4].ValueNumber ;};_bfaa :=0;if _cgfe ==6&&args [5].Type !=ResultTypeEmpty {if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("P\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0079\u0070\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_bfaa =int (args [5].ValueNumber );if _bfaa !=0{_bfaa =1;};};return MakeNumberResult (_beea (_bfcg ,_egcb ,_abde ,_cgec ,_bfaa )-_fbdc (_bfcg ,_gdcg ,_egcb ,_abde ,_cgec ,_bfaa ));};const _cfdebf =_g .Millisecond *1000;func (_cfc BinOpType )String ()string {if _cfc >=BinOpType (len (_cgea )-1){return _b .Sprintf ("\u0042\u0069\u006e\u004f\u0070\u0054\u0079\u0070\u0065\u0028\u0025\u0064\u0029",_cfc );
-};return _bdg [_cgea [_cfc ]:_cgea [_cfc +1]];};
-
-// Reference returns an invalid reference for String.
-func (_fcgbg String )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
-
-// RegisterFunction registers a standard function.
-func RegisterFunction (name string ,fn Function ){_cdccd .Lock ();defer _cdccd .Unlock ();if _ ,_eeae :=_ebdbf [name ];_eeae {_gd .Log .Debug ("\u0064\u0075p\u006c\u0069\u0063\u0061t\u0065\u0020r\u0065\u0067\u0069\u0073\u0074\u0072\u0061\u0074i\u006f\u006e\u0020\u006f\u0066\u0020\u0066\u0075\u006e\u0063\u0074\u0069o\u006e\u0020\u0025\u0073",name );
-};_ebdbf [name ]=fn ;};const (_agege rmode =iota ;_aaaf ;_caeb ;);
-
-// NewString constructs a new string expression.
-func NewString (v string )Expression {v =_bcd .Replace (v ,"\u0022\u0022","\u0022",-1);return String {_bfed :v };};
-
-// Pv implements the Excel PV function.
-func Pv (args []Result )Result {_dbca :=len (args );if _dbca < 3||_dbca > 5{return MakeErrorResult ("\u0050\u0056\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020o\u0066\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u006f\u0066\u0020\u0033\u0020\u0061\u006e\u0064\u00205");
-};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_bdbgb :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0056\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020o\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
-};_dffd :=args [1].ValueNumber ;if _dffd !=float64 (int (_dffd )){return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006ff\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0069\u006e\u0074\u0065\u0067\u0065\u0072\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065n\u0074");
-};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0056\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0061\u0079\u006d\u0065\u006e\u0074 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_fdbc :=args [2].ValueNumber ;_gfae :=0.0;if _dbca >=4&&args [3].Type !=ResultTypeEmpty {if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0056 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0075\u0074\u0075\u0072\u0065\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_gfae =args [3].ValueNumber ;};_cfab :=0.0;if _dbca ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0079\u0070\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_cfab =args [4].ValueNumber ;if _cfab !=0{_cfab =1;};};if _bdbgb ==0{return MakeNumberResult (-_fdbc *_dffd -_gfae );}else {return MakeNumberResult ((((1-_d .Pow (1+_bdbgb ,_dffd ))/_bdbgb )*_fdbc *(1+_bdbgb *_cfab )-_gfae )/_d .Pow (1+_bdbgb ,_dffd ));
-};};
-
-// String returns a string representation of ConstArrayExpr.
-func (_gc ConstArrayExpr )String ()string {return ""};const _cabd =57357;
-
-// Eval evaluates a horizontal range with prefix returning a list of results or an error.
-func (_eceg PrefixHorizontalRange )Eval (ctx Context ,ev Evaluator )Result {_bfbbf :=_eceg ._eabcd .Reference (ctx ,ev );switch _bfbbf .Type {case ReferenceTypeSheet :if _fegcda (_bfbbf ,ctx ){return MakeErrorResultType (ErrorTypeName ,_b .Sprintf ("\u0053h\u0065e\u0074\u0020\u0025\u0073\u0020n\u006f\u0074 \u0066\u006f\u0075\u006e\u0064",_bfbbf .Value ));
-};_gcgagd :=_eceg .horizontalRangeReference (_bfbbf .Value );if _defaa ,_eebca :=ev .GetFromCache (_gcgagd );_eebca {return _defaa ;};_ggdb :=ctx .Sheet (_bfbbf .Value );_gdfdb ,_cgcgf :=_aacbc (_ggdb ,_eceg ._dcged ,_eceg ._dafba );_cfgdf :=_ggac (_ggdb ,ev ,_gdfdb ,_cgcgf );
-ev .SetCache (_gcgagd ,_cfgdf );return _cfgdf ;default:return MakeErrorResult (_b .Sprintf ("\u006e\u006f\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0020\u0066\u006f\u0072\u0020r\u0065f\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_bfbbf .Type ));
-};};
-
-// Eval evaluates and returns the result of a Negate expression.
-func (_eeef Negate )Eval (ctx Context ,ev Evaluator )Result {_fdbg :=_eeef ._ecbga .Eval (ctx ,ev );if _fdbg .Type ==ResultTypeNumber {return MakeNumberResult (-_fdbg .ValueNumber );};return MakeErrorResult ("\u004e\u0045\u0047A\u0054\u0045\u0020\u0065x\u0070\u0065\u0063\u0074\u0065\u0064\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};
-
-// NewEvaluator constructs a new defEval object which is the default formula evaluator.
-func NewEvaluator ()Evaluator {_cfa :=&defEval {};_cfa .evCache =_ecg ();return _cfa };
-
-// SumSquares is an implementation of the Excel SUMSQ() function.
-func SumSquares (args []Result )Result {_ccec :=MakeNumberResult (0);for _ ,_fcgc :=range args {_fcgc =_fcgc .AsNumber ();switch _fcgc .Type {case ResultTypeNumber :_ccec .ValueNumber +=_fcgc .ValueNumber *_fcgc .ValueNumber ;case ResultTypeList ,ResultTypeArray :_aaeb :=SumSquares (_fcgc .ListValues ());
-if _aaeb .Type !=ResultTypeNumber {return _aaeb ;};_ccec .ValueNumber +=_aaeb .ValueNumber ;case ResultTypeString :case ResultTypeError :return _fcgc ;case ResultTypeEmpty :default:return MakeErrorResult (_b .Sprintf ("\u0075\u006e\u0068\u0061\u006e\u0064\u006c\u0065\u0064\u0020\u0053\u0055\u004dS\u0051\u0055\u0041\u0052\u0045\u0053(\u0029\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079p\u0065\u0020\u0025\u0073",_fcgc .Type ));
-};};return _ccec ;};func _ee (_fdb ,_eec ,_bae int )float64 {return float64 (_ead (_fdb ,_g .Month (_eec ),_bae )/86400)+_ccda ;};
-
-// ISFORMULA is an implementation of the Excel ISFORMULA() function.
-func IsFormula (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053F\u004f\u0052\u004d\u0055L\u0041\u0028)\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073 \u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_befda :=args [0].Ref ;if _befda .Type !=ReferenceTypeCell {return MakeErrorResult ("I\u0053\u0046\u004f\u0052\u004d\u0055\u004c\u0041\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068\u0065\u0020\u0066\u0069\u0072\u0073t\u0020a\u0072\u0067\u0075\u006de\u006e\u0074 \u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065");
-};return MakeBoolResult (ctx .HasFormula (_befda .Value ));};
-
-// Large implements the Excel LARGE function.
-func Large (args []Result )Result {return _bega (args ,true )};
-
-// Update updates references in the PrefixVerticalRange after removing a row/column.
-func (_bgffa PrefixVerticalRange )Update (q *_a .UpdateQuery )Expression {if q .UpdateType ==_a .UpdateActionRemoveColumn {_cbbga :=_bgffa ;_cccee :=_bgffa ._efdgde .String ();if _cccee ==q .SheetToUpdate {_ebdg :=q .ColumnIdx ;_cbbga ._eebda =_gg (_bgffa ._eebda ,_ebdg );
-_cbbga ._ebcdb =_gg (_bgffa ._ebcdb ,_ebdg );};return _cbbga ;};return _bgffa ;};func _dac (_daf ,_fgea _g .Time ,_cgc int )float64 {if _daf .After (_fgea ){_daf ,_fgea =_fgea ,_daf ;};_ged :=0;_ecca ,_ebfg ,_cegg :=_daf .Date ();_dfbc ,_fbb ,_gdfe :=_fgea .Date ();
-_dcbb ,_cbaa :=int (_ebfg ),int (_fbb );_gcca ,_eeb :=_dge (_ecca ,_dcbb ,_cegg ,_cgc ),_dge (_dfbc ,_cbaa ,_gdfe ,_cgc );if !_fcg (_cgc ){return _ee (_dfbc ,_cbaa ,_eeb )-_ee (_ecca ,_dcbb ,_gcca );};if _cgc ==0{if (_dcbb ==2||_gcca < 30)&&_gdfe ==31{_eeb =31;
-}else if _cbaa ==2&&_eeb ==_affb (_dfbc ,_cbaa ){_eeb =_affb (_dfbc ,2);};}else {if _dcbb ==2&&_gcca ==30{_gcca =_affb (_ecca ,2);};if _cbaa ==2&&_eeb ==30{_eeb =_affb (_dfbc ,2);};};if _ecca < _dfbc ||(_ecca ==_dfbc &&_dcbb < _cbaa ){_ged =30-_gcca +1;
-_cegg =1;_gcca =1;_dccfe :=_g .Date (_ecca ,_g .Month (_dcbb ),_cegg ,0,0,0,0,_g .UTC ).AddDate (0,1,0);if _dccfe .Year ()< _dfbc {_ged +=_acg (_dccfe .Year (),int (_dccfe .Month ()),12,_cgc );_dccfe =_dccfe .AddDate (0,13-int (_dccfe .Month ()),0);_ged +=_cbb (_dccfe .Year (),_dfbc -1,_cgc );
-};_ged +=_acg (_dfbc ,int (_dccfe .Month ()),_cbaa -1,_cgc );_dccfe =_dccfe .AddDate (0,_cbaa -int (_dccfe .Month ()),0);_dcbb =_dccfe .Day ();};_ged +=_eeb -_gcca ;if _ged > 0{return float64 (_ged );}else {return 0;};};
-
-// EmptyExpr is an empty expression.
-type EmptyExpr struct{};
-
-// Small implements the Excel SMALL function.
-func Small (args []Result )Result {return _bega (args ,false )};func _gabaf (_ggceg Result ,_daaf ,_efgg int )[][]Result {_fdfb :=[][]Result {};switch _ggceg .Type {case ResultTypeArray :for _cfdeg ,_efba :=range _ggceg .ValueArray {if _cfdeg < _daaf {_fdfb =append (_fdfb ,_ceb (MakeListResult (_efba ),_efgg ));
-}else {_fdfb =append (_fdfb ,_ceb (MakeErrorResultType (ErrorTypeNA ,""),_efgg ));};};case ResultTypeList :_acac :=_ceb (_ggceg ,_efgg );for _feedf :=0;_feedf < _daaf ;_feedf ++{_fdfb =append (_fdfb ,_acac );};case ResultTypeNumber ,ResultTypeString ,ResultTypeError ,ResultTypeEmpty :for _bfbed :=0;
-_bfbed < _daaf ;_bfbed ++{_bgee :=_ceb (_ggceg ,_efgg );_fdfb =append (_fdfb ,_bgee );};};return _fdfb ;};
-
-// Decimal is an implementation of the Excel function DECIMAL() that parses a string
-// in a given base and returns the numeric result.
-func Decimal (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0044\u0045\u0043\u0049\u004d\u0041\u004c\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069r\u0065s\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
-};_aabac :=args [0].AsString ();if _aabac .Type !=ResultTypeString {return MakeErrorResult ("D\u0045\u0043\u0049\u004d\u0041\u004c\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020s\u0074\u0072\u0069\u006e\u0067\u0020\u0066\u0069\u0072\u0073t \u0061\u0072\u0067u\u006de\u006e\u0074");
-};_fddc :=args [1].AsNumber ();if _fddc .Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0045\u0043\u0049\u004dA\u004c\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
-};_decc :=_aabac .ValueString ;if len (_decc )> 2&&(_bcd .HasPrefix (_decc ,"\u0030\u0078")||_bcd .HasPrefix (_decc ,"\u0030\u0058")){_decc =_decc [2:];};_ecgd ,_ccddb :=_fce .ParseInt (_decc ,int (_fddc .ValueNumber ),64);if _ccddb !=nil {return MakeErrorResult ("\u0044\u0045C\u0049\u004d\u0041\u004c\u0028\u0029\u0020\u0065\u0072\u0072\u006f\u0072\u0020\u0069\u006e\u0020\u0063\u006f\u006e\u0076\u0065\u0072si\u006f\u006e");
-};return MakeNumberResult (float64 (_ecgd ));};func (_cddac PrefixVerticalRange )verticalRangeReference (_agfd string )string {return _b .Sprintf ("\u0025\u0073\u0021\u0025\u0073\u003a\u0025\u0073",_agfd ,_cddac ._eebda ,_cddac ._ebcdb );};
-
-// Reference returns a string reference value to a sheet.
-func (_egfbe SheetPrefixExpr )Reference (ctx Context ,ev Evaluator )Reference {return Reference {Type :ReferenceTypeSheet ,Value :_egfbe ._fbcb };};
-
-// IfNA is an implementation of the Excel IFNA() function. It takes two arguments.
-func IfNA (args []Result )Result {if len (args )!=2{return MakeErrorResult ("I\u0046\u004e\u0041\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f \u0061\u0072\u0067u\u006de\u006e\u0074\u0073");};if args [0].Type ==ResultTypeError &&args [0].ValueString =="\u0023\u004e\u002f\u0041"{return args [1];
-};return args [0];};func _cbd (_bbe BinOpType ,_aff [][]Result ,_eba Result )Result {_dc :=[][]Result {};for _gdb :=range _aff {_bef :=_fd (_bbe ,_aff [_gdb ],_eba );if _bef .Type ==ResultTypeError {return _bef ;};_dc =append (_dc ,_bef .ValueList );};
-return MakeArrayResult (_dc );};func _gg (_ecc string ,_dcc uint32 )string {_bfef :=_de .ColumnToIndex (_ecc );if _bfef ==_dcc {return "\u0023\u0052\u0045F\u0021";}else if _bfef > _dcc {return _de .IndexToColumn (_bfef -1);}else {return _ecc ;};};
-
-// Yield implements the Excel YIELD function.
-func Yield (args []Result )Result {_dgfa :=len (args );if _dgfa !=6&&_dgfa !=7{return MakeErrorResult ("\u0059\u0049E\u004c\u0044\u0020\u0072e\u0071\u0075i\u0072\u0065\u0073\u0020\u0073\u0069\u0078\u0020o\u0072\u0020\u0073\u0065\u0076\u0065\u006e\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_dcda ,_fegd ,_fddef :=_fbae (args [0],args [1],"\u0059\u0049\u0045L\u0044");if _fddef .Type ==ResultTypeError {return _fddef ;};_efc :=args [2];if _efc .Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049\u0045LD\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0072a\u0074e\u0020o\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_dcce :=_efc .ValueNumber ;if _dcce < 0{return MakeErrorResultType (ErrorTypeNum ,"R\u0061\u0074\u0065\u0020\u0073\u0068o\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u006e\u006fn\u0020\u006e\u0065g\u0061t\u0069\u0076\u0065");};_fdda :=args [3];if _fdda .Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020p\u0072 \u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_gabdg :=_fdda .ValueNumber ;if _gabdg <=0{return MakeErrorResultType (ErrorTypeNum ,"p\u0072\u0020\u0073\u0068ou\u006cd\u0020\u0062\u0065\u0020\u0070o\u0073\u0069\u0074\u0069\u0076\u0065");};_fafd :=args [4];if _fafd .Type !=ResultTypeNumber {return MakeErrorResult ("Y\u0049\u0045\u004c\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065m\u0070\u0074\u0069\u006f\u006e\u0020\u006f\u0066\u0020\u0074yp\u0065\u0020\u006eu\u006db\u0065\u0072");
-};_dbcb :=_fafd .ValueNumber ;if _dbcb < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0059\u0069\u0065\u006cd\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065 \u006eo\u006e\u0020\u006e\u0065\u0067\u0061\u0074i\u0076\u0065");};_gade :=args [5];
-if _gade .Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0066\u0072\u0065\u0071\u0075e\u006e\u0063\u0079\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
-};_eafge :=float64 (int (_gade .ValueNumber ));if !_bcf (_eafge ){return MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0066\u0072e\u0071u\u0065n\u0063\u0065\u0020\u0076\u0061\u006c\u0075e");};_bcaa :=0;if _dgfa ==7&&args [6].Type !=ResultTypeEmpty {_dedd :=args [6];
-if _dedd .Type !=ResultTypeNumber {return MakeErrorResult ("Y\u0049\u0045\u004c\u0044\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073 \u0062\u0061\u0073\u0069\u0073\u0020\u006ff\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062e\u0072");};_bcaa =int (_dedd .ValueNumber );
-if !_feeb (_bcaa ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063o\u0072\u0072\u0065\u0063t\u0020\u0062\u0061\u0073\u0069\u0073\u0020v\u0061\u006c\u0075\u0065\u0020\u0066\u006f\u0072\u0020\u0059\u0049\u0045\u004c\u0044");};};_ddgeg :=0.0;
-_ebc :=0.0;_dcdc :=1.0;_ceee ,_fddef :=_cbeee (_dcda ,_fegd ,_dcce ,_ebc ,_dbcb ,_eafge ,_bcaa );if _fddef .Type ==ResultTypeError {return _fddef ;};_feaec ,_fddef :=_cbeee (_dcda ,_fegd ,_dcce ,_dcdc ,_dbcb ,_eafge ,_bcaa );if _fddef .Type ==ResultTypeError {return _fddef ;
-};_bfee :=(_dcdc -_ebc )*0.5;for _cdcd :=0;_cdcd < 100&&_ddgeg !=_gabdg ;_cdcd ++{_ddgeg ,_fddef =_cbeee (_dcda ,_fegd ,_dcce ,_bfee ,_dbcb ,_eafge ,_bcaa );if _fddef .Type ==ResultTypeError {return _fddef ;};if _gabdg ==_ceee {return MakeNumberResult (_ebc );
-}else if _gabdg ==_feaec {return MakeNumberResult (_dcdc );}else if _gabdg ==_ddgeg {return MakeNumberResult (_bfee );}else if _gabdg < _feaec {_dcdc *=2.0;_feaec ,_fddef =_cbeee (_dcda ,_fegd ,_dcce ,_dcdc ,_dbcb ,_eafge ,_bcaa );if _fddef .Type ==ResultTypeError {return _fddef ;
-};_bfee =(_dcdc -_ebc )*0.5;}else {if _gabdg < _ddgeg {_ebc =_bfee ;_ceee =_ddgeg ;}else {_dcdc =_bfee ;_feaec =_ddgeg ;};_bfee =_dcdc -(_dcdc -_ebc )*((_gabdg -_feaec )/(_ceee -_feaec ));};};return MakeNumberResult (_bfee );};
-
-// Product is an implementation of the Excel PRODUCT() function.
-func Product (args []Result )Result {_cgdd :=1.0;for _ ,_fcfc :=range args {_fcfc =_fcfc .AsNumber ();switch _fcfc .Type {case ResultTypeNumber :_cgdd *=_fcfc .ValueNumber ;case ResultTypeList ,ResultTypeArray :_ggfg :=Product (_fcfc .ListValues ());if _ggfg .Type !=ResultTypeNumber {return _ggfg ;
-};_cgdd *=_ggfg .ValueNumber ;case ResultTypeString :case ResultTypeError :return _fcfc ;case ResultTypeEmpty :default:return MakeErrorResult (_b .Sprintf ("\u0075\u006eha\u006e\u0064\u006ce\u0064\u0020\u0050\u0052ODU\u0043T(\u0029\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0020\u0074\u0079\u0070\u0065\u0020%\u0073",_fcfc .Type ));
-};};return MakeNumberResult (_cgdd );};
-
-// T is an implementation of the Excel T function that returns whether the
-// argument is text.
-func T (args []Result )Result {if len (args )!=1{return MakeErrorResult ("T\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0061\u0020\u0073i\u006e\u0067\u006c\u0065\u0020\u0073\u0074r\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
-};_edgf :=args [0];if _edgf .Type ==ResultTypeError ||_edgf .Type ==ResultTypeString {return _edgf ;};return _fca ;};func NewLexer ()*Lexer {return &Lexer {_dcceb :make (chan *node )}};
-
-// Parse parses a string to get an Expression.
-func ParseString (s string )Expression {if s ==""{return NewEmptyExpr ();};return Parse (_bcd .NewReader (s ));};type defEval struct{evCache ;_dee bool ;};var _efcg =[]ri {{1000,"\u004d"},{900,"\u0043\u004d"},{500,"\u0044"},{400,"\u0043\u0044"},{100,"\u0043"},{90,"\u0058\u0043"},{50,"\u004c"},{40,"\u0058\u004c"},{10,"\u0058"},{9,"\u0049\u0058"},{5,"\u0056"},{4,"\u0049\u0056"},{1,"\u0049"}};
-
-
-// Update returns the same object as updating sheet references does not affect SheetPrefixExpr.
-func (_bdcc SheetPrefixExpr )Update (q *_a .UpdateQuery )Expression {return _bdcc };
-
-// GetEpoch returns a null time object for the invalid reference context.
-func (_gcgad *ivr )GetEpoch ()_g .Time {return _g .Time {}};func _bgbe (_aebe []Result ,_ggaad bool )(float64 ,float64 ){_dcge :=0.0;_dcdf :=0.0;for _ ,_cgcfe :=range _aebe {switch _cgcfe .Type {case ResultTypeNumber :if _ggaad ||!_cgcfe .IsBoolean {_dcdf +=_cgcfe .ValueNumber ;
-_dcge ++;};case ResultTypeList ,ResultTypeArray :_daea ,_aabb :=_bgbe (_cgcfe .ListValues (),_ggaad );_dcdf +=_daea ;_dcge +=_aabb ;case ResultTypeString :if _ggaad {_dcge ++;};case ResultTypeEmpty :};};return _dcdf ,_dcge ;};var _gfbe =[...]int {1};func _fedgc (_fgbca []Result )[]float64 {_bbcbc :=make ([]float64 ,0);
-for _ ,_ccba :=range _fgbca {if _ccba .Type ==ResultTypeEmpty {continue ;};_ccba =_ccba .AsNumber ();switch _ccba .Type {case ResultTypeNumber :if !_ccba .IsBoolean {_bbcbc =append (_bbcbc ,_ccba .ValueNumber );};case ResultTypeList ,ResultTypeArray :_bbcbc =append (_bbcbc ,_fedgc (_ccba .ListValues ())...);
-case ResultTypeString :default:_gd .Log .Debug ("\u0075\u006e\u0068\u0061\u006ed\u006c\u0065\u0064\u0020\u0065\u0078\u0074\u0072\u0061\u0063\u0074\u004e\u0075m\u0062\u0065\u0072\u0073\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_ccba .Type );
-};};return _bbcbc ;};
-
-// IsBool returns false for the invalid reference context.
-func (_fgbcf *ivr )IsBool (cellRef string )bool {return false };func (_decfc PrefixHorizontalRange )horizontalRangeReference (_adbg string )string {return _b .Sprintf ("\u0025\u0073\u0021\u0025\u0064\u003a\u0025\u0064",_adbg ,_decfc ._dcged ,_decfc ._dafba );
-};
-
-// Couppcd implements the Excel COUPPCD function.
-func Couppcd (args []Result )Result {_cdac ,_gdag :=_fcge (args ,"\u0043O\u0055\u0050\u0050\u0043\u0044");if _gdag .Type ==ResultTypeError {return _gdag ;};_fgdc :=_dad (_cdac ._dbeb );_efg :=_dad (_cdac ._bfbe );_ceeg :=_cdac ._fdf ;_fbgd :=_cdac ._fgae ;
-_eeg :=_gggg (_fgdc ,_efg ,_ceeg ,_fbgd );_aeg ,_acgg ,_eeebf :=_eeg .Date ();return MakeNumberResult (_ee (_aeg ,int (_acgg ),_eeebf ));};
-
-// NewPrefixExpr constructs an expression with prefix.
-func NewPrefixExpr (pfx ,exp Expression )Expression {return &PrefixExpr {_begcd :pfx ,_ddeba :exp }};func _dgdb (_bdbc ,_gagf Result ,_feaf ,_fdgd bool )cmpResult {_bdbc =_bdbc .AsNumber ();_gagf =_gagf .AsNumber ();if _bdbc .Type !=_gagf .Type {return _dccd ;
-};if _bdbc .Type ==ResultTypeNumber {if _bdbc .ValueNumber ==_gagf .ValueNumber {return _bfggb ;};if _bdbc .ValueNumber < _gagf .ValueNumber {return _dcdbd ;};return _cfda ;};if _bdbc .Type ==ResultTypeString {_ccdgab :=_bdbc .ValueString ;_fcbdg :=_gagf .ValueString ;
-if !_feaf {_ccdgab =_bcd .ToLower (_ccdgab );_fcbdg =_bcd .ToLower (_fcbdg );};if _fdgd {_cfdf :=_dg .Match (_fcbdg ,_ccdgab );if _cfdf {return _bfggb ;}else {return _cfda ;};};return cmpResult (_bcd .Compare (_ccdgab ,_fcbdg ));};if _bdbc .Type ==ResultTypeEmpty {return _bfggb ;
-};if _bdbc .Type ==ResultTypeList {if len (_bdbc .ValueList )< len (_gagf .ValueList ){return _dcdbd ;};if len (_bdbc .ValueList )> len (_gagf .ValueList ){return _cfda ;};for _ebgf :=range _bdbc .ValueList {_cagae :=_dgdb (_bdbc .ValueList [_ebgf ],_gagf .ValueList [_ebgf ],_feaf ,_fdgd );
-if _cagae !=_bfggb {return _cagae ;};};return _bfggb ;};if _bdbc .Type ==ResultTypeList {if len (_bdbc .ValueArray )< len (_gagf .ValueArray ){return _dcdbd ;};if len (_bdbc .ValueArray )> len (_gagf .ValueArray ){return _cfda ;};for _fgag :=range _bdbc .ValueArray {_agae :=_bdbc .ValueArray [_fgag ];
-_gbbd :=_bdbc .ValueArray [_fgag ];if len (_agae )< len (_gbbd ){return _dcdbd ;};if len (_agae )> len (_gbbd ){return _cfda ;};for _fbceb :=range _agae {_abga :=_dgdb (_agae [_fbceb ],_gbbd [_fbceb ],_feaf ,_fdgd );if _abga !=_bfggb {return _abga ;};};
-};return _bfggb ;};return _dccd ;};func _aacb (_addg Result ,_gacad *criteriaParsed )bool {if _addg .IsBoolean {return false ;};_ecbg :=_addg .Type ;if _gacad ._fggcg {return _ecbg ==ResultTypeNumber &&_addg .ValueNumber ==_gacad ._accg ;}else if _ecbg ==ResultTypeNumber {return _edbff (_addg .ValueNumber ,_gacad ._afcgf );
-};return _cade (_addg ,_gacad );};const _gcde =57353;
-
-// NewBool constructs a new boolean expression.
-func NewBool (v string )Expression {_cec ,_cdg :=_fce .ParseBool (v );if _cdg !=nil {_gd .Log .Debug ("\u0065\u0072\u0072\u006f\u0072\u0020p\u0061\u0072\u0073\u0069\u006e\u0067\u0020\u0066\u006f\u0072\u006d\u0075\u006ca\u0020\u0062\u006f\u006f\u006c\u0020\u0025s\u003a\u0020\u0025\u0076",v ,_cdg );
-};return Bool {_dca :_cec };};func _eea (_ebg string )(int ,int ,int ,bool ,Result ){_cddb :="";_bad :=[]string {};for _dcb ,_eeeb :=range _efd {_bad =_eeeb .FindStringSubmatch (_ebg );if len (_bad )> 1{_cddb =_dcb ;break ;};};if _cddb ==""{return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );
-};_caed :=false ;var _bged ,_dbef ,_ea int ;var _ffff error ;switch _cddb {case "\u006d\u006d\u002f\u0064\u0064\u002f\u0079\u0079":_dbef ,_ffff =_fce .Atoi (_bad [1]);if _ffff !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );};_ea ,_ffff =_fce .Atoi (_bad [3]);
-if _ffff !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );};_bged ,_ffff =_fce .Atoi (_bad [5]);if _ffff !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );};if _bged < 0||_bged > 9999||(_bged > 99&&_bged < 1900){return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );
-};_bged =_ggb (_bged );_caed =_bad [8]=="";case "\u006dm\u0020\u0064\u0064\u002c\u0020\u0079y":_dbef =_adf [_bad [1]];_ea ,_ffff =_fce .Atoi (_bad [14]);if _ffff !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );};_bged ,_ffff =_fce .Atoi (_bad [16]);
-if _ffff !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );};if _bged < 0||_bged > 9999||(_bged > 99&&_bged < 1900){return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );};_bged =_ggb (_bged );_caed =_bad [19]=="";case "\u0079\u0079\u002d\u006d\u006d\u002d\u0064\u0064":_dead ,_cfag :=_fce .Atoi (_bad [1]);
-if _cfag !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );};_ced ,_cfag :=_fce .Atoi (_bad [3]);if _cfag !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );};_fdba ,_cfag :=_fce .Atoi (_bad [5]);if _cfag !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );
-};if _dead >=1900&&_dead < 10000{_bged =_dead ;_dbef =_ced ;_ea =_fdba ;}else if _dead > 0&&_dead < 13{_dbef =_dead ;_ea =_ced ;_bged =_fdba ;}else {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );};_caed =_bad [8]=="";case "y\u0079\u002d\u006d\u006d\u0053\u0074\u0072\u002d\u0064\u0064":_bged ,_ffff =_fce .Atoi (_bad [16]);
-if _ffff !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );};_dbef =_adf [_bad [3]];_ea ,_ffff =_fce .Atoi (_bad [1]);if _ffff !=nil {return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );};_caed =_bad [19]=="";};if !_cbae (_bged ,_dbef ,_ea ){return 0,0,0,false ,MakeErrorResultType (ErrorTypeValue ,_agc );
-};return _bged ,_dbef ,_ea ,_caed ,_fca ;};const (_bfggb cmpResult =0;_dcdbd cmpResult =-1;_cfda cmpResult =1;_dccd cmpResult =2;);
-
-// Result is the result of a formula or cell evaluation .
-type Result struct{ValueNumber float64 ;ValueString string ;ValueList []Result ;ValueArray [][]Result ;IsBoolean bool ;ErrorMessage string ;Type ResultType ;Ref Reference ;};func _gbfae (_afaea [][]Result ,_cgaa int )[][]Result {_egfd :=[][]Result {};for _eebdd :=range _afaea {if _eebdd ==0{continue ;
-};_afaf :=[]Result {};for _egdg :=range _afaea {if _egdg ==_cgaa {continue ;};_afaf =append (_afaf ,_afaea [_eebdd ][_egdg ]);};_egfd =append (_egfd ,_afaf );};return _egfd ;};
-
-// String returns a string representation of FunctionCall expression.
-func (_agbg FunctionCall )String ()string {_ggdag :=_e .Buffer {};_ggdag .WriteString (_agbg ._ffgb );_ggdag .WriteString ("\u0028");_bbdc :=len (_agbg ._ebga )-1;for _egeg ,_fbgc :=range _agbg ._ebga {_ggdag .WriteString (_fbgc .String ());if _egeg !=_bbdc {_ggdag .WriteString ("\u002c");
-};};_ggdag .WriteString ("\u0029");return _ggdag .String ();};var _bcdg =[...]int {-1,1,1,-1,-2,0};type parsedReplaceObject struct{_degef string ;_agffc int ;_cacfb int ;_efaaea string ;};func _fdggb ()yyParser {return &yyParserImpl {}};
-
-// Column implements the Excel COLUMN function.
-func Column (args []Result )Result {if len (args )< 1{return MakeErrorResult ("\u0043\u004f\u004c\u0055M\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");};_aaba :=args [0].Ref ;
-if _aaba .Type !=ReferenceTypeCell {return MakeErrorResult ("\u0043\u004f\u004c\u0055\u004dN\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u006e\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063e");
-};_bcbgf ,_abef :=_de .ParseCellReference (_aaba .Value );if _abef !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072re\u0063t\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065\u003a\u0020"+_aaba .Value );};return MakeNumberResult (float64 (_bcbgf .ColumnIdx +1));
-};
-
-// Replace is an implementation of the Excel REPLACE().
-func Replace (args []Result )Result {_fgec ,_gddf :=_fcfce ("\u0052E\u0050\u004c\u0041\u0043\u0045",args );if _gddf .Type !=ResultTypeEmpty {return _gddf ;};_ecageb :=_fgec ._degef ;_cbeeg :=_fgec ._agffc ;_abed :=_fgec ._cacfb ;_gbgf :=_fgec ._efaaea ;
-_fcdeb :=len (_ecageb );if _cbeeg > _fcdeb {_cbeeg =_fcdeb ;};_fadac :=_cbeeg +_abed ;if _fadac > _fcdeb {_fadac =_fcdeb ;};_beacg :=_ecageb [0:_cbeeg ]+_gbgf +_ecageb [_fadac :];return MakeStringResult (_beacg );};
 
 // Lower is an implementation of the Excel LOWER function that returns a lower
 // case version of a string.
 func Lower (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u004c\u004f\u0057\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0061\u0020\u0073\u0069\u006eg\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_gegg :=args [0];switch _gegg .Type {case ResultTypeError :return _gegg ;case ResultTypeNumber ,ResultTypeString :return _badc (args [0]);case ResultTypeList :_eaad :=_gegg .ValueList ;_ddbaf :=[]Result {};for _ ,_afabg :=range _eaad {_eeded :=_badc (_afabg );
-if _eeded .Type ==ResultTypeError {return _eeded ;};_ddbaf =append (_ddbaf ,_eeded );};return MakeListResult (_ddbaf );case ResultTypeArray :_cgbd :=_gegg .ValueArray ;_ebec :=[][]Result {};for _ ,_eedeb :=range _cgbd {_gdadc :=[]Result {};for _ ,_ffgge :=range _eedeb {_eegac :=_badc (_ffgge );
-if _eegac .Type ==ResultTypeError {return _eegac ;};_gdadc =append (_gdadc ,_eegac );};_ebec =append (_ebec ,_gdadc );};return MakeArrayResult (_ebec );default:return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u004c\u004fW\u0045\u0052");
+};_ggea :=args [0];switch _ggea .Type {case ResultTypeError :return _ggea ;case ResultTypeNumber ,ResultTypeString :return _fecc (args [0]);case ResultTypeList :_ccbfd :=_ggea .ValueList ;_debba :=[]Result {};for _ ,_ecccg :=range _ccbfd {_gfecf :=_fecc (_ecccg );
+if _gfecf .Type ==ResultTypeError {return _gfecf ;};_debba =append (_debba ,_gfecf );};return MakeListResult (_debba );case ResultTypeArray :_dgdf :=_ggea .ValueArray ;_gfdf :=[][]Result {};for _ ,_fdaea :=range _dgdf {_gcgac :=[]Result {};for _ ,_cgdf :=range _fdaea {_aecd :=_fecc (_cgdf );
+if _aecd .Type ==ResultTypeError {return _aecd ;};_gcgac =append (_gcgac ,_aecd );};_gfdf =append (_gfdf ,_gcgac );};return MakeArrayResult (_gfdf );default:return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u004c\u004fW\u0045\u0052");
+};};var _bcdaa []byte =[]byte {0,1,2,1,11,1,12,1,13,1,14,1,15,1,16,1,17,1,18,1,19,1,20,1,21,1,22,1,23,1,24,1,25,1,26,1,27,1,28,1,29,1,30,1,31,1,32,1,33,1,34,1,35,1,36,1,37,1,38,1,39,1,40,1,41,1,42,1,43,2,0,1,2,3,4,2,3,5,2,3,6,2,3,7,2,3,8,2,3,9,2,3,10};
+
+
+// Rri implements the Excel RRI function.
+func Rri (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u0052\u0052\u0049\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068r\u0065e\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074\u0073");};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0052I\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u006eu\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_abag :=args [0].ValueNumber ;if _abag <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0052R\u0049\u0020r\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u006f\u0066\u0020p\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062e\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
+};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0052\u0049\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073 p\u0072\u0065\u0073\u0065\u006e\u0074 \u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+};_ffga :=args [1].ValueNumber ;if _ffga <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0052\u0052\u0049\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065\u0073\u0065\u006et\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
+};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("R\u0052\u0049\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0066\u0075\u0074\u0075\u0072e \u0076\u0061\u006c\u0075e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_adgg :=args [2].ValueNumber ;if _adgg < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0052R\u0049\u0020r\u0065\u0071\u0075\u0069r\u0065\u0073\u0020f\u0075\u0074\u0075\u0072\u0065\u0020\u0076\u0061\u006cue\u0020\u0074\u006f \u0062\u0065 \u006e\u006f\u006e\u0020\u006e\u0065g\u0061\u0074i\u0076\u0065");
+};return MakeNumberResult (_d .Pow (_adgg /_ffga ,1/_abag )-1);};const _fcbcg =57367;func _aeeef (_ggba []Result ,_dace bool )Result {_afgb :="\u004d\u0041\u0058";if _dace {_afgb ="\u004d\u0041\u0058\u0041";};if len (_ggba )==0{return MakeErrorResult (_afgb +"\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s\u0020\u0061\u0074\u0020\u006c\u0065\u0061s\u0074\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_eegfa :=-_d .MaxFloat64 ;for _ ,_egcdf :=range _ggba {switch _egcdf .Type {case ResultTypeNumber :if (_dace ||!_egcdf .IsBoolean )&&_egcdf .ValueNumber > _eegfa {_eegfa =_egcdf .ValueNumber ;};case ResultTypeList ,ResultTypeArray :_bade :=_aeeef (_egcdf .ListValues (),_dace );
+if _bade .ValueNumber > _eegfa {_eegfa =_bade .ValueNumber ;};case ResultTypeEmpty :case ResultTypeString :_defcg :=0.0;if _dace {_defcg =_egcdf .AsNumber ().ValueNumber ;};if _defcg > _eegfa {_eegfa =_defcg ;};default:_af .Log .Debug ("\u0075\u006e\u0068\u0061\u006e\u0064\u006c\u0065\u0064\u0020"+_afgb +"\u0028\u0029\u0020\u0061rg\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_egcdf .Type );
+};};if _eegfa ==-_d .MaxFloat64 {_eegfa =0;};return MakeNumberResult (_eegfa );};func _bge (_adc string ,_gde *_db .UpdateQuery )string {_fda ,_ecf :=_bce .ParseCellReference (_adc );if _ecf !=nil {return "\u0023\u0052\u0045F\u0021";};if _gde .UpdateType ==_db .UpdateActionRemoveColumn {_dbbf :=_gde .ColumnIdx ;
+_fde :=_fda .ColumnIdx ;if _fde < _dbbf {return _adc ;}else if _fde ==_dbbf {return "\u0023\u0052\u0045F\u0021";}else {return _fda .Update (_db .UpdateActionRemoveColumn ).String ();};};return _adc ;};
+
+// Disc implements the Excel DISC function.
+func Disc (args []Result )Result {_fcf :=len (args );if _fcf !=4&&_fcf !=5{return MakeErrorResult ("\u0044\u0049SC\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s f\u006fur\u0020\u006f\u0072\u0020\u0066\u0069\u0076e \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
+};_gaa ,_gdfa ,_deca :=_abcb (args [0],args [1],"\u0044\u0049\u0053\u0043");if _deca .Type ==ResultTypeError {return _deca ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_fcfg :=args [2].ValueNumber ;if _fcfg <=0{return MakeErrorResultType (ErrorTypeNum ,"D\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0070\u0072\u0020\u0074o \u0062\u0065\u0020\u0070o\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0049S\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065\u006d\u0070\u0074\u0069\u006f\u006e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_ddfb :=args [3].ValueNumber ;if _ddfb <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0049\u0053\u0043\u0020\u0072\u0065q\u0075\u0069\u0072e\u0073\u0020\u0072e\u0064\u0065m\u0070\u0074\u0069\u006f\u006e\u0020t\u006f b\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_ccd :=0;if _fcf ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0049\u0053\u0043\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0062\u0061\u0073\u0069\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_ccd =int (args [4].ValueNumber );if !_ccfg (_ccd ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0066\u006f\u0072 \u0044\u0049\u0053\u0043");
+};};_eagcg ,_deca :=_fdbc (_gaa ,_gdfa ,_ccd );if _deca .Type ==ResultTypeError {return _deca ;};return MakeNumberResult ((_ddfb -_fcfg )/_ddfb /_eagcg );};
+
+// String returns a string of a range.
+func (_adbag Range )String ()string {return _gf .Sprintf ("\u0025\u0073\u003a%\u0073",_adbag ._gfddg .String (),_adbag ._bffe .String ());};
+
+// Row implements the Excel ROW function.
+func Row (args []Result )Result {if len (args )< 1{return MakeErrorResult ("\u0052O\u0057\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065 \u0061\u0072\u0067\u0075\u006d\u0065\u006et");};_afdef :=args [0].Ref ;if _afdef .Type !=ReferenceTypeCell {return MakeErrorResult ("\u0052\u004f\u0057\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073 a\u006e\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0079p\u0065\u0020\u0072\u0065\u0066\u0065\u0072\u0065n\u0063\u0065");
+};_gdef ,_ddef :=_bce .ParseCellReference (_afdef .Value );if _ddef !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072re\u0063t\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065\u003a\u0020"+_afdef .Value );};return MakeNumberResult (float64 (_gdef .RowIdx ));
+};func _daegg (_bdaeb []Result ,_dcde string )(*couponArgs ,Result ){_bfcg :=len (_bdaeb );if _bfcg !=3&&_bfcg !=4{return nil ,MakeErrorResult (_dcde +"\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u006f\u0072\u0020\u0066o\u0075\u0072\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_dgc ,_gdb ,_gebdb :=_abcb (_bdaeb [0],_bdaeb [1],_dcde );if _gebdb .Type ==ResultTypeError {return nil ,_gebdb ;};if _bdaeb [2].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_dcde +"\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0066\u0072\u0065\u0071\u0075\u0065\u006e\u0063\u0079 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_eebd :=_bdaeb [2].ValueNumber ;if !_fegd (_eebd ){return nil ,MakeErrorResult ("\u0049n\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0066\u0072\u0065q\u0075\u0065\u006e\u0063\u0079\u0020\u0066\u006f\u0072\u0020"+_dcde );};_fdeb :=0;if _bfcg ==4&&_bdaeb [3].Type !=ResultTypeEmpty {if _bdaeb [3].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_dcde +"\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020b\u0061\u0073\u0069\u0073\u0020\u0074\u006f\u0020b\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_fdeb =int (_bdaeb [3].ValueNumber );if !_ccfg (_fdeb ){return nil ,MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020fo\u0072\u0020"+_dcde );
+};};return &couponArgs {_dgc ,_gdb ,int (_eebd ),_fdeb },_fcea ;};func (_gbca *Lexer )Next ()*node {_gbca ._afdd .Lock ();defer _gbca ._afdd .Unlock ();if len (_gbca ._aeaab )> 0{_cagdg :=_gbca ._aeaab [0];_gbca ._aeaab =_gbca ._aeaab [1:];return _cagdg ;
+};return _gbca .nextRaw ();};
+
+// MakeNumberResult constructs a number result.
+func MakeNumberResult (v float64 )Result {if v ==_d .Copysign (0,-1){v =0;};return Result {Type :ResultTypeNumber ,ValueNumber :v };};
+
+// Update returns the same object as updating sheet references does not affect named ranges.
+func (_dacff NamedRangeRef )Update (q *_db .UpdateQuery )Expression {return _dacff };func _edbe (_ddeg string )(int ,int ,float64 ,bool ,bool ,Result ){_abg :="";_dfc :=[]string {};for _aedf ,_abcd :=range _adge {_dfc =_abcd .FindStringSubmatch (_ddeg );
+if len (_dfc )> 1{_abg =_aedf ;break ;};};if _abg ==""{return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_dgd );};_ceec :=_dfc [1]=="";_dfc =_dfc [49:];_fbdb :=len (_dfc );_gca :=_dfc [_fbdb -1];_edf :=_gca =="\u0061\u006d";_gag :=_gca =="\u0070\u006d";
+var _agdb ,_dbfc int ;var _gcgc float64 ;var _bede error ;switch _abg {case "\u0068\u0068":_agdb ,_bede =_fd .Atoi (_dfc [0]);if _bede !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_dgd );};_dbfc =0;_gcgc =0;case "\u0068\u0068\u003am\u006d":_agdb ,_bede =_fd .Atoi (_dfc [0]);
+if _bede !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_dgd );};_dbfc ,_bede =_fd .Atoi (_dfc [2]);if _bede !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_dgd );};_gcgc =0;case "\u006d\u006d\u003as\u0073":_agdb =0;
+_dbfc ,_bede =_fd .Atoi (_dfc [0]);if _bede !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_dgd );};_gcgc ,_bede =_fd .ParseFloat (_dfc [2],64);if _bede !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_dgd );
+};case "\u0068\u0068\u003a\u006d\u006d\u003a\u0073\u0073":_agdb ,_bede =_fd .Atoi (_dfc [0]);if _bede !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_dgd );};_dbfc ,_bede =_fd .Atoi (_dfc [2]);if _bede !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_dgd );
+};_gcgc ,_bede =_fd .ParseFloat (_dfc [4],64);if _bede !=nil {return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_dgd );};};if _dbfc >=60{return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_dgd );};if _edf ||_gag {if _agdb > 12||_gcgc >=60{return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_dgd );
+}else if _agdb ==12{_agdb =0;};}else if _agdb >=24||_gcgc >=10000{return 0,0,0,false ,false ,MakeErrorResultType (ErrorTypeValue ,_dgd );};return _agdb ,_dbfc ,_gcgc ,_gag ,_ceec ,_fcea ;};
+
+// Oddlprice implements the Excel ODDLPRICE function.
+func Oddlprice (args []Result )Result {if len (args )!=8&&len (args )!=9{return MakeErrorResult ("\u004f\u0044\u0044L\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0065\u0069\u0067\u0068\u0074\u0020\u006f\u0072\u0020\u006e\u0069\u006e\u0065\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_gebcc ,_fddc ,_edcb :=_abcb (args [0],args [1],"\u004fD\u0044\u004c\u0050\u0052\u0049\u0043E");if _edcb .Type ==ResultTypeError {return _edcb ;};_cddd ,_edcb :=_gfcac (args [2],"\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065","\u004fD\u0044\u004c\u0050\u0052\u0049\u0043E");
+if _edcb .Type ==ResultTypeError {return _edcb ;};if _cddd >=_gebcc {return MakeErrorResultType (ErrorTypeNum ,"\u004c\u0061\u0073\u0074\u0020i\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0020\u0064\u0061\u0074\u0065\u0020s\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u0062\u0065\u0066\u006f\u0072\u0065\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074e");
+};_adfg :=args [3];if _adfg .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020o\u0066\u0020\u0074\u0079\u0070e\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_dbdae :=_adfg .ValueNumber ;if _dbdae < 0{return MakeErrorResultType (ErrorTypeNum ,"R\u0061\u0074\u0065\u0020\u0073\u0068o\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u006e\u006fn\u0020\u006e\u0065g\u0061t\u0069\u0076\u0065");};_daag :=args [4];if _daag .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0079i\u0065\u006c\u0064\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_adba :=_daag .ValueNumber ;if _adba < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0059\u0069\u0065\u006cd\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065 \u006eo\u006e\u0020\u006e\u0065\u0067\u0061\u0074i\u0076\u0065");};_gfb :=args [5];
+if _gfb .Type !=ResultTypeNumber {return MakeErrorResult ("\u004fD\u0044\u004cP\u0052\u0049\u0043\u0045 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065mp\u0074\u0069\u006fn\u0020\u006ff\u0020\u0074\u0079\u0070\u0065\u0020n\u0075\u006db\u0065\u0072");
+};_ccgb :=_gfb .ValueNumber ;if _ccgb < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0059\u0069\u0065\u006cd\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065 \u006eo\u006e\u0020\u006e\u0065\u0067\u0061\u0074i\u0076\u0065");};_cfef :=args [6];
+if _cfef .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0050\u0052\u0049C\u0045\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u0066\u0072\u0065\u0071\u0075\u0065\u006e\u0063\u0079\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_agec :=float64 (int (_cfef .ValueNumber ));if !_fegd (_agec ){return MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0066\u0072e\u0071u\u0065n\u0063\u0065\u0020\u0076\u0061\u006c\u0075e");};_dcfd :=0;if len (args )==8&&args [7].Type !=ResultTypeEmpty {_bdgb :=args [7];
+if _bdgb .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0044\u0044\u004c\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0062a\u0073\u0069\u0073\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_dcfd =int (_bdgb .ValueNumber );if !_ccfg (_dcfd ){return MakeErrorResultType (ErrorTypeNum ,"I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0062\u0061\u0073\u0069s\u0020\u0076\u0061\u006c\u0075\u0065\u0020f\u006f\u0072\u0020\u004f\u0044\u0044\u004c\u0050\u0052\u0049C\u0045");
+};};_gcgf ,_edcb :=_fdbc (_cddd ,_fddc ,_dcfd );if _edcb .Type ==ResultTypeError {return _edcb ;};_gcgf *=_agec ;_gdbg ,_edcb :=_fdbc (_gebcc ,_fddc ,_dcfd );if _edcb .Type ==ResultTypeError {return _edcb ;};_gdbg *=_agec ;_cbcg ,_edcb :=_fdbc (_cddd ,_gebcc ,_dcfd );
+if _edcb .Type ==ResultTypeError {return _edcb ;};_cbcg *=_agec ;_dafda :=_ccgb +_gcgf *100*_dbdae /_agec ;_dafda /=_gdbg *_adba /_agec +1;_dafda -=_cbcg *100*_dbdae /_agec ;return MakeNumberResult (_dafda );};func _fedf (_abbeb string )string {_abbeb =_e .Replace (_abbeb ,"\u000a","\u005c\u006e",-1);
+_abbeb =_e .Replace (_abbeb ,"\u000d","\u005c\u0072",-1);_abbeb =_e .Replace (_abbeb ,"\u0009","\u005c\u0074",-1);return _abbeb ;};var _eagac []byte =[]byte {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+var _abc float64 =25569.0;
+
+// Effect implements the Excel EFFECT function.
+func Effect (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0045\u0046F\u0045\u0043\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0073");};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0045\u0046\u0046\u0045\u0043\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u006f\u006d\u0069n\u0061\u006c\u0020\u0069\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065n\u0074");
+};_ddgc :=args [0].ValueNumber ;if _ddgc <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0045\u0046\u0046\u0045\u0043\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u006f\u006d\u0069n\u0061\u006c\u0020\u0069\u006e\u0074\u0065\u0072\u0065\u0073\u0074\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062e\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062e\u0072\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074");
+};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0045\u0046\u0046\u0045\u0043\u0054 \u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u006f\u0066 \u0063\u006f\u006d\u0070\u006f\u0075\u006e\u0064\u0069\u006e\u0067\u0020p\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074");
+};_efddf :=float64 (int (args [1].ValueNumber ));if _efddf < 1{return MakeErrorResultType (ErrorTypeNum ,"E\u0046\u0046\u0045\u0043\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0063o\u006dp\u006f\u0075\u006e\u0064i\u006e\u0067 \u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0031\u0020\u006f\u0072\u0020\u006d\u006f\u0072\u0065");
+};return MakeNumberResult (_d .Pow ((1+_ddgc /_efddf ),_efddf )-1);};const _eaceb int =0;
+
+// NewConstArrayExpr constructs a new constant array expression with a given data.
+func NewConstArrayExpr (data [][]Expression )Expression {return &ConstArrayExpr {_fed :data }};
+
+// Substitute is an implementation of the Excel SUBSTITUTE function.
+func Substitute (args []Result )Result {_fgbae :=len (args );if _fgbae !=3&&_fgbae !=4{return MakeErrorResult ("\u0053\u0055\u0042\u0053\u0054\u0049\u0054U\u0054\u0045\u0020r\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u006f\u0072\u0020\u0066\u006f\u0075\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_efec ,_aaca :=_bdegc (args [0],"\u0053\u0055\u0042\u0053\u0054\u0049\u0054\u0055\u0054\u0045","\u0074\u0065\u0078\u0074");if _aaca .Type ==ResultTypeError {return _aaca ;};_ffbb ,_aaca :=_bdegc (args [1],"\u0053\u0055\u0042\u0053\u0054\u0049\u0054\u0055\u0054\u0045","\u006f\u006c\u0064\u0020\u0074\u0065\u0078\u0074");
+if _aaca .Type ==ResultTypeError {return _aaca ;};_gddfb ,_aaca :=_bdegc (args [2],"\u0053\u0055\u0042\u0053\u0054\u0049\u0054\u0055\u0054\u0045","\u006e\u0065\u0077\u0020\u0074\u0065\u0078\u0074");if _aaca .Type ==ResultTypeError {return _aaca ;};_gecag :=0;
+if _fgbae ==3{return MakeStringResult (_e .Replace (_efec ,_ffbb ,_gddfb ,-1));}else {_eefc ,_fcdb :=_ageb (args [3],"\u0053\u0055\u0042\u0053\u0054\u0049\u0054\u0055\u0054\u0045","\u0069\u006e\u0073t\u0061\u006e\u0063\u0065\u005f\u006e\u0075\u006d");if _fcdb .Type ==ResultTypeError {return _fcdb ;
+};_gecag =int (_eefc );if _gecag < 1{return MakeErrorResult ("\u0069\u006es\u0074\u0061\u006e\u0063e\u005f\u006eu\u006d\u0020\u0073\u0068\u006f\u0075\u006c\u0064 \u0062\u0065\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e \u007a\u0065\u0072\u006f");
+};_gbcfc :=_efec ;_gfffg :=_gecag ;_edfb :=-1;_afgc :=len (_ffbb );_dfbf :=0;for {_gfffg --;_bcbg :=_e .Index (_gbcfc ,_ffbb );if _bcbg ==-1{_edfb =-1;break ;}else {_edfb =_bcbg +_dfbf ;if _gfffg ==0{break ;};_eeed :=_afgc +_bcbg ;_dfbf +=_eeed ;_gbcfc =_gbcfc [_eeed :];
+};};if _edfb ==-1{return MakeStringResult (_efec );}else {_acfc :=_efec [:_edfb ];_bbcab :=_efec [_edfb +_afgc :];return MakeStringResult (_acfc +_gddfb +_bbcab );};};};
+
+// Update updates references in the Negate after removing a row/column.
+func (_efece Negate )Update (q *_db .UpdateQuery )Expression {return Negate {_ebfd :_efece ._ebfd .Update (q )};};
+
+// NewBinaryExpr constructs a new binary expression with a given operator.
+func NewBinaryExpr (lhs Expression ,op BinOpType ,rhs Expression )Expression {return BinaryExpr {_ba :lhs ,_efb :rhs ,_fdb :op };};
+
+// ListValues converts an array to a list or returns a lists values. This is used
+// for functions that can accept an array, but don't care about ordering to
+// reuse the list function logic.
+func (_cfec Result )ListValues ()[]Result {if _cfec .Type ==ResultTypeArray {_baaa :=[]Result {};for _ ,_gfadc :=range _cfec .ValueArray {for _ ,_fbcdee :=range _gfadc {_baaa =append (_baaa ,_fbcdee );};};return _baaa ;};if _cfec .Type ==ResultTypeList {return _cfec .ValueList ;
+};return nil ;};
+
+// Dollarfr implements the Excel DOLLARFR function.
+func Dollarfr (args []Result )Result {_bedd ,_ggeb ,_aggd :=_fgef (args ,"\u0044\u004f\u004c\u004c\u0041\u0052\u0046\u0052");if _aggd .Type ==ResultTypeError {return _aggd ;};if _ggeb ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0044\u004f\u004c\u004c\u0041R\u0046\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066r\u0061\u0063\u0074\u0069\u006f\u006e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
+};if _bedd ==0{return MakeNumberResult (0);};_cafc :=_bedd < 0;if _cafc {_bedd =-_bedd ;};_gbge :=float64 (int (_bedd ));_gaf :=args [0].Value ();_ddegb :=_e .Split (_gaf ,"\u002e");_dcdac :=0.0;if len (_ddegb )> 1{var _agc error ;_adeg :=_ddegb [1];_dcdac ,_agc =_fd .ParseFloat (_adeg ,64);
+if _agc !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0066\u0072\u0061\u0063\u0074\u0069\u006f\u006e\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0066\u006fr \u0044\u004f\u004cL\u0041R\u0046\u0052");
+};_aab :=float64 (len (_adeg ));_dcdac /=_d .Pow (10,_aab );};_aagd :=_dcdac *_ggeb /_d .Pow (10,float64 (int (_d .Log10 (_ggeb )))+1)+_gbge ;if _cafc {_aagd =-_aagd ;};return MakeNumberResult (_aagd );};func _ebcb (_beff Context ,_fgcbe Evaluator ,_fbdd ,_fdeaf string )Result {_dggf ,_ggca :=_bce .ParseCellReference (_fbdd );
+if _ggca !=nil {return MakeErrorResult (_gf .Sprintf ("\u0075\u006e\u0061bl\u0065\u0020\u0074\u006f\u0020\u0070\u0061\u0072\u0073e\u0020r\u0061n\u0067e\u0020\u0025\u0073\u003a\u0020\u0065\u0072\u0072\u006f\u0072\u0020\u0025\u0073",_fbdd ,_ggca .Error ()));
+};_cdfg ,_egdg :=_dggf .ColumnIdx ,_dggf .RowIdx ;_faedd ,_begbc :=_bce .ParseCellReference (_fdeaf );if _begbc !=nil {return MakeErrorResult (_gf .Sprintf ("\u0075\u006e\u0061bl\u0065\u0020\u0074\u006f\u0020\u0070\u0061\u0072\u0073e\u0020r\u0061n\u0067e\u0020\u0025\u0073\u003a\u0020\u0065\u0072\u0072\u006f\u0072\u0020\u0025\u0073",_fdeaf ,_begbc .Error ()));
+};_gcdda ,_bafdb :=_faedd .ColumnIdx ,_faedd .RowIdx ;_cage :=[][]Result {};for _fffb :=_egdg ;_fffb <=_bafdb ;_fffb ++{_ccdbe :=[]Result {};for _ggfb :=_cdfg ;_ggfb <=_gcdda ;_ggfb ++{_fabgd :=_beff .Cell (_gf .Sprintf ("\u0025\u0073\u0025\u0064",_bce .IndexToColumn (_ggfb ),_fffb ),_fgcbe );
+_ccdbe =append (_ccdbe ,_fabgd );};_cage =append (_cage ,_ccdbe );};if len (_cage )==1{if len (_cage [0])==1{return _cage [0][0];};return MakeListResult (_cage [0]);};return MakeArrayResult (_cage );};func _cece (_fbcd ,_egff ,_bffb ,_fggd ,_gfd float64 )float64 {var _efad float64 ;
+_cged :=_gfd /_bffb ;if _cged >=1{_cged =1;if _fggd ==1{_efad =_fbcd ;}else {_efad =0;};}else {_efad =_fbcd *_d .Pow (1-_cged ,_fggd -1);};_egef :=_fbcd *_d .Pow (1-_cged ,_fggd );var _afff float64 ;if _egef < _egff {_afff =_efad -_egff ;}else {_afff =_efad -_egef ;
+};if _afff < 0{_afff =0;};return _afff ;};var _fggdg =[]ri {{1000,"\u004d"},{995,"\u0056\u004d"},{990,"\u0058\u004d"},{950,"\u004c\u004d"},{900,"\u0043\u004d"},{500,"\u0044"},{495,"\u0056\u0044"},{490,"\u0058\u0044"},{450,"\u004c\u0044"},{400,"\u0043\u0044"},{100,"\u0043"},{99,"\u0049\u0043"},{90,"\u0058\u0043"},{50,"\u004c"},{45,"\u0056\u004c"},{40,"\u0058\u004c"},{10,"\u0058"},{9,"\u0049\u0058"},{5,"\u0056"},{4,"\u0049\u0056"},{1,"\u0049"}};
+
+
+// RegisterFunction registers a standard function.
+func RegisterFunction (name string ,fn Function ){_bfeac .Lock ();defer _bfeac .Unlock ();if _ ,_ddfbg :=_bcgcc [name ];_ddfbg {_af .Log .Debug ("\u0064\u0075p\u006c\u0069\u0063\u0061t\u0065\u0020r\u0065\u0067\u0069\u0073\u0074\u0072\u0061\u0074i\u006f\u006e\u0020\u006f\u0066\u0020\u0066\u0075\u006e\u0063\u0074\u0069o\u006e\u0020\u0025\u0073",name );
+};_bcgcc [name ]=fn ;};
+
+// And is an implementation of the Excel AND() function.
+func And (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0041\u004e\u0044 r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061t\u0020l\u0065a\u0073t\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_aecbe :=true ;for _ ,_acdde :=range args {_acdde =_acdde .AsNumber ();switch _acdde .Type {case ResultTypeList ,ResultTypeArray :_efcag :=And (_acdde .ListValues ());if _efcag .Type ==ResultTypeError {return _efcag ;};if _efcag .ValueNumber ==0{_aecbe =false ;
+};case ResultTypeNumber :if _acdde .ValueNumber ==0{_aecbe =false ;};case ResultTypeString :return MakeErrorResult ("\u0041\u004e\u0044\u0020\u0064\u006f\u0065\u0073\u006e\u0027t\u0020\u006f\u0070\u0065\u0072\u0061\u0074e\u0020\u006f\u006e\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0073");
+case ResultTypeError :return _acdde ;default:return MakeErrorResult ("\u0075\u006e\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u0061\u0072\u0067u\u006de\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0069\u006e\u0020\u0041\u004e\u0044");
+};};return MakeBoolResult (_aecbe );};
+
+// Eval evaluates a horizontal range with prefix returning a list of results or an error.
+func (_bfcc PrefixHorizontalRange )Eval (ctx Context ,ev Evaluator )Result {_gfac :=_bfcc ._fbcde .Reference (ctx ,ev );switch _gfac .Type {case ReferenceTypeSheet :if _daead (_gfac ,ctx ){return MakeErrorResultType (ErrorTypeName ,_gf .Sprintf ("\u0053h\u0065e\u0074\u0020\u0025\u0073\u0020n\u006f\u0074 \u0066\u006f\u0075\u006e\u0064",_gfac .Value ));
+};_adaab :=_bfcc .horizontalRangeReference (_gfac .Value );if _gfbb ,_ecddc :=ev .GetFromCache (_adaab );_ecddc {return _gfbb ;};_debdg :=ctx .Sheet (_gfac .Value );_babfe ,_gbgaf :=_cecg (_debdg ,_bfcc ._deafa ,_bfcc ._edfgc );_fbcg :=_ebcb (_debdg ,ev ,_babfe ,_gbgaf );
+ev .SetCache (_adaab ,_fbcg );return _fbcg ;default:return MakeErrorResult (_gf .Sprintf ("\u006e\u006f\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0020\u0066\u006f\u0072\u0020r\u0065f\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_gfac .Type ));
+};};func _fecc (_eefed Result )Result {if _eefed .Type ==ResultTypeEmpty {return _eefed ;};_dbdacg :=_eefed .AsString ();if _dbdacg .Type !=ResultTypeString {return MakeErrorResult ("\u004c\u004f\u0057\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0061\u0020\u0073\u0069\u006eg\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};if _eefed .IsBoolean {if _dbdacg .ValueString =="\u0031"{return MakeStringResult ("\u0074\u0072\u0075\u0065");}else if _dbdacg .ValueString =="\u0030"{return MakeStringResult ("\u0066\u0061\u006cs\u0065");}else {return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u004c\u004fW\u0045\u0052");
+};}else {return MakeStringResult (_e .ToLower (_dbdacg .ValueString ));};};type cumulArgs struct{_bead float64 ;_eacb float64 ;_dbae float64 ;_efg float64 ;_cdaf float64 ;_efda int ;};func _gabbc (_befg string ,_cdcba _bcd .Time )(_bcd .Time ,error ){_fbbf ,_ ,_cdec :=_bc .ParseFloat (_befg ,10,128,_bc .ToNearestEven );
+if _cdec !=nil {return _bcd .Time {},_cdec ;};_gbgd :=new (_bc .Float );_gbgd .SetUint64 (uint64 (24*_bcd .Hour ));_fbbf .Mul (_fbbf ,_gbgd );_ggdb ,_ :=_fbbf .Uint64 ();_eaca :=_cdcba .Add (_bcd .Duration (_ggdb ));return _cecfg (_eaca ),nil ;};
+
+// Ispmt implements the Excel ISPMT function.
+func Ispmt (args []Result )Result {if len (args )!=4{return MakeErrorResult ("\u0049\u0053P\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u006f\u0075\u0072\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0073");};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0053\u0050\u004d\u0054 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_eaae :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0053\u0050\u004d\u0054\u0020\u0072e\u0071\u0075\u0069r\u0065\u0073\u0020\u0070e\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_bgede :=args [1].ValueNumber ;if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0053\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0070\u0065\u0072\u0069o\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006dbe\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_cbb :=args [2].ValueNumber ;if _cbb <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0049S\u0050\u004d\u0054\u0020\u0072\u0065\u0071ui\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020p\u0065\u0072i\u006f\u0064\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006eu\u006d\u0062er\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0053\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065s\u0065\u006e\u0074\u0020\u0076\u0061\u006cu\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_cbff :=args [3].ValueNumber ;return MakeNumberResult (_cbff *_eaae *(_bgede /_cbb -1));};func _bcac (_egda string ,_feccf []Result )(*parsedReplaceObject ,Result ){if len (_feccf )!=4{return nil ,MakeErrorResult (_egda +"\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u006f\u0075r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if _feccf [0].Type !=ResultTypeString {return nil ,MakeErrorResult (_egda +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069\u0072s\u0074\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u0073t\u0072\u0069\u006e\u0067");
+};_egad :=_feccf [0].ValueString ;if _feccf [1].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_egda +" \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062e \u0061\u0020\u006eu\u006db\u0065\u0072");
+};_fcfd :=int (_feccf [1].ValueNumber )-1;if _feccf [2].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_egda +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068\u0069r\u0064\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_cdcg :=int (_feccf [2].ValueNumber );if _feccf [3].Type !=ResultTypeString {return nil ,MakeErrorResult (_egda +" \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u006f\u0075\u0072\u0074\u0068\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062e \u0061\u0020\u0073t\u0072i\u006e\u0067");
+};_eccgf :=_feccf [3].ValueString ;return &parsedReplaceObject {_egad ,_fcfd ,_cdcg ,_eccgf },_fcea ;};
+
+// Reference returns a string reference value to an expression with prefix.
+func (_ddcd PrefixExpr )Reference (ctx Context ,ev Evaluator )Reference {_decb :=_ddcd ._fefaa .Reference (ctx ,ev );_cgaeg :=_ddcd ._fbdf .Reference (ctx ,ev );if _decb .Type ==ReferenceTypeSheet &&_cgaeg .Type ==ReferenceTypeCell {return Reference {Type :ReferenceTypeCell ,Value :_decb .Value +"\u0021"+_cgaeg .Value };
+};return ReferenceInvalid ;};
+
+// Xor is an implementation of the Excel XOR() function and takes a variable
+// number of arguments. It's odd to say the least.  If any argument is numeric,
+// it returns true if the number of non-zero numeric arguments is odd and false
+// otherwise.  If no argument is numeric, it returns an error.
+func Xor (args []Result )Result {if len (args )< 1{return MakeErrorResult ("\u0058\u004f\u0052 r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061t\u0020l\u0065a\u0073t\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_efgdd :=0;_adfb :=false ;for _ ,_bebbf :=range args {switch _bebbf .Type {case ResultTypeList ,ResultTypeArray :_egddb :=Xor (_bebbf .ListValues ());if _egddb .Type ==ResultTypeError {return _egddb ;};if _egddb .ValueNumber !=0{_efgdd ++;};_adfb =true ;
+case ResultTypeNumber :if _bebbf .ValueNumber !=0{_efgdd ++;};_adfb =true ;case ResultTypeString :case ResultTypeError :return _bebbf ;default:return MakeErrorResult ("\u0075\u006e\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u0061\u0072\u0067u\u006de\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0069\u006e\u0020\u0058\u004f\u0052");
+};};if !_adfb {return MakeErrorResult ("\u0058\u004f\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0069n\u0070\u0075\u0074");};return MakeBoolResult (_efgdd %2!=0);};const _cdcc =57375;func _cecg (_bbff Context ,_gfbc ,_bfdgg int )(string ,string ){_fbdgc :="\u0041"+_fd .Itoa (_gfbc );
+_befga :=_bbff .LastColumn (_gfbc ,_bfdgg );_cfcbf :=_befga +_fd .Itoa (_bfdgg );return _fbdgc ,_cfcbf ;};
+
+// Clean is an implementation of the Excel CLEAN function that removes
+// unprintable characters.
+func Clean (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0043\u004c\u0045\u0041\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0061\u0020\u0073\u0069\u006eg\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_dcae :=args [0].AsString ();if _dcae .Type !=ResultTypeString {return MakeErrorResult ("\u0043\u0048\u0041\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0073t\u0072\u0069\u006e\u0067\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_aagc :=_c .Buffer {};for _ ,_fdfge :=range _dcae .ValueString {if _f .IsPrint (_fdfge ){_aagc .WriteRune (_fdfge );};};return MakeStringResult (_aagc .String ());};func _accc (_acdd ,_acba ,_fcbe ,_ffab ,_bege ,_gefa float64 )float64 {var _eggf ,_dgdc float64 ;
+_gddf :=0.0;_dfcf :=_d .Ceil (_bege );_agdbc :=_acdd -_acba ;_cbfgc :=false ;_gbab :=0.0;for _feef :=1.0;_feef <=_dfcf ;_feef ++{if !_cbfgc {_eggf =_cece (_acdd ,_acba ,_fcbe ,_feef ,_gefa );_gbab =_agdbc /(_fcbe -_feef +1);if _gbab > _eggf {_dgdc =_gbab ;
+_cbfgc =true ;}else {_dgdc =_eggf ;_agdbc -=_eggf ;};}else {_dgdc =_gbab ;};if _feef ==_dfcf {_dgdc *=_bege +1-_dfcf ;};_gddf +=_dgdc ;};return _gddf ;};var _fffga =[...]int {0,7,3,3,3,8,8,8,8,1,1,1,2,2,2,2,2,14,15,15,17,17,4,4,4,13,5,6,6,6,6,6,6,6,12,12,12,12,12,12,12,12,12,12,12,12,9,9,9,16,16,11,10,10};
+var _fgbad *_gd .Rand ;
+
+// Replace is an implementation of the Excel REPLACE().
+func Replace (args []Result )Result {_fegbd ,_acddg :=_bcac ("\u0052E\u0050\u004c\u0041\u0043\u0045",args );if _acddg .Type !=ResultTypeEmpty {return _acddg ;};_eegfe :=_fegbd ._cffc ;_dbebff :=_fegbd ._gefg ;_ecea :=_fegbd ._cbed ;_egdf :=_fegbd ._gafa ;
+_cabab :=len (_eegfe );if _dbebff > _cabab {_dbebff =_cabab ;};_caffg :=_dbebff +_ecea ;if _caffg > _cabab {_caffg =_cabab ;};_gfgeg :=_eegfe [0:_dbebff ]+_egdf +_eegfe [_caffg :];return MakeStringResult (_gfgeg );};
+
+// MaxIfs implements the MAXIFS function.
+func MaxIfs (args []Result )Result {_gadf :=_gecb (args ,true ,"\u004d\u0041\u0058\u0049\u0046\u0053");if _gadf .Type !=ResultTypeEmpty {return _gadf ;};_cfbe :=_bdaf (args [1:]);_cddf :=-_d .MaxFloat64 ;_cabge :=_cbgb (args [0]);for _ ,_cbdcf :=range _cfbe {_faddgd :=_cabge [_cbdcf ._cafgf ][_cbdcf ._afac ].ValueNumber ;
+if _cddf < _faddgd {_cddf =_faddgd ;};};if _cddf ==-_d .MaxFloat64 {_cddf =0;};return MakeNumberResult (float64 (_cddf ));};
+
+// ISERR is an implementation of the Excel ISERR() function.
+func IsErr (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u0045\u0052\u0052\u0028)\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};return MakeBoolResult (args [0].Type ==ResultTypeError &&args [0].ValueString !="\u0023\u004e\u002f\u0041");};const _cfg =_daga +"\u0020\u0028\u0028[0\u002d\u0039\u005d\u0029\u002b\u0029\u002c\u0020\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029";
+const _cfda =57347;const _agee =57374;
+
+// Decimal is an implementation of the Excel function DECIMAL() that parses a string
+// in a given base and returns the numeric result.
+func Decimal (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0044\u0045\u0043\u0049\u004d\u0041\u004c\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069r\u0065s\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_gfcb :=args [0].AsString ();if _gfcb .Type !=ResultTypeString {return MakeErrorResult ("D\u0045\u0043\u0049\u004d\u0041\u004c\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020s\u0074\u0072\u0069\u006e\u0067\u0020\u0066\u0069\u0072\u0073t \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_bgdec :=args [1].AsNumber ();if _bgdec .Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0045\u0043\u0049\u004dA\u004c\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_ffdc :=_gfcb .ValueString ;if len (_ffdc )> 2&&(_e .HasPrefix (_ffdc ,"\u0030\u0078")||_e .HasPrefix (_ffdc ,"\u0030\u0058")){_ffdc =_ffdc [2:];};_agag ,_ddfaf :=_fd .ParseInt (_ffdc ,int (_bgdec .ValueNumber ),64);if _ddfaf !=nil {return MakeErrorResult ("\u0044\u0045C\u0049\u004d\u0041\u004c\u0028\u0029\u0020\u0065\u0072\u0072\u006f\u0072\u0020\u0069\u006e\u0020\u0063\u006f\u006e\u0076\u0065\u0072si\u006f\u006e");
+};return MakeNumberResult (float64 (_agag ));};func init (){_gbcc ();RegisterFunction ("\u0041V\u0045\u0052\u0041\u0047\u0045",Average );RegisterFunction ("\u0041\u0056\u0045\u0052\u0041\u0047\u0045\u0041",Averagea );RegisterFunction ("\u0043\u004f\u0055N\u0054",Count );
+RegisterFunction ("\u0043\u004f\u0055\u004e\u0054\u0041",Counta );RegisterFunction ("\u0043O\u0055\u004e\u0054\u0049\u0046",CountIf );RegisterFunction ("\u0043\u004f\u0055\u004e\u0054\u0049\u0046\u0053",CountIfs );RegisterFunction ("\u0043\u004f\u0055\u004e\u0054\u0042\u004c\u0041\u004e\u004b",CountBlank );
+RegisterFunction ("\u004d\u0041\u0058",Max );RegisterFunction ("\u004d\u0041\u0058\u0041",MaxA );RegisterFunction ("\u004d\u0041\u0058\u0049\u0046\u0053",MaxIfs );RegisterFunction ("\u005f\u0078\u006cf\u006e\u002e\u004d\u0041\u0058\u0049\u0046\u0053",MaxIfs );
+RegisterFunction ("\u004d\u0045\u0044\u0049\u0041\u004e",Median );RegisterFunction ("\u004d\u0049\u004e",Min );RegisterFunction ("\u004d\u0049\u004e\u0041",MinA );RegisterFunction ("\u004d\u0049\u004e\u0049\u0046\u0053",MinIfs );RegisterFunction ("\u005f\u0078\u006cf\u006e\u002e\u004d\u0049\u004e\u0049\u0046\u0053",MinIfs );
+};
+
+// Fvschedule implements the Excel FVSCHEDULE function.
+func Fvschedule (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0046\u0056\u0053\u0043\u0048\u0045D\u0055\u004c\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020t\u0077\u006f\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0046\u0056\u0053\u0043\u0048E\u0044\u0055\u004c\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0070\u0072\u0069\u006e\u0063\u0069\u0070\u0061\u006c\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
+};_gbag :=args [0].ValueNumber ;switch args [1].Type {case ResultTypeNumber :return MakeNumberResult (_gbag *(args [1].ValueNumber +1));case ResultTypeList ,ResultTypeArray :_cfcfd :=_cbgb (args [1]);for _ ,_eaed :=range _cfcfd {for _ ,_fcda :=range _eaed {if _fcda .Type !=ResultTypeNumber ||_fcda .IsBoolean {return MakeErrorResult ("\u0046\u0056\u0053\u0043\u0048\u0045\u0044\u0055\u004c\u0045\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020r\u0061\u0074\u0065\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075m\u0062\u0065\u0072\u0073");
+};_gbag *=1.0+_fcda .ValueNumber ;};};return MakeNumberResult (_gbag );default:return MakeErrorResult ("\u0046\u0056\u0053\u0043\u0048\u0045\u0044\u0055\u004c\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020s\u0063\u0068\u0065\u0064\u0075\u006c\u0065\u0020\u0074o\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006f\u0072\u0020\u0061\u0072\u0072a\u0079\u0020\u0074y\u0070\u0065");
 };};
 
-// Ceiling is an implementation of the CEILING function which
-// returns the ceiling of a number.
-func Ceiling (args []Result )Result {if len (args )==0{return MakeErrorResult ("C\u0045\u0049\u004c\u0049\u004e\u0047\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020a\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006ee \u0061\u0072\u0067u\u006de\u006e\u0074");
-};if len (args )> 2{return MakeErrorResult ("\u0043\u0045\u0049\u004c\u0049\u004e\u0047\u0028\u0029\u0020\u0061\u006c\u006c\u006f\u0077\u0073\u0020\u0061\u0074\u0020\u006d\u006f\u0073\u0074 \u0074\u0077\u006f\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_edfc :=args [0].AsNumber ();if _edfc .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066i\u0072\u0073t\u0020\u0061\u0072\u0067u\u006d\u0065\u006et\u0020\u0074\u006f\u0020\u0043\u0045\u0049\u004c\u0049NG\u0028\u0029\u0020m\u0075\u0073t\u0020\u0062\u0065\u0020\u0061\u0020n\u0075\u006db\u0065\u0072");
-};_cebg :=float64 (1);if _edfc .ValueNumber < 0{_cebg =-1;};if len (args )> 1{_ddbb :=args [1].AsNumber ();if _ddbb .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073e\u0063\u006fn\u0064\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020t\u006f\u0020\u0043\u0045\u0049\u004cI\u004e\u0047\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062e\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
-};_cebg =_ddbb .ValueNumber ;};if _cebg < 0&&_edfc .ValueNumber > 0{return MakeErrorResultType (ErrorTypeNum ,"\u006e\u0065\u0067\u0061\u0074\u0069v\u0065\u0020\u0073\u0069\u0067\u0020\u0074\u006f\u0020\u0043\u0045\u0049\u004cI\u004e\u0047\u0028\u0029\u0020\u0069\u006ev\u0061\u006c\u0069\u0064");
-};if len (args )==1{return MakeNumberResult (_d .Ceil (_edfc .ValueNumber ));};_cfdab :=_edfc .ValueNumber ;_cfdab ,_cgcfd :=_d .Modf (_cfdab /_cebg );if _cgcfd > 0{_cfdab ++;};return MakeNumberResult (_cfdab *_cebg );};func _bba (_fgaec []Result ,_eac string )(*amorArgs ,Result ){_cfaa :=len (_fgaec );
-if _cfaa !=6&&_cfaa !=7{return nil ,MakeErrorResult (_eac +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0069\u0078\u0020\u006fr\u0020s\u0065\u0076\u0065\u006e\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");};if _fgaec [0].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_eac +"\u0020\u0072eq\u0075\u0069\u0072e\u0073\u0020\u0063\u006fst \u0074o \u0062\u0065\u0020\u006e\u0075\u006d\u0062er\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
-};_gegb :=_fgaec [0].ValueNumber ;if _gegb < 0{return nil ,MakeErrorResultType (ErrorTypeNum ,_eac +"\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0063\u006f\u0073\u0074\u0020\u0074\u006f\u0020\u0062\u0065 \u006e\u006f\u006e\u0020\u006e\u0065\u0067a\u0074\u0069\u0076\u0065");
-};_egba ,_dddbb :=_cdde (_fgaec [1],"\u0064\u0061\u0074\u0065\u0020\u0070\u0075\u0072\u0063h\u0061\u0073\u0065\u0064",_eac );if _dddbb .Type ==ResultTypeError {return nil ,_dddbb ;};_eegd ,_dddbb :=_cdde (_fgaec [2],"\u0066\u0069\u0072s\u0074\u0020\u0070\u0065\u0072\u0069\u006f\u0064",_eac );
-if _dddbb .Type ==ResultTypeError {return nil ,_dddbb ;};if _eegd < _egba {return nil ,MakeErrorResultType (ErrorTypeNum ,_eac +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069\u0072\u0073\u0074 \u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020l\u0061\u0074\u0065\u0072\u0020\u0074\u0068\u0061\u006e\u0020\u0064\u0061te\u0020\u0070\u0075\u0072\u0063\u0068\u0061\u0073\u0065\u0064");
-};if _fgaec [3].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_eac +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006cv\u0061\u0067\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_bdc :=_fgaec [3].ValueNumber ;if _bdc < 0||_bdc > _gegb {return nil ,MakeErrorResultType (ErrorTypeNum ,_eac +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061g\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0062\u0065\u0074\u0077\u0065e\u006e\u0020\u0030\u0020\u0061\u006e\u0064\u0020\u0074\u0068\u0065\u0020in\u0069\u0074\u0069\u0061\u006c\u0020\u0063\u006f\u0073\u0074");
-};if _fgaec [4].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_eac +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_gba :=int (_fgaec [4].ValueNumber );if _gba < 0{return nil ,MakeErrorResultType (ErrorTypeNum ,_eac +" \u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0070\u0065\u0072\u0069o\u0064\u0020\u0074\u006f\u0020\u0062\u0065 \u006e\u006f\u006e\u002d\u006e\u0065\u0067\u0061\u0074\u0069v\u0065");
-};if _fgaec [5].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_eac +"\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0064\u0065\u0070\u0072\u0065\u0063\u0069\u0061\u0074\u0069\u006f\u006e\u0020\u0072\u0061\u0074\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
-};_daa :=_fgaec [5].ValueNumber ;if _daa < 0{return nil ,MakeErrorResultType (ErrorTypeNum ,_eac +"\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073 d\u0065\u0070\u0072\u0065\u0063\u0069\u0061\u0074\u0069\u006f\u006e\u0020\u0072\u0061t\u0065\u0020t\u006f\u0020\u0062e\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e\u0020\u0030\u0020\u0061\u006e\u0064 \u006c\u0065ss\u0020\u0074\u0068a\u006e\u0020\u0030\u002e\u0035");
-};_aefb :=0;if _cfaa ==7&&_fgaec [6].Type !=ResultTypeEmpty {if _fgaec [6].Type !=ResultTypeNumber {return nil ,MakeErrorResult (_eac +"\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020b\u0061\u0073\u0069\u0073\u0020\u0074\u006f\u0020b\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_aefb =int (_fgaec [6].ValueNumber );if !_feeb (_aefb )||_aefb ==2{return nil ,MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020fo\u0072\u0020"+_eac );
-};};return &amorArgs {_gegb ,_egba ,_eegd ,_bdc ,_gba ,_daa ,_aefb },_fca ;};const _ffe =86400000000000;const _aaef =57359;
+// Dollarde implements the Excel DOLLARDE function.
+func Dollarde (args []Result )Result {_acad ,_adffb ,_aacf :=_fgef (args ,"\u0044\u004f\u004c\u004c\u0041\u0052\u0044\u0045");if _aacf .Type ==ResultTypeError {return _aacf ;};if _adffb < 1{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0044\u004f\u004c\u004c\u0041\u0052\u0044\u0045\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0072a\u0063t\u0069\u006f\u006e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0065\u0071\u0075\u0061\u006c\u0020\u006f\u0072 \u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e\u0020\u0031");
+};if _acad ==0{return MakeNumberResult (0);};_aadf :=_acad < 0;if _aadf {_acad =-_acad ;};_ceeg :=args [0].Value ();_dga :=_e .Split (_ceeg ,"\u002e");_bgcce :=float64 (int (_acad ));_dead :=_dga [1];_gdd :=len (_dead );_bdgg :=int (_d .Log10 (_adffb ))+1;
+_gade :=float64 (_bdgg -_gdd );_eedfc ,_bdcbd :=_fd .ParseFloat (_dead ,64);if _bdcbd !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0066\u0072\u0061\u0063\u0074\u0069\u006f\u006e\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0066\u006fr \u0044\u004f\u004cL\u0041R\u0044\u0045");
+};_eedfc *=_d .Pow (10,_gade );_eebgf :=_bgcce +_eedfc /_adffb ;if _aadf {_eebgf =-_eebgf ;};return MakeNumberResult (_eebgf );};
 
-//go:generate ragel -G2 -Z lexer.rl
-//go:generate goimports -w lexer.go
-type Lexer struct{_dcceb chan *node ;_gaad _fc .Mutex ;_beabe []chan *node ;_bagea []*node ;};
+// LastColumn returns empty string for the invalid reference context.
+func (_agdd *ivr )LastColumn (rowFrom ,rowTo int )string {return ""};func _gfag (_gdfb ,_eaad ,_abbf ,_dfaf ,_gdea float64 ,_gbdf int )float64 {_gefb :=_dgge (_gdfb ,_abbf ,_dfaf ,_gdea ,_gbdf );var _bga float64 ;if _eaad ==1{if _gbdf ==1{_bga =0;}else {_bga =-_dfaf ;
+};}else {if _gbdf ==1{_bga =_ggdg (_gdfb ,_eaad -2,_gefb ,_dfaf ,1)-_gefb ;}else {_bga =_ggdg (_gdfb ,_eaad -1,_gefb ,_dfaf ,0);};};return _bga *_gdfb ;};var _dbcd =[...]int {0};
 
-// Update updates references in the PrefixHorizontalRange after removing a row/column.
-func (_fbdbf PrefixHorizontalRange )Update (q *_a .UpdateQuery )Expression {return _fbdbf };
+// Eval evaluates the binary expression using the context given.
+func (_bd BinaryExpr )Eval (ctx Context ,ev Evaluator )Result {_gc :=_bd ._ba .Eval (ctx ,ev );if _gc .Type ==ResultTypeError {return _gc ;};_dbd :=_bd ._efb .Eval (ctx ,ev );if _dbd .Type ==ResultTypeError {return _dbd ;};if _gc .Type ==_dbd .Type {if _gc .Type ==ResultTypeArray {if !_fb (_gc .ValueArray ,_dbd .ValueArray ){return MakeErrorResult ("l\u0068\u0073\u002f\u0072\u0068\u0073 \u0073\u0068\u006f\u0075\u006c\u0064 \u0068\u0061\u0076\u0065\u0020\u0073\u0061m\u0065\u0020\u0064\u0069\u006d\u0065\u006e\u0073\u0069\u006fn\u0073");
+};return _fc (_bd ._fdb ,_gc .ValueArray ,_dbd .ValueArray );}else if _gc .Type ==ResultTypeList {if len (_gc .ValueList )!=len (_dbd .ValueList ){return MakeErrorResult ("l\u0068\u0073\u002f\u0072\u0068\u0073 \u0073\u0068\u006f\u0075\u006c\u0064 \u0068\u0061\u0076\u0065\u0020\u0073\u0061m\u0065\u0020\u0064\u0069\u006d\u0065\u006e\u0073\u0069\u006fn\u0073");
+};return _gg (_bd ._fdb ,_gc .ValueList ,_dbd .ValueList );};}else if _gc .Type ==ResultTypeArray &&(_dbd .Type ==ResultTypeNumber ||_dbd .Type ==ResultTypeString ){return _cgg (_bd ._fdb ,_gc .ValueArray ,_dbd );}else if _gc .Type ==ResultTypeList &&(_dbd .Type ==ResultTypeNumber ||_dbd .Type ==ResultTypeString ){return _ggc (_bd ._fdb ,_gc .ValueList ,_dbd );
+};switch _bd ._fdb {case BinOpTypePlus :if _gc .Type ==_dbd .Type {if _gc .Type ==ResultTypeNumber {return MakeNumberResult (_gc .ValueNumber +_dbd .ValueNumber );};};case BinOpTypeMinus :if _gc .Type ==_dbd .Type {if _gc .Type ==ResultTypeNumber {return MakeNumberResult (_gc .ValueNumber -_dbd .ValueNumber );
+};};case BinOpTypeMult :if _gc .Type ==_dbd .Type {if _gc .Type ==ResultTypeNumber {return MakeNumberResult (_gc .ValueNumber *_dbd .ValueNumber );};};case BinOpTypeDiv :if _gc .Type ==_dbd .Type {if _gc .Type ==ResultTypeNumber {if _dbd .ValueNumber ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"\u0064\u0069\u0076\u0069\u0064\u0065\u0020\u0062\u0079 \u007a\u0065\u0072\u006f");
+};return MakeNumberResult (_gc .ValueNumber /_dbd .ValueNumber );};};case BinOpTypeExp :if _gc .Type ==_dbd .Type {if _gc .Type ==ResultTypeNumber {return MakeNumberResult (_d .Pow (_gc .ValueNumber ,_dbd .ValueNumber ));};};case BinOpTypeLT :if _gc .Type ==_dbd .Type {if _gc .Type ==ResultTypeNumber {return MakeBoolResult (_gc .ValueNumber < _dbd .ValueNumber );
+};if _gc .Type ==ResultTypeString {return MakeBoolResult (_gc .ValueString < _dbd .ValueString );};if _gc .Type ==ResultTypeEmpty {return MakeBoolResult (false );};}else if _gc .Type ==ResultTypeString &&_dbd .Type ==ResultTypeNumber {return MakeBoolResult (false );
+}else if _gc .Type ==ResultTypeNumber &&_dbd .Type ==ResultTypeString {return MakeBoolResult (true );}else if _gc .Type ==ResultTypeEmpty &&(_dbd .Type ==ResultTypeNumber ||_dbd .Type ==ResultTypeString ){return MakeBoolResult (true );}else if (_gc .Type ==ResultTypeNumber ||_gc .Type ==ResultTypeString )&&_dbd .Type ==ResultTypeEmpty {return MakeBoolResult (false );
+};case BinOpTypeGT :if _gc .Type ==_dbd .Type {if _gc .Type ==ResultTypeNumber {return MakeBoolResult (_gc .ValueNumber > _dbd .ValueNumber );};if _gc .Type ==ResultTypeString {return MakeBoolResult (_gc .ValueString > _dbd .ValueString );};if _gc .Type ==ResultTypeEmpty {return MakeBoolResult (false );
+};}else if _gc .Type ==ResultTypeString &&_dbd .Type ==ResultTypeNumber {return MakeBoolResult (true );}else if _gc .Type ==ResultTypeNumber &&_dbd .Type ==ResultTypeString {return MakeBoolResult (false );}else if _gc .Type ==ResultTypeEmpty &&(_dbd .Type ==ResultTypeNumber ||_dbd .Type ==ResultTypeString ){return MakeBoolResult (false );
+}else if (_gc .Type ==ResultTypeNumber ||_gc .Type ==ResultTypeString )&&_dbd .Type ==ResultTypeEmpty {return MakeBoolResult (true );};case BinOpTypeEQ :if _gc .Type ==_dbd .Type {if _gc .Type ==ResultTypeNumber {return MakeBoolResult (_gc .ValueNumber ==_dbd .ValueNumber );
+};if _gc .Type ==ResultTypeString {return MakeBoolResult (_gc .ValueString ==_dbd .ValueString );};if _gc .Type ==ResultTypeEmpty {return MakeBoolResult (true );};}else if (_gc .Type ==ResultTypeString &&_dbd .Type ==ResultTypeNumber )||(_gc .Type ==ResultTypeNumber &&_dbd .Type ==ResultTypeString ){return MakeBoolResult (false );
+}else if _gc .Type ==ResultTypeEmpty &&(_dbd .Type ==ResultTypeNumber ||_dbd .Type ==ResultTypeString ){return MakeBoolResult (_df (_dbd ));}else if (_gc .Type ==ResultTypeNumber ||_gc .Type ==ResultTypeString )&&_dbd .Type ==ResultTypeEmpty {return MakeBoolResult (_df (_gc ));
+};case BinOpTypeNE :if _gc .Type ==_dbd .Type {if _gc .Type ==ResultTypeNumber {return MakeBoolResult (_gc .ValueNumber !=_dbd .ValueNumber );};if _gc .Type ==ResultTypeString {return MakeBoolResult (_gc .ValueString !=_dbd .ValueString );};if _gc .Type ==ResultTypeEmpty {return MakeBoolResult (false );
+};}else if (_gc .Type ==ResultTypeString &&_dbd .Type ==ResultTypeNumber )||(_gc .Type ==ResultTypeNumber &&_dbd .Type ==ResultTypeString ){return MakeBoolResult (true );}else if _gc .Type ==ResultTypeEmpty &&(_dbd .Type ==ResultTypeNumber ||_dbd .Type ==ResultTypeString ){return MakeBoolResult (!_df (_dbd ));
+}else if (_gc .Type ==ResultTypeNumber ||_gc .Type ==ResultTypeString )&&_dbd .Type ==ResultTypeEmpty {return MakeBoolResult (!_df (_gc ));};case BinOpTypeLEQ :if _gc .Type ==_dbd .Type {if _gc .Type ==ResultTypeNumber {return MakeBoolResult (_gc .ValueNumber <=_dbd .ValueNumber );
+};if _gc .Type ==ResultTypeString {return MakeBoolResult (_gc .ValueString <=_dbd .ValueString );};if _gc .Type ==ResultTypeEmpty {return MakeBoolResult (true );};}else if _gc .Type ==ResultTypeString &&_dbd .Type ==ResultTypeNumber {return MakeBoolResult (false );
+}else if _gc .Type ==ResultTypeNumber &&_dbd .Type ==ResultTypeString {return MakeBoolResult (true );}else if _gc .Type ==ResultTypeEmpty &&(_dbd .Type ==ResultTypeNumber ||_dbd .Type ==ResultTypeString ){return MakeBoolResult (_df (_dbd ));}else if (_gc .Type ==ResultTypeNumber ||_gc .Type ==ResultTypeString )&&_dbd .Type ==ResultTypeEmpty {return MakeBoolResult (_df (_gc ));
+};case BinOpTypeGEQ :if _gc .Type ==_dbd .Type {if _gc .Type ==ResultTypeNumber {return MakeBoolResult (_gc .ValueNumber >=_dbd .ValueNumber );};if _gc .Type ==ResultTypeString {return MakeBoolResult (_gc .ValueString >=_dbd .ValueString );};if _gc .Type ==ResultTypeEmpty {return MakeBoolResult (true );
+};}else if _gc .Type ==ResultTypeString &&_dbd .Type ==ResultTypeNumber {return MakeBoolResult (true );}else if _gc .Type ==ResultTypeNumber &&_dbd .Type ==ResultTypeString {return MakeBoolResult (false );}else if _gc .Type ==ResultTypeEmpty &&(_dbd .Type ==ResultTypeNumber ||_dbd .Type ==ResultTypeString ){return MakeBoolResult (_df (_dbd ));
+}else if (_gc .Type ==ResultTypeNumber ||_gc .Type ==ResultTypeString )&&_dbd .Type ==ResultTypeEmpty {return MakeBoolResult (_df (_gc ));};case BinOpTypeConcat :return MakeStringResult (_gc .Value ()+_dbd .Value ());};return MakeErrorResult ("u\u006e\u0073\u0075\u0070po\u0072t\u0065\u0064\u0020\u0062\u0069n\u0061\u0072\u0079\u0020\u006f\u0070");
+};
+
+// MakeEmptyResult is ued when parsing an empty argument.
+func MakeEmptyResult ()Result {return Result {Type :ResultTypeEmpty }};
+
+// Rate implements the Excel RATE function.
+func Rate (args []Result )Result {_gbea :=len (args );if _gbea < 3||_gbea > 6{return MakeErrorResult ("\u0052\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006f\u0066\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u006f\u0066\u0020\u0074\u0068\u0072\u0065\u0065 \u0061\u006e\u0064\u0020\u0073i\u0078");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006ff\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_ggfg :=args [0].ValueNumber ;if _ggfg !=float64 (int (_ggfg )){return MakeErrorResultType (ErrorTypeNum ,"R\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0070\u0065\u0072i\u006fd\u0073\u0020\u0074\u006f \u0062\u0065 \u0069\u006e\u0074\u0065\u0067\u0065\u0072\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0041\u0054\u0045\u0020\u0072\u0065q\u0075\u0069\u0072e\u0073\u0020\u0070\u0061y\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_gebe :=args [1].ValueNumber ;if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0041\u0054\u0045\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065\u0073\u0065\u006e\u0074\u0020\u0076\u0061\u006c\u0075\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
+};_cff :=args [2].ValueNumber ;_beeed :=0.0;if _gbea >=4&&args [3].Type !=ResultTypeEmpty {if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0041\u0054\u0045\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s \u0066\u0075\u0074\u0075\u0072\u0065 \u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+};_beeed =args [3].ValueNumber ;};_fac :=0.0;if _gbea >=5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("R\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0079\u0070\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_fac =args [4].ValueNumber ;if _fac !=0{_fac =1;};};_fagd :=0.1;if _gbea >=6&&args [5].Type !=ResultTypeEmpty {if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0041\u0054\u0045\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0067\u0075\u0065\u0073\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_fagd =args [5].ValueNumber ;};_ddfa :=100;_cdgb :=0;_ffff :=false ;_eaab :=1e-6;_agade :=_fagd ;for _cdgb < _ddfa &&!_ffff {_ggbf :=_d .Pow (_agade +1,_ggfg );_gfgeb :=_d .Pow (_agade +1,_ggfg -1);_cbga :=_agade *_fac +1;_bcae :=_gebe *(_ggbf -1);_cbbc :=_beeed +_ggbf *_cff +_bcae *_cbga /_agade ;
+_bbbf :=_ggfg *_gfgeb *_cff -_bcae *_cbga /_d .Pow (_agade ,2);_cedb :=(_ggfg *_gebe *_gfgeb *_cbga +_bcae *_fac )/_agade ;_dgeb :=_cbbc /(_bbbf +_cedb );if _d .Abs (_dgeb )< _eaab {_ffff =true ;};_cdgb ++;_agade -=_dgeb ;};return MakeNumberResult (_agade );
+};func _dfcaa (_eddcc ,_ddfed float64 )float64 {_eddcc =_d .Trunc (_eddcc );_ddfed =_d .Trunc (_ddfed );if _eddcc ==0&&_ddfed ==0{return 0;};return _eddcc *_ddfed /_dedfb (_eddcc ,_ddfed );};
+
+// ResultType is the type of the result
+//
+//go:generate stringer -type=ResultType
+type ResultType byte ;
+
+// Syd implements the Excel SYD function.
+func Syd (args []Result )Result {if len (args )!=4{return MakeErrorResult ("S\u0059\u0044\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0066\u006f\u0075\u0072 \u0061\u0072\u0067u\u006de\u006e\u0074\u0073");};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0059\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020c\u006f\u0073\u0074\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_gabf :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0059\u0044 \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061\u0067\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_cfegf :=args [1].ValueNumber ;if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0059\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020l\u0069\u0066\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_gcad :=args [2].ValueNumber ;if _gcad <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0053\u0059\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0069f\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0059\u0044\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_bgbe :=args [3].ValueNumber ;if _bgbe <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0053\u0059\u0044 r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070e\u0072i\u006fd\u0020t\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
+};if _bgbe > _gcad {return MakeErrorResultType (ErrorTypeNum ,"\u0053\u0059\u0044\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0065q\u0075\u0061\u006c\u0020\u006f\u0072\u0020\u006c\u0065\u0073\u0073\u0020\u0074\u0068a\u006e \u006c\u0069\u0066\u0065");
+};_cfege :=(_gabf -_cfegf )*(_gcad -_bgbe +1)*2;_ccge :=_gcad *(_gcad +1);return MakeNumberResult (_cfege /_ccge );};
+
+// Sum is an implementation of the Excel SUM() function.
+func Sum (args []Result )Result {_faad :=MakeNumberResult (0);for _ ,_cfdca :=range args {_cfdca =_cfdca .AsNumber ();switch _cfdca .Type {case ResultTypeNumber :_faad .ValueNumber +=_cfdca .ValueNumber ;case ResultTypeList ,ResultTypeArray :_gacgg :=Sum (_cfdca .ListValues ());
+if _gacgg .Type !=ResultTypeNumber {return _gacgg ;};_faad .ValueNumber +=_gacgg .ValueNumber ;case ResultTypeString :case ResultTypeError :return _cfdca ;case ResultTypeEmpty :default:return MakeErrorResult (_gf .Sprintf ("\u0075\u006e\u0068\u0061\u006e\u0064\u006c\u0065\u0064\u0020\u0053\u0055\u004d\u0028\u0029 \u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_cfdca .Type ));
+};};return _faad ;};var (_cfbf =0;_aecdg =false ;);
+
+// Large implements the Excel LARGE function.
+func Large (args []Result )Result {return _cbcd (args ,true )};type ri struct{_babc float64 ;_ggccf string ;};func _fba (_ffbg int ,_abcc _bcd .Month ,_fad int )int64 {if _ffbg ==1900&&int (_abcc )<=2{_fad --;};_bbbb :=_bcd .Date (_ffbg ,_abcc ,_fad ,0,0,0,0,_bcd .UTC );
+return _bbbb .Unix ();};
+
+// Eval evaluates and returns a boolean.
+func (_baf Bool )Eval (ctx Context ,ev Evaluator )Result {return MakeBoolResult (_baf ._ec )};const _edae =57376;
+
+// Month is an implementation of the Excel MONTH() function.
+func Month (args []Result )Result {if len (args )!=1{return MakeErrorResult ("M\u004f\u004e\u0054\u0048\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006f\u006ee\u0020\u0061\u0072g\u0075m\u0065\u006e\u0074");};_aafg :=args [0];switch _aafg .Type {case ResultTypeEmpty :return MakeNumberResult (1);
+case ResultTypeNumber :_bcbc :=_ded (_aafg .ValueNumber );return MakeNumberResult (float64 (_bcbc .Month ()));case ResultTypeString :_fgaf :=_e .ToLower (_aafg .ValueString );if !_cgaf (_fgaf ){_ ,_ ,_ ,_ ,_bfad ,_gdg :=_edbe (_fgaf );if _gdg .Type ==ResultTypeError {_gdg .ErrorMessage ="\u0049\u006ec\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0066\u006f\u0072\u0020\u004dON\u0054\u0048";
+return _gdg ;};if _bfad {return MakeNumberResult (1);};};_ ,_bde ,_ ,_ ,_dac :=_fcbd (_fgaf );if _dac .Type ==ResultTypeError {return _dac ;};return MakeNumberResult (float64 (_bde ));default:return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u004d\u004fN\u0054\u0048");
+};};
+
+// String returns a string representation of PrefixExpr.
+func (_fgeeb PrefixExpr )String ()string {return _gf .Sprintf ("\u0025\u0073\u0021%\u0073",_fgeeb ._fefaa .String (),_fgeeb ._fbdf .String ());};
+
+// Product is an implementation of the Excel PRODUCT() function.
+func Product (args []Result )Result {_eedg :=1.0;for _ ,_gcdd :=range args {_gcdd =_gcdd .AsNumber ();switch _gcdd .Type {case ResultTypeNumber :_eedg *=_gcdd .ValueNumber ;case ResultTypeList ,ResultTypeArray :_abbd :=Product (_gcdd .ListValues ());if _abbd .Type !=ResultTypeNumber {return _abbd ;
+};_eedg *=_abbd .ValueNumber ;case ResultTypeString :case ResultTypeError :return _gcdd ;case ResultTypeEmpty :default:return MakeErrorResult (_gf .Sprintf ("\u0075\u006eha\u006e\u0064\u006ce\u0064\u0020\u0050\u0052ODU\u0043T(\u0029\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0020\u0074\u0079\u0070\u0065\u0020%\u0073",_gcdd .Type ));
+};};return MakeNumberResult (_eedg );};
+
+// SumIfs implements the SUMIFS function.
+func SumIfs (args []Result )Result {_gcba :=_gecb (args ,true ,"\u0053\u0055\u004d\u0049\u0046\u0053");if _gcba .Type !=ResultTypeEmpty {return _gcba ;};_gbee :=_bdaf (args [1:]);_acedc :=0.0;_geeaf :=_cbgb (args [0]);for _ ,_bcgfa :=range _gbee {_acedc +=_geeaf [_bcgfa ._cafgf ][_bcgfa ._afac ].ValueNumber ;
+};return MakeNumberResult (float64 (_acedc ));};
+
+// NA is an implementation of the Excel NA() function that just returns the #N/A! error.
+func NA (args []Result )Result {if len (args )!=0{return MakeErrorResult ("\u004eA\u0028\u0029\u0020\u0061c\u0063\u0065\u0070\u0074\u0073 \u006eo\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074s");};return MakeErrorResultType (ErrorTypeNA ,"");};
+
+// Offset is an implementation of the Excel OFFSET function.
+func Offset (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=3&&len (args )!=5{return MakeErrorResult ("\u004f\u0046\u0046\u0053\u0045\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0074\u0068\u0072\u0065e\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_bgba :=args [0].Ref ;for _bgba .Type ==ReferenceTypeNamedRange {_bgba =ctx .NamedRange (_bgba .Value );};_fbfd :="";switch _bgba .Type {case ReferenceTypeCell :_fbfd =_bgba .Value ;case ReferenceTypeRange :_dgab :=_e .Split (_bgba .Value ,"\u003a");
+if len (_dgab )==2{_fbfd =_dgab [0];};default:return MakeErrorResult (_gf .Sprintf ("\u0049\u006ev\u0061\u006c\u0069\u0064\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u0069\u006e\u0020\u004f\u0046\u0046\u0053\u0045\u0054\u0028\u0029: \u0025\u0073",_bgba .Type ));
+};_gead ,_bgaa :=_bce .ParseCellReference (_fbfd );if _bgaa !=nil {return MakeErrorResult (_gf .Sprintf ("\u0070\u0061\u0072s\u0065\u0020\u006f\u0072i\u0067\u0069\u006e\u0020\u0065\u0072\u0072o\u0072\u0020\u004f\u0046\u0046\u0053\u0045\u0054\u0028\u0029\u003a\u0020\u0025\u0073",_bgaa .Error ()));
+};_acfg ,_gfcde ,_dff :=_gead .Column ,_gead .RowIdx ,_gead .SheetName ;_fdbcf :=args [1].AsNumber ();if _fdbcf .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0046\u0046SE\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020n\u0075m\u0065r\u0069\u0063\u0020\u0072\u006f\u0077\u0020\u006f\u0066\u0066\u0073\u0065\u0074");
+};_fbea :=args [2].AsNumber ();if _fbea .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0046\u0046SE\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020n\u0075m\u0065r\u0069\u0063\u0020\u0063\u006f\u006c\u0020\u006f\u0066\u0066\u0073\u0065\u0074");
+};var _cdgg ,_acfd Result ;if len (args )==3{_cdgg =MakeNumberResult (1);_acfd =MakeNumberResult (1);}else {_cdgg =args [3].AsNumber ();if _cdgg .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0046\u0046\u0053\u0045\u0054\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u006e\u0075m\u0065\u0072\u0069\u0063\u0020\u0068\u0065\u0069\u0067\u0068\u0074");
+};if _cdgg .ValueNumber ==0{return MakeErrorResultType (ErrorTypeRef ,"");};_acfd =args [4].AsNumber ();if _acfd .Type !=ResultTypeNumber {return MakeErrorResult ("\u004f\u0046F\u0053\u0045\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0077id\u0074\u0068");
+};if _acfd .ValueNumber ==0{return MakeErrorResultType (ErrorTypeRef ,"");};};_bffc :=_bce .ColumnToIndex (_acfg );_abcfa :=_gfcde +uint32 (_fdbcf .ValueNumber );_fffc :=_bffc +uint32 (_fbea .ValueNumber );_eaaa :=_abcfa +uint32 (_cdgg .ValueNumber );_gaeg :=_fffc +uint32 (_acfd .ValueNumber );
+if _cdgg .ValueNumber > 0{_eaaa --;}else {_eaaa ++;_abcfa ,_eaaa =_eaaa ,_abcfa ;};if _acfd .ValueNumber > 0{_gaeg --;}else {_gaeg ++;_fffc ,_gaeg =_gaeg ,_fffc ;};_dbga :=_gf .Sprintf ("\u0025\u0073\u0025\u0064",_bce .IndexToColumn (_fffc ),_abcfa );_dgcgb :=_gf .Sprintf ("\u0025\u0073\u0025\u0064",_bce .IndexToColumn (_gaeg ),_eaaa );
+if _dff ==""{return _ebcb (ctx ,ev ,_dbga ,_dgcgb );}else {return _ebcb (ctx .Sheet (_dff ),ev ,_dbga ,_dgcgb );};};
+
+// Today is an implementation of the Excel TODAY() function.
+func Today (args []Result )Result {if len (args )> 0{return MakeErrorResult ("\u0054\u004f\u0044A\u0059\u0020\u0064\u006fe\u0073\u006e\u0027\u0074\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_eag :=_bcd .Now ();_ ,_dbbc :=_eag .Zone ();_bfd :=_bacc (_gfg ,_eag .Unix ()+int64 (_dbbc ))+1;return MakeNumberResult (_bfd );};func Sign (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0053\u0049\u0047\u004e(\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+};_fged :=args [0].AsNumber ();if _fged .Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0049\u0047N(\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020a\u0020n\u0075m\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if _fged .ValueNumber < 0{return MakeNumberResult (-1);}else if _fged .ValueNumber > 0{return MakeNumberResult (1);};return MakeNumberResult (0);};
+
+// String returns a string representation for Bool.
+func (_adg Bool )String ()string {if _adg ._ec {return "\u0054\u0052\u0055\u0045";}else {return "\u0046\u0041\u004cS\u0045";};};
+
+// Eval evaluates and returns an expression with prefix.
+func (_ebff PrefixExpr )Eval (ctx Context ,ev Evaluator )Result {_eefca :=_ebff ._fefaa .Reference (ctx ,ev );switch _eefca .Type {case ReferenceTypeSheet :if _daead (_eefca ,ctx ){return MakeErrorResultType (ErrorTypeName ,_gf .Sprintf ("\u0053h\u0065e\u0074\u0020\u0025\u0073\u0020n\u006f\u0074 \u0066\u006f\u0075\u006e\u0064",_eefca .Value ));
+};_abgde :=ctx .Sheet (_eefca .Value );return _ebff ._fbdf .Eval (_abgde ,ev );default:return MakeErrorResult (_gf .Sprintf ("\u006e\u006f\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0020\u0066\u006f\u0072\u0020r\u0065f\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_eefca .Type ));
+};};func _cecfg (_edecg _bcd .Time )_bcd .Time {_edecg =_edecg .UTC ();return _bcd .Date (_edecg .Year (),_edecg .Month (),_edecg .Day (),_edecg .Hour (),_edecg .Minute (),_edecg .Second (),_edecg .Nanosecond (),_bcd .Local );};
+
+// Reference returns an invalid reference for String.
+func (_eagdd String )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
+
+// Days is an implementation of the Excel DAYS() function.
+func Days (args []Result )Result {if len (args )!=2{return MakeErrorResult ("D\u0041\u0059\u0053\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f \u0061\u0072\u0067u\u006de\u006e\u0074\u0073");};var _cefa ,_gcd float64 ;switch args [0].Type {case ResultTypeNumber :_gcd =args [0].ValueNumber ;
+case ResultTypeString :_ffc :=DateValue ([]Result {args [0]});if _ffc .Type ==ResultTypeError {return MakeErrorResult ("I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0065\u006e\u0064\u0020\u0064\u0061\u0074e\u0020\u0066\u006fr\u0020D\u0041\u0059\u0053");
+};_gcd =_ffc .ValueNumber ;default:return MakeErrorResult ("I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0020\u0066\u006fr\u0020D\u0041\u0059\u0053");};switch args [1].Type {case ResultTypeNumber :_cefa =args [1].ValueNumber ;
+if _cefa < 62&&_gcd >=62{_cefa --;};case ResultTypeString :_faa :=DateValue ([]Result {args [1]});if _faa .Type ==ResultTypeError {return MakeErrorResult ("\u0049\u006ec\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0073\u0074\u0061\u0072\u0074\u0020\u0064\u0061\u0074\u0065\u0020\u0066\u006f\u0072\u0020DA\u0059\u0053");
+};_cefa =_faa .ValueNumber ;default:return MakeErrorResult ("I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0020\u0066\u006fr\u0020D\u0041\u0059\u0053");};_ege :=float64 (int (_gcd -_cefa ));return MakeNumberResult (_ege );
+};const (BinOpTypeUnknown BinOpType =iota ;BinOpTypePlus ;BinOpTypeMinus ;BinOpTypeMult ;BinOpTypeDiv ;BinOpTypeExp ;BinOpTypeLT ;BinOpTypeGT ;BinOpTypeEQ ;BinOpTypeLEQ ;BinOpTypeGEQ ;BinOpTypeNE ;BinOpTypeConcat ;);
+
+// Mirr implements the Excel MIRR function.
+func Mirr (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u004d\u0049R\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0073");};if args [0].Type !=ResultTypeList &&args [0].Type !=ResultTypeArray {return MakeErrorResult ("M\u0049\u0052\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0076\u0061\u006c\u0075\u0065s\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020ar\u0072\u0061\u0079 \u0074y\u0070\u0065");
+};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u0049\u0052\u0052\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s \u0066\u0069\u006e\u0061\u006e\u0063e\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+};_gcgg :=args [1].ValueNumber +1;if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u0049\u0052\u0052\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0069\u006e\u0076\u0065\u0073\u0074\u0020\u0072\u0061\u0074\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
+};_aafb :=args [2].ValueNumber +1;if _aafb ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"");};_cced :=_cbgb (args [0]);_dbce :=float64 (len (_cced ));_efed ,_efcb :=0.0,0.0;_dfd ,_abbg :=1.0,1.0;_egcd ,_bceca :=false ,false ;for _ ,_faf :=range _cced {for _ ,_gdgb :=range _faf {if _gdgb .Type ==ResultTypeNumber &&!_gdgb .IsBoolean {_afd :=_gdgb .ValueNumber ;
+if _afd ==0{continue ;}else {if _afd > 0{_egcd =true ;_efcb +=_gdgb .ValueNumber *_abbg ;}else {_bceca =true ;_efed +=_gdgb .ValueNumber *_dfd ;};_dfd /=_gcgg ;_abbg /=_aafb ;};};};};if !_egcd ||!_bceca {return MakeErrorResultType (ErrorTypeDivideByZero ,"");
+};_fafc :=-_efcb /_efed ;_fafc *=_d .Pow (_aafb ,_dbce -1);_fafc =_d .Pow (_fafc ,1/(_dbce -1));return MakeNumberResult (_fafc -1);};const _cfd =86400000000000;
+
+// Reference returns an invalid reference for BinaryExpr.
+func (_ge BinaryExpr )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };func init (){RegisterFunction ("\u0043\u0048\u0041\u0052",Char );RegisterFunction ("\u0043\u004c\u0045A\u004e",Clean );RegisterFunction ("\u0043\u004f\u0044\u0045",Code );
+RegisterFunction ("C\u004f\u004e\u0043\u0041\u0054\u0045\u004e\u0041\u0054\u0045",Concat );RegisterFunction ("\u0043\u004f\u004e\u0043\u0041\u0054",Concat );RegisterFunction ("\u005f\u0078\u006cf\u006e\u002e\u0043\u004f\u004e\u0043\u0041\u0054",Concat );
+RegisterFunction ("\u0045\u0058\u0041C\u0054",Exact );RegisterFunction ("\u0046\u0049\u004e\u0044",Find );RegisterFunctionComplex ("\u0046\u0049\u004eD\u0042",Findb );RegisterFunction ("\u004c\u0045\u0046\u0054",Left );RegisterFunction ("\u004c\u0045\u0046T\u0042",Left );
+RegisterFunction ("\u004c\u0045\u004e",Len );RegisterFunction ("\u004c\u0045\u004e\u0042",Len );RegisterFunction ("\u004c\u004f\u0057E\u0052",Lower );RegisterFunction ("\u004d\u0049\u0044",Mid );RegisterFunction ("\u0050\u0052\u004f\u0050\u0045\u0052",Proper );
+RegisterFunction ("\u0052E\u0050\u004c\u0041\u0043\u0045",Replace );RegisterFunction ("\u0052\u0045\u0050\u0054",Rept );RegisterFunction ("\u0052\u0049\u0047H\u0054",Right );RegisterFunction ("\u0052\u0049\u0047\u0048\u0054\u0042",Right );RegisterFunction ("\u0053\u0045\u0041\u0052\u0043\u0048",Search );
+RegisterFunctionComplex ("\u0053E\u0041\u0052\u0043\u0048\u0042",Searchb );RegisterFunction ("\u0053\u0055\u0042\u0053\u0054\u0049\u0054\u0055\u0054\u0045",Substitute );RegisterFunction ("\u0054",T );RegisterFunction ("\u0054\u0045\u0058\u0054",Text );
+RegisterFunction ("\u0054\u0045\u0058\u0054\u004a\u004f\u0049\u004e",TextJoin );RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0054\u0045\u0058T\u004a\u004f\u0049\u004e",TextJoin );RegisterFunction ("\u0054\u0052\u0049\u004d",Trim );RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0055\u004e\u0049\u0043\u0048\u0041\u0052",Char );
+RegisterFunction ("\u005f\u0078\u006c\u0066\u006e\u002e\u0055\u004e\u0049\u0043\u004f\u0044\u0045",Unicode );RegisterFunction ("\u0055\u0050\u0050E\u0052",Upper );RegisterFunction ("\u0056\u0041\u004cU\u0045",Value );};func _cbd (_gfcd ,_gacg []float64 ,_eacg float64 )float64 {_agfg :=_eacg +1;
+_fbac :=0.0;_ecdc :=len (_gfcd );_ffda :=_gacg [0];for _ddfd :=1;_ddfd < _ecdc ;_ddfd ++{_ffdb :=(_gacg [_ddfd ]-_ffda )/365;_fbac -=_ffdb *_gfcd [_ddfd ]/_d .Pow (_agfg ,_ffdb +1);};return _fbac ;};func _abgca (_bbagd Context ,_ebfed ,_fbbcd string )(string ,string ){_efecg :=_ebfed +"\u0031";
+_afcff :=_bbagd .LastRow (_ebfed );_acbcd :=_fbbcd +_fd .Itoa (_afcff );return _efecg ,_acbcd ;};
+
+// VerticalRange is a range expression that when evaluated returns a list of Results from references like AA:IJ (all cells from columns AA to IJ).
+type VerticalRange struct{_cege ,_afaca string };func _fdab (_fbdga Result )*criteriaParsed {_ddga :=_fbdga .Type ==ResultTypeNumber ;_eggb :=_fbdga .ValueNumber ;_aggdd :=_e .ToLower (_fbdga .ValueString );_daeda :=_fdga (_aggdd );return &criteriaParsed {_ddga ,_eggb ,_aggdd ,_daeda };
+};type xargs struct{_dfcfc []float64 ;_fegbf []float64 ;};func (_gfgb *noCache )GetFromCache (key string )(Result ,bool ){return _fcea ,false };var _ecdfb =[...]int {1};
+
+// Radians is an implementation of the Excel function RADIANS() that converts
+// degrees to radians.
+func Radians (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0052\u0041\u0044I\u0041\u004e\u0053\u0028)\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_abac :=args [0].AsNumber ();if _abac .Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u0041\u0044IA\u004e\u0053\u0028\u0029\u0020\u0072\u0065\u0071\u0075i\u0072e\u0073 \u006eu\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};return MakeNumberResult (_d .Pi /180.0*_abac .ValueNumber );};
+
+// Eval evaluates and returns the result of the NamedRangeRef reference.
+func (_baae NamedRangeRef )Eval (ctx Context ,ev Evaluator )Result {_edbab :=ctx .NamedRange (_baae ._ceba );_dddf :=_edbab .Value ;if _fbbc ,_dbdg :=ev .GetFromCache (_dddf );_dbdg {return _fbbc ;};_fgaef :=_e .Split (_dddf ,"\u0021");if len (_fgaef )!=2{return MakeErrorResult (_gf .Sprintf ("\u0075\u006e\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u006e\u0061\u006de\u0064 \u0072\u0061\u006e\u0067\u0065\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0025\u0073",_dddf ));
+};_befe :=ctx .Sheet (_fgaef [0]);_dgaba :=_e .Split (_fgaef [1],"\u003a");switch len (_dgaba ){case 1:_gdaad :=ev .Eval (_befe ,_dgaba [0]);ev .SetCache (_dddf ,_gdaad );return _gdaad ;case 2:_bfdb :=_ebcb (_befe ,ev ,_dgaba [0],_dgaba [1]);ev .SetCache (_dddf ,_bfdb );
+return _bfdb ;};return MakeErrorResult (_gf .Sprintf ("\u0075\u006es\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u0074\u0079\u0070e \u0025\u0073",_edbab .Type ));};
+
+// Fact is an implementation of the excel FACT function which returns the
+// factorial of a positive numeric input.
+func Fact (args []Result )Result {if len (args )!=1{return MakeErrorResult ("F\u0041\u0043\u0054\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_fbdg :=args [0].AsNumber ();if _fbdg .Type !=ResultTypeNumber {return MakeErrorResult ("F\u0041\u0043\u0054\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069n\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067u\u006de\u006e\u0074");
+};if _fbdg .ValueNumber < 0{return MakeErrorResult ("\u0046\u0041\u0043\u0054\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u006f\u006e\u006c\u0079\u0020\u0070\u006f\u0073\u0069t\u0069\u0076\u0065\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
+};return MakeNumberResult (_feed (_fbdg .ValueNumber ));};
+
+// Searchb is an implementation of the Excel SEARCHB().
+func Searchb (ctx Context ,ev Evaluator ,args []Result )Result {if !ctx .IsDBCS (){return Search (args );};_bcfb ,_ecadf :=_eacd ("\u0046\u0049\u004e\u0044",args );if _ecadf .Type !=ResultTypeEmpty {return _ecadf ;};_ebfe :=_e .ToLower (_bcfb ._eefe );
+_bbgdb :=_e .ToLower (_bcfb ._gdgff );if _ebfe ==""{return MakeNumberResult (1.0);};_ebefg :=_bcfb ._dbdf -1;_ebdga :=1;_aaac :=0;for _gedgb :=range _bbgdb {if _gedgb !=0{_faeb :=1;if _gedgb -_aaac > 1{_faeb =2;};_ebdga +=_faeb ;};if _ebdga > _ebefg {_gcgb :=_eg .Index (_ebfe ,_bbgdb [_gedgb :]);
+if _gcgb ==0{return MakeNumberResult (float64 (_ebdga ));};};_aaac =_gedgb ;};return MakeErrorResultType (ErrorTypeValue ,"\u004eo\u0074\u0020\u0066\u006f\u0075\u006ed");};const _dgff =57346;
+
+// Eval evaluates and returns the result of a constant array expression.
+func (_bdc ConstArrayExpr )Eval (ctx Context ,ev Evaluator )Result {_eeb :=[][]Result {};for _ ,_dfg :=range _bdc ._fed {_bfa :=[]Result {};for _ ,_cdd :=range _dfg {_bfa =append (_bfa ,_cdd .Eval (ctx ,ev ));};_eeb =append (_eeb ,_bfa );};return MakeArrayResult (_eeb );
+};var _ffgf =[...]int {0,-2,1,2,0,0,0,0,11,12,13,14,0,16,5,6,7,8,22,0,24,46,0,26,25,29,30,31,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,18,20,9,10,0,0,23,32,33,47,0,49,51,34,35,36,37,38,39,40,41,42,43,44,45,0,17,0,0,15,27,0,48,53,4,19,21,28,50,52};func _feed (_beag float64 )float64 {_acaga :=float64 (1);
+for _ecgbb :=float64 (2);_ecgbb <=_beag ;_ecgbb ++{_acaga *=_ecgbb ;};return _acaga ;};
+
+// GetLabelPrefix returns an empty string for the invalid reference context.
+func (_caae *ivr )GetLabelPrefix (cellRef string )string {return ""};
+
+// Reference returns a string reference value to a horizontal range with prefix.
+func (_dfff PrefixHorizontalRange )Reference (ctx Context ,ev Evaluator )Reference {_gcfa :=_dfff ._fbcde .Reference (ctx ,ev );return Reference {Type :ReferenceTypeHorizontalRange ,Value :_dfff .horizontalRangeReference (_gcfa .Value )};};
+
+// EmptyExpr is an empty expression.
+type EmptyExpr struct{};
+
+// Reference returns an invalid reference for ConstArrayExpr.
+func (_dfe ConstArrayExpr )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
+
+// NewCellRef constructs a new cell reference.
+func NewCellRef (v string )Expression {return CellRef {_cge :v }};func _agaef (_fggb Result )bool {_gdeb :=_fggb .Type ;return _gdeb !=ResultTypeArray &&_gdeb !=ResultTypeList ;};type defEval struct{evCache ;_fce bool ;};func _beea (_gabdg ,_bcde Result ,_ccdb string )(*xargs ,Result ){if _gabdg .Type !=ResultTypeList &&_gabdg .Type !=ResultTypeArray {return nil ,MakeErrorResult (_ccdb +"\u0020\u0072eq\u0075\u0069\u0072e\u0073\u0020\u0076\u0061lue\u0073 t\u006f\u0020\u0062\u0065\u0020\u006f\u0066 a\u0072\u0072\u0061\u0079\u0020\u0074\u0079p\u0065");
+};_eada :=_cbgb (_gabdg );_fdddd :=[]float64 {};for _ ,_ccbbe :=range _eada {for _ ,_bgeded :=range _ccbbe {if _bgeded .Type ==ResultTypeNumber &&!_bgeded .IsBoolean {_fdddd =append (_fdddd ,_bgeded .ValueNumber );}else {return nil ,MakeErrorResult (_ccdb +"\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0076\u0061\u006c\u0075\u0065\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006dbe\u0072\u0073");
+};};};_cadg :=len (_fdddd );if len (_fdddd )< 2{return nil ,MakeErrorResultType (ErrorTypeNum ,"");};if _bcde .Type !=ResultTypeList &&_bcde .Type !=ResultTypeArray {return nil ,MakeErrorResult (_ccdb +" \u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0064\u0061\u0074\u0065s\u0020\u0074\u006f\u0020\u0062\u0065\u0020o\u0066\u0020\u0061\u0072\u0072\u0061\u0079\u0020\u0074\u0079p\u0065");
+};_ddgf :=_cbgb (_bcde );_feaa :=[]float64 {};_agbc :=0.0;for _ ,_gcbb :=range _ddgf {for _ ,_cbfa :=range _gcbb {if _cbfa .Type ==ResultTypeNumber &&!_cbfa .IsBoolean {_gbcg :=float64 (int (_cbfa .ValueNumber ));if _gbcg < _agbc {return nil ,MakeErrorResultType (ErrorTypeNum ,_ccdb +" \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0064\u0061\u0074\u0065\u0073\u0020\u0074\u006f\u0020b\u0065\u0020\u0069\u006e\u0020\u0061\u0073\u0063\u0065\u006edi\u006e\u0067\u0020o\u0072d\u0065\u0072");
+};_feaa =append (_feaa ,_gbcg );_agbc =_gbcg ;}else {return nil ,MakeErrorResult (_ccdb +"\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0064\u0061\u0074\u0065\u0073\u0020t\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062e\u0072\u0073");};};};if len (_feaa )!=_cadg {return nil ,MakeErrorResultType (ErrorTypeNum ,"");
+};return &xargs {_fdddd ,_feaa },MakeEmptyResult ();};
+
+// TextJoin is an implementation of the Excel TEXTJOIN function.
+func TextJoin (args []Result )Result {if len (args )< 3{return MakeErrorResult ("\u0054\u0045\u0058\u0054\u004aO\u0049\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074h\u0072\u0065\u0065\u0020\u006f\u0072\u0020\u006d\u006f\u0072\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if args [0].Type !=ResultTypeString {return MakeErrorResult ("\u0054\u0045\u0058T\u004a\u004f\u0049\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0064\u0065\u006c\u0069\u006d\u0069\u0074\u0065\u0072\u0020\u0074\u006f\u0020\u0062\u0065 \u0061\u0020\u0073\u0074\u0072\u0069\u006e\u0067");
+};_dbbcad :=args [0].ValueString ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0054\u0045\u0058\u0054\u004a\u004f\u0049\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065c\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006f\u0072 \u0062\u006f\u006f\u006c\u0065a\u006e");
+};_fddag :=args [1].ValueNumber !=0;_bgafc :=_bgbfe (args [2:],[]string {},_fddag );return MakeStringResult (_e .Join (_bgafc ,_dbbcad ));};const _cfed ="\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029\u002f\u0028\u0028\u005b\u0030-\u0039]\u0029\u002b\u0029\u002f\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029";
+func _efdc (_bab ,_cbc ,_eec int )float64 {return float64 (_fba (_bab ,_bcd .Month (_cbc ),_eec )/86400)+_abc ;};func (_bbeb *Lexer )nextRaw ()*node {for len (_bbeb ._ggcbe )!=0{_ggeg :=<-_bbeb ._ggcbe [len (_bbeb ._ggcbe )-1];if _ggeg !=nil {return _ggeg ;
+};_bbeb ._ggcbe =_bbeb ._ggcbe [0:len (_bbeb ._ggcbe )-1];};return <-_bbeb ._cafe ;};func _aaeb (_bdeag [][]Result ,_cada int )[][]Result {_bdeae :=[][]Result {};for _bggg :=range _bdeag {if _bggg ==0{continue ;};_baddg :=[]Result {};for _bbfdf :=range _bdeag {if _bbfdf ==_cada {continue ;
+};_baddg =append (_baddg ,_bdeag [_bggg ][_bbfdf ]);};_bdeae =append (_bdeae ,_baddg );};return _bdeae ;};const _dgbed =57378;
+
+// SumSquares is an implementation of the Excel SUMSQ() function.
+func SumSquares (args []Result )Result {_ecad :=MakeNumberResult (0);for _ ,_bfda :=range args {_bfda =_bfda .AsNumber ();switch _bfda .Type {case ResultTypeNumber :_ecad .ValueNumber +=_bfda .ValueNumber *_bfda .ValueNumber ;case ResultTypeList ,ResultTypeArray :_cadgb :=SumSquares (_bfda .ListValues ());
+if _cadgb .Type !=ResultTypeNumber {return _cadgb ;};_ecad .ValueNumber +=_cadgb .ValueNumber ;case ResultTypeString :case ResultTypeError :return _bfda ;case ResultTypeEmpty :default:return MakeErrorResult (_gf .Sprintf ("\u0075\u006e\u0068\u0061\u006e\u0064\u006c\u0065\u0064\u0020\u0053\u0055\u004dS\u0051\u0055\u0041\u0052\u0045\u0053(\u0029\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079p\u0065\u0020\u0025\u0073",_bfda .Type ));
+};};return _ecad ;};
+
+// Amordegrc implements the Excel AMORDEGRC function.
+func Amordegrc (args []Result )Result {_ggd ,_ebea :=_eacc (args ,"\u0041M\u004f\u0052\u0044\u0045\u0047\u0052C");if _ebea .Type ==ResultTypeError {return _ebea ;};_eac :=_ggd ._aede ;_bcab :=_ggd ._abfe ;_beee :=_ggd ._gebgf ;_cbfb :=_ggd ._bcda ;_caa :=_ggd ._daae ;
+_egb :=_ggd ._gabd ;if _egb >=0.5{return MakeErrorResultType (ErrorTypeNum ,"\u0041\u004d\u004f\u0052\u0044\u0045\u0047R\u0043\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006c\u0065\u0073\u0073\u0020\u0074\u0068\u0061\u006e\u0020\u0030\u002e\u0035");
+};_gfa :=_ggd ._acag ;_gge :=1.0/_egb ;_ffbd :=2.5;if _gge < 3{_ffbd =1;}else if _gge < 5{_ffbd =1.5;}else if _gge <=6{_ffbd =2;};_egb *=_ffbd ;_begab ,_cbgf :=_fdbc (_bcab ,_beee ,_gfa );if _cbgf .Type ==ResultTypeError {return MakeErrorResult ("\u0069\u006ec\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0064\u0061\u0074\u0065\u0073\u0020\u0066\u006f\u0072\u0020\u0041\u004d\u004f\u0052\u0044EG\u0052\u0043");
+};_cbeb :=_dcgcg (_begab *_egb *_eac );_eac -=_cbeb ;_fge :=_eac -_cbfb ;for _begb :=0;_begb < _caa ;_begb ++{_cbeb =_dcgcg (_egb *_eac );_fge -=_cbeb ;if _fge < 0{switch _caa -_begb {case 0:case 1:return MakeNumberResult (_dcgcg (_eac *0.5));default:return MakeNumberResult (0);
+};};_eac -=_cbeb ;};return MakeNumberResult (_cbeb );};
+
+// Update returns the same object as updating sheet references does not affect Bool.
+func (_feg Bool )Update (q *_db .UpdateQuery )Expression {return _feg };
+
+// If is an implementation of the Excel IF() function. It takes one, two or
+// three arguments.
+func If (args []Result )Result {if len (args )< 2{return MakeErrorResult ("\u0049\u0046\u0020re\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074 \u006ce\u0061s\u0074 \u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if len (args )> 3{return MakeErrorResult ("\u0049\u0046\u0020ac\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0074\u0020m\u006fs\u0074 \u0074h\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");};_dbef :=args [0];switch _dbef .Type {case ResultTypeError :return _dbef ;
+case ResultTypeNumber :if len (args )==1{return MakeBoolResult (_dbef .ValueNumber !=0);};if _dbef .ValueNumber !=0{return args [1];};if len (args )==3{return args [2];}else {return MakeBoolResult (false );};case ResultTypeList :return _gabgb (args );case ResultTypeArray :return _cebd (args );
+default:return MakeErrorResult ("\u0049F\u0020\u0069n\u0069\u0074\u0069\u0061l\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u006d\u0075\u0073t \u0062\u0065\u0020n\u0075\u006de\u0072\u0069\u0063\u0020\u006f\u0072 \u0061\u0072r\u0061\u0079");};
+};
+
+// Couppcd implements the Excel COUPPCD function.
+func Couppcd (args []Result )Result {_dcda ,_agef :=_daegg (args ,"\u0043O\u0055\u0050\u0050\u0043\u0044");if _agef .Type ==ResultTypeError {return _agef ;};_aeb :=_ded (_dcda ._agg );_cgea :=_ded (_dcda ._cgef );_aafa :=_dcda ._fbdc ;_gdceb :=_dcda ._bcgf ;
+_bagf :=_ccgg (_aeb ,_cgea ,_aafa ,_gdceb );_ffd ,_baddc ,_adda :=_bagf .Date ();return MakeNumberResult (_efdc (_ffd ,int (_baddc ),_adda ));};const _aeed =16;
+
+// ErrorType is a formula evaluation error type.
+type ErrorType byte ;
+
+// Rand is an implementation of the Excel RAND() function that returns random
+// numbers in the range [0,1).
+func Rand (args []Result )Result {if len (args )!=0{return MakeErrorResult ("R\u0041\u004e\u0044\u0028\u0029\u0020a\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u006e\u006f \u0061\u0072\u0067u\u006de\u006e\u0074\u0073");};return MakeNumberResult (_fgbad .Float64 ());
+};func (_agbaa *plex )Lex (lval *yySymType )int {_aecdg =true ;_dbfd :=<-_agbaa ._bcegd ;if _dbfd !=nil {lval ._cagb =_dbfd ;return int (lval ._cagb ._aefcg );};return 0;};type yySymType struct{_gdegf int ;_cagb *node ;_ffgb Expression ;_egadf []Expression ;
+_ebgdc [][]Expression ;};
+
+// Reference returns a string reference value to a range.
+func (_ggfcg Range )Reference (ctx Context ,ev Evaluator )Reference {_eddfa :=_ggfcg ._gfddg .Reference (ctx ,ev );_cbcfd :=_ggfcg ._bffe .Reference (ctx ,ev );if _eddfa .Type ==ReferenceTypeCell &&_cbcfd .Type ==ReferenceTypeCell {return MakeRangeReference (_cfbb (_eddfa ,_cbcfd ));
+};return ReferenceInvalid ;};
+
+// String returns a string representation of CellRef.
+func (_bfb CellRef )String ()string {return _bfb ._cge };var _efd =[]*_bg .Regexp {};
+
+// Number is a nubmer expression.
+type Number struct{_dgga float64 };
+
+// Len is an implementation of the Excel LEN function that returns length of a string
+func Len (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u004c\u0045N\u0020\u0072\u0065\u0071u\u0069\u0072e\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067l\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_adbcc :=args [0].AsString ();if _adbcc .Type !=ResultTypeString {return MakeErrorResult ("\u004c\u0045N\u0020\u0072\u0065\u0071u\u0069\u0072e\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067l\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};return MakeNumberResult (float64 (len (_adbcc .ValueString )));};func _cebd (_ecgfa []Result )Result {_bcdgd :=_ecgfa [0].ValueArray ;if len (_ecgfa )==1{_fcbcb :=[][]Result {};for _ ,_decdg :=range _bcdgd {_fcbcb =append (_fcbcb ,_gabgb ([]Result {MakeListResult (_decdg )}).ValueList );
+};return MakeArrayResult (_fcbcb );}else if len (_ecgfa )==2{_ecbfd :=len (_bcdgd );_dcbf :=len (_bcdgd [0]);_bfcge :=_agffe (_ecgfa [1],_ecbfd ,_dcbf );_adef :=len (_bfcge );_cgcb :=[][]Result {};var _fdgdaa []Result ;for _adbe ,_dcdeg :=range _bcdgd {if _adbe < _adef {_fdgdaa =_bfcge [_adbe ];
+}else {_fdgdaa =_gdecg (MakeErrorResultType (ErrorTypeNA ,""),_dcbf );};_cgcb =append (_cgcb ,_gabgb ([]Result {MakeListResult (_dcdeg ),MakeListResult (_fdgdaa )}).ValueList );};return MakeArrayResult (_cgcb );}else if len (_ecgfa )==3{_acfgc :=len (_bcdgd );
+_eebcd :=len (_bcdgd [0]);_ebgde :=_agffe (_ecgfa [1],_acfgc ,_eebcd );_bbag :=_agffe (_ecgfa [2],_acfgc ,_eebcd );_aefaf :=len (_ebgde );_gabdb :=len (_bbag );_ecac :=[][]Result {};var _cggb ,_fcae []Result ;for _edfg ,_ddgda :=range _bcdgd {if _edfg < _aefaf {_cggb =_ebgde [_edfg ];
+}else {_cggb =_gdecg (MakeErrorResultType (ErrorTypeNA ,""),_eebcd );};if _edfg < _gabdb {_fcae =_bbag [_edfg ];}else {_fcae =_gdecg (MakeErrorResultType (ErrorTypeNA ,""),_eebcd );};_ecac =append (_ecac ,_gabgb ([]Result {MakeListResult (_ddgda ),MakeListResult (_cggb ),MakeListResult (_fcae )}).ValueList );
+};return MakeArrayResult (_ecac );};return MakeErrorResultType (ErrorTypeValue ,"");};func _gecb (_agcc []Result ,_aedfd bool ,_fegdd string )Result {var _bccb ,_bggbd string ;if _aedfd {_bccb ="\u0074\u0068\u0072e\u0065";_bggbd ="\u006f\u0064\u0064";}else {_bccb ="\u0074\u0077\u006f";
+_bggbd ="\u0065\u0076\u0065\u006e";};_acddd :=len (_agcc );if (_aedfd &&_acddd < 3)||(!_aedfd &&_acddd < 2){return MakeErrorResult (_fegdd +"\u0020\u0072\u0065\u0071ui\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020"+_bccb +" \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0073");
+};if (_acddd /2*2==_acddd )==_aedfd {return MakeErrorResult (_fegdd +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020"+_bggbd +" \u006eu\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020a\u0072\u0067\u0075\u006den\u0074\u0073");};_cgad :=-1;
+_deege :=-1;for _fdgfe :=0;_fdgfe < _acddd ;_fdgfe +=2{_fddbf :=_agcc [_fdgfe ];if _fddbf .Type !=ResultTypeArray &&_fddbf .Type !=ResultTypeList {return MakeErrorResult (_fegdd +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u006e\u0067\u0065\u0073\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065 \u006c\u0069\u0073\u0074\u0020o\u0072\u0020a\u0072\u0072\u0061\u0079");
+};_fffcf :=_cbgb (_fddbf );if _deege ==-1{_deege =len (_fffcf );_cgad =len (_fffcf [0]);}else if len (_fffcf )!=_deege ||len (_fffcf [0])!=_cgad {return MakeErrorResult (_fegdd +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0061l\u006c\u0020\u0072\u0061n\u0067\u0065\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0068\u0065\u0020\u0073\u0061\u006d\u0065\u0020\u0073\u0069\u007a\u0065");
+};if _aedfd &&_fdgfe ==0{_fdgfe --;};};return _fcea ;};func _gbgdc (_cbac yyLexer )int {return _gggd ().Parse (_cbac )};
+
+// Update updates references in the Range after removing a row/column.
+func (_fccga Range )Update (q *_db .UpdateQuery )Expression {_eddfb :=_fccga ;if q .UpdateCurrentSheet {_eddfb ._gfddg =_fccga ._gfddg .Update (q );_eddfb ._bffe =_fccga ._bffe .Update (q );};return _eddfb ;};var _gcac ,_dfag ,_cbggc ,_egaf ,_begg ,_gdaf ,_agde ,_cbab ,_gdcf ,_ecfb ,_bbad ,_gdfc ,_ggcb ,_adce ,_gbcf *_bg .Regexp ;
+func (_ggecb *ivr )NamedRange (ref string )Reference {return ReferenceInvalid };
+
+// Eval evaluates and returns the result of an error expression.
+func (_cfcb Error )Eval (ctx Context ,ev Evaluator )Result {return MakeErrorResult (_cfcb ._cef )};const _eacbc =57364;
+
+// Proper is an implementation of the Excel PROPER function that returns a copy
+// of the string with each word capitalized.
+func Proper (args []Result )Result {if len (args )!=1{return MakeErrorResult ("P\u0052\u004f\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073i\u006e\u0067\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006eg \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_dccfb :=args [0].AsString ();if _dccfb .Type !=ResultTypeString {return MakeErrorResult ("P\u0052\u004f\u0050\u0045\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073i\u006e\u0067\u006c\u0065\u0020\u0073\u0074\u0072\u0069\u006eg \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_cgafb :=_c .Buffer {};_eddfg :=false ;for _ ,_faabf :=range _dccfb .ValueString {if !_eddfg &&_f .IsLetter (_faabf ){_cgafb .WriteRune (_f .ToUpper (_faabf ));}else {_cgafb .WriteRune (_f .ToLower (_faabf ));};_eddfg =_f .IsLetter (_faabf );};return MakeStringResult (_cgafb .String ());
+};const _ffgba =57349;var _aae =map[string ]*_bg .Regexp {};const (_bffcf countMode =iota ;_cgbd ;_bfdef ;);type amorArgs struct{_aede float64 ;_abfe float64 ;_gebgf float64 ;_bcda float64 ;_daae int ;_gabd float64 ;_acag int ;};
+
+// Update returns the same object as updating sheet references does not affect Number.
+func (_deedd Number )Update (q *_db .UpdateQuery )Expression {return _deedd };
+
+// SetLocked does nothing for the invalid reference context.
+func (_eccce *ivr )SetLocked (cellRef string ,locked bool ){};func _dgac (_cbgfd ,_ecce float64 )bool {return _d .Abs (_cbgfd -_ecce )< 1.0e-6};
+
+// NewPrefixVerticalRange constructs a new full columns range with prefix.
+func NewPrefixVerticalRange (pfx Expression ,v string )Expression {_dacag :=_e .Split (v ,"\u003a");if len (_dacag )!=2{return nil ;};if _dacag [0]> _dacag [1]{_dacag [0],_dacag [1]=_dacag [1],_dacag [0];};return PrefixVerticalRange {_fdgbe :pfx ,_adfgb :_dacag [0],_caagf :_dacag [1]};
+};
+
+// Count implements the COUNT function.
+func Count (args []Result )Result {return MakeNumberResult (_fbbd (args ,_bffcf ))};
+
+// Yieldmat implements the Excel YIELDMAT function.
+func Yieldmat (args []Result )Result {_cbgg :=len (args );if _cbgg !=5&&_cbgg !=6{return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0066\u0069v\u0065\u0020\u006f\u0072\u0020\u0073\u0069\u0078\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_dfdf ,_dfec ,_gaaa :=_abcb (args [0],args [1],"\u0059\u0049\u0045\u004c\u0044\u004d\u0041\u0054");if _gaaa .Type ==ResultTypeError {return _gaaa ;};_cega ,_gaaa :=_gfcac (args [2],"\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065","\u0059\u0049\u0045\u004c\u0044\u004d\u0041\u0054");
+if _gaaa .Type ==ResultTypeError {return _gaaa ;};if _cega >=_dfdf {return MakeErrorResult ("\u0059\u0049\u0045\u004cD\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062e\u0020\u0062\u0065\u0066\u006fr\u0065\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074\u0065");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049E\u004c\u0044\u004d\u0041T\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072a\u0074\u0065\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_dfb :=args [3].ValueNumber ;if _dfb < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0059\u0049\u0045\u004c\u0044M\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072a\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u006e\u0065\u0067\u0061\u0074\u0069\u0076\u0065");
+};if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044\u004d\u0041\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0079\u0069\u0065\u006c\u0064\u0020o\u0066\u0020\u0074\u0079\u0070e\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_deadc :=args [4].ValueNumber ;if _deadc <=0{return MakeErrorResultType (ErrorTypeNum ,"Y\u0049\u0045\u004c\u0044\u004d\u0041T\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0070\u0072\u0020\u0074o\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069v\u0065");
+};_gfaf :=0;if _cbgg ==6&&args [5].Type !=ResultTypeEmpty {if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059I\u0045\u004cD\u004d\u0041\u0054 \u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0062\u0061\u0073\u0069\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_gfaf =int (args [5].ValueNumber );if !_ccfg (_gfaf ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065c\u0074\u0020b\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u0059\u0049\u0045L\u0044\u004d\u0041\u0054");
+};};_cegg ,_gaaa :=_fdbc (_cega ,_dfec ,_gfaf );if _gaaa .Type ==ResultTypeError {return _gaaa ;};_fgfc ,_gaaa :=_fdbc (_cega ,_dfdf ,_gfaf );if _gaaa .Type ==ResultTypeError {return _gaaa ;};_fage ,_gaaa :=_fdbc (_dfdf ,_dfec ,_gfaf );if _gaaa .Type ==ResultTypeError {return _gaaa ;
+};_gdec :=1+_cegg *_dfb ;_gdec /=_deadc /100+_fgfc *_dfb ;_gdec --;_gdec /=_fage ;return MakeNumberResult (_gdec );};var _beef =map[string ]bool {"\u0049F\u0045\u0052\u0052\u004f\u0052":true ,"\u0049\u0046\u004e\u0041":true ,"\u005f\u0078\u006c\u0066\u006e\u002e\u0049\u0046\u004e\u0041":true ,"\u0049\u0053\u0045R\u0052":true ,"\u0049S\u0045\u0052\u0052\u004f\u0052":true ,"\u0049\u0053\u004e\u0041":true ,"\u0049\u0053\u0052E\u0046":true };
+
+
+// Power is an implementation of the Excel POWER function that raises a number
+// to a power. It requires two numeric arguments.
+func Power (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0050\u004f\u0057\u0045\u0052\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u006e\u0075\u006de\u0072\u0069\u0063\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_ccag :=args [0].AsNumber ();if _ccag .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072s\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0050\u004f\u0057\u0045\u0052\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_dggd :=args [1].AsNumber ();if _dggd .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020a\u0072\u0067\u0075m\u0065\u006e\u0074\u0020t\u006f\u0020\u0050\u004f\u0057\u0045\u0052\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};return MakeNumberResult (_d .Pow (_ccag .ValueNumber ,_dggd .ValueNumber ));};func _dedfb (_cggg ,_cgag float64 )float64 {_cggg =_d .Trunc (_cggg );_cgag =_d .Trunc (_cgag );if _cggg ==0{return _cgag ;};if _cgag ==0{return _cggg ;};for _cggg !=_cgag {if _cggg > _cgag {_cggg =_cggg -_cgag ;
+}else {_cgag =_cgag -_cggg ;};};return _cggg ;};func _bbgd (_fdgd ,_bcaf []float64 ,_fdeba float64 )Result {_fccb :=false ;_bdda :=false ;for _dddc :=0;_dddc < len (_fdgd );_dddc ++{if _fdgd [_dddc ]> 0{_fccb =true ;};if _fdgd [_dddc ]< 0{_bdda =true ;
+};};if !_fccb ||!_bdda {return MakeErrorResultType (ErrorTypeNum ,"");};_bbe :=_fdeba ;_cdeg :=1e-10;_dcbg :=0;_bgdbg :=50;_geda :=false ;for {_begac :=_acadc (_fdgd ,_bcaf ,_bbe );_acfb :=_bbe -_begac /_cbd (_fdgd ,_bcaf ,_bbe );_bfbd :=_d .Abs (_acfb -_bbe );
+_bbe =_acfb ;_dcbg ++;if _bfbd <=_cdeg ||_d .Abs (_begac )<=_cdeg {break ;};if _dcbg > _bgdbg {_geda =true ;break ;};};if _geda ||_d .IsNaN (_bbe )||_d .IsInf (_bbe ,0){return MakeErrorResultType (ErrorTypeNum ,"");};return MakeNumberResult (_bbe );};var _cdabg =[...]int {0,0,71,70,69,4,67,66,53,51,50,49,48,47,46,45,44,2};
+func (_aaacc *ivr )Sheet (name string )Context {return _aaacc };const _ebee ="\u0028\u0028\u005b0\u002d\u0039\u005d\u0029\u002b\u0029\u003a\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u005c\u002e\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029\u0028\u0020(\u0061\u006d\u007c\u0070\u006d\u0029\u0029\u003f";
+
+
+// String returns an empty string for EmptyExpr.
+func (_dfgc EmptyExpr )String ()string {return ""};const _fgaca =57362;
+
+// SupportedFunctions returns a list of supported functions.
+func SupportedFunctions ()[]string {_efcaf :=[]string {};for _ddca :=range _bcgcc {_efcaf =append (_efcaf ,_ddca );};for _fbeef :=range _ccgcg {_efcaf =append (_efcaf ,_fbeef );};_bf .Strings (_efcaf );return _efcaf ;};
+
+// Munit is an implementation of the Excel MUNIT function that returns an
+// identity matrix.
+func Munit (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u004d\u0055\u004eIT\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073 \u006fn\u0065 \u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0069\u006e\u0070\u0075\u0074");
+};_debf :=args [0].AsNumber ();if _debf .Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u0055\u004eIT\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073 \u006fn\u0065 \u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0069\u006e\u0070\u0075\u0074");
+};_dgca :=int (_debf .ValueNumber );_gaff :=make ([][]Result ,0,_dgca );for _adbaf :=0;_adbaf < _dgca ;_adbaf ++{_fgdgc :=make ([]Result ,_dgca );for _ebcf :=0;_ebcf < _dgca ;_ebcf ++{if _adbaf ==_ebcf {_fgdgc [_ebcf ]=MakeNumberResult (1.0);}else {_fgdgc [_ebcf ]=MakeNumberResult (0.0);
+};};_gaff =append (_gaff ,_fgdgc );};return MakeArrayResult (_gaff );};
+
+// PrefixRangeExpr is a range expression that when evaluated returns a list of Results from a given sheet like Sheet1!A1:B4 (all cells from A1 to B4 from a sheet 'Sheet1').
+type PrefixRangeExpr struct{_dgbf ,_aada ,_gdbf Expression };var _ed =[...]uint8 {0,16,29,43,56,68,80,91,102,113,125,137,148,163};func _fgef (_bggd []Result ,_gcca string )(float64 ,float64 ,Result ){if len (_bggd )!=2{return 0,0,MakeErrorResult (_gcca +"\u0020\u0072\u0065qu\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if _bggd [0].Type !=ResultTypeNumber {return 0,0,MakeErrorResult (_gcca +"\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0066\u0072\u0061\u0063\u0074\u0069\u006f\u006e\u0061\u006c\u0020\u0064\u006f\u006c\u006c\u0061\u0072 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
+};_cafce :=_bggd [0].ValueNumber ;if _bggd [1].Type !=ResultTypeNumber {return 0,0,MakeErrorResult (_gcca +" \u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0072\u0061\u0063\u0074\u0069\u006f\u006e\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_edfad :=float64 (int (_bggd [1].ValueNumber ));if _edfad < 0{return 0,0,MakeErrorResultType (ErrorTypeNum ,_gcca +"\u0020r\u0065\u0071u\u0069\u0072\u0065\u0073 \u0066\u0072\u0061c\u0074\u0069\u006f\u006e\u0020\u0074\u006f\u0020\u0062e \u006e\u006f\u006e \u006e\u0065g\u0061\u0074\u0069\u0076\u0065\u0020n\u0075\u006db\u0065\u0072");
+};return _cafce ,_edfad ,_fcea ;};
+
+// Eval evaluates a vertical range with prefix returning a list of results or an error.
+func (_cbeg PrefixVerticalRange )Eval (ctx Context ,ev Evaluator )Result {_dadec :=_cbeg ._fdgbe .Reference (ctx ,ev );switch _dadec .Type {case ReferenceTypeSheet :if _daead (_dadec ,ctx ){return MakeErrorResultType (ErrorTypeName ,_gf .Sprintf ("\u0053h\u0065e\u0074\u0020\u0025\u0073\u0020n\u006f\u0074 \u0066\u006f\u0075\u006e\u0064",_dadec .Value ));
+};_fcgfb :=_cbeg .verticalRangeReference (_dadec .Value );if _daced ,_dabdf :=ev .GetFromCache (_fcgfb );_dabdf {return _daced ;};_eeebb :=ctx .Sheet (_dadec .Value );_gegd ,_bccfg :=_abgca (_eeebb ,_cbeg ._adfgb ,_cbeg ._caagf );_bbdbe :=_ebcb (_eeebb ,ev ,_gegd ,_bccfg );
+ev .SetCache (_fcgfb ,_bbdbe );return _bbdbe ;default:return MakeErrorResult (_gf .Sprintf ("\u006e\u006f\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0020\u0066\u006f\u0072\u0020r\u0065f\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_dadec .Type ));
+};};
+
+// MakeBoolResult constructs a boolean result (internally a number).
+func MakeBoolResult (b bool )Result {if b {return Result {Type :ResultTypeNumber ,ValueNumber :1,IsBoolean :true };};return Result {Type :ResultTypeNumber ,ValueNumber :0,IsBoolean :true };};
+
+// LookupFunction looks up and returns a standard function or nil.
+func LookupFunction (name string )Function {_bfeac .Lock ();defer _bfeac .Unlock ();if _acec ,_dbbfdb :=_bcgcc [name ];_dbbfdb {return _acec ;};return nil ;};var _adge =map[string ]*_bg .Regexp {};
+
+// Coupnum implements the Excel COUPNUM function.
+func Coupnum (args []Result )Result {_bged ,_bfce :=_daegg (args ,"\u0043O\u0055\u0050\u004e\u0055\u004d");if _bfce .Type ==ResultTypeError {return _bfce ;};_efcf :=_bged ._fbdc ;_gbbf :=_bged ._bcgf ;_fcbf ,_bfce :=_ebd (_bged ._agg ,_bged ._cgef ,_efcf ,_gbbf );
+if _bfce .Type ==ResultTypeError {return _bfce ;};return MakeNumberResult (_fcbf );};
+
+// LastEvalIsRef returns if last evaluation with the evaluator was a reference.
+func (_eda *defEval )LastEvalIsRef ()bool {return _eda ._fce };
+
+// DateDif is an implementation of the Excel DATEDIF() function.
+func DateDif (args []Result )Result {if len (args )!=3||args [0].Type !=ResultTypeNumber ||args [1].Type !=ResultTypeNumber ||args [2].Type !=ResultTypeString {return MakeErrorResult ("\u0044\u0041\u0054\u0045\u0044I\u0046\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077o\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u006e\u0064\u0020\u006f\u006e\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
+};_agb :=args [0].ValueNumber ;_bda :=args [1].ValueNumber ;if _bda < _agb {return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0068\u0065\u0020\u0073\u0074\u0061r\u0074\u0020\u0064a\u0074\u0065\u0020\u0069s\u0020\u0067\u0072\u0065\u0061\u0074\u0065\u0072\u0020\u0074\u0068\u0061\u006e\u0020\u0074\u0068\u0065\u0020\u0065\u006e\u0064\u0020\u0064\u0061\u0074\u0065");
+};if _bda ==_agb {return MakeNumberResult (0);};_dg :=_e .ToLower (args [2].ValueString );if _dg =="\u0064"{return MakeNumberResult (_bda -_agb );};_bfea :=_ded (_agb );_baga :=_ded (_bda );_ccfe ,_dea ,_bgc :=_bfea .Date ();_fae ,_gdcc ,_ceg :=_baga .Date ();
+_gebc :=int (_dea );_eca :=int (_gdcc );var _ffce float64 ;switch _dg {case "\u0079":_ffce =float64 (_fae -_ccfe );if _eca < _gebc ||(_eca ==_gebc &&_ceg < _bgc ){_ffce --;};case "\u006d":_fcg :=_fae -_ccfe ;_ccg :=_eca -_gebc ;if _ceg < _bgc {_ccg --;
+};if _ccg < 0{_fcg --;_ccg +=12;};_ffce =float64 (_fcg *12+_ccg );case "\u006d\u0064":_eaf :=_eca ;if _ceg < _bgc {_eaf --;};_ffce =float64 (int (_bda -_efdc (_fae ,_eaf ,_bgc )));case "\u0079\u006d":_ffce =float64 (_eca -_gebc );if _ceg < _bgc {_ffce --;
+};if _ffce < 0{_ffce +=12;};case "\u0079\u0064":_cga :=_fae ;if _eca < _gebc ||(_eca ==_gebc &&_ceg < _bgc ){_cga --;};_ffce =float64 (int (_bda -_efdc (_cga ,_gebc ,_bgc )));default:return MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0069\u006e\u0074e\u0072\u0076\u0061\u006c\u0020\u0076\u0061\u006c\u0075\u0065");
+};return MakeNumberResult (_ffce );};const _gdac =57355;func _dad (_ffe ,_eecd float64 ,_gfcf ,_aad int )float64 {_daeg :=_ded (_ffe );_gac :=_ded (_eecd );if _aad ==1{_gbdd :=_ccgg (_daeg ,_gac ,_gfcf ,1);_bbgb :=_gbdd .AddDate (0,12/_gfcf ,0);return _eebg (_gbdd ,_bbgb ,_aad );
+};return float64 (_cfab (0,_aad ))/float64 (_gfcf );};const _bcdce =57352;func _gfcac (_aafc Result ,_gbbc ,_badd string )(float64 ,Result ){var _fdfa float64 ;switch _aafc .Type {case ResultTypeNumber :_fdfa =float64 (int (_aafc .ValueNumber ));case ResultTypeString :_addd :=DateValue ([]Result {_aafc });
+if _addd .Type ==ResultTypeError {return 0,MakeErrorResult ("\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020"+_gbbc +"\u0020\u0064\u0061\u0074\u0065\u0020\u0066\u006f\u0072\u0020"+_badd );};_fdfa =_addd .ValueNumber ;default:return 0,MakeErrorResult ("\u0049\u006e\u0063or\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020"+_badd );
+};if _fdfa < 0{return 0,MakeErrorResultType (ErrorTypeNum ,_gbbc +"\u0020\u0073\u0068ou\u006c\u0064\u0020\u0062\u0065\u0020\u006e\u006f\u006e\u0020\u006e\u0065\u0067\u0061\u0074\u0069\u0076\u0065");};return _fdfa ,_fcea ;};
+
+// Parse parses a string to get an Expression.
+func ParseString (s string )Expression {if s ==""{return NewEmptyExpr ();};return Parse (_e .NewReader (s ));};var _fec =map[string ]int {"\u006aa\u006e\u0075\u0061\u0072\u0079":1,"\u0066\u0065\u0062\u0072\u0075\u0061\u0072\u0079":2,"\u006d\u0061\u0072c\u0068":3,"\u0061\u0070\u0072i\u006c":4,"\u006d\u0061\u0079":5,"\u006a\u0075\u006e\u0065":6,"\u006a\u0075\u006c\u0079":7,"\u0061\u0075\u0067\u0075\u0073\u0074":8,"\u0073e\u0070\u0074\u0065\u006d\u0070\u0065r":9,"\u006fc\u0074\u006f\u0062\u0065\u0072":10,"\u006e\u006f\u0076\u0065\u006d\u0062\u0065\u0072":11,"\u0064\u0065\u0063\u0065\u006d\u0062\u0065\u0072":12,"\u006a\u0061\u006e":1,"\u0066\u0065\u0062":2,"\u006d\u0061\u0072":3,"\u0061\u0070\u0072":4,"\u006a\u0075\u006e":6,"\u006a\u0075\u006c":7,"\u0061\u0075\u0067":8,"\u0073\u0065\u0070":9,"\u006f\u0063\u0074":10,"\u006e\u006f\u0076":11,"\u0064\u0065\u0063":12};
+func _afffb (_abgad ,_ffebe int )string {const TOKSTART =4;if !_aecdg {return "\u0073\u0079\u006et\u0061\u0078\u0020\u0065\u0072\u0072\u006f\u0072";};for _ ,_dbeg :=range _debed {if _dbeg ._ffbc ==_abgad &&_dbeg ._gccff ==_ffebe {return "\u0073\u0079\u006e\u0074\u0061\u0078\u0020\u0065\u0072r\u006f\u0072\u003a\u0020"+_dbeg ._gabff ;
+};};_eeceb :="\u0073y\u006e\u0074\u0061\u0078 \u0065\u0072\u0072\u006f\u0072:\u0020u\u006ee\u0078\u0070\u0065\u0063\u0074\u0065\u0064 "+_eafge (_ffebe );_eggcc :=make ([]int ,0,4);_bdee :=_ffeeb [_abgad ];for _bebab :=TOKSTART ;_bebab -1< len (_aggdg );
+_bebab ++{if _bcdeb :=_bdee +_bebab ;_bcdeb >=0&&_bcdeb < _gafad &&_aafe [_cgcg [_bcdeb ]]==_bebab {if len (_eggcc )==cap (_eggcc ){return _eeceb ;};_eggcc =append (_eggcc ,_bebab );};};if _ffgf [_abgad ]==-2{_bdddb :=0;for _fccgd [_bdddb ]!=-1||_fccgd [_bdddb +1]!=_abgad {_bdddb +=2;
+};for _bdddb +=2;_fccgd [_bdddb ]>=0;_bdddb +=2{_bebac :=_fccgd [_bdddb ];if _bebac < TOKSTART ||_fccgd [_bdddb +1]==0{continue ;};if len (_eggcc )==cap (_eggcc ){return _eeceb ;};_eggcc =append (_eggcc ,_bebac );};if _fccgd [_bdddb +1]!=0{return _eeceb ;
+};};for _eeba ,_gfade :=range _eggcc {if _eeba ==0{_eeceb +="\u002c\u0020\u0065x\u0070\u0065\u0063\u0074\u0069\u006e\u0067\u0020";}else {_eeceb +="\u0020\u006f\u0072\u0020";};_eeceb +=_eafge (_gfade );};return _eeceb ;};
+
+// NewRange constructs a new range.
+func NewRange (from ,to Expression )Expression {_egefb ,_fbgf ,_cegaff :=_fbgeb (from ,to );if _cegaff !=nil {_af .Log .Debug (_cegaff .Error ());return NewError (_cegaff .Error ());};return Range {_gfddg :_egefb ,_bffe :_fbgf };};
+
+// Yield implements the Excel YIELD function.
+func Yield (args []Result )Result {_ffad :=len (args );if _ffad !=6&&_ffad !=7{return MakeErrorResult ("\u0059\u0049E\u004c\u0044\u0020\u0072e\u0071\u0075i\u0072\u0065\u0073\u0020\u0073\u0069\u0078\u0020o\u0072\u0020\u0073\u0065\u0076\u0065\u006e\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_fdgda ,_babb ,_bccd :=_abcb (args [0],args [1],"\u0059\u0049\u0045L\u0044");if _bccd .Type ==ResultTypeError {return _bccd ;};_fdeag :=args [2];if _fdeag .Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049\u0045LD\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0072a\u0074e\u0020o\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_beded :=_fdeag .ValueNumber ;if _beded < 0{return MakeErrorResultType (ErrorTypeNum ,"R\u0061\u0074\u0065\u0020\u0073\u0068o\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u006e\u006fn\u0020\u006e\u0065g\u0061t\u0069\u0076\u0065");};_bccf :=args [3];if _bccf .Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020p\u0072 \u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_abbe :=_bccf .ValueNumber ;if _abbe <=0{return MakeErrorResultType (ErrorTypeNum ,"p\u0072\u0020\u0073\u0068ou\u006cd\u0020\u0062\u0065\u0020\u0070o\u0073\u0069\u0074\u0069\u0076\u0065");};_bcbf :=args [4];if _bcbf .Type !=ResultTypeNumber {return MakeErrorResult ("Y\u0049\u0045\u004c\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065m\u0070\u0074\u0069\u006f\u006e\u0020\u006f\u0066\u0020\u0074yp\u0065\u0020\u006eu\u006db\u0065\u0072");
+};_geeae :=_bcbf .ValueNumber ;if _geeae < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0059\u0069\u0065\u006cd\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065 \u006eo\u006e\u0020\u006e\u0065\u0067\u0061\u0074i\u0076\u0065");};_fagdf :=args [5];
+if _fagdf .Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0066\u0072\u0065\u0071\u0075e\u006e\u0063\u0079\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u006eu\u006d\u0062\u0065\u0072");
+};_cgca :=float64 (int (_fagdf .ValueNumber ));if !_fegd (_cgca ){return MakeErrorResultType (ErrorTypeNum ,"\u0049n\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0066\u0072e\u0071u\u0065n\u0063\u0065\u0020\u0076\u0061\u006c\u0075e");};_ccbg :=0;if _ffad ==7&&args [6].Type !=ResultTypeEmpty {_gacdb :=args [6];
+if _gacdb .Type !=ResultTypeNumber {return MakeErrorResult ("Y\u0049\u0045\u004c\u0044\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073 \u0062\u0061\u0073\u0069\u0073\u0020\u006ff\u0020\u0074\u0079\u0070\u0065\u0020\u006e\u0075\u006d\u0062e\u0072");};_ccbg =int (_gacdb .ValueNumber );
+if !_ccfg (_ccbg ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063o\u0072\u0072\u0065\u0063t\u0020\u0062\u0061\u0073\u0069\u0073\u0020v\u0061\u006c\u0075\u0065\u0020\u0066\u006f\u0072\u0020\u0059\u0049\u0045\u004c\u0044");};};_aecb :=0.0;
+_dgcg :=0.0;_agea :=1.0;_effec ,_bccd :=_ecaa (_fdgda ,_babb ,_beded ,_dgcg ,_geeae ,_cgca ,_ccbg );if _bccd .Type ==ResultTypeError {return _bccd ;};_ffcee ,_bccd :=_ecaa (_fdgda ,_babb ,_beded ,_agea ,_geeae ,_cgca ,_ccbg );if _bccd .Type ==ResultTypeError {return _bccd ;
+};_ecab :=(_agea -_dgcg )*0.5;for _dfga :=0;_dfga < 100&&_aecb !=_abbe ;_dfga ++{_aecb ,_bccd =_ecaa (_fdgda ,_babb ,_beded ,_ecab ,_geeae ,_cgca ,_ccbg );if _bccd .Type ==ResultTypeError {return _bccd ;};if _abbe ==_effec {return MakeNumberResult (_dgcg );
+}else if _abbe ==_ffcee {return MakeNumberResult (_agea );}else if _abbe ==_aecb {return MakeNumberResult (_ecab );}else if _abbe < _ffcee {_agea *=2.0;_ffcee ,_bccd =_ecaa (_fdgda ,_babb ,_beded ,_agea ,_geeae ,_cgca ,_ccbg );if _bccd .Type ==ResultTypeError {return _bccd ;
+};_ecab =(_agea -_dgcg )*0.5;}else {if _abbe < _aecb {_dgcg =_ecab ;_effec =_aecb ;}else {_agea =_ecab ;_ffcee =_aecb ;};_ecab =_agea -(_agea -_dgcg )*((_abbe -_ffcee )/(_effec -_ffcee ));};};return MakeNumberResult (_ecab );};
+
+// Eval evaluates and returns the result of the cell reference.
+func (_fdg CellRef )Eval (ctx Context ,ev Evaluator )Result {return ctx .Cell (_fdg ._cge ,ev )};type cmpResult int8 ;
+
+// Update updates the FunctionCall references after removing a row/column.
+func (_fggdgf FunctionCall )Update (q *_db .UpdateQuery )Expression {_fdfe :=[]Expression {};for _ ,_bbfdeg :=range _fggdgf ._fdca {_dadbb :=_bbfdeg .Update (q );_fdfe =append (_fdfe ,_dadbb );};return FunctionCall {_cdabe :_fggdgf ._cdabe ,_fdca :_fdfe };
+};const _bfae ="\u0028\u0028\u005b\u0030\u002d\u0039]\u0029\u002b\u0029:\u0028\u0028\u005b0\u002d\u0039\u005d\u0029\u002b\u0029\u003a\u0028\u0028\u005b0\u002d\u0039\u005d\u0029\u002b(\\\u002e\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029\u003f\u0029\u0028\u0020\u0028\u0061\u006d\u007c\u0070\u006d\u0029\u0029\u003f";
+
+
+// T is an implementation of the Excel T function that returns whether the
+// argument is text.
+func T (args []Result )Result {if len (args )!=1{return MakeErrorResult ("T\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0061\u0020\u0073i\u006e\u0067\u006c\u0065\u0020\u0073\u0074r\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
+};_ddgcd :=args [0];if _ddgcd .Type ==ResultTypeError ||_ddgcd .Type ==ResultTypeString {return _ddgcd ;};return _fcea ;};const _cbadf =57369;type noCache struct{};
+
+// NewFunction constructs a new function call expression.
+func NewFunction (name string ,args []Expression )Expression {return FunctionCall {_cdabe :name ,_fdca :args };};
+
+// Ppmt implements the Excel PPPMT function.
+func Ppmt (args []Result )Result {_fbb :=len (args );if _fbb < 4||_fbb > 6{return MakeErrorResult ("\u0050\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006f\u0066\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074\u0073\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u006ff\u0020\u0066\u006f\u0075\u0072\u0020a\u006e\u0064\u0020s\u0069\u0078");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("P\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_eeef :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0050\u004dT\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_aebc :=args [1].ValueNumber ;if _aebc <=0{return MakeErrorResultType (ErrorTypeNum ,"P\u0050\u004d\u0054\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020p\u0065\u0072\u0069\u006f\u0064\u0020\u0074o\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069v\u0065");
+};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006ff\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_cfeb :=args [2].ValueNumber ;if _cfeb < _aebc {return MakeErrorResultType (ErrorTypeNum ,"\u0050\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006f\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064s\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u0074\u0020\u006c\u0065s\u0073\u0020\u0074\u0068\u0061\u006e \u0070\u0065\u0072i\u006f\u0064");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0050\u004d\u0054\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0072\u0065\u0073\u0065\u006e\u0074\u0020\u0076\u0061\u006c\u0075\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
+};_eab :=args [3].ValueNumber ;_edfe :=0.0;if _fbb >=5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u0050\u004d\u0054\u0020\u0072\u0065\u0071u\u0069\u0072\u0065s \u0066\u0075\u0074\u0075\u0072\u0065 \u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+};_edfe =args [4].ValueNumber ;};_fcbg :=0;if _fbb ==6&&args [5].Type !=ResultTypeEmpty {if args [5].Type !=ResultTypeNumber {return MakeErrorResult ("P\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0079\u0070\u0065\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_fcbg =int (args [5].ValueNumber );if _fcbg !=0{_fcbg =1;};};return MakeNumberResult (_dgge (_eeef ,_cfeb ,_eab ,_edfe ,_fcbg )-_gfag (_eeef ,_aebc ,_cfeb ,_eab ,_edfe ,_fcbg ));};
+
+// CeilingMath implements _xlfn.CEILING.MATH which rounds numbers to the nearest
+// multiple of the second argument, toward or away from zero as specified by the
+// third argument.
+func CeilingMath (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0043E\u0049\u004cI\u004e\u0047\u002eM\u0041\u0054\u0048\u0028\u0029\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073 \u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006ee\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if len (args )> 3{return MakeErrorResult ("\u0043E\u0049\u004cI\u004e\u0047\u002eM\u0041\u0054\u0048\u0028\u0029\u0020\u0061l\u006c\u006f\u0077\u0073\u0020\u0061t\u0020\u006d\u006f\u0073\u0074\u0020\u0074\u0068\u0072\u0065\u0065 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_cfgf :=args [0].AsNumber ();if _cfgf .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072\u0073\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0043\u0045\u0049\u004c\u0049\u004e\u0047\u002e\u004dA\u0054\u0048\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061 \u006eu\u006d\u0062\u0065\u0072");
+};_aefg :=float64 (1);if _cfgf .ValueNumber < 0{_aefg =-1;};if len (args )> 1{_fbecg :=args [1].AsNumber ();if _fbecg .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f \u0043\u0045\u0049\u004c\u0049\u004e\u0047.\u004d\u0041\u0054\u0048\u0028\u0029\u0020\u006d\u0075\u0073\u0074 \u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_aefg =_fbecg .ValueNumber ;};_adbad :=float64 (1);if len (args )> 2{_cddg :=args [2].AsNumber ();if _cddg .Type !=ResultTypeNumber {return MakeErrorResult ("\u0074\u0068\u0069\u0072\u0064\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0043\u0045\u0049\u004c\u0049\u004e\u0047\u002e\u004dA\u0054\u0048\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061 \u006eu\u006d\u0062\u0065\u0072");
+};_adbad =_cddg .ValueNumber ;};if len (args )==1{return MakeNumberResult (_d .Ceil (_cfgf .ValueNumber ));};_abgc :=_cfgf .ValueNumber ;_abgc ,_dbbcf :=_d .Modf (_abgc /_aefg );if _dbbcf !=0{if _cfgf .ValueNumber > 0{_abgc ++;}else if _adbad < 0{_abgc --;
+};};return MakeNumberResult (_abgc *_aefg );};
+
+// Tbillprice implements the Excel TBILLPRICE function.
+func Tbillprice (args []Result )Result {if len (args )!=3{return MakeErrorResult ("T\u0042\u0049\u004c\u004c\u0050\u0052I\u0043\u0045\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0074\u0068r\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
+};_gcaa ,_bgfe ,_faab :=_abcb (args [0],args [1],"\u0054\u0042\u0049\u004c\u004c\u0050\u0052\u0049\u0043\u0045");if _faab .Type ==ResultTypeError {return _faab ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0054\u0042\u0049\u004c\u004c\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0064\u0069\u0073\u0063\u006f\u0075n\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_gdae :=_bgfe -_gcaa ;if _gdae > 365{return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0042\u0049\u004c\u004cP\u0052\u0049\u0043\u0045\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020m\u0061\u0074\u0075r\u0069\u0074\u0079\u0020t\u006f\u0020\u0062\u0065\u0020\u006eo\u0074\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068\u0061\u006e\u0020\u006f\u006e\u0065\u0020\u0079e\u0061\u0072\u0020\u0061\u0066\u0074\u0065\u0072\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065\u006e\u0074");
+};_efce :=args [2].ValueNumber ;if _efce <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0042\u0049\u004c\u004c\u0050\u0052\u0049\u0043\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020d\u0069\u0073\u0063\u006f\u0075\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065n\u0074");
+};return MakeNumberResult (100*(1-_efce *_gdae /360));};const _dcff =57350;
+
+// Eval evaluates a range returning a list of results or an error.
+func (_dabac Range )Eval (ctx Context ,ev Evaluator )Result {_abcg :=_dabac ._gfddg .Reference (ctx ,ev );_dcbcef :=_dabac ._bffe .Reference (ctx ,ev );_faebc :=_cfbb (_abcg ,_dcbcef );if _abcg .Type ==ReferenceTypeCell &&_dcbcef .Type ==ReferenceTypeCell {if _gbcaa ,_gbgbb :=ev .GetFromCache (_faebc );
+_gbgbb {return _gbcaa ;}else {_gadg :=_ebcb (ctx ,ev ,_abcg .Value ,_dcbcef .Value );ev .SetCache (_faebc ,_gadg );return _gadg ;};};return MakeErrorResult ("\u0069\u006e\u0076\u0061\u006c\u0069\u0064\u0020\u0072a\u006e\u0067\u0065\u0020"+_faebc );};func _gbcgc (_cbaaf string ,_aaee func (_cfcba float64 )float64 )Function {return func (_bgdae []Result )Result {if len (_bgdae )!=1{return MakeErrorResult (_cbaaf +"\u0020\u0072\u0065\u0071ui\u0072\u0065\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
+};_cafa :=_bgdae [0].AsNumber ();switch _cafa .Type {case ResultTypeNumber :_fcee :=_aaee (_cafa .ValueNumber );if _d .IsNaN (_fcee ){return MakeErrorResult (_cbaaf +"\u0020\u0072\u0065\u0074\u0075\u0072\u006e\u0065\u0064\u0020\u004e\u0061\u004e");};if _d .IsInf (_fcee ,0){return MakeErrorResult (_cbaaf +"\u0020r\u0065t\u0075\u0072\u006e\u0065\u0064 \u0069\u006ef\u0069\u006e\u0069\u0074\u0079");
+};if _fcee ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,_cbaaf +"\u0020d\u0069v\u0069\u0064\u0065\u0020\u0062\u0079\u0020\u007a\u0065\u0072\u006f");};return MakeNumberResult (1/_fcee );case ResultTypeList ,ResultTypeString :return MakeErrorResult (_cbaaf +"\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u006e\u0075\u006de\u0072i\u0063\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+case ResultTypeError :return _cafa ;default:return MakeErrorResult (_gf .Sprintf ("\u0075\u006e\u0068a\u006e\u0064\u006c\u0065d\u0020\u0025\u0073\u0028\u0029\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_cbaaf ,_cafa .Type ));
+};};};func (_caf *evCache )SetCache (key string ,value Result ){_caf ._bfc .Lock ();_caf ._fgad [key ]=value ;_caf ._bfc .Unlock ();};
+
+// Reference returns an invalid reference for Error.
+func (_geg Error )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
+
+// Reference returns a string reference value to a named range.
+func (_addf NamedRangeRef )Reference (ctx Context ,ev Evaluator )Reference {return Reference {Type :ReferenceTypeNamedRange ,Value :_addf ._ceba };};var _agfaf =[...]uint8 {0,17,33,49,63,78,93,108};
+
+// Coupdaysnc implements the Excel COUPDAYSNC function.
+func Coupdaysnc (args []Result )Result {_fdad ,_cagf :=_daegg (args ,"\u0043\u004f\u0055\u0050\u0044\u0041\u0059\u0053\u004e\u0043");if _cagf .Type ==ResultTypeError {return _cagf ;};return MakeNumberResult (_ecd (_fdad ._agg ,_fdad ._cgef ,_fdad ._fbdc ,_fdad ._bcgf ));
+};
+
+// Yielddisc implements the Excel YIELDDISC function.
+func Yielddisc (args []Result )Result {_beae :=len (args );if _beae !=4&&_beae !=5{return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044D\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020f\u006f\u0075\u0072\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_fdcb ,_dbca ,_ceed :=_abcb (args [0],args [1],"\u0059I\u0045\u004c\u0044\u0044\u0049\u0053C");if _ceed .Type ==ResultTypeError {return _ceed ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044\u0044\u0049S\u0043\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u0070\u0072\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_ddgg :=args [2].ValueNumber ;if _ddgg <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0059\u0049E\u004c\u0044\u0044\u0049\u0053C\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0070\u0072\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049\u0045\u004c\u0044D\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020r\u0065\u0064\u0065\u006d\u0070\u0074\u0069\u006f\u006e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
+};_accb :=args [3].ValueNumber ;if _accb <=0{return MakeErrorResultType (ErrorTypeNum ,"YI\u0045\u004cD\u0044\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065\u006d\u0070\u0074\u0069\u006f\u006e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076e\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072g\u0075m\u0065\u006et");
+};_fcfa :=0;if _beae ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0059\u0049E\u004c\u0044\u0044\u0049\u0053\u0043\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_fcfa =int (args [4].ValueNumber );if !_ccfg (_fcfa ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0062\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074 \u0066\u006f\u0072\u0020\u0059I\u0045\u004cD\u0044\u0049\u0053\u0043");
+};};_eceg ,_ceed :=_fdbc (_fdcb ,_dbca ,_fcfa );if _ceed .Type ==ResultTypeError {return _ceed ;};return MakeNumberResult ((_accb /_ddgg -1)/_eceg );};
+
+// CountIf implements the COUNTIF function.
+func CountIf (args []Result )Result {if len (args )< 2{return MakeErrorResult ("\u0043\u004f\u0055N\u0054\u0049\u0046\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0073");
+};_egce :=args [0];if _egce .Type !=ResultTypeArray &&_egce .Type !=ResultTypeList {return MakeErrorResult ("\u0043O\u0055\u004eT\u0049\u0046\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u0066\u0069\u0072\u0073\u0074\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020t\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
+};_fcaba :=_fdab (args [1]);_ddge :=0;for _ ,_ccdd :=range _cbgb (_egce ){for _ ,_ebcca :=range _ccdd {if _fdgg (_ebcca ,_fcaba ){_ddge ++;};};};return MakeNumberResult (float64 (_ddge ));};
+
+// Choose implements the Excel CHOOSE function.
+func Choose (args []Result )Result {if len (args )< 2{return MakeErrorResult ("\u0043\u0048O\u004f\u0053\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u0061\u0072\u0067\u0075\u006den\u0074\u0073");};_gegc :=args [0];
+if _gegc .Type !=ResultTypeNumber {return MakeErrorResult ("\u0043H\u004f\u004fS\u0045\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020f\u0069\u0072\u0073\u0074\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074y\u0070\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_gcae :=int (_gegc .ValueNumber );if _gcae < 1{return MakeErrorResult ("\u0049\u006e\u0064\u0065\u0078\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065 \u0061 \u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u0076\u0061\u006c\u0075\u0065");
+};if len (args )<=_gcae {return MakeErrorResult ("\u0049\u006e\u0064\u0065\u0078\u0020\u0073\u0068\u006f\u0075\u006cd\u0020\u0062\u0065\u0020\u006c\u0065\u0073\u0073 \u006fr\u0020\u0065\u0071\u0075\u0061\u006c\u0020\u0074\u006f\u0020\u0074\u0068\u0065\u0020\u006e\u0075\u006d\u0062e\u0072\u0020\u006f\u0066\u0020\u0076\u0061\u006c\u0075\u0065\u0073");
+};return args [_gcae ];};var _ccgcg =map[string ]FunctionComplex {};func _bbaa (_ggad []Result ,_ecdf rmode )Result {if len (_ggad )!=2{return MakeErrorResult ("\u0052\u004f\u0055\u004e\u0044\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u006e\u0075\u006de\u0072\u0069\u0063\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_deeg :=_ggad [0].AsNumber ();if _deeg .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072s\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0052\u004f\u0055\u004e\u0044\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065 \u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_bddgb :=_ggad [1].AsNumber ();if _bddgb .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073\u0065\u0063\u006f\u006e\u0064\u0020a\u0072\u0067\u0075m\u0065\u006e\u0074\u0020t\u006f\u0020\u0052\u004f\u0055\u004e\u0044\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_cbffb :=_bddgb .ValueNumber ;_ffed :=_deeg .ValueNumber ;_bdge :=1.0;if _cbffb > 0{_bdge =_d .Pow (1/10.0,_cbffb );}else {_bdge =_d .Pow (10.0,-_cbffb );};_ffed ,_ebbdc :=_d .Modf (_ffed /_bdge );switch _ecdf {case _dbebf :const _efeb =0.499999999;if _ebbdc >=_efeb {_ffed ++;
+}else if _ebbdc <=-_efeb {_ffed --;};case _febab :case _ddbg :if _ebbdc > 0{_ffed ++;}else if _ebbdc < 0{_ffed --;};};return MakeNumberResult (_ffed *_bdge );};
+
+// Round is an implementation of the Excel ROUND function that rounds a number
+// to a specified number of digits.
+func Round (args []Result )Result {return _bbaa (args ,_dbebf )};func _ded (_ebb float64 )_bcd .Time {_feba :=int64 ((_ebb -_abc )*_cfd );return _bcd .Unix (0,_feba ).UTC ();};var _cbacd =false ;func _fbgeb (_bebgc ,_bfcd Expression )(Expression ,Expression ,error ){_fedg ,_gdbba :=_bebgc .(CellRef );
+if !_gdbba {return nil ,nil ,_a .New (_gf .Sprintf ("\u0049\u006e\u0063\u006frr\u0065\u0063\u0074\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020%\u0073",_bebgc .String ()));};_fffbc ,_gdbba :=_bfcd .(CellRef );if !_gdbba {return nil ,nil ,_a .New (_gf .Sprintf ("\u0049\u006e\u0063\u006frr\u0065\u0063\u0074\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0020%\u0073",_bfcd .String ()));
+};_eeca ,_ebfba :=_bce .ParseCellReference (_fedg ._cge );if _ebfba !=nil {return nil ,nil ,_ebfba ;};_feda ,_bada :=_bce .ParseCellReference (_fffbc ._cge );if _bada !=nil {return nil ,nil ,_bada ;};_gdcfd :=false ;if _eeca .RowIdx > _feda .RowIdx {_gdcfd =true ;
+_eeca .RowIdx ,_feda .RowIdx =_feda .RowIdx ,_eeca .RowIdx ;};if _eeca .ColumnIdx > _feda .ColumnIdx {_gdcfd =true ;_eeca .ColumnIdx ,_feda .ColumnIdx =_feda .ColumnIdx ,_eeca .ColumnIdx ;_eeca .Column ,_feda .Column =_feda .Column ,_eeca .Column ;};if _gdcfd {return NewCellRef (_eeca .String ()),NewCellRef (_feda .String ()),nil ;
+};return _bebgc ,_bfcd ,nil ;};func _dcgcg (_bebf float64 )float64 {return float64 (int (_bebf +0.5))};
+
+// Reference returns a string reference value to a cell.
+func (_ccb CellRef )Reference (ctx Context ,ev Evaluator )Reference {return Reference {Type :ReferenceTypeCell ,Value :_ccb ._cge };};
+
+// CountIfs implements the COUNTIFS function.
+func CountIfs (args []Result )Result {_feeb :=_gecb (args ,false ,"\u0043\u004f\u0055\u004e\u0054\u0049\u0046\u0053");if _feeb .Type !=ResultTypeEmpty {return _feeb ;};_febd :=_bdaf (args );return MakeNumberResult (float64 (len (_febd )));};
+
+// Eval evaluates and returns the result of a Negate expression.
+func (_cccdc Negate )Eval (ctx Context ,ev Evaluator )Result {_fefgb :=_cccdc ._ebfd .Eval (ctx ,ev );if _fefgb .Type ==ResultTypeNumber {return MakeNumberResult (-_fefgb .ValueNumber );};return MakeErrorResult ("\u004e\u0045\u0047A\u0054\u0045\u0020\u0065x\u0070\u0065\u0063\u0074\u0065\u0064\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};func _ggc (_da BinOpType ,_daa []Result ,_afe Result )Result {_eba :=[]Result {};switch _afe .Type {case ResultTypeNumber :_ccc :=_afe .ValueNumber ;for _dag :=range _daa {_ebe :=_daa [_dag ].AsNumber ();if _ebe .Type !=ResultTypeNumber {return MakeErrorResult ("\u006e\u006f\u006e\u002d\u006e\u0075\u006e\u006d\u0065\u0072\u0069\u0063\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0069\u006e\u0020\u0062\u0069n\u0061\u0072\u0079\u0020\u006fp\u0065\u0072a\u0074\u0069\u006f\u006e");
+};switch _da {case BinOpTypePlus :_eba =append (_eba ,MakeNumberResult (_ebe .ValueNumber +_ccc ));case BinOpTypeMinus :_eba =append (_eba ,MakeNumberResult (_ebe .ValueNumber -_ccc ));case BinOpTypeMult :_eba =append (_eba ,MakeNumberResult (_ebe .ValueNumber *_ccc ));
+case BinOpTypeDiv :if _ccc ==0{return MakeErrorResultType (ErrorTypeDivideByZero ,"");};_eba =append (_eba ,MakeNumberResult (_ebe .ValueNumber /_ccc ));case BinOpTypeExp :_eba =append (_eba ,MakeNumberResult (_d .Pow (_ebe .ValueNumber ,_ccc )));case BinOpTypeLT :_eba =append (_eba ,MakeBoolResult (_ebe .ValueNumber < _ccc ));
+case BinOpTypeGT :_eba =append (_eba ,MakeBoolResult (_ebe .ValueNumber > _ccc ));case BinOpTypeEQ :_eba =append (_eba ,MakeBoolResult (_ebe .ValueNumber ==_ccc ));case BinOpTypeLEQ :_eba =append (_eba ,MakeBoolResult (_ebe .ValueNumber <=_ccc ));case BinOpTypeGEQ :_eba =append (_eba ,MakeBoolResult (_ebe .ValueNumber >=_ccc ));
+case BinOpTypeNE :_eba =append (_eba ,MakeBoolResult (_ebe .ValueNumber !=_ccc ));default:return MakeErrorResult (_gf .Sprintf ("\u0075\u006es\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u006c\u0069\u0073\u0074\u0020\u0062\u0069\u006e\u0061\u0072\u0079\u0020\u006fp \u0025\u0073",_da ));
+};};case ResultTypeString :_cfc :=_afe .ValueString ;for _fdd :=range _daa {_ab :=_daa [_fdd ].AsString ();if _ab .Type !=ResultTypeString {return MakeErrorResult ("\u006e\u006f\u006e\u002d\u006e\u0075\u006e\u006d\u0065\u0072\u0069\u0063\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0069\u006e\u0020\u0062\u0069n\u0061\u0072\u0079\u0020\u006fp\u0065\u0072a\u0074\u0069\u006f\u006e");
+};switch _da {case BinOpTypeLT :_eba =append (_eba ,MakeBoolResult (_ab .ValueString < _cfc ));case BinOpTypeGT :_eba =append (_eba ,MakeBoolResult (_ab .ValueString > _cfc ));case BinOpTypeEQ :_eba =append (_eba ,MakeBoolResult (_ab .ValueString ==_cfc ));
+case BinOpTypeLEQ :_eba =append (_eba ,MakeBoolResult (_ab .ValueString <=_cfc ));case BinOpTypeGEQ :_eba =append (_eba ,MakeBoolResult (_ab .ValueString >=_cfc ));case BinOpTypeNE :_eba =append (_eba ,MakeBoolResult (_ab .ValueString !=_cfc ));default:return MakeErrorResult (_gf .Sprintf ("\u0075\u006es\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064\u0020\u006c\u0069\u0073\u0074\u0020\u0062\u0069\u006e\u0061\u0072\u0079\u0020\u006fp \u0025\u0073",_da ));
+};};default:return MakeErrorResult ("\u006e\u006f\u006e\u002d\u006e\u0075\u006e\u006d\u0065\u0072\u0069c\u0020\u0061\u006e\u0064\u0020\u006e\u006f\u006e-\u0073t\u0072\u0069\u006e\u0067\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0069\u006e\u0020\u0062\u0069\u006e\u0061r\u0079\u0020\u006f\u0070\u0065\u0072\u0061\u0074\u0069\u006f\u006e");
+};return MakeListResult (_eba );};
+
+// SeriesSum implements the Excel SERIESSUM function.
+func SeriesSum (args []Result )Result {if len (args )!=4{return MakeErrorResult ("\u0053\u0045\u0052\u0049\u0045\u0053\u0053\u0055\u004d\u0028\u0029\u0020\u0072\u0065\u0071u\u0069r\u0065\u0073\u0020\u0034\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_egcf :=args [0].AsNumber ();_ebgab :=args [1].AsNumber ();_eaag :=args [2].AsNumber ();_ebceg :=args [3].ListValues ();if _egcf .Type !=ResultTypeNumber ||_ebgab .Type !=ResultTypeNumber ||_eaag .Type !=ResultTypeNumber {return MakeErrorResult ("\u0053\u0045\u0052\u0049\u0045\u0053S\u0055\u004d\u0028)\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u0069\u0072\u0073t\u0020\u0074\u0068\u0072\u0065e \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063");
+};_gbdb :=float64 (0);for _dcgff ,_dbceg :=range _ebceg {_gbdb +=_dbceg .ValueNumber *_d .Pow (_egcf .ValueNumber ,_ebgab .ValueNumber +float64 (_dcgff )*_eaag .ValueNumber );};return MakeNumberResult (_gbdb );};func _age ()evCache {_fdge :=evCache {};
+_fdge ._fgad =make (map[string ]Result );_fdge ._bfc =&_ad .Mutex {};return _fdge ;};func _fdf (_gdcee ,_abbb ,_acga int )int {if _gdcee > _abbb {return 0;};if _cfad (_acga ){return (_abbb -_gdcee +1)*360;};_bfeaa :=0;for _aga :=_gdcee ;_aga <=_abbb ;_aga ++{_ffbe :=365;
+if _bgea (_aga ){_ffbe =366;};_bfeaa +=_ffbe ;};return _bfeaa ;};var _ddacc =[...]int {0,1,1,2,4,1,1,1,1,2,2,1,1,1,1,3,1,3,1,3,1,3,1,2,1,1,1,3,4,1,1,1,2,2,3,3,3,3,3,3,3,3,3,3,3,3,1,2,3,1,3,1,1,0};
+
+// ISNONTEXT is an implementation of the Excel ISNONTEXT() function.
+func IsNonText (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053N\u004f\u004e\u0054\u0045X\u0054\u0028)\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073 \u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};return MakeBoolResult (args [0].Type !=ResultTypeString );};
+
+// Reference returns an invalid reference for Negate.
+func (_eegfc Negate )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
+
+// Irr implements the Excel IRR function.
+func Irr (args []Result )Result {_fgcg :=len (args );if _fgcg ==0||_fgcg > 2{return MakeErrorResult ("\u0049\u0052\u0052\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006f\u006e\u0065\u0020\u006f\u0072\u0020t\u0077\u006f\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};if args [0].Type !=ResultTypeList &&args [0].Type !=ResultTypeArray {return MakeErrorResult ("\u0049\u0052\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020v\u0061\u006c\u0075\u0065\u0073\u0020t\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0061\u0072\u0072\u0061\u0079 \u0074\u0079\u0070\u0065");
+};_cgcf :=_cbgb (args [0]);_ccdg :=[]float64 {};for _ ,_cfggf :=range _cgcf {for _ ,_feac :=range _cfggf {if _feac .Type ==ResultTypeNumber &&!_feac .IsBoolean {_ccdg =append (_ccdg ,_feac .ValueNumber );};};};_ead :=len (_ccdg );if len (_ccdg )< 2{return MakeErrorResultType (ErrorTypeNum ,"");
+};_ecgc :=0.1;if _fgcg ==2&&args [1].Type !=ResultTypeEmpty {if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("I\u0052\u0052\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0067\u0075\u0065\u0073\u0073\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_ecgc =args [1].ValueNumber ;if _ecgc <=-1{return MakeErrorResult ("\u0049\u0052R\u0020\u0072\u0065\u0071u\u0069\u0072e\u0073\u0020\u0067\u0075\u0065\u0073\u0073\u0020t\u006f\u0020\u0062\u0065\u0020\u006d\u006f\u0072\u0065\u0020\u0074\u0068a\u006e\u0020\u002d\u0031");
+};};_ccff :=[]float64 {};for _gbf :=0;_gbf < _ead ;_gbf ++{if _gbf ==0{_ccff =append (_ccff ,0);}else {_ccff =append (_ccff ,_ccff [_gbf -1]+365);};};return _bbgd (_ccdg ,_ccff ,_ecgc );};const _fdadc =57358;const _egac =57344;
+
+// Reference returns a string reference value to a vertical range.
+func (_adbff VerticalRange )Reference (ctx Context ,ev Evaluator )Reference {return Reference {Type :ReferenceTypeVerticalRange ,Value :_adbff .verticalRangeReference ()};};func _gdde (_aacg Result ,_bec *criteriaParsed )bool {if _aacg .Type ==ResultTypeEmpty {return false ;
+};if _bec ._badfb {return _aacg .ValueNumber ==_bec ._gfaa ;}else {_dbgd :=_e .ToLower (_aacg .ValueString );return _bec ._gaea ==_dbgd ||_eg .Match (_bec ._gaea ,_dbgd );};};
+
+// Parse parses an io.Reader to get an Expression. If expression is parsed with an error, nil is returned
+func Parse (r _b .Reader )Expression {_bcad :=&plex {_bcegd :LexReader (r )};_gbgdc (_bcad );if _bcad ._bedc !=""{return nil ;};return _bcad ._ffcg ;};
+
+// AsNumber attempts to intepret a string cell value as a number. Upon success,
+// it returns a new number result, upon  failure it returns the original result.
+// This is used as functions return strings that can then act like number (e.g.
+// LEFT(1.2345,3) + LEFT(1.2345,3) = 2.4)
+func (_fceac Result )AsNumber ()Result {if _fceac .Type ==ResultTypeString {_fceeb ,_ggcbg :=_fd .ParseFloat (_fceac .ValueString ,64);if _ggcbg ==nil {return MakeNumberResult (_fceeb );};};if _fceac .Type ==ResultTypeEmpty {return MakeNumberResult (0);
+};return _fceac ;};
+
+// LCM implements the Excel LCM() function which returns the least common
+// multiple of a range of numbers.
+func LCM (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u004c\u0043M(\u0029\u0020\u0072e\u0071\u0075\u0069\u0072es \u0061t \u006c\u0065\u0061\u0073\u0074\u0020\u006fne\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");};_ffde :=[]float64 {};
+for _ ,_bbfg :=range args {switch _bbfg .Type {case ResultTypeString :_dgfeb :=_bbfg .AsNumber ();if _dgfeb .Type !=ResultTypeNumber {return MakeErrorResult ("\u004c\u0043M(\u0029\u0020\u006fn\u006c\u0079\u0020\u0061cce\u0070ts\u0020\u006e\u0075\u006d\u0065\u0072\u0069c \u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073");
+};_ffde =append (_ffde ,_dgfeb .ValueNumber );case ResultTypeList :_decg :=LCM (_bbfg .ValueList );if _decg .Type !=ResultTypeNumber {return _decg ;};_ffde =append (_ffde ,_decg .ValueNumber );case ResultTypeNumber :_ffde =append (_ffde ,_bbfg .ValueNumber );
+case ResultTypeEmpty :case ResultTypeError :return _bbfg ;};};if len (_ffde )==0{return MakeErrorResult ("\u004cC\u004d\u0020r\u0065\u0071\u0075\u0069r\u0065\u0073\u0020a\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006fne\u0020\u006e\u006fn\u002d\u0065m\u0070\u0074\u0079\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
+};if _ffde [0]< 0{return MakeErrorResult ("\u004c\u0043M\u0028\u0029\u0020\u006fn\u006c\u0079 \u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020p\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");};if len (_ffde )==1{return MakeNumberResult (_ffde [0]);
+};_bece :=_ffde [0];for _bdaea :=1;_bdaea < len (_ffde );_bdaea ++{if _ffde [_bdaea ]< 0{return MakeErrorResult ("\u004c\u0043M\u0028\u0029\u0020\u006fn\u006c\u0079 \u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020p\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_bece =_dfcaa (_bece ,_ffde [_bdaea ]);};return MakeNumberResult (_bece );};
+
+// Pi is an implementation of the Excel Pi() function that just returns the Pi
+// constant.
+func Pi (args []Result )Result {if len (args )!=0{return MakeErrorResult ("\u0050I\u0028\u0029\u0020\u0061c\u0063\u0065\u0070\u0074\u0073 \u006eo\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074s");};return MakeNumberResult (_d .Pi );};
+
+// Column implements the Excel COLUMN function.
+func Column (args []Result )Result {if len (args )< 1{return MakeErrorResult ("\u0043\u004f\u004c\u0055M\u004e\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");};_cccg :=args [0].Ref ;
+if _cccg .Type !=ReferenceTypeCell {return MakeErrorResult ("\u0043\u004f\u004c\u0055\u004dN\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u006e\u0020a\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0072\u0065\u0066\u0065\u0072\u0065\u006e\u0063e");
+};_gdccg ,_daaeb :=_bce .ParseCellReference (_cccg .Value );if _daaeb !=nil {return MakeErrorResult ("I\u006e\u0063\u006f\u0072re\u0063t\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065\u003a\u0020"+_cccg .Value );};return MakeNumberResult (float64 (_gdccg .ColumnIdx +1));
+};
+
+// Context is a formula execution context.  Formula evaluation uses the context
+// to retreive information from sheets.
+type Context interface{
+
+// Cell returns the result of evaluating a cell.
+Cell (_fcd string ,_ecg Evaluator )Result ;
+
+// Sheet returns an evaluation context for a given sheet name.  This is used
+// when evaluating cells that pull data from other sheets (e.g. ='Sheet 2'!A1).
+Sheet (_ff string )Context ;
+
+// GetEpoch returns the time epoch of the context's Workbook.
+GetEpoch ()_bcd .Time ;
+
+// GetFilename returns the full filename of the context's Workbook.
+GetFilename ()string ;
+
+// GetWidth returns a worksheet's column width.
+GetWidth (_gb int )float64 ;
+
+// GetFormat returns a cell's format.
+GetFormat (_deb string )string ;
+
+// GetLabelPrefix returns cell's label prefix dependent on cell horizontal alignment.
+GetLabelPrefix (_dc string )string ;
+
+// GetFormat returns if cell is protected.
+GetLocked (_debb string )bool ;
+
+// HasFormula returns if cell contains formula.
+HasFormula (_cfe string )bool ;
+
+// IsBool returns if cell contains boolean value.
+IsBool (_bgbg string )bool ;
+
+// IsDBCS returns if workbook default language is among DBCS.
+IsDBCS ()bool ;
+
+// LastColumn returns the name of last column which contains data in range of context sheet's given rows.
+LastColumn (_cb ,_dee int )string ;
+
+// LastRow returns the name of last row which contains data in range of context sheet's given columns.
+LastRow (_bdd string )int ;
+
+// SetLocked returns sets cell's protected attribute.
+SetLocked (_gebd string ,_edg bool );
+
+// NamedRange returns a named range.
+NamedRange (_fcb string )Reference ;
+
+// SetOffset is used so that the Context can evaluate cell references
+// differently when they are not absolute (e.g. not like '$A$5').  See the
+// shared formula support in Cell for usage.
+SetOffset (_ccf ,_ecb uint32 );};
+
+// Update returns the same object as updating sheet references does not affect String.
+func (_ggdd String )Update (q *_db .UpdateQuery )Expression {return _ggdd };func (_afb BinOpType )String ()string {if _afb >=BinOpType (len (_ed )-1){return _gf .Sprintf ("\u0042\u0069\u006e\u004f\u0070\u0054\u0079\u0070\u0065\u0028\u0025\u0064\u0029",_afb );
+};return _dd [_ed [_afb ]:_ed [_afb +1]];};
+
+// Update returns the same object as updating sheet references does not affect SheetPrefixExpr.
+func (_bgfb SheetPrefixExpr )Update (q *_db .UpdateQuery )Expression {return _bgfb };
+
+// Value is an implementation of the Excel VALUE function.
+func Value (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0056\u0041\u004c\u0055\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020a\u0020s\u0069\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_eabf :=args [0];if _eabf .Type ==ResultTypeNumber {return _eabf ;};if _eabf .Type ==ResultTypeString {_eeae ,_baace :=_fd .ParseFloat (_eabf .Value (),64);if _baace ==nil {return MakeNumberResult (_eeae );};};return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0056\u0041L\u0055\u0045");
+};
+
+// CellRef is a reference to a single cell
+type CellRef struct{_cge string };
+
+// LastRow returns 0 for the invalid reference context.
+func (_cggd *ivr )LastRow (colFrom string )int {return 0};const _cfegfd int =30;func _adec (_aaf int )int {if _aaf < 1900{if _aaf < 30{_aaf +=2000;}else {_aaf +=1900;};};return _aaf ;};
+
+// String returns a string representation of a horizontal range with prefix.
+func (_bgca PrefixHorizontalRange )String ()string {return _gf .Sprintf ("\u0025\u0073\u0021\u0025\u0064\u003a\u0025\u0064",_bgca ._fbcde .String (),_bgca ._deafa ,_bgca ._edfgc );};
+
+// Transpose implements the TRANSPOSE function that transposes a cell range.
+func Transpose (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0054\u0052AN\u0053\u0050\u004fS\u0045\u0020\u0072\u0065qui\u0072es\u0020\u0061\u0020\u0073\u0069\u006e\u0067le\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");};if args [0].Type !=ResultTypeArray &&args [0].Type !=ResultTypeList {return MakeErrorResult ("T\u0052\u0041\u004e\u0053\u0050\u004fS\u0045\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0061\u0020\u0072a\u006e\u0067\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");
+};_ddbde :=args [0];if _ddbde .Type ==ResultTypeList {_cagca :=[][]Result {};for _ ,_ddbb :=range _ddbde .ValueList {_cagca =append (_cagca ,[]Result {_ddbb });};return MakeArrayResult (_cagca );};_babf :=make ([][]Result ,len (_ddbde .ValueArray [0]));
+for _ ,_bdcg :=range _ddbde .ValueArray {for _ebbb ,_cgfc :=range _bdcg {_babf [_ebbb ]=append (_babf [_ebbb ],_cgfc );};};return MakeArrayResult (_babf );};type Expression interface{Eval (_efa Context ,_ged Evaluator )Result ;Reference (_ebefb Context ,_dcbc Evaluator )Reference ;
+String ()string ;Update (_aff *_db .UpdateQuery )Expression ;};
+
+// MakeArrayResult constructs an array result (matrix).
+func MakeArrayResult (arr [][]Result )Result {return Result {Type :ResultTypeArray ,ValueArray :arr }};
+
+// Fv implements the Excel FV function.
+func Fv (args []Result )Result {_abea :=len (args );if _abea < 3||_abea > 5{return MakeErrorResult ("\u0046\u0056\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020o\u0066\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u006f\u0066\u0020\u0033\u0020\u0061\u006e\u0064\u00205");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0046\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_bafd :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0046\u0056\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020o\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et");
+};_effe :=args [1].ValueNumber ;if _effe !=float64 (int (_effe )){return MakeErrorResultType (ErrorTypeNum ,"\u0046\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u006ff\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0069\u006e\u0074\u0065\u0067\u0065\u0072\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020a\u0072\u0067\u0075\u006d\u0065n\u0074");
+};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0046\u0056\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0061\u0079\u006d\u0065\u006e\u0074 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_ece :=args [2].ValueNumber ;_gegf :=0.0;if _abea >=4&&args [3].Type !=ResultTypeEmpty {if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("F\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0070\u0072\u0065\u0073\u0065\u006et \u0076\u0061\u006c\u0075e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_gegf =args [3].ValueNumber ;};_dbcga :=0;if _abea ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0046\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0079\u0070\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_dbcga =int (args [4].ValueNumber );if _dbcga !=0{_dbcga =1;};};return MakeNumberResult (_ggdg (_bafd ,_effe ,_ece ,_gegf ,_dbcga ));};func (_ffddc *yyParserImpl )Parse (yylex yyLexer )int {_cabgc :=_bcd .Now ();var _edbcc int ;var _adead yySymType ;
+var _ggaca []yySymType ;_ =_ggaca ;_cabd :=_ffddc ._efcba [:];Nerrs :=0;Errflag :=0;_bgbbf :=0;_ffddc ._ccege =-1;_gcbef :=-1;defer func (){_bgbbf =-1;_ffddc ._ccege =-1;_gcbef =-1}();_face :=-1;goto _dcgb ;_acae :return 0;_cead :return 1;_dcgb :if _dabdd (_cabgc ){_af .Log .Error ("\u0050\u0061\u0072\u0073\u0065\u0020\u0074\u0069\u006d\u0065\u006f\u0075\u0074");
+goto _cead ;};if _cfbf >=4{_gf .Printf ("\u0063\u0068\u0061\u0072\u0020\u0025\u0076\u0020\u0069n\u0020\u0025\u0076\u000a",_eafge (_gcbef ),_cffe (_bgbbf ));};_face ++;if _face >=len (_cabd ){_ebfa :=make ([]yySymType ,len (_cabd )*2);copy (_ebfa ,_cabd );
+_cabd =_ebfa ;};_cabd [_face ]=_adead ;_cabd [_face ]._gdegf =_bgbbf ;_fgbab :if _dabdd (_cabgc ){_af .Log .Error ("\u0050\u0061\u0072\u0073\u0065\u0020\u0074\u0069\u006d\u0065\u006f\u0075\u0074");goto _cead ;};_edbcc =_ffeeb [_bgbbf ];if _edbcc <=_fccc {goto _dgbef ;
+};if _ffddc ._ccege < 0{_ffddc ._ccege ,_gcbef =_ccffc (yylex ,&_ffddc ._bdedf );};_edbcc +=_gcbef ;if _edbcc < 0||_edbcc >=_gafad {goto _dgbef ;};_edbcc =_cgcg [_edbcc ];if _aafe [_edbcc ]==_gcbef {_ffddc ._ccege =-1;_gcbef =-1;_adead =_ffddc ._bdedf ;
+_bgbbf =_edbcc ;if Errflag > 0{Errflag --;};goto _dcgb ;};_dgbef :if _dabdd (_cabgc ){_af .Log .Error ("\u0050\u0061\u0072\u0073\u0065\u0020\u0074\u0069\u006d\u0065\u006f\u0075\u0074");goto _cead ;};_edbcc =_ffgf [_bgbbf ];if _edbcc ==-2{if _ffddc ._ccege < 0{_ffddc ._ccege ,_gcbef =_ccffc (yylex ,&_ffddc ._bdedf );
+};_badg :=0;for {if _fccgd [_badg +0]==-1&&_fccgd [_badg +1]==_bgbbf {break ;};_badg +=2;};for _badg +=2;;_badg +=2{_edbcc =_fccgd [_badg +0];if _edbcc < 0||_edbcc ==_gcbef {break ;};};_edbcc =_fccgd [_badg +1];if _edbcc < 0{goto _acae ;};};if _edbcc ==0{switch Errflag {case 0:yylex .Error (_afffb (_bgbbf ,_gcbef ));
+Nerrs ++;if _cfbf >=1{_gf .Printf ("\u0025\u0073",_cffe (_bgbbf ));_gf .Printf ("\u0020\u0073\u0061\u0077\u0020\u0025\u0073\u000a",_eafge (_gcbef ));};fallthrough;case 1,2:Errflag =3;for _face >=0{_edbcc =_ffeeb [_cabd [_face ]._gdegf ]+_dggb ;if _edbcc >=0&&_edbcc < _gafad {_bgbbf =_cgcg [_edbcc ];
+if _aafe [_bgbbf ]==_dggb {goto _dcgb ;};};if _cfbf >=2{_gf .Printf ("\u0065\u0072r\u006f\u0072\u0020\u0072\u0065\u0063\u006f\u0076\u0065\u0072\u0079\u0020\u0070\u006f\u0070\u0073\u0020\u0073\u0074\u0061\u0074\u0065 %\u0064\u000a",_cabd [_face ]._gdegf );
+};_face --;};goto _cead ;case 3:if _cfbf >=2{_gf .Printf ("e\u0072\u0072\u006f\u0072\u0020\u0072e\u0063\u006f\u0076\u0065\u0072\u0079\u0020\u0064\u0069s\u0063\u0061\u0072d\u0073 \u0025\u0073\u000a",_eafge (_gcbef ));};if _gcbef ==_aecde {goto _cead ;};
+_ffddc ._ccege =-1;_gcbef =-1;goto _fgbab ;};};if _cfbf >=2{_gf .Printf ("\u0072e\u0064u\u0063\u0065\u0020\u0025\u0076 \u0069\u006e:\u000a\u0009\u0025\u0076\u000a",_edbcc ,_cffe (_bgbbf ));};_eddg :=_edbcc ;_eaccc :=_face ;_ =_eaccc ;_face -=_ddacc [_edbcc ];
+if _face +1>=len (_cabd ){_bbec :=make ([]yySymType ,len (_cabd )*2);copy (_bbec ,_cabd );_cabd =_bbec ;};_adead =_cabd [_face +1];_edbcc =_fffga [_edbcc ];_gedea :=_cdabg [_edbcc ];_dfdb :=_gedea +_cabd [_face ]._gdegf +1;if _dfdb >=_gafad {_bgbbf =_cgcg [_gedea ];
+}else {_bgbbf =_cgcg [_dfdb ];if _aafe [_bgbbf ]!=-_edbcc {_bgbbf =_cgcg [_gedea ];};};switch _eddg {case 1:_ggaca =_cabd [_eaccc -1:_eaccc +1];{yylex .(*plex )._ffcg =_adead ._ffgb ;};case 3:_ggaca =_cabd [_eaccc -2:_eaccc +1];{_adead ._ffgb =_ggaca [2]._ffgb ;
+};case 4:_ggaca =_cabd [_eaccc -4:_eaccc +1];{};case 5:_ggaca =_cabd [_eaccc -1:_eaccc +1];{_adead ._ffgb =NewBool (_ggaca [1]._cagb ._eadc );};case 6:_ggaca =_cabd [_eaccc -1:_eaccc +1];{_adead ._ffgb =NewNumber (_ggaca [1]._cagb ._eadc );};case 7:_ggaca =_cabd [_eaccc -1:_eaccc +1];
+{_adead ._ffgb =NewString (_ggaca [1]._cagb ._eadc );};case 8:_ggaca =_cabd [_eaccc -1:_eaccc +1];{_adead ._ffgb =NewError (_ggaca [1]._cagb ._eadc );};case 9:_ggaca =_cabd [_eaccc -2:_eaccc +1];{_adead ._ffgb =_ggaca [2]._ffgb ;};case 10:_ggaca =_cabd [_eaccc -2:_eaccc +1];
+{_adead ._ffgb =NewNegate (_ggaca [2]._ffgb );};case 15:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =_ggaca [2]._ffgb ;};case 17:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewConstArrayExpr (_ggaca [2]._ebgdc );};case 18:_ggaca =_cabd [_eaccc -1:_eaccc +1];
+{_adead ._ebgdc =append (_adead ._ebgdc ,_ggaca [1]._egadf );};case 19:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ebgdc =append (_ggaca [1]._ebgdc ,_ggaca [3]._egadf );};case 20:_ggaca =_cabd [_eaccc -1:_eaccc +1];{_adead ._egadf =append (_adead ._egadf ,_ggaca [1]._ffgb );
+};case 21:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._egadf =append (_ggaca [1]._egadf ,_ggaca [3]._ffgb );};case 23:_ggaca =_cabd [_eaccc -2:_eaccc +1];{_adead ._ffgb =NewPrefixExpr (_ggaca [1]._ffgb ,_ggaca [2]._ffgb );};case 25:_ggaca =_cabd [_eaccc -1:_eaccc +1];
+{_adead ._ffgb =NewSheetPrefixExpr (_ggaca [1]._cagb ._eadc );};case 26:_ggaca =_cabd [_eaccc -1:_eaccc +1];{_adead ._ffgb =NewCellRef (_ggaca [1]._cagb ._eadc );};case 27:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewRange (_ggaca [1]._ffgb ,_ggaca [3]._ffgb );
+};case 28:_ggaca =_cabd [_eaccc -4:_eaccc +1];{_adead ._ffgb =NewPrefixRangeExpr (_ggaca [1]._ffgb ,_ggaca [2]._ffgb ,_ggaca [4]._ffgb );};case 29:_ggaca =_cabd [_eaccc -1:_eaccc +1];{_adead ._ffgb =NewNamedRangeRef (_ggaca [1]._cagb ._eadc );};case 30:_ggaca =_cabd [_eaccc -1:_eaccc +1];
+{_adead ._ffgb =NewHorizontalRange (_ggaca [1]._cagb ._eadc );};case 31:_ggaca =_cabd [_eaccc -1:_eaccc +1];{_adead ._ffgb =NewVerticalRange (_ggaca [1]._cagb ._eadc );};case 32:_ggaca =_cabd [_eaccc -2:_eaccc +1];{_adead ._ffgb =NewPrefixHorizontalRange (_ggaca [1]._ffgb ,_ggaca [2]._cagb ._eadc );
+};case 33:_ggaca =_cabd [_eaccc -2:_eaccc +1];{_adead ._ffgb =NewPrefixVerticalRange (_ggaca [1]._ffgb ,_ggaca [2]._cagb ._eadc );};case 34:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewBinaryExpr (_ggaca [1]._ffgb ,BinOpTypePlus ,_ggaca [3]._ffgb );
+};case 35:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewBinaryExpr (_ggaca [1]._ffgb ,BinOpTypeMinus ,_ggaca [3]._ffgb );};case 36:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewBinaryExpr (_ggaca [1]._ffgb ,BinOpTypeMult ,_ggaca [3]._ffgb );
+};case 37:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewBinaryExpr (_ggaca [1]._ffgb ,BinOpTypeDiv ,_ggaca [3]._ffgb );};case 38:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewBinaryExpr (_ggaca [1]._ffgb ,BinOpTypeExp ,_ggaca [3]._ffgb );
+};case 39:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewBinaryExpr (_ggaca [1]._ffgb ,BinOpTypeLT ,_ggaca [3]._ffgb );};case 40:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewBinaryExpr (_ggaca [1]._ffgb ,BinOpTypeGT ,_ggaca [3]._ffgb );
+};case 41:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewBinaryExpr (_ggaca [1]._ffgb ,BinOpTypeLEQ ,_ggaca [3]._ffgb );};case 42:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewBinaryExpr (_ggaca [1]._ffgb ,BinOpTypeGEQ ,_ggaca [3]._ffgb );
+};case 43:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewBinaryExpr (_ggaca [1]._ffgb ,BinOpTypeEQ ,_ggaca [3]._ffgb );};case 44:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewBinaryExpr (_ggaca [1]._ffgb ,BinOpTypeNE ,_ggaca [3]._ffgb );
+};case 45:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._ffgb =NewBinaryExpr (_ggaca [1]._ffgb ,BinOpTypeConcat ,_ggaca [3]._ffgb );};case 47:_ggaca =_cabd [_eaccc -2:_eaccc +1];{_adead ._ffgb =NewFunction (_ggaca [1]._cagb ._eadc ,nil );};case 48:_ggaca =_cabd [_eaccc -3:_eaccc +1];
+{_adead ._ffgb =NewFunction (_ggaca [1]._cagb ._eadc ,_ggaca [2]._egadf );};case 49:_ggaca =_cabd [_eaccc -1:_eaccc +1];{_adead ._egadf =append (_adead ._egadf ,_ggaca [1]._ffgb );};case 50:_ggaca =_cabd [_eaccc -3:_eaccc +1];{_adead ._egadf =append (_ggaca [1]._egadf ,_ggaca [3]._ffgb );
+};case 53:_ggaca =_cabd [_eaccc -0:_eaccc +1];{_adead ._ffgb =NewEmptyExpr ();};};goto _dcgb ;};const _ae =_bcd .Second *1;func _df (_dbc Result )bool {if _dbc .Type ==ResultTypeString {return _dbc .ValueString =="";};return _dbc .ValueNumber ==0;};var _gabag []byte =[]byte {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,69,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+const _cfgg ="\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029\u003a\u0028\u0028\u005b\u0030-\u0039]\u0029\u002b\u0029\u0028\u0020\u0028\u0061\u006d\u007c\u0070\u006d\u0029\u0029\u003f";type tokenType int ;var _debed =[...]struct{_ffbc int ;
+_gccff int ;_gabff string ;}{};func _ecaa (_efedd ,_bdbg ,_bgf ,_gbe ,_dafg ,_acde float64 ,_geff int )(float64 ,Result ){_afc :=int (_acde );_ecaae :=_dad (_efedd ,_bdbg ,_afc ,_geff );_fffg :=_ecd (_efedd ,_bdbg ,_afc ,_geff )/_ecaae ;_cefb ,_ebce :=_ebd (_efedd ,_bdbg ,_afc ,_geff );
+if _ebce .Type ==ResultTypeError {return 0,_ebce ;};_bbc :=_dccb (_efedd ,_bdbg ,_afc ,_geff );_fgdb :=_dafg /_d .Pow (1+_gbe /_acde ,_cefb -1+_fffg );_fgdb -=100*_bgf /_acde *_bbc /_ecaae ;_dagd :=100*_bgf /_acde ;_acce :=1+_gbe /_acde ;for _badb :=0.0;
+_badb < _cefb ;_badb ++{_fgdb +=_dagd /_d .Pow (_acce ,_badb +_fffg );};return _fgdb ,MakeEmptyResult ();};var _bbeg =[...]uint8 {0,20,37,60,78,96};
+
+// Day is an implementation of the Excel DAY() function.
+func Day (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0044A\u0059\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073 \u006fn\u0065 \u0061\u0072\u0067\u0075\u006d\u0065\u006et");};_debd :=args [0];switch _debd .Type {case ResultTypeEmpty :return MakeNumberResult (0);
+case ResultTypeNumber :_dddg :=_ded (_debd .ValueNumber );return MakeNumberResult (float64 (_dddg .Day ()));case ResultTypeString :_gce :=_e .ToLower (_debd .ValueString );if !_cgaf (_gce ){_ ,_ ,_ ,_ ,_fgb ,_aed :=_edbe (_gce );if _aed .Type ==ResultTypeError {_aed .ErrorMessage ="I\u006e\u0063\u006f\u0072\u0072\u0065c\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006et\u0073\u0020\u0066o\u0072 \u0044\u0041\u0059";
+return _aed ;};if _fgb {return MakeNumberResult (0);};};_ ,_ ,_ga ,_ ,_gdee :=_fcbd (_gce );if _gdee .Type ==ResultTypeError {return _gdee ;};return MakeNumberResult (float64 (_ga ));default:return MakeErrorResult ("\u0049\u006e\u0063\u006f\u0072\u0072\u0065\u0063\u0074\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072 \u0044\u0041\u0059");
+};};type rangeIndex struct{_cafgf int ;_afac int ;};func _gffc (){_gcac =_bg .MustCompile ("\u005e\u0030\u002b\u0024");_cbggc =_bg .MustCompile ("\u005e\u0028\u0028\u0023|0\u0029\u002b\u002c\u0029\u002b\u0028\u0023\u007c\u0030\u0029\u002b\u0028\u003b\u007c$\u0029");
+_egaf =_bg .MustCompile ("\u005e\u0028\u0023\u007c\u0030\u007c\u002c\u0029\u002a\u005f\u005c\u0029\u003b");_dfag =_bg .MustCompile ("\u005e\u0030\u002b\u005c\u002e\u0028\u0030\u002b\u0029\u0024");_begg =_bg .MustCompile ("\u005e\u0028\u0028\u0023\u007c\u0030\u0029\u002b\u002c\u0029+\u0028\u0023\u007c\u0030\u0029\u002b\u005c.\u0028\u0030\u002b\u0029\u002e\u002a\u0028\u003b\u007c\u0024\u0029");
+_gdaf =_bg .MustCompile ("^\u0028\u005f\u007c\u002d\u007c\u0020)\u002b\u005c\u002a\u0020\u0023\u002b\u002c\u0023\u002b0\u005c\u002e\u00280\u002b)\u002e\u002a\u003b");_agde =_bg .MustCompile ("\u005e\u0028\u0028\u0023\u007c\u0030)\u002b\u002c\u0029\u002b\u0028\u0023\u007c\u0030\u0029\u002b\u005c\u002e\u0028(\u0023\u007c\u0030\u0029\u002b\u0029\u005f\\\u0029\u002e\u002a\u003b");
+_gdcf =_bg .MustCompile ("\u005e\u0028\u0023\u007c0)\u002b\u005c\u002e\u0028\u0028\u0023\u007c\u0030\u0029\u002b\u0029\u0025\u0024");_ecfb =_bg .MustCompile ("\u005c\u005b\u005c$\u005c\u0024\u002d\u002e+\u005c\u005d\u0028\u005c\u002a\u0020\u0029?\u0028\u0023\u007c\u0030\u0029\u002b\u002c\u0028\u0023\u007c\u0030\u0029\u002b\u003b");
+_bbad =_bg .MustCompile ("\u005c[\u005c\u0024\\\u0024\u002d\u002e+\u005c\u005d\u0028\u005c\u002a\u0020\u0029?\u0028\u0023\u007c\u0030\u0029\u002b,\u0028\u0023\u007c\u0030\u0029\u002b\u005c\u002e\u0028\u0028\u0023|\u0030\u007c\u002d\u0029\u002b\u0029\u002e\u002a\u003b");
+_gdfc =_bg .MustCompile ("\u005e(\u0028\u0023|\u0030\u0029\u002b,\u0029\u002b\u0028\u0023\u007c\u0030\u0029+\u0028\u005c\u002e\u0028\u0028\u0023|\u0030\u007c\u002d\u0029\u002b\u0029\u0029\u003f\u002e\u002b\u005c[\u005c\u0024\u002e\u002b\u005c\u005d\u002e\u002a\u003b");
+_ggcb =_bg .MustCompile ("\u005e\u004d\u002b(\u002f\u007c\u0020\u007c\u002c\u007c\u0022\u007c"+_ebgd +_ebgd +"\u0029\u002b\u0044\u002b\u0028\u002f\u007c\u0020\u007c\u002c\u007c\u0022\u007c"+_ebgd +_ebgd +"\u0029\u002b\u0059+\u0024");_adce =_bg .MustCompile ("\u005e\u0044\u002b\u0028\u002f\u007c\u0020\u007c\u005c\u002e\u007c\u0022\u007c"+_ebgd +_ebgd +"\u0029\u002b\u004d\u002b\u0028\u002f\u007c\u0020\u007c\\\u002e\u007c\u0022\u007c"+_ebgd +_ebgd +"\u0029\u002b\u0059+\u0024");
+_gbcf =_bg .MustCompile ("\u005e\u0028\u0023|\u0030\u0029\u002b\u005c.\u0028\u0028\u0023\u007c\u0030\u0029\u002a)\u0045\u005c\u002b\u0028\u0023\u007c\u0030\u0029\u002b\u0028\u003b\u007c\u0024\u0029");_cbab =_bg .MustCompile ("\u005e.\u002a\u005f\u005c\u0029\u002e\u002a;");
+};
+
+// BinOpType is the binary operation operator type
+//
+//go:generate stringer -type=BinOpType
+type BinOpType byte ;func _eafge (_gddc int )string {if _gddc >=1&&_gddc -1< len (_aggdg ){if _aggdg [_gddc -1]!=""{return _aggdg [_gddc -1];};};return _gf .Sprintf ("\u0074\u006f\u006b\u002d\u0025\u0076",_gddc );};const _aecde =1;func _daead (_gbbfg Reference ,_efgg Context )bool {return _efgg .Sheet (_gbbfg .Value )==InvalidReferenceContext ;
+};
+
+// HasFormula returns FALSE for the invalid reference context.
+func (_defb *ivr )HasFormula (cellRef string )bool {return false };type plex struct{_bcegd chan *node ;_ffcg Expression ;_bedc string ;};func _ageb (_baeed Result ,_caaa ,_dcaa string )(float64 ,Result ){switch _baeed .Type {case ResultTypeEmpty :return 0,_fcea ;
+case ResultTypeNumber :return _baeed .ValueNumber ,_fcea ;case ResultTypeString :_bacd ,_eace :=_fd .ParseFloat (_baeed .ValueString ,64);if _eace !=nil {return 0,MakeErrorResult (_dcaa +"\u0020s\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u0061\u0020n\u0075\u006d\u0062\u0065\u0072\u0020\u0066\u006f\u0072\u0020"+_caaa );
+};return _bacd ,_fcea ;default:return 0,MakeErrorResult (_caaa +"\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020"+_dcaa +"\u0020t\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062e\u0072\u0020\u006f\u0072\u0020\u0065\u006d\u0070\u0074\u0079");
+};};const (ResultTypeUnknown ResultType =iota ;ResultTypeNumber ;ResultTypeString ;ResultTypeList ;ResultTypeArray ;ResultTypeError ;ResultTypeEmpty ;);var _aafe =[...]int {-1000,-7,-3,-1,27,18,22,23,-2,-8,-4,-9,20,-14,10,11,12,13,-5,-13,-6,-12,17,16,15,9,4,5,22,23,24,25,26,28,29,30,31,27,32,35,-1,18,27,-15,-17,-1,-1,-1,-1,33,-5,4,5,21,-16,-11,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,19,36,34,21,-5,33,21,34,19,-17,-1,-5,-10,-1};
+
+
+// SumIf implements the SUMIF function.
+func SumIf (args []Result )Result {if len (args )< 3{return MakeErrorResult ("\u0053\u0055\u004d\u0049\u0046\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0074\u0068\u0072e\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");};
+_bfadd :=args [0];if _bfadd .Type !=ResultTypeArray &&_bfadd .Type !=ResultTypeList {return MakeErrorResult ("\u0053\u0055\u004d\u0049\u0046\u0020\u0072e\u0071\u0075\u0069r\u0065\u0073\u0020\u0066i\u0072\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
+};_dbbca :=_cbgb (_bfadd );_gagff :=args [2];if _gagff .Type !=ResultTypeArray &&_gagff .Type !=ResultTypeList {return MakeErrorResult ("\u0053\u0055\u004dI\u0046\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0061\u0073\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074y\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
+};_cffg :=_cbgb (_gagff );_gbde :=_fdab (args [1]);_abce :=0.0;for _gbead ,_ggac :=range _dbbca {for _facb ,_bdbd :=range _ggac {if _fdgg (_bdbd ,_gbde ){_abce +=_cffg [_gbead ][_facb ].ValueNumber ;};};};return MakeNumberResult (_abce );};
+
+// Median implements the MEDIAN function that returns the median of a range of
+// values.
+func Median (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u004d\u0045D\u0049\u0041\u004e\u0020r\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020l\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_ffegc :=_bafce (args );_bf .Float64s (_ffegc );var _gcbg float64 ;if len (_ffegc )%2==0{_gcbg =(_ffegc [len (_ffegc )/2-1]+_ffegc [len (_ffegc )/2])/2;}else {_gcbg =_ffegc [len (_ffegc )/2];};return MakeNumberResult (_gcbg );};
+
+// Update updates references in the PrefixExpr after removing a row/column.
+func (_aebbg PrefixExpr )Update (q *_db .UpdateQuery )Expression {_eacdg :=_aebbg ;_ceddf :=_aebbg ._fefaa .String ();if _ceddf ==q .SheetToUpdate {_ggbd :=*q ;_ggbd .UpdateCurrentSheet =true ;_eacdg ._fbdf =_aebbg ._fbdf .Update (&_ggbd );};return _eacdg ;
+};
+
+// Npv implements the Excel NPV function.
+func Npv (args []Result )Result {_ddee :=len (args );if _ddee < 2{return MakeErrorResult ("\u004e\u0050\u0056 r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074w\u006f \u006fr\u0020m\u006f\u0072\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u004e\u0050\u0056\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020r\u0061\u0074\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_agce :=args [0].ValueNumber ;if _agce ==-1{return MakeErrorResultType (ErrorTypeDivideByZero ,"");};_cefgb :=[]float64 {};for _ ,_fcga :=range args [1:]{switch _fcga .Type {case ResultTypeNumber :_cefgb =append (_cefgb ,_fcga .ValueNumber );case ResultTypeArray ,ResultTypeList :_ggaa :=_cbgb (_fcga );
+for _ ,_ecga :=range _ggaa {for _ ,_acbb :=range _ecga {if _acbb .Type ==ResultTypeNumber &&!_acbb .IsBoolean {_cefgb =append (_cefgb ,_acbb .ValueNumber );};};};};};_cagd :=0.0;for _eafc ,_bgec :=range _cefgb {_cagd +=_bgec /_d .Pow (1+_agce ,float64 (_eafc )+1);
+};return MakeNumberResult (_cagd );};
+
+// Eval evaluates and returns the result of a sheet expression.
+func (_fceaf SheetPrefixExpr )Eval (ctx Context ,ev Evaluator )Result {return MakeErrorResult ("\u0073\u0068\u0065\u0065\u0074\u0020\u0070\u0072\u0065\u0066\u0069\u0078\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u006e\u0065\u0076\u0065r\u0020\u0062\u0065\u0020\u0065v\u0061\u006cu\u0061\u0074\u0065\u0064");
+};
 
 // HLookup implements the HLOOKUP function that returns a matching value from a
 // row in an array.
 func HLookup (args []Result )Result {if len (args )< 3{return MakeErrorResult ("\u0048\u004c\u004f\u004f\u004bU\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074 \u006c\u0065\u0061\u0073\u0074\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
 };if len (args )> 4{return MakeErrorResult ("\u0048\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0061\u0074\u0020m\u006f\u0073\u0074\u0020\u0066\u006f\u0075\u0072\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
-};_ceceg :=args [0];_abgd :=args [1];if _abgd .Type !=ResultTypeArray {return MakeErrorResult ("\u0048\u004cO\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
-};_dga :=args [2].AsNumber ();if _dga .Type !=ResultTypeNumber {return MakeErrorResult ("\u0048\u004cO\u004f\u004b\u0055\u0050 \u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075m\u0065\u0072\u0069\u0063\u0020\u0072\u006f\u0077\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};_degee :=false ;if len (args )==4{_gdgf :=args [3].AsNumber ();if _gdgf .Type !=ResultTypeNumber {return MakeErrorResult ("\u0048\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006e\u0075\u006de\u0072\u0069\u0063\u0020\u006d\u0061\u0074\u0063\u0068\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
-};if _gdgf .ValueNumber ==0{_degee =true ;};};_egdf :=-1;_gcbgb :=false ;if len (_abgd .ValueArray )==0{return MakeErrorResult ("\u0048\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020n\u006f\u006e\u002d\u0065\u006d\u0070\u0074\u0079\u0020\u0061\u0072\u0072\u0061\u0079");
-};_aadgf :=_abgd .ValueArray [0];_eade :for _caedd ,_fbca :=range _aadgf {switch _dgdb (_fbca ,_ceceg ,false ,_degee ){case _dcdbd :_egdf =_caedd ;case _bfggb :_egdf =_caedd ;_gcbgb =true ;break _eade ;};};if _egdf ==-1{return MakeErrorResultType (ErrorTypeNA ,"\u0048\u004c\u004fOK\u0055\u0050\u0020\u006e\u006f\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0066\u006f\u0075\u006e\u0064");
-};_ecee :=int (_dga .ValueNumber )-1;if _ecee < 0||_ecee > len (_abgd .ValueArray ){return MakeErrorResult ("\u0048L\u004f\u004f\u004b\u0055P\u0020\u0068\u0061\u0064\u0020i\u006ev\u0061l\u0069\u0064\u0020\u0069\u006e\u0064\u0065x");};_aadgf =_abgd .ValueArray [_ecee ];
-if _egdf < 0||_egdf >=len (_aadgf ){return MakeErrorResult ("\u0056\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0068\u0061\u0073\u0020\u0069\u006e\u0076a\u006ci\u0064\u0020\u0063\u006f\u006c\u0075\u006d\u006e\u0020\u0069\u006e\u0064\u0065\u0078");};if _gcbgb ||!_degee {return _aadgf [_egdf ];
+};_dfdc :=args [0];_ebbd :=args [1];if _ebbd .Type !=ResultTypeArray {return MakeErrorResult ("\u0048\u004cO\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
+};_cdac :=args [2].AsNumber ();if _cdac .Type !=ResultTypeNumber {return MakeErrorResult ("\u0048\u004cO\u004f\u004b\u0055\u0050 \u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075m\u0065\u0072\u0069\u0063\u0020\u0072\u006f\u0077\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_fcab :=false ;if len (args )==4{_efaa :=args [3].AsNumber ();if _efaa .Type !=ResultTypeNumber {return MakeErrorResult ("\u0048\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006e\u0075\u006de\u0072\u0069\u0063\u0020\u006d\u0061\u0074\u0063\u0068\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};if _efaa .ValueNumber ==0{_fcab =true ;};};_dgdd :=-1;_gffd :=false ;if len (_ebbd .ValueArray )==0{return MakeErrorResult ("\u0048\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020n\u006f\u006e\u002d\u0065\u006d\u0070\u0074\u0079\u0020\u0061\u0072\u0072\u0061\u0079");
+};_fabg :=_ebbd .ValueArray [0];_cecd :for _gcaf ,_ebeg :=range _fabg {switch _fgbaf (_ebeg ,_dfdc ,false ,_fcab ){case _cggc :_dgdd =_gcaf ;case _beaf :_dgdd =_gcaf ;_gffd =true ;break _cecd ;};};if _dgdd ==-1{return MakeErrorResultType (ErrorTypeNA ,"\u0048\u004c\u004fOK\u0055\u0050\u0020\u006e\u006f\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0066\u006f\u0075\u006e\u0064");
+};_egaga :=int (_cdac .ValueNumber )-1;if _egaga < 0||_egaga > len (_ebbd .ValueArray ){return MakeErrorResult ("\u0048L\u004f\u004f\u004b\u0055P\u0020\u0068\u0061\u0064\u0020i\u006ev\u0061l\u0069\u0064\u0020\u0069\u006e\u0064\u0065x");};_fabg =_ebbd .ValueArray [_egaga ];
+if _dgdd < 0||_dgdd >=len (_fabg ){return MakeErrorResult ("\u0056\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0068\u0061\u0073\u0020\u0069\u006e\u0076a\u006ci\u0064\u0020\u0063\u006f\u006c\u0075\u006d\u006e\u0020\u0069\u006e\u0064\u0065\u0078");};if _gffd ||!_fcab {return _fabg [_dgdd ];
 };return MakeErrorResultType (ErrorTypeNA ,"\u0056\u004c\u004fOK\u0055\u0050\u0020\u006e\u006f\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0066\u006f\u0075\u006e\u0064");};
 
-// NewPrefixRangeExpr constructs a new range with prefix.
-func NewPrefixRangeExpr (pfx ,from ,to Expression )Expression {_bgabe ,_afdcb ,_egcca :=_cbggg (from ,to );if _egcca !=nil {_gd .Log .Debug (_egcca .Error ());return NewError (_egcca .Error ());};return PrefixRangeExpr {_fgcba :pfx ,_bgacf :_bgabe ,_fabf :_afdcb };
-};func _bcf (_cegd float64 )bool {return _cegd ==1||_cegd ==2||_cegd ==4};
+// Reference returns an invalid reference for Number.
+func (_dcccc Number )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };func NewLexer ()*Lexer {return &Lexer {_cafe :make (chan *node )}};
+
+// Intrate implements the Excel INTRATE function.
+func Intrate (args []Result )Result {_gbgc :=len (args );if _gbgc !=4&&_gbgc !=5{return MakeErrorResult ("\u0049\u004e\u0054\u0052\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0066\u006f\u0075r\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_aacd ,_ccgc ,_dagg :=_abcb (args [0],args [1],"\u0049N\u0054\u0052\u0041\u0054\u0045");if _dagg .Type ==ResultTypeError {return _dagg ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u004e\u0054\u0052\u0041\u0054E\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0069\u006e\u0076\u0065\u0073\u0074\u006d\u0065\u006e\u0074 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
+};_fcca :=args [2].ValueNumber ;if _fcca <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u004e\u0054\u0052\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0069\u006e\u0076e\u0073\u0074\u006d\u0065\u006e\u0074\u0020\u0074\u006f \u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020\u0061r\u0067\u0075\u006de\u006e\u0074");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u004e\u0054\u0052\u0041\u0054E\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064\u0065\u006d\u0070\u0074\u0069\u006f\u006e \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061r\u0067u\u006d\u0065\u006e\u0074");
+};_ccda :=args [3].ValueNumber ;if _ccda <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u004e\u0054\u0052\u0041\u0054\u0045\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0065\u0064e\u006d\u0070\u0074\u0069\u006f\u006e\u0020\u0074\u006f \u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020\u0061r\u0067\u0075\u006de\u006e\u0074");
+};_egba :=0;if _gbgc ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049N\u0054\u0052A\u0054\u0045\u0020\u0072e\u0071\u0075\u0069r\u0065\u0073\u0020\u0062\u0061\u0073\u0069\u0073\u0020to\u0020\u0062\u0065 \u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
+};_egba =int (args [4].ValueNumber );if !_ccfg (_egba ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006eco\u0072\u0072\u0065c\u0074\u0020\u0062\u0061sis\u0020ar\u0067\u0075\u006d\u0065\u006e\u0074\u0020fo\u0072\u0020\u0049\u004e\u0054\u0052\u0041T\u0045");
+};};_agfb ,_dagg :=_fdbc (_aacd ,_ccgc ,_egba );if _dagg .Type ==ResultTypeError {return _dagg ;};return MakeNumberResult ((_ccda -_fcca )/_fcca /_agfb );};
+
+// Reference returns a string reference value to a sheet.
+func (_cfbd SheetPrefixExpr )Reference (ctx Context ,ev Evaluator )Reference {return Reference {Type :ReferenceTypeSheet ,Value :_cfbd ._aeef };};
+
+// FactDouble is an implementation of the excel FACTDOUBLE function which
+// returns the double factorial of a positive numeric input.
+func FactDouble (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0046\u0041C\u0054\u0044\u004f\u0055\u0042\u004c\u0045\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_gfde :=args [0].AsNumber ();if _gfde .Type !=ResultTypeNumber {return MakeErrorResult ("\u0046\u0041C\u0054\u0044\u004f\u0055\u0042\u004c\u0045\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if _gfde .ValueNumber < 0{return MakeErrorResult ("\u0046A\u0043\u0054D\u004f\u0055\u0042\u004cE\u0028\u0029\u0020a\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u006f\u006ely\u0020\u0070\u006fs\u0069\u0074i\u0076\u0065\u0020\u0061\u0072\u0067u\u006d\u0065n\u0074\u0073");
+};_eeeb :=float64 (1);_eeefb :=_d .Trunc (_gfde .ValueNumber );for _fbdgg :=_eeefb ;_fbdgg > 1;_fbdgg -=2{_eeeb *=_fbdgg ;};return MakeNumberResult (_eeeb );};
+
+// IsLeapYear is an implementation of the Excel ISLEAPYEAR() function.
+func IsLeapYear (ctx Context ,ev Evaluator ,args []Result )Result {if len (args )!=1||args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049S\u004c\u0045A\u0050\u0059\u0045\u0041R\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073in\u0067\u006c\u0065 \u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
+};_daeec :=ctx .GetEpoch ();_cegbe ,_bgage :=_gabbc (args [0].Value (),_daeec );if _bgage !=nil {return MakeErrorResult ("\u0049S\u004c\u0045A\u0050\u0059\u0045\u0041R\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073in\u0067\u006c\u0065 \u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
+};_ecgb :=_cegbe .Year ();return MakeBoolResult (_bgea (_ecgb ));};func _bag (_gfc string ,_ceb uint32 )string {_dbda :=_bce .ColumnToIndex (_gfc );if _dbda ==_ceb {return "\u0023\u0052\u0045F\u0021";}else if _dbda > _ceb {return _bce .IndexToColumn (_dbda -1);
+}else {return _gfc ;};};func _fb (_ee ,_cg [][]Result )bool {if len (_ee )!=len (_cg ){return false ;};for _efc :=range _ee {if len (_ee [_efc ])!=len (_cg [_efc ]){return false ;};};return true ;};
+
+// TimeValue is an implementation of the Excel TIMEVALUE() function.
+func TimeValue (args []Result )Result {if len (args )!=1||args [0].Type !=ResultTypeString {return MakeErrorResult ("\u0054I\u004d\u0045V\u0041\u004c\u0055\u0045 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069ng\u006c\u0065\u0020s\u0074\u0072i\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065n\u0074\u0073");
+};_bgcc :=_e .ToLower (args [0].ValueString );if !_fbd (_bgcc ){_ ,_ ,_ ,_dae ,_dge :=_fcbd (_bgcc );if _dge .Type ==ResultTypeError {_dge .ErrorMessage ="\u0049\u006e\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020f\u006f\u0072\u0020\u0054\u0049\u004d\u0045V\u0041\u004c\u0055\u0045";
+return _dge ;};if _dae {return MakeNumberResult (0);};};_cde ,_edba ,_cda ,_fea ,_ ,_dcbe :=_edbe (_bgcc );if _dcbe .Type ==ResultTypeError {return _dcbe ;};_cegde :=_efbd (float64 (_cde ),float64 (_edba ),_cda );if _fea {_cegde +=0.5;}else if _cegde >=1{_cegde -=float64 (int (_cegde ));
+};return MakeNumberResult (_cegde );};func _bafce (_ceae []Result )[]float64 {_dfge :=make ([]float64 ,0);for _ ,_fedc :=range _ceae {if _fedc .Type ==ResultTypeEmpty {continue ;};_fedc =_fedc .AsNumber ();switch _fedc .Type {case ResultTypeNumber :if !_fedc .IsBoolean {_dfge =append (_dfge ,_fedc .ValueNumber );
+};case ResultTypeList ,ResultTypeArray :_dfge =append (_dfge ,_bafce (_fedc .ListValues ())...);case ResultTypeString :default:_af .Log .Debug ("\u0075\u006e\u0068\u0061\u006ed\u006c\u0065\u0064\u0020\u0065\u0078\u0074\u0072\u0061\u0063\u0074\u004e\u0075m\u0062\u0065\u0072\u0073\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_fedc .Type );
+};};return _dfge ;};func (_ffcec *noCache )SetCache (key string ,value Result ){};
+
+// Exact is an implementation of the Excel EXACT() which compares two strings.
+func Exact (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0043\u004f\u004e\u0043\u0041\u0054\u0045N\u0041\u0054\u0045(\u0029\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_bgab :=args [0].AsString ();_gggg :=args [1].AsString ();if _bgab .Type !=ResultTypeString ||_gggg .Type !=ResultTypeString {return MakeErrorResult ("\u0043\u004f\u004e\u0043\u0041\u0054\u0045N\u0041\u0054\u0045(\u0029\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};return MakeBoolResult (_bgab .ValueString ==_gggg .ValueString );};func (_eeff ResultType )String ()string {if _eeff >=ResultType (len (_agfaf )-1){return _gf .Sprintf ("\u0052\u0065\u0073\u0075\u006c\u0074\u0054\u0079\u0070e\u0028\u0025\u0064\u0029",_eeff );
+};return _effdd [_agfaf [_eeff ]:_agfaf [_eeff +1]];};
+
+// Lookup implements the LOOKUP function that returns a matching value from a
+// column, or from the same index in a second column.
+func Lookup (args []Result )Result {if len (args )< 2{return MakeErrorResult ("\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074 \u0074\u0077\u006f\u0020\u0061r\u0067\u0075m\u0065\u006e\u0074\u0073");
+};if len (args )> 3{return MakeErrorResult ("\u004c\u004f\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0061\u0074\u0020\u006do\u0073\u0074\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_aeeg :=args [0];_abgd :=args [1];if _abgd .Type !=ResultTypeArray &&_abgd .Type !=ResultTypeList {return MakeErrorResult ("\u0056\u004cO\u004f\u004b\u0055\u0050\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u006f\u0066\u0020\u0074\u0079\u0070\u0065\u0020\u0061\u0072\u0072\u0061\u0079");
+};_bbcfb :=_febbd (_abgd );_bef :=-1;for _cbbe ,_eggfe :=range _bbcfb {if _fgbaf (_aeeg ,_eggfe ,false ,false )==_beaf {_bef =_cbbe ;};};if _bef ==-1{return MakeErrorResultType (ErrorTypeNA ,"\u004c\u004f\u004f\u004bUP\u0020\u006e\u006f\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0066\u006f\u0075n\u0064");
+};_gec :=_bbcfb ;if len (args )==3{_gec =_febbd (args [2]);};if _bef < 0||_bef >=len (_gec ){return MakeErrorResultType (ErrorTypeNA ,"\u004c\u004f\u004f\u004bUP\u0020\u006e\u006f\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0066\u006f\u0075n\u0064");
+};return _gec [_bef ];};
+
+//go:generate ragel -G2 -Z lexer.rl
+//go:generate goimports -w lexer.go
+type Lexer struct{_cafe chan *node ;_afdd _ad .Mutex ;_ggcbe []chan *node ;_aeaab []*node ;};type Reference struct{Type ReferenceType ;Value string ;};
+
+// Mround is an implementation of the Excel MROUND function.  It is not a
+// generic rounding function and has some oddities to match Excel's behavior.
+func Mround (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u004d\u0052\u004f\u0055\u004e\u0044\u0028\u0029\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0074\u0077o\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_ggdff :=args [0].AsNumber ();if _ggdff .Type !=ResultTypeNumber {return MakeErrorResult ("\u0066\u0069\u0072\u0073\u0074\u0020\u0061r\u0067\u0075\u006de\u006e\u0074\u0020\u0074o\u0020\u004d\u0052\u004f\u0055\u004e\u0044\u0028\u0029\u0020\u006d\u0075\u0073\u0074\u0020\u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006d\u0062\u0065\u0072");
+};_gdda :=float64 (1);_babdd :=args [1].AsNumber ();if _babdd .Type !=ResultTypeNumber {return MakeErrorResult ("\u0073e\u0063\u006fn\u0064\u0020\u0061\u0072g\u0075\u006d\u0065n\u0074\u0020\u0074\u006f\u0020\u004d\u0052\u004f\u0055ND\u0028\u0029\u0020m\u0075\u0073t\u0020\u0062\u0065\u0020\u0061\u0020n\u0075\u006db\u0065\u0072");
+};_gdda =_babdd .ValueNumber ;if _gdda < 0&&_ggdff .ValueNumber > 0||_gdda > 0&&_ggdff .ValueNumber < 0{return MakeErrorResult ("\u004d\u0052\u004fUN\u0044\u0028\u0029\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020s\u0069g\u006e\u0073\u0020\u006d\u0075\u0073\u0074\u0020\u006d\u0061\u0074\u0063\u0068");
+};_fggbe :=_ggdff .ValueNumber ;_fggbe ,_aeg :=_d .Modf (_fggbe /_gdda );if _d .Trunc (_aeg +0.5)> 0{_fggbe ++;};return MakeNumberResult (_fggbe *_gdda );};
+
+// Value returns a string version of the result.
+func (_cdcea Result )Value ()string {switch _cdcea .Type {case ResultTypeNumber :_dfagb :=_fd .FormatFloat (_cdcea .ValueNumber ,'f',-1,64);if len (_dfagb )> 12{_eefedc :=12;for _aeffc :=_eefedc ;_aeffc > 0&&_dfagb [_aeffc ]=='0';_aeffc --{_eefedc --;};
+_dfagb =_dfagb [0:_eefedc +1];};return _dfagb ;case ResultTypeError :return _cdcea .ValueString ;case ResultTypeString :return _cdcea .ValueString ;case ResultTypeList :if len (_cdcea .ValueList )==0{return "";};return _cdcea .ValueList [0].Value ();case ResultTypeArray :if len (_cdcea .ValueArray )==0||len (_cdcea .ValueArray [0])==0{return "";
+};return _cdcea .ValueArray [0][0].Value ();case ResultTypeEmpty :return "";default:return "\u0075\u006e\u0068\u0061nd\u006c\u0065\u0064\u0020\u0072\u0065\u0073\u0075\u006c\u0074\u0020\u0076\u0061\u006cu\u0065";};};
+
+// Coupdays implements the Excel COUPDAYS function.
+func Coupdays (args []Result )Result {_ddega ,_fbaf :=_daegg (args ,"\u0043\u004f\u0055\u0050\u0044\u0041\u0059\u0053");if _fbaf .Type ==ResultTypeError {return _fbaf ;};return MakeNumberResult (_dad (_ddega ._agg ,_ddega ._cgef ,_ddega ._fbdc ,_ddega ._bcgf ));
+};func _gabgb (_aedb []Result )Result {_bfdfag :=_aedb [0].ValueList ;_dgbd :=len (_bfdfag );switch len (_aedb ){case 1:_dfce :=[]Result {};for _ ,_facf :=range _bfdfag {_dfce =append (_dfce ,MakeBoolResult (_facf .ValueNumber !=0));};return MakeListResult (_dfce );
+case 2:_dacc :=_aedb [1];switch _dacc .Type {case ResultTypeNumber ,ResultTypeString ,ResultTypeEmpty :_aabg :=[]Result {};for _ ,_fdbd :=range _bfdfag {var _cfaac Result ;if _fdbd .ValueNumber ==0{_cfaac =MakeBoolResult (false );}else {_cfaac =_dacc ;
+};_aabg =append (_aabg ,_cfaac );};return MakeListResult (_aabg );case ResultTypeList :_bgbbg :=_gdecg (_dacc ,_dgbd );_gcdf :=[]Result {};for _dged ,_adag :=range _bfdfag {var _aebg Result ;if _adag .ValueNumber ==0{_aebg =MakeBoolResult (false );}else {_aebg =_bgbbg [_dged ];
+};_gcdf =append (_gcdf ,_aebg );};return MakeListResult (_gcdf );case ResultTypeArray :_ceegf :=_agffe (_dacc ,len (_dacc .ValueArray ),_dgbd );_feaca :=[][]Result {};for _ ,_adaa :=range _ceegf {_geca :=[]Result {};for _ccbgg ,_cggbb :=range _bfdfag {var _gdcef Result ;
+if _cggbb .ValueNumber ==0{_gdcef =MakeBoolResult (false );}else {_gdcef =_adaa [_ccbgg ];};_geca =append (_geca ,_gdcef );};_feaca =append (_feaca ,_geca );};return MakeArrayResult (_feaca );};case 3:_daed :=_aedb [1];_cdef :=_aedb [2];_fbebb :=_agaef (_daed );
+_fefff :=_agaef (_cdef );if _fbebb &&_fefff {_cbad :=[]Result {};for _ ,_fbee :=range _bfdfag {var _edace Result ;if _fbee .ValueNumber ==0{_edace =_cdef ;}else {_edace =_daed ;};_cbad =append (_cbad ,_edace );};return MakeListResult (_cbad );};if _daed .Type !=ResultTypeArray &&_cdef .Type !=ResultTypeArray {_bcdeg :=_gdecg (_daed ,_dgbd );
+_abdb :=_gdecg (_cdef ,_dgbd );_efgd :=[]Result {};for _eced ,_dgedf :=range _bfdfag {var _bdfc Result ;if _dgedf .ValueNumber ==0{_bdfc =_abdb [_eced ];}else {_bdfc =_bcdeg [_eced ];};_efgd =append (_efgd ,_bdfc );};return MakeListResult (_efgd );};_fcdg ,_ecgce :=len (_daed .ValueArray ),len (_cdef .ValueArray );
+_bdea ,_bbfde :=_fcdg ,_ecgce ;if _ecgce > _bdea {_bdea ,_bbfde =_bbfde ,_bdea ;};_gbaf :=_agffe (_daed ,_bdea ,_dgbd );_geaa :=_agffe (_cdef ,_bdea ,_dgbd );_eeda :=[][]Result {};for _dbaf :=0;_dbaf < _bdea ;_dbaf ++{_edcc :=[]Result {};for _gceg ,_bgcb :=range _bfdfag {var _fedd Result ;
+if _bgcb .ValueNumber ==0{if _dbaf < _ecgce {_fedd =_geaa [_dbaf ][_gceg ];}else {_fedd =MakeErrorResultType (ErrorTypeNA ,"");};}else {if _dbaf < _fcdg {_fedd =_gbaf [_dbaf ][_gceg ];}else {_fedd =MakeErrorResultType (ErrorTypeNA ,"");};};_edcc =append (_edcc ,_fedd );
+};_eeda =append (_eeda ,_edcc );};return MakeArrayResult (_eeda );};return MakeErrorResult ("");};var _ffeeb =[...]int {123,-1000,-1000,74,163,103,163,163,-1000,-1000,-1000,-1000,163,-1000,-1000,-1000,-1000,-1000,-12,106,-1000,-1000,143,-1000,-1000,-1000,-1000,-1000,163,163,163,163,163,163,163,163,163,163,163,163,74,163,163,6,-28,74,-15,-15,60,10,-14,-1000,-1000,-1000,7,-1000,74,-15,-15,-23,-23,-1000,-8,-8,-8,-8,-8,-8,-4,33,-1000,163,163,-1000,-1000,10,-1000,163,-1000,-28,74,-1000,-1000,74};
+func (_cecdc *ivr )Cell (ref string ,ev Evaluator )Result {return MakeErrorResult ("\u0069\u006e\u0076\u0061\u006c\u0069\u0064\u0020\u0072\u0065\u0066\u0065r\u0065\u006e\u0063\u0065");};func _bacc (_dgb ,_ega int64 )float64 {return float64 (int (0.5+float64 ((_ega -_dgb )/86400)))};
+
+
+// Roman is an implementation of the Excel ROMAN function that convers numbers
+// to roman numerals in one of 5 formats.
+func Roman (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0052\u004fM\u0041\u004e\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if len (args )> 2{return MakeErrorResult ("\u0052\u004fM\u0041\u004e\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006d\u006f\u0073\u0074\u0020\u0074\u0077\u006f\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_fced :=args [0].AsNumber ();if _fced .Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u004fM\u0041\u004e\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074\u0020\u006f\u006e\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_ddcf :=0;if len (args )> 1{_fcedb :=args [1];if _fcedb .Type !=ResultTypeNumber {return MakeErrorResult ("\u0052\u004fM\u0041\u004e\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0065\u0072\u0069\u0063");
+};_ddcf =int (_fcedb .ValueNumber );if _ddcf < 0{_ddcf =0;}else if _ddcf > 4{_ddcf =4;};};_ecbg :=_fdfg ;switch _ddcf {case 1:_ecbg =_bcgb ;case 2:_ecbg =_cbae ;case 3:_ecbg =_fggdg ;case 4:_ecbg =_ggce ;};_dca :=_d .Trunc (_fced .ValueNumber );_eddab :=_c .Buffer {};
+for _ ,_dfcea :=range _ecbg {for _dca >=_dfcea ._babc {_eddab .WriteString (_dfcea ._ggccf );_dca -=_dfcea ._babc ;};};return MakeStringResult (_eddab .String ());};
+
+// IsNA is an implementation of the Excel ISNA() function.
+func IsNA (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u004e\u0041\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u006f\u006e\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074");};return MakeBoolResult (args [0].Type ==ResultTypeError &&args [0].ValueString =="\u0023\u004e\u002f\u0041");
+};
+
+// Negate is a negate expression like -A1.
+type Negate struct{_ebfd Expression };
+
+// Eval evaluates and returns a string.
+func (_egga String )Eval (ctx Context ,ev Evaluator )Result {return MakeStringResult (_egga ._eaebe )};
+
+// NewError constructs a new error expression from a string.
+func NewError (v string )Expression {return Error {_cef :v }};
+
+// NewEvaluator constructs a new defEval object which is the default formula evaluator.
+func NewEvaluator ()Evaluator {_eed :=&defEval {};_eed .evCache =_age ();return _eed };
+
+// Findb is an implementation of the Excel FINDB().
+func Findb (ctx Context ,ev Evaluator ,args []Result )Result {if !ctx .IsDBCS (){return Find (args );};_efdef ,_deed :=_eacd ("\u0046\u0049\u004e\u0044",args );if _deed .Type !=ResultTypeEmpty {return _deed ;};_faee :=_efdef ._eefe ;if _faee ==""{return MakeNumberResult (1.0);
+};_acge :=_efdef ._gdgff ;_effa :=_efdef ._dbdf -1;_cgbcd :=1;_bcfa :=0;for _acgd :=range _acge {if _acgd !=0{_cafgc :=1;if _acgd -_bcfa > 1{_cafgc =2;};_cgbcd +=_cafgc ;};if _cgbcd > _effa {_aebb :=_e .Index (_acge [_acgd :],_faee );if _aebb ==0{return MakeNumberResult (float64 (_cgbcd ));
+};};_bcfa =_acgd ;};return MakeErrorResultType (ErrorTypeValue ,"\u004eo\u0074\u0020\u0066\u006f\u0075\u006ed");};type yyParser interface{Parse (yyLexer )int ;Lookahead ()int ;};
+
+// Concat is an implementation of the Excel CONCAT() and deprecated CONCATENATE() function.
+func Concat (args []Result )Result {_bbdb :=_c .Buffer {};for _ ,_debg :=range args {switch _debg .Type {case ResultTypeString :_bbdb .WriteString (_debg .ValueString );case ResultTypeNumber :var _ccfc string ;if _debg .IsBoolean {if _debg .ValueNumber ==0{_ccfc ="\u0046\u0041\u004cS\u0045";
+}else {_ccfc ="\u0054\u0052\u0055\u0045";};}else {_ccfc =_debg .AsString ().ValueString ;};_bbdb .WriteString (_ccfc );default:return MakeErrorResult ("\u0043\u004f\u004e\u0043\u0041T\u0028\u0029\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061r\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0073\u0074\u0072\u0069\u006e\u0067\u0073");
+};};return MakeStringResult (_bbdb .String ());};
+
+// Error is an error expression.
+type Error struct{_cef string };func _bgbfe (_eabfa []Result ,_dccc []string ,_adddg bool )[]string {for _ ,_febba :=range _eabfa {switch _febba .Type {case ResultTypeEmpty :if !_adddg {_dccc =append (_dccc ,"");};case ResultTypeString :if _febba .ValueString !=""||!_adddg {_dccc =append (_dccc ,_febba .ValueString );
+};case ResultTypeNumber :_dccc =append (_dccc ,_febba .Value ());case ResultTypeList :_dccc =_eegaa (_dccc ,_bgbfe (_febba .ValueList ,[]string {},_adddg ));case ResultTypeArray :for _ ,_dedc :=range _febba .ValueArray {_dccc =_eegaa (_dccc ,_bgbfe (_dedc ,[]string {},_adddg ));
+};};};return _dccc ;};
+
+// Result is the result of a formula or cell evaluation .
+type Result struct{ValueNumber float64 ;ValueString string ;ValueList []Result ;ValueArray [][]Result ;IsBoolean bool ;ErrorMessage string ;Type ResultType ;Ref Reference ;};
+
+// Accrintm implements the Excel ACCRINTM function.
+func Accrintm (args []Result )Result {_ebg :=len (args );if _ebg !=4&&_ebg !=5{return MakeErrorResult ("A\u0043\u0043\u0052\u0049\u004e\u0054\u004d\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0066o\u0075\u0072\u0020\u006f\u0072\u0020\u0066\u0069\u0076\u0065 a\u0072\u0067\u0075m\u0065n\u0074\u0073");
+};_fag ,_ccbf :=_gfcac (args [0],"\u0069\u0073\u0073\u0075\u0065\u0020\u0064\u0061\u0074\u0065","\u0041\u0043\u0043\u0052\u0049\u004e\u0054\u004d");if _ccbf .Type ==ResultTypeError {return _ccbf ;};_ddbd ,_ccbf :=_gfcac (args [1],"\u0073e\u0074t\u006c\u0065\u006d\u0065\u006e\u0074\u0020\u0064\u0061\u0074\u0065","\u0041\u0043\u0043\u0052\u0049\u004e\u0054\u004d");
+if _ccbf .Type ==ResultTypeError {return _ccbf ;};if _fag >=_ddbd {return MakeErrorResultType (ErrorTypeNum ,"\u0049\u0073\u0073\u0075\u0065\u0020d\u0061\u0074\u0065\u0020\u0073\u0068\u006f\u0075\u006c\u0064\u0020\u0062\u0065\u0020\u0065\u0061\u0072\u006c\u0069\u0065r\u0020\u0074\u0068\u0061\u006e\u0020\u0073\u0065\u0074\u0074\u006c\u0065\u006d\u0065n\u0074 \u0064\u0061\u0074\u0065");
+};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0041C\u0043\u0052I\u004e\u0054\u004d\u0020r\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0072\u0061\u0074\u0065\u0020to\u0020\u0062\u0065 \u006e\u0075m\u0062\u0065\u0072\u0020\u0061\u0072g\u0075\u006de\u006e\u0074");
+};_abgg :=args [2].ValueNumber ;if _abgg <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0041\u0043\u0043\u0052\u0049\u004e\u0054\u004d\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0072\u0061t\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("\u0041\u0043\u0043\u0052\u0049\u004e\u0054M\u0020\u0072\u0065q\u0075\u0069\u0072\u0065s\u0020\u0070\u0061\u0072\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_gba :=args [3].ValueNumber ;if _gba <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0041\u0043C\u0052\u0049\u004e\u0054\u004d \u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0070\u0061\u0072\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_eff :=0;if _ebg ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0041C\u0043\u0052I\u004e\u0054\u004d \u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020\u0062\u0061\u0073\u0069\u0073 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_eff =int (args [4].ValueNumber );if !_ccfg (_eff ){return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006ec\u006f\u0072\u0072\u0065c\u0074\u0020b\u0061\u0073\u0069\u0073\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074\u0020\u0066\u006f\u0072\u0020\u0041\u0043\u0043R\u0049\u004e\u0054\u004d");
+};};_affc ,_ccbf :=_fdbc (_fag ,_ddbd ,_eff );if _ccbf .Type ==ResultTypeError {return _ccbf ;};return MakeNumberResult (_gba *_abgg *_affc );};
+
+// Or is an implementation of the Excel OR() function and takes a variable
+// number of arguments.
+func Or (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u004f\u0052\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0074\u0020\u006c\u0065\u0061\u0073\u0074 \u006f\u006e\u0065\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_bfcf :=false ;for _ ,_dgaa :=range args {switch _dgaa .Type {case ResultTypeList ,ResultTypeArray :_cdbc :=Or (_dgaa .ListValues ());if _cdbc .Type ==ResultTypeError {return _cdbc ;};if _cdbc .ValueNumber !=0{_bfcf =true ;};case ResultTypeNumber :if _dgaa .ValueNumber !=0{_bfcf =true ;
+};case ResultTypeString :return MakeErrorResult ("\u004f\u0052 \u0064\u006f\u0065\u0073\u006e\u0027\u0074\u0020\u006f\u0070\u0065\u0072\u0061\u0074\u0065\u0020\u006f\u006e\u0020\u0073\u0074\u0072in\u0067\u0073");case ResultTypeError :return _dgaa ;default:return MakeErrorResult ("\u0075\u006e\u0073u\u0070\u0070\u006f\u0072t\u0065\u0064\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0069\u006e\u0020\u004f\u0052");
+};};return MakeBoolResult (_bfcf );};const (ErrorTypeValue ErrorType =iota ;ErrorTypeNull ;ErrorTypeRef ;ErrorTypeName ;ErrorTypeNum ;ErrorTypeSpill ;ErrorTypeNA ;ErrorTypeDivideByZero ;);func _cfbb (_gcbdf ,_bffa Reference )string {return _gf .Sprintf ("\u0025\u0073\u003a%\u0073",_gcbdf .Value ,_bffa .Value );
+};
+
+// Duration implements the Excel DURATION function.
+func Duration (args []Result )Result {_ebc ,_bdeg :=_agfa (args ,"\u0044\u0055\u0052\u0041\u0054\u0049\u004f\u004e");if _bdeg .Type ==ResultTypeError {return _bdeg ;};_abe :=_ebc ._beba ;_dcfa :=_ebc ._gebg ;_gcdc :=_ebc ._bcec ;_edab :=_ebc ._edee ;_gfcg :=_ebc ._fabd ;
+_deec :=_ebc ._dgfb ;return _gabe (_abe ,_dcfa ,_gcdc ,_edab ,_gfcg ,_deec );};
+
+// BinaryExpr is a binary expression.
+type BinaryExpr struct{_ba ,_efb Expression ;_fdb BinOpType ;};func (_abead *Lexer )emit (_egca tokenType ,_egcgg []byte ){if _cbacd {_gf .Println ("\u0065\u006d\u0069\u0074",_egca ,_fedf (string (_egcgg )));};_abead ._cafe <-&node {_egca ,string (_egcgg )};
+};func _ggdg (_ebgg ,_aac ,_bdagg ,_fgbd float64 ,_acca int )float64 {var _gaeb float64 ;if _ebgg ==0{_gaeb =_fgbd +_bdagg *_aac ;}else {_fcgf :=_d .Pow (1+_ebgg ,_aac );if _acca ==1{_gaeb =_fgbd *_fcgf +_bdagg *(1+_ebgg )*(_fcgf -1)/_ebgg ;}else {_gaeb =_fgbd *_fcgf +_bdagg *(_fcgf -1)/_ebgg ;
+};};return -_gaeb ;};func _dfegd (_eef Result ,_afbb *criteriaParsed )bool {_ceff :=_e .ToLower (_eef .ValueString );_adcb :=_afbb ._geeef ._ebed ;_debbe :=_afbb ._geeef ._bagg ;if _adcb ==_becec {return _ceff ==_debbe ||_eg .Match (_debbe ,_ceff );};if _eef .Type !=ResultTypeEmpty {if _ceff ==_afbb ._gaea ||_eg .Match (_afbb ._gaea ,_ceff ){return true ;
+};if _ ,_dfgg :=_fd .ParseFloat (_debbe ,64);_dfgg ==nil {return false ;};switch _adcb {case _gfgd :return _ceff <=_debbe ;case _efaf :return _ceff >=_debbe ;case _fcbfe :return _ceff < _debbe ;case _gagd :return _ceff > _debbe ;};};return false ;};
+
+// NewVerticalRange constructs a new full columns range.
+func NewVerticalRange (v string )Expression {_gfbf :=_e .Split (v ,"\u003a");if len (_gfbf )!=2{return nil ;};if _gfbf [0]> _gfbf [1]{_gfbf [0],_gfbf [1]=_gfbf [1],_gfbf [0];};return VerticalRange {_cege :_gfbf [0],_afaca :_gfbf [1]};};
+
+// Pmt implements the Excel PMT function.
+func Pmt (args []Result )Result {_baee :=len (args );if _baee < 3||_baee > 5{return MakeErrorResult ("\u0050\u004dT\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u006eu\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020\u0069\u006e\u0020\u0072\u0061\u006e\u0067\u0065\u0020\u006f\u0066\u0020\u0033\u0020\u0061\u006e\u0064\u0020\u0035");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020r\u0061\u0074\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_bcged :=args [0].ValueNumber ;if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u004dT\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u006eu\u006d\u0062\u0065\u0072\u0020\u006f\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_fafe :=args [1].ValueNumber ;if _fafe ==0{return MakeErrorResultType (ErrorTypeNum ,"\u0050\u004d\u0054\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006e\u0075\u006d\u0062\u0065\u0072 \u006f\u0066\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0073\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u006f\u0074\u0020\u0065\u0071\u0075\u0061\u006c\u0020\u0074\u006f\u00200");
+};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073 p\u0072\u0065\u0073\u0065\u006e\u0074 \u0076\u0061\u006c\u0075\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006db\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006de\u006e\u0074");
+};_deae :=args [2].ValueNumber ;_ebgb :=0.0;if _baee >=4&&args [3].Type !=ResultTypeEmpty {if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("P\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072e\u0073\u0020\u0066\u0075\u0074\u0075\u0072e \u0076\u0061\u006c\u0075e\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_ebgb =args [3].ValueNumber ;};_eea :=0.0;if _baee ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0050\u004d\u0054\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020t\u0079\u0070\u0065\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_eea =args [4].ValueNumber ;if _eea !=0{_eea =1;};};var _ffeb float64 ;if _bcged ==0{_ffeb =(_deae +_ebgb )/_fafe ;}else {_eddc :=_d .Pow (1+_bcged ,_fafe );if _eea ==1{_ffeb =(_ebgb *_bcged /(_eddc -1)+_deae *_bcged /(1-1/_eddc ))/(1+_bcged );}else {_ffeb =_ebgb *_bcged /(_eddc -1)+_deae *_bcged /(1-1/_eddc );
+};};return MakeNumberResult (-_ffeb );};
+
+// String is a string expression.
+type String struct{_eaebe string };
+
+// MakeErrorResultType makes an error result of a given type with a specified
+// debug message
+func MakeErrorResultType (t ErrorType ,msg string )Result {switch t {case ErrorTypeNull :return Result {Type :ResultTypeError ,ValueString :"\u0023\u004e\u0055\u004c\u004c\u0021",ErrorMessage :msg };case ErrorTypeValue :return Result {Type :ResultTypeError ,ValueString :"\u0023V\u0041\u004c\u0055\u0045\u0021",ErrorMessage :msg };
+case ErrorTypeRef :return Result {Type :ResultTypeError ,ValueString :"\u0023\u0052\u0045F\u0021",ErrorMessage :msg };case ErrorTypeName :return Result {Type :ResultTypeError ,ValueString :"\u0023\u004e\u0041\u004d\u0045\u003f",ErrorMessage :msg };case ErrorTypeNum :return Result {Type :ResultTypeError ,ValueString :"\u0023\u004e\u0055M\u0021",ErrorMessage :msg };
+case ErrorTypeSpill :return Result {Type :ResultTypeError ,ValueString :"\u0023S\u0050\u0049\u004c\u004c\u0021",ErrorMessage :msg };case ErrorTypeNA :return Result {Type :ResultTypeError ,ValueString :"\u0023\u004e\u002f\u0041",ErrorMessage :msg };case ErrorTypeDivideByZero :return Result {Type :ResultTypeError ,ValueString :"\u0023D\u0049\u0056\u002f\u0030\u0021",ErrorMessage :msg };
+default:return Result {Type :ResultTypeError ,ValueString :"\u0023V\u0041\u004c\u0055\u0045\u0021",ErrorMessage :msg };};};func _ccbgc (_fegdg []string ,_gggc int )string {return _fd .Itoa (len (_fegdg [len (_fegdg )-1-_gggc ]))};type durationArgs struct{_beba float64 ;
+_gebg float64 ;_bcec float64 ;_edee float64 ;_fabd float64 ;_dgfb int ;};
+
+// NewNegate constructs a new negate expression.
+func NewNegate (e Expression )Expression {return Negate {_ebfd :e }};
+
+// Tbilleq implements the Excel TBILLEQ function.
+func Tbilleq (args []Result )Result {if len (args )!=3{return MakeErrorResult ("\u0054\u0042\u0049\u004c\u004c\u0045\u0051\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065s\u0020t\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};_ddfea ,_aaba ,_dedb :=_abcb (args [0],args [1],"\u0054B\u0049\u004c\u004c\u0045\u0051");if _dedb .Type ==ResultTypeError {return _dedb ;};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("T\u0042\u0049\u004c\u004c\u0045\u0051\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0064is\u0063\u006f\u0075\u006et\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075mb\u0065\u0072 \u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_edde :=_aaba -_ddfea ;if _edde > 365{return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0042\u0049\u004c\u004c\u0045\u0051\u0020\u0072e\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006d\u0061\u0074\u0075\u0072\u0069\u0074\u0079\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eo\u0074\u0020m\u006f\u0072e\u0020\u0074\u0068\u0061\u006e\u0020\u006f\u006e\u0065\u0020\u0079\u0065\u0061r \u0061\u0066\u0074\u0065\u0072\u0020\u0073\u0065\u0074t\u006c\u0065\u006d\u0065\u006e\u0074");
+};_acdba :=args [2].ValueNumber ;if _acdba <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0054\u0042\u0049\u004c\u004c\u0045Q\u0020\u0072\u0065q\u0075\u0069\u0072e\u0073\u0020\u0064\u0069\u0073\u0063\u006f\u0075\u006e\u0074 \u0074\u006f\u0020\u0062\u0065 p\u006f\u0073\u0069\u0074\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};return MakeNumberResult ((365*_acdba )/(360-_acdba *_edde ));};const _bcb ="(\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029\u002d"+_daga +"-\u0028\u0028\u005b\u0030\u002d\u0039\u005d\u0029\u002b\u0029";func (_cgggg Result )AsString ()Result {switch _cgggg .Type {case ResultTypeNumber :return MakeStringResult (_cgggg .Value ());
+default:return _cgggg ;};};
+
+// Reference returns an invalid reference for FunctionCall.
+func (_ecca FunctionCall )Reference (ctx Context ,ev Evaluator )Reference {return ReferenceInvalid };
+
+// Edate is an implementation of the Excel EDATE() function.
+func Edate (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0045\u0044\u0041\u0054E\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020t\u0077o\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074\u0073");};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0045\u0044A\u0054\u0045");
+};_adf :=args [1].ValueNumber ;_ada :=args [0];var _gegg float64 ;switch _ada .Type {case ResultTypeEmpty :return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0045\u0044A\u0054\u0045");
+case ResultTypeNumber :_gegg =_ada .ValueNumber ;case ResultTypeString :_dbf :=DateValue ([]Result {args [0]});if _dbf .Type ==ResultTypeError {return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0045\u0044A\u0054\u0045");
+};_gegg =_dbf .ValueNumber ;default:return MakeErrorResult ("\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0045\u0044A\u0054\u0045");};_cedd :=_ded (_gegg );_gee :=_cedd .AddDate (0,int (_adf ),0);
+_egc ,_dbbb ,_eggc :=_gee .Date ();_gfgg :=_efdc (_egc ,int (_dbbb ),_eggc );if _gfgg < 1{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063\u006fr\u0072\u0065\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006de\u006et\u0020\u0066\u006f\u0072\u0020\u0045\u0044A\u0054\u0045");
+};return MakeNumberResult (_gfgg );};func _dbdac (_bebb ,_fbc _bcd .Time )bool {_bfgf :=_bebb .Unix ();_gedd :=_fbc .Unix ();_dcgf :=_bebb .Year ();_gbd :=_fba (_dcgf ,_bcd .March ,1);if _bgea (_dcgf )&&_bfgf < _gbd &&_gedd >=_gbd {return true ;};var _bfdfa =_fbc .Year ();
+var _egge =_fba (_bfdfa ,_bcd .March ,1);return (_bgea (_bfdfa )&&_gedd >=_egge &&_bfgf < _egge );};const _daefb =57371;
+
+// String returns a string representation of a vertical range.
+func (_gbac VerticalRange )String ()string {return _gbac .verticalRangeReference ()};
+
+// String returns a string representation of SheetPrefixExpr.
+func (_beaeg SheetPrefixExpr )String ()string {return _beaeg ._aeef };const _gfe ="\u005e\u0028\u0028"+_cfed +"\u007c"+_cfg +"\u007c"+_gea +"\u007c"+_bcb +"\u0029\u0020\u0029\u003f";var _fcea Result =MakeEmptyResult ();
+
+// MakeErrorResult constructs a #VALUE! error with a given extra error message.
+// The error message is for debugging formula evaluation only and is not stored
+// in the sheet.
+func MakeErrorResult (msg string )Result {return MakeErrorResultType (ErrorTypeValue ,msg )};func _fbda (_fgge float64 ,_gded *criteriaRegex )bool {_ffdeg ,_eaef :=_fd .ParseFloat (_gded ._bagg ,64);if _eaef !=nil {return false ;};switch _gded ._ebed {case _becec :return _fgge ==_ffdeg ;
+case _gfgd :return _fgge <=_ffdeg ;case _efaf :return _fgge >=_ffdeg ;case _fcbfe :return _fgge < _ffdeg ;case _gagd :return _fgge > _ffdeg ;};return false ;};func _abb (_cabg ,_cdf ,_bcdd ,_abf int )int {if _cdf > _bcdd {return 0;};if _cfad (_abf ){return (_bcdd -_cdf +1)*30;
+};_dgdg :=0;for _agf :=_cdf ;_agf <=_bcdd ;_agf ++{_dgdg +=_ggf (_cabg ,_agf );};return _dgdg ;};
+
+// Db implements the Excel DB function.
+func Db (args []Result )Result {_cfba :=len (args );if _cfba !=4&&_cfba !=5{return MakeErrorResult ("\u0044\u0042\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0066\u006f\u0075\u0072\u0020\u006f\u0072 \u0066\u0069\u0076\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0063\u006f\u0073\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_eafg :=args [0].ValueNumber ;if _eafg < 0{return MakeErrorResultType (ErrorTypeNum ,"D\u0042\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0073\u0020\u0063\u006fs\u0074\u0020\u0074\u006f\u0020\u0062\u0065 \u006e\u006f\u006e\u0020\u006e\u0065\u0067\u0061\u0074\u0069v\u0065");
+};if args [1].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0042\u0020\u0072\u0065q\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061\u0067\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};_debe :=args [1].ValueNumber ;if _debe < 0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0073\u0061\u006c\u0076\u0061\u0067\u0065\u0020\u0074\u006f\u0020\u0062e\u0020\u006e\u006f\u006e\u0020n\u0065\u0067a\u0074\u0069\u0076\u0065");
+};if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006c\u0069\u0066\u0065\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u006eu\u006d\u0062\u0065\u0072\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_cca :=args [2].ValueNumber ;if _cca <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0042\u0020r\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u006c\u0069\u0066\u0065 \u0074\u006f\u0020\u0062\u0065\u0020\u0070\u006f\u0073\u0069\u0074\u0069\u0076\u0065");
+};if args [3].Type !=ResultTypeNumber {return MakeErrorResult ("D\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020t\u006f\u0020\u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065r \u0061\u0072\u0067u\u006de\u006e\u0074");
+};_ddfe :=args [3].ValueNumber ;if _ddfe <=0{return MakeErrorResultType (ErrorTypeNum ,"\u0044\u0042\u0020\u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0074o\u0020\u0062\u0065\u0020\u0070\u006f\u0073i\u0074\u0069\u0076\u0065");
+};if _ddfe -_cca > 1{return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063or\u0072\u0065\u0063\u0074\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0066\u006f\u0072\u0020\u0044\u0042");};_bcge :=12.0;if _cfba ==5&&args [4].Type !=ResultTypeEmpty {if args [4].Type !=ResultTypeNumber {return MakeErrorResult ("\u0044\u0042\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u006do\u006e\u0074\u0068\u0020\u0074\u006f \u0062\u0065\u0020\u006e\u0075\u006d\u0062\u0065\u0072\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_bcge =args [4].ValueNumber ;if _bcge < 1||_bcge > 12{return MakeErrorResultType (ErrorTypeNum ,"\u0044B\u0020\u0072e\u0071\u0075\u0069\u0072e\u0073\u0020\u006do\u006e\u0074\u0068\u0020\u0074\u006f\u0020\u0062\u0065 i\u006e\u0020\u0072a\u006e\u0067e\u0020\u006f\u0066\u0020\u0031\u0020a\u006e\u0064 \u0031\u0032");
+};};if _bcge ==12&&_ddfe > _cca {return MakeErrorResultType (ErrorTypeNum ,"\u0049\u006e\u0063or\u0072\u0065\u0063\u0074\u0020\u0070\u0065\u0072\u0069\u006f\u0064\u0020\u0066\u006f\u0072\u0020\u0044\u0042");};if _debe >=_eafg {return MakeNumberResult (0);
+};_gdeg :=1-_d .Pow (_debe /_eafg ,1/_cca );_gdeg =float64 (int (_gdeg *1000+0.5))/1000;_fdgc :=_eafg *_gdeg *_bcge /12;if _ddfe ==1{return MakeNumberResult (_fdgc );};_bdf :=_fdgc ;_dcge :=0.0;_cecf :=_cca ;if _cecf > _ddfe {_cecf =_ddfe ;};for _fgf :=2.0;
+_fgf <=_cecf ;_fgf ++{_dcge =(_eafg -_bdf )*_gdeg ;_bdf +=_dcge ;};if _ddfe > _cca {return MakeNumberResult ((_eafg -_bdf )*_gdeg *(12-_bcge )/12);};return MakeNumberResult (_dcge );};const _dgfea =57351;
+
+// String returns a string representation for Negate.
+func (_fgee Negate )String ()string {return "\u002d"+_fgee ._ebfd .String ()};
+
+// PrefixVerticalRange is a range expression that when evaluated returns a list of Results from references like Sheet1!AA:IJ (all cells from columns AA to IJ of sheet 'Sheet1').
+type PrefixVerticalRange struct{_fdgbe Expression ;_adfgb ,_caagf string ;};const _ebddf ="\u0052\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0054\u0079\u0070\u0065\u0049\u006e\u0076\u0061\u006c\u0069\u0064\u0052\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0054\u0079\u0070\u0065\u0043\u0065\u006c\u006c\u0052\u0065\u0066\u0065r\u0065\u006ec\u0065\u0054\u0079\u0070e\u004e\u0061\u006d\u0065\u0064\u0052\u0061\u006e\u0067\u0065R\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065\u0054y\u0070\u0065\u0052\u0061\u006e\u0067\u0065\u0052\u0065\u0066e\u0072\u0065\u006ec\u0065\u0054\u0079\u0070\u0065\u0053\u0068e\u0065\u0074";
+func _cfab (_gbc ,_bac int )int {switch _bac {case 1:if _bgea (_gbc ){return 366;}else {return 365;};case 3:return 365;default:return 360;};};
+
+// GetFormat returns an empty string for the invalid reference context.
+func (_cgcgd *ivr )GetFormat (cellRef string )string {return ""};func _ccfg (_eagd int )bool {return _eagd >=0&&_eagd <=4};func _cffe (_dcfag int )string {if _dcfag >=0&&_dcfag < len (_fbae ){if _fbae [_dcfag ]!=""{return _fbae [_dcfag ];};};return _gf .Sprintf ("\u0073\u0074\u0061\u0074\u0065\u002d\u0025\u0076",_dcfag );
+};const _ddae =57365;
+
+// CountBlank implements the COUNTBLANK function.
+func CountBlank (args []Result )Result {if len (args )==0{return MakeErrorResult ("\u0043\u004f\u0055N\u0054\u0042\u004c\u0041N\u004b\u0020\u0072\u0065\u0071\u0075\u0069r\u0065\u0073\u0020\u0061\u006e\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};return MakeNumberResult (_fbbd (args ,_bfdef ));};
+
+// ISEVEN is an implementation of the Excel ISEVEN() function.
+func IsEven (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053\u0045VE\u004e\u0028\u0029\u0020\u0061\u0063\u0063\u0065\u0070t\u0073 \u0061 \u0073i\u006e\u0067\u006c\u0065\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074");
+};if args [0].Type !=ResultTypeNumber {return MakeErrorResult ("\u0049\u0053\u0045\u0056\u0045\u004e \u0061\u0063\u0063\u0065\u0070\u0074\u0073\u0020\u0061\u0020\u006e\u0075\u006de\u0072\u0069\u0063\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");};
+_cabf :=int (args [0].ValueNumber );return MakeBoolResult (_cabf ==_cabf /2*2);};
+
+// DateValue is an implementation of the Excel DATEVALUE() function.
+func DateValue (args []Result )Result {if len (args )!=1||args [0].Type !=ResultTypeString {return MakeErrorResult ("\u0044A\u0054\u0045V\u0041\u004c\u0055\u0045 \u0072\u0065\u0071u\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069ng\u006c\u0065\u0020s\u0074\u0072i\u006e\u0067\u0020\u0061\u0072\u0067u\u006d\u0065n\u0074\u0073");
+};_bb :=_e .ToLower (args [0].ValueString );if !_cgaf (_bb ){_ ,_ ,_ ,_ ,_cad ,_bfbf :=_edbe (_bb );if _bfbf .Type ==ResultTypeError {_bfbf .ErrorMessage ="\u0049\u006e\u0063\u006f\u0072\u0072e\u0063\u0074\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0073\u0020f\u006f\u0072\u0020\u0044\u0041\u0054\u0045V\u0041\u004c\u0055\u0045";
+return _bfbf ;};if _cad {return MakeNumberResult (0);};};_dbgf ,_fef ,_bbf ,_ ,_gcg :=_fcbd (_bb );if _gcg .Type ==ResultTypeError {return _gcg ;};return MakeNumberResult (_efdc (_dbgf ,_fef ,_bbf ));};
+
+// String returns an empty string for Error.
+func (_ggg Error )String ()string {return ""};
+
+// Error is called in the case of parsing error and saves an error to a plex.
+func (_aecc *plex )Error (s string ){_af .Log .Debug ("\u0070a\u0072s\u0065\u0020\u0065\u0072\u0072\u006f\u0072\u003a\u0020\u0025\u0073",s );_aecc ._bedc =s ;};
+
+// Atan2 implements the Excel ATAN2 function.  It accepts two numeric arguments,
+// and the arguments are (x,y), reversed from normal to match Excel's behaviour.
+func Atan2 (args []Result )Result {if len (args )!=2{return MakeErrorResult ("\u0041\u0054\u0041\u004e2\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020t\u0077o\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074\u0073");};_aefcb :=args [0].AsNumber ();
+_dgeg :=args [1].AsNumber ();if _aefcb .Type ==ResultTypeNumber &&_dgeg .Type ==ResultTypeNumber {_acac :=_d .Atan2 (_dgeg .ValueNumber ,_aefcb .ValueNumber );if _acac !=_acac {return MakeErrorResult ("\u0041T\u0041N\u0032\u0020\u0072\u0065\u0074u\u0072\u006ee\u0064\u0020\u004e\u0061\u004e");
+};return MakeNumberResult (_acac );};for _ ,_cdge :=range []ResultType {_aefcb .Type ,_dgeg .Type }{switch _cdge {case ResultTypeList ,ResultTypeString :return MakeErrorResult ("\u0041\u0054\u0041\u004e\u0032\u0020r\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u006e\u0075\u006de\u0072\u0069\u0063\u0020\u0061\u0072\u0067u\u006d\u0065\u006e\u0074");
+case ResultTypeError :return _aefcb ;default:return MakeErrorResult (_gf .Sprintf ("\u0075\u006e\u0068an\u0064\u006c\u0065\u0064\u0020\u0041\u0054\u0041\u004e2\u0028)\u0020a\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_cdge ));
+};};return MakeErrorResult ("u\u006e\u0068\u0061\u006e\u0064\u006ce\u0064\u0020\u0065\u0072\u0072\u006f\u0072\u0020\u0066o\u0072\u0020\u0041T\u0041N\u0032\u0028\u0029");};var _fdfg =[]ri {{1000,"\u004d"},{900,"\u0043\u004d"},{500,"\u0044"},{400,"\u0043\u0044"},{100,"\u0043"},{90,"\u0058\u0043"},{50,"\u004c"},{40,"\u0058\u004c"},{10,"\u0058"},{9,"\u0049\u0058"},{5,"\u0056"},{4,"\u0049\u0056"},{1,"\u0049"}};
+const _cdagb int =30;func (_dfdg node )String ()string {return _gf .Sprintf ("\u007b%\u0073\u0020\u0025\u0073\u007d",_dfdg ._aefcg ,_fedf (string (_dfdg ._eadc )));};const _cefbd =57366;func _bgea (_acf int )bool {if _acf ==_acf /400*400{return true ;};
+if _acf ==_acf /100*100{return false ;};return _acf ==_acf /4*4;};
+
+// GetFilename returns an empty string for the invalid reference context.
+func (_accd *ivr )GetFilename ()string {return ""};
+
+// Match implements the MATCH function.
+func Match (args []Result )Result {_edfee :=len (args );if _edfee !=2&&_edfee !=3{return MakeErrorResult ("\u004d\u0041T\u0043\u0048\u0020\u0072e\u0071\u0075i\u0072\u0065\u0073\u0020\u0074\u0077\u006f\u0020o\u0072\u0020\u0074\u0068\u0072\u0065\u0065\u0020\u0061\u0072\u0067\u0075m\u0065\u006e\u0074\u0073");
+};_efdg :=1;if _edfee ==3&&args [2].Type !=ResultTypeEmpty {if args [2].Type !=ResultTypeNumber {return MakeErrorResult ("\u004d\u0041\u0054\u0043\u0048\u0020\u0072\u0065q\u0075\u0069\u0072es\u0020\u0074\u0068\u0065\u0020\u0074h\u0069\u0072\u0064\u0020\u0061\u0072\u0067\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f \u0062\u0065\u0020\u0061\u0020\u006e\u0075\u006db\u0065\u0072");
+};_ddc :=args [2].ValueNumber ;if _ddc ==-1||_ddc ==0{_efdg =int (_ddc );};};_eggg :=args [1];var _cegf []Result ;switch _eggg .Type {case ResultTypeList :_cegf =_eggg .ValueList ;case ResultTypeArray :_dddga :=_eggg .ValueArray ;for _ ,_dbcf :=range _dddga {if len (_dbcf )!=1{return MakeErrorResult ("\u004d\u0041\u0054\u0043\u0048\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068e\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006f\u006e\u0065\u002dd\u0069\u006d\u0065\u006e\u0073\u0069o\u006e\u0061l\u0020\u0072a\u006eg\u0065");
+};_cegf =append (_cegf ,_dbcf [0]);};default:return MakeErrorResult ("\u004d\u0041\u0054\u0043\u0048\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0074\u0068e\u0020\u0073\u0065\u0063\u006f\u006e\u0064\u0020\u0061\u0072g\u0075\u006d\u0065\u006e\u0074\u0020\u0074\u006f\u0020\u0062\u0065\u0020\u0061\u0020\u006f\u006e\u0065\u002dd\u0069\u006d\u0065\u006e\u0073\u0069o\u006e\u0061l\u0020\u0072a\u006eg\u0065");
+};_dbecg :=_fdab (args [0]);switch _efdg {case 0:for _ecdd ,_cfde :=range _cegf {if _gdde (_cfde ,_dbecg ){return MakeNumberResult (float64 (_ecdd +1));};};case -1:for _cfag :=0;_cfag < len (_cegf );_cfag ++{if _gdde (_cegf [_cfag ],_dbecg ){return MakeNumberResult (float64 (_cfag +1));
+};if _dbecg ._badfb &&(_cegf [_cfag ].ValueNumber < _dbecg ._gfaa ){if _cfag ==0{return MakeErrorResultType (ErrorTypeNA ,"");};return MakeNumberResult (float64 (_cfag ));};};case 1:for _daab :=0;_daab < len (_cegf );_daab ++{if _gdde (_cegf [_daab ],_dbecg ){return MakeNumberResult (float64 (_daab +1));
+};if _dbecg ._badfb &&(_cegf [_daab ].ValueNumber > _dbecg ._gfaa ){if _daab ==0{return MakeErrorResultType (ErrorTypeNA ,"");};return MakeNumberResult (float64 (_daab ));};};};return MakeErrorResultType (ErrorTypeNA ,"");};
+
+// NewBool constructs a new boolean expression.
+func NewBool (v string )Expression {_bcf ,_bdg :=_fd .ParseBool (v );if _bdg !=nil {_af .Log .Debug ("\u0065\u0072\u0072\u006f\u0072\u0020p\u0061\u0072\u0073\u0069\u006e\u0067\u0020\u0066\u006f\u0072\u006d\u0075\u006ca\u0020\u0062\u006f\u006f\u006c\u0020\u0025s\u003a\u0020\u0025\u0076",v ,_bdg );
+};return Bool {_ec :_bcf };};const _fccc =-1000;func (_dacbbb *ivr )SetOffset (col ,row uint32 ){};
+
+// ISNUMBER is an implementation of the Excel ISNUMBER() function.
+func IsNumber (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0049\u0053NU\u004d\u0042\u0045R\u0028\u0029\u0020\u0061cce\u0070ts\u0020\u0061\u0020\u0073\u0069\u006e\u0067le\u0020\u0061\u0072\u0067\u0075\u006d\u0065n\u0074");};return MakeBoolResult (args [0].Type ==ResultTypeNumber );
+};
+
+// Trim is an implementation of the Excel TRIM function that removes leading,
+// trailing and consecutive spaces.
+func Trim (args []Result )Result {if len (args )!=1{return MakeErrorResult ("\u0054\u0052\u0049\u004d\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0073t\u0072\u0069\u006e\u0067\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_dbaea :=args [0].AsString ();if _dbaea .Type !=ResultTypeString {return MakeErrorResult ("\u0054\u0052\u0049\u004d\u0020\u0072\u0065\u0071\u0075\u0069\u0072\u0065\u0073\u0020\u0061\u0020\u0073\u0069\u006e\u0067\u006c\u0065\u0020\u0073t\u0072\u0069\u006e\u0067\u0020a\u0072\u0067u\u006d\u0065\u006e\u0074");
+};_gffea :=_c .Buffer {};_edge :=false ;_fdgdac :=false ;_fafae :=0;for _ ,_eaeefa :=range _dbaea .ValueString {_bgeba :=_eaeefa ==' ';if _bgeba {if !_edge {continue ;};if !_fdgdac {_fafae ++;_gffea .WriteRune (_eaeefa );};}else {_fafae =0;_edge =true ;
+_gffea .WriteRune (_eaeefa );};_fdgdac =_bgeba ;};_gffea .Truncate (_gffea .Len ()-_fafae );return MakeStringResult (_gffea .String ());};func _dabdd (_ecefg _bcd .Time )bool {return _bcd .Now ().Sub (_ecefg )>=_afab };
+
+// Eval evaluates a range with prefix returning a list of results or an error.
+func (_cfebe PrefixRangeExpr )Eval (ctx Context ,ev Evaluator )Result {_daeed :=_cfebe ._dgbf .Reference (ctx ,ev );_gegb :=_cfebe ._aada .Reference (ctx ,ev );_dbcgf :=_cfebe ._gdbf .Reference (ctx ,ev );switch _daeed .Type {case ReferenceTypeSheet :if _daead (_daeed ,ctx ){return MakeErrorResultType (ErrorTypeName ,_gf .Sprintf ("\u0053h\u0065e\u0074\u0020\u0025\u0073\u0020n\u006f\u0074 \u0066\u006f\u0075\u006e\u0064",_daeed .Value ));
+};_cfee :=_gcfb (_daeed ,_gegb ,_dbcgf );if _gegb .Type ==ReferenceTypeCell &&_dbcgf .Type ==ReferenceTypeCell {if _bdgaf ,_fdebe :=ev .GetFromCache (_cfee );_fdebe {return _bdgaf ;}else {_fedb :=_ebcb (ctx .Sheet (_daeed .Value ),ev ,_gegb .Value ,_dbcgf .Value );
+ev .SetCache (_cfee ,_fedb );return _fedb ;};};return MakeErrorResult ("\u0069\u006e\u0076\u0061\u006c\u0069\u0064\u0020\u0072a\u006e\u0067\u0065\u0020"+_cfee );default:return MakeErrorResult (_gf .Sprintf ("\u006e\u006f\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0020\u0066\u006f\u0072\u0020r\u0065f\u0065\u0072\u0065\u006e\u0063\u0065\u0020\u0074\u0079\u0070\u0065\u0020\u0025\u0073",_daeed .Type ));
+};};
