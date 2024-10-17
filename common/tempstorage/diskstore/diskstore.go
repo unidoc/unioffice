@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_f "github.com/unidoc/unioffice/common/tempstorage";_eg "io/ioutil";_ga "os";_g "strings";);
-
-// RemoveAll removes all files in the directory
-func (_bg diskStorage )RemoveAll (dir string )error {if _g .HasPrefix (dir ,_ga .TempDir ()){return _ga .RemoveAll (dir );};return nil ;};
-
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_b diskStorage )TempFile (dir ,pattern string )(_f .File ,error ){return _eg .TempFile (dir ,pattern );};
-
-// Add is not applicable in the diskstore implementation
-func (_df diskStorage )Add (path string )error {return nil };
-
-// SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_fd :=diskStorage {};_f .SetAsStorage (&_fd )};type diskStorage struct{};
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_fc diskStorage )TempDir (pattern string )(string ,error ){return _eg .TempDir ("",pattern )};
+package diskstore ;import (_gb "github.com/unidoc/unioffice/common/tempstorage";_d "io/ioutil";_gg "os";_e "strings";);type diskStorage struct{};
 
 // Open opens file from disk according to a path
-func (_d diskStorage )Open (path string )(_f .File ,error ){return _ga .OpenFile (path ,_ga .O_RDWR ,0644)};
+func (_ff diskStorage )Open (path string )(_gb .File ,error ){return _gg .OpenFile (path ,_gg .O_RDWR ,0644);};
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_a diskStorage )TempDir (pattern string )(string ,error ){return _d .TempDir ("",pattern )};
+
+// RemoveAll removes all files in the directory
+func (_c diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_gg .TempDir ()){return _gg .RemoveAll (dir );};return nil ;};
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_da diskStorage )TempFile (dir ,pattern string )(_gb .File ,error ){return _d .TempFile (dir ,pattern );};
+
+// Add is not applicable in the diskstore implementation
+func (_cb diskStorage )Add (path string )error {return nil };
+
+// SetAsStorage sets temp storage as a disk storage
+func SetAsStorage (){_f :=diskStorage {};_gb .SetAsStorage (&_f )};

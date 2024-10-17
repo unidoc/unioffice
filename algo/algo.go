@@ -9,10 +9,10 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package algo ;import _e "strconv";
+package algo ;import _fe "strconv";func RepeatString (s string ,cnt int )string {if cnt <=0{return "";};_c :=make ([]byte ,len (s )*cnt );_ef :=[]byte (s );for _gc :=0;_gc < cnt ;_gc ++{copy (_c [_gc :],_ef );};return string (_c );};func _e (_fa byte )bool {return _fa >='0'&&_fa <='9'};
+
 
 // NaturalLess compares two strings in a human manner so rId2 sorts less than rId10
-func NaturalLess (lhs ,rhs string )bool {_cea ,_b :=0,0;for _cea < len (lhs )&&_b < len (rhs ){_f :=lhs [_cea ];_gf :=rhs [_b ];_cf :=_g (_f );_ced :=_g (_gf );switch {case _cf &&!_ced :return true ;case !_cf &&_ced :return false ;case !_cf &&!_ced :if _f !=_gf {return _f < _gf ;
-};_cea ++;_b ++;default:_cc :=_cea +1;_bd :=_b +1;for _cc < len (lhs )&&_g (lhs [_cc ]){_cc ++;};for _bd < len (rhs )&&_g (rhs [_bd ]){_bd ++;};_a ,_ :=_e .ParseUint (lhs [_cea :_cc ],10,64);_fd ,_ :=_e .ParseUint (rhs [_cea :_bd ],10,64);if _a !=_fd {return _a < _fd ;
-};_cea =_cc ;_b =_bd ;};};return len (lhs )< len (rhs );};func RepeatString (s string ,cnt int )string {if cnt <=0{return "";};_bdg :=make ([]byte ,len (s )*cnt );_d :=[]byte (s );for _ceac :=0;_ceac < cnt ;_ceac ++{copy (_bdg [_ceac :],_d );};return string (_bdg );
-};func _g (_ce byte )bool {return _ce >='0'&&_ce <='9'};
+func NaturalLess (lhs ,rhs string )bool {_d ,_fg :=0,0;for _d < len (lhs )&&_fg < len (rhs ){_g :=lhs [_d ];_ff :=rhs [_fg ];_eb :=_e (_g );_a :=_e (_ff );switch {case _eb &&!_a :return true ;case !_eb &&_a :return false ;case !_eb &&!_a :if _g !=_ff {return _g < _ff ;
+};_d ++;_fg ++;default:_ea :=_d +1;_fga :=_fg +1;for _ea < len (lhs )&&_e (lhs [_ea ]){_ea ++;};for _fga < len (rhs )&&_e (rhs [_fga ]){_fga ++;};_eag ,_ :=_fe .ParseUint (lhs [_d :_ea ],10,64);_ge ,_ :=_fe .ParseUint (rhs [_d :_fga ],10,64);if _eag !=_ge {return _eag < _ge ;
+};_d =_ea ;_fg =_fga ;};};return len (lhs )< len (rhs );};
