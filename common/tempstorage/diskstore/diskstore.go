@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_gb "github.com/unidoc/unioffice/common/tempstorage";_d "io/ioutil";_gg "os";_e "strings";);type diskStorage struct{};
-
-// Open opens file from disk according to a path
-func (_ff diskStorage )Open (path string )(_gb .File ,error ){return _gg .OpenFile (path ,_gg .O_RDWR ,0644);};
+package diskstore ;import (_gd "github.com/unidoc/unioffice/common/tempstorage";_a "io/ioutil";_f "os";_gc "strings";);type diskStorage struct{};
 
 // TempFile creates a new temp directory by calling ioutil TempDir
-func (_a diskStorage )TempDir (pattern string )(string ,error ){return _d .TempDir ("",pattern )};
-
-// RemoveAll removes all files in the directory
-func (_c diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_gg .TempDir ()){return _gg .RemoveAll (dir );};return nil ;};
+func (_c diskStorage )TempDir (pattern string )(string ,error ){return _a .TempDir ("",pattern )};
 
 // TempFile creates a new temp file by calling ioutil TempFile
-func (_da diskStorage )TempFile (dir ,pattern string )(_gb .File ,error ){return _d .TempFile (dir ,pattern );};
+func (_e diskStorage )TempFile (dir ,pattern string )(_gd .File ,error ){return _a .TempFile (dir ,pattern );};
 
 // Add is not applicable in the diskstore implementation
-func (_cb diskStorage )Add (path string )error {return nil };
+func (_ce diskStorage )Add (path string )error {return nil };
+
+// RemoveAll removes all files in the directory
+func (_b diskStorage )RemoveAll (dir string )error {if _gc .HasPrefix (dir ,_f .TempDir ()){return _f .RemoveAll (dir );};return nil ;};
+
+// Open opens file from disk according to a path
+func (_fa diskStorage )Open (path string )(_gd .File ,error ){return _f .OpenFile (path ,_f .O_RDWR ,0644)};
 
 // SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_f :=diskStorage {};_gb .SetAsStorage (&_f )};
+func SetAsStorage (){_d :=diskStorage {};_gd .SetAsStorage (&_d )};
