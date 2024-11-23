@@ -11,44 +11,43 @@
 
 // Package license helps manage commercial licenses and check if they
 // are valid for the version of UniOffice used.
-package license ;import _ge "github.com/unidoc/unioffice/internal/license";
-
-// GetMeteredState checks the currently used metered document usage status,
-// documents used and credits available.
-func GetMeteredState ()(_ge .MeteredStatus ,error ){return _ge .GetMeteredState ()};
-
-// LegacyLicense holds the old-style unioffice license information.
-type LegacyLicense =_ge .LegacyLicense ;
+package license ;import _gg "github.com/unidoc/unioffice/internal/license";
 
 // LegacyLicenseType is the type of license
-type LegacyLicenseType =_ge .LegacyLicenseType ;
-
-// SetLegacyLicenseKey installs a legacy license code. License codes issued prior to June 2019.
-// Will be removed at some point in a future major version.
-func SetLegacyLicenseKey (s string )error {return _ge .SetLegacyLicenseKey (s )};
-
-// MakeUnlicensedKey returns a default key.
-func MakeUnlicensedKey ()*LicenseKey {return _ge .MakeUnlicensedKey ()};
-
-// LicenseKey represents a loaded license key.
-type LicenseKey =_ge .LicenseKey ;
-
-// SetMeteredKeyUsageLogVerboseMode sets the metered License API Key usage log verbose mode.
-// Default value `false`, set to `true` will log the credit usages and print out to console with log level INFO.
-func SetMeteredKeyUsageLogVerboseMode (val bool ){_ge .SetMeteredKeyUsageLogVerboseMode (val )};
-
-// SetLicenseKey sets and validates the license key.
-func SetLicenseKey (content string ,customerName string )error {return _ge .SetLicenseKey (content ,customerName );};const (LicenseTierUnlicensed =_ge .LicenseTierUnlicensed ;LicenseTierCommunity =_ge .LicenseTierCommunity ;LicenseTierIndividual =_ge .LicenseTierIndividual ;
-LicenseTierBusiness =_ge .LicenseTierBusiness ;);
-
-// GetLicenseKey returns the currently loaded license key.
-func GetLicenseKey ()*LicenseKey {return _ge .GetLicenseKey ()};
-
-// SetMeteredKey sets the metered License API key required for SaaS operation.
-// Document usage is reported periodically for the product to function correctly.
-func SetMeteredKey (apiKey string )error {return _ge .SetMeteredKey (apiKey )};
+type LegacyLicenseType =_gg .LegacyLicenseType ;
 
 // SetMeteredKeyPersistentCache sets the metered License API Key persistent cache.
 // Default value `true`, set to `false` will report the usage immediately to license server,
 // this can be used when there's no access to persistent data storage.
-func SetMeteredKeyPersistentCache (val bool ){_ge .SetMeteredKeyPersistentCache (val )};
+func SetMeteredKeyPersistentCache (val bool ){_gg .SetMeteredKeyPersistentCache (val )};
+
+// GetLicenseKey returns the currently loaded license key.
+func GetLicenseKey ()*LicenseKey {return _gg .GetLicenseKey ()};
+
+// SetMeteredKey sets the metered License API key required for SaaS operation.
+// Document usage is reported periodically for the product to function correctly.
+func SetMeteredKey (apiKey string )error {return _gg .SetMeteredKey (apiKey )};
+
+// SetMeteredKeyUsageLogVerboseMode sets the metered License API Key usage log verbose mode.
+// Default value `false`, set to `true` will log the credit usages and print out to console with log level INFO.
+func SetMeteredKeyUsageLogVerboseMode (val bool ){_gg .SetMeteredKeyUsageLogVerboseMode (val )};
+
+// LicenseKey represents a loaded license key.
+type LicenseKey =_gg .LicenseKey ;const (LicenseTierUnlicensed =_gg .LicenseTierUnlicensed ;LicenseTierCommunity =_gg .LicenseTierCommunity ;LicenseTierIndividual =_gg .LicenseTierIndividual ;LicenseTierBusiness =_gg .LicenseTierBusiness ;);
+
+// SetLicenseKey sets and validates the license key.
+func SetLicenseKey (content string ,customerName string )error {return _gg .SetLicenseKey (content ,customerName );};
+
+// LegacyLicense holds the old-style unioffice license information.
+type LegacyLicense =_gg .LegacyLicense ;
+
+// GetMeteredState checks the currently used metered document usage status,
+// documents used and credits available.
+func GetMeteredState ()(_gg .MeteredStatus ,error ){return _gg .GetMeteredState ()};
+
+// SetLegacyLicenseKey installs a legacy license code. License codes issued prior to June 2019.
+// Will be removed at some point in a future major version.
+func SetLegacyLicenseKey (s string )error {return _gg .SetLegacyLicenseKey (s )};
+
+// MakeUnlicensedKey returns a default key.
+func MakeUnlicensedKey ()*LicenseKey {return _gg .MakeUnlicensedKey ()};
