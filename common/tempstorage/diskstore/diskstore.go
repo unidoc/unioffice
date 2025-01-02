@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_gd "github.com/unidoc/unioffice/common/tempstorage";_a "io/ioutil";_f "os";_gc "strings";);type diskStorage struct{};
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_c diskStorage )TempDir (pattern string )(string ,error ){return _a .TempDir ("",pattern )};
-
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_e diskStorage )TempFile (dir ,pattern string )(_gd .File ,error ){return _a .TempFile (dir ,pattern );};
-
-// Add is not applicable in the diskstore implementation
-func (_ce diskStorage )Add (path string )error {return nil };
-
-// RemoveAll removes all files in the directory
-func (_b diskStorage )RemoveAll (dir string )error {if _gc .HasPrefix (dir ,_f .TempDir ()){return _f .RemoveAll (dir );};return nil ;};
-
-// Open opens file from disk according to a path
-func (_fa diskStorage )Open (path string )(_gd .File ,error ){return _f .OpenFile (path ,_f .O_RDWR ,0644)};
+package diskstore ;import (_d "github.com/unidoc/unioffice/common/tempstorage";_e "io/ioutil";_g "os";_b "strings";);
 
 // SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_d :=diskStorage {};_gd .SetAsStorage (&_d )};
+func SetAsStorage (){_gc :=diskStorage {};_d .SetAsStorage (&_gc )};
+
+// Open opens file from disk according to a path
+func (_bb diskStorage )Open (path string )(_d .File ,error ){return _g .OpenFile (path ,_g .O_RDWR ,0644)};
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_a diskStorage )TempFile (dir ,pattern string )(_d .File ,error ){return _e .TempFile (dir ,pattern );};
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_fg diskStorage )TempDir (pattern string )(string ,error ){return _e .TempDir ("",pattern )};type diskStorage struct{};
+
+// RemoveAll removes all files in the directory
+func (_ee diskStorage )RemoveAll (dir string )error {if _b .HasPrefix (dir ,_g .TempDir ()){return _g .RemoveAll (dir );};return nil ;};
+
+// Add is not applicable in the diskstore implementation
+func (_c diskStorage )Add (path string )error {return nil };

@@ -11,42 +11,43 @@
 
 // Package memstore implements tempStorage interface
 // by using memory as a storage
-package memstore ;import (_gb "encoding/hex";_fb "errors";_a "fmt";_cae "github.com/unidoc/unioffice/common/tempstorage";_cg "io";_g "io/ioutil";_f "math/rand";_ca "sync";);
+package memstore ;import (_a "encoding/hex";_c "errors";_d "fmt";_bf "github.com/unidoc/unioffice/common/tempstorage";_bc "io";_ec "io/ioutil";_ea "math/rand";_e "sync";);func _cd (_bcb int )(string ,error ){_gd :=make ([]byte ,_bcb );if _ ,_ceee :=_ea .Read (_gd );
+_ceee !=nil {return "",_ceee ;};return _a .EncodeToString (_gd ),nil ;};type memStorage struct{_bff _e .Map };type memDataCell struct{_dfe string ;_cee []byte ;_abd int64 ;};
 
 // ReadAt reads from the underlying memDataCell at an offset provided in order to implement ReaderAt interface.
 // It does not affect f.readOffset.
-func (_cfa *memFile )ReadAt (p []byte ,readOffset int64 )(int ,error ){_cea :=_cfa ._b ._gfa ;_fe :=int64 (len (p ));if _fe > _cea {_fe =_cea ;p =p [:_fe ];};if readOffset >=_cea {return 0,_cg .EOF ;};_bd :=readOffset +_fe ;if _bd >=_cea {_bd =_cea ;};
-_db :=copy (p ,_cfa ._b ._bc [readOffset :_bd ]);return _db ,nil ;};
-
-// Name returns the filename of the underlying memDataCell
-func (_e *memFile )Name ()string {return _e ._b ._gfb };func _aed (_af int )(string ,error ){_fdb :=make ([]byte ,_af );if _ ,_cdb :=_f .Read (_fdb );_cdb !=nil {return "",_cdb ;};return _gb .EncodeToString (_fdb ),nil ;};
-
-// Write writes to the end of the underlying memDataCell in order to implement Writer interface
-func (_cfaa *memFile )Write (p []byte )(int ,error ){_cfaa ._b ._bc =append (_cfaa ._b ._bc ,p ...);_cfaa ._b ._gfa +=int64 (len (p ));return len (p ),nil ;};type memStorage struct{_gfg _ca .Map };
-
-// TempDir creates a name for a new temp directory using a pattern argument
-func (_ed *memStorage )TempDir (pattern string )(string ,error ){return _dca (pattern ),nil };type memDataCell struct{_gfb string ;_bc []byte ;_gfa int64 ;};
-
-// RemoveAll removes all files according to the dir argument prefix
-func (_ee *memStorage )RemoveAll (dir string )error {_ee ._gfg .Range (func (_cfb ,_gba interface{})bool {_ee ._gfg .Delete (_cfb );return true });return nil ;};
-
-// Open returns tempstorage File object by name
-func (_dg *memStorage )Open (path string )(_cae .File ,error ){_cd ,_aa :=_dg ._gfg .Load (path );if !_aa {return nil ,_fb .New (_a .Sprintf ("\u0043\u0061\u006eno\u0074\u0020\u006f\u0070\u0065\u006e\u0020\u0074\u0068\u0065\u0020\u0066\u0069\u006c\u0065\u0020\u0025\u0073",path ));
-};return &memFile {_b :_cd .(*memDataCell )},nil ;};
-
-// Close is not applicable in this implementation
-func (_fd *memFile )Close ()error {return nil };
-
-// Add reads a file from a disk and adds it to the storage
-func (_ge *memStorage )Add (path string )error {_ ,_dd :=_ge ._gfg .Load (path );if _dd {return nil ;};_dc ,_edf :=_g .ReadFile (path );if _edf !=nil {return _edf ;};_ge ._gfg .Store (path ,&memDataCell {_gfb :path ,_bc :_dc ,_gfa :int64 (len (_dc ))});
-return nil ;};func _dca (_dde string )string {_fa ,_ :=_aed (6);return _dde +_fa };
-
-// TempFile creates a new empty file in the storage and returns it
-func (_da *memStorage )TempFile (dir ,pattern string )(_cae .File ,error ){_cgf :=dir +"\u002f"+_dca (pattern );_ab :=&memDataCell {_gfb :_cgf ,_bc :[]byte {}};_ea :=&memFile {_b :_ab };_da ._gfg .Store (_cgf ,_ab );return _ea ,nil ;};
-
-// Read reads from the underlying memDataCell in order to implement Reader interface
-func (_ad *memFile )Read (p []byte )(int ,error ){_gg :=_ad ._cf ;_ggc :=_ad ._b ._gfa ;_d :=int64 (len (p ));if _d > _ggc {_d =_ggc ;p =p [:_d ];};if _gg >=_ggc {return 0,_cg .EOF ;};_gf :=_gg +_d ;if _gf >=_ggc {_gf =_ggc ;};_ce :=copy (p ,_ad ._b ._bc [_gg :_gf ]);
-_ad ._cf =_gf ;return _ce ,nil ;};type memFile struct{_b *memDataCell ;_cf int64 ;};
+func (_cb *memFile )ReadAt (p []byte ,readOffset int64 )(int ,error ){_ab :=_cb ._ad ._abd ;_f :=int64 (len (p ));if _f > _ab {_f =_ab ;p =p [:_f ];};if readOffset >=_ab {return 0,_bc .EOF ;};_dd :=readOffset +_f ;if _dd >=_ab {_dd =_ab ;};_ce :=copy (p ,_cb ._ad ._cee [readOffset :_dd ]);
+return _ce ,nil ;};
 
 // SetAsStorage sets temp storage as a memory storage
-func SetAsStorage (){_gfd :=memStorage {_gfg :_ca .Map {}};_cae .SetAsStorage (&_gfd )};
+func SetAsStorage (){_be :=memStorage {_bff :_e .Map {}};_bf .SetAsStorage (&_be )};
+
+// Write writes to the end of the underlying memDataCell in order to implement Writer interface
+func (_ag *memFile )Write (p []byte )(int ,error ){_ag ._ad ._cee =append (_ag ._ad ._cee ,p ...);_ag ._ad ._abd +=int64 (len (p ));return len (p ),nil ;};
+
+// Name returns the filename of the underlying memDataCell
+func (_db *memFile )Name ()string {return _db ._ad ._dfe };type memFile struct{_ad *memDataCell ;_eb int64 ;};
+
+// Close is not applicable in this implementation
+func (_aad *memFile )Close ()error {return nil };
+
+// Open returns tempstorage File object by name
+func (_bfd *memStorage )Open (path string )(_bf .File ,error ){_ed ,_fe :=_bfd ._bff .Load (path );if !_fe {return nil ,_c .New (_d .Sprintf ("\u0043\u0061\u006eno\u0074\u0020\u006f\u0070\u0065\u006e\u0020\u0074\u0068\u0065\u0020\u0066\u0069\u006c\u0065\u0020\u0025\u0073",path ));
+};return &memFile {_ad :_ed .(*memDataCell )},nil ;};
+
+// Read reads from the underlying memDataCell in order to implement Reader interface
+func (_aa *memFile )Read (p []byte )(int ,error ){_ba :=_aa ._eb ;_ead :=_aa ._ad ._abd ;_df :=int64 (len (p ));if _df > _ead {_df =_ead ;p =p [:_df ];};if _ba >=_ead {return 0,_bc .EOF ;};_cf :=_ba +_df ;if _cf >=_ead {_cf =_ead ;};_cfc :=copy (p ,_aa ._ad ._cee [_ba :_cf ]);
+_aa ._eb =_cf ;return _cfc ,nil ;};
+
+// RemoveAll removes all files according to the dir argument prefix
+func (_bd *memStorage )RemoveAll (dir string )error {_bd ._bff .Range (func (_af ,_gb interface{})bool {_bd ._bff .Delete (_af );return true });return nil ;};func _ff (_ca string )string {_abb ,_ :=_cd (6);return _ca +_abb };
+
+// TempDir creates a name for a new temp directory using a pattern argument
+func (_de *memStorage )TempDir (pattern string )(string ,error ){return _ff (pattern ),nil };
+
+// Add reads a file from a disk and adds it to the storage
+func (_dfa *memStorage )Add (path string )error {_ ,_ef :=_dfa ._bff .Load (path );if _ef {return nil ;};_dg ,_edb :=_ec .ReadFile (path );if _edb !=nil {return _edb ;};_dfa ._bff .Store (path ,&memDataCell {_dfe :path ,_cee :_dg ,_abd :int64 (len (_dg ))});
+return nil ;};
+
+// TempFile creates a new empty file in the storage and returns it
+func (_cec *memStorage )TempFile (dir ,pattern string )(_bf .File ,error ){_adc :=dir +"\u002f"+_ff (pattern );_fa :=&memDataCell {_dfe :_adc ,_cee :[]byte {}};_g :=&memFile {_ad :_fa };_cec ._bff .Store (_adc ,_fa );return _g ,nil ;};

@@ -9,26 +9,26 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package tempstorage ;import _g "io";type storage interface{Open (_a string )(File ,error );TempFile (_b ,_f string )(File ,error );TempDir (_e string )(string ,error );RemoveAll (_cg string )error ;Add (_d string )error ;};var _ac storage ;
+package tempstorage ;import _da "io";
+
+// RemoveAll removes all files according to the dir argument prefix.
+func RemoveAll (dir string )error {return _b .RemoveAll (dir )};
+
+// Add reads a file from a disk and adds it to the storage.
+func Add (path string )error {return _b .Add (path )};
+
+// TempFile creates new empty file in the storage and returns it.
+func TempFile (dir ,pattern string )(File ,error ){return _b .TempFile (dir ,pattern )};
 
 // File is a representation of a storage file
 // with Read, Write, Close and Name methods identical to os.File.
-type File interface{_g .Reader ;_g .ReaderAt ;_g .Writer ;_g .Closer ;Name ()string ;};
-
-// Add reads a file from a disk and adds it to the storage.
-func Add (path string )error {return _ac .Add (path )};
-
-// TempFile creates new empty file in the storage and returns it.
-func TempFile (dir ,pattern string )(File ,error ){return _ac .TempFile (dir ,pattern )};
-
-// RemoveAll removes all files according to the dir argument prefix.
-func RemoveAll (dir string )error {return _ac .RemoveAll (dir )};
-
-// Open returns tempstorage File object by name.
-func Open (path string )(File ,error ){return _ac .Open (path )};
-
-// TempDir creates a name for a new temp directory using a pattern argument.
-func TempDir (pattern string )(string ,error ){return _ac .TempDir (pattern )};
+type File interface{_da .Reader ;_da .ReaderAt ;_da .Writer ;_da .Closer ;Name ()string ;};var _b storage ;
 
 // SetAsStorage changes temporary storage to newStorage.
-func SetAsStorage (newStorage storage ){_ac =newStorage };
+func SetAsStorage (newStorage storage ){_b =newStorage };type storage interface{Open (_de string )(File ,error );TempFile (_e ,_a string )(File ,error );TempDir (_g string )(string ,error );RemoveAll (_f string )error ;Add (_dg string )error ;};
+
+// Open returns tempstorage File object by name.
+func Open (path string )(File ,error ){return _b .Open (path )};
+
+// TempDir creates a name for a new temp directory using a pattern argument.
+func TempDir (pattern string )(string ,error ){return _b .TempDir (pattern )};
