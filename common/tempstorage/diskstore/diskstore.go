@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_d "github.com/unidoc/unioffice/common/tempstorage";_e "io/ioutil";_g "os";_b "strings";);
-
-// SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_gc :=diskStorage {};_d .SetAsStorage (&_gc )};
+package diskstore ;import (_a "github.com/unidoc/unioffice/v2/common/tempstorage";_g "io/ioutil";_gg "os";_e "strings";);type diskStorage struct{};
 
 // Open opens file from disk according to a path
-func (_bb diskStorage )Open (path string )(_d .File ,error ){return _g .OpenFile (path ,_g .O_RDWR ,0644)};
-
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_a diskStorage )TempFile (dir ,pattern string )(_d .File ,error ){return _e .TempFile (dir ,pattern );};
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_fg diskStorage )TempDir (pattern string )(string ,error ){return _e .TempDir ("",pattern )};type diskStorage struct{};
-
-// RemoveAll removes all files in the directory
-func (_ee diskStorage )RemoveAll (dir string )error {if _b .HasPrefix (dir ,_g .TempDir ()){return _g .RemoveAll (dir );};return nil ;};
+func (_ab diskStorage )Open (path string )(_a .File ,error ){return _gg .OpenFile (path ,_gg .O_RDWR ,0644);};
 
 // Add is not applicable in the diskstore implementation
-func (_c diskStorage )Add (path string )error {return nil };
+func (_d diskStorage )Add (path string )error {return nil };
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_fb diskStorage )TempDir (pattern string )(string ,error ){return _g .TempDir ("",pattern )};
+
+// SetAsStorage sets temp storage as a disk storage
+func SetAsStorage (){_f :=diskStorage {};_a .SetAsStorage (&_f )};
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_eb diskStorage )TempFile (dir ,pattern string )(_a .File ,error ){return _g .TempFile (dir ,pattern );};
+
+// RemoveAll removes all files in the directory
+func (_ac diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_gg .TempDir ()){return _gg .RemoveAll (dir );};return nil ;};

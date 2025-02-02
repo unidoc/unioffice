@@ -9,9 +9,10 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package algo ;import _d "strconv";func RepeatString (s string ,cnt int )string {if cnt <=0{return "";};_fb :=make ([]byte ,len (s )*cnt );_gd :=[]byte (s );for _egd :=0;_egd < cnt ;_egd ++{copy (_fb [_egd :],_gd );};return string (_fb );};
+package algo ;import _f "strconv";func _e (_c byte )bool {return _c >='0'&&_c <='9'};
 
 // NaturalLess compares two strings in a human manner so rId2 sorts less than rId10
-func NaturalLess (lhs ,rhs string )bool {_g ,_dc :=0,0;for _g < len (lhs )&&_dc < len (rhs ){_gc :=lhs [_g ];_a :=rhs [_dc ];_dg :=_f (_gc );_df :=_f (_a );switch {case _dg &&!_df :return true ;case !_dg &&_df :return false ;case !_dg &&!_df :if _gc !=_a {return _gc < _a ;
-};_g ++;_dc ++;default:_dfd :=_g +1;_eg :=_dc +1;for _dfd < len (lhs )&&_f (lhs [_dfd ]){_dfd ++;};for _eg < len (rhs )&&_f (rhs [_eg ]){_eg ++;};_da ,_ :=_d .ParseUint (lhs [_g :_dfd ],10,64);_gcb ,_ :=_d .ParseUint (rhs [_g :_eg ],10,64);if _da !=_gcb {return _da < _gcb ;
-};_g =_dfd ;_dc =_eg ;};};return len (lhs )< len (rhs );};func _f (_c byte )bool {return _c >='0'&&_c <='9'};
+func NaturalLess (lhs ,rhs string )bool {_b ,_fe :=0,0;for _b < len (lhs )&&_fe < len (rhs ){_a :=lhs [_b ];_ae :=rhs [_fe ];_fc :=_e (_a );_ca :=_e (_ae );switch {case _fc &&!_ca :return true ;case !_fc &&_ca :return false ;case !_fc &&!_ca :if _a !=_ae {return _a < _ae ;
+};_b ++;_fe ++;default:_fca :=_b +1;_ce :=_fe +1;for _fca < len (lhs )&&_e (lhs [_fca ]){_fca ++;};for _ce < len (rhs )&&_e (rhs [_ce ]){_ce ++;};_ad ,_ :=_f .ParseUint (lhs [_b :_fca ],10,64);_eg ,_ :=_f .ParseUint (rhs [_b :_ce ],10,64);if _ad !=_eg {return _ad < _eg ;
+};_b =_fca ;_fe =_ce ;};};return len (lhs )< len (rhs );};func RepeatString (s string ,cnt int )string {if cnt <=0{return "";};_ea :=make ([]byte ,len (s )*cnt );_ff :=[]byte (s );for _eae :=0;_eae < cnt ;_eae ++{copy (_ea [_eae :],_ff );};return string (_ea );
+};
