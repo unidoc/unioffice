@@ -9,44 +9,47 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package powerpoint ;import (_g "encoding/xml";_gg "fmt";_b "github.com/unidoc/unioffice";);type CT_Rel struct{IdAttr *string ;};func (_ffd *Textdata )MarshalXML (e *_g .Encoder ,start _g .StartElement )error {start .Attr =append (start .Attr ,_g .Attr {Name :_g .Name {Local :"\u0078\u006d\u006cn\u0073"},Value :"\u0075\u0072\u006e\u003a\u0073\u0063\u0068e\u006d\u0061\u0073-\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002d\u0063\u006f\u006d\u003a\u006f\u0066\u0066\u0069\u0063\u0065\u003a\u0070\u006f\u0077\u0065\u0072\u0070\u006f\u0069\u006e\u0074"});
-start .Attr =append (start .Attr ,_g .Attr {Name :_g .Name {Local :"\u0078m\u006c\u006e\u0073\u003a\u0078\u006dl"},Value :"\u0068\u0074tp\u003a\u002f\u002fw\u0077\u0077\u002e\u00773.o\u0072g/\u0058\u004d\u004c\u002f\u0031\u0039\u00398/\u006e\u0061\u006d\u0065\u0073\u0070\u0061c\u0065"});
-start .Name .Local ="\u0074\u0065\u0078\u0074\u0064\u0061\u0074\u0061";return _ffd .CT_Rel .MarshalXML (e ,start );};type Iscomment struct{CT_Empty };func (_fg *CT_Rel )UnmarshalXML (d *_g .Decoder ,start _g .StartElement )error {for _ ,_ggb :=range start .Attr {if _ggb .Name .Local =="\u0069\u0064"{_a ,_gd :=_ggb .Value ,error (nil );
-if _gd !=nil {return _gd ;};_fg .IdAttr =&_a ;continue ;};};for {_deb ,_bga :=d .Token ();if _bga !=nil {return _gg .Errorf ("\u0070a\u0072s\u0069\u006e\u0067\u0020\u0043T\u005f\u0052e\u006c\u003a\u0020\u0025\u0073",_bga );};if _bc ,_fa :=_deb .(_g .EndElement );
-_fa &&_bc .Name ==start .Name {break ;};};return nil ;};
-
-// Validate validates the CT_Rel and its children
-func (_bd *CT_Rel )Validate ()error {return _bd .ValidateWithPath ("\u0043\u0054\u005f\u0052\u0065\u006c");};func (_cb *Iscomment )MarshalXML (e *_g .Encoder ,start _g .StartElement )error {start .Attr =append (start .Attr ,_g .Attr {Name :_g .Name {Local :"\u0078\u006d\u006cn\u0073"},Value :"\u0075\u0072\u006e\u003a\u0073\u0063\u0068e\u006d\u0061\u0073-\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002d\u0063\u006f\u006d\u003a\u006f\u0066\u0066\u0069\u0063\u0065\u003a\u0070\u006f\u0077\u0065\u0072\u0070\u006f\u0069\u006e\u0074"});
-start .Attr =append (start .Attr ,_g .Attr {Name :_g .Name {Local :"\u0078m\u006c\u006e\u0073\u003a\u0078\u006dl"},Value :"\u0068\u0074tp\u003a\u002f\u002fw\u0077\u0077\u002e\u00773.o\u0072g/\u0058\u004d\u004c\u002f\u0031\u0039\u00398/\u006e\u0061\u006d\u0065\u0073\u0070\u0061c\u0065"});
-start .Name .Local ="\u0069s\u0063\u006f\u006d\u006d\u0065\u006et";return _cb .CT_Empty .MarshalXML (e ,start );};
+package powerpoint ;import (_b "encoding/xml";_e "fmt";_ee "github.com/unidoc/unioffice/v2";);
 
 // Validate validates the Iscomment and its children
-func (_db *Iscomment )Validate ()error {return _db .ValidateWithPath ("\u0049s\u0063\u006f\u006d\u006d\u0065\u006et");};func NewTextdata ()*Textdata {_bbb :=&Textdata {};_bbb .CT_Rel =*NewCT_Rel ();return _bbb };
-
-// ValidateWithPath validates the CT_Empty and its children, prefixing error messages with path
-func (_bf *CT_Empty )ValidateWithPath (path string )error {return nil };func (_bb *CT_Empty )MarshalXML (e *_g .Encoder ,start _g .StartElement )error {e .EncodeToken (start );e .EncodeToken (_g .EndElement {Name :start .Name });return nil ;};type Textdata struct{CT_Rel };
-type CT_Empty struct{};func (_gc *Iscomment )UnmarshalXML (d *_g .Decoder ,start _g .StartElement )error {_gc .CT_Empty =*NewCT_Empty ();for {_cbe ,_ga :=d .Token ();if _ga !=nil {return _gg .Errorf ("p\u0061\u0072\u0073\u0069ng\u0020I\u0073\u0063\u006f\u006d\u006de\u006e\u0074\u003a\u0020\u0025\u0073",_ga );
-};if _ab ,_fff :=_cbe .(_g .EndElement );_fff &&_ab .Name ==start .Name {break ;};};return nil ;};func (_df *CT_Rel )MarshalXML (e *_g .Encoder ,start _g .StartElement )error {if _df .IdAttr !=nil {start .Attr =append (start .Attr ,_g .Attr {Name :_g .Name {Local :"\u0069\u0064"},Value :_gg .Sprintf ("\u0025\u0076",*_df .IdAttr )});
-};e .EncodeToken (start );e .EncodeToken (_g .EndElement {Name :start .Name });return nil ;};func (_dbg *Textdata )UnmarshalXML (d *_g .Decoder ,start _g .StartElement )error {_dbg .CT_Rel =*NewCT_Rel ();for _ ,_fab :=range start .Attr {if _fab .Name .Local =="\u0069\u0064"{_cbea ,_gaf :=_fab .Value ,error (nil );
-if _gaf !=nil {return _gaf ;};_dbg .IdAttr =&_cbea ;continue ;};};for {_gafc ,_ffg :=d .Token ();if _ffg !=nil {return _gg .Errorf ("p\u0061r\u0073\u0069\u006e\u0067\u0020\u0054\u0065\u0078t\u0064\u0061\u0074\u0061: \u0025\u0073",_ffg );};if _ggf ,_dbb :=_gafc .(_g .EndElement );
-_dbb &&_ggf .Name ==start .Name {break ;};};return nil ;};func NewCT_Rel ()*CT_Rel {_fe :=&CT_Rel {};return _fe };
-
-// ValidateWithPath validates the Textdata and its children, prefixing error messages with path
-func (_bgb *Textdata )ValidateWithPath (path string )error {if _abe :=_bgb .CT_Rel .ValidateWithPath (path );_abe !=nil {return _abe ;};return nil ;};
+func (_ge *Iscomment )Validate ()error {return _ge .ValidateWithPath ("\u0049s\u0063\u006f\u006d\u006d\u0065\u006et");};
 
 // ValidateWithPath validates the CT_Rel and its children, prefixing error messages with path
-func (_ef *CT_Rel )ValidateWithPath (path string )error {return nil };func NewCT_Empty ()*CT_Empty {_gf :=&CT_Empty {};return _gf };
+func (_bec *CT_Rel )ValidateWithPath (path string )error {return nil };func (_cab *Iscomment )UnmarshalXML (d *_b .Decoder ,start _b .StartElement )error {_cab .CT_Empty =*NewCT_Empty ();for {_ed ,_g :=d .Token ();if _g !=nil {return _e .Errorf ("p\u0061\u0072\u0073\u0069ng\u0020I\u0073\u0063\u006f\u006d\u006de\u006e\u0074\u003a\u0020\u0025\u0073",_g );
+};if _cc ,_cg :=_ed .(_b .EndElement );_cg &&_cc .Name ==start .Name {break ;};};return nil ;};func (_ea *CT_Empty )MarshalXML (e *_b .Encoder ,start _b .StartElement )error {e .EncodeToken (start );e .EncodeToken (_b .EndElement {Name :start .Name });
+return nil ;};
 
 // ValidateWithPath validates the Iscomment and its children, prefixing error messages with path
-func (_ca *Iscomment )ValidateWithPath (path string )error {if _fb :=_ca .CT_Empty .ValidateWithPath (path );_fb !=nil {return _fb ;};return nil ;};
-
-// Validate validates the Textdata and its children
-func (_ec *Textdata )Validate ()error {return _ec .ValidateWithPath ("\u0054\u0065\u0078\u0074\u0064\u0061\u0074\u0061");};
+func (_bc *Iscomment )ValidateWithPath (path string )error {if _eg :=_bc .CT_Empty .ValidateWithPath (path );_eg !=nil {return _eg ;};return nil ;};func (_dc *Textdata )UnmarshalXML (d *_b .Decoder ,start _b .StartElement )error {_dc .CT_Rel =*NewCT_Rel ();
+for _ ,_fa :=range start .Attr {if _fa .Name .Local =="\u0069\u0064"{_bca :=_fa .Value ;_dc .IdAttr =&_bca ;continue ;};};for {_dd ,_ba :=d .Token ();if _ba !=nil {return _e .Errorf ("p\u0061r\u0073\u0069\u006e\u0067\u0020\u0054\u0065\u0078t\u0064\u0061\u0074\u0061: \u0025\u0073",_ba );
+};if _gd ,_dcb :=_dd .(_b .EndElement );_dcb &&_gd .Name ==start .Name {break ;};};return nil ;};func (_f *CT_Empty )UnmarshalXML (d *_b .Decoder ,start _b .StartElement )error {for {_bd ,_ff :=d .Token ();if _ff !=nil {return _e .Errorf ("p\u0061r\u0073\u0069\u006e\u0067\u0020\u0043\u0054\u005fE\u006d\u0070\u0074\u0079: \u0025\u0073",_ff );
+};if _fd ,_ad :=_bd .(_b .EndElement );_ad &&_fd .Name ==start .Name {break ;};};return nil ;};
 
 // Validate validates the CT_Empty and its children
-func (_ce *CT_Empty )Validate ()error {return _ce .ValidateWithPath ("\u0043\u0054\u005f\u0045\u006d\u0070\u0074\u0079");};func NewIscomment ()*Iscomment {_ff :=&Iscomment {};_ff .CT_Empty =*NewCT_Empty ();return _ff };func (_e *CT_Empty )UnmarshalXML (d *_g .Decoder ,start _g .StartElement )error {for {_f ,_d :=d .Token ();
-if _d !=nil {return _gg .Errorf ("p\u0061r\u0073\u0069\u006e\u0067\u0020\u0043\u0054\u005fE\u006d\u0070\u0074\u0079: \u0025\u0073",_d );};if _eb ,_bg :=_f .(_g .EndElement );_bg &&_eb .Name ==start .Name {break ;};};return nil ;};func init (){_b .RegisterConstructor ("\u0075\u0072\u006e\u003a\u0073\u0063\u0068e\u006d\u0061\u0073-\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002d\u0063\u006f\u006d\u003a\u006f\u0066\u0066\u0069\u0063\u0065\u003a\u0070\u006f\u0077\u0065\u0072\u0070\u006f\u0069\u006e\u0074","\u0043\u0054\u005f\u0045\u006d\u0070\u0074\u0079",NewCT_Empty );
-_b .RegisterConstructor ("\u0075\u0072\u006e\u003a\u0073\u0063\u0068e\u006d\u0061\u0073-\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002d\u0063\u006f\u006d\u003a\u006f\u0066\u0066\u0069\u0063\u0065\u003a\u0070\u006f\u0077\u0065\u0072\u0070\u006f\u0069\u006e\u0074","\u0043\u0054\u005f\u0052\u0065\u006c",NewCT_Rel );
-_b .RegisterConstructor ("\u0075\u0072\u006e\u003a\u0073\u0063\u0068e\u006d\u0061\u0073-\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002d\u0063\u006f\u006d\u003a\u006f\u0066\u0066\u0069\u0063\u0065\u003a\u0070\u006f\u0077\u0065\u0072\u0070\u006f\u0069\u006e\u0074","\u0069s\u0063\u006f\u006d\u006d\u0065\u006et",NewIscomment );
-_b .RegisterConstructor ("\u0075\u0072\u006e\u003a\u0073\u0063\u0068e\u006d\u0061\u0073-\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002d\u0063\u006f\u006d\u003a\u006f\u0066\u0066\u0069\u0063\u0065\u003a\u0070\u006f\u0077\u0065\u0072\u0070\u006f\u0069\u006e\u0074","\u0074\u0065\u0078\u0074\u0064\u0061\u0074\u0061",NewTextdata );
+func (_ca *CT_Empty )Validate ()error {return _ca .ValidateWithPath ("\u0043\u0054\u005f\u0045\u006d\u0070\u0074\u0079");};func NewIscomment ()*Iscomment {_ef :=&Iscomment {};_ef .CT_Empty =*NewCT_Empty ();return _ef };
+
+// ValidateWithPath validates the Textdata and its children, prefixing error messages with path
+func (_eb *Textdata )ValidateWithPath (path string )error {if _fec :=_eb .CT_Rel .ValidateWithPath (path );_fec !=nil {return _fec ;};return nil ;};type Textdata struct{CT_Rel };func (_eaf *CT_Rel )MarshalXML (e *_b .Encoder ,start _b .StartElement )error {if _eaf .IdAttr !=nil {start .Attr =append (start .Attr ,_b .Attr {Name :_b .Name {Local :"\u0069\u0064"},Value :_e .Sprintf ("\u0025\u0076",*_eaf .IdAttr )});
+};e .EncodeToken (start );e .EncodeToken (_b .EndElement {Name :start .Name });return nil ;};func NewCT_Rel ()*CT_Rel {_af :=&CT_Rel {};return _af };func (_caf *Iscomment )MarshalXML (e *_b .Encoder ,start _b .StartElement )error {start .Attr =append (start .Attr ,_b .Attr {Name :_b .Name {Local :"\u0078\u006d\u006cn\u0073"},Value :"\u0075\u0072\u006e\u003a\u0073\u0063\u0068e\u006d\u0061\u0073-\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002d\u0063\u006f\u006d\u003a\u006f\u0066\u0066\u0069\u0063\u0065\u003a\u0070\u006f\u0077\u0065\u0072\u0070\u006f\u0069\u006e\u0074"});
+start .Attr =append (start .Attr ,_b .Attr {Name :_b .Name {Local :"\u0078m\u006c\u006e\u0073\u003a\u0078\u006dl"},Value :"\u0068\u0074tp\u003a\u002f\u002fw\u0077\u0077\u002e\u00773.o\u0072g/\u0058\u004d\u004c\u002f\u0031\u0039\u00398/\u006e\u0061\u006d\u0065\u0073\u0070\u0061c\u0065"});
+start .Name .Local ="\u0069s\u0063\u006f\u006d\u006d\u0065\u006et";return _caf .CT_Empty .MarshalXML (e ,start );};func NewCT_Empty ()*CT_Empty {_a :=&CT_Empty {};return _a };type CT_Rel struct{
+
+// Text Reference
+IdAttr *string ;};type CT_Empty struct{};type Iscomment struct{CT_Empty };func (_be *CT_Rel )UnmarshalXML (d *_b .Decoder ,start _b .StartElement )error {for _ ,_fdd :=range start .Attr {if _fdd .Name .Local =="\u0069\u0064"{_d :=_fdd .Value ;_be .IdAttr =&_d ;
+continue ;};};for {_afg ,_fc :=d .Token ();if _fc !=nil {return _e .Errorf ("\u0070a\u0072s\u0069\u006e\u0067\u0020\u0043T\u005f\u0052e\u006c\u003a\u0020\u0025\u0073",_fc );};if _fe ,_ec :=_afg .(_b .EndElement );_ec &&_fe .Name ==start .Name {break ;};
+};return nil ;};func (_cb *Textdata )MarshalXML (e *_b .Encoder ,start _b .StartElement )error {start .Attr =append (start .Attr ,_b .Attr {Name :_b .Name {Local :"\u0078\u006d\u006cn\u0073"},Value :"\u0075\u0072\u006e\u003a\u0073\u0063\u0068e\u006d\u0061\u0073-\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002d\u0063\u006f\u006d\u003a\u006f\u0066\u0066\u0069\u0063\u0065\u003a\u0070\u006f\u0077\u0065\u0072\u0070\u006f\u0069\u006e\u0074"});
+start .Attr =append (start .Attr ,_b .Attr {Name :_b .Name {Local :"\u0078m\u006c\u006e\u0073\u003a\u0078\u006dl"},Value :"\u0068\u0074tp\u003a\u002f\u002fw\u0077\u0077\u002e\u00773.o\u0072g/\u0058\u004d\u004c\u002f\u0031\u0039\u00398/\u006e\u0061\u006d\u0065\u0073\u0070\u0061c\u0065"});
+start .Name .Local ="\u0074\u0065\u0078\u0074\u0064\u0061\u0074\u0061";return _cb .CT_Rel .MarshalXML (e ,start );};
+
+// Validate validates the Textdata and its children
+func (_de *Textdata )Validate ()error {return _de .ValidateWithPath ("\u0054\u0065\u0078\u0074\u0064\u0061\u0074\u0061");};func NewTextdata ()*Textdata {_gg :=&Textdata {};_gg .CT_Rel =*NewCT_Rel ();return _gg };
+
+// ValidateWithPath validates the CT_Empty and its children, prefixing error messages with path
+func (_cd *CT_Empty )ValidateWithPath (path string )error {return nil };
+
+// Validate validates the CT_Rel and its children
+func (_da *CT_Rel )Validate ()error {return _da .ValidateWithPath ("\u0043\u0054\u005f\u0052\u0065\u006c");};func init (){_ee .RegisterConstructor ("\u0075\u0072\u006e\u003a\u0073\u0063\u0068e\u006d\u0061\u0073-\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002d\u0063\u006f\u006d\u003a\u006f\u0066\u0066\u0069\u0063\u0065\u003a\u0070\u006f\u0077\u0065\u0072\u0070\u006f\u0069\u006e\u0074","\u0043\u0054\u005f\u0045\u006d\u0070\u0074\u0079",NewCT_Empty );
+_ee .RegisterConstructor ("\u0075\u0072\u006e\u003a\u0073\u0063\u0068e\u006d\u0061\u0073-\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002d\u0063\u006f\u006d\u003a\u006f\u0066\u0066\u0069\u0063\u0065\u003a\u0070\u006f\u0077\u0065\u0072\u0070\u006f\u0069\u006e\u0074","\u0043\u0054\u005f\u0052\u0065\u006c",NewCT_Rel );
+_ee .RegisterConstructor ("\u0075\u0072\u006e\u003a\u0073\u0063\u0068e\u006d\u0061\u0073-\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002d\u0063\u006f\u006d\u003a\u006f\u0066\u0066\u0069\u0063\u0065\u003a\u0070\u006f\u0077\u0065\u0072\u0070\u006f\u0069\u006e\u0074","\u0069s\u0063\u006f\u006d\u006d\u0065\u006et",NewIscomment );
+_ee .RegisterConstructor ("\u0075\u0072\u006e\u003a\u0073\u0063\u0068e\u006d\u0061\u0073-\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002d\u0063\u006f\u006d\u003a\u006f\u0066\u0066\u0069\u0063\u0065\u003a\u0070\u006f\u0077\u0065\u0072\u0070\u006f\u0069\u006e\u0074","\u0074\u0065\u0078\u0074\u0064\u0061\u0074\u0061",NewTextdata );
 };
