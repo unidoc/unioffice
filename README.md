@@ -49,7 +49,7 @@ DOCX/XLSX/PPTX.
 
 ## Installation ##
     
-    go get github.com/unidoc/unioffice/
+    go get github.com/unidoc/unioffice/v2
 
 ## License key
 This software package (unioffice) is a commercial product and requires a license code to operate.
