@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_eg "github.com/unidoc/unioffice/v2/common/tempstorage";_c "io/ioutil";_ee "os";_e "strings";);
-
-// Open opens file from disk according to a path
-func (_d diskStorage )Open (path string )(_eg .File ,error ){return _ee .OpenFile (path ,_ee .O_RDWR ,0644);};
+package diskstore ;import (_ce "github.com/unidoc/unioffice/v2/common/tempstorage";_b "io/ioutil";_bf "os";_a "strings";);
 
 // TempFile creates a new temp directory by calling ioutil TempDir
-func (_a diskStorage )TempDir (pattern string )(string ,error ){return _c .TempDir ("",pattern )};type diskStorage struct{};
+func (_ag diskStorage )TempDir (pattern string )(string ,error ){return _b .TempDir ("",pattern )};
 
 // RemoveAll removes all files in the directory
-func (_cg diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_ee .TempDir ()){return _ee .RemoveAll (dir );};return nil ;};
+func (_af diskStorage )RemoveAll (dir string )error {if _a .HasPrefix (dir ,_bf .TempDir ()){return _bf .RemoveAll (dir );};return nil ;};
 
 // TempFile creates a new temp file by calling ioutil TempFile
-func (_f diskStorage )TempFile (dir ,pattern string )(_eg .File ,error ){return _c .TempFile (dir ,pattern );};
+func (_ad diskStorage )TempFile (dir ,pattern string )(_ce .File ,error ){return _b .TempFile (dir ,pattern );};
 
 // Add is not applicable in the diskstore implementation
-func (_dd diskStorage )Add (path string )error {return nil };
+func (_cg diskStorage )Add (path string )error {return nil };
 
 // SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_b :=diskStorage {};_eg .SetAsStorage (&_b )};
+func SetAsStorage (){_d :=diskStorage {};_ce .SetAsStorage (&_d )};type diskStorage struct{};
+
+// Open opens file from disk according to a path
+func (_cd diskStorage )Open (path string )(_ce .File ,error ){return _bf .OpenFile (path ,_bf .O_RDWR ,0644);};
