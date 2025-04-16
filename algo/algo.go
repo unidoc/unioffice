@@ -9,10 +9,4 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package algo ;import _g "strconv";func _ae (_b byte )bool {return _b >='0'&&_b <='9'};func RepeatString (s string ,cnt int )string {if cnt <=0{return "";};_aec :=make ([]byte ,len (s )*cnt );_bcb :=[]byte (s );for _ea :=0;_ea < cnt ;_ea ++{copy (_aec [_ea :],_bcb );
-};return string (_aec );};
-
-// NaturalLess compares two strings in a human manner so rId2 sorts less than rId10
-func NaturalLess (lhs ,rhs string )bool {_e ,_ac :=0,0;for _e < len (lhs )&&_ac < len (rhs ){_c :=lhs [_e ];_ab :=rhs [_ac ];_f :=_ae (_c );_ad :=_ae (_ab );switch {case _f &&!_ad :return true ;case !_f &&_ad :return false ;case !_f &&!_ad :if _c !=_ab {return _c < _ab ;
-};_e ++;_ac ++;default:_bf :=_e +1;_fg :=_ac +1;for _bf < len (lhs )&&_ae (lhs [_bf ]){_bf ++;};for _fg < len (rhs )&&_ae (rhs [_fg ]){_fg ++;};_gb ,_ :=_g .ParseUint (lhs [_e :_bf ],10,64);_bc ,_ :=_g .ParseUint (rhs [_e :_fg ],10,64);if _gb !=_bc {return _gb < _bc ;
-};_e =_bf ;_ac =_fg ;};};return len (lhs )< len (rhs );};
+package algo ;func RepeatString (s string ,cnt int )string {if cnt <=0{return "";};_d :=make ([]byte ,len (s )*cnt );_g :=[]byte (s );for _gc :=0;_gc < cnt ;_gc ++{copy (_d [_gc :],_g );};return string (_d );};
