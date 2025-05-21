@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_ce "github.com/unidoc/unioffice/v2/common/tempstorage";_b "io/ioutil";_bf "os";_a "strings";);
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_ag diskStorage )TempDir (pattern string )(string ,error ){return _b .TempDir ("",pattern )};
+package diskstore ;import (_d "github.com/unidoc/unioffice/v2/common/tempstorage";_gg "io/ioutil";_b "os";_ggd "strings";);
 
 // RemoveAll removes all files in the directory
-func (_af diskStorage )RemoveAll (dir string )error {if _a .HasPrefix (dir ,_bf .TempDir ()){return _bf .RemoveAll (dir );};return nil ;};
-
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_ad diskStorage )TempFile (dir ,pattern string )(_ce .File ,error ){return _b .TempFile (dir ,pattern );};
-
-// Add is not applicable in the diskstore implementation
-func (_cg diskStorage )Add (path string )error {return nil };
+func (_da diskStorage )RemoveAll (dir string )error {if _ggd .HasPrefix (dir ,_b .TempDir ()){return _b .RemoveAll (dir );};return nil ;};
 
 // SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_d :=diskStorage {};_ce .SetAsStorage (&_d )};type diskStorage struct{};
+func SetAsStorage (){_bg :=diskStorage {};_d .SetAsStorage (&_bg )};
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_ff diskStorage )TempFile (dir ,pattern string )(_d .File ,error ){return _gg .TempFile (dir ,pattern );};type diskStorage struct{};
+
+// Add is not applicable in the diskstore implementation
+func (_fg diskStorage )Add (path string )error {return nil };
 
 // Open opens file from disk according to a path
-func (_cd diskStorage )Open (path string )(_ce .File ,error ){return _bf .OpenFile (path ,_bf .O_RDWR ,0644);};
+func (_f diskStorage )Open (path string )(_d .File ,error ){return _b .OpenFile (path ,_b .O_RDWR ,0644)};
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_bgb diskStorage )TempDir (pattern string )(string ,error ){return _gg .TempDir ("",pattern )};

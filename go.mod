@@ -7,7 +7,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/unidoc/emf v0.1.0
 	github.com/unidoc/unichart v0.4.0
-	github.com/unidoc/unipdf/v3 v3.68.0
+	github.com/unidoc/unipdf/v4 v4.0.0
 	github.com/unidoc/unitype v0.5.1
 	golang.org/x/image v0.24.0
 )

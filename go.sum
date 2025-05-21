@@ -51,8 +51,8 @@ github.com/unidoc/timestamp v0.0.0-20200412005513-91597fd3793a h1:RLtvUhe4DsUDl6
 github.com/unidoc/timestamp v0.0.0-20200412005513-91597fd3793a/go.mod h1:j+qMWZVpZFTvDey3zxUkSgPJZEX33tDgU/QIA0IzCUw=
 github.com/unidoc/unichart v0.4.0 h1:uXk9ZjbqzKb8Lt2Qv2oM9D2ftNRXvezPevgxQhsTQys=
 github.com/unidoc/unichart v0.4.0/go.mod h1:9QsE8RbS0fE7ndHNroeCEFkRPqqk47Qsoj6QSAtcwN0=
-github.com/unidoc/unipdf/v3 v3.68.0 h1:AM1wKukv75hvCtTbiPb3HSIdHS5RbmR6aYTCE0jiO+A=
-github.com/unidoc/unipdf/v3 v3.68.0/go.mod h1:4mQ4E8niuY+30TGxT1e/8aVoSk/nn0yCKfi+kYw98+I=
+github.com/unidoc/unipdf/v4 v4.0.0 h1:XxrrOMGLJ6HD7VBO6GpZL5wfoRDmLxawV+wkMXTuPeM=
+github.com/unidoc/unipdf/v4 v4.0.0/go.mod h1:SbSYFUoutyBR+hLlsHyNiCzzcSVVuG10S5Xu8RIJ6EY=
 github.com/unidoc/unitype v0.5.1 h1:UwTX15K6bktwKocWVvLoijIeu4JAVEAIeFqMOjvxqQs=
 github.com/unidoc/unitype v0.5.1/go.mod h1:3dxbRL+f1otNqFQIRHho8fxdg3CcUKrqS8w1SXTsqcI=
 golang.org/x/crypto v0.33.0 h1:IOBPskki6Lysi0lo9qQvbxiQ+FvsCC/YWOecCHAixus=
