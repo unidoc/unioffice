@@ -9,11 +9,11 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package utils ;import (_g "bytes";_a "github.com/unidoc/unioffice/v2/document";_f "github.com/unidoc/unioffice/v2/document/convert";_af "github.com/unidoc/unipdf/v4/model";);
+package utils ;import (_g "bytes";_gg "github.com/unidoc/unioffice/v2/document";_ef "github.com/unidoc/unioffice/v2/document/convert";_a "github.com/unidoc/unipdf/v4/model";);
 
 // GetNumPages will try to get actual document page count by converting the document to a PDF first
 // and then get the actual page count from the PDF result.
 //
 // WARNING: This method is currently in experimental state as the PDF result might have incorrect page count.
-func GetNumPages (d *_a .Document )(int ,error ){var _ea _g .Buffer ;_eg :=_f .ConvertToPdf (d );if _ae :=_eg .Write (&_ea );_ae !=nil {return 0,_ae ;};_d ,_da :=_af .NewPdfReader (_g .NewReader (_ea .Bytes ()));if _da !=nil {return 0,_da ;};_b ,_da :=_d .GetNumPages ();
-if _da !=nil {return 0,_da ;};return _b ,nil ;};
+func GetNumPages (d *_gg .Document )(int ,error ){var _b _g .Buffer ;_c :=_ef .ConvertToPdf (d );if _f :=_c .Write (&_b );_f !=nil {return 0,_f ;};_gd ,_d :=_a .NewPdfReader (_g .NewReader (_b .Bytes ()));if _d !=nil {return 0,_d ;};_bg ,_d :=_gd .GetNumPages ();
+if _d !=nil {return 0,_d ;};return _bg ,nil ;};

@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_d "github.com/unidoc/unioffice/v2/common/tempstorage";_gg "io/ioutil";_b "os";_ggd "strings";);
-
-// RemoveAll removes all files in the directory
-func (_da diskStorage )RemoveAll (dir string )error {if _ggd .HasPrefix (dir ,_b .TempDir ()){return _b .RemoveAll (dir );};return nil ;};
+package diskstore ;import (_g "github.com/unidoc/unioffice/v2/common/tempstorage";_b "io/ioutil";_fg "os";_e "strings";);
 
 // SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_bg :=diskStorage {};_d .SetAsStorage (&_bg )};
+func SetAsStorage (){_fge :=diskStorage {};_g .SetAsStorage (&_fge )};
 
-// TempFile creates a new temp file by calling ioutil TempFile
-func (_ff diskStorage )TempFile (dir ,pattern string )(_d .File ,error ){return _gg .TempFile (dir ,pattern );};type diskStorage struct{};
-
-// Add is not applicable in the diskstore implementation
-func (_fg diskStorage )Add (path string )error {return nil };
-
-// Open opens file from disk according to a path
-func (_f diskStorage )Open (path string )(_d .File ,error ){return _b .OpenFile (path ,_b .O_RDWR ,0644)};
+// RemoveAll removes all files in the directory
+func (_fc diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_fg .TempDir ()){return _fg .RemoveAll (dir );};return nil ;};
 
 // TempFile creates a new temp directory by calling ioutil TempDir
-func (_bgb diskStorage )TempDir (pattern string )(string ,error ){return _gg .TempDir ("",pattern )};
+func (_be diskStorage )TempDir (pattern string )(string ,error ){return _b .TempDir ("",pattern )};type diskStorage struct{};
+
+// Add is not applicable in the diskstore implementation
+func (_bc diskStorage )Add (path string )error {return nil };
+
+// TempFile creates a new temp file by calling ioutil TempFile
+func (_bd diskStorage )TempFile (dir ,pattern string )(_g .File ,error ){return _b .TempFile (dir ,pattern );};
+
+// Open opens file from disk according to a path
+func (_fe diskStorage )Open (path string )(_g .File ,error ){return _fg .OpenFile (path ,_fg .O_RDWR ,0644);};
