@@ -9,26 +9,27 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package tempstorage ;import _b "io";
-
-// TempFile creates new empty file in the storage and returns it.
-func TempFile (dir ,pattern string )(File ,error ){return _d .TempFile (dir ,pattern )};var _d storage ;
-
-// RemoveAll removes all files according to the dir argument prefix.
-func RemoveAll (dir string )error {return _d .RemoveAll (dir )};
-
-// Add reads a file from a disk and adds it to the storage.
-func Add (path string )error {return _d .Add (path )};
-
-// TempDir creates a name for a new temp directory using a pattern argument.
-func TempDir (pattern string )(string ,error ){return _d .TempDir (pattern )};
+package tempstorage ;import _d "io";
 
 // SetAsStorage changes temporary storage to newStorage.
-func SetAsStorage (newStorage storage ){_d =newStorage };
+func SetAsStorage (newStorage storage ){_cf =newStorage };
 
 // File is a representation of a storage file
 // with Read, Write, Close and Name methods identical to os.File.
-type File interface{_b .Reader ;_b .ReaderAt ;_b .Writer ;_b .Closer ;Name ()string ;};
+type File interface{_d .Reader ;_d .ReaderAt ;_d .Writer ;_d .Closer ;Name ()string ;};
 
 // Open returns tempstorage File object by name.
-func Open (path string )(File ,error ){return _d .Open (path )};type storage interface{Open (_g string )(File ,error );TempFile (_ga ,_a string )(File ,error );TempDir (_fb string )(string ,error );RemoveAll (_c string )error ;Add (_e string )error ;};
+func Open (path string )(File ,error ){return _cf .Open (path )};
+
+// TempDir creates a name for a new temp directory using a pattern argument.
+func TempDir (pattern string )(string ,error ){return _cf .TempDir (pattern )};
+
+// Add reads a file from a disk and adds it to the storage.
+func Add (path string )error {return _cf .Add (path )};
+
+// TempFile creates new empty file in the storage and returns it.
+func TempFile (dir ,pattern string )(File ,error ){return _cf .TempFile (dir ,pattern )};type storage interface{Open (_a string )(File ,error );TempFile (_f ,_b string )(File ,error );TempDir (_ae string )(string ,error );RemoveAll (_g string )error ;Add (_bf string )error ;
+};var _cf storage ;
+
+// RemoveAll removes all files according to the dir argument prefix.
+func RemoveAll (dir string )error {return _cf .RemoveAll (dir )};

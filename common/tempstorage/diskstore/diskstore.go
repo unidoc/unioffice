@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_g "github.com/unidoc/unioffice/v2/common/tempstorage";_b "io/ioutil";_fg "os";_e "strings";);
+package diskstore ;import (_e "github.com/unidoc/unioffice/v2/common/tempstorage";_b "io/ioutil";_ge "os";_gb "strings";);
 
 // SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_fge :=diskStorage {};_g .SetAsStorage (&_fge )};
-
-// RemoveAll removes all files in the directory
-func (_fc diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_fg .TempDir ()){return _fg .RemoveAll (dir );};return nil ;};
+func SetAsStorage (){_d :=diskStorage {};_e .SetAsStorage (&_d )};type diskStorage struct{};
 
 // TempFile creates a new temp directory by calling ioutil TempDir
-func (_be diskStorage )TempDir (pattern string )(string ,error ){return _b .TempDir ("",pattern )};type diskStorage struct{};
-
-// Add is not applicable in the diskstore implementation
-func (_bc diskStorage )Add (path string )error {return nil };
+func (_a diskStorage )TempDir (pattern string )(string ,error ){return _b .TempDir ("",pattern )};
 
 // TempFile creates a new temp file by calling ioutil TempFile
-func (_bd diskStorage )TempFile (dir ,pattern string )(_g .File ,error ){return _b .TempFile (dir ,pattern );};
+func (_bc diskStorage )TempFile (dir ,pattern string )(_e .File ,error ){return _b .TempFile (dir ,pattern );};
+
+// Add is not applicable in the diskstore implementation
+func (_ea diskStorage )Add (path string )error {return nil };
 
 // Open opens file from disk according to a path
-func (_fe diskStorage )Open (path string )(_g .File ,error ){return _fg .OpenFile (path ,_fg .O_RDWR ,0644);};
+func (_f diskStorage )Open (path string )(_e .File ,error ){return _ge .OpenFile (path ,_ge .O_RDWR ,0644)};
+
+// RemoveAll removes all files in the directory
+func (_c diskStorage )RemoveAll (dir string )error {if _gb .HasPrefix (dir ,_ge .TempDir ()){return _ge .RemoveAll (dir );};return nil ;};
