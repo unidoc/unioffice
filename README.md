@@ -134,7 +134,7 @@ make docker-update-testdata
 
 ## Go Version Compatibility
 
-Officially we support three latest Go versions, but internally we would test the build with up to five latest Go versions in our CI runner.
+Officially we support three latest Go versions.
 
 ## Support and consulting ##
 
