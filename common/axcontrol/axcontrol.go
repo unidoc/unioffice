@@ -9,438 +9,439 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package axcontrol ;import (_f "bytes";_be "encoding/binary";_ac "errors";_fg "fmt";_ba "github.com/unidoc/unioffice/v2/common/tempstorage";_bac "github.com/unidoc/unioffice/v2/internal/mscfb";_d "github.com/unidoc/unioffice/v2/internal/mscfb/rw";_e "github.com/unidoc/unioffice/v2/schema/schemas.microsoft.com/office/activeX";
-_b "io";);const _gdbdf =3;
+package axcontrol ;import (_d "bytes";_cb "encoding/binary";_ca "errors";_c "fmt";_g "github.com/unidoc/unioffice/v2/common/tempstorage";_aa "github.com/unidoc/unioffice/v2/internal/mscfb";_ef "github.com/unidoc/unioffice/v2/internal/mscfb/rw";_dd "github.com/unidoc/unioffice/v2/schema/schemas.microsoft.com/office/activeX";
+_e "io";);
 
-// SetHeight sets height of the CommandButton in HIMETRIC (0.01mm)
-func (_feac *CommandButtonControl )SetHeight (height uint32 ){_feac ._cac ._cbd =true ;_feac ._fgf ._afd =height ;};
+// GetWidth returns width of the Label in HIMETRIC (0.01mm)
+func (_dga *LabelControl )GetWidth ()uint32 {return _dga ._ecfg ._cba };func (_agc *CommandButtonControl )writeExtraDataBlock (_aga *_ef .Writer )error {if _agc ._bed ._bca > 0{if _gead :=_aga .WriteStringProperty (_agc ._dg ._gag );_gead !=nil {return _gead ;
+};};if _agc ._fce ._ead {_gcf :=uint64 (_agc ._dg ._agb )<<32|uint64 (_agc ._dg ._eacg );if _aef :=_aga .WritePropertyNoAlign (_gcf );_aef !=nil {return _aef ;};};return nil ;};func (_bfa *LabelControl )readExtraDataBlock (_cccfd *_ef .Reader )error {_bfa ._ecfg =&labelExtraDataBlock {};
+if _bfa ._aed ._gagb > 0{_cge ,_cbbf :=_cccfd .ReadStringProperty (_bfa ._aed ._gagb );if _cbbf !=nil {return _cbbf ;};_bfa ._ecfg ._daac =_cge ;};if _bfa ._gdfa ._cgb {var _cafgf uint64 ;if _dadc :=_cccfd .ReadPairProperty (&_cafgf );_dadc !=nil {return _dadc ;
+};_bfa ._ecfg ._dbag =uint32 (_cafgf );_bfa ._ecfg ._cba =uint32 (_cafgf >>32);};return nil ;};
 
-// SpinButtonControl is a representation of a spinButton ActiveX form.
-type SpinButtonControl struct{controlBase ;_bfab *spinButtonPropMask ;_ebd *spinButtonDataBlock ;_debf *spinButtonExtraDataBlock ;_aecc *streamData ;};const (FmPictureAlignmentTopLeft FmPictureAlignment =iota ;FmPictureAlignmentTopRight ;FmPictureAlignmentCenter ;
-FmPictureAlignmentBottomLeft ;FmPictureAlignmentBottomRight ;);const _bf uint32 =0x0000746C;func (_fbbaf *ScrollBarControl )writePropMask (_dceg *_d .Writer )error {_bgdf :=uint32 (0);_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._eeae );_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._ceba );
-_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._eddg );_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._cgaeg );_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._acce );_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._dggg );_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._aebe );
-_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._eebe );_bgdf >>=1;_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._cbgb );_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._bfaa );_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._dgeg );_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._cedc );
-_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._eec );_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._dcg );_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._feab );_bgdf =_d .PushLeftUI32 (_bgdf ,_fbbaf ._fbfd ._gcff );_bgdf >>=15;return _be .Write (_dceg ,_be .LittleEndian ,_bgdf );
-};type labelExtraDataBlock struct{_bfb uint32 ;_eeg uint32 ;_dfga string ;};
+// GetMin gets a button min value.
+func (_dbg *SpinButtonControl )GetMin ()int32 {return _dbg ._agce ._gdge };func (_bgda *controlBase )setMouseIconBytes (_dba []byte ){if _bgda ._ccg ._adfde ==nil {_bgda ._ccg ._adfde =&guidAndPicture {};};_bgda ._ccg ._adfde .setStdPictureBytes (_dba );
+};
 
-// GetWidth returns width of the morphDataControl in HIMETRIC (0.01mm)
-func (_feb *morphDataControl )GetWidth ()uint32 {return _feb ._bbaa ._cgebb };func (_dfc *ScrollBarControl )readPropMask (_beae *_d .Reader )error {var _dcea uint32 ;if _dgfg :=_be .Read (_beae ,_be .LittleEndian ,&_dcea );_dgfg !=nil {return _dgfg ;};
-_dfc ._fbfd =&scrollBarPropMask {};_dfc ._fbfd ._eeae ,_dcea =_d .PopRightUI32 (_dcea );_dfc ._fbfd ._ceba ,_dcea =_d .PopRightUI32 (_dcea );_dfc ._fbfd ._eddg ,_dcea =_d .PopRightUI32 (_dcea );_dfc ._fbfd ._cgaeg ,_dcea =_d .PopRightUI32 (_dcea );_dfc ._fbfd ._acce ,_dcea =_d .PopRightUI32 (_dcea );
-_dfc ._fbfd ._dggg ,_dcea =_d .PopRightUI32 (_dcea );_dfc ._fbfd ._aebe ,_dcea =_d .PopRightUI32 (_dcea );_dfc ._fbfd ._eebe ,_dcea =_d .PopRightUI32 (_dcea );_dcea >>=1;_dfc ._fbfd ._cbgb ,_dcea =_d .PopRightUI32 (_dcea );_dfc ._fbfd ._bfaa ,_dcea =_d .PopRightUI32 (_dcea );
-_dfc ._fbfd ._dgeg ,_dcea =_d .PopRightUI32 (_dcea );_dfc ._fbfd ._cedc ,_dcea =_d .PopRightUI32 (_dcea );_dfc ._fbfd ._eec ,_dcea =_d .PopRightUI32 (_dcea );_dfc ._fbfd ._dcg ,_dcea =_d .PopRightUI32 (_dcea );_dfc ._fbfd ._feab ,_dcea =_d .PopRightUI32 (_dcea );
-_dfc ._fbfd ._gcff ,_dcea =_d .PopRightUI32 (_dcea );return nil ;};func (_dca *morphDataControl )getValueString ()string {if _dca ._edcc ._dgf {return _dca ._bbaa ._eae ;};return "";};const _beaf =2;type labelPropMask struct{_edcg bool ;_dfg bool ;_ddd bool ;
-_dbf bool ;_fab bool ;_cbe bool ;_fcgd bool ;_cacd bool ;_ega bool ;_bgbe bool ;_gggf bool ;_fcb bool ;_fgae bool ;};
+// GetMin gets a button min value.
+func (_ffe *ScrollBarControl )GetMin ()int32 {return _ffe ._efcf ._bfbd };
 
-// SetCaption sets a caption string for a commandButton control.
-func (_bdg *CommandButtonControl )SetCaption (caption string ){_bdg ._cac ._dfe =true ;_bdg ._dgg ._bbfb =uint32 (len (caption ));_bdg ._fgf ._fc =caption ;};func (_gffb *CommandButtonControl )writeDataBlock (_fda *_d .Writer )error {if _gffb ._cac ._caca {if _dec :=_fda .WriteProperty (_gffb ._dgg ._dega );
-_dec !=nil {return _dec ;};};if _gffb ._cac ._dgb {if _fbc :=_fda .WriteProperty (_gffb ._dgg ._fff );_fbc !=nil {return _fbc ;};};if _gffb ._cac ._bgda {if _ded :=_fda .WriteProperty (_gffb ._dgg ._acad );_ded !=nil {return _ded ;};};if _gffb ._cac ._dfe {_dced :=_ecd (_gffb ._dgg ._bbfb ,_gffb ._dgg ._cabe );
-if _dee :=_fda .WriteProperty (_dced );_dee !=nil {return _dee ;};};if _gffb ._cac ._agb {if _dafc :=_fda .WriteProperty (_gffb ._dgg ._gbg );_dafc !=nil {return _dafc ;};};if _gffb ._cac ._ecg {if _aee :=_fda .WriteProperty (_gffb ._dgg ._eea );_aee !=nil {return _aee ;
-};};if _gffb ._cac ._ceac {if _ecgc :=_fda .WriteProperty (_gffb ._dgg ._bcg );_ecgc !=nil {return _ecgc ;};};if _gffb ._cac ._dbca {if _ada :=_fda .WriteProperty (_gffb ._dgg ._fec );_ada !=nil {return _ada ;};};if _gffb ._cac ._bgdg {if _bae :=_fda .WriteProperty (_gffb ._dgg ._gga );
-_bae !=nil {return _bae ;};};return _fda .AlignLength (4);};func (_gfgaf *morphDataControl )readPropMask (_gbe *_d .Reader )error {var _bfae uint64 ;if _dcaa :=_be .Read (_gbe ,_be .LittleEndian ,&_bfae );_dcaa !=nil {return _dcaa ;};_gfgaf ._edcc =&morphDataPropMask {};
-_gfgaf ._edcc ._bgaa ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._bge ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._ede ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._cbea ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._daaf ,_bfae =_d .PopRightUI64 (_bfae );
-_gfgaf ._edcc ._aeea ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._fgfb ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._bec ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._dgee ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._cba ,_bfae =_d .PopRightUI64 (_bfae );
-_gfgaf ._edcc ._dac ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._agae ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._ddgc ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._fbga ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._cbbf ,_bfae =_d .PopRightUI64 (_bfae );
-_gfgaf ._edcc ._gdgb ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._faga ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._gaa ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._dgcf ,_bfae =_d .PopRightUI64 (_bfae );_bfae >>=1;_gfgaf ._edcc ._abeb ,_bfae =_d .PopRightUI64 (_bfae );
-_gfgaf ._edcc ._acda ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._dgf ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._febd ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._agee ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._fecg ,_bfae =_d .PopRightUI64 (_bfae );
-_gfgaf ._edcc ._fbfc ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._gac ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._dea ,_bfae =_d .PopRightUI64 (_bfae );_gfgaf ._edcc ._edea ,_bfae =_d .PopRightUI64 (_bfae );_bfae >>=1;_bfae >>=1;_gfgaf ._edcc ._efd ,_bfae =_d .PopRightUI64 (_bfae );
-return nil ;};func (_bea *ImageControl )writeExtraDataBlock (_cgeb *_d .Writer )error {if _bea ._gbb ._aec {_fbgc :=uint64 (_bea ._gfbc ._baa )<<32|uint64 (_bea ._gfbc ._ccddc );if _fde :=_cgeb .WritePropertyNoAlign (_fbgc );_fde !=nil {return _fde ;};
-};return nil ;};
-
-// SetWidth sets width of the ScrollBar in HIMETRIC (0.01mm)
-func (_aedd *ScrollBarControl )SetWidth (width uint32 ){_aedd ._fbfd ._cgaeg =true ;_aedd ._ddfc ._debb =width ;};func (_fbe *ImageControl )writePropMask (_gcf *_d .Writer )error {_effa :=uint32 (0);_effa >>=2;_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._caec );
-_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._abc );_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._gab );_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._gbd );_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._ddfg );_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._bcb );
-_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._aeeb );_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._aec );_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._eff );_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._gee );_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._efae );
-_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._aff );_effa =_d .PushLeftUI32 (_effa ,_fbe ._gbb ._fgfgd );_effa >>=17;return _be .Write (_gcf ,_be .LittleEndian ,_effa );};
-
-// SetCaption sets a caption string for a label control.
-func (_bbc *LabelControl )SetCaption (caption string ){_bbc ._fbb ._dbf =true ;_bbc ._ccgf ._bfc =uint32 (len (caption ));_bbc ._gccc ._dfga =caption ;};func _fcdg (_gad *_d .Reader )(*morphDataControl ,error ){_cgba :=&morphDataControl {};if _ccdaa :=_cgba .readPropMask (_gad );
-_ccdaa !=nil {return nil ,_ccdaa ;};if _gcaf :=_cgba .readDataBlock (_gad );_gcaf !=nil {return nil ,_gcaf ;};if _gaea :=_cgba .readExtraDataBlock (_gad );_gaea !=nil {return nil ,_gaea ;};if _eab :=_cgba .readStreamDataMP (_gad ,_cgba ._edcc ._gac ,_cgba ._edcc ._dea );
-_eab !=nil {return nil ,_eab ;};switch _cgba ._gdfbf ._efc {case _beaf ,_gdbdf :if _bdbd :=_cgba .readColumnInfo (_gad );_bdbd !=nil {return nil ,_bdbd ;};if _abecf :=_cgba .readColumnInfoPropMask (_gad );_abecf !=nil {return nil ,_abecf ;};if _cgbae :=_cgba .readColumnInfoDataBlock (_gad );
-_cgbae !=nil {return nil ,_cgbae ;};};if _aaeb :=_cgba .readTheRest (_gad );_aaeb !=nil {return nil ,_aaeb ;};return _cgba ,nil ;};func (_cbdc *LabelControl )readDataBlock (_eeef *_d .Reader )error {_cbdc ._ccgf =&labelDataBlock {};if _cbdc ._fbb ._edcg {if _accg :=_eeef .ReadProperty (&_cbdc ._ccgf ._dddd );
-_accg !=nil {return _accg ;};};if _cbdc ._fbb ._dfg {if _efe :=_eeef .ReadProperty (&_cbdc ._ccgf ._dadf );_efe !=nil {return _efe ;};};if _cbdc ._fbb ._ddd {if _cfa :=_eeef .ReadProperty (&_cbdc ._ccgf ._baeb );_cfa !=nil {return _cfa ;};};if _cbdc ._fbb ._dbf {var _aebf uint32 ;
-if _cdge :=_eeef .ReadProperty (&_aebf );_cdge !=nil {return _cdge ;};_cbdc ._ccgf ._bdac ,_cbdc ._ccgf ._bfc =_db (_aebf );};if _cbdc ._fbb ._fab {if _ggcb :=_eeef .ReadProperty (&_cbdc ._ccgf ._eafd );_ggcb !=nil {return _ggcb ;};};if _cbdc ._fbb ._fcgd {if _ggac :=_eeef .ReadProperty (&_cbdc ._ccgf ._caef );
-_ggac !=nil {return _ggac ;};};if _cbdc ._fbb ._cacd {if _cbg :=_eeef .ReadProperty (&_cbdc ._ccgf ._edb );_cbg !=nil {return _cbg ;};};if _cbdc ._fbb ._ega {if _cgce :=_eeef .ReadProperty (&_cbdc ._ccgf ._edbd );_cgce !=nil {return _cgce ;};};if _cbdc ._fbb ._bgbe {if _gbdg :=_eeef .ReadProperty (&_cbdc ._ccgf ._gdeb );
-_gbdg !=nil {return _gbdg ;};};if _cbdc ._fbb ._gggf {if _gaf :=_eeef .ReadProperty (&_cbdc ._ccgf ._cef );_gaf !=nil {return _gaf ;};};if _cbdc ._fbb ._fcb {if _fgde :=_eeef .ReadProperty (&_cbdc ._ccgf ._dgea );_fgde !=nil {return _fgde ;};};if _cbdc ._fbb ._fgae {if _gfgc :=_eeef .ReadProperty (&_cbdc ._ccgf ._degg );
-_gfgc !=nil {return _gfgc ;};};return nil ;};type stdPicture struct{_gea uint32 ;_agg uint32 ;_gfde *_f .Buffer ;};type controlBase struct{_fbg uint16 ;_bdc bool ;_gbgc *streamData ;_gfef []byte ;};type commandButtonExtraDataBlock struct{_daa uint32 ;_afd uint32 ;
-_fc string ;};
+// CheckBoxDataControl is a representation of a check box ActiveX form.
+type CheckBoxDataControl struct{*morphDataControlBoolValue };const _cgac =4;func (_cfef *controlBase )writeStreamDataMP (_efde *_ef .Writer )error {if _cfef ._ccg !=nil {if _cfef ._ccg ._adfde !=nil {if _ggba :=_cfef ._ccg ._adfde .export (_efde );_ggba !=nil {return _ggba ;
+};};if _cfef ._ccg ._bbbg !=nil {if _bcca :=_cfef ._ccg ._bbbg .export (_efde );_bcca !=nil {return _bcca ;};};};return nil ;};
 
 // CommandButtonControl is a representation of a commandButton ActiveX form.
-type CommandButtonControl struct{controlBase ;_cac *commandButtonPropMask ;_dgg *commandButtonDataBlock ;_fgf *commandButtonExtraDataBlock ;_dgc *streamData ;};
-
-// SetBackColor sets a button text color value from a system palette for a label control.
-func (_afaa *LabelControl )SetBackColor (backColor uint32 ){_afaa ._fbb ._dfg =true ;_afaa ._ccgf ._dadf =backColor ;};func _db (_baf uint32 )(bool ,uint32 ){if _baf ==0{return false ,0;};_gbc :=_baf >=1<<31;if _gbc {_baf -=1<<31;};return _gbc ,_baf ;};
-
-
-// SetCaption sets a caption string for a morph control.
-func (_begbd *morphDataControl )SetCaption (caption string ){if _begbd ._bdc {_begbd ._edcc ._febd =true ;_begbd ._gdfbf ._efb =uint32 (len (caption ));_begbd ._bbaa ._eac =caption ;};};func (_aaed *morphDataControl )readColumnInfo (_gbfd *_d .Reader )error {return nil };
-
-
-// GetBackColor gets a button text color value for a system palette from a spinButton control.
-func (_fgadb *SpinButtonControl )GetBackColor ()uint32 {return _fgadb ._ebd ._efbcb };func (_dfbg *controlBase )writeStreamDataM (_cbad *_d .Writer )error {if _dfbg ._gbgc !=nil {if _dfbg ._gbgc ._dadg !=nil {if _gfaa :=_dfbg ._gbgc ._dadg .export (_cbad );
-_gfaa !=nil {return _gfaa ;};};};return nil ;};
-
-// GetWidth returns width of the ScrollBar in HIMETRIC (0.01mm)
-func (_aadf *ScrollBarControl )GetWidth ()uint32 {return _aadf ._ddfc ._debb };const _acae =4;
-
-// ListBoxDataControl is a representation of a list box ActiveX form.
-type ListBoxDataControl struct{*morphDataControlStringValue };
-
-// GetHeight returns height of the morphDataControl in HIMETRIC (0.01mm)
-func (_cace *morphDataControl )GetHeight ()uint32 {return _cace ._bbaa ._cdgeb };func (_fed *ImageControl )export (_caf *_d .Writer )error {if _fcg :=_fed .writePropMask (_caf );_fcg !=nil {return _fcg ;};if _edd :=_fed .writeDataBlock (_caf );_edd !=nil {return _edd ;
-};if _aged :=_fed .writeExtraDataBlock (_caf );_aged !=nil {return _aged ;};_fed ._fbg =uint16 (_caf .Len ()-4);if _ecgd :=_fed .writeStreamDataPM (_caf );_ecgd !=nil {return _ecgd ;};return _fed .writeTheRest (_caf );};
-
-// SetWidth sets width of the morphDataControl in HIMETRIC (0.01mm)
-func (_dfed *morphDataControl )SetWidth (width uint32 ){_dfed ._edcc ._dgee =true ;_dfed ._bbaa ._cgebb =width ;};
-
-// OptionButtonDataControl is a representation of an option button ActiveX form.
-type OptionButtonDataControl struct{*morphDataControlBoolValue };
-
-// GetWidth returns width of the SpinButton in HIMETRIC (0.01mm)
-func (_geee *SpinButtonControl )GetWidth ()uint32 {return _geee ._debf ._bdda };func (_ab *CommandButtonControl )readDataBlock (_ccd *_d .Reader )error {_ab ._dgg =&commandButtonDataBlock {};if _ab ._cac ._caca {if _egd :=_ccd .ReadProperty (&_ab ._dgg ._dega );
-_egd !=nil {return _egd ;};};if _ab ._cac ._dgb {if _ggf :=_ccd .ReadProperty (&_ab ._dgg ._fff );_ggf !=nil {return _ggf ;};};if _ab ._cac ._bgda {if _cebc :=_ccd .ReadProperty (&_ab ._dgg ._acad );_cebc !=nil {return _cebc ;};};if _ab ._cac ._dfe {var _aab uint32 ;
-if _eb :=_ccd .ReadProperty (&_aab );_eb !=nil {return _eb ;};_ab ._dgg ._cabe ,_ab ._dgg ._bbfb =_db (_aab );};if _ab ._cac ._agb {if _abe :=_ccd .ReadProperty (&_ab ._dgg ._gbg );_abe !=nil {return _abe ;};};if _ab ._cac ._ecg {if _cdc :=_ccd .ReadProperty (&_ab ._dgg ._eea );
-_cdc !=nil {return _cdc ;};};if _ab ._cac ._ceac {if _ggc :=_ccd .ReadProperty (&_ab ._dgg ._bcg );_ggc !=nil {return _ggc ;};};if _ab ._cac ._dbca {if _dfa :=_ccd .ReadProperty (&_ab ._dgg ._fec );_dfa !=nil {return _dfa ;};};if _ab ._cac ._bgdg {if _abg :=_ccd .ReadProperty (&_ab ._dgg ._gga );
-_abg !=nil {return _abg ;};};return nil ;};type morphDataColumnInfoPropMask struct{};
-
-// GetCaption gets a caption string from a commandButton control.
-func (_cc *CommandButtonControl )GetCaption ()string {return _cc ._fgf ._fc };func (_abaf *morphDataControl )writeDataBlock (_febeb *_d .Writer )error {if _abaf ._edcc ._bgaa {if _gfae :=_febeb .WriteProperty (_abaf ._gdfbf ._fgff );_gfae !=nil {return _gfae ;
-};};if _abaf ._edcc ._bge {if _acac :=_febeb .WriteProperty (_abaf ._gdfbf ._gef );_acac !=nil {return _acac ;};};if _abaf ._edcc ._ede {if _fge :=_febeb .WriteProperty (_abaf ._gdfbf ._adg );_fge !=nil {return _fge ;};};if _abaf ._edcc ._cbea {if _fdef :=_febeb .WriteProperty (_abaf ._gdfbf ._ceag );
-_fdef !=nil {return _fdef ;};};if _abaf ._edcc ._daaf {if _fbfe :=_febeb .WriteProperty (_abaf ._gdfbf ._bdbf );_fbfe !=nil {return _fbfe ;};};if _abaf ._edcc ._aeea {if _ccf :=_febeb .WriteProperty (_abaf ._gdfbf ._abdb );_ccf !=nil {return _ccf ;};};
-if _abaf ._edcc ._fgfb {if _gdcf :=_febeb .WriteProperty (_abaf ._gdfbf ._efc );_gdcf !=nil {return _gdcf ;};};if _abaf ._edcc ._bec {if _bfe :=_febeb .WriteProperty (_abaf ._gdfbf ._cbaf );_bfe !=nil {return _bfe ;};};if _abaf ._edcc ._cba {if _bee :=_febeb .WriteProperty (_abaf ._gdfbf ._dgd );
-_bee !=nil {return _bee ;};};if _abaf ._edcc ._dac {if _fbcc :=_febeb .WriteProperty (_abaf ._gdfbf ._dda );_fbcc !=nil {return _fbcc ;};};if _abaf ._edcc ._agae {if _ddddf :=_febeb .WriteProperty (_abaf ._gdfbf ._fbcb );_ddddf !=nil {return _ddddf ;};
-};if _abaf ._edcc ._ddgc {if _gdbb :=_febeb .WriteProperty (_abaf ._gdfbf ._fgcg );_gdbb !=nil {return _gdbb ;};};if _abaf ._edcc ._fbga {if _agf :=_febeb .WriteProperty (_abaf ._gdfbf ._ebc );_agf !=nil {return _agf ;};};if _abaf ._edcc ._cbbf {if _ddbc :=_febeb .WriteProperty (_abaf ._gdfbf ._cfdd );
-_ddbc !=nil {return _ddbc ;};};if _abaf ._edcc ._gdgb {if _gbfg :=_febeb .WriteProperty (_abaf ._gdfbf ._aeed );_gbfg !=nil {return _gbfg ;};};if _abaf ._edcc ._faga {if _bdde :=_febeb .WriteProperty (_abaf ._gdfbf ._egcce );_bdde !=nil {return _bdde ;
-};};if _abaf ._edcc ._gaa {if _fgef :=_febeb .WriteProperty (_abaf ._gdfbf ._ecba );_fgef !=nil {return _fgef ;};};if _abaf ._edcc ._dgcf {if _dba :=_febeb .WriteProperty (_abaf ._gdfbf ._cda );_dba !=nil {return _dba ;};};if _abaf ._edcc ._abeb {if _ceagb :=_febeb .WriteProperty (_abaf ._gdfbf ._cfe );
-_ceagb !=nil {return _ceagb ;};};if _abaf ._edcc ._acda {if _agdd :=_febeb .WriteProperty (_abaf ._gdfbf ._abdd );_agdd !=nil {return _agdd ;};};if _abaf ._edcc ._dgf {_ffge :=_ecd (_abaf ._gdfbf ._ged ,_abaf ._gdfbf ._fefb );if _bdcb :=_febeb .WriteProperty (_ffge );
-_bdcb !=nil {return _bdcb ;};};if _abaf ._edcc ._febd {_ebcb :=_ecd (_abaf ._gdfbf ._efb ,_abaf ._gdfbf ._agca );if _dgbe :=_febeb .WriteProperty (_ebcb );_dgbe !=nil {return _dgbe ;};};if _abaf ._edcc ._agee {if _effag :=_febeb .WriteProperty (_abaf ._gdfbf ._dbfd );
-_effag !=nil {return _effag ;};};if _abaf ._edcc ._fecg {if _abac :=_febeb .WriteProperty (_abaf ._gdfbf ._cad );_abac !=nil {return _abac ;};};if _abaf ._edcc ._fbfc {if _fee :=_febeb .WriteProperty (_abaf ._gdfbf ._gacd );_fee !=nil {return _fee ;};};
-if _abaf ._edcc ._gac {if _egfa :=_febeb .WriteProperty (_abaf ._gdfbf ._febe );_egfa !=nil {return _egfa ;};};if _abaf ._edcc ._dea {if _ddfgd :=_febeb .WriteProperty (_abaf ._gdfbf ._bcc );_ddfgd !=nil {return _ddfgd ;};};if _abaf ._edcc ._edea {if _abag :=_febeb .WriteProperty (_abaf ._gdfbf ._egbg );
-_abag !=nil {return _abag ;};};if _abaf ._edcc ._efd {_ccc :=_ecd (_abaf ._gdfbf ._dgcg ,_abaf ._gdfbf ._egf );if _cbdf :=_febeb .WriteProperty (_ccc );_cbdf !=nil {return _cbdf ;};};return _febeb .AlignLength (4);};
-
-// SetValue sets a value for a control which value can be represented as boolean (on/off).
-func (_adad *morphDataControlBoolValue )SetValue (value bool ){_adad .setValueBool (value )};type commandButtonPropMask struct{_caca bool ;_dgb bool ;_bgda bool ;_dfe bool ;_agb bool ;_cbd bool ;_ecg bool ;_ceac bool ;_dbca bool ;_ad bool ;_bgdg bool ;
-};func (_ggfcb *LabelControl )readExtraDataBlock (_cfbf *_d .Reader )error {_ggfcb ._gccc =&labelExtraDataBlock {};if _ggfcb ._ccgf ._bfc > 0{_adae ,_dab :=_cfbf .ReadStringProperty (_ggfcb ._ccgf ._bfc );if _dab !=nil {return _dab ;};_ggfcb ._gccc ._dfga =_adae ;
-};if _ggfcb ._fbb ._cbe {var _afdg uint64 ;if _cgbe :=_cfbf .ReadPairProperty (&_afdg );_cgbe !=nil {return _cgbe ;};_ggfcb ._gccc ._eeg =uint32 (_afdg );_ggfcb ._gccc ._bfb =uint32 (_afdg >>32);};return nil ;};type spinButtonPropMask struct{_ddbg bool ;
-_fabd bool ;_ebf bool ;_dffc bool ;_gdfc bool ;_fggf bool ;_bgdc bool ;_gdeg bool ;_dffbe bool ;_geb bool ;_fbeca bool ;_aage bool ;_gdbf bool ;_dacc bool ;};func (_ffa *LabelControl )readPropMask (_ggd *_d .Reader )error {var _egcc uint32 ;if _fcbg :=_be .Read (_ggd ,_be .LittleEndian ,&_egcc );
-_fcbg !=nil {return _fcbg ;};_ffa ._fbb =&labelPropMask {};_ffa ._fbb ._edcg ,_egcc =_d .PopRightUI32 (_egcc );_ffa ._fbb ._dfg ,_egcc =_d .PopRightUI32 (_egcc );_ffa ._fbb ._ddd ,_egcc =_d .PopRightUI32 (_egcc );_ffa ._fbb ._dbf ,_egcc =_d .PopRightUI32 (_egcc );
-_ffa ._fbb ._fab ,_egcc =_d .PopRightUI32 (_egcc );_ffa ._fbb ._cbe ,_egcc =_d .PopRightUI32 (_egcc );_ffa ._fbb ._fcgd ,_egcc =_d .PopRightUI32 (_egcc );_ffa ._fbb ._cacd ,_egcc =_d .PopRightUI32 (_egcc );_ffa ._fbb ._ega ,_egcc =_d .PopRightUI32 (_egcc );
-_ffa ._fbb ._bgbe ,_egcc =_d .PopRightUI32 (_egcc );_ffa ._fbb ._gggf ,_egcc =_d .PopRightUI32 (_egcc );_ffa ._fbb ._fcb ,_egcc =_d .PopRightUI32 (_egcc );_ffa ._fbb ._fgae ,_egcc =_d .PopRightUI32 (_egcc );return nil ;};
-
-// GetForeColor gets a button text color value for a system palette from a scrollBar control.
-func (_gefg *ScrollBarControl )GetForeColor ()uint32 {return _gefg ._dbe ._caad };type scrollBarDataBlock struct{_caad uint32 ;_bfee uint32 ;_begd uint32 ;_bace uint8 ;_efdb int32 ;_faeg int32 ;_gfc int32 ;_edfc int32 ;_bdfa int32 ;_bgc int32 ;_ddbe int32 ;
-_ddga uint32 ;_abeg uint32 ;_fccg uint32 ;_fada uint16 ;};func (_ddff *morphDataControl )getValueBool ()bool {return _ddff ._edcc ._dgf &&_ddff ._bbaa ._eae =="\u0031";};
-
-// GetForeColor gets a button text color value for a system palette from a commandButton control.
-func (_acd *CommandButtonControl )GetForeColor ()uint32 {return _acd ._dgg ._dega };
-
-// ComboBoxDataControl is a representation of a combo box ActiveX form.
-type ComboBoxDataControl struct{*morphDataControlStringValue };func (_bdaa *SpinButtonControl )export (_aaf *_d .Writer )error {if _ebbd :=_bdaa .writePropMask (_aaf );_ebbd !=nil {return _ebbd ;};if _fefbc :=_bdaa .writeDataBlock (_aaf );_fefbc !=nil {return _fefbc ;
-};if _caaef :=_bdaa .writeExtraDataBlock (_aaf );_caaef !=nil {return _caaef ;};_bdaa ._fbg =uint16 (_aaf .Len ()-4);if _fgga :=_bdaa .writeStreamDataM (_aaf );_fgga !=nil {return _fgga ;};return _bdaa .writeTheRest (_aaf );};
-
-// SetForeColor sets a button text color value from a system palette for a commandButton control.
-func (_cea *CommandButtonControl )SetForeColor (foreColor uint32 ){_cea ._cac ._caca =true ;_cea ._dgg ._dega =foreColor ;};var _ffcc =[]byte {0x04,0x52,0xE3,0x0B,0x91,0x8F,0xCE,0x11,0x9D,0xE3,0,0xAA,0,0x4B,0xB8,0x51};func (_aed *controlBase )readTheRest (_fad *_d .Reader )error {_gc :=_f .NewBuffer ([]byte {});
-_ ,_ccda :=_b .Copy (_gc ,_fad );if _ccda !=nil {return _ccda ;};_aed ._gfef =_gc .Bytes ();return nil ;};
-
-// SetHeight sets height of the ScrollBar in HIMETRIC (0.01mm)
-func (_degb *ScrollBarControl )SetHeight (height uint32 ){_degb ._fbfd ._cgaeg =true ;_degb ._ddfc ._afdgc =height ;};
+type CommandButtonControl struct{controlBase ;_fce *commandButtonPropMask ;_bed *commandButtonDataBlock ;_dg *commandButtonExtraDataBlock ;_aad *streamData ;};type spinButtonPropMask struct{_efgb bool ;_cgab bool ;_cacf bool ;_ccd bool ;_ccef bool ;_dagff bool ;
+_facd bool ;_efab bool ;_bbag bool ;_eaace bool ;_cdc bool ;_dfae bool ;_bgcg bool ;_baa bool ;};
 
 // GetHeight returns height of the CommandButton in HIMETRIC (0.01mm)
-func (_gfe *CommandButtonControl )GetHeight ()uint32 {return _gfe ._fgf ._afd };type morphDataControlStringValue struct{*morphDataControl };
+func (_beg *CommandButtonControl )GetHeight ()uint32 {return _beg ._dg ._eacg };
 
-// ToggleButtonDataControl is a representation of a toggle button ActiveX form.
-type ToggleButtonDataControl struct{*morphDataControlBoolValue };
+// SetForeColor sets a button text color value from a system palette for a label control.
+func (_cdf *LabelControl )SetForeColor (foreColor uint32 ){_cdf ._gdfa ._gdc =true ;_cdf ._aed ._agec =foreColor ;};const _fcea =5;func (_ceb *controlBase )setPictureBytes (_dbc []byte ){if _ceb ._ccg ._bbbg ==nil {_ceb ._ccg ._bbbg =&guidAndPicture {};
+};_ceb ._ccg ._bbbg .setStdPictureBytes (_dbc );};
 
-// FmPictureSizeMode represents one of the three picture size modes according to MS-OFORMS document.
-type FmPictureSizeMode byte ;
-
-// SetValue sets a value for a control which value can be represented as a string.
-func (_effc *morphDataControlStringValue )SetValue (value string ){_effc .setValueString (value )};
-
-// GetHeight returns height of the Label in HIMETRIC (0.01mm)
-func (_aadc *LabelControl )GetHeight ()uint32 {return _aadc ._gccc ._eeg };
-
-// GetValue gets a value from a control which value can be represented as a string.
-func (_bfa *morphDataControlStringValue )GetValue ()string {return _bfa .getValueString ()};func (_beg *guidAndPicture )setStdPictureBytes (_dgce []byte ){if _dgce ==nil {return ;};if _beg ._ffc ==nil {_beg ._ffc =_ffcc ;};if _beg ._bce ==nil {_beg ._bce =&stdPicture {_gea :_bf };
-};_beg ._bce ._agg =uint32 (len (_dgce ));_beg ._bce ._gfde =_f .NewBuffer (_dgce );};func (_cgd *morphDataControl )readColumnInfoPropMask (_ffeb *_d .Reader )error {return nil };type spinButtonDataBlock struct{_cfad uint32 ;_efbcb uint32 ;_deeb uint32 ;
-_dfcf int32 ;_cdaf int32 ;_ebca int32 ;_gdcg int32 ;_cadc int32 ;_cag int32 ;_gabg uint32 ;_gefe uint32 ;_gfbd uint16 ;_aagf uint8 ;};
-
-// SetMin sets a button min value.
-func (_bbfa *ScrollBarControl )SetMin (min int32 ){_bbfa ._fbfd ._dggg =true ;_bbfa ._dbe ._efdb =min };
-
-// GetHeight returns height of the SpinButton in HIMETRIC (0.01mm)
-func (_aaac *SpinButtonControl )GetHeight ()uint32 {return _aaac ._debf ._bggc };func (_fgb *morphDataControl )readExtraDataBlock (_eba *_d .Reader )error {_fgb ._bbaa =&morphDataExtraDataBlock {};if _fgb ._edcc ._dgee {var _gcgg uint64 ;if _gagb :=_eba .ReadPairProperty (&_gcgg );
-_gagb !=nil {return _gagb ;};_fgb ._bbaa ._cdgeb =uint32 (_gcgg );_fgb ._bbaa ._cgebb =uint32 (_gcgg >>32);};if _fgb ._gdfbf ._ged > 0{_afe ,_gaag :=_eba .ReadStringProperty (_fgb ._gdfbf ._ged );if _gaag !=nil {return _gaag ;};_fgb ._bbaa ._eae =_afe ;
-};if _fgb ._gdfbf ._efb > 0{_cccg ,_cdeg :=_eba .ReadStringProperty (_fgb ._gdfbf ._efb );if _cdeg !=nil {return _cdeg ;};_fgb ._bbaa ._eac =_cccg ;};if _fgb ._gdfbf ._dgcg > 0{_afc ,_caae :=_eba .ReadStringProperty (_fgb ._gdfbf ._dgcg );if _caae !=nil {return _caae ;
-};_fgb ._bbaa ._abfd =_afc ;};return nil ;};type scrollBarExtraDataBlock struct{_debb uint32 ;_afdgc uint32 ;};
+// GetForeColor gets a button text color value for a system palette from a commandButton control.
+func (_gc *CommandButtonControl )GetForeColor ()uint32 {return _gc ._bed ._eba };type scrollBarPropMask struct{_fccd bool ;_acgb bool ;_bgdb bool ;_bcge bool ;_afec bool ;_effd bool ;_gce bool ;_ebbd bool ;_afca bool ;_egac bool ;_dcbe bool ;_gaf bool ;
+_faaf bool ;_eaab bool ;_abac bool ;_ggaa bool ;};func (_ddaa *ScrollBarControl )export (_abbf *_ef .Writer )error {if _ccaf :=_ddaa .writePropMask (_abbf );_ccaf !=nil {return _ccaf ;};if _bbcdd :=_ddaa .writeDataBlock (_abbf );_bbcdd !=nil {return _bbcdd ;
+};if _dacd :=_ddaa .writeExtraDataBlock (_abbf );_dacd !=nil {return _dacd ;};_ddaa ._fee =uint16 (_abbf .Len ()-4);if _adc :=_ddaa .writeStreamDataM (_abbf );_adc !=nil {return _adc ;};return _ddaa .writeTheRest (_abbf );};
 
 // GetPosition gets a button position value.
-func (_egbb *SpinButtonControl )GetPosition ()int32 {return _egbb ._ebd ._ebca };
+func (_agceg *SpinButtonControl )GetPosition ()int32 {return _agceg ._agce ._egec };func (_agf *morphDataControl )export (_caab *_ef .Writer )error {if _ebgd :=_agf .writePropMask (_caab );_ebgd !=nil {return _ebgd ;};if _deae :=_agf .writeDataBlock (_caab );
+_deae !=nil {return _deae ;};if _badab :=_agf .writeExtraDataBlock (_caab );_badab !=nil {return _badab ;};_agf ._fee =uint16 (_caab .Len ()-4);if _dbe :=_agf .writeStreamDataMP (_caab );_dbe !=nil {return _dbe ;};return _agf .writeTheRest (_caab );};
 
 // GetForeColor gets a button text color value for a system palette from a spinButton control.
-func (_efbc *SpinButtonControl )GetForeColor ()uint32 {return _efbc ._ebd ._cfad };func (_ebg *ImageControl )readPropMask (_aad *_d .Reader )error {var _afb uint32 ;if _fef :=_be .Read (_aad ,_be .LittleEndian ,&_afb );_fef !=nil {return _fef ;};_ebg ._gbb =&imagePropMask {};
-_afb >>=2;_ebg ._gbb ._caec ,_afb =_d .PopRightUI32 (_afb );_ebg ._gbb ._abc ,_afb =_d .PopRightUI32 (_afb );_ebg ._gbb ._gab ,_afb =_d .PopRightUI32 (_afb );_ebg ._gbb ._gbd ,_afb =_d .PopRightUI32 (_afb );_ebg ._gbb ._ddfg ,_afb =_d .PopRightUI32 (_afb );
-_ebg ._gbb ._bcb ,_afb =_d .PopRightUI32 (_afb );_ebg ._gbb ._aeeb ,_afb =_d .PopRightUI32 (_afb );_ebg ._gbb ._aec ,_afb =_d .PopRightUI32 (_afb );_ebg ._gbb ._eff ,_afb =_d .PopRightUI32 (_afb );_ebg ._gbb ._gee ,_afb =_d .PopRightUI32 (_afb );_ebg ._gbb ._efae ,_afb =_d .PopRightUI32 (_afb );
-_ebg ._gbb ._aff ,_afb =_d .PopRightUI32 (_afb );_ebg ._gbb ._fgfgd ,_afb =_d .PopRightUI32 (_afb );return nil ;};func _fbf (_bgde *_d .Reader )(*ImageControl ,error ){_ece :=&ImageControl {};if _gcgd :=_ece .readPropMask (_bgde );_gcgd !=nil {return nil ,_gcgd ;
-};if _abgd :=_ece .readDataBlock (_bgde );_abgd !=nil {return nil ,_abgd ;};if _cfbc :=_ece .readExtraDataBlock (_bgde );_cfbc !=nil {return nil ,_cfbc ;};if _dafg :=_ece .readStreamDataPM (_bgde ,_ece ._gbb ._eff ,_ece ._gbb ._fgfgd );_dafg !=nil {return nil ,_dafg ;
-};if _gcc :=_ece .readTheRest (_bgde );_gcc !=nil {return nil ,_gcc ;};return _ece ,nil ;};type streamData struct{_dadg *guidAndPicture ;_ggcd *guidAndPicture ;};type imageExtraDataBlock struct{_baa uint32 ;_ccddc uint32 ;};const (FmPictureSizeModeClip FmPictureSizeMode =iota ;
-FmPictureSizeModeStretch ;_ ;FmPictureSizeModeZoom ;);
+func (_bgdc *SpinButtonControl )GetForeColor ()uint32 {return _bgdc ._agce ._fdda };func (_ada *guidAndPicture )export (_fgb *_ef .Writer )error {if _ ,_ced :=_e .Copy (_fgb ,_d .NewBuffer (_ada ._bbc ));_ced !=nil {return _ced ;};if _ddg :=_fgb .WriteProperty (_ada ._gga ._dfc );
+_ddg !=nil {return _ddg ;};if _eda :=_fgb .WriteProperty (_ada ._gga ._fgea );_eda !=nil {return _eda ;};_ ,_gdf :=_e .Copy (_fgb ,_ada ._gga ._dbb );if _gdf !=nil {return _gdf ;};return nil ;};
 
-// GetHeight returns height of the ScrollBar in HIMETRIC (0.01mm)
-func (_afag *ScrollBarControl )GetHeight ()uint32 {return _afag ._ddfc ._afdgc };func (_gaaa *ScrollBarControl )readDataBlock (_bbcg *_d .Reader )error {_gaaa ._dbe =&scrollBarDataBlock {};if _gaaa ._fbfd ._eeae {if _ecbe :=_bbcg .ReadProperty (&_gaaa ._dbe ._caad );
-_ecbe !=nil {return _ecbe ;};};if _gaaa ._fbfd ._ceba {if _fgad :=_bbcg .ReadProperty (&_gaaa ._dbe ._bfee );_fgad !=nil {return _fgad ;};};if _gaaa ._fbfd ._eddg {if _gffg :=_bbcg .ReadProperty (&_gaaa ._dbe ._begd );_gffg !=nil {return _gffg ;};};if _gaaa ._fbfd ._acce {if _addd :=_bbcg .ReadProperty (&_gaaa ._dbe ._bace );
-_addd !=nil {return _addd ;};};if _gaaa ._fbfd ._dggg {if _cfc :=_bbcg .ReadProperty (&_gaaa ._dbe ._efdb );_cfc !=nil {return _cfc ;};};if _gaaa ._fbfd ._aebe {if _gec :=_bbcg .ReadProperty (&_gaaa ._dbe ._faeg );_gec !=nil {return _gec ;};};if _gaaa ._fbfd ._eebe {if _gfad :=_bbcg .ReadProperty (&_gaaa ._dbe ._gfc );
-_gfad !=nil {return _gfad ;};};if _gaaa ._fbfd ._cbgb {if _edfe :=_bbcg .ReadProperty (&_gaaa ._dbe ._edfc );_edfe !=nil {return _edfe ;};};if _gaaa ._fbfd ._bfaa {if _cfef :=_bbcg .ReadProperty (&_gaaa ._dbe ._bdfa );_cfef !=nil {return _cfef ;};};if _gaaa ._fbfd ._dgeg {if _fcfa :=_bbcg .ReadProperty (&_gaaa ._dbe ._bgc );
-_fcfa !=nil {return _fcfa ;};};if _gaaa ._fbfd ._cedc {if _eacd :=_bbcg .ReadProperty (&_gaaa ._dbe ._ddbe );_eacd !=nil {return _eacd ;};};if _gaaa ._fbfd ._eec {if _egbe :=_bbcg .ReadProperty (&_gaaa ._dbe ._ddga );_egbe !=nil {return _egbe ;};};if _gaaa ._fbfd ._dcg {if _ecdb :=_bbcg .ReadProperty (&_gaaa ._dbe ._abeg );
-_ecdb !=nil {return _ecdb ;};};if _gaaa ._fbfd ._feab {if _cdac :=_bbcg .ReadProperty (&_gaaa ._dbe ._fccg );_cdac !=nil {return _cdac ;};};if _gaaa ._fbfd ._gcff {if _cgcf :=_bbcg .ReadProperty (&_gaaa ._dbe ._fada );_cgcf !=nil {return _cgcf ;};};return nil ;
-};func (_aaa *guidAndPicture )importFromReader (_gcg *_d .Reader )error {_gdb :=_f .NewBuffer ([]byte {});if _ ,_gdfb :=_b .CopyN (_gdb ,_gcg ,int64 (_cbcc ));_gdfb !=nil {return _gdfb ;};_dge :=_gdb .Bytes ();for _bgf :=0;_bgf < _cbcc ;_bgf ++{if _dge [_bgf ]!=_ffcc [_bgf ]{return _fg .Errorf ("\u0049\u006e\u0076\u0061\u006c\u0069d\u0020\u0047\u0055\u0049\u0044\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0025v\u0020\u0061\u0074\u0020\u0069\u006e\u0064e\u0078\u0020\u0025\u0076",_dge [_bgf ],_bgf );
-};};_aaa ._ffc =_dge ;_aaa ._bce =&stdPicture {};if _ebe :=_gcg .ReadProperty (&_aaa ._bce ._gea );_ebe !=nil {return _ebe ;};if _aaa ._bce ._gea !=_bf {return _fg .Errorf ("\u0049\u006e\u0076\u0061li\u0064\u0020\u0070\u0072\u0065\u0061\u006d\u0062\u006c\u0065\u0020\u0025\u0076",_aaa ._bce ._gea );
-};if _ecf :=_gcg .ReadProperty (&_aaa ._bce ._agg );_ecf !=nil {return _ecf ;};if _aaa ._bce ._agg !=0{_ggaf :=_f .NewBuffer ([]byte {});if _ ,_agbg :=_b .Copy (_ggaf ,_gcg );_agbg !=nil {return _agbg ;};_aaa ._bce ._gfde =_ggaf ;};return nil ;};
+// SetCaption sets a caption string for a label control.
+func (_cfd *LabelControl )SetCaption (caption string ){_cfd ._gdfa ._cgaf =true ;_cfd ._aed ._gagb =uint32 (len (caption ));_cfd ._ecfg ._daac =caption ;};func (_agfe *ScrollBarControl )readDataBlock (_gbcd *_ef .Reader )error {_agfe ._efcf =&scrollBarDataBlock {};
+if _agfe ._bebb ._fccd {if _gfgd :=_gbcd .ReadProperty (&_agfe ._efcf ._ffdb );_gfgd !=nil {return _gfgd ;};};if _agfe ._bebb ._acgb {if _cfbg :=_gbcd .ReadProperty (&_agfe ._efcf ._facc );_cfbg !=nil {return _cfbg ;};};if _agfe ._bebb ._bgdb {if _gbca :=_gbcd .ReadProperty (&_agfe ._efcf ._fbc );
+_gbca !=nil {return _gbca ;};};if _agfe ._bebb ._bcge {if _afda :=_gbcd .ReadProperty (&_agfe ._efcf ._aeb );_afda !=nil {return _afda ;};};if _agfe ._bebb ._effd {if _gefg :=_gbcd .ReadProperty (&_agfe ._efcf ._bfbd );_gefg !=nil {return _gefg ;};};if _agfe ._bebb ._gce {if _fccg :=_gbcd .ReadProperty (&_agfe ._efcf ._cgcc );
+_fccg !=nil {return _fccg ;};};if _agfe ._bebb ._ebbd {if _bcfd :=_gbcd .ReadProperty (&_agfe ._efcf ._aacf );_bcfd !=nil {return _bcfd ;};};if _agfe ._bebb ._afca {if _adcc :=_gbcd .ReadProperty (&_agfe ._efcf ._bgaf );_adcc !=nil {return _adcc ;};};if _agfe ._bebb ._egac {if _fdd :=_gbcd .ReadProperty (&_agfe ._efcf ._fbbf );
+_fdd !=nil {return _fdd ;};};if _agfe ._bebb ._dcbe {if _cedadf :=_gbcd .ReadProperty (&_agfe ._efcf ._dcdb );_cedadf !=nil {return _cedadf ;};};if _agfe ._bebb ._gaf {if _gba :=_gbcd .ReadProperty (&_agfe ._efcf ._cgff );_gba !=nil {return _gba ;};};if _agfe ._bebb ._faaf {if _cfeg :=_gbcd .ReadProperty (&_agfe ._efcf ._cdae );
+_cfeg !=nil {return _cfeg ;};};if _agfe ._bebb ._eaab {if _ecca :=_gbcd .ReadProperty (&_agfe ._efcf ._gadd );_ecca !=nil {return _ecca ;};};if _agfe ._bebb ._abac {if _bgdbc :=_gbcd .ReadProperty (&_agfe ._efcf ._ffaf );_bgdbc !=nil {return _bgdbc ;};
+};if _agfe ._bebb ._ggaa {if _bde :=_gbcd .ReadProperty (&_agfe ._efcf ._bdfe );_bde !=nil {return _bde ;};};return nil ;};
 
-// GetPosition gets a button position value.
-func (_fbd *ScrollBarControl )GetPosition ()int32 {return _fbd ._dbe ._gfc };func (_aeee *controlBase )setMouseIconBytes (_dbd []byte ){if _aeee ._gbgc ._dadg ==nil {_aeee ._gbgc ._dadg =&guidAndPicture {};};_aeee ._gbgc ._dadg .setStdPictureBytes (_dbd );
-};func (_bdb *LabelControl )writeExtraDataBlock (_baeg *_d .Writer )error {if _bdb ._ccgf ._bfc > 0{if _fcgb :=_baeg .WriteStringProperty (_bdb ._gccc ._dfga );_fcgb !=nil {return _fcgb ;};};if _bdb ._fbb ._cbe {_acf :=uint64 (_bdb ._gccc ._bfb )<<32|uint64 (_bdb ._gccc ._eeg );
-if _eeea :=_baeg .WritePropertyNoAlign (_acf );_eeea !=nil {return _eeea ;};};return nil ;};func (_agdb *controlBase )readStreamDataPM (_afcb *_d .Reader ,_cfdc ,_deaf bool )error {_agdb ._gbgc =&streamData {};if _cfdc {_agdb ._gbgc ._ggcd =&guidAndPicture {};
-if _edag :=_agdb ._gbgc ._ggcd .importFromReader (_afcb );_edag !=nil {return _edag ;};};if _deaf {_agdb ._gbgc ._dadg =&guidAndPicture {};if _gdcb :=_agdb ._gbgc ._dadg .importFromReader (_afcb );_gdcb !=nil {return _gdcb ;};};return nil ;};
+// GetMax gets a button max value.
+func (_bgff *ScrollBarControl )GetMax ()int32 {return _bgff ._efcf ._cgcc };
 
-// SetHeight sets height of the morphDataControl in HIMETRIC (0.01mm)
-func (_fdcg *morphDataControl )SetHeight (height uint32 ){_fdcg ._edcc ._dgee =true ;_fdcg ._bbaa ._cdgeb =height ;};type morphDataColumnInfo struct{};
+// SetForeColor sets a button text color value from a system palette for a spinButton control.
+func (_cfbe *SpinButtonControl )SetForeColor (foreColor uint32 ){_cfbe ._fcfaf ._efgb =true ;_cfbe ._agce ._fdda =foreColor ;};type labelPropMask struct{_gdc bool ;_beeb bool ;_ccgg bool ;_cgaf bool ;_cfg bool ;_cgb bool ;_bffg bool ;_abag bool ;_cacd bool ;
+_aeg bool ;_dcdc bool ;_dgdd bool ;_ggb bool ;};func (_adfd *SpinButtonControl )export (_cgfa *_ef .Writer )error {if _acc :=_adfd .writePropMask (_cgfa );_acc !=nil {return _acc ;};if _adb :=_adfd .writeDataBlock (_cgfa );_adb !=nil {return _adb ;};if _cfgf :=_adfd .writeExtraDataBlock (_cgfa );
+_cfgf !=nil {return _cfgf ;};_adfd ._fee =uint16 (_cgfa .Len ()-4);if _dce :=_adfd .writeStreamDataM (_cgfa );_dce !=nil {return _dce ;};return _adfd .writeTheRest (_cgfa );};
 
-// SetForeColor sets a button text color value from a system palette for a scrollBar control.
-func (_dff *ScrollBarControl )SetForeColor (foreColor uint32 ){_dff ._fbfd ._eeae =true ;_dff ._dbe ._caad =foreColor ;};func (_bbb *guidAndPicture )getStdPictureBytes ()[]byte {if _bbb !=nil &&_bbb ._bce !=nil &&_bbb ._bce ._gfde !=nil {return _bbb ._bce ._gfde .Bytes ();
-};return nil ;};
-
-// ExportToByteArray makes a byte array from a control as it is stored in .bin files.
-func (_da *Control )ExportToByteArray ()([]byte ,error ){_ce ,_cec :=_ba .Open (_da ._ec );if _cec !=nil {return nil ,_cec ;};defer _ce .Close ();_ca ,_cec :=_bac .New (_ce );if _cec !=nil {return nil ,_cec ;};_cf :=_d .NewWriter ();if _gfd :=_be .Write (_cf ,_be .LittleEndian ,&_da ._fgg );
-_gfd !=nil {return nil ,_gfd ;};if _dfb :=_be .Write (_cf ,_be .LittleEndian ,&_da ._ff );_dfb !=nil {return nil ,_dfb ;};if _age :=_be .Write (_cf ,_be .LittleEndian ,uint16 (0));_age !=nil {return nil ,_age ;};var _eg error ;if _ceb :=_da .Choice ;_ceb !=nil {if _ceb .CheckBox !=nil {_eg =_ceb .CheckBox .export (_cf );
-}else if _ceb .TextBox !=nil {_eg =_ceb .TextBox .export (_cf );}else if _ceb .ComboBox !=nil {_eg =_ceb .ComboBox .export (_cf );}else if _ceb .ListBox !=nil {_eg =_ceb .ListBox .export (_cf );}else if _ceb .OptionButton !=nil {_eg =_ceb .OptionButton .export (_cf );
-}else if _ceb .ToggleButton !=nil {_eg =_ceb .ToggleButton .export (_cf );}else if _ceb .Label !=nil {_eg =_ceb .Label .export (_cf );}else if _ceb .SpinButton !=nil {_eg =_ceb .SpinButton .export (_cf );}else if _ceb .CommandButton !=nil {_eg =_ceb .CommandButton .export (_cf );
-}else if _ceb .ScrollBar !=nil {_eg =_ceb .ScrollBar .export (_cf );}else {_eg =_ceb ._fa .writeTheRest (_cf );};};if _eg !=nil {return nil ,_eg ;};if _eda :=_cf .WriteByteAt (byte (_da ._bag ),2);_eda !=nil {return nil ,_eda ;};if _daf :=_cf .WriteByteAt (byte (_da ._bag >>8),3);
-_daf !=nil {return nil ,_daf ;};_fdg ,_cec :=_ca .GetEntry ("\u0063\u006f\u006e\u0074\u0065\u006e\u0074\u0073");if _cec !=nil {return nil ,_cec ;};if _ea :=_fdg .SetEntryContent (_cf .Bytes ());_ea !=nil {return nil ,_ea ;};return _ca .Export ();};func (_affb *ImageControl )readExtraDataBlock (_bba *_d .Reader )error {_affb ._gfbc =&imageExtraDataBlock {};
-if _affb ._gbb ._aec {var _bbge uint64 ;if _babb :=_bba .ReadPairProperty (&_bbge );_babb !=nil {return _babb ;};_affb ._gfbc ._ccddc =uint32 (_bbge );_affb ._gfbc ._baa =uint32 (_bbge >>32);};return nil ;};
-
-// SetBackColor sets a button text color value from a system palette for a commandButton control.
-func (_dfd *CommandButtonControl )SetBackColor (backColor uint32 ){_dfd ._cac ._dgb =true ;_dfd ._dgg ._fff =backColor ;};
+// GetValue gets a value from a control which value can be represented as boolean (on/off).
+func (_fefg *morphDataControlBoolValue )GetValue ()bool {return _fefg .getValueBool ()};func (_cefe *LabelControl )readPropMask (_egbd *_ef .Reader )error {var _edgc uint32 ;if _adfb :=_cb .Read (_egbd ,_cb .LittleEndian ,&_edgc );_adfb !=nil {return _adfb ;
+};_cefe ._gdfa =&labelPropMask {};_cefe ._gdfa ._gdc ,_edgc =_ef .PopRightUI32 (_edgc );_cefe ._gdfa ._beeb ,_edgc =_ef .PopRightUI32 (_edgc );_cefe ._gdfa ._ccgg ,_edgc =_ef .PopRightUI32 (_edgc );_cefe ._gdfa ._cgaf ,_edgc =_ef .PopRightUI32 (_edgc );
+_cefe ._gdfa ._cfg ,_edgc =_ef .PopRightUI32 (_edgc );_cefe ._gdfa ._cgb ,_edgc =_ef .PopRightUI32 (_edgc );_cefe ._gdfa ._bffg ,_edgc =_ef .PopRightUI32 (_edgc );_cefe ._gdfa ._abag ,_edgc =_ef .PopRightUI32 (_edgc );_cefe ._gdfa ._cacd ,_edgc =_ef .PopRightUI32 (_edgc );
+_cefe ._gdfa ._aeg ,_edgc =_ef .PopRightUI32 (_edgc );_cefe ._gdfa ._dcdc ,_edgc =_ef .PopRightUI32 (_edgc );_cefe ._gdfa ._dgdd ,_edgc =_ef .PopRightUI32 (_edgc );_cefe ._gdfa ._ggb ,_edgc =_ef .PopRightUI32 (_edgc );return nil ;};const _acab uint32 =0x0000746C;
+func (_bgg *morphDataControl )getValueBool ()bool {return _bgg ._befg ._gge &&_bgg ._egff ._egbg =="\u0031";};
 
 // ImageControl is a representation of an image ActiveX form.
-type ImageControl struct{controlBase ;_gbb *imagePropMask ;_fdfg *imageDataBlock ;_gfbc *imageExtraDataBlock ;_cgg *streamData ;};func (_abgc *morphDataControl )writeColumnInfoDataBlock (_fecb *_d .Writer )error {return nil };func (_dgdb *controlBase )readStreamDataMP (_fcbe *_d .Reader ,_bbbf ,_gbce bool )error {_dgdb ._gbgc =&streamData {};
-if _bbbf {_dgdb ._gbgc ._dadg =&guidAndPicture {};if _bccb :=_dgdb ._gbgc ._dadg .importFromReader (_fcbe );_bccb !=nil {return _bccb ;};};if _gbce {_dgdb ._gbgc ._ggcd =&guidAndPicture {};if _ceed :=_dgdb ._gbgc ._ggcd .importFromReader (_fcbe );_ceed !=nil {return _ceed ;
-};};return nil ;};type scrollBarPropMask struct{_eeae bool ;_ceba bool ;_eddg bool ;_acce bool ;_cgaeg bool ;_dggg bool ;_aebe bool ;_eebe bool ;_cbgb bool ;_bfaa bool ;_dgeg bool ;_cedc bool ;_eec bool ;_dcg bool ;_feab bool ;_gcff bool ;};
+type ImageControl struct{controlBase ;_dfd *imagePropMask ;_bbad *imageDataBlock ;_efec *imageExtraDataBlock ;_add *streamData ;};
+
+// SetValue sets a value for a control which value can be represented as boolean (on/off).
+func (_gedg *morphDataControlBoolValue )SetValue (value bool ){_gedg .setValueBool (value )};
+
+// SetValue sets a value for a control which value can be represented as a string.
+func (_bbb *morphDataControlStringValue )SetValue (value string ){_bbb .setValueString (value )};func (_gf *ImageControl )export (_gcgd *_ef .Writer )error {if _gebdg :=_gf .writePropMask (_gcgd );_gebdg !=nil {return _gebdg ;};if _acabf :=_gf .writeDataBlock (_gcgd );
+_acabf !=nil {return _acabf ;};if _fdea :=_gf .writeExtraDataBlock (_gcgd );_fdea !=nil {return _fdea ;};_gf ._fee =uint16 (_gcgd .Len ()-4);if _gcfg :=_gf .writeStreamDataPM (_gcgd );_gcfg !=nil {return _gcfg ;};return _gf .writeTheRest (_gcgd );};func (_fcba *morphDataControl )getValueString ()string {if _fcba ._befg ._gge {return _fcba ._egff ._egbg ;
+};return "";};type scrollBarDataBlock struct{_ffdb uint32 ;_facc uint32 ;_fbc uint32 ;_aeb uint8 ;_bfbd int32 ;_cgcc int32 ;_aacf int32 ;_bgaf int32 ;_fbbf int32 ;_dcdb int32 ;_cgff int32 ;_cdae uint32 ;_gadd uint32 ;_ffaf uint32 ;_bdfe uint16 ;};type morphDataControlStringValue struct{*morphDataControl };
+
+
+// SetBackColor sets a button text color value from a system palette for a scrollBar control.
+func (_ggbf *ScrollBarControl )SetBackColor (backColor uint32 ){_ggbf ._bebb ._acgb =true ;_ggbf ._efcf ._facc =backColor ;};func (_faad *CommandButtonControl )readPropMask (_gg *_ef .Reader )error {var _ebe uint32 ;if _fbf :=_cb .Read (_gg ,_cb .LittleEndian ,&_ebe );
+_fbf !=nil {return _fbf ;};_faad ._fce =&commandButtonPropMask {};_faad ._fce ._bgd ,_ebe =_ef .PopRightUI32 (_ebe );_faad ._fce ._dee ,_ebe =_ef .PopRightUI32 (_ebe );_faad ._fce ._fca ,_ebe =_ef .PopRightUI32 (_ebe );_faad ._fce ._dcf ,_ebe =_ef .PopRightUI32 (_ebe );
+_faad ._fce ._bba ,_ebe =_ef .PopRightUI32 (_ebe );_faad ._fce ._ead ,_ebe =_ef .PopRightUI32 (_ebe );_faad ._fce ._eac ,_ebe =_ef .PopRightUI32 (_ebe );_faad ._fce ._geb ,_ebe =_ef .PopRightUI32 (_ebe );_faad ._fce ._caf ,_ebe =_ef .PopRightUI32 (_ebe );
+_faad ._fce ._df ,_ebe =_ef .PopRightUI32 (_ebe );_faad ._fce ._edc ,_ebe =_ef .PopRightUI32 (_ebe );return nil ;};func _gde (_gdcb *_ef .Reader )(*SpinButtonControl ,error ){_aggd :=&SpinButtonControl {};if _ffac :=_aggd .readPropMask (_gdcb );_ffac !=nil {return nil ,_ffac ;
+};if _fdf :=_aggd .readDataBlock (_gdcb );_fdf !=nil {return nil ,_fdf ;};if _ecdc :=_aggd .readExtraDataBlock (_gdcb );_ecdc !=nil {return nil ,_ecdc ;};if _dbec :=_aggd .readStreamDataM (_gdcb ,_aggd ._fcfaf ._bgcg );_dbec !=nil {return nil ,_dbec ;};
+if _bcbec :=_aggd .readTheRest (_gdcb );_bcbec !=nil {return nil ,_bcbec ;};return _aggd ,nil ;};func (_bda *CommandButtonControl )readDataBlock (_dea *_ef .Reader )error {_bda ._bed =&commandButtonDataBlock {};if _bda ._fce ._bgd {if _dcc :=_dea .ReadProperty (&_bda ._bed ._eba );
+_dcc !=nil {return _dcc ;};};if _bda ._fce ._dee {if _dde :=_dea .ReadProperty (&_bda ._bed ._ff );_dde !=nil {return _dde ;};};if _bda ._fce ._fca {if _faf :=_dea .ReadProperty (&_bda ._bed ._acf );_faf !=nil {return _faf ;};};if _bda ._fce ._dcf {var _fbg uint32 ;
+if _dad :=_dea .ReadProperty (&_fbg );_dad !=nil {return _dad ;};_bda ._bed ._ecb ,_bda ._bed ._bca =_ag (_fbg );};if _bda ._fce ._bba {if _dfe :=_dea .ReadProperty (&_bda ._bed ._fab );_dfe !=nil {return _dfe ;};};if _bda ._fce ._eac {if _cff :=_dea .ReadProperty (&_bda ._bed ._efbd );
+_cff !=nil {return _cff ;};};if _bda ._fce ._geb {if _eaff :=_dea .ReadProperty (&_bda ._bed ._fff );_eaff !=nil {return _eaff ;};};if _bda ._fce ._caf {if _ebd :=_dea .ReadProperty (&_bda ._bed ._dac );_ebd !=nil {return _ebd ;};};if _bda ._fce ._edc {if _bea :=_dea .ReadProperty (&_bda ._bed ._ga );
+_bea !=nil {return _bea ;};};return nil ;};
+
+// GetValue gets a value from a control which value can be represented as a string.
+func (_ddee *morphDataControlStringValue )GetValue ()string {return _ddee .getValueString ()};func (_cedf *SpinButtonControl )writeDataBlock (_gdb *_ef .Writer )error {if _cedf ._fcfaf ._efgb {if _dccd :=_gdb .WriteProperty (_cedf ._agce ._fdda );_dccd !=nil {return _dccd ;
+};};if _cedf ._fcfaf ._cgab {if _dgbaf :=_gdb .WriteProperty (_cedf ._agce ._gfbb );_dgbaf !=nil {return _dgbaf ;};};if _cedf ._fcfaf ._cacf {if _cbca :=_gdb .WriteProperty (_cedf ._agce ._eaef );_cbca !=nil {return _cbca ;};};if _cedf ._fcfaf ._ccef {if _egfc :=_gdb .WriteProperty (_cedf ._agce ._gdge );
+_egfc !=nil {return _egfc ;};};if _cedf ._fcfaf ._dagff {if _faee :=_gdb .WriteProperty (_cedf ._agce ._dgcb );_faee !=nil {return _faee ;};};if _cedf ._fcfaf ._facd {if _ggfb :=_gdb .WriteProperty (_cedf ._agce ._egec );_ggfb !=nil {return _ggfb ;};};
+if _cedf ._fcfaf ._efab {if _eced :=_gdb .WriteProperty (_cedf ._agce ._gdfaa );_eced !=nil {return _eced ;};};if _cedf ._fcfaf ._bbag {if _gbbf :=_gdb .WriteProperty (_cedf ._agce ._fgbd );_gbbf !=nil {return _gbbf ;};};if _cedf ._fcfaf ._eaace {if _fad :=_gdb .WriteProperty (_cedf ._agce ._afcab );
+_fad !=nil {return _fad ;};};if _cedf ._fcfaf ._cdc {if _ddf :=_gdb .WriteProperty (_cedf ._agce ._fdeg );_ddf !=nil {return _ddf ;};};if _cedf ._fcfaf ._dfae {if _befb :=_gdb .WriteProperty (_cedf ._agce ._efff );_befb !=nil {return _befb ;};};if _cedf ._fcfaf ._bgcg {if _egab :=_gdb .WriteProperty (_cedf ._agce ._efbe );
+_egab !=nil {return _egab ;};};if _cedf ._fcfaf ._baa {if _bfe :=_gdb .WriteProperty (_cedf ._agce ._affd );_bfe !=nil {return _bfe ;};};return _gdb .AlignLength (4);};func (_bfff *LabelControl )export (_cfb *_ef .Writer )error {if _edcc :=_bfff .writePropMask (_cfb );
+_edcc !=nil {return _edcc ;};if _fec :=_bfff .writeDataBlock (_cfb );_fec !=nil {return _fec ;};if _eaa :=_bfff .writeExtraDataBlock (_cfb );_eaa !=nil {return _eaa ;};_bfff ._fee =uint16 (_cfb .Len ()-4);if _cbfe :=_bfff .writeStreamDataPM (_cfb );_cbfe !=nil {return _cbfe ;
+};return _bfff .writeTheRest (_cfb );};func (_beab *morphDataControl )readExtraDataBlock (_daef *_ef .Reader )error {_beab ._egff =&morphDataExtraDataBlock {};if _beab ._befg ._dfcfd {var _dgea uint64 ;if _dfeea :=_daef .ReadPairProperty (&_dgea );_dfeea !=nil {return _dfeea ;
+};_beab ._egff ._gebb =uint32 (_dgea );_beab ._egff ._dff =uint32 (_dgea >>32);};if _beab ._fcb ._dgba > 0{_gbga ,_aea :=_daef .ReadStringProperty (_beab ._fcb ._dgba );if _aea !=nil {return _aea ;};_beab ._egff ._egbg =_gbga ;};if _beab ._fcb ._dfee > 0{_gedge ,_acbg :=_daef .ReadStringProperty (_beab ._fcb ._dfee );
+if _acbg !=nil {return _acbg ;};_beab ._egff ._abfd =_gedge ;};if _beab ._fcb ._bbca > 0{_cfa ,_cecb :=_daef .ReadStringProperty (_beab ._fcb ._bbca );if _cecb !=nil {return _cecb ;};_beab ._egff ._fded =_cfa ;};return nil ;};func (_bcc *ImageControl )readDataBlock (_fcdg *_ef .Reader )error {_bcc ._bbad =&imageDataBlock {};
+if _bcc ._dfd ._bgaa {if _gbc :=_fcdg .ReadProperty (&_bcc ._bbad ._gad );_gbc !=nil {return _gbc ;};};if _bcc ._dfd ._eacb {if _ebc :=_fcdg .ReadProperty (&_bcc ._bbad ._fbd );_ebc !=nil {return _ebc ;};};if _bcc ._dfd ._bab {if _eebf :=_fcdg .ReadProperty (&_bcc ._bbad ._egb );
+_eebf !=nil {return _eebf ;};};if _bcc ._dfd ._cec {if _agab :=_fcdg .ReadProperty (&_bcc ._bbad ._dgca );_agab !=nil {return _agab ;};};if _bcc ._dfd ._dfda {if _fdg :=_fcdg .ReadProperty (&_bcc ._bbad ._ega );_fdg !=nil {return _fdg ;};};if _bcc ._dfd ._efbf {if _faga :=_fcdg .ReadProperty (&_bcc ._bbad ._dcd );
+_faga !=nil {return _faga ;};};if _bcc ._dfd ._ccc {if _gfd :=_fcdg .ReadProperty (&_bcc ._bbad ._fef );_gfd !=nil {return _gfd ;};};if _bcc ._dfd ._bege {if _dcgf :=_fcdg .ReadProperty (&_bcc ._bbad ._bcd );_dcgf !=nil {return _dcgf ;};};if _bcc ._dfd ._fac {if _eabg :=_fcdg .ReadProperty (&_bcc ._bbad ._gada );
+_eabg !=nil {return _eabg ;};};if _bcc ._dfd ._fda {if _gcb :=_fcdg .ReadProperty (&_bcc ._bbad ._ggf );_gcb !=nil {return _gcb ;};};return nil ;};func _ag (_cca uint32 )(bool ,uint32 ){if _cca ==0{return false ,0;};_fcc :=_cca >=1<<31;if _fcc {_cca -=1<<31;
+};return _fcc ,_cca ;};
+
+// ComboBoxDataControl is a representation of a combo box ActiveX form.
+type ComboBoxDataControl struct{*morphDataControlStringValue };type commandButtonPropMask struct{_bgd bool ;_dee bool ;_fca bool ;_dcf bool ;_bba bool ;_ead bool ;_eac bool ;_geb bool ;_caf bool ;_df bool ;_edc bool ;};type controlBase struct{_fee uint16 ;
+_cafg bool ;_ccg *streamData ;_def []byte ;};type labelExtraDataBlock struct{_cba uint32 ;_dbag uint32 ;_daac string ;};func (_ggde *ScrollBarControl )writeDataBlock (_fbea *_ef .Writer )error {if _ggde ._bebb ._fccd {if _afcaf :=_fbea .WriteProperty (_ggde ._efcf ._ffdb );
+_afcaf !=nil {return _afcaf ;};};if _ggde ._bebb ._acgb {if _gdca :=_fbea .WriteProperty (_ggde ._efcf ._facc );_gdca !=nil {return _gdca ;};};if _ggde ._bebb ._bgdb {if _eefc :=_fbea .WriteProperty (_ggde ._efcf ._fbc );_eefc !=nil {return _eefc ;};};
+if _ggde ._bebb ._bcge {if _cgbf :=_fbea .WriteProperty (_ggde ._efcf ._aeb );_cgbf !=nil {return _cgbf ;};};if _ggde ._bebb ._effd {if _cgacc :=_fbea .WriteProperty (_ggde ._efcf ._bfbd );_cgacc !=nil {return _cgacc ;};};if _ggde ._bebb ._gce {if _abba :=_fbea .WriteProperty (_ggde ._efcf ._cgcc );
+_abba !=nil {return _abba ;};};if _ggde ._bebb ._ebbd {if _cgde :=_fbea .WriteProperty (_ggde ._efcf ._aacf );_cgde !=nil {return _cgde ;};};if _ggde ._bebb ._afca {if _dbce :=_fbea .WriteProperty (_ggde ._efcf ._bgaf );_dbce !=nil {return _dbce ;};};if _ggde ._bebb ._egac {if _eccb :=_fbea .WriteProperty (_ggde ._efcf ._fbbf );
+_eccb !=nil {return _eccb ;};};if _ggde ._bebb ._dcbe {if _abda :=_fbea .WriteProperty (_ggde ._efcf ._dcdb );_abda !=nil {return _abda ;};};if _ggde ._bebb ._gaf {if _befc :=_fbea .WriteProperty (_ggde ._efcf ._cgff );_befc !=nil {return _befc ;};};if _ggde ._bebb ._faaf {if _aacd :=_fbea .WriteProperty (_ggde ._efcf ._cdae );
+_aacd !=nil {return _aacd ;};};if _ggde ._bebb ._eaab {if _ddaae :=_fbea .WriteProperty (_ggde ._efcf ._gadd );_ddaae !=nil {return _ddaae ;};};if _ggde ._bebb ._abac {if _ded :=_fbea .WriteProperty (_ggde ._efcf ._ffaf );_ded !=nil {return _ded ;};};if _ggde ._bebb ._ggaa {if _eaaa :=_fbea .WriteProperty (_ggde ._efcf ._bdfe );
+_eaaa !=nil {return _eaaa ;};};return _fbea .AlignLength (4);};
+
+// GetHeight returns height of the ScrollBar in HIMETRIC (0.01mm)
+func (_gdgf *ScrollBarControl )GetHeight ()uint32 {return _gdgf ._gbbb ._gfa };func (_baca *morphDataControl )readDataBlock (_fcac *_ef .Reader )error {_baca ._fcb =&morphDataDataBlock {};if _baca ._befg ._dabf {if _dfgb :=_fcac .ReadProperty (&_baca ._fcb ._gdff );
+_dfgb !=nil {return _dfgb ;};};if _baca ._befg ._ebb {if _aefg :=_fcac .ReadProperty (&_baca ._fcb ._ccac );_aefg !=nil {return _aefg ;};};if _baca ._befg ._ecd {if _deb :=_fcac .ReadProperty (&_baca ._fcb ._edbg );_deb !=nil {return _deb ;};};if _baca ._befg ._bge {if _dfbc :=_fcac .ReadProperty (&_baca ._fcb ._egbdg );
+_dfbc !=nil {return _dfbc ;};};if _baca ._befg ._bfag {if _dagd :=_fcac .ReadProperty (&_baca ._fcb ._bfcc );_dagd !=nil {return _dagd ;};};if _baca ._befg ._bedb {if _gcgg :=_fcac .ReadProperty (&_baca ._fcb ._afc );_gcgg !=nil {return _gcgg ;};};if _baca ._befg ._fdc {if _eaac :=_fcac .ReadProperty (&_baca ._fcb ._aegf );
+_eaac !=nil {return _eaac ;};};if _baca ._befg ._dda {if _cbce :=_fcac .ReadProperty (&_baca ._fcb ._fcfa );_cbce !=nil {return _cbce ;};};if _baca ._befg ._ceag {if _dae :=_fcac .ReadProperty (&_baca ._fcb ._feef );_dae !=nil {return _dae ;};};if _baca ._befg ._faab {if _bae :=_fcac .ReadProperty (&_baca ._fcb ._fgae );
+_bae !=nil {return _bae ;};};if _baca ._befg ._ffd {if _cfe :=_fcac .ReadProperty (&_baca ._fcb ._ebdf );_cfe !=nil {return _cfe ;};};if _baca ._befg ._afed {if _cde :=_fcac .ReadProperty (&_baca ._fcb ._gdfg );_cde !=nil {return _cde ;};};if _baca ._befg ._deaed {if _gff :=_fcac .ReadProperty (&_baca ._fcb ._gca );
+_gff !=nil {return _gff ;};};if _baca ._befg ._ecbf {if _agad :=_fcac .ReadProperty (&_baca ._fcb ._ggbe );_agad !=nil {return _agad ;};};if _baca ._befg ._aabf {if _bcg :=_fcac .ReadProperty (&_baca ._fcb ._cggb );_bcg !=nil {return _bcg ;};};if _baca ._befg ._eebd {if _dabd :=_fcac .ReadProperty (&_baca ._fcb ._edge );
+_dabd !=nil {return _dabd ;};};if _baca ._befg ._bggb {if _fegc :=_fcac .ReadProperty (&_baca ._fcb ._ffg );_fegc !=nil {return _fegc ;};};if _baca ._befg ._ebaf {if _dge :=_fcac .ReadProperty (&_baca ._fcb ._fdef );_dge !=nil {return _dge ;};};if _baca ._befg ._bdf {if _bgbb :=_fcac .ReadProperty (&_baca ._fcb ._abgg );
+_bgbb !=nil {return _bgbb ;};};if _baca ._befg ._cafgd {if _cece :=_fcac .ReadProperty (&_baca ._fcb ._bgb );_cece !=nil {return _cece ;};};if _baca ._befg ._gge {var _ddga uint32 ;if _fcec :=_fcac .ReadProperty (&_ddga );_fcec !=nil {return _fcec ;};_baca ._fcb ._eeg ,_baca ._fcb ._dgba =_ag (_ddga );
+};if _baca ._befg ._eecc {var _cacb uint32 ;if _cced :=_fcac .ReadProperty (&_cacb );_cced !=nil {return _cced ;};_baca ._fcb ._dacg ,_baca ._fcb ._dfee =_ag (_cacb );};if _baca ._befg ._cbd {if _bbcc :=_fcac .ReadProperty (&_baca ._fcb ._affc );_bbcc !=nil {return _bbcc ;
+};};if _baca ._befg ._eff {if _ddgf :=_fcac .ReadProperty (&_baca ._fcb ._bfb );_ddgf !=nil {return _ddgf ;};};if _baca ._befg ._edcd {if _bdbf :=_fcac .ReadProperty (&_baca ._fcb ._ecgg );_bdbf !=nil {return _bdbf ;};};if _baca ._befg ._cgg {if _ddge :=_fcac .ReadProperty (&_baca ._fcb ._ebef );
+_ddge !=nil {return _ddge ;};};if _baca ._befg ._becg {if _aged :=_fcac .ReadProperty (&_baca ._fcb ._aec );_aged !=nil {return _aged ;};};if _baca ._befg ._eafe {if _eacbg :=_fcac .ReadProperty (&_baca ._fcb ._gdfe );_eacbg !=nil {return _eacbg ;};};if _baca ._befg ._cbcf {var _ceca uint32 ;
+if _dcaf :=_fcac .ReadProperty (&_ceca );_dcaf !=nil {return _dcaf ;};_baca ._fcb ._bgfd ,_baca ._fcb ._bbca =_ag (_ceca );};return nil ;};
+
+// GetBackColor gets a button text color value for a system palette from a label control.
+func (_cecg *LabelControl )GetBackColor ()uint32 {return _cecg ._aed ._cbbd };
+
+// Control represents an ActiveX control wrapper.
+type Control struct{TargetAttr string ;Ocx *_dd .Ocx ;Choice *ControlChoice ;_f string ;_efb uint8 ;_cf uint8 ;_ed uint16 ;};
+
+// GetBackColor gets a button text color value for a system palette from a commandButton control.
+func (_fcd *CommandButtonControl )GetBackColor ()uint32 {return _fcd ._bed ._ff };
+
+// SetPosition sets a button position value.
+func (_ffga *ScrollBarControl )SetPosition (position int32 ){_ffga ._bebb ._ebbd =true ;_ffga ._efcf ._aacf =position ;};func _aagg (_eca *_aa .Reader )(string ,error ){_bfc ,_bb :=_eca .GetEntry ("\u0043o\u006d\u0070\u004f\u0062\u006a");if _bb !=nil {return "",_bb ;
+};_ege :=make ([]byte ,_bfc .Size );_ ,_bb =_bfc .Read (_ege );if _bb !=nil {return "",_bb ;};_bbg :=_d .Split (_ege ,[]byte ("\u002e"));if len (_bbg )< 2{return "",_ca .New ("\u0055\u006e\u006bn\u006f\u0077\u006e\u0020\u0066\u006f\u0072\u006d");};return string (_bbg [len (_bbg )-2]),nil ;
+};func (_fae *ScrollBarControl )writeExtraDataBlock (_edbd *_ef .Writer )error {if _fae ._bebb ._afec {_fabc :=uint64 (_fae ._gbbb ._ece )<<32|uint64 (_fae ._gbbb ._gfa );if _aacfc :=_edbd .WritePropertyNoAlign (_fabc );_aacfc !=nil {return _aacfc ;};};
+return nil ;};func (_ggcg *SpinButtonControl )writePropMask (_dcdd *_ef .Writer )error {_baec :=uint32 (0);_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._efgb );_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._cgab );_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._cacf );
+_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._ccd );_baec >>=1;_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._ccef );_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._dagff );_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._facd );_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._efab );
+_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._bbag );_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._eaace );_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._cdc );_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._dfae );_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._bgcg );
+_baec =_ef .PushLeftUI32 (_baec ,_ggcg ._fcfaf ._baa );_baec >>=17;return _cb .Write (_dcdd ,_cb .LittleEndian ,_baec );};func _fcfg (_dggf *_ef .Reader )(*morphDataControl ,error ){_cegf :=&morphDataControl {};if _ceed :=_cegf .readPropMask (_dggf );_ceed !=nil {return nil ,_ceed ;
+};if _gbb :=_cegf .readDataBlock (_dggf );_gbb !=nil {return nil ,_gbb ;};if _fbe :=_cegf .readExtraDataBlock (_dggf );_fbe !=nil {return nil ,_fbe ;};if _aaef :=_cegf .readStreamDataMP (_dggf ,_cegf ._befg ._cgg ,_cegf ._befg ._becg );_aaef !=nil {return nil ,_aaef ;
+};switch _cegf ._fcb ._aegf {case _dgf ,_dfad :if _fgcb :=_cegf .readColumnInfo (_dggf );_fgcb !=nil {return nil ,_fgcb ;};if _eccc :=_cegf .readColumnInfoPropMask (_dggf );_eccc !=nil {return nil ,_eccc ;};if _ffce :=_cegf .readColumnInfoDataBlock (_dggf );
+_ffce !=nil {return nil ,_ffce ;};};if _efg :=_cegf .readTheRest (_dggf );_efg !=nil {return nil ,_efg ;};return _cegf ,nil ;};func (_gbgea *morphDataControl )readColumnInfoDataBlock (_gccf *_ef .Reader )error {return nil };func (_dfcb *SpinButtonControl )readExtraDataBlock (_fgbbb *_ef .Reader )error {_dfcb ._efga =&spinButtonExtraDataBlock {};
+if _dfcb ._fcfaf ._ccd {var _cecd uint64 ;if _bfed :=_fgbbb .ReadPairProperty (&_cecd );_bfed !=nil {return _bfed ;};_dfcb ._efga ._beac =uint32 (_cecd );_dfcb ._efga ._acaa =uint32 (_cecd >>32);};return nil ;};type streamData struct{_adfde *guidAndPicture ;
+_bbbg *guidAndPicture ;};
+
+// GetCaption gets a caption string from a morph control.
+func (_gccd *morphDataControl )GetCaption ()string {if _gccd ._cafg &&_gccd ._befg ._eecc {return _gccd ._egff ._abfd ;};return "";};func (_acfc *controlBase )readTheRest (_gdd *_ef .Reader )error {_aba :=_d .NewBuffer ([]byte {});_ ,_ddb :=_e .Copy (_aba ,_gdd );
+if _ddb !=nil {return _ddb ;};_acfc ._def =_aba .Bytes ();return nil ;};
+
+// GetWidth returns width of the SpinButton in HIMETRIC (0.01mm)
+func (_gbe *SpinButtonControl )GetWidth ()uint32 {return _gbe ._efga ._acaa };func (_acgg *SpinButtonControl )readDataBlock (_gab *_ef .Reader )error {_acgg ._agce =&spinButtonDataBlock {};if _acgg ._fcfaf ._efgb {if _cecf :=_gab .ReadProperty (&_acgg ._agce ._fdda );
+_cecf !=nil {return _cecf ;};};if _acgg ._fcfaf ._cgab {if _bece :=_gab .ReadProperty (&_acgg ._agce ._gfbb );_bece !=nil {return _bece ;};};if _acgg ._fcfaf ._cacf {if _cgba :=_gab .ReadProperty (&_acgg ._agce ._eaef );_cgba !=nil {return _cgba ;};};if _acgg ._fcfaf ._ccef {if _dggfd :=_gab .ReadProperty (&_acgg ._agce ._gdge );
+_dggfd !=nil {return _dggfd ;};};if _acgg ._fcfaf ._dagff {if _caed :=_gab .ReadProperty (&_acgg ._agce ._dgcb );_caed !=nil {return _caed ;};};if _acgg ._fcfaf ._facd {if _dcbc :=_gab .ReadProperty (&_acgg ._agce ._egec );_dcbc !=nil {return _dcbc ;};
+};if _acgg ._fcfaf ._efab {if _bcdc :=_gab .ReadProperty (&_acgg ._agce ._gdfaa );_bcdc !=nil {return _bcdc ;};};if _acgg ._fcfaf ._bbag {if _gdde :=_gab .ReadProperty (&_acgg ._agce ._fgbd );_gdde !=nil {return _gdde ;};};if _acgg ._fcfaf ._eaace {if _dfeg :=_gab .ReadProperty (&_acgg ._agce ._afcab );
+_dfeg !=nil {return _dfeg ;};};if _acgg ._fcfaf ._cdc {if _feeb :=_gab .ReadProperty (&_acgg ._agce ._fdeg );_feeb !=nil {return _feeb ;};};if _acgg ._fcfaf ._dfae {if _bffd :=_gab .ReadProperty (&_acgg ._agce ._efff );_bffd !=nil {return _bffd ;};};if _acgg ._fcfaf ._bgcg {if _fbaa :=_gab .ReadProperty (&_acgg ._agce ._efbe );
+_fbaa !=nil {return _fbaa ;};};if _acgg ._fcfaf ._baa {if _gcd :=_gab .ReadProperty (&_acgg ._agce ._affd );_gcd !=nil {return _gcd ;};};return nil ;};
+
+// SetWidth sets width of the CommandButton in HIMETRIC (0.01mm)
+func (_db *CommandButtonControl )SetWidth (width uint32 ){_db ._fce ._ead =true ;_db ._dg ._agb =width };
+
+// SetHeight sets height of the SpinButton in HIMETRIC (0.01mm)
+func (_dfeb *SpinButtonControl )SetHeight (height uint32 ){_dfeb ._fcfaf ._ccd =true ;_dfeb ._efga ._beac =height ;};func (_ddbd *ImageControl )readPropMask (_gbg *_ef .Reader )error {var _aadf uint32 ;if _gcc :=_cb .Read (_gbg ,_cb .LittleEndian ,&_aadf );
+_gcc !=nil {return _gcc ;};_ddbd ._dfd =&imagePropMask {};_aadf >>=2;_ddbd ._dfd ._ged ,_aadf =_ef .PopRightUI32 (_aadf );_ddbd ._dfd ._bgaa ,_aadf =_ef .PopRightUI32 (_aadf );_ddbd ._dfd ._eacb ,_aadf =_ef .PopRightUI32 (_aadf );_ddbd ._dfd ._bab ,_aadf =_ef .PopRightUI32 (_aadf );
+_ddbd ._dfd ._cec ,_aadf =_ef .PopRightUI32 (_aadf );_ddbd ._dfd ._dfda ,_aadf =_ef .PopRightUI32 (_aadf );_ddbd ._dfd ._efbf ,_aadf =_ef .PopRightUI32 (_aadf );_ddbd ._dfd ._cad ,_aadf =_ef .PopRightUI32 (_aadf );_ddbd ._dfd ._ccc ,_aadf =_ef .PopRightUI32 (_aadf );
+_ddbd ._dfd ._bege ,_aadf =_ef .PopRightUI32 (_aadf );_ddbd ._dfd ._bbcd ,_aadf =_ef .PopRightUI32 (_aadf );_ddbd ._dfd ._fac ,_aadf =_ef .PopRightUI32 (_aadf );_ddbd ._dfd ._fda ,_aadf =_ef .PopRightUI32 (_aadf );return nil ;};func (_eadb *CommandButtonControl )writePropMask (_cea *_ef .Writer )error {_cgf :=uint32 (0);
+_cgf =_ef .PushLeftUI32 (_cgf ,_eadb ._fce ._bgd );_cgf =_ef .PushLeftUI32 (_cgf ,_eadb ._fce ._dee );_cgf =_ef .PushLeftUI32 (_cgf ,_eadb ._fce ._fca );_cgf =_ef .PushLeftUI32 (_cgf ,_eadb ._fce ._dcf );_cgf =_ef .PushLeftUI32 (_cgf ,_eadb ._fce ._bba );
+_cgf =_ef .PushLeftUI32 (_cgf ,_eadb ._fce ._ead );_cgf =_ef .PushLeftUI32 (_cgf ,_eadb ._fce ._eac );_cgf =_ef .PushLeftUI32 (_cgf ,_eadb ._fce ._geb );_cgf =_ef .PushLeftUI32 (_cgf ,_eadb ._fce ._caf );_cgf =_ef .PushLeftUI32 (_cgf ,_eadb ._fce ._df );
+_cgf =_ef .PushLeftUI32 (_cgf ,_eadb ._fce ._edc );_cgf >>=21;return _cb .Write (_cea ,_cb .LittleEndian ,_cgf );};const _gfe =1;type imageExtraDataBlock struct{_egf uint32 ;_adg uint32 ;};func (_feg *morphDataControl )setValueBool (_edda bool ){_feg ._befg ._gge =true ;
+_feg ._fcb ._dgba =1;_feg ._fcb ._eeg =true ;_aff :="\u0030";if _edda {_aff ="\u0031";};_feg ._egff ._egbg =_aff ;};
+
+// SetPosition sets a button position value.
+func (_eeab *SpinButtonControl )SetPosition (position int32 ){_eeab ._fcfaf ._facd =true ;_eeab ._agce ._egec =position ;};
+
+// SetMin sets a button min value.
+func (_agdb *ScrollBarControl )SetMin (min int32 ){_agdb ._bebb ._effd =true ;_agdb ._efcf ._bfbd =min };
+
+// SetWidth sets width of the ScrollBar in HIMETRIC (0.01mm)
+func (_gcbe *ScrollBarControl )SetWidth (width uint32 ){_gcbe ._bebb ._afec =true ;_gcbe ._gbbb ._ece =width ;};func (_aegg *SpinButtonControl )writeExtraDataBlock (_bcfc *_ef .Writer )error {if _aegg ._fcfaf ._ccd {_adebe :=uint64 (_aegg ._efga ._acaa )<<32|uint64 (_aegg ._efga ._beac );
+if _cdcf :=_bcfc .WritePropertyNoAlign (_adebe );_cdcf !=nil {return _cdcf ;};};return nil ;};func (_bee *CommandButtonControl )readExtraDataBlock (_gb *_ef .Reader )error {_bee ._dg =&commandButtonExtraDataBlock {};if _bee ._bed ._bca > 0{_bga ,_fcf :=_gb .ReadStringProperty (_bee ._bed ._bca );
+if _fcf !=nil {return _fcf ;};_bee ._dg ._gag =_bga ;};if _bee ._fce ._ead {var _efd uint64 ;if _deef :=_gb .ReadPairProperty (&_efd );_deef !=nil {return _deef ;};_bee ._dg ._eacg =uint32 (_efd );_bee ._dg ._agb =uint32 (_efd >>32);};return nil ;};func (_afd *ImageControl )writeDataBlock (_eae *_ef .Writer )error {if _afd ._dfd ._bgaa {if _acee :=_eae .WriteProperty (_afd ._bbad ._gad );
+_acee !=nil {return _acee ;};};if _afd ._dfd ._eacb {if _gadf :=_eae .WriteProperty (_afd ._bbad ._fbd );_gadf !=nil {return _gadf ;};};if _afd ._dfd ._bab {if _deff :=_eae .WriteProperty (_afd ._bbad ._egb );_deff !=nil {return _deff ;};};if _afd ._dfd ._cec {if _aaf :=_eae .WriteProperty (_afd ._bbad ._dgca );
+_aaf !=nil {return _aaf ;};};if _afd ._dfd ._dfda {if _cga :=_eae .WriteProperty (_afd ._bbad ._ega );_cga !=nil {return _cga ;};};if _afd ._dfd ._efbf {if _cac :=_eae .WriteProperty (_afd ._bbad ._dcd );_cac !=nil {return _cac ;};};if _afd ._dfd ._ccc {if _cafd :=_eae .WriteProperty (_afd ._bbad ._fef );
+_cafd !=nil {return _cafd ;};};if _afd ._dfd ._bege {if _dcfd :=_eae .WriteProperty (_afd ._bbad ._bcd );_dcfd !=nil {return _dcfd ;};};if _afd ._dfd ._fac {if _agcd :=_eae .WriteProperty (_afd ._bbad ._gada );_agcd !=nil {return _agcd ;};};if _afd ._dfd ._fda {if _edbb :=_eae .WriteProperty (_afd ._bbad ._ggf );
+_edbb !=nil {return _edbb ;};};return _eae .AlignLength (4);};func (_fba *guidAndPicture )importFromReader (_ade *_ef .Reader )error {_dfb :=_d .NewBuffer ([]byte {});if _ ,_cbfb :=_e .CopyN (_dfb ,_ade ,int64 (_dgd ));_cbfb !=nil {return _cbfb ;};_ecc :=_dfb .Bytes ();
+for _fbgg :=0;_fbgg < _dgd ;_fbgg ++{if _ecc [_fbgg ]!=_fde [_fbgg ]{return _c .Errorf ("\u0049\u006e\u0076\u0061\u006c\u0069d\u0020\u0047\u0055\u0049\u0044\u0020\u0076\u0061\u006c\u0075\u0065\u0020\u0025v\u0020\u0061\u0074\u0020\u0069\u006e\u0064e\u0078\u0020\u0025\u0076",_ecc [_fbgg ],_fbgg );
+};};_fba ._bbc =_ecc ;_fba ._gga =&stdPicture {};if _dcfb :=_ade .ReadProperty (&_fba ._gga ._dfc );_dcfb !=nil {return _dcfb ;};if _fba ._gga ._dfc !=_acab {return _c .Errorf ("\u0049\u006e\u0076\u0061li\u0064\u0020\u0070\u0072\u0065\u0061\u006d\u0062\u006c\u0065\u0020\u0025\u0076",_fba ._gga ._dfc );
+};if _dgc :=_ade .ReadProperty (&_fba ._gga ._fgea );_dgc !=nil {return _dgc ;};if _fba ._gga ._fgea !=0{_cef :=_d .NewBuffer ([]byte {});if _ ,_gac :=_e .Copy (_cef ,_ade );_gac !=nil {return _gac ;};_fba ._gga ._dbb =_cef ;};return nil ;};func (_agg *CommandButtonControl )export (_abe *_ef .Writer )error {if _age :=_agg .writePropMask (_abe );
+_age !=nil {return _age ;};if _efce :=_agg .writeDataBlock (_abe );_efce !=nil {return _efce ;};if _fe :=_agg .writeExtraDataBlock (_abe );_fe !=nil {return _fe ;};_agg ._fee =uint16 (_abe .Len ()-4);if _bcb :=_agg .writeStreamDataPM (_abe );_bcb !=nil {return _bcb ;
+};return _agg .writeTheRest (_abe );};func (_bbfe *morphDataControl )readPropMask (_cegb *_ef .Reader )error {var _bdb uint64 ;if _gda :=_cb .Read (_cegb ,_cb .LittleEndian ,&_bdb );_gda !=nil {return _gda ;};_bbfe ._befg =&morphDataPropMask {};_bbfe ._befg ._dabf ,_bdb =_ef .PopRightUI64 (_bdb );
+_bbfe ._befg ._ebb ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._ecd ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._bge ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._bfag ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._bedb ,_bdb =_ef .PopRightUI64 (_bdb );
+_bbfe ._befg ._fdc ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._dda ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._dfcfd ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._ceag ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._faab ,_bdb =_ef .PopRightUI64 (_bdb );
+_bbfe ._befg ._ffd ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._afed ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._deaed ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._ecbf ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._aabf ,_bdb =_ef .PopRightUI64 (_bdb );
+_bbfe ._befg ._eebd ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._bggb ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._ebaf ,_bdb =_ef .PopRightUI64 (_bdb );_bdb >>=1;_bbfe ._befg ._bdf ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._cafgd ,_bdb =_ef .PopRightUI64 (_bdb );
+_bbfe ._befg ._gge ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._eecc ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._cbd ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._eff ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._edcd ,_bdb =_ef .PopRightUI64 (_bdb );
+_bbfe ._befg ._cgg ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._becg ,_bdb =_ef .PopRightUI64 (_bdb );_bbfe ._befg ._eafe ,_bdb =_ef .PopRightUI64 (_bdb );_bdb >>=1;_bdb >>=1;_bbfe ._befg ._cbcf ,_bdb =_ef .PopRightUI64 (_bdb );return nil ;};
 
 // SetMax sets a button max value.
-func (_agce *ScrollBarControl )SetMax (max int32 ){_agce ._fbfd ._aebe =true ;_agce ._dbe ._faeg =max };func (_agc *CommandButtonControl )readExtraDataBlock (_bda *_d .Reader )error {_agc ._fgf =&commandButtonExtraDataBlock {};if _agc ._dgg ._bbfb > 0{_eaf ,_egc :=_bda .ReadStringProperty (_agc ._dgg ._bbfb );
-if _egc !=nil {return _egc ;};_agc ._fgf ._fc =_eaf ;};if _agc ._cac ._cbd {var _ga uint64 ;if _cebe :=_bda .ReadPairProperty (&_ga );_cebe !=nil {return _cebe ;};_agc ._fgf ._afd =uint32 (_ga );_agc ._fgf ._daa =uint32 (_ga >>32);};return nil ;};func (_ffdf *morphDataControl )writeColumnInfo (_fdb *_d .Writer )error {return nil };
+func (_bbac *ScrollBarControl )SetMax (max int32 ){_bbac ._bebb ._gce =true ;_bbac ._efcf ._cgcc =max };type morphDataPropMask struct{_dabf bool ;_ebb bool ;_ecd bool ;_bge bool ;_bfag bool ;_bedb bool ;_fdc bool ;_dda bool ;_dfcfd bool ;_ceag bool ;_faab bool ;
+_ffd bool ;_afed bool ;_deaed bool ;_ecbf bool ;_aabf bool ;_eebd bool ;_bggb bool ;_ebaf bool ;_bdf bool ;_cafgd bool ;_gge bool ;_eecc bool ;_cbd bool ;_eff bool ;_edcd bool ;_cgg bool ;_becg bool ;_eafe bool ;_cbcf bool ;};
 
+// SetHeight sets height of the ScrollBar in HIMETRIC (0.01mm)
+func (_cbfa *ScrollBarControl )SetHeight (height uint32 ){_cbfa ._bebb ._afec =true ;_cbfa ._gbbb ._gfa =height ;};
+
+// SetHeight sets height of the CommandButton in HIMETRIC (0.01mm)
+func (_dgg *CommandButtonControl )SetHeight (height uint32 ){_dgg ._fce ._ead =true ;_dgg ._dg ._eacg =height ;};
+
+// OptionButtonDataControl is a representation of an option button ActiveX form.
+type OptionButtonDataControl struct{*morphDataControlBoolValue };func (_gcfb *guidAndPicture )setStdPictureBytes (_fgf []byte ){if _fgf ==nil {return ;};if _gcfb ._bbc ==nil {_gcfb ._bbc =_fde ;};if _gcfb ._gga ==nil {_gcfb ._gga =&stdPicture {_dfc :_acab };
+};_gcfb ._gga ._fgea =uint32 (len (_fgf ));_gcfb ._gga ._dbb =_d .NewBuffer (_fgf );};
+
+// SetHeight sets height of the Label in HIMETRIC (0.01mm)
+func (_ecbc *LabelControl )SetHeight (height uint32 ){_ecbc ._gdfa ._cgb =true ;_ecbc ._ecfg ._dbag =height ;};type morphDataColumnInfoPropMask struct{};
+
+// GetForeColor gets a button text color value for a system palette from a scrollBar control.
+func (_fgg *ScrollBarControl )GetForeColor ()uint32 {return _fgg ._efcf ._ffdb };var _fde =[]byte {0x04,0x52,0xE3,0x0B,0x91,0x8F,0xCE,0x11,0x9D,0xE3,0,0xAA,0,0x4B,0xB8,0x51};type imageDataBlock struct{_gad uint32 ;_fbd uint32 ;_egb byte ;_dgca uint8 ;_ega byte ;
+_dcd byte ;_fef uint16 ;_bcd byte ;_gada uint32 ;_ggf uint16 ;};
+
+// ExportToByteArray makes a byte array from a control as it is stored in .bin files.
+func (_gea *Control )ExportToByteArray ()([]byte ,error ){_caa ,_aac :=_g .Open (_gea ._f );if _aac !=nil {return nil ,_aac ;};defer _caa .Close ();_ae ,_aac :=_aa .New (_caa );if _aac !=nil {return nil ,_aac ;};_ecf :=_ef .NewWriter ();if _dcg :=_cb .Write (_ecf ,_cb .LittleEndian ,&_gea ._efb );
+_dcg !=nil {return nil ,_dcg ;};if _cd :=_cb .Write (_ecf ,_cb .LittleEndian ,&_gea ._cf );_cd !=nil {return nil ,_cd ;};if _dag :=_cb .Write (_ecf ,_cb .LittleEndian ,uint16 (0));_dag !=nil {return nil ,_dag ;};var _abg error ;if _ce :=_gea .Choice ;_ce !=nil {if _ce .CheckBox !=nil {_abg =_ce .CheckBox .export (_ecf );
+}else if _ce .TextBox !=nil {_abg =_ce .TextBox .export (_ecf );}else if _ce .ComboBox !=nil {_abg =_ce .ComboBox .export (_ecf );}else if _ce .ListBox !=nil {_abg =_ce .ListBox .export (_ecf );}else if _ce .OptionButton !=nil {_abg =_ce .OptionButton .export (_ecf );
+}else if _ce .ToggleButton !=nil {_abg =_ce .ToggleButton .export (_ecf );}else if _ce .Label !=nil {_abg =_ce .Label .export (_ecf );}else if _ce .SpinButton !=nil {_abg =_ce .SpinButton .export (_ecf );}else if _ce .CommandButton !=nil {_abg =_ce .CommandButton .export (_ecf );
+}else if _ce .ScrollBar !=nil {_abg =_ce .ScrollBar .export (_ecf );}else {_abg =_ce ._b .writeTheRest (_ecf );};};if _abg !=nil {return nil ,_abg ;};if _eb :=_ecf .WriteByteAt (byte (_gea ._ed ),2);_eb !=nil {return nil ,_eb ;};if _dca :=_ecf .WriteByteAt (byte (_gea ._ed >>8),3);
+_dca !=nil {return nil ,_dca ;};_cbf ,_aac :=_ae .GetEntry ("\u0063\u006f\u006e\u0074\u0065\u006e\u0074\u0073");if _aac !=nil {return nil ,_aac ;};if _bd :=_cbf .SetEntryContent (_ecf .Bytes ());_bd !=nil {return nil ,_bd ;};return _ae .Export ();};
+
+// SpinButtonControl is a representation of a spinButton ActiveX form.
+type SpinButtonControl struct{controlBase ;_fcfaf *spinButtonPropMask ;_agce *spinButtonDataBlock ;_efga *spinButtonExtraDataBlock ;_eeca *streamData ;};func (_cgc *ScrollBarControl )writePropMask (_gcag *_ef .Writer )error {_fefe :=uint32 (0);_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._fccd );
+_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._acgb );_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._bgdb );_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._afec );_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._bcge );_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._effd );
+_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._gce );_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._ebbd );_fefe >>=1;_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._afca );_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._egac );_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._dcbe );
+_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._gaf );_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._faaf );_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._eaab );_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._abac );_fefe =_ef .PushLeftUI32 (_fefe ,_cgc ._bebb ._ggaa );
+_fefe >>=15;return _cb .Write (_gcag ,_cb .LittleEndian ,_fefe );};
+
+// ToggleButtonDataControl is a representation of a toggle button ActiveX form.
+type ToggleButtonDataControl struct{*morphDataControlBoolValue };type morphDataDataBlock struct{_gdff uint32 ;_ccac uint32 ;_edbg uint32 ;_egbdg uint32 ;_bfcc byte ;_afc byte ;_aegf byte ;_fcfa byte ;_feef rune ;_fgae uint32 ;_ebdf uint16 ;_gdfg int16 ;
+_gca int16 ;_ggbe uint16 ;_cggb uint16 ;_edge uint8 ;_ffg uint8 ;_fdef uint8 ;_abgg uint8 ;_bgb uint8 ;_dgba uint32 ;_eeg bool ;_dfee uint32 ;_dacg bool ;_affc uint32 ;_bfb uint32 ;_ecgg uint32 ;_ebef uint16 ;_aec uint16 ;_gdfe rune ;_bbca uint32 ;_bgfd bool ;
+};
+
+// GetHeight returns height of the SpinButton in HIMETRIC (0.01mm)
+func (_abgf *SpinButtonControl )GetHeight ()uint32 {return _abgf ._efga ._beac };
+
+// SetWidth sets width of the morphDataControl in HIMETRIC (0.01mm)
+func (_cfc *morphDataControl )SetWidth (width uint32 ){_cfc ._befg ._dfcfd =true ;_cfc ._egff ._dff =width ;};const (FmPictureAlignmentTopLeft FmPictureAlignment =iota ;FmPictureAlignmentTopRight ;FmPictureAlignmentCenter ;FmPictureAlignmentBottomLeft ;
+FmPictureAlignmentBottomRight ;);func (_fbdc *morphDataControl )writePropMask (_adaf *_ef .Writer )error {_eaae :=uint64 (0);_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._dabf );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._ebb );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._ecd );
+_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._bge );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._bfag );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._bedb );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._fdc );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._dda );
+_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._dfcfd );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._ceag );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._faab );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._ffd );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._afed );
+_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._deaed );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._ecbf );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._aabf );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._eebd );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._bggb );
+_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._ebaf );_eaae >>=1;_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._bdf );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._cafgd );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._gge );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._eecc );
+_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._cbd );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._eff );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._edcd );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._cgg );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._becg );
+_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._eafe );_eaae >>=1;_eaae =_ef .PushLeftUI64 (_eaae ,true );_eaae =_ef .PushLeftUI64 (_eaae ,_fbdc ._befg ._cbcf );_eaae >>=31;return _cb .Write (_adaf ,_cb .LittleEndian ,_eaae );};
+
+// SetCaption sets a caption string for a commandButton control.
+func (_cbb *CommandButtonControl )SetCaption (caption string ){_cbb ._fce ._dcf =true ;_cbb ._bed ._bca =uint32 (len (caption ));_cbb ._dg ._gag =caption ;};type morphDataControlBoolValue struct{*morphDataControl };const _dgf =2;type morphDataColumnInfoDataBlock struct{};
+
+
+// ImportFromFile makes a Control from a file in a storage.
+func ImportFromFile (storagePath string )(*Control ,error ){_fb ,_ac :=_g .Open (storagePath );if _ac !=nil {return nil ,_ac ;};defer _fb .Close ();_efe ,_ac :=_aa .New (_fb );if _ac !=nil {return nil ,_ac ;};_be ,_ac :=_aagg (_efe );if _ac !=nil {return nil ,_ac ;
+};_bf ,_ac :=_efe .GetEntry ("\u0063\u006f\u006e\u0074\u0065\u006e\u0074\u0073");if _ac !=nil {return nil ,_ac ;};_aag :=make ([]byte ,_bf .Size );_ ,_ac =_bf .Read (_aag );if _ac !=nil {return nil ,_ac ;};_edg :=&Control {_f :storagePath };_dc ,_ac :=_ef .NewReader (_aag );
+if _ac !=nil {return nil ,_ac ;};if _gd :=_cb .Read (_dc ,_cb .LittleEndian ,&_edg ._efb );_gd !=nil {return nil ,_gd ;};if _fbb :=_cb .Read (_dc ,_cb .LittleEndian ,&_edg ._cf );_fbb !=nil {return nil ,_fbb ;};if _da :=_cb .Read (_dc ,_cb .LittleEndian ,&_edg ._ed );
+_da !=nil {return nil ,_da ;};switch _be {case "\u0043\u0068\u0065\u0063\u006b\u0042\u006f\u0078":_ea ,_cbe :=_fcfg (_dc );if _cbe !=nil {return nil ,_cbe ;};_ea ._cafg =true ;_edg .Choice =&ControlChoice {CheckBox :&CheckBoxDataControl {&morphDataControlBoolValue {_ea }}};
+case "\u0054e\u0078\u0074\u0042\u006f\u0078":_bfd ,_eab :=_fcfg (_dc );if _eab !=nil {return nil ,_eab ;};_bfd ._cafg =true ;_edg .Choice =&ControlChoice {TextBox :&TextBoxDataControl {&morphDataControlStringValue {_bfd }}};case "\u0043\u006f\u006d\u0062\u006f\u0042\u006f\u0078":_efc ,_ec :=_fcfg (_dc );
+if _ec !=nil {return nil ,_ec ;};_efc ._cafg =true ;_edg .Choice =&ControlChoice {ComboBox :&ComboBoxDataControl {&morphDataControlStringValue {_efc }}};case "\u004ci\u0073\u0074\u0042\u006f\u0078":_ecg ,_de :=_fcfg (_dc );if _de !=nil {return nil ,_de ;
+};_ecg ._cafg =true ;_edg .Choice =&ControlChoice {ListBox :&ListBoxDataControl {&morphDataControlStringValue {_ecg }}};case "\u004f\u0070\u0074i\u006f\u006e\u0042\u0075\u0074\u0074\u006f\u006e":_aae ,_af :=_fcfg (_dc );if _af !=nil {return nil ,_af ;};
+_aae ._cafg =true ;_edg .Choice =&ControlChoice {OptionButton :&OptionButtonDataControl {&morphDataControlBoolValue {_aae }}};case "\u0054\u006f\u0067g\u006c\u0065\u0042\u0075\u0074\u0074\u006f\u006e":_ee ,_fa :=_fcfg (_dc );if _fa !=nil {return nil ,_fa ;
+};_ee ._cafg =true ;_edg .Choice =&ControlChoice {ToggleButton :&ToggleButtonDataControl {&morphDataControlBoolValue {_ee }}};case "\u004c\u0061\u0062e\u006c":_aca ,_fc :=_bff (_dc );if _fc !=nil {return nil ,_fc ;};_edg .Choice =&ControlChoice {Label :_aca };
+case "\u0053\u0070\u0069\u006e\u0042\u0075\u0074\u0074\u006f\u006e":_ad ,_ab :=_gde (_dc );if _ab !=nil {return nil ,_ab ;};_edg .Choice =&ControlChoice {SpinButton :_ad };case "\u0043\u006f\u006d\u006d\u0061\u006e\u0064\u0042\u0075\u0074\u0074\u006f\u006e":_ge ,_faa :=_ace (_dc );
+if _faa !=nil {return nil ,_faa ;};_edg .Choice =&ControlChoice {CommandButton :_ge };case "\u0053c\u0072\u006f\u006c\u006c\u0042\u0061r":_acb ,_cc :=_abd (_dc );if _cc !=nil {return nil ,_cc ;};_edg .Choice =&ControlChoice {ScrollBar :_acb };default:_cbc :=&controlBase {};
+if _faae :=_cbc .readTheRest (_dc );_faae !=nil {return nil ,_faae ;};_edg .Choice =&ControlChoice {_b :_cbc };};return _edg ,nil ;};func (_agag *morphDataControl )writeColumnInfoDataBlock (_gdg *_ef .Writer )error {return nil };type commandButtonExtraDataBlock struct{_agb uint32 ;
+_eacg uint32 ;_gag string ;};type morphDataColumnInfo struct{};type imagePropMask struct{_ged bool ;_bgaa bool ;_eacb bool ;_bab bool ;_cec bool ;_dfda bool ;_efbf bool ;_cad bool ;_ccc bool ;_bege bool ;_bbcd bool ;_fac bool ;_fda bool ;};func (_aefc *LabelControl )writeDataBlock (_dagf *_ef .Writer )error {if _aefc ._gdfa ._gdc {if _egd :=_dagf .WriteProperty (_aefc ._aed ._agec );
+_egd !=nil {return _egd ;};};if _aefc ._gdfa ._beeb {if _faaa :=_dagf .WriteProperty (_aefc ._aed ._cbbd );_faaa !=nil {return _faaa ;};};if _aefc ._gdfa ._ccgg {if _aadg :=_dagf .WriteProperty (_aefc ._aed ._ebg );_aadg !=nil {return _aadg ;};};if _aefc ._gdfa ._cgaf {_afe :=_eg (_aefc ._aed ._gagb ,_aefc ._aed ._gdda );
+if _bdaa :=_dagf .WriteProperty (_afe );_bdaa !=nil {return _bdaa ;};};if _aefc ._gdfa ._cfg {if _eec :=_dagf .WriteProperty (_aefc ._aed ._afgb );_eec !=nil {return _eec ;};};if _aefc ._gdfa ._bffg {if _gbcf :=_dagf .WriteProperty (_aefc ._aed ._cccf );
+_gbcf !=nil {return _gbcf ;};};if _aefc ._gdfa ._abag {if _befd :=_dagf .WriteProperty (_aefc ._aed ._dafa );_befd !=nil {return _befd ;};};if _aefc ._gdfa ._cacd {if _bdg :=_dagf .WriteProperty (_aefc ._aed ._bbd );_bdg !=nil {return _bdg ;};};if _aefc ._gdfa ._aeg {if _dfa :=_dagf .WriteProperty (_aefc ._aed ._bbe );
+_dfa !=nil {return _dfa ;};};if _aefc ._gdfa ._dcdc {if _egcg :=_dagf .WriteProperty (_aefc ._aed ._gfg );_egcg !=nil {return _egcg ;};};if _aefc ._gdfa ._dgdd {if _ddc :=_dagf .WriteProperty (_aefc ._aed ._daa );_ddc !=nil {return _ddc ;};};if _aefc ._gdfa ._ggb {if _bada :=_dagf .WriteProperty (_aefc ._aed ._egg );
+_bada !=nil {return _bada ;};};return _dagf .AlignLength (4);};
+
+// GetPosition gets a button position value.
+func (_bbfec *ScrollBarControl )GetPosition ()int32 {return _bbfec ._efcf ._aacf };
+
+// GetBackColor gets a button text color value for a system palette from a spinButton control.
+func (_dagg *SpinButtonControl )GetBackColor ()uint32 {return _dagg ._agce ._gfbb };type scrollBarExtraDataBlock struct{_ece uint32 ;_gfa uint32 ;};func (_gagc *ImageControl )writePropMask (_agbc *_ef .Writer )error {_aee :=uint32 (0);_aee >>=2;_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._ged );
+_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._bgaa );_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._eacb );_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._bab );_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._cec );_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._dfda );
+_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._efbf );_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._cad );_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._ccc );_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._bege );_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._bbcd );
+_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._fac );_aee =_ef .PushLeftUI32 (_aee ,_gagc ._dfd ._fda );_aee >>=17;return _cb .Write (_agbc ,_cb .LittleEndian ,_aee );};const (FmPictureSizeModeClip FmPictureSizeMode =iota ;FmPictureSizeModeStretch ;_ ;FmPictureSizeModeZoom ;
+);func (_ggd *morphDataControl )writeColumnInfo (_cdd *_ef .Writer )error {return nil };func (_cadb *morphDataControl )readColumnInfoPropMask (_efba *_ef .Reader )error {return nil };func (_egea *ScrollBarControl )readPropMask (_gdaa *_ef .Reader )error {var _ccf uint32 ;
+if _gcbb :=_cb .Read (_gdaa ,_cb .LittleEndian ,&_ccf );_gcbb !=nil {return _gcbb ;};_egea ._bebb =&scrollBarPropMask {};_egea ._bebb ._fccd ,_ccf =_ef .PopRightUI32 (_ccf );_egea ._bebb ._acgb ,_ccf =_ef .PopRightUI32 (_ccf );_egea ._bebb ._bgdb ,_ccf =_ef .PopRightUI32 (_ccf );
+_egea ._bebb ._afec ,_ccf =_ef .PopRightUI32 (_ccf );_egea ._bebb ._bcge ,_ccf =_ef .PopRightUI32 (_ccf );_egea ._bebb ._effd ,_ccf =_ef .PopRightUI32 (_ccf );_egea ._bebb ._gce ,_ccf =_ef .PopRightUI32 (_ccf );_egea ._bebb ._ebbd ,_ccf =_ef .PopRightUI32 (_ccf );
+_ccf >>=1;_egea ._bebb ._afca ,_ccf =_ef .PopRightUI32 (_ccf );_egea ._bebb ._egac ,_ccf =_ef .PopRightUI32 (_ccf );_egea ._bebb ._dcbe ,_ccf =_ef .PopRightUI32 (_ccf );_egea ._bebb ._gaf ,_ccf =_ef .PopRightUI32 (_ccf );_egea ._bebb ._faaf ,_ccf =_ef .PopRightUI32 (_ccf );
+_egea ._bebb ._eaab ,_ccf =_ef .PopRightUI32 (_ccf );_egea ._bebb ._abac ,_ccf =_ef .PopRightUI32 (_ccf );_egea ._bebb ._ggaa ,_ccf =_ef .PopRightUI32 (_ccf );return nil ;};
+
+// SetBackColor sets a button text color value from a system palette for a spinButton control.
+func (_ebee *SpinButtonControl )SetBackColor (backColor uint32 ){_ebee ._fcfaf ._cgab =true ;_ebee ._agce ._gfbb =backColor ;};func (_ffa *morphDataControl )setValueString (_aggf string ){_ffa ._befg ._gge =true ;_ffa ._fcb ._dgba =uint32 (len (_aggf ));
+_ffa ._egff ._egbg =_aggf ;};func (_cbg *controlBase )writeTheRest (_afg *_ef .Writer )error {_ ,_gebd :=_afg .Write (_cbg ._def );return _gebd ;};func (_dcba *ImageControl )readExtraDataBlock (_fgc *_ef .Reader )error {_dcba ._efec =&imageExtraDataBlock {};
+if _dcba ._dfd ._cad {var _eade uint64 ;if _adf :=_fgc .ReadPairProperty (&_eade );_adf !=nil {return _adf ;};_dcba ._efec ._adg =uint32 (_eade );_dcba ._efec ._egf =uint32 (_eade >>32);};return nil ;};func (_bfdf *controlBase )writeStreamDataM (_ggfbd *_ef .Writer )error {if _bfdf ._ccg !=nil {if _bfdf ._ccg ._adfde !=nil {if _bbbc :=_bfdf ._ccg ._adfde .export (_ggfbd );
+_bbbc !=nil {return _bbbc ;};};};return nil ;};
+
+// GetBackColor gets a button text color value for a system palette from a scrollBar control.
+func (_dgag *ScrollBarControl )GetBackColor ()uint32 {return _dgag ._efcf ._facc };func (_fd *CommandButtonControl )writeDataBlock (_dcgc *_ef .Writer )error {if _fd ._fce ._bgd {if _cee :=_dcgc .WriteProperty (_fd ._bed ._eba );_cee !=nil {return _cee ;
+};};if _fd ._fce ._dee {if _egc :=_dcgc .WriteProperty (_fd ._bed ._ff );_egc !=nil {return _egc ;};};if _fd ._fce ._fca {if _fdb :=_dcgc .WriteProperty (_fd ._bed ._acf );_fdb !=nil {return _fdb ;};};if _fd ._fce ._dcf {_fge :=_eg (_fd ._bed ._bca ,_fd ._bed ._ecb );
+if _bdaf :=_dcgc .WriteProperty (_fge );_bdaf !=nil {return _bdaf ;};};if _fd ._fce ._bba {if _ceaa :=_dcgc .WriteProperty (_fd ._bed ._fab );_ceaa !=nil {return _ceaa ;};};if _fd ._fce ._eac {if _fgd :=_dcgc .WriteProperty (_fd ._bed ._efbd );_fgd !=nil {return _fgd ;
+};};if _fd ._fce ._geb {if _bef :=_dcgc .WriteProperty (_fd ._bed ._fff );_bef !=nil {return _bef ;};};if _fd ._fce ._caf {if _cae :=_dcgc .WriteProperty (_fd ._bed ._dac );_cae !=nil {return _cae ;};};if _fd ._fce ._edc {if _eeb :=_dcgc .WriteProperty (_fd ._bed ._ga );
+_eeb !=nil {return _eeb ;};};return _dcgc .AlignLength (4);};
+
+// SetCaption sets a caption string for a morph control.
+func (_bac *morphDataControl )SetCaption (caption string ){if _bac ._cafg {_bac ._befg ._eecc =true ;_bac ._fcb ._dfee =uint32 (len (caption ));_bac ._egff ._abfd =caption ;};};func (_gbgeg *morphDataControl )readColumnInfo (_gadag *_ef .Reader )error {return nil };
+func (_ddca *controlBase )readStreamDataPM (_dfgd *_ef .Reader ,_cdgc ,_affb bool )error {_ddca ._ccg =&streamData {};if _cdgc {_ddca ._ccg ._bbbg =&guidAndPicture {};if _egba :=_ddca ._ccg ._bbbg .importFromReader (_dfgd );_egba !=nil {return _egba ;};
+};if _affb {_ddca ._ccg ._adfde =&guidAndPicture {};if _dgdb :=_ddca ._ccg ._adfde .importFromReader (_dfgd );_dgdb !=nil {return _dgdb ;};};return nil ;};
+
+// GetHeight returns height of the Label in HIMETRIC (0.01mm)
+func (_gbge *LabelControl )GetHeight ()uint32 {return _gbge ._ecfg ._dbag };func (_eddd *SpinButtonControl )readPropMask (_fbag *_ef .Reader )error {var _dggg uint32 ;if _cgffa :=_cb .Read (_fbag ,_cb .LittleEndian ,&_dggg );_cgffa !=nil {return _cgffa ;
+};_eddd ._fcfaf =&spinButtonPropMask {};_eddd ._fcfaf ._efgb ,_dggg =_ef .PopRightUI32 (_dggg );_eddd ._fcfaf ._cgab ,_dggg =_ef .PopRightUI32 (_dggg );_eddd ._fcfaf ._cacf ,_dggg =_ef .PopRightUI32 (_dggg );_eddd ._fcfaf ._ccd ,_dggg =_ef .PopRightUI32 (_dggg );
+_dggg >>=1;_eddd ._fcfaf ._ccef ,_dggg =_ef .PopRightUI32 (_dggg );_eddd ._fcfaf ._dagff ,_dggg =_ef .PopRightUI32 (_dggg );_eddd ._fcfaf ._facd ,_dggg =_ef .PopRightUI32 (_dggg );_eddd ._fcfaf ._efab ,_dggg =_ef .PopRightUI32 (_dggg );_eddd ._fcfaf ._bbag ,_dggg =_ef .PopRightUI32 (_dggg );
+_eddd ._fcfaf ._eaace ,_dggg =_ef .PopRightUI32 (_dggg );_eddd ._fcfaf ._cdc ,_dggg =_ef .PopRightUI32 (_dggg );_eddd ._fcfaf ._dfae ,_dggg =_ef .PopRightUI32 (_dggg );_eddd ._fcfaf ._bgcg ,_dggg =_ef .PopRightUI32 (_dggg );_eddd ._fcfaf ._baa ,_dggg =_ef .PopRightUI32 (_dggg );
+return nil ;};
+
+// GetWidth returns width of the ScrollBar in HIMETRIC (0.01mm)
+func (_fgbb *ScrollBarControl )GetWidth ()uint32 {return _fgbb ._gbbb ._ece };type labelDataBlock struct{_agec uint32 ;_cbbd uint32 ;_ebg uint32 ;_gagb uint32 ;_gdda bool ;_afgb uint32 ;_cccf uint8 ;_dafa uint32 ;_bbd uint16 ;_bbe uint16 ;_gfg uint16 ;
+_daa rune ;_egg uint16 ;};func _ace (_cda *_ef .Reader )(*CommandButtonControl ,error ){_bc :=&CommandButtonControl {};if _gee :=_bc .readPropMask (_cda );_gee !=nil {return nil ,_gee ;};if _daf :=_bc .readDataBlock (_cda );_daf !=nil {return nil ,_daf ;
+};if _fg :=_bc .readExtraDataBlock (_cda );_fg !=nil {return nil ,_fg ;};if _edb :=_bc .readStreamDataPM (_cda ,_bc ._fce ._geb ,_bc ._fce ._edc );_edb !=nil {return nil ,_edb ;};if _gef :=_bc .readTheRest (_cda );_gef !=nil {return nil ,_gef ;};return _bc ,nil ;
+};
+
+// LabelControl is a representation of a label ActiveX form.
+type LabelControl struct{controlBase ;_gdfa *labelPropMask ;_aed *labelDataBlock ;_ecfg *labelExtraDataBlock ;_fccb *streamData ;};
+
+// GetForeColor gets a button text color value for a system palette from a label control.
+func (_face *LabelControl )GetForeColor ()uint32 {return _face ._aed ._agec };func _eg (_aaee uint32 ,_cce bool )uint32 {if _aaee ==0{return 0;};if _cce {_aaee |=1<<31;};return _aaee ;};type morphDataExtraDataBlock struct{_dff uint32 ;_gebb uint32 ;_egbg string ;
+_abfd string ;_fded string ;};func (_beb *morphDataControl )writeDataBlock (_cgd *_ef .Writer )error {if _beb ._befg ._dabf {if _ddec :=_cgd .WriteProperty (_beb ._fcb ._gdff );_ddec !=nil {return _ddec ;};};if _beb ._befg ._ebb {if _fcce :=_cgd .WriteProperty (_beb ._fcb ._ccac );
+_fcce !=nil {return _fcce ;};};if _beb ._befg ._ecd {if _caeg :=_cgd .WriteProperty (_beb ._fcb ._edbg );_caeg !=nil {return _caeg ;};};if _beb ._befg ._bge {if _dbeg :=_cgd .WriteProperty (_beb ._fcb ._egbdg );_dbeg !=nil {return _dbeg ;};};if _beb ._befg ._bfag {if _eace :=_cgd .WriteProperty (_beb ._fcb ._bfcc );
+_eace !=nil {return _eace ;};};if _beb ._befg ._bedb {if _daec :=_cgd .WriteProperty (_beb ._fcb ._afc );_daec !=nil {return _daec ;};};if _beb ._befg ._fdc {if _efdg :=_cgd .WriteProperty (_beb ._fcb ._aegf );_efdg !=nil {return _efdg ;};};if _beb ._befg ._dda {if _eacdd :=_cgd .WriteProperty (_beb ._fcb ._fcfa );
+_eacdd !=nil {return _eacdd ;};};if _beb ._befg ._ceag {if _dcfda :=_cgd .WriteProperty (_beb ._fcb ._feef );_dcfda !=nil {return _dcfda ;};};if _beb ._befg ._faab {if _deaa :=_cgd .WriteProperty (_beb ._fcb ._fgae );_deaa !=nil {return _deaa ;};};if _beb ._befg ._ffd {if _dbcb :=_cgd .WriteProperty (_beb ._fcb ._ebdf );
+_dbcb !=nil {return _dbcb ;};};if _beb ._befg ._afed {if _cebe :=_cgd .WriteProperty (_beb ._fcb ._gdfg );_cebe !=nil {return _cebe ;};};if _beb ._befg ._deaed {if _fgcbb :=_cgd .WriteProperty (_beb ._fcb ._gca );_fgcbb !=nil {return _fgcbb ;};};if _beb ._befg ._ecbf {if _edcb :=_cgd .WriteProperty (_beb ._fcb ._ggbe );
+_edcb !=nil {return _edcb ;};};if _beb ._befg ._aabf {if _dgga :=_cgd .WriteProperty (_beb ._fcb ._cggb );_dgga !=nil {return _dgga ;};};if _beb ._befg ._eebd {if _bcce :=_cgd .WriteProperty (_beb ._fcb ._edge );_bcce !=nil {return _bcce ;};};if _beb ._befg ._bggb {if _ffcec :=_cgd .WriteProperty (_beb ._fcb ._ffg );
+_ffcec !=nil {return _ffcec ;};};if _beb ._befg ._ebaf {if _bcgd :=_cgd .WriteProperty (_beb ._fcb ._fdef );_bcgd !=nil {return _bcgd ;};};if _beb ._befg ._bdf {if _gadfb :=_cgd .WriteProperty (_beb ._fcb ._abgg );_gadfb !=nil {return _gadfb ;};};if _beb ._befg ._cafgd {if _cggd :=_cgd .WriteProperty (_beb ._fcb ._bgb );
+_cggd !=nil {return _cggd ;};};if _beb ._befg ._gge {_adeb :=_eg (_beb ._fcb ._dgba ,_beb ._fcb ._eeg );if _adaa :=_cgd .WriteProperty (_adeb );_adaa !=nil {return _adaa ;};};if _beb ._befg ._eecc {_agbe :=_eg (_beb ._fcb ._dfee ,_beb ._fcb ._dacg );if _aceg :=_cgd .WriteProperty (_agbe );
+_aceg !=nil {return _aceg ;};};if _beb ._befg ._cbd {if _cedad :=_cgd .WriteProperty (_beb ._fcb ._affc );_cedad !=nil {return _cedad ;};};if _beb ._befg ._eff {if _gcad :=_cgd .WriteProperty (_beb ._fcb ._bfb );_gcad !=nil {return _gcad ;};};if _beb ._befg ._edcd {if _dgef :=_cgd .WriteProperty (_beb ._fcb ._ecgg );
+_dgef !=nil {return _dgef ;};};if _beb ._befg ._cgg {if _gcgb :=_cgd .WriteProperty (_beb ._fcb ._ebef );_gcgb !=nil {return _gcgb ;};};if _beb ._befg ._becg {if _acg :=_cgd .WriteProperty (_beb ._fcb ._aec );_acg !=nil {return _acg ;};};if _beb ._befg ._eafe {if _fgdf :=_cgd .WriteProperty (_beb ._fcb ._gdfe );
+_fgdf !=nil {return _fgdf ;};};if _beb ._befg ._cbcf {_cbbb :=_eg (_beb ._fcb ._bbca ,_beb ._fcb ._bgfd );if _cebf :=_cgd .WriteProperty (_cbbb );_cebf !=nil {return _cebf ;};};return _cgd .AlignLength (4);};
+
+// GetMax gets a button max value.
+func (_feec *SpinButtonControl )GetMax ()int32 {return _feec ._agce ._dgcb };func (_bce *LabelControl )writeExtraDataBlock (_abb *_ef .Writer )error {if _bce ._aed ._gagb > 0{if _cbgb :=_abb .WriteStringProperty (_bce ._ecfg ._daac );_cbgb !=nil {return _cbgb ;
+};};if _bce ._gdfa ._cgb {_fcab :=uint64 (_bce ._ecfg ._cba )<<32|uint64 (_bce ._ecfg ._dbag );if _acbe :=_abb .WritePropertyNoAlign (_fcab );_acbe !=nil {return _acbe ;};};return nil ;};func (_bbde *controlBase )writeStreamDataPM (_gdee *_ef .Writer )error {if _bbde ._ccg !=nil {if _bbde ._ccg ._bbbg !=nil {if _efef :=_bbde ._ccg ._bbbg .export (_gdee );
+_efef !=nil {return _efef ;};};if _bbde ._ccg ._adfde !=nil {if _ddba :=_bbde ._ccg ._adfde .export (_gdee );_ddba !=nil {return _ddba ;};};};return nil ;};
 
 // ControlChoice represents an ActiveX control inside a wrapper.
 type ControlChoice struct{CheckBox *CheckBoxDataControl ;TextBox *TextBoxDataControl ;ListBox *ListBoxDataControl ;ComboBox *ComboBoxDataControl ;OptionButton *OptionButtonDataControl ;ToggleButton *ToggleButtonDataControl ;Label *LabelControl ;Image *ImageControl ;
-SpinButton *SpinButtonControl ;CommandButton *CommandButtonControl ;ScrollBar *ScrollBarControl ;_fa *controlBase ;};func (_cgefb *ScrollBarControl )readExtraDataBlock (_geac *_d .Reader )error {_cgefb ._ddfc =&scrollBarExtraDataBlock {};if _cgefb ._fbfd ._cgaeg {var _bbbc uint64 ;
-if _ebga :=_geac .ReadPairProperty (&_bbbc );_ebga !=nil {return _ebga ;};_cgefb ._ddfc ._afdgc =uint32 (_bbbc );_cgefb ._ddfc ._debb =uint32 (_bbbc >>32);};return nil ;};func _ecd (_cab uint32 ,_dc bool )uint32 {if _cab ==0{return 0;};if _dc {_cab |=1<<31;
-};return _cab ;};
-
-// SetBackColor sets a button text color value from a system palette for a spinButton control.
-func (_feca *SpinButtonControl )SetBackColor (backColor uint32 ){_feca ._bfab ._fabd =true ;_feca ._ebd ._efbcb =backColor ;};func _ecdbg (_bgg *_d .Reader )(*SpinButtonControl ,error ){_gffa :=&SpinButtonControl {};if _gafb :=_gffa .readPropMask (_bgg );
-_gafb !=nil {return nil ,_gafb ;};if _gbed :=_gffa .readDataBlock (_bgg );_gbed !=nil {return nil ,_gbed ;};if _ffcb :=_gffa .readExtraDataBlock (_bgg );_ffcb !=nil {return nil ,_ffcb ;};if _efcf :=_gffa .readStreamDataM (_bgg ,_gffa ._bfab ._gdbf );_efcf !=nil {return nil ,_efcf ;
-};if _aeaf :=_gffa .readTheRest (_bgg );_aeaf !=nil {return nil ,_aeaf ;};return _gffa ,nil ;};const _aag =1;type morphDataControl struct{controlBase ;_edcc *morphDataPropMask ;_gdfbf *morphDataDataBlock ;_bbaa *morphDataExtraDataBlock ;_fbec *streamData ;
-_fbbg *morphDataColumnInfo ;_bcab *morphDataColumnInfoPropMask ;_eaa *morphDataColumnInfoDataBlock ;};const _ddfgf =5;
-
-// SetMin sets a button min value.
-func (_dbaf *SpinButtonControl )SetMin (min int32 ){_dbaf ._bfab ._gdfc =true ;_dbaf ._ebd ._dfcf =min };func (_edg *SpinButtonControl )writePropMask (_eaff *_d .Writer )error {_afeb :=uint32 (0);_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._ddbg );_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._fabd );
-_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._ebf );_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._dffc );_afeb >>=1;_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._gdfc );_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._fggf );_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._bgdc );
-_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._gdeg );_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._dffbe );_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._geb );_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._fbeca );_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._aage );
-_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._gdbf );_afeb =_d .PushLeftUI32 (_afeb ,_edg ._bfab ._dacc );_afeb >>=17;return _be .Write (_eaff ,_be .LittleEndian ,_afeb );};func (_fgd *CommandButtonControl )readPropMask (_fgfg *_d .Reader )error {var _af uint32 ;
-if _ccg :=_be .Read (_fgfg ,_be .LittleEndian ,&_af );_ccg !=nil {return _ccg ;};_fgd ._cac =&commandButtonPropMask {};_fgd ._cac ._caca ,_af =_d .PopRightUI32 (_af );_fgd ._cac ._dgb ,_af =_d .PopRightUI32 (_af );_fgd ._cac ._bgda ,_af =_d .PopRightUI32 (_af );
-_fgd ._cac ._dfe ,_af =_d .PopRightUI32 (_af );_fgd ._cac ._agb ,_af =_d .PopRightUI32 (_af );_fgd ._cac ._cbd ,_af =_d .PopRightUI32 (_af );_fgd ._cac ._ecg ,_af =_d .PopRightUI32 (_af );_fgd ._cac ._ceac ,_af =_d .PopRightUI32 (_af );_fgd ._cac ._dbca ,_af =_d .PopRightUI32 (_af );
-_fgd ._cac ._ad ,_af =_d .PopRightUI32 (_af );_fgd ._cac ._bgdg ,_af =_d .PopRightUI32 (_af );return nil ;};
-
-// LabelControl is a representation of a label ActiveX form.
-type LabelControl struct{controlBase ;_fbb *labelPropMask ;_ccgf *labelDataBlock ;_gccc *labelExtraDataBlock ;_cde *streamData ;};func (_gdbdfb *SpinButtonControl )readExtraDataBlock (_efdg *_d .Reader )error {_gdbdfb ._debf =&spinButtonExtraDataBlock {};
-if _gdbdfb ._bfab ._dffc {var _cfcb uint64 ;if _baga :=_efdg .ReadPairProperty (&_cfcb );_baga !=nil {return _baga ;};_gdbdfb ._debf ._bggc =uint32 (_cfcb );_gdbdfb ._debf ._bdda =uint32 (_cfcb >>32);};return nil ;};
-
-// SetMax sets a button max value.
-func (_geacd *SpinButtonControl )SetMax (max int32 ){_geacd ._bfab ._fggf =true ;_geacd ._ebd ._cdaf =max ;};func (_cccb *ScrollBarControl )writeExtraDataBlock (_abca *_d .Writer )error {if _cccb ._fbfd ._cgaeg {_baag :=uint64 (_cccb ._ddfc ._debb )<<32|uint64 (_cccb ._ddfc ._afdgc );
-if _cfde :=_abca .WritePropertyNoAlign (_baag );_cfde !=nil {return _cfde ;};};return nil ;};const _fefd =6;func (_gdg *LabelControl )writePropMask (_begb *_d .Writer )error {_gce :=uint32 (0);_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._edcg );_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._dfg );
-_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._ddd );_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._dbf );_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._fab );_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._cbe );_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._fcgd );_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._cacd );
-_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._ega );_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._bgbe );_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._gggf );_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._fcb );_gce =_d .PushLeftUI32 (_gce ,_gdg ._fbb ._fgae );_gce >>=19;
-return _be .Write (_begb ,_be .LittleEndian ,_gce );};func (_ecb *controlBase )getPictureBytes ()[]byte {return _ecb ._gbgc ._ggcd .getStdPictureBytes ()};func _ffd (_cbb *_bac .Reader )(string ,error ){_ge ,_ddf :=_cbb .GetEntry ("\u0043o\u006d\u0070\u004f\u0062\u006a");
-if _ddf !=nil {return "",_ddf ;};_bd :=make ([]byte ,_ge .Size );_ ,_ddf =_ge .Read (_bd );if _ddf !=nil {return "",_ddf ;};_cd :=_f .Split (_bd ,[]byte ("\u002e"));if len (_cd )< 2{return "",_ac .New ("\u0055\u006e\u006bn\u006f\u0077\u006e\u0020\u0066\u006f\u0072\u006d");
-};return string (_cd [len (_cd )-2]),nil ;};
-
-// GetForeColor gets a button text color value for a system palette from a label control.
-func (_adfc *LabelControl )GetForeColor ()uint32 {return _adfc ._ccgf ._dddd };
-
-// GetCaption gets a caption string from a label control.
-func (_cdg *LabelControl )GetCaption ()string {return _cdg ._gccc ._dfga };
-
-// TextBoxDataControl is a representation of a text box ActiveX form.
-type TextBoxDataControl struct{*morphDataControlStringValue };
-
-// CheckBoxDataControl is a representation of a check box ActiveX form.
-type CheckBoxDataControl struct{*morphDataControlBoolValue };func (_ffb *LabelControl )export (_gagf *_d .Writer )error {if _ffg :=_ffb .writePropMask (_gagf );_ffg !=nil {return _ffg ;};if _adfb :=_ffb .writeDataBlock (_gagf );_adfb !=nil {return _adfb ;
-};if _cgb :=_ffb .writeExtraDataBlock (_gagf );_cgb !=nil {return _cgb ;};_ffb ._fbg =uint16 (_gagf .Len ()-4);if _bca :=_ffb .writeStreamDataPM (_gagf );_bca !=nil {return _bca ;};return _ffb .writeTheRest (_gagf );};func (_cgef *controlBase )setPictureBytes (_afa []byte ){if _cgef ._gbgc ._ggcd ==nil {_cgef ._gbgc ._ggcd =&guidAndPicture {};
-};_cgef ._gbgc ._ggcd .setStdPictureBytes (_afa );};func (_cee *SpinButtonControl )writeDataBlock (_ggbb *_d .Writer )error {if _cee ._bfab ._ddbg {if _cbf :=_ggbb .WriteProperty (_cee ._ebd ._cfad );_cbf !=nil {return _cbf ;};};if _cee ._bfab ._fabd {if _eecf :=_ggbb .WriteProperty (_cee ._ebd ._efbcb );
-_eecf !=nil {return _eecf ;};};if _cee ._bfab ._ebf {if _cff :=_ggbb .WriteProperty (_cee ._ebd ._deeb );_cff !=nil {return _cff ;};};if _cee ._bfab ._gdfc {if _fedd :=_ggbb .WriteProperty (_cee ._ebd ._dfcf );_fedd !=nil {return _fedd ;};};if _cee ._bfab ._fggf {if _geg :=_ggbb .WriteProperty (_cee ._ebd ._cdaf );
-_geg !=nil {return _geg ;};};if _cee ._bfab ._bgdc {if _dgbd :=_ggbb .WriteProperty (_cee ._ebd ._ebca );_dgbd !=nil {return _dgbd ;};};if _cee ._bfab ._gdeg {if _fdab :=_ggbb .WriteProperty (_cee ._ebd ._gdcg );_fdab !=nil {return _fdab ;};};if _cee ._bfab ._dffbe {if _acff :=_ggbb .WriteProperty (_cee ._ebd ._cadc );
-_acff !=nil {return _acff ;};};if _cee ._bfab ._geb {if _aeec :=_ggbb .WriteProperty (_cee ._ebd ._cag );_aeec !=nil {return _aeec ;};};if _cee ._bfab ._fbeca {if _adfbe :=_ggbb .WriteProperty (_cee ._ebd ._gabg );_adfbe !=nil {return _adfbe ;};};if _cee ._bfab ._aage {if _bbda :=_ggbb .WriteProperty (_cee ._ebd ._gefe );
-_bbda !=nil {return _bbda ;};};if _cee ._bfab ._gdbf {if _ffdd :=_ggbb .WriteProperty (_cee ._ebd ._gfbd );_ffdd !=nil {return _ffdd ;};};if _cee ._bfab ._dacc {if _dedc :=_ggbb .WriteProperty (_cee ._ebd ._aagf );_dedc !=nil {return _dedc ;};};return _ggbb .AlignLength (4);
-};func (_cebeb *guidAndPicture )export (_fca *_d .Writer )error {if _ ,_deb :=_b .Copy (_fca ,_f .NewBuffer (_cebeb ._ffc ));_deb !=nil {return _deb ;};if _fdf :=_fca .WriteProperty (_cebeb ._bce ._gea );_fdf !=nil {return _fdf ;};if _adb :=_fca .WriteProperty (_cebeb ._bce ._agg );
-_adb !=nil {return _adb ;};_ ,_caa :=_b .Copy (_fca ,_cebeb ._bce ._gfde );if _caa !=nil {return _caa ;};return nil ;};func (_edc *controlBase )getMouseIconBytes ()[]byte {return _edc ._gbgc ._dadg .getStdPictureBytes ()};func (_geff *controlBase )writeStreamDataPM (_cccbf *_d .Writer )error {if _geff ._gbgc !=nil {if _geff ._gbgc ._ggcd !=nil {if _ecfc :=_geff ._gbgc ._ggcd .export (_cccbf );
-_ecfc !=nil {return _ecfc ;};};if _geff ._gbgc ._dadg !=nil {if _bbfde :=_geff ._gbgc ._dadg .export (_cccbf );_bbfde !=nil {return _bbfde ;};};};return nil ;};type morphDataDataBlock struct{_fgff uint32 ;_gef uint32 ;_adg uint32 ;_ceag uint32 ;_bdbf byte ;
-_abdb byte ;_efc byte ;_cbaf byte ;_dgd rune ;_dda uint32 ;_fbcb uint16 ;_fgcg int16 ;_ebc int16 ;_cfdd uint16 ;_aeed uint16 ;_egcce uint8 ;_ecba uint8 ;_cda uint8 ;_cfe uint8 ;_abdd uint8 ;_ged uint32 ;_fefb bool ;_efb uint32 ;_agca bool ;_dbfd uint32 ;
-_cad uint32 ;_gacd uint32 ;_febe uint16 ;_bcc uint16 ;_egbg rune ;_dgcg uint32 ;_egf bool ;};type morphDataColumnInfoDataBlock struct{};func (_fac *morphDataControl )writeExtraDataBlock (_gbee *_d .Writer )error {if _fac ._edcc ._dgee {_gcdg :=uint64 (_fac ._bbaa ._cgebb )<<32|uint64 (_fac ._bbaa ._cdgeb );
-if _gcag :=_gbee .WritePropertyNoAlign (_gcdg );_gcag !=nil {return _gcag ;};};if _fac ._gdfbf ._ged > 0{if _fagef :=_gbee .WriteStringProperty (_fac ._bbaa ._eae );_fagef !=nil {return _fagef ;};};if _fac ._gdfbf ._efb > 0{if _dggc :=_gbee .WriteStringProperty (_fac ._bbaa ._eac );
-_dggc !=nil {return _dggc ;};};if _fac ._gdfbf ._dgcg > 0{if _ggfa :=_gbee .WriteStringProperty (_fac ._bbaa ._abfd );_ggfa !=nil {return _ggfa ;};};return nil ;};
-
-// GetBackColor gets a button text color value for a system palette from a scrollBar control.
-func (_fbfec *ScrollBarControl )GetBackColor ()uint32 {return _fbfec ._dbe ._bfee };
-
-// SetPosition sets a button position value.
-func (_dgba *ScrollBarControl )SetPosition (position int32 ){_dgba ._fbfd ._eebe =true ;_dgba ._dbe ._gfc =position ;};func _cae (_gda *_d .Reader )(*CommandButtonControl ,error ){_ae :=&CommandButtonControl {};if _bgd :=_ae .readPropMask (_gda );_bgd !=nil {return nil ,_bgd ;
-};if _edf :=_ae .readDataBlock (_gda );_edf !=nil {return nil ,_edf ;};if _cg :=_ae .readExtraDataBlock (_gda );_cg !=nil {return nil ,_cg ;};if _deg :=_ae .readStreamDataPM (_gda ,_ae ._cac ._ceac ,_ae ._cac ._bgdg );_deg !=nil {return nil ,_deg ;};if _efa :=_ae .readTheRest (_gda );
-_efa !=nil {return nil ,_efa ;};return _ae ,nil ;};func (_afde *LabelControl )writeDataBlock (_dga *_d .Writer )error {if _afde ._fbb ._edcg {if _def :=_dga .WriteProperty (_afde ._ccgf ._dddd );_def !=nil {return _def ;};};if _afde ._fbb ._dfg {if _gaed :=_dga .WriteProperty (_afde ._ccgf ._dadf );
-_gaed !=nil {return _gaed ;};};if _afde ._fbb ._ddd {if _bdge :=_dga .WriteProperty (_afde ._ccgf ._baeb );_bdge !=nil {return _bdge ;};};if _afde ._fbb ._dbf {_bagd :=_ecd (_afde ._ccgf ._bfc ,_afde ._ccgf ._bdac );if _efef :=_dga .WriteProperty (_bagd );
-_efef !=nil {return _efef ;};};if _afde ._fbb ._fab {if _cbde :=_dga .WriteProperty (_afde ._ccgf ._eafd );_cbde !=nil {return _cbde ;};};if _afde ._fbb ._fcgd {if _fadg :=_dga .WriteProperty (_afde ._ccgf ._caef );_fadg !=nil {return _fadg ;};};if _afde ._fbb ._cacd {if _gdbd :=_dga .WriteProperty (_afde ._ccgf ._edb );
-_gdbd !=nil {return _gdbd ;};};if _afde ._fbb ._ega {if _bdff :=_dga .WriteProperty (_afde ._ccgf ._edbd );_bdff !=nil {return _bdff ;};};if _afde ._fbb ._bgbe {if _bbcc :=_dga .WriteProperty (_afde ._ccgf ._gdeb );_bbcc !=nil {return _bbcc ;};};if _afde ._fbb ._gggf {if _dece :=_dga .WriteProperty (_afde ._ccgf ._cef );
-_dece !=nil {return _dece ;};};if _afde ._fbb ._fcb {if _fcf :=_dga .WriteProperty (_afde ._ccgf ._dgea );_fcf !=nil {return _fcf ;};};if _afde ._fbb ._fgae {if _fcc :=_dga .WriteProperty (_afde ._ccgf ._degg );_fcc !=nil {return _fcc ;};};return _dga .AlignLength (4);
-};func (_fgc *ImageControl )readDataBlock (_faae *_d .Reader )error {_fgc ._fdfg =&imageDataBlock {};if _fgc ._gbb ._abc {if _fag :=_faae .ReadProperty (&_fgc ._fdfg ._gbf );_fag !=nil {return _fag ;};};if _fgc ._gbb ._gab {if _fdfd :=_faae .ReadProperty (&_fgc ._fdfg ._adf );
-_fdfd !=nil {return _fdfd ;};};if _fgc ._gbb ._gbd {if _gag :=_faae .ReadProperty (&_fgc ._fdfg ._bgb );_gag !=nil {return _gag ;};};if _fgc ._gbb ._ddfg {if _dfdb :=_faae .ReadProperty (&_fgc ._fdfg ._cgc );_dfdb !=nil {return _dfdb ;};};if _fgc ._gbb ._bcb {if _cgf :=_faae .ReadProperty (&_fgc ._fdfg ._ggfc );
-_cgf !=nil {return _cgf ;};};if _fgc ._gbb ._aeeb {if _gcb :=_faae .ReadProperty (&_fgc ._fdfg ._fcdb );_gcb !=nil {return _gcb ;};};if _fgc ._gbb ._eff {if _gae :=_faae .ReadProperty (&_fgc ._fdfg ._cecf );_gae !=nil {return _gae ;};};if _fgc ._gbb ._gee {if _abb :=_faae .ReadProperty (&_fgc ._fdfg ._bad );
-_abb !=nil {return _abb ;};};if _fgc ._gbb ._aff {if _bacc :=_faae .ReadProperty (&_fgc ._fdfg ._fdga );_bacc !=nil {return _bacc ;};};if _fgc ._gbb ._fgfgd {if _gfa :=_faae .ReadProperty (&_fgc ._fdfg ._ggb );_gfa !=nil {return _gfa ;};};return nil ;};
-func (_bdbc *ScrollBarControl )writeDataBlock (_aeg *_d .Writer )error {if _bdbc ._fbfd ._eeae {if _eece :=_aeg .WriteProperty (_bdbc ._dbe ._caad );_eece !=nil {return _eece ;};};if _bdbc ._fbfd ._ceba {if _bgbd :=_aeg .WriteProperty (_bdbc ._dbe ._bfee );
-_bgbd !=nil {return _bgbd ;};};if _bdbc ._fbfd ._eddg {if _ecdg :=_aeg .WriteProperty (_bdbc ._dbe ._begd );_ecdg !=nil {return _ecdg ;};};if _bdbc ._fbfd ._acce {if _dfbd :=_aeg .WriteProperty (_bdbc ._dbe ._bace );_dfbd !=nil {return _dfbd ;};};if _bdbc ._fbfd ._dggg {if _ddcd :=_aeg .WriteProperty (_bdbc ._dbe ._efdb );
-_ddcd !=nil {return _ddcd ;};};if _bdbc ._fbfd ._aebe {if _aea :=_aeg .WriteProperty (_bdbc ._dbe ._faeg );_aea !=nil {return _aea ;};};if _bdbc ._fbfd ._eebe {if _cbba :=_aeg .WriteProperty (_bdbc ._dbe ._gfc );_cbba !=nil {return _cbba ;};};if _bdbc ._fbfd ._cbgb {if _gcgc :=_aeg .WriteProperty (_bdbc ._dbe ._edfc );
-_gcgc !=nil {return _gcgc ;};};if _bdbc ._fbfd ._bfaa {if _cebcd :=_aeg .WriteProperty (_bdbc ._dbe ._bdfa );_cebcd !=nil {return _cebcd ;};};if _bdbc ._fbfd ._dgeg {if _bbgf :=_aeg .WriteProperty (_bdbc ._dbe ._bgc );_bbgf !=nil {return _bbgf ;};};if _bdbc ._fbfd ._cedc {if _ddbf :=_aeg .WriteProperty (_bdbc ._dbe ._ddbe );
-_ddbf !=nil {return _ddbf ;};};if _bdbc ._fbfd ._eec {if _ggge :=_aeg .WriteProperty (_bdbc ._dbe ._ddga );_ggge !=nil {return _ggge ;};};if _bdbc ._fbfd ._dcg {if _cebb :=_aeg .WriteProperty (_bdbc ._dbe ._abeg );_cebb !=nil {return _cebb ;};};if _bdbc ._fbfd ._feab {if _bbac :=_aeg .WriteProperty (_bdbc ._dbe ._fccg );
-_bbac !=nil {return _bbac ;};};if _bdbc ._fbfd ._gcff {if _eaca :=_aeg .WriteProperty (_bdbc ._dbe ._fada );_eaca !=nil {return _eaca ;};};return _aeg .AlignLength (4);};
-
-// GetMin gets a button min value.
-func (_ebbe *ScrollBarControl )GetMin ()int32 {return _ebbe ._dbe ._efdb };type labelDataBlock struct{_dddd uint32 ;_dadf uint32 ;_baeb uint32 ;_bfc uint32 ;_bdac bool ;_eafd uint32 ;_caef uint8 ;_edb uint32 ;_edbd uint16 ;_gdeb uint16 ;_cef uint16 ;_dgea rune ;
-_degg uint16 ;};
-
-// GetValue gets a value from a control which value can be represented as boolean (on/off).
-func (_ccdg *morphDataControlBoolValue )GetValue ()bool {return _ccdg .getValueBool ()};
-
-// GetMax gets a button max value.
-func (_becb *SpinButtonControl )GetMax ()int32 {return _becb ._ebd ._cdaf };func (_cge *CommandButtonControl )export (_bdf *_d .Writer )error {if _dce :=_cge .writePropMask (_bdf );_dce !=nil {return _dce ;};if _cbc :=_cge .writeDataBlock (_bdf );_cbc !=nil {return _cbc ;
-};if _bbf :=_cge .writeExtraDataBlock (_bdf );_bbf !=nil {return _bbf ;};_cge ._fbg =uint16 (_bdf .Len ()-4);if _gff :=_cge .writeStreamDataPM (_bdf );_gff !=nil {return _gff ;};return _cge .writeTheRest (_bdf );};func (_affd *ScrollBarControl )export (_dbda *_d .Writer )error {if _gfeg :=_affd .writePropMask (_dbda );
-_gfeg !=nil {return _gfeg ;};if _cbae :=_affd .writeDataBlock (_dbda );_cbae !=nil {return _cbae ;};if _dcbg :=_affd .writeExtraDataBlock (_dbda );_dcbg !=nil {return _dcbg ;};_affd ._fbg =uint16 (_dbda .Len ()-4);if _dddc :=_affd .writeStreamDataM (_dbda );
-_dddc !=nil {return _dddc ;};return _affd .writeTheRest (_dbda );};
-
-// SetBackColor sets a button text color value from a system palette for a scrollBar control.
-func (_dffb *ScrollBarControl )SetBackColor (backColor uint32 ){_dffb ._fbfd ._ceba =true ;_dffb ._dbe ._bfee =backColor ;};
-
-// GetCaption gets a caption string from a morph control.
-func (_dadb *morphDataControl )GetCaption ()string {if _dadb ._bdc &&_dadb ._edcc ._febd {return _dadb ._bbaa ._eac ;};return "";};
-
-// SetHeight sets height of the Label in HIMETRIC (0.01mm)
-func (_fbba *LabelControl )SetHeight (height uint32 ){_fbba ._fbb ._cbe =true ;_fbba ._gccc ._eeg =height ;};
-
-// FmPictureAlignment represents one of the five picture aignments according to MS-OFORMS document.
-type FmPictureAlignment byte ;func (_faab *morphDataControl )export (_gdfg *_d .Writer )error {if _bfbb :=_faab .writePropMask (_gdfg );_bfbb !=nil {return _bfbb ;};if _ecbg :=_faab .writeDataBlock (_gdfg );_ecbg !=nil {return _ecbg ;};if _cbgg :=_faab .writeExtraDataBlock (_gdfg );
-_cbgg !=nil {return _cbgg ;};_faab ._fbg =uint16 (_gdfg .Len ()-4);if _faf :=_faab .writeStreamDataMP (_gdfg );_faf !=nil {return _faf ;};return _faab .writeTheRest (_gdfg );};type morphDataExtraDataBlock struct{_cgebb uint32 ;_cdgeb uint32 ;_eae string ;
-_eac string ;_abfd string ;};func (_aeb *CommandButtonControl )writePropMask (_add *_d .Writer )error {_fdc :=uint32 (0);_fdc =_d .PushLeftUI32 (_fdc ,_aeb ._cac ._caca );_fdc =_d .PushLeftUI32 (_fdc ,_aeb ._cac ._dgb );_fdc =_d .PushLeftUI32 (_fdc ,_aeb ._cac ._bgda );
-_fdc =_d .PushLeftUI32 (_fdc ,_aeb ._cac ._dfe );_fdc =_d .PushLeftUI32 (_fdc ,_aeb ._cac ._agb );_fdc =_d .PushLeftUI32 (_fdc ,_aeb ._cac ._cbd );_fdc =_d .PushLeftUI32 (_fdc ,_aeb ._cac ._ecg );_fdc =_d .PushLeftUI32 (_fdc ,_aeb ._cac ._ceac );_fdc =_d .PushLeftUI32 (_fdc ,_aeb ._cac ._dbca );
-_fdc =_d .PushLeftUI32 (_fdc ,_aeb ._cac ._ad );_fdc =_d .PushLeftUI32 (_fdc ,_aeb ._cac ._bgdg );_fdc >>=21;return _be .Write (_add ,_be .LittleEndian ,_fdc );};type imageDataBlock struct{_gbf uint32 ;_adf uint32 ;_bgb byte ;_cgc uint8 ;_ggfc byte ;_fcdb byte ;
-_cecf uint16 ;_bad byte ;_fdga uint32 ;_ggb uint16 ;};
-
-// GetWidth returns width of the Label in HIMETRIC (0.01mm)
-func (_dggf *LabelControl )GetWidth ()uint32 {return _dggf ._gccc ._bfb };func (_cce *ImageControl )writeDataBlock (_gca *_d .Writer )error {if _cce ._gbb ._abc {if _adfe :=_gca .WriteProperty (_cce ._fdfg ._gbf );_adfe !=nil {return _adfe ;};};if _cce ._gbb ._gab {if _ccdd :=_gca .WriteProperty (_cce ._fdfg ._adf );
-_ccdd !=nil {return _ccdd ;};};if _cce ._gbb ._gbd {if _abec :=_gca .WriteProperty (_cce ._fdfg ._bgb );_abec !=nil {return _abec ;};};if _cce ._gbb ._ddfg {if _gde :=_gca .WriteProperty (_cce ._fdfg ._cgc );_gde !=nil {return _gde ;};};if _cce ._gbb ._bcb {if _eef :=_gca .WriteProperty (_cce ._fdfg ._ggfc );
-_eef !=nil {return _eef ;};};if _cce ._gbb ._aeeb {if _gbdc :=_gca .WriteProperty (_cce ._fdfg ._fcdb );_gbdc !=nil {return _gbdc ;};};if _cce ._gbb ._eff {if _ccgd :=_gca .WriteProperty (_cce ._fdfg ._cecf );_ccgd !=nil {return _ccgd ;};};if _cce ._gbb ._gee {if _ggg :=_gca .WriteProperty (_cce ._fdfg ._bad );
-_ggg !=nil {return _ggg ;};};if _cce ._gbb ._aff {if _bbg :=_gca .WriteProperty (_cce ._fdfg ._fdga );_bbg !=nil {return _bbg ;};};if _cce ._gbb ._fgfgd {if _daae :=_gca .WriteProperty (_cce ._fdfg ._ggb );_daae !=nil {return _daae ;};};return _gca .AlignLength (4);
-};
-
-// SetPosition sets a button position value.
-func (_gbcg *SpinButtonControl )SetPosition (position int32 ){_gbcg ._bfab ._bgdc =true ;_gbcg ._ebd ._ebca =position ;};func (_dcc *SpinButtonControl )readPropMask (_afdc *_d .Reader )error {var _fcdf uint32 ;if _bfaf :=_be .Read (_afdc ,_be .LittleEndian ,&_fcdf );
-_bfaf !=nil {return _bfaf ;};_dcc ._bfab =&spinButtonPropMask {};_dcc ._bfab ._ddbg ,_fcdf =_d .PopRightUI32 (_fcdf );_dcc ._bfab ._fabd ,_fcdf =_d .PopRightUI32 (_fcdf );_dcc ._bfab ._ebf ,_fcdf =_d .PopRightUI32 (_fcdf );_dcc ._bfab ._dffc ,_fcdf =_d .PopRightUI32 (_fcdf );
-_fcdf >>=1;_dcc ._bfab ._gdfc ,_fcdf =_d .PopRightUI32 (_fcdf );_dcc ._bfab ._fggf ,_fcdf =_d .PopRightUI32 (_fcdf );_dcc ._bfab ._bgdc ,_fcdf =_d .PopRightUI32 (_fcdf );_dcc ._bfab ._gdeg ,_fcdf =_d .PopRightUI32 (_fcdf );_dcc ._bfab ._dffbe ,_fcdf =_d .PopRightUI32 (_fcdf );
-_dcc ._bfab ._geb ,_fcdf =_d .PopRightUI32 (_fcdf );_dcc ._bfab ._fbeca ,_fcdf =_d .PopRightUI32 (_fcdf );_dcc ._bfab ._aage ,_fcdf =_d .PopRightUI32 (_fcdf );_dcc ._bfab ._gdbf ,_fcdf =_d .PopRightUI32 (_fcdf );_dcc ._bfab ._dacc ,_fcdf =_d .PopRightUI32 (_fcdf );
-return nil ;};
-
-// Control represents an ActiveX control wrapper.
-type Control struct{TargetAttr string ;Ocx *_e .Ocx ;Choice *ControlChoice ;_ec string ;_fgg uint8 ;_ff uint8 ;_bag uint16 ;};func _agd (_dfee *_d .Reader )(*LabelControl ,error ){_ggbc :=&LabelControl {};if _ddc :=_ggbc .readPropMask (_dfee );_ddc !=nil {return nil ,_ddc ;
-};if _gcd :=_ggbc .readDataBlock (_dfee );_gcd !=nil {return nil ,_gcd ;};if _fce :=_ggbc .readExtraDataBlock (_dfee );_fce !=nil {return nil ,_fce ;};if _cdb :=_ggbc .readStreamDataPM (_dfee ,_ggbc ._fbb ._gggf ,_ggbc ._fbb ._fgae );_cdb !=nil {return nil ,_cdb ;
-};if _gbbd :=_ggbc .readTheRest (_dfee );_gbbd !=nil {return nil ,_gbbd ;};return _ggbc ,nil ;};
-
-// SetWidth sets width of the CommandButton in HIMETRIC (0.01mm)
-func (_aae *CommandButtonControl )SetWidth (width uint32 ){_aae ._cac ._cbd =true ;_aae ._fgf ._daa =width ;};
-
-// GetBackColor gets a button text color value for a system palette from a commandButton control.
-func (_dbc *CommandButtonControl )GetBackColor ()uint32 {return _dbc ._dgg ._fff };type morphDataControlBoolValue struct{*morphDataControl };func (_bfba *controlBase )writeStreamDataMP (_adgb *_d .Writer )error {if _bfba ._gbgc !=nil {if _bfba ._gbgc ._dadg !=nil {if _cafd :=_bfba ._gbgc ._dadg .export (_adgb );
-_cafd !=nil {return _cafd ;};};if _bfba ._gbgc ._ggcd !=nil {if _ffebc :=_bfba ._gbgc ._ggcd .export (_adgb );_ffebc !=nil {return _ffebc ;};};};return nil ;};type spinButtonExtraDataBlock struct{_bdda uint32 ;_bggc uint32 ;};
+SpinButton *SpinButtonControl ;CommandButton *CommandButtonControl ;ScrollBar *ScrollBarControl ;_b *controlBase ;};
 
 // ScrollBarControl is a representation of a scrollBar ActiveX form.
-type ScrollBarControl struct{controlBase ;_fbfd *scrollBarPropMask ;_dbe *scrollBarDataBlock ;_ddfc *scrollBarExtraDataBlock ;_gge *streamData ;};
+type ScrollBarControl struct{controlBase ;_bebb *scrollBarPropMask ;_efcf *scrollBarDataBlock ;_gbbb *scrollBarExtraDataBlock ;_bcag *streamData ;};
 
-// GetWidth returns width of the CommandButton in HIMETRIC (0.01mm)
-func (_bdd *CommandButtonControl )GetWidth ()uint32 {return _bdd ._fgf ._daa };type commandButtonDataBlock struct{_dega uint32 ;_fff uint32 ;_acad uint32 ;_bbfb uint32 ;_cabe bool ;_gbg uint32 ;_eea uint8 ;_bcg uint16 ;_fec rune ;_gga uint16 ;};
-
-// GetBackColor gets a button text color value for a system palette from a label control.
-func (_cfbb *LabelControl )GetBackColor ()uint32 {return _cfbb ._ccgf ._dadf };func (_eeb *CommandButtonControl )writeExtraDataBlock (_cga *_d .Writer )error {if _eeb ._dgg ._bbfb > 0{if _gfga :=_cga .WriteStringProperty (_eeb ._fgf ._fc );_gfga !=nil {return _gfga ;
-};};if _eeb ._cac ._cbd {_abd :=uint64 (_eeb ._fgf ._daa )<<32|uint64 (_eeb ._fgf ._afd );if _fcd :=_cga .WritePropertyNoAlign (_abd );_fcd !=nil {return _fcd ;};};return nil ;};
-
-// SetForeColor sets a button text color value from a system palette for a label control.
-func (_dcb *LabelControl )SetForeColor (foreColor uint32 ){_dcb ._fbb ._edcg =true ;_dcb ._ccgf ._dddd =foreColor ;};
+// SetBackColor sets a button text color value from a system palette for a label control.
+func (_gcce *LabelControl )SetBackColor (backColor uint32 ){_gcce ._gdfa ._beeb =true ;_gcce ._aed ._cbbd =backColor ;};func (_ccfc *controlBase )readStreamDataMP (_efge *_ef .Reader ,_bbeg ,_cdag bool )error {_ccfc ._ccg =&streamData {};if _bbeg {_ccfc ._ccg ._adfde =&guidAndPicture {};
+if _ecbff :=_ccfc ._ccg ._adfde .importFromReader (_efge );_ecbff !=nil {return _ecbff ;};};if _cdag {_ccfc ._ccg ._bbbg =&guidAndPicture {};if _cafe :=_ccfc ._ccg ._bbbg .importFromReader (_efge );_cafe !=nil {return _cafe ;};};return nil ;};
 
 // SetWidth sets width of the SpinButton in HIMETRIC (0.01mm)
-func (_cdeb *SpinButtonControl )SetWidth (width uint32 ){_cdeb ._bfab ._dffc =true ;_cdeb ._debf ._bdda =width ;};
+func (_ggc *SpinButtonControl )SetWidth (width uint32 ){_ggc ._fcfaf ._ccd =true ;_ggc ._efga ._acaa =width ;};func (_affcd *morphDataControl )writeExtraDataBlock (_cggbf *_ef .Writer )error {if _affcd ._befg ._dfcfd {_cdg :=uint64 (_affcd ._egff ._dff )<<32|uint64 (_affcd ._egff ._gebb );
+if _fdeaa :=_cggbf .WritePropertyNoAlign (_cdg );_fdeaa !=nil {return _fdeaa ;};};if _affcd ._fcb ._dgba > 0{if _deeg :=_cggbf .WriteStringProperty (_affcd ._egff ._egbg );_deeg !=nil {return _deeg ;};};if _affcd ._fcb ._dfee > 0{if _cbge :=_cggbf .WriteStringProperty (_affcd ._egff ._abfd );
+_cbge !=nil {return _cbge ;};};if _affcd ._fcb ._bbca > 0{if _ffbd :=_cggbf .WriteStringProperty (_affcd ._egff ._fded );_ffbd !=nil {return _ffbd ;};};return nil ;};
 
-// SetForeColor sets a button text color value from a system palette for a spinButton control.
-func (_bdab *SpinButtonControl )SetForeColor (foreColor uint32 ){_bdab ._bfab ._ddbg =true ;_bdab ._ebd ._cfad =foreColor ;};func (_efdd *morphDataControl )readDataBlock (_fffc *_d .Reader )error {_efdd ._gdfbf =&morphDataDataBlock {};if _efdd ._edcc ._bgaa {if _ddcc :=_fffc .ReadProperty (&_efdd ._gdfbf ._fgff );
-_ddcc !=nil {return _ddcc ;};};if _efdd ._edcc ._bge {if _gffe :=_fffc .ReadProperty (&_efdd ._gdfbf ._gef );_gffe !=nil {return _gffe ;};};if _efdd ._edcc ._ede {if _addf :=_fffc .ReadProperty (&_efdd ._gdfbf ._adg );_addf !=nil {return _addf ;};};if _efdd ._edcc ._cbea {if _cfae :=_fffc .ReadProperty (&_efdd ._gdfbf ._ceag );
-_cfae !=nil {return _cfae ;};};if _efdd ._edcc ._daaf {if _ecc :=_fffc .ReadProperty (&_efdd ._gdfbf ._bdbf );_ecc !=nil {return _ecc ;};};if _efdd ._edcc ._aeea {if _cacf :=_fffc .ReadProperty (&_efdd ._gdfbf ._abdb );_cacf !=nil {return _cacf ;};};if _efdd ._edcc ._fgfb {if _ddb :=_fffc .ReadProperty (&_efdd ._gdfbf ._efc );
-_ddb !=nil {return _ddb ;};};if _efdd ._edcc ._bec {if _fcfg :=_fffc .ReadProperty (&_efdd ._gdfbf ._cbaf );_fcfg !=nil {return _fcfg ;};};if _efdd ._edcc ._cba {if _ddca :=_fffc .ReadProperty (&_efdd ._gdfbf ._dgd );_ddca !=nil {return _ddca ;};};if _efdd ._edcc ._dac {if _ffda :=_fffc .ReadProperty (&_efdd ._gdfbf ._dda );
-_ffda !=nil {return _ffda ;};};if _efdd ._edcc ._agae {if _aebg :=_fffc .ReadProperty (&_efdd ._gdfbf ._fbcb );_aebg !=nil {return _aebg ;};};if _efdd ._edcc ._ddgc {if _fcbb :=_fffc .ReadProperty (&_efdd ._gdfbf ._fgcg );_fcbb !=nil {return _fcbb ;};};
-if _efdd ._edcc ._fbga {if _ebef :=_fffc .ReadProperty (&_efdd ._gdfbf ._ebc );_ebef !=nil {return _ebef ;};};if _efdd ._edcc ._cbbf {if _ffe :=_fffc .ReadProperty (&_efdd ._gdfbf ._cfdd );_ffe !=nil {return _ffe ;};};if _efdd ._edcc ._gdgb {if _edbf :=_fffc .ReadProperty (&_efdd ._gdfbf ._aeed );
-_edbf !=nil {return _edbf ;};};if _efdd ._edcc ._faga {if _fae :=_fffc .ReadProperty (&_efdd ._gdfbf ._egcce );_fae !=nil {return _fae ;};};if _efdd ._edcc ._gaa {if _fage :=_fffc .ReadProperty (&_efdd ._gdfbf ._ecba );_fage !=nil {return _fage ;};};if _efdd ._edcc ._dgcf {if _feg :=_fffc .ReadProperty (&_efdd ._gdfbf ._cda );
-_feg !=nil {return _feg ;};};if _efdd ._edcc ._abeb {if _gdcc :=_fffc .ReadProperty (&_efdd ._gdfbf ._cfe );_gdcc !=nil {return _gdcc ;};};if _efdd ._edcc ._acda {if _aba :=_fffc .ReadProperty (&_efdd ._gdfbf ._abdd );_aba !=nil {return _aba ;};};if _efdd ._edcc ._dgf {var _aaebd uint32 ;
-if _adbd :=_fffc .ReadProperty (&_aaebd );_adbd !=nil {return _adbd ;};_efdd ._gdfbf ._fefb ,_efdd ._gdfbf ._ged =_db (_aaebd );};if _efdd ._edcc ._febd {var _ggfb uint32 ;if _afab :=_fffc .ReadProperty (&_ggfb );_afab !=nil {return _afab ;};_efdd ._gdfbf ._agca ,_efdd ._gdfbf ._efb =_db (_ggfb );
-};if _efdd ._edcc ._agee {if _egde :=_fffc .ReadProperty (&_efdd ._gdfbf ._dbfd );_egde !=nil {return _egde ;};};if _efdd ._edcc ._fecg {if _cgae :=_fffc .ReadProperty (&_efdd ._gdfbf ._cad );_cgae !=nil {return _cgae ;};};if _efdd ._edcc ._fbfc {if _fgag :=_fffc .ReadProperty (&_efdd ._gdfbf ._gacd );
-_fgag !=nil {return _fgag ;};};if _efdd ._edcc ._gac {if _abf :=_fffc .ReadProperty (&_efdd ._gdfbf ._febe );_abf !=nil {return _abf ;};};if _efdd ._edcc ._dea {if _gadc :=_fffc .ReadProperty (&_efdd ._gdfbf ._bcc );_gadc !=nil {return _gadc ;};};if _efdd ._edcc ._edea {if _ffcca :=_fffc .ReadProperty (&_efdd ._gdfbf ._egbg );
-_ffcca !=nil {return _ffcca ;};};if _efdd ._edcc ._efd {var _fcdbc uint32 ;if _deced :=_fffc .ReadProperty (&_fcdbc );_deced !=nil {return _deced ;};_efdd ._gdfbf ._egf ,_efdd ._gdfbf ._dgcg =_db (_fcdbc );};return nil ;};var _cbcc =len (_ffcc );func (_gdc *morphDataControl )setValueBool (_egb bool ){_gdc ._edcc ._dgf =true ;
-_gdc ._gdfbf ._ged =1;_gdc ._gdfbf ._fefb =true ;_ced :="\u0030";if _egb {_ced ="\u0031";};_gdc ._bbaa ._eae =_ced ;};type guidAndPicture struct{_ffc []byte ;_bce *stdPicture ;};
+// SetMin sets a button min value.
+func (_efa *SpinButtonControl )SetMin (min int32 ){_efa ._fcfaf ._ccef =true ;_efa ._agce ._gdge =min };
+
+// GetCaption gets a caption string from a label control.
+func (_dab *LabelControl )GetCaption ()string {return _dab ._ecfg ._daac };func (_bbdg *LabelControl )readDataBlock (_bcab *_ef .Reader )error {_bbdg ._aed =&labelDataBlock {};if _bbdg ._gdfa ._gdc {if _bad :=_bcab .ReadProperty (&_bbdg ._aed ._agec );
+_bad !=nil {return _bad ;};};if _bbdg ._gdfa ._beeb {if _ggg :=_bcab .ReadProperty (&_bbdg ._aed ._cbbd );_ggg !=nil {return _ggg ;};};if _bbdg ._gdfa ._ccgg {if _dbf :=_bcab .ReadProperty (&_bbdg ._aed ._ebg );_dbf !=nil {return _dbf ;};};if _bbdg ._gdfa ._cgaf {var _aab uint32 ;
+if _ceda :=_bcab .ReadProperty (&_aab );_ceda !=nil {return _ceda ;};_bbdg ._aed ._gdda ,_bbdg ._aed ._gagb =_ag (_aab );};if _bbdg ._gdfa ._cfg {if _bec :=_bcab .ReadProperty (&_bbdg ._aed ._afgb );_bec !=nil {return _bec ;};};if _bbdg ._gdfa ._bffg {if _cbfef :=_bcab .ReadProperty (&_bbdg ._aed ._cccf );
+_cbfef !=nil {return _cbfef ;};};if _bbdg ._gdfa ._abag {if _dfg :=_bcab .ReadProperty (&_bbdg ._aed ._dafa );_dfg !=nil {return _dfg ;};};if _bbdg ._gdfa ._cacd {if _abf :=_bcab .ReadProperty (&_bbdg ._aed ._bbd );_abf !=nil {return _abf ;};};if _bbdg ._gdfa ._aeg {if _bgf :=_bcab .ReadProperty (&_bbdg ._aed ._bbe );
+_bgf !=nil {return _bgf ;};};if _bbdg ._gdfa ._dcdc {if _geag :=_bcab .ReadProperty (&_bbdg ._aed ._gfg );_geag !=nil {return _geag ;};};if _bbdg ._gdfa ._dgdd {if _dgb :=_bcab .ReadProperty (&_bbdg ._aed ._daa );_dgb !=nil {return _dgb ;};};if _bbdg ._gdfa ._ggb {if _efee :=_bcab .ReadProperty (&_bbdg ._aed ._egg );
+_efee !=nil {return _efee ;};};return nil ;};
+
+// SetMax sets a button max value.
+func (_cacbc *SpinButtonControl )SetMax (max int32 ){_cacbc ._fcfaf ._dagff =true ;_cacbc ._agce ._dgcb =max ;};
+
+// SetBackColor sets a button text color value from a system palette for a commandButton control.
+func (_bbf *CommandButtonControl )SetBackColor (backColor uint32 ){_bbf ._fce ._dee =true ;_bbf ._bed ._ff =backColor ;};
+
+// SetForeColor sets a button text color value from a system palette for a commandButton control.
+func (_bbge *CommandButtonControl )SetForeColor (foreColor uint32 ){_bbge ._fce ._bgd =true ;_bbge ._bed ._eba =foreColor ;};
+
+// SetHeight sets height of the morphDataControl in HIMETRIC (0.01mm)
+func (_fga *morphDataControl )SetHeight (height uint32 ){_fga ._befg ._dfcfd =true ;_fga ._egff ._gebb =height ;};
+
+// TextBoxDataControl is a representation of a text box ActiveX form.
+type TextBoxDataControl struct{*morphDataControlStringValue };type spinButtonDataBlock struct{_fdda uint32 ;_gfbb uint32 ;_eaef uint32 ;_gdge int32 ;_dgcb int32 ;_egec int32 ;_gdfaa int32 ;_fgbd int32 ;_afcab int32 ;_fdeg uint32 ;_efff uint32 ;_efbe uint16 ;
+_affd uint8 ;};
+
+// ListBoxDataControl is a representation of a list box ActiveX form.
+type ListBoxDataControl struct{*morphDataControlStringValue };type stdPicture struct{_dfc uint32 ;_fgea uint32 ;_dbb *_d .Buffer ;};func (_cbcc *controlBase )readStreamDataM (_eacbf *_ef .Reader ,_aafb bool )error {_cbcc ._ccg =&streamData {};if _aafb {_cbcc ._ccg ._adfde =&guidAndPicture {};
+if _dedf :=_cbcc ._ccg ._adfde .importFromReader (_eacbf );_dedf !=nil {return _dedf ;};};return nil ;};
+
+// GetCaption gets a caption string from a commandButton control.
+func (_cag *CommandButtonControl )GetCaption ()string {return _cag ._dg ._gag };
+
+// GetWidth returns width of the CommandButton in HIMETRIC (0.01mm)
+func (_bg *CommandButtonControl )GetWidth ()uint32 {return _bg ._dg ._agb };func _fgdg (_eef *_ef .Reader )(*ImageControl ,error ){_fag :=&ImageControl {};if _adac :=_fag .readPropMask (_eef );_adac !=nil {return nil ,_adac ;};if _cafgg :=_fag .readDataBlock (_eef );
+_cafgg !=nil {return nil ,_cafgg ;};if _dfec :=_fag .readExtraDataBlock (_eef );_dfec !=nil {return nil ,_dfec ;};if _ba :=_fag .readStreamDataPM (_eef ,_fag ._dfd ._ccc ,_fag ._dfd ._fda );_ba !=nil {return nil ,_ba ;};if _ddgg :=_fag .readTheRest (_eef );
+_ddgg !=nil {return nil ,_ddgg ;};return _fag ,nil ;};func _abd (_fegb *_ef .Reader )(*ScrollBarControl ,error ){_eea :=&ScrollBarControl {};if _bgc :=_eea .readPropMask (_fegb );_bgc !=nil {return nil ,_bgc ;};if _badd :=_eea .readDataBlock (_fegb );_badd !=nil {return nil ,_badd ;
+};if _gfb :=_eea .readExtraDataBlock (_fegb );_gfb !=nil {return nil ,_gfb ;};if _fdae :=_eea .readStreamDataM (_fegb ,_eea ._bebb ._ggaa );_fdae !=nil {return nil ,_fdae ;};if _eafg :=_eea .readTheRest (_fegb );_eafg !=nil {return nil ,_eafg ;};return _eea ,nil ;
+};func (_eag *ScrollBarControl )readExtraDataBlock (_gadb *_ef .Reader )error {_eag ._gbbb =&scrollBarExtraDataBlock {};if _eag ._bebb ._afec {var _adag uint64 ;if _dcag :=_gadb .ReadPairProperty (&_adag );_dcag !=nil {return _dcag ;};_eag ._gbbb ._gfa =uint32 (_adag );
+_eag ._gbbb ._ece =uint32 (_adag >>32);};return nil ;};
+
+// FmPictureAlignment represents one of the five picture aignments according to MS-OFORMS document.
+type FmPictureAlignment byte ;
+
+// GetWidth returns width of the morphDataControl in HIMETRIC (0.01mm)
+func (_adfc *morphDataControl )GetWidth ()uint32 {return _adfc ._egff ._dff };func (_dbcd *morphDataControl )writeColumnInfoPropMask (_bgab *_ef .Writer )error {return nil };const _dfad =3;
 
 // SetWidth sets width of the Label in HIMETRIC (0.01mm)
-func (_acb *LabelControl )SetWidth (width uint32 ){_acb ._fbb ._cbe =true ;_acb ._gccc ._bfb =width };func (_gbdgg *SpinButtonControl )readDataBlock (_eafdf *_d .Reader )error {_gbdgg ._ebd =&spinButtonDataBlock {};if _gbdgg ._bfab ._ddbg {if _gadcf :=_eafdf .ReadProperty (&_gbdgg ._ebd ._cfad );
-_gadcf !=nil {return _gadcf ;};};if _gbdgg ._bfab ._fabd {if _bgfa :=_eafdf .ReadProperty (&_gbdgg ._ebd ._efbcb );_bgfa !=nil {return _bgfa ;};};if _gbdgg ._bfab ._ebf {if _eafdg :=_eafdf .ReadProperty (&_gbdgg ._ebd ._deeb );_eafdg !=nil {return _eafdg ;
-};};if _gbdgg ._bfab ._gdfc {if _cgec :=_eafdf .ReadProperty (&_gbdgg ._ebd ._dfcf );_cgec !=nil {return _cgec ;};};if _gbdgg ._bfab ._fggf {if _ffgf :=_eafdf .ReadProperty (&_gbdgg ._ebd ._cdaf );_ffgf !=nil {return _ffgf ;};};if _gbdgg ._bfab ._bgdc {if _gbbe :=_eafdf .ReadProperty (&_gbdgg ._ebd ._ebca );
-_gbbe !=nil {return _gbbe ;};};if _gbdgg ._bfab ._gdeg {if _ffgc :=_eafdf .ReadProperty (&_gbdgg ._ebd ._gdcg );_ffgc !=nil {return _ffgc ;};};if _gbdgg ._bfab ._dffbe {if _gbde :=_eafdf .ReadProperty (&_gbdgg ._ebd ._cadc );_gbde !=nil {return _gbde ;
-};};if _gbdgg ._bfab ._geb {if _bced :=_eafdf .ReadProperty (&_gbdgg ._ebd ._cag );_bced !=nil {return _bced ;};};if _gbdgg ._bfab ._fbeca {if _afdgf :=_eafdf .ReadProperty (&_gbdgg ._ebd ._gabg );_afdgf !=nil {return _afdgf ;};};if _gbdgg ._bfab ._aage {if _ead :=_eafdf .ReadProperty (&_gbdgg ._ebd ._gefe );
-_ead !=nil {return _ead ;};};if _gbdgg ._bfab ._gdbf {if _aaef :=_eafdf .ReadProperty (&_gbdgg ._ebd ._gfbd );_aaef !=nil {return _aaef ;};};if _gbdgg ._bfab ._dacc {if _bff :=_eafdf .ReadProperty (&_gbdgg ._ebd ._aagf );_bff !=nil {return _bff ;};};return nil ;
-};func (_dddb *SpinButtonControl )writeExtraDataBlock (_fecd *_d .Writer )error {if _dddb ._bfab ._dffc {_bcgd :=uint64 (_dddb ._debf ._bdda )<<32|uint64 (_dddb ._debf ._bggc );if _ebdd :=_fecd .WritePropertyNoAlign (_bcgd );_ebdd !=nil {return _ebdd ;
-};};return nil ;};
+func (_ddbe *LabelControl )SetWidth (width uint32 ){_ddbe ._gdfa ._cgb =true ;_ddbe ._ecfg ._cba =width };type spinButtonExtraDataBlock struct{_acaa uint32 ;_beac uint32 ;};type commandButtonDataBlock struct{_eba uint32 ;_ff uint32 ;_acf uint32 ;_bca uint32 ;
+_ecb bool ;_fab uint32 ;_efbd uint8 ;_fff uint16 ;_dac rune ;_ga uint16 ;};func (_ede *ImageControl )writeExtraDataBlock (_dcbd *_ef .Writer )error {if _ede ._dfd ._cad {_bcbe :=uint64 (_ede ._efec ._egf )<<32|uint64 (_ede ._efec ._adg );if _ffc :=_dcbd .WritePropertyNoAlign (_bcbe );
+_ffc !=nil {return _ffc ;};};return nil ;};type morphDataControl struct{controlBase ;_befg *morphDataPropMask ;_fcb *morphDataDataBlock ;_egff *morphDataExtraDataBlock ;_aaca *streamData ;_ceg *morphDataColumnInfo ;_ffb *morphDataColumnInfoPropMask ;_acef *morphDataColumnInfoDataBlock ;
+};func (_gaa *LabelControl )writePropMask (_dfcf *_ef .Writer )error {_efeg :=uint32 (0);_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._gdc );_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._beeb );_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._ccgg );_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._cgaf );
+_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._cfg );_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._cgb );_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._bffg );_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._abag );_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._cacd );
+_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._aeg );_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._dcdc );_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._dgdd );_efeg =_ef .PushLeftUI32 (_efeg ,_gaa ._gdfa ._ggb );_efeg >>=19;return _cb .Write (_dfcf ,_cb .LittleEndian ,_efeg );
+};
 
-// SetHeight sets height of the SpinButton in HIMETRIC (0.01mm)
-func (_aef *SpinButtonControl )SetHeight (height uint32 ){_aef ._bfab ._dffc =true ;_aef ._debf ._bggc =height ;};func _aaebg (_dbab *_d .Reader )(*ScrollBarControl ,error ){_babc :=&ScrollBarControl {};if _dada :=_babc .readPropMask (_dbab );_dada !=nil {return nil ,_dada ;
-};if _fdae :=_babc .readDataBlock (_dbab );_fdae !=nil {return nil ,_fdae ;};if _beag :=_babc .readExtraDataBlock (_dbab );_beag !=nil {return nil ,_beag ;};if _gdce :=_babc .readStreamDataM (_dbab ,_babc ._fbfd ._gcff );_gdce !=nil {return nil ,_gdce ;
-};if _agbb :=_babc .readTheRest (_dbab );_agbb !=nil {return nil ,_agbb ;};return _babc ,nil ;};func (_bgebd *controlBase )readStreamDataM (_edgc *_d .Reader ,_cbfa bool )error {_bgebd ._gbgc =&streamData {};if _cbfa {_bgebd ._gbgc ._dadg =&guidAndPicture {};
-if _gdbfa :=_bgebd ._gbgc ._dadg .importFromReader (_edgc );_gdbfa !=nil {return _gdbfa ;};};return nil ;};type imagePropMask struct{_caec bool ;_abc bool ;_gab bool ;_gbd bool ;_ddfg bool ;_bcb bool ;_aeeb bool ;_aec bool ;_eff bool ;_gee bool ;_efae bool ;
-_aff bool ;_fgfgd bool ;};func (_beea *morphDataControl )writeColumnInfoPropMask (_afg *_d .Writer )error {return nil };func (_fcbd *morphDataControl )writePropMask (_aagg *_d .Writer )error {_gbdd :=uint64 (0);_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._bgaa );
-_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._bge );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._ede );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._cbea );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._daaf );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._aeea );
-_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._fgfb );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._bec );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._dgee );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._cba );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._dac );
-_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._agae );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._ddgc );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._fbga );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._cbbf );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._gdgb );
-_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._faga );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._gaa );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._dgcf );_gbdd >>=1;_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._abeb );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._acda );
-_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._dgf );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._febd );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._agee );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._fecg );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._fbfc );
-_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._gac );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._dea );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._edea );_gbdd >>=1;_gbdd =_d .PushLeftUI64 (_gbdd ,true );_gbdd =_d .PushLeftUI64 (_gbdd ,_fcbd ._edcc ._efd );
-_gbdd >>=31;return _be .Write (_aagg ,_be .LittleEndian ,_gbdd );};
+// GetHeight returns height of the morphDataControl in HIMETRIC (0.01mm)
+func (_ccbf *morphDataControl )GetHeight ()uint32 {return _ccbf ._egff ._gebb };func _bff (_geba *_ef .Reader )(*LabelControl ,error ){_eacc :=&LabelControl {};if _fefc :=_eacc .readPropMask (_geba );_fefc !=nil {return nil ,_fefc ;};if _dfed :=_eacc .readDataBlock (_geba );
+_dfed !=nil {return nil ,_dfed ;};if _eacf :=_eacc .readExtraDataBlock (_geba );_eacf !=nil {return nil ,_eacf ;};if _dbba :=_eacc .readStreamDataPM (_geba ,_eacc ._gdfa ._dcdc ,_eacc ._gdfa ._ggb );_dbba !=nil {return nil ,_dbba ;};if _dgcd :=_eacc .readTheRest (_geba );
+_dgcd !=nil {return nil ,_dgcd ;};return _eacc ,nil ;};const _bcf =6;func (_abc *guidAndPicture )getStdPictureBytes ()[]byte {if _abc !=nil &&_abc ._gga !=nil &&_abc ._gga ._dbb !=nil {return _abc ._gga ._dbb .Bytes ();};return nil ;};
 
-// ImportFromFile makes a Control from a file in a storage.
-func ImportFromFile (storagePath string )(*Control ,error ){_g ,_ag :=_ba .Open (storagePath );if _ag !=nil {return nil ,_ag ;};defer _g .Close ();_aa ,_ag :=_bac .New (_g );if _ag !=nil {return nil ,_ag ;};_gb ,_ag :=_ffd (_aa );if _ag !=nil {return nil ,_ag ;
-};_dg ,_ag :=_aa .GetEntry ("\u0063\u006f\u006e\u0074\u0065\u006e\u0074\u0073");if _ag !=nil {return nil ,_ag ;};_bg :=make ([]byte ,_dg .Size );_ ,_ag =_dg .Read (_bg );if _ag !=nil {return nil ,_ag ;};_fb :=&Control {_ec :storagePath };_bb ,_ag :=_d .NewReader (_bg );
-if _ag !=nil {return nil ,_ag ;};if _dd :=_be .Read (_bb ,_be .LittleEndian ,&_fb ._fgg );_dd !=nil {return nil ,_dd ;};if _gf :=_be .Read (_bb ,_be .LittleEndian ,&_fb ._ff );_gf !=nil {return nil ,_gf ;};if _fe :=_be .Read (_bb ,_be .LittleEndian ,&_fb ._bag );
-_fe !=nil {return nil ,_fe ;};switch _gb {case "\u0043\u0068\u0065\u0063\u006b\u0042\u006f\u0078":_c ,_aca :=_fcdg (_bb );if _aca !=nil {return nil ,_aca ;};_c ._bdc =true ;_fb .Choice =&ControlChoice {CheckBox :&CheckBoxDataControl {&morphDataControlBoolValue {_c }}};
-case "\u0054e\u0078\u0074\u0042\u006f\u0078":_bab ,_ee :=_fcdg (_bb );if _ee !=nil {return nil ,_ee ;};_bab ._bdc =true ;_fb .Choice =&ControlChoice {TextBox :&TextBoxDataControl {&morphDataControlStringValue {_bab }}};case "\u0043\u006f\u006d\u0062\u006f\u0042\u006f\u0078":_de ,_faa :=_fcdg (_bb );
-if _faa !=nil {return nil ,_faa ;};_de ._bdc =true ;_fb .Choice =&ControlChoice {ComboBox :&ComboBoxDataControl {&morphDataControlStringValue {_de }}};case "\u004ci\u0073\u0074\u0042\u006f\u0078":_bed ,_ddg :=_fcdg (_bb );if _ddg !=nil {return nil ,_ddg ;
-};_bed ._bdc =true ;_fb .Choice =&ControlChoice {ListBox :&ListBoxDataControl {&morphDataControlStringValue {_bed }}};case "\u004f\u0070\u0074i\u006f\u006e\u0042\u0075\u0074\u0074\u006f\u006e":_fd ,_cb :=_fcdg (_bb );if _cb !=nil {return nil ,_cb ;};_fd ._bdc =true ;
-_fb .Choice =&ControlChoice {OptionButton :&OptionButtonDataControl {&morphDataControlBoolValue {_fd }}};case "\u0054\u006f\u0067g\u006c\u0065\u0042\u0075\u0074\u0074\u006f\u006e":_bc ,_ef :=_fcdg (_bb );if _ef !=nil {return nil ,_ef ;};_bc ._bdc =true ;
-_fb .Choice =&ControlChoice {ToggleButton :&ToggleButtonDataControl {&morphDataControlBoolValue {_bc }}};case "\u004c\u0061\u0062e\u006c":_ed ,_bage :=_agd (_bb );if _bage !=nil {return nil ,_bage ;};_fb .Choice =&ControlChoice {Label :_ed };case "\u0053\u0070\u0069\u006e\u0042\u0075\u0074\u0074\u006f\u006e":_acc ,_eee :=_ecdbg (_bb );
-if _eee !=nil {return nil ,_eee ;};_fb .Choice =&ControlChoice {SpinButton :_acc };case "\u0043\u006f\u006d\u006d\u0061\u006e\u0064\u0042\u0075\u0074\u0074\u006f\u006e":_gd ,_gfg :=_cae (_bb );if _gfg !=nil {return nil ,_gfg ;};_fb .Choice =&ControlChoice {CommandButton :_gd };
-case "\u0053c\u0072\u006f\u006c\u006c\u0042\u0061r":_df ,_gg :=_aaebg (_bb );if _gg !=nil {return nil ,_gg ;};_fb .Choice =&ControlChoice {ScrollBar :_df };default:_bga :=&controlBase {};if _fea :=_bga .readTheRest (_bb );_fea !=nil {return nil ,_fea ;
-};_fb .Choice =&ControlChoice {_fa :_bga };};return _fb ,nil ;};func (_cfd *morphDataControl )setValueString (_aga string ){_cfd ._edcc ._dgf =true ;_cfd ._gdfbf ._ged =uint32 (len (_aga ));_cfd ._bbaa ._eae =_aga ;};
+// SetForeColor sets a button text color value from a system palette for a scrollBar control.
+func (_dgdda *ScrollBarControl )SetForeColor (foreColor uint32 ){_dgdda ._bebb ._fccd =true ;_dgdda ._efcf ._ffdb =foreColor ;};func (_edd *controlBase )getPictureBytes ()[]byte {return _edd ._ccg ._bbbg .getStdPictureBytes ()};func (_dcb *controlBase )getMouseIconBytes ()[]byte {return _dcb ._ccg ._adfde .getStdPictureBytes ()};
+var _dgd =len (_fde );
 
-// GetMax gets a button max value.
-func (_fadgf *ScrollBarControl )GetMax ()int32 {return _fadgf ._dbe ._faeg };
-
-// GetMin gets a button min value.
-func (_bgeb *SpinButtonControl )GetMin ()int32 {return _bgeb ._ebd ._dfcf };func (_fdgc *morphDataControl )readColumnInfoDataBlock (_ecfb *_d .Reader )error {return nil };type morphDataPropMask struct{_bgaa bool ;_bge bool ;_ede bool ;_cbea bool ;_daaf bool ;
-_aeea bool ;_fgfb bool ;_bec bool ;_dgee bool ;_cba bool ;_dac bool ;_agae bool ;_ddgc bool ;_fbga bool ;_cbbf bool ;_gdgb bool ;_faga bool ;_gaa bool ;_dgcf bool ;_abeb bool ;_acda bool ;_dgf bool ;_febd bool ;_agee bool ;_fecg bool ;_fbfc bool ;_gac bool ;
-_dea bool ;_edea bool ;_efd bool ;};func (_adda *controlBase )writeTheRest (_gfb *_d .Writer )error {_ ,_dcd :=_gfb .Write (_adda ._gfef );return _dcd ;};
+// FmPictureSizeMode represents one of the three picture size modes according to MS-OFORMS document.
+type FmPictureSizeMode byte ;type guidAndPicture struct{_bbc []byte ;_gga *stdPicture ;};
