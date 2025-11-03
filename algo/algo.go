@@ -9,4 +9,4 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package algo ;func RepeatString (s string ,cnt int )string {if cnt <=0{return "";};_fd :=make ([]byte ,len (s )*cnt );_c :=[]byte (s );for _g :=0;_g < cnt ;_g ++{copy (_fd [_g :],_c );};return string (_fd );};
+package algo ;func RepeatString (s string ,cnt int )string {if cnt <=0{return "";};_d :=make ([]byte ,len (s )*cnt );_e :=[]byte (s );for _ea :=0;_ea < cnt ;_ea ++{copy (_d [_ea :],_e );};return string (_d );};
