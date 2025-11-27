@@ -21,1889 +21,90 @@ Example:
 	run.SetText("foo")
 	doc.SaveToFile("foo.docx")
 */
-package document ;import (_fda "archive/zip";_d "bytes";_c "encoding/xml";_be "errors";_cb "fmt";_g "github.com/unidoc/unioffice/v2";_ce "github.com/unidoc/unioffice/v2/color";_edb "github.com/unidoc/unioffice/v2/common";_dd "github.com/unidoc/unioffice/v2/common/axcontrol";
-_ad "github.com/unidoc/unioffice/v2/common/logger";_ga "github.com/unidoc/unioffice/v2/common/tempstorage";_dc "github.com/unidoc/unioffice/v2/internal/formatutils";_abd "github.com/unidoc/unioffice/v2/internal/license";_ac "github.com/unidoc/unioffice/v2/measurement";
-_gd "github.com/unidoc/unioffice/v2/schema/schemas.microsoft.com/office/activeX";_eg "github.com/unidoc/unioffice/v2/schema/soo/dml";_ece "github.com/unidoc/unioffice/v2/schema/soo/dml/chart";_gg "github.com/unidoc/unioffice/v2/schema/soo/dml/picture";
-_de "github.com/unidoc/unioffice/v2/schema/soo/ofc/sharedTypes";_gb "github.com/unidoc/unioffice/v2/schema/soo/pkg/relationships";_bg "github.com/unidoc/unioffice/v2/schema/soo/wml";_ec "github.com/unidoc/unioffice/v2/schema/urn/schemas_microsoft_com/vml";
-_dg "github.com/unidoc/unioffice/v2/vmldrawing";_da "github.com/unidoc/unioffice/v2/zippkg";_fd "image";_aea "image/jpeg";_ed "io";_ae "math/rand";_eag "os";_b "path/filepath";_ea "regexp";_a "strconv";_ef "strings";_e "time";_ab "unicode";);
-
-// GetHeaderFooterImageObjByRelId returns a common.Image with the associated relation ID in the
-// document, its header or footer.
-func (_dbeef *Document )GetHeaderFooterImageObjByRelId (relId string ,isHeader ,isFooter bool )(_edb .Image ,error ){_gcfc :="";if isHeader {for _ ,_bafce :=range _dbeef ._gdde {if _gcfc !=""{break ;};_gcfc =_bafce .GetTargetByRelIdAndType (relId ,_g .ImageType );
-};};if isFooter &&_gcfc ==""{for _ ,_cceg :=range _dbeef ._dce {if _gcfc !=""{break ;};_gcfc =_cceg .GetTargetByRelIdAndType (relId ,_g .ImageType );};};if _gcfc ==""{_gcfc =_dbeef ._fee .GetTargetByRelIdAndType (relId ,_g .ImageType );};return _dbeef .DocBase .GetImageBytesByTarget (_gcfc );
-};func (_faff *Document )insertTable (_dabe Paragraph ,_adbg bool )Table {_aeag :=_faff ._feaa .Body ;if _aeag ==nil {return _faff .AddTable ();};_bcb :=_dabe .X ();for _fbfg ,_eff :=range _aeag .EG_BlockLevelElts {for _ ,_ead :=range _eff .BlockLevelEltsChoice .EG_ContentBlockContent {for _bbcf ,_cda :=range _ead .ContentBlockContentChoice .P {if _cda ==_bcb {_ggeeg :=_bg .NewCT_Tbl ();
-_afcc :=_bg .NewEG_BlockLevelElts ();_dcee :=_bg .NewEG_ContentBlockContent ();_afcc .BlockLevelEltsChoice .EG_ContentBlockContent =append (_afcc .BlockLevelEltsChoice .EG_ContentBlockContent ,_dcee );_dcee .ContentBlockContentChoice .Tbl =append (_dcee .ContentBlockContentChoice .Tbl ,_ggeeg );
-_aeag .EG_BlockLevelElts =append (_aeag .EG_BlockLevelElts ,nil );if _adbg {copy (_aeag .EG_BlockLevelElts [_fbfg +1:],_aeag .EG_BlockLevelElts [_fbfg :]);_aeag .EG_BlockLevelElts [_fbfg ]=_afcc ;if _bbcf !=0{_dbc :=_bg .NewEG_BlockLevelElts ();_faa :=_bg .NewEG_ContentBlockContent ();
-_dbc .BlockLevelEltsChoice .EG_ContentBlockContent =append (_dbc .BlockLevelEltsChoice .EG_ContentBlockContent ,_faa );_faa .ContentBlockContentChoice .P =_ead .ContentBlockContentChoice .P [:_bbcf ];_aeag .EG_BlockLevelElts =append (_aeag .EG_BlockLevelElts ,nil );
-copy (_aeag .EG_BlockLevelElts [_fbfg +1:],_aeag .EG_BlockLevelElts [_fbfg :]);_aeag .EG_BlockLevelElts [_fbfg ]=_dbc ;};_ead .ContentBlockContentChoice .P =_ead .ContentBlockContentChoice .P [_bbcf :];}else {copy (_aeag .EG_BlockLevelElts [_fbfg +2:],_aeag .EG_BlockLevelElts [_fbfg +1:]);
-_aeag .EG_BlockLevelElts [_fbfg +1]=_afcc ;if _bbcf !=len (_ead .ContentBlockContentChoice .P )-1{_cgff :=_bg .NewEG_BlockLevelElts ();_daff :=_bg .NewEG_ContentBlockContent ();_cgff .BlockLevelEltsChoice .EG_ContentBlockContent =append (_cgff .BlockLevelEltsChoice .EG_ContentBlockContent ,_daff );
-_daff .ContentBlockContentChoice .P =_ead .ContentBlockContentChoice .P [_bbcf +1:];_aeag .EG_BlockLevelElts =append (_aeag .EG_BlockLevelElts ,nil );copy (_aeag .EG_BlockLevelElts [_fbfg +3:],_aeag .EG_BlockLevelElts [_fbfg +2:]);_aeag .EG_BlockLevelElts [_fbfg +2]=_cgff ;
-};_ead .ContentBlockContentChoice .P =_ead .ContentBlockContentChoice .P [:_bbcf +1];};return Table {_faff ,_ggeeg };};};for _ ,_egba :=range _ead .ContentBlockContentChoice .Tbl {_dgdd :=_ggac (_egba ,_bcb ,_adbg );if _dgdd !=nil {return Table {_faff ,_dgdd };
-};};};};return _faff .AddTable ();};
-
-// SetPictureSize set watermark picture size with given width and height.
-func (_dabc *WatermarkPicture )SetPictureSize (width ,height int64 ){if _dabc ._dfdgf !=nil {_dfaef :=_dabc .GetShapeStyle ();_dfaef .SetWidth (float64 (width )*_ac .Point );_dfaef .SetHeight (float64 (height )*_ac .Point );_dabc .SetShapeStyle (_dfaef );
-};};
-
-// AddCheckBox adds checkbox form field to the paragraph and returns it.
-func (_fadd Paragraph )AddCheckBox (name string )FormField {_cbcd :=_fadd .addFldCharsForField (name ,"\u0046\u004f\u0052M\u0043\u0048\u0045\u0043\u004b\u0042\u004f\u0058");_cbcd ._acfd .FFDataChoice [0].CheckBox =_bg .NewCT_FFCheckBox ();return _cbcd ;
+package document ;import (_gf "archive/zip";_bc "bytes";_ag "encoding/xml";_ff "errors";_cb "fmt";_c "github.com/unidoc/unioffice/v2";_gc "github.com/unidoc/unioffice/v2/color";_aee "github.com/unidoc/unioffice/v2/common";_ge "github.com/unidoc/unioffice/v2/common/axcontrol";
+_be "github.com/unidoc/unioffice/v2/common/logger";_ea "github.com/unidoc/unioffice/v2/common/tempstorage";_dc "github.com/unidoc/unioffice/v2/internal/formatutils";_fb "github.com/unidoc/unioffice/v2/internal/license";_ga "github.com/unidoc/unioffice/v2/measurement";
+_bb "github.com/unidoc/unioffice/v2/schema/schemas.microsoft.com/office/activeX";_cc "github.com/unidoc/unioffice/v2/schema/soo/dml";_bee "github.com/unidoc/unioffice/v2/schema/soo/dml/chart";_bf "github.com/unidoc/unioffice/v2/schema/soo/dml/picture";
+_afe "github.com/unidoc/unioffice/v2/schema/soo/ofc/sharedTypes";_ae "github.com/unidoc/unioffice/v2/schema/soo/pkg/relationships";_ec "github.com/unidoc/unioffice/v2/schema/soo/wml";_ceg "github.com/unidoc/unioffice/v2/schema/urn/schemas_microsoft_com/vml";
+_af "github.com/unidoc/unioffice/v2/vmldrawing";_ba "github.com/unidoc/unioffice/v2/zippkg";_f "image";_e "image/jpeg";_d "io";_a "math/rand";_ad "os";_agf "path/filepath";_cf "regexp";_b "strconv";_ce "strings";_aa "time";_bg "unicode";);func (_gefad *WatermarkPicture )getShapeType ()*_c .XSDAny {return _gefad .getInnerElement ("\u0073h\u0061\u0070\u0065\u0074\u0079\u0070e");
 };
 
-// SetWrapPathLineTo sets wrapPath lineTo value.
-func (_fcc AnchorDrawWrapOptions )SetWrapPathLineTo (coordinates []*_eg .CT_Point2D ){_fcc ._adf =coordinates ;};
-
-// AddTabStop adds a tab stop to the paragraph.  It controls the position of text when using Run.AddTab()
-func (_dbfdg ParagraphProperties )AddTabStop (position _ac .Distance ,justificaton _bg .ST_TabJc ,leader _bg .ST_TabTlc ){if _dbfdg ._dabde .Tabs ==nil {_dbfdg ._dabde .Tabs =_bg .NewCT_Tabs ();};_bbedc :=_bg .NewCT_TabStop ();_bbedc .LeaderAttr =leader ;
-_bbedc .ValAttr =justificaton ;_bbedc .PosAttr .Int64 =_g .Int64 (int64 (position /_ac .Twips ));_dbfdg ._dabde .Tabs .Tab =append (_dbfdg ._dabde .Tabs .Tab ,_bbedc );};
-
-// MultiLevelType returns the multilevel type, or ST_MultiLevelTypeUnset if not set.
-func (_gbffb NumberingDefinition )MultiLevelType ()_bg .ST_MultiLevelType {if _gbffb ._dbagd .MultiLevelType !=nil {return _gbffb ._dbagd .MultiLevelType .ValAttr ;}else {return _bg .ST_MultiLevelTypeUnset ;};};
-
-// SizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
-func (_ggdfa ParagraphProperties )SizeMeasure ()string {if _gfaed :=_ggdfa ._dabde .RPr .Sz ;_gfaed !=nil {_fgfad :=_gfaed .ValAttr ;if _fgfad .ST_PositiveUniversalMeasure !=nil {return *_fgfad .ST_PositiveUniversalMeasure ;};};return "";};
-
-// X returns the inner wrapped XML type.
-func (_babcd Row )X ()*_bg .CT_Row {return _babcd ._bgcee };func (_dbac *Document )reorderEndnote (){_deea :=int64 (1);_efeb :=map[int64 ]int64 {};for _ ,_acgf :=range _dbac ._ccb .Endnote {switch _acgf .TypeAttr {case _bg .ST_FtnEdnSeparator :_acgf .IdAttr =-1;
-break ;case _bg .ST_FtnEdnContinuationSeparator :_acgf .IdAttr =0;break ;default:_efeb [_acgf .IdAttr ]=_deea ;_acgf .IdAttr =_deea ;_deea ++;};};for _ ,_gcgc :=range _dbac .Paragraphs (){for _ ,_geae :=range _gcgc .Runs (){if _ffde ,_cgcd :=_geae .IsEndnote ();
-_ffde {_geae .X ().EG_RunInnerContent [0].RunInnerContentChoice .EndnoteReference .IdAttr =_efeb [_cgcd ];};};};};var _gadea =[...]uint8 {0,20,37,58,79};
-
-// X returns the inner wrapped XML type.
-func (_fege Color )X ()*_bg .CT_Color {return _fege ._eaga };
-
-// SetSpacing sets the spacing that comes before and after the paragraph.
-func (_cffef ParagraphStyleProperties )SetSpacing (before ,after _ac .Distance ){if _cffef ._becee .Spacing ==nil {_cffef ._becee .Spacing =_bg .NewCT_Spacing ();};if before ==_ac .Zero {_cffef ._becee .Spacing .BeforeAttr =nil ;}else {_cffef ._becee .Spacing .BeforeAttr =&_de .ST_TwipsMeasure {};
-_cffef ._becee .Spacing .BeforeAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (before /_ac .Twips ));};if after ==_ac .Zero {_cffef ._becee .Spacing .AfterAttr =nil ;}else {_cffef ._becee .Spacing .AfterAttr =&_de .ST_TwipsMeasure {};_cffef ._becee .Spacing .AfterAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (after /_ac .Twips ));
-};};
-
-// SetBorder sets the border of anchor.
-func (_ggc AnchoredDrawing )SetBorder (borderType _eg .ST_PresetLineDashVal ,c _ce .Color ,thickness _ac .Distance ){_acce :=_ac .ToEMU (float64 (thickness ));for _ ,_ggcf :=range _ggc ._cd .Graphic .GraphicData .Any {if _eba ,_afc :=_ggcf .(*_gg .Pic );
-_afc {_eba .SpPr .Ln =_eg .NewCT_LineProperties ();_eba .SpPr .Ln .WAttr =_g .Int32 (int32 (_acce ));_eba .SpPr .Ln .LineDashPropertiesChoice =_eg .NewEG_LineDashPropertiesChoice ();_eba .SpPr .Ln .LineDashPropertiesChoice .PrstDash =_eg .NewCT_PresetLineDashProperties ();
-_eba .SpPr .Ln .LineDashPropertiesChoice .PrstDash .ValAttr =borderType ;_eba .SpPr .Ln .LineFillPropertiesChoice =_eg .NewEG_LineFillPropertiesChoice ();_eba .SpPr .Ln .LineFillPropertiesChoice .SolidFill =_eg .NewCT_SolidColorFillProperties ();_eba .SpPr .Ln .LineFillPropertiesChoice .SolidFill .SrgbClr =_eg .NewCT_SRgbColor ();
-_eba .SpPr .Ln .LineFillPropertiesChoice .SolidFill .SrgbClr .ValAttr =*c .AsRGBString ();};};_ggc .setEffectExtent (_acce ,_acce ,_acce ,_acce );};
-
-// SetKerning sets the run's font kerning.
-func (_dffc RunProperties )SetKerning (size _ac .Distance ){_dffc ._ddbb .Kern =_bg .NewCT_HpsMeasure ();_dffc ._ddbb .Kern .ValAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (size /_ac .HalfPoint ));};type listItemInfo struct{FromStyle *Style ;FromParagraph *Paragraph ;
-AbstractNumId *int64 ;NumberingLevel *NumberingLevel ;};func (_ceeg *chart )X ()*_ece .ChartSpace {return _ceeg ._gbg };
-
-// SetFirstLineIndent controls the first line indent of the paragraph.
-func (_gffdfg ParagraphStyleProperties )SetFirstLineIndent (m _ac .Distance ){if _gffdfg ._becee .Ind ==nil {_gffdfg ._becee .Ind =_bg .NewCT_Ind ();};if m ==_ac .Zero {_gffdfg ._becee .Ind .FirstLineAttr =nil ;}else {_gffdfg ._becee .Ind .FirstLineAttr =&_de .ST_TwipsMeasure {};
-_gffdfg ._becee .Ind .FirstLineAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (m /_ac .Twips ));};};
-
-// NewAnchorDrawWrapOptions return anchor drawing options property.
-func NewAnchorDrawWrapOptions ()*AnchorDrawWrapOptions {_gcd :=&AnchorDrawWrapOptions {};if !_gcd ._gege {_eced ,_gefd :=_agde ();_gcd ._gga =_eced ;_gcd ._adf =_gefd ;};return _gcd ;};
-
-// SetOutline sets the run to outlined text.
-func (_daeeg RunProperties )SetOutline (b bool ){if !b {_daeeg ._ddbb .Outline =nil ;}else {_daeeg ._ddbb .Outline =_bg .NewCT_OnOff ();};};var _eaf =false ;
-
-// Outline returns true if paragraph outline is on.
-func (_bdbe ParagraphProperties )Outline ()bool {return _bbeg (_bdbe ._dabde .RPr .Outline )};
-
-// FindNodeByRegexp return node based on matched text and return a slice of node.
-func (_bbga *Nodes )FindNodeByRegexp (r *_ea .Regexp )[]Node {_adgc :=[]Node {};for _ ,_aaeg :=range _bbga ._feda {if r .MatchString (_aaeg .Text ()){_adgc =append (_adgc ,_aaeg );};_cbegf :=Nodes {_feda :_aaeg .Children };_adgc =append (_adgc ,_cbegf .FindNodeByRegexp (r )...);
-};return _adgc ;};
-
-// SetPageBreakBefore controls if there is a page break before this paragraph.
-func (_fcgcd ParagraphProperties )SetPageBreakBefore (b bool ){if !b {_fcgcd ._dabde .PageBreakBefore =nil ;}else {_fcgcd ._dabde .PageBreakBefore =_bg .NewCT_OnOff ();};};
-
-// X returns the inner wrapped XML type.
-func (_fgf Bookmark )X ()*_bg .CT_Bookmark {return _fgf ._aef };
-
-// SetCellSpacingPercent sets the cell spacing within a table to a percent width.
-func (_beafg TableProperties )SetCellSpacingPercent (pct float64 ){_beafg ._cdfg .TblCellSpacing =_bg .NewCT_TblWidth ();_beafg ._cdfg .TblCellSpacing .TypeAttr =_bg .ST_TblWidthPct ;_beafg ._cdfg .TblCellSpacing .WAttr =&_bg .ST_MeasurementOrPercent {};
-_beafg ._cdfg .TblCellSpacing .WAttr .ST_DecimalNumberOrPercent =&_bg .ST_DecimalNumberOrPercent {};_beafg ._cdfg .TblCellSpacing .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_g .Int64 (int64 (pct *50));};
-
-// X returns the inner wrapped XML type.
-func (_bc AnchoredDrawing )X ()*_bg .WdAnchor {return _bc ._cd };
-
-// Headers returns the headers defined in the document.
-func (_gcfaf *Document )Headers ()[]Header {_abe :=[]Header {};for _ ,_dfddb :=range _gcfaf ._gffb {_abe =append (_abe ,Header {_gcfaf ,_dfddb });};return _abe ;};
-
-// RunProperties returns the RunProperties controlling numbering level font, etc.
-func (_gfcf NumberingLevel )RunProperties ()RunProperties {if _gfcf ._ebebd .RPr ==nil {_gfcf ._ebebd .RPr =_bg .NewCT_RPr ();};return RunProperties {_gfcf ._ebebd .RPr };};
-
-// SetFirstLineIndent controls the indentation of the first line in a paragraph.
-func (_decfc Paragraph )SetFirstLineIndent (m _ac .Distance ){_decfc .ensurePPr ();_faeg :=_decfc ._dfbf .PPr ;if _faeg .Ind ==nil {_faeg .Ind =_bg .NewCT_Ind ();};if m ==_ac .Zero {_faeg .Ind .FirstLineAttr =nil ;}else {_faeg .Ind .FirstLineAttr =&_de .ST_TwipsMeasure {};
-_faeg .Ind .FirstLineAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (m /_ac .Twips ));};};
-
-// Style returns the style for a paragraph, or an empty string if it is unset.
-func (_gfcce Paragraph )Style ()string {if _gfcce ._dfbf .PPr !=nil &&_gfcce ._dfbf .PPr .PStyle !=nil {return _gfcce ._dfbf .PPr .PStyle .ValAttr ;};return "";};
-
-// FindNodeByCondition return node based on condition function,
-// if wholeElements is true, its will extract children as next node elements.
-func (_gacdb *Nodes )FindNodeByCondition (f func (_deec *Node )bool ,wholeElements bool )[]Node {_ddbf :=[]Node {};for _ ,_faee :=range _gacdb ._feda {if f (&_faee ){_ddbf =append (_ddbf ,_faee );};if wholeElements {_cccfa :=Nodes {_feda :_faee .Children };
-_ddbf =append (_ddbf ,_cccfa .FindNodeByCondition (f ,wholeElements )...);};};return _ddbf ;};
-
-// Open opens and reads a document from a file (.docx).
-func Open (filename string )(*Document ,error ){_geag ,_dbea :=_eag .Open (filename );if _dbea !=nil {return nil ,_cb .Errorf ("e\u0072r\u006f\u0072\u0020\u006f\u0070\u0065\u006e\u0069n\u0067\u0020\u0025\u0073: \u0025\u0073",filename ,_dbea );};defer _geag .Close ();
-_cgdb ,_dbea :=_eag .Stat (filename );if _dbea !=nil {return nil ,_cb .Errorf ("e\u0072r\u006f\u0072\u0020\u006f\u0070\u0065\u006e\u0069n\u0067\u0020\u0025\u0073: \u0025\u0073",filename ,_dbea );};_ =_cgdb ;return Read (_geag ,_cgdb .Size ());};
-
-// RemoveParagraph removes a paragraph from a footer.
-func (_faffa Header )RemoveParagraph (p Paragraph ){for _ ,_effc :=range _faffa ._adfd .EG_BlockLevelElts {for _ ,_caag :=range _effc .BlockLevelEltsChoice .EG_ContentBlockContent {for _caec ,_ebcf :=range _caag .ContentBlockContentChoice .P {if _ebcf ==p ._dfbf {copy (_caag .ContentBlockContentChoice .P [_caec :],_caag .ContentBlockContentChoice .P [_caec +1:]);
-_caag .ContentBlockContentChoice .P =_caag .ContentBlockContentChoice .P [0:len (_caag .ContentBlockContentChoice .P )-1];return ;};};};};};
-
-// SizeValue returns the value of run font size in points.
-func (_ccede RunProperties )SizeValue ()float64 {if _bbcg :=_ccede ._ddbb .Sz ;_bbcg !=nil {_bfff :=_bbcg .ValAttr ;if _bfff .ST_UnsignedDecimalNumber !=nil {return float64 (*_bfff .ST_UnsignedDecimalNumber )/2;};};return 0.0;};
-
-// Footers returns the footers defined in the document.
-func (_gaed *Document )Footers ()[]Footer {_bfb :=[]Footer {};for _ ,_fca :=range _gaed ._dgdg {_bfb =append (_bfb ,Footer {_gaed ,_fca });};return _bfb ;};
-
-// X returns the inner wrapped XML type.
-func (_daee HyperLink )X ()*_bg .CT_Hyperlink {return _daee ._eage };
-
-// X returns the inner wml.CT_TblBorders
-func (_bceb TableBorders )X ()*_bg .CT_TblBorders {return _bceb ._gfgeb };
-
-// AddFootnoteReference adds a footnote reference to a run.
-func (_dgff Run )AddFootnoteReference (){_ccdfb :=_dgff .newIC ();_ccdfb .RunInnerContentChoice .FootnoteRef =&_bg .CT_Empty {};};
-
-// X returns the inner wrapped XML type.
-func (_bbdfgg TableConditionalFormatting )X ()*_bg .CT_TblStylePr {return _bbdfgg ._dbgc };
-
-// SetWidthPercent sets the table to a width percentage.
-func (_gfaec TableProperties )SetWidthPercent (pct float64 ){_gfaec ._cdfg .TblW =_bg .NewCT_TblWidth ();_gfaec ._cdfg .TblW .TypeAttr =_bg .ST_TblWidthPct ;_gfaec ._cdfg .TblW .WAttr =&_bg .ST_MeasurementOrPercent {};_gfaec ._cdfg .TblW .WAttr .ST_DecimalNumberOrPercent =&_bg .ST_DecimalNumberOrPercent {};
-_gfaec ._cdfg .TblW .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_g .Int64 (int64 (pct *50));};
-
-// SetFormat sets the numbering format.
-func (_cbbe NumberingLevel )SetFormat (f _bg .ST_NumberFormat ){if _cbbe ._ebebd .NumFmt ==nil {_cbbe ._ebebd .NumFmt =_bg .NewCT_NumFmt ();};_cbbe ._ebebd .NumFmt .ValAttr =f ;};
-
-// SetAlignment set alignment of paragraph.
-func (_bbgdc Paragraph )SetAlignment (alignment _bg .ST_Jc ){_bbgdc .ensurePPr ();if _bbgdc ._dfbf .PPr .Jc ==nil {_bbgdc ._dfbf .PPr .Jc =_bg .NewCT_Jc ();};_bbgdc ._dfbf .PPr .Jc .ValAttr =alignment ;};
-
-// ParagraphProperties are the properties for a paragraph.
-type ParagraphProperties struct{_caedc *Document ;_dabde *_bg .CT_PPr ;};
-
-// RStyle returns the name of character style.
-// It is defined here http://officeopenxml.com/WPstyleCharStyles.php
-func (_dfgde RunProperties )RStyle ()string {if _dfgde ._ddbb .RStyle !=nil {return _dfgde ._ddbb .RStyle .ValAttr ;};return "";};
-
-// SizeValue returns the value of paragraph font size in points.
-func (_bfaag ParagraphProperties )SizeValue ()float64 {if _aegeg :=_bfaag ._dabde .RPr .Sz ;_aegeg !=nil {_degbb :=_aegeg .ValAttr ;if _degbb .ST_UnsignedDecimalNumber !=nil {return float64 (*_degbb .ST_UnsignedDecimalNumber )/2;};};return 0.0;};
-
-// WatermarkPicture is watermark picture within document.
-type WatermarkPicture struct{_cfgg *_bg .CT_Picture ;_eafda *_dg .ShapeStyle ;_dfdgf *_ec .Shape ;_cedge *_ec .Shapetype ;};
-
-// ExtractTextOptions extraction text options.
-type ExtractTextOptions struct{
-
-// WithNumbering extract numbering elements if set to `true`.
-WithNumbering bool ;
-
-// NumberingIndent default value of numbering indent.
-NumberingIndent string ;
-
-// RunsOnNewLine write each of runs text on new line if set to `true`.
-RunsOnNewLine bool ;};
-
-// Endnotes returns the endnotes defined in the document.
-func (_bgce *Document )Endnotes ()[]Endnote {_afbe :=[]Endnote {};for _ ,_aefd :=range _bgce ._ccb .CT_Endnotes .Endnote {_afbe =append (_afbe ,Endnote {_bgce ,_aefd });};return _afbe ;};
-
-// SetBevelImageEffect sets the glow image effect.
-func (_gage AnchoredDrawing )SetBevelImageEffect (){for _ ,_cfg :=range _gage ._cd .Graphic .GraphicData .Any {if _ggd ,_gdba :=_cfg .(*_gg .Pic );_gdba {_ggd .SpPr .Sp3d =_eg .NewCT_Shape3D ();_ggd .SpPr .Sp3d .BevelT =_eg .NewCT_Bevel ();_ggd .SpPr .Sp3d .BevelT .PrstAttr =_eg .ST_BevelPresetTypeConvex ;
-_ggd .SpPr .Scene3d =_eg .NewCT_Scene3D ();_ggd .SpPr .Scene3d .Camera =_eg .NewCT_Camera ();_ggd .SpPr .Scene3d .Camera .PrstAttr =_eg .ST_PresetCameraTypeOrthographicFront ;_ggd .SpPr .Scene3d .LightRig =_eg .NewCT_LightRig ();_ggd .SpPr .Scene3d .LightRig .RigAttr =_eg .ST_LightRigTypeThreePt ;
-_ggd .SpPr .Scene3d .LightRig .DirAttr =_eg .ST_LightRigDirectionT ;};};};
-
-// SetLeftIndent controls left indent of paragraph.
-func (_ffgcba Paragraph )SetLeftIndent (m _ac .Distance ){_ffgcba .ensurePPr ();_babaf :=_ffgcba ._dfbf .PPr ;if _babaf .Ind ==nil {_babaf .Ind =_bg .NewCT_Ind ();};if m ==_ac .Zero {_babaf .Ind .LeftAttr =nil ;}else {_babaf .Ind .LeftAttr =&_bg .ST_SignedTwipsMeasure {};
-_babaf .Ind .LeftAttr .Int64 =_g .Int64 (int64 (m /_ac .Twips ));};};
-
-// SetRight sets the right border to a specified type, color and thickness.
-func (_edfab TableBorders )SetRight (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_edfab ._gfgeb .Right =_bg .NewCT_Border ();_ecag (_edfab ._gfgeb .Right ,t ,c ,thickness );};
-
-// SetTextWrapNone unsets text wrapping so the image can float on top of the
-// text. When used in conjunction with X/Y Offset relative to the page it can be
-// used to place a logo at the top of a page at an absolute position that
-// doesn't interfere with text.
-func (_gdf AnchoredDrawing )SetTextWrapNone (){_gdf ._cd .WrapTypeChoice =&_bg .WdEG_WrapTypeChoice {};_gdf ._cd .WrapTypeChoice .WrapNone =_bg .NewWdCT_WrapNone ();};
-
-// PossibleValues returns the possible values for a FormFieldTypeDropDown.
-func (_eddda FormField )PossibleValues ()[]string {if len (_eddda ._acfd .FFDataChoice )==0{return nil ;};_dgdfd :=[]string {};for _ ,_caca :=range _eddda ._acfd .FFDataChoice {if _caca .DdList !=nil {for _ ,_gdfbe :=range _caca .DdList .ListEntry {if _gdfbe ==nil {continue ;
-};_dgdfd =append (_dgdfd ,_gdfbe .ValAttr );};};};return _dgdfd ;};
-
-// SetLeftPct sets the cell left margin
-func (_fcdg CellMargins )SetLeftPct (pct float64 ){_fcdg ._cc .Left =_bg .NewCT_TblWidth ();_aee (_fcdg ._cc .Left ,pct );};
-
-// AddDropdownList adds dropdown list form field to the paragraph and returns it.
-func (_fagfe Paragraph )AddDropdownList (name string )FormField {_fedd :=_fagfe .addFldCharsForField (name ,"\u0046\u004f\u0052M\u0044\u0052\u004f\u0050\u0044\u004f\u0057\u004e");_fedd ._acfd .FFDataChoice [0].DdList =_bg .NewCT_FFDDList ();return _fedd ;
-};
-
-// Caps returns true if run font is capitalized.
-func (_gcedd RunProperties )Caps ()bool {return _bbeg (_gcedd ._ddbb .Caps )};func _adgd (_gcfeb *_bg .CT_P ,_aaea *_bg .CT_Hyperlink ,_ffea *TableInfo ,_gedd *DrawingInfo ,_dbfbe []*_bg .EG_ContentRunContent )[]TextItem {_ccbe :=[]TextItem {};for _ ,_fbed :=range _dbfbe {if _gbab :=_fbed .ContentRunContentChoice .Sdt ;
-_gbab !=nil {if _gbgcf :=_gbab .SdtContent ;_gbgcf !=nil {for _ ,_gffg :=range _gbgcf .EG_PContent {_ccbe =append (_ccbe ,_adgd (_gcfeb ,_aaea ,_ffea ,_gedd ,_gffg .PContentChoice .EG_ContentRunContent )...);};};};if _fggeeg :=_fbed .ContentRunContentChoice .R ;
-_fggeeg !=nil {_eagc :=_d .NewBuffer ([]byte {});for _ ,_ageg :=range _fggeeg .EG_RunInnerContent {if _ageg .RunInnerContentChoice .Br !=nil {_eagc .WriteString ("\u000a");};if _ageg .RunInnerContentChoice .Tab !=nil {_eagc .WriteString ("\u0009");};if _ageg .RunInnerContentChoice .T !=nil {_eagc .WriteString (_ageg .RunInnerContentChoice .T .Content );
-};if _ageg .RunInnerContentChoice .Pict !=nil &&len (_ageg .RunInnerContentChoice .Pict .Any )> 0{for _ ,_afac :=range _ageg .RunInnerContentChoice .Pict .Any {if _eead ,_fega :=_afac .(*_ec .Shape );_fega {for _ ,_adcfg :=range _eead .ShapeChoice {if _abfeb :=_adcfg .ShapeElementsChoice .Textbox ;
-_abfeb !=nil {if _abfeb .TxbxContent !=nil {for _ ,_ggff :=range _abfeb .TxbxContent .EG_BlockLevelElts {_ccbe =append (_ccbe ,_adgff (_ggff .BlockLevelEltsChoice .EG_ContentBlockContent ,nil )...);};};};};};};};};_ccbe =append (_ccbe ,TextItem {Text :_eagc .String (),DrawingInfo :_gedd ,Paragraph :_gcfeb ,Hyperlink :_aaea ,Run :_fggeeg ,TableInfo :_ffea });
-for _ ,_dcae :=range _fggeeg .Extra {if _cbabe ,_cadd :=_dcae .(*_bg .AlternateContentRun );_cadd {_fdaee :=&DrawingInfo {Drawing :_cbabe .Choice .Drawing };for _ ,_beccd :=range _fdaee .Drawing .DrawingChoice {if _beccd .Anchor ==nil {continue ;};for _ ,_dacbb :=range _beccd .Anchor .Graphic .GraphicData .Any {if _dabfc ,_cdbc :=_dacbb .(*_bg .WdWsp );
-_cdbc {if _dabfc .WordprocessingShapeChoice1 !=nil {if _gceba :=_dabfc .SpPr ;_gceba !=nil {if _cbgd :=_gceba .Xfrm ;_cbgd !=nil {if _bdcag :=_cbgd .Ext ;_bdcag !=nil {_fdaee .Width =_bdcag .CxAttr ;_fdaee .Height =_bdcag .CyAttr ;};};};for _ ,_dbcc :=range _dabfc .WordprocessingShapeChoice1 .Txbx .TxbxContent .EG_BlockLevelElts {for _ ,_aeac :=range _dbcc .BlockLevelEltsChoice .EG_ContentBlockContent {_ccbe =append (_ccbe ,_affb (_aeac .ContentBlockContentChoice .P ,_ffea ,_fdaee )...);
-};};};};};};};};};};return _ccbe ;};func _aee (_ccc *_bg .CT_TblWidth ,_gcfa float64 ){_ccc .TypeAttr =_bg .ST_TblWidthPct ;_ccc .WAttr =&_bg .ST_MeasurementOrPercent {};_ccc .WAttr .ST_DecimalNumberOrPercent =&_bg .ST_DecimalNumberOrPercent {};_ccc .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_g .Int64 (int64 (_gcfa *50));
-};type htmlNode struct{_fdbd _c .StartElement ;_bffc *htmlNode ;};func _bedd (_affbf *Document ,_cdebfc []*_bg .CT_P ,_gaede *TableInfo ,_egdb *DrawingInfo )[]Node {_cdab :=[]Node {};for _ ,_deab :=range _cdebfc {_cefab :=Paragraph {_affbf ,_deab };_cged :=Node {_ggab :_affbf ,_ffdc :&_cefab };
-if _beed ,_cdacg :=_affbf .Styles .SearchStyleById (_cefab .Style ());_cdacg {_cged .Style =_beed ;};for _ ,_fbcdb :=range _cefab .Runs (){_cged .Children =append (_cged .Children ,Node {_ggab :_affbf ,_ffdc :_fbcdb ,AnchoredDrawings :_fbcdb .DrawingAnchored (),InlineDrawings :_fbcdb .DrawingInline ()});
-};_cdab =append (_cdab ,_cged );};return _cdab ;};
-
-// CharacterSpacingValue returns the value of run's characters spacing in twips (1/20 of point).
-func (_bbace RunProperties )CharacterSpacingValue ()int64 {if _dbgfe :=_bbace ._ddbb .Spacing ;_dbgfe !=nil {_gded :=_dbgfe .ValAttr ;if _gded .Int64 !=nil {return *_gded .Int64 ;};};return int64 (0);};
-
-// SetCSTheme sets the font complex script theme.
-func (_fcfb Fonts )SetCSTheme (t _bg .ST_Theme ){_fcfb ._bcce .CsthemeAttr =t };
-
-// X returns the inner wrapped XML type.
-func (_ceaea Numbering )X ()*_bg .Numbering {return _ceaea ._faffc };
-
-// Themes returns document's themes.
-func (_ggba *Document )Themes ()[]*_eg .Theme {return _ggba ._bgb };
-
-// FindNodeByText return node based on matched text and return a slice of node.
-func (_gdegg *Nodes )FindNodeByText (text string )[]Node {_fbcfd :=[]Node {};for _ ,_eagcg :=range _gdegg ._feda {if _ef .TrimSpace (_eagcg .Text ())==text {_fbcfd =append (_fbcfd ,_eagcg );};_dbadc :=Nodes {_feda :_eagcg .Children };_fbcfd =append (_fbcfd ,_dbadc .FindNodeByText (text )...);
-};return _fbcfd ;};
-
-// TableLook is the conditional formatting associated with a table style that
-// has been assigned to a table.
-type TableLook struct{_acgba *_bg .CT_TblLook };
-
-// SetAlignment sets the paragraph alignment
-func (_bcbec NumberingLevel )SetAlignment (j _bg .ST_Jc ){if j ==_bg .ST_JcUnset {_bcbec ._ebebd .LvlJc =nil ;}else {_bcbec ._ebebd .LvlJc =_bg .NewCT_Jc ();_bcbec ._ebebd .LvlJc .ValAttr =j ;};};
-
-// ReplaceTextByRegexp replace the text within node using regexp expression.
-func (_gbee *Node )ReplaceTextByRegexp (rgx *_ea .Regexp ,newText string ){switch _ecaa :=_gbee .X ().(type ){case *Paragraph :for _ ,_adcg :=range _ecaa .Runs (){for _ ,_cgdgb :=range _adcg ._bdced .EG_RunInnerContent {if _cgdgb .RunInnerContentChoice .T !=nil {_fcef :=_cgdgb .RunInnerContentChoice .T .Content ;
-_fcef =rgx .ReplaceAllString (_fcef ,newText );_cgdgb .RunInnerContentChoice .T .Content =_fcef ;};};};};for _ ,_edfd :=range _gbee .Children {_edfd .ReplaceTextByRegexp (rgx ,newText );};};
-
-// Text returns text from the document as one string separated with line breaks.
-func (_cege *DocText )Text ()string {_efdf :=_d .NewBuffer ([]byte {});for _ ,_gacfg :=range _cege .Items {if _gacfg .Text !=""{_efdf .WriteString (_gacfg .Text );_efdf .WriteString ("\u000a");};};return _efdf .String ();};
-
-// PutNodeAfter put node to position after relativeTo.
-func (_bcgf *Document )PutNodeAfter (relativeTo ,node Node ){_bcgf .putNode (relativeTo ,node ,false )};
-
-// Strike returns true if run is striked.
-func (_affgb RunProperties )Strike ()bool {return _bbeg (_affgb ._ddbb .Strike )};
-
-// ParagraphProperties returns the paragraph properties controlling text formatting within the table.
-func (_fcbcb TableConditionalFormatting )ParagraphProperties ()ParagraphStyleProperties {if _fcbcb ._dbgc .PPr ==nil {_fcbcb ._dbgc .PPr =_bg .NewCT_PPrGeneral ();};return ParagraphStyleProperties {_fcbcb ._dbgc .PPr };};func (_ggec *Document )reorderFootnote (){_cdbf :=int64 (1);
-_edef :=map[int64 ]int64 {};for _ ,_egac :=range _ggec ._gca .Footnote {switch _egac .TypeAttr {case _bg .ST_FtnEdnSeparator :_egac .IdAttr =-1;break ;case _bg .ST_FtnEdnContinuationSeparator :_egac .IdAttr =0;break ;default:_edef [_egac .IdAttr ]=_cdbf ;
-_egac .IdAttr =_cdbf ;_cdbf ++;};};for _ ,_gcefc :=range _ggec .Paragraphs (){for _ ,_ddec :=range _gcefc .Runs (){if _dbdf ,_eeda :=_ddec .IsFootnote ();_dbdf {_ddec .X ().EG_RunInnerContent [0].RunInnerContentChoice .FootnoteReference .IdAttr =_edef [_eeda ];
-};};};};
-
-// Style is a style within the styles.xml file.
-type Style struct{_cbega *_bg .CT_Style };
-
-// SetXOffset sets the X offset for an image relative to the origin.
-func (_bfd AnchoredDrawing )SetXOffset (x _ac .Distance ){_bfd ._cd .PositionH .PosHChoice =&_bg .WdCT_PosHChoice {};_bfd ._cd .PositionH .PosHChoice .PosOffset =_g .Int32 (int32 (x /_ac .EMU ));};
-
-// SetAll sets all of the borders to a given value.
-func (_bggcb ParagraphBorders )SetAll (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_bggcb .SetBottom (t ,c ,thickness );_bggcb .SetLeft (t ,c ,thickness );_bggcb .SetRight (t ,c ,thickness );_bggcb .SetTop (t ,c ,thickness );};
-
-// CloseComment will close the comment.
-func (_dfga Paragraph )CloseComment (commentId int64 ){_dfga .addEndComment (commentId );_dbffg :=_dfga .AddRun ();_dbffg .AddCommentReference (commentId );_fbbdb :=_dbffg .Properties ();_fbbdb .SetStyle (_dgfa );};
-
-// X returns the inner wrapped XML type.
-func (_edcc Fonts )X ()*_bg .CT_Fonts {return _edcc ._bcce };
-
-// OnOffValue represents an on/off value that can also be unset
-type OnOffValue byte ;func (_ffcee *WatermarkText )getShape ()*_g .XSDAny {return _ffcee .getInnerElement ("\u0073\u0068\u0061p\u0065");};func (_ggfbc Paragraph )addInstrText (_dfgaf string )*_bg .CT_Text {_dffa :=_ggfbc .AddRun ();_dfbc :=_dffa .X ();
-_bfcge :=_bg .NewEG_RunInnerContent ();_bddba :=_bg .NewCT_Text ();_dceeg :="\u0070\u0072\u0065\u0073\u0065\u0072\u0076\u0065";_bddba .SpaceAttr =&_dceeg ;_bddba .Content ="\u0020"+_dfgaf +"\u0020";_bfcge .RunInnerContentChoice .InstrText =_bddba ;_dfbc .EG_RunInnerContent =append (_dfbc .EG_RunInnerContent ,_bfcge );
-return _bddba ;};func (_acca *Document )validateTableCells ()error {for _ ,_eaba :=range _acca ._feaa .Body .EG_BlockLevelElts {for _ ,_gfaa :=range _eaba .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_eaeb :=range _gfaa .ContentBlockContentChoice .Tbl {for _ ,_ecb :=range _eaeb .EG_ContentRowContent {for _ ,_beb :=range _ecb .ContentRowContentChoice .Tr {_fegd :=false ;
-for _ ,_ggda :=range _beb .EG_ContentCellContent {_cead :=false ;for _ ,_gbgg :=range _ggda .ContentCellContentChoice .Tc {_fegd =true ;for _ ,_ccac :=range _gbgg .EG_BlockLevelElts {for _ ,_deaa :=range _ccac .BlockLevelEltsChoice .EG_ContentBlockContent {if len (_deaa .ContentBlockContentChoice .P )> 0{_cead =true ;
-break ;};};};};if !_cead {return _be .New ("t\u0061\u0062\u006c\u0065\u0020\u0063e\u006c\u006c\u0020\u006d\u0075\u0073t\u0020\u0063\u006f\u006e\u0074\u0061\u0069n\u0020\u0061\u0020\u0070\u0061\u0072\u0061\u0067\u0072\u0061p\u0068");};};if !_fegd {return _be .New ("\u0074\u0061b\u006c\u0065\u0020\u0072\u006f\u0077\u0020\u006d\u0075\u0073\u0074\u0020\u0063\u006f\u006e\u0074\u0061\u0069\u006e\u0020\u0061\u0020ce\u006c\u006c");
-};};};};};};return nil ;};
-
-// Append appends a document d0 to a document d1. All settings, headers and footers remain the same as in the document d0 if they exist there, otherwise they are taken from the d1.
-func (_addg *Document )Append (d1orig *Document )error {_gcce ,_ccdf :=d1orig .Copy ();if _ccdf !=nil {return _ccdf ;};_addg .DocBase =_addg .DocBase .Append (_gcce .DocBase );if _gcce ._feaa .ConformanceAttr !=_de .ST_ConformanceClassStrict {_addg ._feaa .ConformanceAttr =_gcce ._feaa .ConformanceAttr ;
-};_fbad :=_addg ._fee .X ().Relationship ;_gfbf :=_gcce ._fee .X ().Relationship ;_fbec :=_gcce ._feaa .Body ;_dgbf :=map[string ]string {};_bfgd :=map[int64 ]int64 {};_agag :=map[int64 ]int64 {};for _ ,_eefe :=range _gfbf {_ggcec :=true ;_bfec :=_eefe .IdAttr ;
-_gadag :=_eefe .TargetAttr ;_gade :=_eefe .TypeAttr ;_fgb :=_gade ==_g .ImageType ;_gefg :=_gade ==_g .HyperLinkType ;var _adeb string ;for _ ,_aebb :=range _fbad {if _aebb .TypeAttr ==_gade &&_aebb .TargetAttr ==_gadag {_ggcec =false ;_adeb =_aebb .IdAttr ;
-break ;};};if _fgb {_gfde :="\u0077\u006f\u0072d\u002f"+_gadag ;for _ ,_aeded :=range _gcce .DocBase .Images {if _aeded .Target ()==_gfde {_babg ,_gdgba :=_edb .ImageFromStorage (_aeded .Path ());if _gdgba !=nil {return _gdgba ;};_ecgc ,_gdgba :=_addg .AddImage (_babg );
-if _gdgba !=nil {return _gdgba ;};_adeb =_ecgc .RelID ();break ;};};}else if _ggcec {if _gefg {_bbfc :=_addg ._fee .AddHyperlink (_gadag );_adeb =_edb .Relationship (_bbfc ).ID ();}else {_bddb :=_addg ._fee .AddRelationship (_gadag ,_gade );_adeb =_bddb .X ().IdAttr ;
-};};if _bfec !=_adeb {_dgbf [_bfec ]=_adeb ;};};if _fbec .SectPr !=nil {for _ ,_gefga :=range _fbec .SectPr .EG_HdrFtrReferences {if _gefga .HdrFtrReferencesChoice .HeaderReference !=nil {if _eccb ,_adee :=_dgbf [_gefga .HdrFtrReferencesChoice .HeaderReference .IdAttr ];
-_adee {_gefga .HdrFtrReferencesChoice .HeaderReference .IdAttr =_eccb ;_addg ._gdde =append (_addg ._gdde ,_edb .NewRelationships ());};}else if _gefga .HdrFtrReferencesChoice .FooterReference !=nil {if _dfacb ,_agbf :=_dgbf [_gefga .HdrFtrReferencesChoice .FooterReference .IdAttr ];
-_agbf {_gefga .HdrFtrReferencesChoice .FooterReference .IdAttr =_dfacb ;_addg ._dce =append (_addg ._dce ,_edb .NewRelationships ());};};};};_eebb ,_dedee :=_addg ._ccb ,_gcce ._ccb ;if _eebb !=nil {if _dedee !=nil {if _eebb .Endnote !=nil {if _dedee .Endnote !=nil {_cedg :=int64 (len (_eebb .Endnote )+1);
-for _ ,_cgdef :=range _dedee .Endnote {_cdadd :=_cgdef .IdAttr ;if _cdadd > 0{_cgdef .IdAttr =_cedg ;_eebb .Endnote =append (_eebb .Endnote ,_cgdef );_agag [_cdadd ]=_cedg ;_cedg ++;};};};}else {_eebb .Endnote =_dedee .Endnote ;};};}else if _dedee !=nil {_eebb =_dedee ;
-};_addg ._ccb =_eebb ;_bgaa ,_ddd :=_addg ._gca ,_gcce ._gca ;if _bgaa !=nil {if _ddd !=nil {if _bgaa .Footnote !=nil {if _ddd .Footnote !=nil {_gbcb :=int64 (len (_bgaa .Footnote )+1);for _ ,_dace :=range _ddd .Footnote {_cbg :=_dace .IdAttr ;if _cbg > 0{_dace .IdAttr =_gbcb ;
-_bgaa .Footnote =append (_bgaa .Footnote ,_dace );_bfgd [_cbg ]=_gbcb ;_gbcb ++;};};};}else {_bgaa .Footnote =_ddd .Footnote ;};};}else if _ddd !=nil {_bgaa =_ddd ;};_addg ._gca =_bgaa ;for _ ,_agdeb :=range _fbec .EG_BlockLevelElts {for _ ,_acbb :=range _agdeb .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_dddf :=range _acbb .ContentBlockContentChoice .P {_eggdf (_dddf ,_dgbf );
-_beag (_dddf ,_dgbf );_gefe (_dddf ,_bfgd ,_agag );};for _ ,_dccgb :=range _acbb .ContentBlockContentChoice .Tbl {_bebaf (_dccgb ,_dgbf );_fagcd (_dccgb ,_dgbf );_gfcg (_dccgb ,_bfgd ,_agag );};};};_addg ._feaa .Body .EG_BlockLevelElts =append (_addg ._feaa .Body .EG_BlockLevelElts ,_gcce ._feaa .Body .EG_BlockLevelElts ...);
-if _addg ._feaa .Body .SectPr ==nil {_addg ._feaa .Body .SectPr =_gcce ._feaa .Body .SectPr ;}else {var _bdce ,_bfbe bool ;for _ ,_gfcb :=range _addg ._feaa .Body .SectPr .EG_HdrFtrReferences {if _gfcb .HdrFtrReferencesChoice .HeaderReference !=nil {_bdce =true ;
-}else if _gfcb .HdrFtrReferencesChoice .FooterReference !=nil {_bfbe =true ;};};if !_bdce {for _ ,_fbcb :=range _gcce ._feaa .Body .SectPr .EG_HdrFtrReferences {if _fbcb .HdrFtrReferencesChoice .HeaderReference !=nil {_addg ._feaa .Body .SectPr .EG_HdrFtrReferences =append (_addg ._feaa .Body .SectPr .EG_HdrFtrReferences ,_fbcb );
-break ;};};};if !_bfbe {for _ ,_bgba :=range _gcce ._feaa .Body .SectPr .EG_HdrFtrReferences {if _bgba .HdrFtrReferencesChoice .FooterReference !=nil {_addg ._feaa .Body .SectPr .EG_HdrFtrReferences =append (_addg ._feaa .Body .SectPr .EG_HdrFtrReferences ,_bgba );
-break ;};};};if _addg ._feaa .Body .SectPr .Cols ==nil &&_gcce ._feaa .Body .SectPr .Cols !=nil {_addg ._feaa .Body .SectPr .Cols =_gcce ._feaa .Body .SectPr .Cols ;};};_bcbb :=_addg .Numbering ._faffc ;_dfdg :=_gcce .Numbering ._faffc ;if _bcbb ==nil &&_dfdg !=nil {_bcbb =_dfdg ;
-};_addg .Numbering ._faffc =_bcbb ;if _addg .Styles ._gcdd ==nil &&_gcce .Styles ._gcdd !=nil {_addg .Styles ._gcdd =_gcce .Styles ._gcdd ;};_addg ._bgb =append (_addg ._bgb ,_gcce ._bgb ...);_addg ._dagbd =append (_addg ._dagbd ,_gcce ._dagbd ...);if len (_addg ._gffb )==0{_addg ._gffb =_gcce ._gffb ;
-};if len (_addg ._dgdg )==0{_addg ._dgdg =_gcce ._dgdg ;};_cece :=_addg ._ada ;_ebcb :=_gcce ._ada ;if _cece !=nil {if _ebcb !=nil {if _cece .Divs !=nil {if _ebcb .Divs !=nil {_cece .Divs .Div =append (_cece .Divs .Div ,_ebcb .Divs .Div ...);};}else {_cece .Divs =_ebcb .Divs ;
-};};_cece .Frameset =nil ;}else if _ebcb !=nil {_cece =_ebcb ;_cece .Frameset =nil ;};_addg ._ada =_cece ;_gbd :=_addg ._deccc ;_agaa :=_gcce ._deccc ;if _gbd !=nil {if _agaa !=nil {if _gbd .Font !=nil {if _agaa .Font !=nil {for _ ,_ecbd :=range _agaa .Font {_gecc :=true ;
-for _ ,_bdcec :=range _gbd .Font {if _bdcec .NameAttr ==_ecbd .NameAttr {_gecc =false ;break ;};};if _gecc {_gbd .Font =append (_gbd .Font ,_ecbd );};};};}else {_gbd .Font =_agaa .Font ;};};}else if _agaa !=nil {_gbd =_agaa ;};_addg ._deccc =_gbd ;return nil ;
-};func (_gcfee *Document )save (_fdb _ed .Writer ,_eee string )error {const _ggee ="\u0064o\u0063u\u006d\u0065\u006e\u0074\u003a\u0064\u002e\u0053\u0061\u0076\u0065";if _fdg :=_gcfee ._feaa .Validate ();_fdg !=nil {_ad .Log .Warning ("\u0076\u0061\u006c\u0069\u0064\u0061\u0074\u0069\u006f\u006e\u0020\u0065\u0072\u0072\u006fr\u0020i\u006e\u0020\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u003a\u0020\u0025\u0073",_fdg );
-};_bedb :=_g .DocTypeDocument ;if !_abd .GetLicenseKey ().IsLicensed ()&&!_eaf {_cb .Println ("\u0055\u006e\u006ci\u0063\u0065\u006e\u0073e\u0064\u0020\u0076\u0065\u0072\u0073\u0069o\u006e\u0020\u006f\u0066\u0020\u0055\u006e\u0069\u004f\u0066\u0066\u0069\u0063\u0065");
-_cb .Println ("\u002d\u0020\u0047e\u0074\u0020\u0061\u0020\u0074\u0072\u0069\u0061\u006c\u0020\u006c\u0069\u0063\u0065\u006e\u0073\u0065\u0020\u006f\u006e\u0020\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002fu\u006e\u0069\u0064\u006f\u0063\u002e\u0069\u006f");
-return _be .New ("\u0075\u006e\u0069\u006f\u0066\u0066\u0069\u0063\u0065\u0020\u006ci\u0063\u0065\u006e\u0073\u0065\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0064");};_fcf :="\u0075n\u006b\u006e\u006f\u0077\u006e";if _fcab ,_gddg :=_fdb .(*_eag .File );
-_gddg {_fcf =_fcab .Name ();};if len (_gcfee ._dcdb )==0{if len (_eee )> 0{_gcfee ._dcdb =_eee ;}else {_fadc ,_ded :=_abd .GenRefId ("\u0064\u0077");if _ded !=nil {_ad .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_ded );return _ded ;};_gcfee ._dcdb =_fadc ;
-};};if _gfc :=_abd .Track (_gcfee ._dcdb ,_ggee ,_fcf );_gfc !=nil {_ad .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_gfc );return _gfc ;};_fbg :=_fda .NewWriter (_fdb );defer _fbg .Close ();if _ggeg :=_da .MarshalXML (_fbg ,_g .BaseRelsFilename ,_gcfee .Rels .X ());
-_ggeg !=nil {return _ggeg ;};if _ggf :=_da .MarshalXMLByType (_fbg ,_bedb ,_g .ExtendedPropertiesType ,_gcfee .AppProperties .X ());_ggf !=nil {return _ggf ;};if _ccd :=_da .MarshalXMLByType (_fbg ,_bedb ,_g .CorePropertiesType ,_gcfee .CoreProperties .X ());
-_ccd !=nil {return _ccd ;};if _gcfee .CustomProperties .X ()!=nil {if _ecc :=_da .MarshalXMLByType (_fbg ,_bedb ,_g .CustomPropertiesType ,_gcfee .CustomProperties .X ());_ecc !=nil {return _ecc ;};};if _gcfee .Thumbnail !=nil {_bdbf ,_efe :=_fbg .Create ("\u0064\u006f\u0063Pr\u006f\u0070\u0073\u002f\u0074\u0068\u0075\u006d\u0062\u006e\u0061\u0069\u006c\u002e\u006a\u0070\u0065\u0067");
-if _efe !=nil {return _efe ;};if _afdc :=_aea .Encode (_bdbf ,_gcfee .Thumbnail ,nil );_afdc !=nil {return _afdc ;};};if _fccf :=_da .MarshalXMLByType (_fbg ,_bedb ,_g .SettingsType ,_gcfee .Settings .X ());_fccf !=nil {return _fccf ;};_cgf :=_g .AbsoluteFilename (_bedb ,_g .OfficeDocumentType ,0);
-if _aadd :=_da .MarshalXML (_fbg ,_cgf ,_gcfee ._feaa );_aadd !=nil {return _aadd ;};if _dgad :=_da .MarshalXML (_fbg ,_da .RelationsPathFor (_cgf ),_gcfee ._fee .X ());_dgad !=nil {return _dgad ;};if _gcfee .Numbering .X ()!=nil {if _dgae :=_da .MarshalXMLByType (_fbg ,_bedb ,_g .NumberingType ,_gcfee .Numbering .X ());
-_dgae !=nil {return _dgae ;};};if _fccfd :=_da .MarshalXMLByType (_fbg ,_bedb ,_g .StylesType ,_gcfee .Styles .X ());_fccfd !=nil {return _fccfd ;};if _gcfee ._ada !=nil {if _eecc :=_da .MarshalXMLByType (_fbg ,_bedb ,_g .WebSettingsType ,_gcfee ._ada );
-_eecc !=nil {return _eecc ;};};if _gcfee ._deccc !=nil {if _cgb :=_da .MarshalXMLByType (_fbg ,_bedb ,_g .FontTableType ,_gcfee ._deccc );_cgb !=nil {return _cgb ;};};if _gcfee ._ccb !=nil {if _abcg :=_da .MarshalXMLByType (_fbg ,_bedb ,_g .EndNotesType ,_gcfee ._ccb );
-_abcg !=nil {return _abcg ;};};if _gcfee ._gca !=nil {if _cfef :=_da .MarshalXMLByType (_fbg ,_bedb ,_g .FootNotesType ,_gcfee ._gca );_cfef !=nil {return _cfef ;};};if _gcfee ._edg !=nil {if _aac :=_da .MarshalXMLByType (_fbg ,_bedb ,_g .CommentsContentType ,_gcfee ._edg );
-_aac !=nil {return _aac ;};};for _gaaa ,_fbaa :=range _gcfee ._bgb {if _fead :=_da .MarshalXMLByTypeIndex (_fbg ,_bedb ,_g .ThemeType ,_gaaa +1,_fbaa );_fead !=nil {return _fead ;};};for _bdf ,_adb :=range _gcfee ._dagbd {_efbba ,_fbab :=_adb .ExportToByteArray ();
-if _fbab !=nil {return _fbab ;};_deccd :="\u0077\u006f\u0072d\u002f"+_adb .TargetAttr [:len (_adb .TargetAttr )-4]+"\u002e\u0062\u0069\u006e";if _dage :=_da .AddFileFromBytes (_fbg ,_deccd ,_efbba );_dage !=nil {return _dage ;};if _eddb :=_da .MarshalXMLByTypeIndex (_fbg ,_bedb ,_g .ControlType ,_bdf +1,_adb .Ocx );
-_eddb !=nil {return _eddb ;};};for _fbf ,_faf :=range _gcfee ._gffb {_gda :=_g .AbsoluteFilename (_bedb ,_g .HeaderType ,_fbf +1);if _bbad :=_da .MarshalXML (_fbg ,_gda ,_faf );_bbad !=nil {return _bbad ;};if !_gcfee ._gdde [_fbf ].IsEmpty (){_da .MarshalXML (_fbg ,_da .RelationsPathFor (_gda ),_gcfee ._gdde [_fbf ].X ());
-};};for _fcad ,_ggeec :=range _gcfee ._dgdg {_ggcb :=_g .AbsoluteFilename (_bedb ,_g .FooterType ,_fcad +1);if _ffg :=_da .MarshalXMLByTypeIndex (_fbg ,_bedb ,_g .FooterType ,_fcad +1,_ggeec );_ffg !=nil {return _ffg ;};if !_gcfee ._dce [_fcad ].IsEmpty (){_da .MarshalXML (_fbg ,_da .RelationsPathFor (_ggcb ),_gcfee ._dce [_fcad ].X ());
-};};for _daf ,_dcfd :=range _gcfee .Images {if _acf :=_edb .AddImageToZip (_fbg ,_dcfd ,_daf +1,_g .DocTypeDocument );_acf !=nil {return _acf ;};};for _gcaa ,_bccd :=range _gcfee ._bddg {_fgc :=_g .AbsoluteFilename (_bedb ,_g .ChartType ,_gcaa +1);_da .MarshalXML (_fbg ,_fgc ,_bccd ._gbg );
-};if _eeaf :=_da .MarshalXML (_fbg ,_g .ContentTypesFilename ,_gcfee .ContentTypes .X ());_eeaf !=nil {return _eeaf ;};if _dadf :=_gcfee .WriteExtraFiles (_fbg );_dadf !=nil {return _dadf ;};return _fbg .Close ();};
-
-// AddBookmark adds a bookmark to a document that can then be used from a hyperlink. Name is a document
-// unique name that identifies the bookmark so it can be referenced from hyperlinks.
-func (_adcgb Paragraph )AddBookmark (name string )Bookmark {_fgfga :=_bg .NewEG_PContent ();_bdbbb :=_bg .NewEG_ContentRunContent ();_fgfga .PContentChoice .EG_ContentRunContent =append (_fgfga .PContentChoice .EG_ContentRunContent ,_bdbbb );_caffc :=_bg .NewEG_RunLevelElts ();
-_bdbbb .ContentRunContentChoice .EG_RunLevelElts =append (_bdbbb .ContentRunContentChoice .EG_RunLevelElts ,_caffc );_gdcae :=_bg .NewEG_RangeMarkupElements ();_afgg :=_bg .NewCT_Bookmark ();_gdcae .RangeMarkupElementsChoice .BookmarkStart =_afgg ;_caffc .RunLevelEltsChoice .EG_RangeMarkupElements =append (_caffc .RunLevelEltsChoice .EG_RangeMarkupElements ,_gdcae );
-_gdcae =_bg .NewEG_RangeMarkupElements ();_gdcae .RangeMarkupElementsChoice .BookmarkEnd =_bg .NewCT_MarkupRange ();_caffc .RunLevelEltsChoice .EG_RangeMarkupElements =append (_caffc .RunLevelEltsChoice .EG_RangeMarkupElements ,_gdcae );_adcgb ._dfbf .EG_PContent =append (_adcgb ._dfbf .EG_PContent ,_fgfga );
-_aded :=Bookmark {_afgg };_aded .SetName (name );return _aded ;};
-
-// X returns the inner wrapped XML type.
-func (_bfed ParagraphStyleProperties )X ()*_bg .CT_PPrGeneral {return _bfed ._becee };
-
-// Clear clears all content within a footer
-func (_egdea Footer )Clear (){_egdea ._bfebb .EG_BlockLevelElts =[]*_bg .EG_BlockLevelElts {}};
-
-// DrawingInfo is used for keep information about a drawing wrapping a textbox where the text is located.
-type DrawingInfo struct{Drawing *_bg .CT_Drawing ;Width int64 ;Height int64 ;};
-
-// FindNodeByStyleName return slice of node base on style name.
-func (_adbf *Nodes )FindNodeByStyleName (styleName string )[]Node {_dggc :=[]Node {};for _ ,_fdcac :=range _adbf ._feda {switch _cdcda :=_fdcac ._ffdc .(type ){case *Paragraph :if _cdcda !=nil {if _ddeg ,_cfcaa :=_fdcac ._ggab .Styles .SearchStyleByName (styleName );
-_cfcaa {_ceda :=_cdcda .Style ();if _ceda ==_ddeg .StyleID (){_dggc =append (_dggc ,_fdcac );};};};case *Table :if _cdcda !=nil {if _abce ,_cafd :=_fdcac ._ggab .Styles .SearchStyleByName (styleName );_cafd {_agfcb :=_cdcda .Style ();if _agfcb ==_abce .StyleID (){_dggc =append (_dggc ,_fdcac );
-};};};};_geccf :=Nodes {_feda :_fdcac .Children };_dggc =append (_dggc ,_geccf .FindNodeByStyleName (styleName )...);};return _dggc ;};
-
-// AddCommentReference adds comment reference to a run.
-func (_cddd Run )AddCommentReference (id int64 ){_dceggc :=_cddd .newIC ();_dceggc .RunInnerContentChoice .CommentReference =_bg .NewCT_Markup ();_dceggc .RunInnerContentChoice .CommentReference .IdAttr =id ;};
-
-// SetTextStyleItalic sets text style of watermark to italic.
-func (_ecfg *WatermarkText )SetTextStyleItalic (value bool ){_deadc :=_ecfg .GetStyle ();_deadc .SetItalic (value );_ecfg .SetStyle (_deadc );};
-
-// AddParagraph adds a new paragraph to the document body.
-func (_bdgb *Document )AddParagraph ()Paragraph {_ebg :=_bg .NewEG_BlockLevelElts ();_bdgb ._feaa .Body .EG_BlockLevelElts =append (_bdgb ._feaa .Body .EG_BlockLevelElts ,_ebg );_fdf :=_bg .NewEG_ContentBlockContent ();_ebg .BlockLevelEltsChoice .EG_ContentBlockContent =append (_ebg .BlockLevelEltsChoice .EG_ContentBlockContent ,_fdf );
-_cffg :=_bg .NewCT_P ();_fdf .ContentBlockContentChoice .P =append (_fdf .ContentBlockContentChoice .P ,_cffg );return Paragraph {_bdgb ,_cffg };};
-
-// Levels returns all of the numbering levels defined in the definition.
-func (_cegc NumberingDefinition )Levels ()[]NumberingLevel {_bcgb :=[]NumberingLevel {};for _ ,_deeg :=range _cegc ._dbagd .Lvl {_bcgb =append (_bcgb ,NumberingLevel {_deeg });};return _bcgb ;};
-
-// SetCalcOnExit marks if a FormField should be CalcOnExit or not.
-func (_badc FormField )SetCalcOnExit (calcOnExit bool ){_ffbe :=_bg .NewCT_OnOff ();_ffbe .ValAttr =&_de .ST_OnOff {Bool :&calcOnExit };_badc ._acfd .FFDataChoice =[]*_bg .CT_FFDataChoice {{CalcOnExit :_ffbe }};};
-
-// Index returns the index of the header within the document.  This is used to
-// form its zip packaged filename as well as to match it with its relationship
-// ID.
-func (_dfebc Header )Index ()int {for _aedb ,_fgadd :=range _dfebc ._dafeb ._gffb {if _fgadd ==_dfebc ._adfd {return _aedb ;};};return -1;};
-
-// SetBottom sets the cell bottom margin
-func (_cg CellMargins )SetBottom (d _ac .Distance ){_cg ._cc .Bottom =_bg .NewCT_TblWidth ();_gacd (_cg ._cc .Bottom ,d );};func _bbca (_cfacg *_bg .CT_OnOff )OnOffValue {if _cfacg ==nil {return OnOffValueUnset ;};if _cfacg .ValAttr !=nil &&_cfacg .ValAttr .Bool !=nil &&*_cfacg .ValAttr .Bool ==false {return OnOffValueOff ;
-};return OnOffValueOn ;};
-
-// Header is a header for a document section.
-type Header struct{_dafeb *Document ;_adfd *_bg .Hdr ;};
-
-// AddCell adds a cell to a row and returns it
-func (_bbdfg Row )AddCell ()Cell {_dbgfb :=_bg .NewEG_ContentCellContent ();_bbdfg ._bgcee .EG_ContentCellContent =append (_bbdfg ._bgcee .EG_ContentCellContent ,_dbgfb );_ddcbc :=_bg .NewCT_Tc ();_dbgfb .ContentCellContentChoice .Tc =append (_dbgfb .ContentCellContentChoice .Tc ,_ddcbc );
-return Cell {_bbdfg ._ccdec ,_ddcbc };};
-
-// Pict returns the pict object.
-func (_gbbfd *WatermarkPicture )Pict ()*_bg .CT_Picture {return _gbbfd ._cfgg };func (_cffga *Document )addEndnoteSeparator (){_fbgb :=_bg .NewCT_FtnEdn ();_fbgb .IdAttr =-1;_fbgb .TypeAttr =_bg .ST_FtnEdnSeparator ;_faaf :=Footnote {_cffga ,_fbgb };_faaf .X ().EG_BlockLevelElts =[]*_bg .EG_BlockLevelElts {_bg .NewEG_BlockLevelElts ()};
-_geeg :=_faaf .AddParagraph ();_geeg .X ().PPr =nil ;_gdfc :=_geeg .AddRun ();_ggaf :=_gdfc .newIC ();_ggaf .RunInnerContentChoice .Separator =_bg .NewCT_Empty ();_cffga ._ccb .CT_Endnotes .Endnote =append (_cffga ._ccb .CT_Endnotes .Endnote ,_fbgb );_fbgb =_bg .NewCT_FtnEdn ();
-_fbgb .IdAttr =0;_fbgb .TypeAttr =_bg .ST_FtnEdnContinuationSeparator ;_faaf =Footnote {_cffga ,_fbgb };_faaf .X ().EG_BlockLevelElts =[]*_bg .EG_BlockLevelElts {_bg .NewEG_BlockLevelElts ()};_geeg =_faaf .AddParagraph ();_geeg .X ().PPr =nil ;_gdfc =_geeg .AddRun ();
-_ggaf =_gdfc .newIC ();_ggaf .RunInnerContentChoice .ContinuationSeparator =_bg .NewCT_Empty ();_cffga ._ccb .CT_Endnotes .Endnote =append (_cffga ._ccb .CT_Endnotes .Endnote ,_fbgb );};func (_dbfb *Document )insertParagraph (_aca Paragraph ,_aadg bool )Paragraph {if _dbfb ._feaa .Body ==nil {return _dbfb .AddParagraph ();
-};_ffdf :=_aca .X ();for _ ,_ffbc :=range _dbfb ._feaa .Body .EG_BlockLevelElts {for _ ,_dede :=range _ffbc .BlockLevelEltsChoice .EG_ContentBlockContent {for _gcba ,_degg :=range _dede .ContentBlockContentChoice .P {if _degg ==_ffdf {_egfg :=_bg .NewCT_P ();
-_dede .ContentBlockContentChoice .P =append (_dede .ContentBlockContentChoice .P ,nil );if _aadg {copy (_dede .ContentBlockContentChoice .P [_gcba +1:],_dede .ContentBlockContentChoice .P [_gcba :]);_dede .ContentBlockContentChoice .P [_gcba ]=_egfg ;}else {copy (_dede .ContentBlockContentChoice .P [_gcba +2:],_dede .ContentBlockContentChoice .P [_gcba +1:]);
-_dede .ContentBlockContentChoice .P [_gcba +1]=_egfg ;};return Paragraph {_dbfb ,_egfg };};};for _ ,_bcfc :=range _dede .ContentBlockContentChoice .Tbl {for _ ,_cfgf :=range _bcfc .EG_ContentRowContent {for _ ,_fbcf :=range _cfgf .ContentRowContentChoice .Tr {for _ ,_aece :=range _fbcf .EG_ContentCellContent {for _ ,_bdag :=range _aece .ContentCellContentChoice .Tc {for _ ,_dgca :=range _bdag .EG_BlockLevelElts {for _ ,_bdcb :=range _dgca .BlockLevelEltsChoice .EG_ContentBlockContent {for _cecg ,_aade :=range _bdcb .ContentBlockContentChoice .P {if _aade ==_ffdf {_gffff :=_bg .NewCT_P ();
-_bdcb .ContentBlockContentChoice .P =append (_bdcb .ContentBlockContentChoice .P ,nil );if _aadg {copy (_bdcb .ContentBlockContentChoice .P [_cecg +1:],_bdcb .ContentBlockContentChoice .P [_cecg :]);_bdcb .ContentBlockContentChoice .P [_cecg ]=_gffff ;
-}else {copy (_bdcb .ContentBlockContentChoice .P [_cecg +2:],_bdcb .ContentBlockContentChoice .P [_cecg +1:]);_bdcb .ContentBlockContentChoice .P [_cecg +1]=_gffff ;};return Paragraph {_dbfb ,_gffff };};};};};};};};};};if _dede .ContentBlockContentChoice .Sdt !=nil &&_dede .ContentBlockContentChoice .Sdt .SdtContent !=nil {for _ ,_dbba :=range _dede .ContentBlockContentChoice .Sdt .SdtContent .EG_ContentBlockContent {for _efbec ,_dbff :=range _dbba .ContentBlockContentChoice .P {if _dbff ==_ffdf {_bgcg :=_bg .NewCT_P ();
-_dbba .ContentBlockContentChoice .P =append (_dbba .ContentBlockContentChoice .P ,nil );if _aadg {copy (_dbba .ContentBlockContentChoice .P [_efbec +1:],_dbba .ContentBlockContentChoice .P [_efbec :]);_dbba .ContentBlockContentChoice .P [_efbec ]=_bgcg ;
-}else {copy (_dbba .ContentBlockContentChoice .P [_efbec +2:],_dbba .ContentBlockContentChoice .P [_efbec +1:]);_dbba .ContentBlockContentChoice .P [_efbec +1]=_bgcg ;};return Paragraph {_dbfb ,_bgcg };};};};};};};return _dbfb .AddParagraph ();};
-
-// SetOffset sets the offset of the image relative to the origin, which by
-// default this is the top-left corner of the page. Offset is incompatible with
-// SetAlignment, whichever is called last is applied.
-func (_gc AnchoredDrawing )SetOffset (x ,y _ac .Distance ){_gc .SetXOffset (x );_gc .SetYOffset (y )};func _ceeb (_gedea *Run ,_fafe string ,_febc *htmlNode ){switch _fafe {case "\u0062","\u0073\u0074\u0072\u006f\u006e\u0067":_gedea .Properties ().SetBold (true );
-case "\u0069","\u0065\u006d":_gedea .Properties ().SetItalic (true );case "\u0075":_agddb :=_ce .Black ;for _ ,_geagg :=range _febc ._fdbd .Attr {if _geagg .Name .Local =="\u0063\u006f\u006co\u0072"{if _ccge ,_cecea :=_ce .ColorMap [_geagg .Value ];_cecea {_agddb =_ccge ;
-};};};_gedea .Properties ().SetUnderline (_bg .ST_UnderlineSingle ,_agddb );case "\u0073\u0074\u0072\u0069\u006b\u0065":_gedea .Properties ().SetStrikeThrough (true );case "\u006d\u0061\u0072\u006b":_fabeg :=_bg .ST_HighlightColorYellow ;for _ ,_fgecg :=range _febc ._fdbd .Attr {if _fgecg .Name .Local =="\u0063\u006f\u006co\u0072"{if _ccea ,_bgeaf :=_ce .HighlightColorMap [_fgecg .Value ];
-_bgeaf {_fabeg =_ccea ;};};};_gedea .Properties ().SetHighlight (_fabeg );case "\u0073\u0075\u0062":_gedea .Properties ().SetVerticalAlignment (_de .ST_VerticalAlignRunSubscript );case "\u0073\u0075\u0070":_gedea .Properties ().SetVerticalAlignment (_de .ST_VerticalAlignRunSuperscript );
-};};
-
-// ParagraphBorders allows manipulation of borders on a paragraph.
-type ParagraphBorders struct{_beca *Document ;_bfeee *_bg .CT_PBdr ;};type mergeFieldInfo struct{_bcgae string ;_baaf string ;_agdc string ;_dgcef bool ;_dfacc bool ;_eacd bool ;_cgca bool ;_aacc Paragraph ;_dfgb ,_bfeaa ,_adcab int ;_ffba *_bg .EG_PContent ;
-_dacdf bool ;};
-
-// DocText is an array of extracted text items which has some methods for representing extracted text.
-type DocText struct{Items []TextItem ;_dbae []listItemInfo ;_afbdb map[int64 ]map[int64 ]int64 ;};func (_aed *Document )appendParagraph (_cccg *Paragraph ,_dbfa Paragraph ,_dcgc bool )Paragraph {_dfef :=_bg .NewEG_BlockLevelElts ();_aed ._feaa .Body .EG_BlockLevelElts =append (_aed ._feaa .Body .EG_BlockLevelElts ,_dfef );
-_beg :=_bg .NewEG_ContentBlockContent ();_dfef .BlockLevelEltsChoice .EG_ContentBlockContent =append (_dfef .BlockLevelEltsChoice .EG_ContentBlockContent ,_beg );if _cccg !=nil {_ecgd :=_cccg .X ();for _ ,_gbgc :=range _aed ._feaa .Body .EG_BlockLevelElts {for _ ,_gad :=range _gbgc .BlockLevelEltsChoice .EG_ContentBlockContent {for _eac ,_gadd :=range _gad .ContentBlockContentChoice .P {if _gadd ==_ecgd {_cedf :=_dbfa .X ();
-_gad .ContentBlockContentChoice .P =append (_gad .ContentBlockContentChoice .P ,nil );if _dcgc {copy (_gad .ContentBlockContentChoice .P [_eac +1:],_gad .ContentBlockContentChoice .P [_eac :]);_gad .ContentBlockContentChoice .P [_eac ]=_cedf ;}else {copy (_gad .ContentBlockContentChoice .P [_eac +2:],_gad .ContentBlockContentChoice .P [_eac +1:]);
-_gad .ContentBlockContentChoice .P [_eac +1]=_cedf ;};break ;};};for _ ,_cgc :=range _gad .ContentBlockContentChoice .Tbl {for _ ,_aaa :=range _cgc .EG_ContentRowContent {for _ ,_dcba :=range _aaa .ContentRowContentChoice .Tr {for _ ,_eeea :=range _dcba .EG_ContentCellContent {for _ ,_daec :=range _eeea .ContentCellContentChoice .Tc {for _ ,_cfec :=range _daec .EG_BlockLevelElts {for _ ,_caf :=range _cfec .BlockLevelEltsChoice .EG_ContentBlockContent {for _ggag ,_fdfd :=range _caf .ContentBlockContentChoice .P {if _fdfd ==_ecgd {_eede :=_dbfa .X ();
-_caf .ContentBlockContentChoice .P =append (_caf .ContentBlockContentChoice .P ,nil );if _dcgc {copy (_caf .ContentBlockContentChoice .P [_ggag +1:],_caf .ContentBlockContentChoice .P [_ggag :]);_caf .ContentBlockContentChoice .P [_ggag ]=_eede ;}else {copy (_caf .ContentBlockContentChoice .P [_ggag +2:],_caf .ContentBlockContentChoice .P [_ggag +1:]);
-_caf .ContentBlockContentChoice .P [_ggag +1]=_eede ;};break ;};};};};};};};};};if _gad .ContentBlockContentChoice .Sdt !=nil &&_gad .ContentBlockContentChoice .Sdt .SdtContent !=nil {for _ ,_aga :=range _gad .ContentBlockContentChoice .Sdt .SdtContent .EG_ContentBlockContent {for _aede ,_bdcd :=range _aga .ContentBlockContentChoice .P {if _bdcd ==_ecgd {_acdea :=_dbfa .X ();
-_aga .ContentBlockContentChoice .P =append (_aga .ContentBlockContentChoice .P ,nil );if _dcgc {copy (_aga .ContentBlockContentChoice .P [_aede +1:],_aga .ContentBlockContentChoice .P [_aede :]);_aga .ContentBlockContentChoice .P [_aede ]=_acdea ;}else {copy (_aga .ContentBlockContentChoice .P [_aede +2:],_aga .ContentBlockContentChoice .P [_aede +1:]);
-_aga .ContentBlockContentChoice .P [_aede +1]=_acdea ;};break ;};};};};};};}else {_beg .ContentBlockContentChoice .P =append (_beg .ContentBlockContentChoice .P ,_dbfa .X ());};_bda :=_dbfa .Properties ();if _dgaec ,_bea :=_bda .Section ();_bea {var (_gfdb map[string ]string ;
-_baf map[string ]string ;);_gdgbe :=_dgaec .X ().EG_HdrFtrReferences ;for _ ,_abee :=range _gdgbe {if _abee .HdrFtrReferencesChoice .HeaderReference !=nil {_gfdb =map[string ]string {_abee .HdrFtrReferencesChoice .HeaderReference .IdAttr :_dgaec ._baggf ._fee .GetTargetByRelId (_abee .HdrFtrReferencesChoice .HeaderReference .IdAttr )};
-};if _abee .HdrFtrReferencesChoice .FooterReference !=nil {_baf =map[string ]string {_abee .HdrFtrReferencesChoice .FooterReference .IdAttr :_dgaec ._baggf ._fee .GetTargetByRelId (_abee .HdrFtrReferencesChoice .FooterReference .IdAttr )};};};var _caed map[int ]_edb .ImageRef ;
-for _ ,_cgdg :=range _dgaec ._baggf .Headers (){for _dbga ,_cea :=range _gfdb {_bfa :=_cb .Sprintf ("\u0068\u0065\u0061d\u0065\u0072\u0025\u0064\u002e\u0078\u006d\u006c",(_cgdg .Index ()+1));if _bfa ==_cea {_cbca :=_cb .Sprintf ("\u0068\u0065\u0061d\u0065\u0072\u0025\u0064\u002e\u0078\u006d\u006c",_cgdg .Index ());
-_aed ._gffb =append (_aed ._gffb ,_cgdg .X ());_gegd :=_aed ._fee .AddRelationship (_cbca ,_g .HeaderType );_gegd .SetID (_dbga );_aed .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072\u0064\u002f"+_cbca ,"\u0061p\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064.\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c\u002e\u0068\u0065\u0061\u0064e\u0072\u002b\u0078\u006d\u006c");
-_aed ._gdde =append (_aed ._gdde ,_edb .NewRelationships ());_bdbfd :=_cgdg .Paragraphs ();for _ ,_dcbee :=range _bdbfd {for _ ,_eaec :=range _dcbee .Runs (){_bgcf :=_eaec .DrawingAnchored ();for _ ,_cgdf :=range _bgcf {if _bgcfg ,_dbfad :=_cgdf .GetImage ();
-_dbfad {_caed =map[int ]_edb .ImageRef {_cgdg .Index ():_bgcfg };};};_eddd :=_eaec .DrawingInline ();for _ ,_aaag :=range _eddd {if _aeagd ,_dcfe :=_aaag .GetImage ();_dcfe {_caed =map[int ]_edb .ImageRef {_cgdg .Index ():_aeagd };};};};};};};};for _afg ,_eeff :=range _caed {for _ ,_gfag :=range _aed .Headers (){if (_gfag .Index ()+1)==_afg {_gbfd ,_baga :=_edb .ImageFromFile (_eeff .Path ());
-if _baga !=nil {_ad .Log .Debug ("\u0075\u006e\u0061\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0063r\u0065\u0061\u0074\u0065\u0020\u0069\u006d\u0061\u0067\u0065:\u0020\u0025\u0073",_baga );};if _ ,_baga =_gfag .AddImage (_gbfd );_baga !=nil {_ad .Log .Debug ("u\u006e\u0061\u0062\u006c\u0065\u0020t\u006f\u0020\u0061\u0064\u0064\u0020i\u006d\u0061\u0067\u0065\u0020\u0074\u006f \u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u003a\u0020%\u0073",_baga );
-};};for _ ,_fdfc :=range _gfag .Paragraphs (){if _cfdf ,_afcg :=_dgaec ._baggf .Styles .SearchStyleById (_fdfc .Style ());_afcg {if _ ,_bded :=_aed .Styles .SearchStyleById (_fdfc .Style ());!_bded {_aed .Styles .InsertStyle (_cfdf );};};};};};var _ccgf map[int ]_edb .ImageRef ;
-for _ ,_gea :=range _dgaec ._baggf .Footers (){for _dcfec ,_eagf :=range _baf {_adcb :=_cb .Sprintf ("\u0066\u006f\u006ft\u0065\u0072\u0025\u0064\u002e\u0078\u006d\u006c",(_gea .Index ()+1));if _adcb ==_eagf {_dafd :=_cb .Sprintf ("\u0066\u006f\u006ft\u0065\u0072\u0025\u0064\u002e\u0078\u006d\u006c",_gea .Index ());
-_aed ._dgdg =append (_aed ._dgdg ,_gea .X ());_cafb :=_aed ._fee .AddRelationship (_dafd ,_g .FooterType );_cafb .SetID (_dcfec );_aed .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072\u0064\u002f"+_dafd ,"\u0061p\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064.\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c\u002e\u0066\u006f\u006f\u0074e\u0072\u002b\u0078\u006d\u006c");
-_aed ._dce =append (_aed ._dce ,_edb .NewRelationships ());_aeagdb :=_gea .Paragraphs ();for _ ,_afea :=range _aeagdb {for _ ,_bgea :=range _afea .Runs (){_edf :=_bgea .DrawingAnchored ();for _ ,_dedf :=range _edf {if _gbcg ,_bcbg :=_dedf .GetImage ();
-_bcbg {_ccgf =map[int ]_edb .ImageRef {_gea .Index ():_gbcg };};};_egbg :=_bgea .DrawingInline ();for _ ,_cgbe :=range _egbg {if _cgg ,_befa :=_cgbe .GetImage ();_befa {_ccgf =map[int ]_edb .ImageRef {_gea .Index ():_cgg };};};};};};};};for _bddgf ,_edga :=range _ccgf {for _ ,_abb :=range _aed .Footers (){if (_abb .Index ()+1)==_bddgf {_adbe ,_affg :=_edb .ImageFromFile (_edga .Path ());
-if _affg !=nil {_ad .Log .Debug ("\u0075\u006e\u0061\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0063r\u0065\u0061\u0074\u0065\u0020\u0069\u006d\u0061\u0067\u0065:\u0020\u0025\u0073",_affg );};if _ ,_affg =_abb .AddImage (_adbe );_affg !=nil {_ad .Log .Debug ("u\u006e\u0061\u0062\u006c\u0065\u0020t\u006f\u0020\u0061\u0064\u0064\u0020i\u006d\u0061\u0067\u0065\u0020\u0074\u006f \u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u003a\u0020%\u0073",_affg );
-};};for _ ,_ddf :=range _abb .Paragraphs (){if _geac ,_bgbg :=_dgaec ._baggf .Styles .SearchStyleById (_ddf .Style ());_bgbg {if _ ,_gdaf :=_aed .Styles .SearchStyleById (_ddf .Style ());!_gdaf {_aed .Styles .InsertStyle (_geac );};};};};};};_aage :=_dbfa .Numbering ();
-_aed .Numbering ._faffc .AbstractNum =append (_aed .Numbering ._faffc .AbstractNum ,_aage ._faffc .AbstractNum ...);_aed .Numbering ._faffc .Num =append (_aed .Numbering ._faffc .Num ,_aage ._faffc .Num ...);return Paragraph {_aed ,_dbfa .X ()};};
-
-// AddImage adds an image to the document package, returning a reference that
-// can be used to add the image to a run and place it in the document contents.
-func (_bdagc Header )AddImage (i _edb .Image )(_edb .ImageRef ,error ){var _bdgfd _edb .Relationships ;for _gcgb ,_fbede :=range _bdagc ._dafeb ._gffb {if _fbede ==_bdagc ._adfd {_bdgfd =_bdagc ._dafeb ._gdde [_gcgb ];};};_babde :=_edb .MakeImageRef (i ,&_bdagc ._dafeb .DocBase ,_bdgfd );
-if i .Data ==nil &&i .Path ==""{return _babde ,_be .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0064\u0061t\u0061\u0020\u006f\u0072\u0020\u0061\u0020\u0070\u0061\u0074\u0068");};if i .Format ==""{return _babde ,_be .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0061\u0020v\u0061\u006c\u0069\u0064\u0020\u0066\u006f\u0072\u006d\u0061\u0074");
-};if i .Size .X ==0||i .Size .Y ==0{return _babde ,_be .New ("\u0069\u006d\u0061\u0067e\u0020\u006d\u0075\u0073\u0074\u0020\u0068\u0061\u0076\u0065 \u0061 \u0076\u0061\u006c\u0069\u0064\u0020\u0073i\u007a\u0065");};_bdagc ._dafeb .Images =append (_bdagc ._dafeb .Images ,_babde );
-_gefdcc :=_cb .Sprintf ("\u006d\u0065d\u0069\u0061\u002fi\u006d\u0061\u0067\u0065\u0025\u0064\u002e\u0025\u0073",len (_bdagc ._dafeb .Images ),i .Format );_bedf :=_bdgfd .AddRelationship (_gefdcc ,_g .ImageType );_babde .SetRelID (_bedf .X ().IdAttr );
-return _babde ,nil ;};
-
-// InlineDrawing is an inlined image within a run.
-type InlineDrawing struct{_bdcdg *Document ;_dacaf *_bg .WdInline ;};
-
-// SetRightPct sets the cell right margin
-func (_ecf CellMargins )SetRightPct (pct float64 ){_ecf ._cc .Right =_bg .NewCT_TblWidth ();_aee (_ecf ._cc .Right ,pct );};func (_gab *Document )removeFootnote (_ddg int64 ){_afgd :=_gab ._gca ;var _gefa int ;for _bcdc ,_cgbf :=range _afgd .CT_Footnotes .Footnote {if _cgbf .IdAttr ==_ddg {_gefa =_bcdc ;
-break ;};};_afgd .CT_Footnotes .Footnote [_gefa ]=nil ;_afgd .CT_Footnotes .Footnote [_gefa ]=_afgd .CT_Footnotes .Footnote [len (_afgd .CT_Footnotes .Footnote )-1];_afgd .CT_Footnotes .Footnote =_afgd .CT_Footnotes .Footnote [:len (_afgd .CT_Footnotes .Footnote )-1];
-_gab .reorderFootnote ();_gab .syncFootnoteSettings ();};
-
-// SetHorizontalBanding controls the conditional formatting for horizontal banding.
-func (_eaad TableLook )SetHorizontalBanding (on bool ){if !on {_eaad ._acgba .NoHBandAttr =&_de .ST_OnOff {};_eaad ._acgba .NoHBandAttr .ST_OnOff1 =_de .ST_OnOff1On ;}else {_eaad ._acgba .NoHBandAttr =&_de .ST_OnOff {};_eaad ._acgba .NoHBandAttr .ST_OnOff1 =_de .ST_OnOff1Off ;
-};};
-
-// SetKeepWithNext controls if this paragraph should be kept with the next.
-func (_faddb ParagraphProperties )SetKeepWithNext (b bool ){if !b {_faddb ._dabde .KeepNext =nil ;}else {_faddb ._dabde .KeepNext =_bg .NewCT_OnOff ();};};func (_ebbe *Document )insertImageFromNode (_ebfg Node ){for _ ,_cccgg :=range _ebfg .AnchoredDrawings {if _ggde ,_fbcbc :=_cccgg .GetImage ();
-_fbcbc {_abae ,_fdgb :=_edb .ImageFromFile (_ggde .Path ());if _fdgb !=nil {_ad .Log .Debug ("\u0075\u006e\u0061\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0063r\u0065\u0061\u0074\u0065\u0020\u0069\u006d\u0061\u0067\u0065:\u0020\u0025\u0073",_fdgb );};
-_cccgd ,_fdgb :=_ebbe .AddImage (_abae );if _fdgb !=nil {_ad .Log .Debug ("u\u006e\u0061\u0062\u006c\u0065\u0020t\u006f\u0020\u0061\u0064\u0064\u0020i\u006d\u0061\u0067\u0065\u0020\u0074\u006f \u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u003a\u0020%\u0073",_fdgb );
-};_bbed :=_ebbe ._fee .GetByRelId (_cccgd .RelID ());_bbed .SetID (_ggde .RelID ());};};for _ ,_bdgf :=range _ebfg .InlineDrawings {if _dcaf ,_ggbeg :=_bdgf .GetImage ();_ggbeg {_aebfg ,_caef :=_edb .ImageFromFile (_dcaf .Path ());if _caef !=nil {_ad .Log .Debug ("\u0075\u006e\u0061\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0063r\u0065\u0061\u0074\u0065\u0020\u0069\u006d\u0061\u0067\u0065:\u0020\u0025\u0073",_caef );
-};_bebag ,_caef :=_ebbe .AddImage (_aebfg );if _caef !=nil {_ad .Log .Debug ("u\u006e\u0061\u0062\u006c\u0065\u0020t\u006f\u0020\u0061\u0064\u0064\u0020i\u006d\u0061\u0067\u0065\u0020\u0074\u006f \u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u003a\u0020%\u0073",_caef );
-};_eadc :=_ebbe ._fee .GetByRelId (_bebag .RelID ());_eadc .SetID (_dcaf .RelID ());};};};
-
-// Table is a table within a document.
-type Table struct{_ebbbg *Document ;_cefad *_bg .CT_Tbl ;};
-
-// SetBefore sets the spacing that comes before the paragraph.
-func (_debg ParagraphSpacing )SetBefore (before _ac .Distance ){_debg ._cdade .BeforeAttr =&_de .ST_TwipsMeasure {};_debg ._cdade .BeforeAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (before /_ac .Twips ));};
-
-// Index returns the index of the footer within the document.  This is used to
-// form its zip packaged filename as well as to match it with its relationship
-// ID.
-func (_cffa Footer )Index ()int {for _geagb ,_fbadc :=range _cffa ._babd ._dgdg {if _fbadc ==_cffa ._bfebb {return _geagb ;};};return -1;};
-
-// AddWatermarkPicture adds new watermark picture to document.
-func (_cdad *Document )AddWatermarkPicture (imageRef _edb .ImageRef )WatermarkPicture {var _ccbd []Header ;if _bdca ,_effg :=_cdad .BodySection ().GetHeader (_bg .ST_HdrFtrDefault );_effg {_ccbd =append (_ccbd ,_bdca );};if _gaee ,_faae :=_cdad .BodySection ().GetHeader (_bg .ST_HdrFtrEven );
-_faae {_ccbd =append (_ccbd ,_gaee );};if _aeda ,_eeag :=_cdad .BodySection ().GetHeader (_bg .ST_HdrFtrFirst );_eeag {_ccbd =append (_ccbd ,_aeda );};if len (_ccbd )< 1{_fddf :=_cdad .AddHeader ();_cdad .BodySection ().SetHeader (_fddf ,_bg .ST_HdrFtrDefault );
-_ccbd =append (_ccbd ,_fddf );};var _egaa error ;_ace :=NewWatermarkPicture ();for _ ,_bad :=range _ccbd {imageRef ,_egaa =_bad .AddImageRef (imageRef );if _egaa !=nil {return WatermarkPicture {};};_adea :=_bad .Paragraphs ();if len (_adea )< 1{_gebc :=_bad .AddParagraph ();
-_gebc .AddRun ().AddText ("");};for _ ,_gdc :=range _bad .X ().EG_BlockLevelElts {for _ ,_fef :=range _gdc .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_bdbcb :=range _fef .ContentBlockContentChoice .P {for _ ,_fcgc :=range _bdbcb .EG_PContent {for _ ,_bacf :=range _fcgc .PContentChoice .EG_ContentRunContent {if _bacf .ContentRunContentChoice .R ==nil {continue ;
-};_bacf .ContentRunContentChoice .R .EG_RunInnerContent =append (_bacf .ContentRunContentChoice .R .EG_RunInnerContent ,&_bg .EG_RunInnerContent {RunInnerContentChoice :&_bg .EG_RunInnerContentChoice {Pict :_ace ._cfgg }});};};};};};};_ace .SetPicture (imageRef );
-return _ace ;};
-
-// SetCharacterSpacing sets the run's Character Spacing Adjustment.
-func (_beeee RunProperties )SetCharacterSpacing (size _ac .Distance ){_beeee ._ddbb .Spacing =_bg .NewCT_SignedTwipsMeasure ();_beeee ._ddbb .Spacing .ValAttr .Int64 =_g .Int64 (int64 (size /_ac .Twips ));};func (_ggafe Paragraph )addStartBookmark (_dbfe int64 ,_adae string )*_bg .CT_Bookmark {_cdba :=_bg .NewEG_PContent ();
-_ggafe ._dfbf .EG_PContent =append (_ggafe ._dfbf .EG_PContent ,_cdba );_ebbad :=_bg .NewEG_ContentRunContent ();_edfdg :=_bg .NewEG_RunLevelElts ();_bbgag :=_bg .NewEG_RangeMarkupElements ();_fddee :=_bg .NewCT_Bookmark ();_fddee .NameAttr =_adae ;_fddee .IdAttr =_dbfe ;
-_bbgag .RangeMarkupElementsChoice .BookmarkStart =_fddee ;_cdba .PContentChoice .EG_ContentRunContent =append (_cdba .PContentChoice .EG_ContentRunContent ,_ebbad );_ebbad .ContentRunContentChoice .EG_RunLevelElts =append (_ebbad .ContentRunContentChoice .EG_RunLevelElts ,_edfdg );
-_edfdg .RunLevelEltsChoice .EG_RangeMarkupElements =append (_edfdg .RunLevelEltsChoice .EG_RangeMarkupElements ,_bbgag );return _fddee ;};
-
-// X return slice of node.
-func (_dafea *Nodes )X ()[]Node {return _dafea ._feda };
-
-// SetColor sets a specific color or auto.
-func (_aabd Color )SetColor (v _ce .Color ){if v .IsAuto (){_aabd ._eaga .ValAttr .ST_HexColorAuto =_bg .ST_HexColorAutoAuto ;_aabd ._eaga .ValAttr .ST_HexColorRGB =nil ;}else {_aabd ._eaga .ValAttr .ST_HexColorAuto =_bg .ST_HexColorAutoUnset ;_aabd ._eaga .ValAttr .ST_HexColorRGB =v .AsRGBString ();
-};};
-
-// Set3DRotationImageEffect sets the 3D rotation image effect.
-func (_cfd AnchoredDrawing )Set3DRotationImageEffect (){for _ ,_fce :=range _cfd ._cd .Graphic .GraphicData .Any {if _gee ,_aabe :=_fce .(*_gg .Pic );_aabe {_gee .SpPr .Scene3d =_eg .NewCT_Scene3D ();_gee .SpPr .Scene3d .Camera =_eg .NewCT_Camera ();_gee .SpPr .Scene3d .Camera .PrstAttr =_eg .ST_PresetCameraTypeIsometricRightUp ;
-_gee .SpPr .Scene3d .LightRig =_eg .NewCT_LightRig ();_gee .SpPr .Scene3d .LightRig .RigAttr =_eg .ST_LightRigTypeThreePt ;_gee .SpPr .Scene3d .LightRig .DirAttr =_eg .ST_LightRigDirectionT ;};};};
-
-// SetColor sets the text color.
-func (_ceaeb RunProperties )SetColor (c _ce .Color ){_ceaeb ._ddbb .Color =_bg .NewCT_Color ();_ceaeb ._ddbb .Color .ValAttr .ST_HexColorRGB =c .AsRGBString ();};
-
-// SetAllowOverlapAttr sets the allowOverlap attribute of anchor.
-func (_ba AnchoredDrawing )SetAllowOverlapAttr (val bool ){_ba ._cd .AllowOverlapAttr =val };
-
-// X returns the inner wrapped XML type.
-func (_faed RunProperties )X ()*_bg .CT_RPr {return _faed ._ddbb };
-
-// Strike returns true if paragraph is striked.
-func (_ceea ParagraphProperties )Strike ()bool {return _bbeg (_ceea ._dabde .RPr .Strike )};
-
-// Copy makes a deep copy of the document by saving and reading it back.
-// It can be useful to avoid sharing common data between two documents.
-func (_dfcd *Document )Copy ()(*Document ,error ){_fdge :=_d .NewBuffer ([]byte {});_bacd :=_dfcd .save (_fdge ,_dfcd ._dcdb );if _bacd !=nil {return nil ,_bacd ;};_becf :=_fdge .Bytes ();_eagg :=_d .NewReader (_becf );return _ebeg (_eagg ,int64 (_eagg .Len ()),_dfcd ._dcdb );
-};func _bbfe (_ddde *Document ,_fbadg Paragraph )listItemInfo {if _ddde .Numbering .X ()==nil {return listItemInfo {};};if len (_ddde .Numbering .Definitions ())< 1{return listItemInfo {};};_gfdbb :=_aagd (_fbadg );if _gfdbb ==nil {return listItemInfo {};
-};_cdegc :=_ddde .GetNumberingLevelByIds (_gfdbb .NumId .ValAttr ,_gfdbb .Ilvl .ValAttr );if _fgab :=_cdegc .X ();_fgab ==nil {return listItemInfo {};};_gbbc :=int64 (0);for _ ,_fgdf :=range _ddde .Numbering ._faffc .Num {if _fgdf !=nil &&_fgdf .NumIdAttr ==_gfdbb .NumId .ValAttr {_gbbc =_fgdf .AbstractNumId .ValAttr ;
-};};return listItemInfo {FromParagraph :&_fbadg ,AbstractNumId :&_gbbc ,NumberingLevel :&_cdegc };};
-
-// SetLastColumn controls the conditional formatting for the last column in a table.
-func (_bgeeb TableLook )SetLastColumn (on bool ){if !on {_bgeeb ._acgba .LastColumnAttr =&_de .ST_OnOff {};_bgeeb ._acgba .LastColumnAttr .ST_OnOff1 =_de .ST_OnOff1Off ;}else {_bgeeb ._acgba .LastColumnAttr =&_de .ST_OnOff {};_bgeeb ._acgba .LastColumnAttr .ST_OnOff1 =_de .ST_OnOff1On ;
-};};
-
-// AbstractNumberID returns the ID that is unique within all numbering
-// definitions that is used to assign the definition to a paragraph.
-func (_ccba NumberingDefinition )AbstractNumberID ()int64 {return _ccba ._dbagd .AbstractNumIdAttr };
-
-// Clear resets the numbering.
-func (_fbde Numbering )Clear (){_fbde ._faffc .AbstractNum =nil ;_fbde ._faffc .Num =nil ;_fbde ._faffc .NumIdMacAtCleanup =nil ;_fbde ._faffc .NumPicBullet =nil ;};
-
-// SetHeader sets a section header.
-func (_fegaf Section )SetHeader (h Header ,t _bg .ST_HdrFtr ){_daea :=_bg .NewEG_HdrFtrReferences ();_fegaf ._cdebe .EG_HdrFtrReferences =append (_fegaf ._cdebe .EG_HdrFtrReferences ,_daea );_daea .HdrFtrReferencesChoice .HeaderReference =_bg .NewCT_HdrFtrRef ();
-_daea .HdrFtrReferencesChoice .HeaderReference .TypeAttr =t ;_dcad :=_fegaf ._baggf ._fee .FindRIDForN (h .Index (),_g .HeaderType );if _dcad ==""{_ad .Log .Debug ("\u0075\u006ea\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0064\u0065\u0074\u0065\u0072\u006d\u0069\u006e\u0065\u0020\u0068\u0065\u0061\u0064\u0065r \u0049\u0044");
-};_daea .HdrFtrReferencesChoice .HeaderReference .IdAttr =_dcad ;};
-
-// AddWatermarkText adds new watermark text to the document.
-func (_defc *Document )AddWatermarkText (text string )WatermarkText {var _dcac []Header ;if _dbgb ,_efc :=_defc .BodySection ().GetHeader (_bg .ST_HdrFtrDefault );_efc {_dcac =append (_dcac ,_dbgb );};if _egbe ,_efgaf :=_defc .BodySection ().GetHeader (_bg .ST_HdrFtrEven );
-_efgaf {_dcac =append (_dcac ,_egbe );};if _ebga ,_edba :=_defc .BodySection ().GetHeader (_bg .ST_HdrFtrFirst );_edba {_dcac =append (_dcac ,_ebga );};if len (_dcac )< 1{_adgf :=_defc .AddHeader ();_defc .BodySection ().SetHeader (_adgf ,_bg .ST_HdrFtrDefault );
-_dcac =append (_dcac ,_adgf );};_edfb :=NewWatermarkText ();for _ ,_bfda :=range _dcac {_dggd :=_bfda .Paragraphs ();if len (_dggd )< 1{_gaage :=_bfda .AddParagraph ();_gaage .AddRun ().AddText ("");};for _ ,_abfgb :=range _bfda .X ().EG_BlockLevelElts {for _ ,_dgce :=range _abfgb .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_gced :=range _dgce .ContentBlockContentChoice .P {for _ ,_ceegb :=range _gced .EG_PContent {for _ ,_cdebf :=range _ceegb .PContentChoice .EG_ContentRunContent {if _cdebf .ContentRunContentChoice .R ==nil {continue ;
-};_cdebf .ContentRunContentChoice .R .EG_RunInnerContent =append (_cdebf .ContentRunContentChoice .R .EG_RunInnerContent ,&_bg .EG_RunInnerContent {RunInnerContentChoice :&_bg .EG_RunInnerContentChoice {Pict :_edfb ._dbaf }});};};};};};};_edfb .SetText (text );
-return _edfb ;};
-
-// AddHTML adds HTML text to a run.
-func (_dafbg Run )AddHTML (s string ){_fedce :=_bg .NewEG_RunInnerContent ();_dafbg ._bdced .EG_RunInnerContent =append (_dafbg ._bdced .EG_RunInnerContent ,_fedce );_fedce .RunInnerContentChoice .T =_bg .NewCT_Text ();if _g .NeedsSpacePreserve (s ){_cgec :="\u0070\u0072\u0065\u0073\u0065\u0072\u0076\u0065";
-_fedce .RunInnerContentChoice .T .SpaceAttr =&_cgec ;};_gedc :=_dafbg .parseHTMLTag (s );_fedce .RunInnerContentChoice .T .Content =_gedc ;};
-
-// AddSection adds a new document section with an optional section break.  If t
-// is ST_SectionMarkUnset, then no break will be inserted.
-func (_aadea ParagraphProperties )AddSection (t _bg .ST_SectionMark )Section {_aadea ._dabde .SectPr =_bg .NewCT_SectPr ();if t !=_bg .ST_SectionMarkUnset {_aadea ._dabde .SectPr .Type =_bg .NewCT_SectType ();_aadea ._dabde .SectPr .Type .ValAttr =t ;};
-return Section {_aadea ._caedc ,_aadea ._dabde .SectPr };};
-
-// Tables returns the tables defined in the document.
-func (_afb *Document )Tables ()[]Table {_bbe :=[]Table {};if _afb ._feaa .Body ==nil {return nil ;};for _ ,_afccb :=range _afb ._feaa .Body .EG_BlockLevelElts {for _ ,_bacb :=range _afccb .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_agc :=range _afb .tables (_bacb ){_bbe =append (_bbe ,_agc );
-};};};return _bbe ;};
-
-// NumberingDefinition defines a numbering definition for a list of pragraphs.
-type NumberingDefinition struct{_dbagd *_bg .CT_AbstractNum };
-
-// SetTop sets the cell top margin
-func (_efg CellMargins )SetTop (d _ac .Distance ){_efg ._cc .Top =_bg .NewCT_TblWidth ();_gacd (_efg ._cc .Top ,d );};
-
-// SetBehindDoc sets the behindDoc attribute of anchor.
-func (_fa AnchoredDrawing )SetBehindDoc (val bool ){_fa ._cd .BehindDocAttr =val };
-
-// SetAfterAuto controls if spacing after a paragraph is automatically determined.
-func (_fdfg ParagraphSpacing )SetAfterAuto (b bool ){if b {_fdfg ._cdade .AfterAutospacingAttr =&_de .ST_OnOff {};_fdfg ._cdade .AfterAutospacingAttr .Bool =_g .Bool (true );}else {_fdfg ._cdade .AfterAutospacingAttr =nil ;};};
-
-// SetSemiHidden controls if the style is hidden in the UI.
-func (_ebded Style )SetSemiHidden (b bool ){if b {_ebded ._cbega .SemiHidden =_bg .NewCT_OnOff ();}else {_ebded ._cbega .SemiHidden =nil ;};};
-
-// SetStart sets the cell start margin
-func (_dfdd CellMargins )SetStart (d _ac .Distance ){_dfdd ._cc .Start =_bg .NewCT_TblWidth ();_gacd (_dfdd ._cc .Start ,d );};
-
-// SetYOffset sets the Y offset for an image relative to the origin.
-func (_acd AnchoredDrawing )SetYOffset (y _ac .Distance ){_acd ._cd .PositionV .PosVChoice =&_bg .WdCT_PosVChoice {};_acd ._cd .PositionV .PosVChoice .PosOffset =_g .Int32 (int32 (y /_ac .EMU ));};
-
-// SetStyle sets the table style name.
-func (_egddb TableProperties )SetStyle (name string ){if name ==""{_egddb ._cdfg .TblStyle =nil ;}else {_egddb ._cdfg .TblStyle =_bg .NewCT_String ();_egddb ._cdfg .TblStyle .ValAttr =name ;};};
-
-// SetNumberingDefinitionByID sets the numbering definition ID directly, which must
-// match an ID defined in numbering.xml
-func (_gdcad Paragraph )SetNumberingDefinitionByID (abstractNumberID int64 ){_gdcad .ensurePPr ();if _gdcad ._dfbf .PPr .NumPr ==nil {_gdcad ._dfbf .PPr .NumPr =_bg .NewCT_NumPr ();};_gbgcd :=_bg .NewCT_DecimalNumber ();_gbgcd .ValAttr =int64 (abstractNumberID );
-_gdcad ._dfbf .PPr .NumPr .NumId =_gbgcd ;};func (_defe *chart )RelId ()string {return _defe ._aff };
-
-// GetHeader gets a section Header for given type t [ST_HdrFtrDefault, ST_HdrFtrEven, ST_HdrFtrFirst]
-func (_bdaea Section )GetHeader (t _bg .ST_HdrFtr )(Header ,bool ){for _ ,_cgef :=range _bdaea ._cdebe .EG_HdrFtrReferences {if _cgef .HdrFtrReferencesChoice .HeaderReference ==nil {continue ;};if _cgef .HdrFtrReferencesChoice .HeaderReference .TypeAttr ==t {for _ ,_fdfac :=range _bdaea ._baggf .Headers (){_fegg :=_bdaea ._baggf ._fee .FindRIDForN (_fdfac .Index (),_g .HeaderType );
-if _fegg ==_cgef .HdrFtrReferencesChoice .HeaderReference .IdAttr {return _fdfac ,true ;};};};};return Header {},false ;};func _ecbae (_abgc *Document ,_gdbcd []*_bg .EG_ContentBlockContent ,_ffcd *TableInfo )[]Node {_eegaf :=[]Node {};for _ ,_cfga :=range _gdbcd {if _gaga :=_cfga .ContentBlockContentChoice .Sdt ;
-_gaga !=nil {if _gadde :=_gaga .SdtContent ;_gadde !=nil {for _ ,_fcfcb :=range _gadde .EG_ContentBlockContent {_eegaf =append (_eegaf ,_bedd (_abgc ,_fcfcb .ContentBlockContentChoice .P ,_ffcd ,nil )...);};};};_eegaf =append (_eegaf ,_bedd (_abgc ,_cfga .ContentBlockContentChoice .P ,_ffcd ,nil )...);
-for _ ,_gfgc :=range _cfga .ContentBlockContentChoice .Tbl {_afabb :=Table {_abgc ,_gfgc };_aaddc ,_ :=_abgc .Styles .SearchStyleById (_afabb .Style ());_bfeg :=[]Node {};for _baba ,_bgbf :=range _gfgc .EG_ContentRowContent {for _ ,_bfge :=range _bgbf .ContentRowContentChoice .Tr {for _agef ,_bcdfg :=range _bfge .EG_ContentCellContent {for _ ,_fdde :=range _bcdfg .ContentCellContentChoice .Tc {_ceaee :=&TableInfo {Table :_gfgc ,Row :_bfge ,Cell :_fdde ,RowIndex :_baba ,ColIndex :_agef };
-for _ ,_caff :=range _fdde .EG_BlockLevelElts {_bfeg =append (_bfeg ,_ecbae (_abgc ,_caff .BlockLevelEltsChoice .EG_ContentBlockContent ,_ceaee )...);};};};};};_eegaf =append (_eegaf ,Node {_ggab :_abgc ,_ffdc :&_afabb ,Style :_aaddc ,Children :_bfeg });
-};};return _eegaf ;};
-
-// SetHangingIndent controls special indent of paragraph.
-func (_ggfaa Paragraph )SetHangingIndent (m _ac .Distance ){_ggfaa .ensurePPr ();_aagb :=_ggfaa ._dfbf .PPr ;if _aagb .Ind ==nil {_aagb .Ind =_bg .NewCT_Ind ();};if m ==_ac .Zero {_aagb .Ind .HangingAttr =nil ;}else {_aagb .Ind .HangingAttr =&_de .ST_TwipsMeasure {};
-_aagb .Ind .HangingAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (m /_ac .Twips ));};};
-
-// Type returns the type of the field.
-func (_gacfb FormField )Type ()FormFieldType {if len (_gacfb ._acfd .FFDataChoice )==0{return FormFieldTypeUnknown ;};for _ ,_gdec :=range _gacfb ._acfd .FFDataChoice {switch {case _gdec .TextInput !=nil :return FormFieldTypeText ;case _gdec .CheckBox !=nil :return FormFieldTypeCheckBox ;
-case _gdec .DdList !=nil :return FormFieldTypeDropDown ;};};return FormFieldTypeUnknown ;};
-
-// AddParagraph adds a paragraph to the footnote.
-func (_cgcgf Footnote )AddParagraph ()Paragraph {_gbcbf :=_bg .NewEG_ContentBlockContent ();_eacg :=len (_cgcgf ._efbd .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent );_cgcgf ._efbd .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent =append (_cgcgf ._efbd .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent ,_gbcbf );
-_cbga :=_bg .NewCT_P ();var _bebe *_bg .CT_String ;if _eacg !=0{_cggg :=len (_cgcgf ._efbd .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent [_eacg -1].ContentBlockContentChoice .P );_bebe =_cgcgf ._efbd .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent [_eacg -1].ContentBlockContentChoice .P [_cggg -1].PPr .PStyle ;
-}else {_bebe =_bg .NewCT_String ();_bebe .ValAttr =FootnoteTextStyleId ;};_gbcbf .ContentBlockContentChoice .P =append (_gbcbf .ContentBlockContentChoice .P ,_cbga );_cabc :=Paragraph {_cgcgf ._affbg ,_cbga };_cabc ._dfbf .PPr =_bg .NewCT_PPr ();_cabc ._dfbf .PPr .PStyle =_bebe ;
-_cabc ._dfbf .PPr .RPr =_bg .NewCT_ParaRPr ();return _cabc ;};
-
-// InitializeDefault constructs a default numbering.
-func (_bfcb Numbering )InitializeDefault (){_bcfce :=_bg .NewCT_AbstractNum ();_bcfce .MultiLevelType =_bg .NewCT_MultiLevelType ();_bcfce .MultiLevelType .ValAttr =_bg .ST_MultiLevelTypeHybridMultilevel ;_bfcb ._faffc .AbstractNum =append (_bfcb ._faffc .AbstractNum ,_bcfce );
-_bcfce .AbstractNumIdAttr =1;const _efcfc =720;const _adebd =720;const _cecb =360;for _abfff :=0;_abfff < 9;_abfff ++{_egfa :=_bg .NewCT_Lvl ();_egfa .IlvlAttr =int64 (_abfff );_egfa .Start =_bg .NewCT_DecimalNumber ();_egfa .Start .ValAttr =1;_egfa .NumFmt =_bg .NewCT_NumFmt ();
-_egfa .NumFmt .ValAttr =_bg .ST_NumberFormatBullet ;_egfa .Suff =_bg .NewCT_LevelSuffix ();_egfa .Suff .ValAttr =_bg .ST_LevelSuffixNothing ;_egfa .LvlText =_bg .NewCT_LevelText ();_egfa .LvlText .ValAttr =_g .String ("\uf0b7");_egfa .LvlJc =_bg .NewCT_Jc ();
-_egfa .LvlJc .ValAttr =_bg .ST_JcLeft ;_egfa .RPr =_bg .NewCT_RPr ();_egfa .RPr .RFonts =_bg .NewCT_Fonts ();_egfa .RPr .RFonts .AsciiAttr =_g .String ("\u0053\u0079\u006d\u0062\u006f\u006c");_egfa .RPr .RFonts .HAnsiAttr =_g .String ("\u0053\u0079\u006d\u0062\u006f\u006c");
-_egfa .RPr .RFonts .HintAttr =_bg .ST_HintDefault ;_egfa .PPr =_bg .NewCT_PPrGeneral ();_geda :=int64 (_abfff *_adebd +_efcfc );_egfa .PPr .Ind =_bg .NewCT_Ind ();_egfa .PPr .Ind .LeftAttr =&_bg .ST_SignedTwipsMeasure {};_egfa .PPr .Ind .LeftAttr .Int64 =_g .Int64 (_geda );
-_egfa .PPr .Ind .HangingAttr =&_de .ST_TwipsMeasure {};_egfa .PPr .Ind .HangingAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (_cecb ));_bcfce .Lvl =append (_bcfce .Lvl ,_egfa );};_dcga :=_bg .NewCT_Num ();_dcga .NumIdAttr =1;_dcga .AbstractNumId =_bg .NewCT_DecimalNumber ();
-_dcga .AbstractNumId .ValAttr =1;_bfcb ._faffc .Num =append (_bfcb ._faffc .Num ,_dcga );};
-
-// AddImage adds an image to the document package, returning a reference that
-// can be used to add the image to a run and place it in the document contents.
-func (_ebbf Footer )AddImage (i _edb .Image )(_edb .ImageRef ,error ){var _dbbd _edb .Relationships ;for _cffd ,_gaaae :=range _ebbf ._babd ._dgdg {if _gaaae ==_ebbf ._bfebb {_dbbd =_ebbf ._babd ._dce [_cffd ];};};_gcbc :=_edb .MakeImageRef (i ,&_ebbf ._babd .DocBase ,_dbbd );
-if i .Data ==nil &&i .Path ==""{return _gcbc ,_be .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0064\u0061t\u0061\u0020\u006f\u0072\u0020\u0061\u0020\u0070\u0061\u0074\u0068");};if i .Format ==""{return _gcbc ,_be .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0061\u0020v\u0061\u006c\u0069\u0064\u0020\u0066\u006f\u0072\u006d\u0061\u0074");
-};if i .Size .X ==0||i .Size .Y ==0{return _gcbc ,_be .New ("\u0069\u006d\u0061\u0067e\u0020\u006d\u0075\u0073\u0074\u0020\u0068\u0061\u0076\u0065 \u0061 \u0076\u0061\u006c\u0069\u0064\u0020\u0073i\u007a\u0065");};_ebbf ._babd .Images =append (_ebbf ._babd .Images ,_gcbc );
-_cgbea :=_cb .Sprintf ("\u006d\u0065d\u0069\u0061\u002fi\u006d\u0061\u0067\u0065\u0025\u0064\u002e\u0025\u0073",len (_ebbf ._babd .Images ),i .Format );_ggdeb :=_dbbd .AddRelationship (_cgbea ,_g .ImageType );_gcbc .SetRelID (_ggdeb .X ().IdAttr );return _gcbc ,nil ;
-};func (_gaad *Document )addFootnoteSeparator (){_bcfb :=_bg .NewCT_FtnEdn ();_bcfb .IdAttr =-1;_bcfb .TypeAttr =_bg .ST_FtnEdnSeparator ;_gead :=Footnote {_gaad ,_bcfb };_gead .X ().EG_BlockLevelElts =[]*_bg .EG_BlockLevelElts {_bg .NewEG_BlockLevelElts ()};
-_gcgf :=_gead .AddParagraph ();_gcgf .X ().PPr =nil ;_cage :=_gcgf .AddRun ();_edag :=_cage .newIC ();_edag .RunInnerContentChoice .Separator =_bg .NewCT_Empty ();_gaad ._gca .CT_Footnotes .Footnote =append (_gaad ._gca .CT_Footnotes .Footnote ,_bcfb );
-_bcfb =_bg .NewCT_FtnEdn ();_bcfb .IdAttr =0;_bcfb .TypeAttr =_bg .ST_FtnEdnContinuationSeparator ;_gead =Footnote {_gaad ,_bcfb };_gead .X ().EG_BlockLevelElts =[]*_bg .EG_BlockLevelElts {_bg .NewEG_BlockLevelElts ()};_gcgf =_gead .AddParagraph ();_gcgf .X ().PPr =nil ;
-_cage =_gcgf .AddRun ();_edag =_cage .newIC ();_edag .RunInnerContentChoice .ContinuationSeparator =_bg .NewCT_Empty ();_gaad ._gca .CT_Footnotes .Footnote =append (_gaad ._gca .CT_Footnotes .Footnote ,_bcfb );};
-
-// SetVerticalBanding controls the conditional formatting for vertical banding.
-func (_babgc TableLook )SetVerticalBanding (on bool ){if !on {_babgc ._acgba .NoVBandAttr =&_de .ST_OnOff {};_babgc ._acgba .NoVBandAttr .ST_OnOff1 =_de .ST_OnOff1On ;}else {_babgc ._acgba .NoVBandAttr =&_de .ST_OnOff {};_babgc ._acgba .NoVBandAttr .ST_OnOff1 =_de .ST_OnOff1Off ;
-};};
-
-// Endnote is an individual endnote reference within the document.
-type Endnote struct{_gccc *Document ;_ddb *_bg .CT_FtnEdn ;};func (_ggdaf Paragraph )addEndBookmark (_gcfae int64 )*_bg .CT_MarkupRange {_ebed :=_bg .NewEG_PContent ();_ggdaf ._dfbf .EG_PContent =append (_ggdaf ._dfbf .EG_PContent ,_ebed );_fcce :=_bg .NewEG_ContentRunContent ();
-_eacdd :=_bg .NewEG_RunLevelElts ();_egcb :=_bg .NewEG_RangeMarkupElements ();_aadbf :=_bg .NewCT_MarkupRange ();_aadbf .IdAttr =_gcfae ;_egcb .RangeMarkupElementsChoice .BookmarkEnd =_aadbf ;_ebed .PContentChoice .EG_ContentRunContent =append (_ebed .PContentChoice .EG_ContentRunContent ,_fcce );
-_fcce .ContentRunContentChoice .EG_RunLevelElts =append (_fcce .ContentRunContentChoice .EG_RunLevelElts ,_eacdd );_eacdd .RunLevelEltsChoice .EG_RangeMarkupElements =append (_eacdd .RunLevelEltsChoice .EG_RangeMarkupElements ,_egcb );return _aadbf ;};
-
-
-// SetAfterLineSpacing sets spacing below paragraph in line units.
-func (_aecbd Paragraph )SetAfterLineSpacing (d _ac .Distance ){_aecbd .ensurePPr ();if _aecbd ._dfbf .PPr .Spacing ==nil {_aecbd ._dfbf .PPr .Spacing =_bg .NewCT_Spacing ();};_egfed :=_aecbd ._dfbf .PPr .Spacing ;_egfed .AfterLinesAttr =_g .Int64 (int64 (d /_ac .Twips ));
-};
-
-// SetName marks sets a name attribute for a FormField.
-func (_fbdc FormField )SetName (name string ){_cfefc :=_bg .NewCT_FFName ();_cfefc .ValAttr =&name ;_fbdc ._acfd .FFDataChoice =[]*_bg .CT_FFDataChoice {{Name :_cfefc }};};
-
-// RunProperties returns the run properties controlling text formatting within the table.
-func (_cbddeg TableConditionalFormatting )RunProperties ()RunProperties {if _cbddeg ._dbgc .RPr ==nil {_cbddeg ._dbgc .RPr =_bg .NewCT_RPr ();};return RunProperties {_cbddeg ._dbgc .RPr };};func (_eabac *Document )insertStyleFromNode (_fcgd Node ){if _fcgd .Style .X ()!=nil {if _ ,_eagga :=_eabac .Styles .SearchStyleById (_fcgd .Style .StyleID ());
-!_eagga {_eabac .Styles .InsertStyle (_fcgd .Style );_cfbed :=_fcgd .Style .ParagraphProperties ();_eabac .insertNumberingFromStyleProperties (_fcgd ._ggab .Numbering ,_cfbed );};};};
-
-// X returns the inner wrapped XML type.
-func (_gebee TableWidth )X ()*_bg .CT_TblWidth {return _gebee ._badd };
-
-// FindNodeByStyleId return slice of node base on style id.
-func (_aagc *Nodes )FindNodeByStyleId (styleId string )[]Node {_agebd :=[]Node {};for _ ,_dcgg :=range _aagc ._feda {switch _fefeb :=_dcgg ._ffdc .(type ){case *Paragraph :if _fefeb !=nil &&_fefeb .Style ()==styleId {_agebd =append (_agebd ,_dcgg );};case *Table :if _fefeb !=nil &&_fefeb .Style ()==styleId {_agebd =append (_agebd ,_dcgg );
-};};_cdaac :=Nodes {_feda :_dcgg .Children };_agebd =append (_agebd ,_cdaac .FindNodeByStyleId (styleId )...);};return _agebd ;};
-
-// SetWidth sets the table with to a specified width.
-func (_fcecf TableProperties )SetWidth (d _ac .Distance ){_fcecf ._cdfg .TblW =_bg .NewCT_TblWidth ();_fcecf ._cdfg .TblW .TypeAttr =_bg .ST_TblWidthDxa ;_fcecf ._cdfg .TblW .WAttr =&_bg .ST_MeasurementOrPercent {};_fcecf ._cdfg .TblW .WAttr .ST_DecimalNumberOrPercent =&_bg .ST_DecimalNumberOrPercent {};
-_fcecf ._cdfg .TblW .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_g .Int64 (int64 (d /_ac .Twips ));};
-
-// AppendNode append node to document element.
-func (_bgedc *Document )AppendNode (node Node ){_bgedc .insertImageFromNode (node );_bgedc .insertStyleFromNode (node );for _ ,_gagc :=range node .Children {_bgedc .insertImageFromNode (_gagc );_bgedc .insertStyleFromNode (_gagc );};switch _fffb :=node .X ().(type ){case *Paragraph :_bgedc .appendParagraph (nil ,*_fffb ,false );
-case *Table :_bgedc .appendTable (nil ,*_fffb ,false );};if node ._ggab !=nil {if node ._ggab ._bgb !=nil {if _fbabc :=_bgedc ._fee .FindRIDForN (0,_g .ThemeType );_fbabc ==""{if _gaddf :=node ._ggab ._fee .FindRIDForN (0,_g .ThemeType );_gaddf !=""{_bgedc ._bgb =append (_bgedc ._bgb ,node ._ggab ._bgb ...);
-_ggbg :=node ._ggab ._fee .GetTargetByRelId (_gaddf );_bgedc .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072\u0064\u002f"+_ggbg ,"\u0061\u0070\u0070\u006c\u0069\u0063\u0061t\u0069\u006f\u006e/\u0076\u006e\u0064.\u006f\u0070e\u006e\u0078\u006d\u006c\u0066\u006fr\u006dat\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0074\u0068\u0065\u006d\u0065\u002b\u0078\u006d\u006c");
-_bgedc ._fee .AddRelationship (_ggbg ,_g .ThemeType );};};};_eeafe :=_bgedc ._deccc ;_bacfb :=node ._ggab ._deccc ;if _eeafe !=nil {if _bacfb !=nil {if _eeafe .Font !=nil {if _bacfb .Font !=nil {for _ ,_gaccf :=range _bacfb .Font {_gegad :=true ;for _ ,_cccf :=range _eeafe .Font {if _cccf .NameAttr ==_gaccf .NameAttr {_gegad =false ;
-break ;};};if _gegad {_eeafe .Font =append (_eeafe .Font ,_gaccf );};};};}else {_eeafe .Font =_bacfb .Font ;};};}else if _bacfb !=nil {_eeafe =_bacfb ;};_bgedc ._deccc =_eeafe ;if _efgg :=_bgedc ._fee .FindRIDForN (0,_g .FontTableType );_efgg ==""{_bgedc .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072d/\u0066\u006f\u006e\u0074\u0054\u0061\u0062\u006c\u0065\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069c\u0061\u0074\u0069\u006f\u006e\u002f\u0076n\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072\u006d\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063e\u0073\u0073\u0069\u006e\u0067\u006d\u006c\u002e\u0066\u006f\u006e\u0074T\u0061\u0062\u006c\u0065\u002b\u0078m\u006c");
-_bgedc ._fee .AddRelationship ("\u0066\u006f\u006e\u0074\u0054\u0061\u0062\u006c\u0065\u002e\u0078\u006d\u006c",_g .FontTableType );};};};
-
-// ComplexSizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
-func (_dfcee ParagraphProperties )ComplexSizeMeasure ()string {if _dgaf :=_dfcee ._dabde .RPr .SzCs ;_dgaf !=nil {_fadgb :=_dgaf .ValAttr ;if _fadgb .ST_PositiveUniversalMeasure !=nil {return *_fadgb .ST_PositiveUniversalMeasure ;};};return "";};func _ecag (_egbag *_bg .CT_Border ,_afaa _bg .ST_Border ,_egbf _ce .Color ,_afddb _ac .Distance ){_egbag .ValAttr =_afaa ;
-_egbag .ColorAttr =&_bg .ST_HexColor {};if _egbf .IsAuto (){_egbag .ColorAttr .ST_HexColorAuto =_bg .ST_HexColorAutoAuto ;}else {_egbag .ColorAttr .ST_HexColorRGB =_egbf .AsRGBString ();};if _afddb !=_ac .Zero {_egbag .SzAttr =_g .Uint64 (uint64 (_afddb /_ac .Point *8));
-};};func (_dfc Comment )id ()int64 {return _dfc ._dcff .IdAttr };func _agde ()(*_eg .CT_Point2D ,[]*_eg .CT_Point2D ){var (_egg int64 =0;_egd int64 =21600;);_fag :=_eg .ST_Coordinate {ST_CoordinateUnqualified :&_egg ,ST_UniversalMeasure :nil };_fec :=_eg .ST_Coordinate {ST_CoordinateUnqualified :&_egd ,ST_UniversalMeasure :nil };
-_fcg :=_eg .NewCT_Point2D ();_fcg .XAttr =_fag ;_fcg .YAttr =_fag ;_gcf :=[]*_eg .CT_Point2D {&_eg .CT_Point2D {XAttr :_fag ,YAttr :_fec },&_eg .CT_Point2D {XAttr :_fec ,YAttr :_fec },&_eg .CT_Point2D {XAttr :_fec ,YAttr :_fag },_fcg };return _fcg ,_gcf ;
-};func (_dbdg *Document )addComments (){_dbdg ._edg =_bg .NewComments ();_dbdg ._edg .CT_Comments =*_bg .NewCT_Comments ();_dbdg ._edg .Comment =make ([]*_bg .CT_Comment ,0);_dbdg .ContentTypes .AddOverride ("\u002fw\u006fr\u0064\u002f\u0063\u006f\u006dm\u0065\u006et\u0073\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069\u0063\u0061\u0074\u0069o\u006e\u002fv\u006e\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006dl\u0066\u006f\u0072\u006da\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c.\u0063\u006f\u006d\u006d\u0065\u006e\u0074\u0073\u002b\u0078\u006d\u006c");
-_dbdg ._fee .AddRelationship ("\u0063\u006f\u006dm\u0065\u006e\u0074\u0073\u002e\u0078\u006d\u006c",_g .CommentsType );_fcec :=_dbdg .Styles .AddStyle (_dgfa ,_bg .ST_StyleTypeParagraph ,false );_fcec .SetName ("\u0043\u006f\u006d\u006d\u0065\u006e\u0074\u0020\u0052\u0065\u0066\u0065r\u0065\u006e\u0063\u0065");
-_fcec .SetBasedOn ("D\u0065f\u0061\u0075\u006c\u0074\u0050\u0061\u0072\u0061g\u0072\u0061\u0070\u0068Fo\u006e\u0074");_ggbd :=_fcec .RunProperties ();_ggbd .X ().Sz =&_bg .CT_HpsMeasure {ValAttr :_bg .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_egdf }};
-_ggbd .X ().SzCs =&_bg .CT_HpsMeasure {ValAttr :_bg .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_egdf }};_agg :=_dbdg .Styles .AddStyle (_adcc ,_bg .ST_StyleTypeParagraph ,false );_agg .SetName ("\u0043\u006f\u006dm\u0065\u006e\u0074\u0020\u0054\u0065\u0078\u0074");
-_agg .SetBasedOn ("\u004e\u006f\u0072\u006d\u0061\u006c");_agg .SetLinkedStyle (_eef );_agae :=_agg .RunProperties ();_agae .X ().Sz =&_bg .CT_HpsMeasure {ValAttr :_bg .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_gce }};_agae .X ().SzCs =&_bg .CT_HpsMeasure {ValAttr :_bg .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_gce }};
-_accc :=_dbdg .Styles .AddStyle (_adcc ,_bg .ST_StyleTypeParagraph ,false );_accc .SetName ("\u0043\u006f\u006d\u006d\u0065\u006e\u0074\u0020\u0054\u0065\u0078\u0074 \u0043\u0068\u0061\u0072");_accc .SetBasedOn ("D\u0065f\u0061\u0075\u006c\u0074\u0050\u0061\u0072\u0061g\u0072\u0061\u0070\u0068Fo\u006e\u0074");
-_accc .SetLinkedStyle (_adcc );_adag :=_accc .RunProperties ();_adag .X ().Sz =&_bg .CT_HpsMeasure {ValAttr :_bg .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_gce }};_adag .X ().SzCs =&_bg .CT_HpsMeasure {ValAttr :_bg .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_gce }};
-_bcbc :=_dbdg .Styles .AddStyle (_adcc ,_bg .ST_StyleTypeParagraph ,false );_bcbc .SetName ("\u0043o\u006dm\u0065\u006e\u0074\u0020\u0053\u0075\u0062\u006a\u0065\u0063\u0074");_bcbc .SetBasedOn (_adcc );_bcbc .SetLinkedStyle (_gggd );_bcbc .SetNextStyle (_adcc );
-_cffe :=_bcbc .RunProperties ();_cffe .SetBold (true );};
-
-// AddTabStop adds a tab stop to the paragraph.
-func (_ffaa ParagraphStyleProperties )AddTabStop (position _ac .Distance ,justificaton _bg .ST_TabJc ,leader _bg .ST_TabTlc ){if _ffaa ._becee .Tabs ==nil {_ffaa ._becee .Tabs =_bg .NewCT_Tabs ();};_cegae :=_bg .NewCT_TabStop ();_cegae .LeaderAttr =leader ;
-_cegae .ValAttr =justificaton ;_cegae .PosAttr .Int64 =_g .Int64 (int64 (position /_ac .Twips ));_ffaa ._becee .Tabs .Tab =append (_ffaa ._becee .Tabs .Tab ,_cegae );};
-
-// Section is the beginning of a new section.
-type Section struct{_baggf *Document ;_cdebe *_bg .CT_SectPr ;};
-
-// SetWidthPercent sets the cell to a width percentage.
-func (_feb CellProperties )SetWidthPercent (pct float64 ){_feb ._bbb .TcW =_bg .NewCT_TblWidth ();_feb ._bbb .TcW .TypeAttr =_bg .ST_TblWidthPct ;_feb ._bbb .TcW .WAttr =&_bg .ST_MeasurementOrPercent {};_feb ._bbb .TcW .WAttr .ST_DecimalNumberOrPercent =&_bg .ST_DecimalNumberOrPercent {};
-_feb ._bbb .TcW .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_g .Int64 (int64 (pct *50));};
-
-// ParagraphStyleProperties is the styling information for a paragraph.
-type ParagraphStyleProperties struct{_becee *_bg .CT_PPrGeneral };
-
-// CharacterSpacingMeasure returns paragraph characters spacing with its measure which can be mm, cm, in, pt, pc or pi.
-func (_agage ParagraphProperties )CharacterSpacingMeasure ()string {if _aaeb :=_agage ._dabde .RPr .Spacing ;_aaeb !=nil {_afbdc :=_aaeb .ValAttr ;if _afbdc .ST_UniversalMeasure !=nil {return *_afbdc .ST_UniversalMeasure ;};};return "";};
-
-// IsFootnote returns a bool based on whether the run has a
-// footnote or not. Returns both a bool as to whether it has
-// a footnote as well as the ID of the footnote.
-func (_cafdg Run )IsFootnote ()(bool ,int64 ){if _cafdg ._bdced .EG_RunInnerContent !=nil {if _cafdg ._bdced .EG_RunInnerContent [0].RunInnerContentChoice .FootnoteReference !=nil {return true ,_cafdg ._bdced .EG_RunInnerContent [0].RunInnerContentChoice .FootnoteReference .IdAttr ;
-};};return false ,0;};
-
-// InsertStyle insert style to styles.
-func (_bbag Styles )InsertStyle (ss Style ){_bbag ._gcdd .Style =append (_bbag ._gcdd .Style ,ss .X ())};
-
-// Text returns the underlying text in the run.
-func (_cddc Run )Text ()string {if len (_cddc ._bdced .EG_RunInnerContent )==0{return "";};_egfd :=_d .Buffer {};for _ ,_dfcef :=range _cddc ._bdced .EG_RunInnerContent {if _dfcef .RunInnerContentChoice .T !=nil {_egfd .WriteString (_dfcef .RunInnerContentChoice .T .Content );
-};if _dfcef .RunInnerContentChoice .Tab !=nil {_egfd .WriteByte ('\t');};};return _egfd .String ();};
-
-// SetConformance sets conformance attribute of the document
-// as one of these values from github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes:
-// ST_ConformanceClassUnset, ST_ConformanceClassStrict or ST_ConformanceClassTransitional.
-func (_cagc Document )SetConformance (conformanceAttr _de .ST_ConformanceClass ){_cagc ._feaa .ConformanceAttr =conformanceAttr ;};
-
-// Style returns the style for a paragraph, or an empty string if it is unset.
-func (_edcad ParagraphProperties )Style ()string {if _edcad ._dabde .PStyle !=nil {return _edcad ._dabde .PStyle .ValAttr ;};return "";};
-
-// X returns the inner wrapped XML type.
-func (_gcaf Endnote )X ()*_bg .CT_FtnEdn {return _gcaf ._ddb };func (_eabaa *Document )getWatermarkHeaderInnerContentPictures ()[]*_bg .CT_Picture {var _gebf []*_bg .CT_Picture ;for _ ,_ffcg :=range _eabaa .Headers (){for _ ,_fbgf :=range _ffcg .X ().EG_BlockLevelElts {for _ ,_gdcc :=range _fbgf .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_dccg :=range _gdcc .ContentBlockContentChoice .P {for _ ,_gaec :=range _dccg .EG_PContent {for _ ,_gbfgc :=range _gaec .PContentChoice .EG_ContentRunContent {if _gbfgc .ContentRunContentChoice .R ==nil {continue ;
-};for _ ,_cegb :=range _gbfgc .ContentRunContentChoice .R .EG_RunInnerContent {if _cegb .RunInnerContentChoice .Pict ==nil {continue ;};_edgd :=false ;for _ ,_ffdee :=range _cegb .RunInnerContentChoice .Pict .Any {_eabg ,_agcc :=_ffdee .(*_g .XSDAny );
-if _agcc &&_eabg .XMLName .Local =="\u0073\u0068\u0061p\u0065"{_edgd =true ;};};if _edgd {_gebf =append (_gebf ,_cegb .RunInnerContentChoice .Pict );};};};};};};};};return _gebf ;};
+// SetContextualSpacing controls whether to Ignore Spacing Above and Below When
+// Using Identical Styles
+func (_gbae ParagraphStyleProperties )SetContextualSpacing (b bool ){if !b {_gbae ._egfac .ContextualSpacing =nil ;}else {_gbae ._egfac .ContextualSpacing =_ec .NewCT_OnOff ();};};func _eege (_ebe *_ec .CT_TblWidth ,_ffd _ga .Distance ){_ebe .TypeAttr =_ec .ST_TblWidthDxa ;
+_ebe .WAttr =&_ec .ST_MeasurementOrPercent {};_ebe .WAttr .ST_DecimalNumberOrPercent =&_ec .ST_DecimalNumberOrPercent {};_ebe .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_c .Int64 (int64 (_ffd /_ga .Dxa ));};
 
 // FormFieldType is the type of the form field.
 //
 //go:generate stringer -type=FormFieldType
 type FormFieldType byte ;
 
-// SetFirstRow controls the conditional formatting for the first row in a table.
-func (_cfbag TableLook )SetFirstRow (on bool ){if !on {_cfbag ._acgba .FirstRowAttr =&_de .ST_OnOff {};_cfbag ._acgba .FirstRowAttr .ST_OnOff1 =_de .ST_OnOff1Off ;}else {_cfbag ._acgba .FirstRowAttr =&_de .ST_OnOff {};_cfbag ._acgba .FirstRowAttr .ST_OnOff1 =_de .ST_OnOff1On ;
-};};
-
 // Properties returns the numbering level paragraph properties.
-func (_cadff NumberingLevel )Properties ()ParagraphStyleProperties {if _cadff ._ebebd .PPr ==nil {_cadff ._ebebd .PPr =_bg .NewCT_PPrGeneral ();};return ParagraphStyleProperties {_cadff ._ebebd .PPr };};
-
-// SetCellSpacingPercent sets the cell spacing within a table to a percent width.
-func (_bdcbg TableStyleProperties )SetCellSpacingPercent (pct float64 ){_bdcbg ._ddecf .TblCellSpacing =_bg .NewCT_TblWidth ();_bdcbg ._ddecf .TblCellSpacing .TypeAttr =_bg .ST_TblWidthPct ;_bdcbg ._ddecf .TblCellSpacing .WAttr =&_bg .ST_MeasurementOrPercent {};
-_bdcbg ._ddecf .TblCellSpacing .WAttr .ST_DecimalNumberOrPercent =&_bg .ST_DecimalNumberOrPercent {};_bdcbg ._ddecf .TblCellSpacing .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_g .Int64 (int64 (pct *50));};
-
-// Color controls the run or styles color.
-type Color struct{_eaga *_bg .CT_Color };
-
-// SetShading controls the cell shading.
-func (_abc CellProperties )SetShading (shd _bg .ST_Shd ,foreground ,fill _ce .Color ){if shd ==_bg .ST_ShdUnset {_abc ._bbb .Shd =nil ;}else {_abc ._bbb .Shd =_bg .NewCT_Shd ();_abc ._bbb .Shd .ValAttr =shd ;_abc ._bbb .Shd .ColorAttr =&_bg .ST_HexColor {};
-if foreground .IsAuto (){_abc ._bbb .Shd .ColorAttr .ST_HexColorAuto =_bg .ST_HexColorAutoAuto ;}else {_abc ._bbb .Shd .ColorAttr .ST_HexColorRGB =foreground .AsRGBString ();};_abc ._bbb .Shd .FillAttr =&_bg .ST_HexColor {};if fill .IsAuto (){_abc ._bbb .Shd .FillAttr .ST_HexColorAuto =_bg .ST_HexColorAutoAuto ;
-}else {_abc ._bbb .Shd .FillAttr .ST_HexColorRGB =fill .AsRGBString ();};};};
-
-// SetKeepOnOnePage controls if all lines in a paragraph are kept on the same
-// page.
-func (_agfbb ParagraphStyleProperties )SetKeepOnOnePage (b bool ){if !b {_agfbb ._becee .KeepLines =nil ;}else {_agfbb ._becee .KeepLines =_bg .NewCT_OnOff ();};};
-
-// RemoveMailMerge removes any mail merge settings
-func (_dbed Settings )RemoveMailMerge (){_dbed ._eggcbb .MailMerge =nil };
-
-// NewSettings constructs a new empty Settings
-func NewSettings ()Settings {_geegf :=_bg .NewSettings ();_geegf .Compat =_bg .NewCT_Compat ();_cgdfd :=_bg .NewCT_CompatSetting ();_cgdfd .NameAttr =_g .String ("\u0063\u006f\u006d\u0070\u0061\u0074\u0069\u0062\u0069\u006c\u0069\u0074y\u004d\u006f\u0064\u0065");
-_cgdfd .UriAttr =_g .String ("h\u0074\u0074\u0070\u003a\u002f\u002f\u0073\u0063\u0068\u0065\u006d\u0061\u0073\u002e\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002e\u0063\u006f\u006d\u002f\u006fff\u0069\u0063\u0065/\u0077o\u0072\u0064");_cgdfd .ValAttr =_g .String ("\u0031\u0035");
-_geegf .Compat .CompatSetting =append (_geegf .Compat .CompatSetting ,_cgdfd );return Settings {_geegf };};
-
-// SetUISortOrder controls the order the style is displayed in the UI.
-func (_ccfa Style )SetUISortOrder (order int ){_ccfa ._cbega .UiPriority =_bg .NewCT_DecimalNumber ();_ccfa ._cbega .UiPriority .ValAttr =int64 (order );};
-
-// X returns the inner wrapped XML type.
-func (_dgfab TableProperties )X ()*_bg .CT_TblPr {return _dgfab ._cdfg };func (_gfgag *Document )GetFontBytesByRelId (relID string )([]byte ,error ){if relID ==""{return nil ,nil ;};_gdbb :=_gfgag ._adc .GetTargetByRelId (relID );_gdbb ="\u0077\u006f\u0072d\u002f"+_gdbb ;
-for _ ,_bdea :=range _gfgag .ExtraFiles {if _bdea .ZipPath ==_gdbb {_gcfbf ,_efaeb :=_eag .ReadFile (_bdea .StoragePath );if _efaeb !=nil {return nil ,_cb .Errorf ("e\u0072r\u006f\u0072\u0020\u0072\u0065\u0061\u0064\u0069n\u0067\u0020\u0025\u0073: \u0025\u0073",_bdea .StoragePath ,_efaeb );
-};return _gcfbf ,nil ;};};return nil ,_cb .Errorf ("\u0066\u006fn\u0074\u0020\u006e\u006f\u0074\u0020\u0066\u006f\u0075\u006e\u0064\u0020\u0069\u006e\u0020\u0073\u0074\u006f\u0072\u0061\u0067\u0065: \u0025\u0073",_gdbb );};func _fgaf ()*_ec .OfcLock {_agccd :=_ec .NewOfcLock ();
-_agccd .ExtAttr =_ec .ST_ExtEdit ;_agccd .TextAttr =_de .ST_TrueFalseTrue ;_agccd .ShapetypeAttr =_de .ST_TrueFalseTrue ;return _agccd ;};
-
-// SetPrimaryStyle marks the style as a primary style.
-func (_fadbd Style )SetPrimaryStyle (b bool ){if b {_fadbd ._cbega .QFormat =_bg .NewCT_OnOff ();}else {_fadbd ._cbega .QFormat =nil ;};};
-
-// InitializeDefault constructs the default styles.
-func (_daef Styles )InitializeDefault (){_daef .initializeDocDefaults ();_daef .initializeStyleDefaults ();};
-
-// SetLeft sets the left border to a specified type, color and thickness.
-func (_gadcg TableBorders )SetLeft (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_gadcg ._gfgeb .Left =_bg .NewCT_Border ();_ecag (_gadcg ._gfgeb .Left ,t ,c ,thickness );};
-
-// Italic returns true if run font is italic.
-func (_bafdd RunProperties )Italic ()bool {_ebfcc :=_bafdd ._ddbb ;return _bbeg (_ebfcc .I )||_bbeg (_ebfcc .ICs );};
-
-// GetShapeStyle returns string style of the shape in watermark and format it to ShapeStyle.
-func (_gacad *WatermarkPicture )GetShapeStyle ()_dg .ShapeStyle {if _gacad ._dfdgf !=nil &&_gacad ._dfdgf .StyleAttr !=nil {return _dg .NewShapeStyle (*_gacad ._dfdgf .StyleAttr );};return _dg .NewShapeStyle ("");};
-
-// Rows returns the rows defined in the table.
-func (_ddeee Table )Rows ()[]Row {_bfaf :=[]Row {};for _ ,_eaggd :=range _ddeee ._cefad .EG_ContentRowContent {for _ ,_decfg :=range _eaggd .ContentRowContentChoice .Tr {_bfaf =append (_bfaf ,Row {_ddeee ._ebbbg ,_decfg });};if _eaggd .ContentRowContentChoice .Sdt !=nil &&_eaggd .ContentRowContentChoice .Sdt .SdtContent !=nil {for _ ,_cbac :=range _eaggd .ContentRowContentChoice .Sdt .SdtContent .EG_ContentRowContent {for _ ,_egga :=range _cbac .ContentRowContentChoice .Tr {_bfaf =append (_bfaf ,Row {_ddeee ._ebbbg ,_egga });
-};};};};return _bfaf ;};
-
-// RemoveParagraph removes a paragraph from a footer.
-func (_ddc Footer )RemoveParagraph (p Paragraph ){for _ ,_edcg :=range _ddc ._bfebb .EG_BlockLevelElts {for _ ,_bdec :=range _edcg .BlockLevelEltsChoice .EG_ContentBlockContent {for _bede ,_adfg :=range _bdec .ContentBlockContentChoice .P {if _adfg ==p ._dfbf {copy (_bdec .ContentBlockContentChoice .P [_bede :],_bdec .ContentBlockContentChoice .P [_bede +1:]);
-_bdec .ContentBlockContentChoice .P =_bdec .ContentBlockContentChoice .P [0:len (_bdec .ContentBlockContentChoice .P )-1];return ;};};};};};
-
-// RowProperties are the properties for a row within a table
-type RowProperties struct{_bedbf *_bg .CT_TrPr };
-
-// SetBottom sets the bottom border to a specified type, color and thickness.
-func (_dab CellBorders )SetBottom (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_dab ._bee .Bottom =_bg .NewCT_Border ();_ecag (_dab ._bee .Bottom ,t ,c ,thickness );};
-
-// Properties returns the paragraph properties.
-func (_befge Paragraph )Properties ()ParagraphProperties {_befge .ensurePPr ();return ParagraphProperties {_befge ._ebfb ,_befge ._dfbf .PPr };};
-
-// FormField is a form within a document. It references the document, so changes
-// to the form field wil be reflected in the document if it is saved.
-type FormField struct{_acfd *_bg .CT_FFData ;_gdaa *_bg .EG_RunInnerContent ;};
-
-// SetAll sets all of the borders to a given value.
-func (_gaa CellBorders )SetAll (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_gaa .SetBottom (t ,c ,thickness );_gaa .SetLeft (t ,c ,thickness );_gaa .SetRight (t ,c ,thickness );_gaa .SetTop (t ,c ,thickness );_gaa .SetInsideHorizontal (t ,c ,thickness );
-_gaa .SetInsideVertical (t ,c ,thickness );};
-
-// SetRightToLeft sets the run text goes from right to left.
-func (_geccd RunProperties )SetRightToLeft (b bool ){if !b {_geccd ._ddbb .Rtl =nil ;}else {_geccd ._ddbb .Rtl =_bg .NewCT_OnOff ();};};
-
-// ClearContent clears any content in the run (text, tabs, breaks, etc.)
-func (_eacga Run )ClearContent (){_eacga ._bdced .EG_RunInnerContent =nil };
-
-// SetThemeShade sets the shade based off the theme color.
-func (_bfcf Color )SetThemeShade (s uint8 ){_aba :=_cb .Sprintf ("\u0025\u0030\u0032\u0078",s );_bfcf ._eaga .ThemeShadeAttr =&_aba ;};func _gfebg (_ddgga string )mergeFieldInfo {_bgda :=[]string {};_aeedd :=_d .Buffer {};_feea :=-1;for _bdae ,_dege :=range _ddgga {switch _dege {case ' ':if _aeedd .Len ()!=0{_bgda =append (_bgda ,_aeedd .String ());
-};_aeedd .Reset ();case '"':if _feea !=-1{_bgda =append (_bgda ,_ddgga [_feea +1:_bdae ]);_feea =-1;}else {_feea =_bdae ;};default:_aeedd .WriteRune (_dege );};};if _aeedd .Len ()!=0{_bgda =append (_bgda ,_aeedd .String ());};_becdg :=mergeFieldInfo {};
-for _fddca :=0;_fddca < len (_bgda )-1;_fddca ++{_gcda :=_bgda [_fddca ];switch _gcda {case "\u004d\u0045\u0052\u0047\u0045\u0046\u0049\u0045\u004c\u0044":_becdg ._bcgae =_bgda [_fddca +1];_fddca ++;case "\u005c\u0066":_becdg ._baaf =_bgda [_fddca +1];
-_fddca ++;case "\u005c\u0062":_becdg ._agdc =_bgda [_fddca +1];_fddca ++;case "\u005c\u002a":switch _bgda [_fddca +1]{case "\u0055\u0070\u0070e\u0072":_becdg ._dgcef =true ;case "\u004c\u006f\u0077e\u0072":_becdg ._dfacc =true ;case "\u0043\u0061\u0070\u0073":_becdg ._cgca =true ;
-case "\u0046\u0069\u0072\u0073\u0074\u0043\u0061\u0070":_becdg ._eacd =true ;};_fddca ++;};};return _becdg ;};func (_fdab Paragraph )addBeginFldChar (_agbd string )*_bg .CT_FFData {_dfacf :=_fdab .addFldChar ();_dfacf .FldCharTypeAttr =_bg .ST_FldCharTypeBegin ;
-if _dfacf .FldCharChoice ==nil {_dfacf .FldCharChoice =_bg .NewCT_FldCharChoice ();};_dfacf .FldCharChoice .FfData =_bg .NewCT_FFData ();_fffe :=_bg .NewCT_FFName ();_fffe .ValAttr =&_agbd ;_dfacf .FldCharChoice .FfData .FFDataChoice =[]*_bg .CT_FFDataChoice {&_bg .CT_FFDataChoice {Name :_fffe }};
-return _dfacf .FldCharChoice .FfData ;};
-
-// SetFontFamily sets font family of watermark text.
-func (_ccffd *WatermarkText )SetFontFamily (value string ){_dagaf :=_ccffd .GetStyle ();_dagaf .SetFontFamily ("\u0022"+value +"\u0022");_ccffd .SetStyle (_dagaf );};
-
-// X returns the inner wrapped XML type.
-func (_gadc Footnote )X ()*_bg .CT_FtnEdn {return _gadc ._efbd };func _gacd (_fdad *_bg .CT_TblWidth ,_ecgb _ac .Distance ){_fdad .TypeAttr =_bg .ST_TblWidthDxa ;_fdad .WAttr =&_bg .ST_MeasurementOrPercent {};_fdad .WAttr .ST_DecimalNumberOrPercent =&_bg .ST_DecimalNumberOrPercent {};
-_fdad .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_g .Int64 (int64 (_ecgb /_ac .Dxa ));};
-
-// GetColor returns the color.Color object representing the run color.
-func (_ffefc ParagraphProperties )GetColor ()_ce .Color {if _ceec :=_ffefc ._dabde .RPr .Color ;_ceec !=nil {_agbg :=_ceec .ValAttr ;if _agbg .ST_HexColorRGB !=nil {return _ce .FromHex (*_agbg .ST_HexColorRGB );};};return _ce .Color {};};
-
-// SetUpdateFieldsOnOpen controls if fields are recalculated upon opening the
-// document. This is useful for things like a table of contents as the library
-// only adds the field code and relies on Word/LibreOffice to actually compute
-// the content.
-func (_cfaea Settings )SetUpdateFieldsOnOpen (b bool ){if !b {_cfaea ._eggcbb .UpdateFields =nil ;}else {_cfaea ._eggcbb .UpdateFields =_bg .NewCT_OnOff ();};};
-
-// Read reads a document from an io.Reader.
-func Read (r _ed .ReaderAt ,size int64 )(*Document ,error ){return _ebeg (r ,size ,"")};
-
-// InsertRunBefore inserts a run in the paragraph before the relative run.
-func (_cgcab Paragraph )InsertRunBefore (relativeTo Run )Run {return _cgcab .insertRun (relativeTo ,true );};
-
-// SetBottom sets the bottom border to a specified type, color and thickness.
-func (_ddba TableBorders )SetBottom (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_ddba ._gfgeb .Bottom =_bg .NewCT_Border ();_ecag (_ddba ._gfgeb .Bottom ,t ,c ,thickness );};func _eggdf (_fbfca *_bg .CT_P ,_gggc map[string ]string ){for _ ,_efbbg :=range _fbfca .EG_PContent {for _ ,_dcbb :=range _efbbg .PContentChoice .EG_ContentRunContent {if _dcbb .ContentRunContentChoice .R !=nil {for _ ,_cdfd :=range _dcbb .ContentRunContentChoice .R .EG_RunInnerContent {_fgad :=_cdfd .RunInnerContentChoice .Drawing ;
-if _fgad !=nil {for _ ,_ebbb :=range _fgad .DrawingChoice {if _ebbb .Anchor !=nil {_cbfg :=_ebbb .Anchor ;for _ ,_aabf :=range _cbfg .Graphic .GraphicData .Any {switch _cfcb :=_aabf .(type ){case *_gg .Pic :if _cfcb .BlipFill !=nil &&_cfcb .BlipFill .Blip !=nil {_ecgbc (_cfcb .BlipFill .Blip ,_gggc );
-};default:};};};if _ebbb .Inline !=nil {_ccab :=_ebbb .Inline ;for _ ,_fbbg :=range _ccab .Graphic .GraphicData .Any {switch _acgb :=_fbbg .(type ){case *_gg .Pic :if _acgb .BlipFill !=nil &&_acgb .BlipFill .Blip !=nil {_ecgbc (_acgb .BlipFill .Blip ,_gggc );
-};default:};};};};};};};};};};
-
-// Styles returns all styles.
-func (_aggaa Styles )Styles ()[]Style {_dcabe :=[]Style {};for _ ,_bacc :=range _aggaa ._gcdd .Style {_dcabe =append (_dcabe ,Style {_bacc });};return _dcabe ;};const (OnOffValueUnset OnOffValue =iota ;OnOffValueOff ;OnOffValueOn ;);
-
-// RemoveFootnote removes a footnote from both the paragraph and the document
-// the requested footnote must be anchored on the paragraph being referenced.
-//
-// After each removal, the rest of the footnote ids would be reordered.
-func (_aceb Paragraph )RemoveFootnote (id int64 ){for _ ,_cfbaf :=range _aceb .Runs (){if _fbae ,_fccg :=_cfbaf .IsFootnote ();_fbae {if _fccg ==id {_aceb .RemoveRun (_cfbaf );break ;};};};_aceb ._ebfb .removeFootnote (id );};
-
-// ClearColor clears the text color.
-func (_dceed RunProperties )ClearColor (){_dceed ._ddbb .Color =nil };
-
-// SetContextualSpacing controls whether to Ignore Spacing Above and Below When
-// Using Identical Styles
-func (_bdcef ParagraphStyleProperties )SetContextualSpacing (b bool ){if !b {_bdcef ._becee .ContextualSpacing =nil ;}else {_bdcef ._becee .ContextualSpacing =_bg .NewCT_OnOff ();};};
-
-// SetThemeColor sets the color from the theme.
-func (_bfe Color )SetThemeColor (t _bg .ST_ThemeColor ){_bfe ._eaga .ThemeColorAttr =t };
-
-// Run is a run of text within a paragraph that shares the same formatting.
-type Run struct{_efagg *Document ;_bdced *_bg .CT_R ;};
-
-// InsertParagraphAfter adds a new empty paragraph after the relativeTo
-// paragraph.
-func (_ccgae *Document )InsertParagraphAfter (relativeTo Paragraph )Paragraph {return _ccgae .insertParagraph (relativeTo ,false );};
-
-// Settings controls the document settings.
-type Settings struct{_eggcbb *_bg .Settings };
-
-// GetColor returns the color.Color object representing the run color.
-func (_dfcdg RunProperties )GetColor ()_ce .Color {if _ggeaf :=_dfcdg ._ddbb .Color ;_ggeaf !=nil {_bbab :=_ggeaf .ValAttr ;if _bbab .ST_HexColorRGB !=nil {return _ce .FromHex (*_bbab .ST_HexColorRGB );};};return _ce .Color {};};
-
-// X return element of Node as interface, can be either *Paragraph, *Table and Run.
-func (_dfacg *Node )X ()interface{}{return _dfacg ._ffdc };
-
-// OpenTemplate opens a document, removing all content so it can be used as a
-// template.  Since Word removes unused styles from a document upon save, to
-// create a template in Word add a paragraph with every style of interest.  When
-// opened with OpenTemplate the document's styles will be available but the
-// content will be gone.
-func OpenTemplate (filename string )(*Document ,error ){_bccde ,_faaff :=Open (filename );if _faaff !=nil {return nil ,_faaff ;};_bccde ._feaa .Body =_bg .NewCT_Body ();return _bccde ,nil ;};
-
-// Properties returns the table properties.
-func (_agcbg Table )Properties ()TableProperties {if _agcbg ._cefad .TblPr ==nil {_agcbg ._cefad .TblPr =_bg .NewCT_TblPr ();};return TableProperties {_agcbg ._cefad .TblPr };};
-
-// X returns the inner wrapped XML type.
-func (_ggbcf TableStyleProperties )X ()*_bg .CT_TblPrBase {return _ggbcf ._ddecf };
-
-// AddAnnotationReference adds annotation reference to a run.
-func (_egfbe Run )AddAnnotationReference (){_eaecf :=_egfbe .newIC ();_eaecf .RunInnerContentChoice .AnnotationRef =_bg .NewCT_Empty ();};func (_adfeae Footnote )content ()[]*_bg .EG_ContentBlockContent {var _dadb []*_bg .EG_ContentBlockContent ;for _ ,_dafe :=range _adfeae ._efbd .EG_BlockLevelElts {_dadb =append (_dadb ,_dafe .BlockLevelEltsChoice .EG_ContentBlockContent ...);
-};return _dadb ;};
-
-// SizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
-func (_gfege RunProperties )SizeMeasure ()string {if _bbcfg :=_gfege ._ddbb .Sz ;_bbcfg !=nil {_ecfc :=_bbcfg .ValAttr ;if _ecfc .ST_PositiveUniversalMeasure !=nil {return *_ecfc .ST_PositiveUniversalMeasure ;};};return "";};
-
-// Definitions returns the defined numbering definitions.
-func (_gcfea Numbering )Definitions ()[]NumberingDefinition {_ddcd :=[]NumberingDefinition {};if _gcfea ._faffc !=nil {for _ ,_bfcd :=range _gcfea ._faffc .AbstractNum {_ddcd =append (_ddcd ,NumberingDefinition {_bfcd });};};return _ddcd ;};
-
-// SetLeftIndent controls the left indent of the paragraph.
-func (_fgcag ParagraphStyleProperties )SetLeftIndent (m _ac .Distance ){if _fgcag ._becee .Ind ==nil {_fgcag ._becee .Ind =_bg .NewCT_Ind ();};if m ==_ac .Zero {_fgcag ._becee .Ind .LeftAttr =nil ;}else {_fgcag ._becee .Ind .LeftAttr =&_bg .ST_SignedTwipsMeasure {};
-_fgcag ._becee .Ind .LeftAttr .Int64 =_g .Int64 (int64 (m /_ac .Twips ));};};
-
-// X returns the inner wrapped XML type.
-func (_aeef Header )X ()*_bg .Hdr {return _aeef ._adfd };
-
-// SetOpacity sets opacity of watermark text in range 0.0 - 1.0, where is 1.0 is the default value.
-func (_bgbd *WatermarkText )SetOpacity (value float64 ){if _bgbd ._fbcbg !=nil {_eggffd :=_bgbd ._fbcbg .ShapeChoice ;for _ ,_aacb :=range _eggffd {if _aacb .ShapeElementsChoice .Fill !=nil {_abda :=_a .Itoa ((int )(65536.0*value ))+"\u0066";_aacb .ShapeElementsChoice .Fill .OpacityAttr =&_abda ;
-};};};};
-
-// X returns the inner wrapped XML type.
-func (_fabe InlineDrawing )X ()*_bg .WdInline {return _fabe ._dacaf };
-
-// Runs returns all of the runs in a paragraph.
-func (_fbabcc Paragraph )Runs ()[]Run {_dddc :=[]Run {};for _ ,_fdea :=range _fbabcc ._dfbf .EG_PContent {if _fdea .PContentChoice .Hyperlink !=nil &&_fdea .PContentChoice .Hyperlink .PContentChoice .EG_ContentRunContent !=nil {for _ ,_cgbfe :=range _fdea .PContentChoice .Hyperlink .PContentChoice .EG_ContentRunContent {if _cgbfe .ContentRunContentChoice .R !=nil {_dddc =append (_dddc ,Run {_fbabcc ._ebfb ,_cgbfe .ContentRunContentChoice .R });
-};};};for _ ,_ffdd :=range _fdea .PContentChoice .EG_ContentRunContent {if _ffdd .ContentRunContentChoice .R !=nil {_dddc =append (_dddc ,Run {_fbabcc ._ebfb ,_ffdd .ContentRunContentChoice .R });};if _ffdd .ContentRunContentChoice .Sdt !=nil &&_ffdd .ContentRunContentChoice .Sdt .SdtContent !=nil {for _ ,_eadabg :=range _ffdd .ContentRunContentChoice .Sdt .SdtContent .EG_PContent {for _ ,_cadfe :=range _eadabg .PContentChoice .EG_ContentRunContent {if _cadfe .ContentRunContentChoice .R !=nil {_dddc =append (_dddc ,Run {_fbabcc ._ebfb ,_cadfe .ContentRunContentChoice .R });
-};};};};};};return _dddc ;};
-
-// Spacing returns the paragraph spacing settings.
-func (_deed ParagraphProperties )Spacing ()ParagraphSpacing {if _deed ._dabde .Spacing ==nil {_deed ._dabde .Spacing =_bg .NewCT_Spacing ();};return ParagraphSpacing {_deed ._dabde .Spacing };};
-
-// ReplaceText replace text inside node.
-func (_gffdf *Nodes )ReplaceText (oldText ,newText string ){for _ ,_fdcg :=range _gffdf ._feda {_fdcg .ReplaceText (oldText ,newText );};};
-
-// SetProperties sets the `RunProperties` to the `Run` element
-func (_ecfdg Run )SetProperties (rp RunProperties ){if rp ._ddbb ==nil {_ecfdg ._bdced .RPr =_bg .NewCT_RPr ();}else {_aacgc :=_bg .NewCT_RPr ();if rp ._ddbb .RStyle !=nil {_aacgc .RStyle =&_bg .CT_String {ValAttr :rp ._ddbb .RStyle .ValAttr };};if rp ._ddbb .RFonts !=nil {_aacgc .RFonts =&_bg .CT_Fonts {HintAttr :rp ._ddbb .RFonts .HintAttr ,AsciiAttr :rp ._ddbb .RFonts .AsciiAttr ,HAnsiAttr :rp ._ddbb .RFonts .HAnsiAttr ,EastAsiaAttr :rp ._ddbb .RFonts .EastAsiaAttr ,CsAttr :rp ._ddbb .RFonts .CsAttr ,AsciiThemeAttr :rp ._ddbb .RFonts .AsciiThemeAttr ,HAnsiThemeAttr :rp ._ddbb .RFonts .HAnsiThemeAttr ,EastAsiaThemeAttr :rp ._ddbb .RFonts .EastAsiaThemeAttr ,CsthemeAttr :rp ._ddbb .RFonts .CsthemeAttr };
-};if rp ._ddbb .B !=nil {_aacgc .B =&_bg .CT_OnOff {};if rp ._ddbb .B .ValAttr !=nil {_aggg :=*rp ._ddbb .B .ValAttr ;_aacgc .B .ValAttr =&_aggg ;};};if rp ._ddbb .BCs !=nil {_aacgc .BCs =&_bg .CT_OnOff {};if rp ._ddbb .BCs .ValAttr !=nil {_dbbeb :=*rp ._ddbb .BCs .ValAttr ;
-_aacgc .BCs .ValAttr =&_dbbeb ;};};if rp ._ddbb .I !=nil {_aacgc .I =&_bg .CT_OnOff {};if rp ._ddbb .I .ValAttr !=nil {_fddb :=*rp ._ddbb .I .ValAttr ;_aacgc .I .ValAttr =&_fddb ;};};if rp ._ddbb .ICs !=nil {_aacgc .ICs =&_bg .CT_OnOff {};if rp ._ddbb .ICs .ValAttr !=nil {_dbce :=*rp ._ddbb .ICs .ValAttr ;
-_aacgc .ICs .ValAttr =&_dbce ;};};if rp ._ddbb .Caps !=nil {_aacgc .Caps =&_bg .CT_OnOff {};if rp ._ddbb .Caps .ValAttr !=nil {_fecgc :=*rp ._ddbb .Caps .ValAttr ;_aacgc .Caps .ValAttr =&_fecgc ;};};if rp ._ddbb .SmallCaps !=nil {_aacgc .SmallCaps =&_bg .CT_OnOff {};
-if rp ._ddbb .SmallCaps .ValAttr !=nil {_cdfb :=*rp ._ddbb .SmallCaps .ValAttr ;_aacgc .SmallCaps .ValAttr =&_cdfb ;};};if rp ._ddbb .Strike !=nil {_aacgc .Strike =&_bg .CT_OnOff {};if rp ._ddbb .Strike .ValAttr !=nil {_badf :=*rp ._ddbb .Strike .ValAttr ;
-_aacgc .Strike .ValAttr =&_badf ;};};if rp ._ddbb .Dstrike !=nil {_aacgc .Dstrike =&_bg .CT_OnOff {};if rp ._ddbb .Dstrike .ValAttr !=nil {_cbdf :=*rp ._ddbb .Dstrike .ValAttr ;_aacgc .Dstrike .ValAttr =&_cbdf ;};};if rp ._ddbb .Outline !=nil {_aacgc .Outline =&_bg .CT_OnOff {};
-if rp ._ddbb .Outline .ValAttr !=nil {_fbbgc :=*rp ._ddbb .Outline .ValAttr ;_aacgc .Outline .ValAttr =&_fbbgc ;};};if rp ._ddbb .Shadow !=nil {_aacgc .Shadow =&_bg .CT_OnOff {};if rp ._ddbb .Shadow .ValAttr !=nil {_aaeac :=*rp ._ddbb .Shadow .ValAttr ;
-_aacgc .Shadow .ValAttr =&_aaeac ;};};if rp ._ddbb .Emboss !=nil {_aacgc .Emboss =&_bg .CT_OnOff {};if rp ._ddbb .Emboss .ValAttr !=nil {_ecbea :=*rp ._ddbb .Emboss .ValAttr ;_aacgc .Emboss .ValAttr =&_ecbea ;};};if rp ._ddbb .Imprint !=nil {_aacgc .Imprint =&_bg .CT_OnOff {};
-if rp ._ddbb .Imprint .ValAttr !=nil {_acggaf :=*rp ._ddbb .Imprint .ValAttr ;_aacgc .Imprint .ValAttr =&_acggaf ;};};if rp ._ddbb .NoProof !=nil {_aacgc .NoProof =&_bg .CT_OnOff {};if rp ._ddbb .NoProof .ValAttr !=nil {_bccef :=*rp ._ddbb .NoProof .ValAttr ;
-_aacgc .NoProof .ValAttr =&_bccef ;};};if rp ._ddbb .SnapToGrid !=nil {_aacgc .SnapToGrid =&_bg .CT_OnOff {};if rp ._ddbb .SnapToGrid .ValAttr !=nil {_gaf :=*rp ._ddbb .SnapToGrid .ValAttr ;_aacgc .SnapToGrid .ValAttr =&_gaf ;};};if rp ._ddbb .Vanish !=nil {_aacgc .Vanish =&_bg .CT_OnOff {};
-if rp ._ddbb .Vanish .ValAttr !=nil {_agebg :=*rp ._ddbb .Vanish .ValAttr ;_aacgc .Vanish .ValAttr =&_agebg ;};};if rp ._ddbb .WebHidden !=nil {_aacgc .WebHidden =&_bg .CT_OnOff {};if rp ._ddbb .WebHidden .ValAttr !=nil {_eeef :=*rp ._ddbb .WebHidden .ValAttr ;
-_aacgc .WebHidden .ValAttr =&_eeef ;};};if rp ._ddbb .Color !=nil {_aacgc .Color =&_bg .CT_Color {ValAttr :rp ._ddbb .Color .ValAttr ,ThemeColorAttr :rp ._ddbb .Color .ThemeColorAttr ,ThemeTintAttr :rp ._ddbb .Color .ThemeTintAttr ,ThemeShadeAttr :rp ._ddbb .Color .ThemeShadeAttr };
-};if rp ._ddbb .Spacing !=nil {_aacgc .Spacing =&_bg .CT_SignedTwipsMeasure {ValAttr :rp ._ddbb .Spacing .ValAttr };};if rp ._ddbb .W !=nil {_aacgc .W =&_bg .CT_TextScale {ValAttr :rp ._ddbb .W .ValAttr };};if rp ._ddbb .Kern !=nil {_aacgc .Kern =&_bg .CT_HpsMeasure {ValAttr :rp ._ddbb .Kern .ValAttr };
-};if rp ._ddbb .Position !=nil {_aacgc .Position =&_bg .CT_SignedHpsMeasure {ValAttr :rp ._ddbb .Position .ValAttr };};if rp ._ddbb .Sz !=nil {_aacgc .Sz =&_bg .CT_HpsMeasure {ValAttr :rp ._ddbb .Sz .ValAttr };};if rp ._ddbb .SzCs !=nil {_aacgc .SzCs =&_bg .CT_HpsMeasure {ValAttr :rp ._ddbb .SzCs .ValAttr };
-};if rp ._ddbb .Highlight !=nil {_aacgc .Highlight =&_bg .CT_Highlight {ValAttr :rp ._ddbb .Highlight .ValAttr };};if rp ._ddbb .U !=nil {_aacgc .U =&_bg .CT_Underline {ValAttr :rp ._ddbb .U .ValAttr ,ColorAttr :rp ._ddbb .U .ColorAttr ,ThemeColorAttr :rp ._ddbb .U .ThemeColorAttr ,ThemeTintAttr :rp ._ddbb .U .ThemeTintAttr ,ThemeShadeAttr :rp ._ddbb .U .ThemeShadeAttr };
-};if rp ._ddbb .Effect !=nil {_aacgc .Effect =&_bg .CT_TextEffect {ValAttr :rp ._ddbb .Effect .ValAttr };};if rp ._ddbb .Bdr !=nil {_aacgc .Bdr =&_bg .CT_Border {ValAttr :rp ._ddbb .Bdr .ValAttr ,ColorAttr :rp ._ddbb .Bdr .ColorAttr ,ThemeColorAttr :rp ._ddbb .Bdr .ThemeColorAttr ,ThemeTintAttr :rp ._ddbb .Bdr .ThemeTintAttr ,ThemeShadeAttr :rp ._ddbb .Bdr .ThemeShadeAttr ,SzAttr :rp ._ddbb .Bdr .SzAttr ,SpaceAttr :rp ._ddbb .Bdr .SpaceAttr ,ShadowAttr :rp ._ddbb .Bdr .ShadowAttr ,FrameAttr :rp ._ddbb .Bdr .FrameAttr };
-};if rp ._ddbb .Shd !=nil {_aacgc .Shd =&_bg .CT_Shd {ValAttr :rp ._ddbb .Shd .ValAttr ,ColorAttr :rp ._ddbb .Shd .ColorAttr ,ThemeColorAttr :rp ._ddbb .Shd .ThemeColorAttr ,ThemeTintAttr :rp ._ddbb .Shd .ThemeTintAttr ,ThemeShadeAttr :rp ._ddbb .Shd .ThemeShadeAttr ,FillAttr :rp ._ddbb .Shd .FillAttr ,ThemeFillAttr :rp ._ddbb .Shd .ThemeFillAttr ,ThemeFillTintAttr :rp ._ddbb .Shd .ThemeFillTintAttr ,ThemeFillShadeAttr :rp ._ddbb .Shd .ThemeFillShadeAttr };
-};if rp ._ddbb .FitText !=nil {_aacgc .FitText =&_bg .CT_FitText {ValAttr :rp ._ddbb .FitText .ValAttr ,IdAttr :rp ._ddbb .FitText .IdAttr };};if rp ._ddbb .VertAlign !=nil {_aacgc .VertAlign =&_bg .CT_VerticalAlignRun {ValAttr :rp ._ddbb .VertAlign .ValAttr };
-};if rp ._ddbb .Rtl !=nil {_aacgc .Rtl =&_bg .CT_OnOff {ValAttr :rp ._ddbb .Rtl .ValAttr };};if rp ._ddbb .Cs !=nil {_aacgc .Cs =&_bg .CT_OnOff {ValAttr :rp ._ddbb .Cs .ValAttr };};if rp ._ddbb .Em !=nil {_aacgc .Em =&_bg .CT_Em {ValAttr :rp ._ddbb .Em .ValAttr };
-};if rp ._ddbb .Lang !=nil {_aacgc .Lang =&_bg .CT_Language {ValAttr :rp ._ddbb .Lang .ValAttr ,EastAsiaAttr :rp ._ddbb .Lang .EastAsiaAttr ,BidiAttr :rp ._ddbb .Lang .BidiAttr };};if rp ._ddbb .EastAsianLayout !=nil {_aacgc .EastAsianLayout =&_bg .CT_EastAsianLayout {IdAttr :rp ._ddbb .EastAsianLayout .IdAttr ,CombineAttr :rp ._ddbb .EastAsianLayout .CombineAttr ,CombineBracketsAttr :rp ._ddbb .EastAsianLayout .CombineBracketsAttr ,VertAttr :rp ._ddbb .EastAsianLayout .VertAttr ,VertCompressAttr :rp ._ddbb .EastAsianLayout .VertCompressAttr };
-};if rp ._ddbb .SpecVanish !=nil {_aacgc .SpecVanish =&_bg .CT_OnOff {ValAttr :rp ._ddbb .SpecVanish .ValAttr };};if rp ._ddbb .OMath !=nil {_aacgc .OMath =&_bg .CT_OnOff {ValAttr :rp ._ddbb .OMath .ValAttr };};_ecfdg ._bdced .RPr =_aacgc ;};};
-
-// Cells returns the cells defined in the table.
-func (_agdb Row )Cells ()[]Cell {_ddea :=[]Cell {};for _ ,_bebd :=range _agdb ._bgcee .EG_ContentCellContent {for _ ,_abcgb :=range _bebd .ContentCellContentChoice .Tc {_ddea =append (_ddea ,Cell {_agdb ._ccdec ,_abcgb });};if _bebd .ContentCellContentChoice .Sdt !=nil &&_bebd .ContentCellContentChoice .Sdt .SdtContent !=nil {for _ ,_feefd :=range _bebd .ContentCellContentChoice .Sdt .SdtContent .EG_ContentCellContent {for _ ,_faccc :=range _feefd .ContentCellContentChoice .Tc {_ddea =append (_ddea ,Cell {_agdb ._ccdec ,_faccc });
-};};};};return _ddea ;};
-
-// SetAfterSpacing sets spacing below paragraph.
-func (_ccfb Paragraph )SetAfterSpacing (d _ac .Distance ){_ccfb .ensurePPr ();if _ccfb ._dfbf .PPr .Spacing ==nil {_ccfb ._dfbf .PPr .Spacing =_bg .NewCT_Spacing ();};_fbgfa :=_ccfb ._dfbf .PPr .Spacing ;_fbgfa .AfterAttr =&_de .ST_TwipsMeasure {};_fbgfa .AfterAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (d /_ac .Twips ));
-};
-
-// InsertParagraphBefore adds a new empty paragraph before the relativeTo
-// paragraph.
-func (_gbbe *Document )InsertParagraphBefore (relativeTo Paragraph )Paragraph {return _gbbe .insertParagraph (relativeTo ,true );};func (_dafg *Document )addFootnotes (){_dafg ._gca =_bg .NewFootnotes ();_dafg ._gca .CT_Footnotes =_bg .CT_Footnotes {};
-_dafg ._gca .Footnote =make ([]*_bg .CT_FtnEdn ,0);_dafg .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072d/\u0066\u006f\u006f\u0074\u006e\u006f\u0074\u0065\u0073\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069c\u0061\u0074\u0069\u006f\u006e\u002f\u0076n\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072\u006d\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063e\u0073\u0073\u0069\u006e\u0067\u006d\u006c\u002e\u0066\u006f\u006f\u0074n\u006f\u0074\u0065\u0073\u002b\u0078m\u006c");
-_dafg ._fee .AddRelationship ("\u002f\u0077\u006f\u0072d/\u0066\u006f\u006f\u0074\u006e\u006f\u0074\u0065\u0073\u002e\u0078\u006d\u006c",_g .FootNotesType );_gadf :=_dafg .Styles .AddStyle (FootnoteTextStyleId ,_bg .ST_StyleTypeParagraph ,false );_gadf .SetName ("\u0046\u006f\u006f\u0074\u006e\u006f\u0074\u0065\u0020\u0054\u0065\u0078\u0074");
-_gadf .SetBasedOn ("\u004e\u006f\u0072\u006d\u0061\u006c");_egce :=_gadf .ParagraphProperties ();_egce .X ().SuppressLineNumbers =&_bg .CT_OnOff {};_dea :=_gadf .RunProperties ();_dea .X ().Sz =&_bg .CT_HpsMeasure {ValAttr :_bg .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_bgc }};
-_dea .X ().SzCs =&_bg .CT_HpsMeasure {ValAttr :_bg .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_bgc }};_ebcc :=_dafg .Styles .AddStyle (_eec ,_bg .ST_StyleTypeCharacter ,false );_ebcc .SetName ("\u0046o\u006ft\u006e\u006f\u0074\u0065\u0020R\u0065\u0066e\u0072\u0065\u006e\u0063\u0065");
-_decfd :=_ebcc .RunProperties ();_decfd .X ().VertAlign =&_bg .CT_VerticalAlignRun {ValAttr :_de .ST_VerticalAlignRunSuperscript };_dafg .addFootnoteSeparator ();};
-
-// HasEndnotes returns a bool based on the presence or abscence of endnotes within
-// the document.
-func (_edbb *Document )HasEndnotes ()bool {return _edbb ._ccb !=nil };const (FieldCurrentPage ="\u0050\u0041\u0047\u0045";FieldNumberOfPages ="\u004e\u0055\u004d\u0050\u0041\u0047\u0045\u0053";FieldDate ="\u0044\u0041\u0054\u0045";FieldCreateDate ="\u0043\u0052\u0045\u0041\u0054\u0045\u0044\u0041\u0054\u0045";
-FieldEditTime ="\u0045\u0044\u0049\u0054\u0054\u0049\u004d\u0045";FieldPrintDate ="\u0050R\u0049\u004e\u0054\u0044\u0041\u0054E";FieldSaveDate ="\u0053\u0041\u0056\u0045\u0044\u0041\u0054\u0045";FieldTIme ="\u0054\u0049\u004d\u0045";FieldTOC ="\u0054\u004f\u0043";
-);
-
-// SetCellSpacingAuto sets the cell spacing within a table to automatic.
-func (_aaegc TableStyleProperties )SetCellSpacingAuto (){_aaegc ._ddecf .TblCellSpacing =_bg .NewCT_TblWidth ();_aaegc ._ddecf .TblCellSpacing .TypeAttr =_bg .ST_TblWidthAuto ;};
-
-// ExtractText returns text from the document as a DocText object.
-func (_gebef *Document )ExtractText ()*DocText {_fgaca :=[]TextItem {};for _ ,_gbdc :=range _gebef ._feaa .Body .EG_BlockLevelElts {_fgaca =append (_fgaca ,_adgff (_gbdc .BlockLevelEltsChoice .EG_ContentBlockContent ,nil )...);};var _bgg []listItemInfo ;
-_aadeb :=_gebef .Paragraphs ();for _ ,_baedd :=range _aadeb {_efab :=_bbfe (_gebef ,_baedd );_bgg =append (_bgg ,_efab );};_egff :=_cdege (_gebef );return &DocText {Items :_fgaca ,_dbae :_bgg ,_afbdb :_egff };};
-
-// ComplexSizeValue returns the value of run font size for complex fonts in points.
-func (_ecdc RunProperties )ComplexSizeValue ()float64 {if _gedgbb :=_ecdc ._ddbb .SzCs ;_gedgbb !=nil {_cfdd :=_gedgbb .ValAttr ;if _cfdd .ST_UnsignedDecimalNumber !=nil {return float64 (*_cfdd .ST_UnsignedDecimalNumber )/2;};};return 0.0;};func _ebgfe ()*_ec .Fill {_edbab :=_ec .NewFill ();
-_edbab .AngleAttr =_g .Float64 (0);return _edbab };
-
-// SetOutlineLevel sets the outline level of this style.
-func (_cbegc ParagraphStyleProperties )SetOutlineLevel (lvl int ){_cbegc ._becee .OutlineLvl =_bg .NewCT_DecimalNumber ();_cbegc ._becee .OutlineLvl .ValAttr =int64 (lvl );};
-
-// SetOutlineLvl sets outline level of paragraph.
-func (_cbba Paragraph )SetOutlineLvl (lvl int64 ){_cbba .ensurePPr ();if _cbba ._dfbf .PPr .OutlineLvl ==nil {_cbba ._dfbf .PPr .OutlineLvl =_bg .NewCT_DecimalNumber ();};_cadab :=lvl -1;_cbba ._dfbf .PPr .OutlineLvl .ValAttr =_cadab ;};
-
-// Footnote returns the footnote based on the ID; this can be used nicely with
-// the run.IsFootnote() functionality.
-func (_cbf *Document )Footnote (id int64 )Footnote {for _ ,_cbe :=range _cbf .Footnotes (){if _cbe .id ()==id {return _cbe ;};};return Footnote {};};func (_ccdeb *WatermarkPicture )getShapeImagedata ()*_g .XSDAny {return _ccdeb .getInnerElement ("\u0069m\u0061\u0067\u0065\u0064\u0061\u0074a");
-};func _cdege (_cdebc *Document )map[int64 ]map[int64 ]int64 {_dbccc :=_cdebc .Paragraphs ();_eecdg :=make (map[int64 ]map[int64 ]int64 ,0);for _ ,_aeeaa :=range _dbccc {_eacf :=_bbfe (_cdebc ,_aeeaa );if _eacf .NumberingLevel !=nil &&_eacf .AbstractNumId !=nil {_fdged :=*_eacf .AbstractNumId ;
-if _ ,_cbbd :=_eecdg [_fdged ];_cbbd {if _ceced :=_eacf .NumberingLevel .X ();_ceced !=nil {if _ ,_dafgb :=_eecdg [_fdged ][_ceced .IlvlAttr ];_dafgb {_eecdg [_fdged ][_ceced .IlvlAttr ]++;}else {_eecdg [_fdged ][_ceced .IlvlAttr ]=1;};};}else {if _febd :=_eacf .NumberingLevel .X ();
-_febd !=nil {_eecdg [_fdged ]=map[int64 ]int64 {_febd .IlvlAttr :1};};};};};return _eecdg ;};
-
-// X returns the inner wrapped XML type.
-func (_dbfc Style )X ()*_bg .CT_Style {return _dbfc ._cbega };
-
-// ComplexSizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
-func (_afad RunProperties )ComplexSizeMeasure ()string {if _gbbd :=_afad ._ddbb .SzCs ;_gbbd !=nil {_dcefb :=_gbbd .ValAttr ;if _dcefb .ST_PositiveUniversalMeasure !=nil {return *_dcefb .ST_PositiveUniversalMeasure ;};};return "";};
-
-// InsertRunAfter inserts a run in the paragraph after the relative run.
-func (_acdee Paragraph )InsertRunAfter (relativeTo Run )Run {return _acdee .insertRun (relativeTo ,false );};
-
-// AddEndnote will create a new endnote and attach it to the Paragraph in the
-// location at the end of the previous run (endnotes create their own run within
-// the paragraph. The text given to the function is simply a convenience helper,
-// paragraphs and runs can always be added to the text of the endnote later.
-func (_bccgd Paragraph )AddEndnote (text string )Endnote {var _edfe int64 ;if _bccgd ._ebfb .HasEndnotes (){for _ ,_bafe :=range _bccgd ._ebfb .Endnotes (){if _bafe .id ()> _edfe {_edfe =_bafe .id ();};};_edfe ++;}else {_bccgd ._ebfb .addEndnotes ();_edfe =1;
-};_ecab :=_bg .NewCT_FtnEdn ();_deca :=_bg .NewCT_FtnEdnRef ();_deca .IdAttr =_edfe ;_bccgd ._ebfb ._ccb .CT_Endnotes .Endnote =append (_bccgd ._ebfb ._ccb .CT_Endnotes .Endnote ,_ecab );_bddfae :=_bccgd .AddRun ();_decg :=_bddfae .Properties ();_decg .SetStyle (_bffa );
-_bddfae ._bdced .EG_RunInnerContent =[]*_bg .EG_RunInnerContent {_bg .NewEG_RunInnerContent ()};_bddfae ._bdced .EG_RunInnerContent [0].RunInnerContentChoice .EndnoteReference =_deca ;_dbgbc :=Endnote {_bccgd ._ebfb ,_ecab };_dbgbc ._ddb .IdAttr =_edfe ;
-_dbgbc ._ddb .EG_BlockLevelElts =[]*_bg .EG_BlockLevelElts {_bg .NewEG_BlockLevelElts ()};_aabaf :=_dbgbc .AddParagraph ();_aabaf .Properties ().SetStyle (EndnoteTextStyleId );_aabaf ._dfbf .PPr .RPr =_bg .NewCT_ParaRPr ();_ffdfc :=_aabaf .AddRun ();_acda :=_ffdfc .Properties ();
-_acda .SetStyle (_bffa );_ffdfc .AddEndnoteReference ();_bdagg :=_aabaf .AddRun ();_bdagg .AddText ("\u0020");_bdagg =_aabaf .AddRun ();_bdagg .AddText (text );return _dbgbc ;};func (_ebge *Document )insertNumberingFromStyleProperties (_ffecd Numbering ,_efgafb ParagraphStyleProperties ){_fdfa :=_efgafb .NumId ();
-_cgdc :=int64 (-1);if _fdfa > -1{for _ ,_dfaae :=range _ffecd ._faffc .Num {if _dfaae .NumIdAttr ==_fdfa {if _dfaae .AbstractNumId !=nil {_cgdc =_dfaae .AbstractNumId .ValAttr ;_abca :=false ;for _ ,_ccaf :=range _ebge .Numbering ._faffc .Num {if _ccaf .NumIdAttr ==_fdfa {_abca =true ;
-break ;};};if !_abca {_ebge .Numbering ._faffc .Num =append (_ebge .Numbering ._faffc .Num ,_dfaae );};break ;};};};for _ ,_gebfc :=range _ffecd ._faffc .AbstractNum {if _gebfc .AbstractNumIdAttr ==_cgdc {_acgg :=false ;for _ ,_dgeb :=range _ebge .Numbering ._faffc .AbstractNum {if _dgeb .AbstractNumIdAttr ==_cgdc {_acgg =true ;
-break ;};};if !_acgg {_ebge .Numbering ._faffc .AbstractNum =append (_ebge .Numbering ._faffc .AbstractNum ,_gebfc );};break ;};};};};
-
-// SetRowBandSize sets the number of Rows in the row band
-func (_cfbc TableStyleProperties )SetRowBandSize (rows int64 ){_cfbc ._ddecf .TblStyleRowBandSize =_bg .NewCT_DecimalNumber ();_cfbc ._ddecf .TblStyleRowBandSize .ValAttr =rows ;};func (_cbd AnchoredDrawing )setEffectExtent (_bdb ,_egf ,_ced ,_fde int64 ){if _cbd ._cd .EffectExtent ==nil {_cbd ._cd .EffectExtent =_bg .NewWdCT_EffectExtent ();
-}else {_bdb +=*_cbd ._cd .EffectExtent .BAttr .ST_CoordinateUnqualified ;_egf +=*_cbd ._cd .EffectExtent .TAttr .ST_CoordinateUnqualified ;_ced +=*_cbd ._cd .EffectExtent .LAttr .ST_CoordinateUnqualified ;_fde +=*_cbd ._cd .EffectExtent .RAttr .ST_CoordinateUnqualified ;
-};_cbd ._cd .EffectExtent .BAttr =_eg .ST_Coordinate {ST_CoordinateUnqualified :&_bdb };_cbd ._cd .EffectExtent .TAttr =_eg .ST_Coordinate {ST_CoordinateUnqualified :&_egf };_cbd ._cd .EffectExtent .LAttr =_eg .ST_Coordinate {ST_CoordinateUnqualified :&_ced };
-_cbd ._cd .EffectExtent .RAttr =_eg .ST_Coordinate {ST_CoordinateUnqualified :&_fde };};
-
-// SetTextWrapTight sets the text wrap to tight with a give wrap type.
-func (_dgf AnchoredDrawing )SetTextWrapTight (option *AnchorDrawWrapOptions ){_dgf ._cd .WrapTypeChoice =&_bg .WdEG_WrapTypeChoice {};_dgf ._cd .WrapTypeChoice .WrapTight =_bg .NewWdCT_WrapTight ();_dgf ._cd .WrapTypeChoice .WrapTight .WrapTextAttr =_bg .WdST_WrapTextBothSides ;
-_db :=false ;_dgf ._cd .WrapTypeChoice .WrapTight .WrapPolygon .EditedAttr =&_db ;if option ==nil {option =NewAnchorDrawWrapOptions ();};_dgf ._cd .WrapTypeChoice .WrapTight .WrapPolygon .LineTo =option .GetWrapPathLineTo ();_dgf ._cd .WrapTypeChoice .WrapTight .WrapPolygon .Start =option .GetWrapPathStart ();
-_dgf ._cd .LayoutInCellAttr =true ;_dgf ._cd .AllowOverlapAttr =true ;};
-
-// SetVerticalAlignment controls the vertical alignment of the run, this is used
-// to control if text is superscript/subscript.
-func (_gdeb RunProperties )SetVerticalAlignment (v _de .ST_VerticalAlignRun ){if v ==_de .ST_VerticalAlignRunUnset {_gdeb ._ddbb .VertAlign =nil ;}else {_gdeb ._ddbb .VertAlign =_bg .NewCT_VerticalAlignRun ();_gdeb ._ddbb .VertAlign .ValAttr =v ;};};
-
-// AddParagraph adds a paragraph to the header.
-func (_bafbe Header )AddParagraph ()Paragraph {_afab :=_bg .NewEG_ContentBlockContent ();_bafbe ._adfd .EG_BlockLevelElts =append (_bafbe ._adfd .EG_BlockLevelElts ,&_bg .EG_BlockLevelElts {BlockLevelEltsChoice :&_bg .EG_BlockLevelEltsChoice {EG_ContentBlockContent :[]*_bg .EG_ContentBlockContent {_afab }}});
-_dgef :=_bg .NewCT_P ();_afab .ContentBlockContentChoice .P =append (_afab .ContentBlockContentChoice .P ,_dgef );return Paragraph {_bafbe ._dafeb ,_dgef };};
-
-// Clear content of node element.
-func (_cecf *Node )Clear (){_cecf ._ffdc =nil };
-
-// BoldValue returns the precise nature of the bold setting (unset, off or on).
-func (_bcee RunProperties )BoldValue ()OnOffValue {return _bbca (_bcee ._ddbb .B )};
-
-// GetEffect returns the effect of the run.
-func (_ffagd RunProperties )GetEffect ()_bg .ST_TextEffect {if _ffagd ._ddbb .Effect ==nil {return _bg .ST_TextEffectUnset ;};return _ffagd ._ddbb .Effect .ValAttr ;};
+func (_bbbbf NumberingLevel )Properties ()ParagraphStyleProperties {if _bbbbf ._bgced .PPr ==nil {_bbbbf ._bgced .PPr =_ec .NewCT_PPrGeneral ();};return ParagraphStyleProperties {_bbbbf ._bgced .PPr };};
 
 // SetAlignment controls the paragraph alignment
-func (_ccggb ParagraphProperties )SetAlignment (align _bg .ST_Jc ){if align ==_bg .ST_JcUnset {_ccggb ._dabde .Jc =nil ;}else {_ccggb ._dabde .Jc =_bg .NewCT_Jc ();_ccggb ._dabde .Jc .ValAttr =align ;};};
-
-// X returns the inner wrapped XML type.
-func (_eabb Styles )X ()*_bg .Styles {return _eabb ._gcdd };
-
-// SetFirstColumn controls the conditional formatting for the first column in a table.
-func (_badfb TableLook )SetFirstColumn (on bool ){if !on {_badfb ._acgba .FirstColumnAttr =&_de .ST_OnOff {};_badfb ._acgba .FirstColumnAttr .ST_OnOff1 =_de .ST_OnOff1Off ;}else {_badfb ._acgba .FirstColumnAttr =&_de .ST_OnOff {};_badfb ._acgba .FirstColumnAttr .ST_OnOff1 =_de .ST_OnOff1On ;
-};};func _bcceg ()*_ec .Handles {_febg :=_ec .NewHandles ();_fbfgg :=_ec .NewCT_H ();_fbce :="\u0023\u0030\u002c\u0062\u006f\u0074\u0074\u006f\u006dR\u0069\u0067\u0068\u0074";_fbfgg .PositionAttr =&_fbce ;_gagbb :="\u0036\u0036\u0032\u0039\u002c\u0031\u0034\u0039\u0037\u0031";
-_fbfgg .XrangeAttr =&_gagbb ;_febg .H =[]*_ec .CT_H {_fbfgg };return _febg ;};
-
-// AddDrawingAnchored adds an anchored (floating) drawing from an ImageRef.
-func (_bcbff Run )AddDrawingAnchored (img _edb .ImageRef )(AnchoredDrawing ,error ){_cgagc :=_bcbff .newIC ();_cgagc .RunInnerContentChoice .Drawing =_bg .NewCT_Drawing ();_ceaf :=_bg .NewWdAnchor ();_eagff :=AnchoredDrawing {_bcbff ._efagg ,_ceaf };_ceaf .SimplePosAttr =_g .Bool (false );
-_ceaf .AllowOverlapAttr =true ;_ceaf .CNvGraphicFramePr =_eg .NewCT_NonVisualGraphicFrameProperties ();_cgagc .RunInnerContentChoice .Drawing .DrawingChoice =append (_cgagc .RunInnerContentChoice .Drawing .DrawingChoice ,&_bg .CT_DrawingChoice {Anchor :_ceaf });
-_ceaf .Graphic =_eg .NewGraphic ();_ceaf .Graphic .GraphicData =_eg .NewCT_GraphicalObjectData ();_ceaf .Graphic .GraphicData .UriAttr ="\u0068\u0074\u0074\u0070\u003a\u002f/\u0073\u0063\u0068e\u006d\u0061\u0073.\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002e\u006frg\u002f\u0064\u0072\u0061\u0077\u0069\u006e\u0067\u006d\u006c\u002f\u0032\u0030\u0030\u0036\u002f\u0070\u0069\u0063\u0074\u0075\u0072\u0065";
-_ceaf .SimplePos .XAttr .ST_CoordinateUnqualified =_g .Int64 (0);_ceaf .SimplePos .YAttr .ST_CoordinateUnqualified =_g .Int64 (0);_ceaf .PositionH .RelativeFromAttr =_bg .WdST_RelFromHPage ;_ceaf .PositionH .PosHChoice =&_bg .WdCT_PosHChoice {};_ceaf .PositionH .PosHChoice .PosOffset =_g .Int32 (0);
-_ceaf .PositionV .RelativeFromAttr =_bg .WdST_RelFromVPage ;_ceaf .PositionV .PosVChoice =&_bg .WdCT_PosVChoice {};_ceaf .PositionV .PosVChoice .PosOffset =_g .Int32 (0);_ceaf .Extent .CxAttr =int64 (float64 (img .Size ().X *_ac .Pixel72 )/_ac .EMU );_ceaf .Extent .CyAttr =int64 (float64 (img .Size ().Y *_ac .Pixel72 )/_ac .EMU );
-_ceaf .WrapTypeChoice =&_bg .WdEG_WrapTypeChoice {};_ceaf .WrapTypeChoice .WrapSquare =_bg .NewWdCT_WrapSquare ();_ceaf .WrapTypeChoice .WrapSquare .WrapTextAttr =_bg .WdST_WrapTextBothSides ;_edgaf :=0x7FFFFFFF&_ae .Uint32 ();_ceaf .DocPr .IdAttr =_edgaf ;
-_acff :=_gg .NewPic ();_acff .NvPicPr .CNvPr .IdAttr =_edgaf ;_efbea :=img .RelID ();if _efbea ==""{return _eagff ,_be .New ("\u0063\u006f\u0075\u006c\u0064\u006e\u0027\u0074\u0020\u0066\u0069\u006e\u0064\u0020\u0072\u0065\u0066\u0065\u0072\u0065n\u0063\u0065\u0020\u0074\u006f\u0020\u0069\u006d\u0061g\u0065\u0020\u0077\u0069\u0074\u0068\u0069\u006e\u0020\u0064\u006f\u0063\u0075m\u0065\u006e\u0074\u0020\u0072\u0065l\u0061\u0074\u0069o\u006e\u0073");
-};_ceaf .Graphic .GraphicData .Any =append (_ceaf .Graphic .GraphicData .Any ,_acff );_acff .BlipFill =_eg .NewCT_BlipFillProperties ();_acff .BlipFill .Blip =_eg .NewCT_Blip ();_acff .BlipFill .Blip .EmbedAttr =&_efbea ;_acff .BlipFill .FillModePropertiesChoice .Stretch =_eg .NewCT_StretchInfoProperties ();
-_acff .BlipFill .FillModePropertiesChoice .Stretch .FillRect =_eg .NewCT_RelativeRect ();_acff .SpPr =_eg .NewCT_ShapeProperties ();_acff .SpPr .Xfrm =_eg .NewCT_Transform2D ();_acff .SpPr .Xfrm .Off =_eg .NewCT_Point2D ();_acff .SpPr .Xfrm .Off .XAttr .ST_CoordinateUnqualified =_g .Int64 (0);
-_acff .SpPr .Xfrm .Off .YAttr .ST_CoordinateUnqualified =_g .Int64 (0);_acff .SpPr .Xfrm .Ext =_eg .NewCT_PositiveSize2D ();_acff .SpPr .Xfrm .Ext .CxAttr =int64 (img .Size ().X *_ac .Point );_acff .SpPr .Xfrm .Ext .CyAttr =int64 (img .Size ().Y *_ac .Point );
-_acff .SpPr .GeometryChoice .PrstGeom =_eg .NewCT_PresetGeometry2D ();_acff .SpPr .GeometryChoice .PrstGeom .PrstAttr =_eg .ST_ShapeTypeRect ;return _eagff ,nil ;};
-
-// Paragraphs returns the paragraphs defined in the cell.
-func (_bfdf Cell )Paragraphs ()[]Paragraph {_bba :=[]Paragraph {};for _ ,_dagb :=range _bfdf ._gega .EG_BlockLevelElts {for _ ,_bfc :=range _dagb .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_befg :=range _bfc .ContentBlockContentChoice .P {_bba =append (_bba ,Paragraph {_bfdf ._aeg ,_befg });
-};};};return _bba ;};
-
-// RemoveRun removes a child run from a paragraph.
-func (_cbbb Paragraph )RemoveRun (r Run ){for _ ,_cebb :=range _cbbb ._dfbf .EG_PContent {for _eeed ,_gfae :=range _cebb .PContentChoice .EG_ContentRunContent {if _gfae .ContentRunContentChoice .R ==r ._bdced {copy (_cebb .PContentChoice .EG_ContentRunContent [_eeed :],_cebb .PContentChoice .EG_ContentRunContent [_eeed +1:]);
-_cebb .PContentChoice .EG_ContentRunContent =_cebb .PContentChoice .EG_ContentRunContent [0:len (_cebb .PContentChoice .EG_ContentRunContent )-1];};if _gfae .ContentRunContentChoice .Sdt !=nil &&_gfae .ContentRunContentChoice .Sdt .SdtContent !=nil {for _ ,_adfc :=range _gfae .ContentRunContentChoice .Sdt .SdtContent .EG_PContent {for _bbeda ,_aaga :=range _adfc .PContentChoice .EG_ContentRunContent {if _aaga .ContentRunContentChoice .R ==r ._bdced {copy (_adfc .PContentChoice .EG_ContentRunContent [_bbeda :],_adfc .PContentChoice .EG_ContentRunContent [_bbeda +1:]);
-_adfc .PContentChoice .EG_ContentRunContent =_adfc .PContentChoice .EG_ContentRunContent [0:len (_adfc .PContentChoice .EG_ContentRunContent )-1];};};};};};};};
-
-// AddField adds a field (automatically computed text) to the document.
-func (_bddga Run )AddField (code string ){_bddga .AddFieldWithFormatting (code ,"",true )};
-
-// IsBold returns true if the run has been set to bold.
-func (_eagge RunProperties )IsBold ()bool {return _eagge .BoldValue ()==OnOffValueOn };func (_eda AnchoredDrawing )initializeEffectList (_cdg *_eg .CT_ShapeProperties ){if _cdg .EffectPropertiesChoice ==nil {_cdg .EffectPropertiesChoice =_eg .NewEG_EffectPropertiesChoice ();
-};if _cdg .EffectPropertiesChoice .EffectLst ==nil {_cdg .EffectPropertiesChoice .EffectLst =_eg .NewCT_EffectList ();};};
-
-// SetEmboss sets the run to embossed text.
-func (_ecgf RunProperties )SetEmboss (b bool ){if !b {_ecgf ._ddbb .Emboss =nil ;}else {_ecgf ._ddbb .Emboss =_bg .NewCT_OnOff ();};};
-
-// SetSize sets the size of the displayed image on the page.
-func (_becd InlineDrawing )SetSize (w ,h _ac .Distance ){_becd ._dacaf .Extent .CxAttr =int64 (float64 (w *_ac .Pixel72 )/_ac .EMU );_becd ._dacaf .Extent .CyAttr =int64 (float64 (h *_ac .Pixel72 )/_ac .EMU );};
-
-// SetOrigin sets the origin of the image.  It defaults to ST_RelFromHPage and
-// ST_RelFromVPage
-func (_bed AnchoredDrawing )SetOrigin (h _bg .WdST_RelFromH ,v _bg .WdST_RelFromV ){_bed ._cd .PositionH .RelativeFromAttr =h ;_bed ._cd .PositionV .RelativeFromAttr =v ;};func (_eddga *WatermarkText )getShapeType ()*_g .XSDAny {return _eddga .getInnerElement ("\u0073h\u0061\u0070\u0065\u0074\u0079\u0070e");
-};
-
-// FontTable returns document fontTable element.
-func (_fdeef *Document )FontTable ()*_bg .Fonts {return _fdeef ._deccc };func (_dadgc FormFieldType )String ()string {if _dadgc >=FormFieldType (len (_gadea )-1){return _cb .Sprintf ("\u0046\u006f\u0072\u006d\u0046\u0069\u0065\u006c\u0064\u0054\u0079\u0070e\u0028\u0025\u0064\u0029",_dadgc );
-};return _agec [_gadea [_dadgc ]:_gadea [_dadgc +1]];};func _bccg (_bbef *_bg .CT_P ,_aeeab *_bg .CT_Hyperlink ,_bdgc *TableInfo ,_ddgb *DrawingInfo ,_fggd []*_bg .EG_PContent )[]TextItem {if len (_fggd )==0{return []TextItem {TextItem {Text :"",DrawingInfo :_ddgb ,Paragraph :_bbef ,Hyperlink :_aeeab ,Run :nil ,TableInfo :_bdgc }};
-};_bbdf :=[]TextItem {};for _ ,_bbfb :=range _fggd {for _ ,_bade :=range _bbfb .PContentChoice .FldSimple {if _bade !=nil {_bbdf =append (_bbdf ,_bccg (_bbef ,_aeeab ,_bdgc ,_ddgb ,_bade .EG_PContent )...);};};if _gacf :=_bbfb .PContentChoice .Hyperlink ;
-_gacf !=nil {_bbdf =append (_bbdf ,_adgd (_bbef ,_gacf ,_bdgc ,_ddgb ,_gacf .PContentChoice .EG_ContentRunContent )...);};_bbdf =append (_bbdf ,_adgd (_bbef ,nil ,_bdgc ,_ddgb ,_bbfb .PContentChoice .EG_ContentRunContent )...);};return _bbdf ;};func _aagd (_bbbg Paragraph )*_bg .CT_NumPr {_bbbg .ensurePPr ();
-if _bbbg ._dfbf .PPr .NumPr ==nil {return nil ;};return _bbbg ._dfbf .PPr .NumPr ;};func _bgacf ()*_ec .Path {_aeeb :=_ec .NewPath ();_aeeb .ExtrusionokAttr =_de .ST_TrueFalseTrue ;_aeeb .GradientshapeokAttr =_de .ST_TrueFalseTrue ;_aeeb .ConnecttypeAttr =_ec .OfcST_ConnectTypeRect ;
-return _aeeb ;};
-
-// SetDefaultValue sets the default value of a FormFieldTypeDropDown. For
-// FormFieldTypeDropDown, the value must be one of the fields possible values.
-func (_cebfg FormField )SetDefaultValue (v string ){if len (_cebfg ._acfd .FFDataChoice )> 0{for _ ,_eddc :=range _cebfg ._acfd .FFDataChoice {if _eddc .DdList !=nil {for _fedc ,_ggfge :=range _cebfg .PossibleValues (){if _ggfge ==v {_eddc .DdList .Default =_bg .NewCT_DecimalNumber ();
-_eddc .DdList .Default .ValAttr =int64 (_fedc );break ;};};};};};};
-
-// TableStyleProperties are table properties as defined in a style.
-type TableStyleProperties struct{_ddecf *_bg .CT_TblPrBase };
-
-// SetTextWrapInFrontOfText sets the text wrap to in front of text.
-func (_acc AnchoredDrawing )SetTextWrapInFrontOfText (){_acc ._cd .WrapTypeChoice =&_bg .WdEG_WrapTypeChoice {};_acc ._cd .WrapTypeChoice .WrapNone =_bg .NewWdCT_WrapNone ();_acc ._cd .BehindDocAttr =false ;_acc ._cd .LayoutInCellAttr =true ;_acc ._cd .AllowOverlapAttr =true ;
-};func _gfcg (_gggef *_bg .CT_Tbl ,_aeggb ,_bbba map[int64 ]int64 ){for _ ,_ffe :=range _gggef .EG_ContentRowContent {for _ ,_gacc :=range _ffe .ContentRowContentChoice .Tr {for _ ,_cega :=range _gacc .EG_ContentCellContent {for _ ,_cagd :=range _cega .ContentCellContentChoice .Tc {for _ ,_ggbb :=range _cagd .EG_BlockLevelElts {for _ ,_cbae :=range _ggbb .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_facc :=range _cbae .ContentBlockContentChoice .P {_gefe (_facc ,_aeggb ,_bbba );
-};for _ ,_abdg :=range _cbae .ContentBlockContentChoice .Tbl {_gfcg (_abdg ,_aeggb ,_bbba );};};};};};};};};
-
-// AddRow adds a row to a table.
-func (_gadba Table )AddRow ()Row {_fagb :=_bg .NewEG_ContentRowContent ();_gadba ._cefad .EG_ContentRowContent =append (_gadba ._cefad .EG_ContentRowContent ,_fagb );_dgeg :=_bg .NewCT_Row ();_fagb .ContentRowContentChoice .Tr =append (_fagb .ContentRowContentChoice .Tr ,_dgeg );
-return Row {_gadba ._ebbbg ,_dgeg };};
-
-// TableProperties are the properties for a table within a document
-type TableProperties struct{_cdfg *_bg .CT_TblPr };
-
-// SetSoftEdgeImageEffect sets the soft edge image effect.
-func (_dec AnchoredDrawing )SetSoftEdgeImageEffect (radius _ac .Distance ){_afd :=_ac .ToEMU (float64 (radius ));for _ ,_def :=range _dec ._cd .Graphic .GraphicData .Any {if _fab ,_bag :=_def .(*_gg .Pic );_bag {_dec .initializeEffectList (_fab .SpPr );
-_fab .SpPr .EffectPropertiesChoice .EffectLst .SoftEdge =_eg .NewCT_SoftEdgesEffect ();_fab .SpPr .EffectPropertiesChoice .EffectLst .SoftEdge .RadAttr =_afd ;};};};
-
-// AddParagraph adds a paragraph to the table cell.
-func (_efd Cell )AddParagraph ()Paragraph {_fcga :=_bg .NewEG_BlockLevelElts ();_efd ._gega .EG_BlockLevelElts =append (_efd ._gega .EG_BlockLevelElts ,_fcga );_agdd :=_bg .NewEG_ContentBlockContent ();_fcga .BlockLevelEltsChoice .EG_ContentBlockContent =append (_fcga .BlockLevelEltsChoice .EG_ContentBlockContent ,_agdd );
-_abg :=_bg .NewCT_P ();_agdd .ContentBlockContentChoice .P =append (_agdd .ContentBlockContentChoice .P ,_abg );return Paragraph {_efd ._aeg ,_abg };};
-
-// SetStartIndent controls the start indent of the paragraph.
-func (_dega ParagraphStyleProperties )SetStartIndent (m _ac .Distance ){if _dega ._becee .Ind ==nil {_dega ._becee .Ind =_bg .NewCT_Ind ();};if m ==_ac .Zero {_dega ._becee .Ind .StartAttr =nil ;}else {_dega ._becee .Ind .StartAttr =&_bg .ST_SignedTwipsMeasure {};
-_dega ._becee .Ind .StartAttr .Int64 =_g .Int64 (int64 (m /_ac .Twips ));};};func (_baef Paragraph )insertRun (_geaf Run ,_eebf bool )Run {for _ ,_geca :=range _baef ._dfbf .EG_PContent {for _fbbd ,_ffce :=range _geca .PContentChoice .EG_ContentRunContent {if _ffce .ContentRunContentChoice .R ==_geaf .X (){_afffb :=_bg .NewCT_R ();
-_geca .PContentChoice .EG_ContentRunContent =append (_geca .PContentChoice .EG_ContentRunContent ,nil );if _eebf {copy (_geca .PContentChoice .EG_ContentRunContent [_fbbd +1:],_geca .PContentChoice .EG_ContentRunContent [_fbbd :]);_geca .PContentChoice .EG_ContentRunContent [_fbbd ]=_bg .NewEG_ContentRunContent ();
-_geca .PContentChoice .EG_ContentRunContent [_fbbd ].ContentRunContentChoice .R =_afffb ;}else {copy (_geca .PContentChoice .EG_ContentRunContent [_fbbd +2:],_geca .PContentChoice .EG_ContentRunContent [_fbbd +1:]);_geca .PContentChoice .EG_ContentRunContent [_fbbd +1]=_bg .NewEG_ContentRunContent ();
-_geca .PContentChoice .EG_ContentRunContent [_fbbd +1].ContentRunContentChoice .R =_afffb ;};return Run {_baef ._ebfb ,_afffb };};if _ffce .ContentRunContentChoice .Sdt !=nil &&_ffce .ContentRunContentChoice .Sdt .SdtContent !=nil {for _ ,_bcdg :=range _ffce .ContentRunContentChoice .Sdt .SdtContent .EG_PContent {for _ ,_acafc :=range _bcdg .PContentChoice .EG_ContentRunContent {if _acafc .ContentRunContentChoice .R ==_geaf .X (){_fgca :=_bg .NewCT_R ();
-_bcdg .PContentChoice .EG_ContentRunContent =append (_bcdg .PContentChoice .EG_ContentRunContent ,nil );if _eebf {copy (_bcdg .PContentChoice .EG_ContentRunContent [_fbbd +1:],_bcdg .PContentChoice .EG_ContentRunContent [_fbbd :]);_bcdg .PContentChoice .EG_ContentRunContent [_fbbd ]=_bg .NewEG_ContentRunContent ();
-_bcdg .PContentChoice .EG_ContentRunContent [_fbbd ].ContentRunContentChoice .R =_fgca ;}else {copy (_bcdg .PContentChoice .EG_ContentRunContent [_fbbd +2:],_bcdg .PContentChoice .EG_ContentRunContent [_fbbd +1:]);_bcdg .PContentChoice .EG_ContentRunContent [_fbbd +1]=_bg .NewEG_ContentRunContent ();
-_bcdg .PContentChoice .EG_ContentRunContent [_fbbd +1].ContentRunContentChoice .R =_fgca ;};return Run {_baef ._ebfb ,_fgca };};};};};};};return _baef .AddRun ();};
-
-// AddPageBreak adds a page break to a run.
-func (_cdgbe Run )AddPageBreak (){_ffag :=_cdgbe .newIC ();_ffag .RunInnerContentChoice .Br =_bg .NewCT_Br ();_ffag .RunInnerContentChoice .Br .TypeAttr =_bg .ST_BrTypePage ;};
-
-// AddFieldWithFormatting adds a field (automatically computed text) to the
-// document with field specifc formatting.
-func (_cdaf Run )AddFieldWithFormatting (code string ,fmt string ,isDirty bool ){_effeg :=_cdaf .newIC ();_effeg .RunInnerContentChoice .FldChar =_bg .NewCT_FldChar ();_effeg .RunInnerContentChoice .FldChar .FldCharTypeAttr =_bg .ST_FldCharTypeBegin ;if isDirty {_effeg .RunInnerContentChoice .FldChar .DirtyAttr =&_de .ST_OnOff {};
-_effeg .RunInnerContentChoice .FldChar .DirtyAttr .Bool =_g .Bool (true );};_effeg =_cdaf .newIC ();_effeg .RunInnerContentChoice .InstrText =_bg .NewCT_Text ();if fmt !=""{_effeg .RunInnerContentChoice .InstrText .Content =code +"\u0020"+fmt ;}else {_effeg .RunInnerContentChoice .InstrText .Content =code ;
-};_effeg =_cdaf .newIC ();_effeg .RunInnerContentChoice .FldChar =_bg .NewCT_FldChar ();_effeg .RunInnerContentChoice .FldChar .FldCharTypeAttr =_bg .ST_FldCharTypeEnd ;};
-
-// NewTableWidth returns a newly intialized TableWidth
-func NewTableWidth ()TableWidth {return TableWidth {_bg .NewCT_TblWidth ()}};func (_deac *WatermarkText )getInnerElement (_fafgb string )*_g .XSDAny {for _ ,_ggae :=range _deac ._dbaf .Any {_bbefa ,_aggd :=_ggae .(*_g .XSDAny );if _aggd &&(_bbefa .XMLName .Local ==_fafgb ||_bbefa .XMLName .Local =="\u0076\u003a"+_fafgb ){return _bbefa ;
-};};return nil ;};
-
-// SetAfter sets the spacing that comes after the paragraph.
-func (_ceab ParagraphSpacing )SetAfter (after _ac .Distance ){_ceab ._cdade .AfterAttr =&_de .ST_TwipsMeasure {};_ceab ._cdade .AfterAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (after /_ac .Twips ));};
-
-// Borders allows controlling individual cell borders.
-func (_bcc CellProperties )Borders ()CellBorders {if _bcc ._bbb .TcBorders ==nil {_bcc ._bbb .TcBorders =_bg .NewCT_TcBorders ();};return CellBorders {_bcc ._bbb .TcBorders };};
-
-// SetTop sets the top border to a specified type, color and thickness.
-func (_dfde TableBorders )SetTop (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_dfde ._gfgeb .Top =_bg .NewCT_Border ();_ecag (_dfde ._gfgeb .Top ,t ,c ,thickness );};
-
-// X returns the inner wrapped XML type.
-func (_bccb NumberingLevel )X ()*_bg .CT_Lvl {return _bccb ._ebebd };func (_cgfg Paragraph )removeCommentRef (_feaga int64 )bool {for _ ,_feffg :=range _cgfg .X ().EG_PContent {for _ ,_cbeb :=range _feffg .PContentChoice .EG_ContentRunContent {if _cbeb .ContentRunContentChoice .R !=nil {for _ ,_ffab :=range _cbeb .ContentRunContentChoice .R .EG_RunInnerContent {if _ffab .RunInnerContentChoice .CommentReference !=nil &&_ffab .RunInnerContentChoice .CommentReference .IdAttr ==_feaga {_cbeb .ContentRunContentChoice .R =nil ;
-return true ;};};};};};return false ;};
-
-// Numbering return numbering that being use by paragraph.
-func (_bdeg Paragraph )Numbering ()Numbering {_bdeg .ensurePPr ();_fdce :=NewNumbering ();if _bdeg ._dfbf .PPr .NumPr !=nil {_degeg :=int64 (-1);_gceff :=int64 (-1);if _bdeg ._dfbf .PPr .NumPr .NumId !=nil {_degeg =_bdeg ._dfbf .PPr .NumPr .NumId .ValAttr ;
-};for _ ,_cbcfd :=range _bdeg ._ebfb .Numbering ._faffc .Num {if _degeg < 0{break ;};if _cbcfd .NumIdAttr ==_degeg {if _cbcfd .AbstractNumId !=nil {_gceff =_cbcfd .AbstractNumId .ValAttr ;_fdce ._faffc .Num =append (_fdce ._faffc .Num ,_cbcfd );break ;
-};};};for _ ,_ebfe :=range _bdeg ._ebfb .Numbering ._faffc .AbstractNum {if _gceff < 0{break ;};if _ebfe .AbstractNumIdAttr ==_gceff {_fdce ._faffc .AbstractNum =append (_fdce ._faffc .AbstractNum ,_ebfe );break ;};};};return _fdce ;};
-
-// WatermarkText is watermark text within the document.
-type WatermarkText struct{_dbaf *_bg .CT_Picture ;_bfbd *_dg .TextpathStyle ;_fbcbg *_ec .Shape ;_fdbdg *_ec .Shapetype ;};
-
-// TextItem is used for keeping text with references to a paragraph and run or a table, a row and a cell where it is located.
-type TextItem struct{Text string ;DrawingInfo *DrawingInfo ;Paragraph *_bg .CT_P ;Hyperlink *_bg .CT_Hyperlink ;Run *_bg .CT_R ;TableInfo *TableInfo ;};
-
-// SetWidthAuto sets the the cell width to automatic.
-func (_bcd CellProperties )SetWidthAuto (){_bcd ._bbb .TcW =_bg .NewCT_TblWidth ();_bcd ._bbb .TcW .TypeAttr =_bg .ST_TblWidthAuto ;};
-
-// SetLineSpacing sets the spacing between lines in a paragraph.
-func (_eafdd ParagraphSpacing )SetLineSpacing (d _ac .Distance ,rule _bg .ST_LineSpacingRule ){if rule ==_bg .ST_LineSpacingRuleUnset {_eafdd ._cdade .LineRuleAttr =_bg .ST_LineSpacingRuleUnset ;_eafdd ._cdade .LineAttr =nil ;}else {_eafdd ._cdade .LineRuleAttr =rule ;
-_eafdd ._cdade .LineAttr =&_bg .ST_SignedTwipsMeasure {};_eafdd ._cdade .LineAttr .Int64 =_g .Int64 (int64 (d /_ac .Twips ));};};func (_gfbc Paragraph )addStartComment (_gdad int64 )*_bg .CT_MarkupRange {_efgba :=_bg .NewEG_PContent ();_gfbc ._dfbf .EG_PContent =append (_gfbc ._dfbf .EG_PContent ,_efgba );
-_caad :=_bg .NewEG_ContentRunContent ();_cdcc :=_bg .NewEG_RunLevelElts ();_bdcdd :=_bg .NewEG_RangeMarkupElements ();_ggabb :=_bg .NewCT_MarkupRange ();_ggabb .IdAttr =_gdad ;_bdcdd .RangeMarkupElementsChoice .CommentRangeStart =_ggabb ;_efgba .PContentChoice .EG_ContentRunContent =append (_efgba .PContentChoice .EG_ContentRunContent ,_caad );
-_caad .ContentRunContentChoice .EG_RunLevelElts =append (_caad .ContentRunContentChoice .EG_RunLevelElts ,_cdcc );_cdcc .RunLevelEltsChoice .EG_RangeMarkupElements =append (_cdcc .RunLevelEltsChoice .EG_RangeMarkupElements ,_bdcdd );return _ggabb ;};
-
-// SetLayout controls the table layout. wml.ST_TblLayoutTypeAutofit corresponds
-// to "Automatically resize to fit contents" being checked, while
-// wml.ST_TblLayoutTypeFixed corresponds to it being unchecked.
-func (_fcfe TableProperties )SetLayout (l _bg .ST_TblLayoutType ){if l ==_bg .ST_TblLayoutTypeUnset ||l ==_bg .ST_TblLayoutTypeAutofit {_fcfe ._cdfg .TblLayout =nil ;}else {_fcfe ._cdfg .TblLayout =_bg .NewCT_TblLayoutType ();_fcfe ._cdfg .TblLayout .TypeAttr =l ;
-};};
-
-// SetBeforeSpacing sets spacing above paragraph.
-func (_daga Paragraph )SetBeforeSpacing (d _ac .Distance ){_daga .ensurePPr ();if _daga ._dfbf .PPr .Spacing ==nil {_daga ._dfbf .PPr .Spacing =_bg .NewCT_Spacing ();};_abdc :=_daga ._dfbf .PPr .Spacing ;_abdc .BeforeAttr =&_de .ST_TwipsMeasure {};_abdc .BeforeAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (d /_ac .Twips ));
-};
-
-// DocRels returns document relationship.
-func (_daegc *Document )DocRels ()_edb .Relationships {return _daegc ._fee };
-
-// SetCantSplit set row properties for Can't Split value.
-func (_gebbge RowProperties )SetCantSplit (val bool ){if !val {_gebbge ._bedbf .TrPrBaseChoice =nil ;}else {_gebbge ._bedbf .TrPrBaseChoice =[]*_bg .CT_TrPrBaseChoice {&_bg .CT_TrPrBaseChoice {CantSplit :_bg .NewCT_OnOff ()}};};};
-
-// IsEndnote returns a bool based on whether the run has a
-// footnote or not. Returns both a bool as to whether it has
-// a footnote as well as the ID of the footnote.
-func (_dafba Run )IsEndnote ()(bool ,int64 ){if _dafba ._bdced .EG_RunInnerContent !=nil {if _dafba ._bdced .EG_RunInnerContent [0].RunInnerContentChoice .EndnoteReference !=nil {return true ,_dafba ._bdced .EG_RunInnerContent [0].RunInnerContentChoice .EndnoteReference .IdAttr ;
-};};return false ,0;};
-
-// ItalicValue returns the precise nature of the italic setting (unset, off or on).
-func (_bcbcc RunProperties )ItalicValue ()OnOffValue {return _bbca (_bcbcc ._ddbb .I )};
-
-// SetStartPct sets the cell start margin
-func (_gae CellMargins )SetStartPct (pct float64 ){_gae ._cc .Start =_bg .NewCT_TblWidth ();_aee (_gae ._cc .Start ,pct );};
-
-// RightToLeft returns true if run text goes from right to left.
-func (_gbfad RunProperties )RightToLeft ()bool {return _bbeg (_gbfad ._ddbb .Rtl )};
-
-// Shadow returns true if run shadow is on.
-func (_dbbaa RunProperties )Shadow ()bool {return _bbeg (_dbbaa ._ddbb .Shadow )};
-
-// SetBottom sets the bottom border to a specified type, color and thickness.
-func (_ccbb ParagraphBorders )SetBottom (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_ccbb ._bfeee .Bottom =_bg .NewCT_Border ();_ggef (_ccbb ._bfeee .Bottom ,t ,c ,thickness );};
-
-// Underline returns the type of paragraph underline.
-func (_faddbf ParagraphProperties )Underline ()_bg .ST_Underline {if _eeba :=_faddbf ._dabde .RPr .U ;_eeba !=nil {return _eeba .ValAttr ;};return 0;};
-
-// SetInsideHorizontal sets the interior horizontal borders to a specified type, color and thickness.
-func (_ffdcf TableBorders )SetInsideHorizontal (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_ffdcf ._gfgeb .InsideH =_bg .NewCT_Border ();_ecag (_ffdcf ._gfgeb .InsideH ,t ,c ,thickness );};
-
-// RemoveComment will remove comment with a given id from the document.
-func (_ffc *Document )RemoveComment (id int64 )bool {if !_ffc .HasComments (){return false ;};_dfg :=_ffc ._edg ;var _debd int ;for _dbgg ,_gfga :=range _dfg .CT_Comments .Comment {if _gfga .IdAttr ==id {_debd =_dbgg ;break ;};};_afda :=_dfg .CT_Comments .Comment [:_debd ];
-_afda =append (_afda ,_dfg .CT_Comments .Comment [_debd +1:len (_dfg .CT_Comments .Comment )]...);_dfg .CT_Comments .Comment =_afda ;for _ ,_aecb :=range _ffc .Paragraphs (){if _aecb .removeCommentRange (id ){_aecb .removeCommentRef (id );break ;};};_ffc .reorderComments ();
-return true ;};
-
-// SetStartIndent controls the start indentation.
-func (_ecd ParagraphProperties )SetStartIndent (m _ac .Distance ){if _ecd ._dabde .Ind ==nil {_ecd ._dabde .Ind =_bg .NewCT_Ind ();};if m ==_ac .Zero {_ecd ._dabde .Ind .StartAttr =nil ;}else {_ecd ._dabde .Ind .StartAttr =&_bg .ST_SignedTwipsMeasure {};
-_ecd ._dabde .Ind .StartAttr .Int64 =_g .Int64 (int64 (m /_ac .Twips ));};};
-
-// SetTargetBookmark sets the bookmark target of the hyperlink.
-func (_beee HyperLink )SetTargetBookmark (bm Bookmark ){_beee ._eage .AnchorAttr =_g .String (bm .Name ());_beee ._eage .IdAttr =nil ;};
-
-// SetEffect sets a text effect on the run.
-func (_deaf RunProperties )SetEffect (e _bg .ST_TextEffect ){if e ==_bg .ST_TextEffectUnset {_deaf ._ddbb .Effect =nil ;}else {_deaf ._ddbb .Effect =_bg .NewCT_TextEffect ();_deaf ._ddbb .Effect .ValAttr =e ;};};
-
-// SetTopPct sets the cell top margin
-func (_aae CellMargins )SetTopPct (pct float64 ){_aae ._cc .Top =_bg .NewCT_TblWidth ();_aee (_aae ._cc .Top ,pct );};
-
-// Footer is a footer for a document section.
-type Footer struct{_babd *Document ;_bfebb *_bg .Ftr ;};
-
-// SetSize sets size attribute for a FormFieldTypeCheckBox in pt.
-func (_cbfa FormField )SetSize (size uint64 ){if len (_cbfa ._acfd .FFDataChoice )==0{return ;};size *=2;for _ ,_aecee :=range _cbfa ._acfd .FFDataChoice {if _aecee .CheckBox !=nil {_aecee .CheckBox .FFCheckBoxChoice =_bg .NewCT_FFCheckBoxChoice ();_aecee .CheckBox .FFCheckBoxChoice .Size =_bg .NewCT_HpsMeasure ();
-_aecee .CheckBox .FFCheckBoxChoice .Size .ValAttr =_bg .ST_HpsMeasure {ST_UnsignedDecimalNumber :&size };};};};
-
-// SetPageSizeAndOrientation sets the page size and orientation for a section.
-func (_edaf Section )SetPageSizeAndOrientation (w ,h _ac .Distance ,orientation _bg .ST_PageOrientation ){if _edaf ._cdebe .PgSz ==nil {_edaf ._cdebe .PgSz =_bg .NewCT_PageSz ();};_edaf ._cdebe .PgSz .OrientAttr =orientation ;if orientation ==_bg .ST_PageOrientationLandscape {_edaf ._cdebe .PgSz .WAttr =&_de .ST_TwipsMeasure {};
-_edaf ._cdebe .PgSz .WAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (h /_ac .Twips ));_edaf ._cdebe .PgSz .HAttr =&_de .ST_TwipsMeasure {};_edaf ._cdebe .PgSz .HAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (w /_ac .Twips ));}else {_edaf ._cdebe .PgSz .WAttr =&_de .ST_TwipsMeasure {};
-_edaf ._cdebe .PgSz .WAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (w /_ac .Twips ));_edaf ._cdebe .PgSz .HAttr =&_de .ST_TwipsMeasure {};_edaf ._cdebe .PgSz .HAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (h /_ac .Twips ));};};
-
-// GetImageObjByRelId returns a common.Image with the associated relation ID in the
-// document.
-func (_bdcbd *Document )GetImageObjByRelId (relId string )(_edb .Image ,error ){_gbbb :=_bdcbd ._fee .GetTargetByRelIdAndType (relId ,_g .ImageType );if _gbbb ==""{for _ ,_ffgc :=range _bdcbd ._gdde {if _gbbb !=""{break ;};_gbbb =_ffgc .GetTargetByRelIdAndType (relId ,_g .ImageType );
-};};if _gbbb ==""{for _ ,_cabf :=range _bdcbd ._dce {if _gbbb !=""{break ;};_gbbb =_cabf .GetTargetByRelIdAndType (relId ,_g .ImageType );};};return _bdcbd .DocBase .GetImageBytesByTarget (_gbbb );};
-
-// Paragraph is a paragraph within a document.
-type Paragraph struct{_ebfb *Document ;_dfbf *_bg .CT_P ;};
-
-// SetInsideVertical sets the interior vertical borders to a specified type, color and thickness.
-func (_dga CellBorders )SetInsideVertical (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_dga ._bee .InsideV =_bg .NewCT_Border ();_ecag (_dga ._bee .InsideV ,t ,c ,thickness );};
-
-// AddFootnote will create a new footnote and attach it to the Paragraph in the
-// location at the end of the previous run (footnotes create their own run within
-// the paragraph). The text given to the function is simply a convenience helper,
-// paragraphs and runs can always be added to the text of the footnote later.
-func (_efdab Paragraph )AddFootnote (text string )Footnote {var _cbdc int64 ;if _efdab ._ebfb .HasFootnotes (){for _ ,_cfgbb :=range _efdab ._ebfb .Footnotes (){if _cfgbb .id ()> _cbdc {_cbdc =_cfgbb .id ();};};_cbdc ++;}else {_efdab ._ebfb .addFootnotes ();
-_cbdc =1;};_ggcd :=_bg .NewCT_FtnEdn ();_fdcdf :=_bg .NewCT_FtnEdnRef ();_fdcdf .IdAttr =_cbdc ;_efdab ._ebfb ._gca .CT_Footnotes .Footnote =append (_efdab ._ebfb ._gca .CT_Footnotes .Footnote ,_ggcd );_gfeed :=_efdab .AddRun ();_eccg :=_gfeed .Properties ();
-_eccg .SetStyle (_eec );_gfeed ._bdced .EG_RunInnerContent =[]*_bg .EG_RunInnerContent {_bg .NewEG_RunInnerContent ()};_gfeed ._bdced .EG_RunInnerContent [0].RunInnerContentChoice .FootnoteReference =_fdcdf ;_eefd :=Footnote {_efdab ._ebfb ,_ggcd };_eefd ._efbd .IdAttr =_cbdc ;
-_eefd ._efbd .EG_BlockLevelElts =[]*_bg .EG_BlockLevelElts {_bg .NewEG_BlockLevelElts ()};_bfdea :=_eefd .AddParagraph ();_bfdea .Properties ().SetStyle (FootnoteTextStyleId );_bfdea ._dfbf .PPr .RPr =_bg .NewCT_ParaRPr ();_cfacf :=_bfdea .AddRun ();_fcee :=_cfacf .Properties ();
-_fcee .SetStyle (_eec );_cfacf .AddFootnoteReference ();_ddcb :=_bfdea .AddRun ();_ddcb .AddText ("\u0020");_ddcb =_bfdea .AddRun ();_ddcb .AddText (text );return _eefd ;};
-
-// Bookmark is a bookmarked location within a document that can be referenced
-// with a hyperlink.
-type Bookmark struct{_aef *_bg .CT_Bookmark };
-
-// Copy returns a copy of the run.
-func (_dbcd Run )Copy ()Run {_eccba :=_bg .NewCT_R ();_bggb :=*_dbcd ._bdced .RPr ;_eccba .RPr =&_bggb ;for _ ,_dgfd :=range _dbcd ._bdced .EG_RunInnerContent {_effff :=_bg .NewEG_RunInnerContent ();if _dgfd .RunInnerContentChoice .T !=nil {_effff .RunInnerContentChoice .T =&_bg .CT_Text {Content :_dgfd .RunInnerContentChoice .T .Content ,SpaceAttr :_dgfd .RunInnerContentChoice .T .SpaceAttr };
-};_eccba .EG_RunInnerContent =append (_eccba .EG_RunInnerContent ,_effff );};return Run {_efagg :_dbcd ._efagg ,_bdced :_eccba };};
-
-// DrawingAnchored returns a slice of AnchoredDrawings.
-func (_feaab Run )DrawingAnchored ()[]AnchoredDrawing {_daceg :=[]AnchoredDrawing {};for _ ,_facdf :=range _feaab ._bdced .EG_RunInnerContent {if _facdf .RunInnerContentChoice .Drawing ==nil {continue ;};for _ ,_dead :=range _facdf .RunInnerContentChoice .Drawing .DrawingChoice {if _dead .Anchor ==nil {continue ;
-};_daceg =append (_daceg ,AnchoredDrawing {_feaab ._efagg ,_dead .Anchor });};};return _daceg ;};
-
-// SetLeft sets the cell left margin
-func (_dgdf CellMargins )SetLeft (d _ac .Distance ){_dgdf ._cc .Left =_bg .NewCT_TblWidth ();_gacd (_dgdf ._cc .Left ,d );};
-
-// SaveToFile writes the document out to a file.
-func (_cdd *Document )SaveToFile (path string )error {_ade ,_bfaaf :=_eag .Create (path );if _bfaaf !=nil {return _bfaaf ;};defer _ade .Close ();return _cdd .Save (_ade );};
-
-// Validate validates the structure and in cases where it't possible, the ranges
-// of elements within a document. A validation error dones't mean that the
-// document won't work in MS Word or LibreOffice, but it's worth checking into.
-func (_ggbe *Document )Validate ()error {if _ggbe ==nil ||_ggbe ._feaa ==nil {return _be .New ("\u0064o\u0063\u0075m\u0065\u006e\u0074\u0020n\u006f\u0074\u0020i\u006e\u0069\u0074\u0069\u0061\u006c\u0069\u007a\u0065d \u0063\u006f\u0072r\u0065\u0063t\u006c\u0079\u002c\u0020\u006e\u0069l\u0020\u0062a\u0073\u0065");
-};for _ ,_gcbg :=range []func ()error {_ggbe .validateTableCells ,_ggbe .validateBookmarks }{if _eagag :=_gcbg ();_eagag !=nil {return _eagag ;};};if _gcae :=_ggbe ._feaa .Validate ();_gcae !=nil {return _gcae ;};return nil ;};
-
-// GetSize return the size of anchor on the page.
-func (_egb AnchoredDrawing )GetSize ()(_gag ,_eea int64 ){return _egb ._cd .Extent .CxAttr ,_egb ._cd .Extent .CyAttr ;};
-
-// GetChartSpaceByRelId returns a *crt.ChartSpace with the associated relation ID in the
-// document.
-func (_bfeb *Document )GetChartSpaceByRelId (relId string )*_ece .ChartSpace {_feag :=_bfeb ._fee .GetTargetByRelId (relId );for _ ,_bbde :=range _bfeb ._bddg {if _feag ==_bbde .Target (){return _bbde ._gbg ;};};return nil ;};
-
-// Fonts allows manipulating a style or run's fonts.
-type Fonts struct{_bcce *_bg .CT_Fonts };
-
-// SetMultiLevelType sets the multilevel type.
-func (_efcab NumberingDefinition )SetMultiLevelType (t _bg .ST_MultiLevelType ){if t ==_bg .ST_MultiLevelTypeUnset {_efcab ._dbagd .MultiLevelType =nil ;}else {_efcab ._dbagd .MultiLevelType =_bg .NewCT_MultiLevelType ();_efcab ._dbagd .MultiLevelType .ValAttr =t ;
-};};
-
-// GetText returns text in the watermark.
-func (_acdad *WatermarkText )GetText ()string {_deacd :=_acdad .getShape ();if _acdad ._fbcbg !=nil {_gaafgd :=_acdad ._fbcbg .ShapeChoice ;for _ ,_aegf :=range _gaafgd {if _aegf .ShapeElementsChoice .Textpath !=nil {return *_aegf .ShapeElementsChoice .Textpath .StringAttr ;
-};};}else {_ebfbg :=_acdad .findNode (_deacd ,"\u0074\u0065\u0078\u0074\u0070\u0061\u0074\u0068");for _ ,_ggfd :=range _ebfbg .Attrs {if _ggfd .Name .Local =="\u0073\u0074\u0072\u0069\u006e\u0067"{return _ggfd .Value ;};};};return "";};
-
-// X returns the inner wrapped XML type.
-func (_gfaf Table )X ()*_bg .CT_Tbl {return _gfaf ._cefad };
-
-// Endnote returns the endnote based on the ID; this can be used nicely with
-// the run.IsEndnote() functionality.
-func (_gdff *Document )Endnote (id int64 )Endnote {for _ ,_cgde :=range _gdff .Endnotes (){if _cgde .id ()==id {return _cgde ;};};return Endnote {};};
-
-// SetToolTip sets the tooltip text for a hyperlink.
-func (_cgdbb HyperLink )SetToolTip (text string ){if text ==""{_cgdbb ._eage .TooltipAttr =nil ;}else {_cgdbb ._eage .TooltipAttr =_g .String (text );};};
-
-// X returns the inner wrapped XML type.
-func (_fbfb TableLook )X ()*_bg .CT_TblLook {return _fbfb ._acgba };func _ggac (_fbfd *_bg .CT_Tbl ,_dcdd *_bg .CT_P ,_gbf bool )*_bg .CT_Tbl {for _ ,_eecf :=range _fbfd .EG_ContentRowContent {for _ ,_dda :=range _eecf .ContentRowContentChoice .Tr {for _ ,_ggce :=range _dda .EG_ContentCellContent {for _ ,_dbfg :=range _ggce .ContentCellContentChoice .Tc {for _gdgfg ,_cfac :=range _dbfg .EG_BlockLevelElts {for _ ,_cde :=range _cfac .BlockLevelEltsChoice .EG_ContentBlockContent {for _gceb ,_cef :=range _cde .ContentBlockContentChoice .P {if _cef ==_dcdd {_aec :=_bg .NewEG_BlockLevelElts ();
-_ggdf :=_bg .NewEG_ContentBlockContent ();_aec .BlockLevelEltsChoice .EG_ContentBlockContent =append (_aec .BlockLevelEltsChoice .EG_ContentBlockContent ,_ggdf );_fbfc :=_bg .NewCT_Tbl ();_ggdf .ContentBlockContentChoice .Tbl =append (_ggdf .ContentBlockContentChoice .Tbl ,_fbfc );
-_dbfg .EG_BlockLevelElts =append (_dbfg .EG_BlockLevelElts ,nil );if _gbf {copy (_dbfg .EG_BlockLevelElts [_gdgfg +1:],_dbfg .EG_BlockLevelElts [_gdgfg :]);_dbfg .EG_BlockLevelElts [_gdgfg ]=_aec ;if _gceb !=0{_decf :=_bg .NewEG_BlockLevelElts ();_ffff :=_bg .NewEG_ContentBlockContent ();
-_decf .BlockLevelEltsChoice .EG_ContentBlockContent =append (_decf .BlockLevelEltsChoice .EG_ContentBlockContent ,_ffff );_ffff .ContentBlockContentChoice .P =_cde .ContentBlockContentChoice .P [:_gceb ];_dbfg .EG_BlockLevelElts =append (_dbfg .EG_BlockLevelElts ,nil );
-copy (_dbfg .EG_BlockLevelElts [_gdgfg +1:],_dbfg .EG_BlockLevelElts [_gdgfg :]);_dbfg .EG_BlockLevelElts [_gdgfg ]=_decf ;};_cde .ContentBlockContentChoice .P =_cde .ContentBlockContentChoice .P [_gceb :];}else {copy (_dbfg .EG_BlockLevelElts [_gdgfg +2:],_dbfg .EG_BlockLevelElts [_gdgfg +1:]);
-_dbfg .EG_BlockLevelElts [_gdgfg +1]=_aec ;if _gceb !=len (_cde .ContentBlockContentChoice .P )-1{_fbe :=_bg .NewEG_BlockLevelElts ();_bae :=_bg .NewEG_ContentBlockContent ();_fbe .BlockLevelEltsChoice .EG_ContentBlockContent =append (_fbe .BlockLevelEltsChoice .EG_ContentBlockContent ,_bae );
-_bae .ContentBlockContentChoice .P =_cde .ContentBlockContentChoice .P [_gceb +1:];_dbfg .EG_BlockLevelElts =append (_dbfg .EG_BlockLevelElts ,nil );copy (_dbfg .EG_BlockLevelElts [_gdgfg +3:],_dbfg .EG_BlockLevelElts [_gdgfg +2:]);_dbfg .EG_BlockLevelElts [_gdgfg +2]=_fbe ;
-}else {_bdga :=_bg .NewEG_BlockLevelElts ();_ebc :=_bg .NewEG_ContentBlockContent ();_bdga .BlockLevelEltsChoice .EG_ContentBlockContent =append (_bdga .BlockLevelEltsChoice .EG_ContentBlockContent ,_ebc );_ebc .ContentBlockContentChoice .P =[]*_bg .CT_P {_bg .NewCT_P ()};
-_dbfg .EG_BlockLevelElts =append (_dbfg .EG_BlockLevelElts ,nil );copy (_dbfg .EG_BlockLevelElts [_gdgfg +3:],_dbfg .EG_BlockLevelElts [_gdgfg +2:]);_dbfg .EG_BlockLevelElts [_gdgfg +2]=_bdga ;};_cde .ContentBlockContentChoice .P =_cde .ContentBlockContentChoice .P [:_gceb +1];
-};return _fbfc ;};};for _ ,_agf :=range _cde .ContentBlockContentChoice .Tbl {_cae :=_ggac (_agf ,_dcdd ,_gbf );if _cae !=nil {return _cae ;};};};};};};};};return nil ;};
-
-// AddComment add comment to the paragraph.
-func (_ceca Paragraph )AddComment (author ,commentText string )int64 {var _eggcb int64 ;if _ceca ._ebfb .HasComments (){for _ ,_febdc :=range _ceca ._ebfb .Comments (){if _febdc .id ()> _eggcb {_eggcb =_febdc .id ();};};_eggcb ++;}else {_ceca ._ebfb .addComments ();
-_eggcb =1;};_dgag :=_bg .NewCT_Comment ();_ccef :=_bg .NewCT_Markup ();_cgab :=_dc .Initials (author );_cfbb :=_e .Now ();_dgag .IdAttr =_eggcb ;_dgag .AuthorAttr =author ;_dgag .InitialsAttr =&_cgab ;_dgag .DateAttr =&_cfbb ;_ccef .IdAttr =_eggcb ;_dgag .EG_BlockLevelElts =append (_dgag .EG_BlockLevelElts ,_bg .NewEG_BlockLevelElts ());
-_adfgfa :=Comment {_ceca ._ebfb ,_dgag };_cfea :=_adfgfa .AddParagraph ();_cfea .SetStyle (_adcc );_dfbgg :=_cfea .AddRun ();_dfbgg .AddAnnotationReference ();_ebca :=_dfbgg .Properties ();_ebca .SetStyle (_dgfa );_cbee :=_cfea .AddRun ();_cbee .AddText (commentText );
-_eggcbc :=_cbee .Properties ();_eggcbc .SetSize (_ac .Distance (_egdf ));_ceca ._ebfb ._edg .CT_Comments .Comment =append (_ceca ._ebfb ._edg .CT_Comments .Comment ,_dgag );_ceca .addStartComment (_eggcb );return _eggcb ;};
-
-// SetLastRow controls the conditional formatting for the last row in a table.
-// This is called the 'Total' row within Word.
-func (_bfbbg TableLook )SetLastRow (on bool ){if !on {_bfbbg ._acgba .LastRowAttr =&_de .ST_OnOff {};_bfbbg ._acgba .LastRowAttr .ST_OnOff1 =_de .ST_OnOff1Off ;}else {_bfbbg ._acgba .LastRowAttr =&_de .ST_OnOff {};_bfbbg ._acgba .LastRowAttr .ST_OnOff1 =_de .ST_OnOff1On ;
-};};
-
-// Document is a text document that can be written out in the OOXML .docx
-// format. It can be opened from a file on disk and modified, or created from
-// scratch.
-type Document struct{_edb .DocBase ;_feaa *_bg .Document ;Settings Settings ;Numbering Numbering ;Styles Styles ;_gffb []*_bg .Hdr ;_gdde []_edb .Relationships ;_dgdg []*_bg .Ftr ;_dce []_edb .Relationships ;_fee _edb .Relationships ;_bgb []*_eg .Theme ;
-_ada *_bg .WebSettings ;_deccc *_bg .Fonts ;_adc _edb .Relationships ;_ccb *_bg .Endnotes ;_gca *_bg .Footnotes ;_dagbd []*_dd .Control ;_bddg []*chart ;_edg *_bg .Comments ;_dcdb string ;};
-
-// Pict returns the pict object.
-func (_fddeeb *WatermarkText )Pict ()*_bg .CT_Picture {return _fddeeb ._dbaf };
-
-// SetDiagonalLayout enables or disables diagonal layout.
-// By default, diagonal layout is disabled and we have horizontal layout.
-func (_eecfb *WatermarkText )EnableDiagonalLayout (value bool ){if _eecfb ._fbcbg !=nil &&_eecfb ._fbcbg .StyleAttr !=nil {_acfbc :=*_eecfb ._fbcbg .StyleAttr ;if value {_acfbc +="\u0072\u006f\u0074\u0061\u0074\u0069\u006f\u006e\u003a\u0033\u0031\u0035\u003b";
-}else {_acfbc =_ef .ReplaceAll (_acfbc ,"\u0072\u006f\u0074\u0061\u0074\u0069\u006f\u006e\u003a\u0033\u0031\u0035\u003b","");};_eecfb ._fbcbg .StyleAttr =&_acfbc ;};};
-
-// SetId sets the id of the image.
-func (_fg AnchoredDrawing )SetId (id uint32 ){for _ ,_bce :=range _fg ._cd .Graphic .GraphicData .Any {if _edd ,_aa :=_bce .(*_gg .Pic );_aa {_edd .NvPicPr .CNvPr .IdAttr =id ;};};};
-
-// EastAsiaFont returns the name of paragraph font family for East Asia.
-func (_afgf ParagraphProperties )EastAsiaFont ()string {if _gacb :=_afgf ._dabde .RPr .RFonts ;_gacb !=nil {if _gacb .EastAsiaAttr !=nil {return *_gacb .EastAsiaAttr ;};};return "";};
-
-// Emboss returns true if paragraph emboss is on.
-func (_edfcd ParagraphProperties )Emboss ()bool {return _bbeg (_edfcd ._dabde .RPr .Emboss )};
-
-// SetGlowImageEffect sets the glow image effect.
-func (_eb AnchoredDrawing )SetGlowImageEffect (radius _ac .Distance ,c _ce .Color ){_bdd :=_ac .ToEMU (float64 (radius ));for _ ,_cee :=range _eb ._cd .Graphic .GraphicData .Any {if _cba ,_dgd :=_cee .(*_gg .Pic );_dgd {_eb .initializeEffectList (_cba .SpPr );
-_cba .SpPr .EffectPropertiesChoice .EffectLst .Glow =_eg .NewCT_GlowEffect ();_cba .SpPr .EffectPropertiesChoice .EffectLst .Glow .RadAttr =&_bdd ;_cba .SpPr .EffectPropertiesChoice .EffectLst .Glow .SrgbClr =_eg .NewCT_SRgbColor ();_cba .SpPr .EffectPropertiesChoice .EffectLst .Glow .SrgbClr .ValAttr =*c .AsRGBString ();
-};};_eb .setEffectExtent (_bdd ,_bdd ,_bdd ,_bdd );};func (_gbe *chart )Target ()string {return _gbe ._ede };func (_feec Run )newIC ()*_bg .EG_RunInnerContent {_fbaba :=_bg .NewEG_RunInnerContent ();_feec ._bdced .EG_RunInnerContent =append (_feec ._bdced .EG_RunInnerContent ,_fbaba );
-return _fbaba ;};
-
-// Restart restarts the numbering
-func (_gcdc *Numbering )Restart (nd *NumberingDefinition ){_effca :=nd ._dbagd .Lvl ;_ecbe :=_gcdc .AddDefinition ();nd ._dbagd =_ecbe ._dbagd ;nd ._dbagd .Lvl =_effca ;};
-
-// AddDrawingInline adds an inline drawing from an ImageRef.
-func (_aabeee Run )AddDrawingInline (img _edb .ImageRef )(InlineDrawing ,error ){_deda :=_aabeee .newIC ();_deda .RunInnerContentChoice .Drawing =_bg .NewCT_Drawing ();_fefd :=_bg .NewWdInline ();_cddg :=InlineDrawing {_aabeee ._efagg ,_fefd };_fefd .CNvGraphicFramePr =_eg .NewCT_NonVisualGraphicFrameProperties ();
-_deda .RunInnerContentChoice .Drawing .DrawingChoice =append (_deda .RunInnerContentChoice .Drawing .DrawingChoice ,&_bg .CT_DrawingChoice {Inline :_fefd });_fefd .Graphic =_eg .NewGraphic ();_fefd .Graphic .GraphicData =_eg .NewCT_GraphicalObjectData ();
-_fefd .Graphic .GraphicData .UriAttr ="\u0068\u0074\u0074\u0070\u003a\u002f/\u0073\u0063\u0068e\u006d\u0061\u0073.\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002e\u006frg\u002f\u0064\u0072\u0061\u0077\u0069\u006e\u0067\u006d\u006c\u002f\u0032\u0030\u0030\u0036\u002f\u0070\u0069\u0063\u0074\u0075\u0072\u0065";
-_fefd .DistTAttr =_g .Uint32 (0);_fefd .DistLAttr =_g .Uint32 (0);_fefd .DistBAttr =_g .Uint32 (0);_fefd .DistRAttr =_g .Uint32 (0);_fefd .Extent .CxAttr =int64 (float64 (img .Size ().X *_ac .Pixel72 )/_ac .EMU );_fefd .Extent .CyAttr =int64 (float64 (img .Size ().Y *_ac .Pixel72 )/_ac .EMU );
-_gefee :=0x7FFFFFFF&_ae .Uint32 ();_fefd .DocPr .IdAttr =_gefee ;_fgfgg :=_gg .NewPic ();_fgfgg .NvPicPr .CNvPr .IdAttr =_gefee ;_cecff :=img .RelID ();if _cecff ==""{return _cddg ,_be .New ("\u0063\u006f\u0075\u006c\u0064\u006e\u0027\u0074\u0020\u0066\u0069\u006e\u0064\u0020\u0072\u0065\u0066\u0065\u0072\u0065n\u0063\u0065\u0020\u0074\u006f\u0020\u0069\u006d\u0061g\u0065\u0020\u0077\u0069\u0074\u0068\u0069\u006e\u0020\u0064\u006f\u0063\u0075m\u0065\u006e\u0074\u0020\u0072\u0065l\u0061\u0074\u0069o\u006e\u0073");
-};_fefd .Graphic .GraphicData .Any =append (_fefd .Graphic .GraphicData .Any ,_fgfgg );_fgfgg .BlipFill =_eg .NewCT_BlipFillProperties ();_fgfgg .BlipFill .Blip =_eg .NewCT_Blip ();_fgfgg .BlipFill .Blip .EmbedAttr =&_cecff ;_fgfgg .BlipFill .FillModePropertiesChoice .Stretch =_eg .NewCT_StretchInfoProperties ();
-_fgfgg .BlipFill .FillModePropertiesChoice .Stretch .FillRect =_eg .NewCT_RelativeRect ();_fgfgg .SpPr =_eg .NewCT_ShapeProperties ();_fgfgg .SpPr .Xfrm =_eg .NewCT_Transform2D ();_fgfgg .SpPr .Xfrm .Off =_eg .NewCT_Point2D ();_fgfgg .SpPr .Xfrm .Off .XAttr .ST_CoordinateUnqualified =_g .Int64 (0);
-_fgfgg .SpPr .Xfrm .Off .YAttr .ST_CoordinateUnqualified =_g .Int64 (0);_fgfgg .SpPr .Xfrm .Ext =_eg .NewCT_PositiveSize2D ();_fgfgg .SpPr .Xfrm .Ext .CxAttr =int64 (img .Size ().X *_ac .Point );_fgfgg .SpPr .Xfrm .Ext .CyAttr =int64 (img .Size ().Y *_ac .Point );
-_fgfgg .SpPr .GeometryChoice .PrstGeom =_eg .NewCT_PresetGeometry2D ();_fgfgg .SpPr .GeometryChoice .PrstGeom .PrstAttr =_eg .ST_ShapeTypeRect ;return _cddg ,nil ;};func (_cafg *Document )syncEndnoteSettings (){_dggb :=[]int64 {};_acbf :=_cafg .Endnotes ();
-for _ ,_eega :=range _acbf {if _eega .X ().TypeAttr !=_bg .ST_FtnEdnUnset &&_eega .X ().TypeAttr !=_bg .ST_FtnEdnNormal {_dggb =append (_dggb ,_eega .X ().IdAttr );};};_edce :=_cafg .Settings .X ().CT_Settings .EndnotePr ;if _edce ==nil {_edce =_bg .NewCT_EdnDocProps ();
-};if len (_dggb )==0{_edce .Endnote =nil ;return ;};_edce .Endnote =[]*_bg .CT_FtnEdnSepRef {};for _ ,_deb :=range _dggb {_dfed :=_bg .NewCT_FtnEdnSepRef ();_dfed .IdAttr =_deb ;_edce .Endnote =append (_edce .Endnote ,_dfed );};};
-
-// Comments get list of comments in the document.
-func (_ecfbe *Document )Comments ()[]Comment {_dabg :=[]Comment {};for _ ,_caeda :=range _ecfbe ._edg .Comment {_dabg =append (_dabg ,Comment {_ecfbe ,_caeda });};return _dabg ;};
-
-// SetStrikeThrough sets the run to strike-through.
-func (_efddc RunProperties )SetStrikeThrough (b bool ){if !b {_efddc ._ddbb .Strike =nil ;}else {_efddc ._ddbb .Strike =_bg .NewCT_OnOff ();};};
-
-// SetAlignment controls the paragraph alignment
-func (_gfda ParagraphStyleProperties )SetAlignment (align _bg .ST_Jc ){if align ==_bg .ST_JcUnset {_gfda ._becee .Jc =nil ;}else {_gfda ._becee .Jc =_bg .NewCT_Jc ();_gfda ._becee .Jc .ValAttr =align ;};};
-
-// SetInnerShadowImageEffect sets the inner shadow image effect.
-func (_bb AnchoredDrawing )SetInnerShadowImageEffect (radius ,offset _ac .Distance ,c _ce .Color ,degrees float64 ){_abdd :=_ac .ToEMU (float64 (radius ));_gdb :=_ac .ToEMU (float64 (offset ));_cf :=int32 (degrees *60000);for _ ,_dcc :=range _bb ._cd .Graphic .GraphicData .Any {if _bd ,_gef :=_dcc .(*_gg .Pic );
-_gef {_bb .initializeEffectList (_bd .SpPr );_bd .SpPr .EffectPropertiesChoice .EffectLst .InnerShdw =_eg .NewCT_InnerShadowEffect ();_bd .SpPr .EffectPropertiesChoice .EffectLst .InnerShdw .BlurRadAttr =&_abdd ;_bd .SpPr .EffectPropertiesChoice .EffectLst .InnerShdw .DistAttr =&_gdb ;
-_bd .SpPr .EffectPropertiesChoice .EffectLst .InnerShdw .DirAttr =&_cf ;_bd .SpPr .EffectPropertiesChoice .EffectLst .InnerShdw .SrgbClr =_eg .NewCT_SRgbColor ();_bd .SpPr .EffectPropertiesChoice .EffectLst .InnerShdw .SrgbClr .ValAttr =*c .AsRGBString ();
-};};};
-
-// SetTextWrapThrough sets the text wrap to through with a give wrap type.
-func (_gdd AnchoredDrawing )SetTextWrapThrough (option *AnchorDrawWrapOptions ){_gdd ._cd .WrapTypeChoice =&_bg .WdEG_WrapTypeChoice {};_gdd ._cd .WrapTypeChoice .WrapThrough =_bg .NewWdCT_WrapThrough ();_gdd ._cd .WrapTypeChoice .WrapThrough .WrapTextAttr =_bg .WdST_WrapTextBothSides ;
-_eeg :=false ;_gdd ._cd .WrapTypeChoice .WrapThrough .WrapPolygon .EditedAttr =&_eeg ;if option ==nil {option =NewAnchorDrawWrapOptions ();};_gdd ._cd .WrapTypeChoice .WrapThrough .WrapPolygon .Start =option .GetWrapPathStart ();_gdd ._cd .WrapTypeChoice .WrapThrough .WrapPolygon .LineTo =option .GetWrapPathLineTo ();
-_gdd ._cd .LayoutInCellAttr =true ;_gdd ._cd .AllowOverlapAttr =true ;};
-
-// SetTargetByRef sets the URL target of the hyperlink and is more efficient if a link
-// destination will be used many times.
-func (_gfcc HyperLink )SetTargetByRef (link _edb .Hyperlink ){_gfcc ._eage .IdAttr =_g .String (_edb .Relationship (link ).ID ());_gfcc ._eage .AnchorAttr =nil ;};
-
-// SetBasedOn sets the style that this style is based on.
-func (_bbbgc Style )SetBasedOn (name string ){if name ==""{_bbbgc ._cbega .BasedOn =nil ;}else {_bbbgc ._cbega .BasedOn =_bg .NewCT_String ();_bbbgc ._cbega .BasedOn .ValAttr =name ;};};func _ecgbc (_cfbe *_eg .CT_Blip ,_beefd map[string ]string ){if _cfbe .EmbedAttr !=nil {if _bfbg ,_gbgd :=_beefd [*_cfbe .EmbedAttr ];
-_gbgd {*_cfbe .EmbedAttr =_bfbg ;};};};
-
-// Tables returns the tables defined in the header.
-func (_fccb Header )Tables ()[]Table {_aebe :=[]Table {};if _fccb ._adfd ==nil {return nil ;};for _ ,_gfac :=range _fccb ._adfd .EG_BlockLevelElts {for _ ,_bgge :=range _gfac .BlockLevelEltsChoice .EG_ContentBlockContent {_aebe =append (_aebe ,_fccb ._dafeb .tables (_bgge )...);
-};};return _aebe ;};
-
-// SetHAlignment sets the horizontal alignment for an anchored image.
-func (_dae AnchoredDrawing )SetHAlignment (h _bg .WdST_AlignH ){_dae ._cd .PositionH .PosHChoice =&_bg .WdCT_PosHChoice {};_dae ._cd .PositionH .PosHChoice .Align =h ;};
-
-// SetBetween sets the between border to a specified type, color and thickness between paragraph.
-func (_fbdb ParagraphBorders )SetBetween (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_fbdb ._bfeee .Between =_bg .NewCT_Border ();_ggef (_fbdb ._bfeee .Between ,t ,c ,thickness );};
-
-// TableConditionalFormatting controls the conditional formatting within a table
-// style.
-type TableConditionalFormatting struct{_dbgc *_bg .CT_TblStylePr };func (_efdbg Paragraph )addEndComment (_edgc int64 )*_bg .CT_MarkupRange {_cfefe :=_bg .NewEG_PContent ();_efdbg ._dfbf .EG_PContent =append (_efdbg ._dfbf .EG_PContent ,_cfefe );_ggbdcd :=_bg .NewEG_ContentRunContent ();
-_bdagf :=_bg .NewEG_RunLevelElts ();_bdfa :=_bg .NewEG_RangeMarkupElements ();_bcaea :=_bg .NewCT_MarkupRange ();_bcaea .IdAttr =_edgc ;_bdfa .RangeMarkupElementsChoice .CommentRangeEnd =_bcaea ;_cfefe .PContentChoice .EG_ContentRunContent =append (_cfefe .PContentChoice .EG_ContentRunContent ,_ggbdcd );
-_ggbdcd .ContentRunContentChoice .EG_RunLevelElts =append (_ggbdcd .ContentRunContentChoice .EG_RunLevelElts ,_bdagf );_bdagf .RunLevelEltsChoice .EG_RangeMarkupElements =append (_bdagf .RunLevelEltsChoice .EG_RangeMarkupElements ,_bdfa );return _bcaea ;
-};
-
-// SetTextWrapSquare sets the text wrap to square with a given wrap type.
-func (_dfd AnchoredDrawing )SetTextWrapSquare (t _bg .WdST_WrapText ){_dfd ._cd .WrapTypeChoice =&_bg .WdEG_WrapTypeChoice {};_dfd ._cd .WrapTypeChoice .WrapSquare =_bg .NewWdCT_WrapSquare ();_dfd ._cd .WrapTypeChoice .WrapSquare .WrapTextAttr =t ;};
-
-// Name returns the name of the style if set.
-func (_baeg Style )Name ()string {if _baeg ._cbega .Name ==nil {return "";};return _baeg ._cbega .Name .ValAttr ;};
-
-// RunProperties returns the run style properties.
-func (_caffe Style )RunProperties ()RunProperties {if _caffe ._cbega .RPr ==nil {_caffe ._cbega .RPr =_bg .NewCT_RPr ();};return RunProperties {_caffe ._cbega .RPr };};func (_afeb Endnote )content ()[]*_bg .EG_ContentBlockContent {var _cafa []*_bg .EG_ContentBlockContent ;
-for _ ,_gebbg :=range _afeb ._ddb .EG_BlockLevelElts {_cafa =append (_cafa ,_gebbg .BlockLevelEltsChoice .EG_ContentBlockContent ...);};return _cafa ;};
-
-// SetNumberingDefinition sets the numbering definition ID via a NumberingDefinition
-// defined in numbering.xml
-func (_dedfa Paragraph )SetNumberingDefinition (nd NumberingDefinition ){_dedfa .ensurePPr ();if _dedfa ._dfbf .PPr .NumPr ==nil {_dedfa ._dfbf .PPr .NumPr =_bg .NewCT_NumPr ();};_cdgb :=_bg .NewCT_DecimalNumber ();_eagde :=int64 (-1);for _ ,_ebgfc :=range _dedfa ._ebfb .Numbering ._faffc .Num {if _ebgfc .AbstractNumId !=nil &&_ebgfc .AbstractNumId .ValAttr ==nd .AbstractNumberID (){_eagde =_ebgfc .NumIdAttr ;
-};};if _eagde ==-1{_cdaeb :=_bg .NewCT_Num ();_dedfa ._ebfb .Numbering ._faffc .Num =append (_dedfa ._ebfb .Numbering ._faffc .Num ,_cdaeb );_cdaeb .NumIdAttr =int64 (len (_dedfa ._ebfb .Numbering ._faffc .Num ));_cdaeb .AbstractNumId =_bg .NewCT_DecimalNumber ();
-_cdaeb .AbstractNumId .ValAttr =nd .AbstractNumberID ();_eagde =_cdaeb .NumIdAttr ;};_cdgb .ValAttr =_eagde ;_dedfa ._dfbf .PPr .NumPr .NumId =_cdgb ;};func (_abcf *Document )tables (_cab *_bg .EG_ContentBlockContent )[]Table {_ggcba :=[]Table {};for _ ,_bcdf :=range _cab .ContentBlockContentChoice .Tbl {_ggcba =append (_ggcba ,Table {_abcf ,_bcdf });
-for _ ,_bgedf :=range _bcdf .EG_ContentRowContent {for _ ,_gde :=range _bgedf .ContentRowContentChoice .Tr {for _ ,_cca :=range _gde .EG_ContentCellContent {for _ ,_cfeg :=range _cca .ContentCellContentChoice .Tc {for _ ,_feef :=range _cfeg .EG_BlockLevelElts {for _ ,_geff :=range _feef .BlockLevelEltsChoice .EG_ContentBlockContent {_ggcba =append (_ggcba ,_abcf .tables (_geff )...);
-};};};};};};};return _ggcba ;};
-
-// NumId return numbering numId that being use by style properties.
-func (_abcee ParagraphStyleProperties )NumId ()int64 {if _abcee ._becee .NumPr !=nil {if _abcee ._becee .NumPr .NumId !=nil {return _abcee ._becee .NumPr .NumId .ValAttr ;};};return -1;};
-
-// GetImageByRelID returns an ImageRef with the associated relation ID in the
-// document.
-func (_eecg *Document )GetImageByRelID (relID string )(_edb .ImageRef ,bool ){_gede :=_eecg ._fee .GetTargetByRelId (relID );_ebd :="";for _ ,_ffcc :=range _eecg ._gdde {if _ebd !=""{break ;};_ebd =_ffcc .GetTargetByRelId (relID );};_fgfc :="";for _ ,_accd :=range _eecg ._dce {if _fgfc !=""{break ;
-};_fgfc =_accd .GetTargetByRelId (relID );};for _ ,_ebgg :=range _eecg .Images {if _ebgg .RelID ()==relID {return _ebgg ,true ;};if _gede !=""{_eadg :=_ef .Replace (_ebgg .Target (),"\u0077\u006f\u0072d\u002f","",1);if _eadg ==_gede {if _ebgg .RelID ()==""{_ebgg .SetRelID (relID );
-};return _ebgg ,true ;};};if _ebd !=""{_eeafd :=_ef .Replace (_ebgg .Target (),"\u0077\u006f\u0072d\u002f","",1);if _eeafd ==_ebd {if _ebgg .RelID ()==""{_ebgg .SetRelID (relID );};return _ebgg ,true ;};};if _fgfc !=""{_cdeb :=_ef .Replace (_ebgg .Target (),"\u0077\u006f\u0072d\u002f","",1);
-if _cdeb ==_fgfc {if _ebgg .RelID ()==""{_ebgg .SetRelID (relID );};return _ebgg ,true ;};};};return _edb .ImageRef {},false ;};func _fagcd (_gdae *_bg .CT_Tbl ,_ggdd map[string ]string ){for _ ,_aebba :=range _gdae .EG_ContentRowContent {for _ ,_eegc :=range _aebba .ContentRowContentChoice .Tr {for _ ,_ccgd :=range _eegc .EG_ContentCellContent {for _ ,_gaaf :=range _ccgd .ContentCellContentChoice .Tc {for _ ,_beecf :=range _gaaf .EG_BlockLevelElts {for _ ,_afga :=range _beecf .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_agaef :=range _afga .ContentBlockContentChoice .P {_beag (_agaef ,_ggdd );
-};for _ ,_cgbb :=range _afga .ContentBlockContentChoice .Tbl {_fagcd (_cgbb ,_ggdd );};};};};};};};};func (_bbdc Paragraph )ensurePPr (){if _bbdc ._dfbf .PPr ==nil {_bbdc ._dfbf .PPr =_bg .NewCT_PPr ();};};
-
-// SetName sets the name of the style.
-func (_dfgeb Style )SetName (name string ){_dfgeb ._cbega .Name =_bg .NewCT_String ();_dfgeb ._cbega .Name .ValAttr =name ;};func (_ccf *Document )onNewRelationship (_beba *_da .DecodeMap ,_gebe ,_gbff string ,_fcgca []*_fda .File ,_bga *_gb .Relationship ,_abgd _da .Target )error {_ababc :=_g .DocTypeDocument ;
-switch _gbff {case _g .OfficeDocumentType ,_g .OfficeDocumentTypeStrict :_ccf ._feaa =_bg .NewDocument ();_beba .AddTarget (_gebe ,_ccf ._feaa ,_gbff ,0);_beba .AddTarget (_da .RelationsPathFor (_gebe ),_ccf ._fee .X (),_gbff ,0);_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,0);
-case _g .CorePropertiesType :_beba .AddTarget (_gebe ,_ccf .CoreProperties .X (),_gbff ,0);_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,0);case _g .CorePropertiesAltType :_beba .AddTarget (_gebe ,_ccf .CoreProperties .X (),_g .CorePropertiesType ,0);
-_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_g .CorePropertiesType ,0);case _g .CustomPropertiesType :_beba .AddTarget (_gebe ,_ccf .CustomProperties .X (),_gbff ,0);_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,0);
-case _g .ExtendedPropertiesType ,_g .ExtendedPropertiesTypeStrict :_beba .AddTarget (_gebe ,_ccf .AppProperties .X (),_gbff ,0);_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,0);case _g .ThumbnailType ,_g .ThumbnailTypeStrict :for _cedc ,_efbc :=range _fcgca {if _efbc ==nil {continue ;
-};if _efbc .Name ==_gebe {_aegg ,_dbdfe :=_efbc .Open ();if _dbdfe !=nil {return _cb .Errorf ("e\u0072\u0072\u006f\u0072\u0020\u0072e\u0061\u0064\u0069\u006e\u0067\u0020\u0074\u0068\u0075m\u0062\u006e\u0061i\u006c:\u0020\u0025\u0073",_dbdfe );};_ccf .Thumbnail ,_ ,_dbdfe =_fd .Decode (_aegg );
-_aegg .Close ();if _dbdfe !=nil {return _cb .Errorf ("\u0065\u0072\u0072\u006fr\u0020\u0064\u0065\u0063\u006f\u0064\u0069\u006e\u0067\u0020t\u0068u\u006d\u0062\u006e\u0061\u0069\u006c\u003a \u0025\u0073",_dbdfe );};_fcgca [_cedc ]=nil ;};};case _g .SettingsType ,_g .SettingsTypeStrict :_beba .AddTarget (_gebe ,_ccf .Settings .X (),_gbff ,0);
-_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,0);case _g .NumberingType ,_g .NumberingTypeStrict :_ccf .Numbering =NewNumbering ();_beba .AddTarget (_gebe ,_ccf .Numbering .X (),_gbff ,0);_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,0);
-case _g .StylesType ,_g .StylesTypeStrict :_ccf .Styles .Clear ();_beba .AddTarget (_gebe ,_ccf .Styles .X (),_gbff ,0);_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,0);case _g .HeaderType ,_g .HeaderTypeStrict :_eeaa :=_bg .NewHdr ();
-_beba .AddTarget (_gebe ,_eeaa ,_gbff ,uint32 (len (_ccf ._gffb )));_ccf ._gffb =append (_ccf ._gffb ,_eeaa );_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,len (_ccf ._gffb ));_afdcc :=_edb .NewRelationships ();_beba .AddTarget (_da .RelationsPathFor (_gebe ),_afdcc .X (),_gbff ,0);
-_ccf ._gdde =append (_ccf ._gdde ,_afdcc );case _g .FooterType ,_g .FooterTypeStrict :_daba :=_bg .NewFtr ();_beba .AddTarget (_gebe ,_daba ,_gbff ,uint32 (len (_ccf ._dgdg )));_ccf ._dgdg =append (_ccf ._dgdg ,_daba );_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,len (_ccf ._dgdg ));
-_egde :=_edb .NewRelationships ();_beba .AddTarget (_da .RelationsPathFor (_gebe ),_egde .X (),_gbff ,0);_ccf ._dce =append (_ccf ._dce ,_egde );case _g .ThemeType ,_g .ThemeTypeStrict :_abfc :=_eg .NewTheme ();_beba .AddTarget (_gebe ,_abfc ,_gbff ,uint32 (len (_ccf ._bgb )));
-_ccf ._bgb =append (_ccf ._bgb ,_abfc );_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,len (_ccf ._bgb ));case _g .WebSettingsType ,_g .WebSettingsTypeStrict :_ccf ._ada =_bg .NewWebSettings ();_beba .AddTarget (_gebe ,_ccf ._ada ,_gbff ,0);
-_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,0);case _g .FontTableType ,_g .FontTableTypeStrict :_ccf ._deccc =_bg .NewFonts ();_beba .AddTarget (_gebe ,_ccf ._deccc ,_gbff ,0);_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,0);
-case _g .FontEmbeddingType :_fffd :=_edb .NewRelationships ();_beba .AddTarget (_da .RelationsPathFor (_gebe ),_fffd .X (),_gbff ,0);_ccf ._adc =_fffd ;case _g .EndNotesType ,_g .EndNotesTypeStrict :_ccf ._ccb =_bg .NewEndnotes ();_beba .AddTarget (_gebe ,_ccf ._ccb ,_gbff ,0);
-_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,0);case _g .FootNotesType ,_g .FootNotesTypeStrict :_ccf ._gca =_bg .NewFootnotes ();_beba .AddTarget (_gebe ,_ccf ._gca ,_gbff ,0);_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,0);
-case _g .CommentsType :_ccf ._edg =_bg .NewComments ();_beba .AddTarget (_gebe ,_ccf ._edg ,_gbff ,0);_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,0);case _g .ImageType ,_g .ImageTypeStrict :var _bfba _edb .ImageRef ;for _agea ,_fcfc :=range _fcgca {if _fcfc ==nil {continue ;
-};_gcffa :=_ef .TrimPrefix (_fcfc .Name ,"\u0077\u006f\u0072d\u002f");if _aeed :=_ef .TrimPrefix (_gebe ,"\u0077\u006f\u0072d\u002f");_gcffa ==_aeed {_bcae ,_gabc :=_da .ExtractToDiskTmp (_fcfc ,_ccf .TmpPath );if _gabc !=nil {return _gabc ;};_dfac :=_b .Ext (_fcfc .Name );
-_gfb :=_edb .Image {};if _dfac [1:]!="\u0065\u006d\u0066"{_cce ,_dfeb :=_edb .ImageFromStorage (_bcae );if _dfeb !=nil {return _dfeb ;};_gfb =_cce ;}else {_gfb .Path =_bcae ;};_gfb .Format =_dfac [1:];_bfba =_edb .MakeImageRef (_gfb ,&_ccf .DocBase ,_ccf ._fee );
-_fcgca [_agea ]=nil ;};};if _bfba .Format ()!=""{_ddgg :="\u002e"+_ef .ToLower (_bfba .Format ());_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,len (_ccf .Images )+1);if _dfec :=_b .Ext (_bga .TargetAttr );_dfec !=_ddgg {_bga .TargetAttr =_bga .TargetAttr [0:len (_bga .TargetAttr )-len (_dfec )]+_ddgg ;
-};_bfba .SetTarget ("\u0077\u006f\u0072d\u002f"+_bga .TargetAttr );_ccf .Images =append (_ccf .Images ,_bfba );};case _g .ControlType ,_g .ControlTypeStrict :_cced :=_gd .NewOcx ();_bgdee :=_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,len (_ccf ._dagbd )+1);
-_fefe :="\u0077\u006f\u0072d\u002f"+_bgdee [:len (_bgdee )-4]+"\u002e\u0062\u0069\u006e";for _edad ,_bddf :=range _fcgca {if _bddf ==nil {continue ;};if _bddf .Name ==_fefe {_afef ,_ggbdc :=_da .ExtractToDiskTmp (_bddf ,_ccf .TmpPath );if _ggbdc !=nil {return _ggbdc ;
-};_dbeg ,_ggbdc :=_dd .ImportFromFile (_afef );if _ggbdc ==nil {_dbeg .TargetAttr =_bgdee ;_dbeg .Ocx =_cced ;_ccf ._dagbd =append (_ccf ._dagbd ,_dbeg );_beba .AddTarget (_gebe ,_cced ,_gbff ,uint32 (len (_ccf ._dagbd )));_bga .TargetAttr =_bgdee ;_fcgca [_edad ]=nil ;
-}else {_ad .Log .Debug ("c\u0061\u006e\u006e\u006f\u0074\u0020r\u0065\u0061\u0064\u0020\u0062\u0069\u006e\u0020\u0066i\u006c\u0065\u003a \u0025s\u0020\u0025\u0073",_fefe ,_ggbdc .Error ());};break ;};};case _g .ChartType :_dece :=chart {_gbg :_ece .NewChartSpace ()};
-_aggc :=uint32 (len (_ccf ._bddg ));_beba .AddTarget (_gebe ,_dece ._gbg ,_gbff ,_aggc );_ccf ._bddg =append (_ccf ._bddg ,&_dece );_bga .TargetAttr =_g .RelativeFilename (_ababc ,_abgd .Typ ,_gbff ,len (_ccf ._bddg ));_dece ._ede =_bga .TargetAttr ;default:_ad .Log .Debug ("\u0075\u006e\u0073\u0075\u0070p\u006f\u0072\u0074\u0065\u0064\u0020\u0072\u0065\u006c\u0061\u0074\u0069\u006fn\u0073\u0068\u0069\u0070\u0020\u0074\u0079\u0070\u0065\u003a\u0020\u0025\u0073\u0020\u0074\u0067\u0074\u003a\u0020\u0025\u0073",_gbff ,_gebe );
-};return nil ;};func _bbeg (_eadab *_bg .CT_OnOff )bool {return _eadab !=nil };
-
-// SetRight sets the right border to a specified type, color and thickness.
-func (_cfe CellBorders )SetRight (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_cfe ._bee .Right =_bg .NewCT_Border ();_ecag (_cfe ._bee .Right ,t ,c ,thickness );};
-
-// SetTextWrapTopAndBottom sets the text wrap to top and bottom.
-func (_ag AnchoredDrawing )SetTextWrapTopAndBottom (){_ag ._cd .WrapTypeChoice =&_bg .WdEG_WrapTypeChoice {};_ag ._cd .WrapTypeChoice .WrapTopAndBottom =_bg .NewWdCT_WrapTopBottom ();_ag ._cd .LayoutInCellAttr =true ;_ag ._cd .AllowOverlapAttr =true ;};
-
-
-// SetWindowControl controls if the first or last line of the paragraph is
-// allowed to display on a separate page.
-func (_dafcb ParagraphProperties )SetWindowControl (b bool ){if !b {_dafcb ._dabde .WidowControl =nil ;}else {_dafcb ._dabde .WidowControl =_bg .NewCT_OnOff ();};};func (_acacf Paragraph )addFldCharsForField (_bacbd ,_aebbd string )FormField {_gedegf :=_acacf .addBeginFldChar (_bacbd );
-_dcdbf :=FormField {_acfd :_gedegf };_ebea :=_acacf ._ebfb .Bookmarks ();_bdaa :=int64 (len (_ebea ));if _bacbd !=""{_acacf .addStartBookmark (_bdaa ,_bacbd );};_acacf .addInstrText (_aebbd );_acacf .addSeparateFldChar ();if _aebbd =="\u0046\u004f\u0052\u004d\u0054\u0045\u0058\u0054"{_eecb :=_acacf .AddRun ();
-_cadeg :=_bg .NewEG_RunInnerContent ();_eecb ._bdced .EG_RunInnerContent =[]*_bg .EG_RunInnerContent {_cadeg };_dcdbf ._gdaa =_cadeg ;};_acacf .addEndFldChar ();if _bacbd !=""{_acacf .addEndBookmark (_bdaa );};return _dcdbf ;};
-
-// // SetBeforeLineSpacing sets spacing above paragraph in line units.
-func (_cdacf Paragraph )SetBeforeLineSpacing (d _ac .Distance ){_cdacf .ensurePPr ();if _cdacf ._dfbf .PPr .Spacing ==nil {_cdacf ._dfbf .PPr .Spacing =_bg .NewCT_Spacing ();};_daed :=_cdacf ._dfbf .PPr .Spacing ;_daed .BeforeLinesAttr =_g .Int64 (int64 (d /_ac .Twips ));
-};
-
-// AddFooter creates a Footer associated with the document, but doesn't add it
-// to the document for display.
-func (_cad *Document )AddFooter ()Footer {_gfe :=_bg .NewFtr ();_cad ._dgdg =append (_cad ._dgdg ,_gfe );_egc :=_cb .Sprintf ("\u0066\u006f\u006ft\u0065\u0072\u0025\u0064\u002e\u0078\u006d\u006c",len (_cad ._dgdg ));_cad ._fee .AddRelationship (_egc ,_g .FooterType );
-_cad .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072\u0064\u002f"+_egc ,"\u0061p\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064.\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c\u002e\u0066\u006f\u006f\u0074e\u0072\u002b\u0078\u006d\u006c");
-_cad ._dce =append (_cad ._dce ,_edb .NewRelationships ());return Footer {_cad ,_gfe };};func _ebeg (_dfbd _ed .ReaderAt ,_abef int64 ,_agaeb string )(*Document ,error ){const _cgga ="\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0052\u0065\u0061\u0064";
-if !_abd .GetLicenseKey ().IsLicensed ()&&!_eaf {_cb .Println ("\u0055\u006e\u006ci\u0063\u0065\u006e\u0073e\u0064\u0020\u0076\u0065\u0072\u0073\u0069o\u006e\u0020\u006f\u0066\u0020\u0055\u006e\u0069\u004f\u0066\u0066\u0069\u0063\u0065");_cb .Println ("\u002d\u0020\u0047e\u0074\u0020\u0061\u0020\u0074\u0072\u0069\u0061\u006c\u0020\u006c\u0069\u0063\u0065\u006e\u0073\u0065\u0020\u006f\u006e\u0020\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002fu\u006e\u0069\u0064\u006f\u0063\u002e\u0069\u006f");
-return nil ,_be .New ("\u0075\u006e\u0069\u006f\u0066\u0066\u0069\u0063\u0065\u0020\u006ci\u0063\u0065\u006e\u0073\u0065\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0064");};_cfdfc :="\u0075n\u006b\u006e\u006f\u0077\u006e";if _dgac ,_fecb :=_dfbd .(*_eag .File );
-_fecb {_cfdfc =_dgac .Name ();};_agdf :=New ();_agdf .Numbering ._faffc =nil ;if len (_agaeb )> 0{_agdf ._dcdb =_agaeb ;}else {_dge ,_gdbc :=_abd .GenRefId ("\u0064\u0072");if _gdbc !=nil {_ad .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_gdbc );
-return nil ,_gdbc ;};_agdf ._dcdb =_dge ;};if _dbagg :=_abd .Track (_agdf ._dcdb ,_cgga ,_cfdfc );_dbagg !=nil {_ad .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_dbagg );return nil ,_dbagg ;};_gaba ,_abag :=_ga .TempDir ("\u0075\u006e\u0069\u006f\u0066\u0066\u0069\u0063\u0065-\u0064\u006f\u0063\u0078");
-if _abag !=nil {return nil ,_abag ;};_agdf .TmpPath =_gaba ;_afge ,_abag :=_fda .NewReader (_dfbd ,_abef );if _abag !=nil {return nil ,_cb .Errorf ("\u0070a\u0072s\u0069\u006e\u0067\u0020\u007a\u0069\u0070\u003a\u0020\u0025\u0073",_abag );};_cefb :=[]*_fda .File {};
-_cefb =append (_cefb ,_afge .File ...);_ecgbg :=false ;for _ ,_ggeac :=range _cefb {if _ggeac .FileHeader .Name =="\u0064\u006f\u0063\u0050ro\u0070\u0073\u002f\u0063\u0075\u0073\u0074\u006f\u006d\u002e\u0078\u006d\u006c"{_ecgbg =true ;break ;};};if _ecgbg {_agdf .CreateCustomProperties ();
-};_fgaa :=_agdf ._feaa .ConformanceAttr ;_gcgfc :=_da .DecodeMap {};_gcgfc .SetOnNewRelationshipFunc (_agdf .onNewRelationship );_gcgfc .AddTarget (_g .ContentTypesFilename ,_agdf .ContentTypes .X (),"",0);_gcgfc .AddTarget (_g .BaseRelsFilename ,_agdf .Rels .X (),"",0);
-if _faaffb :=_gcgfc .Decode (_cefb );_faaffb !=nil {return nil ,_faaffb ;};_agdf ._feaa .ConformanceAttr =_fgaa ;for _ ,_ebgf :=range _cefb {if _ebgf ==nil {continue ;};if _gffba :=_agdf .AddExtraFileFromZip (_ebgf );_gffba !=nil {return nil ,_gffba ;};
-};if _ecgbg {_ccga :=false ;for _ ,_cdeg :=range _agdf .Rels .X ().Relationship {if _cdeg .TargetAttr =="\u0064\u006f\u0063\u0050ro\u0070\u0073\u002f\u0063\u0075\u0073\u0074\u006f\u006d\u002e\u0078\u006d\u006c"{_ccga =true ;break ;};};if !_ccga {_agdf .AddCustomRelationships ();
-};};return _agdf ,nil ;};
-
-// Styles is the document wide styles contained in styles.xml.
-type Styles struct{_gcdd *_bg .Styles };
-
-// AddTextInput adds text input form field to the paragraph and returns it.
-func (_fbag Paragraph )AddTextInput (name string )FormField {_gaafg :=_fbag .addFldCharsForField (name ,"\u0046\u004f\u0052\u004d\u0054\u0045\u0058\u0054");_gaafg ._acfd .FFDataChoice [0].TextInput =_bg .NewCT_FFTextInput ();return _gaafg ;};
-
-// SetBeforeAuto controls if spacing before a paragraph is automatically determined.
-func (_facb ParagraphSpacing )SetBeforeAuto (b bool ){if b {_facb ._cdade .BeforeAutospacingAttr =&_de .ST_OnOff {};_facb ._cdade .BeforeAutospacingAttr .Bool =_g .Bool (true );}else {_facb ._cdade .BeforeAutospacingAttr =nil ;};};
-
-// Bold returns true if run font is bold.
-func (_gecgf RunProperties )Bold ()bool {_gegcd :=_gecgf ._ddbb ;return _bbeg (_gegcd .B )||_bbeg (_gegcd .BCs );};
-
-// SetFontFamily sets the Ascii & HAnsi fonly family for a run.
-func (_eaea RunProperties )SetFontFamily (family string ){if _eaea ._ddbb .RFonts ==nil {_eaea ._ddbb .RFonts =_bg .NewCT_Fonts ();};_eaea ._ddbb .RFonts .AsciiAttr =_g .String (family );_eaea ._ddbb .RFonts .HAnsiAttr =_g .String (family );_eaea ._ddbb .RFonts .EastAsiaAttr =_g .String (family );
-};
-
-// SetUnderline controls underline for a run style.
-func (_aefe RunProperties )SetUnderline (style _bg .ST_Underline ,c _ce .Color ){if style ==_bg .ST_UnderlineUnset {_aefe ._ddbb .U =nil ;}else {_aefe ._ddbb .U =_bg .NewCT_Underline ();_aefe ._ddbb .U .ColorAttr =&_bg .ST_HexColor {};_aefe ._ddbb .U .ColorAttr .ST_HexColorRGB =c .AsRGBString ();
-_aefe ._ddbb .U .ValAttr =style ;};};
-
-// NumberingLevel is the definition for numbering for a particular level within
-// a NumberingDefinition.
-type NumberingLevel struct{_ebebd *_bg .CT_Lvl };
-
-// AddImageRef add ImageRef to header as relationship, returning ImageRef
-// that can be used to be placed as header content.
-func (_ceaaf Header )AddImageRef (r _edb .ImageRef )(_edb .ImageRef ,error ){var _dcfc _edb .Relationships ;for _fabg ,_bgbc :=range _ceaaf ._dafeb ._gffb {if _bgbc ==_ceaaf ._adfd {_dcfc =_ceaaf ._dafeb ._gdde [_fabg ];};};_fdeb :=_dcfc .AddRelationship (r .Target (),_g .ImageType );
-r .SetRelID (_fdeb .X ().IdAttr );return r ,nil ;};
-
-// X returns the inner wrapped XML type.
-func (_efbb CellProperties )X ()*_bg .CT_TcPr {return _efbb ._bbb };func (_fae *Document )syncFootnoteSettings (){_bbf :=[]int64 {};_bbdd :=_fae .Footnotes ();for _ ,_dbe :=range _bbdd {if _dbe .X ().TypeAttr !=_bg .ST_FtnEdnUnset &&_dbe .X ().TypeAttr !=_bg .ST_FtnEdnNormal {_bbf =append (_bbf ,_dbe .X ().IdAttr );
-};};_ceb :=_fae .Settings .X ().CT_Settings .FootnotePr ;if _ceb ==nil {_ceb =_bg .NewCT_FtnDocProps ();};if len (_bbf )==0{_ceb .Footnote =nil ;return ;};_ceb .Footnote =[]*_bg .CT_FtnEdnSepRef {};for _ ,_efda :=range _bbf {_eggc :=_bg .NewCT_FtnEdnSepRef ();
-_eggc .IdAttr =_efda ;_ceb .Footnote =append (_ceb .Footnote ,_eggc );};};
-
-// Paragraphs returns the paragraphs defined in a footnote.
-func (_dfbe Footnote )Paragraphs ()[]Paragraph {_adca :=[]Paragraph {};for _ ,_eaag :=range _dfbe .content (){for _ ,_effe :=range _eaag .ContentBlockContentChoice .P {_adca =append (_adca ,Paragraph {_dfbe ._affbg ,_effe });};};return _adca ;};func (_gaedd Document )mergeFields ()[]mergeFieldInfo {_bcgd :=[]Paragraph {};
-_efgcgc :=[]mergeFieldInfo {};for _ ,_ffbfg :=range _gaedd .Tables (){for _ ,_cgee :=range _ffbfg .Rows (){for _ ,_ebae :=range _cgee .Cells (){_bcgd =append (_bcgd ,_ebae .Paragraphs ()...);};};};_bcgd =append (_bcgd ,_gaedd .Paragraphs ()...);for _ ,_dcdcc :=range _gaedd .Headers (){_bcgd =append (_bcgd ,_dcdcc .Paragraphs ()...);
-for _ ,_efgf :=range _dcdcc .Tables (){for _ ,_gdea :=range _efgf .Rows (){for _ ,_fdcdg :=range _gdea .Cells (){_bcgd =append (_bcgd ,_fdcdg .Paragraphs ()...);};};};};for _ ,_dgabf :=range _gaedd .Footers (){_bcgd =append (_bcgd ,_dgabf .Paragraphs ()...);
-for _ ,_ecbag :=range _dgabf .Tables (){for _ ,_dbgf :=range _ecbag .Rows (){for _ ,_cacf :=range _dbgf .Cells (){_bcgd =append (_bcgd ,_cacf .Paragraphs ()...);};};};};for _ ,_edcae :=range _bcgd {_dbeb :=_edcae .Runs ();_cgag :=-1;_eabad :=-1;_dcbeef :=-1;
-_dbgd :=mergeFieldInfo {};for _ ,_ageb :=range _edcae ._dfbf .EG_PContent {for _ ,_gdca :=range _ageb .PContentChoice .FldSimple {if _ef .Contains (_gdca .InstrAttr ,"\u004d\u0045\u0052\u0047\u0045\u0046\u0049\u0045\u004c\u0044"){_edfbf :=_gfebg (_gdca .InstrAttr );
-_edfbf ._dacdf =true ;_edfbf ._aacc =_edcae ;_edfbf ._ffba =_ageb ;_efgcgc =append (_efgcgc ,_edfbf );};};};for _bcfg :=0;_bcfg < len (_dbeb );_bcfg ++{_fgcec :=_dbeb [_bcfg ];for _ ,_aafb :=range _fgcec .X ().EG_RunInnerContent {if _aafb .RunInnerContentChoice .FldChar !=nil {switch _aafb .RunInnerContentChoice .FldChar .FldCharTypeAttr {case _bg .ST_FldCharTypeBegin :_cgag =_bcfg ;
-case _bg .ST_FldCharTypeSeparate :_eabad =_bcfg ;case _bg .ST_FldCharTypeEnd :_dcbeef =_bcfg ;if _dbgd ._bcgae !=""{_dbgd ._aacc =_edcae ;_dbgd ._dfgb =_cgag ;_dbgd ._adcab =_dcbeef ;_dbgd ._bfeaa =_eabad ;_efgcgc =append (_efgcgc ,_dbgd );};_cgag =-1;
-_eabad =-1;_dcbeef =-1;_dbgd =mergeFieldInfo {};};}else if _aafb .RunInnerContentChoice .InstrText !=nil &&_ef .Contains (_aafb .RunInnerContentChoice .InstrText .Content ,"\u004d\u0045\u0052\u0047\u0045\u0046\u0049\u0045\u004c\u0044"){if _cgag !=-1&&_dcbeef ==-1{_dbgd =_gfebg (_aafb .RunInnerContentChoice .InstrText .Content );
-};};};};};return _efgcgc ;};
-
-// Save writes the document to an io.Writer in the Zip package format.
-func (_bgd *Document )Save (w _ed .Writer )error {return _bgd .save (w ,_bgd ._dcdb )};
-
-// Underline returns the type of run underline.
-func (_bcbbb RunProperties )Underline ()_bg .ST_Underline {if _aaee :=_bcbbb ._ddbb .U ;_aaee !=nil {return _aaee .ValAttr ;};return 0;};
-
-// Name returns the name of the bookmark whcih is the document unique ID that
-// identifies the bookmark.
-func (_cfa Bookmark )Name ()string {return _cfa ._aef .NameAttr };
-
-// EastAsiaFont returns the name of run font family for East Asia.
-func (_afec RunProperties )EastAsiaFont ()string {if _gagb :=_afec ._ddbb .RFonts ;_gagb !=nil {if _gagb .EastAsiaAttr !=nil {return *_gagb .EastAsiaAttr ;};};return "";};
-
-// SetRight sets the cell right margin
-func (_abde CellMargins )SetRight (d _ac .Distance ){_abde ._cc .Right =_bg .NewCT_TblWidth ();_gacd (_abde ._cc .Right ,d );};
-
-// New constructs an empty document that content can be added to.
-func New ()*Document {_ffbf :=&Document {_feaa :_bg .NewDocument ()};_ffbf .ContentTypes =_edb .NewContentTypes ();_ffbf ._feaa .Body =_bg .NewCT_Body ();_ffbf ._feaa .ConformanceAttr =_de .ST_ConformanceClassTransitional ;_ffbf ._fee =_edb .NewRelationships ();
-_ffbf ._adc =_edb .NewRelationships ();_ffbf .AppProperties =_edb .NewAppProperties ();_ffbf .CoreProperties =_edb .NewCoreProperties ();_ffbf .ContentTypes .AddOverride ("\u002fw\u006fr\u0064\u002f\u0064\u006f\u0063u\u006d\u0065n\u0074\u002e\u0078\u006d\u006c","\u0061p\u0070\u006c\u0069c\u0061\u0074\u0069o\u006e/v\u006e\u0064\u002e\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072\u006d\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072dp\u0072o\u0063\u0065\u0073\u0073\u0069\u006eg\u006d\u006c\u002e\u0064\u006fc\u0075\u006d\u0065\u006e\u0074\u002e\u006d\u0061\u0069\u006e\u002bx\u006d\u006c");
-_ffbf .Settings =NewSettings ();_ffbf ._fee .AddRelationship ("\u0073\u0065\u0074t\u0069\u006e\u0067\u0073\u002e\u0078\u006d\u006c",_g .SettingsType );_ffbf .ContentTypes .AddOverride ("\u002fw\u006fr\u0064\u002f\u0073\u0065\u0074t\u0069\u006eg\u0073\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069\u0063\u0061\u0074\u0069o\u006e\u002fv\u006e\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006dl\u0066\u006f\u0072\u006da\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c.\u0073\u0065\u0074\u0074\u0069\u006e\u0067\u0073\u002b\u0078\u006d\u006c");
-_ffbf .Rels =_edb .NewRelationships ();_ffbf .Rels .AddRelationship (_g .RelativeFilename (_g .DocTypeDocument ,"",_g .CorePropertiesType ,0),_g .CorePropertiesType );_ffbf .Rels .AddRelationship ("\u0064\u006fc\u0050\u0072\u006fp\u0073\u002f\u0061\u0070\u0070\u002e\u0078\u006d\u006c",_g .ExtendedPropertiesType );
-_ffbf .Rels .AddRelationship ("\u0077\u006f\u0072\u0064\u002f\u0064\u006f\u0063\u0075\u006d\u0065\u006et\u002e\u0078\u006d\u006c",_g .OfficeDocumentType );_ffbf .Numbering =NewNumbering ();_ffbf .Numbering .InitializeDefault ();_ffbf .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072d/\u006e\u0075\u006d\u0062\u0065\u0072\u0069\u006e\u0067\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069c\u0061\u0074\u0069\u006f\u006e\u002f\u0076n\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072\u006d\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063e\u0073\u0073\u0069\u006e\u0067\u006d\u006c\u002e\u006e\u0075\u006d\u0062e\u0072\u0069\u006e\u0067\u002b\u0078m\u006c");
-_ffbf ._fee .AddRelationship ("\u006e\u0075\u006d\u0062\u0065\u0072\u0069\u006e\u0067\u002e\u0078\u006d\u006c",_g .NumberingType );_ffbf .Styles =NewStyles ();_ffbf .Styles .InitializeDefault ();_ffbf .ContentTypes .AddOverride ("\u002f\u0077o\u0072\u0064\u002fs\u0074\u0079\u006c\u0065\u0073\u002e\u0078\u006d\u006c","\u0061p\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064.\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c\u002e\u0073\u0074\u0079\u006ce\u0073\u002b\u0078\u006d\u006c");
-_ffbf ._fee .AddRelationship ("\u0073\u0074\u0079\u006c\u0065\u0073\u002e\u0078\u006d\u006c",_g .StylesType );_ffbf ._feaa .Body =_bg .NewCT_Body ();return _ffbf ;};func _adgff (_cgdcf []*_bg .EG_ContentBlockContent ,_dgec *TableInfo )[]TextItem {_dagdf :=[]TextItem {};
-for _ ,_gfeb :=range _cgdcf {if _gebcg :=_gfeb .ContentBlockContentChoice .Sdt ;_gebcg !=nil {if _acec :=_gebcg .SdtContent ;_acec !=nil {for _ ,_debe :=range _acec .EG_ContentBlockContent {_dagdf =append (_dagdf ,_affb (_debe .ContentBlockContentChoice .P ,_dgec ,nil )...);
-};};};_dagdf =append (_dagdf ,_affb (_gfeb .ContentBlockContentChoice .P ,_dgec ,nil )...);for _ ,_ccbce :=range _gfeb .ContentBlockContentChoice .Tbl {for _cbgc ,_gbef :=range _ccbce .EG_ContentRowContent {for _ ,_ecff :=range _gbef .ContentRowContentChoice .Tr {for _geadd ,_fegde :=range _ecff .EG_ContentCellContent {for _ ,_bbffa :=range _fegde .ContentCellContentChoice .Tc {_fggee :=&TableInfo {Table :_ccbce ,Row :_ecff ,Cell :_bbffa ,RowIndex :_cbgc ,ColIndex :_geadd };
-for _ ,_egdg :=range _bbffa .EG_BlockLevelElts {_dagdf =append (_dagdf ,_adgff (_egdg .BlockLevelEltsChoice .EG_ContentBlockContent ,_fggee )...);};};};};};};};return _dagdf ;};
-
-// Font returns the name of paragraph font family.
-func (_abga ParagraphProperties )Font ()string {if _daae :=_abga ._dabde .RPr .RFonts ;_daae !=nil {if _daae .AsciiAttr !=nil {return *_daae .AsciiAttr ;}else if _daae .HAnsiAttr !=nil {return *_daae .HAnsiAttr ;}else if _daae .CsAttr !=nil {return *_daae .CsAttr ;
-};};return "";};
-
-// X returns the inner wrapped XML type.
-func (_edaa Comment )X ()*_bg .CT_Comment {return _edaa ._dcff };func (_ceed Paragraph )removeCommentRange (_ccgg int64 )bool {_ddca :=false ;for _ ,_cbec :=range _ceed .X ().EG_PContent {for _ ,_eedf :=range _cbec .PContentChoice .EG_ContentRunContent {for _ ,_aaagb :=range _eedf .ContentRunContentChoice .EG_RunLevelElts {for _cdccf ,_afbf :=range _aaagb .RunLevelEltsChoice .EG_RangeMarkupElements {if !_ddca &&_afbf .RangeMarkupElementsChoice .CommentRangeStart !=nil &&_afbf .RangeMarkupElementsChoice .CommentRangeStart .IdAttr ==_ccgg {_gcgcf :=_aaagb .RunLevelEltsChoice .EG_RangeMarkupElements [:_cdccf ];
-_gcgcf =append (_gcgcf ,_aaagb .RunLevelEltsChoice .EG_RangeMarkupElements [_cdccf +1:len (_aaagb .RunLevelEltsChoice .EG_RangeMarkupElements )]...);_aaagb .RunLevelEltsChoice .EG_RangeMarkupElements =_gcgcf ;_ddca =true ;};if _ddca &&_afbf .RangeMarkupElementsChoice .CommentRangeEnd !=nil &&_afbf .RangeMarkupElementsChoice .CommentRangeEnd .IdAttr ==_ccgg {_gcaed :=_aaagb .RunLevelEltsChoice .EG_RangeMarkupElements [:_cdccf ];
-_gcaed =append (_gcaed ,_aaagb .RunLevelEltsChoice .EG_RangeMarkupElements [_cdccf +1:len (_aaagb .RunLevelEltsChoice .EG_RangeMarkupElements )]...);_aaagb .RunLevelEltsChoice .EG_RangeMarkupElements =_gcaed ;return true ;};};};};};return false ;};
-
-// SetEastAsiaTheme sets the font East Asia Theme.
-func (_afacc Fonts )SetEastAsiaTheme (t _bg .ST_Theme ){_afacc ._bcce .EastAsiaThemeAttr =t };
-
-// AddParagraph adds a paragraph to the comment.
-func (_fga Comment )AddParagraph ()Paragraph {_cff :=_bg .NewEG_ContentBlockContent ();_fga ._dcff .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent =append (_fga ._dcff .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent ,_cff );
-_gcfe :=_bg .NewCT_P ();_cff .ContentBlockContentChoice .P =append (_cff .ContentBlockContentChoice .P ,_gcfe );_aeab :=Paragraph {_fga ._cfed ,_gcfe };_aeab ._dfbf .PPr =_bg .NewCT_PPr ();_aeab ._dfbf .PPr .RPr =_bg .NewCT_ParaRPr ();return _aeab ;};
-
-// GetStyle returns string style of the text in watermark and format it to TextpathStyle.
-func (_bfga *WatermarkText )GetStyle ()_dg .TextpathStyle {_caegac :=_bfga .getShape ();if _bfga ._fbcbg !=nil {_cfdbc :=_bfga ._fbcbg .ShapeChoice ;for _ ,_ccgfb :=range _cfdbc {if _ccgfb .ShapeElementsChoice .Textpath !=nil {return _dg .NewTextpathStyle (*_ccgfb .ShapeElementsChoice .Textpath .StyleAttr );
-};};}else {_eegb :=_bfga .findNode (_caegac ,"\u0074\u0065\u0078\u0074\u0070\u0061\u0074\u0068");for _ ,_bggef :=range _eegb .Attrs {if _bggef .Name .Local =="\u0073\u0074\u0079l\u0065"{return _dg .NewTextpathStyle (_bggef .Value );};};};return _dg .NewTextpathStyle ("");
-};func (_gba *Document )InsertTableAfter (relativeTo Paragraph )Table {return _gba .insertTable (relativeTo ,false );};
-
-// SetImprint sets the run to imprinted text.
-func (_dfbca RunProperties )SetImprint (b bool ){if !b {_dfbca ._ddbb .Imprint =nil ;}else {_dfbca ._ddbb .Imprint =_bg .NewCT_OnOff ();};};
-
-// SetColumnBandSize sets the number of Columns in the column band
-func (_bdfdd TableStyleProperties )SetColumnBandSize (cols int64 ){_bdfdd ._ddecf .TblStyleColBandSize =_bg .NewCT_DecimalNumber ();_bdfdd ._ddecf .TblStyleColBandSize .ValAttr =cols ;};
-
-// SetSize sets the font size for a run.
-func (_degbg RunProperties )SetSize (size _ac .Distance ){_degbg ._ddbb .Sz =_bg .NewCT_HpsMeasure ();_degbg ._ddbb .Sz .ValAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (size /_ac .HalfPoint ));_degbg ._ddbb .SzCs =_bg .NewCT_HpsMeasure ();_degbg ._ddbb .SzCs .ValAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (size /_ac .HalfPoint ));
-};
-
-// GetFooter gets a section Footer for given type
-func (_ecea Section )GetFooter (t _bg .ST_HdrFtr )(Footer ,bool ){for _ ,_acbfe :=range _ecea ._cdebe .EG_HdrFtrReferences {if _acbfe .HdrFtrReferencesChoice .FooterReference ==nil {continue ;};if _acbfe .HdrFtrReferencesChoice .FooterReference .TypeAttr ==t {for _ ,_dgage :=range _ecea ._baggf .Footers (){_agdee :=_ecea ._baggf ._fee .FindRIDForN (_dgage .Index (),_g .FooterType );
-if _agdee ==_acbfe .HdrFtrReferencesChoice .FooterReference .IdAttr {return _dgage ,true ;};};};};return Footer {},false ;};func _gefe (_cdggd *_bg .CT_P ,_fgge ,_dacea map[int64 ]int64 ){for _ ,_bgee :=range _cdggd .EG_PContent {for _ ,_eeae :=range _bgee .PContentChoice .EG_ContentRunContent {if _eeae .ContentRunContentChoice .R !=nil {for _ ,_befag :=range _eeae .ContentRunContentChoice .R .EG_RunInnerContent {_cfba :=_befag .RunInnerContentChoice .EndnoteReference ;
-if _cfba !=nil &&_cfba .IdAttr > 0{if _eceff ,_fecbg :=_dacea [_cfba .IdAttr ];_fecbg {_cfba .IdAttr =_eceff ;};};_gbcgg :=_befag .RunInnerContentChoice .FootnoteReference ;if _gbcgg !=nil &&_gbcgg .IdAttr > 0{if _cdce ,_dfecf :=_fgge [_gbcgg .IdAttr ];
-_dfecf {_gbcgg .IdAttr =_cdce ;};};};};};};};
-
-// SetDoubleStrikeThrough sets the run to double strike-through.
-func (_gbgag RunProperties )SetDoubleStrikeThrough (b bool ){if !b {_gbgag ._ddbb .Dstrike =nil ;}else {_gbgag ._ddbb .Dstrike =_bg .NewCT_OnOff ();};};
-
-// GetStyleByID returns Style by it is IdAttr.
-func (_gbce *Document )GetStyleByID (id string )Style {for _ ,_dgab :=range _gbce .Styles ._gcdd .Style {if _dgab .StyleIdAttr !=nil &&*_dgab .StyleIdAttr ==id {return Style {_dgab };};};return Style {};};
-
-// AddLevel adds a new numbering level to a NumberingDefinition.
-func (_fcgb NumberingDefinition )AddLevel ()NumberingLevel {_fcgbb :=_bg .NewCT_Lvl ();_fcgbb .Start =&_bg .CT_DecimalNumber {ValAttr :1};_fcgbb .IlvlAttr =int64 (len (_fcgb ._dbagd .Lvl ));_fcgb ._dbagd .Lvl =append (_fcgb ._dbagd .Lvl ,_fcgbb );return NumberingLevel {_fcgbb };
-};
-
-// SetShadow sets the run to shadowed text.
-func (_bfae RunProperties )SetShadow (b bool ){if !b {_bfae ._ddbb .Shadow =nil ;}else {_bfae ._ddbb .Shadow =_bg .NewCT_OnOff ();};};
-
-// SetText sets the watermark text.
-func (_ebce *WatermarkText )SetText (text string ){_afbga :=_ebce .getShape ();if _ebce ._fbcbg !=nil {_bgacfc :=_ebce ._fbcbg .ShapeChoice ;for _ ,_cbcc :=range _bgacfc {if _cbcc .ShapeElementsChoice .Textpath !=nil {_cbcc .ShapeElementsChoice .Textpath .StringAttr =&text ;
-};};}else {_egcf :=_ebce .findNode (_afbga ,"\u0074\u0065\u0078\u0074\u0070\u0061\u0074\u0068");for _abcga ,_gecda :=range _egcf .Attrs {if _gecda .Name .Local =="\u0073\u0074\u0072\u0069\u006e\u0067"{_egcf .Attrs [_abcga ].Value =text ;};};};};
-
-// Close closes the document, removing any temporary files that might have been
-// created when opening a document.
-func (_agcd *Document )Close ()error {if _agcd .TmpPath !=""{return _ga .RemoveAll (_agcd .TmpPath );};return nil ;};
-
-// SetPicture sets the watermark picture.
-func (_bbacf *WatermarkPicture )SetPicture (imageRef _edb .ImageRef ){_cecag :=imageRef .RelID ();_fgaace :=_bbacf .getShape ();if _bbacf ._dfdgf !=nil {_gefda :=_bbacf ._dfdgf .ShapeChoice ;if len (_gefda )> 0&&_gefda [0].ShapeElementsChoice .Imagedata !=nil {_gefda [0].ShapeElementsChoice .Imagedata .IdAttr =&_cecag ;
-};}else {_ffage :=_bbacf .findNode (_fgaace ,"\u0069m\u0061\u0067\u0065\u0064\u0061\u0074a");for _gefac ,_bfgcb :=range _ffage .Attrs {if _bfgcb .Name .Local =="\u0069\u0064"{_ffage .Attrs [_gefac ].Value =_cecag ;};};};};
-
-// VerticalAlign returns the value of run vertical align.
-func (_ecdcg RunProperties )VerticalAlignment ()_de .ST_VerticalAlignRun {if _edgaa :=_ecdcg ._ddbb .VertAlign ;_edgaa !=nil {return _edgaa .ValAttr ;};return 0;};
-
-// AddParagraph adds a paragraph to the endnote.
-func (_agga Endnote )AddParagraph ()Paragraph {_bgf :=_bg .NewEG_ContentBlockContent ();_acaca :=len (_agga ._ddb .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent );_agga ._ddb .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent =append (_agga ._ddb .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent ,_bgf );
-_gcefe :=_bg .NewCT_P ();var _bafb *_bg .CT_String ;if _acaca !=0{_egcc :=len (_agga ._ddb .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent [_acaca -1].ContentBlockContentChoice .P );_bafb =_agga ._ddb .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent [_acaca -1].ContentBlockContentChoice .P [_egcc -1].PPr .PStyle ;
-}else {_bafb =_bg .NewCT_String ();_bafb .ValAttr ="\u0045n\u0064\u006e\u006f\u0074\u0065";};_bgf .ContentBlockContentChoice .P =append (_bgf .ContentBlockContentChoice .P ,_gcefe );_cdae :=Paragraph {_agga ._gccc ,_gcefe };_cdae ._dfbf .PPr =_bg .NewCT_PPr ();
-_cdae ._dfbf .PPr .PStyle =_bafb ;_cdae ._dfbf .PPr .RPr =_bg .NewCT_ParaRPr ();return _cdae ;};func (_beff *Document )reorderComments (){_gagd :=int64 (1);_adac :=map[int64 ]int64 {};_ggcc :=_beff ._edg ;for _ ,_gfdc :=range _ggcc .CT_Comments .Comment {_adac [_gfdc .IdAttr ]=_gagd ;
-_gfdc .IdAttr =_gagd ;_gagd ++;};for _ ,_edbc :=range _beff .Paragraphs (){for _ ,_baed :=range _edbc .X ().EG_PContent {for _ ,_gabd :=range _baed .PContentChoice .EG_ContentRunContent {for _ ,_efdbb :=range _gabd .ContentRunContentChoice .EG_RunLevelElts {for _ ,_gcaaf :=range _efdbb .RunLevelEltsChoice .EG_RangeMarkupElements {if _gcaaf .RangeMarkupElementsChoice .CommentRangeStart !=nil {_gcaaf .RangeMarkupElementsChoice .CommentRangeStart .IdAttr =_adac [_gcaaf .RangeMarkupElementsChoice .CommentRangeStart .IdAttr ];
-}else if _gcaaf .RangeMarkupElementsChoice .CommentRangeEnd !=nil {_gcaaf .RangeMarkupElementsChoice .CommentRangeEnd .IdAttr =_adac [_gcaaf .RangeMarkupElementsChoice .CommentRangeEnd .IdAttr ];};};};if _gabd .ContentRunContentChoice .R !=nil {for _ ,_cbfe :=range _gabd .ContentRunContentChoice .R .EG_RunInnerContent {if _cbfe .RunInnerContentChoice .CommentReference !=nil {_cbfe .RunInnerContentChoice .CommentReference .IdAttr =_adac [_cbfe .RunInnerContentChoice .CommentReference .IdAttr ];
-};};};};};};};
-
-// SetLineSpacing controls the line spacing of the paragraph.
-func (_cbeeb ParagraphStyleProperties )SetLineSpacing (m _ac .Distance ,rule _bg .ST_LineSpacingRule ){if _cbeeb ._becee .Spacing ==nil {_cbeeb ._becee .Spacing =_bg .NewCT_Spacing ();};if rule ==_bg .ST_LineSpacingRuleUnset {_cbeeb ._becee .Spacing .LineRuleAttr =_bg .ST_LineSpacingRuleUnset ;
-_cbeeb ._becee .Spacing .LineAttr =nil ;}else {_cbeeb ._becee .Spacing .LineRuleAttr =rule ;_cbeeb ._becee .Spacing .LineAttr =&_bg .ST_SignedTwipsMeasure {};_cbeeb ._becee .Spacing .LineAttr .Int64 =_g .Int64 (int64 (m /_ac .Twips ));};};
-
-// SetFooter sets a section footer.
-func (_feccc Section )SetFooter (f Footer ,t _bg .ST_HdrFtr ){_cebbc :=_bg .NewEG_HdrFtrReferences ();_feccc ._cdebe .EG_HdrFtrReferences =append (_feccc ._cdebe .EG_HdrFtrReferences ,_cebbc );_cebbc .HdrFtrReferencesChoice .FooterReference =_bg .NewCT_HdrFtrRef ();
-_cebbc .HdrFtrReferencesChoice .FooterReference .TypeAttr =t ;_ddggb :=_feccc ._baggf ._fee .FindRIDForN (f .Index (),_g .FooterType );if _ddggb ==""{_ad .Log .Debug ("\u0075\u006ea\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0064\u0065\u0074\u0065\u0072\u006d\u0069\u006e\u0065\u0020\u0066\u006f\u006f\u0074\u0065r \u0049\u0044");
-};_cebbc .HdrFtrReferencesChoice .FooterReference .IdAttr =_ddggb ;};
-
-// Shadow returns true if paragraph shadow is on.
-func (_ggbad ParagraphProperties )Shadow ()bool {return _bbeg (_ggbad ._dabde .RPr .Shadow )};func (_baca *Document )appendTable (_dac *Paragraph ,_gfd Table ,_dbg bool )Table {_dgg :=_baca ._feaa .Body ;_aacf :=_bg .NewEG_BlockLevelElts ();_baca ._feaa .Body .EG_BlockLevelElts =append (_baca ._feaa .Body .EG_BlockLevelElts ,_aacf );
-_gfa :=_bg .NewEG_ContentBlockContent ();_aacf .BlockLevelEltsChoice .EG_ContentBlockContent =append (_aacf .BlockLevelEltsChoice .EG_ContentBlockContent ,_gfa );if _dac !=nil {_gfg :=_dac .X ();for _fbgg ,_add :=range _dgg .EG_BlockLevelElts {for _ ,_ged :=range _add .BlockLevelEltsChoice .EG_ContentBlockContent {for _fgce ,_dceg :=range _gfa .ContentBlockContentChoice .P {if _dceg ==_gfg {_cdb :=_gfd .X ();
-_efee :=_bg .NewEG_BlockLevelElts ();_dba :=_bg .NewEG_ContentBlockContent ();_efee .BlockLevelEltsChoice .EG_ContentBlockContent =append (_efee .BlockLevelEltsChoice .EG_ContentBlockContent ,_dba );_dba .ContentBlockContentChoice .Tbl =append (_dba .ContentBlockContentChoice .Tbl ,_cdb );
-_dgg .EG_BlockLevelElts =append (_dgg .EG_BlockLevelElts ,nil );if _dbg {copy (_dgg .EG_BlockLevelElts [_fbgg +1:],_dgg .EG_BlockLevelElts [_fbgg :]);_dgg .EG_BlockLevelElts [_fbgg ]=_efee ;if _fgce !=0{_dfdc :=_bg .NewEG_BlockLevelElts ();_gcef :=_bg .NewEG_ContentBlockContent ();
-_dfdc .BlockLevelEltsChoice .EG_ContentBlockContent =append (_dfdc .BlockLevelEltsChoice .EG_ContentBlockContent ,_gcef );_gcef .ContentBlockContentChoice .P =_ged .ContentBlockContentChoice .P [:_fgce ];_dgg .EG_BlockLevelElts =append (_dgg .EG_BlockLevelElts ,nil );
-copy (_dgg .EG_BlockLevelElts [_fbgg +1:],_dgg .EG_BlockLevelElts [_fbgg :]);_dgg .EG_BlockLevelElts [_fbgg ]=_dfdc ;};_ged .ContentBlockContentChoice .P =_ged .ContentBlockContentChoice .P [_fgce :];}else {copy (_dgg .EG_BlockLevelElts [_fbgg +2:],_dgg .EG_BlockLevelElts [_fbgg +1:]);
-_dgg .EG_BlockLevelElts [_fbgg +1]=_efee ;if _fgce !=len (_ged .ContentBlockContentChoice .P )-1{_bec :=_bg .NewEG_BlockLevelElts ();_fbb :=_bg .NewEG_ContentBlockContent ();_bec .BlockLevelEltsChoice .EG_ContentBlockContent =append (_bec .BlockLevelEltsChoice .EG_ContentBlockContent ,_fbb );
-_fbb .ContentBlockContentChoice .P =_ged .ContentBlockContentChoice .P [_fgce +1:];_dgg .EG_BlockLevelElts =append (_dgg .EG_BlockLevelElts ,nil );copy (_dgg .EG_BlockLevelElts [_fbgg +3:],_dgg .EG_BlockLevelElts [_fbgg +2:]);_dgg .EG_BlockLevelElts [_fbgg +2]=_bec ;
-};_ged .ContentBlockContentChoice .P =_ged .ContentBlockContentChoice .P [:_fgce +1];};break ;};};for _ ,_cdaa :=range _ged .ContentBlockContentChoice .Tbl {_dccc :=_ggac (_cdaa ,_gfg ,_dbg );if _dccc !=nil {break ;};};};};}else {_gfa .ContentBlockContentChoice .Tbl =append (_gfa .ContentBlockContentChoice .Tbl ,_gfd .X ());
-};return Table {_baca ,_gfd .X ()};};func (_gddgd *Document )validateBookmarks ()error {_ccbc :=make (map[string ]struct{});for _ ,_dgfg :=range _gddgd .Bookmarks (){if _ ,_gbcga :=_ccbc [_dgfg .Name ()];_gbcga {return _cb .Errorf ("d\u0075\u0070\u006c\u0069\u0063\u0061t\u0065\u0020\u0062\u006f\u006f\u006b\u006d\u0061\u0072k\u0020\u0025\u0073 \u0066o\u0075\u006e\u0064",_dgfg .Name ());
-};_ccbc [_dgfg .Name ()]=struct{}{};};return nil ;};func _bebaf (_fefea *_bg .CT_Tbl ,_gffd map[string ]string ){for _ ,_adgb :=range _fefea .EG_ContentRowContent {for _ ,_bdfg :=range _adgb .ContentRowContentChoice .Tr {for _ ,_ccgff :=range _bdfg .EG_ContentCellContent {for _ ,_aaaga :=range _ccgff .ContentCellContentChoice .Tc {for _ ,_fgacg :=range _aaaga .EG_BlockLevelElts {for _ ,_cbea :=range _fgacg .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_cgcc :=range _cbea .ContentBlockContentChoice .P {_eggdf (_cgcc ,_gffd );
-};for _ ,_acdg :=range _cbea .ContentBlockContentChoice .Tbl {_bebaf (_acdg ,_gffd );};};};};};};};};
-
-// SetSmallCaps sets the run to small caps.
-func (_geccb RunProperties )SetSmallCaps (b bool ){if !b {_geccb ._ddbb .SmallCaps =nil ;}else {_geccb ._ddbb .SmallCaps =_bg .NewCT_OnOff ();};};
-
-// X returns the inner wrapped XML type.
-func (_bdfe Settings )X ()*_bg .Settings {return _bdfe ._eggcbb };
+func (_adadc ParagraphProperties )SetAlignment (align _ec .ST_Jc ){if align ==_ec .ST_JcUnset {_adadc ._bbdf .Jc =nil ;}else {_adadc ._bbdf .Jc =_ec .NewCT_Jc ();_adadc ._bbdf .Jc .ValAttr =align ;};};func (_eccec *WatermarkText )getShape ()*_c .XSDAny {return _eccec .getInnerElement ("\u0073\u0068\u0061p\u0065");
+};func _ebaeg ()*_ceg .Path {_gfbg :=_ceg .NewPath ();_gfbg .TextpathokAttr =_afe .ST_TrueFalseTrue ;_gfbg .ConnecttypeAttr =_ceg .OfcST_ConnectTypeCustom ;_ecfba :="\u0040\u0039\u002c0;\u0040\u0031\u0030\u002c\u0031\u0030\u0038\u0030\u0030;\u00401\u0031,\u00321\u0036\u0030\u0030\u003b\u0040\u0031\u0032\u002c\u0031\u0030\u0038\u0030\u0030";
+_gfbg .ConnectlocsAttr =&_ecfba ;_bdbde :="\u0032\u0037\u0030,\u0031\u0038\u0030\u002c\u0039\u0030\u002c\u0030";_gfbg .ConnectanglesAttr =&_bdbde ;return _gfbg ;};
+
+// SetPossibleValues sets possible values for a FormFieldTypeDropDown.
+func (_gcccd FormField )SetPossibleValues (values []string ){if len (_gcccd ._dcbfb .FFDataChoice )> 0{for _ ,_ddgf :=range _gcccd ._dcbfb .FFDataChoice {if _ddgf .DdList !=nil {for _ ,_gcfg :=range values {_bafgd :=_ec .NewCT_String ();_bafgd .ValAttr =_gcfg ;
+_ddgf .DdList .ListEntry =append (_ddgf .DdList .ListEntry ,_bafgd );};};};};};
+
+// AddTabStop adds a tab stop to the paragraph.  It controls the position of text when using Run.AddTab()
+func (_geea ParagraphProperties )AddTabStop (position _ga .Distance ,justificaton _ec .ST_TabJc ,leader _ec .ST_TabTlc ){if _geea ._bbdf .Tabs ==nil {_geea ._bbdf .Tabs =_ec .NewCT_Tabs ();};_afdce :=_ec .NewCT_TabStop ();_afdce .LeaderAttr =leader ;_afdce .ValAttr =justificaton ;
+_afdce .PosAttr .Int64 =_c .Int64 (int64 (position /_ga .Twips ));_geea ._bbdf .Tabs .Tab =append (_geea ._bbdf .Tabs .Tab ,_afdce );};func (_ega *Document )save (_gdbe _d .Writer ,_fcf string )error {const _cgb ="\u0064o\u0063u\u006d\u0065\u006e\u0074\u003a\u0064\u002e\u0053\u0061\u0076\u0065";
+if _deab :=_ega ._dgg .Validate ();_deab !=nil {_be .Log .Warning ("\u0076\u0061\u006c\u0069\u0064\u0061\u0074\u0069\u006f\u006e\u0020\u0065\u0072\u0072\u006fr\u0020i\u006e\u0020\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u003a\u0020\u0025\u0073",_deab );
+};_fbc :=_c .DocTypeDocument ;if !_fb .GetLicenseKey ().IsLicensed ()&&!_ecda {_cb .Println ("\u0055\u006e\u006ci\u0063\u0065\u006e\u0073e\u0064\u0020\u0076\u0065\u0072\u0073\u0069o\u006e\u0020\u006f\u0066\u0020\u0055\u006e\u0069\u004f\u0066\u0066\u0069\u0063\u0065");
+_cb .Println ("\u002d\u0020\u0047e\u0074\u0020\u0061\u0020\u0074\u0072\u0069\u0061\u006c\u0020\u006c\u0069\u0063\u0065\u006e\u0073\u0065\u0020\u006f\u006e\u0020\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002fu\u006e\u0069\u0064\u006f\u0063\u002e\u0069\u006f");
+return _ff .New ("\u0075\u006e\u0069\u006f\u0066\u0066\u0069\u0063\u0065\u0020\u006ci\u0063\u0065\u006e\u0073\u0065\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0064");};_ggb :="\u0075n\u006b\u006e\u006f\u0077\u006e";if _bfc ,_cbac :=_gdbe .(*_ad .File );
+_cbac {_ggb =_bfc .Name ();};if len (_ega ._dgdb )==0{if len (_fcf )> 0{_ega ._dgdb =_fcf ;}else {_bfcd ,_bgd :=_fb .GenRefId ("\u0064\u0077");if _bgd !=nil {_be .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_bgd );return _bgd ;};_ega ._dgdb =_bfcd ;
+};};if _cbdb :=_fb .Track (_ega ._dgdb ,_cgb ,_ggb );_cbdb !=nil {_be .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_cbdb );return _cbdb ;};_bbe :=_gf .NewWriter (_gdbe );defer _bbe .Close ();if _bcd :=_ba .MarshalXML (_bbe ,_c .BaseRelsFilename ,_ega .Rels .X ());
+_bcd !=nil {return _bcd ;};if _cebe :=_ba .MarshalXMLByType (_bbe ,_fbc ,_c .ExtendedPropertiesType ,_ega .AppProperties .X ());_cebe !=nil {return _cebe ;};if _dgdg :=_ba .MarshalXMLByType (_bbe ,_fbc ,_c .CorePropertiesType ,_ega .CoreProperties .X ());
+_dgdg !=nil {return _dgdg ;};if _ega .CustomProperties .X ()!=nil {if _aecd :=_ba .MarshalXMLByType (_bbe ,_fbc ,_c .CustomPropertiesType ,_ega .CustomProperties .X ());_aecd !=nil {return _aecd ;};};if _ega .Thumbnail !=nil {_cafa ,_egg :=_bbe .Create ("\u0064\u006f\u0063Pr\u006f\u0070\u0073\u002f\u0074\u0068\u0075\u006d\u0062\u006e\u0061\u0069\u006c\u002e\u006a\u0070\u0065\u0067");
+if _egg !=nil {return _egg ;};if _ccde :=_e .Encode (_cafa ,_ega .Thumbnail ,nil );_ccde !=nil {return _ccde ;};};if _dfa :=_ba .MarshalXMLByType (_bbe ,_fbc ,_c .SettingsType ,_ega .Settings .X ());_dfa !=nil {return _dfa ;};_eee :=_c .AbsoluteFilename (_fbc ,_c .OfficeDocumentType ,0);
+if _fgac :=_ba .MarshalXML (_bbe ,_eee ,_ega ._dgg );_fgac !=nil {return _fgac ;};if _egcd :=_ba .MarshalXML (_bbe ,_ba .RelationsPathFor (_eee ),_ega ._cbaa .X ());_egcd !=nil {return _egcd ;};if _ega .Numbering .X ()!=nil {if _fgacb :=_ba .MarshalXMLByType (_bbe ,_fbc ,_c .NumberingType ,_ega .Numbering .X ());
+_fgacb !=nil {return _fgacb ;};};if _fdac :=_ba .MarshalXMLByType (_bbe ,_fbc ,_c .StylesType ,_ega .Styles .X ());_fdac !=nil {return _fdac ;};if _ega ._dcb !=nil {if _eac :=_ba .MarshalXMLByType (_bbe ,_fbc ,_c .WebSettingsType ,_ega ._dcb );_eac !=nil {return _eac ;
+};};if _ega ._gabd !=nil {if _bgea :=_ba .MarshalXMLByType (_bbe ,_fbc ,_c .FontTableType ,_ega ._gabd );_bgea !=nil {return _bgea ;};};if _ega ._gdd !=nil {if _cdcf :=_ba .MarshalXMLByType (_bbe ,_fbc ,_c .EndNotesType ,_ega ._gdd );_cdcf !=nil {return _cdcf ;
+};};if _ega ._dcba !=nil {if _bbb :=_ba .MarshalXMLByType (_bbe ,_fbc ,_c .FootNotesType ,_ega ._dcba );_bbb !=nil {return _bbb ;};};if _ega ._cdc !=nil {if _cgf :=_ba .MarshalXMLByType (_bbe ,_fbc ,_c .CommentsContentType ,_ega ._cdc );_cgf !=nil {return _cgf ;
+};};for _fea ,_dgfg :=range _ega ._aeeb {if _fab :=_ba .MarshalXMLByTypeIndex (_bbe ,_fbc ,_c .ThemeType ,_fea +1,_dgfg );_fab !=nil {return _fab ;};};for _aeea ,_ffgg :=range _ega ._fff {_aebf ,_adb :=_ffgg .ExportToByteArray ();if _adb !=nil {return _adb ;
+};_dae :="\u0077\u006f\u0072d\u002f"+_ffgg .TargetAttr [:len (_ffgg .TargetAttr )-4]+"\u002e\u0062\u0069\u006e";if _aabb :=_ba .AddFileFromBytes (_bbe ,_dae ,_aebf );_aabb !=nil {return _aabb ;};if _ggdg :=_ba .MarshalXMLByTypeIndex (_bbe ,_fbc ,_c .ControlType ,_aeea +1,_ffgg .Ocx );
+_ggdg !=nil {return _ggdg ;};};for _bdca ,_cge :=range _ega ._ace {_aede :=_c .AbsoluteFilename (_fbc ,_c .HeaderType ,_bdca +1);if _eag :=_ba .MarshalXML (_bbe ,_aede ,_cge );_eag !=nil {return _eag ;};if !_ega ._feb [_bdca ].IsEmpty (){_ba .MarshalXML (_bbe ,_ba .RelationsPathFor (_aede ),_ega ._feb [_bdca ].X ());
+};};for _cga ,_dbaf :=range _ega ._ddbf {_afeg :=_c .AbsoluteFilename (_fbc ,_c .FooterType ,_cga +1);if _fde :=_ba .MarshalXMLByTypeIndex (_bbe ,_fbc ,_c .FooterType ,_cga +1,_dbaf );_fde !=nil {return _fde ;};if !_ega ._cef [_cga ].IsEmpty (){_ba .MarshalXML (_bbe ,_ba .RelationsPathFor (_afeg ),_ega ._cef [_cga ].X ());
+};};for _cag ,_cac :=range _ega .Images {if _gdbg :=_aee .AddImageToZip (_bbe ,_cac ,_cag +1,_c .DocTypeDocument );_gdbg !=nil {return _gdbg ;};};for _cgbc ,_dgb :=range _ega ._bgbe {_aebe :=_c .AbsoluteFilename (_fbc ,_c .ChartType ,_cgbc +1);_ba .MarshalXML (_bbe ,_aebe ,_dgb ._fdfc );
+};if _fggf :=_ba .MarshalXML (_bbe ,_c .ContentTypesFilename ,_ega .ContentTypes .X ());_fggf !=nil {return _fggf ;};if _debd :=_ega .WriteExtraFiles (_bbe );_debd !=nil {return _debd ;};return _bbe .Close ();};
 
 // UnderlineColor returns the hex color value of paragraph underline.
-func (_fgbf ParagraphProperties )UnderlineColor ()string {if _ebcff :=_fgbf ._dabde .RPr .U ;_ebcff !=nil {_bccec :=_ebcff .ColorAttr ;if _bccec !=nil &&_bccec .ST_HexColorRGB !=nil {return *_bccec .ST_HexColorRGB ;};};return "";};
+func (_fdafc ParagraphProperties )UnderlineColor ()string {if _efbbe :=_fdafc ._bbdf .RPr .U ;_efbbe !=nil {_fece :=_efbbe .ColorAttr ;if _fece !=nil &&_fece .ST_HexColorRGB !=nil {return *_fece .ST_HexColorRGB ;};};return "";};
 
-// SetName sets the name of the image, visible in the properties of the image
-// within Word.
-func (_ee AnchoredDrawing )SetName (name string ){_ee ._cd .DocPr .NameAttr =name ;for _ ,_fdae :=range _ee ._cd .Graphic .GraphicData .Any {if _bge ,_bef :=_fdae .(*_gg .Pic );_bef {_bge .NvPicPr .CNvPr .DescrAttr =_g .String (name );};};};
+// AddRun adds a run to a paragraph.
+func (_cgac Paragraph )AddRun ()Run {_gcaf :=_ec .NewEG_PContent ();_cgac ._fagb .EG_PContent =append (_cgac ._fagb .EG_PContent ,_gcaf );_dbbfe :=_ec .NewEG_ContentRunContent ();_gcaf .PContentChoice .EG_ContentRunContent =append (_gcaf .PContentChoice .EG_ContentRunContent ,_dbbfe );
+_gffg :=_ec .NewCT_R ();_dbbfe .ContentRunContentChoice .R =_gffg ;return Run {_cgac ._fafde ,_gffg };};
 
-// SetStyle sets the font size.
-func (_dfebcd RunProperties )SetStyle (style string ){if style ==""{_dfebcd ._ddbb .RStyle =nil ;}else {_dfebcd ._ddbb .RStyle =_bg .NewCT_String ();_dfebcd ._ddbb .RStyle .ValAttr =style ;};};
+// SetBottom sets the cell bottom margin
+func (_fbd CellMargins )SetBottom (d _ga .Distance ){_fbd ._debg .Bottom =_ec .NewCT_TblWidth ();_eege (_fbd ._debg .Bottom ,d );};
 
-// SetCellSpacingAuto sets the cell spacing within a table to automatic.
-func (_dggg TableProperties )SetCellSpacingAuto (){_dggg ._cdfg .TblCellSpacing =_bg .NewCT_TblWidth ();_dggg ._cdfg .TblCellSpacing .TypeAttr =_bg .ST_TblWidthAuto ;};
+// SetOutline sets the run to outlined text.
+func (_cgfgf RunProperties )SetOutline (b bool ){if !b {_cgfgf ._bffab .Outline =nil ;}else {_cgfgf ._bffab .Outline =_ec .NewCT_OnOff ();};};
 
-// StructuredDocumentTags returns the structured document tags in the document
-// which are commonly used in document templates.
-func (_abff *Document )StructuredDocumentTags ()[]StructuredDocumentTag {_gcdb :=[]StructuredDocumentTag {};for _ ,_gceg :=range _abff ._feaa .Body .EG_BlockLevelElts {for _ ,_fac :=range _gceg .BlockLevelEltsChoice .EG_ContentBlockContent {if _fac .ContentBlockContentChoice .Sdt !=nil {_gcdb =append (_gcdb ,StructuredDocumentTag {_abff ,_fac .ContentBlockContentChoice .Sdt });
-};};};return _gcdb ;};
+// DoubleStrike returns true if paragraph is double striked.
+func (_edbg ParagraphProperties )DoubleStrike ()bool {return _gfgb (_edbg ._bbdf .RPr .Dstrike )};
 
-// AddImage adds an image to the document package, returning a reference that
-// can be used to add the image to a run and place it in the document contents.
-func (_aebg *Document )AddImage (i _edb .Image )(_edb .ImageRef ,error ){_edgb :=_edb .MakeImageRef (i ,&_aebg .DocBase ,_aebg ._fee );if i .Data ==nil &&i .Path ==""{return _edgb ,_be .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0064\u0061t\u0061\u0020\u006f\u0072\u0020\u0061\u0020\u0070\u0061\u0074\u0068");
-};if i .Format ==""{return _edgb ,_be .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0061\u0020v\u0061\u006c\u0069\u0064\u0020\u0066\u006f\u0072\u006d\u0061\u0074");};if i .Size .X ==0||i .Size .Y ==0{return _edgb ,_be .New ("\u0069\u006d\u0061\u0067e\u0020\u006d\u0075\u0073\u0074\u0020\u0068\u0061\u0076\u0065 \u0061 \u0076\u0061\u006c\u0069\u0064\u0020\u0073i\u007a\u0065");
-};if i .Path !=""{_afa :=_ga .Add (i .Path );if _afa !=nil {return _edgb ,_afa ;};};_aebg .Images =append (_aebg .Images ,_edgb );_gdfbc :=_cb .Sprintf ("\u006d\u0065d\u0069\u0061\u002fi\u006d\u0061\u0067\u0065\u0025\u0064\u002e\u0025\u0073",len (_aebg .Images ),i .Format );
-_ggdb :=_aebg ._fee .AddRelationship (_gdfbc ,_g .ImageType );_aebg .ContentTypes .EnsureDefault ("\u0070\u006e\u0067","\u0069m\u0061\u0067\u0065\u002f\u0070\u006eg");_aebg .ContentTypes .EnsureDefault ("\u006a\u0070\u0065\u0067","\u0069\u006d\u0061\u0067\u0065\u002f\u006a\u0070\u0065\u0067");
-_aebg .ContentTypes .EnsureDefault ("\u006a\u0070\u0067","\u0069\u006d\u0061\u0067\u0065\u002f\u006a\u0070\u0065\u0067");_aebg .ContentTypes .EnsureDefault ("\u0077\u006d\u0066","i\u006d\u0061\u0067\u0065\u002f\u0078\u002d\u0077\u006d\u0066");_aebg .ContentTypes .EnsureDefault (i .Format ,"\u0069\u006d\u0061\u0067\u0065\u002f"+i .Format );
-_edgb .SetRelID (_ggdb .X ().IdAttr );_edgb .SetTarget (_gdfbc );return _edgb ,nil ;};
+// Nodes contains slice of Node element.
+type Nodes struct{_adac []Node };
 
-// AddInsertedText add a text insertion to the paragraph
-// specifying its revision number, author and id.
-func (_agba Paragraph )AddInsertedText (newVal ,revNum ,author string ,t _e .Time ,id int64 ){_cebae :=_bg .NewCT_RunTrackChange ();_cebae .AuthorAttr =author ;_cebae .DateAttr =&t ;_cebae .IdAttr =id ;_cgcf :=_bg .NewCT_R ();_cgcf .RsidRAttr =&revNum ;
-_fegf :=_bg .NewCT_Text ();_fegf .Content =newVal ;_ffgcb :=_bg .NewEG_RunInnerContent ();_ffgcb .RunInnerContentChoice .T =_fegf ;_cgcf .EG_RunInnerContent =append (_cgcf .EG_RunInnerContent ,_ffgcb );_abad :=_bg .NewCT_RunTrackChangeChoice ();_fcfba :=_bg .NewEG_ContentRunContentChoice ();
-_fcfba .R =_cgcf ;_abad .ContentRunContentChoice =_fcfba ;_cebae .RunTrackChangeChoice =append (_cebae .RunTrackChangeChoice ,_abad );_abbf :=_bg .NewEG_PContent ();_eaeba :=_bg .NewEG_ContentRunContent ();_abbf .PContentChoice .EG_ContentRunContent =append (_abbf .PContentChoice .EG_ContentRunContent ,_eaeba );
-_ffcb :=_bg .NewEG_RunLevelElts ();_eaeba .ContentRunContentChoice .EG_RunLevelElts =append (_eaeba .ContentRunContentChoice .EG_RunLevelElts ,_ffcb );_ffcb .RunLevelEltsChoice .Ins =_cebae ;_agba ._dfbf .EG_PContent =append (_agba ._dfbf .EG_PContent ,_abbf );
-};
+// X returns the inner wrapped XML type.
+func (_bac Cell )X ()*_ec .CT_Tc {return _bac ._eaff };
 
-// GetDocRelTargetByID returns TargetAttr of document relationship given its IdAttr.
-func (_eddde *Document )GetDocRelTargetByID (idAttr string )string {for _ ,_dcbd :=range _eddde ._fee .X ().Relationship {if _dcbd .IdAttr ==idAttr {return _dcbd .TargetAttr ;};};return "";};
+// Paragraphs returns the paragraphs defined in the cell.
+func (_cfa Cell )Paragraphs ()[]Paragraph {_ddf :=[]Paragraph {};for _ ,_bcf :=range _cfa ._eaff .EG_BlockLevelElts {for _ ,_ecd :=range _bcf .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_fe :=range _ecd .ContentBlockContentChoice .P {_ddf =append (_ddf ,Paragraph {_cfa ._dfb ,_fe });
+};};};return _ddf ;};
 
-// DrawingInline return a slice of InlineDrawings.
-func (_daedf Run )DrawingInline ()[]InlineDrawing {_ggbag :=[]InlineDrawing {};for _ ,_fdcda :=range _daedf ._bdced .EG_RunInnerContent {if _fdcda .RunInnerContentChoice .Drawing ==nil {continue ;};for _ ,_gaae :=range _fdcda .RunInnerContentChoice .Drawing .DrawingChoice {if _gaae .Inline ==nil {continue ;
-};_ggbag =append (_ggbag ,InlineDrawing {_daedf ._efagg ,_gaae .Inline });};};return _ggbag ;};
+// GetWrapPathStart return wrapPath start value.
+func (_caf AnchorDrawWrapOptions )GetWrapPathStart ()*_cc .CT_Point2D {return _caf ._fba };
 
-// Node is document element node,
-// contains Paragraph or Table element.
-type Node struct{_ggab *Document ;_ffdc interface{};Style Style ;AnchoredDrawings []AnchoredDrawing ;InlineDrawings []InlineDrawing ;Children []Node ;};
-
-// Name returns the name of the field.
-func (_fbea FormField )Name ()string {if len (_fbea ._acfd .FFDataChoice )==0{return "";};return *_fbea ._acfd .FFDataChoice [0].Name .ValAttr ;};
-
-// AddEndnoteReference adds a footnote reference to a run.
-func (_fcbd Run )AddEndnoteReference (){_ecccb :=_fcbd .newIC ();_ecccb .RunInnerContentChoice .EndnoteRef =&_bg .CT_Empty {};};
-
-// Properties returns the row properties.
-func (_gabe Row )Properties ()RowProperties {if _gabe ._bgcee .TrPr ==nil {_gabe ._bgcee .TrPr =_bg .NewCT_TrPr ();};return RowProperties {_gabe ._bgcee .TrPr };};
-
-// Clear clears the styes.
-func (_abgce Styles )Clear (){_abgce ._gcdd .DocDefaults =nil ;_abgce ._gcdd .LatentStyles =nil ;_abgce ._gcdd .Style =nil ;};
-
-// Emboss returns true if run emboss is on.
-func (_fagd RunProperties )Emboss ()bool {return _bbeg (_fagd ._ddbb .Emboss )};
-
-// HasFootnotes returns a bool based on the presence or abscence of footnotes within
-// the document.
-func (_gfab *Document )HasFootnotes ()bool {return _gfab ._gca !=nil };func _gefdaa ()*_ec .Path {_aedd :=_ec .NewPath ();_aedd .TextpathokAttr =_de .ST_TrueFalseTrue ;_aedd .ConnecttypeAttr =_ec .OfcST_ConnectTypeCustom ;_febf :="\u0040\u0039\u002c0;\u0040\u0031\u0030\u002c\u0031\u0030\u0038\u0030\u0030;\u00401\u0031,\u00321\u0036\u0030\u0030\u003b\u0040\u0031\u0032\u002c\u0031\u0030\u0038\u0030\u0030";
-_aedd .ConnectlocsAttr =&_febf ;_eagef :="\u0032\u0037\u0030,\u0031\u0038\u0030\u002c\u0039\u0030\u002c\u0030";_aedd .ConnectanglesAttr =&_eagef ;return _aedd ;};const (FormFieldTypeUnknown FormFieldType =iota ;FormFieldTypeText ;FormFieldTypeCheckBox ;
-FormFieldTypeDropDown ;);
-
-// Cell is a table cell within a document (not a spreadsheet)
-type Cell struct{_aeg *Document ;_gega *_bg .CT_Tc ;};
-
-// SetStrict is a shortcut for document.SetConformance,
-// as one of these values from github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes:
-// ST_ConformanceClassUnset, ST_ConformanceClassStrict or ST_ConformanceClassTransitional.
-func (_gaeef Document )SetStrict (strict bool ){if strict {_gaeef ._feaa .ConformanceAttr =_de .ST_ConformanceClassStrict ;}else {_gaeef ._feaa .ConformanceAttr =_de .ST_ConformanceClassTransitional ;};};
-
-// AddTab adds tab to a run and can be used with the the Paragraph's tab stops.
-func (_edbcc Run )AddTab (){_gbabd :=_edbcc .newIC ();_gbabd .RunInnerContentChoice .Tab =_bg .NewCT_Empty ();};
-
-// TableLook returns the table look, or conditional formatting applied to a table style.
-func (_fdabb TableProperties )TableLook ()TableLook {if _fdabb ._cdfg .TblLook ==nil {_fdabb ._cdfg .TblLook =_bg .NewCT_TblLook ();};return TableLook {_fdabb ._cdfg .TblLook };};
-
-// SetHeight allows controlling the height of a row within a table.
-func (_ffeec RowProperties )SetHeight (ht _ac .Distance ,rule _bg .ST_HeightRule ){if rule ==_bg .ST_HeightRuleUnset {_ffeec ._bedbf .TrPrBaseChoice =nil ;}else {_gdbge :=_bg .NewCT_Height ();_gdbge .HRuleAttr =rule ;_gdbge .ValAttr =&_de .ST_TwipsMeasure {};
-_gdbge .ValAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (ht /_ac .Twips ));_ffeec ._bedbf .TrPrBaseChoice =[]*_bg .CT_TrPrBaseChoice {&_bg .CT_TrPrBaseChoice {TrHeight :_gdbge }};};};
-
-// IgnoreSpaceBetweenParagraphOfSameStyle sets contextual spacing.
-func (_gcbe Paragraph )IgnoreSpaceBetweenParagraphOfSameStyle (){_gcbe .ensurePPr ();if _gcbe ._dfbf .PPr .ContextualSpacing ==nil {_gcbe ._dfbf .PPr .ContextualSpacing =_bg .NewCT_OnOff ();};_gcbe ._dfbf .PPr .ContextualSpacing .ValAttr =&_de .ST_OnOff {ST_OnOff1 :_de .ST_OnOff1On };
-};
-
-// SetPageMargins sets the page margins for a section
-func (_gecf Section )SetPageMargins (top ,right ,bottom ,left ,header ,footer ,gutter _ac .Distance ){_dedb :=_bg .NewCT_PageMar ();_dedb .TopAttr .Int64 =_g .Int64 (int64 (top /_ac .Twips ));_dedb .BottomAttr .Int64 =_g .Int64 (int64 (bottom /_ac .Twips ));
-_dedb .RightAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (right /_ac .Twips ));_dedb .LeftAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (left /_ac .Twips ));_dedb .HeaderAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (header /_ac .Twips ));
-_dedb .FooterAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (footer /_ac .Twips ));_dedb .GutterAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (gutter /_ac .Twips ));_gecf ._cdebe .PgMar =_dedb ;};
-
-// SearchStyleByName return style by its name.
-func (_dfcb Styles )SearchStyleByName (name string )(Style ,bool ){for _ ,_fbbc :=range _dfcb ._gcdd .Style {if _fbbc .Name !=nil {if _fbbc .Name .ValAttr ==name {return Style {_fbbc },true ;};};};return Style {},false ;};
-
-// NewWatermarkPicture generates new WatermarkPicture.
-func NewWatermarkPicture ()WatermarkPicture {_edceb :=_ec .NewShapetype ();_bbgad :=_gfdbg ();_gegf :=_bgacf ();_gccfc :=_fdbdd ();_edceb .EG_ShapeElements =[]*_ec .EG_ShapeElements {{ShapeElementsChoice :&_ec .EG_ShapeElementsChoice {Formulas :_bbgad }},{ShapeElementsChoice :&_ec .EG_ShapeElementsChoice {Path :_gegf }},{ShapeElementsChoice :&_ec .EG_ShapeElementsChoice {Lock :_gccfc }}};
-var (_fbdef ="\u005f\u0078\u0030\u0030\u0030\u0030\u005f\u0074\u0037\u0035";_dfeca ="2\u0031\u0036\u0030\u0030\u002c\u0032\u0031\u0036\u0030\u0030";_gddf =float32 (75.0);_egdba ="\u006d\u0040\u0034\u00405l\u0040\u0034\u0040\u0031\u0031\u0040\u0039\u0040\u0031\u0031\u0040\u0039\u0040\u0035x\u0065";
-);_edceb .IdAttr =&_fbdef ;_edceb .CoordsizeAttr =&_dfeca ;_edceb .SptAttr =&_gddf ;_edceb .PreferrelativeAttr =_de .ST_TrueFalseTrue ;_edceb .PathAttr =&_egdba ;_edceb .FilledAttr =_de .ST_TrueFalseFalse ;_edceb .StrokedAttr =_de .ST_TrueFalseFalse ;_aegc :=_ec .NewShape ();
-_aegc .ShapeChoice =[]*_ec .CT_ShapeChoice {{ShapeElementsChoice :&_ec .EG_ShapeElementsChoice {Imagedata :_caadd ()}}};var (_bbadg ="\u0057\u006f\u0072\u0064\u0050\u0069\u0063\u0074\u0075\u0072e\u0057\u0061\u0074\u0065\u0072\u006d\u0061r\u006b\u0031\u0036\u0033\u0032\u0033\u0031\u0036\u0035\u0039\u0035";
-_ggeed ="\u005f\u0078\u00300\u0030\u0030\u005f\u0073\u0032\u0030\u0035\u0031";_egeae ="#\u005f\u0078\u0030\u0030\u0030\u0030\u005f\u0074\u0037\u0035";_ffeba ="";_gfeea ="\u0070os\u0069t\u0069o\u006e\u003a\u0061\u0062\u0073\u006fl\u0075\u0074\u0065\u003bm\u0061\u0072\u0067\u0069\u006e\u002d\u006c\u0065\u0066\u0074\u003a\u0030\u003bma\u0072\u0067\u0069\u006e\u002d\u0074\u006f\u0070\u003a\u0030\u003b\u0077\u0069\u0064\u0074\u0068\u003a\u0030\u0070\u0074;\u0068e\u0069\u0067\u0068\u0074\u003a\u0030\u0070\u0074\u003b\u007a\u002d\u0069\u006ed\u0065\u0078:\u002d\u0032\u00351\u0036\u0035\u0038\u0032\u0034\u0030\u003b\u006d\u0073o-\u0070\u006f\u0073i\u0074\u0069\u006f\u006e-\u0068\u006f\u0072\u0069\u007a\u006fn\u0074\u0061l\u003a\u0063\u0065\u006e\u0074\u0065\u0072\u003bm\u0073\u006f\u002d\u0070\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u002d\u0068\u006f\u0072\u0069\u007a\u006f\u006e\u0074\u0061\u006c\u002drela\u0074\u0069\u0076\u0065\u003a\u006d\u0061\u0072\u0067\u0069\u006e\u003b\u006d\u0073\u006f\u002d\u0070\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u002d\u0076\u0065\u0072t\u0069c\u0061l\u003a\u0063\u0065\u006e\u0074\u0065\u0072\u003b\u006d\u0073\u006f\u002d\u0070\u006f\u0073\u0069\u0074\u0069\u006f\u006e-\u0076\u0065r\u0074\u0069c\u0061l\u002d\u0072\u0065\u006c\u0061\u0074i\u0076\u0065\u003a\u006d\u0061\u0072\u0067\u0069\u006e";
-);_aegc .IdAttr =&_bbadg ;_aegc .SpidAttr =&_ggeed ;_aegc .TypeAttr =&_egeae ;_aegc .AltAttr =&_ffeba ;_aegc .StyleAttr =&_gfeea ;_aegc .AllowincellAttr =_de .ST_TrueFalseFalse ;_ggfbg :=_bg .NewCT_Picture ();_ggfbg .Any =[]_g .Any {_edceb ,_aegc };return WatermarkPicture {_cfgg :_ggfbg ,_dfdgf :_aegc ,_cedge :_edceb };
-};
-
-// Fonts returns the style's Fonts.
-func (_cdff RunProperties )Fonts ()Fonts {if _cdff ._ddbb .RFonts ==nil {_cdff ._ddbb .RFonts =_bg .NewCT_Fonts ();};return Fonts {_cdff ._ddbb .RFonts };};
-
-// SetNextStyle sets the style that the next paragraph will use.
-func (_faaee Style )SetNextStyle (name string ){if name ==""{_faaee ._cbega .Next =nil ;}else {_faaee ._cbega .Next =_bg .NewCT_String ();_faaee ._cbega .Next .ValAttr =name ;};};
-
-// ComplexSizeValue returns the value of paragraph font size for complex fonts in points.
-func (_dcegg ParagraphProperties )ComplexSizeValue ()float64 {if _ffbg :=_dcegg ._dabde .RPr .SzCs ;_ffbg !=nil {_fgabc :=_ffbg .ValAttr ;if _fgabc .ST_UnsignedDecimalNumber !=nil {return float64 (*_fgabc .ST_UnsignedDecimalNumber )/2;};};return 0.0;};
-
-
-// ParagraphProperties returns the paragraph style properties.
-func (_agca Style )ParagraphProperties ()ParagraphStyleProperties {if _agca ._cbega .PPr ==nil {_agca ._cbega .PPr =_bg .NewCT_PPrGeneral ();};return ParagraphStyleProperties {_agca ._cbega .PPr };};
-
-// Borders allows manipulation of the table borders.
-func (_dcfb TableStyleProperties )Borders ()TableBorders {if _dcfb ._ddecf .TblBorders ==nil {_dcfb ._ddecf .TblBorders =_bg .NewCT_TblBorders ();};return TableBorders {_dcfb ._ddecf .TblBorders };};
-
-// SetName sets the name of the bookmark. This is the name that is used to
-// reference the bookmark from hyperlinks.
-func (_eeb Bookmark )SetName (name string ){_eeb ._aef .NameAttr =name };
-
-// SetWrapPathStart sets wrapPath start value.
-func (_acb AnchorDrawWrapOptions )SetWrapPathStart (coordinate *_eg .CT_Point2D ){_acb ._gga =coordinate ;};
-
-// SetLeft sets the left border to a specified type, color and thickness.
-func (_abffc ParagraphBorders )SetLeft (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_abffc ._bfeee .Left =_bg .NewCT_Border ();_ggef (_abffc ._bfeee .Left ,t ,c ,thickness );};
-
-// RStyle returns the name of character style.
-// It is defined here http://officeopenxml.com/WPstyleCharStyles.php
-func (_gcced ParagraphProperties )RStyle ()string {if _gcced ._dabde .RPr .RStyle !=nil {return _gcced ._dabde .RPr .RStyle .ValAttr ;};return "";};
-
-// TableProperties returns the table style properties.
-func (_egacf Style )TableProperties ()TableStyleProperties {if _egacf ._cbega .TblPr ==nil {_egacf ._cbega .TblPr =_bg .NewCT_TblPrBase ();};return TableStyleProperties {_egacf ._cbega .TblPr };};
-
-// AddTable adds a table to the table cell.
-func (_daeg Cell )AddTable ()Table {_decc :=_bg .NewEG_BlockLevelElts ();_daeg ._gega .EG_BlockLevelElts =append (_daeg ._gega .EG_BlockLevelElts ,_decc );_gf :=_bg .NewEG_ContentBlockContent ();_decc .BlockLevelEltsChoice .EG_ContentBlockContent =append (_decc .BlockLevelEltsChoice .EG_ContentBlockContent ,_gf );
-_bdg :=_bg .NewCT_Tbl ();_gf .ContentBlockContentChoice .Tbl =append (_gf .ContentBlockContentChoice .Tbl ,_bdg );return Table {_daeg ._aeg ,_bdg };};
-
-// SetCellSpacing sets the cell spacing within a table.
-func (_ffgac TableProperties )SetCellSpacing (m _ac .Distance ){_ffgac ._cdfg .TblCellSpacing =_bg .NewCT_TblWidth ();_ffgac ._cdfg .TblCellSpacing .TypeAttr =_bg .ST_TblWidthDxa ;_ffgac ._cdfg .TblCellSpacing .WAttr =&_bg .ST_MeasurementOrPercent {};_ffgac ._cdfg .TblCellSpacing .WAttr .ST_DecimalNumberOrPercent =&_bg .ST_DecimalNumberOrPercent {};
-_ffgac ._cdfg .TblCellSpacing .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_g .Int64 (int64 (m /_ac .Dxa ));};
-
-// SetBold sets the run to bold.
-func (_eebff RunProperties )SetBold (b bool ){if !b {_eebff ._ddbb .B =nil ;_eebff ._ddbb .BCs =nil ;}else {_eebff ._ddbb .B =_bg .NewCT_OnOff ();_eebff ._ddbb .BCs =_bg .NewCT_OnOff ();};};type chart struct{_gbg *_ece .ChartSpace ;_aff string ;_ede string ;
-};
-
-// HyperLink is a link within a document.
-type HyperLink struct{_baac *Document ;_eage *_bg .CT_Hyperlink ;};
-
-// Paragraphs returns the paragraphs defined in an endnote.
-func (_fbee Endnote )Paragraphs ()[]Paragraph {_efgca :=[]Paragraph {};for _ ,_becc :=range _fbee .content (){for _ ,_dfcg :=range _becc .ContentBlockContentChoice .P {_efgca =append (_efgca ,Paragraph {_fbee ._gccc ,_dfcg });};};return _efgca ;};
-
-// AddHyperlink adds a hyperlink to a document. Adding the hyperlink to a document
-// and setting it on a cell is more efficient than setting hyperlinks directly
-// on a cell.
-func (_bedg Document )AddHyperlink (url string )_edb .Hyperlink {return _bedg ._fee .AddHyperlink (url )};
-
-// Paragraphs returns all the paragraphs in the document body including tables.
-func (_faac *Document )Paragraphs ()[]Paragraph {_abfb :=[]Paragraph {};if _faac ._feaa .Body ==nil {return nil ;};for _ ,_efae :=range _faac ._feaa .Body .EG_BlockLevelElts {for _ ,_cfff :=range _efae .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_egfe :=range _cfff .ContentBlockContentChoice .P {_abfb =append (_abfb ,Paragraph {_faac ,_egfe });
-};};};for _ ,_bgdb :=range _faac .Tables (){for _ ,_cbc :=range _bgdb .Rows (){for _ ,_ege :=range _cbc .Cells (){_abfb =append (_abfb ,_ege .Paragraphs ()...);};};};return _abfb ;};
-
-// TableBorders allows manipulation of borders on a table.
-type TableBorders struct{_gfgeb *_bg .CT_TblBorders };
+// ReplaceTextByRegexp replace the text within node using regexp expression.
+func (_feda *Node )ReplaceTextByRegexp (rgx *_cf .Regexp ,newText string ){switch _ebfc :=_feda .X ().(type ){case *Paragraph :for _ ,_edfcf :=range _ebfc .Runs (){for _ ,_dbdf :=range _edfcf ._aeef .EG_RunInnerContent {if _dbdf .RunInnerContentChoice .T !=nil {_abab :=_dbdf .RunInnerContentChoice .T .Content ;
+_abab =rgx .ReplaceAllString (_abab ,newText );_dbdf .RunInnerContentChoice .T .Content =_abab ;};};};};for _ ,_dcfa :=range _feda .Children {_dcfa .ReplaceTextByRegexp (rgx ,newText );};};
 
 // TOCOptions specify options for table of contents customization.
 type TOCOptions struct{
@@ -1918,158 +119,317 @@ OmitPageNumbers bool ;
 // "3-3" is to show only third heading level, for instance.
 HeadingLevel string ;};
 
-// Footnote is an individual footnote reference within the document.
-type Footnote struct{_affbg *Document ;_efbd *_bg .CT_FtnEdn ;};
+// SetWrapPathLineTo sets wrapPath lineTo value.
+func (_efcb AnchorDrawWrapOptions )SetWrapPathLineTo (coordinates []*_cc .CT_Point2D ){_efcb ._deb =coordinates ;};
 
-// CellProperties returns the cell properties.
-func (_aecbb TableConditionalFormatting )CellProperties ()CellProperties {if _aecbb ._dbgc .TcPr ==nil {_aecbb ._dbgc .TcPr =_bg .NewCT_TcPr ();};return CellProperties {_aecbb ._dbgc .TcPr };};
+// AppendNode append node to document element.
+func (_cdae *Document )AppendNode (node Node ){_cdae .insertImageFromNode (node );_cdae .insertStyleFromNode (node );for _ ,_ggff :=range node .Children {_cdae .insertImageFromNode (_ggff );_cdae .insertStyleFromNode (_ggff );};switch _eeaea :=node .X ().(type ){case *Paragraph :_cdae .appendParagraph (nil ,*_eeaea ,false );
+case *Table :_cdae .appendTable (nil ,*_eeaea ,false );};if node ._ecce !=nil {if node ._ecce ._aeeb !=nil {if _edaf :=_cdae ._cbaa .FindRIDForN (0,_c .ThemeType );_edaf ==""{if _cfga :=node ._ecce ._cbaa .FindRIDForN (0,_c .ThemeType );_cfga !=""{_cdae ._aeeb =append (_cdae ._aeeb ,node ._ecce ._aeeb ...);
+_daed :=node ._ecce ._cbaa .GetTargetByRelId (_cfga );_cdae .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072\u0064\u002f"+_daed ,"\u0061\u0070\u0070\u006c\u0069\u0063\u0061t\u0069\u006f\u006e/\u0076\u006e\u0064.\u006f\u0070e\u006e\u0078\u006d\u006c\u0066\u006fr\u006dat\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0074\u0068\u0065\u006d\u0065\u002b\u0078\u006d\u006c");
+_cdae ._cbaa .AddRelationship (_daed ,_c .ThemeType );};};};_fdbf :=_cdae ._gabd ;_bceb :=node ._ecce ._gabd ;if _fdbf !=nil {if _bceb !=nil {if _fdbf .Font !=nil {if _bceb .Font !=nil {for _ ,_ebgd :=range _bceb .Font {_dabb :=true ;for _ ,_dgae :=range _fdbf .Font {if _dgae .NameAttr ==_ebgd .NameAttr {_dabb =false ;
+break ;};};if _dabb {_fdbf .Font =append (_fdbf .Font ,_ebgd );};};};}else {_fdbf .Font =_bceb .Font ;};};}else if _bceb !=nil {_fdbf =_bceb ;};_cdae ._gabd =_fdbf ;if _cccg :=_cdae ._cbaa .FindRIDForN (0,_c .FontTableType );_cccg ==""{_cdae .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072d/\u0066\u006f\u006e\u0074\u0054\u0061\u0062\u006c\u0065\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069c\u0061\u0074\u0069\u006f\u006e\u002f\u0076n\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072\u006d\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063e\u0073\u0073\u0069\u006e\u0067\u006d\u006c\u002e\u0066\u006f\u006e\u0074T\u0061\u0062\u006c\u0065\u002b\u0078m\u006c");
+_cdae ._cbaa .AddRelationship ("\u0066\u006f\u006e\u0074\u0054\u0061\u0062\u006c\u0065\u002e\u0078\u006d\u006c",_c .FontTableType );};};};
 
-// CellProperties are a table cells properties within a document.
-type CellProperties struct{_bbb *_bg .CT_TcPr };
+// SetColor sets a specific color or auto.
+func (_gdfa Color )SetColor (v _gc .Color ){if v .IsAuto (){_gdfa ._fggd .ValAttr .ST_HexColorAuto =_ec .ST_HexColorAutoAuto ;_gdfa ._fggd .ValAttr .ST_HexColorRGB =nil ;}else {_gdfa ._fggd .ValAttr .ST_HexColorAuto =_ec .ST_HexColorAutoUnset ;_gdfa ._fggd .ValAttr .ST_HexColorRGB =v .AsRGBString ();
+};};
 
-// StyleID returns the style ID.
-func (_egea Style )StyleID ()string {if _egea ._cbega .StyleIdAttr ==nil {return "";};return *_egea ._cbega .StyleIdAttr ;};func (_defa Paragraph )addEndFldChar ()*_bg .CT_FldChar {_bbfg :=_defa .addFldChar ();_bbfg .FldCharTypeAttr =_bg .ST_FldCharTypeEnd ;
-return _bbfg ;};func (_bcff Footnote )id ()int64 {return _bcff ._efbd .IdAttr };
-
-// Caps returns true if paragraph font is capitalized.
-func (_gfeca ParagraphProperties )Caps ()bool {return _bbeg (_gfeca ._dabde .RPr .Caps )};
-
-// GetRightToLeft returns true if the run text is displayed from right to left.
-func (_agbe RunProperties )GetRightToLeft ()bool {return _bbeg (_agbe ._ddbb .Rtl )};
-
-// SetPossibleValues sets possible values for a FormFieldTypeDropDown.
-func (_beac FormField )SetPossibleValues (values []string ){if len (_beac ._acfd .FFDataChoice )> 0{for _ ,_ffeff :=range _beac ._acfd .FFDataChoice {if _ffeff .DdList !=nil {for _ ,_dacd :=range values {_afgdb :=_bg .NewCT_String ();_afgdb .ValAttr =_dacd ;
-_ffeff .DdList .ListEntry =append (_ffeff .DdList .ListEntry ,_afgdb );};};};};};
-
-// SetAlignment sets the alignment of a table within the page.
-func (_bdee TableProperties )SetAlignment (align _bg .ST_JcTable ){if align ==_bg .ST_JcTableUnset {_bdee ._cdfg .Jc =nil ;}else {_bdee ._cdfg .Jc =_bg .NewCT_JcTable ();_bdee ._cdfg .Jc .ValAttr =align ;};};
-
-// Paragraphs returns the paragraphs within a structured document tag.
-func (_fcdb StructuredDocumentTag )Paragraphs ()[]Paragraph {if _fcdb ._dgecf .SdtContent ==nil {return nil ;};_dceec :=[]Paragraph {};for _ ,_edfeb :=range _fcdb ._dgecf .SdtContent .EG_ContentBlockContent {for _ ,_fbdea :=range _edfeb .ContentBlockContentChoice .P {_dceec =append (_dceec ,Paragraph {_fcdb ._gecad ,_fbdea });
-};};return _dceec ;};
-
-// RemoveParagraph removes a paragraph from the endnote.
-func (_ffef Endnote )RemoveParagraph (p Paragraph ){for _ ,_fedf :=range _ffef .content (){for _cggf ,_fbeg :=range _fedf .ContentBlockContentChoice .P {if _fbeg ==p ._dfbf {copy (_fedf .ContentBlockContentChoice .P [_cggf :],_fedf .ContentBlockContentChoice .P [_cggf +1:]);
-_fedf .ContentBlockContentChoice .P =_fedf .ContentBlockContentChoice .P [0:len (_fedf .ContentBlockContentChoice .P )-1];return ;};};};};
-
-// SearchStylesById returns style by its id.
-func (_bdfaf Styles )SearchStyleById (id string )(Style ,bool ){for _ ,_bcbd :=range _bdfaf ._gcdd .Style {if _bcbd .StyleIdAttr !=nil {if *_bcbd .StyleIdAttr ==id {return Style {_bcbd },true ;};};};return Style {},false ;};
-
-// CharacterSpacingValue returns the value of characters spacing in twips (1/20 of point).
-func (_ggege ParagraphProperties )CharacterSpacingValue ()int64 {if _faacg :=_ggege ._dabde .RPr .Spacing ;_faacg !=nil {_ccaa :=_faacg .ValAttr ;if _ccaa .Int64 !=nil {return *_ccaa .Int64 ;};};return int64 (0);};
-
-// AddRun adds a run of text to a hyperlink. This is the text that will be linked.
-func (_faec HyperLink )AddRun ()Run {_acdeb :=_bg .NewEG_ContentRunContent ();_faec ._eage .PContentChoice .EG_ContentRunContent =append (_faec ._eage .PContentChoice .EG_ContentRunContent ,_acdeb );_eedd :=_bg .NewCT_R ();_acdeb .ContentRunContentChoice .R =_eedd ;
-return Run {_faec ._baac ,_eedd };};
-
-// StructuredDocumentTag are a tagged bit of content in a document.
-type StructuredDocumentTag struct{_gecad *Document ;_dgecf *_bg .CT_SdtBlock ;};func (_beef *Document )addEndnotes (){_beef ._ccb =_bg .NewEndnotes ();_beef .ContentTypes .AddOverride ("\u002fw\u006fr\u0064\u002f\u0065\u006e\u0064n\u006f\u0074e\u0073\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069\u0063\u0061\u0074\u0069o\u006e\u002fv\u006e\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006dl\u0066\u006f\u0072\u006da\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c.\u0065\u006e\u0064\u006e\u006f\u0074\u0065\u0073\u002b\u0078\u006d\u006c");
-_beef ._fee .AddRelationship ("\u002fw\u006fr\u0064\u002f\u0065\u006e\u0064n\u006f\u0074e\u0073\u002e\u0078\u006d\u006c",_g .EndNotesType );_beefe :=_beef .Styles .AddStyle (EndnoteTextStyleId ,_bg .ST_StyleTypeParagraph ,false );_beefe .SetName ("\u0045\u006e\u0064n\u006f\u0074\u0065\u0020\u0054\u0065\u0078\u0074");
-_beefe .SetBasedOn ("\u004e\u006f\u0072\u006d\u0061\u006c");_fagg :=_beefe .ParagraphProperties ();_fagg .X ().SuppressLineNumbers =&_bg .CT_OnOff {};_bfaa :=_beefe .RunProperties ();_bfaa .X ().Sz =&_bg .CT_HpsMeasure {ValAttr :_bg .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_bgc }};
-_bfaa .X ().SzCs =&_bg .CT_HpsMeasure {ValAttr :_bg .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_bgc }};_gcb :=_beef .Styles .AddStyle (_bffa ,_bg .ST_StyleTypeCharacter ,false );_gcb .SetName ("\u0045\u006e\u0064\u006e\u006f\u0074\u0065\u0020\u0052\u0065\u0066\u0065r\u0065\u006e\u0063\u0065");
-_eeeb :=_gcb .RunProperties ();_eeeb .X ().VertAlign =&_bg .CT_VerticalAlignRun {ValAttr :_de .ST_VerticalAlignRunSuperscript };_beef .addEndnoteSeparator ();};
-
-// RemoveEndnote removes a endnote from both the paragraph and the document
-// the requested endnote must be anchored on the paragraph being referenced.
-//
-// After each removal, the rest of the endnote ids would be reordered.
-func (_fgdgd Paragraph )RemoveEndnote (id int64 ){for _ ,_gcaeg :=range _fgdgd .Runs (){if _gcgg ,_ebba :=_gcaeg .IsEndnote ();_gcgg {if _ebba ==id {_fgdgd .RemoveRun (_gcaeg );break ;};};};_fgdgd ._ebfb .removeEndnote (id );};func (_fddfg Styles )initializeDocDefaults (){_fddfg ._gcdd .DocDefaults =_bg .NewCT_DocDefaults ();
-_fddfg ._gcdd .DocDefaults .RPrDefault =_bg .NewCT_RPrDefault ();_fddfg ._gcdd .DocDefaults .RPrDefault .RPr =_bg .NewCT_RPr ();_cecc :=RunProperties {_fddfg ._gcdd .DocDefaults .RPrDefault .RPr };_cecc .SetSize (12*_ac .Point );_cecc .Fonts ().SetASCIITheme (_bg .ST_ThemeMajorAscii );
-_cecc .Fonts ().SetEastAsiaTheme (_bg .ST_ThemeMajorEastAsia );_cecc .Fonts ().SetHANSITheme (_bg .ST_ThemeMajorHAnsi );_cecc .Fonts ().SetCSTheme (_bg .ST_ThemeMajorBidi );_cecc .X ().Lang =_bg .NewCT_Language ();_cecc .X ().Lang .ValAttr =_g .String ("\u0065\u006e\u002dU\u0053");
-_cecc .X ().Lang .EastAsiaAttr =_g .String ("\u0065\u006e\u002dU\u0053");_cecc .X ().Lang .BidiAttr =_g .String ("\u0061\u0072\u002dS\u0041");_fddfg ._gcdd .DocDefaults .PPrDefault =_bg .NewCT_PPrDefault ();};
-
-// Text return node and its child text,
-func (_gdcab *Node )Text ()string {_dgge :=_d .NewBuffer ([]byte {});switch _gdge :=_gdcab .X ().(type ){case *Paragraph :for _ ,_dbgfg :=range _gdge .Runs (){if _dbgfg .Text ()!=""{_dgge .WriteString (_dbgfg .Text ());_dgge .WriteString ("\u000a");};};
-};for _ ,_ebcfd :=range _gdcab .Children {_dgge .WriteString (_ebcfd .Text ());};return _dgge .String ();};
-
-// SetSpacing sets the spacing that comes before and after the paragraph.
-// Deprecated: See Spacing() instead which allows finer control.
-func (_fcecg ParagraphProperties )SetSpacing (before ,after _ac .Distance ){if _fcecg ._dabde .Spacing ==nil {_fcecg ._dabde .Spacing =_bg .NewCT_Spacing ();};_fcecg ._dabde .Spacing .BeforeAttr =&_de .ST_TwipsMeasure {};_fcecg ._dabde .Spacing .BeforeAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (before /_ac .Twips ));
-_fcecg ._dabde .Spacing .AfterAttr =&_de .ST_TwipsMeasure {};_fcecg ._dabde .Spacing .AfterAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (after /_ac .Twips ));};func _fdbdd ()*_ec .OfcLock {_gedef :=_ec .NewOfcLock ();_gedef .ExtAttr =_ec .ST_ExtEdit ;
-_gedef .AspectratioAttr =_de .ST_TrueFalseTrue ;return _gedef ;};
-
-// AddDeletedText add a text deletion to the paragraph
-// specifying its revision number, author and id.
-func (_dgde Paragraph )AddDeletedText (oldVal ,revNum ,author string ,t _e .Time ,id int64 ){_fgfa :=_bg .NewCT_RunTrackChange ();_fgfa .AuthorAttr =author ;_fgfa .DateAttr =&t ;_fgfa .IdAttr =id ;_babga :=_bg .NewCT_R ();_babga .RsidRAttr =&revNum ;_fbdeg :=_bg .NewCT_Text ();
-_fbdeg .Content =oldVal ;_begc :=_bg .NewEG_RunInnerContent ();_begc .RunInnerContentChoice .DelText =_fbdeg ;_babga .EG_RunInnerContent =append (_babga .EG_RunInnerContent ,_begc );_cefcf :=_bg .NewCT_RunTrackChangeChoice ();_ffbeb :=_bg .NewEG_ContentRunContentChoice ();
-_ffbeb .R =_babga ;_cefcf .ContentRunContentChoice =_ffbeb ;_fgfa .RunTrackChangeChoice =append (_fgfa .RunTrackChangeChoice ,_cefcf );_abfcf :=_bg .NewEG_PContent ();_bddff :=_bg .NewEG_ContentRunContent ();_abfcf .PContentChoice .EG_ContentRunContent =append (_abfcf .PContentChoice .EG_ContentRunContent ,_bddff );
-_ecegd :=_bg .NewEG_RunLevelElts ();_bddff .ContentRunContentChoice .EG_RunLevelElts =append (_bddff .ContentRunContentChoice .EG_RunLevelElts ,_ecegd );_ecegd .RunLevelEltsChoice .Del =_fgfa ;_dgde ._dfbf .EG_PContent =append (_dgde ._dfbf .EG_PContent ,_abfcf );
-};func (_ecec *Document )InsertTableBefore (relativeTo Paragraph )Table {return _ecec .insertTable (relativeTo ,true );};
-
-// CharacterSpacingMeasure returns paragraph characters spacing with its measure which can be mm, cm, in, pt, pc or pi.
-func (_gdee RunProperties )CharacterSpacingMeasure ()string {if _ecdd :=_gdee ._ddbb .Spacing ;_ecdd !=nil {_dcfa :=_ecdd .ValAttr ;if _dcfa .ST_UniversalMeasure !=nil {return *_dcfa .ST_UniversalMeasure ;};};return "";};
+// PutNodeAfter put node to position after relativeTo.
+func (_egeb *Document )PutNodeAfter (relativeTo ,node Node ){_egeb .putNode (relativeTo ,node ,false )};
 
 // InsertRowBefore inserts a row before another row
-func (_gdcccg Table )InsertRowBefore (r Row )Row {for _dggec ,_efgab :=range _gdcccg ._cefad .EG_ContentRowContent {if len (_efgab .ContentRowContentChoice .Tr )> 0&&r .X ()==_efgab .ContentRowContentChoice .Tr [0]{_affd :=_bg .NewEG_ContentRowContent ();
-_gdcccg ._cefad .EG_ContentRowContent =append (_gdcccg ._cefad .EG_ContentRowContent ,nil );copy (_gdcccg ._cefad .EG_ContentRowContent [_dggec +1:],_gdcccg ._cefad .EG_ContentRowContent [_dggec :]);_gdcccg ._cefad .EG_ContentRowContent [_dggec ]=_affd ;
-_acggf :=_bg .NewCT_Row ();_affd .ContentRowContentChoice .Tr =append (_affd .ContentRowContentChoice .Tr ,_acggf );return Row {_gdcccg ._ebbbg ,_acggf };};};return _gdcccg .AddRow ();};
+func (_deeab Table )InsertRowBefore (r Row )Row {for _egdgd ,_dcaefa :=range _deeab ._bbefb .EG_ContentRowContent {if len (_dcaefa .ContentRowContentChoice .Tr )> 0&&r .X ()==_dcaefa .ContentRowContentChoice .Tr [0]{_agbd :=_ec .NewEG_ContentRowContent ();
+_deeab ._bbefb .EG_ContentRowContent =append (_deeab ._bbefb .EG_ContentRowContent ,nil );copy (_deeab ._bbefb .EG_ContentRowContent [_egdgd +1:],_deeab ._bbefb .EG_ContentRowContent [_egdgd :]);_deeab ._bbefb .EG_ContentRowContent [_egdgd ]=_agbd ;_fgadf :=_ec .NewCT_Row ();
+_agbd .ContentRowContentChoice .Tr =append (_agbd .ContentRowContentChoice .Tr ,_fgadf );return Row {_deeab ._edbe ,_fgadf };};};return _deeab .AddRow ();};
 
-// Clear removes all the content from within a run.
-func (_ggbfb Run )Clear (){_ggbfb ._bdced .EG_RunInnerContent =nil };
+// SetImprint sets the run to imprinted text.
+func (_bgca RunProperties )SetImprint (b bool ){if !b {_bgca ._bffab .Imprint =nil ;}else {_bgca ._bffab .Imprint =_ec .NewCT_OnOff ();};};
 
-// X returns the inner wml.CT_PBdr
-func (_abbgd ParagraphBorders )X ()*_bg .CT_PBdr {return _abbgd ._bfeee };
-
-// BodySection returns the default body section used for all preceding
-// paragraphs until the previous Section. If there is no previous sections, the
-// body section applies to the entire document.
-func (_adaa *Document )BodySection ()Section {if _adaa ._feaa .Body .SectPr ==nil {_adaa ._feaa .Body .SectPr =_bg .NewCT_SectPr ();};return Section {_adaa ,_adaa ._feaa .Body .SectPr };};
-
-// ReplaceText replace the text inside node.
-func (_fdbb *Node )ReplaceText (oldText ,newText string ){switch _bbdaa :=_fdbb .X ().(type ){case *Paragraph :for _ ,_bccge :=range _bbdaa .Runs (){for _ ,_dcfcg :=range _bccge ._bdced .EG_RunInnerContent {if _dcfcg .RunInnerContentChoice .T !=nil {_gbgf :=_dcfcg .RunInnerContentChoice .T .Content ;
-_gbgf =_ef .ReplaceAll (_gbgf ,oldText ,newText );_dcfcg .RunInnerContentChoice .T .Content =_gbgf ;};};};};for _ ,_bgac :=range _fdbb .Children {_bgac .ReplaceText (oldText ,newText );};};
-
-// SetColumnSpan sets the number of Grid Columns Spanned by the Cell.  This is used
-// to give the appearance of merged cells.
-func (_efga CellProperties )SetColumnSpan (cols int ){if cols ==0{_efga ._bbb .GridSpan =nil ;}else {_efga ._bbb .GridSpan =_bg .NewCT_DecimalNumber ();_efga ._bbb .GridSpan .ValAttr =int64 (cols );};};func _affb (_gcfd []*_bg .CT_P ,_ffgcd *TableInfo ,_bdcc *DrawingInfo )[]TextItem {_fdfaa :=[]TextItem {};
-for _ ,_caa :=range _gcfd {_fdfaa =append (_fdfaa ,_bccg (_caa ,nil ,_ffgcd ,_bdcc ,_caa .EG_PContent )...);};return _fdfaa ;};
-
-// SetLineSpacing sets the spacing between lines in a paragraph.
-func (_bcdcb Paragraph )SetLineSpacing (d _ac .Distance ,rule _bg .ST_LineSpacingRule ){_bcdcb .ensurePPr ();if _bcdcb ._dfbf .PPr .Spacing ==nil {_bcdcb ._dfbf .PPr .Spacing =_bg .NewCT_Spacing ();};_defd :=_bcdcb ._dfbf .PPr .Spacing ;if rule ==_bg .ST_LineSpacingRuleUnset {_defd .LineRuleAttr =_bg .ST_LineSpacingRuleUnset ;
-_defd .LineAttr =nil ;}else {_defd .LineRuleAttr =rule ;_defd .LineAttr =&_bg .ST_SignedTwipsMeasure {};_defd .LineAttr .Int64 =_g .Int64 (int64 (d /_ac .Twips ));};};
-
-// GetKerning returns the kerning (character spacing) of a run
-func (_fgfbc RunProperties )GetKerning ()_ac .Distance {if _fgfbc ._ddbb .Kern !=nil {return _ac .Distance (float64 (*_fgfbc ._ddbb .Kern .ValAttr .ST_UnsignedDecimalNumber )*_ac .HalfPoint );};return 0;};
-
-// SetShapeStyle sets style to the element v:shape in watermark.
-func (_defec *WatermarkPicture )SetShapeStyle (shapeStyle _dg .ShapeStyle ){if _defec ._dfdgf !=nil {_dbfdc :=shapeStyle .String ();_defec ._dfdgf .StyleAttr =&_dbfdc ;};};
-
-// SetValue sets the value of a FormFieldTypeText or FormFieldTypeDropDown. For
-// FormFieldTypeDropDown, the value must be one of the fields possible values.
-func (_efeg FormField )SetValue (v string ){if len (_efeg ._acfd .FFDataChoice )> 0{for _ ,_dade :=range _efeg ._acfd .FFDataChoice {if _dade .DdList !=nil {for _daca ,_ddaf :=range _efeg .PossibleValues (){if _ddaf ==v {_dade .DdList .Result =_bg .NewCT_DecimalNumber ();
-_dade .DdList .Result .ValAttr =int64 (_daca );break ;};};}else if _dade .TextInput !=nil {_efeg ._gdaa .RunInnerContentChoice .T =_bg .NewCT_Text ();_efeg ._gdaa .RunInnerContentChoice .T .Content =v ;};};};};func (_bfbae *WatermarkPicture )getShape ()*_g .XSDAny {return _bfbae .getInnerElement ("\u0073\u0068\u0061p\u0065");
+// AddTOC adds a table of contents to the document and customize it according to TOCOptions if necessary.
+func (_ddbe Run )AddTOC (options *TOCOptions ){_dggf :="";if options !=nil {if options .UseHyperlinks {_dggf +="\u0020\u005c\u0068\u0020";};if options .OmitPageNumbers {_dggf +="\u0020\u005c\u006e\u0020";};if options .HeadingLevel !=""{_dggf +="\u0020\u005c\u006f \u0027"+options .HeadingLevel +"\u0027";
+};};_ddbe .AddFieldWithFormatting (FieldTOC ,_dggf ,true );};func (_eea Comment )id ()int64 {return _eea ._fdge .IdAttr };func (_eaffd *WatermarkText )getShapeType ()*_c .XSDAny {return _eaffd .getInnerElement ("\u0073h\u0061\u0070\u0065\u0074\u0079\u0070e");
 };
 
-// AddRun adds a run to a paragraph.
-func (_ggbf Paragraph )AddRun ()Run {_badgd :=_bg .NewEG_PContent ();_ggbf ._dfbf .EG_PContent =append (_ggbf ._dfbf .EG_PContent ,_badgd );_ddbg :=_bg .NewEG_ContentRunContent ();_badgd .PContentChoice .EG_ContentRunContent =append (_badgd .PContentChoice .EG_ContentRunContent ,_ddbg );
-_gaeda :=_bg .NewCT_R ();_ddbg .ContentRunContentChoice .R =_gaeda ;return Run {_ggbf ._ebfb ,_gaeda };};
+// FormFields extracts all the fields from a document.  They can then be
+// manipulated via the methods on the field and the document saved.
+func (_ecag *Document )FormFields ()[]FormField {_geed :=[]FormField {};for _ ,_egdg :=range _ecag .Paragraphs (){_gebg :=_egdg .Runs ();for _cgbf ,_eaaa :=range _gebg {for _ ,_ccc :=range _eaaa ._aeef .EG_RunInnerContent {if _ccc .RunInnerContentChoice .FldChar ==nil ||_ccc .RunInnerContentChoice .FldChar .FldCharChoice .FfData ==nil {continue ;
+};if _ccc .RunInnerContentChoice .FldChar .FldCharTypeAttr ==_ec .ST_FldCharTypeBegin {_degcc :=false ;for _ ,_gadg :=range _ccc .RunInnerContentChoice .FldChar .FldCharChoice .FfData .FFDataChoice {if _gadg .Name ==nil ||_gadg .Name .ValAttr ==nil {continue ;
+};_degcc =true ;break ;};if !_degcc {continue ;};_eec :=FormField {_dcbfb :_ccc .RunInnerContentChoice .FldChar .FldCharChoice .FfData };for _ ,_cafc :=range _ccc .RunInnerContentChoice .FldChar .FldCharChoice .FfData .FFDataChoice {if _cafc .TextInput ==nil {continue ;
+};for _begbc :=_cgbf +1;_begbc < len (_gebg )-1;_begbc ++{if len (_gebg [_begbc ]._aeef .EG_RunInnerContent )==0{continue ;};_bgce :=_gebg [_begbc ]._aeef .EG_RunInnerContent [0];if _bgce .RunInnerContentChoice .FldChar !=nil &&_bgce .RunInnerContentChoice .FldChar .FldCharTypeAttr ==_ec .ST_FldCharTypeSeparate {if len (_gebg [_begbc +1]._aeef .EG_RunInnerContent )==0{continue ;
+};if _gebg [_begbc +1]._aeef .EG_RunInnerContent [0].RunInnerContentChoice .FldChar ==nil {_eec ._adaec =_gebg [_begbc +1]._aeef .EG_RunInnerContent [0];break ;};};};};_geed =append (_geed ,_eec );};};};};for _ ,_cagg :=range _ecag .Headers (){for _ ,_ecbg :=range _cagg .Paragraphs (){_aaca :=_ecbg .Runs ();
+for _bfff ,_ddeb :=range _aaca {for _ ,_cabc :=range _ddeb ._aeef .EG_RunInnerContent {if _cabc .RunInnerContentChoice .FldChar ==nil ||_cabc .RunInnerContentChoice .FldChar .FldCharChoice .FfData ==nil {continue ;};if _cabc .RunInnerContentChoice .FldChar .FldCharTypeAttr ==_ec .ST_FldCharTypeBegin {_gegd :=false ;
+for _ ,_ecdc :=range _cabc .RunInnerContentChoice .FldChar .FldCharChoice .FfData .FFDataChoice {if _ecdc .Name ==nil ||_ecdc .Name .ValAttr ==nil {continue ;};_gegd =true ;break ;};if !_gegd {continue ;};_dfea :=FormField {_dcbfb :_cabc .RunInnerContentChoice .FldChar .FldCharChoice .FfData };
+for _ ,_aafg :=range _cabc .RunInnerContentChoice .FldChar .FldCharChoice .FfData .FFDataChoice {if _aafg .TextInput ==nil {continue ;};for _eabd :=_bfff +1;_eabd < len (_aaca )-1;_eabd ++{if len (_aaca [_eabd ]._aeef .EG_RunInnerContent )==0{continue ;
+};_ede :=_aaca [_eabd ]._aeef .EG_RunInnerContent [0];if _ede .RunInnerContentChoice .FldChar !=nil &&_ede .RunInnerContentChoice .FldChar .FldCharTypeAttr ==_ec .ST_FldCharTypeSeparate {if len (_aaca [_eabd +1]._aeef .EG_RunInnerContent )==0{continue ;
+};if _aaca [_eabd +1]._aeef .EG_RunInnerContent [0].RunInnerContentChoice .FldChar ==nil {_dfea ._adaec =_aaca [_eabd +1]._aeef .EG_RunInnerContent [0];break ;};};};};_geed =append (_geed ,_dfea );};};};};};for _ ,_febc :=range _ecag .Footers (){for _ ,_adab :=range _febc .Paragraphs (){_eagc :=_adab .Runs ();
+for _gaa ,_efde :=range _eagc {for _ ,_dacf :=range _efde ._aeef .EG_RunInnerContent {if _dacf .RunInnerContentChoice .FldChar ==nil ||_dacf .RunInnerContentChoice .FldChar .FldCharChoice .FfData ==nil {continue ;};if _dacf .RunInnerContentChoice .FldChar .FldCharTypeAttr ==_ec .ST_FldCharTypeBegin {_adda :=false ;
+for _ ,_bade :=range _dacf .RunInnerContentChoice .FldChar .FldCharChoice .FfData .FFDataChoice {if _bade .Name ==nil ||_bade .Name .ValAttr ==nil {continue ;};_adda =true ;break ;};if !_adda {continue ;};_cgaf :=FormField {_dcbfb :_dacf .RunInnerContentChoice .FldChar .FldCharChoice .FfData };
+for _ ,_cgcba :=range _dacf .RunInnerContentChoice .FldChar .FldCharChoice .FfData .FFDataChoice {if _cgcba .TextInput ==nil {continue ;};for _abfe :=_gaa +1;_abfe < len (_eagc )-1;_abfe ++{if len (_eagc [_abfe ]._aeef .EG_RunInnerContent )==0{continue ;
+};_edca :=_eagc [_abfe ]._aeef .EG_RunInnerContent [0];if _edca .RunInnerContentChoice .FldChar !=nil &&_edca .RunInnerContentChoice .FldChar .FldCharTypeAttr ==_ec .ST_FldCharTypeSeparate {if len (_eagc [_abfe +1]._aeef .EG_RunInnerContent )==0{continue ;
+};if _eagc [_abfe +1]._aeef .EG_RunInnerContent [0].RunInnerContentChoice .FldChar ==nil {_cgaf ._adaec =_eagc [_abfe +1]._aeef .EG_RunInnerContent [0];break ;};};};};_geed =append (_geed ,_cgaf );};};};};};return _geed ;};
 
-// Borders returns the ParagraphBorders for setting-up border on paragraph.
-func (_baafc Paragraph )Borders ()ParagraphBorders {_baafc .ensurePPr ();if _baafc ._dfbf .PPr .PBdr ==nil {_baafc ._dfbf .PPr .PBdr =_bg .NewCT_PBdr ();};return ParagraphBorders {_baafc ._ebfb ,_baafc ._dfbf .PPr .PBdr };};
+// Strike returns true if paragraph is striked.
+func (_ddbff ParagraphProperties )Strike ()bool {return _gfgb (_ddbff ._bbdf .RPr .Strike )};
 
-// NewWatermarkText generates a new WatermarkText.
-func NewWatermarkText ()WatermarkText {_gbdf :=_ec .NewShapetype ();_bggcd :=_gafg ();_efggc :=_gefdaa ();_cabgg :=_ccacg ();_bcbed :=_bcceg ();_gbbec :=_fgaf ();_gbdf .EG_ShapeElements =[]*_ec .EG_ShapeElements {{ShapeElementsChoice :&_ec .EG_ShapeElementsChoice {Formulas :_bggcd }},{ShapeElementsChoice :&_ec .EG_ShapeElementsChoice {Path :_efggc }},{ShapeElementsChoice :&_ec .EG_ShapeElementsChoice {Textpath :_cabgg }},{ShapeElementsChoice :&_ec .EG_ShapeElementsChoice {Handles :_bcbed }},{ShapeElementsChoice :&_ec .EG_ShapeElementsChoice {Lock :_gbbec }}};
-var (_ebcg ="_\u0078\u0030\u0030\u0030\u0030\u005f\u0074\u0031\u0033\u0036";_fbege ="2\u0031\u0036\u0030\u0030\u002c\u0032\u0031\u0036\u0030\u0030";_gddge =float32 (136.0);_egfec ="\u0031\u0030\u00380\u0030";_bdbcbb ="m\u0040\u0037\u002c\u006c\u0040\u0038,\u006d\u0040\u0035\u002c\u0032\u0031\u0036\u0030\u0030l\u0040\u0036\u002c2\u00316\u0030\u0030\u0065";
-);_gbdf .IdAttr =&_ebcg ;_gbdf .CoordsizeAttr =&_fbege ;_gbdf .SptAttr =&_gddge ;_gbdf .AdjAttr =&_egfec ;_gbdf .PathAttr =&_bdbcbb ;_gbfdd :=_ec .NewShape ();_gbfdd .ShapeChoice =append (_gbfdd .ShapeChoice ,&_ec .CT_ShapeChoice {ShapeElementsChoice :&_ec .EG_ShapeElementsChoice {Fill :_ebgfe ()}});
-_gbfdd .ShapeChoice =append (_gbfdd .ShapeChoice ,&_ec .CT_ShapeChoice {ShapeElementsChoice :&_ec .EG_ShapeElementsChoice {Textpath :_dabeb ()}});var (_debf ="\u0050\u006f\u0077\u0065\u0072\u0050l\u0075\u0073\u0057\u0061\u0074\u0065\u0072\u004d\u0061\u0072\u006b\u004f\u0062j\u0065\u0063\u0074\u0031\u0033\u0036\u00380\u0030\u0038\u0038\u0036";
-_fdcgd ="\u005f\u0078\u00300\u0030\u0030\u005f\u0073\u0032\u0030\u0035\u0031";_ddbga ="\u0023\u005f\u00780\u0030\u0030\u0030\u005f\u0074\u0031\u0033\u0036";_dbgcd ="";_fgagb ="\u0070\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u003a\u0061bs\u006f\u006c\u0075\u0074\u0065;\u006d\u0061\u0072\u0067\u0069\u006e\u002d\u006c\u0065f\u0074\u003a\u0030\u003b\u006d\u0061\u0072\u0067\u0069\u006e\u002d\u0074\u006f\u0070\u003a\u0030\u003b\u0077\u0069\u0064\u0074h\u003a\u0034\u0036\u0038\u0070\u0074\u003bh\u0065ig\u0068\u0074\u003a\u0032\u0033\u0034p\u0074\u003b\u007a\u002d\u0069\u006e\u0064\u0065x\u003a\u002d\u0032\u00351\u0036\u0035\u0031\u0030\u0037\u0032\u003b\u006d\u0073o\u002d\u0077r\u0061\u0070\u002d\u0065\u0064\u0069\u0074\u0065\u0064\u003a\u0066\u003b\u006d\u0073\u006f\u002d\u0077\u0069\u0064\u0074\u0068\u002d\u0070\u0065\u0072\u0063\u0065\u006e\u0074\u003a\u0030\u003b\u006d\u0073\u006f\u002dh\u0065\u0069\u0067\u0068\u0074\u002dp\u0065\u0072\u0063\u0065\u006e\u0074\u003a\u0030\u003b\u006d\u0073\u006f\u002dp\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u002d\u0068\u006f\u0072\u0069\u007a\u006f\u006e\u0074\u0061\u006c\u003a\u0063\u0065\u006e\u0074\u0065r\u003b\u006d\u0073\u006f\u002d\u0070\u006f\u0073\u0069\u0074\u0069\u006fn\u002d\u0068\u006f\u0072\u0069\u007a\u006f\u006e\u0074\u0061\u006c\u002d\u0072\u0065\u006ca\u0074\u0069\u0076\u0065\u003a\u006d\u0061\u0072\u0067\u0069\u006e\u003b\u006d\u0073\u006f\u002d\u0070\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u002d\u0076e\u0072\u0074\u0069\u0063\u0061\u006c\u003a\u0063\u0065\u006e\u0074\u0065\u0072\u003b\u006d\u0073\u006f\u002d\u0070\u006f\u0073\u0069\u0074\u0069o\u006e\u002d\u0076e\u0072\u0074\u0069\u0063\u0061\u006c-\u0072\u0065\u006c\u0061\u0074\u0069v\u0065\u003a\u006d\u0061\u0072\u0067\u0069\u006e;\u006d\u0073\u006f\u002d\u0077\u0069\u0064\u0074\u0068-p\u0065\u0072\u0063\u0065\u006e\u0074:\u0030\u003b\u006d\u0073\u006f-\u0068\u0065\u0069\u0067\u0068\u0074\u002d\u0070\u0065\u0072\u0063\u0065\u006e\u0074\u003a\u0030\u003b";
-_ccff ="\u0073\u0069\u006c\u0076\u0065\u0072";);_gbfdd .IdAttr =&_debf ;_gbfdd .SpidAttr =&_fdcgd ;_gbfdd .TypeAttr =&_ddbga ;_gbfdd .AltAttr =&_dbgcd ;_gbfdd .StyleAttr =&_fgagb ;_gbfdd .AllowincellAttr =_de .ST_TrueFalseFalse ;_gbfdd .FillcolorAttr =&_ccff ;
-_gbfdd .StrokedAttr =_de .ST_TrueFalseF ;_addb :=_bg .NewCT_Picture ();_addb .Any =[]_g .Any {_gbdf ,_gbfdd };return WatermarkText {_dbaf :_addb ,_fbcbg :_gbfdd ,_fdbdg :_gbdf };};
+// DrawingInfo is used for keep information about a drawing wrapping a textbox where the text is located.
+type DrawingInfo struct{Drawing *_ec .CT_Drawing ;Width int64 ;Height int64 ;};
 
-// Clear clears all content within a header
-func (_efaef Header )Clear (){_efaef ._adfd .EG_BlockLevelElts =[]*_bg .EG_BlockLevelElts {}};
+// Footer is a footer for a document section.
+type Footer struct{_dbgc *Document ;_bgde *_ec .Ftr ;};
 
-// TextWithOptions extract text with options.
-func (_eccbf *DocText )TextWithOptions (options ExtractTextOptions )string {_bcbf :=make (map[int64 ]map[int64 ]int64 ,0);_eggb :=_d .NewBuffer ([]byte {});_babc :=int64 (0);_gccg :=int64 (0);_adccd :=int64 (0);for _effa ,_fecc :=range _eccbf .Items {_aebce :=false ;
-if _fecc .Text !=""{if _effa > 0{if _fecc .Paragraph !=_eccbf .Items [_effa -1].Paragraph {_aebce =true ;};if !options .RunsOnNewLine &&_aebce {_eggb .WriteString ("\u000a");}else if options .RunsOnNewLine {_eggb .WriteString ("\u000a");};}else {_aebce =true ;
-};if options .WithNumbering {if _aebce {for _ ,_dfgc :=range _eccbf ._dbae {if _dfgc .FromParagraph ==nil {continue ;};if _dfgc .FromParagraph .X ()==_fecc .Paragraph {if _edeg :=_dfgc .NumberingLevel .X ();_edeg !=nil {if _dfgc .AbstractNumId !=nil &&_eccbf ._afbdb [*_dfgc .AbstractNumId ][_edeg .IlvlAttr ]> 0{if _ ,_eeaee :=_bcbf [*_dfgc .AbstractNumId ];
-_eeaee {if _ ,_ccca :=_bcbf [*_dfgc .AbstractNumId ][_edeg .IlvlAttr ];_ccca {_bcbf [*_dfgc .AbstractNumId ][_edeg .IlvlAttr ]++;}else {_bcbf [*_dfgc .AbstractNumId ][_edeg .IlvlAttr ]=1;};}else {_bcbf [*_dfgc .AbstractNumId ]=map[int64 ]int64 {_edeg .IlvlAttr :1};
-};if _babc ==_dfgc .NumberingLevel .X ().IlvlAttr &&_edeg .IlvlAttr > 0{_gccg ++;}else {_gccg =_bcbf [*_dfgc .AbstractNumId ][_edeg .IlvlAttr ];if _edeg .IlvlAttr > _babc &&_adccd ==*_dfgc .AbstractNumId {_gccg =1;};};_cafeb :="";if _edeg .LvlText .ValAttr !=nil {_cafeb =*_edeg .LvlText .ValAttr ;
-};_gcega :=_dc .FormatNumberingText (_gccg ,_edeg .IlvlAttr ,_cafeb ,_edeg .NumFmt ,_bcbf [*_dfgc .AbstractNumId ]);_eggb .WriteString (_gcega );_eccbf ._afbdb [*_dfgc .AbstractNumId ][_edeg .IlvlAttr ]--;_babc =_edeg .IlvlAttr ;_adccd =*_dfgc .AbstractNumId ;
-if options .NumberingIndent !=""{_eggb .WriteString (options .NumberingIndent );};};};break ;};};};};_eggb .WriteString (_fecc .Text );};};return _eggb .String ();};
+// AddImage adds an image to the document package, returning a reference that
+// can be used to add the image to a run and place it in the document contents.
+func (_fgfd *Document )AddImage (i _aee .Image )(_aee .ImageRef ,error ){_bfbc :=_aee .MakeImageRef (i ,&_fgfd .DocBase ,_fgfd ._cbaa );if i .Data ==nil &&i .Path ==""{return _bfbc ,_ff .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0064\u0061t\u0061\u0020\u006f\u0072\u0020\u0061\u0020\u0070\u0061\u0074\u0068");
+};if i .Format ==""{return _bfbc ,_ff .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0061\u0020v\u0061\u006c\u0069\u0064\u0020\u0066\u006f\u0072\u006d\u0061\u0074");};if i .Size .X ==0||i .Size .Y ==0{return _bfbc ,_ff .New ("\u0069\u006d\u0061\u0067e\u0020\u006d\u0075\u0073\u0074\u0020\u0068\u0061\u0076\u0065 \u0061 \u0076\u0061\u006c\u0069\u0064\u0020\u0073i\u007a\u0065");
+};if i .Path !=""{_gddb :=_ea .Add (i .Path );if _gddb !=nil {return _bfbc ,_gddb ;};};_fgfd .Images =append (_fgfd .Images ,_bfbc );_agfb :=_cb .Sprintf ("\u006d\u0065d\u0069\u0061\u002fi\u006d\u0061\u0067\u0065\u0025\u0064\u002e\u0025\u0073",len (_fgfd .Images ),i .Format );
+_cbddf :=_fgfd ._cbaa .AddRelationship (_agfb ,_c .ImageType );_fgfd .ContentTypes .EnsureDefault ("\u0070\u006e\u0067","\u0069m\u0061\u0067\u0065\u002f\u0070\u006eg");_fgfd .ContentTypes .EnsureDefault ("\u006a\u0070\u0065\u0067","\u0069\u006d\u0061\u0067\u0065\u002f\u006a\u0070\u0065\u0067");
+_fgfd .ContentTypes .EnsureDefault ("\u006a\u0070\u0067","\u0069\u006d\u0061\u0067\u0065\u002f\u006a\u0070\u0065\u0067");_fgfd .ContentTypes .EnsureDefault ("\u0077\u006d\u0066","i\u006d\u0061\u0067\u0065\u002f\u0078\u002d\u0077\u006d\u0066");_fgfd .ContentTypes .EnsureDefault (i .Format ,"\u0069\u006d\u0061\u0067\u0065\u002f"+i .Format );
+_bfbc .SetRelID (_cbddf .X ().IdAttr );_bfbc .SetTarget (_agfb );return _bfbc ,nil ;};
 
-// SetBottomPct sets the cell bottom margin
-func (_cbab CellMargins )SetBottomPct (pct float64 ){_cbab ._cc .Bottom =_bg .NewCT_TblWidth ();_aee (_cbab ._cc .Bottom ,pct );};
+// Copy makes a deep copy of the document by saving and reading it back.
+// It can be useful to avoid sharing common data between two documents.
+func (_cecg *Document )Copy ()(*Document ,error ){_gfae :=_bc .NewBuffer ([]byte {});_ccbdg :=_cecg .save (_gfae ,_cecg ._dgdb );if _ccbdg !=nil {return nil ,_ccbdg ;};_eaffg :=_gfae .Bytes ();_fgdc :=_bc .NewReader (_eaffg );return _adfc (_fgdc ,int64 (_fgdc .Len ()),_cecg ._dgdb );
+};
+
+// Restart restarts the numbering
+func (_fcaa *Numbering )Restart (nd *NumberingDefinition ){_dgdfe :=nd ._bgag .Lvl ;_bcadf :=_fcaa .AddDefinition ();nd ._bgag =_bcadf ._bgag ;nd ._bgag .Lvl =_dgdfe ;};
+
+// X returns the inner wrapped XML type.
+func (_agce TableWidth )X ()*_ec .CT_TblWidth {return _agce ._fbebf };
+
+// X returns the inner wrapped XML type.
+func (_gdga TableStyleProperties )X ()*_ec .CT_TblPrBase {return _gdga ._bgebd };
+
+// X returns the inner wrapped XML type.
+func (_dgdaa Numbering )X ()*_ec .Numbering {return _dgdaa ._fdea };func (_gbec Endnote )content ()[]*_ec .EG_ContentBlockContent {var _egag []*_ec .EG_ContentBlockContent ;for _ ,_efaf :=range _gbec ._ggcdg .EG_BlockLevelElts {_egag =append (_egag ,_efaf .BlockLevelEltsChoice .EG_ContentBlockContent ...);
+};return _egag ;};
+
+// SetBehindDoc sets the behindDoc attribute of anchor.
+func (_dbb AnchoredDrawing )SetBehindDoc (val bool ){_dbb ._da .BehindDocAttr =val };
+
+// SetName sets the name of the bookmark. This is the name that is used to
+// reference the bookmark from hyperlinks.
+func (_bbfg Bookmark )SetName (name string ){_bbfg ._fad .NameAttr =name };
+
+// X returns the inner wrapped XML type.
+func (_dfaa HyperLink )X ()*_ec .CT_Hyperlink {return _dfaa ._fbcd };
+
+// PossibleValues returns the possible values for a FormFieldTypeDropDown.
+func (_efdgb FormField )PossibleValues ()[]string {if len (_efdgb ._dcbfb .FFDataChoice )==0{return nil ;};_ffbef :=[]string {};for _ ,_egga :=range _efdgb ._dcbfb .FFDataChoice {if _egga .DdList !=nil {for _ ,_dfbde :=range _egga .DdList .ListEntry {if _dfbde ==nil {continue ;
+};_ffbef =append (_ffbef ,_dfbde .ValAttr );};};};return _ffbef ;};
+
+// OnOffValue represents an on/off value that can also be unset
+type OnOffValue byte ;
+
+// SizeValue returns the value of run font size in points.
+func (_dcee RunProperties )SizeValue ()float64 {if _egee :=_dcee ._bffab .Sz ;_egee !=nil {_ggbc :=_egee .ValAttr ;if _ggbc .ST_UnsignedDecimalNumber !=nil {return float64 (*_ggbc .ST_UnsignedDecimalNumber )/2;};};return 0.0;};
+
+// SetFontFamily sets font family of watermark text.
+func (_fgggc *WatermarkText )SetFontFamily (value string ){_efdf :=_fgggc .GetStyle ();_efdf .SetFontFamily ("\u0022"+value +"\u0022");_fgggc .SetStyle (_efdf );};
+
+// SetTop sets the top border to a specified type, color and thickness.
+func (_dgggb TableBorders )SetTop (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_dgggb ._gbeg .Top =_ec .NewCT_Border ();_cffba (_dgggb ._gbeg .Top ,t ,c ,thickness );};
+
+// SetBold sets the run to bold.
+func (_cgacd RunProperties )SetBold (b bool ){if !b {_cgacd ._bffab .B =nil ;_cgacd ._bffab .BCs =nil ;}else {_cgacd ._bffab .B =_ec .NewCT_OnOff ();_cgacd ._bffab .BCs =_ec .NewCT_OnOff ();};};
+
+// GetChartSpaceByRelId returns a *crt.ChartSpace with the associated relation ID in the
+// document.
+func (_bgdb *Document )GetChartSpaceByRelId (relId string )*_bee .ChartSpace {_edfb :=_bgdb ._cbaa .GetTargetByRelId (relId );for _ ,_egdgc :=range _bgdb ._bgbe {if _edfb ==_egdgc .Target (){return _egdgc ._fdfc ;};};return nil ;};
+
+// Name returns the name of the field.
+func (_eefea FormField )Name ()string {if len (_eefea ._dcbfb .FFDataChoice )==0{return "";};return *_eefea ._dcbfb .FFDataChoice [0].Name .ValAttr ;};
+
+// Paragraphs returns the paragraphs defined in a footer.
+func (_fbagb Footer )Paragraphs ()[]Paragraph {_fdgd :=[]Paragraph {};for _ ,_dbdga :=range _fbagb ._bgde .EG_BlockLevelElts {for _ ,_aaffg :=range _dbdga .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_dfbd :=range _aaffg .ContentBlockContentChoice .P {_fdgd =append (_fdgd ,Paragraph {_fbagb ._dbgc ,_dfbd });
+};};};for _ ,_efded :=range _fbagb .Tables (){for _ ,_cfb :=range _efded .Rows (){for _ ,_cgeg :=range _cfb .Cells (){_fdgd =append (_fdgd ,_cgeg .Paragraphs ()...);};};};return _fdgd ;};
+
+// ParagraphBorders allows manipulation of borders on a paragraph.
+type ParagraphBorders struct{_badda *Document ;_bbgee *_ec .CT_PBdr ;};
+
+// ComplexSizeValue returns the value of paragraph font size for complex fonts in points.
+func (_fggc ParagraphProperties )ComplexSizeValue ()float64 {if _ccfgg :=_fggc ._bbdf .RPr .SzCs ;_ccfgg !=nil {_dfeg :=_ccfgg .ValAttr ;if _dfeg .ST_UnsignedDecimalNumber !=nil {return float64 (*_dfeg .ST_UnsignedDecimalNumber )/2;};};return 0.0;};
+
+// SetWidth sets the table with to a specified width.
+func (_cbae TableProperties )SetWidth (d _ga .Distance ){_cbae ._egdbb .TblW =_ec .NewCT_TblWidth ();_cbae ._egdbb .TblW .TypeAttr =_ec .ST_TblWidthDxa ;_cbae ._egdbb .TblW .WAttr =&_ec .ST_MeasurementOrPercent {};_cbae ._egdbb .TblW .WAttr .ST_DecimalNumberOrPercent =&_ec .ST_DecimalNumberOrPercent {};
+_cbae ._egdbb .TblW .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_c .Int64 (int64 (d /_ga .Twips ));};
+
+// AbstractNumberID returns the ID that is unique within all numbering
+// definitions that is used to assign the definition to a paragraph.
+func (_abag NumberingDefinition )AbstractNumberID ()int64 {return _abag ._bgag .AbstractNumIdAttr };
+
+// Styles returns all styles.
+func (_ggafa Styles )Styles ()[]Style {_efgf :=[]Style {};for _ ,_fbed :=range _ggafa ._ggeafb .Style {_efgf =append (_efgf ,Style {_fbed });};return _efgf ;};
+
+// X returns the inner wrapped XML type.
+func (_fgg CellProperties )X ()*_ec .CT_TcPr {return _fgg ._eef };
+
+// FontTable returns document fontTable element.
+func (_agbf *Document )FontTable ()*_ec .Fonts {return _agbf ._gabd };
+
+// Copy returns a copy of the run.
+func (_gdcb Run )Copy ()Run {_ccce :=_ec .NewCT_R ();_bgcb :=*_gdcb ._aeef .RPr ;_ccce .RPr =&_bgcb ;for _ ,_cadf :=range _gdcb ._aeef .EG_RunInnerContent {_bfgbg :=_ec .NewEG_RunInnerContent ();if _cadf .RunInnerContentChoice .T !=nil {_bfgbg .RunInnerContentChoice .T =&_ec .CT_Text {Content :_cadf .RunInnerContentChoice .T .Content ,SpaceAttr :_cadf .RunInnerContentChoice .T .SpaceAttr };
+};_ccce .EG_RunInnerContent =append (_ccce .EG_RunInnerContent ,_bfgbg );};return Run {_abae :_gdcb ._abae ,_aeef :_ccce };};func _gfgb (_bgac *_ec .CT_OnOff )bool {return _bgac !=nil };
+
+// AnchoredDrawing is an absolutely positioned image within a document page.
+type AnchoredDrawing struct{_aeb *Document ;_da *_ec .WdAnchor ;};
+
+// SetLeft sets the left border to a specified type, color and thickness.
+func (_ebbd ParagraphBorders )SetLeft (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_ebbd ._bbgee .Left =_ec .NewCT_Border ();_dabbg (_ebbd ._bbgee .Left ,t ,c ,thickness );};func _bba ()(*_cc .CT_Point2D ,[]*_cc .CT_Point2D ){var (_dgd int64 =0;
+_aae int64 =21600;);_cbb :=_cc .ST_Coordinate {ST_CoordinateUnqualified :&_dgd ,ST_UniversalMeasure :nil };_dac :=_cc .ST_Coordinate {ST_CoordinateUnqualified :&_aae ,ST_UniversalMeasure :nil };_egb :=_cc .NewCT_Point2D ();_egb .XAttr =_cbb ;_egb .YAttr =_cbb ;
+_cda :=[]*_cc .CT_Point2D {&_cc .CT_Point2D {XAttr :_cbb ,YAttr :_dac },&_cc .CT_Point2D {XAttr :_dac ,YAttr :_dac },&_cc .CT_Point2D {XAttr :_dac ,YAttr :_cbb },_egb };return _egb ,_cda ;};
+
+// SetBasedOn sets the style that this style is based on.
+func (_bfbfa Style )SetBasedOn (name string ){if name ==""{_bfbfa ._ggbag .BasedOn =nil ;}else {_bfbfa ._ggbag .BasedOn =_ec .NewCT_String ();_bfbfa ._ggbag .BasedOn .ValAttr =name ;};};
+
+// CellMargins are the margins for an individual cell.
+type CellMargins struct{_debg *_ec .CT_TcMar };
+
+// NumberingLevel is the definition for numbering for a particular level within
+// a NumberingDefinition.
+type NumberingLevel struct{_bgced *_ec .CT_Lvl };
+
+// AddParagraph adds a paragraph to the footer.
+func (_cgbcc Footer )AddParagraph ()Paragraph {_ggbdg :=_ec .NewEG_ContentBlockContent ();_cgbcc ._bgde .EG_BlockLevelElts =append (_cgbcc ._bgde .EG_BlockLevelElts ,&_ec .EG_BlockLevelElts {BlockLevelEltsChoice :&_ec .EG_BlockLevelEltsChoice {EG_ContentBlockContent :[]*_ec .EG_ContentBlockContent {_ggbdg }}});
+_gabf :=_ec .NewCT_P ();_ggbdg .ContentBlockContentChoice .P =append (_ggbdg .ContentBlockContentChoice .P ,_gabf );return Paragraph {_cgbcc ._dbgc ,_gabf };};
+
+// Bookmarks returns all the bookmarks defined in the document.
+func (_cfge Document )Bookmarks ()[]Bookmark {if _cfge ._dgg .Body ==nil {return nil ;};_afaa :=[]Bookmark {};for _ ,_fcfe :=range _cfge ._dgg .Body .EG_BlockLevelElts {for _ ,_bgge :=range _fcfe .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_ebef :=range _faee (_bgge ){_afaa =append (_afaa ,_ebef );
+};};};return _afaa ;};
+
+// ComplexSizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
+func (_bafd RunProperties )ComplexSizeMeasure ()string {if _acdd :=_bafd ._bffab .SzCs ;_acdd !=nil {_gafg :=_acdd .ValAttr ;if _gafg .ST_PositiveUniversalMeasure !=nil {return *_gafg .ST_PositiveUniversalMeasure ;};};return "";};
+
+// UnderlineColor returns the hex color value of run underline.
+func (_cebb RunProperties )UnderlineColor ()string {if _ecfb :=_cebb ._bffab .U ;_ecfb !=nil {_bcded :=_ecfb .ColorAttr ;if _bcded !=nil &&_bcded .ST_HexColorRGB !=nil {return *_bcded .ST_HexColorRGB ;};};return "";};
+
+// SetYOffset sets the Y offset for an image relative to the origin.
+func (_dd AnchoredDrawing )SetYOffset (y _ga .Distance ){_dd ._da .PositionV .PosVChoice =&_ec .WdCT_PosVChoice {};_dd ._da .PositionV .PosVChoice .PosOffset =_c .Int32 (int32 (y /_ga .EMU ));};
+
+// InsertStyle insert style to styles.
+func (_baafd Styles )InsertStyle (ss Style ){_baafd ._ggeafb .Style =append (_baafd ._ggeafb .Style ,ss .X ());};
+
+// AddComment add comment to the paragraph.
+func (_geba Paragraph )AddComment (author ,commentText string )int64 {var _eafc int64 ;if _geba ._fafde .HasComments (){for _ ,_cabg :=range _geba ._fafde .Comments (){if _cabg .id ()> _eafc {_eafc =_cabg .id ();};};_eafc ++;}else {_geba ._fafde .addComments ();
+_eafc =1;};_dbaac :=_ec .NewCT_Comment ();_bdfa :=_ec .NewCT_Markup ();_dfbfa :=_dc .Initials (author );_ggde :=_aa .Now ();_dbaac .IdAttr =_eafc ;_dbaac .AuthorAttr =author ;_dbaac .InitialsAttr =&_dfbfa ;_dbaac .DateAttr =&_ggde ;_bdfa .IdAttr =_eafc ;
+_dbaac .EG_BlockLevelElts =append (_dbaac .EG_BlockLevelElts ,_ec .NewEG_BlockLevelElts ());_ebee :=Comment {_geba ._fafde ,_dbaac };_gggcd :=_ebee .AddParagraph ();_gggcd .SetStyle (_gcde );_bdaf :=_gggcd .AddRun ();_bdaf .AddAnnotationReference ();_eafgd :=_bdaf .Properties ();
+_eafgd .SetStyle (_egbc );_bdbca :=_gggcd .AddRun ();_bdbca .AddText (commentText );_edce :=_bdbca .Properties ();_edce .SetSize (_ga .Distance (_aaeb ));_geba ._fafde ._cdc .CT_Comments .Comment =append (_geba ._fafde ._cdc .CT_Comments .Comment ,_dbaac );
+_geba .addStartComment (_eafc );return _eafc ;};
+
+// SetVerticalAlignment controls the vertical alignment of the run, this is used
+// to control if text is superscript/subscript.
+func (_bcde RunProperties )SetVerticalAlignment (v _afe .ST_VerticalAlignRun ){if v ==_afe .ST_VerticalAlignRunUnset {_bcde ._bffab .VertAlign =nil ;}else {_bcde ._bffab .VertAlign =_ec .NewCT_VerticalAlignRun ();_bcde ._bffab .VertAlign .ValAttr =v ;};
+};
+
+// SetVerticalBanding controls the conditional formatting for vertical banding.
+func (_ecfcg TableLook )SetVerticalBanding (on bool ){if !on {_ecfcg ._cgfd .NoVBandAttr =&_afe .ST_OnOff {};_ecfcg ._cgfd .NoVBandAttr .ST_OnOff1 =_afe .ST_OnOff1On ;}else {_ecfcg ._cgfd .NoVBandAttr =&_afe .ST_OnOff {};_ecfcg ._cgfd .NoVBandAttr .ST_OnOff1 =_afe .ST_OnOff1Off ;
+};};
+
+// IsItalic returns true if the run has been set to italics.
+func (_cdgbb RunProperties )IsItalic ()bool {return _cdgbb .ItalicValue ()==OnOffValueOn };
+
+// Document is a text document that can be written out in the OOXML .docx
+// format. It can be opened from a file on disk and modified, or created from
+// scratch.
+type Document struct{_aee .DocBase ;_dgg *_ec .Document ;Settings Settings ;Numbering Numbering ;Styles Styles ;_ace []*_ec .Hdr ;_feb []_aee .Relationships ;_ddbf []*_ec .Ftr ;_cef []_aee .Relationships ;_cbaa _aee .Relationships ;_aeeb []*_cc .Theme ;
+_dcb *_ec .WebSettings ;_gabd *_ec .Fonts ;_beaa _aee .Relationships ;_gdd *_ec .Endnotes ;_dcba *_ec .Footnotes ;_fff []*_ge .Control ;_bgbe []*chart ;_cdc *_ec .Comments ;_dgdb string ;};func (_bebf *Document )reorderComments (){_fgdd :=int64 (1);_befa :=map[int64 ]int64 {};
+_abac :=_bebf ._cdc ;for _ ,_gggbc :=range _abac .CT_Comments .Comment {_befa [_gggbc .IdAttr ]=_fgdd ;_gggbc .IdAttr =_fgdd ;_fgdd ++;};for _ ,_acg :=range _bebf .Paragraphs (){for _ ,_ebf :=range _acg .X ().EG_PContent {for _ ,_eeea :=range _ebf .PContentChoice .EG_ContentRunContent {for _ ,_ddged :=range _eeea .ContentRunContentChoice .EG_RunLevelElts {for _ ,_edcg :=range _ddged .RunLevelEltsChoice .EG_RangeMarkupElements {if _edcg .RangeMarkupElementsChoice .CommentRangeStart !=nil {_edcg .RangeMarkupElementsChoice .CommentRangeStart .IdAttr =_befa [_edcg .RangeMarkupElementsChoice .CommentRangeStart .IdAttr ];
+}else if _edcg .RangeMarkupElementsChoice .CommentRangeEnd !=nil {_edcg .RangeMarkupElementsChoice .CommentRangeEnd .IdAttr =_befa [_edcg .RangeMarkupElementsChoice .CommentRangeEnd .IdAttr ];};};};if _eeea .ContentRunContentChoice .R !=nil {for _ ,_cgab :=range _eeea .ContentRunContentChoice .R .EG_RunInnerContent {if _cgab .RunInnerContentChoice .CommentReference !=nil {_cgab .RunInnerContentChoice .CommentReference .IdAttr =_befa [_cgab .RunInnerContentChoice .CommentReference .IdAttr ];
+};};};};};};};
+
+// SetText sets the text to be used in bullet mode.
+func (_abacg NumberingLevel )SetText (t string ){if t ==""{_abacg ._bgced .LvlText =nil ;}else {_abacg ._bgced .LvlText =_ec .NewCT_LevelText ();_abacg ._bgced .LvlText .ValAttr =_c .String (t );};};
+
+// SetAlignment sets the alignment of a table within the page.
+func (_dabdg TableProperties )SetAlignment (align _ec .ST_JcTable ){if align ==_ec .ST_JcTableUnset {_dabdg ._egdbb .Jc =nil ;}else {_dabdg ._egdbb .Jc =_ec .NewCT_JcTable ();_dabdg ._egdbb .Jc .ValAttr =align ;};};
+
+// SetKeepWithNext controls if this paragraph should be kept with the next.
+func (_efabb ParagraphProperties )SetKeepWithNext (b bool ){if !b {_efabb ._bbdf .KeepNext =nil ;}else {_efabb ._bbdf .KeepNext =_ec .NewCT_OnOff ();};};
+
+// Bold returns true if run font is bold.
+func (_fbbc RunProperties )Bold ()bool {_ebbb :=_fbbc ._bffab ;return _gfgb (_ebbb .B )||_gfgb (_ebbb .BCs );};
+
+// SetCellSpacingAuto sets the cell spacing within a table to automatic.
+func (_degga TableProperties )SetCellSpacingAuto (){_degga ._egdbb .TblCellSpacing =_ec .NewCT_TblWidth ();_degga ._egdbb .TblCellSpacing .TypeAttr =_ec .ST_TblWidthAuto ;};func (_bdec *Document )getWatermarkHeaderInnerContentPictures ()[]*_ec .CT_Picture {var _gddbd []*_ec .CT_Picture ;
+for _ ,_bdd :=range _bdec .Headers (){for _ ,_bbdg :=range _bdd .X ().EG_BlockLevelElts {for _ ,_adad :=range _bbdg .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_ggccb :=range _adad .ContentBlockContentChoice .P {for _ ,_cgda :=range _ggccb .EG_PContent {for _ ,_gfgcc :=range _cgda .PContentChoice .EG_ContentRunContent {if _gfgcc .ContentRunContentChoice .R ==nil {continue ;
+};for _ ,_ccfc :=range _gfgcc .ContentRunContentChoice .R .EG_RunInnerContent {if _ccfc .RunInnerContentChoice .Pict ==nil {continue ;};_efcbg :=false ;for _ ,_eadf :=range _ccfc .RunInnerContentChoice .Pict .Any {_gddce ,_aedd :=_eadf .(*_c .XSDAny );
+if _aedd &&_gddce .XMLName .Local =="\u0073\u0068\u0061p\u0065"{_efcbg =true ;};};if _efcbg {_gddbd =append (_gddbd ,_ccfc .RunInnerContentChoice .Pict );};};};};};};};};return _gddbd ;};
+
+// RemoveRun removes a child run from a paragraph.
+func (_gage Paragraph )RemoveRun (r Run ){for _ ,_ffdcg :=range _gage ._fagb .EG_PContent {for _fgad ,_edgeb :=range _ffdcg .PContentChoice .EG_ContentRunContent {if _edgeb .ContentRunContentChoice .R ==r ._aeef {copy (_ffdcg .PContentChoice .EG_ContentRunContent [_fgad :],_ffdcg .PContentChoice .EG_ContentRunContent [_fgad +1:]);
+_ffdcg .PContentChoice .EG_ContentRunContent =_ffdcg .PContentChoice .EG_ContentRunContent [0:len (_ffdcg .PContentChoice .EG_ContentRunContent )-1];};if _edgeb .ContentRunContentChoice .Sdt !=nil &&_edgeb .ContentRunContentChoice .Sdt .SdtContent !=nil {for _ ,_gfbf :=range _edgeb .ContentRunContentChoice .Sdt .SdtContent .EG_PContent {for _bfbee ,_gbfa :=range _gfbf .PContentChoice .EG_ContentRunContent {if _gbfa .ContentRunContentChoice .R ==r ._aeef {copy (_gfbf .PContentChoice .EG_ContentRunContent [_bfbee :],_gfbf .PContentChoice .EG_ContentRunContent [_bfbee +1:]);
+_gfbf .PContentChoice .EG_ContentRunContent =_gfbf .PContentChoice .EG_ContentRunContent [0:len (_gfbf .PContentChoice .EG_ContentRunContent )-1];};};};};};};};
+
+// Margins allows controlling individual cell margins.
+func (_gbb CellProperties )Margins ()CellMargins {if _gbb ._eef .TcMar ==nil {_gbb ._eef .TcMar =_ec .NewCT_TcMar ();};return CellMargins {_gbb ._eef .TcMar };};
+
+// SetDoubleStrikeThrough sets the run to double strike-through.
+func (_fbeegg RunProperties )SetDoubleStrikeThrough (b bool ){if !b {_fbeegg ._bffab .Dstrike =nil ;}else {_fbeegg ._bffab .Dstrike =_ec .NewCT_OnOff ();};};
+
+// SetStyle sets the style of a paragraph.
+func (_bacbd ParagraphProperties )SetStyle (s string ){if s ==""{_bacbd ._bbdf .PStyle =nil ;}else {_bacbd ._bbdf .PStyle =_ec .NewCT_String ();_bacbd ._bbdf .PStyle .ValAttr =s ;};};
+
+// Color controls the run or styles color.
+type Color struct{_fggd *_ec .CT_Color };
+
+// SetSize sets size attribute for a FormFieldTypeCheckBox in pt.
+func (_edeg FormField )SetSize (size uint64 ){if len (_edeg ._dcbfb .FFDataChoice )==0{return ;};size *=2;for _ ,_dfga :=range _edeg ._dcbfb .FFDataChoice {if _dfga .CheckBox !=nil {_dfga .CheckBox .FFCheckBoxChoice =_ec .NewCT_FFCheckBoxChoice ();_dfga .CheckBox .FFCheckBoxChoice .Size =_ec .NewCT_HpsMeasure ();
+_dfga .CheckBox .FFCheckBoxChoice .Size .ValAttr =_ec .ST_HpsMeasure {ST_UnsignedDecimalNumber :&size };};};};
+
+// Headers returns the headers defined in the document.
+func (_ggg *Document )Headers ()[]Header {_gcc :=[]Header {};for _ ,_cdd :=range _ggg ._ace {_gcc =append (_gcc ,Header {_ggg ,_cdd });};return _gcc ;};
+
+// AddImage adds an image to the document package, returning a reference that
+// can be used to add the image to a run and place it in the document contents.
+func (_fbdb Header )AddImage (i _aee .Image )(_aee .ImageRef ,error ){var _addg _aee .Relationships ;for _ceab ,_bgaa :=range _fbdb ._fegd ._ace {if _bgaa ==_fbdb ._fgcdg {_addg =_fbdb ._fegd ._feb [_ceab ];};};_gaac :=_aee .MakeImageRef (i ,&_fbdb ._fegd .DocBase ,_addg );
+if i .Data ==nil &&i .Path ==""{return _gaac ,_ff .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0064\u0061t\u0061\u0020\u006f\u0072\u0020\u0061\u0020\u0070\u0061\u0074\u0068");};if i .Format ==""{return _gaac ,_ff .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0061\u0020v\u0061\u006c\u0069\u0064\u0020\u0066\u006f\u0072\u006d\u0061\u0074");
+};if i .Size .X ==0||i .Size .Y ==0{return _gaac ,_ff .New ("\u0069\u006d\u0061\u0067e\u0020\u006d\u0075\u0073\u0074\u0020\u0068\u0061\u0076\u0065 \u0061 \u0076\u0061\u006c\u0069\u0064\u0020\u0073i\u007a\u0065");};_fbdb ._fegd .Images =append (_fbdb ._fegd .Images ,_gaac );
+_geeb :=_cb .Sprintf ("\u006d\u0065d\u0069\u0061\u002fi\u006d\u0061\u0067\u0065\u0025\u0064\u002e\u0025\u0073",len (_fbdb ._fegd .Images ),i .Format );_bagcf :=_addg .AddRelationship (_geeb ,_c .ImageType );_gaac .SetRelID (_bagcf .X ().IdAttr );return _gaac ,nil ;
+};
+
+// AddTabStop adds a tab stop to the paragraph.
+func (_eadbf ParagraphStyleProperties )AddTabStop (position _ga .Distance ,justificaton _ec .ST_TabJc ,leader _ec .ST_TabTlc ){if _eadbf ._egfac .Tabs ==nil {_eadbf ._egfac .Tabs =_ec .NewCT_Tabs ();};_cfbe :=_ec .NewCT_TabStop ();_cfbe .LeaderAttr =leader ;
+_cfbe .ValAttr =justificaton ;_cfbe .PosAttr .Int64 =_c .Int64 (int64 (position /_ga .Twips ));_eadbf ._egfac .Tabs .Tab =append (_eadbf ._egfac .Tabs .Tab ,_cfbe );};func (_dcdeb *Document )insertNumberingFromStyleProperties (_eegc Numbering ,_fdaad ParagraphStyleProperties ){_eaaf :=_fdaad .NumId ();
+_fcedg :=int64 (-1);if _eaaf > -1{for _ ,_fafg :=range _eegc ._fdea .Num {if _fafg .NumIdAttr ==_eaaf {if _fafg .AbstractNumId !=nil {_fcedg =_fafg .AbstractNumId .ValAttr ;_adff :=false ;for _ ,_deaa :=range _dcdeb .Numbering ._fdea .Num {if _deaa .NumIdAttr ==_eaaf {_adff =true ;
+break ;};};if !_adff {_dcdeb .Numbering ._fdea .Num =append (_dcdeb .Numbering ._fdea .Num ,_fafg );};break ;};};};for _ ,_gecg :=range _eegc ._fdea .AbstractNum {if _gecg .AbstractNumIdAttr ==_fcedg {_edagb :=false ;for _ ,_edbc :=range _dcdeb .Numbering ._fdea .AbstractNum {if _edbc .AbstractNumIdAttr ==_fcedg {_edagb =true ;
+break ;};};if !_edagb {_dcdeb .Numbering ._fdea .AbstractNum =append (_dcdeb .Numbering ._fdea .AbstractNum ,_gecg );};break ;};};};};
+
+// HyperLink is a link within a document.
+type HyperLink struct{_ebdea *Document ;_fbcd *_ec .CT_Hyperlink ;};func (_afac *chart )X ()*_bee .ChartSpace {return _afac ._fdfc };
+
+// SetSmallCaps sets the run to small caps.
+func (_eaba RunProperties )SetSmallCaps (b bool ){if !b {_eaba ._bffab .SmallCaps =nil ;}else {_eaba ._bffab .SmallCaps =_ec .NewCT_OnOff ();};};func _afdb (_bgga *_ec .CT_Tbl ,_ffe *_ec .CT_P ,_ebeb bool )*_ec .CT_Tbl {for _ ,_fbb :=range _bgga .EG_ContentRowContent {for _ ,_dbff :=range _fbb .ContentRowContentChoice .Tr {for _ ,_dgce :=range _dbff .EG_ContentCellContent {for _ ,_bdcd :=range _dgce .ContentCellContentChoice .Tc {for _decb ,_bcga :=range _bdcd .EG_BlockLevelElts {for _ ,_agfd :=range _bcga .BlockLevelEltsChoice .EG_ContentBlockContent {for _ddge ,_dgab :=range _agfd .ContentBlockContentChoice .P {if _dgab ==_ffe {_cde :=_ec .NewEG_BlockLevelElts ();
+_eeae :=_ec .NewEG_ContentBlockContent ();_cde .BlockLevelEltsChoice .EG_ContentBlockContent =append (_cde .BlockLevelEltsChoice .EG_ContentBlockContent ,_eeae );_gbd :=_ec .NewCT_Tbl ();_eeae .ContentBlockContentChoice .Tbl =append (_eeae .ContentBlockContentChoice .Tbl ,_gbd );
+_bdcd .EG_BlockLevelElts =append (_bdcd .EG_BlockLevelElts ,nil );if _ebeb {copy (_bdcd .EG_BlockLevelElts [_decb +1:],_bdcd .EG_BlockLevelElts [_decb :]);_bdcd .EG_BlockLevelElts [_decb ]=_cde ;if _ddge !=0{_ecc :=_ec .NewEG_BlockLevelElts ();_fgda :=_ec .NewEG_ContentBlockContent ();
+_ecc .BlockLevelEltsChoice .EG_ContentBlockContent =append (_ecc .BlockLevelEltsChoice .EG_ContentBlockContent ,_fgda );_fgda .ContentBlockContentChoice .P =_agfd .ContentBlockContentChoice .P [:_ddge ];_bdcd .EG_BlockLevelElts =append (_bdcd .EG_BlockLevelElts ,nil );
+copy (_bdcd .EG_BlockLevelElts [_decb +1:],_bdcd .EG_BlockLevelElts [_decb :]);_bdcd .EG_BlockLevelElts [_decb ]=_ecc ;};_agfd .ContentBlockContentChoice .P =_agfd .ContentBlockContentChoice .P [_ddge :];}else {copy (_bdcd .EG_BlockLevelElts [_decb +2:],_bdcd .EG_BlockLevelElts [_decb +1:]);
+_bdcd .EG_BlockLevelElts [_decb +1]=_cde ;if _ddge !=len (_agfd .ContentBlockContentChoice .P )-1{_daea :=_ec .NewEG_BlockLevelElts ();_fffe :=_ec .NewEG_ContentBlockContent ();_daea .BlockLevelEltsChoice .EG_ContentBlockContent =append (_daea .BlockLevelEltsChoice .EG_ContentBlockContent ,_fffe );
+_fffe .ContentBlockContentChoice .P =_agfd .ContentBlockContentChoice .P [_ddge +1:];_bdcd .EG_BlockLevelElts =append (_bdcd .EG_BlockLevelElts ,nil );copy (_bdcd .EG_BlockLevelElts [_decb +3:],_bdcd .EG_BlockLevelElts [_decb +2:]);_bdcd .EG_BlockLevelElts [_decb +2]=_daea ;
+}else {_bbec :=_ec .NewEG_BlockLevelElts ();_acc :=_ec .NewEG_ContentBlockContent ();_bbec .BlockLevelEltsChoice .EG_ContentBlockContent =append (_bbec .BlockLevelEltsChoice .EG_ContentBlockContent ,_acc );_acc .ContentBlockContentChoice .P =[]*_ec .CT_P {_ec .NewCT_P ()};
+_bdcd .EG_BlockLevelElts =append (_bdcd .EG_BlockLevelElts ,nil );copy (_bdcd .EG_BlockLevelElts [_decb +3:],_bdcd .EG_BlockLevelElts [_decb +2:]);_bdcd .EG_BlockLevelElts [_decb +2]=_bbec ;};_agfd .ContentBlockContentChoice .P =_agfd .ContentBlockContentChoice .P [:_ddge +1];
+};return _gbd ;};};for _ ,_dgced :=range _agfd .ContentBlockContentChoice .Tbl {_facdg :=_afdb (_dgced ,_ffe ,_ebeb );if _facdg !=nil {return _facdg ;};};};};};};};};return nil ;};func (_ddbcd Paragraph )ensurePPr (){if _ddbcd ._fagb .PPr ==nil {_ddbcd ._fagb .PPr =_ec .NewCT_PPr ();
+};};func _acfe (_gdda []*_ec .EG_ContentBlockContent ,_acgge *TableInfo )[]TextItem {_ddcd :=[]TextItem {};for _ ,_ggdac :=range _gdda {if _dbee :=_ggdac .ContentBlockContentChoice .Sdt ;_dbee !=nil {if _ebfdf :=_dbee .SdtContent ;_ebfdf !=nil {for _ ,_aeegc :=range _ebfdf .EG_ContentBlockContent {_ddcd =append (_ddcd ,_cadbb (_aeegc .ContentBlockContentChoice .P ,_acgge ,nil )...);
+};};};_ddcd =append (_ddcd ,_cadbb (_ggdac .ContentBlockContentChoice .P ,_acgge ,nil )...);for _ ,_ggbdf :=range _ggdac .ContentBlockContentChoice .Tbl {for _dddca ,_ccaf :=range _ggbdf .EG_ContentRowContent {for _ ,_edef :=range _ccaf .ContentRowContentChoice .Tr {for _cggb ,_ebae :=range _edef .EG_ContentCellContent {for _ ,_baga :=range _ebae .ContentCellContentChoice .Tc {_fcgg :=&TableInfo {Table :_ggbdf ,Row :_edef ,Cell :_baga ,RowIndex :_dddca ,ColIndex :_cggb };
+for _ ,_cgcf :=range _baga .EG_BlockLevelElts {_ddcd =append (_ddcd ,_acfe (_cgcf .BlockLevelEltsChoice .EG_ContentBlockContent ,_fcgg )...);};};};};};};};return _ddcd ;};
+
+// GetTargetByRelId returns a target path with the associated relation ID in the
+// document.
+func (_dda *Document )GetTargetByRelId (idAttr string )string {return _dda ._cbaa .GetTargetByRelId (idAttr );};type chart struct{_fdfc *_bee .ChartSpace ;_bad string ;_gdg string ;};
+
+// // SetBeforeLineSpacing sets spacing above paragraph in line units.
+func (_aaedc Paragraph )SetBeforeLineSpacing (d _ga .Distance ){_aaedc .ensurePPr ();if _aaedc ._fagb .PPr .Spacing ==nil {_aaedc ._fagb .PPr .Spacing =_ec .NewCT_Spacing ();};_edcf :=_aaedc ._fagb .PPr .Spacing ;_edcf .BeforeLinesAttr =_c .Int64 (int64 (d /_ga .Twips ));
+};
+
+// TableStyleProperties are table properties as defined in a style.
+type TableStyleProperties struct{_bgebd *_ec .CT_TblPrBase };func (_agcef *WatermarkPicture )getShapeImagedata ()*_c .XSDAny {return _agcef .getInnerElement ("\u0069m\u0061\u0067\u0065\u0064\u0061\u0074a");};
+
+// SetStartIndent controls the start indentation.
+func (_gede ParagraphProperties )SetStartIndent (m _ga .Distance ){if _gede ._bbdf .Ind ==nil {_gede ._bbdf .Ind =_ec .NewCT_Ind ();};if m ==_ga .Zero {_gede ._bbdf .Ind .StartAttr =nil ;}else {_gede ._bbdf .Ind .StartAttr =&_ec .ST_SignedTwipsMeasure {};
+_gede ._bbdf .Ind .StartAttr .Int64 =_c .Int64 (int64 (m /_ga .Twips ));};};
+
+// SetLastColumn controls the conditional formatting for the last column in a table.
+func (_cfebb TableLook )SetLastColumn (on bool ){if !on {_cfebb ._cgfd .LastColumnAttr =&_afe .ST_OnOff {};_cfebb ._cgfd .LastColumnAttr .ST_OnOff1 =_afe .ST_OnOff1Off ;}else {_cfebb ._cgfd .LastColumnAttr =&_afe .ST_OnOff {};_cfebb ._cgfd .LastColumnAttr .ST_OnOff1 =_afe .ST_OnOff1On ;
+};};
 
 // AddHTML adds a text that contains HTML tags to a paragraph.
 //
@@ -2081,544 +441,2189 @@ func (_cbab CellMargins )SetBottomPct (pct float64 ){_cbab ._cc .Bottom =_bg .Ne
 //   - <mark> for highlighted text
 //   - <sub> for subscript text
 //   - <sup> for superscript text
-func (_gdbg Paragraph )AddHTML (s string ){var (_egcdf *htmlNode ;_acea *Run ;);_eggff :=_c .NewDecoder (_d .NewReader ([]byte (s )));for {_eadf ,_eaebg :=_eggff .Token ();if _eaebg !=nil {break ;};switch _abbg :=_eadf .(type ){case _c .StartElement :if _acea !=nil &&_acea .Text ()!=""{if _egcdf !=nil {_afdbbd :=_egcdf ;
-for {if _afdbbd ==nil {break ;};_ceeb (_acea ,_afdbbd ._fdbd .Name .Local ,_afdbbd );_afdbbd =_afdbbd ._bffc ;};_agcb :=_acea .Copy ();_acea =&_agcb ;}else {_acea =nil ;};};_egcdf =&htmlNode {_fdbd :_abbg ,_bffc :_egcdf };case _c .EndElement :if _egcdf !=nil {_ceeb (_acea ,_abbg .Name .Local ,_egcdf );
-_egcdf =_egcdf ._bffc ;if _egcdf ==nil {_acea =nil ;};};case _c .CharData :if _acea ==nil {_afbg :=_gdbg .AddRun ();_acea =&_afbg ;}else if _egcdf !=nil {_afbde :=_egcdf ;for {if _afbde ==nil {break ;};_ceeb (_acea ,_afbde ._fdbd .Name .Local ,_afbde );
-_afbde =_afbde ._bffc ;};_acgfd :=_gdbg .AddRun ();_acea =&_acgfd ;};_acea .AddText (string (_abbg ));};};};func (_cgbcb *Node )Remove (){switch _adba :=_cgbcb .X ().(type ){case *Paragraph :_cgbcb ._ggab .RemoveParagraph (*_adba );case *Table :_cgbcb ._ggab .RemoveTable (*_adba );
-default:_ad .Log .Debug ("\u004e\u006f\u0064e \u0074\u0079\u0070\u0065\u0020\u006e\u006f\u0074\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064");};for _ ,_ebbd :=range _cgbcb .Children {_ebbd .Remove ();};};
+func (_fbg Paragraph )AddHTML (s string ){var (_efaddb *htmlNode ;_cfac *Run ;);_affc :=_ag .NewDecoder (_bc .NewReader ([]byte (s )));for {_faadd ,_bgead :=_affc .Token ();if _bgead !=nil {break ;};switch _ddfae :=_faadd .(type ){case _ag .StartElement :if _cfac !=nil &&_cfac .Text ()!=""{if _efaddb !=nil {_eggfa :=_efaddb ;
+for {if _eggfa ==nil {break ;};_ggba (_cfac ,_eggfa ._ffga .Name .Local ,_eggfa );_eggfa =_eggfa ._dfgf ;};_fffec :=_cfac .Copy ();_cfac =&_fffec ;}else {_cfac =nil ;};};_efaddb =&htmlNode {_ffga :_ddfae ,_dfgf :_efaddb };case _ag .EndElement :if _efaddb !=nil {_ggba (_cfac ,_ddfae .Name .Local ,_efaddb );
+_efaddb =_efaddb ._dfgf ;if _efaddb ==nil {_cfac =nil ;};};case _ag .CharData :if _cfac ==nil {_egfg :=_fbg .AddRun ();_cfac =&_egfg ;}else if _efaddb !=nil {_daadb :=_efaddb ;for {if _daadb ==nil {break ;};_ggba (_cfac ,_daadb ._ffga .Name .Local ,_daadb );
+_daadb =_daadb ._dfgf ;};_adgb :=_fbg .AddRun ();_cfac =&_adgb ;};_cfac .AddText (string (_ddfae ));};};};
 
-// SetReflectionImageEffect sets the reflection image effect.
-func (_bged AnchoredDrawing )SetReflectionImageEffect (radius _ac .Distance ,opacity ,size float64 ){_ffb :=_ac .ToEMU (float64 (radius ));_af :="\u002d1\u0030\u0030\u0030\u0030\u0030";for _ ,_fad :=range _bged ._cd .Graphic .GraphicData .Any {if _bcg ,_dcd :=_fad .(*_gg .Pic );
-_dcd {_bged .initializeEffectList (_bcg .SpPr );_bcg .SpPr .EffectPropertiesChoice .EffectLst .Reflection =_eg .NewCT_ReflectionEffect ();_bcg .SpPr .EffectPropertiesChoice .EffectLst .Reflection .BlurRadAttr =&_ffb ;_bcg .SpPr .EffectPropertiesChoice .EffectLst .Reflection .AlgnAttr =_eg .ST_RectAlignmentBl ;
-_bbd :=false ;_bcg .SpPr .EffectPropertiesChoice .EffectLst .Reflection .RotWithShapeAttr =&_bbd ;_bcg .SpPr .EffectPropertiesChoice .EffectLst .Reflection .StAAttr =&_eg .ST_PositiveFixedPercentage {};_bcg .SpPr .EffectPropertiesChoice .EffectLst .Reflection .StAAttr .ST_PositiveFixedPercentageDecimal =_g .Int32 (int32 (opacity *1000));
-_bcg .SpPr .EffectPropertiesChoice .EffectLst .Reflection .EndPosAttr =&_eg .ST_PositiveFixedPercentage {};_bcg .SpPr .EffectPropertiesChoice .EffectLst .Reflection .EndPosAttr .ST_PositiveFixedPercentageDecimal =_g .Int32 (int32 (size *1000));_bcg .SpPr .EffectPropertiesChoice .EffectLst .Reflection .SyAttr =&_eg .ST_Percentage {};
-_bcg .SpPr .EffectPropertiesChoice .EffectLst .Reflection .SyAttr .ST_Percentage =&_af ;};};_ ,_fff :=_bged .GetSize ();_fff =_fff *int64 (size )/100;_bged .setEffectExtent (_fff ,_ffb ,_ffb ,_ffb );};
+// SetConformance sets conformance attribute of the document
+// as one of these values from github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes:
+// ST_ConformanceClassUnset, ST_ConformanceClassStrict or ST_ConformanceClassTransitional.
+func (_eegeg Document )SetConformance (conformanceAttr _afe .ST_ConformanceClass ){_eegeg ._dgg .ConformanceAttr =conformanceAttr ;};func _fgfda (_dgdef *Document ,_acdg []*_ec .EG_ContentBlockContent ,_cgce *TableInfo )[]Node {_ddfcc :=[]Node {};for _ ,_eagfd :=range _acdg {if _beege :=_eagfd .ContentBlockContentChoice .Sdt ;
+_beege !=nil {if _ddfcg :=_beege .SdtContent ;_ddfcg !=nil {for _ ,_fdae :=range _ddfcg .EG_ContentBlockContent {_ddfcc =append (_ddfcc ,_dbebbg (_dgdef ,_fdae .ContentBlockContentChoice .P ,_cgce ,nil )...);};};};_ddfcc =append (_ddfcc ,_dbebbg (_dgdef ,_eagfd .ContentBlockContentChoice .P ,_cgce ,nil )...);
+for _ ,_ebcf :=range _eagfd .ContentBlockContentChoice .Tbl {_eedbea :=Table {_dgdef ,_ebcf };_fbaaa ,_ :=_dgdef .Styles .SearchStyleById (_eedbea .Style ());_eeecg :=[]Node {};for _addfa ,_adfeca :=range _ebcf .EG_ContentRowContent {for _ ,_abffb :=range _adfeca .ContentRowContentChoice .Tr {for _efea ,_cedag :=range _abffb .EG_ContentCellContent {for _ ,_bfae :=range _cedag .ContentCellContentChoice .Tc {_daced :=&TableInfo {Table :_ebcf ,Row :_abffb ,Cell :_bfae ,RowIndex :_addfa ,ColIndex :_efea };
+for _ ,_abedd :=range _bfae .EG_BlockLevelElts {_eeecg =append (_eeecg ,_fgfda (_dgdef ,_abedd .BlockLevelEltsChoice .EG_ContentBlockContent ,_daced )...);};};};};};_ddfcc =append (_ddfcc ,Node {_ecce :_dgdef ,_becg :&_eedbea ,Style :_fbaaa ,Children :_eeecg });
+};};return _ddfcc ;};func (_abbd *Node )Remove (){switch _ggce :=_abbd .X ().(type ){case *Paragraph :_abbd ._ecce .RemoveParagraph (*_ggce );case *Table :_abbd ._ecce .RemoveTable (*_ggce );default:_be .Log .Debug ("\u004e\u006f\u0064e \u0074\u0079\u0070\u0065\u0020\u006e\u006f\u0074\u0020\u0073\u0075\u0070\u0070\u006f\u0072\u0074\u0065\u0064");
+};for _ ,_gdgb :=range _abbd .Children {_gdgb .Remove ();};};
 
-// SetHangingIndent controls the hanging indent of the paragraph.
-func (_agab ParagraphStyleProperties )SetHangingIndent (m _ac .Distance ){if _agab ._becee .Ind ==nil {_agab ._becee .Ind =_bg .NewCT_Ind ();};if m ==_ac .Zero {_agab ._becee .Ind .HangingAttr =nil ;}else {_agab ._becee .Ind .HangingAttr =&_de .ST_TwipsMeasure {};
-_agab ._becee .Ind .HangingAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (m /_ac .Twips ));};};func (_eged Paragraph )addFldChar ()*_bg .CT_FldChar {_abdf :=_eged .AddRun ();_dfae :=_abdf .X ();_dgdc :=_bg .NewEG_RunInnerContent ();_gcdf :=_bg .NewCT_FldChar ();
-_dgdc .RunInnerContentChoice .FldChar =_gcdf ;_dfae .EG_RunInnerContent =append (_dfae .EG_RunInnerContent ,_dgdc );return _gcdf ;};
+// Footnotes returns the footnotes defined in the document.
+func (_dceg *Document )Footnotes ()[]Footnote {_effe :=[]Footnote {};for _ ,_defc :=range _dceg ._dcba .CT_Footnotes .Footnote {_effe =append (_effe ,Footnote {_dceg ,_defc });};return _effe ;};
 
-// TableInfo is used for keep information about a table, a row and a cell where the text is located.
-type TableInfo struct{Table *_bg .CT_Tbl ;Row *_bg .CT_Row ;Cell *_bg .CT_Tc ;RowIndex int ;ColIndex int ;};
+// SetBevelImageEffect sets the glow image effect.
+func (_egc AnchoredDrawing )SetBevelImageEffect (){for _ ,_dee :=range _egc ._da .Graphic .GraphicData .Any {if _bdac ,_abe :=_dee .(*_bf .Pic );_abe {_bdac .SpPr .Sp3d =_cc .NewCT_Shape3D ();_bdac .SpPr .Sp3d .BevelT =_cc .NewCT_Bevel ();_bdac .SpPr .Sp3d .BevelT .PrstAttr =_cc .ST_BevelPresetTypeConvex ;
+_bdac .SpPr .Scene3d =_cc .NewCT_Scene3D ();_bdac .SpPr .Scene3d .Camera =_cc .NewCT_Camera ();_bdac .SpPr .Scene3d .Camera .PrstAttr =_cc .ST_PresetCameraTypeOrthographicFront ;_bdac .SpPr .Scene3d .LightRig =_cc .NewCT_LightRig ();_bdac .SpPr .Scene3d .LightRig .RigAttr =_cc .ST_LightRigTypeThreePt ;
+_bdac .SpPr .Scene3d .LightRig .DirAttr =_cc .ST_LightRigDirectionT ;};};};
 
-// RemoveTable remove table element from document.
-func (_aeb *Document )RemoveTable (tbl Table ){if _aeb ._feaa .Body ==nil {return ;};for _ ,_efa :=range _aeb ._feaa .Body .EG_BlockLevelElts {for _ ,_ggea :=range _efa .BlockLevelEltsChoice .EG_ContentBlockContent {for _fbc ,_dcdbe :=range _ggea .ContentBlockContentChoice .Tbl {if _dcdbe ==tbl ._cefad {copy (_ggea .ContentBlockContentChoice .Tbl [_fbc :],_ggea .ContentBlockContentChoice .Tbl [_fbc +1:]);
-_ggea .ContentBlockContentChoice .Tbl =_ggea .ContentBlockContentChoice .Tbl [0:len (_ggea .ContentBlockContentChoice .Tbl )-1];return ;};};if _ggea .ContentBlockContentChoice .Sdt !=nil &&_ggea .ContentBlockContentChoice .Sdt .SdtContent !=nil {for _ ,_gggb :=range _ggea .ContentBlockContentChoice .Sdt .SdtContent .EG_ContentBlockContent {if _gggb .ContentBlockContentChoice .P !=nil {for _gcg ,_aecf :=range _gggb .ContentBlockContentChoice .Tbl {if _aecf ==tbl ._cefad {copy (_ggea .ContentBlockContentChoice .Tbl [_gcg :],_ggea .ContentBlockContentChoice .Tbl [_gcg +1:]);
-_ggea .ContentBlockContentChoice .Tbl =_ggea .ContentBlockContentChoice .Tbl [0:len (_ggea .ContentBlockContentChoice .Tbl )-1];return ;};};};};};};};};
+// SetId sets the id of the image.
+func (_ead AnchoredDrawing )SetId (id uint32 ){for _ ,_ccb :=range _ead ._da .Graphic .GraphicData .Any {if _geb ,_cd :=_ccb .(*_bf .Pic );_cd {_geb .NvPicPr .CNvPr .IdAttr =id ;};};};
 
-// MergeFields returns the list of all mail merge fields found in the document.
-func (_ccfc Document )MergeFields ()[]string {_cggb :=map[string ]struct{}{};for _ ,_aacd :=range _ccfc .mergeFields (){_cggb [_aacd ._bcgae ]=struct{}{};};_aedc :=[]string {};for _agecb :=range _cggb {_aedc =append (_aedc ,_agecb );};return _aedc ;};func (_gcdg Styles )initializeStyleDefaults (){_ecgfd :=_gcdg .AddStyle ("\u004e\u006f\u0072\u006d\u0061\u006c",_bg .ST_StyleTypeParagraph ,true );
-_ecgfd .SetName ("\u004e\u006f\u0072\u006d\u0061\u006c");_ecgfd .SetPrimaryStyle (true );_ebdf :=_gcdg .AddStyle ("D\u0065f\u0061\u0075\u006c\u0074\u0050\u0061\u0072\u0061g\u0072\u0061\u0070\u0068Fo\u006e\u0074",_bg .ST_StyleTypeCharacter ,true );_ebdf .SetName ("\u0044\u0065\u0066\u0061ul\u0074\u0020\u0050\u0061\u0072\u0061\u0067\u0072\u0061\u0070\u0068\u0020\u0046\u006fn\u0074");
-_ebdf .SetUISortOrder (1);_ebdf .SetSemiHidden (true );_ebdf .SetUnhideWhenUsed (true );_gbbf :=_gcdg .AddStyle ("\u0054i\u0074\u006c\u0065\u0043\u0068\u0061r",_bg .ST_StyleTypeCharacter ,false );_gbbf .SetName ("\u0054\u0069\u0074\u006c\u0065\u0020\u0043\u0068\u0061\u0072");
-_gbbf .SetBasedOn (_ebdf .StyleID ());_gbbf .SetLinkedStyle ("\u0054\u0069\u0074l\u0065");_gbbf .SetUISortOrder (10);_gbbf .RunProperties ().Fonts ().SetASCIITheme (_bg .ST_ThemeMajorAscii );_gbbf .RunProperties ().Fonts ().SetEastAsiaTheme (_bg .ST_ThemeMajorEastAsia );
-_gbbf .RunProperties ().Fonts ().SetHANSITheme (_bg .ST_ThemeMajorHAnsi );_gbbf .RunProperties ().Fonts ().SetCSTheme (_bg .ST_ThemeMajorBidi );_gbbf .RunProperties ().SetSize (28*_ac .Point );_gbbf .RunProperties ().SetKerning (14*_ac .Point );_gbbf .RunProperties ().SetCharacterSpacing (-10*_ac .Twips );
-_aebcg :=_gcdg .AddStyle ("\u0054\u0069\u0074l\u0065",_bg .ST_StyleTypeParagraph ,false );_aebcg .SetName ("\u0054\u0069\u0074l\u0065");_aebcg .SetBasedOn (_ecgfd .StyleID ());_aebcg .SetNextStyle (_ecgfd .StyleID ());_aebcg .SetLinkedStyle (_gbbf .StyleID ());
-_aebcg .SetUISortOrder (10);_aebcg .SetPrimaryStyle (true );_aebcg .ParagraphProperties ().SetContextualSpacing (true );_aebcg .RunProperties ().Fonts ().SetASCIITheme (_bg .ST_ThemeMajorAscii );_aebcg .RunProperties ().Fonts ().SetEastAsiaTheme (_bg .ST_ThemeMajorEastAsia );
-_aebcg .RunProperties ().Fonts ().SetHANSITheme (_bg .ST_ThemeMajorHAnsi );_aebcg .RunProperties ().Fonts ().SetCSTheme (_bg .ST_ThemeMajorBidi );_aebcg .RunProperties ().SetSize (28*_ac .Point );_aebcg .RunProperties ().SetKerning (14*_ac .Point );_aebcg .RunProperties ().SetCharacterSpacing (-10*_ac .Twips );
-_afcgf :=_gcdg .AddStyle ("T\u0061\u0062\u006c\u0065\u004e\u006f\u0072\u006d\u0061\u006c",_bg .ST_StyleTypeTable ,false );_afcgf .SetName ("\u004e\u006f\u0072m\u0061\u006c\u0020\u0054\u0061\u0062\u006c\u0065");_afcgf .SetUISortOrder (99);_afcgf .SetSemiHidden (true );
-_afcgf .SetUnhideWhenUsed (true );_afcgf .X ().TblPr =_bg .NewCT_TblPrBase ();_ccfe :=NewTableWidth ();_afcgf .X ().TblPr .TblInd =_ccfe .X ();_ccfe .SetValue (0*_ac .Dxa );_afcgf .X ().TblPr .TblCellMar =_bg .NewCT_TblCellMar ();_ccfe =NewTableWidth ();
-_afcgf .X ().TblPr .TblCellMar .Top =_ccfe .X ();_ccfe .SetValue (0*_ac .Dxa );_ccfe =NewTableWidth ();_afcgf .X ().TblPr .TblCellMar .Bottom =_ccfe .X ();_ccfe .SetValue (0*_ac .Dxa );_ccfe =NewTableWidth ();_afcgf .X ().TblPr .TblCellMar .Left =_ccfe .X ();
-_ccfe .SetValue (108*_ac .Dxa );_ccfe =NewTableWidth ();_afcgf .X ().TblPr .TblCellMar .Right =_ccfe .X ();_ccfe .SetValue (108*_ac .Dxa );_dgbg :=_gcdg .AddStyle ("\u004e\u006f\u004c\u0069\u0073\u0074",_bg .ST_StyleTypeNumbering ,false );_dgbg .SetName ("\u004eo\u0020\u004c\u0069\u0073\u0074");
-_dgbg .SetUISortOrder (1);_dgbg .SetSemiHidden (true );_dgbg .SetUnhideWhenUsed (true );_fgaaa :=[]_ac .Distance {16,13,12,11,11,11,11,11,11};_cbfc :=[]_ac .Distance {240,40,40,40,40,40,40,40,40};for _ccfae :=0;_ccfae < 9;_ccfae ++{_cfee :=_cb .Sprintf ("\u0048e\u0061\u0064\u0069\u006e\u0067\u0025d",_ccfae +1);
-_geaa :=_gcdg .AddStyle (_cfee +"\u0043\u0068\u0061\u0072",_bg .ST_StyleTypeCharacter ,false );_geaa .SetName (_cb .Sprintf ("\u0048e\u0061d\u0069\u006e\u0067\u0020\u0025\u0064\u0020\u0043\u0068\u0061\u0072",_ccfae +1));_geaa .SetBasedOn (_ebdf .StyleID ());
-_geaa .SetLinkedStyle (_cfee );_geaa .SetUISortOrder (9+_ccfae );_geaa .RunProperties ().SetSize (_fgaaa [_ccfae ]*_ac .Point );_deaec :=_gcdg .AddStyle (_cfee ,_bg .ST_StyleTypeParagraph ,false );_deaec .SetName (_cb .Sprintf ("\u0068\u0065\u0061\u0064\u0069\u006e\u0067\u0020\u0025\u0064",_ccfae +1));
-_deaec .SetNextStyle (_ecgfd .StyleID ());_deaec .SetLinkedStyle (_deaec .StyleID ());_deaec .SetUISortOrder (9+_ccfae );_deaec .SetPrimaryStyle (true );_deaec .ParagraphProperties ().SetKeepNext (true );_deaec .ParagraphProperties ().SetSpacing (_cbfc [_ccfae ]*_ac .Twips ,0);
-_deaec .ParagraphProperties ().SetOutlineLevel (_ccfae );_deaec .RunProperties ().SetSize (_fgaaa [_ccfae ]*_ac .Point );};};
+// Paragraphs returns all the paragraphs in the document body including tables.
+func (_fcag *Document )Paragraphs ()[]Paragraph {_beec :=[]Paragraph {};if _fcag ._dgg .Body ==nil {return nil ;};for _ ,_bgbc :=range _fcag ._dgg .Body .EG_BlockLevelElts {for _ ,_addd :=range _bgbc .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_aabe :=range _addd .ContentBlockContentChoice .P {_beec =append (_beec ,Paragraph {_fcag ,_aabe });
+};};};for _ ,_fcab :=range _fcag .Tables (){for _ ,_fbec :=range _fcab .Rows (){for _ ,_age :=range _fbec .Cells (){_beec =append (_beec ,_age .Paragraphs ()...);};};};return _beec ;};
 
-// AddTOC adds a table of contents to the document and customize it according to TOCOptions if necessary.
-func (_ggbab Run )AddTOC (options *TOCOptions ){_abgg :="";if options !=nil {if options .UseHyperlinks {_abgg +="\u0020\u005c\u0068\u0020";};if options .OmitPageNumbers {_abgg +="\u0020\u005c\u006e\u0020";};if options .HeadingLevel !=""{_abgg +="\u0020\u005c\u006f \u0027"+options .HeadingLevel +"\u0027";
-};};_ggbab .AddFieldWithFormatting (FieldTOC ,_abgg ,true );};
+// Style returns the style for a paragraph, or an empty string if it is unset.
+func (_edecd ParagraphProperties )Style ()string {if _edecd ._bbdf .PStyle !=nil {return _edecd ._bbdf .PStyle .ValAttr ;};return "";};
 
-// SetAlignment positions an anchored image via alignment.  Offset is
-// incompatible with SetOffset, whichever is called last is applied.
-func (_ge AnchoredDrawing )SetAlignment (h _bg .WdST_AlignH ,v _bg .WdST_AlignV ){_ge .SetHAlignment (h );_ge .SetVAlignment (v );};
+// AddParagraph adds a new paragraph to the document body.
+func (_dcde *Document )AddParagraph ()Paragraph {_fafd :=_ec .NewEG_BlockLevelElts ();_dcde ._dgg .Body .EG_BlockLevelElts =append (_dcde ._dgg .Body .EG_BlockLevelElts ,_fafd );_cdg :=_ec .NewEG_ContentBlockContent ();_fafd .BlockLevelEltsChoice .EG_ContentBlockContent =append (_fafd .BlockLevelEltsChoice .EG_ContentBlockContent ,_cdg );
+_eda :=_ec .NewCT_P ();_cdg .ContentBlockContentChoice .P =append (_cdg .ContentBlockContentChoice .P ,_eda );return Paragraph {_dcde ,_eda };};
 
-// SetRight sets the right border to a specified type, color and thickness.
-func (_abbea ParagraphBorders )SetRight (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_abbea ._bfeee .Right =_bg .NewCT_Border ();_ggef (_abbea ._bfeee .Right ,t ,c ,thickness );};
+// RemoveFootnote removes a footnote from both the paragraph and the document
+// the requested footnote must be anchored on the paragraph being referenced.
+//
+// After each removal, the rest of the footnote ids would be reordered.
+func (_deccd Paragraph )RemoveFootnote (id int64 ){for _ ,_cfef :=range _deccd .Runs (){if _efce ,_adgc :=_cfef .IsFootnote ();_efce {if _adgc ==id {_deccd .RemoveRun (_cfef );break ;};};};_deccd ._fafde .removeFootnote (id );};
 
-// SetTextStyleBold sets text style of watermark to bold.
-func (_dcdcd *WatermarkText )SetTextStyleBold (value bool ){_dcefc :=_dcdcd .GetStyle ();_dcefc .SetBold (value );_dcdcd .SetStyle (_dcefc );};
+// SetXOffset sets the X offset for an image relative to the origin.
+func (_fdf AnchoredDrawing )SetXOffset (x _ga .Distance ){_fdf ._da .PositionH .PosHChoice =&_ec .WdCT_PosHChoice {};_fdf ._da .PositionH .PosHChoice .PosOffset =_c .Int32 (int32 (x /_ga .EMU ));};func (_ffae *Document )removeEndnote (_cced int64 ){_dgbg :=_ffae ._gdd ;
+var _beeg int ;for _ceeaf ,_dfe :=range _dgbg .CT_Endnotes .Endnote {if _dfe .IdAttr ==_cced {_beeg =_ceeaf ;break ;};};_dgbg .CT_Endnotes .Endnote [_beeg ]=nil ;_dgbg .CT_Endnotes .Endnote [_beeg ]=_dgbg .CT_Endnotes .Endnote [len (_dgbg .CT_Endnotes .Endnote )-1];
+_dgbg .CT_Endnotes .Endnote =_dgbg .CT_Endnotes .Endnote [:len (_dgbg .CT_Endnotes .Endnote )-1];_ffae .reorderEndnote ();_ffae .syncEndnoteSettings ();};
 
-// SetColor sets color of watermark text.
-func (_cgecf *WatermarkText )SetColor (value string ){if _cgecf ._fbcbg !=nil {_cgecf ._fbcbg .FillcolorAttr =&value ;};};
+// X return element of Node as interface, can be either *Paragraph, *Table and Run.
+func (_eaafa *Node )X ()interface{}{return _eaafa ._becg };
 
-// SetTextWrapBehindText sets the text wrap to behind text.
-func (_acg AnchoredDrawing )SetTextWrapBehindText (){_acg ._cd .WrapTypeChoice =&_bg .WdEG_WrapTypeChoice {};_acg ._cd .WrapTypeChoice .WrapNone =_bg .NewWdCT_WrapNone ();_acg ._cd .BehindDocAttr =true ;_acg ._cd .LayoutInCellAttr =true ;_acg ._cd .AllowOverlapAttr =true ;
-};func (_cec *Document )removeEndnote (_ggcfc int64 ){_efdb :=_cec ._ccb ;var _edgad int ;for _edaae ,_ebfd :=range _efdb .CT_Endnotes .Endnote {if _ebfd .IdAttr ==_ggcfc {_edgad =_edaae ;break ;};};_efdb .CT_Endnotes .Endnote [_edgad ]=nil ;_efdb .CT_Endnotes .Endnote [_edgad ]=_efdb .CT_Endnotes .Endnote [len (_efdb .CT_Endnotes .Endnote )-1];
-_efdb .CT_Endnotes .Endnote =_efdb .CT_Endnotes .Endnote [:len (_efdb .CT_Endnotes .Endnote )-1];_cec .reorderEndnote ();_cec .syncEndnoteSettings ();};
+// AddHyperlink adds a hyperlink to a document. Adding the hyperlink to a document
+// and setting it on a cell is more efficient than setting hyperlinks directly
+// on a cell.
+func (_dgba Document )AddHyperlink (url string )_aee .Hyperlink {return _dgba ._cbaa .AddHyperlink (url )};
 
-// Margins allows controlling individual cell margins.
-func (_agddf CellProperties )Margins ()CellMargins {if _agddf ._bbb .TcMar ==nil {_agddf ._bbb .TcMar =_bg .NewCT_TcMar ();};return CellMargins {_agddf ._bbb .TcMar };};
+// SetTextWrapThrough sets the text wrap to through with a give wrap type.
+func (_agd AnchoredDrawing )SetTextWrapThrough (option *AnchorDrawWrapOptions ){_agd ._da .WrapTypeChoice =&_ec .WdEG_WrapTypeChoice {};_agd ._da .WrapTypeChoice .WrapThrough =_ec .NewWdCT_WrapThrough ();_agd ._da .WrapTypeChoice .WrapThrough .WrapTextAttr =_ec .WdST_WrapTextBothSides ;
+_faa :=false ;_agd ._da .WrapTypeChoice .WrapThrough .WrapPolygon .EditedAttr =&_faa ;if option ==nil {option =NewAnchorDrawWrapOptions ();};_agd ._da .WrapTypeChoice .WrapThrough .WrapPolygon .Start =option .GetWrapPathStart ();_agd ._da .WrapTypeChoice .WrapThrough .WrapPolygon .LineTo =option .GetWrapPathLineTo ();
+_agd ._da .LayoutInCellAttr =true ;_agd ._da .AllowOverlapAttr =true ;};
 
-// SetFollowImageShape sets wrapPath to follow image shape,
-// if nil return wrapPath that follow image size.
-func (_bac AnchorDrawWrapOptions )SetFollowImageShape (val bool ){_bac ._gege =val ;if !val {_acde ,_cag :=_agde ();_bac ._gga =_acde ;_bac ._adf =_cag ;};};
+// RightToLeft returns true if run text goes from right to left.
+func (_aced RunProperties )RightToLeft ()bool {return _gfgb (_aced ._bffab .Rtl )};func (_dage *Document )tables (_cbgg *_ec .EG_ContentBlockContent )[]Table {_fbag :=[]Table {};for _ ,_ebb :=range _cbgg .ContentBlockContentChoice .Tbl {_fbag =append (_fbag ,Table {_dage ,_ebb });
+for _ ,_bce :=range _ebb .EG_ContentRowContent {for _ ,_fabf :=range _bce .ContentRowContentChoice .Tr {for _ ,_afc :=range _fabf .EG_ContentCellContent {for _ ,_fdgc :=range _afc .ContentCellContentChoice .Tc {for _ ,_dff :=range _fdgc .EG_BlockLevelElts {for _ ,_aga :=range _dff .BlockLevelEltsChoice .EG_ContentBlockContent {_fbag =append (_fbag ,_dage .tables (_aga )...);
+};};};};};};};return _fbag ;};
 
-// AddDefinition adds a new numbering definition.
-func (_cfeb Numbering )AddDefinition ()NumberingDefinition {_dbbe :=_bg .NewCT_Num ();_ebaec :=int64 (1);for _ ,_beaf :=range _cfeb .Definitions (){if _beaf .AbstractNumberID ()>=_ebaec {_ebaec =_beaf .AbstractNumberID ()+1;};};_dfcdc :=int64 (1);for _ ,_edfc :=range _cfeb .X ().Num {if _edfc .NumIdAttr >=_dfcdc {_dfcdc =_edfc .NumIdAttr +1;
-};};_dbbe .NumIdAttr =_dfcdc ;_dbbe .AbstractNumId =_bg .NewCT_DecimalNumber ();_dbbe .AbstractNumId .ValAttr =_ebaec ;_eggf :=_bg .NewCT_AbstractNum ();_eggf .AbstractNumIdAttr =_ebaec ;_cfeb ._faffc .AbstractNum =append (_cfeb ._faffc .AbstractNum ,_eggf );
-_cfeb ._faffc .Num =append (_cfeb ._faffc .Num ,_dbbe );return NumberingDefinition {_eggf };};
+// Row is a row within a table within a document.
+type Row struct{_aebdd *Document ;_gfeea *_ec .CT_Row ;};
+
+// SetBefore sets the spacing that comes before the paragraph.
+func (_daddd ParagraphSpacing )SetBefore (before _ga .Distance ){_daddd ._dbgcf .BeforeAttr =&_afe .ST_TwipsMeasure {};_daddd ._dbgcf .BeforeAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (before /_ga .Twips ));};func _ecdfc ()*_ceg .Path {_dafbg :=_ceg .NewPath ();
+_dafbg .ExtrusionokAttr =_afe .ST_TrueFalseTrue ;_dafbg .GradientshapeokAttr =_afe .ST_TrueFalseTrue ;_dafbg .ConnecttypeAttr =_ceg .OfcST_ConnectTypeRect ;return _dafbg ;};
 
 // X returns the inner wrapped XML type.
-func (_afebd Paragraph )X ()*_bg .CT_P {return _afebd ._dfbf };
+func (_bfebg TableProperties )X ()*_ec .CT_TblPr {return _bfebg ._egdbb };func _ffaea ()*_ceg .Formulas {_gaaa :=_ceg .NewFormulas ();_gaaa .F =[]*_ceg .CT_F {_af .CreateFormula ("\u0073\u0075\u006d\u0020\u0023\u0030\u0020\u0030\u00201\u0030\u0038\u0030\u0030"),_af .CreateFormula ("p\u0072\u006f\u0064\u0020\u0023\u0030\u0020\u0032\u0020\u0031"),_af .CreateFormula ("\u0073\u0075\u006d\u0020\u0032\u0031\u0036\u0030\u0030 \u0030\u0020\u0040\u0031"),_af .CreateFormula ("\u0073\u0075\u006d\u0020\u0030\u0020\u0030\u0020\u0040\u0032"),_af .CreateFormula ("\u0073\u0075\u006d\u0020\u0032\u0031\u0036\u0030\u0030 \u0030\u0020\u0040\u0033"),_af .CreateFormula ("\u0069\u0066\u0020\u0040\u0030\u0020\u0040\u0033\u0020\u0030"),_af .CreateFormula ("\u0069\u0066\u0020\u0040\u0030\u0020\u0032\u0031\u00360\u0030\u0020\u0040\u0031"),_af .CreateFormula ("\u0069\u0066\u0020\u0040\u0030\u0020\u0030\u0020\u0040\u0032"),_af .CreateFormula ("\u0069\u0066\u0020\u0040\u0030\u0020\u0040\u0034\u00202\u0031\u0036\u0030\u0030"),_af .CreateFormula ("\u006di\u0064\u0020\u0040\u0035\u0020\u00406"),_af .CreateFormula ("\u006di\u0064\u0020\u0040\u0038\u0020\u00405"),_af .CreateFormula ("\u006di\u0064\u0020\u0040\u0037\u0020\u00408"),_af .CreateFormula ("\u006di\u0064\u0020\u0040\u0036\u0020\u00407"),_af .CreateFormula ("s\u0075\u006d\u0020\u0040\u0036\u0020\u0030\u0020\u0040\u0035")};
+return _gaaa ;};
 
-// Style return the table style.
-func (_gbgcg Table )Style ()string {if _gbgcg ._cefad .TblPr !=nil &&_gbgcg ._cefad .TblPr .TblStyle !=nil {return _gbgcg ._cefad .TblPr .TblStyle .ValAttr ;};return "";};func _caadd ()*_ec .Imagedata {_eaaag :=_ec .NewImagedata ();_bcgg :="\u0072\u0049\u0064\u0031";
-_cfeba :="\u0057A\u0054\u0045\u0052\u004d\u0041\u0052K";_eaaag .IdAttr =&_bcgg ;_eaaag .TitleAttr =&_cfeba ;return _eaaag ;};
+// FindNodeByStyleId return slice of node base on style id.
+func (_cfaf *Nodes )FindNodeByStyleId (styleId string )[]Node {_aaadg :=[]Node {};for _ ,_abggd :=range _cfaf ._adac {switch _fgbb :=_abggd ._becg .(type ){case *Paragraph :if _fgbb !=nil &&_fgbb .Style ()==styleId {_aaadg =append (_aaadg ,_abggd );};case *Table :if _fgbb !=nil &&_fgbb .Style ()==styleId {_aaadg =append (_aaadg ,_abggd );
+};};_bafbc :=Nodes {_adac :_abggd .Children };_aaadg =append (_aaadg ,_bafbc .FindNodeByStyleId (styleId )...);};return _aaadg ;};func (_eeggg Paragraph )addStartComment (_gggd int64 )*_ec .CT_MarkupRange {_aggc :=_ec .NewEG_PContent ();_eeggg ._fagb .EG_PContent =append (_eeggg ._fagb .EG_PContent ,_aggc );
+_eeba :=_ec .NewEG_ContentRunContent ();_decf :=_ec .NewEG_RunLevelElts ();_beedf :=_ec .NewEG_RangeMarkupElements ();_bged :=_ec .NewCT_MarkupRange ();_bged .IdAttr =_gggd ;_beedf .RangeMarkupElementsChoice .CommentRangeStart =_bged ;_aggc .PContentChoice .EG_ContentRunContent =append (_aggc .PContentChoice .EG_ContentRunContent ,_eeba );
+_eeba .ContentRunContentChoice .EG_RunLevelElts =append (_eeba .ContentRunContentChoice .EG_RunLevelElts ,_decf );_decf .RunLevelEltsChoice .EG_RangeMarkupElements =append (_decf .RunLevelEltsChoice .EG_RangeMarkupElements ,_beedf );return _bged ;};
 
-// AddTable adds a table to the header.
-func (_cggfd Header )AddTable ()Table {_cafc :=_bg .NewEG_ContentBlockContent ();_cggfd ._adfd .EG_BlockLevelElts =append (_cggfd ._adfd .EG_BlockLevelElts ,&_bg .EG_BlockLevelElts {BlockLevelEltsChoice :&_bg .EG_BlockLevelEltsChoice {EG_ContentBlockContent :[]*_bg .EG_ContentBlockContent {_cafc }}});
-_fgcb :=_bg .NewCT_Tbl ();_cafc .ContentBlockContentChoice .Tbl =append (_cafc .ContentBlockContentChoice .Tbl ,_fgcb );return Table {_cggfd ._dafeb ,_fgcb };};
+// AddWatermarkPicture adds new watermark picture to document.
+func (_geadg *Document )AddWatermarkPicture (imageRef _aee .ImageRef )WatermarkPicture {var _adfb []Header ;if _ced ,_ccad :=_geadg .BodySection ().GetHeader (_ec .ST_HdrFtrDefault );_ccad {_adfb =append (_adfb ,_ced );};if _fabfb ,_edb :=_geadg .BodySection ().GetHeader (_ec .ST_HdrFtrEven );
+_edb {_adfb =append (_adfb ,_fabfb );};if _ccbg ,_ccf :=_geadg .BodySection ().GetHeader (_ec .ST_HdrFtrFirst );_ccf {_adfb =append (_adfb ,_ccbg );};if len (_adfb )< 1{_cefc :=_geadg .AddHeader ();_geadg .BodySection ().SetHeader (_cefc ,_ec .ST_HdrFtrDefault );
+_adfb =append (_adfb ,_cefc );};var _aabc error ;_fbace :=NewWatermarkPicture ();for _ ,_ebed :=range _adfb {imageRef ,_aabc =_ebed .AddImageRef (imageRef );if _aabc !=nil {return WatermarkPicture {};};_afcf :=_ebed .Paragraphs ();if len (_afcf )< 1{_bgeac :=_ebed .AddParagraph ();
+_bgeac .AddRun ().AddText ("");};for _ ,_fee :=range _ebed .X ().EG_BlockLevelElts {for _ ,_ffed :=range _fee .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_gade :=range _ffed .ContentBlockContentChoice .P {for _ ,_gfe :=range _gade .EG_PContent {for _ ,_agge :=range _gfe .PContentChoice .EG_ContentRunContent {if _agge .ContentRunContentChoice .R ==nil {continue ;
+};_agge .ContentRunContentChoice .R .EG_RunInnerContent =append (_agge .ContentRunContentChoice .R .EG_RunInnerContent ,&_ec .EG_RunInnerContent {RunInnerContentChoice :&_ec .EG_RunInnerContentChoice {Pict :_fbace ._gfgcg }});};};};};};};_fbace .SetPicture (imageRef );
+return _fbace ;};func (_fcgae Paragraph )addSeparateFldChar ()*_ec .CT_FldChar {_bdfaf :=_fcgae .addFldChar ();_bdfaf .FldCharTypeAttr =_ec .ST_FldCharTypeSeparate ;return _bdfaf ;};
 
-// SetStyle sets the style of a paragraph.
-func (_bcad ParagraphProperties )SetStyle (s string ){if s ==""{_bcad ._dabde .PStyle =nil ;}else {_bcad ._dabde .PStyle =_bg .NewCT_String ();_bcad ._dabde .PStyle .ValAttr =s ;};};
+// Paragraphs returns the paragraphs defined in a header.
+func (_eecd Header )Paragraphs ()[]Paragraph {_febba :=[]Paragraph {};for _ ,_fgagd :=range _eecd ._fgcdg .EG_BlockLevelElts {for _ ,_fafgc :=range _fgagd .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_bffgf :=range _fafgc .ContentBlockContentChoice .P {_febba =append (_febba ,Paragraph {_eecd ._fegd ,_bffgf });
+};};};for _ ,_cfaea :=range _eecd .Tables (){for _ ,_fcff :=range _cfaea .Rows (){for _ ,_ffgd :=range _fcff .Cells (){_febba =append (_febba ,_ffgd .Paragraphs ()...);};};};return _febba ;};
 
-// X returns the internally wrapped *wml.CT_SectPr.
-func (_efea Section )X ()*_bg .CT_SectPr {return _efea ._cdebe };func (_cabac Endnote )id ()int64 {return _cabac ._ddb .IdAttr };
+// SetLineSpacing sets the spacing between lines in a paragraph.
+func (_gfbdf ParagraphSpacing )SetLineSpacing (d _ga .Distance ,rule _ec .ST_LineSpacingRule ){if rule ==_ec .ST_LineSpacingRuleUnset {_gfbdf ._dbgcf .LineRuleAttr =_ec .ST_LineSpacingRuleUnset ;_gfbdf ._dbgcf .LineAttr =nil ;}else {_gfbdf ._dbgcf .LineRuleAttr =rule ;
+_gfbdf ._dbgcf .LineAttr =&_ec .ST_SignedTwipsMeasure {};_gfbdf ._dbgcf .LineAttr .Int64 =_c .Int64 (int64 (d /_ga .Twips ));};};
 
-// SetAll sets all of the borders to a given value.
-func (_bgedd TableBorders )SetAll (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_bgedd .SetBottom (t ,c ,thickness );_bgedd .SetLeft (t ,c ,thickness );_bgedd .SetRight (t ,c ,thickness );_bgedd .SetTop (t ,c ,thickness );_bgedd .SetInsideHorizontal (t ,c ,thickness );
-_bgedd .SetInsideVertical (t ,c ,thickness );};
+// NewAnchorDrawWrapOptions return anchor drawing options property.
+func NewAnchorDrawWrapOptions ()*AnchorDrawWrapOptions {_fdg :=&AnchorDrawWrapOptions {};if !_fdg ._gbge {_faag ,_bcc :=_bba ();_fdg ._fba =_faag ;_fdg ._deb =_bcc ;};return _fdg ;};
 
-// GetImage returns the ImageRef associated with an AnchoredDrawing.
-func (_edc AnchoredDrawing )GetImage ()(_edb .ImageRef ,bool ){_gdg :=_edc ._cd .Graphic .GraphicData .Any ;if len (_gdg )> 0{_fb ,_df :=_gdg [0].(*_gg .Pic );if _df {if _fb .BlipFill !=nil &&_fb .BlipFill .Blip !=nil &&_fb .BlipFill .Blip .EmbedAttr !=nil {return _edc ._dad .GetImageByRelID (*_fb .BlipFill .Blip .EmbedAttr );
-};};};return _edb .ImageRef {},false ;};
+// SetTextWrapNone unsets text wrapping so the image can float on top of the
+// text. When used in conjunction with X/Y Offset relative to the page it can be
+// used to place a logo at the top of a page at an absolute position that
+// doesn't interfere with text.
+func (_gff AnchoredDrawing )SetTextWrapNone (){_gff ._da .WrapTypeChoice =&_ec .WdEG_WrapTypeChoice {};_gff ._da .WrapTypeChoice .WrapNone =_ec .NewWdCT_WrapNone ();};func _daade (_cddf *_ec .CT_Tbl ,_afbg ,_beba map[int64 ]int64 ){for _ ,_degf :=range _cddf .EG_ContentRowContent {for _ ,_bcbeg :=range _degf .ContentRowContentChoice .Tr {for _ ,_bag :=range _bcbeg .EG_ContentCellContent {for _ ,_gbcf :=range _bag .ContentCellContentChoice .Tc {for _ ,_acbe :=range _gbcf .EG_BlockLevelElts {for _ ,_cgg :=range _acbe .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_ddgg :=range _cgg .ContentBlockContentChoice .P {_agdf (_ddgg ,_afbg ,_beba );
+};for _ ,_daga :=range _cgg .ContentBlockContentChoice .Tbl {_daade (_daga ,_afbg ,_beba );};};};};};};};};func _cfbff ()*_ceg .Textpath {_dfba :=_ceg .NewTextpath ();_bcfg :="\u0066\u006f\u006e\u0074\u002d\u0066\u0061\u006d\u0069l\u0079\u003a\u0022\u0043\u0061\u006c\u0069\u0062\u0072\u0069\u0022\u003b\u0066\u006f\u006e\u0074\u002d\u0073\u0069\u007a\u0065\u003a\u00366\u0070\u0074;\u0066\u006fn\u0074\u002d\u0077\u0065\u0069\u0067\u0068\u0074\u003a\u0062\u006f\u006c\u0064;f\u006f\u006e\u0074\u002d\u0073\u0074\u0079\u006c\u0065:\u0069\u0074\u0061\u006c\u0069\u0063";
+_dfba .StyleAttr =&_bcfg ;_bcbd :="\u0041\u0053\u0041\u0050";_dfba .StringAttr =&_bcbd ;_dfba .FitshapeAttr =_afe .ST_TrueFalseT ;return _dfba ;};func (_bebca *Document )appendParagraph (_dgfbd *Paragraph ,_cgc Paragraph ,_bcad bool )Paragraph {_dgcf :=_ec .NewEG_BlockLevelElts ();
+_bebca ._dgg .Body .EG_BlockLevelElts =append (_bebca ._dgg .Body .EG_BlockLevelElts ,_dgcf );_dbe :=_ec .NewEG_ContentBlockContent ();_dgcf .BlockLevelEltsChoice .EG_ContentBlockContent =append (_dgcf .BlockLevelEltsChoice .EG_ContentBlockContent ,_dbe );
+if _dgfbd !=nil {_aaeg :=_dgfbd .X ();for _ ,_abb :=range _bebca ._dgg .Body .EG_BlockLevelElts {for _ ,_afce :=range _abb .BlockLevelEltsChoice .EG_ContentBlockContent {for _cbdd ,_gfa :=range _afce .ContentBlockContentChoice .P {if _gfa ==_aaeg {_bcfd :=_cgc .X ();
+_afce .ContentBlockContentChoice .P =append (_afce .ContentBlockContentChoice .P ,nil );if _bcad {copy (_afce .ContentBlockContentChoice .P [_cbdd +1:],_afce .ContentBlockContentChoice .P [_cbdd :]);_afce .ContentBlockContentChoice .P [_cbdd ]=_bcfd ;}else {copy (_afce .ContentBlockContentChoice .P [_cbdd +2:],_afce .ContentBlockContentChoice .P [_cbdd +1:]);
+_afce .ContentBlockContentChoice .P [_cbdd +1]=_bcfd ;};break ;};};for _ ,_bff :=range _afce .ContentBlockContentChoice .Tbl {for _ ,_gefb :=range _bff .EG_ContentRowContent {for _ ,_gcf :=range _gefb .ContentRowContentChoice .Tr {for _ ,_dgge :=range _gcf .EG_ContentCellContent {for _ ,_bbeb :=range _dgge .ContentCellContentChoice .Tc {for _ ,_cfd :=range _bbeb .EG_BlockLevelElts {for _ ,_gggb :=range _cfd .BlockLevelEltsChoice .EG_ContentBlockContent {for _ggcc ,_dabd :=range _gggb .ContentBlockContentChoice .P {if _dabd ==_aaeg {_dcdf :=_cgc .X ();
+_gggb .ContentBlockContentChoice .P =append (_gggb .ContentBlockContentChoice .P ,nil );if _bcad {copy (_gggb .ContentBlockContentChoice .P [_ggcc +1:],_gggb .ContentBlockContentChoice .P [_ggcc :]);_gggb .ContentBlockContentChoice .P [_ggcc ]=_dcdf ;}else {copy (_gggb .ContentBlockContentChoice .P [_ggcc +2:],_gggb .ContentBlockContentChoice .P [_ggcc +1:]);
+_gggb .ContentBlockContentChoice .P [_ggcc +1]=_dcdf ;};break ;};};};};};};};};};if _afce .ContentBlockContentChoice .Sdt !=nil &&_afce .ContentBlockContentChoice .Sdt .SdtContent !=nil {for _ ,_cgcg :=range _afce .ContentBlockContentChoice .Sdt .SdtContent .EG_ContentBlockContent {for _bdb ,_cege :=range _cgcg .ContentBlockContentChoice .P {if _cege ==_aaeg {_gcfd :=_cgc .X ();
+_cgcg .ContentBlockContentChoice .P =append (_cgcg .ContentBlockContentChoice .P ,nil );if _bcad {copy (_cgcg .ContentBlockContentChoice .P [_bdb +1:],_cgcg .ContentBlockContentChoice .P [_bdb :]);_cgcg .ContentBlockContentChoice .P [_bdb ]=_gcfd ;}else {copy (_cgcg .ContentBlockContentChoice .P [_bdb +2:],_cgcg .ContentBlockContentChoice .P [_bdb +1:]);
+_cgcg .ContentBlockContentChoice .P [_bdb +1]=_gcfd ;};break ;};};};};};};}else {_dbe .ContentBlockContentChoice .P =append (_dbe .ContentBlockContentChoice .P ,_cgc .X ());};_bbd :=_cgc .Properties ();if _fdfa ,_fge :=_bbd .Section ();_fge {var (_begb map[string ]string ;
+_agdda map[string ]string ;);_eegd :=_fdfa .X ().EG_HdrFtrReferences ;for _ ,_agga :=range _eegd {if _agga .HdrFtrReferencesChoice .HeaderReference !=nil {_begb =map[string ]string {_agga .HdrFtrReferencesChoice .HeaderReference .IdAttr :_fdfa ._gbedd ._cbaa .GetTargetByRelId (_agga .HdrFtrReferencesChoice .HeaderReference .IdAttr )};
+};if _agga .HdrFtrReferencesChoice .FooterReference !=nil {_agdda =map[string ]string {_agga .HdrFtrReferencesChoice .FooterReference .IdAttr :_fdfa ._gbedd ._cbaa .GetTargetByRelId (_agga .HdrFtrReferencesChoice .FooterReference .IdAttr )};};};var _fffa map[int ]_aee .ImageRef ;
+for _ ,_fdafd :=range _fdfa ._gbedd .Headers (){for _bdff ,_eadb :=range _begb {_cffca :=_cb .Sprintf ("\u0068\u0065\u0061d\u0065\u0072\u0025\u0064\u002e\u0078\u006d\u006c",(_fdafd .Index ()+1));if _cffca ==_eadb {_cdfec :=_cb .Sprintf ("\u0068\u0065\u0061d\u0065\u0072\u0025\u0064\u002e\u0078\u006d\u006c",_fdafd .Index ());
+_bebca ._ace =append (_bebca ._ace ,_fdafd .X ());_eaad :=_bebca ._cbaa .AddRelationship (_cdfec ,_c .HeaderType );_eaad .SetID (_bdff );_bebca .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072\u0064\u002f"+_cdfec ,"\u0061p\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064.\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c\u002e\u0068\u0065\u0061\u0064e\u0072\u002b\u0078\u006d\u006c");
+_bebca ._feb =append (_bebca ._feb ,_aee .NewRelationships ());_gddf :=_fdafd .Paragraphs ();for _ ,_fbcf :=range _gddf {for _ ,_bfbga :=range _fbcf .Runs (){_efcba :=_bfbga .DrawingAnchored ();for _ ,_fbab :=range _efcba {if _bgeab ,_bdfb :=_fbab .GetImage ();
+_bdfb {_fffa =map[int ]_aee .ImageRef {_fdafd .Index ():_bgeab };};};_edac :=_bfbga .DrawingInline ();for _ ,_cbc :=range _edac {if _adba ,_dcdc :=_cbc .GetImage ();_dcdc {_fffa =map[int ]_aee .ImageRef {_fdafd .Index ():_adba };};};};};};};};for _deaf ,_fabg :=range _fffa {for _ ,_daa :=range _bebca .Headers (){if (_daa .Index ()+1)==_deaf {_dfdc ,_aaaf :=_aee .ImageFromFile (_fabg .Path ());
+if _aaaf !=nil {_be .Log .Debug ("\u0075\u006e\u0061\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0063r\u0065\u0061\u0074\u0065\u0020\u0069\u006d\u0061\u0067\u0065:\u0020\u0025\u0073",_aaaf );};if _ ,_aaaf =_daa .AddImage (_dfdc );_aaaf !=nil {_be .Log .Debug ("u\u006e\u0061\u0062\u006c\u0065\u0020t\u006f\u0020\u0061\u0064\u0064\u0020i\u006d\u0061\u0067\u0065\u0020\u0074\u006f \u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u003a\u0020%\u0073",_aaaf );
+};};for _ ,_gabc :=range _daa .Paragraphs (){if _dfc ,_aad :=_fdfa ._gbedd .Styles .SearchStyleById (_gabc .Style ());_aad {if _ ,_ccgb :=_bebca .Styles .SearchStyleById (_gabc .Style ());!_ccgb {_bebca .Styles .InsertStyle (_dfc );};};};};};var _aeaf map[int ]_aee .ImageRef ;
+for _ ,_fgag :=range _fdfa ._gbedd .Footers (){for _bef ,_bffc :=range _agdda {_ddff :=_cb .Sprintf ("\u0066\u006f\u006ft\u0065\u0072\u0025\u0064\u002e\u0078\u006d\u006c",(_fgag .Index ()+1));if _ddff ==_bffc {_cacc :=_cb .Sprintf ("\u0066\u006f\u006ft\u0065\u0072\u0025\u0064\u002e\u0078\u006d\u006c",_fgag .Index ());
+_bebca ._ddbf =append (_bebca ._ddbf ,_fgag .X ());_abgb :=_bebca ._cbaa .AddRelationship (_cacc ,_c .FooterType );_abgb .SetID (_bef );_bebca .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072\u0064\u002f"+_cacc ,"\u0061p\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064.\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c\u002e\u0066\u006f\u006f\u0074e\u0072\u002b\u0078\u006d\u006c");
+_bebca ._cef =append (_bebca ._cef ,_aee .NewRelationships ());_cgdb :=_fgag .Paragraphs ();for _ ,_eeec :=range _cgdb {for _ ,_bedg :=range _eeec .Runs (){_cfg :=_bedg .DrawingAnchored ();for _ ,_bfdg :=range _cfg {if _ded ,_cdcg :=_bfdg .GetImage ();
+_cdcg {_aeaf =map[int ]_aee .ImageRef {_fgag .Index ():_ded };};};_ccbd :=_bedg .DrawingInline ();for _ ,_edg :=range _ccbd {if _gccb ,_ecfa :=_edg .GetImage ();_ecfa {_aeaf =map[int ]_aee .ImageRef {_fgag .Index ():_gccb };};};};};};};};for _eeef ,_gdbc :=range _aeaf {for _ ,_egdb :=range _bebca .Footers (){if (_egdb .Index ()+1)==_eeef {_face ,_bae :=_aee .ImageFromFile (_gdbc .Path ());
+if _bae !=nil {_be .Log .Debug ("\u0075\u006e\u0061\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0063r\u0065\u0061\u0074\u0065\u0020\u0069\u006d\u0061\u0067\u0065:\u0020\u0025\u0073",_bae );};if _ ,_bae =_egdb .AddImage (_face );_bae !=nil {_be .Log .Debug ("u\u006e\u0061\u0062\u006c\u0065\u0020t\u006f\u0020\u0061\u0064\u0064\u0020i\u006d\u0061\u0067\u0065\u0020\u0074\u006f \u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u003a\u0020%\u0073",_bae );
+};};for _ ,_bfde :=range _egdb .Paragraphs (){if _cab ,_eefe :=_fdfa ._gbedd .Styles .SearchStyleById (_bfde .Style ());_eefe {if _ ,_cgcb :=_bebca .Styles .SearchStyleById (_bfde .Style ());!_cgcb {_bebca .Styles .InsertStyle (_cab );};};};};};};_abee :=_cgc .Numbering ();
+_bebca .Numbering ._fdea .AbstractNum =append (_bebca .Numbering ._fdea .AbstractNum ,_abee ._fdea .AbstractNum ...);_bebca .Numbering ._fdea .Num =append (_bebca .Numbering ._fdea .Num ,_abee ._fdea .Num ...);return Paragraph {_bebca ,_cgc .X ()};};
 
-// SetTableIndent sets the Table Indent from the Leading Margin
-func (_effab TableStyleProperties )SetTableIndent (ind _ac .Distance ){_effab ._ddecf .TblInd =_bg .NewCT_TblWidth ();_effab ._ddecf .TblInd .TypeAttr =_bg .ST_TblWidthDxa ;_effab ._ddecf .TblInd .WAttr =&_bg .ST_MeasurementOrPercent {};_effab ._ddecf .TblInd .WAttr .ST_DecimalNumberOrPercent =&_bg .ST_DecimalNumberOrPercent {};
-_effab ._ddecf .TblInd .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_g .Int64 (int64 (ind /_ac .Dxa ));};
+// SetStartPct sets the cell start margin
+func (_fec CellMargins )SetStartPct (pct float64 ){_fec ._debg .Start =_ec .NewCT_TblWidth ();_gbe (_fec ._debg .Start ,pct );};
+
+// GetImageByRelID returns an ImageRef with the associated relation ID in the
+// document.
+func (_fbda *Document )GetImageByRelID (relID string )(_aee .ImageRef ,bool ){_aecda :=_fbda ._cbaa .GetTargetByRelId (relID );_cace :="";for _ ,_egba :=range _fbda ._feb {if _cace !=""{break ;};_cace =_egba .GetTargetByRelId (relID );};_eacc :="";for _ ,_aabef :=range _fbda ._cef {if _eacc !=""{break ;
+};_eacc =_aabef .GetTargetByRelId (relID );};for _ ,_ggag :=range _fbda .Images {if _ggag .RelID ()==relID {return _ggag ,true ;};if _aecda !=""{_geee :=_ce .Replace (_ggag .Target (),"\u0077\u006f\u0072d\u002f","",1);if _geee ==_aecda {if _ggag .RelID ()==""{_ggag .SetRelID (relID );
+};return _ggag ,true ;};};if _cace !=""{_egfb :=_ce .Replace (_ggag .Target (),"\u0077\u006f\u0072d\u002f","",1);if _egfb ==_cace {if _ggag .RelID ()==""{_ggag .SetRelID (relID );};return _ggag ,true ;};};if _eacc !=""{_bafg :=_ce .Replace (_ggag .Target (),"\u0077\u006f\u0072d\u002f","",1);
+if _bafg ==_eacc {if _ggag .RelID ()==""{_ggag .SetRelID (relID );};return _ggag ,true ;};};};return _aee .ImageRef {},false ;};
+
+// SetInsideHorizontal sets the interior horizontal borders to a specified type, color and thickness.
+func (_dbgb TableBorders )SetInsideHorizontal (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_dbgb ._gbeg .InsideH =_ec .NewCT_Border ();_cffba (_dbgb ._gbeg .InsideH ,t ,c ,thickness );};
+
+// SetValue sets the width value.
+func (_cabccg TableWidth )SetValue (m _ga .Distance ){_cabccg ._fbebf .WAttr =&_ec .ST_MeasurementOrPercent {};_cabccg ._fbebf .WAttr .ST_DecimalNumberOrPercent =&_ec .ST_DecimalNumberOrPercent {};_cabccg ._fbebf .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_c .Int64 (int64 (m /_ga .Twips ));
+_cabccg ._fbebf .TypeAttr =_ec .ST_TblWidthDxa ;};
+
+// Numbering return numbering that being use by paragraph.
+func (_fgbdb Paragraph )Numbering ()Numbering {_fgbdb .ensurePPr ();_bfcdg :=NewNumbering ();if _fgbdb ._fagb .PPr .NumPr !=nil {_cedc :=int64 (-1);_caggb :=int64 (-1);if _fgbdb ._fagb .PPr .NumPr .NumId !=nil {_cedc =_fgbdb ._fagb .PPr .NumPr .NumId .ValAttr ;
+};for _ ,_cdccc :=range _fgbdb ._fafde .Numbering ._fdea .Num {if _cedc < 0{break ;};if _cdccc .NumIdAttr ==_cedc {if _cdccc .AbstractNumId !=nil {_caggb =_cdccc .AbstractNumId .ValAttr ;_bfcdg ._fdea .Num =append (_bfcdg ._fdea .Num ,_cdccc );break ;};
+};};for _ ,_facb :=range _fgbdb ._fafde .Numbering ._fdea .AbstractNum {if _caggb < 0{break ;};if _facb .AbstractNumIdAttr ==_caggb {_bfcdg ._fdea .AbstractNum =append (_bfcdg ._fdea .AbstractNum ,_facb );break ;};};};return _bfcdg ;};
 
 // X returns the inner wrapped XML type.
-func (_gegg ParagraphProperties )X ()*_bg .CT_PPr {return _gegg ._dabde };
+func (_fcffa NumberingLevel )X ()*_ec .CT_Lvl {return _fcffa ._bgced };
 
-// FormFields extracts all the fields from a document.  They can then be
-// manipulated via the methods on the field and the document saved.
-func (_dbef *Document )FormFields ()[]FormField {_deg :=[]FormField {};for _ ,_afgc :=range _dbef .Paragraphs (){_cbef :=_afgc .Runs ();for _bbcb ,_gfff :=range _cbef {for _ ,_cac :=range _gfff ._bdced .EG_RunInnerContent {if _cac .RunInnerContentChoice .FldChar ==nil ||_cac .RunInnerContentChoice .FldChar .FldCharChoice .FfData ==nil {continue ;
-};if _cac .RunInnerContentChoice .FldChar .FldCharTypeAttr ==_bg .ST_FldCharTypeBegin {_aedaa :=false ;for _ ,_edcag :=range _cac .RunInnerContentChoice .FldChar .FldCharChoice .FfData .FFDataChoice {if _edcag .Name ==nil ||_edcag .Name .ValAttr ==nil {continue ;
-};_aedaa =true ;break ;};if !_aedaa {continue ;};_gfdf :=FormField {_acfd :_cac .RunInnerContentChoice .FldChar .FldCharChoice .FfData };for _ ,_ccgbe :=range _cac .RunInnerContentChoice .FldChar .FldCharChoice .FfData .FFDataChoice {if _ccgbe .TextInput ==nil {continue ;
-};for _efdbc :=_bbcb +1;_efdbc < len (_cbef )-1;_efdbc ++{if len (_cbef [_efdbc ]._bdced .EG_RunInnerContent )==0{continue ;};_afdd :=_cbef [_efdbc ]._bdced .EG_RunInnerContent [0];if _afdd .RunInnerContentChoice .FldChar !=nil &&_afdd .RunInnerContentChoice .FldChar .FldCharTypeAttr ==_bg .ST_FldCharTypeSeparate {if len (_cbef [_efdbc +1]._bdced .EG_RunInnerContent )==0{continue ;
-};if _cbef [_efdbc +1]._bdced .EG_RunInnerContent [0].RunInnerContentChoice .FldChar ==nil {_gfdf ._gdaa =_cbef [_efdbc +1]._bdced .EG_RunInnerContent [0];break ;};};};};_deg =append (_deg ,_gfdf );};};};};for _ ,_edgg :=range _dbef .Headers (){for _ ,_fgdc :=range _edgg .Paragraphs (){_cbcag :=_fgdc .Runs ();
-for _defb ,_ecfeb :=range _cbcag {for _ ,_gcad :=range _ecfeb ._bdced .EG_RunInnerContent {if _gcad .RunInnerContentChoice .FldChar ==nil ||_gcad .RunInnerContentChoice .FldChar .FldCharChoice .FfData ==nil {continue ;};if _gcad .RunInnerContentChoice .FldChar .FldCharTypeAttr ==_bg .ST_FldCharTypeBegin {_dabf :=false ;
-for _ ,_fadb :=range _gcad .RunInnerContentChoice .FldChar .FldCharChoice .FfData .FFDataChoice {if _fadb .Name ==nil ||_fadb .Name .ValAttr ==nil {continue ;};_dabf =true ;break ;};if !_dabf {continue ;};_agcce :=FormField {_acfd :_gcad .RunInnerContentChoice .FldChar .FldCharChoice .FfData };
-for _ ,_aaba :=range _gcad .RunInnerContentChoice .FldChar .FldCharChoice .FfData .FFDataChoice {if _aaba .TextInput ==nil {continue ;};for _afff :=_defb +1;_afff < len (_cbcag )-1;_afff ++{if len (_cbcag [_afff ]._bdced .EG_RunInnerContent )==0{continue ;
-};_fgeb :=_cbcag [_afff ]._bdced .EG_RunInnerContent [0];if _fgeb .RunInnerContentChoice .FldChar !=nil &&_fgeb .RunInnerContentChoice .FldChar .FldCharTypeAttr ==_bg .ST_FldCharTypeSeparate {if len (_cbcag [_afff +1]._bdced .EG_RunInnerContent )==0{continue ;
-};if _cbcag [_afff +1]._bdced .EG_RunInnerContent [0].RunInnerContentChoice .FldChar ==nil {_agcce ._gdaa =_cbcag [_afff +1]._bdced .EG_RunInnerContent [0];break ;};};};};_deg =append (_deg ,_agcce );};};};};};for _ ,_dafc :=range _dbef .Footers (){for _ ,_bgca :=range _dafc .Paragraphs (){_cadb :=_bgca .Runs ();
-for _abab ,_gdccc :=range _cadb {for _ ,_aeea :=range _gdccc ._bdced .EG_RunInnerContent {if _aeea .RunInnerContentChoice .FldChar ==nil ||_aeea .RunInnerContentChoice .FldChar .FldCharChoice .FfData ==nil {continue ;};if _aeea .RunInnerContentChoice .FldChar .FldCharTypeAttr ==_bg .ST_FldCharTypeBegin {_gcff :=false ;
-for _ ,_gcaca :=range _aeea .RunInnerContentChoice .FldChar .FldCharChoice .FfData .FFDataChoice {if _gcaca .Name ==nil ||_gcaca .Name .ValAttr ==nil {continue ;};_gcff =true ;break ;};if !_gcff {continue ;};_cbdd :=FormField {_acfd :_aeea .RunInnerContentChoice .FldChar .FldCharChoice .FfData };
-for _ ,_agfb :=range _aeea .RunInnerContentChoice .FldChar .FldCharChoice .FfData .FFDataChoice {if _agfb .TextInput ==nil {continue ;};for _cdac :=_abab +1;_cdac < len (_cadb )-1;_cdac ++{if len (_cadb [_cdac ]._bdced .EG_RunInnerContent )==0{continue ;
-};_fagc :=_cadb [_cdac ]._bdced .EG_RunInnerContent [0];if _fagc .RunInnerContentChoice .FldChar !=nil &&_fagc .RunInnerContentChoice .FldChar .FldCharTypeAttr ==_bg .ST_FldCharTypeSeparate {if len (_cadb [_cdac +1]._bdced .EG_RunInnerContent )==0{continue ;
-};if _cadb [_cdac +1]._bdced .EG_RunInnerContent [0].RunInnerContentChoice .FldChar ==nil {_cbdd ._gdaa =_cadb [_cdac +1]._bdced .EG_RunInnerContent [0];break ;};};};};_deg =append (_deg ,_cbdd );};};};};};return _deg ;};
+// SetLastRow controls the conditional formatting for the last row in a table.
+// This is called the 'Total' row within Word.
+func (_adef TableLook )SetLastRow (on bool ){if !on {_adef ._cgfd .LastRowAttr =&_afe .ST_OnOff {};_adef ._cgfd .LastRowAttr .ST_OnOff1 =_afe .ST_OnOff1Off ;}else {_adef ._cgfd .LastRowAttr =&_afe .ST_OnOff {};_adef ._cgfd .LastRowAttr .ST_OnOff1 =_afe .ST_OnOff1On ;
+};};
 
-// SetInsideVertical sets the interior vertical borders to a specified type, color and thickness.
-func (_eacfaf TableBorders )SetInsideVertical (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_eacfaf ._gfgeb .InsideV =_bg .NewCT_Border ();_ecag (_eacfaf ._gfgeb .InsideV ,t ,c ,thickness );};func (_addf *WatermarkPicture )getShapeType ()*_g .XSDAny {return _addf .getInnerElement ("\u0073h\u0061\u0070\u0065\u0074\u0079\u0070e");
-};
-
-// Value returns the string value of a FormFieldTypeText or FormFieldTypeDropDown.
-func (_affa FormField )Value ()string {if len (_affa ._acfd .FFDataChoice )> 0{for _ ,_fefef :=range _affa ._acfd .FFDataChoice {if _fefef .TextInput !=nil &&_affa ._gdaa .RunInnerContentChoice .T !=nil {return _affa ._gdaa .RunInnerContentChoice .T .Content ;
-}else if _fefef .DdList !=nil &&_fefef .DdList .Result !=nil {_cffac :=_affa .PossibleValues ();_egae :=int (_fefef .DdList .Result .ValAttr );if _egae < len (_cffac ){return _cffac [_egae ];};}else if _fefef .CheckBox !=nil {if _affa .IsChecked (){return "\u0074\u0072\u0075\u0065";
-};return "\u0066\u0061\u006cs\u0065";};};};return "";};
-
-// SetTblHeader set row properties for repeat table row on every new page value.
-func (_fbac RowProperties )SetTblHeader (val bool ){if !val {_fbac ._bedbf .TrPrBaseChoice =nil ;}else {_fbac ._bedbf .TrPrBaseChoice =[]*_bg .CT_TrPrBaseChoice {&_bg .CT_TrPrBaseChoice {TblHeader :_bg .NewCT_OnOff ()}};};};
-
-// AddText adds text to a run.
-func (_bgacd Run )AddText (s string ){_agdea :=_bg .NewEG_RunInnerContent ();_bgacd ._bdced .EG_RunInnerContent =append (_bgacd ._bdced .EG_RunInnerContent ,_agdea );_agdea .RunInnerContentChoice .T =_bg .NewCT_Text ();if _g .NeedsSpacePreserve (s ){_gdecd :="\u0070\u0072\u0065\u0073\u0065\u0072\u0076\u0065";
-_agdea .RunInnerContentChoice .T .SpaceAttr =&_gdecd ;};_agdea .RunInnerContentChoice .T .Content =s ;};
-
-// MailMerge finds mail merge fields and replaces them with the text provided.  It also removes
-// the mail merge source info from the document settings.
-func (_efaba *Document )MailMerge (mergeContent map[string ]string ){_ffeb :=_efaba .mergeFields ();_abfgd :=map[Paragraph ][]Run {};for _ ,_dfba :=range _ffeb {_afdbb ,_fbdca :=mergeContent [_dfba ._bcgae ];if _fbdca {if _dfba ._dgcef {_afdbb =_ef .ToUpper (_afdbb );
-}else if _dfba ._dfacc {_afdbb =_ef .ToLower (_afdbb );}else if _dfba ._cgca {_afdbb =_ef .Title (_afdbb );}else if _dfba ._eacd {_dfce :=_d .Buffer {};for _bggg ,_gabb :=range _afdbb {if _bggg ==0{_dfce .WriteRune (_ab .ToUpper (_gabb ));}else {_dfce .WriteRune (_gabb );
-};};_afdbb =_dfce .String ();};if _afdbb !=""&&_dfba ._agdc !=""{_afdbb =_dfba ._agdc +_afdbb ;};if _afdbb !=""&&_dfba ._baaf !=""{_afdbb =_afdbb +_dfba ._baaf ;};};if _dfba ._dacdf {if len (_dfba ._ffba .PContentChoice .FldSimple )==1&&len (_dfba ._ffba .PContentChoice .FldSimple [0].EG_PContent )==1&&len (_dfba ._ffba .PContentChoice .FldSimple [0].EG_PContent [0].PContentChoice .EG_ContentRunContent )==1{_decd :=_bg .NewEG_ContentRunContent ();
-_decd .ContentRunContentChoice .R =_dfba ._ffba .PContentChoice .FldSimple [0].EG_PContent [0].PContentChoice .EG_ContentRunContent [0].ContentRunContentChoice .R ;_dfba ._ffba .PContentChoice .FldSimple =nil ;_eafde :=Run {_efaba ,_decd .ContentRunContentChoice .R };
-_eafde .ClearContent ();_eafde .AddText (_afdbb );_dfba ._ffba .PContentChoice .EG_ContentRunContent =append (_dfba ._ffba .PContentChoice .EG_ContentRunContent ,_decd );};}else {_bdbg :=_dfba ._aacc .Runs ();for _ffee :=_dfba ._dfgb ;_ffee <=_dfba ._adcab ;
-_ffee ++{if _ffee ==_dfba ._bfeaa +1{_bdbg [_ffee ].ClearContent ();_bdbg [_ffee ].AddText (_afdbb );}else {_abfgd [_dfba ._aacc ]=append (_abfgd [_dfba ._aacc ],_bdbg [_ffee ]);};};};};for _dfge ,_cfbae :=range _abfgd {for _ ,_gecg :=range _cfbae {_dfge .RemoveRun (_gecg );
-};};_efaba .Settings .RemoveMailMerge ();};
-
-// SetASCIITheme sets the font ASCII Theme.
-func (_ggfg Fonts )SetASCIITheme (t _bg .ST_Theme ){_ggfg ._bcce .AsciiThemeAttr =t };
-
-// NewNumbering constructs a new numbering.
-func NewNumbering ()Numbering {_bgeb :=_bg .NewNumbering ();return Numbering {_bgeb }};
+// DocRels returns document relationship.
+func (_efcg *Document )DocRels ()_aee .Relationships {return _efcg ._cbaa };
 
 // SetKeepOnOnePage controls if all lines in a paragraph are kept on the same
 // page.
-func (_bagg ParagraphProperties )SetKeepOnOnePage (b bool ){if !b {_bagg ._dabde .KeepLines =nil ;}else {_bagg ._dabde .KeepLines =_bg .NewCT_OnOff ();};};
+func (_ddebd ParagraphProperties )SetKeepOnOnePage (b bool ){if !b {_ddebd ._bbdf .KeepLines =nil ;}else {_ddebd ._bbdf .KeepLines =_ec .NewCT_OnOff ();};};
 
 // SetTop sets the top border to a specified type, color and thickness.
-func (_gff CellBorders )SetTop (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_gff ._bee .Top =_bg .NewCT_Border ();_ecag (_gff ._bee .Top ,t ,c ,thickness );};
-
-// Tables returns the tables defined in the footer.
-func (_cade Footer )Tables ()[]Table {_cccc :=[]Table {};if _cade ._bfebb ==nil {return nil ;};for _ ,_bdfd :=range _cade ._bfebb .EG_BlockLevelElts {for _ ,_dafb :=range _bdfd .BlockLevelEltsChoice .EG_ContentBlockContent {_cccc =append (_cccc ,_cade ._babd .tables (_dafb )...);
-};};return _cccc ;};
-
-// X returns the inner wrapped XML type.
-func (_egbb Cell )X ()*_bg .CT_Tc {return _egbb ._gega };func _ggef (_ggccd *_bg .CT_Border ,_dbbdc _bg .ST_Border ,_daffg _ce .Color ,_fecg _ac .Distance ){_ggccd .ValAttr =_dbbdc ;_ggccd .ColorAttr =&_bg .ST_HexColor {};if _daffg .IsAuto (){_ggccd .ColorAttr .ST_HexColorAuto =_bg .ST_HexColorAutoAuto ;
-}else {_ggccd .ColorAttr .ST_HexColorRGB =_daffg .AsRGBString ();};if _fecg !=_ac .Zero {_ggccd .SzAttr =_g .Uint64 (uint64 (_fecg /_ac .Point *8));};};func _ccacg ()*_ec .Textpath {_agabc :=_ec .NewTextpath ();_agabc .OnAttr =_de .ST_TrueFalseTrue ;_agabc .FitshapeAttr =_de .ST_TrueFalseTrue ;
-return _agabc ;};func _beag (_dafda *_bg .CT_P ,_cefcg map[string ]string ){for _ ,_agad :=range _dafda .EG_PContent {if _agad .PContentChoice .Hyperlink !=nil &&_agad .PContentChoice .Hyperlink .IdAttr !=nil {if _cdcd ,_aedg :=_cefcg [*_agad .PContentChoice .Hyperlink .IdAttr ];
-_aedg {*_agad .PContentChoice .Hyperlink .IdAttr =_cdcd ;};};};};
-
-// SetFontSize sets font size of watermark text.
-func (_cddcb *WatermarkText )SetFontSize (value int64 ){_abdgg :=_cddcb .GetStyle ();_abdgg .SetFontSize (value );_cddcb .SetStyle (_abdgg );if _cddcb ._fbcbg !=nil &&_cddcb ._fbcbg .StyleAttr !=nil {_cbfae :=*_cddcb ._fbcbg .StyleAttr ;_cbfae =_ef .ReplaceAll (_cbfae ,"\u0077i\u0064\u0074\u0068\u003a4\u0036\u0038\u0070\u0074\u003bh\u0065i\u0067h\u0074\u003a\u0032\u0033\u0034\u0070\u0074;",_cb .Sprintf ("\u0077\u0069\u0064th\u003a\u0025\u0064\u0070\u0074\u003b\u0068\u0065\u0069\u0067\u0068\u0074\u003a\u0025\u0064\u0070\u0074\u003b",int64 (len (_cddcb .GetText ()))*value ,2*value ));
-_cddcb ._fbcbg .StyleAttr =&_cbfae ;};};
-
-// SetRightIndent controls right indent of paragraph.
-func (_fgdgb Paragraph )SetRightIndent (m _ac .Distance ){_fgdgb .ensurePPr ();_efdc :=_fgdgb ._dfbf .PPr ;if _efdc .Ind ==nil {_efdc .Ind =_bg .NewCT_Ind ();};if m ==_ac .Zero {_efdc .Ind .RightAttr =nil ;}else {_efdc .Ind .RightAttr =&_bg .ST_SignedTwipsMeasure {};
-_efdc .Ind .RightAttr .Int64 =_g .Int64 (int64 (m /_ac .Twips ));};};
-
-// SetTarget sets the URL target of the hyperlink.
-func (_ddacb HyperLink )SetTarget (url string ){_bbda :=_ddacb ._baac .AddHyperlink (url );_ddacb ._eage .IdAttr =_g .String (_edb .Relationship (_bbda ).ID ());_ddacb ._eage .AnchorAttr =nil ;};
-
-// SetStyle sets style to the text in watermark.
-func (_fadf *WatermarkText )SetStyle (style _dg .TextpathStyle ){_cefbe :=_fadf .getShape ();if _fadf ._fbcbg !=nil {_fcca :=_fadf ._fbcbg .ShapeChoice ;for _ ,_daedc :=range _fcca {if _daedc .ShapeElementsChoice .Textpath !=nil {var _gfbb =style .String ();
-_daedc .ShapeElementsChoice .Textpath .StyleAttr =&_gfbb ;};};return ;};_adab :=_fadf .findNode (_cefbe ,"\u0074\u0065\u0078\u0074\u0070\u0061\u0074\u0068");for _agabg ,_efabfc :=range _adab .Attrs {if _efabfc .Name .Local =="\u0073\u0074\u0079l\u0065"{_adab .Attrs [_agabg ].Value =style .String ();
-};};};
-
-// Properties returns the run properties.
-func (_ccaec Run )Properties ()RunProperties {if _ccaec ._bdced .RPr ==nil {_ccaec ._bdced .RPr =_bg .NewCT_RPr ();};return RunProperties {_ccaec ._bdced .RPr };};
-
-// SetHANSITheme sets the font H ANSI Theme.
-func (_bfbb Fonts )SetHANSITheme (t _bg .ST_Theme ){_bfbb ._bcce .HAnsiThemeAttr =t };
-
-// CellBorders are the borders for an individual
-type CellBorders struct{_bee *_bg .CT_TcBorders };
+func (_eeaff ParagraphBorders )SetTop (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_eeaff ._bbgee .Top =_ec .NewCT_Border ();_dabbg (_eeaff ._bbgee .Top ,t ,c ,thickness );};
 
 // GetImage returns the ImageRef associated with an InlineDrawing.
-func (_egcd InlineDrawing )GetImage ()(_edb .ImageRef ,bool ){_feff :=_egcd ._dacaf .Graphic .GraphicData .Any ;if len (_feff )> 0{for _ ,_fgfb :=range _feff {_efag ,_acgga :=_fgfb .(*_gg .Pic );if _acgga {if _efag .BlipFill !=nil &&_efag .BlipFill .Blip !=nil &&_efag .BlipFill .Blip .EmbedAttr !=nil {return _egcd ._bdcdg .GetImageByRelID (*_efag .BlipFill .Blip .EmbedAttr );
-};};};};return _edb .ImageRef {},false ;};
+func (_aace InlineDrawing )GetImage ()(_aee .ImageRef ,bool ){_egbaa :=_aace ._ggdaf .Graphic .GraphicData .Any ;if len (_egbaa )> 0{for _ ,_ecec :=range _egbaa {_acbb ,_fgcc :=_ecec .(*_bf .Pic );if _fgcc {if _acbb .BlipFill !=nil &&_acbb .BlipFill .Blip !=nil &&_acbb .BlipFill .Blip .EmbedAttr !=nil {return _aace ._fbdda .GetImageByRelID (*_acbb .BlipFill .Blip .EmbedAttr );
+};};};};return _aee .ImageRef {},false ;};
 
-// AddTable adds a new table to the document body.
-func (_dca *Document )AddTable ()Table {_fgae :=_bg .NewEG_BlockLevelElts ();_dca ._feaa .Body .EG_BlockLevelElts =append (_dca ._feaa .Body .EG_BlockLevelElts ,_fgae );_acbe :=_bg .NewEG_ContentBlockContent ();_fgae .BlockLevelEltsChoice .EG_ContentBlockContent =append (_fgae .BlockLevelEltsChoice .EG_ContentBlockContent ,_acbe );
-_age :=_bg .NewCT_Tbl ();_acbe .ContentBlockContentChoice .Tbl =append (_acbe .ContentBlockContentChoice .Tbl ,_age );return Table {_dca ,_age };};
+// SetBeforeSpacing sets spacing above paragraph.
+func (_gbfdc Paragraph )SetBeforeSpacing (d _ga .Distance ){_gbfdc .ensurePPr ();if _gbfdc ._fagb .PPr .Spacing ==nil {_gbfdc ._fagb .PPr .Spacing =_ec .NewCT_Spacing ();};_ecdca :=_gbfdc ._fagb .PPr .Spacing ;_ecdca .BeforeAttr =&_afe .ST_TwipsMeasure {};
+_ecdca .BeforeAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (d /_ga .Twips ));};func (_gdae Document )mergeFields ()[]mergeFieldInfo {_dgfe :=[]Paragraph {};_eadg :=[]mergeFieldInfo {};for _ ,_eaee :=range _gdae .Tables (){for _ ,_decg :=range _eaee .Rows (){for _ ,_fcffc :=range _decg .Cells (){_dgfe =append (_dgfe ,_fcffc .Paragraphs ()...);
+};};};_dgfe =append (_dgfe ,_gdae .Paragraphs ()...);for _ ,_acae :=range _gdae .Headers (){_dgfe =append (_dgfe ,_acae .Paragraphs ()...);for _ ,_fccb :=range _acae .Tables (){for _ ,_befb :=range _fccb .Rows (){for _ ,_efadd :=range _befb .Cells (){_dgfe =append (_dgfe ,_efadd .Paragraphs ()...);
+};};};};for _ ,_ggdag :=range _gdae .Footers (){_dgfe =append (_dgfe ,_ggdag .Paragraphs ()...);for _ ,_aebbf :=range _ggdag .Tables (){for _ ,_adeg :=range _aebbf .Rows (){for _ ,_cfcd :=range _adeg .Cells (){_dgfe =append (_dgfe ,_cfcd .Paragraphs ()...);
+};};};};for _ ,_aaegd :=range _dgfe {_cade :=_aaegd .Runs ();_fgfc :=-1;_aegc :=-1;_bcebc :=-1;_aebbe :=mergeFieldInfo {};for _ ,_aadcf :=range _aaegd ._fagb .EG_PContent {for _ ,_bfbf :=range _aadcf .PContentChoice .FldSimple {if _ce .Contains (_bfbf .InstrAttr ,"\u004d\u0045\u0052\u0047\u0045\u0046\u0049\u0045\u004c\u0044"){_abgc :=_gfdd (_bfbf .InstrAttr );
+_abgc ._dbebb =true ;_abgc ._bbca =_aaegd ;_abgc ._acaa =_aadcf ;_eadg =append (_eadg ,_abgc );};};};for _caba :=0;_caba < len (_cade );_caba ++{_abcec :=_cade [_caba ];for _ ,_caage :=range _abcec .X ().EG_RunInnerContent {if _caage .RunInnerContentChoice .FldChar !=nil {switch _caage .RunInnerContentChoice .FldChar .FldCharTypeAttr {case _ec .ST_FldCharTypeBegin :_fgfc =_caba ;
+case _ec .ST_FldCharTypeSeparate :_aegc =_caba ;case _ec .ST_FldCharTypeEnd :_bcebc =_caba ;if _aebbe ._ecgeg !=""{_aebbe ._bbca =_aaegd ;_aebbe ._ecacd =_fgfc ;_aebbe ._dfade =_bcebc ;_aebbe ._abcc =_aegc ;_eadg =append (_eadg ,_aebbe );};_fgfc =-1;_aegc =-1;
+_bcebc =-1;_aebbe =mergeFieldInfo {};};}else if _caage .RunInnerContentChoice .InstrText !=nil &&_ce .Contains (_caage .RunInnerContentChoice .InstrText .Content ,"\u004d\u0045\u0052\u0047\u0045\u0046\u0049\u0045\u004c\u0044"){if _fgfc !=-1&&_bcebc ==-1{_aebbe =_gfdd (_caage .RunInnerContentChoice .InstrText .Content );
+};};};};};return _eadg ;};
 
-// SetWidthAuto sets the the table width to automatic.
-func (_cadac TableProperties )SetWidthAuto (){_cadac ._cdfg .TblW =_bg .NewCT_TblWidth ();_cadac ._cdfg .TblW .TypeAttr =_bg .ST_TblWidthAuto ;};
+// SetOutlineLvl sets outline level of paragraph.
+func (_fedda Paragraph )SetOutlineLvl (lvl int64 ){_fedda .ensurePPr ();if _fedda ._fagb .PPr .OutlineLvl ==nil {_fedda ._fagb .PPr .OutlineLvl =_ec .NewCT_DecimalNumber ();};_bfcdge :=lvl -1;_fedda ._fagb .PPr .OutlineLvl .ValAttr =_bfcdge ;};func (_ggee *Document )insertParagraph (_dafe Paragraph ,_ccfb bool )Paragraph {if _ggee ._dgg .Body ==nil {return _ggee .AddParagraph ();
+};_gccg :=_dafe .X ();for _ ,_badf :=range _ggee ._dgg .Body .EG_BlockLevelElts {for _ ,_eega :=range _badf .BlockLevelEltsChoice .EG_ContentBlockContent {for _dfdf ,_bbece :=range _eega .ContentBlockContentChoice .P {if _bbece ==_gccg {_acgf :=_ec .NewCT_P ();
+_eega .ContentBlockContentChoice .P =append (_eega .ContentBlockContentChoice .P ,nil );if _ccfb {copy (_eega .ContentBlockContentChoice .P [_dfdf +1:],_eega .ContentBlockContentChoice .P [_dfdf :]);_eega .ContentBlockContentChoice .P [_dfdf ]=_acgf ;}else {copy (_eega .ContentBlockContentChoice .P [_dfdf +2:],_eega .ContentBlockContentChoice .P [_dfdf +1:]);
+_eega .ContentBlockContentChoice .P [_dfdf +1]=_acgf ;};return Paragraph {_ggee ,_acgf };};};for _ ,_bfbgc :=range _eega .ContentBlockContentChoice .Tbl {for _ ,_aeec :=range _bfbgc .EG_ContentRowContent {for _ ,_gbfe :=range _aeec .ContentRowContentChoice .Tr {for _ ,_eabb :=range _gbfe .EG_ContentCellContent {for _ ,_cceb :=range _eabb .ContentCellContentChoice .Tc {for _ ,_fgbg :=range _cceb .EG_BlockLevelElts {for _ ,_fbfd :=range _fgbg .BlockLevelEltsChoice .EG_ContentBlockContent {for _ceaf ,_gabdc :=range _fbfd .ContentBlockContentChoice .P {if _gabdc ==_gccg {_dbbc :=_ec .NewCT_P ();
+_fbfd .ContentBlockContentChoice .P =append (_fbfd .ContentBlockContentChoice .P ,nil );if _ccfb {copy (_fbfd .ContentBlockContentChoice .P [_ceaf +1:],_fbfd .ContentBlockContentChoice .P [_ceaf :]);_fbfd .ContentBlockContentChoice .P [_ceaf ]=_dbbc ;}else {copy (_fbfd .ContentBlockContentChoice .P [_ceaf +2:],_fbfd .ContentBlockContentChoice .P [_ceaf +1:]);
+_fbfd .ContentBlockContentChoice .P [_ceaf +1]=_dbbc ;};return Paragraph {_ggee ,_dbbc };};};};};};};};};};if _eega .ContentBlockContentChoice .Sdt !=nil &&_eega .ContentBlockContentChoice .Sdt .SdtContent !=nil {for _ ,_aage :=range _eega .ContentBlockContentChoice .Sdt .SdtContent .EG_ContentBlockContent {for _bbae ,_feee :=range _aage .ContentBlockContentChoice .P {if _feee ==_gccg {_geec :=_ec .NewCT_P ();
+_aage .ContentBlockContentChoice .P =append (_aage .ContentBlockContentChoice .P ,nil );if _ccfb {copy (_aage .ContentBlockContentChoice .P [_bbae +1:],_aage .ContentBlockContentChoice .P [_bbae :]);_aage .ContentBlockContentChoice .P [_bbae ]=_geec ;}else {copy (_aage .ContentBlockContentChoice .P [_bbae +2:],_aage .ContentBlockContentChoice .P [_bbae +1:]);
+_aage .ContentBlockContentChoice .P [_bbae +1]=_geec ;};return Paragraph {_ggee ,_geec };};};};};};};return _ggee .AddParagraph ();};func _faee (_ddga *_ec .EG_ContentBlockContent )[]Bookmark {_fafc :=[]Bookmark {};for _ ,_eeeg :=range _ddga .ContentBlockContentChoice .P {for _ ,_eaed :=range _eeeg .EG_PContent {for _ ,_cdag :=range _eaed .PContentChoice .EG_ContentRunContent {for _ ,_gdff :=range _cdag .ContentRunContentChoice .EG_RunLevelElts {for _ ,_debe :=range _gdff .RunLevelEltsChoice .EG_RangeMarkupElements {if _debe .RangeMarkupElementsChoice .BookmarkStart !=nil {_fafc =append (_fafc ,Bookmark {_debe .RangeMarkupElementsChoice .BookmarkStart });
+};};};};};};for _ ,_cbeb :=range _ddga .ContentBlockContentChoice .EG_RunLevelElts {for _ ,_efbf :=range _cbeb .RunLevelEltsChoice .EG_RangeMarkupElements {if _efbf .RangeMarkupElementsChoice .BookmarkStart !=nil {_fafc =append (_fafc ,Bookmark {_efbf .RangeMarkupElementsChoice .BookmarkStart });
+};};};for _ ,_cgafa :=range _ddga .ContentBlockContentChoice .Tbl {for _ ,_feeed :=range _cgafa .EG_ContentRowContent {for _ ,_acd :=range _feeed .ContentRowContentChoice .Tr {for _ ,_gfaa :=range _acd .EG_ContentCellContent {for _ ,_gbafd :=range _gfaa .ContentCellContentChoice .Tc {for _ ,_ccabb :=range _gbafd .EG_BlockLevelElts {for _ ,_adcd :=range _ccabb .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_dbad :=range _faee (_adcd ){_fafc =append (_fafc ,_dbad );
+};};};};};};};};return _fafc ;};func _gfdd (_edbdd string )mergeFieldInfo {_dffbc :=[]string {};_bfbeg :=_bc .Buffer {};_egagd :=-1;for _dggd ,_gdec :=range _edbdd {switch _gdec {case ' ':if _bfbeg .Len ()!=0{_dffbc =append (_dffbc ,_bfbeg .String ());
+};_bfbeg .Reset ();case '"':if _egagd !=-1{_dffbc =append (_dffbc ,_edbdd [_egagd +1:_dggd ]);_egagd =-1;}else {_egagd =_dggd ;};default:_bfbeg .WriteRune (_gdec );};};if _bfbeg .Len ()!=0{_dffbc =append (_dffbc ,_bfbeg .String ());};_bebb :=mergeFieldInfo {};
+for _eacb :=0;_eacb < len (_dffbc )-1;_eacb ++{_dceb :=_dffbc [_eacb ];switch _dceb {case "\u004d\u0045\u0052\u0047\u0045\u0046\u0049\u0045\u004c\u0044":_bebb ._ecgeg =_dffbc [_eacb +1];_eacb ++;case "\u005c\u0066":_bebb ._acadb =_dffbc [_eacb +1];_eacb ++;
+case "\u005c\u0062":_bebb ._fbbff =_dffbc [_eacb +1];_eacb ++;case "\u005c\u002a":switch _dffbc [_eacb +1]{case "\u0055\u0070\u0070e\u0072":_bebb ._ccfg =true ;case "\u004c\u006f\u0077e\u0072":_bebb ._agddc =true ;case "\u0043\u0061\u0070\u0073":_bebb ._aacee =true ;
+case "\u0046\u0069\u0072\u0073\u0074\u0043\u0061\u0070":_bebb ._bgbfb =true ;};_eacb ++;};};return _bebb ;};func (_ddb *chart )Target ()string {return _ddb ._gdg };
 
-// SetText sets the text to be used in bullet mode.
-func (_gdgcf NumberingLevel )SetText (t string ){if t ==""{_gdgcf ._ebebd .LvlText =nil ;}else {_gdgcf ._ebebd .LvlText =_bg .NewCT_LevelText ();_gdgcf ._ebebd .LvlText .ValAttr =_g .String (t );};};
+// ExtractFromFooter returns text from the document footer as an array of TextItems.
+func ExtractFromFooter (footer *_ec .Ftr )[]TextItem {var _beeac []TextItem ;for _ ,_acebe :=range footer .EG_BlockLevelElts {_beeac =append (_beeac ,_acfe (_acebe .BlockLevelEltsChoice .EG_ContentBlockContent ,nil )...);};return _beeac ;};
+
+// SetToolTip sets the tooltip text for a hyperlink.
+func (_dbca HyperLink )SetToolTip (text string ){if text ==""{_dbca ._fbcd .TooltipAttr =nil ;}else {_dbca ._fbcd .TooltipAttr =_c .String (text );};};
+
+// NewSettings constructs a new empty Settings
+func NewSettings ()Settings {_abfc :=_ec .NewSettings ();_abfc .Compat =_ec .NewCT_Compat ();_cabba :=_ec .NewCT_CompatSetting ();_cabba .NameAttr =_c .String ("\u0063\u006f\u006d\u0070\u0061\u0074\u0069\u0062\u0069\u006c\u0069\u0074y\u004d\u006f\u0064\u0065");
+_cabba .UriAttr =_c .String ("h\u0074\u0074\u0070\u003a\u002f\u002f\u0073\u0063\u0068\u0065\u006d\u0061\u0073\u002e\u006d\u0069\u0063\u0072o\u0073\u006f\u0066\u0074\u002e\u0063\u006f\u006d\u002f\u006fff\u0069\u0063\u0065/\u0077o\u0072\u0064");_cabba .ValAttr =_c .String ("\u0031\u0035");
+_abfc .Compat .CompatSetting =append (_abfc .Compat .CompatSetting ,_cabba );return Settings {_abfc };};
 
 // Borders allows manipulation of the table borders.
-func (_adfcb TableProperties )Borders ()TableBorders {if _adfcb ._cdfg .TblBorders ==nil {_adfcb ._cdfg .TblBorders =_bg .NewCT_TblBorders ();};return TableBorders {_adfcb ._cdfg .TblBorders };};
+func (_daef TableStyleProperties )Borders ()TableBorders {if _daef ._bgebd .TblBorders ==nil {_daef ._bgebd .TblBorders =_ec .NewCT_TblBorders ();};return TableBorders {_daef ._bgebd .TblBorders };};
 
-// Properties returns the cell properties.
-func (_eeab Cell )Properties ()CellProperties {if _eeab ._gega .TcPr ==nil {_eeab ._gega .TcPr =_bg .NewCT_TcPr ();};return CellProperties {_eeab ._gega .TcPr };};
+// AddParagraph adds a paragraph to the header.
+func (_beced Header )AddParagraph ()Paragraph {_aeecd :=_ec .NewEG_ContentBlockContent ();_beced ._fgcdg .EG_BlockLevelElts =append (_beced ._fgcdg .EG_BlockLevelElts ,&_ec .EG_BlockLevelElts {BlockLevelEltsChoice :&_ec .EG_BlockLevelEltsChoice {EG_ContentBlockContent :[]*_ec .EG_ContentBlockContent {_aeecd }}});
+_edcgf :=_ec .NewCT_P ();_aeecd .ContentBlockContentChoice .P =append (_aeecd .ContentBlockContentChoice .P ,_edcgf );return Paragraph {_beced ._fegd ,_edcgf };};
 
-// SetLinkedStyle sets the style that this style is linked to.
-func (_cddf Style )SetLinkedStyle (name string ){if name ==""{_cddf ._cbega .Link =nil ;}else {_cddf ._cbega .Link =_bg .NewCT_String ();_cddf ._cbega .Link .ValAttr =name ;};};
+// SearchStyleByName return style by its name.
+func (_ccfa Styles )SearchStyleByName (name string )(Style ,bool ){for _ ,_fegda :=range _ccfa ._ggeafb .Style {if _fegda .Name !=nil {if _fegda .Name .ValAttr ==name {return Style {_fegda },true ;};};};return Style {},false ;};
 
-// SetVerticalMerge controls the vertical merging of cells.
-func (_afe CellProperties )SetVerticalMerge (mergeVal _bg .ST_Merge ){if mergeVal ==_bg .ST_MergeUnset {_afe ._bbb .VMerge =nil ;}else {_afe ._bbb .VMerge =_bg .NewCT_VMerge ();_afe ._bbb .VMerge .ValAttr =mergeVal ;};};
+// Font returns the name of paragraph font family.
+func (_egaec ParagraphProperties )Font ()string {if _beff :=_egaec ._bbdf .RPr .RFonts ;_beff !=nil {if _beff .AsciiAttr !=nil {return *_beff .AsciiAttr ;}else if _beff .HAnsiAttr !=nil {return *_beff .HAnsiAttr ;}else if _beff .CsAttr !=nil {return *_beff .CsAttr ;
+};};return "";};
 
-// SetSize sets the size of the displayed image on the page.
-func (_ca AnchoredDrawing )SetSize (w ,h _ac .Distance ){_ca ._cd .Extent .CxAttr =int64 (float64 (w *_ac .Pixel72 )/_ac .EMU );_ca ._cd .Extent .CyAttr =int64 (float64 (h *_ac .Pixel72 )/_ac .EMU );};
+// SetHangingIndent controls the hanging indent of the paragraph.
+func (_abadg ParagraphStyleProperties )SetHangingIndent (m _ga .Distance ){if _abadg ._egfac .Ind ==nil {_abadg ._egfac .Ind =_ec .NewCT_Ind ();};if m ==_ga .Zero {_abadg ._egfac .Ind .HangingAttr =nil ;}else {_abadg ._egfac .Ind .HangingAttr =&_afe .ST_TwipsMeasure {};
+_abadg ._egfac .Ind .HangingAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (m /_ga .Twips ));};};
 
-// X returns the inner wrapped type
-func (_gbc CellBorders )X ()*_bg .CT_TcBorders {return _gbc ._bee };
+// GetStyleByID returns Style by it is IdAttr.
+func (_dbffb *Document )GetStyleByID (id string )Style {for _ ,_eacd :=range _dbffb .Styles ._ggeafb .Style {if _eacd .StyleIdAttr !=nil &&*_eacd .StyleIdAttr ==id {return Style {_eacd };};};return Style {};};func _ggba (_cggg *Run ,_efccb string ,_abba *htmlNode ){switch _efccb {case "\u0062","\u0073\u0074\u0072\u006f\u006e\u0067":_cggg .Properties ().SetBold (true );
+case "\u0069","\u0065\u006d":_cggg .Properties ().SetItalic (true );case "\u0075":_bfcce :=_gc .Black ;for _ ,_afedf :=range _abba ._ffga .Attr {if _afedf .Name .Local =="\u0063\u006f\u006co\u0072"{if _abad ,_fagg :=_gc .ColorMap [_afedf .Value ];_fagg {_bfcce =_abad ;
+};};};_cggg .Properties ().SetUnderline (_ec .ST_UnderlineSingle ,_bfcce );case "\u0073\u0074\u0072\u0069\u006b\u0065":_cggg .Properties ().SetStrikeThrough (true );case "\u006d\u0061\u0072\u006b":_fbgf :=_ec .ST_HighlightColorYellow ;for _ ,_aaggd :=range _abba ._ffga .Attr {if _aaggd .Name .Local =="\u0063\u006f\u006co\u0072"{if _gbdbd ,_dgace :=_gc .HighlightColorMap [_aaggd .Value ];
+_dgace {_fbgf =_gbdbd ;};};};_cggg .Properties ().SetHighlight (_fbgf );case "\u0073\u0075\u0062":_cggg .Properties ().SetVerticalAlignment (_afe .ST_VerticalAlignRunSubscript );case "\u0073\u0075\u0070":_cggg .Properties ().SetVerticalAlignment (_afe .ST_VerticalAlignRunSuperscript );
+};};func (_gggf *Document )syncFootnoteSettings (){_bced :=[]int64 {};_febd :=_gggf .Footnotes ();for _ ,_eca :=range _febd {if _eca .X ().TypeAttr !=_ec .ST_FtnEdnUnset &&_eca .X ().TypeAttr !=_ec .ST_FtnEdnNormal {_bced =append (_bced ,_eca .X ().IdAttr );
+};};_cabf :=_gggf .Settings .X ().CT_Settings .FootnotePr ;if _cabf ==nil {_cabf =_ec .NewCT_FtnDocProps ();};if len (_bced )==0{_cabf .Footnote =nil ;return ;};_cabf .Footnote =[]*_ec .CT_FtnEdnSepRef {};for _ ,_dce :=range _bced {_dad :=_ec .NewCT_FtnEdnSepRef ();
+_dad .IdAttr =_dce ;_cabf .Footnote =append (_cabf .Footnote ,_dad );};};
 
-// GetWrapPathStart return wrapPath start value.
-func (_agd AnchorDrawWrapOptions )GetWrapPathStart ()*_eg .CT_Point2D {return _agd ._gga };
+// EastAsiaFont returns the name of run font family for East Asia.
+func (_bdfbc RunProperties )EastAsiaFont ()string {if _cbgf :=_bdfbc ._bffab .RFonts ;_cbgf !=nil {if _cbgf .EastAsiaAttr !=nil {return *_cbgf .EastAsiaAttr ;};};return "";};
 
-// Comment returns comment associated with given id.
-func (_bgdfd *Document )Comment (id int64 )Comment {for _ ,_eab :=range _bgdfd .Comments (){if _eab .id ()==id {return _eab ;};};return Comment {};};
+// SetTextStyleItalic sets text style of watermark to italic.
+func (_ceeb *WatermarkText )SetTextStyleItalic (value bool ){_dafbf :=_ceeb .GetStyle ();_dafbf .SetItalic (value );_ceeb .SetStyle (_dafbf );};
 
-// Font returns the name of run font family.
-func (_ebfa RunProperties )Font ()string {if _eecgd :=_ebfa ._ddbb .RFonts ;_eecgd !=nil {if _eecgd .AsciiAttr !=nil {return *_eecgd .AsciiAttr ;}else if _eecgd .HAnsiAttr !=nil {return *_eecgd .HAnsiAttr ;}else if _eecgd .CsAttr !=nil {return *_eecgd .CsAttr ;
-};};return "";};func _gfdd (_dfca *_bg .EG_ContentBlockContent )[]Bookmark {_bdagb :=[]Bookmark {};for _ ,_gccd :=range _dfca .ContentBlockContentChoice .P {for _ ,_eagd :=range _gccd .EG_PContent {for _ ,_ecee :=range _eagd .PContentChoice .EG_ContentRunContent {for _ ,_fafd :=range _ecee .ContentRunContentChoice .EG_RunLevelElts {for _ ,_fcgf :=range _fafd .RunLevelEltsChoice .EG_RangeMarkupElements {if _fcgf .RangeMarkupElementsChoice .BookmarkStart !=nil {_bdagb =append (_bdagb ,Bookmark {_fcgf .RangeMarkupElementsChoice .BookmarkStart });
-};};};};};};for _ ,_bfbaa :=range _dfca .ContentBlockContentChoice .EG_RunLevelElts {for _ ,_acac :=range _bfbaa .RunLevelEltsChoice .EG_RangeMarkupElements {if _acac .RangeMarkupElementsChoice .BookmarkStart !=nil {_bdagb =append (_bdagb ,Bookmark {_acac .RangeMarkupElementsChoice .BookmarkStart });
-};};};for _ ,_fgac :=range _dfca .ContentBlockContentChoice .Tbl {for _ ,_ccdd :=range _fgac .EG_ContentRowContent {for _ ,_bfdb :=range _ccdd .ContentRowContentChoice .Tr {for _ ,_eafg :=range _bfdb .EG_ContentCellContent {for _ ,_gged :=range _eafg .ContentCellContentChoice .Tc {for _ ,_eddg :=range _gged .EG_BlockLevelElts {for _ ,_edgada :=range _eddg .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_aebf :=range _gfdd (_edgada ){_bdagb =append (_bdagb ,_aebf );
-};};};};};};};};return _bdagb ;};
+// PutNodeBefore put node to position before relativeTo.
+func (_addfc *Document )PutNodeBefore (relativeTo ,node Node ){_addfc .putNode (relativeTo ,node ,true )};
 
-// ReplaceTextByRegexp replace text inside node using regexp.
-func (_ddga *Nodes )ReplaceTextByRegexp (expr *_ea .Regexp ,newText string ){for _ ,_dfff :=range _ddga ._feda {_dfff .ReplaceTextByRegexp (expr ,newText );};};
+// Name returns the name of the bookmark whcih is the document unique ID that
+// identifies the bookmark.
+func (_bdc Bookmark )Name ()string {return _bdc ._fad .NameAttr };
 
-// SetOuterShadowImageEffect sets the outer shadow image effect.
-func (_fe AnchoredDrawing )SetOuterShadowImageEffect (radius ,offset _ac .Distance ,c _ce .Color ,degrees float64 ){_ecg :=_ac .ToEMU (float64 (radius ));_geg :=_ac .ToEMU (float64 (offset ));_fea :=int32 (degrees *60000);for _ ,_gcc :=range _fe ._cd .Graphic .GraphicData .Any {if _ff ,_feg :=_gcc .(*_gg .Pic );
-_feg {_fe .initializeEffectList (_ff .SpPr );_ff .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw =_eg .NewCT_OuterShadowEffect ();_ff .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .BlurRadAttr =&_ecg ;_ff .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .DistAttr =&_geg ;
-_ff .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .DirAttr =&_fea ;_ff .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .SrgbClr =_eg .NewCT_SRgbColor ();_ff .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .SrgbClr .ValAttr =*c .AsRGBString ();
-_ff .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .AlgnAttr =_eg .ST_RectAlignmentBl ;_abf :=false ;_ff .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .RotWithShapeAttr =&_abf ;};};_fe .setEffectExtent (_ecg ,_ecg ,_ecg ,_ecg );};
+// X returns the inner wrapped XML type.
+func (_efbae Color )X ()*_ec .CT_Color {return _efbae ._fggd };
 
-// SetVAlignment sets the vertical alignment for an anchored image.
-func (_aab AnchoredDrawing )SetVAlignment (v _bg .WdST_AlignV ){_aab ._cd .PositionV .PosVChoice =&_bg .WdCT_PosVChoice {};_aab ._cd .PositionV .PosVChoice .Align =v ;};
+// SetThemeColor sets the color from the theme.
+func (_eed Color )SetThemeColor (t _ec .ST_ThemeColor ){_eed ._fggd .ThemeColorAttr =t };
+
+// SetRight sets the right border to a specified type, color and thickness.
+func (_feec TableBorders )SetRight (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_feec ._gbeg .Right =_ec .NewCT_Border ();_cffba (_feec ._gbeg .Right ,t ,c ,thickness );};
+
+// SetWidthAuto sets the the cell width to automatic.
+func (_agg CellProperties )SetWidthAuto (){_agg ._eef .TcW =_ec .NewCT_TblWidth ();_agg ._eef .TcW .TypeAttr =_ec .ST_TblWidthAuto ;};
+
+// AddDropdownList adds dropdown list form field to the paragraph and returns it.
+func (_fcgfe Paragraph )AddDropdownList (name string )FormField {_baaa :=_fcgfe .addFldCharsForField (name ,"\u0046\u004f\u0052M\u0044\u0052\u004f\u0050\u0044\u004f\u0057\u004e");_baaa ._dcbfb .FFDataChoice [0].DdList =_ec .NewCT_FFDDList ();return _baaa ;
+};
+
+// Paragraph is a paragraph within a document.
+type Paragraph struct{_fafde *Document ;_fagb *_ec .CT_P ;};func (_dgfca Run )newIC ()*_ec .EG_RunInnerContent {_bgfc :=_ec .NewEG_RunInnerContent ();_dgfca ._aeef .EG_RunInnerContent =append (_dgfca ._aeef .EG_RunInnerContent ,_bgfc );return _bgfc ;};
+
+
+// Fonts allows manipulating a style or run's fonts.
+type Fonts struct{_addaa *_ec .CT_Fonts };
+
+// Borders allows controlling individual cell borders.
+func (_cce CellProperties )Borders ()CellBorders {if _cce ._eef .TcBorders ==nil {_cce ._eef .TcBorders =_ec .NewCT_TcBorders ();};return CellBorders {_cce ._eef .TcBorders };};
+
+// IsFootnote returns a bool based on whether the run has a
+// footnote or not. Returns both a bool as to whether it has
+// a footnote as well as the ID of the footnote.
+func (_gafc Run )IsFootnote ()(bool ,int64 ){if _gafc ._aeef .EG_RunInnerContent !=nil {if _gafc ._aeef .EG_RunInnerContent [0].RunInnerContentChoice .FootnoteReference !=nil {return true ,_gafc ._aeef .EG_RunInnerContent [0].RunInnerContentChoice .FootnoteReference .IdAttr ;
+};};return false ,0;};
 
 // AnchorDrawWrapOptions is options to set
 // wrapPolygon for wrap text through and tight.
-type AnchorDrawWrapOptions struct{_gege bool ;_gga *_eg .CT_Point2D ;_adf []*_eg .CT_Point2D ;};
+type AnchorDrawWrapOptions struct{_gbge bool ;_fba *_cc .CT_Point2D ;_deb []*_cc .CT_Point2D ;};
+
+// SetStartIndent controls the start indent of the paragraph.
+func (_bgfd ParagraphStyleProperties )SetStartIndent (m _ga .Distance ){if _bgfd ._egfac .Ind ==nil {_bgfd ._egfac .Ind =_ec .NewCT_Ind ();};if m ==_ga .Zero {_bgfd ._egfac .Ind .StartAttr =nil ;}else {_bgfd ._egfac .Ind .StartAttr =&_ec .ST_SignedTwipsMeasure {};
+_bgfd ._egfac .Ind .StartAttr .Int64 =_c .Int64 (int64 (m /_ga .Twips ));};};
+
+// CloseComment will close the comment.
+func (_egcf Paragraph )CloseComment (commentId int64 ){_egcf .addEndComment (commentId );_aege :=_egcf .AddRun ();_aege .AddCommentReference (commentId );_abaf :=_aege .Properties ();_abaf .SetStyle (_egbc );};
+
+// SetFontSize sets font size of watermark text.
+func (_dcbfc *WatermarkText )SetFontSize (value int64 ){_eabee :=_dcbfc .GetStyle ();_eabee .SetFontSize (value );_dcbfc .SetStyle (_eabee );if _dcbfc ._eafca !=nil &&_dcbfc ._eafca .StyleAttr !=nil {_bggc :=*_dcbfc ._eafca .StyleAttr ;_bggc =_ce .ReplaceAll (_bggc ,"\u0077i\u0064\u0074\u0068\u003a4\u0036\u0038\u0070\u0074\u003bh\u0065i\u0067h\u0074\u003a\u0032\u0033\u0034\u0070\u0074;",_cb .Sprintf ("\u0077\u0069\u0064th\u003a\u0025\u0064\u0070\u0074\u003b\u0068\u0065\u0069\u0067\u0068\u0074\u003a\u0025\u0064\u0070\u0074\u003b",int64 (len (_dcbfc .GetText ()))*value ,2*value ));
+_dcbfc ._eafca .StyleAttr =&_bggc ;};};
+
+// SetWidthPercent sets the table to a width percentage.
+func (_accf TableProperties )SetWidthPercent (pct float64 ){_accf ._egdbb .TblW =_ec .NewCT_TblWidth ();_accf ._egdbb .TblW .TypeAttr =_ec .ST_TblWidthPct ;_accf ._egdbb .TblW .WAttr =&_ec .ST_MeasurementOrPercent {};_accf ._egdbb .TblW .WAttr .ST_DecimalNumberOrPercent =&_ec .ST_DecimalNumberOrPercent {};
+_accf ._egdbb .TblW .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_c .Int64 (int64 (pct *50));};
+
+// Strike returns true if run is striked.
+func (_fcce RunProperties )Strike ()bool {return _gfgb (_fcce ._bffab .Strike )};
+
+// Underline returns the type of paragraph underline.
+func (_afba ParagraphProperties )Underline ()_ec .ST_Underline {if _dddbe :=_afba ._bbdf .RPr .U ;_dddbe !=nil {return _dddbe .ValAttr ;};return 0;};func (_dgfbg *Document )putNode (_bbbe ,_aeead Node ,_fdggc bool )bool {_dgfbg .insertImageFromNode (_aeead );
+_dgfbg .insertStyleFromNode (_aeead );switch _cfab :=_aeead ._becg .(type ){case *Paragraph :if _bagc ,_bbba :=_bbbe .X ().(*Paragraph );_bbba {_dgfbg .appendParagraph (_bagc ,*_cfab ,_fdggc );return true ;}else {for _ ,_caag :=range _bbbe .Children {if _fgbdd :=_dgfbg .putNode (_caag ,_aeead ,_fdggc );
+_fgbdd {break ;};};};case *Table :if _eabc ,_eaec :=_bbbe .X ().(*Paragraph );_eaec {_gfca :=_dgfbg .appendTable (_eabc ,*_cfab ,_fdggc );_gfca ._bbefb =_cfab ._bbefb ;return true ;}else {for _ ,_cgba :=range _bbbe .Children {if _baee :=_dgfbg .putNode (_cgba ,_aeead ,_fdggc );
+_baee {break ;};};};};return false ;};
+
+// SetName marks sets a name attribute for a FormField.
+func (_gebgg FormField )SetName (name string ){_bfce :=_ec .NewCT_FFName ();_bfce .ValAttr =&name ;_gebgg ._dcbfb .FFDataChoice =[]*_ec .CT_FFDataChoice {{Name :_bfce }};};
+
+// DrawingInline return a slice of InlineDrawings.
+func (_fbca Run )DrawingInline ()[]InlineDrawing {_adaca :=[]InlineDrawing {};for _ ,_bbfd :=range _fbca ._aeef .EG_RunInnerContent {if _bbfd .RunInnerContentChoice .Drawing ==nil {continue ;};for _ ,_bbab :=range _bbfd .RunInnerContentChoice .Drawing .DrawingChoice {if _bbab .Inline ==nil {continue ;
+};_adaca =append (_adaca ,InlineDrawing {_fbca ._abae ,_bbab .Inline });};};return _adaca ;};
+
+// InitializeDefault constructs the default styles.
+func (_gacbg Styles )InitializeDefault (){_gacbg .initializeDocDefaults ();_gacbg .initializeStyleDefaults ();};func _dbebbg (_abded *Document ,_cgcd []*_ec .CT_P ,_cdge *TableInfo ,_cdcfa *DrawingInfo )[]Node {_dgeaf :=[]Node {};for _ ,_dfac :=range _cgcd {_cgbac :=Paragraph {_abded ,_dfac };
+_fdgdg :=Node {_ecce :_abded ,_becg :&_cgbac };if _gfge ,_dbfc :=_abded .Styles .SearchStyleById (_cgbac .Style ());_dbfc {_fdgdg .Style =_gfge ;};for _ ,_cdcfd :=range _cgbac .Runs (){_fdgdg .Children =append (_fdgdg .Children ,Node {_ecce :_abded ,_becg :_cdcfd ,AnchoredDrawings :_cdcfd .DrawingAnchored (),InlineDrawings :_cdcfd .DrawingInline ()});
+};_dgeaf =append (_dgeaf ,_fdgdg );};return _dgeaf ;};
+
+// SetLeftIndent controls the left indent of the paragraph.
+func (_debf ParagraphStyleProperties )SetLeftIndent (m _ga .Distance ){if _debf ._egfac .Ind ==nil {_debf ._egfac .Ind =_ec .NewCT_Ind ();};if m ==_ga .Zero {_debf ._egfac .Ind .LeftAttr =nil ;}else {_debf ._egfac .Ind .LeftAttr =&_ec .ST_SignedTwipsMeasure {};
+_debf ._egfac .Ind .LeftAttr .Int64 =_c .Int64 (int64 (m /_ga .Twips ));};};
 
 // X returns the inner wrapped XML type.
-func (_dgbe Run )X ()*_bg .CT_R {return _dgbe ._bdced };var (FootnoteTextStyleId ="\u0046\u006f\u006ft\u006e\u006f\u0074\u0065\u0054\u0065\u0078\u0074";_eec ="\u0046\u006f\u006f\u0074\u006e\u006f\u0074\u0065\u0052\u0065\u0066\u0065r\u0065\u006e\u0063\u0065";
-EndnoteTextStyleId ="E\u006e\u0064\u006e\u006f\u0074\u0065\u0054\u0065\u0078\u0074";_bffa ="\u0045\u006ed\u006e\u006f\u0074e\u0052\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065";_bgc =uint64 (20);_dgfa ="\u0043\u006fm\u006d\u0065\u006et\u0052\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065";
-_adcc ="C\u006f\u006d\u006d\u0065\u006e\u0074\u0054\u0065\u0078\u0074";_eef ="\u0043o\u006dm\u0065\u006e\u0074\u0054\u0065\u0078\u0074\u0043\u0068\u0061\u0072";_ggg ="\u0043\u006f\u006d\u006d\u0065\u006e\u0074\u0053\u0075b\u006a\u0065\u0063\u0074";_gggd ="\u0043o\u006dm\u0065\u006e\u0074\u0053\u0075b\u006a\u0065c\u0074\u0043\u0068\u0061\u0072";
-_gce =uint64 (20);_egdf =uint64 (16););
-
-// SetChecked marks a FormFieldTypeCheckBox as checked or unchecked.
-func (_bbac FormField )SetChecked (b bool ){if len (_bbac ._acfd .FFDataChoice )==0{return ;};for _ ,_eca :=range _bbac ._acfd .FFDataChoice {if _eca .CheckBox !=nil {if !b {_eca .CheckBox .Checked =nil ;}else {_eca .CheckBox .Checked =_bg .NewCT_OnOff ();
-};};};};
-
-// Row is a row within a table within a document.
-type Row struct{_ccdec *Document ;_bgcee *_bg .CT_Row ;};func (_cggae *WatermarkText )findNode (_edggd *_g .XSDAny ,_bfac string )*_g .XSDAny {for _ ,_cgea :=range _edggd .Nodes {if _cgea .XMLName .Local ==_bfac {return _cgea ;};};return nil ;};
-
-// Control returns an *axcontrol.Control object contained in the run or the nil value in case of no controls.
-func (_feeee Run )Control ()*_dd .Control {if _bfca :=_feeee ._bdced .EG_RunInnerContent ;_bfca !=nil {if _afdf :=_bfca [0].RunInnerContentChoice .Object ;_afdf !=nil {if _fcbb :=_afdf .ObjectChoice ;_fcbb !=nil {if _dggde :=_fcbb .Control ;_dggde !=nil {if _dggde .IdAttr !=nil {_gcdae :=_feeee ._efagg .GetDocRelTargetByID (*_dggde .IdAttr );
-for _ ,_cfcg :=range _feeee ._efagg ._dagbd {if _gcdae ==_cfcg .TargetAttr {return _cfcg ;};};};};};};};return nil ;};
-
-// SetFirstLineIndent controls the indentation of the first line in a paragraph.
-func (_dcaeb ParagraphProperties )SetFirstLineIndent (m _ac .Distance ){if _dcaeb ._dabde .Ind ==nil {_dcaeb ._dabde .Ind =_bg .NewCT_Ind ();};if m ==_ac .Zero {_dcaeb ._dabde .Ind .FirstLineAttr =nil ;}else {_dcaeb ._dabde .Ind .FirstLineAttr =&_de .ST_TwipsMeasure {};
-_dcaeb ._dabde .Ind .FirstLineAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (m /_ac .Twips ));};};
-
-// DoubleStrike returns true if paragraph is double striked.
-func (_facg ParagraphProperties )DoubleStrike ()bool {return _bbeg (_facg ._dabde .RPr .Dstrike )};
-
-// AddParagraph adds a paragraph to the footer.
-func (_ccae Footer )AddParagraph ()Paragraph {_dgceg :=_bg .NewEG_ContentBlockContent ();_ccae ._bfebb .EG_BlockLevelElts =append (_ccae ._bfebb .EG_BlockLevelElts ,&_bg .EG_BlockLevelElts {BlockLevelEltsChoice :&_bg .EG_BlockLevelEltsChoice {EG_ContentBlockContent :[]*_bg .EG_ContentBlockContent {_dgceg }}});
-_cbeg :=_bg .NewCT_P ();_dgceg .ContentBlockContentChoice .P =append (_dgceg .ContentBlockContentChoice .P ,_cbeg );return Paragraph {_ccae ._babd ,_cbeg };};
-
-// RemoveParagraph removes a paragraph from the footnote.
-func (_adfgf Footnote )RemoveParagraph (p Paragraph ){for _ ,_dcdc :=range _adfgf .content (){for _afgcd ,_bbaf :=range _dcdc .ContentBlockContentChoice .P {if _bbaf ==p ._dfbf {copy (_dcdc .ContentBlockContentChoice .P [_afgcd :],_dcdc .ContentBlockContentChoice .P [_afgcd +1:]);
-_dcdc .ContentBlockContentChoice .P =_dcdc .ContentBlockContentChoice .P [0:len (_dcdc .ContentBlockContentChoice .P )-1];return ;};};};};
-
-// SetHeadingLevel sets a heading level and style based on the level to a
-// paragraph.  The default styles for a new unioffice document support headings
-// from level 1 to 8.
-func (_gecd ParagraphProperties )SetHeadingLevel (idx int ){_gecd .SetStyle (_cb .Sprintf ("\u0048e\u0061\u0064\u0069\u006e\u0067\u0025d",idx ));if _gecd ._dabde .NumPr ==nil {_gecd ._dabde .NumPr =_bg .NewCT_NumPr ();};_gecd ._dabde .NumPr .Ilvl =_bg .NewCT_DecimalNumber ();
-_gecd ._dabde .NumPr .Ilvl .ValAttr =int64 (idx );};
-
-// Outline returns true if run outline is on.
-func (_bccbb RunProperties )Outline ()bool {return _bbeg (_bccbb ._ddbb .Outline )};
+func (_beee Endnote )X ()*_ec .CT_FtnEdn {return _beee ._ggcdg };
 
 // X returns the inner wrapped XML type.
-func (_afffe Footer )X ()*_bg .Ftr {return _afffe ._bfebb };
+func (_aadc InlineDrawing )X ()*_ec .WdInline {return _aadc ._ggdaf };
 
-// AddTable adds a table to the footer.
-func (_efcb Footer )AddTable ()Table {_fcfcg :=_bg .NewEG_ContentBlockContent ();_efcb ._bfebb .EG_BlockLevelElts =append (_efcb ._bfebb .EG_BlockLevelElts ,&_bg .EG_BlockLevelElts {BlockLevelEltsChoice :&_bg .EG_BlockLevelEltsChoice {EG_ContentBlockContent :[]*_bg .EG_ContentBlockContent {_fcfcg }}});
-_effgc :=_bg .NewCT_Tbl ();_fcfcg .ContentBlockContentChoice .Tbl =append (_fcfcg .ContentBlockContentChoice .Tbl ,_effgc );return Table {_efcb ._babd ,_effgc };};
+// SetColor sets color of watermark text.
+func (_defce *WatermarkText )SetColor (value string ){if _defce ._eafca !=nil {_defce ._eafca .FillcolorAttr =&value ;};};
 
-// SetVerticalAlignment sets the vertical alignment of content within a table cell.
-func (_adfb CellProperties )SetVerticalAlignment (align _bg .ST_VerticalJc ){if align ==_bg .ST_VerticalJcUnset {_adfb ._bbb .VAlign =nil ;}else {_adfb ._bbb .VAlign =_bg .NewCT_VerticalJc ();_adfb ._bbb .VAlign .ValAttr =align ;};};
+// NumId return numbering numId that being use by style properties.
+func (_beddg ParagraphStyleProperties )NumId ()int64 {if _beddg ._egfac .NumPr !=nil {if _beddg ._egfac .NumPr .NumId !=nil {return _beddg ._egfac .NumPr .NumId .ValAttr ;};};return -1;};
+
+// Nodes return the document's element as nodes.
+func (_dgad *Document )Nodes ()Nodes {_dcega :=[]Node {};for _ ,_abaa :=range _dgad ._dgg .Body .EG_BlockLevelElts {_dcega =append (_dcega ,_fgfda (_dgad ,_abaa .BlockLevelEltsChoice .EG_ContentBlockContent ,nil )...);};if _dgad ._dgg .Body .SectPr !=nil {_dcega =append (_dcega ,Node {_becg :_dgad ._dgg .Body .SectPr });
+};_faeed :=Nodes {_adac :_dcega };return _faeed ;};
+
+// AddImageRef add ImageRef to header as relationship, returning ImageRef
+// that can be used to be placed as header content.
+func (_bcdf Header )AddImageRef (r _aee .ImageRef )(_aee .ImageRef ,error ){var _gcdea _aee .Relationships ;for _dbadf ,_aagd :=range _bcdf ._fegd ._ace {if _aagd ==_bcdf ._fgcdg {_gcdea =_bcdf ._fegd ._feb [_dbadf ];};};_agfg :=_gcdea .AddRelationship (r .Target (),_c .ImageType );
+r .SetRelID (_agfg .X ().IdAttr );return r ,nil ;};
+
+// Caps returns true if paragraph font is capitalized.
+func (_ggafe ParagraphProperties )Caps ()bool {return _gfgb (_ggafe ._bbdf .RPr .Caps )};
+
+// HasEndnotes returns a bool based on the presence or abscence of endnotes within
+// the document.
+func (_gaefe *Document )HasEndnotes ()bool {return _gaefe ._gdd !=nil };
+
+// Properties returns the paragraph properties.
+func (_dfbc Paragraph )Properties ()ParagraphProperties {_dfbc .ensurePPr ();return ParagraphProperties {_dfbc ._fafde ,_dfbc ._fagb .PPr };};
+
+// AddDefinition adds a new numbering definition.
+func (_aebc Numbering )AddDefinition ()NumberingDefinition {_faad :=_ec .NewCT_Num ();_acgb :=int64 (1);for _ ,_fegg :=range _aebc .Definitions (){if _fegg .AbstractNumberID ()>=_acgb {_acgb =_fegg .AbstractNumberID ()+1;};};_ggae :=int64 (1);for _ ,_bfge :=range _aebc .X ().Num {if _bfge .NumIdAttr >=_ggae {_ggae =_bfge .NumIdAttr +1;
+};};_faad .NumIdAttr =_ggae ;_faad .AbstractNumId =_ec .NewCT_DecimalNumber ();_faad .AbstractNumId .ValAttr =_acgb ;_addge :=_ec .NewCT_AbstractNum ();_addge .AbstractNumIdAttr =_acgb ;_aebc ._fdea .AbstractNum =append (_aebc ._fdea .AbstractNum ,_addge );
+_aebc ._fdea .Num =append (_aebc ._fdea .Num ,_faad );return NumberingDefinition {_addge };};
+
+// AddCheckBox adds checkbox form field to the paragraph and returns it.
+func (_geaa Paragraph )AddCheckBox (name string )FormField {_fffad :=_geaa .addFldCharsForField (name ,"\u0046\u004f\u0052M\u0043\u0048\u0045\u0043\u004b\u0042\u004f\u0058");_fffad ._dcbfb .FFDataChoice [0].CheckBox =_ec .NewCT_FFCheckBox ();return _fffad ;
+};
+
+// ItalicValue returns the precise nature of the italic setting (unset, off or on).
+func (_bdcag RunProperties )ItalicValue ()OnOffValue {return _aeeag (_bdcag ._bffab .I )};func (_gffa *Document )addComments (){_gffa ._cdc =_ec .NewComments ();_gffa ._cdc .CT_Comments =*_ec .NewCT_Comments ();_gffa ._cdc .Comment =make ([]*_ec .CT_Comment ,0);
+_gffa .ContentTypes .AddOverride ("\u002fw\u006fr\u0064\u002f\u0063\u006f\u006dm\u0065\u006et\u0073\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069\u0063\u0061\u0074\u0069o\u006e\u002fv\u006e\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006dl\u0066\u006f\u0072\u006da\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c.\u0063\u006f\u006d\u006d\u0065\u006e\u0074\u0073\u002b\u0078\u006d\u006c");
+_gffa ._cbaa .AddRelationship ("\u0063\u006f\u006dm\u0065\u006e\u0074\u0073\u002e\u0078\u006d\u006c",_c .CommentsType );_afbf :=_gffa .Styles .AddStyle (_egbc ,_ec .ST_StyleTypeParagraph ,false );_afbf .SetName ("\u0043\u006f\u006d\u006d\u0065\u006e\u0074\u0020\u0052\u0065\u0066\u0065r\u0065\u006e\u0063\u0065");
+_afbf .SetBasedOn ("D\u0065f\u0061\u0075\u006c\u0074\u0050\u0061\u0072\u0061g\u0072\u0061\u0070\u0068Fo\u006e\u0074");_adbd :=_afbf .RunProperties ();_adbd .X ().Sz =&_ec .CT_HpsMeasure {ValAttr :_ec .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_aaeb }};
+_adbd .X ().SzCs =&_ec .CT_HpsMeasure {ValAttr :_ec .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_aaeb }};_bead :=_gffa .Styles .AddStyle (_gcde ,_ec .ST_StyleTypeParagraph ,false );_bead .SetName ("\u0043\u006f\u006dm\u0065\u006e\u0074\u0020\u0054\u0065\u0078\u0074");
+_bead .SetBasedOn ("\u004e\u006f\u0072\u006d\u0061\u006c");_bead .SetLinkedStyle (_egf );_afde :=_bead .RunProperties ();_afde .X ().Sz =&_ec .CT_HpsMeasure {ValAttr :_ec .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_bgg }};_afde .X ().SzCs =&_ec .CT_HpsMeasure {ValAttr :_ec .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_bgg }};
+_dfef :=_gffa .Styles .AddStyle (_gcde ,_ec .ST_StyleTypeParagraph ,false );_dfef .SetName ("\u0043\u006f\u006d\u006d\u0065\u006e\u0074\u0020\u0054\u0065\u0078\u0074 \u0043\u0068\u0061\u0072");_dfef .SetBasedOn ("D\u0065f\u0061\u0075\u006c\u0074\u0050\u0061\u0072\u0061g\u0072\u0061\u0070\u0068Fo\u006e\u0074");
+_dfef .SetLinkedStyle (_gcde );_afdc :=_dfef .RunProperties ();_afdc .X ().Sz =&_ec .CT_HpsMeasure {ValAttr :_ec .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_bgg }};_afdc .X ().SzCs =&_ec .CT_HpsMeasure {ValAttr :_ec .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_bgg }};
+_gbaf :=_gffa .Styles .AddStyle (_gcde ,_ec .ST_StyleTypeParagraph ,false );_gbaf .SetName ("\u0043o\u006dm\u0065\u006e\u0074\u0020\u0053\u0075\u0062\u006a\u0065\u0063\u0074");_gbaf .SetBasedOn (_gcde );_gbaf .SetLinkedStyle (_cadb );_gbaf .SetNextStyle (_gcde );
+_daaf :=_gbaf .RunProperties ();_daaf .SetBold (true );};
+
+// AddBookmark adds a bookmark to a document that can then be used from a hyperlink. Name is a document
+// unique name that identifies the bookmark so it can be referenced from hyperlinks.
+func (_eecf Paragraph )AddBookmark (name string )Bookmark {_ecbb :=_ec .NewEG_PContent ();_edeef :=_ec .NewEG_ContentRunContent ();_ecbb .PContentChoice .EG_ContentRunContent =append (_ecbb .PContentChoice .EG_ContentRunContent ,_edeef );_gdbcb :=_ec .NewEG_RunLevelElts ();
+_edeef .ContentRunContentChoice .EG_RunLevelElts =append (_edeef .ContentRunContentChoice .EG_RunLevelElts ,_gdbcb );_fbdae :=_ec .NewEG_RangeMarkupElements ();_bfgf :=_ec .NewCT_Bookmark ();_fbdae .RangeMarkupElementsChoice .BookmarkStart =_bfgf ;_gdbcb .RunLevelEltsChoice .EG_RangeMarkupElements =append (_gdbcb .RunLevelEltsChoice .EG_RangeMarkupElements ,_fbdae );
+_fbdae =_ec .NewEG_RangeMarkupElements ();_fbdae .RangeMarkupElementsChoice .BookmarkEnd =_ec .NewCT_MarkupRange ();_gdbcb .RunLevelEltsChoice .EG_RangeMarkupElements =append (_gdbcb .RunLevelEltsChoice .EG_RangeMarkupElements ,_fbdae );_eecf ._fagb .EG_PContent =append (_eecf ._fagb .EG_PContent ,_ecbb );
+_agfae :=Bookmark {_bfgf };_agfae .SetName (name );return _agfae ;};
+
+// SetBorder sets the border of anchor.
+func (_efcc AnchoredDrawing )SetBorder (borderType _cc .ST_PresetLineDashVal ,c _gc .Color ,thickness _ga .Distance ){_ffg :=_ga .ToEMU (float64 (thickness ));for _ ,_cad :=range _efcc ._da .Graphic .GraphicData .Any {if _agff ,_fdb :=_cad .(*_bf .Pic );
+_fdb {_agff .SpPr .Ln =_cc .NewCT_LineProperties ();_agff .SpPr .Ln .WAttr =_c .Int32 (int32 (_ffg ));_agff .SpPr .Ln .LineDashPropertiesChoice =_cc .NewEG_LineDashPropertiesChoice ();_agff .SpPr .Ln .LineDashPropertiesChoice .PrstDash =_cc .NewCT_PresetLineDashProperties ();
+_agff .SpPr .Ln .LineDashPropertiesChoice .PrstDash .ValAttr =borderType ;_agff .SpPr .Ln .LineFillPropertiesChoice =_cc .NewEG_LineFillPropertiesChoice ();_agff .SpPr .Ln .LineFillPropertiesChoice .SolidFill =_cc .NewCT_SolidColorFillProperties ();_agff .SpPr .Ln .LineFillPropertiesChoice .SolidFill .SrgbClr =_cc .NewCT_SRgbColor ();
+_agff .SpPr .Ln .LineFillPropertiesChoice .SolidFill .SrgbClr .ValAttr =*c .AsRGBString ();};};_efcc .setEffectExtent (_ffg ,_ffg ,_ffg ,_ffg );};
+
+// SetSize sets the size of the displayed image on the page.
+func (_gd AnchoredDrawing )SetSize (w ,h _ga .Distance ){_gd ._da .Extent .CxAttr =int64 (float64 (w *_ga .Pixel72 )/_ga .EMU );_gd ._da .Extent .CyAttr =int64 (float64 (h *_ga .Pixel72 )/_ga .EMU );};
+
+// Paragraphs returns the paragraphs within a structured document tag.
+func (_gefef StructuredDocumentTag )Paragraphs ()[]Paragraph {if _gefef ._aacgf .SdtContent ==nil {return nil ;};_acggf :=[]Paragraph {};for _ ,_gecbb :=range _gefef ._aacgf .SdtContent .EG_ContentBlockContent {for _ ,_cbcag :=range _gecbb .ContentBlockContentChoice .P {_acggf =append (_acggf ,Paragraph {_gefef ._acggg ,_cbcag });
+};};return _acggf ;};
+
+// GetHeader gets a section Header for given type t [ST_HdrFtrDefault, ST_HdrFtrEven, ST_HdrFtrFirst]
+func (_gcaba Section )GetHeader (t _ec .ST_HdrFtr )(Header ,bool ){for _ ,_egcdf :=range _gcaba ._gcebe .EG_HdrFtrReferences {if _egcdf .HdrFtrReferencesChoice .HeaderReference ==nil {continue ;};if _egcdf .HdrFtrReferencesChoice .HeaderReference .TypeAttr ==t {for _ ,_baed :=range _gcaba ._gbedd .Headers (){_dabg :=_gcaba ._gbedd ._cbaa .FindRIDForN (_baed .Index (),_c .HeaderType );
+if _dabg ==_egcdf .HdrFtrReferencesChoice .HeaderReference .IdAttr {return _baed ,true ;};};};};return Header {},false ;};
+
+// X returns the inner wrapped XML type.
+func (_dfdb NumberingDefinition )X ()*_ec .CT_AbstractNum {return _dfdb ._bgag };
+
+// SetNumberingDefinitionByID sets the numbering definition ID directly, which must
+// match an ID defined in numbering.xml
+func (_fgbe Paragraph )SetNumberingDefinitionByID (abstractNumberID int64 ){_fgbe .ensurePPr ();if _fgbe ._fagb .PPr .NumPr ==nil {_fgbe ._fagb .PPr .NumPr =_ec .NewCT_NumPr ();};_bcdaa :=_ec .NewCT_DecimalNumber ();_bcdaa .ValAttr =int64 (abstractNumberID );
+_fgbe ._fagb .PPr .NumPr .NumId =_bcdaa ;};func (_cefa Paragraph )insertRun (_bdecec Run ,_gbef bool )Run {for _ ,_faadg :=range _cefa ._fagb .EG_PContent {for _ccff ,_gbea :=range _faadg .PContentChoice .EG_ContentRunContent {if _gbea .ContentRunContentChoice .R ==_bdecec .X (){_abbbc :=_ec .NewCT_R ();
+_faadg .PContentChoice .EG_ContentRunContent =append (_faadg .PContentChoice .EG_ContentRunContent ,nil );if _gbef {copy (_faadg .PContentChoice .EG_ContentRunContent [_ccff +1:],_faadg .PContentChoice .EG_ContentRunContent [_ccff :]);_faadg .PContentChoice .EG_ContentRunContent [_ccff ]=_ec .NewEG_ContentRunContent ();
+_faadg .PContentChoice .EG_ContentRunContent [_ccff ].ContentRunContentChoice .R =_abbbc ;}else {copy (_faadg .PContentChoice .EG_ContentRunContent [_ccff +2:],_faadg .PContentChoice .EG_ContentRunContent [_ccff +1:]);_faadg .PContentChoice .EG_ContentRunContent [_ccff +1]=_ec .NewEG_ContentRunContent ();
+_faadg .PContentChoice .EG_ContentRunContent [_ccff +1].ContentRunContentChoice .R =_abbbc ;};return Run {_cefa ._fafde ,_abbbc };};if _gbea .ContentRunContentChoice .Sdt !=nil &&_gbea .ContentRunContentChoice .Sdt .SdtContent !=nil {for _ ,_acfde :=range _gbea .ContentRunContentChoice .Sdt .SdtContent .EG_PContent {for _ ,_dfbf :=range _acfde .PContentChoice .EG_ContentRunContent {if _dfbf .ContentRunContentChoice .R ==_bdecec .X (){_gdgbc :=_ec .NewCT_R ();
+_acfde .PContentChoice .EG_ContentRunContent =append (_acfde .PContentChoice .EG_ContentRunContent ,nil );if _gbef {copy (_acfde .PContentChoice .EG_ContentRunContent [_ccff +1:],_acfde .PContentChoice .EG_ContentRunContent [_ccff :]);_acfde .PContentChoice .EG_ContentRunContent [_ccff ]=_ec .NewEG_ContentRunContent ();
+_acfde .PContentChoice .EG_ContentRunContent [_ccff ].ContentRunContentChoice .R =_gdgbc ;}else {copy (_acfde .PContentChoice .EG_ContentRunContent [_ccff +2:],_acfde .PContentChoice .EG_ContentRunContent [_ccff +1:]);_acfde .PContentChoice .EG_ContentRunContent [_ccff +1]=_ec .NewEG_ContentRunContent ();
+_acfde .PContentChoice .EG_ContentRunContent [_ccff +1].ContentRunContentChoice .R =_gdgbc ;};return Run {_cefa ._fafde ,_gdgbc };};};};};};};return _cefa .AddRun ();};
+
+// Style is a style within the styles.xml file.
+type Style struct{_ggbag *_ec .CT_Style };
+
+// SetValue sets the value of a FormFieldTypeText or FormFieldTypeDropDown. For
+// FormFieldTypeDropDown, the value must be one of the fields possible values.
+func (_dggc FormField )SetValue (v string ){if len (_dggc ._dcbfb .FFDataChoice )> 0{for _ ,_fefga :=range _dggc ._dcbfb .FFDataChoice {if _fefga .DdList !=nil {for _feea ,_cdbg :=range _dggc .PossibleValues (){if _cdbg ==v {_fefga .DdList .Result =_ec .NewCT_DecimalNumber ();
+_fefga .DdList .Result .ValAttr =int64 (_feea );break ;};};}else if _fefga .TextInput !=nil {_dggc ._adaec .RunInnerContentChoice .T =_ec .NewCT_Text ();_dggc ._adaec .RunInnerContentChoice .T .Content =v ;};};};};
+
+// X returns the inner wrapped XML type.
+func (_aeaa TableConditionalFormatting )X ()*_ec .CT_TblStylePr {return _aeaa ._abcbe };
+
+// Endnote is an individual endnote reference within the document.
+type Endnote struct{_edad *Document ;_ggcdg *_ec .CT_FtnEdn ;};
+
+// SetVerticalMerge controls the vertical merging of cells.
+func (_bdacd CellProperties )SetVerticalMerge (mergeVal _ec .ST_Merge ){if mergeVal ==_ec .ST_MergeUnset {_bdacd ._eef .VMerge =nil ;}else {_bdacd ._eef .VMerge =_ec .NewCT_VMerge ();_bdacd ._eef .VMerge .ValAttr =mergeVal ;};};
+
+// Underline returns the type of run underline.
+func (_dbbca RunProperties )Underline ()_ec .ST_Underline {if _fdggac :=_dbbca ._bffab .U ;_fdggac !=nil {return _fdggac .ValAttr ;};return 0;};
+
+// InsertParagraphAfter adds a new empty paragraph after the relativeTo
+// paragraph.
+func (_egae *Document )InsertParagraphAfter (relativeTo Paragraph )Paragraph {return _egae .insertParagraph (relativeTo ,false );};
+
+// AddDrawingAnchored adds an anchored (floating) drawing from an ImageRef.
+func (_gadda Run )AddDrawingAnchored (img _aee .ImageRef )(AnchoredDrawing ,error ){_bddbf :=_gadda .newIC ();_bddbf .RunInnerContentChoice .Drawing =_ec .NewCT_Drawing ();_fcfa :=_ec .NewWdAnchor ();_dcfd :=AnchoredDrawing {_gadda ._abae ,_fcfa };_fcfa .SimplePosAttr =_c .Bool (false );
+_fcfa .AllowOverlapAttr =true ;_fcfa .CNvGraphicFramePr =_cc .NewCT_NonVisualGraphicFrameProperties ();_bddbf .RunInnerContentChoice .Drawing .DrawingChoice =append (_bddbf .RunInnerContentChoice .Drawing .DrawingChoice ,&_ec .CT_DrawingChoice {Anchor :_fcfa });
+_fcfa .Graphic =_cc .NewGraphic ();_fcfa .Graphic .GraphicData =_cc .NewCT_GraphicalObjectData ();_fcfa .Graphic .GraphicData .UriAttr ="\u0068\u0074\u0074\u0070\u003a\u002f/\u0073\u0063\u0068e\u006d\u0061\u0073.\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002e\u006frg\u002f\u0064\u0072\u0061\u0077\u0069\u006e\u0067\u006d\u006c\u002f\u0032\u0030\u0030\u0036\u002f\u0070\u0069\u0063\u0074\u0075\u0072\u0065";
+_fcfa .SimplePos .XAttr .ST_CoordinateUnqualified =_c .Int64 (0);_fcfa .SimplePos .YAttr .ST_CoordinateUnqualified =_c .Int64 (0);_fcfa .PositionH .RelativeFromAttr =_ec .WdST_RelFromHPage ;_fcfa .PositionH .PosHChoice =&_ec .WdCT_PosHChoice {};_fcfa .PositionH .PosHChoice .PosOffset =_c .Int32 (0);
+_fcfa .PositionV .RelativeFromAttr =_ec .WdST_RelFromVPage ;_fcfa .PositionV .PosVChoice =&_ec .WdCT_PosVChoice {};_fcfa .PositionV .PosVChoice .PosOffset =_c .Int32 (0);_fcfa .Extent .CxAttr =int64 (float64 (img .Size ().X *_ga .Pixel72 )/_ga .EMU );_fcfa .Extent .CyAttr =int64 (float64 (img .Size ().Y *_ga .Pixel72 )/_ga .EMU );
+_fcfa .WrapTypeChoice =&_ec .WdEG_WrapTypeChoice {};_fcfa .WrapTypeChoice .WrapSquare =_ec .NewWdCT_WrapSquare ();_fcfa .WrapTypeChoice .WrapSquare .WrapTextAttr =_ec .WdST_WrapTextBothSides ;_bgagd :=0x7FFFFFFF&_a .Uint32 ();_fcfa .DocPr .IdAttr =_bgagd ;
+_afaag :=_bf .NewPic ();_afaag .NvPicPr .CNvPr .IdAttr =_bgagd ;_cbdfcb :=img .RelID ();if _cbdfcb ==""{return _dcfd ,_ff .New ("\u0063\u006f\u0075\u006c\u0064\u006e\u0027\u0074\u0020\u0066\u0069\u006e\u0064\u0020\u0072\u0065\u0066\u0065\u0072\u0065n\u0063\u0065\u0020\u0074\u006f\u0020\u0069\u006d\u0061g\u0065\u0020\u0077\u0069\u0074\u0068\u0069\u006e\u0020\u0064\u006f\u0063\u0075m\u0065\u006e\u0074\u0020\u0072\u0065l\u0061\u0074\u0069o\u006e\u0073");
+};_fcfa .Graphic .GraphicData .Any =append (_fcfa .Graphic .GraphicData .Any ,_afaag );_afaag .BlipFill =_cc .NewCT_BlipFillProperties ();_afaag .BlipFill .Blip =_cc .NewCT_Blip ();_afaag .BlipFill .Blip .EmbedAttr =&_cbdfcb ;_afaag .BlipFill .FillModePropertiesChoice .Stretch =_cc .NewCT_StretchInfoProperties ();
+_afaag .BlipFill .FillModePropertiesChoice .Stretch .FillRect =_cc .NewCT_RelativeRect ();_afaag .SpPr =_cc .NewCT_ShapeProperties ();_afaag .SpPr .Xfrm =_cc .NewCT_Transform2D ();_afaag .SpPr .Xfrm .Off =_cc .NewCT_Point2D ();_afaag .SpPr .Xfrm .Off .XAttr .ST_CoordinateUnqualified =_c .Int64 (0);
+_afaag .SpPr .Xfrm .Off .YAttr .ST_CoordinateUnqualified =_c .Int64 (0);_afaag .SpPr .Xfrm .Ext =_cc .NewCT_PositiveSize2D ();_afaag .SpPr .Xfrm .Ext .CxAttr =int64 (img .Size ().X *_ga .Point );_afaag .SpPr .Xfrm .Ext .CyAttr =int64 (img .Size ().Y *_ga .Point );
+_afaag .SpPr .GeometryChoice .PrstGeom =_cc .NewCT_PresetGeometry2D ();_afaag .SpPr .GeometryChoice .PrstGeom .PrstAttr =_cc .ST_ShapeTypeRect ;return _dcfd ,nil ;};func (_gdbgb *Document )syncEndnoteSettings (){_eggf :=[]int64 {};_eede :=_gdbgb .Endnotes ();
+for _ ,_dgdga :=range _eede {if _dgdga .X ().TypeAttr !=_ec .ST_FtnEdnUnset &&_dgdga .X ().TypeAttr !=_ec .ST_FtnEdnNormal {_eggf =append (_eggf ,_dgdga .X ().IdAttr );};};_cffcg :=_gdbgb .Settings .X ().CT_Settings .EndnotePr ;if _cffcg ==nil {_cffcg =_ec .NewCT_EdnDocProps ();
+};if len (_eggf )==0{_cffcg .Endnote =nil ;return ;};_cffcg .Endnote =[]*_ec .CT_FtnEdnSepRef {};for _ ,_dgdc :=range _eggf {_badd :=_ec .NewCT_FtnEdnSepRef ();_badd .IdAttr =_dgdc ;_cffcg .Endnote =append (_cffcg .Endnote ,_badd );};};
+
+// Font returns the name of run font family.
+func (_gfbfc RunProperties )Font ()string {if _aeade :=_gfbfc ._bffab .RFonts ;_aeade !=nil {if _aeade .AsciiAttr !=nil {return *_aeade .AsciiAttr ;}else if _aeade .HAnsiAttr !=nil {return *_aeade .HAnsiAttr ;}else if _aeade .CsAttr !=nil {return *_aeade .CsAttr ;
+};};return "";};
+
+// AddParagraph adds a paragraph to the footnote.
+func (_defa Footnote )AddParagraph ()Paragraph {_aabcf :=_ec .NewEG_ContentBlockContent ();_acba :=len (_defa ._decc .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent );_defa ._decc .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent =append (_defa ._decc .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent ,_aabcf );
+_dbfag :=_ec .NewCT_P ();var _gefa *_ec .CT_String ;if _acba !=0{_efeb :=len (_defa ._decc .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent [_acba -1].ContentBlockContentChoice .P );_gefa =_defa ._decc .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent [_acba -1].ContentBlockContentChoice .P [_efeb -1].PPr .PStyle ;
+}else {_gefa =_ec .NewCT_String ();_gefa .ValAttr =FootnoteTextStyleId ;};_aabcf .ContentBlockContentChoice .P =append (_aabcf .ContentBlockContentChoice .P ,_dbfag );_fgab :=Paragraph {_defa ._cdca ,_dbfag };_fgab ._fagb .PPr =_ec .NewCT_PPr ();_fgab ._fagb .PPr .PStyle =_gefa ;
+_fgab ._fagb .PPr .RPr =_ec .NewCT_ParaRPr ();return _fgab ;};
+
+// SetSpacing sets the spacing that comes before and after the paragraph.
+func (_aacaa ParagraphStyleProperties )SetSpacing (before ,after _ga .Distance ){if _aacaa ._egfac .Spacing ==nil {_aacaa ._egfac .Spacing =_ec .NewCT_Spacing ();};if before ==_ga .Zero {_aacaa ._egfac .Spacing .BeforeAttr =nil ;}else {_aacaa ._egfac .Spacing .BeforeAttr =&_afe .ST_TwipsMeasure {};
+_aacaa ._egfac .Spacing .BeforeAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (before /_ga .Twips ));};if after ==_ga .Zero {_aacaa ._egfac .Spacing .AfterAttr =nil ;}else {_aacaa ._egfac .Spacing .AfterAttr =&_afe .ST_TwipsMeasure {};_aacaa ._egfac .Spacing .AfterAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (after /_ga .Twips ));
+};};
+
+// SetNumberingDefinition sets the numbering definition ID via a NumberingDefinition
+// defined in numbering.xml
+func (_eaaef Paragraph )SetNumberingDefinition (nd NumberingDefinition ){_eaaef .ensurePPr ();if _eaaef ._fagb .PPr .NumPr ==nil {_eaaef ._fagb .PPr .NumPr =_ec .NewCT_NumPr ();};_addgb :=_ec .NewCT_DecimalNumber ();_eacg :=int64 (-1);for _ ,_ggcdc :=range _eaaef ._fafde .Numbering ._fdea .Num {if _ggcdc .AbstractNumId !=nil &&_ggcdc .AbstractNumId .ValAttr ==nd .AbstractNumberID (){_eacg =_ggcdc .NumIdAttr ;
+};};if _eacg ==-1{_dgdea :=_ec .NewCT_Num ();_eaaef ._fafde .Numbering ._fdea .Num =append (_eaaef ._fafde .Numbering ._fdea .Num ,_dgdea );_dgdea .NumIdAttr =int64 (len (_eaaef ._fafde .Numbering ._fdea .Num ));_dgdea .AbstractNumId =_ec .NewCT_DecimalNumber ();
+_dgdea .AbstractNumId .ValAttr =nd .AbstractNumberID ();_eacg =_dgdea .NumIdAttr ;};_addgb .ValAttr =_eacg ;_eaaef ._fagb .PPr .NumPr .NumId =_addgb ;};
+
+// ClearColor clears the text color.
+func (_dfbfe RunProperties )ClearColor (){_dfbfe ._bffab .Color =nil };func _baca ()*_ceg .Fill {_bggb :=_ceg .NewFill ();_bggb .AngleAttr =_c .Float64 (0);return _bggb };var _ffgcg =[...]uint8 {0,20,37,58,79};
+
+// SetEffect sets a text effect on the run.
+func (_bbeca RunProperties )SetEffect (e _ec .ST_TextEffect ){if e ==_ec .ST_TextEffectUnset {_bbeca ._bffab .Effect =nil ;}else {_bbeca ._bffab .Effect =_ec .NewCT_TextEffect ();_bbeca ._bffab .Effect .ValAttr =e ;};};
+
+// SetLayoutInCell sets the layoutInCell attribute of anchor.
+func (_efb AnchoredDrawing )SetLayoutInCell (val bool ){_efb ._da .LayoutInCellAttr =val };func (_aaa *Document )appendTable (_bbag *Paragraph ,_dca Table ,_dgfb bool )Table {_cbf :=_aaa ._dgg .Body ;_gcca :=_ec .NewEG_BlockLevelElts ();_aaa ._dgg .Body .EG_BlockLevelElts =append (_aaa ._dgg .Body .EG_BlockLevelElts ,_gcca );
+_bdf :=_ec .NewEG_ContentBlockContent ();_gcca .BlockLevelEltsChoice .EG_ContentBlockContent =append (_gcca .BlockLevelEltsChoice .EG_ContentBlockContent ,_bdf );if _bbag !=nil {_ffc :=_bbag .X ();for _bab ,_bgee :=range _cbf .EG_BlockLevelElts {for _ ,_ecbd :=range _bgee .BlockLevelEltsChoice .EG_ContentBlockContent {for _fega ,_bdg :=range _bdf .ContentBlockContentChoice .P {if _bdg ==_ffc {_gefg :=_dca .X ();
+_fdaf :=_ec .NewEG_BlockLevelElts ();_daf :=_ec .NewEG_ContentBlockContent ();_fdaf .BlockLevelEltsChoice .EG_ContentBlockContent =append (_fdaf .BlockLevelEltsChoice .EG_ContentBlockContent ,_daf );_daf .ContentBlockContentChoice .Tbl =append (_daf .ContentBlockContentChoice .Tbl ,_gefg );
+_cbf .EG_BlockLevelElts =append (_cbf .EG_BlockLevelElts ,nil );if _dgfb {copy (_cbf .EG_BlockLevelElts [_bab +1:],_cbf .EG_BlockLevelElts [_bab :]);_cbf .EG_BlockLevelElts [_bab ]=_fdaf ;if _fega !=0{_gfgc :=_ec .NewEG_BlockLevelElts ();_def :=_ec .NewEG_ContentBlockContent ();
+_gfgc .BlockLevelEltsChoice .EG_ContentBlockContent =append (_gfgc .BlockLevelEltsChoice .EG_ContentBlockContent ,_def );_def .ContentBlockContentChoice .P =_ecbd .ContentBlockContentChoice .P [:_fega ];_cbf .EG_BlockLevelElts =append (_cbf .EG_BlockLevelElts ,nil );
+copy (_cbf .EG_BlockLevelElts [_bab +1:],_cbf .EG_BlockLevelElts [_bab :]);_cbf .EG_BlockLevelElts [_bab ]=_gfgc ;};_ecbd .ContentBlockContentChoice .P =_ecbd .ContentBlockContentChoice .P [_fega :];}else {copy (_cbf .EG_BlockLevelElts [_bab +2:],_cbf .EG_BlockLevelElts [_bab +1:]);
+_cbf .EG_BlockLevelElts [_bab +1]=_fdaf ;if _fega !=len (_ecbd .ContentBlockContentChoice .P )-1{_dbcg :=_ec .NewEG_BlockLevelElts ();_gbbf :=_ec .NewEG_ContentBlockContent ();_dbcg .BlockLevelEltsChoice .EG_ContentBlockContent =append (_dbcg .BlockLevelEltsChoice .EG_ContentBlockContent ,_gbbf );
+_gbbf .ContentBlockContentChoice .P =_ecbd .ContentBlockContentChoice .P [_fega +1:];_cbf .EG_BlockLevelElts =append (_cbf .EG_BlockLevelElts ,nil );copy (_cbf .EG_BlockLevelElts [_bab +3:],_cbf .EG_BlockLevelElts [_bab +2:]);_cbf .EG_BlockLevelElts [_bab +2]=_dbcg ;
+};_ecbd .ContentBlockContentChoice .P =_ecbd .ContentBlockContentChoice .P [:_fega +1];};break ;};};for _ ,_agdd :=range _ecbd .ContentBlockContentChoice .Tbl {_aaad :=_afdb (_agdd ,_ffc ,_dgfb );if _aaad !=nil {break ;};};};};}else {_bdf .ContentBlockContentChoice .Tbl =append (_bdf .ContentBlockContentChoice .Tbl ,_dca .X ());
+};return Table {_aaa ,_dca .X ()};};
+
+// ReplaceText replace text inside node.
+func (_gddcea *Nodes )ReplaceText (oldText ,newText string ){for _ ,_ddde :=range _gddcea ._adac {_ddde .ReplaceText (oldText ,newText );};};
+
+// AddDrawingInline adds an inline drawing from an ImageRef.
+func (_gccfga Run )AddDrawingInline (img _aee .ImageRef )(InlineDrawing ,error ){_cbfef :=_gccfga .newIC ();_cbfef .RunInnerContentChoice .Drawing =_ec .NewCT_Drawing ();_efgc :=_ec .NewWdInline ();_bfeea :=InlineDrawing {_gccfga ._abae ,_efgc };_efgc .CNvGraphicFramePr =_cc .NewCT_NonVisualGraphicFrameProperties ();
+_cbfef .RunInnerContentChoice .Drawing .DrawingChoice =append (_cbfef .RunInnerContentChoice .Drawing .DrawingChoice ,&_ec .CT_DrawingChoice {Inline :_efgc });_efgc .Graphic =_cc .NewGraphic ();_efgc .Graphic .GraphicData =_cc .NewCT_GraphicalObjectData ();
+_efgc .Graphic .GraphicData .UriAttr ="\u0068\u0074\u0074\u0070\u003a\u002f/\u0073\u0063\u0068e\u006d\u0061\u0073.\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002e\u006frg\u002f\u0064\u0072\u0061\u0077\u0069\u006e\u0067\u006d\u006c\u002f\u0032\u0030\u0030\u0036\u002f\u0070\u0069\u0063\u0074\u0075\u0072\u0065";
+_efgc .DistTAttr =_c .Uint32 (0);_efgc .DistLAttr =_c .Uint32 (0);_efgc .DistBAttr =_c .Uint32 (0);_efgc .DistRAttr =_c .Uint32 (0);_efgc .Extent .CxAttr =int64 (float64 (img .Size ().X *_ga .Pixel72 )/_ga .EMU );_efgc .Extent .CyAttr =int64 (float64 (img .Size ().Y *_ga .Pixel72 )/_ga .EMU );
+_egbg :=0x7FFFFFFF&_a .Uint32 ();_efgc .DocPr .IdAttr =_egbg ;_gggfgf :=_bf .NewPic ();_gggfgf .NvPicPr .CNvPr .IdAttr =_egbg ;_afedc :=img .RelID ();if _afedc ==""{return _bfeea ,_ff .New ("\u0063\u006f\u0075\u006c\u0064\u006e\u0027\u0074\u0020\u0066\u0069\u006e\u0064\u0020\u0072\u0065\u0066\u0065\u0072\u0065n\u0063\u0065\u0020\u0074\u006f\u0020\u0069\u006d\u0061g\u0065\u0020\u0077\u0069\u0074\u0068\u0069\u006e\u0020\u0064\u006f\u0063\u0075m\u0065\u006e\u0074\u0020\u0072\u0065l\u0061\u0074\u0069o\u006e\u0073");
+};_efgc .Graphic .GraphicData .Any =append (_efgc .Graphic .GraphicData .Any ,_gggfgf );_gggfgf .BlipFill =_cc .NewCT_BlipFillProperties ();_gggfgf .BlipFill .Blip =_cc .NewCT_Blip ();_gggfgf .BlipFill .Blip .EmbedAttr =&_afedc ;_gggfgf .BlipFill .FillModePropertiesChoice .Stretch =_cc .NewCT_StretchInfoProperties ();
+_gggfgf .BlipFill .FillModePropertiesChoice .Stretch .FillRect =_cc .NewCT_RelativeRect ();_gggfgf .SpPr =_cc .NewCT_ShapeProperties ();_gggfgf .SpPr .Xfrm =_cc .NewCT_Transform2D ();_gggfgf .SpPr .Xfrm .Off =_cc .NewCT_Point2D ();_gggfgf .SpPr .Xfrm .Off .XAttr .ST_CoordinateUnqualified =_c .Int64 (0);
+_gggfgf .SpPr .Xfrm .Off .YAttr .ST_CoordinateUnqualified =_c .Int64 (0);_gggfgf .SpPr .Xfrm .Ext =_cc .NewCT_PositiveSize2D ();_gggfgf .SpPr .Xfrm .Ext .CxAttr =int64 (img .Size ().X *_ga .Point );_gggfgf .SpPr .Xfrm .Ext .CyAttr =int64 (img .Size ().Y *_ga .Point );
+_gggfgf .SpPr .GeometryChoice .PrstGeom =_cc .NewCT_PresetGeometry2D ();_gggfgf .SpPr .GeometryChoice .PrstGeom .PrstAttr =_cc .ST_ShapeTypeRect ;return _bfeea ,nil ;};
+
+// SetTextWrapBehindText sets the text wrap to behind text.
+func (_fca AnchoredDrawing )SetTextWrapBehindText (){_fca ._da .WrapTypeChoice =&_ec .WdEG_WrapTypeChoice {};_fca ._da .WrapTypeChoice .WrapNone =_ec .NewWdCT_WrapNone ();_fca ._da .BehindDocAttr =true ;_fca ._da .LayoutInCellAttr =true ;_fca ._da .AllowOverlapAttr =true ;
+};
+
+// DoubleStrike returns true if run is double striked.
+func (_ggbg RunProperties )DoubleStrike ()bool {return _gfgb (_ggbg ._bffab .Dstrike )};
+
+// SetLeftIndent controls left indent of paragraph.
+func (_gcgb Paragraph )SetLeftIndent (m _ga .Distance ){_gcgb .ensurePPr ();_ecdff :=_gcgb ._fagb .PPr ;if _ecdff .Ind ==nil {_ecdff .Ind =_ec .NewCT_Ind ();};if m ==_ga .Zero {_ecdff .Ind .LeftAttr =nil ;}else {_ecdff .Ind .LeftAttr =&_ec .ST_SignedTwipsMeasure {};
+_ecdff .Ind .LeftAttr .Int64 =_c .Int64 (int64 (m /_ga .Twips ));};};
+
+// SetRight sets the right border to a specified type, color and thickness.
+func (_gad CellBorders )SetRight (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_gad ._gda .Right =_ec .NewCT_Border ();_cffba (_gad ._gda .Right ,t ,c ,thickness );};
+
+// NewNumbering constructs a new numbering.
+func NewNumbering ()Numbering {_febcd :=_ec .NewNumbering ();return Numbering {_febcd }};func (_geeebc Paragraph )addEndBookmark (_decea int64 )*_ec .CT_MarkupRange {_fagab :=_ec .NewEG_PContent ();_geeebc ._fagb .EG_PContent =append (_geeebc ._fagb .EG_PContent ,_fagab );
+_aaea :=_ec .NewEG_ContentRunContent ();_efdd :=_ec .NewEG_RunLevelElts ();_beeed :=_ec .NewEG_RangeMarkupElements ();_fagbc :=_ec .NewCT_MarkupRange ();_fagbc .IdAttr =_decea ;_beeed .RangeMarkupElementsChoice .BookmarkEnd =_fagbc ;_fagab .PContentChoice .EG_ContentRunContent =append (_fagab .PContentChoice .EG_ContentRunContent ,_aaea );
+_aaea .ContentRunContentChoice .EG_RunLevelElts =append (_aaea .ContentRunContentChoice .EG_RunLevelElts ,_efdd );_efdd .RunLevelEltsChoice .EG_RangeMarkupElements =append (_efdd .RunLevelEltsChoice .EG_RangeMarkupElements ,_beeed );return _fagbc ;};
+
+// SetWindowControl controls if the first or last line of the paragraph is
+// allowed to display on a separate page.
+func (_gefbg ParagraphProperties )SetWindowControl (b bool ){if !b {_gefbg ._bbdf .WidowControl =nil ;}else {_gefbg ._bbdf .WidowControl =_ec .NewCT_OnOff ();};};
+
+// New constructs an empty document that content can be added to.
+func New ()*Document {_aagg :=&Document {_dgg :_ec .NewDocument ()};_aagg .ContentTypes =_aee .NewContentTypes ();_aagg ._dgg .Body =_ec .NewCT_Body ();_aagg ._dgg .ConformanceAttr =_afe .ST_ConformanceClassTransitional ;_aagg ._cbaa =_aee .NewRelationships ();
+_aagg ._beaa =_aee .NewRelationships ();_aagg .AppProperties =_aee .NewAppProperties ();_aagg .CoreProperties =_aee .NewCoreProperties ();_aagg .ContentTypes .AddOverride ("\u002fw\u006fr\u0064\u002f\u0064\u006f\u0063u\u006d\u0065n\u0074\u002e\u0078\u006d\u006c","\u0061p\u0070\u006c\u0069c\u0061\u0074\u0069o\u006e/v\u006e\u0064\u002e\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072\u006d\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072dp\u0072o\u0063\u0065\u0073\u0073\u0069\u006eg\u006d\u006c\u002e\u0064\u006fc\u0075\u006d\u0065\u006e\u0074\u002e\u006d\u0061\u0069\u006e\u002bx\u006d\u006c");
+_aagg .Settings =NewSettings ();_aagg ._cbaa .AddRelationship ("\u0073\u0065\u0074t\u0069\u006e\u0067\u0073\u002e\u0078\u006d\u006c",_c .SettingsType );_aagg .ContentTypes .AddOverride ("\u002fw\u006fr\u0064\u002f\u0073\u0065\u0074t\u0069\u006eg\u0073\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069\u0063\u0061\u0074\u0069o\u006e\u002fv\u006e\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006dl\u0066\u006f\u0072\u006da\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c.\u0073\u0065\u0074\u0074\u0069\u006e\u0067\u0073\u002b\u0078\u006d\u006c");
+_aagg .Rels =_aee .NewRelationships ();_aagg .Rels .AddRelationship (_c .RelativeFilename (_c .DocTypeDocument ,"",_c .CorePropertiesType ,0),_c .CorePropertiesType );_aagg .Rels .AddRelationship ("\u0064\u006fc\u0050\u0072\u006fp\u0073\u002f\u0061\u0070\u0070\u002e\u0078\u006d\u006c",_c .ExtendedPropertiesType );
+_aagg .Rels .AddRelationship ("\u0077\u006f\u0072\u0064\u002f\u0064\u006f\u0063\u0075\u006d\u0065\u006et\u002e\u0078\u006d\u006c",_c .OfficeDocumentType );_aagg .Numbering =NewNumbering ();_aagg .Numbering .InitializeDefault ();_aagg .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072d/\u006e\u0075\u006d\u0062\u0065\u0072\u0069\u006e\u0067\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069c\u0061\u0074\u0069\u006f\u006e\u002f\u0076n\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072\u006d\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063e\u0073\u0073\u0069\u006e\u0067\u006d\u006c\u002e\u006e\u0075\u006d\u0062e\u0072\u0069\u006e\u0067\u002b\u0078m\u006c");
+_aagg ._cbaa .AddRelationship ("\u006e\u0075\u006d\u0062\u0065\u0072\u0069\u006e\u0067\u002e\u0078\u006d\u006c",_c .NumberingType );_aagg .Styles =NewStyles ();_aagg .Styles .InitializeDefault ();_aagg .ContentTypes .AddOverride ("\u002f\u0077o\u0072\u0064\u002fs\u0074\u0079\u006c\u0065\u0073\u002e\u0078\u006d\u006c","\u0061p\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064.\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c\u002e\u0073\u0074\u0079\u006ce\u0073\u002b\u0078\u006d\u006c");
+_aagg ._cbaa .AddRelationship ("\u0073\u0074\u0079\u006c\u0065\u0073\u002e\u0078\u006d\u006c",_c .StylesType );_aagg ._dgg .Body =_ec .NewCT_Body ();return _aagg ;};func _cffba (_ffbb *_ec .CT_Border ,_gdbea _ec .ST_Border ,_gbcge _gc .Color ,_faba _ga .Distance ){_ffbb .ValAttr =_gdbea ;
+_ffbb .ColorAttr =&_ec .ST_HexColor {};if _gbcge .IsAuto (){_ffbb .ColorAttr .ST_HexColorAuto =_ec .ST_HexColorAutoAuto ;}else {_ffbb .ColorAttr .ST_HexColorRGB =_gbcge .AsRGBString ();};if _faba !=_ga .Zero {_ffbb .SzAttr =_c .Uint64 (uint64 (_faba /_ga .Point *8));
+};};
+
+// Node is document element node,
+// contains Paragraph or Table element.
+type Node struct{_ecce *Document ;_becg interface{};Style Style ;AnchoredDrawings []AnchoredDrawing ;InlineDrawings []InlineDrawing ;Children []Node ;};
+
+// Spacing returns the paragraph spacing settings.
+func (_bceda ParagraphProperties )Spacing ()ParagraphSpacing {if _bceda ._bbdf .Spacing ==nil {_bceda ._bbdf .Spacing =_ec .NewCT_Spacing ();};return ParagraphSpacing {_bceda ._bbdf .Spacing };};
+
+// SetWrapPathStart sets wrapPath start value.
+func (_edc AnchorDrawWrapOptions )SetWrapPathStart (coordinate *_cc .CT_Point2D ){_edc ._fba =coordinate ;};
+
+// SetUnhideWhenUsed controls if a semi hidden style becomes visible when used.
+func (_gefd Style )SetUnhideWhenUsed (b bool ){if b {_gefd ._ggbag .UnhideWhenUsed =_ec .NewCT_OnOff ();}else {_gefd ._ggbag .UnhideWhenUsed =nil ;};};
+
+// X returns the inner wrapped XML type.
+func (_fabce Header )X ()*_ec .Hdr {return _fabce ._fgcdg };
+
+// SetWidthPercent sets the cell to a width percentage.
+func (_gfg CellProperties )SetWidthPercent (pct float64 ){_gfg ._eef .TcW =_ec .NewCT_TblWidth ();_gfg ._eef .TcW .TypeAttr =_ec .ST_TblWidthPct ;_gfg ._eef .TcW .WAttr =&_ec .ST_MeasurementOrPercent {};_gfg ._eef .TcW .WAttr .ST_DecimalNumberOrPercent =&_ec .ST_DecimalNumberOrPercent {};
+_gfg ._eef .TcW .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_c .Int64 (int64 (pct *50));};
+
+// TableProperties are the properties for a table within a document
+type TableProperties struct{_egdbb *_ec .CT_TblPr };
+
+// SetShading controls the cell shading.
+func (_ggd CellProperties )SetShading (shd _ec .ST_Shd ,foreground ,fill _gc .Color ){if shd ==_ec .ST_ShdUnset {_ggd ._eef .Shd =nil ;}else {_ggd ._eef .Shd =_ec .NewCT_Shd ();_ggd ._eef .Shd .ValAttr =shd ;_ggd ._eef .Shd .ColorAttr =&_ec .ST_HexColor {};
+if foreground .IsAuto (){_ggd ._eef .Shd .ColorAttr .ST_HexColorAuto =_ec .ST_HexColorAutoAuto ;}else {_ggd ._eef .Shd .ColorAttr .ST_HexColorRGB =foreground .AsRGBString ();};_ggd ._eef .Shd .FillAttr =&_ec .ST_HexColor {};if fill .IsAuto (){_ggd ._eef .Shd .FillAttr .ST_HexColorAuto =_ec .ST_HexColorAutoAuto ;
+}else {_ggd ._eef .Shd .FillAttr .ST_HexColorRGB =fill .AsRGBString ();};};};
+
+// TableProperties returns the table style properties.
+func (_gcabac Style )TableProperties ()TableStyleProperties {if _gcabac ._ggbag .TblPr ==nil {_gcabac ._ggbag .TblPr =_ec .NewCT_TblPrBase ();};return TableStyleProperties {_gcabac ._ggbag .TblPr };};
+
+// GetNumberingLevelByIds returns a NumberingLevel by its NumId and LevelId attributes
+// or an empty one if not found.
+func (_eadec *Document )GetNumberingLevelByIds (numId ,levelId int64 )NumberingLevel {if _eadec .Numbering ._fdea ==nil {return NumberingLevel {};};for _ ,_ccaee :=range _eadec .Numbering ._fdea .Num {if _ccaee !=nil &&_ccaee .NumIdAttr ==numId {_dadf :=_ccaee .AbstractNumId .ValAttr ;
+for _ ,_bacbb :=range _eadec .Numbering ._fdea .AbstractNum {if _bacbb .AbstractNumIdAttr ==_dadf {if _bacbb .NumStyleLink !=nil &&len (_bacbb .Lvl )==0{if _ebfd ,_aedf :=_eadec .Styles .SearchStyleById (_bacbb .NumStyleLink .ValAttr );_aedf {if _ebfd .ParagraphProperties ().NumId ()> -1{return _eadec .GetNumberingLevelByIds (_ebfd .ParagraphProperties ().NumId (),levelId );
+};};};for _ ,_dcacb :=range _bacbb .Lvl {if _dcacb .IlvlAttr ==levelId {return NumberingLevel {_dcacb };};};};};};};return NumberingLevel {};};func (_agcad Paragraph )addFldChar ()*_ec .CT_FldChar {_fbea :=_agcad .AddRun ();_ddabg :=_fbea .X ();_cceedf :=_ec .NewEG_RunInnerContent ();
+_dabcc :=_ec .NewCT_FldChar ();_cceedf .RunInnerContentChoice .FldChar =_dabcc ;_ddabg .EG_RunInnerContent =append (_ddabg .EG_RunInnerContent ,_cceedf );return _dabcc ;};func (_gcab Footnote )id ()int64 {return _gcab ._decc .IdAttr };
+
+// Clear content of node element.
+func (_acda *Node )Clear (){_acda ._becg =nil };
+
+// NumberingDefinition defines a numbering definition for a list of pragraphs.
+type NumberingDefinition struct{_bgag *_ec .CT_AbstractNum };
+
+// SetGlowImageEffect sets the glow image effect.
+func (_dde AnchoredDrawing )SetGlowImageEffect (radius _ga .Distance ,c _gc .Color ){_cae :=_ga .ToEMU (float64 (radius ));for _ ,_adg :=range _dde ._da .Graphic .GraphicData .Any {if _gcd ,_dba :=_adg .(*_bf .Pic );_dba {_dde .initializeEffectList (_gcd .SpPr );
+_gcd .SpPr .EffectPropertiesChoice .EffectLst .Glow =_cc .NewCT_GlowEffect ();_gcd .SpPr .EffectPropertiesChoice .EffectLst .Glow .RadAttr =&_cae ;_gcd .SpPr .EffectPropertiesChoice .EffectLst .Glow .SrgbClr =_cc .NewCT_SRgbColor ();_gcd .SpPr .EffectPropertiesChoice .EffectLst .Glow .SrgbClr .ValAttr =*c .AsRGBString ();
+};};_dde .setEffectExtent (_cae ,_cae ,_cae ,_cae );};
+
+// Levels returns all of the numbering levels defined in the definition.
+func (_eeaa NumberingDefinition )Levels ()[]NumberingLevel {_ecbdf :=[]NumberingLevel {};for _ ,_cfbf :=range _eeaa ._bgag .Lvl {_ecbdf =append (_ecbdf ,NumberingLevel {_cfbf });};return _ecbdf ;};
+
+// Set3DRotationImageEffect sets the 3D rotation image effect.
+func (_gead AnchoredDrawing )Set3DRotationImageEffect (){for _ ,_cbd :=range _gead ._da .Graphic .GraphicData .Any {if _eeg ,_bcg :=_cbd .(*_bf .Pic );_bcg {_eeg .SpPr .Scene3d =_cc .NewCT_Scene3D ();_eeg .SpPr .Scene3d .Camera =_cc .NewCT_Camera ();_eeg .SpPr .Scene3d .Camera .PrstAttr =_cc .ST_PresetCameraTypeIsometricRightUp ;
+_eeg .SpPr .Scene3d .LightRig =_cc .NewCT_LightRig ();_eeg .SpPr .Scene3d .LightRig .RigAttr =_cc .ST_LightRigTypeThreePt ;_eeg .SpPr .Scene3d .LightRig .DirAttr =_cc .ST_LightRigDirectionT ;};};};
+
+// SetHANSITheme sets the font H ANSI Theme.
+func (_ebce Fonts )SetHANSITheme (t _ec .ST_Theme ){_ebce ._addaa .HAnsiThemeAttr =t };
+
+// SetLinkedStyle sets the style that this style is linked to.
+func (_cgdf Style )SetLinkedStyle (name string ){if name ==""{_cgdf ._ggbag .Link =nil ;}else {_cgdf ._ggbag .Link =_ec .NewCT_String ();_cgdf ._ggbag .Link .ValAttr =name ;};};
+
+// SetLayout controls the table layout. wml.ST_TblLayoutTypeAutofit corresponds
+// to "Automatically resize to fit contents" being checked, while
+// wml.ST_TblLayoutTypeFixed corresponds to it being unchecked.
+func (_fgfeb TableProperties )SetLayout (l _ec .ST_TblLayoutType ){if l ==_ec .ST_TblLayoutTypeUnset ||l ==_ec .ST_TblLayoutTypeAutofit {_fgfeb ._egdbb .TblLayout =nil ;}else {_fgfeb ._egdbb .TblLayout =_ec .NewCT_TblLayoutType ();_fgfeb ._egdbb .TblLayout .TypeAttr =l ;
+};};
+
+// FormField is a form within a document. It references the document, so changes
+// to the form field wil be reflected in the document if it is saved.
+type FormField struct{_dcbfb *_ec .CT_FFData ;_adaec *_ec .EG_RunInnerContent ;};
+
+// BoldValue returns the precise nature of the bold setting (unset, off or on).
+func (_bfed RunProperties )BoldValue ()OnOffValue {return _aeeag (_bfed ._bffab .B )};func (_bage Paragraph )addEndComment (_eegcd int64 )*_ec .CT_MarkupRange {_fbeaf :=_ec .NewEG_PContent ();_bage ._fagb .EG_PContent =append (_bage ._fagb .EG_PContent ,_fbeaf );
+_bfgb :=_ec .NewEG_ContentRunContent ();_dcbaf :=_ec .NewEG_RunLevelElts ();_egac :=_ec .NewEG_RangeMarkupElements ();_fedc :=_ec .NewCT_MarkupRange ();_fedc .IdAttr =_eegcd ;_egac .RangeMarkupElementsChoice .CommentRangeEnd =_fedc ;_fbeaf .PContentChoice .EG_ContentRunContent =append (_fbeaf .PContentChoice .EG_ContentRunContent ,_bfgb );
+_bfgb .ContentRunContentChoice .EG_RunLevelElts =append (_bfgb .ContentRunContentChoice .EG_RunLevelElts ,_dcbaf );_dcbaf .RunLevelEltsChoice .EG_RangeMarkupElements =append (_dcbaf .RunLevelEltsChoice .EG_RangeMarkupElements ,_egac );return _fedc ;};
+
+// Styles is the document wide styles contained in styles.xml.
+type Styles struct{_ggeafb *_ec .Styles };
+
+// SaveToFile writes the document out to a file.
+func (_bcdd *Document )SaveToFile (path string )error {_afbb ,_fdaa :=_ad .Create (path );if _fdaa !=nil {return _fdaa ;};defer _afbb .Close ();return _bcdd .Save (_afbb );};
+
+// Color returns the style's Color.
+func (_abcdf RunProperties )Color ()Color {if _abcdf ._bffab .Color ==nil {_abcdf ._bffab .Color =_ec .NewCT_Color ();};return Color {_abcdf ._bffab .Color };};
+
+// FindNodeByText return node based on matched text and return a slice of node.
+func (_ffdd *Nodes )FindNodeByText (text string )[]Node {_aafa :=[]Node {};for _ ,_bgdf :=range _ffdd ._adac {if _ce .TrimSpace (_bgdf .Text ())==text {_aafa =append (_aafa ,_bgdf );};_efbab :=Nodes {_adac :_bgdf .Children };_aafa =append (_aafa ,_efbab .FindNodeByText (text )...);
+};return _aafa ;};
+
+// RStyle returns the name of character style.
+// It is defined here http://officeopenxml.com/WPstyleCharStyles.php
+func (_gbgbd RunProperties )RStyle ()string {if _gbgbd ._bffab .RStyle !=nil {return _gbgbd ._bffab .RStyle .ValAttr ;};return "";};
+
+// SetOrigin sets the origin of the image.  It defaults to ST_RelFromHPage and
+// ST_RelFromVPage
+func (_efc AnchoredDrawing )SetOrigin (h _ec .WdST_RelFromH ,v _ec .WdST_RelFromV ){_efc ._da .PositionH .RelativeFromAttr =h ;_efc ._da .PositionV .RelativeFromAttr =v ;};
+
+// GetShapeStyle returns string style of the shape in watermark and format it to ShapeStyle.
+func (_aefga *WatermarkPicture )GetShapeStyle ()_af .ShapeStyle {if _aefga ._gbadf !=nil &&_aefga ._gbadf .StyleAttr !=nil {return _af .NewShapeStyle (*_aefga ._gbadf .StyleAttr );};return _af .NewShapeStyle ("");};
+
+// Style return the table style.
+func (_efca Table )Style ()string {if _efca ._bbefb .TblPr !=nil &&_efca ._bbefb .TblPr .TblStyle !=nil {return _efca ._bbefb .TblPr .TblStyle .ValAttr ;};return "";};
+
+// SetSize sets the size of the displayed image on the page.
+func (_faagc InlineDrawing )SetSize (w ,h _ga .Distance ){_faagc ._ggdaf .Extent .CxAttr =int64 (float64 (w *_ga .Pixel72 )/_ga .EMU );_faagc ._ggdaf .Extent .CyAttr =int64 (float64 (h *_ga .Pixel72 )/_ga .EMU );};
+
+// AddEndnote will create a new endnote and attach it to the Paragraph in the
+// location at the end of the previous run (endnotes create their own run within
+// the paragraph. The text given to the function is simply a convenience helper,
+// paragraphs and runs can always be added to the text of the endnote later.
+func (_ecgaf Paragraph )AddEndnote (text string )Endnote {var _cdcfb int64 ;if _ecgaf ._fafde .HasEndnotes (){for _ ,_egagb :=range _ecgaf ._fafde .Endnotes (){if _egagb .id ()> _cdcfb {_cdcfb =_egagb .id ();};};_cdcfb ++;}else {_ecgaf ._fafde .addEndnotes ();
+_cdcfb =1;};_ffgdd :=_ec .NewCT_FtnEdn ();_ddef :=_ec .NewCT_FtnEdnRef ();_ddef .IdAttr =_cdcfb ;_ecgaf ._fafde ._gdd .CT_Endnotes .Endnote =append (_ecgaf ._fafde ._gdd .CT_Endnotes .Endnote ,_ffgdd );_bafbd :=_ecgaf .AddRun ();_cdbf :=_bafbd .Properties ();
+_cdbf .SetStyle (_aec );_bafbd ._aeef .EG_RunInnerContent =[]*_ec .EG_RunInnerContent {_ec .NewEG_RunInnerContent ()};_bafbd ._aeef .EG_RunInnerContent [0].RunInnerContentChoice .EndnoteReference =_ddef ;_cbbea :=Endnote {_ecgaf ._fafde ,_ffgdd };_cbbea ._ggcdg .IdAttr =_cdcfb ;
+_cbbea ._ggcdg .EG_BlockLevelElts =[]*_ec .EG_BlockLevelElts {_ec .NewEG_BlockLevelElts ()};_aeca :=_cbbea .AddParagraph ();_aeca .Properties ().SetStyle (EndnoteTextStyleId );_aeca ._fagb .PPr .RPr =_ec .NewCT_ParaRPr ();_ccgcg :=_aeca .AddRun ();_cbdfc :=_ccgcg .Properties ();
+_cbdfc .SetStyle (_aec );_ccgcg .AddEndnoteReference ();_cgcef :=_aeca .AddRun ();_cgcef .AddText ("\u0020");_cgcef =_aeca .AddRun ();_cgcef .AddText (text );return _cbbea ;};
+
+// SetUpdateFieldsOnOpen controls if fields are recalculated upon opening the
+// document. This is useful for things like a table of contents as the library
+// only adds the field code and relies on Word/LibreOffice to actually compute
+// the content.
+func (_eccdf Settings )SetUpdateFieldsOnOpen (b bool ){if !b {_eccdf ._eedfb .UpdateFields =nil ;}else {_eccdf ._eedfb .UpdateFields =_ec .NewCT_OnOff ();};};
+
+// InsertRowAfter inserts a row after another row
+func (_caae Table )InsertRowAfter (r Row )Row {for _fadcd ,_dcgcg :=range _caae ._bbefb .EG_ContentRowContent {if len (_dcgcg .ContentRowContentChoice .Tr )> 0&&r .X ()==_dcgcg .ContentRowContentChoice .Tr [0]{_dadff :=_ec .NewEG_ContentRowContent ();if len (_caae ._bbefb .EG_ContentRowContent )< _fadcd +2{return _caae .AddRow ();
+};_caae ._bbefb .EG_ContentRowContent =append (_caae ._bbefb .EG_ContentRowContent ,nil );copy (_caae ._bbefb .EG_ContentRowContent [_fadcd +2:],_caae ._bbefb .EG_ContentRowContent [_fadcd +1:]);_caae ._bbefb .EG_ContentRowContent [_fadcd +1]=_dadff ;_gdea :=_ec .NewCT_Row ();
+_dadff .ContentRowContentChoice .Tr =append (_dadff .ContentRowContentChoice .Tr ,_gdea );return Row {_caae ._edbe ,_gdea };};};return _caae .AddRow ();};
+
+// AddPageBreak adds a page break to a run.
+func (_fccgb Run )AddPageBreak (){_gadb :=_fccgb .newIC ();_gadb .RunInnerContentChoice .Br =_ec .NewCT_Br ();_gadb .RunInnerContentChoice .Br .TypeAttr =_ec .ST_BrTypePage ;};
+
+// X returns the inner wrapped XML type.
+func (_cagfa TableLook )X ()*_ec .CT_TblLook {return _cagfa ._cgfd };func (_dcbgf *WatermarkText )getInnerElement (_efag string )*_c .XSDAny {for _ ,_ddaf :=range _dcbgf ._dfbb .Any {_afbc ,_cegf :=_ddaf .(*_c .XSDAny );if _cegf &&(_afbc .XMLName .Local ==_efag ||_afbc .XMLName .Local =="\u0076\u003a"+_efag ){return _afbc ;
+};};return nil ;};
+
+// AddCell adds a cell to a row and returns it
+func (_gdaf Row )AddCell ()Cell {_agcfd :=_ec .NewEG_ContentCellContent ();_gdaf ._gfeea .EG_ContentCellContent =append (_gdaf ._gfeea .EG_ContentCellContent ,_agcfd );_dbdef :=_ec .NewCT_Tc ();_agcfd .ContentCellContentChoice .Tc =append (_agcfd .ContentCellContentChoice .Tc ,_dbdef );
+return Cell {_gdaf ._aebdd ,_dbdef };};
+
+// SetProperties sets the `RunProperties` to the `Run` element
+func (_dbed Run )SetProperties (rp RunProperties ){if rp ._bffab ==nil {_dbed ._aeef .RPr =_ec .NewCT_RPr ();}else {_ddabd :=_ec .NewCT_RPr ();if rp ._bffab .RStyle !=nil {_ddabd .RStyle =&_ec .CT_String {ValAttr :rp ._bffab .RStyle .ValAttr };};if rp ._bffab .RFonts !=nil {_ddabd .RFonts =&_ec .CT_Fonts {HintAttr :rp ._bffab .RFonts .HintAttr ,AsciiAttr :rp ._bffab .RFonts .AsciiAttr ,HAnsiAttr :rp ._bffab .RFonts .HAnsiAttr ,EastAsiaAttr :rp ._bffab .RFonts .EastAsiaAttr ,CsAttr :rp ._bffab .RFonts .CsAttr ,AsciiThemeAttr :rp ._bffab .RFonts .AsciiThemeAttr ,HAnsiThemeAttr :rp ._bffab .RFonts .HAnsiThemeAttr ,EastAsiaThemeAttr :rp ._bffab .RFonts .EastAsiaThemeAttr ,CsthemeAttr :rp ._bffab .RFonts .CsthemeAttr };
+};if rp ._bffab .B !=nil {_ddabd .B =&_ec .CT_OnOff {};if rp ._bffab .B .ValAttr !=nil {_fgdf :=*rp ._bffab .B .ValAttr ;_ddabd .B .ValAttr =&_fgdf ;};};if rp ._bffab .BCs !=nil {_ddabd .BCs =&_ec .CT_OnOff {};if rp ._bffab .BCs .ValAttr !=nil {_fdbdfdg :=*rp ._bffab .BCs .ValAttr ;
+_ddabd .BCs .ValAttr =&_fdbdfdg ;};};if rp ._bffab .I !=nil {_ddabd .I =&_ec .CT_OnOff {};if rp ._bffab .I .ValAttr !=nil {_begd :=*rp ._bffab .I .ValAttr ;_ddabd .I .ValAttr =&_begd ;};};if rp ._bffab .ICs !=nil {_ddabd .ICs =&_ec .CT_OnOff {};if rp ._bffab .ICs .ValAttr !=nil {_bfda :=*rp ._bffab .ICs .ValAttr ;
+_ddabd .ICs .ValAttr =&_bfda ;};};if rp ._bffab .Caps !=nil {_ddabd .Caps =&_ec .CT_OnOff {};if rp ._bffab .Caps .ValAttr !=nil {_gcda :=*rp ._bffab .Caps .ValAttr ;_ddabd .Caps .ValAttr =&_gcda ;};};if rp ._bffab .SmallCaps !=nil {_ddabd .SmallCaps =&_ec .CT_OnOff {};
+if rp ._bffab .SmallCaps .ValAttr !=nil {_abef :=*rp ._bffab .SmallCaps .ValAttr ;_ddabd .SmallCaps .ValAttr =&_abef ;};};if rp ._bffab .Strike !=nil {_ddabd .Strike =&_ec .CT_OnOff {};if rp ._bffab .Strike .ValAttr !=nil {_gbbe :=*rp ._bffab .Strike .ValAttr ;
+_ddabd .Strike .ValAttr =&_gbbe ;};};if rp ._bffab .Dstrike !=nil {_ddabd .Dstrike =&_ec .CT_OnOff {};if rp ._bffab .Dstrike .ValAttr !=nil {_bbbee :=*rp ._bffab .Dstrike .ValAttr ;_ddabd .Dstrike .ValAttr =&_bbbee ;};};if rp ._bffab .Outline !=nil {_ddabd .Outline =&_ec .CT_OnOff {};
+if rp ._bffab .Outline .ValAttr !=nil {_bebfc :=*rp ._bffab .Outline .ValAttr ;_ddabd .Outline .ValAttr =&_bebfc ;};};if rp ._bffab .Shadow !=nil {_ddabd .Shadow =&_ec .CT_OnOff {};if rp ._bffab .Shadow .ValAttr !=nil {_afcfc :=*rp ._bffab .Shadow .ValAttr ;
+_ddabd .Shadow .ValAttr =&_afcfc ;};};if rp ._bffab .Emboss !=nil {_ddabd .Emboss =&_ec .CT_OnOff {};if rp ._bffab .Emboss .ValAttr !=nil {_beac :=*rp ._bffab .Emboss .ValAttr ;_ddabd .Emboss .ValAttr =&_beac ;};};if rp ._bffab .Imprint !=nil {_ddabd .Imprint =&_ec .CT_OnOff {};
+if rp ._bffab .Imprint .ValAttr !=nil {_cgdg :=*rp ._bffab .Imprint .ValAttr ;_ddabd .Imprint .ValAttr =&_cgdg ;};};if rp ._bffab .NoProof !=nil {_ddabd .NoProof =&_ec .CT_OnOff {};if rp ._bffab .NoProof .ValAttr !=nil {_addgf :=*rp ._bffab .NoProof .ValAttr ;
+_ddabd .NoProof .ValAttr =&_addgf ;};};if rp ._bffab .SnapToGrid !=nil {_ddabd .SnapToGrid =&_ec .CT_OnOff {};if rp ._bffab .SnapToGrid .ValAttr !=nil {_fgbf :=*rp ._bffab .SnapToGrid .ValAttr ;_ddabd .SnapToGrid .ValAttr =&_fgbf ;};};if rp ._bffab .Vanish !=nil {_ddabd .Vanish =&_ec .CT_OnOff {};
+if rp ._bffab .Vanish .ValAttr !=nil {_defde :=*rp ._bffab .Vanish .ValAttr ;_ddabd .Vanish .ValAttr =&_defde ;};};if rp ._bffab .WebHidden !=nil {_ddabd .WebHidden =&_ec .CT_OnOff {};if rp ._bffab .WebHidden .ValAttr !=nil {_adce :=*rp ._bffab .WebHidden .ValAttr ;
+_ddabd .WebHidden .ValAttr =&_adce ;};};if rp ._bffab .Color !=nil {_ddabd .Color =&_ec .CT_Color {ValAttr :rp ._bffab .Color .ValAttr ,ThemeColorAttr :rp ._bffab .Color .ThemeColorAttr ,ThemeTintAttr :rp ._bffab .Color .ThemeTintAttr ,ThemeShadeAttr :rp ._bffab .Color .ThemeShadeAttr };
+};if rp ._bffab .Spacing !=nil {_ddabd .Spacing =&_ec .CT_SignedTwipsMeasure {ValAttr :rp ._bffab .Spacing .ValAttr };};if rp ._bffab .W !=nil {_ddabd .W =&_ec .CT_TextScale {ValAttr :rp ._bffab .W .ValAttr };};if rp ._bffab .Kern !=nil {_ddabd .Kern =&_ec .CT_HpsMeasure {ValAttr :rp ._bffab .Kern .ValAttr };
+};if rp ._bffab .Position !=nil {_ddabd .Position =&_ec .CT_SignedHpsMeasure {ValAttr :rp ._bffab .Position .ValAttr };};if rp ._bffab .Sz !=nil {_ddabd .Sz =&_ec .CT_HpsMeasure {ValAttr :rp ._bffab .Sz .ValAttr };};if rp ._bffab .SzCs !=nil {_ddabd .SzCs =&_ec .CT_HpsMeasure {ValAttr :rp ._bffab .SzCs .ValAttr };
+};if rp ._bffab .Highlight !=nil {_ddabd .Highlight =&_ec .CT_Highlight {ValAttr :rp ._bffab .Highlight .ValAttr };};if rp ._bffab .U !=nil {_ddabd .U =&_ec .CT_Underline {ValAttr :rp ._bffab .U .ValAttr ,ColorAttr :rp ._bffab .U .ColorAttr ,ThemeColorAttr :rp ._bffab .U .ThemeColorAttr ,ThemeTintAttr :rp ._bffab .U .ThemeTintAttr ,ThemeShadeAttr :rp ._bffab .U .ThemeShadeAttr };
+};if rp ._bffab .Effect !=nil {_ddabd .Effect =&_ec .CT_TextEffect {ValAttr :rp ._bffab .Effect .ValAttr };};if rp ._bffab .Bdr !=nil {_ddabd .Bdr =&_ec .CT_Border {ValAttr :rp ._bffab .Bdr .ValAttr ,ColorAttr :rp ._bffab .Bdr .ColorAttr ,ThemeColorAttr :rp ._bffab .Bdr .ThemeColorAttr ,ThemeTintAttr :rp ._bffab .Bdr .ThemeTintAttr ,ThemeShadeAttr :rp ._bffab .Bdr .ThemeShadeAttr ,SzAttr :rp ._bffab .Bdr .SzAttr ,SpaceAttr :rp ._bffab .Bdr .SpaceAttr ,ShadowAttr :rp ._bffab .Bdr .ShadowAttr ,FrameAttr :rp ._bffab .Bdr .FrameAttr };
+};if rp ._bffab .Shd !=nil {_ddabd .Shd =&_ec .CT_Shd {ValAttr :rp ._bffab .Shd .ValAttr ,ColorAttr :rp ._bffab .Shd .ColorAttr ,ThemeColorAttr :rp ._bffab .Shd .ThemeColorAttr ,ThemeTintAttr :rp ._bffab .Shd .ThemeTintAttr ,ThemeShadeAttr :rp ._bffab .Shd .ThemeShadeAttr ,FillAttr :rp ._bffab .Shd .FillAttr ,ThemeFillAttr :rp ._bffab .Shd .ThemeFillAttr ,ThemeFillTintAttr :rp ._bffab .Shd .ThemeFillTintAttr ,ThemeFillShadeAttr :rp ._bffab .Shd .ThemeFillShadeAttr };
+};if rp ._bffab .FitText !=nil {_ddabd .FitText =&_ec .CT_FitText {ValAttr :rp ._bffab .FitText .ValAttr ,IdAttr :rp ._bffab .FitText .IdAttr };};if rp ._bffab .VertAlign !=nil {_ddabd .VertAlign =&_ec .CT_VerticalAlignRun {ValAttr :rp ._bffab .VertAlign .ValAttr };
+};if rp ._bffab .Rtl !=nil {_ddabd .Rtl =&_ec .CT_OnOff {ValAttr :rp ._bffab .Rtl .ValAttr };};if rp ._bffab .Cs !=nil {_ddabd .Cs =&_ec .CT_OnOff {ValAttr :rp ._bffab .Cs .ValAttr };};if rp ._bffab .Em !=nil {_ddabd .Em =&_ec .CT_Em {ValAttr :rp ._bffab .Em .ValAttr };
+};if rp ._bffab .Lang !=nil {_ddabd .Lang =&_ec .CT_Language {ValAttr :rp ._bffab .Lang .ValAttr ,EastAsiaAttr :rp ._bffab .Lang .EastAsiaAttr ,BidiAttr :rp ._bffab .Lang .BidiAttr };};if rp ._bffab .EastAsianLayout !=nil {_ddabd .EastAsianLayout =&_ec .CT_EastAsianLayout {IdAttr :rp ._bffab .EastAsianLayout .IdAttr ,CombineAttr :rp ._bffab .EastAsianLayout .CombineAttr ,CombineBracketsAttr :rp ._bffab .EastAsianLayout .CombineBracketsAttr ,VertAttr :rp ._bffab .EastAsianLayout .VertAttr ,VertCompressAttr :rp ._bffab .EastAsianLayout .VertCompressAttr };
+};if rp ._bffab .SpecVanish !=nil {_ddabd .SpecVanish =&_ec .CT_OnOff {ValAttr :rp ._bffab .SpecVanish .ValAttr };};if rp ._bffab .OMath !=nil {_ddabd .OMath =&_ec .CT_OnOff {ValAttr :rp ._bffab .OMath .ValAttr };};_dbed ._aeef .RPr =_ddabd ;};};
+
+// Emboss returns true if paragraph emboss is on.
+func (_gdbee ParagraphProperties )Emboss ()bool {return _gfgb (_gdbee ._bbdf .RPr .Emboss )};func (_ecfcd Paragraph )addStartBookmark (_aaebb int64 ,_cegc string )*_ec .CT_Bookmark {_bcfcd :=_ec .NewEG_PContent ();_ecfcd ._fagb .EG_PContent =append (_ecfcd ._fagb .EG_PContent ,_bcfcd );
+_cbfe :=_ec .NewEG_ContentRunContent ();_eacac :=_ec .NewEG_RunLevelElts ();_dbccc :=_ec .NewEG_RangeMarkupElements ();_cbgeg :=_ec .NewCT_Bookmark ();_cbgeg .NameAttr =_cegc ;_cbgeg .IdAttr =_aaebb ;_dbccc .RangeMarkupElementsChoice .BookmarkStart =_cbgeg ;
+_bcfcd .PContentChoice .EG_ContentRunContent =append (_bcfcd .PContentChoice .EG_ContentRunContent ,_cbfe );_cbfe .ContentRunContentChoice .EG_RunLevelElts =append (_cbfe .ContentRunContentChoice .EG_RunLevelElts ,_eacac );_eacac .RunLevelEltsChoice .EG_RangeMarkupElements =append (_eacac .RunLevelEltsChoice .EG_RangeMarkupElements ,_dbccc );
+return _cbgeg ;};
+
+// SetFollowImageShape sets wrapPath to follow image shape,
+// if nil return wrapPath that follow image size.
+func (_bde AnchorDrawWrapOptions )SetFollowImageShape (val bool ){_bde ._gbge =val ;if !val {_ffa ,_ege :=_bba ();_bde ._fba =_ffa ;_bde ._deb =_ege ;};};
+
+// RightToLeft returns true if paragraph text goes from right to left.
+func (_caeb ParagraphProperties )RightToLeft ()bool {return _gfgb (_caeb ._bbdf .RPr .Rtl )};func _aef (_egdca *_ec .CT_Tbl ,_ddea map[string ]string ){for _ ,_bdfg :=range _egdca .EG_ContentRowContent {for _ ,_gbgb :=range _bdfg .ContentRowContentChoice .Tr {for _ ,_badg :=range _gbgb .EG_ContentCellContent {for _ ,_faec :=range _badg .ContentCellContentChoice .Tc {for _ ,_fdd :=range _faec .EG_BlockLevelElts {for _ ,_eedg :=range _fdd .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_cecf :=range _eedg .ContentBlockContentChoice .P {_fbaaf (_cecf ,_ddea );
+};for _ ,_gbgc :=range _eedg .ContentBlockContentChoice .Tbl {_aef (_gbgc ,_ddea );};};};};};};};};
+
+// TextWithOptions extract text with options.
+func (_dfda *DocText )TextWithOptions (options ExtractTextOptions )string {_gdgd :=make (map[int64 ]map[int64 ]int64 ,0);_fecb :=_bc .NewBuffer ([]byte {});_ddfd :=int64 (0);_eeeab :=int64 (0);_bagd :=int64 (0);for _cbdcg ,_cbdgc :=range _dfda .Items {_gca :=false ;
+if _cbdgc .Text !=""{if _cbdcg > 0{if _cbdgc .Paragraph !=_dfda .Items [_cbdcg -1].Paragraph {_gca =true ;};if !options .RunsOnNewLine &&_gca {_fecb .WriteString ("\u000a");}else if options .RunsOnNewLine {_fecb .WriteString ("\u000a");};}else {_gca =true ;
+};if options .WithNumbering {if _gca {for _ ,_aaagg :=range _dfda ._faeb {if _aaagg .FromParagraph ==nil {continue ;};if _aaagg .FromParagraph .X ()==_cbdgc .Paragraph {if _cabb :=_aaagg .NumberingLevel .X ();_cabb !=nil {if _aaagg .AbstractNumId !=nil &&_dfda ._edea [*_aaagg .AbstractNumId ][_cabb .IlvlAttr ]> 0{if _ ,_abgf :=_gdgd [*_aaagg .AbstractNumId ];
+_abgf {if _ ,_dgcfc :=_gdgd [*_aaagg .AbstractNumId ][_cabb .IlvlAttr ];_dgcfc {_gdgd [*_aaagg .AbstractNumId ][_cabb .IlvlAttr ]++;}else {_gdgd [*_aaagg .AbstractNumId ][_cabb .IlvlAttr ]=1;};}else {_gdgd [*_aaagg .AbstractNumId ]=map[int64 ]int64 {_cabb .IlvlAttr :1};
+};if _ddfd ==_aaagg .NumberingLevel .X ().IlvlAttr &&_cabb .IlvlAttr > 0{_eeeab ++;}else {_eeeab =_gdgd [*_aaagg .AbstractNumId ][_cabb .IlvlAttr ];if _cabb .IlvlAttr > _ddfd &&_bagd ==*_aaagg .AbstractNumId {_eeeab =1;};};_fabdd :="";if _cabb .LvlText .ValAttr !=nil {_fabdd =*_cabb .LvlText .ValAttr ;
+};_accgb :=_dc .FormatNumberingText (_eeeab ,_cabb .IlvlAttr ,_fabdd ,_cabb .NumFmt ,_gdgd [*_aaagg .AbstractNumId ]);_fecb .WriteString (_accgb );_dfda ._edea [*_aaagg .AbstractNumId ][_cabb .IlvlAttr ]--;_ddfd =_cabb .IlvlAttr ;_bagd =*_aaagg .AbstractNumId ;
+if options .NumberingIndent !=""{_fecb .WriteString (options .NumberingIndent );};};};break ;};};};};_fecb .WriteString (_cbdgc .Text );};};return _fecb .String ();};
+
+// Section is the beginning of a new section.
+type Section struct{_gbedd *Document ;_gcebe *_ec .CT_SectPr ;};
+
+// SetUISortOrder controls the order the style is displayed in the UI.
+func (_ffgce Style )SetUISortOrder (order int ){_ffgce ._ggbag .UiPriority =_ec .NewCT_DecimalNumber ();_ffgce ._ggbag .UiPriority .ValAttr =int64 (order );};
+
+// DocText is an array of extracted text items which has some methods for representing extracted text.
+type DocText struct{Items []TextItem ;_faeb []listItemInfo ;_edea map[int64 ]map[int64 ]int64 ;};
+
+// X returns the inner wrapped XML type.
+func (_gecab Settings )X ()*_ec .Settings {return _gecab ._eedfb };
+
+// SetLeft sets the left border to a specified type, color and thickness.
+func (_feddg TableBorders )SetLeft (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_feddg ._gbeg .Left =_ec .NewCT_Border ();_cffba (_feddg ._gbeg .Left ,t ,c ,thickness );};
+
+// SetLineSpacing controls the line spacing of the paragraph.
+func (_bfcca ParagraphStyleProperties )SetLineSpacing (m _ga .Distance ,rule _ec .ST_LineSpacingRule ){if _bfcca ._egfac .Spacing ==nil {_bfcca ._egfac .Spacing =_ec .NewCT_Spacing ();};if rule ==_ec .ST_LineSpacingRuleUnset {_bfcca ._egfac .Spacing .LineRuleAttr =_ec .ST_LineSpacingRuleUnset ;
+_bfcca ._egfac .Spacing .LineAttr =nil ;}else {_bfcca ._egfac .Spacing .LineRuleAttr =rule ;_bfcca ._egfac .Spacing .LineAttr =&_ec .ST_SignedTwipsMeasure {};_bfcca ._egfac .Spacing .LineAttr .Int64 =_c .Int64 (int64 (m /_ga .Twips ));};};
+
+// SizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
+func (_bbcae ParagraphProperties )SizeMeasure ()string {if _bfdbe :=_bbcae ._bbdf .RPr .Sz ;_bfdbe !=nil {_bfbb :=_bfdbe .ValAttr ;if _bfbb .ST_PositiveUniversalMeasure !=nil {return *_bfbb .ST_PositiveUniversalMeasure ;};};return "";};
+
+// SetAfterLineSpacing sets spacing below paragraph in line units.
+func (_faga Paragraph )SetAfterLineSpacing (d _ga .Distance ){_faga .ensurePPr ();if _faga ._fagb .PPr .Spacing ==nil {_faga ._fagb .PPr .Spacing =_ec .NewCT_Spacing ();};_aegg :=_faga ._fagb .PPr .Spacing ;_aegg .AfterLinesAttr =_c .Int64 (int64 (d /_ga .Twips ));
+};
+
+// SetOffset sets the offset of the image relative to the origin, which by
+// default this is the top-left corner of the page. Offset is incompatible with
+// SetAlignment, whichever is called last is applied.
+func (_dcf AnchoredDrawing )SetOffset (x ,y _ga .Distance ){_dcf .SetXOffset (x );_dcf .SetYOffset (y )};
+
+// SetTblHeader set row properties for repeat table row on every new page value.
+func (_aceae RowProperties )SetTblHeader (val bool ){if !val {_aceae ._dafb .TrPrBaseChoice =nil ;}else {_aceae ._dafb .TrPrBaseChoice =[]*_ec .CT_TrPrBaseChoice {&_ec .CT_TrPrBaseChoice {TblHeader :_ec .NewCT_OnOff ()}};};};
+
+// ExtractTextOptions extraction text options.
+type ExtractTextOptions struct{
+
+// WithNumbering extract numbering elements if set to `true`.
+WithNumbering bool ;
+
+// NumberingIndent default value of numbering indent.
+NumberingIndent string ;
+
+// RunsOnNewLine write each of runs text on new line if set to `true`.
+RunsOnNewLine bool ;};
+
+// GetColor returns the color.Color object representing the run color.
+func (_affe ParagraphProperties )GetColor ()_gc .Color {if _addbc :=_affe ._bbdf .RPr .Color ;_addbc !=nil {_ebbdg :=_addbc .ValAttr ;if _ebbdg .ST_HexColorRGB !=nil {return _gc .FromHex (*_ebbdg .ST_HexColorRGB );};};return _gc .Color {};};func (_eafb *Document )reorderEndnote (){_caa :=int64 (1);
+_bggf :=map[int64 ]int64 {};for _ ,_ggda :=range _eafb ._gdd .Endnote {switch _ggda .TypeAttr {case _ec .ST_FtnEdnSeparator :_ggda .IdAttr =-1;break ;case _ec .ST_FtnEdnContinuationSeparator :_ggda .IdAttr =0;break ;default:_bggf [_ggda .IdAttr ]=_caa ;
+_ggda .IdAttr =_caa ;_caa ++;};};for _ ,_faff :=range _eafb .Paragraphs (){for _ ,_egcg :=range _faff .Runs (){if _facdb ,_gegb :=_egcg .IsEndnote ();_facdb {_egcg .X ().EG_RunInnerContent [0].RunInnerContentChoice .EndnoteReference .IdAttr =_bggf [_gegb ];
+};};};};func (_ffdg Paragraph )removeCommentRange (_cgaff int64 )bool {_adegd :=false ;for _ ,_efeab :=range _ffdg .X ().EG_PContent {for _ ,_eegfa :=range _efeab .PContentChoice .EG_ContentRunContent {for _ ,_acdgb :=range _eegfa .ContentRunContentChoice .EG_RunLevelElts {for _dgacf ,_geff :=range _acdgb .RunLevelEltsChoice .EG_RangeMarkupElements {if !_adegd &&_geff .RangeMarkupElementsChoice .CommentRangeStart !=nil &&_geff .RangeMarkupElementsChoice .CommentRangeStart .IdAttr ==_cgaff {_egcgg :=_acdgb .RunLevelEltsChoice .EG_RangeMarkupElements [:_dgacf ];
+_egcgg =append (_egcgg ,_acdgb .RunLevelEltsChoice .EG_RangeMarkupElements [_dgacf +1:len (_acdgb .RunLevelEltsChoice .EG_RangeMarkupElements )]...);_acdgb .RunLevelEltsChoice .EG_RangeMarkupElements =_egcgg ;_adegd =true ;};if _adegd &&_geff .RangeMarkupElementsChoice .CommentRangeEnd !=nil &&_geff .RangeMarkupElementsChoice .CommentRangeEnd .IdAttr ==_cgaff {_ggfea :=_acdgb .RunLevelEltsChoice .EG_RangeMarkupElements [:_dgacf ];
+_ggfea =append (_ggfea ,_acdgb .RunLevelEltsChoice .EG_RangeMarkupElements [_dgacf +1:len (_acdgb .RunLevelEltsChoice .EG_RangeMarkupElements )]...);_acdgb .RunLevelEltsChoice .EG_RangeMarkupElements =_ggfea ;return true ;};};};};};return false ;};
+
+// X returns the inner wrapped XML type.
+func (_bcgc Bookmark )X ()*_ec .CT_Bookmark {return _bcgc ._fad };
+
+// RunProperties returns the RunProperties controlling numbering level font, etc.
+func (_dfde NumberingLevel )RunProperties ()RunProperties {if _dfde ._bgced .RPr ==nil {_dfde ._bgced .RPr =_ec .NewCT_RPr ();};return RunProperties {_dfde ._bgced .RPr };};
+
+// SetHeader sets a section header.
+func (_acdab Section )SetHeader (h Header ,t _ec .ST_HdrFtr ){_abgac :=_ec .NewEG_HdrFtrReferences ();_acdab ._gcebe .EG_HdrFtrReferences =append (_acdab ._gcebe .EG_HdrFtrReferences ,_abgac );_abgac .HdrFtrReferencesChoice .HeaderReference =_ec .NewCT_HdrFtrRef ();
+_abgac .HdrFtrReferencesChoice .HeaderReference .TypeAttr =t ;_edgg :=_acdab ._gbedd ._cbaa .FindRIDForN (h .Index (),_c .HeaderType );if _edgg ==""{_be .Log .Debug ("\u0075\u006ea\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0064\u0065\u0074\u0065\u0072\u006d\u0069\u006e\u0065\u0020\u0068\u0065\u0061\u0064\u0065r \u0049\u0044");
+};_abgac .HdrFtrReferencesChoice .HeaderReference .IdAttr =_edgg ;};
+
+// SetEmboss sets the run to embossed text.
+func (_acada RunProperties )SetEmboss (b bool ){if !b {_acada ._bffab .Emboss =nil ;}else {_acada ._bffab .Emboss =_ec .NewCT_OnOff ();};};
+
+// SetStrict is a shortcut for document.SetConformance,
+// as one of these values from github.com/unidoc/unioffice/schema/soo/ofc/sharedTypes:
+// ST_ConformanceClassUnset, ST_ConformanceClassStrict or ST_ConformanceClassTransitional.
+func (_dedb Document )SetStrict (strict bool ){if strict {_dedb ._dgg .ConformanceAttr =_afe .ST_ConformanceClassStrict ;}else {_dedb ._dgg .ConformanceAttr =_afe .ST_ConformanceClassTransitional ;};};
+
+// Style returns the style for a paragraph, or an empty string if it is unset.
+func (_dbbf Paragraph )Style ()string {if _dbbf ._fagb .PPr !=nil &&_dbbf ._fagb .PPr .PStyle !=nil {return _dbbf ._fagb .PPr .PStyle .ValAttr ;};return "";};
+
+// SetTop sets the top border to a specified type, color and thickness.
+func (_agc CellBorders )SetTop (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_agc ._gda .Top =_ec .NewCT_Border ();_cffba (_agc ._gda .Top ,t ,c ,thickness );};
+
+// SetKerning sets the run's font kerning.
+func (_aadf RunProperties )SetKerning (size _ga .Distance ){_aadf ._bffab .Kern =_ec .NewCT_HpsMeasure ();_aadf ._bffab .Kern .ValAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (size /_ga .HalfPoint ));};func (_fbef *Document )validateBookmarks ()error {_ddc :=make (map[string ]struct{});
+for _ ,_aca :=range _fbef .Bookmarks (){if _ ,_ebd :=_ddc [_aca .Name ()];_ebd {return _cb .Errorf ("d\u0075\u0070\u006c\u0069\u0063\u0061t\u0065\u0020\u0062\u006f\u006f\u006b\u006d\u0061\u0072k\u0020\u0025\u0073 \u0066o\u0075\u006e\u0064",_aca .Name ());
+};_ddc [_aca .Name ()]=struct{}{};};return nil ;};
+
+// SetEnabled marks a FormField as enabled or disabled.
+func (_cbda FormField )SetEnabled (enabled bool ){_ffcf :=_ec .NewCT_OnOff ();_ffcf .ValAttr =&_afe .ST_OnOff {Bool :&enabled };_cbda ._dcbfb .FFDataChoice =[]*_ec .CT_FFDataChoice {{Enabled :_ffcf }};};
+
+// AddBreak adds a line break to a run.
+func (_cabbe Run )AddBreak (){_gbbd :=_cabbe .newIC ();_gbbd .RunInnerContentChoice .Br =_ec .NewCT_Br ();};
+
+// EastAsiaFont returns the name of paragraph font family for East Asia.
+func (_dddd ParagraphProperties )EastAsiaFont ()string {if _fbabd :=_dddd ._bbdf .RPr .RFonts ;_fbabd !=nil {if _fbabd .EastAsiaAttr !=nil {return *_fbabd .EastAsiaAttr ;};};return "";};
+
+// SetTextStyleBold sets text style of watermark to bold.
+func (_gfbgc *WatermarkText )SetTextStyleBold (value bool ){_gbgaf :=_gfbgc .GetStyle ();_gbgaf .SetBold (value );_gfbgc .SetStyle (_gbgaf );};
+
+// StructuredDocumentTags returns the structured document tags in the document
+// which are commonly used in document templates.
+func (_beg *Document )StructuredDocumentTags ()[]StructuredDocumentTag {_aba :=[]StructuredDocumentTag {};for _ ,_cffc :=range _beg ._dgg .Body .EG_BlockLevelElts {for _ ,_babb :=range _cffc .BlockLevelEltsChoice .EG_ContentBlockContent {if _babb .ContentBlockContentChoice .Sdt !=nil {_aba =append (_aba ,StructuredDocumentTag {_beg ,_babb .ContentBlockContentChoice .Sdt });
+};};};return _aba ;};
+
+// SetFooter sets a section footer.
+func (_cafce Section )SetFooter (f Footer ,t _ec .ST_HdrFtr ){_edgc :=_ec .NewEG_HdrFtrReferences ();_cafce ._gcebe .EG_HdrFtrReferences =append (_cafce ._gcebe .EG_HdrFtrReferences ,_edgc );_edgc .HdrFtrReferencesChoice .FooterReference =_ec .NewCT_HdrFtrRef ();
+_edgc .HdrFtrReferencesChoice .FooterReference .TypeAttr =t ;_gfab :=_cafce ._gbedd ._cbaa .FindRIDForN (f .Index (),_c .FooterType );if _gfab ==""{_be .Log .Debug ("\u0075\u006ea\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0064\u0065\u0074\u0065\u0072\u006d\u0069\u006e\u0065\u0020\u0066\u006f\u006f\u0074\u0065r \u0049\u0044");
+};_edgc .HdrFtrReferencesChoice .FooterReference .IdAttr =_gfab ;};
+
+// SetCellSpacingPercent sets the cell spacing within a table to a percent width.
+func (_bcdef TableProperties )SetCellSpacingPercent (pct float64 ){_bcdef ._egdbb .TblCellSpacing =_ec .NewCT_TblWidth ();_bcdef ._egdbb .TblCellSpacing .TypeAttr =_ec .ST_TblWidthPct ;_bcdef ._egdbb .TblCellSpacing .WAttr =&_ec .ST_MeasurementOrPercent {};
+_bcdef ._egdbb .TblCellSpacing .WAttr .ST_DecimalNumberOrPercent =&_ec .ST_DecimalNumberOrPercent {};_bcdef ._egdbb .TblCellSpacing .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_c .Int64 (int64 (pct *50));};
+
+// AddField adds a field (automatically computed text) to the document.
+func (_egdcf Run )AddField (code string ){_egdcf .AddFieldWithFormatting (code ,"",true )};
+
+// SetSize sets the font size for a run.
+func (_dggb RunProperties )SetSize (size _ga .Distance ){_dggb ._bffab .Sz =_ec .NewCT_HpsMeasure ();_dggb ._bffab .Sz .ValAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (size /_ga .HalfPoint ));_dggb ._bffab .SzCs =_ec .NewCT_HpsMeasure ();_dggb ._bffab .SzCs .ValAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (size /_ga .HalfPoint ));
+};
+
+// Imprint returns true if run imprint is on.
+func (_eefc RunProperties )Imprint ()bool {return _gfgb (_eefc ._bffab .Imprint )};func (_cbdg *chart )RelId ()string {return _cbdg ._bad };
+
+// Properties returns the table properties.
+func (_ffag Table )Properties ()TableProperties {if _ffag ._bbefb .TblPr ==nil {_ffag ._bbefb .TblPr =_ec .NewCT_TblPr ();};return TableProperties {_ffag ._bbefb .TblPr };};
 
 // SetNumberingLevel sets the numbering level of a paragraph.  If used, then the
 // NumberingDefinition must also be set via SetNumberingDefinition or
 // SetNumberingDefinitionByID.
-func (_decac Paragraph )SetNumberingLevel (listLevel int ){_decac .ensurePPr ();if _decac ._dfbf .PPr .NumPr ==nil {_decac ._dfbf .PPr .NumPr =_bg .NewCT_NumPr ();};_bcec :=_bg .NewCT_DecimalNumber ();_bcec .ValAttr =int64 (listLevel );_decac ._dfbf .PPr .NumPr .Ilvl =_bcec ;
+func (_fcad Paragraph )SetNumberingLevel (listLevel int ){_fcad .ensurePPr ();if _fcad ._fagb .PPr .NumPr ==nil {_fcad ._fagb .PPr .NumPr =_ec .NewCT_NumPr ();};_caef :=_ec .NewCT_DecimalNumber ();_caef .ValAttr =int64 (listLevel );_fcad ._fagb .PPr .NumPr .Ilvl =_caef ;
 };
 
-// ExtractFromFooter returns text from the document footer as an array of TextItems.
-func ExtractFromFooter (footer *_bg .Ftr )[]TextItem {var _gdeg []TextItem ;for _ ,_edcfb :=range footer .EG_BlockLevelElts {_gdeg =append (_gdeg ,_adgff (_edcfb .BlockLevelEltsChoice .EG_ContentBlockContent ,nil )...);};return _gdeg ;};
-
-// SetKeepNext controls if the paragraph is kept with the next paragraph.
-func (_dgddd ParagraphStyleProperties )SetKeepNext (b bool ){if !b {_dgddd ._becee .KeepNext =nil ;}else {_dgddd ._becee .KeepNext =_bg .NewCT_OnOff ();};};
-
-// AnchoredDrawing is an absolutely positioned image within a document page.
-type AnchoredDrawing struct{_dad *Document ;_cd *_bg .WdAnchor ;};
-
-// Nodes return the document's element as nodes.
-func (_eafd *Document )Nodes ()Nodes {_agcf :=[]Node {};for _ ,_gfee :=range _eafd ._feaa .Body .EG_BlockLevelElts {_agcf =append (_agcf ,_ecbae (_eafd ,_gfee .BlockLevelEltsChoice .EG_ContentBlockContent ,nil )...);};if _eafd ._feaa .Body .SectPr !=nil {_agcf =append (_agcf ,Node {_ffdc :_eafd ._feaa .Body .SectPr });
-};_cbad :=Nodes {_feda :_agcf };return _cbad ;};
-
-// ParagraphSpacing controls the spacing for a paragraph and its lines.
-type ParagraphSpacing struct{_cdade *_bg .CT_Spacing };func _gafg ()*_ec .Formulas {_efabf :=_ec .NewFormulas ();_efabf .F =[]*_ec .CT_F {_dg .CreateFormula ("\u0073\u0075\u006d\u0020\u0023\u0030\u0020\u0030\u00201\u0030\u0038\u0030\u0030"),_dg .CreateFormula ("p\u0072\u006f\u0064\u0020\u0023\u0030\u0020\u0032\u0020\u0031"),_dg .CreateFormula ("\u0073\u0075\u006d\u0020\u0032\u0031\u0036\u0030\u0030 \u0030\u0020\u0040\u0031"),_dg .CreateFormula ("\u0073\u0075\u006d\u0020\u0030\u0020\u0030\u0020\u0040\u0032"),_dg .CreateFormula ("\u0073\u0075\u006d\u0020\u0032\u0031\u0036\u0030\u0030 \u0030\u0020\u0040\u0033"),_dg .CreateFormula ("\u0069\u0066\u0020\u0040\u0030\u0020\u0040\u0033\u0020\u0030"),_dg .CreateFormula ("\u0069\u0066\u0020\u0040\u0030\u0020\u0032\u0031\u00360\u0030\u0020\u0040\u0031"),_dg .CreateFormula ("\u0069\u0066\u0020\u0040\u0030\u0020\u0030\u0020\u0040\u0032"),_dg .CreateFormula ("\u0069\u0066\u0020\u0040\u0030\u0020\u0040\u0034\u00202\u0031\u0036\u0030\u0030"),_dg .CreateFormula ("\u006di\u0064\u0020\u0040\u0035\u0020\u00406"),_dg .CreateFormula ("\u006di\u0064\u0020\u0040\u0038\u0020\u00405"),_dg .CreateFormula ("\u006di\u0064\u0020\u0040\u0037\u0020\u00408"),_dg .CreateFormula ("\u006di\u0064\u0020\u0040\u0036\u0020\u00407"),_dg .CreateFormula ("s\u0075\u006d\u0020\u0040\u0036\u0020\u0030\u0020\u0040\u0035")};
-return _efabf ;};
-
-// IsChecked returns true if a FormFieldTypeCheckBox is checked.
-func (_bfea FormField )IsChecked ()bool {if len (_bfea ._acfd .FFDataChoice )==0{return false ;};for _ ,_cedga :=range _bfea ._acfd .FFDataChoice {if _cedga .CheckBox !=nil {if _cedga .CheckBox .Checked !=nil {return true ;};};};return false ;};
-
-// VerticalAlign returns the value of paragraph vertical align.
-func (_acbd ParagraphProperties )VerticalAlignment ()_de .ST_VerticalAlignRun {if _fgfgad :=_acbd ._dabde .RPr .VertAlign ;_fgfgad !=nil {return _fgfgad .ValAttr ;};return 0;};
-
-// SetInsideHorizontal sets the interior horizontal borders to a specified type, color and thickness.
-func (_dcf CellBorders )SetInsideHorizontal (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_dcf ._bee .InsideH =_bg .NewCT_Border ();_ecag (_dcf ._bee .InsideH ,t ,c ,thickness );};
-
-// Paragraphs returns the paragraphs defined in a header.
-func (_gcebg Header )Paragraphs ()[]Paragraph {_efca :=[]Paragraph {};for _ ,_ebgc :=range _gcebg ._adfd .EG_BlockLevelElts {for _ ,_aadgf :=range _ebgc .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_aedf :=range _aadgf .ContentBlockContentChoice .P {_efca =append (_efca ,Paragraph {_gcebg ._dafeb ,_aedf });
-};};};for _ ,_ddfc :=range _gcebg .Tables (){for _ ,_bcba :=range _ddfc .Rows (){for _ ,_gfed :=range _bcba .Cells (){_efca =append (_efca ,_gfed .Paragraphs ()...);};};};return _efca ;};
-
-// TableConditionalFormatting returns a conditional formatting object of a given
-// type.  Calling this method repeatedly will return the same object.
-func (_ecgbcd Style )TableConditionalFormatting (typ _bg .ST_TblStyleOverrideType )TableConditionalFormatting {for _ ,_gdeee :=range _ecgbcd ._cbega .TblStylePr {if _gdeee .TypeAttr ==typ {return TableConditionalFormatting {_gdeee };};};_cffag :=_bg .NewCT_TblStylePr ();
-_cffag .TypeAttr =typ ;_ecgbcd ._cbega .TblStylePr =append (_ecgbcd ._cbega .TblStylePr ,_cffag );return TableConditionalFormatting {_cffag };};
-
-// Bookmarks returns all the bookmarks defined in the document.
-func (_ccbca Document )Bookmarks ()[]Bookmark {if _ccbca ._feaa .Body ==nil {return nil ;};_fdee :=[]Bookmark {};for _ ,_agb :=range _ccbca ._feaa .Body .EG_BlockLevelElts {for _ ,_cdaag :=range _agb .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_effgd :=range _gfdd (_cdaag ){_fdee =append (_fdee ,_effgd );
-};};};return _fdee ;};
-
-// SetStyle sets the style of a paragraph and is identical to setting it on the
-// paragraph's Properties()
-func (_edfa Paragraph )SetStyle (s string ){_edfa .ensurePPr ();if s ==""{_edfa ._dfbf .PPr .PStyle =nil ;}else {_edfa ._dfbf .PPr .PStyle =_bg .NewCT_String ();_edfa ._dfbf .PPr .PStyle .ValAttr =s ;};};
-
-// DoubleStrike returns true if run is double striked.
-func (_edcb RunProperties )DoubleStrike ()bool {return _bbeg (_edcb ._ddbb .Dstrike )};
-
-// ExtractFromHeader returns text from the document header as an array of TextItems.
-func ExtractFromHeader (header *_bg .Hdr )[]TextItem {var _dfgd []TextItem ;for _ ,_gagf :=range header .EG_BlockLevelElts {_dfgd =append (_dfgd ,_adgff (_gagf .BlockLevelEltsChoice .EG_ContentBlockContent ,nil )...);};return _dfgd ;};
-
-// SetValue sets the width value.
-func (_dcaa TableWidth )SetValue (m _ac .Distance ){_dcaa ._badd .WAttr =&_bg .ST_MeasurementOrPercent {};_dcaa ._badd .WAttr .ST_DecimalNumberOrPercent =&_bg .ST_DecimalNumberOrPercent {};_dcaa ._badd .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_g .Int64 (int64 (m /_ac .Twips ));
-_dcaa ._badd .TypeAttr =_bg .ST_TblWidthDxa ;};
-
-// RightToLeft returns true if paragraph text goes from right to left.
-func (_gfdfe ParagraphProperties )RightToLeft ()bool {return _bbeg (_gfdfe ._dabde .RPr .Rtl )};
-
-// SetHighlight highlights text in a specified color.
-func (_fafa RunProperties )SetHighlight (c _bg .ST_HighlightColor ){_fafa ._ddbb .Highlight =_bg .NewCT_Highlight ();_fafa ._ddbb .Highlight .ValAttr =c ;};func _gfdbg ()*_ec .Formulas {_cffb :=_ec .NewFormulas ();_cffb .F =[]*_ec .CT_F {_dg .CreateFormula ("\u0069\u0066 \u006c\u0069\u006e\u0065\u0044\u0072\u0061\u0077\u006e\u0020\u0070\u0069\u0078\u0065\u006c\u004c\u0069\u006e\u0065\u0057\u0069\u0064th\u0020\u0030"),_dg .CreateFormula ("\u0073\u0075\u006d\u0020\u0040\u0030\u0020\u0031\u0020\u0030"),_dg .CreateFormula ("\u0073\u0075\u006d\u0020\u0030\u0020\u0030\u0020\u0040\u0031"),_dg .CreateFormula ("p\u0072\u006f\u0064\u0020\u0040\u0032\u0020\u0031\u0020\u0032"),_dg .CreateFormula ("\u0070r\u006f\u0064\u0020\u0040\u0033\u0020\u0032\u0031\u0036\u0030\u0030 \u0070\u0069\u0078\u0065\u006c\u0057\u0069\u0064\u0074\u0068"),_dg .CreateFormula ("\u0070r\u006f\u0064\u0020\u00403\u0020\u0032\u0031\u0036\u00300\u0020p\u0069x\u0065\u006c\u0048\u0065\u0069\u0067\u0068t"),_dg .CreateFormula ("\u0073\u0075\u006d\u0020\u0040\u0030\u0020\u0030\u0020\u0031"),_dg .CreateFormula ("p\u0072\u006f\u0064\u0020\u0040\u0036\u0020\u0031\u0020\u0032"),_dg .CreateFormula ("\u0070r\u006f\u0064\u0020\u0040\u0037\u0020\u0032\u0031\u0036\u0030\u0030 \u0070\u0069\u0078\u0065\u006c\u0057\u0069\u0064\u0074\u0068"),_dg .CreateFormula ("\u0073\u0075\u006d\u0020\u0040\u0038\u0020\u0032\u00316\u0030\u0030\u0020\u0030"),_dg .CreateFormula ("\u0070r\u006f\u0064\u0020\u00407\u0020\u0032\u0031\u0036\u00300\u0020p\u0069x\u0065\u006c\u0048\u0065\u0069\u0067\u0068t"),_dg .CreateFormula ("\u0073u\u006d \u0040\u0031\u0030\u0020\u0032\u0031\u0036\u0030\u0030\u0020\u0030")};
-return _cffb ;};
-
-// SetItalic sets the run to italic.
-func (_cbeac RunProperties )SetItalic (b bool ){if !b {_cbeac ._ddbb .I =nil ;_cbeac ._ddbb .ICs =nil ;}else {_cbeac ._ddbb .I =_bg .NewCT_OnOff ();_cbeac ._ddbb .ICs =_bg .NewCT_OnOff ();};};
-
-// GetWrapPathLineTo return wrapPath lineTo value.
-func (_abfg AnchorDrawWrapOptions )GetWrapPathLineTo ()[]*_eg .CT_Point2D {return _abfg ._adf };func (_eaca *Document )putNode (_aecd ,_dacb Node ,_ceba bool )bool {_eaca .insertImageFromNode (_dacb );_eaca .insertStyleFromNode (_dacb );switch _aeca :=_dacb ._ffdc .(type ){case *Paragraph :if _eedef ,_gaadc :=_aecd .X ().(*Paragraph );
-_gaadc {_eaca .appendParagraph (_eedef ,*_aeca ,_ceba );return true ;}else {for _ ,_efed :=range _aecd .Children {if _abbe :=_eaca .putNode (_efed ,_dacb ,_ceba );_abbe {break ;};};};case *Table :if _fcea ,_gdgc :=_aecd .X ().(*Paragraph );_gdgc {_egeb :=_eaca .appendTable (_fcea ,*_aeca ,_ceba );
-_egeb ._cefad =_aeca ._cefad ;return true ;}else {for _ ,_dadd :=range _aecd .Children {if _edgbc :=_eaca .putNode (_dadd ,_dacb ,_ceba );_edgbc {break ;};};};};return false ;};
-
-// SetEndIndent controls the end indentation.
-func (_agadb ParagraphProperties )SetEndIndent (m _ac .Distance ){if _agadb ._dabde .Ind ==nil {_agadb ._dabde .Ind =_bg .NewCT_Ind ();};if m ==_ac .Zero {_agadb ._dabde .Ind .EndAttr =nil ;}else {_agadb ._dabde .Ind .EndAttr =&_bg .ST_SignedTwipsMeasure {};
-_agadb ._dabde .Ind .EndAttr .Int64 =_g .Int64 (int64 (m /_ac .Twips ));};};
-
-// Imprint returns true if run imprint is on.
-func (_edbe RunProperties )Imprint ()bool {return _bbeg (_edbe ._ddbb .Imprint )};
-
-// InsertRowAfter inserts a row after another row
-func (_eeccf Table )InsertRowAfter (r Row )Row {for _bccf ,_cffdg :=range _eeccf ._cefad .EG_ContentRowContent {if len (_cffdg .ContentRowContentChoice .Tr )> 0&&r .X ()==_cffdg .ContentRowContentChoice .Tr [0]{_gabf :=_bg .NewEG_ContentRowContent ();if len (_eeccf ._cefad .EG_ContentRowContent )< _bccf +2{return _eeccf .AddRow ();
-};_eeccf ._cefad .EG_ContentRowContent =append (_eeccf ._cefad .EG_ContentRowContent ,nil );copy (_eeccf ._cefad .EG_ContentRowContent [_bccf +2:],_eeccf ._cefad .EG_ContentRowContent [_bccf +1:]);_eeccf ._cefad .EG_ContentRowContent [_bccf +1]=_gabf ;
-_bdbca :=_bg .NewCT_Row ();_gabf .ContentRowContentChoice .Tr =append (_gabf .ContentRowContentChoice .Tr ,_bdbca );return Row {_eeccf ._ebbbg ,_bdbca };};};return _eeccf .AddRow ();};
-
-// Section return paragraph properties section value.
-func (_bbfba ParagraphProperties )Section ()(Section ,bool ){if _bbfba ._dabde .SectPr !=nil {return Section {_bbfba ._caedc ,_bbfba ._dabde .SectPr },true ;};return Section {},false ;};
-
-// Nodes contains slice of Node element.
-type Nodes struct{_feda []Node };
-
-// Italic returns true if paragraph font is italic.
-func (_acfb ParagraphProperties )Italic ()bool {_gagfc :=_acfb ._dabde .RPr ;return _bbeg (_gagfc .I )||_bbeg (_gagfc .ICs );};
-
-// Footnotes returns the footnotes defined in the document.
-func (_bgdf *Document )Footnotes ()[]Footnote {_daa :=[]Footnote {};for _ ,_fgfd :=range _bgdf ._gca .CT_Footnotes .Footnote {_daa =append (_daa ,Footnote {_bgdf ,_fgfd });};return _daa ;};func (_dgcfb *WatermarkPicture )getInnerElement (_efebf string )*_g .XSDAny {for _ ,_dbda :=range _dgcfb ._cfgg .Any {_ebaeg ,_bgddg :=_dbda .(*_g .XSDAny );
-if _bgddg &&(_ebaeg .XMLName .Local ==_efebf ||_ebaeg .XMLName .Local =="\u0076\u003a"+_efebf ){return _ebaeg ;};};return nil ;};func (_cceb Paragraph )addSeparateFldChar ()*_bg .CT_FldChar {_cedag :=_cceb .addFldChar ();_cedag .FldCharTypeAttr =_bg .ST_FldCharTypeSeparate ;
-return _cedag ;};
-
-// AddStyle adds a new empty style, if styleID is already exists, it will return the style.
-func (_ddggf Styles )AddStyle (styleID string ,t _bg .ST_StyleType ,isDefault bool )Style {if _ecbf ,_fbef :=_ddggf .SearchStyleById (styleID );_fbef {return _ecbf ;};_ffdeed :=_bg .NewCT_Style ();_ffdeed .TypeAttr =t ;if isDefault {_ffdeed .DefaultAttr =&_de .ST_OnOff {};
-_ffdeed .DefaultAttr .Bool =_g .Bool (isDefault );};_ffdeed .StyleIdAttr =_g .String (styleID );_ddggf ._gcdd .Style =append (_ddggf ._gcdd .Style ,_ffdeed );return Style {_ffdeed };};
-
-// Bold returns true if paragraph font is bold.
-func (_gfeg ParagraphProperties )Bold ()bool {_eccc :=_gfeg ._dabde .RPr ;return _bbeg (_eccc .B )||_bbeg (_eccc .BCs );};
-
-// SetEnabled marks a FormField as enabled or disabled.
-func (_dccb FormField )SetEnabled (enabled bool ){_aabee :=_bg .NewCT_OnOff ();_aabee .ValAttr =&_de .ST_OnOff {Bool :&enabled };_dccb ._acfd .FFDataChoice =[]*_bg .CT_FFDataChoice {{Enabled :_aabee }};};func (_cbadg *WatermarkPicture )findNode (_ebege *_g .XSDAny ,_eefc string )*_g .XSDAny {for _ ,_gcegf :=range _ebege .Nodes {if _gcegf .XMLName .Local ==_eefc {return _gcegf ;
-};};return nil ;};
-
-// AddHyperLink adds a new hyperlink to a parapgraph.
-func (_eebc Paragraph )AddHyperLink ()HyperLink {_gegc :=_bg .NewEG_PContent ();_eebc ._dfbf .EG_PContent =append (_eebc ._dfbf .EG_PContent ,_gegc );_gegc .PContentChoice .Hyperlink =_bg .NewCT_Hyperlink ();return HyperLink {_eebc ._ebfb ,_gegc .PContentChoice .Hyperlink };
-};
-
-// PutNodeBefore put node to position before relativeTo.
-func (_dagbdd *Document )PutNodeBefore (relativeTo ,node Node ){_dagbdd .putNode (relativeTo ,node ,true );};func _dabeb ()*_ec .Textpath {_aaab :=_ec .NewTextpath ();_fggb :="\u0066\u006f\u006e\u0074\u002d\u0066\u0061\u006d\u0069l\u0079\u003a\u0022\u0043\u0061\u006c\u0069\u0062\u0072\u0069\u0022\u003b\u0066\u006f\u006e\u0074\u002d\u0073\u0069\u007a\u0065\u003a\u00366\u0070\u0074;\u0066\u006fn\u0074\u002d\u0077\u0065\u0069\u0067\u0068\u0074\u003a\u0062\u006f\u006c\u0064;f\u006f\u006e\u0074\u002d\u0073\u0074\u0079\u006c\u0065:\u0069\u0074\u0061\u006c\u0069\u0063";
-_aaab .StyleAttr =&_fggb ;_eddgb :="\u0041\u0053\u0041\u0050";_aaab .StringAttr =&_eddgb ;_aaab .FitshapeAttr =_de .ST_TrueFalseT ;return _aaab ;};
-
-// SetWidth sets the cell width to a specified width.
-func (_bff CellProperties )SetWidth (d _ac .Distance ){_bff ._bbb .TcW =_bg .NewCT_TblWidth ();_bff ._bbb .TcW .TypeAttr =_bg .ST_TblWidthDxa ;_bff ._bbb .TcW .WAttr =&_bg .ST_MeasurementOrPercent {};_bff ._bbb .TcW .WAttr .ST_DecimalNumberOrPercent =&_bg .ST_DecimalNumberOrPercent {};
-_bff ._bbb .TcW .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_g .Int64 (int64 (d /_ac .Twips ));};
-
-// Type returns the type of the style.
-func (_dggdb Style )Type ()_bg .ST_StyleType {return _dggdb ._cbega .TypeAttr };
-
-// SetAllCaps sets the run to all caps.
-func (_cgccg RunProperties )SetAllCaps (b bool ){if !b {_cgccg ._ddbb .Caps =nil ;}else {_cgccg ._ddbb .Caps =_bg .NewCT_OnOff ();};};
-
-// NewStyles constructs a new empty Styles
-func NewStyles ()Styles {return Styles {_bg .NewStyles ()}};
-
-// GetNumberingLevelByIds returns a NumberingLevel by its NumId and LevelId attributes
-// or an empty one if not found.
-func (_eaff *Document )GetNumberingLevelByIds (numId ,levelId int64 )NumberingLevel {if _eaff .Numbering ._faffc ==nil {return NumberingLevel {};};for _ ,_gfec :=range _eaff .Numbering ._faffc .Num {if _gfec !=nil &&_gfec .NumIdAttr ==numId {_gaca :=_gfec .AbstractNumId .ValAttr ;
-for _ ,_fgbg :=range _eaff .Numbering ._faffc .AbstractNum {if _fgbg .AbstractNumIdAttr ==_gaca {if _fgbg .NumStyleLink !=nil &&len (_fgbg .Lvl )==0{if _efff ,_bfgb :=_eaff .Styles .SearchStyleById (_fgbg .NumStyleLink .ValAttr );_bfgb {if _efff .ParagraphProperties ().NumId ()> -1{return _eaff .GetNumberingLevelByIds (_efff .ParagraphProperties ().NumId (),levelId );
-};};};for _ ,_abaf :=range _fgbg .Lvl {if _abaf .IlvlAttr ==levelId {return NumberingLevel {_abaf };};};};};};};return NumberingLevel {};};
-
-// RemoveParagraph removes a paragraph from a document.
-func (_decb *Document )RemoveParagraph (p Paragraph ){if _decb ._feaa .Body ==nil {return ;};for _ ,_eada :=range _decb ._feaa .Body .EG_BlockLevelElts {for _ ,_aag :=range _eada .BlockLevelEltsChoice .EG_ContentBlockContent {for _aabc ,_fddc :=range _aag .ContentBlockContentChoice .P {if _fddc ==p ._dfbf {copy (_aag .ContentBlockContentChoice .P [_aabc :],_aag .ContentBlockContentChoice .P [_aabc +1:]);
-_aag .ContentBlockContentChoice .P =_aag .ContentBlockContentChoice .P [0:len (_aag .ContentBlockContentChoice .P )-1];return ;};};if _aag .ContentBlockContentChoice .Sdt !=nil &&_aag .ContentBlockContentChoice .Sdt .SdtContent !=nil {for _ ,_aebc :=range _aag .ContentBlockContentChoice .Sdt .SdtContent .EG_ContentBlockContent {for _cfca ,_decbb :=range _aebc .ContentBlockContentChoice .P {if _decbb ==p ._dfbf {copy (_aag .ContentBlockContentChoice .P [_cfca :],_aag .ContentBlockContentChoice .P [_cfca +1:]);
-_aag .ContentBlockContentChoice .P =_aag .ContentBlockContentChoice .P [0:len (_aag .ContentBlockContentChoice .P )-1];return ;};};};};};};for _ ,_gdgb :=range _decb .Tables (){for _ ,_efgd :=range _gdgb .Rows (){for _ ,_aege :=range _efgd .Cells (){for _ ,_bcf :=range _aege ._gega .EG_BlockLevelElts {for _ ,_dfbg :=range _bcf .BlockLevelEltsChoice .EG_ContentBlockContent {for _dcg ,_fdbg :=range _dfbg .ContentBlockContentChoice .P {if _fdbg ==p ._dfbf {copy (_dfbg .ContentBlockContentChoice .P [_dcg :],_dfbg .ContentBlockContentChoice .P [_dcg +1:]);
-_dfbg .ContentBlockContentChoice .P =_dfbg .ContentBlockContentChoice .P [0:len (_dfbg .ContentBlockContentChoice .P )-1];return ;};};};};};};};for _ ,_befd :=range _decb .Headers (){_befd .RemoveParagraph (p );};for _ ,_ceg :=range _decb .Footers (){_ceg .RemoveParagraph (p );
-};};
-
-// GetTargetByRelId returns a target path with the associated relation ID in the
+// GetImageObjByRelId returns a common.Image with the associated relation ID in the
 // document.
-func (_bfgc *Document )GetTargetByRelId (idAttr string )string {return _bfgc ._fee .GetTargetByRelId (idAttr );};
+func (_eacca *Document )GetImageObjByRelId (relId string )(_aee .Image ,error ){_fdad :=_eacca ._cbaa .GetTargetByRelIdAndType (relId ,_c .ImageType );if _fdad ==""{for _ ,_defg :=range _eacca ._feb {if _fdad !=""{break ;};_fdad =_defg .GetTargetByRelIdAndType (relId ,_c .ImageType );
+};};if _fdad ==""{for _ ,_aacf :=range _eacca ._cef {if _fdad !=""{break ;};_fdad =_aacf .GetTargetByRelIdAndType (relId ,_c .ImageType );};};return _eacca .DocBase .GetImageBytesByTarget (_fdad );};
 
-// SetTop sets the top border to a specified type, color and thickness.
-func (_cefae ParagraphBorders )SetTop (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_cefae ._bfeee .Top =_bg .NewCT_Border ();_ggef (_cefae ._bfeee .Top ,t ,c ,thickness );};
+// SetCellSpacing sets the cell spacing within a table.
+func (_aecde TableProperties )SetCellSpacing (m _ga .Distance ){_aecde ._egdbb .TblCellSpacing =_ec .NewCT_TblWidth ();_aecde ._egdbb .TblCellSpacing .TypeAttr =_ec .ST_TblWidthDxa ;_aecde ._egdbb .TblCellSpacing .WAttr =&_ec .ST_MeasurementOrPercent {};
+_aecde ._egdbb .TblCellSpacing .WAttr .ST_DecimalNumberOrPercent =&_ec .ST_DecimalNumberOrPercent {};_aecde ._egdbb .TblCellSpacing .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_c .Int64 (int64 (m /_ga .Dxa ));};
 
-// SetUnhideWhenUsed controls if a semi hidden style becomes visible when used.
-func (_ebaf Style )SetUnhideWhenUsed (b bool ){if b {_ebaf ._cbega .UnhideWhenUsed =_bg .NewCT_OnOff ();}else {_ebaf ._cbega .UnhideWhenUsed =nil ;};};const _agec ="\u0046\u006f\u0072\u006d\u0046\u0069\u0065l\u0064\u0054\u0079\u0070\u0065\u0055\u006e\u006b\u006e\u006f\u0077\u006e\u0046\u006fr\u006dF\u0069\u0065\u006c\u0064\u0054\u0079p\u0065\u0054\u0065\u0078\u0074\u0046\u006fr\u006d\u0046\u0069\u0065\u006c\u0064\u0054\u0079\u0070\u0065\u0043\u0068\u0065\u0063\u006b\u0042\u006f\u0078\u0046\u006f\u0072\u006d\u0046i\u0065\u006c\u0064\u0054\u0079\u0070\u0065\u0044\u0072\u006f\u0070\u0044\u006fw\u006e";
+// SetVerticalAlignment sets the vertical alignment of content within a table cell.
+func (_efbc CellProperties )SetVerticalAlignment (align _ec .ST_VerticalJc ){if align ==_ec .ST_VerticalJcUnset {_efbc ._eef .VAlign =nil ;}else {_efbc ._eef .VAlign =_ec .NewCT_VerticalJc ();_efbc ._eef .VAlign .ValAttr =align ;};};
 
+// Caps returns true if run font is capitalized.
+func (_cagc RunProperties )Caps ()bool {return _gfgb (_cagc ._bffab .Caps )};
 
-// RunProperties controls run styling properties.
-type RunProperties struct{_ddbb *_bg .CT_RPr };
+// Header is a header for a document section.
+type Header struct{_fegd *Document ;_fgcdg *_ec .Hdr ;};
 
-// UnderlineColor returns the hex color value of run underline.
-func (_abffg RunProperties )UnderlineColor ()string {if _bcef :=_abffg ._ddbb .U ;_bcef !=nil {_defcb :=_bcef .ColorAttr ;if _defcb !=nil &&_defcb .ST_HexColorRGB !=nil {return *_defcb .ST_HexColorRGB ;};};return "";};
+// SetKeepOnOnePage controls if all lines in a paragraph are kept on the same
+// page.
+func (_bafc ParagraphStyleProperties )SetKeepOnOnePage (b bool ){if !b {_bafc ._egfac .KeepLines =nil ;}else {_bafc ._egfac .KeepLines =_ec .NewCT_OnOff ();};};
+
+// SetStrikeThrough sets the run to strike-through.
+func (_eeaaf RunProperties )SetStrikeThrough (b bool ){if !b {_eeaaf ._bffab .Strike =nil ;}else {_eeaaf ._bffab .Strike =_ec .NewCT_OnOff ();};};
+
+// SetName sets the name of the style.
+func (_agbbg Style )SetName (name string ){_agbbg ._ggbag .Name =_ec .NewCT_String ();_agbbg ._ggbag .Name .ValAttr =name ;};
+
+// Clear clears all content within a header
+func (_eddd Header )Clear (){_eddd ._fgcdg .EG_BlockLevelElts =[]*_ec .EG_BlockLevelElts {}};
+
+// Cell is a table cell within a document (not a spreadsheet)
+type Cell struct{_dfb *Document ;_eaff *_ec .CT_Tc ;};
+
+// SetOuterShadowImageEffect sets the outer shadow image effect.
+func (_facd AnchoredDrawing )SetOuterShadowImageEffect (radius ,offset _ga .Distance ,c _gc .Color ,degrees float64 ){_fg :=_ga .ToEMU (float64 (radius ));_bbf :=_ga .ToEMU (float64 (offset ));_gef :=int32 (degrees *60000);for _ ,_aed :=range _facd ._da .Graphic .GraphicData .Any {if _dga ,_fce :=_aed .(*_bf .Pic );
+_fce {_facd .initializeEffectList (_dga .SpPr );_dga .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw =_cc .NewCT_OuterShadowEffect ();_dga .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .BlurRadAttr =&_fg ;_dga .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .DistAttr =&_bbf ;
+_dga .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .DirAttr =&_gef ;_dga .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .SrgbClr =_cc .NewCT_SRgbColor ();_dga .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .SrgbClr .ValAttr =*c .AsRGBString ();
+_dga .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .AlgnAttr =_cc .ST_RectAlignmentBl ;_gea :=false ;_dga .SpPr .EffectPropertiesChoice .EffectLst .OuterShdw .RotWithShapeAttr =&_gea ;};};_facd .setEffectExtent (_fg ,_fg ,_fg ,_fg );};
+
+// Index returns the index of the header within the document.  This is used to
+// form its zip packaged filename as well as to match it with its relationship
+// ID.
+func (_ecga Header )Index ()int {for _fafb ,_gcccdg :=range _ecga ._fegd ._ace {if _gcccdg ==_ecga ._fgcdg {return _fafb ;};};return -1;};
+
+// SetRightIndent controls right indent of paragraph.
+func (_cggaaa Paragraph )SetRightIndent (m _ga .Distance ){_cggaaa .ensurePPr ();_eecgb :=_cggaaa ._fagb .PPr ;if _eecgb .Ind ==nil {_eecgb .Ind =_ec .NewCT_Ind ();};if m ==_ga .Zero {_eecgb .Ind .RightAttr =nil ;}else {_eecgb .Ind .RightAttr =&_ec .ST_SignedTwipsMeasure {};
+_eecgb .Ind .RightAttr .Int64 =_c .Int64 (int64 (m /_ga .Twips ));};};
+
+// SetPrimaryStyle marks the style as a primary style.
+func (_cbcab Style )SetPrimaryStyle (b bool ){if b {_cbcab ._ggbag .QFormat =_ec .NewCT_OnOff ();}else {_cbcab ._ggbag .QFormat =nil ;};};
+
+// RemoveParagraph removes a paragraph from the footnote.
+func (_adgd Footnote )RemoveParagraph (p Paragraph ){for _ ,_aface :=range _adgd .content (){for _cebee ,_cgcbc :=range _aface .ContentBlockContentChoice .P {if _cgcbc ==p ._fagb {copy (_aface .ContentBlockContentChoice .P [_cebee :],_aface .ContentBlockContentChoice .P [_cebee +1:]);
+_aface .ContentBlockContentChoice .P =_aface .ContentBlockContentChoice .P [0:len (_aface .ContentBlockContentChoice .P )-1];return ;};};};};
+
+// SetTargetBookmark sets the bookmark target of the hyperlink.
+func (_gecd HyperLink )SetTargetBookmark (bm Bookmark ){_gecd ._fbcd .AnchorAttr =_c .String (bm .Name ());_gecd ._fbcd .IdAttr =nil ;};
+
+// RemoveParagraph removes a paragraph from a footer.
+func (_fgafc Footer )RemoveParagraph (p Paragraph ){for _ ,_fabe :=range _fgafc ._bgde .EG_BlockLevelElts {for _ ,_fffcc :=range _fabe .BlockLevelEltsChoice .EG_ContentBlockContent {for _dfcdb ,_cfeg :=range _fffcc .ContentBlockContentChoice .P {if _cfeg ==p ._fagb {copy (_fffcc .ContentBlockContentChoice .P [_dfcdb :],_fffcc .ContentBlockContentChoice .P [_dfcdb +1:]);
+_fffcc .ContentBlockContentChoice .P =_fffcc .ContentBlockContentChoice .P [0:len (_fffcc .ContentBlockContentChoice .P )-1];return ;};};};};};
+
+// SetBeforeAuto controls if spacing before a paragraph is automatically determined.
+func (_afegfd ParagraphSpacing )SetBeforeAuto (b bool ){if b {_afegfd ._dbgcf .BeforeAutospacingAttr =&_afe .ST_OnOff {};_afegfd ._dbgcf .BeforeAutospacingAttr .Bool =_c .Bool (true );}else {_afegfd ._dbgcf .BeforeAutospacingAttr =nil ;};};
+
+// Properties returns the run properties.
+func (_agbb Run )Properties ()RunProperties {if _agbb ._aeef .RPr ==nil {_agbb ._aeef .RPr =_ec .NewCT_RPr ();};return RunProperties {_agbb ._aeef .RPr };};
+
+// X returns the inner wrapped XML type.
+func (_dacd ParagraphProperties )X ()*_ec .CT_PPr {return _dacd ._bbdf };
+
+// SetBottom sets the bottom border to a specified type, color and thickness.
+func (_bbfgd CellBorders )SetBottom (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_bbfgd ._gda .Bottom =_ec .NewCT_Border ();_cffba (_bbfgd ._gda .Bottom ,t ,c ,thickness );};
+
+// GetEffect returns the effect of the run.
+func (_accc RunProperties )GetEffect ()_ec .ST_TextEffect {if _accc ._bffab .Effect ==nil {return _ec .ST_TextEffectUnset ;};return _accc ._bffab .Effect .ValAttr ;};
+
+// SetInnerShadowImageEffect sets the inner shadow image effect.
+func (_gbc AnchoredDrawing )SetInnerShadowImageEffect (radius ,offset _ga .Distance ,c _gc .Color ,degrees float64 ){_afd :=_ga .ToEMU (float64 (radius ));_efa :=_ga .ToEMU (float64 (offset ));_gba :=int32 (degrees *60000);for _ ,_gag :=range _gbc ._da .Graphic .GraphicData .Any {if _cee ,_aag :=_gag .(*_bf .Pic );
+_aag {_gbc .initializeEffectList (_cee .SpPr );_cee .SpPr .EffectPropertiesChoice .EffectLst .InnerShdw =_cc .NewCT_InnerShadowEffect ();_cee .SpPr .EffectPropertiesChoice .EffectLst .InnerShdw .BlurRadAttr =&_afd ;_cee .SpPr .EffectPropertiesChoice .EffectLst .InnerShdw .DistAttr =&_efa ;
+_cee .SpPr .EffectPropertiesChoice .EffectLst .InnerShdw .DirAttr =&_gba ;_cee .SpPr .EffectPropertiesChoice .EffectLst .InnerShdw .SrgbClr =_cc .NewCT_SRgbColor ();_cee .SpPr .EffectPropertiesChoice .EffectLst .InnerShdw .SrgbClr .ValAttr =*c .AsRGBString ();
+};};};
+
+// SetFirstLineIndent controls the indentation of the first line in a paragraph.
+func (_agdfg Paragraph )SetFirstLineIndent (m _ga .Distance ){_agdfg .ensurePPr ();_faecd :=_agdfg ._fagb .PPr ;if _faecd .Ind ==nil {_faecd .Ind =_ec .NewCT_Ind ();};if m ==_ga .Zero {_faecd .Ind .FirstLineAttr =nil ;}else {_faecd .Ind .FirstLineAttr =&_afe .ST_TwipsMeasure {};
+_faecd .Ind .FirstLineAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (m /_ga .Twips ));};};func (_eeeb *Document )InsertTableBefore (relativeTo Paragraph )Table {return _eeeb .insertTable (relativeTo ,true );};
+
+// SetPageBreakBefore controls if there is a page break before this paragraph.
+func (_ceafb ParagraphProperties )SetPageBreakBefore (b bool ){if !b {_ceafb ._bbdf .PageBreakBefore =nil ;}else {_ceafb ._bbdf .PageBreakBefore =_ec .NewCT_OnOff ();};};
+
+// SetCantSplit set row properties for Can't Split value.
+func (_fecge RowProperties )SetCantSplit (val bool ){if !val {_fecge ._dafb .TrPrBaseChoice =nil ;}else {_fecge ._dafb .TrPrBaseChoice =[]*_ec .CT_TrPrBaseChoice {&_ec .CT_TrPrBaseChoice {CantSplit :_ec .NewCT_OnOff ()}};};};
+
+// InsertRunBefore inserts a run in the paragraph before the relative run.
+func (_bbeea Paragraph )InsertRunBefore (relativeTo Run )Run {return _bbeea .insertRun (relativeTo ,true );};func _cadbb (_ddce []*_ec .CT_P ,_agggf *TableInfo ,_afdee *DrawingInfo )[]TextItem {_egeg :=[]TextItem {};for _ ,_febg :=range _ddce {_egeg =append (_egeg ,_bfdga (_febg ,nil ,_agggf ,_afdee ,_febg .EG_PContent )...);
+};return _egeg ;};
+
+// SearchStylesById returns style by its id.
+func (_bbcef Styles )SearchStyleById (id string )(Style ,bool ){for _ ,_eeafg :=range _bbcef ._ggeafb .Style {if _eeafg .StyleIdAttr !=nil {if *_eeafg .StyleIdAttr ==id {return Style {_eeafg },true ;};};};return Style {},false ;};
+
+// SetUnderline controls underline for a run style.
+func (_ebfe RunProperties )SetUnderline (style _ec .ST_Underline ,c _gc .Color ){if style ==_ec .ST_UnderlineUnset {_ebfe ._bffab .U =nil ;}else {_ebfe ._bffab .U =_ec .NewCT_Underline ();_ebfe ._bffab .U .ColorAttr =&_ec .ST_HexColor {};_ebfe ._bffab .U .ColorAttr .ST_HexColorRGB =c .AsRGBString ();
+_ebfe ._bffab .U .ValAttr =style ;};};
+
+// OpenTemplate opens a document, removing all content so it can be used as a
+// template.  Since Word removes unused styles from a document upon save, to
+// create a template in Word add a paragraph with every style of interest.  When
+// opened with OpenTemplate the document's styles will be available but the
+// content will be gone.
+func OpenTemplate (filename string )(*Document ,error ){_agba ,_bcaa :=Open (filename );if _bcaa !=nil {return nil ,_bcaa ;};_agba ._dgg .Body =_ec .NewCT_Body ();return _agba ,nil ;};
+
+// SetChecked marks a FormFieldTypeCheckBox as checked or unchecked.
+func (_afed FormField )SetChecked (b bool ){if len (_afed ._dcbfb .FFDataChoice )==0{return ;};for _ ,_eedd :=range _afed ._dcbfb .FFDataChoice {if _eedd .CheckBox !=nil {if !b {_eedd .CheckBox .Checked =nil ;}else {_eedd .CheckBox .Checked =_ec .NewCT_OnOff ();
+};};};};
+
+// Read reads a document from an io.Reader.
+func Read (r _d .ReaderAt ,size int64 )(*Document ,error ){return _adfc (r ,size ,"")};
+
+// Type returns the type of the field.
+func (_fdee FormField )Type ()FormFieldType {if len (_fdee ._dcbfb .FFDataChoice )==0{return FormFieldTypeUnknown ;};for _ ,_gfda :=range _fdee ._dcbfb .FFDataChoice {switch {case _gfda .TextInput !=nil :return FormFieldTypeText ;case _gfda .CheckBox !=nil :return FormFieldTypeCheckBox ;
+case _gfda .DdList !=nil :return FormFieldTypeDropDown ;};};return FormFieldTypeUnknown ;};
 
 // SetLeft sets the left border to a specified type, color and thickness.
-func (_efb CellBorders )SetLeft (t _bg .ST_Border ,c _ce .Color ,thickness _ac .Distance ){_efb ._bee .Left =_bg .NewCT_Border ();_ecag (_efb ._bee .Left ,t ,c ,thickness );};
+func (_agb CellBorders )SetLeft (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_agb ._gda .Left =_ec .NewCT_Border ();_cffba (_agb ._gda .Left ,t ,c ,thickness );};
 
-// CellMargins are the margins for an individual cell.
-type CellMargins struct{_cc *_bg .CT_TcMar };
+// SetFirstRow controls the conditional formatting for the first row in a table.
+func (_cadbbd TableLook )SetFirstRow (on bool ){if !on {_cadbbd ._cgfd .FirstRowAttr =&_afe .ST_OnOff {};_cadbbd ._cgfd .FirstRowAttr .ST_OnOff1 =_afe .ST_OnOff1Off ;}else {_cadbbd ._cgfd .FirstRowAttr =&_afe .ST_OnOff {};_cadbbd ._cgfd .FirstRowAttr .ST_OnOff1 =_afe .ST_OnOff1On ;
+};};func (_gbaed *WatermarkPicture )getInnerElement (_egad string )*_c .XSDAny {for _ ,_cbcc :=range _gbaed ._gfgcg .Any {_fbdce ,_efcgf :=_cbcc .(*_c .XSDAny );if _efcgf &&(_fbdce .XMLName .Local ==_egad ||_fbdce .XMLName .Local =="\u0076\u003a"+_egad ){return _fbdce ;
+};};return nil ;};
 
-// SetPictureWashout set washout to watermark picture.
-func (_gdebg *WatermarkPicture )SetPictureWashout (isWashout bool ){if _gdebg ._dfdgf !=nil {_fceeb :=_gdebg ._dfdgf .ShapeChoice ;if len (_fceeb )> 0&&_fceeb [0].ShapeElementsChoice .Imagedata !=nil {if isWashout {_cefe :="\u0031\u0039\u0036\u0036\u0031\u0066";
-_bebfd :="\u0032\u0032\u0039\u0033\u0038\u0066";_fceeb [0].ShapeElementsChoice .Imagedata .GainAttr =&_cefe ;_fceeb [0].ShapeElementsChoice .Imagedata .BlacklevelAttr =&_bebfd ;};};};};
+// SetAll sets all of the borders to a given value.
+func (_fdbg CellBorders )SetAll (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_fdbg .SetBottom (t ,c ,thickness );_fdbg .SetLeft (t ,c ,thickness );_fdbg .SetRight (t ,c ,thickness );_fdbg .SetTop (t ,c ,thickness );_fdbg .SetInsideHorizontal (t ,c ,thickness );
+_fdbg .SetInsideVertical (t ,c ,thickness );};
 
-// AddBreak adds a line break to a run.
-func (_bgbab Run )AddBreak (){_fffc :=_bgbab .newIC ();_fffc .RunInnerContentChoice .Br =_bg .NewCT_Br ();};
+// Rows returns the rows defined in the table.
+func (_ebedc Table )Rows ()[]Row {_dadffg :=[]Row {};for _ ,_fbddg :=range _ebedc ._bbefb .EG_ContentRowContent {for _ ,_fbbee :=range _fbddg .ContentRowContentChoice .Tr {_dadffg =append (_dadffg ,Row {_ebedc ._edbe ,_fbbee });};if _fbddg .ContentRowContentChoice .Sdt !=nil &&_fbddg .ContentRowContentChoice .Sdt .SdtContent !=nil {for _ ,_ddaea :=range _fbddg .ContentRowContentChoice .Sdt .SdtContent .EG_ContentRowContent {for _ ,_adgf :=range _ddaea .ContentRowContentChoice .Tr {_dadffg =append (_dadffg ,Row {_ebedc ._edbe ,_adgf });
+};};};};return _dadffg ;};
 
-// TableWidth controls width values in table settings.
-type TableWidth struct{_badd *_bg .CT_TblWidth };
+// CellProperties returns the cell properties.
+func (_caeda TableConditionalFormatting )CellProperties ()CellProperties {if _caeda ._abcbe .TcPr ==nil {_caeda ._abcbe .TcPr =_ec .NewCT_TcPr ();};return CellProperties {_caeda ._abcbe .TcPr };};
 
-// IsItalic returns true if the run has been set to italics.
-func (_efebg RunProperties )IsItalic ()bool {return _efebg .ItalicValue ()==OnOffValueOn };
+// Themes returns document's themes.
+func (_bbcc *Document )Themes ()[]*_cc .Theme {return _bbcc ._aeeb };
 
-// Comment is run's comment component.
-type Comment struct{_cfed *Document ;_dcff *_bg .CT_Comment ;};
+// SetAlignment positions an anchored image via alignment.  Offset is
+// incompatible with SetOffset, whichever is called last is applied.
+func (_gb AnchoredDrawing )SetAlignment (h _ec .WdST_AlignH ,v _ec .WdST_AlignV ){_gb .SetHAlignment (h );_gb .SetVAlignment (v );};
 
-// SetHangingIndent controls the indentation of the non-first lines in a paragraph.
-func (_eaed ParagraphProperties )SetHangingIndent (m _ac .Distance ){if _eaed ._dabde .Ind ==nil {_eaed ._dabde .Ind =_bg .NewCT_Ind ();};if m ==_ac .Zero {_eaed ._dabde .Ind .HangingAttr =nil ;}else {_eaed ._dabde .Ind .HangingAttr =&_de .ST_TwipsMeasure {};
-_eaed ._dabde .Ind .HangingAttr .ST_UnsignedDecimalNumber =_g .Uint64 (uint64 (m /_ac .Twips ));};};
+// Pict returns the pict object.
+func (_gfbgg *WatermarkText )Pict ()*_ec .CT_Picture {return _gfbgg ._dfbb };
 
-// Paragraphs returns the paragraphs defined in a footer.
-func (_ceae Footer )Paragraphs ()[]Paragraph {_bgfa :=[]Paragraph {};for _ ,_bdge :=range _ceae ._bfebb .EG_BlockLevelElts {for _ ,_efaa :=range _bdge .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_afbed :=range _efaa .ContentBlockContentChoice .P {_bgfa =append (_bgfa ,Paragraph {_ceae ._babd ,_afbed });
-};};};for _ ,_fdca :=range _ceae .Tables (){for _ ,_cbdde :=range _fdca .Rows (){for _ ,_cagce :=range _cbdde .Cells (){_bgfa =append (_bgfa ,_cagce .Paragraphs ()...);};};};return _bgfa ;};
+// SetInsideVertical sets the interior vertical borders to a specified type, color and thickness.
+func (_bge CellBorders )SetInsideVertical (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_bge ._gda .InsideV =_ec .NewCT_Border ();_cffba (_bge ._gda .InsideV ,t ,c ,thickness );};
 
-// Color returns the style's Color.
-func (_eecbf RunProperties )Color ()Color {if _eecbf ._ddbb .Color ==nil {_eecbf ._ddbb .Color =_bg .NewCT_Color ();};return Color {_eecbf ._ddbb .Color };};
+// SetTargetByRef sets the URL target of the hyperlink and is more efficient if a link
+// destination will be used many times.
+func (_dbaa HyperLink )SetTargetByRef (link _aee .Hyperlink ){_dbaa ._fbcd .IdAttr =_c .String (_aee .Relationship (link ).ID ());_dbaa ._fbcd .AnchorAttr =nil ;};
 
-// Numbering is the document wide numbering styles contained in numbering.xml.
-type Numbering struct{_faffc *_bg .Numbering };func (_dcgf Run )parseHTMLTag (_adec string )string {_cgbeg :=_c .NewDecoder (_d .NewReader ([]byte (_adec )));_cdacgf :="";_baea :=[]_c .StartElement {};for {_caega ,_gcadg :=_cgbeg .Token ();if _gcadg !=nil {break ;
-};switch _cccdc :=_caega .(type ){case _c .StartElement :_baea =append (_baea ,_cccdc );case _c .EndElement :if _baea [len (_baea )-1].Name .Local ==_cccdc .Name .Local {_dfbed :=_baea [len (_baea )-1];_baea =_baea [:len (_baea )-1];switch _cccdc .Name .Local {case "\u0062","\u0073\u0074\u0072\u006f\u006e\u0067":_dcgf .Properties ().SetBold (true );
-case "\u0069","\u0065\u006d":_dcgf .Properties ().SetItalic (true );case "\u0075":_ccag :=_ce .Black ;for _ ,_bdba :=range _dfbed .Attr {if _bdba .Name .Local =="\u0063\u006f\u006co\u0072"{if _feeg ,_faba :=_ce .ColorMap [_bdba .Value ];_faba {_ccag =_feeg ;
-};};};_dcgf .Properties ().SetUnderline (_bg .ST_UnderlineSingle ,_ccag );case "\u0073\u0074\u0072\u0069\u006b\u0065":_dcgf .Properties ().SetStrikeThrough (true );case "\u006d\u0061\u0072\u006b":_bgef :=_bg .ST_HighlightColorYellow ;for _ ,_gbfa :=range _dfbed .Attr {if _gbfa .Name .Local =="\u0063\u006f\u006co\u0072"{if _eaee ,_deae :=_ce .HighlightColorMap [_gbfa .Value ];
-_deae {_bgef =_eaee ;};};};_dcgf .Properties ().SetHighlight (_bgef );case "\u0073\u0075\u0062":_dcgf .Properties ().SetVerticalAlignment (_de .ST_VerticalAlignRunSubscript );case "\u0073\u0075\u0070":_dcgf .Properties ().SetVerticalAlignment (_de .ST_VerticalAlignRunSuperscript );
-};};case _c .CharData :_cdacgf +=string (_cccdc );};};return _cdacgf ;};
+// SetTopPct sets the cell top margin
+func (_fcc CellMargins )SetTopPct (pct float64 ){_fcc ._debg .Top =_ec .NewCT_TblWidth ();_gbe (_fcc ._debg .Top ,pct );};func (_ffda *Document )addFootnoteSeparator (){_dgde :=_ec .NewCT_FtnEdn ();_dgde .IdAttr =-1;_dgde .TypeAttr =_ec .ST_FtnEdnSeparator ;
+_eaca :=Footnote {_ffda ,_dgde };_eaca .X ().EG_BlockLevelElts =[]*_ec .EG_BlockLevelElts {_ec .NewEG_BlockLevelElts ()};_aac :=_eaca .AddParagraph ();_aac .X ().PPr =nil ;_gcee :=_aac .AddRun ();_effg :=_gcee .newIC ();_effg .RunInnerContentChoice .Separator =_ec .NewCT_Empty ();
+_ffda ._dcba .CT_Footnotes .Footnote =append (_ffda ._dcba .CT_Footnotes .Footnote ,_dgde );_dgde =_ec .NewCT_FtnEdn ();_dgde .IdAttr =0;_dgde .TypeAttr =_ec .ST_FtnEdnContinuationSeparator ;_eaca =Footnote {_ffda ,_dgde };_eaca .X ().EG_BlockLevelElts =[]*_ec .EG_BlockLevelElts {_ec .NewEG_BlockLevelElts ()};
+_aac =_eaca .AddParagraph ();_aac .X ().PPr =nil ;_gcee =_aac .AddRun ();_effg =_gcee .newIC ();_effg .RunInnerContentChoice .ContinuationSeparator =_ec .NewCT_Empty ();_ffda ._dcba .CT_Footnotes .Footnote =append (_ffda ._dcba .CT_Footnotes .Footnote ,_dgde );
+};
+
+// SetPageSizeAndOrientation sets the page size and orientation for a section.
+func (_dgga Section )SetPageSizeAndOrientation (w ,h _ga .Distance ,orientation _ec .ST_PageOrientation ){if _dgga ._gcebe .PgSz ==nil {_dgga ._gcebe .PgSz =_ec .NewCT_PageSz ();};_dgga ._gcebe .PgSz .OrientAttr =orientation ;if orientation ==_ec .ST_PageOrientationLandscape {_dgga ._gcebe .PgSz .WAttr =&_afe .ST_TwipsMeasure {};
+_dgga ._gcebe .PgSz .WAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (h /_ga .Twips ));_dgga ._gcebe .PgSz .HAttr =&_afe .ST_TwipsMeasure {};_dgga ._gcebe .PgSz .HAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (w /_ga .Twips ));}else {_dgga ._gcebe .PgSz .WAttr =&_afe .ST_TwipsMeasure {};
+_dgga ._gcebe .PgSz .WAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (w /_ga .Twips ));_dgga ._gcebe .PgSz .HAttr =&_afe .ST_TwipsMeasure {};_dgga ._gcebe .PgSz .HAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (h /_ga .Twips ));};};
+
+// SetCalcOnExit marks if a FormField should be CalcOnExit or not.
+func (_geeeb FormField )SetCalcOnExit (calcOnExit bool ){_ffdcc :=_ec .NewCT_OnOff ();_ffdcc .ValAttr =&_afe .ST_OnOff {Bool :&calcOnExit };_geeeb ._dcbfb .FFDataChoice =[]*_ec .CT_FFDataChoice {{CalcOnExit :_ffdcc }};};
+
+// SetInsideHorizontal sets the interior horizontal borders to a specified type, color and thickness.
+func (_cea CellBorders )SetInsideHorizontal (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_cea ._gda .InsideH =_ec .NewCT_Border ();_cffba (_cea ._gda .InsideH ,t ,c ,thickness );};
+
+// SetHangingIndent controls special indent of paragraph.
+func (_ebebc Paragraph )SetHangingIndent (m _ga .Distance ){_ebebc .ensurePPr ();_gfdb :=_ebebc ._fagb .PPr ;if _gfdb .Ind ==nil {_gfdb .Ind =_ec .NewCT_Ind ();};if m ==_ga .Zero {_gfdb .Ind .HangingAttr =nil ;}else {_gfdb .Ind .HangingAttr =&_afe .ST_TwipsMeasure {};
+_gfdb .Ind .HangingAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (m /_ga .Twips ));};};
+
+// AddFooter creates a Footer associated with the document, but doesn't add it
+// to the document for display.
+func (_ggea *Document )AddFooter ()Footer {_deee :=_ec .NewFtr ();_ggea ._ddbf =append (_ggea ._ddbf ,_deee );_baa :=_cb .Sprintf ("\u0066\u006f\u006ft\u0065\u0072\u0025\u0064\u002e\u0078\u006d\u006c",len (_ggea ._ddbf ));_ggea ._cbaa .AddRelationship (_baa ,_c .FooterType );
+_ggea .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072\u0064\u002f"+_baa ,"\u0061p\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064.\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c\u002e\u0066\u006f\u006f\u0074e\u0072\u002b\u0078\u006d\u006c");
+_ggea ._cef =append (_ggea ._cef ,_aee .NewRelationships ());return Footer {_ggea ,_deee };};
+
+// X returns the inner wml.CT_TblBorders
+func (_abade TableBorders )X ()*_ec .CT_TblBorders {return _abade ._gbeg };
 
 // X returns the inner wrapped XML type.
-func (_fdd *Document )X ()*_bg .Document {return _fdd ._feaa };
+func (_ecffc Styles )X ()*_ec .Styles {return _ecffc ._ggeafb };func (_cggc Run )parseHTMLTag (_cfeb string )string {_bafbcb :=_ag .NewDecoder (_bc .NewReader ([]byte (_cfeb )));_gcdf :="";_gacba :=[]_ag .StartElement {};for {_egdeg ,_deaba :=_bafbcb .Token ();
+if _deaba !=nil {break ;};switch _dfaeg :=_egdeg .(type ){case _ag .StartElement :_gacba =append (_gacba ,_dfaeg );case _ag .EndElement :if _gacba [len (_gacba )-1].Name .Local ==_dfaeg .Name .Local {_eebb :=_gacba [len (_gacba )-1];_gacba =_gacba [:len (_gacba )-1];
+switch _dfaeg .Name .Local {case "\u0062","\u0073\u0074\u0072\u006f\u006e\u0067":_cggc .Properties ().SetBold (true );case "\u0069","\u0065\u006d":_cggc .Properties ().SetItalic (true );case "\u0075":_bbef :=_gc .Black ;for _ ,_cefb :=range _eebb .Attr {if _cefb .Name .Local =="\u0063\u006f\u006co\u0072"{if _dcbc ,_beedd :=_gc .ColorMap [_cefb .Value ];
+_beedd {_bbef =_dcbc ;};};};_cggc .Properties ().SetUnderline (_ec .ST_UnderlineSingle ,_bbef );case "\u0073\u0074\u0072\u0069\u006b\u0065":_cggc .Properties ().SetStrikeThrough (true );case "\u006d\u0061\u0072\u006b":_ceff :=_ec .ST_HighlightColorYellow ;
+for _ ,_cdgb :=range _eebb .Attr {if _cdgb .Name .Local =="\u0063\u006f\u006co\u0072"{if _bagff ,_gbed :=_gc .HighlightColorMap [_cdgb .Value ];_gbed {_ceff =_bagff ;};};};_cggc .Properties ().SetHighlight (_ceff );case "\u0073\u0075\u0062":_cggc .Properties ().SetVerticalAlignment (_afe .ST_VerticalAlignRunSubscript );
+case "\u0073\u0075\u0070":_cggc .Properties ().SetVerticalAlignment (_afe .ST_VerticalAlignRunSuperscript );};};case _ag .CharData :_gcdf +=string (_dfaeg );};};return _gcdf ;};
 
-// GetHighlight returns the HighlightColor.
-func (_gbgab RunProperties )GetHighlight ()_bg .ST_HighlightColor {if _gbgab ._ddbb .Highlight !=nil {return _gbgab ._ddbb .Highlight .ValAttr ;};return _bg .ST_HighlightColorNone ;};
+// AddParagraph adds a paragraph to the comment.
+func (_gde Comment )AddParagraph ()Paragraph {_fdc :=_ec .NewEG_ContentBlockContent ();_gde ._fdge .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent =append (_gde ._fdge .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent ,_fdc );
+_aaf :=_ec .NewCT_P ();_fdc .ContentBlockContentChoice .P =append (_fdc .ContentBlockContentChoice .P ,_aaf );_dbc :=Paragraph {_gde ._ac ,_aaf };_dbc ._fagb .PPr =_ec .NewCT_PPr ();_dbc ._fagb .PPr .RPr =_ec .NewCT_ParaRPr ();return _dbc ;};
 
-// SetLayoutInCell sets the layoutInCell attribute of anchor.
-func (_fcd AnchoredDrawing )SetLayoutInCell (val bool ){_fcd ._cd .LayoutInCellAttr =val };
+// SetCharacterSpacing sets the run's Character Spacing Adjustment.
+func (_dgbe RunProperties )SetCharacterSpacing (size _ga .Distance ){_dgbe ._bffab .Spacing =_ec .NewCT_SignedTwipsMeasure ();_dgbe ._bffab .Spacing .ValAttr .Int64 =_c .Int64 (int64 (size /_ga .Twips ));};
 
-// X returns the inner wrapped XML type.
-func (_cagb NumberingDefinition )X ()*_bg .CT_AbstractNum {return _cagb ._dbagd };
+// Paragraphs returns the paragraphs defined in an endnote.
+func (_bddee Endnote )Paragraphs ()[]Paragraph {_cacf :=[]Paragraph {};for _ ,_dfdg :=range _bddee .content (){for _ ,_egaf :=range _dfdg .ContentBlockContentChoice .P {_cacf =append (_cacf ,Paragraph {_bddee ._edad ,_egaf });};};return _cacf ;};
 
-// HasComments checks if the document contains comments.
-func (_bbff *Document )HasComments ()bool {return _bbff ._edg !=nil };
+// HasFootnotes returns a bool based on the presence or abscence of footnotes within
+// the document.
+func (_ccgc *Document )HasFootnotes ()bool {return _ccgc ._dcba !=nil };func _fbaaf (_eafe *_ec .CT_P ,_dcfe map[string ]string ){for _ ,_ggaa :=range _eafe .EG_PContent {for _ ,_fbbe :=range _ggaa .PContentChoice .EG_ContentRunContent {if _fbbe .ContentRunContentChoice .R !=nil {for _ ,_afgg :=range _fbbe .ContentRunContentChoice .R .EG_RunInnerContent {_ffbe :=_afgg .RunInnerContentChoice .Drawing ;
+if _ffbe !=nil {for _ ,_bcaf :=range _ffbe .DrawingChoice {if _bcaf .Anchor !=nil {_ccedd :=_bcaf .Anchor ;for _ ,_dafd :=range _ccedd .Graphic .GraphicData .Any {switch _fcfd :=_dafd .(type ){case *_bf .Pic :if _fcfd .BlipFill !=nil &&_fcfd .BlipFill .Blip !=nil {_agdde (_fcfd .BlipFill .Blip ,_dcfe );
+};default:};};};if _bcaf .Inline !=nil {_egfe :=_bcaf .Inline ;for _ ,_fgc :=range _egfe .Graphic .GraphicData .Any {switch _ccbdf :=_fgc .(type ){case *_bf .Pic :if _ccbdf .BlipFill !=nil &&_ccbdf .BlipFill .Blip !=nil {_agdde (_ccbdf .BlipFill .Blip ,_dcfe );
+};default:};};};};};};};};};};
 
-// ParagraphStyles returns only the paragraph styles.
-func (_gagbg Styles )ParagraphStyles ()[]Style {_aebfd :=[]Style {};for _ ,_bage :=range _gagbg ._gcdd .Style {if _bage .TypeAttr !=_bg .ST_StyleTypeParagraph {continue ;};_aebfd =append (_aebfd ,Style {_bage });};return _aebfd ;};
+// X returns the internally wrapped *wml.CT_SectPr.
+func (_bcdgf Section )X ()*_ec .CT_SectPr {return _bcdgf ._gcebe };func _fggb (_eba *_ec .CT_Tbl ,_bfeab map[string ]string ){for _ ,_fcbe :=range _eba .EG_ContentRowContent {for _ ,_decd :=range _fcbe .ContentRowContentChoice .Tr {for _ ,_ecaa :=range _decd .EG_ContentCellContent {for _ ,_ccdd :=range _ecaa .ContentCellContentChoice .Tc {for _ ,_gacd :=range _ccdd .EG_BlockLevelElts {for _ ,_cfagb :=range _gacd .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_bgae :=range _cfagb .ContentBlockContentChoice .P {_geca (_bgae ,_bfeab );
+};for _ ,_acgfb :=range _cfagb .ContentBlockContentChoice .Tbl {_fggb (_acgfb ,_bfeab );};};};};};};};};
+
+// AddSection adds a new document section with an optional section break.  If t
+// is ST_SectionMarkUnset, then no break will be inserted.
+func (_cgeab ParagraphProperties )AddSection (t _ec .ST_SectionMark )Section {_cgeab ._bbdf .SectPr =_ec .NewCT_SectPr ();if t !=_ec .ST_SectionMarkUnset {_cgeab ._bbdf .SectPr .Type =_ec .NewCT_SectType ();_cgeab ._bbdf .SectPr .Type .ValAttr =t ;};return Section {_cgeab ._fdega ,_cgeab ._bbdf .SectPr };
+};
+
+// SetFirstLineIndent controls the first line indent of the paragraph.
+func (_efdb ParagraphStyleProperties )SetFirstLineIndent (m _ga .Distance ){if _efdb ._egfac .Ind ==nil {_efdb ._egfac .Ind =_ec .NewCT_Ind ();};if m ==_ga .Zero {_efdb ._egfac .Ind .FirstLineAttr =nil ;}else {_efdb ._egfac .Ind .FirstLineAttr =&_afe .ST_TwipsMeasure {};
+_efdb ._egfac .Ind .FirstLineAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (m /_ga .Twips ));};};
+
+// NewTableWidth returns a newly intialized TableWidth
+func NewTableWidth ()TableWidth {return TableWidth {_ec .NewCT_TblWidth ()}};func (_gbf *Document )insertTable (_gfc Paragraph ,_fefg bool )Table {_acf :=_gbf ._dgg .Body ;if _acf ==nil {return _gbf .AddTable ();};_gga :=_gfc .X ();for _gdfc ,_fcdb :=range _acf .EG_BlockLevelElts {for _ ,_efbd :=range _fcdb .BlockLevelEltsChoice .EG_ContentBlockContent {for _bfbg ,_faf :=range _efbd .ContentBlockContentChoice .P {if _faf ==_gga {_cdf :=_ec .NewCT_Tbl ();
+_gbcg :=_ec .NewEG_BlockLevelElts ();_eagf :=_ec .NewEG_ContentBlockContent ();_gbcg .BlockLevelEltsChoice .EG_ContentBlockContent =append (_gbcg .BlockLevelEltsChoice .EG_ContentBlockContent ,_eagf );_eagf .ContentBlockContentChoice .Tbl =append (_eagf .ContentBlockContentChoice .Tbl ,_cdf );
+_acf .EG_BlockLevelElts =append (_acf .EG_BlockLevelElts ,nil );if _fefg {copy (_acf .EG_BlockLevelElts [_gdfc +1:],_acf .EG_BlockLevelElts [_gdfc :]);_acf .EG_BlockLevelElts [_gdfc ]=_gbcg ;if _bfbg !=0{_gegf :=_ec .NewEG_BlockLevelElts ();_fbac :=_ec .NewEG_ContentBlockContent ();
+_gegf .BlockLevelEltsChoice .EG_ContentBlockContent =append (_gegf .BlockLevelEltsChoice .EG_ContentBlockContent ,_fbac );_fbac .ContentBlockContentChoice .P =_efbd .ContentBlockContentChoice .P [:_bfbg ];_acf .EG_BlockLevelElts =append (_acf .EG_BlockLevelElts ,nil );
+copy (_acf .EG_BlockLevelElts [_gdfc +1:],_acf .EG_BlockLevelElts [_gdfc :]);_acf .EG_BlockLevelElts [_gdfc ]=_gegf ;};_efbd .ContentBlockContentChoice .P =_efbd .ContentBlockContentChoice .P [_bfbg :];}else {copy (_acf .EG_BlockLevelElts [_gdfc +2:],_acf .EG_BlockLevelElts [_gdfc +1:]);
+_acf .EG_BlockLevelElts [_gdfc +1]=_gbcg ;if _bfbg !=len (_efbd .ContentBlockContentChoice .P )-1{_dcfb :=_ec .NewEG_BlockLevelElts ();_dfd :=_ec .NewEG_ContentBlockContent ();_dcfb .BlockLevelEltsChoice .EG_ContentBlockContent =append (_dcfb .BlockLevelEltsChoice .EG_ContentBlockContent ,_dfd );
+_dfd .ContentBlockContentChoice .P =_efbd .ContentBlockContentChoice .P [_bfbg +1:];_acf .EG_BlockLevelElts =append (_acf .EG_BlockLevelElts ,nil );copy (_acf .EG_BlockLevelElts [_gdfc +3:],_acf .EG_BlockLevelElts [_gdfc +2:]);_acf .EG_BlockLevelElts [_gdfc +2]=_dcfb ;
+};_efbd .ContentBlockContentChoice .P =_efbd .ContentBlockContentChoice .P [:_bfbg +1];};return Table {_gbf ,_cdf };};};for _ ,_gae :=range _efbd .ContentBlockContentChoice .Tbl {_bedd :=_afdb (_gae ,_gga ,_fefg );if _bedd !=nil {return Table {_gbf ,_bedd };
+};};};};return _gbf .AddTable ();};
+
+// SetColumnBandSize sets the number of Columns in the column band
+func (_cafge TableStyleProperties )SetColumnBandSize (cols int64 ){_cafge ._bgebd .TblStyleColBandSize =_ec .NewCT_DecimalNumber ();_cafge ._bgebd .TblStyleColBandSize .ValAttr =cols ;};
+
+// VerticalAlign returns the value of paragraph vertical align.
+func (_gagf ParagraphProperties )VerticalAlignment ()_afe .ST_VerticalAlignRun {if _agcf :=_gagf ._bbdf .RPr .VertAlign ;_agcf !=nil {return _agcf .ValAttr ;};return 0;};
+
+// Cells returns the cells defined in the table.
+func (_bbbaec Row )Cells ()[]Cell {_bfee :=[]Cell {};for _ ,_gbga :=range _bbbaec ._gfeea .EG_ContentCellContent {for _ ,_fcbbf :=range _gbga .ContentCellContentChoice .Tc {_bfee =append (_bfee ,Cell {_bbbaec ._aebdd ,_fcbbf });};if _gbga .ContentCellContentChoice .Sdt !=nil &&_gbga .ContentCellContentChoice .Sdt .SdtContent !=nil {for _ ,_gfdf :=range _gbga .ContentCellContentChoice .Sdt .SdtContent .EG_ContentCellContent {for _ ,_ccag :=range _gfdf .ContentCellContentChoice .Tc {_bfee =append (_bfee ,Cell {_bbbaec ._aebdd ,_ccag });
+};};};};return _bfee ;};
+
+// RunProperties returns the run properties controlling text formatting within the table.
+func (_agdab TableConditionalFormatting )RunProperties ()RunProperties {if _agdab ._abcbe .RPr ==nil {_agdab ._abcbe .RPr =_ec .NewCT_RPr ();};return RunProperties {_agdab ._abcbe .RPr };};
+
+// SetOpacity sets opacity of watermark text in range 0.0 - 1.0, where is 1.0 is the default value.
+func (_eecfc *WatermarkText )SetOpacity (value float64 ){if _eecfc ._eafca !=nil {_fbdbd :=_eecfc ._eafca .ShapeChoice ;for _ ,_beeaf :=range _fbdbd {if _beeaf .ShapeElementsChoice .Fill !=nil {_gbfac :=_b .Itoa ((int )(65536.0*value ))+"\u0066";_beeaf .ShapeElementsChoice .Fill .OpacityAttr =&_gbfac ;
+};};};};
+
+// SetOutlineLevel sets the outline level of this style.
+func (_cgde ParagraphStyleProperties )SetOutlineLevel (lvl int ){_cgde ._egfac .OutlineLvl =_ec .NewCT_DecimalNumber ();_cgde ._egfac .OutlineLvl .ValAttr =int64 (lvl );};const _eceb ="\u0046\u006f\u0072\u006d\u0046\u0069\u0065l\u0064\u0054\u0079\u0070\u0065\u0055\u006e\u006b\u006e\u006f\u0077\u006e\u0046\u006fr\u006dF\u0069\u0065\u006c\u0064\u0054\u0079p\u0065\u0054\u0065\u0078\u0074\u0046\u006fr\u006d\u0046\u0069\u0065\u006c\u0064\u0054\u0079\u0070\u0065\u0043\u0068\u0065\u0063\u006b\u0042\u006f\u0078\u0046\u006f\u0072\u006d\u0046i\u0065\u006c\u0064\u0054\u0079\u0070\u0065\u0044\u0072\u006f\u0070\u0044\u006fw\u006e";
+
 
 // AddHeader creates a header associated with the document, but doesn't add it
 // to the document for display.
-func (_beec *Document )AddHeader ()Header {_ggb :=_bg .NewHdr ();_beec ._gffb =append (_beec ._gffb ,_ggb );_dcb :=_cb .Sprintf ("\u0068\u0065\u0061d\u0065\u0072\u0025\u0064\u002e\u0078\u006d\u006c",len (_beec ._gffb ));_beec ._fee .AddRelationship (_dcb ,_g .HeaderType );
-_beec .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072\u0064\u002f"+_dcb ,"\u0061p\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064.\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c\u002e\u0068\u0065\u0061\u0064e\u0072\u002b\u0078\u006d\u006c");
-_beec ._gdde =append (_beec ._gdde ,_edb .NewRelationships ());return Header {_beec ,_ggb };};
+func (_dea *Document )AddHeader ()Header {_fdcd :=_ec .NewHdr ();_dea ._ace =append (_dea ._ace ,_fdcd );_fgd :=_cb .Sprintf ("\u0068\u0065\u0061d\u0065\u0072\u0025\u0064\u002e\u0078\u006d\u006c",len (_dea ._ace ));_dea ._cbaa .AddRelationship (_fgd ,_c .HeaderType );
+_dea .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072\u0064\u002f"+_fgd ,"\u0061p\u0070l\u0069\u0063\u0061\u0074\u0069\u006f\u006e\u002f\u0076\u006e\u0064.\u006f\u0070\u0065\u006ex\u006d\u006c\u0066\u006f\u0072m\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c\u002e\u0068\u0065\u0061\u0064e\u0072\u002b\u0078\u006d\u006c");
+_dea ._feb =append (_dea ._feb ,_aee .NewRelationships ());return Header {_dea ,_fdcd };};
+
+// AddTable adds a new table to the document body.
+func (_gee *Document )AddTable ()Table {_dag :=_ec .NewEG_BlockLevelElts ();_gee ._dgg .Body .EG_BlockLevelElts =append (_gee ._dgg .Body .EG_BlockLevelElts ,_dag );_dcd :=_ec .NewEG_ContentBlockContent ();_dag .BlockLevelEltsChoice .EG_ContentBlockContent =append (_dag .BlockLevelEltsChoice .EG_ContentBlockContent ,_dcd );
+_gfffb :=_ec .NewCT_Tbl ();_dcd .ContentBlockContentChoice .Tbl =append (_dcd .ContentBlockContentChoice .Tbl ,_gfffb );return Table {_gee ,_gfffb };};
+
+// AddAnnotationReference adds annotation reference to a run.
+func (_gdbb Run )AddAnnotationReference (){_gfce :=_gdbb .newIC ();_gfce .RunInnerContentChoice .AnnotationRef =_ec .NewCT_Empty ();};
+
+// GetDocRelTargetByID returns TargetAttr of document relationship given its IdAttr.
+func (_ebff *Document )GetDocRelTargetByID (idAttr string )string {for _ ,_ebffb :=range _ebff ._cbaa .X ().Relationship {if _ebffb .IdAttr ==idAttr {return _ebffb .TargetAttr ;};};return "";};
+
+// SetStyle sets the style of a paragraph and is identical to setting it on the
+// paragraph's Properties()
+func (_edgfb Paragraph )SetStyle (s string ){_edgfb .ensurePPr ();if s ==""{_edgfb ._fagb .PPr .PStyle =nil ;}else {_edgfb ._fagb .PPr .PStyle =_ec .NewCT_String ();_edgfb ._fagb .PPr .PStyle .ValAttr =s ;};};
+
+// SetRight sets the right border to a specified type, color and thickness.
+func (_fbaf ParagraphBorders )SetRight (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_fbaf ._bbgee .Right =_ec .NewCT_Border ();_dabbg (_fbaf ._bbgee .Right ,t ,c ,thickness );};
+
+// X returns the inner wrapped XML type.
+func (_geg Comment )X ()*_ec .CT_Comment {return _geg ._fdge };func _agdf (_bcbb *_ec .CT_P ,_efg ,_ecde map[int64 ]int64 ){for _ ,_eedbb :=range _bcbb .EG_PContent {for _ ,_afdd :=range _eedbb .PContentChoice .EG_ContentRunContent {if _afdd .ContentRunContentChoice .R !=nil {for _ ,_aece :=range _afdd .ContentRunContentChoice .R .EG_RunInnerContent {_fcbb :=_aece .RunInnerContentChoice .EndnoteReference ;
+if _fcbb !=nil &&_fcbb .IdAttr > 0{if _fedd ,_aead :=_ecde [_fcbb .IdAttr ];_aead {_fcbb .IdAttr =_fedd ;};};_agbg :=_aece .RunInnerContentChoice .FootnoteReference ;if _agbg !=nil &&_agbg .IdAttr > 0{if _gbda ,_gdca :=_efg [_agbg .IdAttr ];_gdca {_agbg .IdAttr =_gbda ;
+};};};};};};};
+
+// SetName sets the name of the image, visible in the properties of the image
+// within Word.
+func (_cg AnchoredDrawing )SetName (name string ){_cg ._da .DocPr .NameAttr =name ;for _ ,_fd :=range _cg ._da .Graphic .GraphicData .Any {if _bfg ,_bfb :=_fd .(*_bf .Pic );_bfb {_bfg .NvPicPr .CNvPr .DescrAttr =_c .String (name );};};};
+
+// X returns the inner wrapped XML type.
+func (_aabad Paragraph )X ()*_ec .CT_P {return _aabad ._fagb };
+
+// AddDeletedText add a text deletion to the paragraph
+// specifying its revision number, author and id.
+func (_eabg Paragraph )AddDeletedText (oldVal ,revNum ,author string ,t _aa .Time ,id int64 ){_ggeb :=_ec .NewCT_RunTrackChange ();_ggeb .AuthorAttr =author ;_ggeb .DateAttr =&t ;_ggeb .IdAttr =id ;_cbcb :=_ec .NewCT_R ();_cbcb .RsidRAttr =&revNum ;_addb :=_ec .NewCT_Text ();
+_addb .Content =oldVal ;_bbge :=_ec .NewEG_RunInnerContent ();_bbge .RunInnerContentChoice .DelText =_addb ;_cbcb .EG_RunInnerContent =append (_cbcb .EG_RunInnerContent ,_bbge );_ggab :=_ec .NewCT_RunTrackChangeChoice ();_gadd :=_ec .NewEG_ContentRunContentChoice ();
+_gadd .R =_cbcb ;_ggab .ContentRunContentChoice =_gadd ;_ggeb .RunTrackChangeChoice =append (_ggeb .RunTrackChangeChoice ,_ggab );_fdbfa :=_ec .NewEG_PContent ();_bdace :=_ec .NewEG_ContentRunContent ();_fdbfa .PContentChoice .EG_ContentRunContent =append (_fdbfa .PContentChoice .EG_ContentRunContent ,_bdace );
+_agda :=_ec .NewEG_RunLevelElts ();_bdace .ContentRunContentChoice .EG_RunLevelElts =append (_bdace .ContentRunContentChoice .EG_RunLevelElts ,_agda );_agda .RunLevelEltsChoice .Del =_ggeb ;_eabg ._fagb .EG_PContent =append (_eabg ._fagb .EG_PContent ,_fdbfa );
+};
+
+// SetFontFamily sets the Ascii & HAnsi fonly family for a run.
+func (_ddeg RunProperties )SetFontFamily (family string ){if _ddeg ._bffab .RFonts ==nil {_ddeg ._bffab .RFonts =_ec .NewCT_Fonts ();};_ddeg ._bffab .RFonts .AsciiAttr =_c .String (family );_ddeg ._bffab .RFonts .HAnsiAttr =_c .String (family );_ddeg ._bffab .RFonts .EastAsiaAttr =_c .String (family );
+};
+
+// SetHorizontalBanding controls the conditional formatting for horizontal banding.
+func (_cecbd TableLook )SetHorizontalBanding (on bool ){if !on {_cecbd ._cgfd .NoHBandAttr =&_afe .ST_OnOff {};_cecbd ._cgfd .NoHBandAttr .ST_OnOff1 =_afe .ST_OnOff1On ;}else {_cecbd ._cgfd .NoHBandAttr =&_afe .ST_OnOff {};_cecbd ._cgfd .NoHBandAttr .ST_OnOff1 =_afe .ST_OnOff1Off ;
+};};
+
+// SetEastAsiaTheme sets the font East Asia Theme.
+func (_babbf Fonts )SetEastAsiaTheme (t _ec .ST_Theme ){_babbf ._addaa .EastAsiaThemeAttr =t };
+
+// Bookmark is a bookmarked location within a document that can be referenced
+// with a hyperlink.
+type Bookmark struct{_fad *_ec .CT_Bookmark };
+
+// RowProperties are the properties for a row within a table
+type RowProperties struct{_dafb *_ec .CT_TrPr };
+
+// SetColor sets the text color.
+func (_efbg RunProperties )SetColor (c _gc .Color ){_efbg ._bffab .Color =_ec .NewCT_Color ();_efbg ._bffab .Color .ValAttr .ST_HexColorRGB =c .AsRGBString ();};
+
+// ParagraphStyles returns only the paragraph styles.
+func (_ggded Styles )ParagraphStyles ()[]Style {_fgedg :=[]Style {};for _ ,_gfabd :=range _ggded ._ggeafb .Style {if _gfabd .TypeAttr !=_ec .ST_StyleTypeParagraph {continue ;};_fgedg =append (_fgedg ,Style {_gfabd });};return _fgedg ;};
+
+// Table is a table within a document.
+type Table struct{_edbe *Document ;_bbefb *_ec .CT_Tbl ;};
+
+// GetSize return the size of anchor on the page.
+func (_fc AnchoredDrawing )GetSize ()(_ab ,_bda int64 ){return _fc ._da .Extent .CxAttr ,_fc ._da .Extent .CyAttr ;};
+
+// RemoveParagraph removes a paragraph from the endnote.
+func (_bdgc Endnote )RemoveParagraph (p Paragraph ){for _ ,_ecfe :=range _bdgc .content (){for _ddfb ,_fddb :=range _ecfe .ContentBlockContentChoice .P {if _fddb ==p ._fagb {copy (_ecfe .ContentBlockContentChoice .P [_ddfb :],_ecfe .ContentBlockContentChoice .P [_ddfb +1:]);
+_ecfe .ContentBlockContentChoice .P =_ecfe .ContentBlockContentChoice .P [0:len (_ecfe .ContentBlockContentChoice .P )-1];return ;};};};};
+
+// VerticalAlign returns the value of run vertical align.
+func (_gdebc RunProperties )VerticalAlignment ()_afe .ST_VerticalAlignRun {if _cfce :=_gdebc ._bffab .VertAlign ;_cfce !=nil {return _cfce .ValAttr ;};return 0;};func _eacaaf (_gabe Paragraph )*_ec .CT_NumPr {_gabe .ensurePPr ();if _gabe ._fagb .PPr .NumPr ==nil {return nil ;
+};return _gabe ._fagb .PPr .NumPr ;};
+
+// Comment returns comment associated with given id.
+func (_dacb *Document )Comment (id int64 )Comment {for _ ,_fbfg :=range _dacb .Comments (){if _fbfg .id ()==id {return _fbfg ;};};return Comment {};};
+
+// SetTextWrapTight sets the text wrap to tight with a give wrap type.
+func (_dg AnchoredDrawing )SetTextWrapTight (option *AnchorDrawWrapOptions ){_dg ._da .WrapTypeChoice =&_ec .WdEG_WrapTypeChoice {};_dg ._da .WrapTypeChoice .WrapTight =_ec .NewWdCT_WrapTight ();_dg ._da .WrapTypeChoice .WrapTight .WrapTextAttr =_ec .WdST_WrapTextBothSides ;
+_fac :=false ;_dg ._da .WrapTypeChoice .WrapTight .WrapPolygon .EditedAttr =&_fac ;if option ==nil {option =NewAnchorDrawWrapOptions ();};_dg ._da .WrapTypeChoice .WrapTight .WrapPolygon .LineTo =option .GetWrapPathLineTo ();_dg ._da .WrapTypeChoice .WrapTight .WrapPolygon .Start =option .GetWrapPathStart ();
+_dg ._da .LayoutInCellAttr =true ;_dg ._da .AllowOverlapAttr =true ;};
+
+// CellProperties are a table cells properties within a document.
+type CellProperties struct{_eef *_ec .CT_TcPr };
+
+// TextItem is used for keeping text with references to a paragraph and run or a table, a row and a cell where it is located.
+type TextItem struct{Text string ;DrawingInfo *DrawingInfo ;Paragraph *_ec .CT_P ;Hyperlink *_ec .CT_Hyperlink ;Run *_ec .CT_R ;TableInfo *TableInfo ;};
+
+// AddParagraph adds a paragraph to the endnote.
+func (_fgcd Endnote )AddParagraph ()Paragraph {_cddg :=_ec .NewEG_ContentBlockContent ();_aaff :=len (_fgcd ._ggcdg .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent );_fgcd ._ggcdg .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent =append (_fgcd ._ggcdg .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent ,_cddg );
+_ffac :=_ec .NewCT_P ();var _gbff *_ec .CT_String ;if _aaff !=0{_efae :=len (_fgcd ._ggcdg .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent [_aaff -1].ContentBlockContentChoice .P );_gbff =_fgcd ._ggcdg .EG_BlockLevelElts [0].BlockLevelEltsChoice .EG_ContentBlockContent [_aaff -1].ContentBlockContentChoice .P [_efae -1].PPr .PStyle ;
+}else {_gbff =_ec .NewCT_String ();_gbff .ValAttr ="\u0045n\u0064\u006e\u006f\u0074\u0065";};_cddg .ContentBlockContentChoice .P =append (_cddg .ContentBlockContentChoice .P ,_ffac );_aaebc :=Paragraph {_fgcd ._edad ,_ffac };_aaebc ._fagb .PPr =_ec .NewCT_PPr ();
+_aaebc ._fagb .PPr .PStyle =_gbff ;_aaebc ._fagb .PPr .RPr =_ec .NewCT_ParaRPr ();return _aaebc ;};
+
+// NewStyles constructs a new empty Styles
+func NewStyles ()Styles {return Styles {_ec .NewStyles ()}};
+
+// WatermarkText is watermark text within the document.
+type WatermarkText struct{_dfbb *_ec .CT_Picture ;_aade *_af .TextpathStyle ;_eafca *_ceg .Shape ;_gaded *_ceg .Shapetype ;};
+
+// SetSpacing sets the spacing that comes before and after the paragraph.
+// Deprecated: See Spacing() instead which allows finer control.
+func (_dcafd ParagraphProperties )SetSpacing (before ,after _ga .Distance ){if _dcafd ._bbdf .Spacing ==nil {_dcafd ._bbdf .Spacing =_ec .NewCT_Spacing ();};_dcafd ._bbdf .Spacing .BeforeAttr =&_afe .ST_TwipsMeasure {};_dcafd ._bbdf .Spacing .BeforeAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (before /_ga .Twips ));
+_dcafd ._bbdf .Spacing .AfterAttr =&_afe .ST_TwipsMeasure {};_dcafd ._bbdf .Spacing .AfterAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (after /_ga .Twips ));};
+
+// GetText returns text in the watermark.
+func (_fcfed *WatermarkText )GetText ()string {_dgbgb :=_fcfed .getShape ();if _fcfed ._eafca !=nil {_eabf :=_fcfed ._eafca .ShapeChoice ;for _ ,_cebgb :=range _eabf {if _cebgb .ShapeElementsChoice .Textpath !=nil {return *_cebgb .ShapeElementsChoice .Textpath .StringAttr ;
+};};}else {_fecbd :=_fcfed .findNode (_dgbgb ,"\u0074\u0065\u0078\u0074\u0070\u0061\u0074\u0068");for _ ,_feecc :=range _fecbd .Attrs {if _feecc .Name .Local =="\u0073\u0074\u0072\u0069\u006e\u0067"{return _feecc .Value ;};};};return "";};
+
+// SetInsideVertical sets the interior vertical borders to a specified type, color and thickness.
+func (_gcfed TableBorders )SetInsideVertical (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_gcfed ._gbeg .InsideV =_ec .NewCT_Border ();_cffba (_gcfed ._gbeg .InsideV ,t ,c ,thickness );};
+
+// SetHangingIndent controls the indentation of the non-first lines in a paragraph.
+func (_bcaaf ParagraphProperties )SetHangingIndent (m _ga .Distance ){if _bcaaf ._bbdf .Ind ==nil {_bcaaf ._bbdf .Ind =_ec .NewCT_Ind ();};if m ==_ga .Zero {_bcaaf ._bbdf .Ind .HangingAttr =nil ;}else {_bcaaf ._bbdf .Ind .HangingAttr =&_afe .ST_TwipsMeasure {};
+_bcaaf ._bbdf .Ind .HangingAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (m /_ga .Twips ));};};
+
+// InlineDrawing is an inlined image within a run.
+type InlineDrawing struct{_fbdda *Document ;_ggdaf *_ec .WdInline ;};const (OnOffValueUnset OnOffValue =iota ;OnOffValueOff ;OnOffValueOn ;);
+
+// Italic returns true if paragraph font is italic.
+func (_dbdgc ParagraphProperties )Italic ()bool {_afdbg :=_dbdgc ._bbdf .RPr ;return _gfgb (_afdbg .I )||_gfgb (_afdbg .ICs );};
+
+// SetAll sets all of the borders to a given value.
+func (_egbae TableBorders )SetAll (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_egbae .SetBottom (t ,c ,thickness );_egbae .SetLeft (t ,c ,thickness );_egbae .SetRight (t ,c ,thickness );_egbae .SetTop (t ,c ,thickness );_egbae .SetInsideHorizontal (t ,c ,thickness );
+_egbae .SetInsideVertical (t ,c ,thickness );};
+
+// Tables returns the tables defined in the document.
+func (_cdfe *Document )Tables ()[]Table {_afdg :=[]Table {};if _cdfe ._dgg .Body ==nil {return nil ;};for _ ,_eeaee :=range _cdfe ._dgg .Body .EG_BlockLevelElts {for _ ,_dbd :=range _eeaee .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_dab :=range _cdfe .tables (_dbd ){_afdg =append (_afdg ,_dab );
+};};};return _afdg ;};func (_ggdgb *Document )GetFontBytesByRelId (relID string )([]byte ,error ){if relID ==""{return nil ,nil ;};_dcbe :=_ggdgb ._beaa .GetTargetByRelId (relID );_dcbe ="\u0077\u006f\u0072d\u002f"+_dcbe ;for _ ,_geaeb :=range _ggdgb .ExtraFiles {if _geaeb .ZipPath ==_dcbe {_dgdf ,_bdba :=_ad .ReadFile (_geaeb .StoragePath );
+if _bdba !=nil {return nil ,_cb .Errorf ("e\u0072r\u006f\u0072\u0020\u0072\u0065\u0061\u0064\u0069n\u0067\u0020\u0025\u0073: \u0025\u0073",_geaeb .StoragePath ,_bdba );};return _dgdf ,nil ;};};return nil ,_cb .Errorf ("\u0066\u006fn\u0074\u0020\u006e\u006f\u0074\u0020\u0066\u006f\u0075\u006e\u0064\u0020\u0069\u006e\u0020\u0073\u0074\u006f\u0072\u0061\u0067\u0065: \u0025\u0073",_dcbe );
+};
+
+// MultiLevelType returns the multilevel type, or ST_MultiLevelTypeUnset if not set.
+func (_aadcg NumberingDefinition )MultiLevelType ()_ec .ST_MultiLevelType {if _aadcg ._bgag .MultiLevelType !=nil {return _aadcg ._bgag .MultiLevelType .ValAttr ;}else {return _ec .ST_MultiLevelTypeUnset ;};};func (_bdda Styles )initializeDocDefaults (){_bdda ._ggeafb .DocDefaults =_ec .NewCT_DocDefaults ();
+_bdda ._ggeafb .DocDefaults .RPrDefault =_ec .NewCT_RPrDefault ();_bdda ._ggeafb .DocDefaults .RPrDefault .RPr =_ec .NewCT_RPr ();_dgdae :=RunProperties {_bdda ._ggeafb .DocDefaults .RPrDefault .RPr };_dgdae .SetSize (12*_ga .Point );_dgdae .Fonts ().SetASCIITheme (_ec .ST_ThemeMajorAscii );
+_dgdae .Fonts ().SetEastAsiaTheme (_ec .ST_ThemeMajorEastAsia );_dgdae .Fonts ().SetHANSITheme (_ec .ST_ThemeMajorHAnsi );_dgdae .Fonts ().SetCSTheme (_ec .ST_ThemeMajorBidi );_dgdae .X ().Lang =_ec .NewCT_Language ();_dgdae .X ().Lang .ValAttr =_c .String ("\u0065\u006e\u002dU\u0053");
+_dgdae .X ().Lang .EastAsiaAttr =_c .String ("\u0065\u006e\u002dU\u0053");_dgdae .X ().Lang .BidiAttr =_c .String ("\u0061\u0072\u002dS\u0041");_bdda ._ggeafb .DocDefaults .PPrDefault =_ec .NewCT_PPrDefault ();};
+
+// Endnote returns the endnote based on the ID; this can be used nicely with
+// the run.IsEndnote() functionality.
+func (_dcda *Document )Endnote (id int64 )Endnote {for _ ,_fffc :=range _dcda .Endnotes (){if _fffc .id ()==id {return _fffc ;};};return Endnote {};};
+
+// Footers returns the footers defined in the document.
+func (_bgc *Document )Footers ()[]Footer {_ceeef :=[]Footer {};for _ ,_gddd :=range _bgc ._ddbf {_ceeef =append (_ceeef ,Footer {_bgc ,_gddd });};return _ceeef ;};
+
+// SetPictureWashout set washout to watermark picture.
+func (_cfgac *WatermarkPicture )SetPictureWashout (isWashout bool ){if _cfgac ._gbadf !=nil {_facee :=_cfgac ._gbadf .ShapeChoice ;if len (_facee )> 0&&_facee [0].ShapeElementsChoice .Imagedata !=nil {if isWashout {_bcdfa :="\u0031\u0039\u0036\u0036\u0031\u0066";
+_aedea :="\u0032\u0032\u0039\u0033\u0038\u0066";_facee [0].ShapeElementsChoice .Imagedata .GainAttr =&_bcdfa ;_facee [0].ShapeElementsChoice .Imagedata .BlacklevelAttr =&_aedea ;};};};};
+
+// Fonts returns the style's Fonts.
+func (_aaeba RunProperties )Fonts ()Fonts {if _aaeba ._bffab .RFonts ==nil {_aaeba ._bffab .RFonts =_ec .NewCT_Fonts ();};return Fonts {_aaeba ._bffab .RFonts };};
+
+// FindNodeByCondition return node based on condition function,
+// if wholeElements is true, its will extract children as next node elements.
+func (_edda *Nodes )FindNodeByCondition (f func (_abga *Node )bool ,wholeElements bool )[]Node {_cceed :=[]Node {};for _ ,_efbfc :=range _edda ._adac {if f (&_efbfc ){_cceed =append (_cceed ,_efbfc );};if wholeElements {_gacc :=Nodes {_adac :_efbfc .Children };
+_cceed =append (_cceed ,_gacc .FindNodeByCondition (f ,wholeElements )...);};};return _cceed ;};
+
+// TableLook returns the table look, or conditional formatting applied to a table style.
+func (_degd TableProperties )TableLook ()TableLook {if _degd ._egdbb .TblLook ==nil {_degd ._egdbb .TblLook =_ec .NewCT_TblLook ();};return TableLook {_degd ._egdbb .TblLook };};
+
+// Clear clears all content within a footer
+func (_ddec Footer )Clear (){_ddec ._bgde .EG_BlockLevelElts =[]*_ec .EG_BlockLevelElts {}};
+
+// SetBottom sets the bottom border to a specified type, color and thickness.
+func (_bfdc ParagraphBorders )SetBottom (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_bfdc ._bbgee .Bottom =_ec .NewCT_Border ();_dabbg (_bfdc ._bbgee .Bottom ,t ,c ,thickness );};
+
+// Text return node and its child text,
+func (_edcac *Node )Text ()string {_gcbd :=_bc .NewBuffer ([]byte {});switch _gagg :=_edcac .X ().(type ){case *Paragraph :for _ ,_beeda :=range _gagg .Runs (){if _beeda .Text ()!=""{_gcbd .WriteString (_beeda .Text ());_gcbd .WriteString ("\u000a");};
+};};for _ ,_cgafd :=range _edcac .Children {_gcbd .WriteString (_cgafd .Text ());};return _gcbd .String ();};
+
+// TableLook is the conditional formatting associated with a table style that
+// has been assigned to a table.
+type TableLook struct{_cgfd *_ec .CT_TblLook };
+
+// Index returns the index of the footer within the document.  This is used to
+// form its zip packaged filename as well as to match it with its relationship
+// ID.
+func (_gace Footer )Index ()int {for _ecbf ,_efbb :=range _gace ._dbgc ._ddbf {if _efbb ==_gace ._bgde {return _ecbf ;};};return -1;};const (FormFieldTypeUnknown FormFieldType =iota ;FormFieldTypeText ;FormFieldTypeCheckBox ;FormFieldTypeDropDown ;);
+
+// AddRun adds a run of text to a hyperlink. This is the text that will be linked.
+func (_afacf HyperLink )AddRun ()Run {_ebgg :=_ec .NewEG_ContentRunContent ();_afacf ._fbcd .PContentChoice .EG_ContentRunContent =append (_afacf ._fbcd .PContentChoice .EG_ContentRunContent ,_ebgg );_dcdg :=_ec .NewCT_R ();_ebgg .ContentRunContentChoice .R =_dcdg ;
+return Run {_afacf ._ebdea ,_dcdg };};
+
+// SetTextWrapTopAndBottom sets the text wrap to top and bottom.
+func (_gg AnchoredDrawing )SetTextWrapTopAndBottom (){_gg ._da .WrapTypeChoice =&_ec .WdEG_WrapTypeChoice {};_gg ._da .WrapTypeChoice .WrapTopAndBottom =_ec .NewWdCT_WrapTopBottom ();_gg ._da .LayoutInCellAttr =true ;_gg ._da .AllowOverlapAttr =true ;};
+
+
+// StructuredDocumentTag are a tagged bit of content in a document.
+type StructuredDocumentTag struct{_acggg *Document ;_aacgf *_ec .CT_SdtBlock ;};func _aeeag (_fgfb *_ec .CT_OnOff )OnOffValue {if _fgfb ==nil {return OnOffValueUnset ;};if _fgfb .ValAttr !=nil &&_fgfb .ValAttr .Bool !=nil &&*_fgfb .ValAttr .Bool ==false {return OnOffValueOff ;
+};return OnOffValueOn ;};
+
+// AddHyperLink adds a new hyperlink to a parapgraph.
+func (_dbde Paragraph )AddHyperLink ()HyperLink {_ffgf :=_ec .NewEG_PContent ();_dbde ._fagb .EG_PContent =append (_dbde ._fagb .EG_PContent ,_ffgf );_ffgf .PContentChoice .Hyperlink =_ec .NewCT_Hyperlink ();return HyperLink {_dbde ._fafde ,_ffgf .PContentChoice .Hyperlink };
+};
+
+// SetTextWrapInFrontOfText sets the text wrap to in front of text.
+func (_cff AnchoredDrawing )SetTextWrapInFrontOfText (){_cff ._da .WrapTypeChoice =&_ec .WdEG_WrapTypeChoice {};_cff ._da .WrapTypeChoice .WrapNone =_ec .NewWdCT_WrapNone ();_cff ._da .BehindDocAttr =false ;_cff ._da .LayoutInCellAttr =true ;_cff ._da .AllowOverlapAttr =true ;
+};func (_acadd Paragraph )addEndFldChar ()*_ec .CT_FldChar {_fecab :=_acadd .addFldChar ();_fecab .FldCharTypeAttr =_ec .ST_FldCharTypeEnd ;return _fecab ;};
+
+// Properties returns the row properties.
+func (_dcc Row )Properties ()RowProperties {if _dcc ._gfeea .TrPr ==nil {_dcc ._gfeea .TrPr =_ec .NewCT_TrPr ();};return RowProperties {_dcc ._gfeea .TrPr };};
+
+// Tables returns the tables defined in the footer.
+func (_bfgg Footer )Tables ()[]Table {_ffbeg :=[]Table {};if _bfgg ._bgde ==nil {return nil ;};for _ ,_ecdac :=range _bfgg ._bgde .EG_BlockLevelElts {for _ ,_bfeb :=range _ecdac .BlockLevelEltsChoice .EG_ContentBlockContent {_ffbeg =append (_ffbeg ,_bfgg ._dbgc .tables (_bfeb )...);
+};};return _ffbeg ;};
+
+// Open opens and reads a document from a file (.docx).
+func Open (filename string )(*Document ,error ){_fffd ,_ffb :=_ad .Open (filename );if _ffb !=nil {return nil ,_cb .Errorf ("e\u0072r\u006f\u0072\u0020\u006f\u0070\u0065\u006e\u0069n\u0067\u0020\u0025\u0073: \u0025\u0073",filename ,_ffb );};defer _fffd .Close ();
+_cdb ,_ffb :=_ad .Stat (filename );if _ffb !=nil {return nil ,_cb .Errorf ("e\u0072r\u006f\u0072\u0020\u006f\u0070\u0065\u006e\u0069n\u0067\u0020\u0025\u0073: \u0025\u0073",filename ,_ffb );};_ =_cdb ;return Read (_fffd ,_cdb .Size ());};
+
+// Text returns the underlying text in the run.
+func (_aceca Run )Text ()string {if len (_aceca ._aeef .EG_RunInnerContent )==0{return "";};_aafb :=_bc .Buffer {};for _ ,_fafe :=range _aceca ._aeef .EG_RunInnerContent {if _fafe .RunInnerContentChoice .T !=nil {_aafb .WriteString (_fafe .RunInnerContentChoice .T .Content );
+};if _fafe .RunInnerContentChoice .Tab !=nil {_aafb .WriteByte ('\t');};};return _aafb .String ();};
+
+// Validate validates the structure and in cases where it't possible, the ranges
+// of elements within a document. A validation error dones't mean that the
+// document won't work in MS Word or LibreOffice, but it's worth checking into.
+func (_eeb *Document )Validate ()error {if _eeb ==nil ||_eeb ._dgg ==nil {return _ff .New ("\u0064o\u0063\u0075m\u0065\u006e\u0074\u0020n\u006f\u0074\u0020i\u006e\u0069\u0074\u0069\u0061\u006c\u0069\u007a\u0065d \u0063\u006f\u0072r\u0065\u0063t\u006c\u0079\u002c\u0020\u006e\u0069l\u0020\u0062a\u0073\u0065");
+};for _ ,_faagg :=range []func ()error {_eeb .validateTableCells ,_eeb .validateBookmarks }{if _bcbe :=_faagg ();_bcbe !=nil {return _bcbe ;};};if _abbb :=_eeb ._dgg .Validate ();_abbb !=nil {return _abbb ;};return nil ;};func (_bgab *WatermarkPicture )findNode (_gbefd *_c .XSDAny ,_bfaf string )*_c .XSDAny {for _ ,_gbdc :=range _gbefd .Nodes {if _gbdc .XMLName .Local ==_bfaf {return _gbdc ;
+};};return nil ;};
+
+// SetPictureSize set watermark picture size with given width and height.
+func (_feggd *WatermarkPicture )SetPictureSize (width ,height int64 ){if _feggd ._gbadf !=nil {_bcfe :=_feggd .GetShapeStyle ();_bcfe .SetWidth (float64 (width )*_ga .Point );_bcfe .SetHeight (float64 (height )*_ga .Point );_feggd .SetShapeStyle (_bcfe );
+};};
+
+// SetTop sets the cell top margin
+func (_fef CellMargins )SetTop (d _ga .Distance ){_fef ._debg .Top =_ec .NewCT_TblWidth ();_eege (_fef ._debg .Top ,d );};
+
+// RemoveParagraph removes a paragraph from a footer.
+func (_bddea Header )RemoveParagraph (p Paragraph ){for _ ,_eeff :=range _bddea ._fgcdg .EG_BlockLevelElts {for _ ,_gfad :=range _eeff .BlockLevelEltsChoice .EG_ContentBlockContent {for _bdcca ,_dgbd :=range _gfad .ContentBlockContentChoice .P {if _dgbd ==p ._fagb {copy (_gfad .ContentBlockContentChoice .P [_bdcca :],_gfad .ContentBlockContentChoice .P [_bdcca +1:]);
+_gfad .ContentBlockContentChoice .P =_gfad .ContentBlockContentChoice .P [0:len (_gfad .ContentBlockContentChoice .P )-1];return ;};};};};};
+
+// Name returns the name of the style if set.
+func (_cbfde Style )Name ()string {if _cbfde ._ggbag .Name ==nil {return "";};return _cbfde ._ggbag .Name .ValAttr ;};
+
+// AddFieldWithFormatting adds a field (automatically computed text) to the
+// document with field specifc formatting.
+func (_degec Run )AddFieldWithFormatting (code string ,fmt string ,isDirty bool ){_aecgd :=_degec .newIC ();_aecgd .RunInnerContentChoice .FldChar =_ec .NewCT_FldChar ();_aecgd .RunInnerContentChoice .FldChar .FldCharTypeAttr =_ec .ST_FldCharTypeBegin ;
+if isDirty {_aecgd .RunInnerContentChoice .FldChar .DirtyAttr =&_afe .ST_OnOff {};_aecgd .RunInnerContentChoice .FldChar .DirtyAttr .Bool =_c .Bool (true );};_aecgd =_degec .newIC ();_aecgd .RunInnerContentChoice .InstrText =_ec .NewCT_Text ();if fmt !=""{_aecgd .RunInnerContentChoice .InstrText .Content =code +"\u0020"+fmt ;
+}else {_aecgd .RunInnerContentChoice .InstrText .Content =code ;};_aecgd =_degec .newIC ();_aecgd .RunInnerContentChoice .FldChar =_ec .NewCT_FldChar ();_aecgd .RunInnerContentChoice .FldChar .FldCharTypeAttr =_ec .ST_FldCharTypeEnd ;};
+
+// SetLeft sets the cell left margin
+func (_afa CellMargins )SetLeft (d _ga .Distance ){_afa ._debg .Left =_ec .NewCT_TblWidth ();_eege (_afa ._debg .Left ,d );};
+
+// SetTextWrapSquare sets the text wrap to square with a given wrap type.
+func (_afb AnchoredDrawing )SetTextWrapSquare (t _ec .WdST_WrapText ){_afb ._da .WrapTypeChoice =&_ec .WdEG_WrapTypeChoice {};_afb ._da .WrapTypeChoice .WrapSquare =_ec .NewWdCT_WrapSquare ();_afb ._da .WrapTypeChoice .WrapSquare .WrapTextAttr =t ;};var _ecda =false ;
+
+
+// Clear removes all the content from within a run.
+func (_gcbef Run )Clear (){_gcbef ._aeef .EG_RunInnerContent =nil };
+
+// AddFootnoteReference adds a footnote reference to a run.
+func (_gdcd Run )AddFootnoteReference (){_bbgc :=_gdcd .newIC ();_bbgc .RunInnerContentChoice .FootnoteRef =&_ec .CT_Empty {};};
+
+// TableInfo is used for keep information about a table, a row and a cell where the text is located.
+type TableInfo struct{Table *_ec .CT_Tbl ;Row *_ec .CT_Row ;Cell *_ec .CT_Tc ;RowIndex int ;ColIndex int ;};func (_fadc *Document )removeFootnote (_ebg int64 ){_ggeac :=_fadc ._dcba ;var _beed int ;for _fed ,_fdgg :=range _ggeac .CT_Footnotes .Footnote {if _fdgg .IdAttr ==_ebg {_beed =_fed ;
+break ;};};_ggeac .CT_Footnotes .Footnote [_beed ]=nil ;_ggeac .CT_Footnotes .Footnote [_beed ]=_ggeac .CT_Footnotes .Footnote [len (_ggeac .CT_Footnotes .Footnote )-1];_ggeac .CT_Footnotes .Footnote =_ggeac .CT_Footnotes .Footnote [:len (_ggeac .CT_Footnotes .Footnote )-1];
+_fadc .reorderFootnote ();_fadc .syncFootnoteSettings ();};
+
+// RunProperties returns the run style properties.
+func (_bagg Style )RunProperties ()RunProperties {if _bagg ._ggbag .RPr ==nil {_bagg ._ggbag .RPr =_ec .NewCT_RPr ();};return RunProperties {_bagg ._ggbag .RPr };};
+
+// Value returns the string value of a FormFieldTypeText or FormFieldTypeDropDown.
+func (_aaba FormField )Value ()string {if len (_aaba ._dcbfb .FFDataChoice )> 0{for _ ,_afag :=range _aaba ._dcbfb .FFDataChoice {if _afag .TextInput !=nil &&_aaba ._adaec .RunInnerContentChoice .T !=nil {return _aaba ._adaec .RunInnerContentChoice .T .Content ;
+}else if _afag .DdList !=nil &&_afag .DdList .Result !=nil {_ggdf :=_aaba .PossibleValues ();_dced :=int (_afag .DdList .Result .ValAttr );if _dced < len (_ggdf ){return _ggdf [_dced ];};}else if _afag .CheckBox !=nil {if _aaba .IsChecked (){return "\u0074\u0072\u0075\u0065";
+};return "\u0066\u0061\u006cs\u0065";};};};return "";};func (_bdeb *Document )addFootnotes (){_bdeb ._dcba =_ec .NewFootnotes ();_bdeb ._dcba .CT_Footnotes =_ec .CT_Footnotes {};_bdeb ._dcba .Footnote =make ([]*_ec .CT_FtnEdn ,0);_bdeb .ContentTypes .AddOverride ("\u002f\u0077\u006f\u0072d/\u0066\u006f\u006f\u0074\u006e\u006f\u0074\u0065\u0073\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069c\u0061\u0074\u0069\u006f\u006e\u002f\u0076n\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006d\u006c\u0066\u006f\u0072\u006d\u0061\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063e\u0073\u0073\u0069\u006e\u0067\u006d\u006c\u002e\u0066\u006f\u006f\u0074n\u006f\u0074\u0065\u0073\u002b\u0078m\u006c");
+_bdeb ._cbaa .AddRelationship ("\u002f\u0077\u006f\u0072d/\u0066\u006f\u006f\u0074\u006e\u006f\u0074\u0065\u0073\u002e\u0078\u006d\u006c",_c .FootNotesType );_deg :=_bdeb .Styles .AddStyle (FootnoteTextStyleId ,_ec .ST_StyleTypeParagraph ,false );_deg .SetName ("\u0046\u006f\u006f\u0074\u006e\u006f\u0074\u0065\u0020\u0054\u0065\u0078\u0074");
+_deg .SetBasedOn ("\u004e\u006f\u0072\u006d\u0061\u006c");_bbc :=_deg .ParagraphProperties ();_bbc .X ().SuppressLineNumbers =&_ec .CT_OnOff {};_edf :=_deg .RunProperties ();_edf .X ().Sz =&_ec .CT_HpsMeasure {ValAttr :_ec .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_ccee }};
+_edf .X ().SzCs =&_ec .CT_HpsMeasure {ValAttr :_ec .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_ccee }};_ceea :=_bdeb .Styles .AddStyle (_fdga ,_ec .ST_StyleTypeCharacter ,false );_ceea .SetName ("\u0046o\u006ft\u006e\u006f\u0074\u0065\u0020R\u0065\u0066e\u0072\u0065\u006e\u0063\u0065");
+_dcff :=_ceea .RunProperties ();_dcff .X ().VertAlign =&_ec .CT_VerticalAlignRun {ValAttr :_afe .ST_VerticalAlignRunSuperscript };_bdeb .addFootnoteSeparator ();};type htmlNode struct{_ffga _ag .StartElement ;_dfgf *htmlNode ;};
+
+// SetDiagonalLayout enables or disables diagonal layout.
+// By default, diagonal layout is disabled and we have horizontal layout.
+func (_eceg *WatermarkText )EnableDiagonalLayout (value bool ){if _eceg ._eafca !=nil &&_eceg ._eafca .StyleAttr !=nil {_cbgegf :=*_eceg ._eafca .StyleAttr ;if value {_cbgegf +="\u0072\u006f\u0074\u0061\u0074\u0069\u006f\u006e\u003a\u0033\u0031\u0035\u003b";
+}else {_cbgegf =_ce .ReplaceAll (_cbgegf ,"\u0072\u006f\u0074\u0061\u0074\u0069\u006f\u006e\u003a\u0033\u0031\u0035\u003b","");};_eceg ._eafca .StyleAttr =&_cbgegf ;};};func (_dgfd FormFieldType )String ()string {if _dgfd >=FormFieldType (len (_ffgcg )-1){return _cb .Sprintf ("\u0046\u006f\u0072\u006d\u0046\u0069\u0065\u006c\u0064\u0054\u0079\u0070e\u0028\u0025\u0064\u0029",_dgfd );
+};return _eceb [_ffgcg [_dgfd ]:_ffgcg [_dgfd +1]];};
+
+// RunProperties controls run styling properties.
+type RunProperties struct{_bffab *_ec .CT_RPr };
+
+// Type returns the type of the style.
+func (_daec Style )Type ()_ec .ST_StyleType {return _daec ._ggbag .TypeAttr };
+
+// Numbering is the document wide numbering styles contained in numbering.xml.
+type Numbering struct{_fdea *_ec .Numbering };
+
+// NewWatermarkText generates a new WatermarkText.
+func NewWatermarkText ()WatermarkText {_bafcc :=_ceg .NewShapetype ();_dgaaf :=_ffaea ();_efcbb :=_ebaeg ();_gcfgg :=_bbaf ();_addag :=_gdfb ();_cebg :=_efee ();_bafcc .EG_ShapeElements =[]*_ceg .EG_ShapeElements {{ShapeElementsChoice :&_ceg .EG_ShapeElementsChoice {Formulas :_dgaaf }},{ShapeElementsChoice :&_ceg .EG_ShapeElementsChoice {Path :_efcbb }},{ShapeElementsChoice :&_ceg .EG_ShapeElementsChoice {Textpath :_gcfgg }},{ShapeElementsChoice :&_ceg .EG_ShapeElementsChoice {Handles :_addag }},{ShapeElementsChoice :&_ceg .EG_ShapeElementsChoice {Lock :_cebg }}};
+var (_daeac ="_\u0078\u0030\u0030\u0030\u0030\u005f\u0074\u0031\u0033\u0036";_fcee ="2\u0031\u0036\u0030\u0030\u002c\u0032\u0031\u0036\u0030\u0030";_gdce =float32 (136.0);_effc ="\u0031\u0030\u00380\u0030";_aaedcd ="m\u0040\u0037\u002c\u006c\u0040\u0038,\u006d\u0040\u0035\u002c\u0032\u0031\u0036\u0030\u0030l\u0040\u0036\u002c2\u00316\u0030\u0030\u0065";
+);_bafcc .IdAttr =&_daeac ;_bafcc .CoordsizeAttr =&_fcee ;_bafcc .SptAttr =&_gdce ;_bafcc .AdjAttr =&_effc ;_bafcc .PathAttr =&_aaedcd ;_dgada :=_ceg .NewShape ();_dgada .ShapeChoice =append (_dgada .ShapeChoice ,&_ceg .CT_ShapeChoice {ShapeElementsChoice :&_ceg .EG_ShapeElementsChoice {Fill :_baca ()}});
+_dgada .ShapeChoice =append (_dgada .ShapeChoice ,&_ceg .CT_ShapeChoice {ShapeElementsChoice :&_ceg .EG_ShapeElementsChoice {Textpath :_cfbff ()}});var (_defe ="\u0050\u006f\u0077\u0065\u0072\u0050l\u0075\u0073\u0057\u0061\u0074\u0065\u0072\u004d\u0061\u0072\u006b\u004f\u0062j\u0065\u0063\u0074\u0031\u0033\u0036\u00380\u0030\u0038\u0038\u0036";
+_gbgcg ="\u005f\u0078\u00300\u0030\u0030\u005f\u0073\u0032\u0030\u0035\u0031";_bbda ="\u0023\u005f\u00780\u0030\u0030\u0030\u005f\u0074\u0031\u0033\u0036";_fgega ="";_eaafab ="\u0070\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u003a\u0061bs\u006f\u006c\u0075\u0074\u0065;\u006d\u0061\u0072\u0067\u0069\u006e\u002d\u006c\u0065f\u0074\u003a\u0030\u003b\u006d\u0061\u0072\u0067\u0069\u006e\u002d\u0074\u006f\u0070\u003a\u0030\u003b\u0077\u0069\u0064\u0074h\u003a\u0034\u0036\u0038\u0070\u0074\u003bh\u0065ig\u0068\u0074\u003a\u0032\u0033\u0034p\u0074\u003b\u007a\u002d\u0069\u006e\u0064\u0065x\u003a\u002d\u0032\u00351\u0036\u0035\u0031\u0030\u0037\u0032\u003b\u006d\u0073o\u002d\u0077r\u0061\u0070\u002d\u0065\u0064\u0069\u0074\u0065\u0064\u003a\u0066\u003b\u006d\u0073\u006f\u002d\u0077\u0069\u0064\u0074\u0068\u002d\u0070\u0065\u0072\u0063\u0065\u006e\u0074\u003a\u0030\u003b\u006d\u0073\u006f\u002dh\u0065\u0069\u0067\u0068\u0074\u002dp\u0065\u0072\u0063\u0065\u006e\u0074\u003a\u0030\u003b\u006d\u0073\u006f\u002dp\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u002d\u0068\u006f\u0072\u0069\u007a\u006f\u006e\u0074\u0061\u006c\u003a\u0063\u0065\u006e\u0074\u0065r\u003b\u006d\u0073\u006f\u002d\u0070\u006f\u0073\u0069\u0074\u0069\u006fn\u002d\u0068\u006f\u0072\u0069\u007a\u006f\u006e\u0074\u0061\u006c\u002d\u0072\u0065\u006ca\u0074\u0069\u0076\u0065\u003a\u006d\u0061\u0072\u0067\u0069\u006e\u003b\u006d\u0073\u006f\u002d\u0070\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u002d\u0076e\u0072\u0074\u0069\u0063\u0061\u006c\u003a\u0063\u0065\u006e\u0074\u0065\u0072\u003b\u006d\u0073\u006f\u002d\u0070\u006f\u0073\u0069\u0074\u0069o\u006e\u002d\u0076e\u0072\u0074\u0069\u0063\u0061\u006c-\u0072\u0065\u006c\u0061\u0074\u0069v\u0065\u003a\u006d\u0061\u0072\u0067\u0069\u006e;\u006d\u0073\u006f\u002d\u0077\u0069\u0064\u0074\u0068-p\u0065\u0072\u0063\u0065\u006e\u0074:\u0030\u003b\u006d\u0073\u006f-\u0068\u0065\u0069\u0067\u0068\u0074\u002d\u0070\u0065\u0072\u0063\u0065\u006e\u0074\u003a\u0030\u003b";
+_effda ="\u0073\u0069\u006c\u0076\u0065\u0072";);_dgada .IdAttr =&_defe ;_dgada .SpidAttr =&_gbgcg ;_dgada .TypeAttr =&_bbda ;_dgada .AltAttr =&_fgega ;_dgada .StyleAttr =&_eaafab ;_dgada .AllowincellAttr =_afe .ST_TrueFalseFalse ;_dgada .FillcolorAttr =&_effda ;
+_dgada .StrokedAttr =_afe .ST_TrueFalseF ;_gffb :=_ec .NewCT_Picture ();_gffb .Any =[]_c .Any {_bafcc ,_dgada };return WatermarkText {_dfbb :_gffb ,_eafca :_dgada ,_gaded :_bafcc };};
+
+// GetHighlight returns the HighlightColor.
+func (_gcdfc RunProperties )GetHighlight ()_ec .ST_HighlightColor {if _gcdfc ._bffab .Highlight !=nil {return _gcdfc ._bffab .Highlight .ValAttr ;};return _ec .ST_HighlightColorNone ;};func _gbe (_bgb *_ec .CT_TblWidth ,_cbdf float64 ){_bgb .TypeAttr =_ec .ST_TblWidthPct ;
+_bgb .WAttr =&_ec .ST_MeasurementOrPercent {};_bgb .WAttr .ST_DecimalNumberOrPercent =&_ec .ST_DecimalNumberOrPercent {};_bgb .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_c .Int64 (int64 (_cbdf *50));};
+
+// ParagraphProperties returns the paragraph properties controlling text formatting within the table.
+func (_abefg TableConditionalFormatting )ParagraphProperties ()ParagraphStyleProperties {if _abefg ._abcbe .PPr ==nil {_abefg ._abcbe .PPr =_ec .NewCT_PPrGeneral ();};return ParagraphStyleProperties {_abefg ._abcbe .PPr };};
+
+// MergeFields returns the list of all mail merge fields found in the document.
+func (_fged Document )MergeFields ()[]string {_cddcg :=map[string ]struct{}{};for _ ,_gbfcg :=range _fged .mergeFields (){_cddcg [_gbfcg ._ecgeg ]=struct{}{};};_bfffc :=[]string {};for _eage :=range _cddcg {_bfffc =append (_bfffc ,_eage );};return _bfffc ;
+};
+
+// GetFooter gets a section Footer for given type
+func (_cffb Section )GetFooter (t _ec .ST_HdrFtr )(Footer ,bool ){for _ ,_bdcg :=range _cffb ._gcebe .EG_HdrFtrReferences {if _bdcg .HdrFtrReferencesChoice .FooterReference ==nil {continue ;};if _bdcg .HdrFtrReferencesChoice .FooterReference .TypeAttr ==t {for _ ,_cgbad :=range _cffb ._gbedd .Footers (){_cfagd :=_cffb ._gbedd ._cbaa .FindRIDForN (_cgbad .Index (),_c .FooterType );
+if _cfagd ==_bdcg .HdrFtrReferencesChoice .FooterReference .IdAttr {return _cgbad ,true ;};};};};return Footer {},false ;};
+
+// SetSemiHidden controls if the style is hidden in the UI.
+func (_agee Style )SetSemiHidden (b bool ){if b {_agee ._ggbag .SemiHidden =_ec .NewCT_OnOff ();}else {_agee ._ggbag .SemiHidden =nil ;};};
+
+// BodySection returns the default body section used for all preceding
+// paragraphs until the previous Section. If there is no previous sections, the
+// body section applies to the entire document.
+func (_gdb *Document )BodySection ()Section {if _gdb ._dgg .Body .SectPr ==nil {_gdb ._dgg .Body .SectPr =_ec .NewCT_SectPr ();};return Section {_gdb ,_gdb ._dgg .Body .SectPr };};
+
+// Shadow returns true if run shadow is on.
+func (_gcffe RunProperties )Shadow ()bool {return _gfgb (_gcffe ._bffab .Shadow )};func (_gdagf Paragraph )addFldCharsForField (_babgc ,_abge string )FormField {_cgaa :=_gdagf .addBeginFldChar (_babgc );_accbb :=FormField {_dcbfb :_cgaa };_cdbc :=_gdagf ._fafde .Bookmarks ();
+_gbece :=int64 (len (_cdbc ));if _babgc !=""{_gdagf .addStartBookmark (_gbece ,_babgc );};_gdagf .addInstrText (_abge );_gdagf .addSeparateFldChar ();if _abge =="\u0046\u004f\u0052\u004d\u0054\u0045\u0058\u0054"{_dgee :=_gdagf .AddRun ();_gfgec :=_ec .NewEG_RunInnerContent ();
+_dgee ._aeef .EG_RunInnerContent =[]*_ec .EG_RunInnerContent {_gfgec };_accbb ._adaec =_gfgec ;};_gdagf .addEndFldChar ();if _babgc !=""{_gdagf .addEndBookmark (_gbece );};return _accbb ;};func _gdfb ()*_ceg .Handles {_gbffa :=_ceg .NewHandles ();_abea :=_ceg .NewCT_H ();
+_efbbg :="\u0023\u0030\u002c\u0062\u006f\u0074\u0074\u006f\u006dR\u0069\u0067\u0068\u0074";_abea .PositionAttr =&_efbbg ;_bccc :="\u0036\u0036\u0032\u0039\u002c\u0031\u0034\u0039\u0037\u0031";_abea .XrangeAttr =&_bccc ;_gbffa .H =[]*_ceg .CT_H {_abea };
+return _gbffa ;};
+
+// X returns the inner wml.CT_PBdr
+func (_egcfc ParagraphBorders )X ()*_ec .CT_PBdr {return _egcfc ._bbgee };
+
+// CharacterSpacingValue returns the value of characters spacing in twips (1/20 of point).
+func (_aecae ParagraphProperties )CharacterSpacingValue ()int64 {if _eecga :=_aecae ._bbdf .RPr .Spacing ;_eecga !=nil {_ecba :=_eecga .ValAttr ;if _ecba .Int64 !=nil {return *_ecba .Int64 ;};};return int64 (0);};
+
+// SetCSTheme sets the font complex script theme.
+func (_fbcb Fonts )SetCSTheme (t _ec .ST_Theme ){_fbcb ._addaa .CsthemeAttr =t };
+
+// SetBetween sets the between border to a specified type, color and thickness between paragraph.
+func (_dadb ParagraphBorders )SetBetween (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_dadb ._bbgee .Between =_ec .NewCT_Border ();_dabbg (_dadb ._bbgee .Between ,t ,c ,thickness );};
+
+// SetStyle sets the font size.
+func (_dfdec RunProperties )SetStyle (style string ){if style ==""{_dfdec ._bffab .RStyle =nil ;}else {_dfdec ._bffab .RStyle =_ec .NewCT_String ();_dfdec ._bffab .RStyle .ValAttr =style ;};};
+
+// Close closes the document, removing any temporary files that might have been
+// created when opening a document.
+func (_gbabf *Document )Close ()error {if _gbabf .TmpPath !=""{return _ea .RemoveAll (_gbabf .TmpPath );};return nil ;};
+
+// IsChecked returns true if a FormFieldTypeCheckBox is checked.
+func (_cbgb FormField )IsChecked ()bool {if len (_cbgb ._dcbfb .FFDataChoice )==0{return false ;};for _ ,_eeeac :=range _cbgb ._dcbfb .FFDataChoice {if _eeeac .CheckBox !=nil {if _eeeac .CheckBox .Checked !=nil {return true ;};};};return false ;};
+
+// SetText sets the watermark text.
+func (_dcfg *WatermarkText )SetText (text string ){_agddd :=_dcfg .getShape ();if _dcfg ._eafca !=nil {_cddfe :=_dcfg ._eafca .ShapeChoice ;for _ ,_edbec :=range _cddfe {if _edbec .ShapeElementsChoice .Textpath !=nil {_edbec .ShapeElementsChoice .Textpath .StringAttr =&text ;
+};};}else {_cgcea :=_dcfg .findNode (_agddd ,"\u0074\u0065\u0078\u0074\u0070\u0061\u0074\u0068");for _ecdd ,_bbdgf :=range _cgcea .Attrs {if _bbdgf .Name .Local =="\u0073\u0074\u0072\u0069\u006e\u0067"{_cgcea .Attrs [_ecdd ].Value =text ;};};};};
+
+// SetHeight allows controlling the height of a row within a table.
+func (_eeac RowProperties )SetHeight (ht _ga .Distance ,rule _ec .ST_HeightRule ){if rule ==_ec .ST_HeightRuleUnset {_eeac ._dafb .TrPrBaseChoice =nil ;}else {_cccac :=_ec .NewCT_Height ();_cccac .HRuleAttr =rule ;_cccac .ValAttr =&_afe .ST_TwipsMeasure {};
+_cccac .ValAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (ht /_ga .Twips ));_eeac ._dafb .TrPrBaseChoice =[]*_ec .CT_TrPrBaseChoice {&_ec .CT_TrPrBaseChoice {TrHeight :_cccac }};};};var (FootnoteTextStyleId ="\u0046\u006f\u006ft\u006e\u006f\u0074\u0065\u0054\u0065\u0078\u0074";
+_fdga ="\u0046\u006f\u006f\u0074\u006e\u006f\u0074\u0065\u0052\u0065\u0066\u0065r\u0065\u006e\u0063\u0065";EndnoteTextStyleId ="E\u006e\u0064\u006e\u006f\u0074\u0065\u0054\u0065\u0078\u0074";_aec ="\u0045\u006ed\u006e\u006f\u0074e\u0052\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065";
+_ccee =uint64 (20);_egbc ="\u0043\u006fm\u006d\u0065\u006et\u0052\u0065\u0066\u0065\u0072\u0065\u006e\u0063\u0065";_gcde ="C\u006f\u006d\u006d\u0065\u006e\u0074\u0054\u0065\u0078\u0074";_egf ="\u0043o\u006dm\u0065\u006e\u0074\u0054\u0065\u0078\u0074\u0043\u0068\u0061\u0072";
+_bec ="\u0043\u006f\u006d\u006d\u0065\u006e\u0074\u0053\u0075b\u006a\u0065\u0063\u0074";_cadb ="\u0043o\u006dm\u0065\u006e\u0074\u0053\u0075b\u006a\u0065c\u0074\u0043\u0068\u0061\u0072";_bgg =uint64 (20);_aaeb =uint64 (16););
+
+// InsertRunAfter inserts a run in the paragraph after the relative run.
+func (_afaf Paragraph )InsertRunAfter (relativeTo Run )Run {return _afaf .insertRun (relativeTo ,false )};
+
+// Emboss returns true if run emboss is on.
+func (_acge RunProperties )Emboss ()bool {return _gfgb (_acge ._bffab .Emboss )};
+
+// AddTab adds tab to a run and can be used with the the Paragraph's tab stops.
+func (_fecf Run )AddTab (){_defd :=_fecf .newIC ();_defd .RunInnerContentChoice .Tab =_ec .NewCT_Empty ();};
+
+// SetShapeStyle sets style to the element v:shape in watermark.
+func (_gacdb *WatermarkPicture )SetShapeStyle (shapeStyle _af .ShapeStyle ){if _gacdb ._gbadf !=nil {_fcdf :=shapeStyle .String ();_gacdb ._gbadf .StyleAttr =&_fcdf ;};};func _dabbg (_bcced *_ec .CT_Border ,_adcbg _ec .ST_Border ,_aegd _gc .Color ,_fdeec _ga .Distance ){_bcced .ValAttr =_adcbg ;
+_bcced .ColorAttr =&_ec .ST_HexColor {};if _aegd .IsAuto (){_bcced .ColorAttr .ST_HexColorAuto =_ec .ST_HexColorAutoAuto ;}else {_bcced .ColorAttr .ST_HexColorRGB =_aegd .AsRGBString ();};if _fdeec !=_ga .Zero {_bcced .SzAttr =_c .Uint64 (uint64 (_fdeec /_ga .Point *8));
+};};
+
+// TableWidth controls width values in table settings.
+type TableWidth struct{_fbebf *_ec .CT_TblWidth };
+
+// SetAll sets all of the borders to a given value.
+func (_fbbg ParagraphBorders )SetAll (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_fbbg .SetBottom (t ,c ,thickness );_fbbg .SetLeft (t ,c ,thickness );_fbbg .SetRight (t ,c ,thickness );_fbbg .SetTop (t ,c ,thickness );};
+
+// Footnote returns the footnote based on the ID; this can be used nicely with
+// the run.IsFootnote() functionality.
+func (_bace *Document )Footnote (id int64 )Footnote {for _ ,_agcb :=range _bace .Footnotes (){if _agcb .id ()==id {return _agcb ;};};return Footnote {};};
+
+// SetAfterAuto controls if spacing after a paragraph is automatically determined.
+func (_fceg ParagraphSpacing )SetAfterAuto (b bool ){if b {_fceg ._dbgcf .AfterAutospacingAttr =&_afe .ST_OnOff {};_fceg ._dbgcf .AfterAutospacingAttr .Bool =_c .Bool (true );}else {_fceg ._dbgcf .AfterAutospacingAttr =nil ;};};
+
+// SetWidth sets the cell width to a specified width.
+func (_debc CellProperties )SetWidth (d _ga .Distance ){_debc ._eef .TcW =_ec .NewCT_TblWidth ();_debc ._eef .TcW .TypeAttr =_ec .ST_TblWidthDxa ;_debc ._eef .TcW .WAttr =&_ec .ST_MeasurementOrPercent {};_debc ._eef .TcW .WAttr .ST_DecimalNumberOrPercent =&_ec .ST_DecimalNumberOrPercent {};
+_debc ._eef .TcW .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_c .Int64 (int64 (d /_ga .Twips ));};
+
+// WatermarkPicture is watermark picture within document.
+type WatermarkPicture struct{_gfgcg *_ec .CT_Picture ;_cdgdg *_af .ShapeStyle ;_gbadf *_ceg .Shape ;_cdfdc *_ceg .Shapetype ;};
+
+// Clear clears the styes.
+func (_ccaeb Styles )Clear (){_ccaeb ._ggeafb .DocDefaults =nil ;_ccaeb ._ggeafb .LatentStyles =nil ;_ccaeb ._ggeafb .Style =nil ;};
+
+// X returns the inner wrapped XML type.
+func (_dagb RunProperties )X ()*_ec .CT_RPr {return _dagb ._bffab };
+
+// AddInsertedText add a text insertion to the paragraph
+// specifying its revision number, author and id.
+func (_ffddf Paragraph )AddInsertedText (newVal ,revNum ,author string ,t _aa .Time ,id int64 ){_cdaa :=_ec .NewCT_RunTrackChange ();_cdaa .AuthorAttr =author ;_cdaa .DateAttr =&t ;_cdaa .IdAttr =id ;_bfca :=_ec .NewCT_R ();_bfca .RsidRAttr =&revNum ;_gfbfa :=_ec .NewCT_Text ();
+_gfbfa .Content =newVal ;_egebe :=_ec .NewEG_RunInnerContent ();_egebe .RunInnerContentChoice .T =_gfbfa ;_bfca .EG_RunInnerContent =append (_bfca .EG_RunInnerContent ,_egebe );_feac :=_ec .NewCT_RunTrackChangeChoice ();_ebcfg :=_ec .NewEG_ContentRunContentChoice ();
+_ebcfg .R =_bfca ;_feac .ContentRunContentChoice =_ebcfg ;_cdaa .RunTrackChangeChoice =append (_cdaa .RunTrackChangeChoice ,_feac );_gedf :=_ec .NewEG_PContent ();_feca :=_ec .NewEG_ContentRunContent ();_gedf .PContentChoice .EG_ContentRunContent =append (_gedf .PContentChoice .EG_ContentRunContent ,_feca );
+_cbge :=_ec .NewEG_RunLevelElts ();_feca .ContentRunContentChoice .EG_RunLevelElts =append (_feca .ContentRunContentChoice .EG_RunLevelElts ,_cbge );_cbge .RunLevelEltsChoice .Ins =_cdaa ;_ffddf ._fagb .EG_PContent =append (_ffddf ._fagb .EG_PContent ,_gedf );
+};
+
+// DrawingAnchored returns a slice of AnchoredDrawings.
+func (_gegg Run )DrawingAnchored ()[]AnchoredDrawing {_fecac :=[]AnchoredDrawing {};for _ ,_gggfg :=range _gegg ._aeef .EG_RunInnerContent {if _gggfg .RunInnerContentChoice .Drawing ==nil {continue ;};for _ ,_fcfdb :=range _gggfg .RunInnerContentChoice .Drawing .DrawingChoice {if _fcfdb .Anchor ==nil {continue ;
+};_fecac =append (_fecac ,AnchoredDrawing {_gegg ._abae ,_fcfdb .Anchor });};};return _fecac ;};func (_dadg Paragraph )addInstrText (_dgbdg string )*_ec .CT_Text {_gacg :=_dadg .AddRun ();_ebgc :=_gacg .X ();_ccef :=_ec .NewEG_RunInnerContent ();_beaab :=_ec .NewCT_Text ();
+_adbb :="\u0070\u0072\u0065\u0073\u0065\u0072\u0076\u0065";_beaab .SpaceAttr =&_adbb ;_beaab .Content ="\u0020"+_dgbdg +"\u0020";_ccef .RunInnerContentChoice .InstrText =_beaab ;_ebgc .EG_RunInnerContent =append (_ebgc .EG_RunInnerContent ,_ccef );return _beaab ;
+};func (_eadc *Document )addEndnoteSeparator (){_bfe :=_ec .NewCT_FtnEdn ();_bfe .IdAttr =-1;_bfe .TypeAttr =_ec .ST_FtnEdnSeparator ;_fbdd :=Footnote {_eadc ,_bfe };_fbdd .X ().EG_BlockLevelElts =[]*_ec .EG_BlockLevelElts {_ec .NewEG_BlockLevelElts ()};
+_ffcd :=_fbdd .AddParagraph ();_ffcd .X ().PPr =nil ;_aecg :=_ffcd .AddRun ();_gac :=_aecg .newIC ();_gac .RunInnerContentChoice .Separator =_ec .NewCT_Empty ();_eadc ._gdd .CT_Endnotes .Endnote =append (_eadc ._gdd .CT_Endnotes .Endnote ,_bfe );_bfe =_ec .NewCT_FtnEdn ();
+_bfe .IdAttr =0;_bfe .TypeAttr =_ec .ST_FtnEdnContinuationSeparator ;_fbdd =Footnote {_eadc ,_bfe };_fbdd .X ().EG_BlockLevelElts =[]*_ec .EG_BlockLevelElts {_ec .NewEG_BlockLevelElts ()};_ffcd =_fbdd .AddParagraph ();_ffcd .X ().PPr =nil ;_aecg =_ffcd .AddRun ();
+_gac =_aecg .newIC ();_gac .RunInnerContentChoice .ContinuationSeparator =_ec .NewCT_Empty ();_eadc ._gdd .CT_Endnotes .Endnote =append (_eadc ._gdd .CT_Endnotes .Endnote ,_bfe );};
+
+// Outline returns true if run outline is on.
+func (_fdcg RunProperties )Outline ()bool {return _gfgb (_fdcg ._bffab .Outline )};
+
+// X returns the inner wrapped type
+func (_feg CellBorders )X ()*_ec .CT_TcBorders {return _feg ._gda };
+
+// SetEndIndent controls the end indentation.
+func (_adecb ParagraphProperties )SetEndIndent (m _ga .Distance ){if _adecb ._bbdf .Ind ==nil {_adecb ._bbdf .Ind =_ec .NewCT_Ind ();};if m ==_ga .Zero {_adecb ._bbdf .Ind .EndAttr =nil ;}else {_adecb ._bbdf .Ind .EndAttr =&_ec .ST_SignedTwipsMeasure {};
+_adecb ._bbdf .Ind .EndAttr .Int64 =_c .Int64 (int64 (m /_ga .Twips ));};};func (_bbcg *Document )insertImageFromNode (_fcea Node ){for _ ,_ggagd :=range _fcea .AnchoredDrawings {if _ffbgd ,_aecf :=_ggagd .GetImage ();_aecf {_cdgd ,_ebbe :=_aee .ImageFromFile (_ffbgd .Path ());
+if _ebbe !=nil {_be .Log .Debug ("\u0075\u006e\u0061\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0063r\u0065\u0061\u0074\u0065\u0020\u0069\u006d\u0061\u0067\u0065:\u0020\u0025\u0073",_ebbe );};_abde ,_ebbe :=_bbcg .AddImage (_cdgd );if _ebbe !=nil {_be .Log .Debug ("u\u006e\u0061\u0062\u006c\u0065\u0020t\u006f\u0020\u0061\u0064\u0064\u0020i\u006d\u0061\u0067\u0065\u0020\u0074\u006f \u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u003a\u0020%\u0073",_ebbe );
+};_fcbg :=_bbcg ._cbaa .GetByRelId (_abde .RelID ());_fcbg .SetID (_ffbgd .RelID ());};};for _ ,_cadg :=range _fcea .InlineDrawings {if _edee ,_fbeb :=_cadg .GetImage ();_fbeb {_ecef ,_efdg :=_aee .ImageFromFile (_edee .Path ());if _efdg !=nil {_be .Log .Debug ("\u0075\u006e\u0061\u0062\u006c\u0065\u0020\u0074\u006f\u0020\u0063r\u0065\u0061\u0074\u0065\u0020\u0069\u006d\u0061\u0067\u0065:\u0020\u0025\u0073",_efdg );
+};_dcgc ,_efdg :=_bbcg .AddImage (_ecef );if _efdg !=nil {_be .Log .Debug ("u\u006e\u0061\u0062\u006c\u0065\u0020t\u006f\u0020\u0061\u0064\u0064\u0020i\u006d\u0061\u0067\u0065\u0020\u0074\u006f \u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u003a\u0020%\u0073",_efdg );
+};_gfd :=_bbcg ._cbaa .GetByRelId (_dcgc .RelID ());_gfd .SetID (_edee .RelID ());};};};
+
+// Run is a run of text within a paragraph that shares the same formatting.
+type Run struct{_abae *Document ;_aeef *_ec .CT_R ;};func (_bcgfa *Document )insertStyleFromNode (_fbee Node ){if _fbee .Style .X ()!=nil {if _ ,_cgdbe :=_bcgfa .Styles .SearchStyleById (_fbee .Style .StyleID ());!_cgdbe {_bcgfa .Styles .InsertStyle (_fbee .Style );
+_edff :=_fbee .Style .ParagraphProperties ();_bcgfa .insertNumberingFromStyleProperties (_fbee ._ecce .Numbering ,_edff );};};};
+
+// RemoveEndnote removes a endnote from both the paragraph and the document
+// the requested endnote must be anchored on the paragraph being referenced.
+//
+// After each removal, the rest of the endnote ids would be reordered.
+func (_cdcff Paragraph )RemoveEndnote (id int64 ){for _ ,_dfgc :=range _cdcff .Runs (){if _cagda ,_dfcc :=_dfgc .IsEndnote ();_cagda {if _dfcc ==id {_cdcff .RemoveRun (_dfgc );break ;};};};_cdcff ._fafde .removeEndnote (id );};
+
+// Pict returns the pict object.
+func (_gbgd *WatermarkPicture )Pict ()*_ec .CT_Picture {return _gbgd ._gfgcg };
+
+// X returns the inner wrapped XML type.
+func (_gcgg Run )X ()*_ec .CT_R {return _gcgg ._aeef };
+
+// SetWidthAuto sets the the table width to automatic.
+func (_fefgg TableProperties )SetWidthAuto (){_fefgg ._egdbb .TblW =_ec .NewCT_TblWidth ();_fefgg ._egdbb .TblW .TypeAttr =_ec .ST_TblWidthAuto ;};func (_dadd *Document )validateTableCells ()error {for _ ,_dbdg :=range _dadd ._dgg .Body .EG_BlockLevelElts {for _ ,_gege :=range _dbdg .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_dead :=range _gege .ContentBlockContentChoice .Tbl {for _ ,_gcbf :=range _dead .EG_ContentRowContent {for _ ,_egcgd :=range _gcbf .ContentRowContentChoice .Tr {_fbfgg :=false ;
+for _ ,_cdfd :=range _egcgd .EG_ContentCellContent {_egfa :=false ;for _ ,_gbafa :=range _cdfd .ContentCellContentChoice .Tc {_fbfgg =true ;for _ ,_cfe :=range _gbafa .EG_BlockLevelElts {for _ ,_afec :=range _cfe .BlockLevelEltsChoice .EG_ContentBlockContent {if len (_afec .ContentBlockContentChoice .P )> 0{_egfa =true ;
+break ;};};};};if !_egfa {return _ff .New ("t\u0061\u0062\u006c\u0065\u0020\u0063e\u006c\u006c\u0020\u006d\u0075\u0073t\u0020\u0063\u006f\u006e\u0074\u0061\u0069n\u0020\u0061\u0020\u0070\u0061\u0072\u0061\u0067\u0072\u0061p\u0068");};};if !_fbfgg {return _ff .New ("\u0074\u0061b\u006c\u0065\u0020\u0072\u006f\u0077\u0020\u006d\u0075\u0073\u0074\u0020\u0063\u006f\u006e\u0074\u0061\u0069\u006e\u0020\u0061\u0020ce\u006c\u006c");
+};};};};};};return nil ;};
+
+// ComplexSizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
+func (_gaee ParagraphProperties )ComplexSizeMeasure ()string {if _bdgg :=_gaee ._bbdf .RPr .SzCs ;_bdgg !=nil {_caaag :=_bdgg .ValAttr ;if _caaag .ST_PositiveUniversalMeasure !=nil {return *_caaag .ST_PositiveUniversalMeasure ;};};return "";};
+
+// AddTable adds a table to the header.
+func (_cccd Header )AddTable ()Table {_aaddc :=_ec .NewEG_ContentBlockContent ();_cccd ._fgcdg .EG_BlockLevelElts =append (_cccd ._fgcdg .EG_BlockLevelElts ,&_ec .EG_BlockLevelElts {BlockLevelEltsChoice :&_ec .EG_BlockLevelEltsChoice {EG_ContentBlockContent :[]*_ec .EG_ContentBlockContent {_aaddc }}});
+_aedg :=_ec .NewCT_Tbl ();_aaddc .ContentBlockContentChoice .Tbl =append (_aaddc .ContentBlockContentChoice .Tbl ,_aedg );return Table {_cccd ._fegd ,_aedg };};
+
+// FindNodeByRegexp return node based on matched text and return a slice of node.
+func (_dfec *Nodes )FindNodeByRegexp (r *_cf .Regexp )[]Node {_bebg :=[]Node {};for _ ,_bded :=range _dfec ._adac {if r .MatchString (_bded .Text ()){_bebg =append (_bebg ,_bded );};_cddfc :=Nodes {_adac :_bded .Children };_bebg =append (_bebg ,_cddfc .FindNodeByRegexp (r )...);
+};return _bebg ;};
+
+// SetAllCaps sets the run to all caps.
+func (_fgca RunProperties )SetAllCaps (b bool ){if !b {_fgca ._bffab .Caps =nil ;}else {_fgca ._bffab .Caps =_ec .NewCT_OnOff ();};};
+
+// RemoveMailMerge removes any mail merge settings
+func (_egggd Settings )RemoveMailMerge (){_egggd ._eedfb .MailMerge =nil };
+
+// X returns the inner wrapped XML type.
+func (_dbae Footer )X ()*_ec .Ftr {return _dbae ._bgde };
+
+// ParagraphSpacing controls the spacing for a paragraph and its lines.
+type ParagraphSpacing struct{_dbgcf *_ec .CT_Spacing };
+
+// AddTable adds a table to the footer.
+func (_affb Footer )AddTable ()Table {_babcd :=_ec .NewEG_ContentBlockContent ();_affb ._bgde .EG_BlockLevelElts =append (_affb ._bgde .EG_BlockLevelElts ,&_ec .EG_BlockLevelElts {BlockLevelEltsChoice :&_ec .EG_BlockLevelEltsChoice {EG_ContentBlockContent :[]*_ec .EG_ContentBlockContent {_babcd }}});
+_dbbad :=_ec .NewCT_Tbl ();_babcd .ContentBlockContentChoice .Tbl =append (_babcd .ContentBlockContentChoice .Tbl ,_dbbad );return Table {_affb ._dbgc ,_dbbad };};
+
+// GetImage returns the ImageRef associated with an AnchoredDrawing.
+func (_db AnchoredDrawing )GetImage ()(_aee .ImageRef ,bool ){_cba :=_db ._da .Graphic .GraphicData .Any ;if len (_cba )> 0{_fa ,_eg :=_cba [0].(*_bf .Pic );if _eg {if _fa .BlipFill !=nil &&_fa .BlipFill .Blip !=nil &&_fa .BlipFill .Blip .EmbedAttr !=nil {return _db ._aeb .GetImageByRelID (*_fa .BlipFill .Blip .EmbedAttr );
+};};};return _aee .ImageRef {},false ;};
+
+// CharacterSpacingMeasure returns paragraph characters spacing with its measure which can be mm, cm, in, pt, pc or pi.
+func (_febe RunProperties )CharacterSpacingMeasure ()string {if _becgc :=_febe ._bffab .Spacing ;_becgc !=nil {_afcgc :=_becgc .ValAttr ;if _afcgc .ST_UniversalMeasure !=nil {return *_afcgc .ST_UniversalMeasure ;};};return "";};
+
+// SetSoftEdgeImageEffect sets the soft edge image effect.
+func (_dbf AnchoredDrawing )SetSoftEdgeImageEffect (radius _ga .Distance ){_gbad :=_ga .ToEMU (float64 (radius ));for _ ,_ccbb :=range _dbf ._da .Graphic .GraphicData .Any {if _gcb ,_gab :=_ccbb .(*_bf .Pic );_gab {_dbf .initializeEffectList (_gcb .SpPr );
+_gcb .SpPr .EffectPropertiesChoice .EffectLst .SoftEdge =_cc .NewCT_SoftEdgesEffect ();_gcb .SpPr .EffectPropertiesChoice .EffectLst .SoftEdge .RadAttr =_gbad ;};};};
+
+// X returns the inner wrapped XML type.
+func (_bbbf Fonts )X ()*_ec .CT_Fonts {return _bbbf ._addaa };
+
+// Bold returns true if paragraph font is bold.
+func (_dafec ParagraphProperties )Bold ()bool {_edecf :=_dafec ._bbdf .RPr ;return _gfgb (_edecf .B )||_gfgb (_edecf .BCs );};
+
+// SetCellSpacingPercent sets the cell spacing within a table to a percent width.
+func (_fefgc TableStyleProperties )SetCellSpacingPercent (pct float64 ){_fefgc ._bgebd .TblCellSpacing =_ec .NewCT_TblWidth ();_fefgc ._bgebd .TblCellSpacing .TypeAttr =_ec .ST_TblWidthPct ;_fefgc ._bgebd .TblCellSpacing .WAttr =&_ec .ST_MeasurementOrPercent {};
+_fefgc ._bgebd .TblCellSpacing .WAttr .ST_DecimalNumberOrPercent =&_ec .ST_DecimalNumberOrPercent {};_fefgc ._bgebd .TblCellSpacing .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_c .Int64 (int64 (pct *50));};type listItemInfo struct{FromStyle *Style ;
+FromParagraph *Paragraph ;AbstractNumId *int64 ;NumberingLevel *NumberingLevel ;};
+
+// SetRightToLeft sets the run text goes from right to left.
+func (_cebd RunProperties )SetRightToLeft (b bool ){if !b {_cebd ._bffab .Rtl =nil ;}else {_cebd ._bffab .Rtl =_ec .NewCT_OnOff ();};};
+
+// SetStart sets the cell start margin
+func (_dgf CellMargins )SetStart (d _ga .Distance ){_dgf ._debg .Start =_ec .NewCT_TblWidth ();_eege (_dgf ._debg .Start ,d );};
+
+// IsEndnote returns a bool based on whether the run has a
+// footnote or not. Returns both a bool as to whether it has
+// a footnote as well as the ID of the footnote.
+func (_ecgea Run )IsEndnote ()(bool ,int64 ){if _ecgea ._aeef .EG_RunInnerContent !=nil {if _ecgea ._aeef .EG_RunInnerContent [0].RunInnerContentChoice .EndnoteReference !=nil {return true ,_ecgea ._aeef .EG_RunInnerContent [0].RunInnerContentChoice .EndnoteReference .IdAttr ;
+};};return false ,0;};
+
+// X return slice of node.
+func (_fagf *Nodes )X ()[]Node {return _fagf ._adac };
+
+// GetKerning returns the kerning (character spacing) of a run
+func (_dccd RunProperties )GetKerning ()_ga .Distance {if _dccd ._bffab .Kern !=nil {return _ga .Distance (float64 (*_dccd ._bffab .Kern .ValAttr .ST_UnsignedDecimalNumber )*_ga .HalfPoint );};return 0;};
+
+// StyleID returns the style ID.
+func (_cfaac Style )StyleID ()string {if _cfaac ._ggbag .StyleIdAttr ==nil {return "";};return *_cfaac ._ggbag .StyleIdAttr ;};
+
+// SetTableIndent sets the Table Indent from the Leading Margin
+func (_faebbg TableStyleProperties )SetTableIndent (ind _ga .Distance ){_faebbg ._bgebd .TblInd =_ec .NewCT_TblWidth ();_faebbg ._bgebd .TblInd .TypeAttr =_ec .ST_TblWidthDxa ;_faebbg ._bgebd .TblInd .WAttr =&_ec .ST_MeasurementOrPercent {};_faebbg ._bgebd .TblInd .WAttr .ST_DecimalNumberOrPercent =&_ec .ST_DecimalNumberOrPercent {};
+_faebbg ._bgebd .TblInd .WAttr .ST_DecimalNumberOrPercent .ST_UnqualifiedPercentage =_c .Int64 (int64 (ind /_ga .Dxa ));};
+
+// SetAllowOverlapAttr sets the allowOverlap attribute of anchor.
+func (_bca AnchoredDrawing )SetAllowOverlapAttr (val bool ){_bca ._da .AllowOverlapAttr =val };
+
+// SizeMeasure returns font with its measure which can be mm, cm, in, pt, pc or pi.
+func (_ddae RunProperties )SizeMeasure ()string {if _dfgaa :=_ddae ._bffab .Sz ;_dfgaa !=nil {_eacag :=_dfgaa .ValAttr ;if _eacag .ST_PositiveUniversalMeasure !=nil {return *_eacag .ST_PositiveUniversalMeasure ;};};return "";};
+
+// SetBottom sets the bottom border to a specified type, color and thickness.
+func (_cbdfcg TableBorders )SetBottom (t _ec .ST_Border ,c _gc .Color ,thickness _ga .Distance ){_cbdfcg ._gbeg .Bottom =_ec .NewCT_Border ();_cffba (_cbdfcg ._gbeg .Bottom ,t ,c ,thickness );};func (_fgegf Styles )initializeStyleDefaults (){_agbgd :=_fgegf .AddStyle ("\u004e\u006f\u0072\u006d\u0061\u006c",_ec .ST_StyleTypeParagraph ,true );
+_agbgd .SetName ("\u004e\u006f\u0072\u006d\u0061\u006c");_agbgd .SetPrimaryStyle (true );_gbbb :=_fgegf .AddStyle ("D\u0065f\u0061\u0075\u006c\u0074\u0050\u0061\u0072\u0061g\u0072\u0061\u0070\u0068Fo\u006e\u0074",_ec .ST_StyleTypeCharacter ,true );_gbbb .SetName ("\u0044\u0065\u0066\u0061ul\u0074\u0020\u0050\u0061\u0072\u0061\u0067\u0072\u0061\u0070\u0068\u0020\u0046\u006fn\u0074");
+_gbbb .SetUISortOrder (1);_gbbb .SetSemiHidden (true );_gbbb .SetUnhideWhenUsed (true );_abggc :=_fgegf .AddStyle ("\u0054i\u0074\u006c\u0065\u0043\u0068\u0061r",_ec .ST_StyleTypeCharacter ,false );_abggc .SetName ("\u0054\u0069\u0074\u006c\u0065\u0020\u0043\u0068\u0061\u0072");
+_abggc .SetBasedOn (_gbbb .StyleID ());_abggc .SetLinkedStyle ("\u0054\u0069\u0074l\u0065");_abggc .SetUISortOrder (10);_abggc .RunProperties ().Fonts ().SetASCIITheme (_ec .ST_ThemeMajorAscii );_abggc .RunProperties ().Fonts ().SetEastAsiaTheme (_ec .ST_ThemeMajorEastAsia );
+_abggc .RunProperties ().Fonts ().SetHANSITheme (_ec .ST_ThemeMajorHAnsi );_abggc .RunProperties ().Fonts ().SetCSTheme (_ec .ST_ThemeMajorBidi );_abggc .RunProperties ().SetSize (28*_ga .Point );_abggc .RunProperties ().SetKerning (14*_ga .Point );_abggc .RunProperties ().SetCharacterSpacing (-10*_ga .Twips );
+_dffc :=_fgegf .AddStyle ("\u0054\u0069\u0074l\u0065",_ec .ST_StyleTypeParagraph ,false );_dffc .SetName ("\u0054\u0069\u0074l\u0065");_dffc .SetBasedOn (_agbgd .StyleID ());_dffc .SetNextStyle (_agbgd .StyleID ());_dffc .SetLinkedStyle (_abggc .StyleID ());
+_dffc .SetUISortOrder (10);_dffc .SetPrimaryStyle (true );_dffc .ParagraphProperties ().SetContextualSpacing (true );_dffc .RunProperties ().Fonts ().SetASCIITheme (_ec .ST_ThemeMajorAscii );_dffc .RunProperties ().Fonts ().SetEastAsiaTheme (_ec .ST_ThemeMajorEastAsia );
+_dffc .RunProperties ().Fonts ().SetHANSITheme (_ec .ST_ThemeMajorHAnsi );_dffc .RunProperties ().Fonts ().SetCSTheme (_ec .ST_ThemeMajorBidi );_dffc .RunProperties ().SetSize (28*_ga .Point );_dffc .RunProperties ().SetKerning (14*_ga .Point );_dffc .RunProperties ().SetCharacterSpacing (-10*_ga .Twips );
+_ggccf :=_fgegf .AddStyle ("T\u0061\u0062\u006c\u0065\u004e\u006f\u0072\u006d\u0061\u006c",_ec .ST_StyleTypeTable ,false );_ggccf .SetName ("\u004e\u006f\u0072m\u0061\u006c\u0020\u0054\u0061\u0062\u006c\u0065");_ggccf .SetUISortOrder (99);_ggccf .SetSemiHidden (true );
+_ggccf .SetUnhideWhenUsed (true );_ggccf .X ().TblPr =_ec .NewCT_TblPrBase ();_cgcga :=NewTableWidth ();_ggccf .X ().TblPr .TblInd =_cgcga .X ();_cgcga .SetValue (0*_ga .Dxa );_ggccf .X ().TblPr .TblCellMar =_ec .NewCT_TblCellMar ();_cgcga =NewTableWidth ();
+_ggccf .X ().TblPr .TblCellMar .Top =_cgcga .X ();_cgcga .SetValue (0*_ga .Dxa );_cgcga =NewTableWidth ();_ggccf .X ().TblPr .TblCellMar .Bottom =_cgcga .X ();_cgcga .SetValue (0*_ga .Dxa );_cgcga =NewTableWidth ();_ggccf .X ().TblPr .TblCellMar .Left =_cgcga .X ();
+_cgcga .SetValue (108*_ga .Dxa );_cgcga =NewTableWidth ();_ggccf .X ().TblPr .TblCellMar .Right =_cgcga .X ();_cgcga .SetValue (108*_ga .Dxa );_edcgd :=_fgegf .AddStyle ("\u004e\u006f\u004c\u0069\u0073\u0074",_ec .ST_StyleTypeNumbering ,false );_edcgd .SetName ("\u004eo\u0020\u004c\u0069\u0073\u0074");
+_edcgd .SetUISortOrder (1);_edcgd .SetSemiHidden (true );_edcgd .SetUnhideWhenUsed (true );_gcbde :=[]_ga .Distance {16,13,12,11,11,11,11,11,11};_bcef :=[]_ga .Distance {240,40,40,40,40,40,40,40,40};for _cfbb :=0;_cfbb < 9;_cfbb ++{_cfbfa :=_cb .Sprintf ("\u0048e\u0061\u0064\u0069\u006e\u0067\u0025d",_cfbb +1);
+_eeeeg :=_fgegf .AddStyle (_cfbfa +"\u0043\u0068\u0061\u0072",_ec .ST_StyleTypeCharacter ,false );_eeeeg .SetName (_cb .Sprintf ("\u0048e\u0061d\u0069\u006e\u0067\u0020\u0025\u0064\u0020\u0043\u0068\u0061\u0072",_cfbb +1));_eeeeg .SetBasedOn (_gbbb .StyleID ());
+_eeeeg .SetLinkedStyle (_cfbfa );_eeeeg .SetUISortOrder (9+_cfbb );_eeeeg .RunProperties ().SetSize (_gcbde [_cfbb ]*_ga .Point );_fgabb :=_fgegf .AddStyle (_cfbfa ,_ec .ST_StyleTypeParagraph ,false );_fgabb .SetName (_cb .Sprintf ("\u0068\u0065\u0061\u0064\u0069\u006e\u0067\u0020\u0025\u0064",_cfbb +1));
+_fgabb .SetNextStyle (_agbgd .StyleID ());_fgabb .SetLinkedStyle (_fgabb .StyleID ());_fgabb .SetUISortOrder (9+_cfbb );_fgabb .SetPrimaryStyle (true );_fgabb .ParagraphProperties ().SetKeepNext (true );_fgabb .ParagraphProperties ().SetSpacing (_bcef [_cfbb ]*_ga .Twips ,0);
+_fgabb .ParagraphProperties ().SetOutlineLevel (_cfbb );_fgabb .RunProperties ().SetSize (_gcbde [_cfbb ]*_ga .Point );};};
+
+// Clear resets the numbering.
+func (_cefde Numbering )Clear (){_cefde ._fdea .AbstractNum =nil ;_cefde ._fdea .Num =nil ;_cefde ._fdea .NumIdMacAtCleanup =nil ;_cefde ._fdea .NumPicBullet =nil ;};
+
+// SetPicture sets the watermark picture.
+func (_afbbg *WatermarkPicture )SetPicture (imageRef _aee .ImageRef ){_cdbcbb :=imageRef .RelID ();_gcaeb :=_afbbg .getShape ();if _afbbg ._gbadf !=nil {_gebad :=_afbbg ._gbadf .ShapeChoice ;if len (_gebad )> 0&&_gebad [0].ShapeElementsChoice .Imagedata !=nil {_gebad [0].ShapeElementsChoice .Imagedata .IdAttr =&_cdbcbb ;
+};}else {_ddgd :=_afbbg .findNode (_gcaeb ,"\u0069m\u0061\u0067\u0065\u0064\u0061\u0074a");for _afbga ,_eabbd :=range _ddgd .Attrs {if _eabbd .Name .Local =="\u0069\u0064"{_ddgd .Attrs [_afbga ].Value =_cdbcbb ;};};};};func _geca (_aaag *_ec .CT_P ,_gddga map[string ]string ){for _ ,_bfbgb :=range _aaag .EG_PContent {if _bfbgb .PContentChoice .Hyperlink !=nil &&_bfbgb .PContentChoice .Hyperlink .IdAttr !=nil {if _eace ,_bffaa :=_gddga [*_bfbgb .PContentChoice .Hyperlink .IdAttr ];
+_bffaa {*_bfbgb .PContentChoice .Hyperlink .IdAttr =_eace ;};};};};
+
+// ParagraphProperties are the properties for a paragraph.
+type ParagraphProperties struct{_fdega *Document ;_bbdf *_ec .CT_PPr ;};
+
+// ParagraphProperties returns the paragraph style properties.
+func (_geafd Style )ParagraphProperties ()ParagraphStyleProperties {if _geafd ._ggbag .PPr ==nil {_geafd ._ggbag .PPr =_ec .NewCT_PPrGeneral ();};return ParagraphStyleProperties {_geafd ._ggbag .PPr };};
+
+// SetLeftPct sets the cell left margin
+func (_gcdc CellMargins )SetLeftPct (pct float64 ){_gcdc ._debg .Left =_ec .NewCT_TblWidth ();_gbe (_gcdc ._debg .Left ,pct );};func _bfdga (_badb *_ec .CT_P ,_dcae *_ec .CT_Hyperlink ,_efcf *TableInfo ,_bfa *DrawingInfo ,_fadb []*_ec .EG_PContent )[]TextItem {if len (_fadb )==0{return []TextItem {TextItem {Text :"",DrawingInfo :_bfa ,Paragraph :_badb ,Hyperlink :_dcae ,Run :nil ,TableInfo :_efcf }};
+};_fdbdf :=[]TextItem {};for _ ,_bbdb :=range _fadb {for _ ,_ceag :=range _bbdb .PContentChoice .FldSimple {if _ceag !=nil {_fdbdf =append (_fdbdf ,_bfdga (_badb ,_dcae ,_efcf ,_bfa ,_ceag .EG_PContent )...);};};if _acad :=_bbdb .PContentChoice .Hyperlink ;
+_acad !=nil {_fdbdf =append (_fdbdf ,_ddgce (_badb ,_acad ,_efcf ,_bfa ,_acad .PContentChoice .EG_ContentRunContent )...);};_fdbdf =append (_fdbdf ,_ddgce (_badb ,nil ,_efcf ,_bfa ,_bbdb .PContentChoice .EG_ContentRunContent )...);};return _fdbdf ;};
+
+// AddEndnoteReference adds a footnote reference to a run.
+func (_daag Run )AddEndnoteReference (){_abcg :=_daag .newIC ();_abcg .RunInnerContentChoice .EndnoteRef =&_ec .CT_Empty {};};func _ebeg (_fgdbb *Document ,_dbecd Paragraph )listItemInfo {if _fgdbb .Numbering .X ()==nil {return listItemInfo {};};if len (_fgdbb .Numbering .Definitions ())< 1{return listItemInfo {};
+};_badbd :=_eacaaf (_dbecd );if _badbd ==nil {return listItemInfo {};};_cgga :=_fgdbb .GetNumberingLevelByIds (_badbd .NumId .ValAttr ,_badbd .Ilvl .ValAttr );if _eedbe :=_cgga .X ();_eedbe ==nil {return listItemInfo {};};_dgea :=int64 (0);for _ ,_decde :=range _fgdbb .Numbering ._fdea .Num {if _decde !=nil &&_decde .NumIdAttr ==_badbd .NumId .ValAttr {_dgea =_decde .AbstractNumId .ValAttr ;
+};};return listItemInfo {FromParagraph :&_dbecd ,AbstractNumId :&_dgea ,NumberingLevel :&_cgga };};
+
+// SetFirstColumn controls the conditional formatting for the first column in a table.
+func (_adgfc TableLook )SetFirstColumn (on bool ){if !on {_adgfc ._cgfd .FirstColumnAttr =&_afe .ST_OnOff {};_adgfc ._cgfd .FirstColumnAttr .ST_OnOff1 =_afe .ST_OnOff1Off ;}else {_adgfc ._cgfd .FirstColumnAttr =&_afe .ST_OnOff {};_adgfc ._cgfd .FirstColumnAttr .ST_OnOff1 =_afe .ST_OnOff1On ;
+};};
+
+// SetAlignment sets the paragraph alignment
+func (_dbcc NumberingLevel )SetAlignment (j _ec .ST_Jc ){if j ==_ec .ST_JcUnset {_dbcc ._bgced .LvlJc =nil ;}else {_dbcc ._bgced .LvlJc =_ec .NewCT_Jc ();_dbcc ._bgced .LvlJc .ValAttr =j ;};};
+
+// SetFormat sets the numbering format.
+func (_aefa NumberingLevel )SetFormat (f _ec .ST_NumberFormat ){if _aefa ._bgced .NumFmt ==nil {_aefa ._bgced .NumFmt =_ec .NewCT_NumFmt ();};_aefa ._bgced .NumFmt .ValAttr =f ;};func (_adcfd *WatermarkPicture )getShape ()*_c .XSDAny {return _adcfd .getInnerElement ("\u0073\u0068\u0061p\u0065");
+};
+
+// Borders allows manipulation of the table borders.
+func (_gedg TableProperties )Borders ()TableBorders {if _gedg ._egdbb .TblBorders ==nil {_gedg ._egdbb .TblBorders =_ec .NewCT_TblBorders ();};return TableBorders {_gedg ._egdbb .TblBorders };};
+
+// X returns the inner wrapped XML type.
+func (_afeeb Footnote )X ()*_ec .CT_FtnEdn {return _afeeb ._decc };
+
+// Runs returns all of the runs in a paragraph.
+func (_febae Paragraph )Runs ()[]Run {_fcga :=[]Run {};for _ ,_dacfe :=range _febae ._fagb .EG_PContent {if _dacfe .PContentChoice .Hyperlink !=nil &&_dacfe .PContentChoice .Hyperlink .PContentChoice .EG_ContentRunContent !=nil {for _ ,_gfbd :=range _dacfe .PContentChoice .Hyperlink .PContentChoice .EG_ContentRunContent {if _gfbd .ContentRunContentChoice .R !=nil {_fcga =append (_fcga ,Run {_febae ._fafde ,_gfbd .ContentRunContentChoice .R });
+};};};for _ ,_bedce :=range _dacfe .PContentChoice .EG_ContentRunContent {if _bedce .ContentRunContentChoice .R !=nil {_fcga =append (_fcga ,Run {_febae ._fafde ,_bedce .ContentRunContentChoice .R });};if _bedce .ContentRunContentChoice .Sdt !=nil &&_bedce .ContentRunContentChoice .Sdt .SdtContent !=nil {for _ ,_afef :=range _bedce .ContentRunContentChoice .Sdt .SdtContent .EG_PContent {for _ ,_acead :=range _afef .PContentChoice .EG_ContentRunContent {if _acead .ContentRunContentChoice .R !=nil {_fcga =append (_fcga ,Run {_febae ._fafde ,_acead .ContentRunContentChoice .R });
+};};};};};};return _fcga ;};func (_eecg Endnote )id ()int64 {return _eecg ._ggcdg .IdAttr };
+
+// TableConditionalFormatting returns a conditional formatting object of a given
+// type.  Calling this method repeatedly will return the same object.
+func (_egfd Style )TableConditionalFormatting (typ _ec .ST_TblStyleOverrideType )TableConditionalFormatting {for _ ,_ddded :=range _egfd ._ggbag .TblStylePr {if _ddded .TypeAttr ==typ {return TableConditionalFormatting {_ddded };};};_cfgcg :=_ec .NewCT_TblStylePr ();
+_cfgcg .TypeAttr =typ ;_egfd ._ggbag .TblStylePr =append (_egfd ._ggbag .TblStylePr ,_cfgcg );return TableConditionalFormatting {_cfgcg };};func _agdde (_cfad *_cc .CT_Blip ,_dafc map[string ]string ){if _cfad .EmbedAttr !=nil {if _faccb ,_gdad :=_dafc [*_cfad .EmbedAttr ];
+_gdad {*_cfad .EmbedAttr =_faccb ;};};};
+
+// IgnoreSpaceBetweenParagraphOfSameStyle sets contextual spacing.
+func (_daca Paragraph )IgnoreSpaceBetweenParagraphOfSameStyle (){_daca .ensurePPr ();if _daca ._fagb .PPr .ContextualSpacing ==nil {_daca ._fagb .PPr .ContextualSpacing =_ec .NewCT_OnOff ();};_daca ._fagb .PPr .ContextualSpacing .ValAttr =&_afe .ST_OnOff {ST_OnOff1 :_afe .ST_OnOff1On };
+};
+
+// AddTable adds a table to the table cell.
+func (_gfff Cell )AddTable ()Table {_ecgd :=_ec .NewEG_BlockLevelElts ();_gfff ._eaff .EG_BlockLevelElts =append (_gfff ._eaff .EG_BlockLevelElts ,_ecgd );_fdbe :=_ec .NewEG_ContentBlockContent ();_ecgd .BlockLevelEltsChoice .EG_ContentBlockContent =append (_ecgd .BlockLevelEltsChoice .EG_ContentBlockContent ,_fdbe );
+_fda :=_ec .NewCT_Tbl ();_fdbe .ContentBlockContentChoice .Tbl =append (_fdbe .ContentBlockContentChoice .Tbl ,_fda );return Table {_gfff ._dfb ,_fda };};
+
+// HasComments checks if the document contains comments.
+func (_eafa *Document )HasComments ()bool {return _eafa ._cdc !=nil };
+
+// Comments get list of comments in the document.
+func (_dgcb *Document )Comments ()[]Comment {_ecac :=[]Comment {};for _ ,_faffd :=range _dgcb ._cdc .Comment {_ecac =append (_ecac ,Comment {_dgcb ,_faffd });};return _ecac ;};
+
+// AddHTML adds HTML text to a run.
+func (_cacfe Run )AddHTML (s string ){_fcde :=_ec .NewEG_RunInnerContent ();_cacfe ._aeef .EG_RunInnerContent =append (_cacfe ._aeef .EG_RunInnerContent ,_fcde );_fcde .RunInnerContentChoice .T =_ec .NewCT_Text ();if _c .NeedsSpacePreserve (s ){_cbbb :="\u0070\u0072\u0065\u0073\u0065\u0072\u0076\u0065";
+_fcde .RunInnerContentChoice .T .SpaceAttr =&_cbbb ;};_cgge :=_cacfe .parseHTMLTag (s );_fcde .RunInnerContentChoice .T .Content =_cgge ;};
+
+// IsBold returns true if the run has been set to bold.
+func (_abdb RunProperties )IsBold ()bool {return _abdb .BoldValue ()==OnOffValueOn };
+
+// SetBottomPct sets the cell bottom margin
+func (_ggc CellMargins )SetBottomPct (pct float64 ){_ggc ._debg .Bottom =_ec .NewCT_TblWidth ();_gbe (_ggc ._debg .Bottom ,pct );};func _ddgce (_dfgg *_ec .CT_P ,_edcc *_ec .CT_Hyperlink ,_gaaf *TableInfo ,_bagf *DrawingInfo ,_fgcb []*_ec .EG_ContentRunContent )[]TextItem {_gfba :=[]TextItem {};
+for _ ,_degff :=range _fgcb {if _bgff :=_degff .ContentRunContentChoice .Sdt ;_bgff !=nil {if _ebea :=_bgff .SdtContent ;_ebea !=nil {for _ ,_fbcfd :=range _ebea .EG_PContent {_gfba =append (_gfba ,_ddgce (_dfgg ,_edcc ,_gaaf ,_bagf ,_fbcfd .PContentChoice .EG_ContentRunContent )...);
+};};};if _cafd :=_degff .ContentRunContentChoice .R ;_cafd !=nil {_eafae :=_bc .NewBuffer ([]byte {});for _ ,_ffdc :=range _cafd .EG_RunInnerContent {if _ffdc .RunInnerContentChoice .Br !=nil {_eafae .WriteString ("\u000a");};if _ffdc .RunInnerContentChoice .Tab !=nil {_eafae .WriteString ("\u0009");
+};if _ffdc .RunInnerContentChoice .T !=nil {_eafae .WriteString (_ffdc .RunInnerContentChoice .T .Content );};if _ffdc .RunInnerContentChoice .Pict !=nil &&len (_ffdc .RunInnerContentChoice .Pict .Any )> 0{for _ ,_ddbc :=range _ffdc .RunInnerContentChoice .Pict .Any {if _cfae ,_gadec :=_ddbc .(*_ceg .Shape );
+_gadec {for _ ,_aceg :=range _cfae .ShapeChoice {if _gcef :=_aceg .ShapeElementsChoice .Textbox ;_gcef !=nil {if _gcef .TxbxContent !=nil {for _ ,_faffe :=range _gcef .TxbxContent .EG_BlockLevelElts {_gfba =append (_gfba ,_acfe (_faffe .BlockLevelEltsChoice .EG_ContentBlockContent ,nil )...);
+};};};};};};};};_gfba =append (_gfba ,TextItem {Text :_eafae .String (),DrawingInfo :_bagf ,Paragraph :_dfgg ,Hyperlink :_edcc ,Run :_cafd ,TableInfo :_gaaf });for _ ,_fceb :=range _cafd .Extra {if _gbdb ,_cedd :=_fceb .(*_ec .AlternateContentRun );_cedd {_acff :=&DrawingInfo {Drawing :_gbdb .Choice .Drawing };
+for _ ,_ddfad :=range _acff .Drawing .DrawingChoice {if _ddfad .Anchor ==nil {continue ;};for _ ,_bbbae :=range _ddfad .Anchor .Graphic .GraphicData .Any {if _fadbc ,_aaga :=_bbbae .(*_ec .WdWsp );_aaga {if _fadbc .WordprocessingShapeChoice1 !=nil {if _egdf :=_fadbc .SpPr ;
+_egdf !=nil {if _eece :=_egdf .Xfrm ;_eece !=nil {if _efe :=_eece .Ext ;_efe !=nil {_acff .Width =_efe .CxAttr ;_acff .Height =_efe .CyAttr ;};};};for _ ,_adfg :=range _fadbc .WordprocessingShapeChoice1 .Txbx .TxbxContent .EG_BlockLevelElts {for _ ,_fcbec :=range _adfg .BlockLevelEltsChoice .EG_ContentBlockContent {_gfba =append (_gfba ,_cadbb (_fcbec .ContentBlockContentChoice .P ,_gaaf ,_acff )...);
+};};};};};};};};};};return _gfba ;};
+
+// GetStyle returns string style of the text in watermark and format it to TextpathStyle.
+func (_gcddb *WatermarkText )GetStyle ()_af .TextpathStyle {_debga :=_gcddb .getShape ();if _gcddb ._eafca !=nil {_fgagb :=_gcddb ._eafca .ShapeChoice ;for _ ,_dbecf :=range _fgagb {if _dbecf .ShapeElementsChoice .Textpath !=nil {return _af .NewTextpathStyle (*_dbecf .ShapeElementsChoice .Textpath .StyleAttr );
+};};}else {_ddefe :=_gcddb .findNode (_debga ,"\u0074\u0065\u0078\u0074\u0070\u0061\u0074\u0068");for _ ,_fffb :=range _ddefe .Attrs {if _fffb .Name .Local =="\u0073\u0074\u0079l\u0065"{return _af .NewTextpathStyle (_fffb .Value );};};};return _af .NewTextpathStyle ("");
+};
+
+// SetAlignment set alignment of paragraph.
+func (_acbaa Paragraph )SetAlignment (alignment _ec .ST_Jc ){_acbaa .ensurePPr ();if _acbaa ._fagb .PPr .Jc ==nil {_acbaa ._fagb .PPr .Jc =_ec .NewCT_Jc ();};_acbaa ._fagb .PPr .Jc .ValAttr =alignment ;};
+
+// SetHeadingLevel sets a heading level and style based on the level to a
+// paragraph.  The default styles for a new unioffice document support headings
+// from level 1 to 8.
+func (_abgbb ParagraphProperties )SetHeadingLevel (idx int ){_abgbb .SetStyle (_cb .Sprintf ("\u0048e\u0061\u0064\u0069\u006e\u0067\u0025d",idx ));if _abgbb ._bbdf .NumPr ==nil {_abgbb ._bbdf .NumPr =_ec .NewCT_NumPr ();};_abgbb ._bbdf .NumPr .Ilvl =_ec .NewCT_DecimalNumber ();
+_abgbb ._bbdf .NumPr .Ilvl .ValAttr =int64 (idx );};
+
+// X returns the inner wrapped XML type.
+func (_ef AnchoredDrawing )X ()*_ec .WdAnchor {return _ef ._da };
+
+// TableConditionalFormatting controls the conditional formatting within a table
+// style.
+type TableConditionalFormatting struct{_abcbe *_ec .CT_TblStylePr };
+
+// Endnotes returns the endnotes defined in the document.
+func (_dada *Document )Endnotes ()[]Endnote {_fgf :=[]Endnote {};for _ ,_cbfc :=range _dada ._gdd .CT_Endnotes .Endnote {_fgf =append (_fgf ,Endnote {_dada ,_cbfc });};return _fgf ;};
+
+// SetReflectionImageEffect sets the reflection image effect.
+func (_add AnchoredDrawing )SetReflectionImageEffect (radius _ga .Distance ,opacity ,size float64 ){_bgf :=_ga .ToEMU (float64 (radius ));_bga :="\u002d1\u0030\u0030\u0030\u0030\u0030";for _ ,_bed :=range _add ._da .Graphic .GraphicData .Any {if _eaf ,_ed :=_bed .(*_bf .Pic );
+_ed {_add .initializeEffectList (_eaf .SpPr );_eaf .SpPr .EffectPropertiesChoice .EffectLst .Reflection =_cc .NewCT_ReflectionEffect ();_eaf .SpPr .EffectPropertiesChoice .EffectLst .Reflection .BlurRadAttr =&_bgf ;_eaf .SpPr .EffectPropertiesChoice .EffectLst .Reflection .AlgnAttr =_cc .ST_RectAlignmentBl ;
+_ceb :=false ;_eaf .SpPr .EffectPropertiesChoice .EffectLst .Reflection .RotWithShapeAttr =&_ceb ;_eaf .SpPr .EffectPropertiesChoice .EffectLst .Reflection .StAAttr =&_cc .ST_PositiveFixedPercentage {};_eaf .SpPr .EffectPropertiesChoice .EffectLst .Reflection .StAAttr .ST_PositiveFixedPercentageDecimal =_c .Int32 (int32 (opacity *1000));
+_eaf .SpPr .EffectPropertiesChoice .EffectLst .Reflection .EndPosAttr =&_cc .ST_PositiveFixedPercentage {};_eaf .SpPr .EffectPropertiesChoice .EffectLst .Reflection .EndPosAttr .ST_PositiveFixedPercentageDecimal =_c .Int32 (int32 (size *1000));_eaf .SpPr .EffectPropertiesChoice .EffectLst .Reflection .SyAttr =&_cc .ST_Percentage {};
+_eaf .SpPr .EffectPropertiesChoice .EffectLst .Reflection .SyAttr .ST_Percentage =&_bga ;};};_ ,_de :=_add .GetSize ();_de =_de *int64 (size )/100;_add .setEffectExtent (_de ,_bgf ,_bgf ,_bgf );};
+
+// Tables returns the tables defined in the header.
+func (_fbbf Header )Tables ()[]Table {_efab :=[]Table {};if _fbbf ._fgcdg ==nil {return nil ;};for _ ,_fdag :=range _fbbf ._fgcdg .EG_BlockLevelElts {for _ ,_aebb :=range _fdag .BlockLevelEltsChoice .EG_ContentBlockContent {_efab =append (_efab ,_fbbf ._fegd .tables (_aebb )...);
+};};return _efab ;};
+
+// SetKeepNext controls if the paragraph is kept with the next paragraph.
+func (_bcdag ParagraphStyleProperties )SetKeepNext (b bool ){if !b {_bcdag ._egfac .KeepNext =nil ;}else {_bcdag ._egfac .KeepNext =_ec .NewCT_OnOff ();};};
+
+// AddLevel adds a new numbering level to a NumberingDefinition.
+func (_fceda NumberingDefinition )AddLevel ()NumberingLevel {_gbac :=_ec .NewCT_Lvl ();_gbac .Start =&_ec .CT_DecimalNumber {ValAttr :1};_gbac .IlvlAttr =int64 (len (_fceda ._bgag .Lvl ));_fceda ._bgag .Lvl =append (_fceda ._bgag .Lvl ,_gbac );return NumberingLevel {_gbac };
+};func _adffe ()*_ceg .Formulas {_fdbea :=_ceg .NewFormulas ();_fdbea .F =[]*_ceg .CT_F {_af .CreateFormula ("\u0069\u0066 \u006c\u0069\u006e\u0065\u0044\u0072\u0061\u0077\u006e\u0020\u0070\u0069\u0078\u0065\u006c\u004c\u0069\u006e\u0065\u0057\u0069\u0064th\u0020\u0030"),_af .CreateFormula ("\u0073\u0075\u006d\u0020\u0040\u0030\u0020\u0031\u0020\u0030"),_af .CreateFormula ("\u0073\u0075\u006d\u0020\u0030\u0020\u0030\u0020\u0040\u0031"),_af .CreateFormula ("p\u0072\u006f\u0064\u0020\u0040\u0032\u0020\u0031\u0020\u0032"),_af .CreateFormula ("\u0070r\u006f\u0064\u0020\u0040\u0033\u0020\u0032\u0031\u0036\u0030\u0030 \u0070\u0069\u0078\u0065\u006c\u0057\u0069\u0064\u0074\u0068"),_af .CreateFormula ("\u0070r\u006f\u0064\u0020\u00403\u0020\u0032\u0031\u0036\u00300\u0020p\u0069x\u0065\u006c\u0048\u0065\u0069\u0067\u0068t"),_af .CreateFormula ("\u0073\u0075\u006d\u0020\u0040\u0030\u0020\u0030\u0020\u0031"),_af .CreateFormula ("p\u0072\u006f\u0064\u0020\u0040\u0036\u0020\u0031\u0020\u0032"),_af .CreateFormula ("\u0070r\u006f\u0064\u0020\u0040\u0037\u0020\u0032\u0031\u0036\u0030\u0030 \u0070\u0069\u0078\u0065\u006c\u0057\u0069\u0064\u0074\u0068"),_af .CreateFormula ("\u0073\u0075\u006d\u0020\u0040\u0038\u0020\u0032\u00316\u0030\u0030\u0020\u0030"),_af .CreateFormula ("\u0070r\u006f\u0064\u0020\u00407\u0020\u0032\u0031\u0036\u00300\u0020p\u0069x\u0065\u006c\u0048\u0065\u0069\u0067\u0068t"),_af .CreateFormula ("\u0073u\u006d \u0040\u0031\u0030\u0020\u0032\u0031\u0036\u0030\u0030\u0020\u0030")};
+return _fdbea ;};func _abaee ()*_ceg .OfcLock {_gafe :=_ceg .NewOfcLock ();_gafe .ExtAttr =_ceg .ST_ExtEdit ;_gafe .AspectratioAttr =_afe .ST_TrueFalseTrue ;return _gafe ;};
+
+// X returns the inner wrapped XML type.
+func (_dgeb Table )X ()*_ec .CT_Tbl {return _dgeb ._bbefb };
+
+// ParagraphStyleProperties is the styling information for a paragraph.
+type ParagraphStyleProperties struct{_egfac *_ec .CT_PPrGeneral };
+
+// GetWrapPathLineTo return wrapPath lineTo value.
+func (_fcd AnchorDrawWrapOptions )GetWrapPathLineTo ()[]*_cc .CT_Point2D {return _fcd ._deb };
+
+// NewWatermarkPicture generates new WatermarkPicture.
+func NewWatermarkPicture ()WatermarkPicture {_gaec :=_ceg .NewShapetype ();_fbedg :=_adffe ();_fgfed :=_ecdfc ();_aebfe :=_abaee ();_gaec .EG_ShapeElements =[]*_ceg .EG_ShapeElements {{ShapeElementsChoice :&_ceg .EG_ShapeElementsChoice {Formulas :_fbedg }},{ShapeElementsChoice :&_ceg .EG_ShapeElementsChoice {Path :_fgfed }},{ShapeElementsChoice :&_ceg .EG_ShapeElementsChoice {Lock :_aebfe }}};
+var (_gagfg ="\u005f\u0078\u0030\u0030\u0030\u0030\u005f\u0074\u0037\u0035";_gbfbf ="2\u0031\u0036\u0030\u0030\u002c\u0032\u0031\u0036\u0030\u0030";_abbdf =float32 (75.0);_beeb ="\u006d\u0040\u0034\u00405l\u0040\u0034\u0040\u0031\u0031\u0040\u0039\u0040\u0031\u0031\u0040\u0039\u0040\u0035x\u0065";
+);_gaec .IdAttr =&_gagfg ;_gaec .CoordsizeAttr =&_gbfbf ;_gaec .SptAttr =&_abbdf ;_gaec .PreferrelativeAttr =_afe .ST_TrueFalseTrue ;_gaec .PathAttr =&_beeb ;_gaec .FilledAttr =_afe .ST_TrueFalseFalse ;_gaec .StrokedAttr =_afe .ST_TrueFalseFalse ;_edbgg :=_ceg .NewShape ();
+_edbgg .ShapeChoice =[]*_ceg .CT_ShapeChoice {{ShapeElementsChoice :&_ceg .EG_ShapeElementsChoice {Imagedata :_baddc ()}}};var (_acfdb ="\u0057\u006f\u0072\u0064\u0050\u0069\u0063\u0074\u0075\u0072e\u0057\u0061\u0074\u0065\u0072\u006d\u0061r\u006b\u0031\u0036\u0033\u0032\u0033\u0031\u0036\u0035\u0039\u0035";
+_acbd ="\u005f\u0078\u00300\u0030\u0030\u005f\u0073\u0032\u0030\u0035\u0031";_bfab ="#\u005f\u0078\u0030\u0030\u0030\u0030\u005f\u0074\u0037\u0035";_cgdeg ="";_fbgb ="\u0070os\u0069t\u0069o\u006e\u003a\u0061\u0062\u0073\u006fl\u0075\u0074\u0065\u003bm\u0061\u0072\u0067\u0069\u006e\u002d\u006c\u0065\u0066\u0074\u003a\u0030\u003bma\u0072\u0067\u0069\u006e\u002d\u0074\u006f\u0070\u003a\u0030\u003b\u0077\u0069\u0064\u0074\u0068\u003a\u0030\u0070\u0074;\u0068e\u0069\u0067\u0068\u0074\u003a\u0030\u0070\u0074\u003b\u007a\u002d\u0069\u006ed\u0065\u0078:\u002d\u0032\u00351\u0036\u0035\u0038\u0032\u0034\u0030\u003b\u006d\u0073o-\u0070\u006f\u0073i\u0074\u0069\u006f\u006e-\u0068\u006f\u0072\u0069\u007a\u006fn\u0074\u0061l\u003a\u0063\u0065\u006e\u0074\u0065\u0072\u003bm\u0073\u006f\u002d\u0070\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u002d\u0068\u006f\u0072\u0069\u007a\u006f\u006e\u0074\u0061\u006c\u002drela\u0074\u0069\u0076\u0065\u003a\u006d\u0061\u0072\u0067\u0069\u006e\u003b\u006d\u0073\u006f\u002d\u0070\u006f\u0073\u0069\u0074\u0069\u006f\u006e\u002d\u0076\u0065\u0072t\u0069c\u0061l\u003a\u0063\u0065\u006e\u0074\u0065\u0072\u003b\u006d\u0073\u006f\u002d\u0070\u006f\u0073\u0069\u0074\u0069\u006f\u006e-\u0076\u0065r\u0074\u0069c\u0061l\u002d\u0072\u0065\u006c\u0061\u0074i\u0076\u0065\u003a\u006d\u0061\u0072\u0067\u0069\u006e";
+);_edbgg .IdAttr =&_acfdb ;_edbgg .SpidAttr =&_acbd ;_edbgg .TypeAttr =&_bfab ;_edbgg .AltAttr =&_cgdeg ;_edbgg .StyleAttr =&_fbgb ;_edbgg .AllowincellAttr =_afe .ST_TrueFalseFalse ;_cbfbc :=_ec .NewCT_Picture ();_cbfbc .Any =[]_c .Any {_gaec ,_edbgg };
+return WatermarkPicture {_gfgcg :_cbfbc ,_gbadf :_edbgg ,_cdfdc :_gaec };};
+
+// SetHAlignment sets the horizontal alignment for an anchored image.
+func (_bd AnchoredDrawing )SetHAlignment (h _ec .WdST_AlignH ){_bd ._da .PositionH .PosHChoice =&_ec .WdCT_PosHChoice {};_bd ._da .PositionH .PosHChoice .Align =h ;};
+
+// RemoveTable remove table element from document.
+func (_fgbc *Document )RemoveTable (tbl Table ){if _fgbc ._dgg .Body ==nil {return ;};for _ ,_baaf :=range _fgbc ._dgg .Body .EG_BlockLevelElts {for _ ,_abg :=range _baaf .BlockLevelEltsChoice .EG_ContentBlockContent {for _cacb ,_eade :=range _abg .ContentBlockContentChoice .Tbl {if _eade ==tbl ._bbefb {copy (_abg .ContentBlockContentChoice .Tbl [_cacb :],_abg .ContentBlockContentChoice .Tbl [_cacb +1:]);
+_abg .ContentBlockContentChoice .Tbl =_abg .ContentBlockContentChoice .Tbl [0:len (_abg .ContentBlockContentChoice .Tbl )-1];return ;};};if _abg .ContentBlockContentChoice .Sdt !=nil &&_abg .ContentBlockContentChoice .Sdt .SdtContent !=nil {for _ ,_gdfe :=range _abg .ContentBlockContentChoice .Sdt .SdtContent .EG_ContentBlockContent {if _gdfe .ContentBlockContentChoice .P !=nil {for _fbf ,_dcbd :=range _gdfe .ContentBlockContentChoice .Tbl {if _dcbd ==tbl ._bbefb {copy (_abg .ContentBlockContentChoice .Tbl [_fbf :],_abg .ContentBlockContentChoice .Tbl [_fbf +1:]);
+_abg .ContentBlockContentChoice .Tbl =_abg .ContentBlockContentChoice .Tbl [0:len (_abg .ContentBlockContentChoice .Tbl )-1];return ;};};};};};};};};
+
+// ExtractText returns text from the document as a DocText object.
+func (_dgcfb *Document )ExtractText ()*DocText {_fbfa :=[]TextItem {};for _ ,_ecff :=range _dgcfb ._dgg .Body .EG_BlockLevelElts {_fbfa =append (_fbfa ,_acfe (_ecff .BlockLevelEltsChoice .EG_ContentBlockContent ,nil )...);};var _ecffd []listItemInfo ;_adcb :=_dgcfb .Paragraphs ();
+for _ ,_fcead :=range _adcb {_gaeb :=_ebeg (_dgcfb ,_fcead );_ecffd =append (_ecffd ,_gaeb );};_ffbaf :=_gbdg (_dgcfb );return &DocText {Items :_fbfa ,_faeb :_ecffd ,_edea :_ffbaf };};
+
+// CellBorders are the borders for an individual
+type CellBorders struct{_gda *_ec .CT_TcBorders };
+
+// ComplexSizeValue returns the value of run font size for complex fonts in points.
+func (_bcec RunProperties )ComplexSizeValue ()float64 {if _adga :=_bcec ._bffab .SzCs ;_adga !=nil {_baea :=_adga .ValAttr ;if _baea .ST_UnsignedDecimalNumber !=nil {return float64 (*_baea .ST_UnsignedDecimalNumber )/2;};};return 0.0;};
+
+// SetLineSpacing sets the spacing between lines in a paragraph.
+func (_fgfcg Paragraph )SetLineSpacing (d _ga .Distance ,rule _ec .ST_LineSpacingRule ){_fgfcg .ensurePPr ();if _fgfcg ._fagb .PPr .Spacing ==nil {_fgfcg ._fagb .PPr .Spacing =_ec .NewCT_Spacing ();};_ddab :=_fgfcg ._fagb .PPr .Spacing ;if rule ==_ec .ST_LineSpacingRuleUnset {_ddab .LineRuleAttr =_ec .ST_LineSpacingRuleUnset ;
+_ddab .LineAttr =nil ;}else {_ddab .LineRuleAttr =rule ;_ddab .LineAttr =&_ec .ST_SignedTwipsMeasure {};_ddab .LineAttr .Int64 =_c .Int64 (int64 (d /_ga .Twips ));};};
+
+// GetColor returns the color.Color object representing the run color.
+func (_eagb RunProperties )GetColor ()_gc .Color {if _dgabg :=_eagb ._bffab .Color ;_dgabg !=nil {_cdafb :=_dgabg .ValAttr ;if _cdafb .ST_HexColorRGB !=nil {return _gc .FromHex (*_cdafb .ST_HexColorRGB );};};return _gc .Color {};};
+
+// FindNodeByStyleName return slice of node base on style name.
+func (_cbdge *Nodes )FindNodeByStyleName (styleName string )[]Node {_cece :=[]Node {};for _ ,_egbe :=range _cbdge ._adac {switch _gedb :=_egbe ._becg .(type ){case *Paragraph :if _gedb !=nil {if _bgcd ,_ffbc :=_egbe ._ecce .Styles .SearchStyleByName (styleName );
+_ffbc {_aecb :=_gedb .Style ();if _aecb ==_bgcd .StyleID (){_cece =append (_cece ,_egbe );};};};case *Table :if _gedb !=nil {if _deeb ,_accbf :=_egbe ._ecce .Styles .SearchStyleByName (styleName );_accbf {_dbdge :=_gedb .Style ();if _dbdge ==_deeb .StyleID (){_cece =append (_cece ,_egbe );
+};};};};_aeff :=Nodes {_adac :_egbe .Children };_cece =append (_cece ,_aeff .FindNodeByStyleName (styleName )...);};return _cece ;};func (_ggcf *Document )reorderFootnote (){_dbec :=int64 (1);_abc :=map[int64 ]int64 {};for _ ,_aggad :=range _ggcf ._dcba .Footnote {switch _aggad .TypeAttr {case _ec .ST_FtnEdnSeparator :_aggad .IdAttr =-1;
+break ;case _ec .ST_FtnEdnContinuationSeparator :_aggad .IdAttr =0;break ;default:_abc [_aggad .IdAttr ]=_dbec ;_aggad .IdAttr =_dbec ;_dbec ++;};};for _ ,_bdad :=range _ggcf .Paragraphs (){for _ ,_gedc :=range _bdad .Runs (){if _ebge ,_adae :=_gedc .IsFootnote ();
+_ebge {_gedc .X ().EG_RunInnerContent [0].RunInnerContentChoice .FootnoteReference .IdAttr =_abc [_adae ];};};};};
+
+// GetHeaderFooterImageObjByRelId returns a common.Image with the associated relation ID in the
+// document, its header or footer.
+func (_gcfc *Document )GetHeaderFooterImageObjByRelId (relId string ,isHeader ,isFooter bool )(_aee .Image ,error ){_cebc :="";if isHeader {for _ ,_gabdg :=range _gcfc ._feb {if _cebc !=""{break ;};_cebc =_gabdg .GetTargetByRelIdAndType (relId ,_c .ImageType );
+};};if isFooter &&_cebc ==""{for _ ,_ebffg :=range _gcfc ._cef {if _cebc !=""{break ;};_cebc =_ebffg .GetTargetByRelIdAndType (relId ,_c .ImageType );};};if _cebc ==""{_cebc =_gcfc ._cbaa .GetTargetByRelIdAndType (relId ,_c .ImageType );};return _gcfc .DocBase .GetImageBytesByTarget (_cebc );
+};
+
+// MailMerge finds mail merge fields and replaces them with the text provided.  It also removes
+// the mail merge source info from the document settings.
+func (_efcfd *Document )MailMerge (mergeContent map[string ]string ){_fcfeb :=_efcfd .mergeFields ();_afff :=map[Paragraph ][]Run {};for _ ,_egce :=range _fcfeb {_fdgf ,_bbed :=mergeContent [_egce ._ecgeg ];if _bbed {if _egce ._ccfg {_fdgf =_ce .ToUpper (_fdgf );
+}else if _egce ._agddc {_fdgf =_ce .ToLower (_fdgf );}else if _egce ._aacee {_fdgf =_ce .Title (_fdgf );}else if _egce ._bgbfb {_gceee :=_bc .Buffer {};for _cegd ,_facca :=range _fdgf {if _cegd ==0{_gceee .WriteRune (_bg .ToUpper (_facca ));}else {_gceee .WriteRune (_facca );
+};};_fdgf =_gceee .String ();};if _fdgf !=""&&_egce ._fbbff !=""{_fdgf =_egce ._fbbff +_fdgf ;};if _fdgf !=""&&_egce ._acadb !=""{_fdgf =_fdgf +_egce ._acadb ;};};if _egce ._dbebb {if len (_egce ._acaa .PContentChoice .FldSimple )==1&&len (_egce ._acaa .PContentChoice .FldSimple [0].EG_PContent )==1&&len (_egce ._acaa .PContentChoice .FldSimple [0].EG_PContent [0].PContentChoice .EG_ContentRunContent )==1{_edfca :=_ec .NewEG_ContentRunContent ();
+_edfca .ContentRunContentChoice .R =_egce ._acaa .PContentChoice .FldSimple [0].EG_PContent [0].PContentChoice .EG_ContentRunContent [0].ContentRunContentChoice .R ;_egce ._acaa .PContentChoice .FldSimple =nil ;_acbbc :=Run {_efcfd ,_edfca .ContentRunContentChoice .R };
+_acbbc .ClearContent ();_acbbc .AddText (_fdgf );_egce ._acaa .PContentChoice .EG_ContentRunContent =append (_egce ._acaa .PContentChoice .EG_ContentRunContent ,_edfca );};}else {_cdbe :=_egce ._bbca .Runs ();for _adfa :=_egce ._ecacd ;_adfa <=_egce ._dfade ;
+_adfa ++{if _adfa ==_egce ._abcc +1{_cdbe [_adfa ].ClearContent ();_cdbe [_adfa ].AddText (_fdgf );}else {_afff [_egce ._bbca ]=append (_afff [_egce ._bbca ],_cdbe [_adfa ]);};};};};for _dbeea ,_agfga :=range _afff {for _ ,_gcbe :=range _agfga {_dbeea .RemoveRun (_gcbe );
+};};_efcfd .Settings .RemoveMailMerge ();};func (_aab AnchoredDrawing )initializeEffectList (_fbe *_cc .CT_ShapeProperties ){if _fbe .EffectPropertiesChoice ==nil {_fbe .EffectPropertiesChoice =_cc .NewEG_EffectPropertiesChoice ();};if _fbe .EffectPropertiesChoice .EffectLst ==nil {_fbe .EffectPropertiesChoice .EffectLst =_cc .NewCT_EffectList ();
+};};func (_cdbcb Paragraph )addBeginFldChar (_gfcb string )*_ec .CT_FFData {_bdebf :=_cdbcb .addFldChar ();_bdebf .FldCharTypeAttr =_ec .ST_FldCharTypeBegin ;if _bdebf .FldCharChoice ==nil {_bdebf .FldCharChoice =_ec .NewCT_FldCharChoice ();};_bdebf .FldCharChoice .FfData =_ec .NewCT_FFData ();
+_fcbc :=_ec .NewCT_FFName ();_fcbc .ValAttr =&_gfcb ;_bdebf .FldCharChoice .FfData .FFDataChoice =[]*_ec .CT_FFDataChoice {&_ec .CT_FFDataChoice {Name :_fcbc }};return _bdebf .FldCharChoice .FfData ;};
+
+// AddTextInput adds text input form field to the paragraph and returns it.
+func (_ffeb Paragraph )AddTextInput (name string )FormField {_cebf :=_ffeb .addFldCharsForField (name ,"\u0046\u004f\u0052\u004d\u0054\u0045\u0058\u0054");_cebf ._dcbfb .FFDataChoice [0].TextInput =_ec .NewCT_FFTextInput ();return _cebf ;};func (_ece *Document )onNewRelationship (_abed *_ba .DecodeMap ,_deae ,_bcgb string ,_agae []*_gf .File ,_dbdc *_ae .Relationship ,_dgbb _ba .Target )error {_bfffb :=_c .DocTypeDocument ;
+switch _bcgb {case _c .OfficeDocumentType ,_c .OfficeDocumentTypeStrict :_ece ._dgg =_ec .NewDocument ();_abed .AddTarget (_deae ,_ece ._dgg ,_bcgb ,0);_abed .AddTarget (_ba .RelationsPathFor (_deae ),_ece ._cbaa .X (),_bcgb ,0);_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,0);
+case _c .CorePropertiesType :_abed .AddTarget (_deae ,_ece .CoreProperties .X (),_bcgb ,0);_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,0);case _c .CorePropertiesAltType :_abed .AddTarget (_deae ,_ece .CoreProperties .X (),_c .CorePropertiesType ,0);
+_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_c .CorePropertiesType ,0);case _c .CustomPropertiesType :_abed .AddTarget (_deae ,_ece .CustomProperties .X (),_bcgb ,0);_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,0);
+case _c .ExtendedPropertiesType ,_c .ExtendedPropertiesTypeStrict :_abed .AddTarget (_deae ,_ece .AppProperties .X (),_bcgb ,0);_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,0);case _c .ThumbnailType ,_c .ThumbnailTypeStrict :for _gfgf ,_bedf :=range _agae {if _bedf ==nil {continue ;
+};if _bedf .Name ==_deae {_dcag ,_eegf :=_bedf .Open ();if _eegf !=nil {return _cb .Errorf ("e\u0072\u0072\u006f\u0072\u0020\u0072e\u0061\u0064\u0069\u006e\u0067\u0020\u0074\u0068\u0075m\u0062\u006e\u0061i\u006c:\u0020\u0025\u0073",_eegf );};_ece .Thumbnail ,_ ,_eegf =_f .Decode (_dcag );
+_dcag .Close ();if _eegf !=nil {return _cb .Errorf ("\u0065\u0072\u0072\u006fr\u0020\u0064\u0065\u0063\u006f\u0064\u0069\u006e\u0067\u0020t\u0068u\u006d\u0062\u006e\u0061\u0069\u006c\u003a \u0025\u0073",_eegf );};_agae [_gfgf ]=nil ;};};case _c .SettingsType ,_c .SettingsTypeStrict :_abed .AddTarget (_deae ,_ece .Settings .X (),_bcgb ,0);
+_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,0);case _c .NumberingType ,_c .NumberingTypeStrict :_ece .Numbering =NewNumbering ();_abed .AddTarget (_deae ,_ece .Numbering .X (),_bcgb ,0);_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,0);
+case _c .StylesType ,_c .StylesTypeStrict :_ece .Styles .Clear ();_abed .AddTarget (_deae ,_ece .Styles .X (),_bcgb ,0);_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,0);case _c .HeaderType ,_c .HeaderTypeStrict :_eadea :=_ec .NewHdr ();
+_abed .AddTarget (_deae ,_eadea ,_bcgb ,uint32 (len (_ece ._ace )));_ece ._ace =append (_ece ._ace ,_eadea );_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,len (_ece ._ace ));_adfca :=_aee .NewRelationships ();_abed .AddTarget (_ba .RelationsPathFor (_deae ),_adfca .X (),_bcgb ,0);
+_ece ._feb =append (_ece ._feb ,_adfca );case _c .FooterType ,_c .FooterTypeStrict :_fedeg :=_ec .NewFtr ();_abed .AddTarget (_deae ,_fedeg ,_bcgb ,uint32 (len (_ece ._ddbf )));_ece ._ddbf =append (_ece ._ddbf ,_fedeg );_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,len (_ece ._ddbf ));
+_ggfe :=_aee .NewRelationships ();_abed .AddTarget (_ba .RelationsPathFor (_deae ),_ggfe .X (),_bcgb ,0);_ece ._cef =append (_ece ._cef ,_ggfe );case _c .ThemeType ,_c .ThemeTypeStrict :_bbdd :=_cc .NewTheme ();_abed .AddTarget (_deae ,_bbdd ,_bcgb ,uint32 (len (_ece ._aeeb )));
+_ece ._aeeb =append (_ece ._aeeb ,_bbdd );_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,len (_ece ._aeeb ));case _c .WebSettingsType ,_c .WebSettingsTypeStrict :_ece ._dcb =_ec .NewWebSettings ();_abed .AddTarget (_deae ,_ece ._dcb ,_bcgb ,0);
+_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,0);case _c .FontTableType ,_c .FontTableTypeStrict :_ece ._gabd =_ec .NewFonts ();_abed .AddTarget (_deae ,_ece ._gabd ,_bcgb ,0);_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,0);
+case _c .FontEmbeddingType :_baba :=_aee .NewRelationships ();_abed .AddTarget (_ba .RelationsPathFor (_deae ),_baba .X (),_bcgb ,0);_ece ._beaa =_baba ;case _c .EndNotesType ,_c .EndNotesTypeStrict :_ece ._gdd =_ec .NewEndnotes ();_abed .AddTarget (_deae ,_ece ._gdd ,_bcgb ,0);
+_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,0);case _c .FootNotesType ,_c .FootNotesTypeStrict :_ece ._dcba =_ec .NewFootnotes ();_abed .AddTarget (_deae ,_ece ._dcba ,_bcgb ,0);_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,0);
+case _c .CommentsType :_ece ._cdc =_ec .NewComments ();_abed .AddTarget (_deae ,_ece ._cdc ,_bcgb ,0);_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,0);case _c .ImageType ,_c .ImageTypeStrict :var _ggcg _aee .ImageRef ;for _cabfc ,_cgfg :=range _agae {if _cgfg ==nil {continue ;
+};_efbe :=_ce .TrimPrefix (_cgfg .Name ,"\u0077\u006f\u0072d\u002f");if _cbga :=_ce .TrimPrefix (_deae ,"\u0077\u006f\u0072d\u002f");_efbe ==_cbga {_ffde ,_dbdd :=_ba .ExtractToDiskTmp (_cgfg ,_ece .TmpPath );if _dbdd !=nil {return _dbdd ;};_dacbd :=_agf .Ext (_cgfg .Name );
+_dge :=_aee .Image {};if _dacbd [1:]!="\u0065\u006d\u0066"{_badee ,_caggc :=_aee .ImageFromStorage (_ffde );if _caggc !=nil {return _caggc ;};_dge =_badee ;}else {_dge .Path =_ffde ;};_dge .Format =_dacbd [1:];_ggcg =_aee .MakeImageRef (_dge ,&_ece .DocBase ,_ece ._cbaa );
+_agae [_cabfc ]=nil ;};};if _ggcg .Format ()!=""{_cbbe :="\u002e"+_ce .ToLower (_ggcg .Format ());_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,len (_ece .Images )+1);if _dgda :=_agf .Ext (_dbdc .TargetAttr );_dgda !=_cbbe {_dbdc .TargetAttr =_dbdc .TargetAttr [0:len (_dbdc .TargetAttr )-len (_dgda )]+_cbbe ;
+};_ggcg .SetTarget ("\u0077\u006f\u0072d\u002f"+_dbdc .TargetAttr );_ece .Images =append (_ece .Images ,_ggcg );};case _c .ControlType ,_c .ControlTypeStrict :_daad :=_bb .NewOcx ();_bdbf :=_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,len (_ece ._fff )+1);
+_gddg :="\u0077\u006f\u0072d\u002f"+_bdbf [:len (_bdbf )-4]+"\u002e\u0062\u0069\u006e";for _gcba ,_fcg :=range _agae {if _fcg ==nil {continue ;};if _fcg .Name ==_gddg {_egdc ,_abce :=_ba .ExtractToDiskTmp (_fcg ,_ece .TmpPath );if _abce !=nil {return _abce ;
+};_ggeag ,_abce :=_ge .ImportFromFile (_egdc );if _abce ==nil {_ggeag .TargetAttr =_bdbf ;_ggeag .Ocx =_daad ;_ece ._fff =append (_ece ._fff ,_ggeag );_abed .AddTarget (_deae ,_daad ,_bcgb ,uint32 (len (_ece ._fff )));_dbdc .TargetAttr =_bdbf ;_agae [_gcba ]=nil ;
+}else {_be .Log .Debug ("c\u0061\u006e\u006e\u006f\u0074\u0020r\u0065\u0061\u0064\u0020\u0062\u0069\u006e\u0020\u0066i\u006c\u0065\u003a \u0025s\u0020\u0025\u0073",_gddg ,_abce .Error ());};break ;};};case _c .ChartType :_gec :=chart {_fdfc :_bee .NewChartSpace ()};
+_bffb :=uint32 (len (_ece ._bgbe ));_abed .AddTarget (_deae ,_gec ._fdfc ,_bcgb ,_bffb );_ece ._bgbe =append (_ece ._bgbe ,&_gec );_dbdc .TargetAttr =_c .RelativeFilename (_bfffb ,_dgbb .Typ ,_bcgb ,len (_ece ._bgbe ));_gec ._gdg =_dbdc .TargetAttr ;default:_be .Log .Debug ("\u0075\u006e\u0073\u0075\u0070p\u006f\u0072\u0074\u0065\u0064\u0020\u0072\u0065\u006c\u0061\u0074\u0069\u006fn\u0073\u0068\u0069\u0070\u0020\u0074\u0079\u0070\u0065\u003a\u0020\u0025\u0073\u0020\u0074\u0067\u0074\u003a\u0020\u0025\u0073",_bcgb ,_deae );
+};return nil ;};
+
+// Append appends a document d0 to a document d1. All settings, headers and footers remain the same as in the document d0 if they exist there, otherwise they are taken from the d1.
+func (_gbcc *Document )Append (d1orig *Document )error {_afdgg ,_agcc :=d1orig .Copy ();if _agcc !=nil {return _agcc ;};_gbcc .DocBase =_gbcc .DocBase .Append (_afdgg .DocBase );if _afdgg ._dgg .ConformanceAttr !=_afe .ST_ConformanceClassStrict {_gbcc ._dgg .ConformanceAttr =_afdgg ._dgg .ConformanceAttr ;
+};_dabc :=_gbcc ._cbaa .X ().Relationship ;_cagb :=_afdgg ._cbaa .X ().Relationship ;_acfgd :=_afdgg ._dgg .Body ;_dafef :=map[string ]string {};_bdbd :=map[int64 ]int64 {};_bfbe :=map[int64 ]int64 {};for _ ,_bedfc :=range _cagb {_geae :=true ;_eedc :=_bedfc .IdAttr ;
+_cfgg :=_bedfc .TargetAttr ;_agaa :=_bedfc .TypeAttr ;_ceca :=_agaa ==_c .ImageType ;_cabe :=_agaa ==_c .HyperLinkType ;var _ebcd string ;for _ ,_edbf :=range _dabc {if _edbf .TypeAttr ==_agaa &&_edbf .TargetAttr ==_cfgg {_geae =false ;_ebcd =_edbf .IdAttr ;
+break ;};};if _ceca {_bbgd :="\u0077\u006f\u0072d\u002f"+_cfgg ;for _ ,_eabdc :=range _afdgg .Images {if _eabdc .Target ()==_bbgd {_fcae ,_abeda :=_aee .ImageFromStorage (_eabdc .Path ());if _abeda !=nil {return _abeda ;};_cgbde ,_abeda :=_gbcc .AddImage (_fcae );
+if _abeda !=nil {return _abeda ;};_ebcd =_cgbde .RelID ();break ;};};}else if _geae {if _cabe {_dfad :=_gbcc ._cbaa .AddHyperlink (_cfgg );_ebcd =_aee .Relationship (_dfad ).ID ();}else {_ddfa :=_gbcc ._cbaa .AddRelationship (_cfgg ,_agaa );_ebcd =_ddfa .X ().IdAttr ;
+};};if _eedc !=_ebcd {_dafef [_eedc ]=_ebcd ;};};if _acfgd .SectPr !=nil {for _ ,_aggg :=range _acfgd .SectPr .EG_HdrFtrReferences {if _aggg .HdrFtrReferencesChoice .HeaderReference !=nil {if _ccga ,_cddc :=_dafef [_aggg .HdrFtrReferencesChoice .HeaderReference .IdAttr ];
+_cddc {_aggg .HdrFtrReferencesChoice .HeaderReference .IdAttr =_ccga ;_gbcc ._feb =append (_gbcc ._feb ,_aee .NewRelationships ());};}else if _aggg .HdrFtrReferencesChoice .FooterReference !=nil {if _gaf ,_edfc :=_dafef [_aggg .HdrFtrReferencesChoice .FooterReference .IdAttr ];
+_edfc {_aggg .HdrFtrReferencesChoice .FooterReference .IdAttr =_gaf ;_gbcc ._cef =append (_gbcc ._cef ,_aee .NewRelationships ());};};};};_ebdf ,_effd :=_gbcc ._gdd ,_afdgg ._gdd ;if _ebdf !=nil {if _effd !=nil {if _ebdf .Endnote !=nil {if _effd .Endnote !=nil {_fdbd :=int64 (len (_ebdf .Endnote )+1);
+for _ ,_bdece :=range _effd .Endnote {_ebffa :=_bdece .IdAttr ;if _ebffa > 0{_bdece .IdAttr =_fdbd ;_ebdf .Endnote =append (_ebdf .Endnote ,_bdece );_bfbe [_ebffa ]=_fdbd ;_fdbd ++;};};};}else {_ebdf .Endnote =_effd .Endnote ;};};}else if _effd !=nil {_ebdf =_effd ;
+};_gbcc ._gdd =_ebdf ;_dddc ,_bafe :=_gbcc ._dcba ,_afdgg ._dcba ;if _dddc !=nil {if _bafe !=nil {if _dddc .Footnote !=nil {if _bafe .Footnote !=nil {_fgdb :=int64 (len (_dddc .Footnote )+1);for _ ,_faeef :=range _bafe .Footnote {_febb :=_faeef .IdAttr ;
+if _febb > 0{_faeef .IdAttr =_fgdb ;_dddc .Footnote =append (_dddc .Footnote ,_faeef );_bdbd [_febb ]=_fgdb ;_fgdb ++;};};};}else {_dddc .Footnote =_bafe .Footnote ;};};}else if _bafe !=nil {_dddc =_bafe ;};_gbcc ._dcba =_dddc ;for _ ,_aadd :=range _acfgd .EG_BlockLevelElts {for _ ,_cbbgc :=range _aadd .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_gfcf :=range _cbbgc .ContentBlockContentChoice .P {_fbaaf (_gfcf ,_dafef );
+_geca (_gfcf ,_dafef );_agdf (_gfcf ,_bdbd ,_bfbe );};for _ ,_accb :=range _cbbgc .ContentBlockContentChoice .Tbl {_aef (_accb ,_dafef );_fggb (_accb ,_dafef );_daade (_accb ,_bdbd ,_bfbe );};};};if _gbcc ._dgg .Body .SectPr ==nil {if _afdgg ._dgg .Body .SectPr !=nil {_ggga :=_gbcc .AddParagraph ();
+_acfd :=_ggga .Properties ();_bbgb :=_acfd .AddSection (_ec .ST_SectionMarkUnset );_bbgb .SetPageSizeAndOrientation (_aee .PageSizeLetter [0],_aee .PageSizeLetter [1],_ec .ST_PageOrientationPortrait );if _afdgg ._dgg .Body .SectPr .PgMar !=nil {_bbgb ._gcebe .PgMar =_afdgg ._dgg .Body .SectPr .PgMar ;
+};if _afdgg ._dgg .Body .SectPr .Cols !=nil {_bbgb ._gcebe .Cols =_afdgg ._dgg .Body .SectPr .Cols ;};};}else {_dgff :=_gbcc .AddParagraph ();_bgdg :=_dgff .Properties ();_dfcd :=_bgdg .AddSection (_ec .ST_SectionMarkUnset );_gecb :=_dfcd .X ();*_gecb =*_gbcc ._dgg .Body .SectPr ;
+_gbcc ._dgg .Body .SectPr =nil ;};_gbcc ._dgg .Body .SectPr =_afdgg ._dgg .Body .SectPr ;_gbcc ._dgg .Body .EG_BlockLevelElts =append (_gbcc ._dgg .Body .EG_BlockLevelElts ,_afdgg ._dgg .Body .EG_BlockLevelElts ...);var _eaae ,_gbee bool ;if _gbcc ._dgg .Body .SectPr !=nil {for _ ,_cafg :=range _gbcc ._dgg .Body .SectPr .EG_HdrFtrReferences {if _cafg .HdrFtrReferencesChoice .HeaderReference !=nil {_eaae =true ;
+}else if _cafg .HdrFtrReferencesChoice .FooterReference !=nil {_gbee =true ;};};};if _afdgg ._dgg .Body .SectPr !=nil {if _gbcc ._dgg .Body .SectPr .PgMar ==nil &&_afdgg ._dgg .Body .SectPr .PgMar !=nil {_gbcc ._dgg .Body .SectPr .PgMar =_afdgg ._dgg .Body .SectPr .PgMar ;
+};if _gbcc ._dgg .Body .SectPr .Cols ==nil &&_afdgg ._dgg .Body .SectPr .Cols !=nil {_gbcc ._dgg .Body .SectPr .Cols =_afdgg ._dgg .Body .SectPr .Cols ;};if !_eaae {for _ ,_geaf :=range _afdgg ._dgg .Body .SectPr .EG_HdrFtrReferences {if _geaf .HdrFtrReferencesChoice .HeaderReference !=nil {_gbcc ._dgg .Body .SectPr .EG_HdrFtrReferences =append (_gbcc ._dgg .Body .SectPr .EG_HdrFtrReferences ,_geaf );
+break ;};};};if !_gbee {for _ ,_cagf :=range _afdgg ._dgg .Body .SectPr .EG_HdrFtrReferences {if _cagf .HdrFtrReferencesChoice .FooterReference !=nil {_gbcc ._dgg .Body .SectPr .EG_HdrFtrReferences =append (_gbcc ._dgg .Body .SectPr .EG_HdrFtrReferences ,_cagf );
+break ;};};};};_ffec :=_gbcc .Numbering ._fdea ;_gdag :=_afdgg .Numbering ._fdea ;if _ffec ==nil &&_gdag !=nil {_ffec =_gdag ;};_gbcc .Numbering ._fdea =_ffec ;if _gbcc .Styles ._ggeafb ==nil &&_afdgg .Styles ._ggeafb !=nil {_gbcc .Styles ._ggeafb =_afdgg .Styles ._ggeafb ;
+};_gbcc ._aeeb =append (_gbcc ._aeeb ,_afdgg ._aeeb ...);_gbcc ._fff =append (_gbcc ._fff ,_afdgg ._fff ...);if len (_gbcc ._ace )==0{_gbcc ._ace =_afdgg ._ace ;};if len (_gbcc ._ddbf )==0{_gbcc ._ddbf =_afdgg ._ddbf ;};_bfffd :=_gbcc ._dcb ;_gdef :=_afdgg ._dcb ;
+if _bfffd !=nil {if _gdef !=nil {if _bfffd .Divs !=nil {if _gdef .Divs !=nil {_bfffd .Divs .Div =append (_bfffd .Divs .Div ,_gdef .Divs .Div ...);};}else {_bfffd .Divs =_gdef .Divs ;};};_bfffd .Frameset =nil ;}else if _gdef !=nil {_bfffd =_gdef ;_bfffd .Frameset =nil ;
+};_gbcc ._dcb =_bfffd ;_gefba :=_gbcc ._gabd ;_fgdbe :=_afdgg ._gabd ;if _gefba !=nil {if _fgdbe !=nil {if _gefba .Font !=nil {if _fgdbe .Font !=nil {for _ ,_eagd :=range _fgdbe .Font {_adec :=true ;for _ ,_afda :=range _gefba .Font {if _afda .NameAttr ==_eagd .NameAttr {_adec =false ;
+break ;};};if _adec {_gefba .Font =append (_gefba .Font ,_eagd );};};};}else {_gefba .Font =_fgdbe .Font ;};};}else if _fgdbe !=nil {_gefba =_fgdbe ;};_gbcc ._gabd =_gefba ;return nil ;};
+
+// SetFirstLineIndent controls the indentation of the first line in a paragraph.
+func (_bbbbda ParagraphProperties )SetFirstLineIndent (m _ga .Distance ){if _bbbbda ._bbdf .Ind ==nil {_bbbbda ._bbdf .Ind =_ec .NewCT_Ind ();};if m ==_ga .Zero {_bbbbda ._bbdf .Ind .FirstLineAttr =nil ;}else {_bbbbda ._bbdf .Ind .FirstLineAttr =&_afe .ST_TwipsMeasure {};
+_bbbbda ._bbdf .Ind .FirstLineAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (m /_ga .Twips ));};};
+
+// ReplaceTextByRegexp replace text inside node using regexp.
+func (_dfecg *Nodes )ReplaceTextByRegexp (expr *_cf .Regexp ,newText string ){for _ ,_adfd :=range _dfecg ._adac {_adfd .ReplaceTextByRegexp (expr ,newText );};};
+
+// Section return paragraph properties section value.
+func (_ffca ParagraphProperties )Section ()(Section ,bool ){if _ffca ._bbdf .SectPr !=nil {return Section {_ffca ._fdega ,_ffca ._bbdf .SectPr },true ;};return Section {},false ;};
+
+// RemoveComment will remove comment with a given id from the document.
+func (_dafg *Document )RemoveComment (id int64 )bool {if !_dafg .HasComments (){return false ;};_cca :=_dafg ._cdc ;var _aafc int ;for _abff ,_aagga :=range _cca .CT_Comments .Comment {if _aagga .IdAttr ==id {_aafc =_abff ;break ;};};_ggf :=_cca .CT_Comments .Comment [:_aafc ];
+_ggf =append (_ggf ,_cca .CT_Comments .Comment [_aafc +1:len (_cca .CT_Comments .Comment )]...);_cca .CT_Comments .Comment =_ggf ;for _ ,_gded :=range _dafg .Paragraphs (){if _gded .removeCommentRange (id ){_gded .removeCommentRef (id );break ;};};_dafg .reorderComments ();
+return true ;};func _adfc (_bfdf _d .ReaderAt ,_afeed int64 ,_eggg string )(*Document ,error ){const _aeeg ="\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0052\u0065\u0061\u0064";if !_fb .GetLicenseKey ().IsLicensed ()&&!_ecda {_cb .Println ("\u0055\u006e\u006ci\u0063\u0065\u006e\u0073e\u0064\u0020\u0076\u0065\u0072\u0073\u0069o\u006e\u0020\u006f\u0066\u0020\u0055\u006e\u0069\u004f\u0066\u0066\u0069\u0063\u0065");
+_cb .Println ("\u002d\u0020\u0047e\u0074\u0020\u0061\u0020\u0074\u0072\u0069\u0061\u006c\u0020\u006c\u0069\u0063\u0065\u006e\u0073\u0065\u0020\u006f\u006e\u0020\u0068\u0074\u0074\u0070\u0073\u003a\u002f\u002fu\u006e\u0069\u0064\u006f\u0063\u002e\u0069\u006f");
+return nil ,_ff .New ("\u0075\u006e\u0069\u006f\u0066\u0066\u0069\u0063\u0065\u0020\u006ci\u0063\u0065\u006e\u0073\u0065\u0020\u0072\u0065\u0071\u0075i\u0072\u0065\u0064");};_beea :="\u0075n\u006b\u006e\u006f\u0077\u006e";if _gaeg ,_bafb :=_bfdf .(*_ad .File );
+_bafb {_beea =_gaeg .Name ();};_gfcg :=New ();_gfcg .Numbering ._fdea =nil ;if len (_eggg )> 0{_gfcg ._dgdb =_eggg ;}else {_ccab ,_bcce :=_fb .GenRefId ("\u0064\u0072");if _bcce !=nil {_be .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_bcce );
+return nil ,_bcce ;};_gfcg ._dgdb =_ccab ;};if _dgcg :=_fb .Track (_gfcg ._dgdb ,_aeeg ,_beea );_dgcg !=nil {_be .Log .Error ("\u0045R\u0052\u004f\u0052\u003a\u0020\u0025v",_dgcg );return nil ,_dgcg ;};_gbeb ,_cfag :=_ea .TempDir ("\u0075\u006e\u0069\u006f\u0066\u0066\u0069\u0063\u0065-\u0064\u006f\u0063\u0078");
+if _cfag !=nil {return nil ,_cfag ;};_gfcg .TmpPath =_gbeb ;_faaa ,_cfag :=_gf .NewReader (_bfdf ,_afeed );if _cfag !=nil {return nil ,_cb .Errorf ("\u0070a\u0072s\u0069\u006e\u0067\u0020\u007a\u0069\u0070\u003a\u0020\u0025\u0073",_cfag );};_daac :=[]*_gf .File {};
+_daac =append (_daac ,_faaa .File ...);_bbfc :=false ;for _ ,_bcbg :=range _daac {if _bcbg .FileHeader .Name =="\u0064\u006f\u0063\u0050ro\u0070\u0073\u002f\u0063\u0075\u0073\u0074\u006f\u006d\u002e\u0078\u006d\u006c"{_bbfc =true ;break ;};};if _bbfc {_gfcg .CreateCustomProperties ();
+};_bdga :=_gfcg ._dgg .ConformanceAttr ;_cdaf :=_ba .DecodeMap {};_cdaf .SetOnNewRelationshipFunc (_gfcg .onNewRelationship );_cdaf .AddTarget (_c .ContentTypesFilename ,_gfcg .ContentTypes .X (),"",0);_cdaf .AddTarget (_c .BaseRelsFilename ,_gfcg .Rels .X (),"",0);
+if _deff :=_cdaf .Decode (_daac );_deff !=nil {return nil ,_deff ;};_gfcg ._dgg .ConformanceAttr =_bdga ;for _ ,_cdcd :=range _daac {if _cdcd ==nil {continue ;};if _gefbb :=_gfcg .AddExtraFileFromZip (_cdcd );_gefbb !=nil {return nil ,_gefbb ;};};if _bbfc {_ccea :=false ;
+for _ ,_edd :=range _gfcg .Rels .X ().Relationship {if _edd .TargetAttr =="\u0064\u006f\u0063\u0050ro\u0070\u0073\u002f\u0063\u0075\u0073\u0074\u006f\u006d\u002e\u0078\u006d\u006c"{_ccea =true ;break ;};};if !_ccea {_gfcg .AddCustomRelationships ();};};
+return _gfcg ,nil ;};
+
+// SetTarget sets the URL target of the hyperlink.
+func (_defag HyperLink )SetTarget (url string ){_gaab :=_defag ._ebdea .AddHyperlink (url );_defag ._fbcd .IdAttr =_c .String (_aee .Relationship (_gaab ).ID ());_defag ._fbcd .AnchorAttr =nil ;};const (FieldCurrentPage ="\u0050\u0041\u0047\u0045";FieldNumberOfPages ="\u004e\u0055\u004d\u0050\u0041\u0047\u0045\u0053";
+FieldDate ="\u0044\u0041\u0054\u0045";FieldCreateDate ="\u0043\u0052\u0045\u0041\u0054\u0045\u0044\u0041\u0054\u0045";FieldEditTime ="\u0045\u0044\u0049\u0054\u0054\u0049\u004d\u0045";FieldPrintDate ="\u0050R\u0049\u004e\u0054\u0044\u0041\u0054E";FieldSaveDate ="\u0053\u0041\u0056\u0045\u0044\u0041\u0054\u0045";
+FieldTIme ="\u0054\u0049\u004d\u0045";FieldTOC ="\u0054\u004f\u0043";);
+
+// X returns the inner wrapped XML type.
+func (_cdgef ParagraphStyleProperties )X ()*_ec .CT_PPrGeneral {return _cdgef ._egfac };
+
+// SetThemeShade sets the shade based off the theme color.
+func (_egd Color )SetThemeShade (s uint8 ){_bcb :=_cb .Sprintf ("\u0025\u0030\u0032\u0078",s );_egd ._fggd .ThemeShadeAttr =&_bcb ;};
+
+// Control returns an *axcontrol.Control object contained in the run or the nil value in case of no controls.
+func (_feceb Run )Control ()*_ge .Control {if _gdcab :=_feceb ._aeef .EG_RunInnerContent ;_gdcab !=nil {if _badcg :=_gdcab [0].RunInnerContentChoice .Object ;_badcg !=nil {if _ccbdb :=_badcg .ObjectChoice ;_ccbdb !=nil {if _fcba :=_ccbdb .Control ;_fcba !=nil {if _fcba .IdAttr !=nil {_ggbb :=_feceb ._abae .GetDocRelTargetByID (*_fcba .IdAttr );
+for _ ,_defb :=range _feceb ._abae ._fff {if _ggbb ==_defb .TargetAttr {return _defb ;};};};};};};};return nil ;};
+
+// AddWatermarkText adds new watermark text to the document.
+func (_addc *Document )AddWatermarkText (text string )WatermarkText {var _ecab []Header ;if _gcfe ,_degc :=_addc .BodySection ().GetHeader (_ec .ST_HdrFtrDefault );_degc {_ecab =append (_ecab ,_gcfe );};if _cdeb ,_ddfe :=_addc .BodySection ().GetHeader (_ec .ST_HdrFtrEven );
+_ddfe {_ecab =append (_ecab ,_cdeb );};if _faef ,_dcac :=_addc .BodySection ().GetHeader (_ec .ST_HdrFtrFirst );_dcac {_ecab =append (_ecab ,_faef );};if len (_ecab )< 1{_ggaf :=_addc .AddHeader ();_addc .BodySection ().SetHeader (_ggaf ,_ec .ST_HdrFtrDefault );
+_ecab =append (_ecab ,_ggaf );};_aceb :=NewWatermarkText ();for _ ,_bgbg :=range _ecab {_defcd :=_bgbg .Paragraphs ();if len (_defcd )< 1{_fdgga :=_bgbg .AddParagraph ();_fdgga .AddRun ().AddText ("");};for _ ,_dcace :=range _bgbg .X ().EG_BlockLevelElts {for _ ,_bdbc :=range _dcace .BlockLevelEltsChoice .EG_ContentBlockContent {for _ ,_fcb :=range _bdbc .ContentBlockContentChoice .P {for _ ,_fabc :=range _fcb .EG_PContent {for _ ,_fedf :=range _fabc .PContentChoice .EG_ContentRunContent {if _fedf .ContentRunContentChoice .R ==nil {continue ;
+};_fedf .ContentRunContentChoice .R .EG_RunInnerContent =append (_fedf .ContentRunContentChoice .R .EG_RunInnerContent ,&_ec .EG_RunInnerContent {RunInnerContentChoice :&_ec .EG_RunInnerContentChoice {Pict :_aceb ._dfbb }});};};};};};};_aceb .SetText (text );
+return _aceb ;};
+
+// SetRightPct sets the cell right margin
+func (_aea CellMargins )SetRightPct (pct float64 ){_aea ._debg .Right =_ec .NewCT_TblWidth ();_gbe (_aea ._debg .Right ,pct );};
+
+// SetRowBandSize sets the number of Rows in the row band
+func (_cafgc TableStyleProperties )SetRowBandSize (rows int64 ){_cafgc ._bgebd .TblStyleRowBandSize =_ec .NewCT_DecimalNumber ();_cafgc ._bgebd .TblStyleRowBandSize .ValAttr =rows ;};func (_aeac *WatermarkText )findNode (_gbaca *_c .XSDAny ,_bcgd string )*_c .XSDAny {for _ ,_gcbg :=range _gbaca .Nodes {if _gcbg .XMLName .Local ==_bcgd {return _gcbg ;
+};};return nil ;};
+
+// SetCellSpacingAuto sets the cell spacing within a table to automatic.
+func (_ddfff TableStyleProperties )SetCellSpacingAuto (){_ddfff ._bgebd .TblCellSpacing =_ec .NewCT_TblWidth ();_ddfff ._bgebd .TblCellSpacing .TypeAttr =_ec .ST_TblWidthAuto ;};
+
+// AddText adds text to a run.
+func (_feagf Run )AddText (s string ){_dcaef :=_ec .NewEG_RunInnerContent ();_feagf ._aeef .EG_RunInnerContent =append (_feagf ._aeef .EG_RunInnerContent ,_dcaef );_dcaef .RunInnerContentChoice .T =_ec .NewCT_Text ();if _c .NeedsSpacePreserve (s ){_acef :="\u0070\u0072\u0065\u0073\u0065\u0072\u0076\u0065";
+_dcaef .RunInnerContentChoice .T .SpaceAttr =&_acef ;};_dcaef .RunInnerContentChoice .T .Content =s ;};
+
+// Outline returns true if paragraph outline is on.
+func (_aegea ParagraphProperties )Outline ()bool {return _gfgb (_aegea ._bbdf .RPr .Outline )};func _gbdg (_ecgae *Document )map[int64 ]map[int64 ]int64 {_bggg :=_ecgae .Paragraphs ();_ccgeb :=make (map[int64 ]map[int64 ]int64 ,0);for _ ,_eecgd :=range _bggg {_ccbca :=_ebeg (_ecgae ,_eecgd );
+if _ccbca .NumberingLevel !=nil &&_ccbca .AbstractNumId !=nil {_ebdg :=*_ccbca .AbstractNumId ;if _ ,_fcda :=_ccgeb [_ebdg ];_fcda {if _cbca :=_ccbca .NumberingLevel .X ();_cbca !=nil {if _ ,_dcacc :=_ccgeb [_ebdg ][_cbca .IlvlAttr ];_dcacc {_ccgeb [_ebdg ][_cbca .IlvlAttr ]++;
+}else {_ccgeb [_ebdg ][_cbca .IlvlAttr ]=1;};};}else {if _dagd :=_ccbca .NumberingLevel .X ();_dagd !=nil {_ccgeb [_ebdg ]=map[int64 ]int64 {_dagd .IlvlAttr :1};};};};};return _ccgeb ;};
+
+// SetPageMargins sets the page margins for a section
+func (_cdace Section )SetPageMargins (top ,right ,bottom ,left ,header ,footer ,gutter _ga .Distance ){_cfcg :=_ec .NewCT_PageMar ();_cfcg .TopAttr .Int64 =_c .Int64 (int64 (top /_ga .Twips ));_cfcg .BottomAttr .Int64 =_c .Int64 (int64 (bottom /_ga .Twips ));
+_cfcg .RightAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (right /_ga .Twips ));_cfcg .LeftAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (left /_ga .Twips ));_cfcg .HeaderAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (header /_ga .Twips ));
+_cfcg .FooterAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (footer /_ga .Twips ));_cfcg .GutterAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (gutter /_ga .Twips ));_cdace ._gcebe .PgMar =_cfcg ;};
+
+// SetRight sets the cell right margin
+func (_dfg CellMargins )SetRight (d _ga .Distance ){_dfg ._debg .Right =_ec .NewCT_TblWidth ();_eege (_dfg ._debg .Right ,d );};func _bbaf ()*_ceg .Textpath {_cfege :=_ceg .NewTextpath ();_cfege .OnAttr =_afe .ST_TrueFalseTrue ;_cfege .FitshapeAttr =_afe .ST_TrueFalseTrue ;
+return _cfege ;};
+
+// SetNextStyle sets the style that the next paragraph will use.
+func (_cbff Style )SetNextStyle (name string ){if name ==""{_cbff ._ggbag .Next =nil ;}else {_cbff ._ggbag .Next =_ec .NewCT_String ();_cbff ._ggbag .Next .ValAttr =name ;};};
+
+// ClearContent clears any content in the run (text, tabs, breaks, etc.)
+func (_fbad Run )ClearContent (){_fbad ._aeef .EG_RunInnerContent =nil };
+
+// ReplaceText replace the text inside node.
+func (_gdeb *Node )ReplaceText (oldText ,newText string ){switch _bgeef :=_gdeb .X ().(type ){case *Paragraph :for _ ,_cabcc :=range _bgeef .Runs (){for _ ,_dgbdc :=range _cabcc ._aeef .EG_RunInnerContent {if _dgbdc .RunInnerContentChoice .T !=nil {_gbag :=_dgbdc .RunInnerContentChoice .T .Content ;
+_gbag =_ce .ReplaceAll (_gbag ,oldText ,newText );_dgbdc .RunInnerContentChoice .T .Content =_gbag ;};};};};for _ ,_gcac :=range _gdeb .Children {_gcac .ReplaceText (oldText ,newText );};};
+
+// SetASCIITheme sets the font ASCII Theme.
+func (_fdbdfd Fonts )SetASCIITheme (t _ec .ST_Theme ){_fdbdfd ._addaa .AsciiThemeAttr =t };
+
+// RStyle returns the name of character style.
+// It is defined here http://officeopenxml.com/WPstyleCharStyles.php
+func (_bgfb ParagraphProperties )RStyle ()string {if _bgfb ._bbdf .RPr .RStyle !=nil {return _bgfb ._bbdf .RPr .RStyle .ValAttr ;};return "";};
+
+// Paragraphs returns the paragraphs defined in a footnote.
+func (_dcaac Footnote )Paragraphs ()[]Paragraph {_bbeaf :=[]Paragraph {};for _ ,_fcdd :=range _dcaac .content (){for _ ,_aadb :=range _fcdd .ContentBlockContentChoice .P {_bbeaf =append (_bbeaf ,Paragraph {_dcaac ._cdca ,_aadb });};};return _bbeaf ;};
+
+// TableBorders allows manipulation of borders on a table.
+type TableBorders struct{_gbeg *_ec .CT_TblBorders };
+
+// CharacterSpacingValue returns the value of run's characters spacing in twips (1/20 of point).
+func (_edeea RunProperties )CharacterSpacingValue ()int64 {if _cagcc :=_edeea ._bffab .Spacing ;_cagcc !=nil {_faab :=_cagcc .ValAttr ;if _faab .Int64 !=nil {return *_faab .Int64 ;};};return int64 (0);};func _efee ()*_ceg .OfcLock {_acbeb :=_ceg .NewOfcLock ();
+_acbeb .ExtAttr =_ceg .ST_ExtEdit ;_acbeb .TextAttr =_afe .ST_TrueFalseTrue ;_acbeb .ShapetypeAttr =_afe .ST_TrueFalseTrue ;return _acbeb ;};
+
+// SetItalic sets the run to italic.
+func (_dgabc RunProperties )SetItalic (b bool ){if !b {_dgabc ._bffab .I =nil ;_dgabc ._bffab .ICs =nil ;}else {_dgabc ._bffab .I =_ec .NewCT_OnOff ();_dgabc ._bffab .ICs =_ec .NewCT_OnOff ();};};
+
+// SetAfter sets the spacing that comes after the paragraph.
+func (_edga ParagraphSpacing )SetAfter (after _ga .Distance ){_edga ._dbgcf .AfterAttr =&_afe .ST_TwipsMeasure {};_edga ._dbgcf .AfterAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (after /_ga .Twips ));};
+
+// SetStyle sets the table style name.
+func (_befd TableProperties )SetStyle (name string ){if name ==""{_befd ._egdbb .TblStyle =nil ;}else {_befd ._egdbb .TblStyle =_ec .NewCT_String ();_befd ._egdbb .TblStyle .ValAttr =name ;};};
+
+// Settings controls the document settings.
+type Settings struct{_eedfb *_ec .Settings };
+
+// InsertParagraphBefore adds a new empty paragraph before the relativeTo
+// paragraph.
+func (_gbbg *Document )InsertParagraphBefore (relativeTo Paragraph )Paragraph {return _gbbg .insertParagraph (relativeTo ,true );};
+
+// Text returns text from the document as one string separated with line breaks.
+func (_dfgd *DocText )Text ()string {_cdcc :=_bc .NewBuffer ([]byte {});for _ ,_cbcg :=range _dfgd .Items {if _cbcg .Text !=""{_cdcc .WriteString (_cbcg .Text );_cdcc .WriteString ("\u000a");};};return _cdcc .String ();};
+
+// Italic returns true if run font is italic.
+func (_fbde RunProperties )Italic ()bool {_daaa :=_fbde ._bffab ;return _gfgb (_daaa .I )||_gfgb (_daaa .ICs );};func (_bcebb Paragraph )removeCommentRef (_bacf int64 )bool {for _ ,_gabcc :=range _bcebb .X ().EG_PContent {for _ ,_bfded :=range _gabcc .PContentChoice .EG_ContentRunContent {if _bfded .ContentRunContentChoice .R !=nil {for _ ,_adag :=range _bfded .ContentRunContentChoice .R .EG_RunInnerContent {if _adag .RunInnerContentChoice .CommentReference !=nil &&_adag .RunInnerContentChoice .CommentReference .IdAttr ==_bacf {_bfded .ContentRunContentChoice .R =nil ;
+return true ;};};};};};return false ;};func (_gbab *Document )InsertTableAfter (relativeTo Paragraph )Table {return _gbab .insertTable (relativeTo ,false );};
+
+// Save writes the document to an io.Writer in the Zip package format.
+func (_gccf *Document )Save (w _d .Writer )error {return _gccf .save (w ,_gccf ._dgdb )};
+
+// SetColumnSpan sets the number of Grid Columns Spanned by the Cell.  This is used
+// to give the appearance of merged cells.
+func (_cbg CellProperties )SetColumnSpan (cols int ){if cols ==0{_cbg ._eef .GridSpan =nil ;}else {_cbg ._eef .GridSpan =_ec .NewCT_DecimalNumber ();_cbg ._eef .GridSpan .ValAttr =int64 (cols );};};func (_bebd Footnote )content ()[]*_ec .EG_ContentBlockContent {var _badba []*_ec .EG_ContentBlockContent ;
+for _ ,_degg :=range _bebd ._decc .EG_BlockLevelElts {_badba =append (_badba ,_degg .BlockLevelEltsChoice .EG_ContentBlockContent ...);};return _badba ;};
+
+// Definitions returns the defined numbering definitions.
+func (_ccgfb Numbering )Definitions ()[]NumberingDefinition {_dfbg :=[]NumberingDefinition {};if _ccgfb ._fdea !=nil {for _ ,_bfac :=range _ccgfb ._fdea .AbstractNum {_dfbg =append (_dfbg ,NumberingDefinition {_bfac });};};return _dfbg ;};
+
+// GetRightToLeft returns true if the run text is displayed from right to left.
+func (_gebc RunProperties )GetRightToLeft ()bool {return _gfgb (_gebc ._bffab .Rtl )};
+
+// AddParagraph adds a paragraph to the table cell.
+func (_fga Cell )AddParagraph ()Paragraph {_fcac :=_ec .NewEG_BlockLevelElts ();_fga ._eaff .EG_BlockLevelElts =append (_fga ._eaff .EG_BlockLevelElts ,_fcac );_gdf :=_ec .NewEG_ContentBlockContent ();_fcac .BlockLevelEltsChoice .EG_ContentBlockContent =append (_fcac .BlockLevelEltsChoice .EG_ContentBlockContent ,_gdf );
+_ecb :=_ec .NewCT_P ();_gdf .ContentBlockContentChoice .P =append (_gdf .ContentBlockContentChoice .P ,_ecb );return Paragraph {_fga ._dfb ,_ecb };};
+
+// Footnote is an individual footnote reference within the document.
+type Footnote struct{_cdca *Document ;_decc *_ec .CT_FtnEdn ;};
+
+// SetStyle sets style to the text in watermark.
+func (_effa *WatermarkText )SetStyle (style _af .TextpathStyle ){_baeb :=_effa .getShape ();if _effa ._eafca !=nil {_adbdb :=_effa ._eafca .ShapeChoice ;for _ ,_dacfeg :=range _adbdb {if _dacfeg .ShapeElementsChoice .Textpath !=nil {var _ebec =style .String ();
+_dacfeg .ShapeElementsChoice .Textpath .StyleAttr =&_ebec ;};};return ;};_ceeg :=_effa .findNode (_baeb ,"\u0074\u0065\u0078\u0074\u0070\u0061\u0074\u0068");for _gfcbb ,_fbdag :=range _ceeg .Attrs {if _fbdag .Name .Local =="\u0073\u0074\u0079l\u0065"{_ceeg .Attrs [_gfcbb ].Value =style .String ();
+};};};
+
+// Comment is run's comment component.
+type Comment struct{_ac *Document ;_fdge *_ec .CT_Comment ;};
+
+// AddStyle adds a new empty style, if styleID is already exists, it will return the style.
+func (_abaag Styles )AddStyle (styleID string ,t _ec .ST_StyleType ,isDefault bool )Style {if _bdedc ,_adbf :=_abaag .SearchStyleById (styleID );_adbf {return _bdedc ;};_aacc :=_ec .NewCT_Style ();_aacc .TypeAttr =t ;if isDefault {_aacc .DefaultAttr =&_afe .ST_OnOff {};
+_aacc .DefaultAttr .Bool =_c .Bool (isDefault );};_aacc .StyleIdAttr =_c .String (styleID );_abaag ._ggeafb .Style =append (_abaag ._ggeafb .Style ,_aacc );return Style {_aacc };};
+
+// RemoveParagraph removes a paragraph from a document.
+func (_cbef *Document )RemoveParagraph (p Paragraph ){if _cbef ._dgg .Body ==nil {return ;};for _ ,_adbe :=range _cbef ._dgg .Body .EG_BlockLevelElts {for _ ,_gbfd :=range _adbe .BlockLevelEltsChoice .EG_ContentBlockContent {for _adc ,_gdc :=range _gbfd .ContentBlockContentChoice .P {if _gdc ==p ._fagb {copy (_gbfd .ContentBlockContentChoice .P [_adc :],_gbfd .ContentBlockContentChoice .P [_adc +1:]);
+_gbfd .ContentBlockContentChoice .P =_gbfd .ContentBlockContentChoice .P [0:len (_gbfd .ContentBlockContentChoice .P )-1];return ;};};if _gbfd .ContentBlockContentChoice .Sdt !=nil &&_gbfd .ContentBlockContentChoice .Sdt .SdtContent !=nil {for _ ,_gfb :=range _gbfd .ContentBlockContentChoice .Sdt .SdtContent .EG_ContentBlockContent {for _eab ,_baf :=range _gfb .ContentBlockContentChoice .P {if _baf ==p ._fagb {copy (_gbfd .ContentBlockContentChoice .P [_eab :],_gbfd .ContentBlockContentChoice .P [_eab +1:]);
+_gbfd .ContentBlockContentChoice .P =_gbfd .ContentBlockContentChoice .P [0:len (_gbfd .ContentBlockContentChoice .P )-1];return ;};};};};};};for _ ,_aafe :=range _cbef .Tables (){for _ ,_afdbaf :=range _aafe .Rows (){for _ ,_ecf :=range _afdbaf .Cells (){for _ ,_dcg :=range _ecf ._eaff .EG_BlockLevelElts {for _ ,_fecg :=range _dcg .BlockLevelEltsChoice .EG_ContentBlockContent {for _ccgf ,_gccac :=range _fecg .ContentBlockContentChoice .P {if _gccac ==p ._fagb {copy (_fecg .ContentBlockContentChoice .P [_ccgf :],_fecg .ContentBlockContentChoice .P [_ccgf +1:]);
+_fecg .ContentBlockContentChoice .P =_fecg .ContentBlockContentChoice .P [0:len (_fecg .ContentBlockContentChoice .P )-1];return ;};};};};};};};for _ ,_facc :=range _cbef .Headers (){_facc .RemoveParagraph (p );};for _ ,_ade :=range _cbef .Footers (){_ade .RemoveParagraph (p );
+};};
+
+// SetAlignment controls the paragraph alignment
+func (_gagd ParagraphStyleProperties )SetAlignment (align _ec .ST_Jc ){if align ==_ec .ST_JcUnset {_gagd ._egfac .Jc =nil ;}else {_gagd ._egfac .Jc =_ec .NewCT_Jc ();_gagd ._egfac .Jc .ValAttr =align ;};};
+
+// SetVAlignment sets the vertical alignment for an anchored image.
+func (_bea AnchoredDrawing )SetVAlignment (v _ec .WdST_AlignV ){_bea ._da .PositionV .PosVChoice =&_ec .WdCT_PosVChoice {};_bea ._da .PositionV .PosVChoice .Align =v ;};
+
+// Borders returns the ParagraphBorders for setting-up border on paragraph.
+func (_cbbc Paragraph )Borders ()ParagraphBorders {_cbbc .ensurePPr ();if _cbbc ._fagb .PPr .PBdr ==nil {_cbbc ._fagb .PPr .PBdr =_ec .NewCT_PBdr ();};return ParagraphBorders {_cbbc ._fafde ,_cbbc ._fagb .PPr .PBdr };};
+
+// X returns the inner wrapped XML type.
+func (_eeee Style )X ()*_ec .CT_Style {return _eeee ._ggbag };
+
+// AddRow adds a row to a table.
+func (_afbab Table )AddRow ()Row {_aeecdb :=_ec .NewEG_ContentRowContent ();_afbab ._bbefb .EG_ContentRowContent =append (_afbab ._bbefb .EG_ContentRowContent ,_aeecdb );_ffegf :=_ec .NewCT_Row ();_aeecdb .ContentRowContentChoice .Tr =append (_aeecdb .ContentRowContentChoice .Tr ,_ffegf );
+return Row {_afbab ._edbe ,_ffegf };};
+
+// SetMultiLevelType sets the multilevel type.
+func (_becc NumberingDefinition )SetMultiLevelType (t _ec .ST_MultiLevelType ){if t ==_ec .ST_MultiLevelTypeUnset {_becc ._bgag .MultiLevelType =nil ;}else {_becc ._bgag .MultiLevelType =_ec .NewCT_MultiLevelType ();_becc ._bgag .MultiLevelType .ValAttr =t ;
+};};
+
+// SetHighlight highlights text in a specified color.
+func (_gagdb RunProperties )SetHighlight (c _ec .ST_HighlightColor ){_gagdb ._bffab .Highlight =_ec .NewCT_Highlight ();_gagdb ._bffab .Highlight .ValAttr =c ;};
+
+// AddFootnote will create a new footnote and attach it to the Paragraph in the
+// location at the end of the previous run (footnotes create their own run within
+// the paragraph). The text given to the function is simply a convenience helper,
+// paragraphs and runs can always be added to the text of the footnote later.
+func (_abgfa Paragraph )AddFootnote (text string )Footnote {var _feff int64 ;if _abgfa ._fafde .HasFootnotes (){for _ ,_adcg :=range _abgfa ._fafde .Footnotes (){if _adcg .id ()> _feff {_feff =_adcg .id ();};};_feff ++;}else {_abgfa ._fafde .addFootnotes ();
+_feff =1;};_efebb :=_ec .NewCT_FtnEdn ();_fcgc :=_ec .NewCT_FtnEdnRef ();_fcgc .IdAttr =_feff ;_abgfa ._fafde ._dcba .CT_Footnotes .Footnote =append (_abgfa ._fafde ._dcba .CT_Footnotes .Footnote ,_efebb );_gacb :=_abgfa .AddRun ();_bgeb :=_gacb .Properties ();
+_bgeb .SetStyle (_fdga );_gacb ._aeef .EG_RunInnerContent =[]*_ec .EG_RunInnerContent {_ec .NewEG_RunInnerContent ()};_gacb ._aeef .EG_RunInnerContent [0].RunInnerContentChoice .FootnoteReference =_fcgc ;_cdfeg :=Footnote {_abgfa ._fafde ,_efebb };_cdfeg ._decc .IdAttr =_feff ;
+_cdfeg ._decc .EG_BlockLevelElts =[]*_ec .EG_BlockLevelElts {_ec .NewEG_BlockLevelElts ()};_debdb :=_cdfeg .AddParagraph ();_debdb .Properties ().SetStyle (FootnoteTextStyleId );_debdb ._fagb .PPr .RPr =_ec .NewCT_ParaRPr ();_abdfc :=_debdb .AddRun ();
+_feacg :=_abdfc .Properties ();_feacg .SetStyle (_fdga );_abdfc .AddFootnoteReference ();_gcdd :=_debdb .AddRun ();_gcdd .AddText ("\u0020");_gcdd =_debdb .AddRun ();_gcdd .AddText (text );return _cdfeg ;};func (_df AnchoredDrawing )setEffectExtent (_bcae ,_gce ,_dec ,_fgb int64 ){if _df ._da .EffectExtent ==nil {_df ._da .EffectExtent =_ec .NewWdCT_EffectExtent ();
+}else {_bcae +=*_df ._da .EffectExtent .BAttr .ST_CoordinateUnqualified ;_gce +=*_df ._da .EffectExtent .TAttr .ST_CoordinateUnqualified ;_dec +=*_df ._da .EffectExtent .LAttr .ST_CoordinateUnqualified ;_fgb +=*_df ._da .EffectExtent .RAttr .ST_CoordinateUnqualified ;
+};_df ._da .EffectExtent .BAttr =_cc .ST_Coordinate {ST_CoordinateUnqualified :&_bcae };_df ._da .EffectExtent .TAttr =_cc .ST_Coordinate {ST_CoordinateUnqualified :&_gce };_df ._da .EffectExtent .LAttr =_cc .ST_Coordinate {ST_CoordinateUnqualified :&_dec };
+_df ._da .EffectExtent .RAttr =_cc .ST_Coordinate {ST_CoordinateUnqualified :&_fgb };};
+
+// InitializeDefault constructs a default numbering.
+func (_bccb Numbering )InitializeDefault (){_ddcf :=_ec .NewCT_AbstractNum ();_ddcf .MultiLevelType =_ec .NewCT_MultiLevelType ();_ddcf .MultiLevelType .ValAttr =_ec .ST_MultiLevelTypeHybridMultilevel ;_bccb ._fdea .AbstractNum =append (_bccb ._fdea .AbstractNum ,_ddcf );
+_ddcf .AbstractNumIdAttr =1;const _gfee =720;const _fgce =720;const _bebdc =360;for _gcae :=0;_gcae < 9;_gcae ++{_cedb :=_ec .NewCT_Lvl ();_cedb .IlvlAttr =int64 (_gcae );_cedb .Start =_ec .NewCT_DecimalNumber ();_cedb .Start .ValAttr =1;_cedb .NumFmt =_ec .NewCT_NumFmt ();
+_cedb .NumFmt .ValAttr =_ec .ST_NumberFormatBullet ;_cedb .Suff =_ec .NewCT_LevelSuffix ();_cedb .Suff .ValAttr =_ec .ST_LevelSuffixNothing ;_cedb .LvlText =_ec .NewCT_LevelText ();_cedb .LvlText .ValAttr =_c .String ("\uf0b7");_cedb .LvlJc =_ec .NewCT_Jc ();
+_cedb .LvlJc .ValAttr =_ec .ST_JcLeft ;_cedb .RPr =_ec .NewCT_RPr ();_cedb .RPr .RFonts =_ec .NewCT_Fonts ();_cedb .RPr .RFonts .AsciiAttr =_c .String ("\u0053\u0079\u006d\u0062\u006f\u006c");_cedb .RPr .RFonts .HAnsiAttr =_c .String ("\u0053\u0079\u006d\u0062\u006f\u006c");
+_cedb .RPr .RFonts .HintAttr =_ec .ST_HintDefault ;_cedb .PPr =_ec .NewCT_PPrGeneral ();_bcdfe :=int64 (_gcae *_fgce +_gfee );_cedb .PPr .Ind =_ec .NewCT_Ind ();_cedb .PPr .Ind .LeftAttr =&_ec .ST_SignedTwipsMeasure {};_cedb .PPr .Ind .LeftAttr .Int64 =_c .Int64 (_bcdfe );
+_cedb .PPr .Ind .HangingAttr =&_afe .ST_TwipsMeasure {};_cedb .PPr .Ind .HangingAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (_bebdc ));_ddcf .Lvl =append (_ddcf .Lvl ,_cedb );};_ebgdd :=_ec .NewCT_Num ();_ebgdd .NumIdAttr =1;_ebgdd .AbstractNumId =_ec .NewCT_DecimalNumber ();
+_ebgdd .AbstractNumId .ValAttr =1;_bccb ._fdea .Num =append (_bccb ._fdea .Num ,_ebgdd );};
+
+// CharacterSpacingMeasure returns paragraph characters spacing with its measure which can be mm, cm, in, pt, pc or pi.
+func (_addgef ParagraphProperties )CharacterSpacingMeasure ()string {if _bdbfd :=_addgef ._bbdf .RPr .Spacing ;_bdbfd !=nil {_ccgg :=_bdbfd .ValAttr ;if _ccgg .ST_UniversalMeasure !=nil {return *_ccgg .ST_UniversalMeasure ;};};return "";};
+
+// X returns the inner wrapped XML type.
+func (_bfd *Document )X ()*_ec .Document {return _bfd ._dgg };
+
+// ExtractFromHeader returns text from the document header as an array of TextItems.
+func ExtractFromHeader (header *_ec .Hdr )[]TextItem {var _aebef []TextItem ;for _ ,_fgaf :=range header .EG_BlockLevelElts {_aebef =append (_aebef ,_acfe (_fgaf .BlockLevelEltsChoice .EG_ContentBlockContent ,nil )...);};return _aebef ;};
+
+// Shadow returns true if paragraph shadow is on.
+func (_cecc ParagraphProperties )Shadow ()bool {return _gfgb (_cecc ._bbdf .RPr .Shadow )};func (_bgbf *Document )addEndnotes (){_bgbf ._gdd =_ec .NewEndnotes ();_bgbf .ContentTypes .AddOverride ("\u002fw\u006fr\u0064\u002f\u0065\u006e\u0064n\u006f\u0074e\u0073\u002e\u0078\u006d\u006c","\u0061\u0070\u0070\u006c\u0069\u0063\u0061\u0074\u0069o\u006e\u002fv\u006e\u0064\u002e\u006f\u0070\u0065\u006e\u0078\u006dl\u0066\u006f\u0072\u006da\u0074\u0073\u002d\u006f\u0066\u0066\u0069\u0063\u0065\u0064\u006f\u0063\u0075\u006d\u0065\u006e\u0074\u002e\u0077\u006f\u0072\u0064\u0070\u0072\u006f\u0063\u0065\u0073\u0073\u0069n\u0067\u006d\u006c.\u0065\u006e\u0064\u006e\u006f\u0074\u0065\u0073\u002b\u0078\u006d\u006c");
+_bgbf ._cbaa .AddRelationship ("\u002fw\u006fr\u0064\u002f\u0065\u006e\u0064n\u006f\u0074e\u0073\u002e\u0078\u006d\u006c",_c .EndNotesType );_eae :=_bgbf .Styles .AddStyle (EndnoteTextStyleId ,_ec .ST_StyleTypeParagraph ,false );_eae .SetName ("\u0045\u006e\u0064n\u006f\u0074\u0065\u0020\u0054\u0065\u0078\u0074");
+_eae .SetBasedOn ("\u004e\u006f\u0072\u006d\u0061\u006c");_ecgdg :=_eae .ParagraphProperties ();_ecgdg .X ().SuppressLineNumbers =&_ec .CT_OnOff {};_bcag :=_eae .RunProperties ();_bcag .X ().Sz =&_ec .CT_HpsMeasure {ValAttr :_ec .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_ccee }};
+_bcag .X ().SzCs =&_ec .CT_HpsMeasure {ValAttr :_ec .ST_HpsMeasure {ST_UnsignedDecimalNumber :&_ccee }};_fggdf :=_bgbf .Styles .AddStyle (_aec ,_ec .ST_StyleTypeCharacter ,false );_fggdf .SetName ("\u0045\u006e\u0064\u006e\u006f\u0074\u0065\u0020\u0052\u0065\u0066\u0065r\u0065\u006e\u0063\u0065");
+_eacaa :=_fggdf .RunProperties ();_eacaa .X ().VertAlign =&_ec .CT_VerticalAlignRun {ValAttr :_afe .ST_VerticalAlignRunSuperscript };_bgbf .addEndnoteSeparator ();};type mergeFieldInfo struct{_ecgeg string ;_acadb string ;_fbbff string ;_ccfg bool ;_agddc bool ;
+_bgbfb bool ;_aacee bool ;_bbca Paragraph ;_ecacd ,_abcc ,_dfade int ;_acaa *_ec .EG_PContent ;_dbebb bool ;};
+
+// AddImage adds an image to the document package, returning a reference that
+// can be used to add the image to a run and place it in the document contents.
+func (_fbcba Footer )AddImage (i _aee .Image )(_aee .ImageRef ,error ){var _dfae _aee .Relationships ;for _ebde ,_egde :=range _fbcba ._dbgc ._ddbf {if _egde ==_fbcba ._bgde {_dfae =_fbcba ._dbgc ._cef [_ebde ];};};_ddfdb :=_aee .MakeImageRef (i ,&_fbcba ._dbgc .DocBase ,_dfae );
+if i .Data ==nil &&i .Path ==""{return _ddfdb ,_ff .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0064\u0061t\u0061\u0020\u006f\u0072\u0020\u0061\u0020\u0070\u0061\u0074\u0068");};if i .Format ==""{return _ddfdb ,_ff .New ("\u0069\u006d\u0061\u0067\u0065\u0020\u006d\u0075\u0073\u0074 \u0068\u0061\u0076\u0065\u0020\u0061\u0020v\u0061\u006c\u0069\u0064\u0020\u0066\u006f\u0072\u006d\u0061\u0074");
+};if i .Size .X ==0||i .Size .Y ==0{return _ddfdb ,_ff .New ("\u0069\u006d\u0061\u0067e\u0020\u006d\u0075\u0073\u0074\u0020\u0068\u0061\u0076\u0065 \u0061 \u0076\u0061\u006c\u0069\u0064\u0020\u0073i\u007a\u0065");};_fbcba ._dbgc .Images =append (_fbcba ._dbgc .Images ,_ddfdb );
+_dgaf :=_cb .Sprintf ("\u006d\u0065d\u0069\u0061\u002fi\u006d\u0061\u0067\u0065\u0025\u0064\u002e\u0025\u0073",len (_fbcba ._dbgc .Images ),i .Format );_aefe :=_dfae .AddRelationship (_dgaf ,_c .ImageType );_ddfdb .SetRelID (_aefe .X ().IdAttr );return _ddfdb ,nil ;
+};
+
+// SizeValue returns the value of paragraph font size in points.
+func (_dcfc ParagraphProperties )SizeValue ()float64 {if _ecged :=_dcfc ._bbdf .RPr .Sz ;_ecged !=nil {_febbe :=_ecged .ValAttr ;if _febbe .ST_UnsignedDecimalNumber !=nil {return float64 (*_febbe .ST_UnsignedDecimalNumber )/2;};};return 0.0;};
+
+// AddCommentReference adds comment reference to a run.
+func (_agcd Run )AddCommentReference (id int64 ){_afdda :=_agcd .newIC ();_afdda .RunInnerContentChoice .CommentReference =_ec .NewCT_Markup ();_afdda .RunInnerContentChoice .CommentReference .IdAttr =id ;};
+
+// X returns the inner wrapped XML type.
+func (_aaec Row )X ()*_ec .CT_Row {return _aaec ._gfeea };
+
+// SetAfterSpacing sets spacing below paragraph.
+func (_cdfdd Paragraph )SetAfterSpacing (d _ga .Distance ){_cdfdd .ensurePPr ();if _cdfdd ._fagb .PPr .Spacing ==nil {_cdfdd ._fagb .PPr .Spacing =_ec .NewCT_Spacing ();};_eagdb :=_cdfdd ._fagb .PPr .Spacing ;_eagdb .AfterAttr =&_afe .ST_TwipsMeasure {};
+_eagdb .AfterAttr .ST_UnsignedDecimalNumber =_c .Uint64 (uint64 (d /_ga .Twips ));};
+
+// SetShadow sets the run to shadowed text.
+func (_abffa RunProperties )SetShadow (b bool ){if !b {_abffa ._bffab .Shadow =nil ;}else {_abffa ._bffab .Shadow =_ec .NewCT_OnOff ();};};
+
+// SetDefaultValue sets the default value of a FormFieldTypeDropDown. For
+// FormFieldTypeDropDown, the value must be one of the fields possible values.
+func (_cccb FormField )SetDefaultValue (v string ){if len (_cccb ._dcbfb .FFDataChoice )> 0{for _ ,_cefd :=range _cccb ._dcbfb .FFDataChoice {if _cefd .DdList !=nil {for _agbfe ,_gdfcg :=range _cccb .PossibleValues (){if _gdfcg ==v {_cefd .DdList .Default =_ec .NewCT_DecimalNumber ();
+_cefd .DdList .Default .ValAttr =int64 (_agbfe );break ;};};};};};};func _baddc ()*_ceg .Imagedata {_afggf :=_ceg .NewImagedata ();_cbbd :="\u0072\u0049\u0064\u0031";_bfef :="\u0057A\u0054\u0045\u0052\u004d\u0041\u0052K";_afggf .IdAttr =&_cbbd ;_afggf .TitleAttr =&_bfef ;
+return _afggf ;};
+
+// Properties returns the cell properties.
+func (_ccd Cell )Properties ()CellProperties {if _ccd ._eaff .TcPr ==nil {_ccd ._eaff .TcPr =_ec .NewCT_TcPr ();};return CellProperties {_ccd ._eaff .TcPr };};
