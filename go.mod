@@ -7,7 +7,7 @@ require (
 	github.com/stretchr/testify v1.11.1
 	github.com/unidoc/emf v0.1.0
 	github.com/unidoc/unichart v0.5.1
-	github.com/unidoc/unipdf/v4 v4.3.0
+	github.com/unidoc/unipdf/v4 v4.6.0
 	github.com/unidoc/unitype v0.5.1
 	golang.org/x/image v0.30.0
 )
@@ -18,6 +18,7 @@ require (
 	github.com/adrg/xdg v0.5.3 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/disintegration/imaging v1.6.2 // indirect
+	github.com/go-text/typesetting v0.3.0 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/gorilla/i18n v0.0.0-20150820051429-8b358169da46 // indirect
 	github.com/h2non/filetype v1.1.3 // indirect

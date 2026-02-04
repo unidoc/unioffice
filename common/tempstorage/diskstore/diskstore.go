@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_ab "github.com/unidoc/unioffice/v2/common/tempstorage";_ae "io/ioutil";_da "os";_d "strings";);
-
-// TempFile creates a new temp directory by calling ioutil TempDir
-func (_dg diskStorage )TempDir (pattern string )(string ,error ){return _ae .TempDir ("",pattern )};
+package diskstore ;import (_ad "github.com/unidoc/unioffice/v2/common/tempstorage";_c "io/ioutil";_af "os";_e "strings";);
 
 // Open opens file from disk according to a path
-func (_e diskStorage )Open (path string )(_ab .File ,error ){return _da .OpenFile (path ,_da .O_RDWR ,0644);};
+func (_d diskStorage )Open (path string )(_ad .File ,error ){return _af .OpenFile (path ,_af .O_RDWR ,0644);};type diskStorage struct{};
 
 // TempFile creates a new temp file by calling ioutil TempFile
-func (_ed diskStorage )TempFile (dir ,pattern string )(_ab .File ,error ){return _ae .TempFile (dir ,pattern );};
+func (_dc diskStorage )TempFile (dir ,pattern string )(_ad .File ,error ){return _c .TempFile (dir ,pattern );};
 
 // SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_c :=diskStorage {};_ab .SetAsStorage (&_c )};
-
-// Add is not applicable in the diskstore implementation
-func (_dc diskStorage )Add (path string )error {return nil };type diskStorage struct{};
+func SetAsStorage (){_cf :=diskStorage {};_ad .SetAsStorage (&_cf )};
 
 // RemoveAll removes all files in the directory
-func (_ee diskStorage )RemoveAll (dir string )error {if _d .HasPrefix (dir ,_da .TempDir ()){return _da .RemoveAll (dir );};return nil ;};
+func (_ag diskStorage )RemoveAll (dir string )error {if _e .HasPrefix (dir ,_af .TempDir ()){return _af .RemoveAll (dir );};return nil ;};
+
+// Add is not applicable in the diskstore implementation
+func (_b diskStorage )Add (path string )error {return nil };
+
+// TempFile creates a new temp directory by calling ioutil TempDir
+func (_ab diskStorage )TempDir (pattern string )(string ,error ){return _c .TempDir ("",pattern )};

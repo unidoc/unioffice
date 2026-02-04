@@ -10,7 +10,7 @@
 // terms that can be accessed at https://unidoc.io/eula/
 
 // Package update contains definitions needed for updating references after removing rows/columns.
-package update ;const (UpdateActionRemoveColumn UpdateAction =iota ;);
+package update ;
 
 // UpdateQuery contains terms of how to update references after removing row/column.
 type UpdateQuery struct{
@@ -25,7 +25,7 @@ ColumnIdx uint32 ;
 SheetToUpdate string ;
 
 // UpdateCurrentSheet is true if references without sheet prefix should be updated as well.
-UpdateCurrentSheet bool ;};
+UpdateCurrentSheet bool ;};const (UpdateActionRemoveColumn UpdateAction =iota ;);
 
 // UpdateAction is the type for update types constants.
 type UpdateAction byte ;
