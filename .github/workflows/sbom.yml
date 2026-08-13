@@ -1,0 +1,64 @@
+name: SBOM
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag to (re)generate SBOMs for, e.g. v2.12.0'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  sbom:
+    name: Generate and attach SBOMs
+    runs-on: ubuntu-latest
+    # Serialize runs for a tag: `gh release upload --clobber` deletes before it
+    # uploads, so overlapping runs can leave an asset missing.
+    concurrency:
+      group: sbom-${{ github.event.release.tag_name || inputs.tag }}
+      cancel-in-progress: false
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+      # Resolve dependency licenses from the Go module proxy.
+      SYFT_GOLANG_SEARCH_REMOTE_LICENSES: 'true'
+    steps:
+      - name: Check out release tag
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ env.TAG }}
+          # No step pushes, so don't leave the token in .git/config for the scan.
+          persist-credentials: false
+
+      - name: Install Syft
+        id: syft
+        uses: anchore/sbom-action/download-syft@e22c389904149dbc22b58101806040fa8d37a610 # v0.24.0
+        with:
+          syft-version: v1.51.0
+
+      # Excluded so they are not catalogued as dependencies of the library: .github
+      # pulls in the actions our own workflows use, and _examples has its own go.mod.
+      - name: Generate SBOMs (SPDX + CycloneDX JSON)
+        run: |
+          ${{ steps.syft.outputs.cmd }} scan dir:. \
+            --exclude './.github/**' \
+            --exclude './_examples/**' \
+            --source-name github.com/unidoc/unioffice/v2 --source-version "${TAG}" \
+            -o spdx-json=unioffice-sbom.spdx.json \
+            -o cyclonedx-json=unioffice-sbom.cyclonedx.json
+
+      # The floor is deliberate: SPDX always lists the subject package itself, so
+      # a scan that catalogues nothing still yields one entry.
+      - name: Verify SBOMs are populated
+        run: |
+          jq -e '.packages | length > 5' unioffice-sbom.spdx.json > /dev/null
+          jq -e '.components | length > 5' unioffice-sbom.cyclonedx.json > /dev/null
+
+      # Stable asset names keep the releases/latest/download/... URLs permanent.
+      - name: Attach SBOMs to release
+        run: gh release upload "${TAG}" unioffice-sbom.spdx.json unioffice-sbom.cyclonedx.json --clobber

@@ -11,22 +11,22 @@
 
 // Package diskstore implements tempStorage interface
 // by using disk as a storage
-package diskstore ;import (_a "github.com/unidoc/unioffice/v2/common/tempstorage";_c "io/ioutil";_cc "os";_f "strings";);type diskStorage struct{};
+package diskstore ;import (_eb "github.com/unidoc/unioffice/v2/common/tempstorage";_g "io/ioutil";_f "os";_d "strings";);
 
 // TempFile creates a new temp directory by calling ioutil TempDir
-func (_caa diskStorage )TempDir (pattern string )(string ,error ){return _c .TempDir ("",pattern )};
+func (_bb diskStorage )TempDir (pattern string )(string ,error ){return _g .TempDir ("",pattern )};
 
 // TempFile creates a new temp file by calling ioutil TempFile
-func (_db diskStorage )TempFile (dir ,pattern string )(_a .File ,error ){return _c .TempFile (dir ,pattern );};
-
-// SetAsStorage sets temp storage as a disk storage
-func SetAsStorage (){_g :=diskStorage {};_a .SetAsStorage (&_g )};
-
-// Open opens file from disk according to a path
-func (_ca diskStorage )Open (path string )(_a .File ,error ){return _cc .OpenFile (path ,_cc .O_RDWR ,0644);};
+func (_be diskStorage )TempFile (dir ,pattern string )(_eb .File ,error ){return _g .TempFile (dir ,pattern );};
 
 // Add is not applicable in the diskstore implementation
-func (_ff diskStorage )Add (path string )error {return nil };
+func (_de diskStorage )Add (path string )error {return nil };type diskStorage struct{};
+
+// SetAsStorage sets temp storage as a disk storage
+func SetAsStorage (){_b :=diskStorage {};_eb .SetAsStorage (&_b )};
 
 // RemoveAll removes all files in the directory
-func (_dbf diskStorage )RemoveAll (dir string )error {if _f .HasPrefix (dir ,_cc .TempDir ()){return _cc .RemoveAll (dir );};return nil ;};
+func (_daf diskStorage )RemoveAll (dir string )error {if _d .HasPrefix (dir ,_f .TempDir ()){return _f .RemoveAll (dir );};return nil ;};
+
+// Open opens file from disk according to a path
+func (_da diskStorage )Open (path string )(_eb .File ,error ){return _f .OpenFile (path ,_f .O_RDWR ,0644)};
