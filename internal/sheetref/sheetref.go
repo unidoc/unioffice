@@ -9,6 +9,6 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package sheetref ;import _b "strings";func SplitTopLevelRefs (refs string )[]string {_bd :=[]string {};_ag :=false ;_bdf :=0;for _c ,_d :=range refs {switch _d {case '\'':_ag =!_ag ;case ',':if !_ag {_bd =append (_bd ,_b .TrimSpace (refs [_bdf :_c ]));
-_bdf =_c +1;};};};_bd =append (_bd ,_b .TrimSpace (refs [_bdf :]));return _bd ;};func UnquoteSheetName (name string )string {if len (name )>=2&&name [0]=='\''&&name [len (name )-1]=='\''{return _b .ReplaceAll (name [1:len (name )-1],"\u0027\u0027","\u0027");
-};return name ;};const (MaxColIdx =16383;MaxRowIdx =1048575;);func HasTopLevelComma (refs string )bool {_g :=false ;for _ ,_ef :=range refs {switch _ef {case '\'':_g =!_g ;case ',':if !_g {return true ;};};};return false ;};
+package sheetref ;import _c "strings";const (MaxColIdx =16383;MaxRowIdx =1048575;);func HasTopLevelComma (refs string )bool {_a :=false ;for _ ,_cd :=range refs {switch _cd {case '\'':_a =!_a ;case ',':if !_a {return true ;};};};return false ;};func SplitTopLevelRefs (refs string )[]string {_f :=[]string {};
+_dg :=false ;_g :=0;for _e ,_cf :=range refs {switch _cf {case '\'':_dg =!_dg ;case ',':if !_dg {_f =append (_f ,_c .TrimSpace (refs [_g :_e ]));_g =_e +1;};};};_f =append (_f ,_c .TrimSpace (refs [_g :]));return _f ;};func UnquoteSheetName (name string )string {if len (name )>=2&&name [0]=='\''&&name [len (name )-1]=='\''{return _c .ReplaceAll (name [1:len (name )-1],"\u0027\u0027","\u0027");
+};return name ;};

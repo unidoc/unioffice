@@ -9,26 +9,26 @@
 // Use of this source code is governed by the UniDoc End User License Agreement
 // terms that can be accessed at https://unidoc.io/eula/
 
-package tempstorage ;import _af "io";
-
-// RemoveAll removes all files according to the dir argument prefix.
-func RemoveAll (dir string )error {return _fa .RemoveAll (dir )};
-
-// Open returns tempstorage File object by name.
-func Open (path string )(File ,error ){return _fa .Open (path )};
-
-// SetAsStorage changes temporary storage to newStorage.
-func SetAsStorage (newStorage storage ){_fa =newStorage };type storage interface{Open (_d string )(File ,error );TempFile (_c ,_f string )(File ,error );TempDir (_cc string )(string ,error );RemoveAll (_fg string )error ;Add (_e string )error ;};
+package tempstorage ;import _e "io";
 
 // Add reads a file from a disk and adds it to the storage.
-func Add (path string )error {return _fa .Add (path )};
-
-// TempDir creates a name for a new temp directory using a pattern argument.
-func TempDir (pattern string )(string ,error ){return _fa .TempDir (pattern )};
+func Add (path string )error {return _cd .Add (path )};type storage interface{Open (_a string )(File ,error );TempFile (_c ,_ab string )(File ,error );TempDir (_ba string )(string ,error );RemoveAll (_f string )error ;Add (_cf string )error ;};
 
 // TempFile creates new empty file in the storage and returns it.
-func TempFile (dir ,pattern string )(File ,error ){return _fa .TempFile (dir ,pattern )};
+func TempFile (dir ,pattern string )(File ,error ){return _cd .TempFile (dir ,pattern )};var _cd storage ;
 
 // File is a representation of a storage file
 // with Read, Write, Close and Name methods identical to os.File.
-type File interface{_af .Reader ;_af .ReaderAt ;_af .Writer ;_af .Closer ;Name ()string ;};var _fa storage ;
+type File interface{_e .Reader ;_e .ReaderAt ;_e .Writer ;_e .Closer ;Name ()string ;};
+
+// Open returns tempstorage File object by name.
+func Open (path string )(File ,error ){return _cd .Open (path )};
+
+// RemoveAll removes all files according to the dir argument prefix.
+func RemoveAll (dir string )error {return _cd .RemoveAll (dir )};
+
+// TempDir creates a name for a new temp directory using a pattern argument.
+func TempDir (pattern string )(string ,error ){return _cd .TempDir (pattern )};
+
+// SetAsStorage changes temporary storage to newStorage.
+func SetAsStorage (newStorage storage ){_cd =newStorage };
